@@ -17,12 +17,12 @@
       <% end %>
     </p>
   <% elsif @product.empty_option_values? %>
-    <div class="alpha twelve columns no-objects-found">
+    <div class="col-xs-9 no-objects-found">
       <%= Spree.t :no_option_values_on_product_html,
                   link: link_to(Spree.t(:product_details), [:edit, :admin, @product]) %>
     </div>
   <% else %>
-    <div class="alpha twelve columns no-objects-found">
+    <div class="col-xs-9 no-objects-found">
       <%= Spree.t(:no_resource, resource: plural_resource_name(Spree::Variant)) %>
       <% if can? :create, Spree::Variant %>
         <%= link_to Spree.t(:create_one), new_object_url, remote: true %>

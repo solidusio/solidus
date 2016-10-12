@@ -1,4 +1,4 @@
-<fieldset id="action_fields" class="eight columns omega no-border-top">
+<fieldset id="action_fields" class="no-border-top">
 
   <%= form_tag spree.admin_promotion_promotion_actions_path(@promotion), :remote => true, :id => 'new_promotion_action_form' do %>
     <% options = options_for_select(  Rails.application.config.spree.promotions.actions.map(&:name).map {|name| [ Spree.t("promotion_action_types.#{name.demodulize.underscore}.name"), name] } ) %>

@@ -15,31 +15,33 @@
 <% content_for :table_filter do %>
   <div data-hook="admin_promotions_index_search">
     <%= search_form_for [:admin, @search] do |f| %>
-      <div class="four columns alpha">
-        <div class="field">
-          <%= label_tag :q_name_cont, Spree::Promotion.human_attribute_name(:name) %>
-          <%= f.text_field :name_cont, tabindex: 1 %>
+      <div class="row">
+        <div class="col-xs-3">
+          <div class="field">
+            <%= label_tag :q_name_cont, Spree::Promotion.human_attribute_name(:name) %>
+            <%= f.text_field :name_cont, tabindex: 1 %>
+          </div>
         </div>
-      </div>
 
-      <div class="four columns">
-        <div class="field">
-          <%= label_tag :q_codes_value_cont, Spree::Promotion.human_attribute_name(:code) %>
-          <%= f.text_field :codes_value_cont, tabindex: 1 %>
+        <div class="col-xs-3">
+          <div class="field">
+            <%= label_tag :q_codes_value_cont, Spree::Promotion.human_attribute_name(:code) %>
+            <%= f.text_field :codes_value_cont, tabindex: 1 %>
+          </div>
         </div>
-      </div>
 
-      <div class="four columns">
-        <div class="field">
-          <%= label_tag :q_path_cont, Spree::Promotion.human_attribute_name(:path) %>
-          <%= f.text_field :path_cont, tabindex: 1 %>
+        <div class="col-xs-3">
+          <div class="field">
+            <%= label_tag :q_path_cont, Spree::Promotion.human_attribute_name(:path) %>
+            <%= f.text_field :path_cont, tabindex: 1 %>
+          </div>
         </div>
-      </div>
 
-      <div class="four columns omega">
-        <div class="field">
-          <%= label_tag :q_promotion_category_id_eq, Spree::PromotionCategory.model_name.human %><br>
-          <%= f.collection_select(:promotion_category_id_eq, @promotion_categories, :id, :name, { :include_blank => Spree.t('match_choices.all') }, { :class => 'select2 fullwidth' }) %>
+        <div class="col-xs-3">
+          <div class="field">
+            <%= label_tag :q_promotion_category_id_eq, Spree::PromotionCategory.model_name.human %><br>
+            <%= f.collection_select(:promotion_category_id_eq, @promotion_categories, :id, :name, { :include_blank => Spree.t('match_choices.all') }, { :class => 'select2 fullwidth' }) %>
+          </div>
         </div>
       </div>
 
@@ -101,7 +103,7 @@
     </tbody>
   </table>
 <% else %>
-  <div class="alpha twelve columns no-objects-found">
+  <div class="col-xs-9 no-objects-found">
     <%= render 'spree/admin/shared/no_objects_found',
                  resource: Spree::Promotion,
                  new_resource_url: new_object_url %>

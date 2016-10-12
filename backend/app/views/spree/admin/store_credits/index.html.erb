@@ -16,7 +16,7 @@
     <strong><%= Spree.t("admin.store_credits.current_balance") %> </strong><%= @user.display_total_available_store_credit %>
   </div>
 
-  <table>
+  <table id="sc-table">
     <thead>
       <th><%= Spree::StoreCredit.human_attribute_name(:amount_credited) %></th>
       <th><%= Spree::StoreCredit.human_attribute_name(:amount_used) %></th>
@@ -61,7 +61,7 @@
     </tbody>
   </table>
 <% else %>
-  <div class="alpha twelve columns no-objects-found">
+  <div class="col-xs-9 no-objects-found">
     <%= render 'spree/admin/shared/no_objects_found',
                  resource: Spree::StoreCredit,
                  new_resource_url: new_object_url %>

@@ -22,10 +22,12 @@
         <%- locals = {:f => f} %>
 
         <div data-hook="admin_property_index_search">
-          <div class="alpha eight columns">
-            <div class="field">
-              <%= f.label :name_cont, Spree.t(:name) %>
-              <%= f.text_field :name_cont, :size => 15 %>
+          <div class="row">
+            <div class="col-xs-6">
+              <div class="field">
+                <%= f.label :name_cont, Spree.t(:name) %>
+                <%= f.text_field :name_cont, :size => 15 %>
+              </div>
             </div>
           </div>
         </div>
@@ -73,7 +75,7 @@
   </tbody>
 </table>
 <% else %>
-  <div class="alpha twelve columns no-objects-found">
+  <div class="col-xs-9 no-objects-found">
     <%= render 'spree/admin/shared/no_objects_found',
                  resource: Spree::Property,
                  new_resource_url: new_object_url %>

@@ -1,5 +1,5 @@
 <div data-hook="admin_stock_locations_form_fields" class="row">
-  <div class="alpha nine columns" data-hook="stock_location_names">
+  <div class="col-xs-7" data-hook="stock_location_names">
     <div data-hook="stock_location_name">
       <%= f.field_container :name do %>
         <%= f.label :name, class: 'required' %><br />
@@ -20,7 +20,7 @@
     </div>
   </div>
 
-  <div class="omega three columns" data-hook="stock_location_status">
+  <div class="col-xs-3" data-hook="stock_location_status">
     <%= f.field_container :active do %>
       <label for="active"><%= Spree.t(:status) %></label>
       <ul>
@@ -56,44 +56,58 @@
     <% end %>
   </div>
 
-  <div class="alpha six columns field" data-hook="stock_location_address1">
-    <%= f.label :address1 %>
-    <%= f.text_field :address1, class: 'fullwidth' %>
+  <div class="col-xs-5" data-hook="stock_location_address1">
+    <div class="field">
+      <%= f.label :address1 %>
+      <%= f.text_field :address1, class: 'fullwidth' %>
+    </div>
   </div>
 
-  <div class="omega six columns field" data-hook="stock_location_city">
-    <%= f.label :city %>
-    <%= f.text_field :city, class: 'fullwidth' %>
+  <div class="col-xs-5" data-hook="stock_location_city">
+    <div class="field">
+      <%= f.label :city %>
+      <%= f.text_field :city, class: 'fullwidth' %>
+    </div>
   </div>
 
-  <div class="alpha six columns field" data-hook="stock_location_address2">
-    <%= f.label :address2 %>
-    <%= f.text_field :address2, class: 'fullwidth' %>
+  <div class="col-xs-5" data-hook="stock_location_address2">
+    <div class="field">
+      <%= f.label :address2 %>
+      <%= f.text_field :address2, class: 'fullwidth' %>
+    </div>
   </div>
 
-  <div class="three columns field" data-hook="stock_location_zipcode">
-    <%= f.label :zipcode %>
-    <%= f.text_field :zipcode, class: 'fullwidth' %>
+  <div class="col-xs-2" data-hook="stock_location_zipcode">
+    <div class="field">
+      <%= f.label :zipcode %>
+      <%= f.text_field :zipcode, class: 'fullwidth' %>
+    </div>
   </div>
 
-  <div class="omega three columns field" data-hook="stock_location_phone">
-    <%= f.label :phone %>
-    <%= f.phone_field :phone, class: 'fullwidth' %>
+  <div class="col-xs-3" data-hook="stock_location_phone">
+    <div class="field">
+      <%= f.label :phone %>
+      <%= f.phone_field :phone, class: 'fullwidth' %>
+    </div>
   </div>
 
-  <div class="alpha six columns field" data-hook="stock_location_country">
-    <%= f.label :country_id %>
-    <span id="country"><%= f.collection_select :country_id, available_countries, :id, :name, {}, { class: 'select2 fullwidth' } %></span>
+  <div class="col-xs-5" data-hook="stock_location_country">
+    <div class="field">
+      <%= f.label :country_id %>
+      <span id="country"><%= f.collection_select :country_id, available_countries, :id, :name, {}, { class: 'select2 fullwidth' } %></span>
+    </div>
   </div>
 
-  <div class="omega six columns field" data-hook="stock_location_state">
-    <% if f.object.country %>
-      <%= f.label :state_id %>
-      <span id="state" class="region">
-        <%= f.text_field :state_name, style: "display: #{f.object.country.states.empty? ? 'block' : 'none' };", disabled: !f.object.country.states.empty?, class: 'fullwidth state_name' %>
-        <%= f.collection_select :state_id, f.object.country.states.sort, :id, :name, { include_blank: true }, {class: 'select2 fullwidth', style: "display: #{f.object.country.states.empty? ? 'none' : 'block' };", disabled: f.object.country.states.empty?} %>
-      </span>
-    <% end %>
+  <div class="col-xs-5" data-hook="stock_location_state">
+    <div class="field">
+      <% if f.object.country %>
+        <%= f.label :state_id %>
+        <span id="state" class="region">
+          <%= f.text_field :state_name, style: "display: #{f.object.country.states.empty? ? 'block' : 'none' };", disabled: !f.object.country.states.empty?, class: 'fullwidth state_name' %>
+          <%= f.collection_select :state_id, f.object.country.states.sort, :id, :name, { include_blank: true }, {class: 'select2 fullwidth', style: "display: #{f.object.country.states.empty? ? 'none' : 'block' };", disabled: f.object.country.states.empty?} %>
+        </span>
+      <% end %>
+    </div>
   </div>
 </div>
 

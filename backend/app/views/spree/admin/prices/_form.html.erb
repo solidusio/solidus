@@ -1,47 +1,48 @@
 <div data-hook="admin_product_price_fields">
 
   <div data-hook="admin_product_price_form">
-    <div class="four columns alpha" data-hook="admin_product_price_form_variant">
-      <%= f.field_container :variant do %>
-        <%= f.label :variant %>
-        <%= f.select :variant_id,
-                     @product.variants_including_master.map { |v| [v.descriptive_name, v.id] },
-                     {},
-                     class: "select2 fullwidth", disabled: !f.object.new_record? %>
-      <% end %>
-    </div>
+    <div class="row">
+      <div class="col-xs-3" data-hook="admin_product_price_form_variant">
+        <%= f.field_container :variant do %>
+          <%= f.label :variant %>
+          <%= f.select :variant_id,
+                      @product.variants_including_master.map { |v| [v.descriptive_name, v.id] },
+                      {},
+                      class: "select2 fullwidth", disabled: !f.object.new_record? %>
+        <% end %>
+      </div>
 
-    <div class="three columns alpha" data-hook="admin_product_price_form_currency">
-      <%= f.field_container :currency do %>
-        <%= f.label :currency %>
-        <%= f.select :currency,
-                     Money::Currency.all.map { |c| ["#{c.iso_code} (#{c.name})", c.iso_code] },
-                     {},
-                     class: "select2 fullwidth", disabled: !f.object.new_record? %>
-      <% end %>
-    </div>
+      <div class="col-xs-2" data-hook="admin_product_price_form_currency">
+        <%= f.field_container :currency do %>
+          <%= f.label :currency %>
+          <%= f.select :currency,
+                      Money::Currency.all.map { |c| ["#{c.iso_code} (#{c.name})", c.iso_code] },
+                      {},
+                      class: "select2 fullwidth", disabled: !f.object.new_record? %>
+        <% end %>
+      </div>
 
-    <div class="three columns" data-hook="admin_product_price_form_country">
-      <%= f.field_container :country do %>
-        <%= f.label :country %>
-        <%= f.field_hint :country %>
-        <%= f.collection_select :country_iso, available_countries, :iso, :name,
-                                {
-                                  include_blank: t(:any_country, scope: [:spree, :admin, :prices]),
-                                  selected: Spree::Config.admin_vat_country_iso
-                                },
-                                { class: 'select2 fullwidth', disabled: !f.object.new_record? } %>
-      <% end %>
-    </div>
+      <div class="col-xs-2" data-hook="admin_product_price_form_country">
+        <%= f.field_container :country do %>
+          <%= f.label :country %>
+          <%= f.field_hint :country %>
+          <%= f.collection_select :country_iso, available_countries, :iso, :name,
+                                  {
+                                    include_blank: t(:any_country, scope: [:spree, :admin, :prices]),
+                                    selected: Spree::Config.admin_vat_country_iso
+                                  },
+                                  { class: 'select2 fullwidth', disabled: !f.object.new_record? } %>
+        <% end %>
+      </div>
 
-    <div class="three columns" data-hook="admin_product_price_form_amount">
-      <%= f.field_container :price do %>
-        <%= f.label :price %>
-        <%= f.text_field :price, value: f.object.money.format, class: 'fullwidth title' %>
-      <% end %>
-    </div>
-
+      <div class="col-xs-2" data-hook="admin_product_price_form_amount">
+        <%= f.field_container :price do %>
+          <%= f.label :price %>
+          <%= f.text_field :price, value: f.object.money.format, class: 'fullwidth title' %>
+        <% end %>
+      </div>
   </div>
+
 </div>
 
 <div class="clear"></div>

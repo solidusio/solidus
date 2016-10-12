@@ -7,13 +7,13 @@
 <%= form_for [:admin, @refund.payment.order, @refund.payment, @refund] do |f| %>
   <fieldset class="no-border-top">
     <div data-hook="admin_refund_form_fields" class="row">
-      <div class="alpha three columns">
+      <div class="col-xs-3">
         <div class="field">
           <%= f.label :amount %><br/>
           <%= @refund.amount %>
         </div>
       </div>
-      <div class="alpha three columns">
+      <div class="col-xs-3">
         <div class="field">
           <%= f.label :refund_reason_id %><br/>
           <%= f.collection_select(:refund_reason_id, refund_reasons, :id, :name, {}, {class: 'select2 fullwidth'}) %>

@@ -18,7 +18,7 @@
           <% if @rma_return_items.any? %>
             <%= render partial: 'return_item_selection', locals: {f: f, return_items: @rma_return_items} %>
           <% else %>
-            <div class="alpha twelve columns no-objects-found"><%= Spree.t(:none) %></div>
+            <div class="col-xs-9 no-objects-found"><%= Spree.t(:none) %></div>
           <% end %>
         </fieldset>
 
@@ -27,7 +27,7 @@
           <% if @new_return_items.any? %>
             <%= render partial: 'return_item_selection', locals: {f: f, return_items: @new_return_items} %>
           <% else %>
-            <div class="alpha twelve columns no-objects-found"><%= Spree.t(:none) %></div>
+            <div class="col-xs-9 no-objects-found"><%= Spree.t(:none) %></div>
           <% end %>
         </fieldset>
 
@@ -48,11 +48,9 @@
 
 <% else %>
 
-  <div class="twelve columns">
-    <div class="alpha twelve columns no-objects-found">
-      <%= Spree.t(:all_items_have_been_returned) %>,
-      <%= link_to Spree.t(:back_to_customer_return_list), spree.admin_order_customer_returns_path(@order) %>.
-    </div>
+  <div class="col-xs-9 no-objects-found">
+    <%= Spree.t(:all_items_have_been_returned) %>,
+    <%= link_to Spree.t(:back_to_customer_return_list), spree.admin_order_customer_returns_path(@order) %>.
   </div>
 
 <% end %>

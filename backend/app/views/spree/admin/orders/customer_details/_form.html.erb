@@ -4,13 +4,13 @@
     <legend align="center"><%= Spree.t(:account) %></legend>
 
     <div data-hook="customer_fields" class="row">
-      <div class="alpha eight columns">
+      <div class="col-xs-9">
         <div class="field">
           <%= f.label :email %>
           <%= f.email_field :email, :class => 'fullwidth' %>
         </div>
       </div>
-      <div class="omega four columns">
+      <div class="col-xs-3">
         <div class="field">
           <%= label_tag nil, Spree.t(:guest_checkout) %>
           <ul>
@@ -36,34 +36,36 @@
     </div>
   </fieldset>
 
-  <div class="alpha six columns" data-hook="ship_address_wrapper">
-    <fieldset class="no-border-bottom">
-      <legend align="center"><%= Spree.t(:shipping_address) %></legend>
-      <%= f.fields_for :ship_address do |sa_form| %>
-        <% if Spree::Config[:order_bill_address_used] %>
-          <div class="field" style="position: absolute;margin-top: -15px;left: 0;">
-            <span data-hook="use_billing">
-              <%= check_box_tag 'order[use_billing]', '1', ((@order.bill_address.empty? && @order.ship_address.empty?) && @order.bill_address == @order.ship_address) %>
-              <%= label_tag 'order[use_billing]', Spree.t(:use_billing_address) %>
-            </span>
-          </div>
-        <% end %>
-
-        <%= render :partial => 'spree/admin/shared/address_form', :locals => { :f => sa_form, :type => 'shipping' } %>
-      <% end %>
-    </fieldset>
-  </div>
-
-  <% if Spree::Config[:order_bill_address_used] %>
-    <div class="omega six columns" data-hook="bill_address_wrapper">
+  <div class="row">
+    <div class="col-xs-6" data-hook="ship_address_wrapper">
       <fieldset class="no-border-bottom">
-        <legend align="center"><%= Spree.t(:billing_address) %></legend>
-        <%= f.fields_for :bill_address do |ba_form| %>
-          <%= render :partial => 'spree/admin/shared/address_form', :locals => { :f => ba_form, :type => "billing" } %>
+        <legend align="center"><%= Spree.t(:shipping_address) %></legend>
+        <%= f.fields_for :ship_address do |sa_form| %>
+          <% if Spree::Config[:order_bill_address_used] %>
+            <div class="field" style="position: absolute;margin-top: -15px;left: 0;">
+              <span data-hook="use_billing">
+                <%= check_box_tag 'order[use_billing]', '1', ((@order.bill_address.empty? && @order.ship_address.empty?) && @order.bill_address == @order.ship_address) %>
+                <%= label_tag 'order[use_billing]', Spree.t(:use_billing_address) %>
+              </span>
+            </div>
+          <% end %>
+
+          <%= render :partial => 'spree/admin/shared/address_form', :locals => { :f => sa_form, :type => 'shipping' } %>
         <% end %>
       </fieldset>
     </div>
-  <% end %>
+
+    <% if Spree::Config[:order_bill_address_used] %>
+      <div class="col-xs-6" data-hook="bill_address_wrapper">
+        <fieldset class="no-border-bottom">
+          <legend align="center"><%= Spree.t(:billing_address) %></legend>
+          <%= f.fields_for :bill_address do |ba_form| %>
+            <%= render :partial => 'spree/admin/shared/address_form', :locals => { :f => ba_form, :type => "billing" } %>
+          <% end %>
+        </fieldset>
+      </div>
+    <% end %>
+  </div>
 
   <div class="clear"></div>
 

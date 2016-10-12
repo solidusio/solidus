@@ -14,81 +14,88 @@
 <% content_for :table_filter do %>
   <div data-hook="admin_orders_index_search">
     <%= search_form_for [:admin, @search] do |f| %>
-      <div class="field-block alpha four columns">
-        <div class="date-range-filter field">
-          <%= label_tag :q_created_at_gt, Spree.t(:date_range) %>
-          <div class="date-range-fields">
-            <%= f.text_field :created_at_gt, :class => 'datepicker datepicker-from', :value => params[:q][:created_at_gt], :placeholder => Spree.t(:start) %>
+      <div class="row">
+        <div class="field-block col-xs-3">
+          <div class="date-range-filter field">
+            <%= label_tag :q_created_at_gt, Spree.t(:date_range) %>
+            <div class="date-range-fields">
+              <%= f.text_field :created_at_gt, :class => 'datepicker datepicker-from', :value => params[:q][:created_at_gt], :placeholder => Spree.t(:start) %>
 
-            <span class="range-divider">
-              <i class="fa fa-arrow-right"></i>
-            </span>
+              <span class="range-divider">
+                <i class="fa fa-arrow-right"></i>
+              </span>
 
-            <%= f.text_field :created_at_lt, :class => 'datepicker datepicker-to', :value => params[:q][:created_at_lt], :placeholder => Spree.t(:stop) %>
+              <%= f.text_field :created_at_lt, :class => 'datepicker datepicker-to', :value => params[:q][:created_at_lt], :placeholder => Spree.t(:stop) %>
+            </div>
           </div>
-        </div>
 
-        <div class="field">
-          <%= label_tag :q_state_eq, Spree.t(:status) %>
-          <%= f.select :state_eq, Spree::Order.state_machines[:state].states.collect {|s| [Spree.t("order_state.#{s.name}"), s.value]}, {:include_blank => true}, :class => 'select2' %>
-        </div>
-
-        <div class="field">
-          <%= label_tag nil, Spree.t(:promotion) %>
-          <%= f.text_field :promotions_codes_value_cont, :size => 25 %>
-        </div>
-
-        <div class="field">
-          <%= label_tag nil, Spree.t(:shipment_number) %>
-          <%= f.text_field :shipments_number_cont %>
-        </div>
-
-      </div>
-
-      <div class="four columns">
-        <div class="field">
-          <%= label_tag :q_number_cont, Spree.t(:order_number, :number => '') %>
-          <%= f.text_field :number_cont %>
-        </div>
-
-        <div class="field">
-          <%= label_tag :q_email_cont, Spree.t(:email) %>
-          <%= f.text_field :email_cont %>
-        </div>
-      </div>
-
-      <div class="four columns">
-        <div class="field">
-          <%= label_tag :q_bill_address_firstname_start, Spree.t(:first_name_begins_with) %>
-          <%= f.text_field :bill_address_firstname_start, :size => 25 %>
-        </div>
-        <div class="field">
-          <%= label_tag :q_bill_address_lastname_start, Spree.t(:last_name_begins_with) %>
-          <%= f.text_field :bill_address_lastname_start, :size => 25%>
-        </div>
-      </div>
-
-      <div class="omega four columns">
-        <% if Spree::Store.count > 1 %>
           <div class="field">
-            <%= label_tag nil, Spree.t(:store) %>
-            <%= f.select :store_id_eq, Spree::Store.all.map { |s| [s.name, s.id] }, { include_blank: true }, { class: "select2" } %>
+            <%= label_tag :q_state_eq, Spree.t(:status) %>
+            <%= f.select :state_eq, Spree::Order.state_machines[:state].states.collect {|s| [Spree.t("order_state.#{s.name}"), s.value]}, {:include_blank => true}, :class => 'select2' %>
           </div>
-        <% end %>
 
-        <div class="field checkbox">
-          <label>
-            <%= f.check_box :completed_at_not_null, {:checked => @show_only_completed}, '1', '0' %>
-            <%= Spree.t(:show_only_complete_orders) %>
-          </label>
-        </div>
-      </div>
+          <div class="field">
+            <%= label_tag nil, Spree.t(:promotion) %>
+            <%= f.text_field :promotions_codes_value_cont, :size => 25 %>
+          </div>
 
-      <div class="omega eight columns">
-        <div class="field" data-hook="sku-select">
-          <%= label_tag :q_line_items_variant_id_in, Spree.t(:variant) %>
-          <%= f.text_field :line_items_variant_id_in, class: "variant_autocomplete fullwidth" %>
+          <div class="field">
+            <%= label_tag nil, Spree.t(:shipment_number) %>
+            <%= f.text_field :shipments_number_cont %>
+          </div>
+
         </div>
+
+        <div class="col-xs-6">
+          <div class="row">
+            <div class="col-xs-6">
+              <div class="field">
+                <%= label_tag :q_number_cont, Spree.t(:order_number, :number => '') %>
+                <%= f.text_field :number_cont %>
+              </div>
+
+              <div class="field">
+                <%= label_tag :q_email_cont, Spree.t(:email) %>
+                <%= f.text_field :email_cont %>
+              </div>
+            </div>
+
+            <div class="col-xs-6">
+              <div class="field">
+                <%= label_tag :q_bill_address_firstname_start, Spree.t(:first_name_begins_with) %>
+                <%= f.text_field :bill_address_firstname_start, :size => 25 %>
+              </div>
+              <div class="field">
+                <%= label_tag :q_bill_address_lastname_start, Spree.t(:last_name_begins_with) %>
+                <%= f.text_field :bill_address_lastname_start, :size => 25%>
+              </div>
+            </div>
+
+            <div class="col-xs-12">
+              <div class="field" data-hook="sku-select">
+                <%= label_tag :q_line_items_variant_id_in, Spree.t(:variant) %>
+                <%= f.text_field :line_items_variant_id_in, class: "variant_autocomplete fullwidth" %>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xs-3">
+          <% if Spree::Store.count > 1 %>
+            <div class="field">
+              <%= label_tag nil, Spree.t(:store) %>
+              <%= f.select :store_id_eq, Spree::Store.all.map { |s| [s.name, s.id] }, { include_blank: true }, { class: "select2" } %>
+            </div>
+          <% end %>
+
+          <div class="field checkbox">
+            <label>
+              <%= f.check_box :completed_at_not_null, {:checked => @show_only_completed}, '1', '0' %>
+              <%= Spree.t(:show_only_complete_orders) %>
+            </label>
+          </div>
+        </div>
+
       </div>
 
       <div class="clearfix"></div>
@@ -162,7 +169,7 @@
     </tbody>
   </table>
 <% else %>
-  <div class="alpha twelve columns no-objects-found">
+  <div class="col-xs-9 no-objects-found">
     <%= render 'spree/admin/shared/no_objects_found',
                  resource: Spree::Order,
                  new_resource_url: spree.new_admin_order_path %>

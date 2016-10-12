@@ -1,4 +1,4 @@
-<div class="alpha twelve columns">
+<div class="col-xs-12">
   <%= f.field_container :reason do %>
     <%= f.label :reason, Spree.t(:reason), class: 'required' %><br />
     <%= select_tag :update_reason_id, options_from_collection_for_select(@update_reasons, :id, :name),

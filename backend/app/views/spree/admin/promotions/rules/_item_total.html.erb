@@ -1,9 +1,19 @@
-<div class="field alpha three columns">
-  <%= select_tag "#{param_prefix}[preferred_operator]", options_for_select(Spree::Promotion::Rules::ItemTotal::OPERATORS.map{|o| [Spree.t("item_total_rule.operators.#{o}"),o]}, promotion_rule.preferred_operator), {:class => 'select2 select_item_total fullwidth'} %>
-</div>
-<div class="field three columns">
-  <%= text_field_tag "#{param_prefix}[preferred_amount]", promotion_rule.preferred_amount, :class => 'fullwidth' %>
-</div>
-<div class="field omega two columns">
-  <%= text_field_tag "#{param_prefix}[preferred_currency]", promotion_rule.preferred_currency, :class => 'fullwidth' %>
+<div class="col-xs-12">
+  <div class="row">
+    <div class="col-xs-4">
+      <div class="field">
+        <%= select_tag "#{param_prefix}[preferred_operator]", options_for_select(Spree::Promotion::Rules::ItemTotal::OPERATORS.map{|o| [Spree.t("item_total_rule.operators.#{o}"),o]}, promotion_rule.preferred_operator), {:class => 'select2 select_item_total fullwidth'} %>
+      </div>
+    </div>
+    <div class="col-xs-4">
+      <div class="field">
+        <%= text_field_tag "#{param_prefix}[preferred_amount]", promotion_rule.preferred_amount, :class => 'fullwidth' %>
+      </div>
+    </div>
+    <div class="col-xs-4">
+      <div class="field">
+        <%= text_field_tag "#{param_prefix}[preferred_currency]", promotion_rule.preferred_currency, :class => 'fullwidth' %>
+      </div>
+    </div>
+  </div>
 </div>

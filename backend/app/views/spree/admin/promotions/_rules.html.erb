@@ -1,4 +1,4 @@
-<fieldset id="rule_fields" class ="alpha eight columns no-border-bottom no-border-top">
+<fieldset id="rule_fields" class ="no-border-bottom no-border-top">
 
   <%= form_tag spree.admin_promotion_promotion_rules_path(@promotion), :remote => true, :id => 'new_product_rule_form' do %>
     <fieldset>
@@ -21,15 +21,19 @@
       <fieldset class="no-border-top">
         <div id="promotion-pilicy-select" class="align-center row">
           <% Spree::Promotion::MATCH_POLICIES.each do |policy| %>
-            <div class="alpha four columns">
+            <div class="col-xs-6">
               <label><%= f.radio_button :match_policy, policy %> <%= Spree.t "promotion_form.match_policies.#{policy}" %></label>
             </div>
           <% end %>
         </div>
 
-        <div id="rules" class="filter_list row">
+        <div id="rules" class="filter_list">
           <% if @promotion.rules.any? %>
-            <%= render :partial => 'promotion_rule', :collection => @promotion.rules, :locals => {} %>
+            <div class="col-xs-12">
+              <div class="row">
+                <%= render :partial => 'promotion_rule', :collection => @promotion.rules, :locals => {} %>
+              </div>
+            </div>
           <% else %>
             <div class="no-objects-found">
               <%= Spree.t(:no_rules_added) %>

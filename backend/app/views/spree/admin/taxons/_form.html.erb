@@ -1,5 +1,5 @@
 <div data-hook="admin_inside_taxon_form" class="row">
-  <div class="alpha five columns">
+  <div class="col-xs-5">
     <%= f.field_container :name do %>
       <%= f.label :name, class: 'required' %><br />
       <%= text_field :taxon, :name, :class => 'fullwidth' %>
@@ -21,14 +21,14 @@
     <% end %>
   </div>
 
-  <div class="omega seven columns">
+  <div class="col-xs-5">
     <%= f.field_container :description do %>
       <%= f.label :description %><br />
       <%= f.text_area :description, :class => 'fullwidth', :rows => 6 %>
     <% end %>
   </div>
 
-  <div class="twelve columns alpha omega">
+  <div class="col-xs-10">
     <%= f.field_container :meta_title do %>
       <%= f.label :meta_title %><br />
       <%= f.text_field :meta_title, :class => 'fullwidth', :rows => 6 %>
