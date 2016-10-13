@@ -38,7 +38,7 @@ describe Spree::StoreCredit do
         allow(store_credit.category).to receive(:non_expiring?).and_return(false)
       end
 
-      it "sets the credit type to non-expiring" do
+      it "sets the credit type to expiring" do
         subject
         expect(store_credit.credit_type.name).to eq "Expiring"
       end
@@ -414,7 +414,7 @@ describe Spree::StoreCredit do
         expect(subject).to be true
       end
 
-      it "returns the capture amount to the store credit" do
+      it "returns the authorized amount to the store credit" do
         expect { subject }.to change{ store_credit.amount_authorized.to_f }.by(-authorized_amount)
       end
 
@@ -519,7 +519,7 @@ describe Spree::StoreCredit do
             @new_store_credit = Spree::StoreCredit.last
           end
 
-          it "does not set the amount used on hte originating store credit" do
+          it "does not set the amount used on the originating store credit" do
             expect(store_credit.reload.amount_used).to eq amount_used
           end
 
