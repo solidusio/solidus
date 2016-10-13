@@ -14,11 +14,13 @@ body {
 .admin-nav {
   @include position(absolute, 0 null 0 0);
   width: $width-sidebar;
+  @media print { display: none }
 }
 
 .content-wrapper {
   body:not(.new-layout) & {
     margin-left: $width-sidebar;
+    @media print { margin-left: 0 }
   }
 
   body.new-layout & {

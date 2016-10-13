@@ -26,6 +26,8 @@ body:not(.new-layout) #sidebar {
       min-height: 3em;
     }
   }
+
+  @media print { display: none }
 }
 
 body.new-layout .content-sidebar {

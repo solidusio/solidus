@@ -11,4 +11,6 @@
   .actions {
     text-align: center;
   }
+
+  @media print { display: none }
 }
