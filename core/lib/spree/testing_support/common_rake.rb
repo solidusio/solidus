@@ -17,8 +17,8 @@ namespace :common do
 
     puts "Setting up dummy database..."
 
-    sh "bundle exec bin/rails db:environment:set RAILS_ENV=test"
-    sh "bundle exec rake db:drop db:create db:migrate VERBOSE=false RAILS_ENV=test"
+    sh "bin/rails db:environment:set RAILS_ENV=test"
+    sh "bin/rails db:drop db:create db:migrate VERBOSE=false RAILS_ENV=test"
 
     begin
       require "generators/#{ENV['LIB_NAME']}/install/install_generator"
