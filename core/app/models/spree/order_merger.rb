@@ -26,7 +26,7 @@ module Spree
     #
     # The line items from `other_order` will be merged in to the `order` for
     # this OrderMerger object. If the line items are for the same variant, it
-    # will the quantity of the incoming line item to the existing line item.
+    # will add the quantity of the incoming line item to the existing line item.
     # Otherwise, it will assign the line item to the new order.
     #
     # After the orders have been merged the `other_order` will be destroyed.
@@ -46,11 +46,11 @@ module Spree
     # specified, the order user association will not be changed.
     # @return [void]
     def merge!(other_order, user = nil)
-      other_order.line_items.each do |other_order_line_item|
-        next unless other_order_line_item.currency == order.currency
-
-        current_line_item = find_matching_line_item(other_order_line_item)
-        handle_merge(current_line_item, other_order_line_item)
+      if other_order.currency == order.currency
+        other_order.line_items.each do |other_order_line_item|
+          current_line_item = find_matching_line_item(other_order_line_item)
+          handle_merge(current_line_item, other_order_line_item)
+        end
       end
 
       set_user(user)

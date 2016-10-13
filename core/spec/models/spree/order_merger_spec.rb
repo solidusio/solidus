@@ -43,6 +43,26 @@ module Spree
       end
     end
 
+    context 'merging together two orders with multiple currencies line items' do
+      let(:order_2) { Spree::Order.create(currency: 'JPY') }
+      let(:variant_2) { create(:variant) }
+
+      before do
+        Spree::Price.create(variant: variant_2, amount: 10, currency: 'JPY')
+        order_1.contents.add(variant, 1)
+        order_2.contents.add(variant_2.reload, 1)
+      end
+
+      it 'rejects other order line items' do
+        subject.merge!(order_2, user)
+        expect(order_1.line_items.count).to eq(1)
+
+        line_item = order_1.line_items.first
+        expect(line_item.quantity).to eq(1)
+        expect(line_item.variant_id).to eq(variant.id)
+      end
+    end
+
     context "merging using extension-specific line_item_comparison_hooks" do
       before do
         Spree::Order.register_line_item_comparison_hook(:foos_match)
