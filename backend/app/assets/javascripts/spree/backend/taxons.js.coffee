@@ -68,6 +68,6 @@ $ ->
   $('#taxon_id').on "change", (e) ->
     Spree.ajax
       url: Spree.routes.taxon_products_api,
-      data: { id: e.val }
+      data: { id: e.val, simple: 1 }
       success: (data) ->
         sortable.html productListTemplate(data.products)

@@ -1,5 +1,5 @@
 object false
-node(:count) { @products.count }
+node(:count) { @products.size }
 node(:total_count) { @products.total_count }
 node(:current_page) { @products.current_page }
 node(:per_page) { @products.limit_value }
