@@ -536,7 +536,7 @@ describe Spree::Shipment, type: :model do
     let(:store) { create :store }
     let(:order) do
       Spree::Order.create(
-        payment_total: 100,
+        incoming_payment: 100,
         payment_state: 'paid',
         total: 100,
         item_total: 100,

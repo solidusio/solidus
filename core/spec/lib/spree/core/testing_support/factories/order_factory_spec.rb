@@ -122,7 +122,7 @@ RSpec.describe 'order factory' do
         expect(order).to have_attributes(
           payment_state: 'balance_due',
           total: 110,
-          payment_total: 0 # payment is still pending
+          incoming_payment: 0 # payment is still pending
         )
 
         expect(order.payments.count).to eq 1
@@ -145,7 +145,7 @@ RSpec.describe 'order factory' do
         expect(order).to be_completed
         expect(order).to have_attributes(
           total: 110,
-          payment_total: 110,
+          incoming_payment: 110,
           payment_state: "paid",
           shipment_state: "ready"
         )
@@ -184,7 +184,7 @@ RSpec.describe 'order factory' do
         expect(order).to be_completed
         expect(order).to have_attributes(
           total: 110,
-          payment_total: 110,
+          incoming_payment: 110,
           payment_state: "paid"
         )
 

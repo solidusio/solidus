@@ -11,8 +11,8 @@ module Spree
     let(:attributes) {
       [:number, :item_total, :display_total, :total,
        :state, :adjustment_total,
-       :user_id, :created_at, :updated_at,
-       :completed_at, :payment_total, :shipment_state,
+       :user_id, :created_at, :updated_at, :completed_at,
+       :payment_total, :incoming_payment, :shipment_state,
        :payment_state, :email, :special_instructions,
        :total_quantity, :display_item_total, :currency]
     }

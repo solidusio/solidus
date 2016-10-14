@@ -629,6 +629,11 @@ describe Spree::Payment, type: :model do
         payment = create(:payment, order: order, state: 'completed')
         expect(order.payment_total).to eq payment.amount
       end
+
+      it "update order incoming total" do
+        payment = create(:payment, order: order, state: 'completed')
+        expect(order.incoming_payment).to eq payment.amount
+      end
     end
 
     context "not completed payments" do
@@ -636,6 +641,12 @@ describe Spree::Payment, type: :model do
         expect {
           Spree::Payment.create(amount: 100, order: order)
         }.not_to change { order.payment_total }
+      end
+
+      it "doesn't update order incoming payment" do
+        expect {
+          Spree::Payment.create(amount: 100, order: order)
+        }.not_to change { order.incoming_payment }
       end
     end
 
@@ -651,6 +662,11 @@ describe Spree::Payment, type: :model do
       it 'updates order payment total' do
         payment.void
         expect(order.payment_total).to eq 0
+      end
+
+      it 'updates order incoming payment' do
+        payment.void
+        expect(order.incoming_payment).to eq 0
       end
     end
 
