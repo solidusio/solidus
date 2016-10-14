@@ -13,6 +13,8 @@
   a {
     padding: 1em;
   }
+
+  @media print { display: none }
 }
 
 .tabs > li:not(.in-dropdown) {

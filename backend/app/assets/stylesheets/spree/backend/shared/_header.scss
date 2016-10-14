@@ -8,6 +8,8 @@
   body:not(.new-layout) & {
     margin-left: $width-sidebar;
   }
+
+  @media print { display: none }
 }
 
 .page-title {
