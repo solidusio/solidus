@@ -1,5 +1,6 @@
 class Spree::PromotionCode < Spree::Base
   belongs_to :promotion, inverse_of: :codes
+  belongs_to :promotion_code_batch, class_name: "Spree::PromotionCodeBatch"
   has_many :adjustments
 
   validates :value, presence: true, uniqueness: { allow_blank: true }

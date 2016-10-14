@@ -46,52 +46,46 @@ describe Spree::Admin::PromotionsController, type: :controller do
     let(:params) { { promotion: { name: 'some promo' } } }
 
     context "it succeeds" do
-      it "creates a promotion" do
-        expect { subject }.to change { Spree::Promotion.count }.by(1)
-      end
-
-      it "sets the flash message" do
-        subject
-        expect(flash[:success]).to eq "Promotion has been successfully created!"
-      end
-
-      it "redirects to promotion edit" do
-        subject
-        expect(response).to redirect_to "http://test.host/admin/promotions/#{assigns(:promotion).id}/edit"
-      end
-
-      context "with one promo codes" do
-        let(:params) do
-          super().merge(promotion_builder: { base_code: 'abc', number_of_codes: 1 })
+      context "with no single code param" do
+        it "creates a promotion" do
+          expect { subject }.to change { Spree::Promotion.count }.by(1)
         end
 
-        it "succeeds and creates one code" do
-          expect {
-            expect {
-              subject
-            }.to change { Spree::Promotion.count }.by(1)
-          }.to change { Spree::PromotionCode.count }.by(1)
+        it "sets the flash message" do
+          subject
+          expect(flash[:success]).to eq "Promotion has been successfully created!"
+        end
 
-          expect(assigns(:promotion).codes.first.value).to eq 'abc'
+        it "redirects to promotion edit" do
+          subject
+          expect(response).to redirect_to "http://test.host/admin/promotions/#{assigns(:promotion).id}/edit"
+        end
+
+        it "doesn't create any promotion codes" do
+          expect { subject }.to_not change { Spree::PromotionCode.count }
         end
       end
 
-      context "with multiple promo codes" do
-        let(:params) do
-          super().merge(promotion_builder: { base_code: 'abc', number_of_codes: 2 })
+      context "with a single code" do
+        let(:params) { { promotion: { name: 'some promo' }, single_code: "promo" } }
+
+        it "creates a promotion" do
+          expect { subject }.to change { Spree::Promotion.count }.by(1)
         end
 
-        it "succeeds and creates multiple codes" do
-          expect {
-            expect {
-              subject
-            }.to change { Spree::Promotion.count }.by(1)
-          }.to change { Spree::PromotionCode.count }.by(2)
+        it "sets the flash message" do
+          subject
+          expect(flash[:success]).to eq "Promotion has been successfully created!"
+        end
 
-          codes = assigns(:promotion).codes.map(&:value).sort
-          expect(codes.length).to be 2
-          expect(codes[0]).to match(/abc_[a-z]{6}/)
-          expect(codes[1]).to match(/abc_[a-z]{6}/)
+        it "redirects to promotion edit" do
+          subject
+          expect(response).to redirect_to "http://test.host/admin/promotions/#{assigns(:promotion).id}/edit"
+        end
+
+        it "creates a promotion code" do
+          expect { subject }.to change { Spree::PromotionCode.count }.by(1)
+          expect(Spree::PromotionCode.last.value).to eq("promo")
         end
       end
     end

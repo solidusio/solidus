@@ -19,6 +19,8 @@ module Spree
     has_many :codes, class_name: "Spree::PromotionCode", inverse_of: :promotion, dependent: :destroy
     alias_method :promotion_codes, :codes
 
+    has_many :promotion_code_batches, class_name: "Spree::PromotionCodeBatch", dependent: :destroy
+
     accepts_nested_attributes_for :promotion_actions, :promotion_rules
 
     validates_associated :rules
