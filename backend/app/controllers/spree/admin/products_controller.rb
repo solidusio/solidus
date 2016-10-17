@@ -4,7 +4,6 @@ module Spree
       helper 'spree/products'
 
       before_action :load_data, except: [:index]
-      create.before :create_before
       update.before :update_before
       helper_method :clone_object_url
 
@@ -113,11 +112,6 @@ module Spree
               per(Spree::Config[:admin_products_per_page])
 
         @collection
-      end
-
-      def create_before
-        return if params[:product][:prototype_id].blank?
-        @prototype = Spree::Prototype.find(params[:product][:prototype_id])
       end
 
       def update_before

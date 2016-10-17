@@ -17,7 +17,6 @@ describe Spree::PermissionSets::ProductManagement do
     it { is_expected.to be_able_to(:manage, Spree::ProductProperty) }
     it { is_expected.to be_able_to(:manage, Spree::OptionType) }
     it { is_expected.to be_able_to(:manage, Spree::Property) }
-    it { is_expected.to be_able_to(:manage, Spree::Prototype) }
     it { is_expected.to be_able_to(:manage, Spree::Taxonomy) }
     it { is_expected.to be_able_to(:manage, Spree::Taxon) }
     it { is_expected.to be_able_to(:manage, Spree::Classification) }
@@ -31,7 +30,6 @@ describe Spree::PermissionSets::ProductManagement do
     it { is_expected.not_to be_able_to(:manage, Spree::ProductProperty) }
     it { is_expected.not_to be_able_to(:manage, Spree::OptionType) }
     it { is_expected.not_to be_able_to(:manage, Spree::Property) }
-    it { is_expected.not_to be_able_to(:manage, Spree::Prototype) }
     it { is_expected.not_to be_able_to(:manage, Spree::Taxonomy) }
     it { is_expected.not_to be_able_to(:manage, Spree::Taxon) }
     it { is_expected.not_to be_able_to(:manage, Spree::Classification) }

@@ -8,9 +8,6 @@
   <% if can? :admin, Spree::Property %>
     <%= tab :properties %>
   <% end %>
-  <% if can? :admin, Spree::Prototype %>
-    <%= tab :prototypes %>
-  <% end %>
   <% if can? :admin, Spree::Taxonomy %>
     <%= tab :taxonomies %>
   <% end %>

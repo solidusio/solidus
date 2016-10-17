@@ -6,9 +6,6 @@ module Spree
     has_many :classifications, -> { order(:position) }, dependent: :delete_all, inverse_of: :taxon
     has_many :products, through: :classifications
 
-    has_many :prototype_taxons, dependent: :destroy
-    has_many :prototypes, through: :prototype_taxons
-
     has_many :promotion_rule_taxons
     has_many :promotion_rules, through: :promotion_rule_taxons
 

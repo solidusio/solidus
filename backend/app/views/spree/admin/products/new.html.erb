@@ -23,13 +23,6 @@
         </div>
       <% end %>
 
-      <div data-hook="new_product_prototype" class="col-xs-3">
-        <%= f.field_container :prototype do %>
-          <%= f.label :prototype_id, Spree::Prototype.model_name.human %><br />
-          <%= f.collection_select :prototype_id, Spree::Prototype.all, :id, :name, {:include_blank => true}, {:class => 'select2 fullwidth'} %>
-        <% end %>
-      </div>
-
       <div data-hook="new_product_price" class="col-xs-3">
         <%= f.field_container :price do %>
           <%= f.label :price, class: 'required' %><br />
@@ -69,33 +62,7 @@
       </div>
     </div>
 
-    <div class="clearfix" data-hook="product-from-prototype" id="product-from-prototype">
-      <%= render :file => 'spree/admin/prototypes/show' if @prototype %>
-    </div>
-
     <%= render :partial => 'spree/admin/shared/new_resource_links' %>
 
   </fieldset>
 <% end %>
-
-<script type="text/javascript">
-//<![CDATA[
-  (function($){
-    var base_url = "<%= admin_prototypes_url %>";
-    var prototype_select = $('#product_prototype_id');
-    prototype_select.change(function() {
-      var id = prototype_select.val();
-      if (id.length) {
-        var url = new Uri(base_url);
-        url.setPath(url.path() + '/' + id);
-        $('#product-from-prototype').load(url.toString());
-      } else {
-        $('#product-from-prototype').empty();
-      }
-    })
-    if (prototype_select.html() == "") {
-      prototype_select.change();
-    }
-  })(jQuery);
-//]]>
-</script>

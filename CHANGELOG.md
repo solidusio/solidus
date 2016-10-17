@@ -1,4 +1,6 @@
 ## Solidus 2.1.0 (master, unreleased)
+*   Prototypes were removed from the admin; the extension `solidus_prototype`
+    provides the same functionality
 
 *   Remove `currency` from line items.
 
@@ -238,7 +240,7 @@
 
     https://github.com/solidusio/solidus/pull/904
 
-    In order to convert your historical shipping rate taxation data, please run  
+    In order to convert your historical shipping rate taxation data, please run
     `rake solidus:upgrade:one_point_three` - this will create persisted taxation notes
     for historical shipping rates. Be aware though that these taxation notes are
     estimations and should not be used for accounting purposes.
