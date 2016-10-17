@@ -791,6 +791,9 @@ en:
           edit_price: Edit Price
         new:
           new_price: New Price
+      users:
+        user_page_actions:
+          create_order: Create order for this user
     administration: Administration
     agree_to_privacy_policy: Agree to Privacy Policy
     agree_to_terms_of_service: Agree to Terms of Service
@@ -963,7 +966,6 @@ en:
     customer_returns: Customer Returns
     create: Create
     create_a_new_account: Create a new account
-    create_new_order: Create new order
     create_reimbursement: Create reimbursement
     create_one: Create One.
     created_at: Created At
