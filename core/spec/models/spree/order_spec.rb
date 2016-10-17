@@ -510,7 +510,8 @@ describe Spree::Order, type: :model do
       payment_method = Spree::PaymentMethod.create!({
         name: "Fake",
         active: true,
-        display_on: "front_end"
+        available_to_users: true,
+        available_to_admin: false
       })
       expect(order.available_payment_methods).to include(payment_method)
     end
@@ -519,16 +520,18 @@ describe Spree::Order, type: :model do
       payment_method = Spree::PaymentMethod.create!({
         name: "Fake",
         active: true,
-        display_on: "both"
+        available_to_users: true,
+        available_to_admin: true
       })
       expect(order.available_payment_methods).to include(payment_method)
     end
 
-    it "does not include a payment method twice if display_on is blank" do
+    it "does not include a payment method twice" do
       payment_method = Spree::PaymentMethod.create!({
         name: "Fake",
         active: true,
-        display_on: "both"
+        available_to_users: true,
+        available_to_admin: true
       })
       expect(order.available_payment_methods.count).to eq(1)
       expect(order.available_payment_methods).to include(payment_method)
@@ -537,8 +540,10 @@ describe Spree::Order, type: :model do
     context "with more than one payment method" do
       subject { order.available_payment_methods }
 
-      let!(:first_method) { FactoryGirl.create(:payment_method, display_on: :both) }
-      let!(:second_method) { FactoryGirl.create(:payment_method, display_on: :both) }
+      let!(:first_method) { FactoryGirl.create(:payment_method, available_to_users: true,
+                                               available_to_admin: true) }
+      let!(:second_method) { FactoryGirl.create(:payment_method, available_to_users: true,
+                                               available_to_admin: true) }
 
       before do
         second_method.move_to_top
