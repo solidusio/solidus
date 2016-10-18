@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-# jj
 
 require 'rails_helper'
 
@@ -131,6 +130,15 @@ RSpec.describe Spree::Order, type: :model do
       end
     end
 
+    context 'when the payment is pending' do
+      let(:order) { create(:completed_order_with_pending_payment) }
+      let(:payment) { order.payments.first }
+
+      it 'voids the pending payment' do
+        expect { subject }.to change { payment.reload.state }.from('pending').to('void')
+      end
+    end
+
     context 'with a store credit payment' do
       let(:order) { create(:completed_order_with_totals) }
       let(:payment) { create(:store_credit_payment, amount: order.total, order: order) }
@@ -157,7 +165,7 @@ RSpec.describe Spree::Order, type: :model do
         end
 
         it 'refunds the payment' do
-          expect { subject  }.to change { Spree::Refund.count }.by(1)
+          expect { subject }.to change { Spree::Refund.count }.by(1)
         end
       end
     end
@@ -1630,7 +1638,6 @@ RSpec.describe Spree::Order, type: :model do
         expect(subject.display_store_credit_remaining_after_capture.money.cents).to eq(amount_remaining * 100.0)
       end
     end
-
   end
 
   context 'update_params_payment_source' do
