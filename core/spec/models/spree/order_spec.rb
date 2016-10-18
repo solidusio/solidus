@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+# jj
 
 require 'rails_helper'
 
@@ -90,16 +91,12 @@ RSpec.describe Spree::Order, type: :model do
   describe "#cancel!" do
     subject { order.cancel! }
 
-    context "with captured store credit" do
-      let!(:store_credit_payment_method) { create(:store_credit_payment_method) }
-      let(:order_total) { 500.00 }
-      let(:store_credit) { create(:store_credit, amount: order_total) }
-      let(:order) { create(:order_with_line_items, user: store_credit.user, line_items_price: order_total) }
+    context 'when the payment is completed' do
+      let(:order) { create(:order_ready_to_ship) }
+      let(:payment) { order.payments.first }
 
-      before do
-        order.add_store_credit_payments
-        order.finalize!
-        order.capture_payments!
+      it 'voids the payment' do
+        expect { subject }.to change { payment.reload.state }.from('completed').to('void')
       end
 
       it "cancels the order" do
@@ -107,7 +104,7 @@ RSpec.describe Spree::Order, type: :model do
         expect(order).to be_canceled
       end
 
-      it 'should save canceled_at' do
+      it 'saves canceled_at' do
         subject
         expect(order.reload.canceled_at).to_not be_nil
       end
@@ -121,18 +118,47 @@ RSpec.describe Spree::Order, type: :model do
       end
     end
 
-    context "with fully refunded payment" do
+    context "when the payment is fully refunded" do
       let(:order) { create(:completed_order_with_totals) }
       let(:payment_amount) { 50 }
       let(:payment) { create(:payment, order: order, amount: payment_amount, state: 'completed') }
 
-      before do
-        create(:refund, payment: payment, amount: payment_amount).perform!
-      end
-
       it "cancels the order" do
+        create(:refund, payment: payment, amount: payment_amount)
+
         expect{ subject }.to change{ order.can_cancel? }.from(true).to(false)
         expect(order).to be_canceled
+      end
+    end
+
+    context 'with a store credit payment' do
+      let(:order) { create(:completed_order_with_totals) }
+      let(:payment) { create(:store_credit_payment, amount: order.total, order: order) }
+
+      context 'when the payment is pending' do
+        let(:store_credit) { payment.source }
+
+        before do
+          payment.authorize!
+        end
+
+        it 'voids the payment' do
+          expect { subject }.to change { payment.reload.state }.from('pending').to('void')
+        end
+
+        it 'releases the pending store credit authorization' do
+          expect { subject }.to change { store_credit.reload.amount_authorized }.from(110).to(0)
+        end
+      end
+
+      context 'when the payment is completed' do
+        before do
+          payment.purchase!
+        end
+
+        it 'refunds the payment' do
+          expect { subject  }.to change { Spree::Refund.count }.by(1)
+        end
       end
     end
   end
@@ -1605,46 +1631,6 @@ RSpec.describe Spree::Order, type: :model do
       end
     end
 
-    context 'when not capturing at order completion' do
-      let!(:store_credit_payment_method) do
-        create(
-          :store_credit_payment_method,
-          auto_capture: false, # not capturing at completion time
-        )
-      end
-
-      describe '#after_cancel' do
-        let(:user) { create(:user) }
-        let!(:store_credit) do
-          create(:store_credit, amount: 100, user: user)
-        end
-        let(:order) do
-          create(
-            :order_with_line_items,
-            user: user,
-            line_items_count: 1,
-            # order will be $20 total:
-            line_items_price: 10,
-            shipment_cost: 10
-          )
-        end
-
-        before do
-          order.contents.advance
-          order.complete!
-        end
-
-        it 'releases the pending store credit authorization' do
-          expect {
-            order.cancel!
-          }.to change {
-            store_credit.reload.amount_authorized
-          }.from(20).to(0)
-
-          expect(store_credit.amount_remaining).to eq 100
-        end
-      end
-    end
   end
 
   context 'update_params_payment_source' do
