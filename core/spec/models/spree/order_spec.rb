@@ -42,43 +42,6 @@ RSpec.describe Spree::Order, type: :model do
     end
   end
 
-  describe "#cancel!" do
-    subject { order.cancel! }
-
-    context "with captured store credit" do
-      let!(:store_credit_payment_method) { create(:store_credit_payment_method) }
-      let(:order_total) { 500.00 }
-      let(:store_credit) { create(:store_credit, amount: order_total) }
-      let(:order) { create(:order_with_line_items, user: store_credit.user, line_items_price: order_total) }
-
-      before do
-        order.add_store_credit_payments
-        order.finalize!
-        order.capture_payments!
-      end
-
-      it "cancels the order" do
-        expect{ subject }.to change{ order.can_cancel? }.from(true).to(false)
-        expect(order).to be_canceled
-      end
-    end
-
-    context "with fully refunded payment" do
-      let(:order) { create(:completed_order_with_totals) }
-      let(:payment_amount) { 50 }
-      let(:payment) { create(:payment, order: order, amount: payment_amount, state: 'completed') }
-
-      before do
-        create(:refund, payment: payment, amount: payment_amount)
-      end
-
-      it "cancels the order" do
-        expect{ subject }.to change{ order.can_cancel? }.from(true).to(false)
-        expect(order).to be_canceled
-      end
-    end
-  end
-
   context "#canceled_by" do
     let(:admin_user) { create :admin_user }
     let(:order) { create :order }
@@ -1512,43 +1475,81 @@ RSpec.describe Spree::Order, type: :model do
       end
     end
 
-    context 'when not capturing at order completion' do
-      let!(:store_credit_payment_method) do
-        create(
-          :store_credit_payment_method,
-          auto_capture: false, # not capturing at completion time
-        )
+    describe '#cancel' do
+      context 'with a credit card payment' do
+        context 'when the payment is completed' do
+          let(:order) { create(:order_ready_to_ship) }
+          let(:payment) { order.payments[0] }
+
+          it 'voids the completed payment' do
+            expect {
+              order.cancel!
+            }.to change {
+              payment.reload.state
+            }.from('completed').to('void')
+          end
+        end
       end
 
-      describe '#after_cancel' do
-        let(:user) { create(:user) }
-        let!(:store_credit) do
-          create(:store_credit, amount: 100, user: user)
-        end
-        let(:order) do
-          create(
-            :order_with_line_items,
-            user: user,
-            line_items_count: 1,
-            # order will be $20 total:
-            line_items_price: 10,
-            shipment_cost: 10
-          )
-        end
+      context "with fully refunded payment" do
+        subject { order.cancel! }
+
+        let(:order) { create(:completed_order_with_totals) }
+        let(:payment_amount) { 50 }
+        let(:payment) { create(:payment, order: order, amount: payment_amount, state: 'completed') }
 
         before do
-          order.contents.advance
-          order.complete!
+          create(:refund, payment: payment, amount: payment_amount)
         end
 
-        it 'releases the pending store credit authorization' do
-          expect {
-            order.cancel!
-          }.to change {
-            store_credit.reload.amount_authorized
-          }.from(20).to(0)
+        it "cancels the order" do
+          expect{ subject }.to change{ order.can_cancel? }.from(true).to(false)
+          expect(order).to be_canceled
+        end
+      end
 
-          expect(store_credit.amount_remaining).to eq 100
+      context 'with a store credit payment' do
+        context 'when the payment is pending' do
+          let(:order) { create(:completed_order_with_totals) }
+
+          before do
+            @payment = create(:store_credit_payment, amount: order.total, order: order)
+            @payment.authorize!
+            @store_credit = @payment.source
+          end
+
+          it 'voids the pending payment' do
+            expect {
+              order.cancel!
+            }.to change {
+              @payment.reload.state
+            }.from('pending').to('void')
+          end
+
+          it 'releases the pending store credit authorization' do
+            expect {
+              order.cancel!
+            }.to change {
+              @store_credit.reload.amount_authorized
+            }.from(110).to(0)
+          end
+        end
+
+        context 'when the payment is completed' do
+          let(:order) { create(:completed_order_with_totals) }
+
+          before do
+            @payment = create(:store_credit_payment, amount: order.total, order: order)
+            @payment.purchase!
+          end
+
+          it 'refunds the completed payment' do
+            expect {
+              order.cancel!
+            }.to change {
+              Spree::Refund.count
+            }.by(1)
+          end
         end
       end
     end
