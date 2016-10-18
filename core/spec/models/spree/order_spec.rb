@@ -1477,6 +1477,19 @@ RSpec.describe Spree::Order, type: :model do
 
     describe '#cancel' do
       context 'with a credit card payment' do
+        context 'when the payment is pending' do
+          let(:order) { create(:completed_order_with_pending_payment) }
+          let(:payment) { order.payments[0] }
+
+          it 'voids the pending payment' do
+            expect {
+              order.cancel!
+            }.to change {
+              payment.reload.state
+            }.from('pending').to('void')
+          end
+        end
+
         context 'when the payment is completed' do
           let(:order) { create(:order_ready_to_ship) }
           let(:payment) { order.payments[0] }
