@@ -569,6 +569,23 @@ describe Spree::Order, type: :model do
             [payment_method_with_store]
           )
         end
+
+        context 'and the store has an extra payment method unavailable to users' do
+          let!(:admin_only_payment_method) do create(:payment_method,
+                                                     available_to_users: false,
+                                                     available_to_admin: true)
+          end
+
+          before do
+            store_with_payment_methods.payment_methods << admin_only_payment_method
+          end
+
+          it 'returns only the payment methods available to users for that store' do
+            expect(order.available_payment_methods).to match_array(
+              [payment_method_with_store]
+            )
+          end
+        end
       end
 
       context 'when the store does not have payment methods' do
