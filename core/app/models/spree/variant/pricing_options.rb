@@ -34,7 +34,7 @@ module Spree
         tax_address = line_item.order.try!(:tax_address)
         new(
           currency: line_item.currency || Spree::Config.currency,
-          country_iso: tax_address && tax_address.country.try!(:iso)
+          country_iso: (tax_address && tax_address.country.try!(:iso)) || Spree::Config.admin_vat_country_iso
         )
       end
 
