@@ -677,6 +677,8 @@ en:
     adjustment: Adjustment
     adjustment_amount: Amount
     adjustment_labels:
+      line_item: '%{promotion} (%{promotion_name})'
+      order: '%{promotion} (%{promotion_name})'
       tax_rates:
         sales_tax: '%{name}'
         vat: '%{name} (Included in Price)'
