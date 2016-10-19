@@ -8,6 +8,8 @@ describe "Store", type: :feature, js: true do
            mail_from_address: 'test@example.org')
   end
 
+  let!(:vat_country) { create(:country, iso: "DE", name: "Germany") }
+
   before(:each) do
     visit spree.admin_path
     click_link "Settings"
@@ -34,6 +36,16 @@ describe "Store", type: :feature, js: true do
       assert_successful_update_message(:general_settings)
       expect(page).to have_field("store_name", with: "Spree Demo Site99")
       expect(page).to have_field("store_mail_from_address", with: "spree@example.org")
+    end
+
+    it "should be able to update the default cart tax country" do
+      expect(page).to have_select("Tax Country for Empty Carts", selected: "No taxes on carts without address")
+
+      select "Germany", from: "Tax Country for Empty Carts"
+      click_button "Update"
+
+      assert_successful_update_message(:general_settings)
+      expect(page).to have_select("Tax Country for Empty Carts", selected: "Germany")
     end
   end
 

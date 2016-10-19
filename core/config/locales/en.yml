@@ -252,6 +252,7 @@ en:
         seo_title: Seo Title
         name: Site Name
         mail_from_address: Mail From Address
+        cart_tax_country_iso: Tax Country for Empty Carts
       spree/store_credit:
         amount: Amount
         amount_authorized: Amount Authorized
@@ -723,6 +724,9 @@ en:
         taxonomies: Taxonomies
         taxons: Taxons
         users: Users
+      general_settings:
+        edit:
+          no_cart_tax_country: "No taxes on carts without address"
       user:
         account: Account
         addresses: Addresses

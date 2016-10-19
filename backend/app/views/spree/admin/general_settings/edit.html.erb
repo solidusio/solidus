@@ -56,6 +56,17 @@
             <%= f.error_message_on :mail_from_address %>
           <% end %>
         </div>
+
+        <div data-hook="admin_general_setting_default_tax_country">
+          <%= f.field_container :cart_tax_country_iso do %>
+            <%= f.label :cart_tax_country_iso %>
+            <%= f.select :cart_tax_country_iso,
+                         Spree::Country.all.map { |c| [c.name, c.iso] },
+                         { include_blank: t(".no_cart_tax_country") },
+                         { class: "select2 fullwidth" } %>
+            <%= f.error_message_on :cart_tax_country_iso %>
+          <% end %>
+        </div>
       <% end %>
 
       <% if can? :update, :general_settings %>
