@@ -227,7 +227,7 @@ module Spree
     # Returns the relevant zone (if any) to be used for taxation purposes.
     # Uses default tax zone unless there is a specific match
     def tax_zone
-      Zone.match(tax_address) || Zone.default_tax
+      Zone.match(tax_address)
     end
     deprecate tax_zone: "Please use Spree::Order#tax_address instead.",
               deprecator: Spree::Deprecation

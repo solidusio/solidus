@@ -27,13 +27,11 @@ RSpec.describe Spree::Tax::OrderAdjuster do
                                             with(
                                               line_items.first,
                                               rates_for_order: rates_for_order_zone,
-                                              rates_for_default_zone: rates_for_default_zone
                                             ).and_return(item_adjuster)
       expect(Spree::Tax::ItemAdjuster).to receive(:new).
                                             with(
                                               line_items.second,
                                               rates_for_order: rates_for_order_zone,
-                                              rates_for_default_zone: rates_for_default_zone
                                             ).and_return(item_adjuster)
 
       expect(item_adjuster).to receive(:adjust!).twice

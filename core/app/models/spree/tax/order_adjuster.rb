@@ -15,17 +15,8 @@ module Spree
       # in the given order.
       def adjust!
         (order.line_items + order.shipments).each do |item|
-          ItemAdjuster.new(item, order_wide_options).adjust!
+          ItemAdjuster.new(item, rates_for_order: rates_for_order(order)).adjust!
         end
-      end
-
-      private
-
-      def order_wide_options
-        {
-          rates_for_order: rates_for_order(order),
-          rates_for_default_zone: rates_for_default_zone
-        }
       end
     end
   end

@@ -49,7 +49,7 @@ describe Spree::Reimbursement, type: :model do
     let!(:adjustments)            { [] } # placeholder to ensure it gets run prior the "before" at this level
 
     let!(:tax_rate)               { nil }
-    let!(:tax_zone)               { create :zone, :with_country, default_tax: true }
+    let!(:tax_zone)               { create :zone, :with_country }
     let(:shipping_method)         { create :shipping_method, zones: [tax_zone] }
     let(:variant)                 { create :variant }
     let(:order)                   { create(:order_with_line_items, state: 'payment', line_items_attributes: [{ variant: variant, price: line_items_price }], shipment_cost: 0, shipping_method: shipping_method) }

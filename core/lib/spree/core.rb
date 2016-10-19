@@ -96,5 +96,3 @@ require 'spree/core/role_configuration'
 require 'spree/core/stock_configuration'
 require 'spree/permission_sets'
 require 'spree/deprecation'
-
-require 'spree/core/price_migrator'
