@@ -389,6 +389,9 @@ en:
       spree/calculator/flexi_rate:
         one: Flexible Rate
         other: Flexible Rate
+      spree/calculator/percent_per_item:
+        one: Percent Per Item
+        other: Percent Per Item
       spree/country:
         one: Country
         other: Countries
