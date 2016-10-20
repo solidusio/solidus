@@ -3,6 +3,11 @@ require 'spec_helper'
 describe Spree::Calculator::FlatRate, type: :model do
   let(:calculator) { Spree::Calculator::FlatRate.new }
 
+  describe ".description" do
+    subject { described_class.description }
+    it { is_expected.to eq("Flat Rate") }
+  end
+
   let(:order) do
     mock_model(
       Spree::Order, quantity: 10, currency: "USD"
