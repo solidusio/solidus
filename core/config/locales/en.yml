@@ -377,6 +377,9 @@ en:
       spree/calculator/percent_on_line_item:
         one: Percent Per Item
         other: Percent Per Item
+      spree/calculator/free_shipping:
+        one: Free Shipping
+        other: Free Shipping
       spree/country:
         one: Country
         other: Countries
