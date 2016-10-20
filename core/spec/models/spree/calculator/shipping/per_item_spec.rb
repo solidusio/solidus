@@ -6,6 +6,11 @@ module Spree
       let(:variant1) { build(:variant) }
       let(:variant2) { build(:variant) }
 
+      describe ".description" do
+        subject { described_class.description }
+        it { is_expected.to eq("Flat rate per package item") }
+      end
+
       let(:package) do
         build(:stock_package, variants_contents: { variant1 => 5, variant2 => 3 })
       end

@@ -383,6 +383,8 @@ en:
       spree/calculator/shipping/price_sack:
         one: Price sack
         other: Price sack
+      spree/calculator/shipping/per_item:
+        one: Flat rate per package item
       spree/country:
         one: Country
         other: Countries
