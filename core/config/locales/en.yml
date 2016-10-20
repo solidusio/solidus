@@ -395,6 +395,9 @@ en:
       spree/calculator/price_sack:
         one: Price Sack
         other: Price Sack
+      spree/calculator/returns/default_refund_amount:
+        one: Default Refund Amount
+        other: Default Refund Amount
       spree/country:
         one: Country
         other: Countries
