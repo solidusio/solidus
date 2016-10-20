@@ -404,6 +404,9 @@ en:
       spree/calculator/shipping/flat_rate:
         one: Flat rate
         other: Flat rate
+      spree/calculator/shipping/flexi_rate:
+        one: Flexible Rate per package item
+        other: Flexible Rate per package item
       spree/country:
         one: Country
         other: Countries
