@@ -385,6 +385,10 @@ en:
         other: Price sack
       spree/calculator/shipping/per_item:
         one: Flat rate per package item
+        other: Flat rate per package item
+      spree/calculator/flexi_rate:
+        one: Flexible Rate
+        other: Flexible Rate
       spree/country:
         one: Country
         other: Countries

@@ -3,6 +3,11 @@ require 'spec_helper'
 describe Spree::Calculator::FlexiRate, type: :model do
   let(:calculator) { Spree::Calculator::FlexiRate.new }
 
+  describe ".description" do
+    subject { described_class.description }
+    it { is_expected.to eq("Flexible Rate") }
+  end
+
   let(:order) do
     mock_model(
       Spree::Order, quantity: 10
