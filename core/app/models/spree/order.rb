@@ -227,8 +227,10 @@ module Spree
     # Returns the relevant zone (if any) to be used for taxation purposes.
     # Uses default tax zone unless there is a specific match
     def tax_zone
-      @tax_zone ||= Zone.match(tax_address) || Zone.default_tax
+      Zone.match(tax_address) || Zone.default_tax
     end
+    deprecate tax_zone: "Please use Spree::Order#tax_address instead.",
+              deprecator: Spree::Deprecation
 
     # Returns the address for taxation based on configuration
     def tax_address
@@ -587,11 +589,6 @@ module Spree
 
     def can_approve?
       !approved?
-    end
-
-    def reload(options = nil)
-      remove_instance_variable(:@tax_zone) if defined?(@tax_zone)
-      super
     end
 
     def quantity

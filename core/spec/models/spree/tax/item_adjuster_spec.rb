@@ -5,10 +5,6 @@ RSpec.describe Spree::Tax::ItemAdjuster do
   let(:order) { create(:order) }
   let(:item) { Spree::LineItem.new(order: order) }
 
-  before do
-    allow(order).to receive(:tax_zone) { build(:zone) }
-  end
-
   describe 'initialization' do
     it 'sets order to item order' do
       expect(adjuster.order).to eq(item.order)
@@ -21,14 +17,13 @@ RSpec.describe Spree::Tax::ItemAdjuster do
 
   describe '#adjust!' do
     before do
-      expect(order).to receive(:tax_zone).and_return(tax_zone)
+      expect(order).to receive(:tax_address).at_least(:once).and_return(address)
     end
 
     context 'when the order has no tax zone' do
-      let(:tax_zone) { nil }
+      let(:address) { Spree::Tax::TaxLocation.new }
 
       before do
-        allow(order).to receive(:tax_zone).and_return(nil)
         adjuster.adjust!
       end
 
@@ -37,13 +32,12 @@ RSpec.describe Spree::Tax::ItemAdjuster do
       end
     end
 
-    context 'when the order has a tax zone' do
+    context 'when the order has an address thats taxable' do
       let(:item) { build_stubbed :line_item, order: order }
-      let(:tax_zone) { build_stubbed(:zone, :with_country) }
+      let(:address) { order.tax_address }
 
       before do
-        expect(Spree::TaxRate).to receive(:for_zone).with(tax_zone).and_return(rates_for_order_zone)
-        expect(Spree::TaxRate).to receive(:for_zone).with(Spree::Zone.default_tax).and_return([])
+        expect(Spree::TaxRate).to receive(:for_address).with(order.tax_address).and_return(rates_for_order_zone)
       end
 
       context 'when there are no matching rates' do

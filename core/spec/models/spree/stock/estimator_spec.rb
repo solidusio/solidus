@@ -140,7 +140,9 @@ module Spree
         end
 
         context "includes tax adjustments if applicable" do
-          let!(:tax_rate) { create(:tax_rate, zone: order.tax_zone) }
+          let(:zone) { create(:zone, countries: [order.tax_address.country])}
+
+          let!(:tax_rate) { create(:tax_rate, zone: zone) }
 
           before do
             shipping_method.update!(tax_category: tax_rate.tax_category)

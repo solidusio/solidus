@@ -103,9 +103,9 @@ describe Spree::OrderContents, type: :model do
         create(:tax_rate, zone: zone, tax_category: variant.tax_category)
       end
 
-      context 'when the order has a tax zone' do
+      context 'when the order has a taxable address' do
         before do
-          expect(order.tax_zone).to be_present
+          expect(order.tax_address.country_id).to be_present
         end
 
         it 'creates a tax adjustment' do
@@ -115,10 +115,10 @@ describe Spree::OrderContents, type: :model do
         end
       end
 
-      context 'when the order does not have a tax zone' do
+      context 'when the order does not have a taxable address' do
         before do
           order.update_attributes!(ship_address: nil, bill_address: nil)
-          expect(order.tax_zone).to be_nil
+          expect(order.tax_address.country_id).to be_nil
         end
 
         it 'creates a tax adjustment' do
