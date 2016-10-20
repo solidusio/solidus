@@ -401,6 +401,9 @@ en:
       spree/calculator/shipping/flat_percent_item_total:
         one: Flat Percent
         other: Flat Percent
+      spree/calculator/shipping/flat_rate:
+        one: Flat rate
+        other: Flat rate
       spree/country:
         one: Country
         other: Countries
