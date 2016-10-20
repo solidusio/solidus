@@ -380,6 +380,9 @@ en:
       spree/calculator/free_shipping:
         one: Free Shipping
         other: Free Shipping
+      spree/calculator/shipping/price_sack:
+        one: Price sack
+        other: Price sack
       spree/country:
         one: Country
         other: Countries

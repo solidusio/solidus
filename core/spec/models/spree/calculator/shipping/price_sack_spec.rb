@@ -9,6 +9,11 @@ describe Spree::Calculator::Shipping::PriceSack, type: :model do
     calculator
   end
 
+  describe ".description" do
+    subject { described_class.description }
+    it { is_expected.to eq("Price sack") }
+  end
+
   let(:order) { stub_model(Spree::Order) }
   let(:shipment) { stub_model(Spree::Shipment, amount: 10) }
 
