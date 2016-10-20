@@ -4,10 +4,6 @@ module Spree
   class Calculator::DefaultTax < Calculator
     include Spree::Tax::TaxHelpers
 
-    def self.description
-      Spree.t(:default_tax)
-    end
-
     # Default tax calculator still needs to support orders for legacy reasons
     # Orders created before Spree 2.1 had tax adjustments applied to the order, as a whole.
     # Orders created with Spree 2.2 and after, have them applied to the line items individually.

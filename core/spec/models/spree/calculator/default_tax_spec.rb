@@ -9,6 +9,11 @@ describe Spree::Calculator::DefaultTax, type: :model do
   let(:included_in_price) { false }
   subject(:calculator) { Spree::Calculator::DefaultTax.new(calculable: rate ) }
 
+  describe ".description" do
+    subject { described_class.description }
+    it { is_expected.to eq("Default Tax") }
+  end
+
   context "#compute" do
     context "when given an order" do
       let(:order) do

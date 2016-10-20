@@ -17,9 +17,10 @@ module Spree
       end
     end
 
-    # overwrite to provide description for your calculators
+    # A description for this calculator in few words
+    # @return [String] A description for the calculator
     def self.description
-      'Base Calculator'
+      model_name.human
     end
 
     ###################################################################

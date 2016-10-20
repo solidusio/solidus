@@ -357,8 +357,11 @@ en:
         one: Adjustment Reason
         other: Adjustment Reasons
       spree/calculator:
-        one: Calculator
-        other: Calculators
+        one: Base Calculator
+        other: Base Calculators
+      spree/calculator/default_tax:
+        one: Default Tax
+        other: Default Tax
       spree/country:
         one: Country
         other: Countries
