@@ -398,6 +398,9 @@ en:
       spree/calculator/returns/default_refund_amount:
         one: Default Refund Amount
         other: Default Refund Amount
+      spree/calculator/shipping/flat_percent_item_total:
+        one: Flat Percent
+        other: Flat Percent
       spree/country:
         one: Country
         other: Countries

@@ -5,10 +5,6 @@ module Spree
     class FlatPercentItemTotal < ShippingCalculator
       preference :flat_percent, :decimal, default: 0
 
-      def self.description
-        Spree.t(:flat_percent)
-      end
-
       def compute_package(package)
         compute_from_price(total(package.contents))
       end
