@@ -3,6 +3,11 @@ require 'spec_helper'
 describe Spree::Calculator::TieredFlatRate, type: :model do
   let(:calculator) { Spree::Calculator::TieredFlatRate.new }
 
+  describe ".description" do
+    subject { described_class.description }
+    it { is_expected.to eq("Tiered Flat Rate") }
+  end
+
   describe "#valid?" do
     subject { calculator.valid? }
     context "when tiers is a hash" do
