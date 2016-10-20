@@ -362,6 +362,8 @@ en:
       spree/calculator/default_tax:
         one: Default Tax
         other: Default Tax
+      spree/calculator/flat_percent_item_total:
+        one: Flat Percent
       spree/country:
         one: Country
         other: Countries

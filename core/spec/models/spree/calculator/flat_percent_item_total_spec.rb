@@ -4,6 +4,11 @@ describe Spree::Calculator::FlatPercentItemTotal, type: :model do
   let(:calculator) { Spree::Calculator::FlatPercentItemTotal.new }
   let(:line_item) { mock_model Spree::LineItem }
 
+  describe ".description" do
+    subject { described_class.description }
+    it { is_expected.to eq("Flat Percent") }
+  end
+
   before { allow(calculator).to receive_messages preferred_flat_percent: 10 }
 
   context "compute" do
