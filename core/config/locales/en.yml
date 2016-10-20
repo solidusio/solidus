@@ -392,6 +392,9 @@ en:
       spree/calculator/percent_per_item:
         one: Percent Per Item
         other: Percent Per Item
+      spree/calculator/price_sack:
+        one: Price Sack
+        other: Price Sack
       spree/country:
         one: Country
         other: Countries
