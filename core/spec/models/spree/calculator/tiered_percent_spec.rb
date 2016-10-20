@@ -3,6 +3,11 @@ require 'spec_helper'
 describe Spree::Calculator::TieredPercent, type: :model do
   let(:calculator) { Spree::Calculator::TieredPercent.new }
 
+  describe ".description" do
+    subject { described_class.description }
+    it { is_expected.to eq("Tiered Percent") }
+  end
+
   describe "#valid?" do
     subject { calculator.valid? }
     context "when base percent is less than zero" do

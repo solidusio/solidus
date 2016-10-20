@@ -18,10 +18,6 @@ module Spree
     }
     validate :preferred_tiers_content
 
-    def self.description
-      Spree.t(:tiered_percent)
-    end
-
     def compute(object)
       order = object.is_a?(Order) ? object : object.order
       _base, percent = preferred_tiers.sort.reverse.detect{ |b, _| order.item_total >= b }

@@ -368,6 +368,9 @@ en:
       spree/calculator/flat_rate:
         one: Flat Rate
         other: Flat Rate
+      spree/calculator/tiered_percent:
+        one: Tiered Percent
+        other: Tiered Percent
       spree/country:
         one: Country
         other: Countries
