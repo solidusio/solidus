@@ -215,9 +215,7 @@ module Spree
 
     # @return [Boolean] true if there are no option values
     def empty_option_values?
-      options.empty? || options.any? do |opt|
-        opt.option_type.option_values.empty?
-      end
+      options.empty? || !option_types.left_joins(:option_values).where('spree_option_values.id IS NULL').empty?
     end
 
     # @param property_name [String] the name of the property to find
