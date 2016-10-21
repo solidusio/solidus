@@ -1,7 +1,6 @@
-<% admin_breadcrumb(link_to plural_resource_name(Spree::Order), spree.admin_orders_path) %>
-<% admin_breadcrumb(link_to "##{@order.number}", spree.edit_admin_order_path(@order)) %>
-<% admin_breadcrumb(Spree.t(:cancel_inventory)) %>
+<%= render partial: 'spree/admin/shared/order_tabs', locals: {current: 'Cancel Inventory'} %>
 
+<% admin_breadcrumb(Spree.t(:cancel_inventory)) %>
 
 <table class="stock-contents index">
   <colgroup>
