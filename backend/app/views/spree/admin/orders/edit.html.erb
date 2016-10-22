@@ -14,7 +14,7 @@
 </div>
 
 <% if @order.payments.exists? && @order.is_risky? %>
-  <%= render 'spree/admin/orders/risk_analysis', latest_payment: @order.payments.order("created_at DESC").first %>
+  <%= render 'spree/admin/orders/risk_analysis', latest_payment: @order.payments.reorder("created_at DESC").first %>
 <% end %>
 
 <% if can?(:update, Spree::Shipment) && can?(:update, @order) && @order.shipment_state != "shipped" %>
