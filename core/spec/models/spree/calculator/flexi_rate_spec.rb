@@ -1,12 +1,10 @@
 require 'spec_helper'
+require 'shared_examples/calculator_shared_examples'
 
 describe Spree::Calculator::FlexiRate, type: :model do
   let(:calculator) { Spree::Calculator::FlexiRate.new }
 
-  describe ".description" do
-    subject { described_class.description }
-    it { is_expected.to eq("Flexible Rate") }
-  end
+  it_behaves_like 'a calculator with a description'
 
   let(:order) do
     mock_model(

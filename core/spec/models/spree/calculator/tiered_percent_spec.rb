@@ -1,12 +1,10 @@
 require 'spec_helper'
+require 'shared_examples/calculator_shared_examples'
 
 describe Spree::Calculator::TieredPercent, type: :model do
   let(:calculator) { Spree::Calculator::TieredPercent.new }
 
-  describe ".description" do
-    subject { described_class.description }
-    it { is_expected.to eq("Tiered Percent") }
-  end
+  it_behaves_like 'a calculator with a description'
 
   describe "#valid?" do
     subject { calculator.valid? }

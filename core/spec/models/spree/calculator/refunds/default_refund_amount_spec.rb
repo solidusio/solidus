@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'shared_examples/calculator_shared_examples'
 
 describe Spree::Calculator::Returns::DefaultRefundAmount, type: :model do
   let(:line_item_quantity) { 2 }
@@ -9,10 +10,7 @@ describe Spree::Calculator::Returns::DefaultRefundAmount, type: :model do
   let(:calculator) { Spree::Calculator::Returns::DefaultRefundAmount.new }
   let(:order) { line_item.order }
 
-  describe ".description" do
-    subject { described_class.description }
-    it { is_expected.to eq("Default Refund Amount") }
-  end
+  it_behaves_like 'a calculator with a description'
 
   subject { calculator.compute(return_item) }
 

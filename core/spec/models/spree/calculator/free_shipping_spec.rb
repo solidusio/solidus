@@ -1,8 +1,6 @@
 require 'spec_helper'
+require 'shared_examples/calculator_shared_examples'
 
 describe Spree::Calculator::FreeShipping, type: :model do
-  describe ".description" do
-    subject { described_class.description }
-    it { is_expected.to eq("Free Shipping") }
-  end
+  it_behaves_like 'a calculator with a description'
 end

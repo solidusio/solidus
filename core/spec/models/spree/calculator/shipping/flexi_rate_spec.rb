@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'shared_examples/calculator_shared_examples'
 
 module Spree
   module Calculator::Shipping
@@ -6,10 +7,7 @@ module Spree
       let(:variant1) { build(:variant, price: 10) }
       let(:variant2) { build(:variant, price: 20) }
 
-      describe ".description" do
-        subject { described_class.description }
-        it { is_expected.to eq("Flexible Rate per package item") }
-      end
+      it_behaves_like 'a calculator with a description'
 
       let(:package) do
         build(:stock_package, variants_contents: { variant1 => 4, variant2 => 6 })
