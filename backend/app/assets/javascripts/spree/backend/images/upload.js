@@ -21,9 +21,9 @@ Spree.prepareImageUploader = function () {
     },
     progressTmpl = document.createElement('div'),
     progressZone = document.getElementById('progress-zone'),
-    fileupload   = document.getElementById('upload-form'),
+    uploadForm   = document.getElementById('upload-form'),
     csrfToken    = document.querySelector('meta[name="csrf-token"]').content,
-    variantId    = fileupload.querySelector('input[name="image[viewable_id]"').value;
+    variantId    = uploadForm.querySelector('input[name="image[viewable_id]"').value;
 
 
   // Parse the progress template
@@ -54,53 +54,62 @@ Spree.prepareImageUploader = function () {
     var formData = new FormData(),
         progressRow = progressTmpl.cloneNode(true),
         progressBar = progressRow.querySelector('progress'),
-        details = progressRow.querySelector('details');
+        summary = progressRow.querySelector('summary'),
+        uploadedId = Math.round((Math.random()*1000000)).toString();
 
     formData.append('image[attachment]', file);
     formData.append('image[viewable_id]', variantId);
+    formData.append('uploaded_id', uploadedId);
+
+    progressRow.setAttribute('data-uploaded-id', uploadedId)
 
     previewFile(file, progressRow);
-    details.innerHTML = file.name;
+    summary.innerHTML = file.name;
     progressZone.appendChild(progressRow);
 
     // send the image to the server
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', window.location.pathname);
-    xhr.setRequestHeader('X-CSRF-Token', csrfToken);
-    xhr.onload = function() {
-      progressBar.value = progressBar.innerHTML = 100;
-    };
-
-    if (tests.progress) {
-      xhr.upload.onprogress = function (event) {
-        if (event.lengthComputable) {
-          var complete = (event.loaded / event.total * 100 | 0);
-          progressBar.value = progressBar.innerHTML = complete;
+    Spree.ajax({
+      url: window.location.pathname,
+      type: "POST",
+      dataType: 'script',
+      data: formData,
+      processData: false,  // tell jQuery not to process the data
+      contentType: false,   // tell jQuery not to set contentType
+      xhr: function () {
+        xhr = $.ajaxSettings.xhr();
+        if (tests.progress) {
+          xhr.upload.onprogress = function (event) {
+            if (event.lengthComputable) {
+              var complete = (event.loaded / event.total * 100 | 0);
+              progressBar.value = progressBar.innerHTML = complete;
+            }
+          };
         }
+        return xhr;
       }
-    }
-
-    xhr.send(formData);
+    }).done(function() {
+      progressBar.value = progressBar.innerHTML = 100;
+    }).error(function() {
+      progressRow.querySelector('error').classList.remove('hidden') ;
+    });
   }
 
   if (tests.dnd) {
     uploadZone.ondragover = function () { this.className = 'hover'; return false; };
     uploadZone.ondragend = function () { this.className = ''; return false; };
     uploadZone.ondrop = function (e) {
-      this.className = '';
       e.preventDefault();
       for (var i = 0; i < e.dataTransfer.files.length; i++) {
         upload(e.dataTransfer.files[i]);
       }
     }
-  } else {
-    fileupload.className = 'hidden';
-    fileupload.querySelector('input').onchange = function () {
-      for (var i = 0; i < this.files.length; i++) {
-        upload(this.files[i]);
-      }
-    };
   }
+
+  uploadForm.querySelector('input[type="file"]').onchange = function () {
+    for (var i = 0; i < this.files.length; i++) {
+      upload(this.files[i]);
+    }
+  };
 };
 
 Spree.ready(function () {

@@ -12,7 +12,7 @@
 <div id="images" data-hook></div>
 
 <style>
-  #upload-zone { border: 10px dashed #ccc; height: 100px; padding: 2rem 5rem; text-align: center; }
+  #upload-zone { border: 10px dashed #ccc; height: 100px; padding: 1rem 5rem; text-align: center; }
   #upload-zone.hover { border: 10px dashed #0c0; }
   .margin-bottom-one { margin-bottom: 1rem; }
   progress { width: 100%; }
@@ -22,17 +22,17 @@
 <fieldset>
   <legend align="center"><%= Spree.t(:new_image) %></legend>
 
-  <p id="upload-zone">
-    Drag images from your desktop on to the drop zone to upload to the server.
-  </p>
+  <div id="upload-zone" class="margin-bottom-one">
+    <%= form_for [:admin, @product, Spree::Image.new],
+        :html => { :multipart => true, id: 'upload-form' } do |f| %>
+      <label>
+        <p>Drag images from your desktop on to the drop zone to upload to the server.</p>
+        <%= f.file_field :attachment, multiple: '' %>
+        <%= f.hidden_field :viewable_id, value: @product.master.id %>
+      </label>
+    <% end %>
+  </div>
 
-  <%= form_for [:admin, @product, Spree::Image.new],
-      :html => { :multipart => true, id: 'upload-form', class: 'hidden' } do |f| %>
-    <label>Drag &amp; drop not supported, but you can still upload via this input field:<br>
-      <%= f.file_field :attachment %>
-      <%= f.hidden_field :viewable_id, value: @product.master.id %>
-    </label>
-  <% end %>
 
   <p id="filereader">File API &amp; FileReader API not supported</p>
   <p id="formdata">XHR2's FormData is not supported</p>
@@ -42,7 +42,8 @@
     <div class="row row-xs-center margin-bottom-one">
       <div class="col-xs-10">
         <progress min="0" max="100" value="0">0</progress>
-        <details></details>
+        <summary></summary>
+        <error class="red hidden">Server failed to process the image</error>
       </div>
       <div class="col-xs-2"><img src="" class="img-fluid"></div>
     </div>
@@ -51,11 +52,6 @@
   <div id="progress-zone"></div>
 </fieldset>
 
-<% unless @product.images.any? || @product.variant_images.any? %>
-  <div class="no-objects-found">
-    <%= Spree.t(:no_images_found) %>.
-  </div>
-<% else %>
   <table class="index sortable" data-hook="images_table" data-sortable-link="<%= update_positions_admin_product_images_url(@product) %>">
     <colgroup>
       <col style="width: 5%">
@@ -78,30 +74,12 @@
     </thead>
 
     <tbody>
-      <% (@product.variant_images).each do |image| %>
-        <tr id="<%= spree_dom_id image %>" data-hook="images_row" class="<%= cycle('odd', 'even')%>">
-          <td class="no-border">
-            <% if can?(:update_positions, Spree::Image) %>
-              <span class="handle"></span>
-            <% end %>
-          </td>
-          <td>
-            <%= link_to image_tag(image.attachment.url(:mini)), image.attachment.url(:product) %>
-          </td>
-          <% if @product.has_variants? %>
-            <td><%= options_text_for(image) %></td>
-          <% end %>
-          <td><%= image.alt %></td>
-          <td class="actions">
-            <% if can?(:update, image) %>
-              <%= link_to_with_icon 'edit', Spree.t('actions.edit'), edit_admin_product_image_url(@product, image), :no_text => true, :data => {:action => 'edit'} %>
-            <% end %>
-            <% if can?(:destroy, image) %>
-              <%= link_to_delete image, { :url => admin_product_image_url(@product, image), :no_text => true } %>
-            <% end %>
-          </td>
-        </tr>
-      <% end %>
+      <%= render partial: 'image_row', collection: @product.variant_images, as: :image %>
     </tbody>
   </table>
-<% end %>
+
+  <% if @product.images.empty? && @product.variant_images.empty? %>
+    <div class="no-objects-found">
+      <%= Spree.t(:no_images_found) %>.
+    </div>
+  <% end %>
