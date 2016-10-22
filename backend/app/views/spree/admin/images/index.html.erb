@@ -11,6 +11,46 @@
 
 <div id="images" data-hook></div>
 
+<style>
+  #upload-zone { border: 10px dashed #ccc; height: 100px; padding: 2rem 5rem; text-align: center; }
+  #upload-zone.hover { border: 10px dashed #0c0; }
+  .margin-bottom-one { margin-bottom: 1rem; }
+  progress { width: 100%; }
+  progress:after { content: '%'; }
+</style>
+
+<fieldset>
+  <legend align="center"><%= Spree.t(:new_image) %></legend>
+
+  <p id="upload-zone">
+    Drag images from your desktop on to the drop zone to upload to the server.
+  </p>
+
+  <%= form_for [:admin, @product, Spree::Image.new],
+      :html => { :multipart => true, id: 'upload-form', class: 'hidden' } do |f| %>
+    <label>Drag &amp; drop not supported, but you can still upload via this input field:<br>
+      <%= f.file_field :attachment %>
+      <%= f.hidden_field :viewable_id, value: @product.master.id %>
+    </label>
+  <% end %>
+
+  <p id="filereader">File API &amp; FileReader API not supported</p>
+  <p id="formdata">XHR2's FormData is not supported</p>
+  <p id="progress">XHR2's upload progress isn't supported</p>
+
+  <script id="progress-tmpl" type="text/x-progress-template">
+    <div class="row row-xs-center margin-bottom-one">
+      <div class="col-xs-10">
+        <progress min="0" max="100" value="0">0</progress>
+        <details></details>
+      </div>
+      <div class="col-xs-2"><img src="" class="img-fluid"></div>
+    </div>
+  </script>
+
+  <div id="progress-zone"></div>
+</fieldset>
+
 <% unless @product.images.any? || @product.variant_images.any? %>
   <div class="no-objects-found">
     <%= Spree.t(:no_images_found) %>.
