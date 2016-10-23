@@ -11,6 +11,13 @@ module Spree
     belongs_to :country, class_name: "Spree::Country"
     belongs_to :state, class_name: "Spree::State"
 
+    ##
+    # Automatically translate address to longitude and latitude.
+    # @see https://github.com/alexreisner/geocoder
+    #
+    geocoded_by :full_street_address
+    after_validation :geocode
+
     validates :firstname, :address1, :city, :country_id, presence: true
     validates :zipcode, presence: true, if: :require_zipcode?
     validates :phone, presence: true, if: :require_phone?
@@ -95,6 +102,18 @@ module Spree
     # @return [String] the full name on this address
     def full_name
       "#{firstname} #{lastname}".strip
+    end
+
+    ##
+    # The full address.
+    #
+    # @example Get the full address.
+    #   address.full_name # "street, city, state, country"
+    #
+    # @return [String] The full street address wit city, state and country.
+    #
+    def full_address
+      [address1, address2.presence, city, state_text, country.try(:iso)].compact.join(', ')
     end
 
     # @return [String] a string representation of this state
