@@ -15,7 +15,7 @@ module Spree
     # Automatically translate address to longitude and latitude.
     # @see https://github.com/alexreisner/geocoder
     #
-    geocoded_by :full_street_address
+    geocoded_by :full_address
     after_validation :geocode
 
     validates :firstname, :address1, :city, :country_id, presence: true
