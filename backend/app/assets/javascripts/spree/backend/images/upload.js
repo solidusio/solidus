@@ -11,8 +11,8 @@ Spree.prepareImageUploader = function () {
     },
     support = {
       filereader: document.getElementById('filereader'),
-      formdata: document.getElementById('formdata'),
-      progress: document.getElementById('progress')
+      formdata:   document.getElementById('formdata'),
+      progress:   document.getElementById('progress')
     },
     acceptedTypes = {
       'image/png': true,
@@ -51,11 +51,11 @@ Spree.prepareImageUploader = function () {
   function upload(file) {
     if (!tests.formdata) return;
 
-    var formData = new FormData(),
+    var formData    = new FormData(),
         progressRow = progressTmpl.cloneNode(true),
         progressBar = progressRow.querySelector('progress'),
-        summary = progressRow.querySelector('summary'),
-        uploadedId = Math.round((Math.random()*1000000)).toString();
+        summary     = progressRow.querySelector('summary'),
+        uploadedId  = Math.round((Math.random()*1000000)).toString();
 
     formData.append('image[attachment]', file);
     formData.append('image[viewable_id]', variantId);
@@ -90,7 +90,7 @@ Spree.prepareImageUploader = function () {
     }).done(function() {
       progressBar.value = progressBar.innerHTML = 100;
     }).error(function() {
-      progressRow.querySelector('error').classList.remove('hidden') ;
+      progressRow.querySelector('error').classList.remove('hidden');
     });
   }
 

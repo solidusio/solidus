@@ -1,11 +1,9 @@
+var uploadedRow = $('[data-uploaded-id="<%=params[:uploaded_id]%>"');
+
 <% if @image.persisted? %>
-  $('[data-uploaded-id="<%=params[:uploaded_id]%>"').slideUp();
-  $('[data-hook="images_table"] tbody').append('<%= j render partial: "image_row", locals: {image: @image } %>');
-  $('select.select2').select2({
-    allowClear: true,
-    dropdownAutoWidth: true
-  });
+  uploadedRow.slideUp();
+  $('#images-table').removeClass('hidden').find('tbody').append('<%= j render partial: "image_row", locals: {image: @image } %>');
   $('.no-objects-found').hide();
 <% else %>
-  console.log('<%= j @image.errors.full_messages.join("<br>") %>');
+  uploadedRow.find('error').text('<%= j @image.errors.full_messages.join("<br>") %>');
 <% end %>
