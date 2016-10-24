@@ -12,8 +12,14 @@
 <div id="images" data-hook></div>
 
 <style>
-  #upload-zone { border: 10px dashed #ccc; height: 100px; padding: 1rem 5rem; text-align: center; }
-  #upload-zone.hover { border: 10px dashed #0c0; }
+  #upload-zone {
+    border: 10px dashed #ccc;
+    min-height: 100px;
+    padding: 1rem 5rem;
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+  #upload-zone.hover { border-color: #0c0; }
   .margin-bottom-one { margin-bottom: 1rem; }
   progress { width: 100%; }
 </style>
@@ -21,7 +27,7 @@
 <fieldset>
   <legend align="center"><%= Spree.t(:new_image) %></legend>
 
-  <div id="upload-zone" class="margin-bottom-one">
+  <div id="upload-zone">
     <%= form_for [:admin, @product, Spree::Image.new],
         :html => { :multipart => true, id: 'upload-form' } do |f| %>
       <label>
@@ -37,14 +43,14 @@
   <p id="formdata">XHR2's FormData is not supported</p>
   <p id="progress">XHR2's upload progress isn't supported</p>
 
-  <script id="progress-tmpl" type="text/x-progress-template">
+  <script type="text/template" id="upload-progress-tmpl">
     <div class="row row-xs-center margin-bottom-one">
       <div class="col-xs-10">
-        <progress min="0" max="100" value="0">0</progress>
-        <summary></summary>
-        <error class="red hidden">Server failed to process the image</error>
+        <progress min="0" max="100" value="{{= progress }}">{{= progress }}</progress>
+        <summary>{{= summary }}</summary>
+        <error class="red {{ if(!serverError) print('hidden'); }}">Server failed to process the image</error>
       </div>
-      <div class="col-xs-2"><img src="" class="img-fluid"></div>
+      <div class="col-xs-2"><img src="{{= imgSrc }}" class="img-fluid"></div>
     </div>
   </script>
 
