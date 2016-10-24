@@ -1,5 +1,5 @@
 Spree::Admin::GeneralSettingsController.class_eval do
-  before_filter :update_i18n_settings, only: :update
+  before_action :update_i18n_settings, only: :update
 
   private
 

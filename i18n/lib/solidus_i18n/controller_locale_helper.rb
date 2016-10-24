@@ -6,7 +6,7 @@ module SolidusI18n
     extend ActiveSupport::Concern
 
     included do
-      prepend_before_filter :set_user_language
+      prepend_before_action :set_user_language
 
       private
 
