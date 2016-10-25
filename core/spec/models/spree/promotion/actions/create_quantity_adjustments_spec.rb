@@ -4,36 +4,53 @@ module Spree::Promotion::Actions
   RSpec.describe CreateQuantityAdjustments do
     let(:action) { CreateQuantityAdjustments.create!(calculator: calculator, promotion: promotion) }
 
-    let(:order) { FactoryGirl.create :order }
+    let(:order) do
+      create(
+        :order_with_line_items,
+        line_items_attributes: line_items_attributes
+      )
+    end
+
+    let(:line_items_attributes) do
+      [
+        { price: 10, quantity: quantity }
+      ]
+    end
+
+    let(:quantity) { 1 }
     let(:promotion) { FactoryGirl.create :promotion }
 
     describe "#compute_amount" do
       subject { action.compute_amount(line_item) }
 
-      let!(:item_a) { FactoryGirl.create :line_item, order: order, quantity: quantity, price: 10 }
-
       context "with a flat rate adjustment" do
         let(:calculator) { FactoryGirl.create :flat_rate_calculator, preferred_amount: 5 }
 
         context "with a quantity group of 2" do
-          let(:line_item) { item_a }
+          let(:line_item) { order.line_items.first }
+
           before { action.preferred_group_size = 2 }
+
           context "and an item with a quantity of 0" do
             let(:quantity) { 0 }
             it { is_expected.to eq 0 }
           end
+
           context "and an item with a quantity of 1" do
             let(:quantity) { 1 }
             it { is_expected.to eq 0 }
           end
+
           context "and an item with a quantity of 2" do
             let(:quantity) { 2 }
             it { is_expected.to eq(-10) }
           end
+
           context "and an item with a quantity of 3" do
             let(:quantity) { 3 }
             it { is_expected.to eq(-10) }
           end
+
           context "and an item with a quantity of 4" do
             let(:quantity) { 4 }
             it { is_expected.to eq(-20) }
@@ -41,36 +58,51 @@ module Spree::Promotion::Actions
         end
 
         context "with a quantity group of 3" do
-          let(:quantity) { 2 }
-          let!(:item_b) { FactoryGirl.create :line_item, order: order, quantity: 1 }
-          let!(:item_c) { FactoryGirl.create :line_item, order: order, quantity: 1 }
           before { action.preferred_group_size = 3 }
+
           context "and 2x item A, 1x item B and 1x item C" do
+            let(:line_items_attributes) do
+              [
+                { price: 10, quantity: 2 },
+                { price: 10, quantity: 1 },
+                { price: 10, quantity: 1 },
+              ]
+            end
+
             before { action.perform({ order: order, promotion: promotion }) }
+
             describe "the adjustment for the first item" do
-              let(:line_item) { item_a }
+              let(:line_item) { order.line_items.first }
               it { is_expected.to eq(-10) }
             end
             describe "the adjustment for the second item" do
-              let(:line_item) { item_b }
+              let(:line_item) { order.line_items.second }
               it { is_expected.to eq(-5) }
             end
             describe "the adjustment for the third item" do
-              let(:line_item) { item_c }
+              let(:line_item) { order.line_items.third }
               it { is_expected.to eq 0 }
             end
           end
         end
 
         context "with multiple orders using the same action" do
-          let(:quantity) { 2 }
-          let(:line_item) { item_a }
+          let(:other_order) do
+            create(
+              :order_with_line_items,
+              line_items_attributes: [
+                { quantity: 3 }
+            ]
+            )
+          end
+
+          let(:line_item) { other_order.line_items.first }
+
           before do
             action.preferred_group_size = 2
-            other_order = FactoryGirl.create :order
-            FactoryGirl.create :line_item, order: other_order, quantity: 3
             action.perform({ order: other_order, promotion: promotion })
           end
+
           it { is_expected.to eq(-10) }
         end
       end
@@ -78,33 +110,45 @@ module Spree::Promotion::Actions
       context "with a percentage based adjustment" do
         let(:calculator) { FactoryGirl.create :percent_on_item_calculator, preferred_percent: 10 }
 
+        let(:line_items_attributes) do
+          [
+            { price: 10, quantity: 1 }.merge(line_one_options),
+            { price: 10, quantity: 1 }.merge(line_two_options),
+          ]
+        end
+
+        let(:line_one_options) { {} }
+        let(:line_two_options) { {} }
+
         context "with a quantity group of 3" do
           before do
             action.preferred_group_size = 3
             action.perform({ order: order, promotion: promotion })
           end
+
           context "and 2x item A and 1x item B" do
-            let(:quantity) { 2 }
-            let!(:item_b) { FactoryGirl.create :line_item, order: order, quantity: 1, price: 10 }
+            let(:line_one_options) { { quantity: 2 } }
+
             describe "the adjustment for the first item" do
-              let(:line_item) { item_a }
+              let(:line_item) { order.line_items.first }
               it { is_expected.to eq(-2) }
             end
             describe "the adjustment for the second item" do
-              let(:line_item) { item_b }
+              let(:line_item) { order.line_items.second }
               it { is_expected.to eq(-1) }
             end
           end
 
           context "and the items cost different amounts" do
-            let(:quantity) { 3 }
-            let!(:item_b) { FactoryGirl.create :line_item, order: order, quantity: 1, price: 20 }
+            let(:line_one_options) { { quantity: 3 } }
+            let(:line_two_options) { { price: 20 } }
+
             describe "the adjustment for the first item" do
-              let(:line_item) { item_a }
+              let(:line_item) { order.line_items.first }
               it { is_expected.to eq(-3) }
             end
             describe "the adjustment for the second item" do
-              let(:line_item) { item_b }
+              let(:line_item) { order.line_items.second }
               it { is_expected.to eq 0 }
             end
           end
@@ -118,9 +162,19 @@ module Spree::Promotion::Actions
             40 => 30
           }
         end
+
         let(:calculator) do
           Spree::Calculator::TieredPercent.create(preferred_base_percent: 10, preferred_tiers: tiers)
         end
+        let(:line_items_attributes) do
+          [
+            { price: 10, quantity: 1 }.merge(line_one_options),
+            { price: 10, quantity: 1 }.merge(line_two_options),
+          ]
+        end
+
+        let(:line_one_options) { {} }
+        let(:line_two_options) { {} }
 
         context "with a quantity group of 3" do
           before do
@@ -129,40 +183,30 @@ module Spree::Promotion::Actions
           end
 
           context "and 2x item A and 1x item B" do
-            let(:quantity) { 2 }
-            let!(:item_b) { FactoryGirl.create :line_item, order: order, quantity: 1, price: 10 }
+            let(:line_one_options) { { quantity: 2 } }
 
             context "when amount falls within the first tier" do
-
-              before do
-                order.reload.updater.update
-              end
-
               describe "the adjustment for the first item" do
-                let(:line_item) { item_a }
+                let(:line_item) { order.line_items.first }
                 it { is_expected.to eq(-4) }
               end
               describe "the adjustment for the second item" do
-                let(:line_item) { item_b }
+                let(:line_item) { order.line_items.second }
                 it { is_expected.to eq(-2) }
               end
             end
 
             context "when amount falls within the second tier" do
-              let!(:item_b) { FactoryGirl.create :line_item, order: order, quantity: 1, price: 20 }
-
-              before do
-                order.reload.updater.update
-              end
+              let(:line_two_options) { { price: 20 } }
 
               describe "the adjustment for the first item" do
-                let(:line_item) { item_a }
-                it { is_expected.to eq (-6) }
+                let(:line_item) { order.line_items.first }
+                it { is_expected.to eq(-6) }
               end
 
               describe "the adjustment for the second item" do
-                let(:line_item) { item_b }
-                it { is_expected.to eq (-6) }
+                let(:line_item) { order.line_items.second }
+                it { is_expected.to eq(-6) }
               end
             end
           end
