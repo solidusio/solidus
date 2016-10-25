@@ -85,15 +85,17 @@ module Spree
 
       def gateway_options
         order.reload
-        options = { email: order.email,
-                    customer: order.email,
-                    customer_id: order.user_id,
-                    ip: order.last_ip_address,
-                    # Need to pass in a unique identifier here to make some
-                    # payment gateways happy.
-                    #
-                    # For more information, please see Spree::Payment#set_unique_identifier
-                    order_id: gateway_order_id }
+        options = {
+          email: order.email,
+          customer: order.email,
+          customer_id: order.user_id,
+          ip: order.last_ip_address,
+          # Need to pass in a unique identifier here to make some
+          # payment gateways happy.
+          #
+          # For more information, please see Spree::Payment#set_unique_identifier
+          order_id: gateway_order_id
+        }
 
         options[:shipping] = order.ship_total * 100
         options[:tax] = order.additional_tax_total * 100
