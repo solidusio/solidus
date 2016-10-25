@@ -25,7 +25,7 @@
 </style>
 
 <fieldset>
-  <legend align="center"><%= Spree.t(:new_image) %></legend>
+  <legend align="center"><%= t(".upload_images") %></legend>
 
   <div id="upload-zone">
     <%= form_for [:admin, @product, Spree::Image.new],
