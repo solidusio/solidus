@@ -94,7 +94,11 @@ module Spree
           # payment gateways happy.
           #
           # For more information, please see Spree::Payment#set_unique_identifier
-          order_id: gateway_order_id
+          order_id: gateway_order_id,
+          # The originator is passed to options used by the payment method.
+          # One example of a place that it is used is in:
+          # app/models/spree/payment_method/store_credit.rb
+          originator: self
         }
 
         options[:shipping] = order.ship_total * 100
