@@ -803,6 +803,10 @@ en:
       users:
         user_page_actions:
           create_order: Create order for this user
+      payments:
+        source_forms:
+          storecredit:
+            not_supported: "Creating store credit payments via the admin is not currently supported."
     administration: Administration
     agree_to_privacy_policy: Agree to Privacy Policy
     agree_to_terms_of_service: Agree to Terms of Service
