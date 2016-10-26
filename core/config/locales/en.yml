@@ -769,6 +769,7 @@ en:
         select_amount_update_reason: "Select a reason for updating the amount"
         total_unused: "Total unused"
         type_html_header: "Credit Type"
+        view: "View store credit"
         errors:
           cannot_change_used_store_credit: "Store credit that has been claimed cannot be changed"
           cannot_be_modified: "cannot be modified"

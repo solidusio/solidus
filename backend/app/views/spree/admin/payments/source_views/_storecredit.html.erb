@@ -16,6 +16,13 @@
         <dt><%= Spree::StoreCredit.human_attribute_name(:issued_on) %>:</dt>
         <dd><%= l payment.source.created_at.to_date %></dd>
       </dl>
+
+      <p>
+        <%= link_to(
+          Spree.t("admin.store_credits.view"),
+          admin_user_store_credit_path(payment.source.user, payment.source)
+        ) %>
+      </p>
     </div>
   </div>
 </fieldset>
