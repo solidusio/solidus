@@ -785,10 +785,10 @@ describe Spree::StoreCredit do
   end
 
   describe "#update_amount" do
-    let(:invalidation_user) { create(:user) }
-    let(:invalidation_reason) { create(:store_credit_update_reason) }
+    let(:updating_user) { create(:user) }
+    let(:update_reason) { create(:store_credit_update_reason) }
 
-    subject { store_credit.update_amount(amount, invalidation_reason, invalidation_user) }
+    subject { store_credit.update_amount(amount, update_reason, updating_user) }
 
     context "amount is valid" do
       let(:amount) { 10.0 }
@@ -810,7 +810,7 @@ describe Spree::StoreCredit do
 
       it "sets the originator on the store credit event correctly" do
         subject
-        expect(store_credit.store_credit_events.find_by(action: Spree::StoreCredit::ADJUSTMENT_ACTION).originator).to eq invalidation_user
+        expect(store_credit.store_credit_events.find_by(action: Spree::StoreCredit::ADJUSTMENT_ACTION).originator).to eq updating_user
       end
     end
 
@@ -867,7 +867,7 @@ describe Spree::StoreCredit do
       it "creates a store credit event for the invalidation" do
         expect { subject }.to change { store_credit.store_credit_events.where(action: Spree::StoreCredit::INVALIDATE_ACTION).count }.from(0).to(1)
       end
-
+      
       it "assigns the originator as the user that is performing the invalidation" do
         subject
         expect(store_credit.store_credit_events.find_by(action: Spree::StoreCredit::INVALIDATE_ACTION).originator).to eq invalidation_user

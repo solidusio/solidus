@@ -751,6 +751,7 @@ en:
         edit: "Editing store credit"
         edit_amount: "Editing store credit amount"
         history: "Store credit history"
+        ledger_entries: "Ledger Entries"
         invalidate_store_credit: "Invalidating store credit"
         invalidated: "Invalidated"
         issued_on: "Issued On"
