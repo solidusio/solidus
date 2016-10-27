@@ -1,30 +1,76 @@
-// https://simplyian.com/2016/02/09/Using-Underscore-js-templates-within-ERB/
-_.templateSettings = {
-  interpolate: /\{\{\=(.+?)\}\}/g,
-  evaluate: /\{\{(.+?)\}\}/g
-};
-
 // Inspired by: http://html5demos.com/dnd-upload
 Spree.prepareImageUploader = function () {
   var uploadZone = document.getElementById('upload-zone');
   if(!uploadZone) return;
 
-  var tests = {
+  var UploadZone = Backbone.View.extend({
+    el: uploadZone,
+
+    events: {
+      "dragover" : "onDragOver",
+      "dragleave" : "onDragLeave",
+      "drop" : "onDrop",
+      'change input[type="file"]' : "onFileBrowserSelect"
+    },
+
+    progressZone: document.getElementById('progress-zone'),
+
+    // Hide or highlight supported browser features
+    initialize: function() {
+      "filereader formdata progress".split(' ').forEach(function (api) {
+        this.support[api].className = (this.tests[api] === false) ? 'red' : 'hidden'
+      }, this);
+    },
+
+    upload: function(file) {
+      if (!this.tests.formdata) return;
+
+      var progressModel = new ProgressModel({file: file});
+      progressModel.previewFile();
+      progressModel.uploadFile();
+
+      var progressView = new ProgressView({model: progressModel});
+      this.progressZone.appendChild(progressView.render().el);
+    },
+
+    onDragOver: function() {
+      this.el.className = 'hover';
+      return false;
+    },
+
+    onDragLeave: function() {
+      this.el.className = '';
+      return false;
+    },
+
+    onDrop: function(e) {
+      this.el.className = '';
+      e.preventDefault();
+
+      for (var i = 0; i < e.originalEvent.dataTransfer.files.length; i++) {
+        this.upload(e.originalEvent.dataTransfer.files[i]);
+      }
+    },
+
+    onFileBrowserSelect: function(e) {
+      for (var i = 0; i < e.target.files.length; i++) {
+        this.upload(e.target.files[i]);
+      }
+    },
+
+    tests: {
       filereader: typeof FileReader != 'undefined',
       dnd: 'draggable' in document.createElement('span'),
       formdata: !!window.FormData,
       progress: "upload" in new XMLHttpRequest
     },
-    support = {
+
+    support: {
       filereader: document.getElementById('filereader'),
       formdata:   document.getElementById('formdata'),
       progress:   document.getElementById('progress')
-    },
-    progressZone = document.getElementById('progress-zone'),
-    progressTmpl = document.getElementById('upload-progress-tmpl').innerHTML,
-    uploadForm   = document.getElementById('upload-form'),
-    variantId    = uploadForm.querySelector('input[name="image[viewable_id]"]').value;
-
+    }
+  });
 
   var ProgressModel = Backbone.Model.extend({
     initialize: function() {
@@ -46,6 +92,8 @@ Spree.prepareImageUploader = function () {
       'image/jpeg': true,
       'image/gif': true
     },
+
+    variantId: document.querySelector('input[name="image[viewable_id]"]').value,
 
     previewFile: function () {
       var file = this.get('file'),
@@ -69,7 +117,7 @@ Spree.prepareImageUploader = function () {
           that = this;
 
       formData.append('image[attachment]', this.get('file'));
-      formData.append('image[viewable_id]', variantId);
+      formData.append('image[viewable_id]', this.variantId);
       formData.append('upload_id', this.cid);
 
       // send the image to the server
@@ -100,11 +148,12 @@ Spree.prepareImageUploader = function () {
     }
   }); // end ProgressModel
 
+
   var ProgressView = Backbone.View.extend({
     tagName: "div",
 
     // Cache the template function for a single item.
-    template: _.template(progressTmpl),
+    template: _.template(document.getElementById('upload-progress-tmpl').innerHTML),
 
     initialize: function() {
       this.listenTo(this.model, 'change:progress', this.updateProgressBar);
@@ -123,7 +172,7 @@ Spree.prepareImageUploader = function () {
     },
 
     render: function() {
-      // Skip progress bar update
+      // Skip progress bar update for better performance
       var changedAttrs = Object.keys(this.model.changed);
       if(changedAttrs.length === 1 && changedAttrs[0] == 'progress') return this;
 
@@ -137,49 +186,18 @@ Spree.prepareImageUploader = function () {
       return this;
     },
 
-    // Remove the item, destroy the model.
+    // Remove the item, destroy the model
     clear: function() {
       this.model.destroy();
     }
-  }); // end Backbone
+  }); // end ProgressView
 
 
-  // Hide or highlight supported browser features
-  "filereader formdata progress".split(' ').forEach(function (api) {
-    support[api].className = (tests[api] === false) ? 'red' : 'hidden'
-  });
+  // Kick off by binding the events on the upload zone
+  new UploadZone();
 
-  function upload(file) {
-    if (!tests.formdata) return;
+}; // end prepareImageUploader
 
-    var progressModel = new ProgressModel({file: file});
-    progressModel.previewFile();
-    progressModel.uploadFile();
-
-    var progressView = new ProgressView({model: progressModel});
-    progressZone.appendChild(progressView.render().el);
-  }
-
-  // Bind area for drag & drop
-  if (tests.dnd) {
-    uploadZone.ondragover = function () { this.className = 'hover'; return false; };
-    uploadZone.ondragleave = function () { this.className = ''; return false; };
-    uploadZone.ondrop = function (e) {
-      this.className = '';
-      e.preventDefault();
-      for (var i = 0; i < e.dataTransfer.files.length; i++) {
-        upload(e.dataTransfer.files[i]);
-      }
-    }
-  }
-
-  // Bind file browser button
-  uploadForm.querySelector('input[type="file"]').onchange = function () {
-    for (var i = 0; i < this.files.length; i++) {
-      upload(this.files[i]);
-    }
-  };
-};
 
 Spree.ready(function () {
   Spree.prepareImageUploader();
