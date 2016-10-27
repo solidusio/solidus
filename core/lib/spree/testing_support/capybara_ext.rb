@@ -107,18 +107,6 @@ module CapybaraExt
       raise "AJAX request took longer than 5 seconds." if counter >= 50
     end
   end
-
-  def accept_alert
-    page.evaluate_script('window.confirm = function() { return true; }')
-    yield
-  end
-
-  def dismiss_alert
-    page.evaluate_script('window.confirm = function() { return false; }')
-    yield
-    # Restore existing default
-    page.evaluate_script('window.confirm = function() { return true; }')
-  end
 end
 
 RSpec::Matchers.define :have_meta do |name, expected|

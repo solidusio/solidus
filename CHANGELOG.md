@@ -65,6 +65,10 @@
       and `remove_nested`. Also removes some javascript bound to selectors
       `.remove`, `a[id*=nested]`.
 
+    * Removed `accept_alert` and `dismiss_alert` from CapybaraExt.
+      `accept_alert` is now a capybara builtin (that we were overriding) and
+      `dismiss_alert` can be replaced with `dismiss_prompt`.
+
 ## Solidus 2.0.0 (unreleased)
 
 *   Upgrade to rails 5.0
