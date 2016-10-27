@@ -1,7 +1,5 @@
 module Spree::Promotion::Actions
   class CreateQuantityAdjustments < CreateItemAdjustments
-    include Spree::CalculatedAdjustments
-
     preference :group_size, :integer, default: 1
 
     has_many :line_item_actions, foreign_key: :action_id, dependent: :destroy
