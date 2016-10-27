@@ -698,44 +698,23 @@ en:
     adjustment_total: Adjustment Total
     adjustments: Adjustments
     admin:
-      tab:
-        areas: Locations
-        checkout: Refunds and Returns
-        configuration: Configuration
-        display_order: Display Order
-        general: Store
-        option_types: Option Types
-        orders: Orders
-        overview: Overview
-        payments: Payments
-        products: Products
-        promotions: Promotions
-        promotion_categories: Promotion Categories
-        properties: Property Types
-        reports: Reports
-        rma: RMA
-        settings: Settings
-        shipping: Shipping
-        stock: Stock
-        stock_items: Store Stock
-        stock_transfers: Stock Transfers
-        taxes: Taxes
-        taxonomies: Taxonomies
-        taxons: Taxons
-        users: Users
       general_settings:
         edit:
           no_cart_tax_country: "No taxes on carts without address"
-      user:
-        account: Account
-        addresses: Addresses
-        items: Items
-        items_purchased: Items Purchased
-        order_history: Order History
-        order_num: "Order #"
-        orders: Orders
-        store_credit: Store Credit
-        user_information: User Information
+      payments:
+        source_forms:
+          storecredit:
+            not_supported: "Creating store credit payments via the admin is not currently supported."
+      prices:
+        any_country: "Any Country"
+        index:
+          amount_greater_than: Amount greater than
+          amount_less_than: Amount less than
+          new_price: New Price
+        edit:
+          edit_price: Edit Price
+        new:
+          new_price: New Price
       store_credits:
         add: "Add store credit"
         amount_authorized: "Amount Authorized"
@@ -776,8 +755,46 @@ en:
           amount_authorized_exceeds_total_credit: " exceeds the available credit"
           amount_used_not_zero: "is greater than zero. Can not delete store credit"
           update_reason_required: "A reason for the change must be selected"
+      tab:
+        areas: Locations
+        checkout: Refunds and Returns
+        configuration: Configuration
+        display_order: Display Order
+        general: Store
+        option_types: Option Types
+        orders: Orders
+        overview: Overview
+        payments: Payments
+        products: Products
+        promotions: Promotions
+        promotion_categories: Promotion Categories
+        properties: Property Types
+        reports: Reports
+        rma: RMA
+        settings: Settings
+        shipping: Shipping
+        stock: Stock
+        stock_items: Store Stock
+        stock_transfers: Stock Transfers
+        taxes: Taxes
+        taxonomies: Taxonomies
+        taxons: Taxons
+        users: Users
       taxons:
         display_order: Display Order
+      user:
+        account: Account
+        addresses: Addresses
+        items: Items
+        items_purchased: Items Purchased
+        order_history: Order History
+        order_num: "Order #"
+        orders: Orders
+        store_credit: Store Credit
+        user_information: User Information
+      users:
+        user_page_actions:
+          create_order: Create order for this user
       variants:
         table_filter:
           show_deleted: Show deleted variants
@@ -790,23 +807,6 @@ en:
           use_product_tax_category: Use Product Tax Category
           pricing: Pricing
           pricing_hint: These values are populated from the product details page and can be overridden below
-      prices:
-        any_country: "Any Country"
-        index:
-          amount_greater_than: Amount greater than
-          amount_less_than: Amount less than
-          new_price: New Price
-        edit:
-          edit_price: Edit Price
-        new:
-          new_price: New Price
-      users:
-        user_page_actions:
-          create_order: Create order for this user
-      payments:
-        source_forms:
-          storecredit:
-            not_supported: "Creating store credit payments via the admin is not currently supported."
     administration: Administration
     agree_to_privacy_policy: Agree to Privacy Policy
     agree_to_terms_of_service: Agree to Terms of Service
