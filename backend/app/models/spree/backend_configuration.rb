@@ -9,7 +9,7 @@ module Spree
                             :variants, :product_properties, :taxonomies,
                             :taxons]
     REPORT_TABS        ||= [:reports]
-    CONFIGURATION_TABS ||= [:configurations, :general_settings, :tax_categories,
+    CONFIGURATION_TABS ||= [:stores, :tax_categories,
                             :tax_rates, :zones, :countries, :states,
                             :payment_methods, :shipping_methods,
                             :shipping_categories, :stock_locations,
@@ -90,10 +90,10 @@ module Spree
         MenuItem.new(
           CONFIGURATION_TABS,
           'wrench',
-          condition: -> { can?(:admin, :general_settings) },
+          condition: -> { can?(:admin, Spree::Store) },
           label: :settings,
           partial: 'spree/admin/shared/settings_sub_menu',
-          url: :edit_admin_general_settings_path
+          url: :admin_stores_path
         ),
         MenuItem.new(
           PROMOTION_TABS,
