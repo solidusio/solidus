@@ -4,6 +4,7 @@ describe "Product Images", type: :feature do
   stub_authorization!
 
   let(:file_path) { Rails.root + "../../spec/support/ror_ringer.jpeg" }
+  let(:product)   { create(:product) }
 
   before do
     # Ensure attachment style keys are symbolized before running all tests
@@ -23,7 +24,9 @@ describe "Product Images", type: :feature do
       click_icon(:edit)
       click_link "Images"
       click_link "new_image_link"
-      attach_file('image_attachment', file_path)
+      within_fieldset 'New Image' do
+        attach_file('image_attachment', file_path)
+      end
       click_button "Update"
       expect(page).to have_content("successfully created!")
 
@@ -39,6 +42,30 @@ describe "Product Images", type: :feature do
         click_icon :trash
       end
       expect(page).not_to have_content("ruby on rails t-shirt")
+    end
+  end
+
+  context 'Via the upload zone', js: true do
+    it "uploads an image with ajax and appends it to the images table" do
+      visit spree.admin_product_images_path(product)
+      expect(page).to have_content("No images found")
+
+      within_fieldset 'Upload Image' do
+        # Can also pass multiple files in the array, but SQLite gives a deadlock on insert
+        attach_file('image_attachment', [file_path])
+        expect(page).to have_css("progress", count: 1)
+        expect(page).to have_text("ror_ringer")
+      end
+
+      expect(page).not_to have_content("No images found")
+
+      within("table.index") do
+        expect(page).to have_css("tbody tr", count: 1)
+
+        within("tbody") do
+          expect(page).to have_xpath("//img[contains(@src,'ror_ringer')]")
+        end
+      end
     end
   end
 

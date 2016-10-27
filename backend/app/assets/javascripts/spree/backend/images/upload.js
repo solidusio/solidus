@@ -23,7 +23,7 @@ Spree.prepareImageUploader = function () {
     progressZone = document.getElementById('progress-zone'),
     progressTmpl = document.getElementById('upload-progress-tmpl').innerHTML,
     uploadForm   = document.getElementById('upload-form'),
-    variantId    = uploadForm.querySelector('input[name="image[viewable_id]"').value;
+    variantId    = uploadForm.querySelector('input[name="image[viewable_id]"]').value;
 
 
   var ProgressModel = Backbone.Model.extend({
@@ -94,7 +94,7 @@ Spree.prepareImageUploader = function () {
         }
       }).done(function() {
         that.set({progress: 100})
-      }).error(function() {
+      }).error(function(jqXHR, textStatus, errorThrown) {
         that.set({serverError: true});
       });
     }

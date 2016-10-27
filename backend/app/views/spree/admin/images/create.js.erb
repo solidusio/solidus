@@ -1,4 +1,4 @@
-var uploadedRow = $('[data-upload-id="<%= params[:upload_id] %>"');
+var uploadedRow = $('[data-upload-id="<%= params[:upload_id] %>"]');
 
 <% if @image.persisted? %>
   uploadedRow.trigger('clear');
