@@ -29,7 +29,7 @@
     <% end %>
 
     <% if @product.price_for(current_pricing_options) and !@product.price.nil? %>
-      <div data-hook="product_price" class="columns five <% if !@product.has_variants? %> alpha <% else %> omega <% end %>">
+      <div data-hook="product_price" class="columns five <%= !@product.has_variants? ? 'alpha' : 'omega' %>">
 
         <div id="product-price">
           <h6 class="product-section-title"><%= Spree.t(:price) %></h6>
