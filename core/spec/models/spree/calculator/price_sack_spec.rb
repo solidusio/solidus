@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'shared_examples/calculator_shared_examples'
 
 describe Spree::Calculator::PriceSack, type: :model do
   let(:calculator) do
@@ -8,6 +9,8 @@ describe Spree::Calculator::PriceSack, type: :model do
     calculator.preferred_discount_amount = 1
     calculator
   end
+
+  it_behaves_like 'a calculator with a description'
 
   let(:order) { stub_model(Spree::Order) }
   let(:shipment) { stub_model(Spree::Shipment, amount: 10) }

@@ -1,7 +1,10 @@
 require 'spec_helper'
+require 'shared_examples/calculator_shared_examples'
 
 describe Spree::Calculator::TieredFlatRate, type: :model do
   let(:calculator) { Spree::Calculator::TieredFlatRate.new }
+
+  it_behaves_like 'a calculator with a description'
 
   describe "#valid?" do
     subject { calculator.valid? }

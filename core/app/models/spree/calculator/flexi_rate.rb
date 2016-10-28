@@ -7,10 +7,6 @@ module Spree
     preference :max_items,       :integer, default: 0
     preference :currency,        :string,  default: ->{ Spree::Config[:currency] }
 
-    def self.description
-      Spree.t(:flexible_rate)
-    end
-
     def self.available?(_object)
       true
     end

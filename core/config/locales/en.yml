@@ -363,6 +363,51 @@ en:
       spree/calculator/default_tax:
         one: Default Tax
         other: Default Tax
+      spree/calculator/flat_percent_item_total:
+        one: Flat Percent
+        other: Flat Percent
+      spree/calculator/flat_rate:
+        one: Flat Rate
+        other: Flat Rate
+      spree/calculator/flexi_rate:
+        one: Flexible Rate
+        other: Flexible Rate
+      spree/calculator/free_shipping:
+        one: Free Shipping
+        other: Free Shipping
+      spree/calculator/percent_on_line_item:
+        one: Percent Per Item
+        other: Percent Per Item
+      spree/calculator/percent_per_item:
+        one: Percent Per Item
+        other: Percent Per Item
+      spree/calculator/price_sack:
+        one: Price Sack
+        other: Price Sack
+      spree/calculator/tiered_percent:
+        one: Tiered Percent
+        other: Tiered Percent
+      spree/calculator/tiered_flat_rate:
+        one: Tiered Flat Rate
+        other: Tiered Flat Rate
+      spree/calculator/returns/default_refund_amount:
+        one: Default Refund Amount
+        other: Default Refund Amount
+      spree/calculator/shipping/flat_percent_item_total:
+        one: Flat Percent
+        other: Flat Percent
+      spree/calculator/shipping/flat_rate:
+        one: Flat rate
+        other: Flat rate
+      spree/calculator/shipping/flexi_rate:
+        one: Flexible Rate per package item
+        other: Flexible Rate per package item
+      spree/calculator/shipping/per_item:
+        one: Flat rate per package item
+        other: Flat rate per package item
+      spree/calculator/shipping/price_sack:
+        one: Price sack
+        other: Price sack
       spree/country:
         one: Country
         other: Countries

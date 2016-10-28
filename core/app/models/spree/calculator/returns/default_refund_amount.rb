@@ -3,9 +3,6 @@ require_dependency 'spree/returns_calculator'
 module Spree
   module Calculator::Returns
     class DefaultRefundAmount < ReturnsCalculator
-      def self.description
-        Spree.t(:default_refund_amount)
-      end
 
       def compute(return_item)
         return 0.0.to_d if return_item.part_of_exchange?

@@ -7,10 +7,6 @@ module Spree
     preference :discount_amount, :decimal, default: 0
     preference :currency, :string, default: ->{ Spree::Config[:currency] }
 
-    def self.description
-      Spree.t(:price_sack)
-    end
-
     # as object we always get line items, as calculable we have Coupon, ShippingMethod
     def compute(object)
       if object.is_a?(Array)

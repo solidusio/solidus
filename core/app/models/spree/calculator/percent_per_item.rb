@@ -10,10 +10,6 @@ module Spree
   class Calculator::PercentPerItem < Calculator
     preference :percent, :decimal, default: 0
 
-    def self.description
-      Spree.t(:percent_per_item)
-    end
-
     def compute(object = nil)
       return 0 if object.nil?
       object.line_items.map { |line_item|

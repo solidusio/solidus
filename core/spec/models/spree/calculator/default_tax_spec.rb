@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'shared_examples/calculator_shared_examples'
 
 describe Spree::Calculator::DefaultTax, type: :model do
   let(:address) { create(:address) }
@@ -9,10 +10,7 @@ describe Spree::Calculator::DefaultTax, type: :model do
   let(:included_in_price) { false }
   subject(:calculator) { Spree::Calculator::DefaultTax.new(calculable: rate ) }
 
-  describe ".description" do
-    subject { described_class.description }
-    it { is_expected.to eq("Default Tax") }
-  end
+  it_behaves_like 'a calculator with a description'
 
   context "#compute" do
     context "when given an order" do

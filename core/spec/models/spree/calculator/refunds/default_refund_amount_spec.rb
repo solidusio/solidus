@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'shared_examples/calculator_shared_examples'
 
 describe Spree::Calculator::Returns::DefaultRefundAmount, type: :model do
   let(:line_item_quantity) { 2 }
@@ -8,6 +9,8 @@ describe Spree::Calculator::Returns::DefaultRefundAmount, type: :model do
   let(:return_item) { build(:return_item, inventory_unit: inventory_unit ) }
   let(:calculator) { Spree::Calculator::Returns::DefaultRefundAmount.new }
   let(:order) { line_item.order }
+
+  it_behaves_like 'a calculator with a description'
 
   subject { calculator.compute(return_item) }
 

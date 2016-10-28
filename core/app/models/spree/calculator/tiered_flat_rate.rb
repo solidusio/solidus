@@ -14,10 +14,6 @@ module Spree
 
     validate :preferred_tiers_content
 
-    def self.description
-      Spree.t(:tiered_flat_rate)
-    end
-
     def compute(object)
       _base, amount = preferred_tiers.sort.reverse.detect{ |b, _| object.amount >= b }
       amount || preferred_base_amount

@@ -1,8 +1,11 @@
 require 'spec_helper'
+require 'shared_examples/calculator_shared_examples'
 
 describe Spree::Calculator::FlatPercentItemTotal, type: :model do
   let(:calculator) { Spree::Calculator::FlatPercentItemTotal.new }
   let(:line_item) { mock_model Spree::LineItem }
+
+  it_behaves_like 'a calculator with a description'
 
   before { allow(calculator).to receive_messages preferred_flat_percent: 10 }
 
