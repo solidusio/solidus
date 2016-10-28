@@ -66,8 +66,8 @@ module Spree
       nil
     end
 
-    def taxon_breadcrumbs(taxon, separator = "&nbsp;&raquo;&nbsp;", breadcrumb_class = "inline")
-      return "" if current_page?("/") || taxon.nil?
+    def taxon_breadcrumbs(taxon, separator = '&nbsp;&raquo;&nbsp;', breadcrumb_class = 'inline')
+      return '' if current_page?('/') || taxon.nil?
 
       crumbs = [[Spree.t(:home), spree.root_path]]
 
@@ -81,15 +81,15 @@ module Spree
 
       separator = raw(separator)
 
-      crumbs.map! do |crumb|
-        content_tag(:li, itemscope: "itemscope", itemtype: "http://data-vocabulary.org/Breadcrumb") do
-          link_to(crumb.last, itemprop: "url") do
-            content_tag(:span, crumb.first, itemprop: "title")
+      items = crumbs.each_with_index.collect do |crumb, i|
+        content_tag(:li, itemprop: 'itemListElement', itemscope: '', itemtype: 'https://schema.org/ListItem') do
+          link_to(crumb.last, itemprop: 'item') do
+            content_tag(:span, crumb.first, itemprop: 'name') + tag('meta', { itemprop: 'position', content: (i+1).to_s }, false, false)
           end + (crumb == crumbs.last ? '' : separator)
         end
       end
 
-      content_tag(:nav, content_tag(:ul, raw(crumbs.map(&:mb_chars).join), class: breadcrumb_class), id: 'breadcrumbs', class: 'sixteen columns')
+      content_tag(:nav, content_tag(:ol, raw(items.map(&:mb_chars).join), class: breadcrumb_class, itemscope: '', itemtype: 'https://schema.org/BreadcrumbList'), id: 'breadcrumbs', class: 'sixteen columns')
     end
 
     def taxons_tree(root_taxon, current_taxon, max_level = 1)
