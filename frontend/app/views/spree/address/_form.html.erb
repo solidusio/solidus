@@ -2,34 +2,43 @@
 <div class="inner" data-hook=<%="#{address_type}_inner" %>>
   <p class="field" id=<%="#{address_id}firstname" %>>
     <%= form.label :firstname, Spree.t(:first_name) %><span class="required">*</span><br />
-    <%= form.text_field :firstname, :class => 'required' %>
+    <%= form.text_field :firstname, class: 'required', autocomplete: address_type + ' given-name' %>
   </p>
+
   <p class="field" id=<%="#{address_id}lastname" %>>
     <%= form.label :lastname, Spree.t(:last_name) %><span class="required">*</span><br />
-    <%= form.text_field :lastname %>
+    <%= form.text_field :lastname, autocomplete: address_type + ' family-name' %>
   </p>
+
   <% if Spree::Config[:company] %>
     <p class="field" id=<%="#{address_id}company" %>>
       <%= form.label :company, Spree.t(:company) %><br />
-      <%= form.text_field :company %>
+      <%= form.text_field :company, autocomplete: address_type + ' organization' %>
     </p>
   <% end %>
+
   <p class="field" id=<%="#{address_id}address1" %>>
     <%= form.label :address1, Spree.t(:street_address) %><span class="required">*</span><br />
-    <%= form.text_field :address1, :class => 'required' %>
+    <%= form.text_field :address1, class: 'required', autocomplete: address_type + ' address-line1' %>
   </p>
+
   <p class="field" id=<%="#{address_id}address2" %>>
     <%= form.label :address2, Spree.t(:street_address_2) %><br />
-    <%= form.text_field :address2 %>
+    <%= form.text_field :address2, autocomplete: address_type + ' address-line2' %>
   </p>
+
   <p class="field" id=<%="#{address_id}city" %>>
     <%= form.label :city, Spree.t(:city) %><span class="required">*</span><br />
-    <%= form.text_field :city, :class => 'required' %>
+    <%= form.text_field :city, class: 'required', autocomplete: address_type + ' address-level2' %>
   </p>
+
   <p class="field" id=<%="#{address_id}country" %>>
     <%= form.label :country_id, Spree.t(:country) %><span class="required">*</span><br />
     <span id=<%="#{address_id}country-selection" %>>
-      <%= form.collection_select :country_id, available_countries, :id, :name, {}, {:class => 'required'} %>
+      <%= form.collection_select :country_id, available_countries, :id, :name, {},
+          class: 'required',
+          autocomplete: address_type + ' country-name'
+        %>
     </span>
   </p>
 
@@ -46,7 +55,8 @@
             {
               class: have_states ? 'required' : '',
               style: have_states ? '' : 'display: none;',
-              disabled: !have_states
+              disabled: !have_states,
+              autocomplete: address_type + ' address-level1'
             })
           %>
         <%=
@@ -54,28 +64,31 @@
             :state_name,
             class: !have_states ? 'required' : '',
             style: have_states ? 'display: none;' : '',
-            disabled: have_states
+            disabled: have_states,
+            autocomplete: address_type + ' address-level1'
           )
         %>
       </span>
       <noscript>
-        <%= form.text_field :state_name, :class => 'required' %>
+        <%= form.text_field :state_name, :class => 'required', autocomplete: address_type + ' address-level1' %>
       </noscript>
     </p>
   <% end %>
 
   <p class="field" id=<%="#{address_id}zipcode" %>>
     <%= form.label :zipcode, Spree.t(:zip) %><% if address.require_zipcode? %><span class="required">*</span><% end %><br />
-    <%= form.text_field :zipcode, :class => "#{'required' if address.require_zipcode?}" %>
+    <%= form.text_field :zipcode, class: "#{'required' if address.require_zipcode?}", autocomplete: address_type + ' postal-code' %>
   </p>
+
   <p class="field" id=<%="#{address_id}phone" %>>
     <%= form.label :phone, Spree.t(:phone) %><% if address.require_phone? %><span class="required">*</span><% end %><br />
-    <%= form.phone_field :phone, :class => "#{'required' if address.require_phone?}" %>
+    <%= form.phone_field :phone, class: "#{'required' if address.require_phone?}", autocomplete: address_type + ' home tel' %>
   </p>
+
   <% if Spree::Config[:alternative_shipping_phone] %>
     <p class="field" id=<%="#{address_id}altphone" %>>
       <%= form.label :alternative_phone, Spree.t(:alternative_phone) %><br />
-      <%= form.phone_field :alternative_phone %>
+      <%= form.phone_field :alternative_phone, autocomplete: address_type + ' tel' %>
     </p>
   <% end %>
 </div>
