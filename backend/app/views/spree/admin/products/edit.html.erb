@@ -11,7 +11,7 @@
 
 <% admin_breadcrumb(Spree.t(:product_details)) %>
 
-<%= form_for [:admin, @product], :method => :put, :html => { :multipart => true } do |f| %>
+<%= form_for [:admin, @product], :html => { :multipart => true } do |f| %>
   <fieldset class="no-border-top">
     <%= render :partial => 'form', :locals => { :f => f } %>
     <% if can?(:update, @product) %>
