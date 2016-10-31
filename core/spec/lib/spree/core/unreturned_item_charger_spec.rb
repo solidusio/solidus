@@ -53,7 +53,6 @@ describe Spree::UnreturnedItemCharger do
 
       it "applies tax" do
         exchange_order = exchange_shipment.order
-        exchange_order.create_tax_charge!
         exchange_order.update!
         subject
         expect(new_order.additional_tax_total).to be > 0

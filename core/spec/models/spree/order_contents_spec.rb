@@ -256,11 +256,6 @@ describe Spree::OrderContents, type: :model do
       }.to change { subject.order.total }
     end
 
-    it "updates tax adjustments" do
-      expect(subject.order).to receive(:create_tax_charge!)
-      subject.update_cart params
-    end
-
     context "submits item quantity 0" do
       let(:params) do
         { line_items_attributes: {

@@ -13,6 +13,28 @@
     Warning: this change also deletes the `currency` database field (String)
     from the line items table, since it will not be used anymore.
 
+*   The OrderUpdater (as used by `order.update!`) now fully updates taxes.
+
+    Previously there were two different ways taxes were calculated: a "full"
+    and a "quick" calculation. The full calculation was performed with
+    `order.create_tax_charge!` and would determine which tax rates applied and
+    add taxes to items. The "quick" calculation was performed as part of an
+    order update, and would only update the tax amounts on existing line items
+    with taxes.
+
+    Now `order.update!` will perform the full calculation every time.
+    `order.create_tax_charge!` is now deprecated and has been made equivalent
+    to `order.update!`.
+
+    https://github.com/solidusio/solidus/pull/1479
+
+*   Added Spree::Config.tax_adjuster_class
+
+    To allow easier customization of tax calculation in extensions or
+    applications.
+
+    https://github.com/solidusio/solidus/pull/1479
+
 *   Add `Spree::Promotion#remove_from` and `Spree::PromotionAction#remove_from`
 
     This will allow promotions to be removed from orders and allows promotion
@@ -31,7 +53,7 @@
 *   Remove callback `Spree::LineItem.after_create :update_tax_charge`
 
     Any code that creates `LineItem`s outside the context of OrderContents
-    should ensure that it calls `order.create_tax_charge!` after doing so.
+    should ensure that it calls `order.update!` after doing so.
 
 *   Mark `Spree::Tax::ItemAdjuster` as api-private
 
@@ -52,7 +74,7 @@
 *   Removals
 
     * Removed deprecated method `Spree::TaxRate.adjust` (not to be confused with
-      Spree::TaxRate#adjust) in favor of `Spree::Tax::OrderAdjuster`.
+      Spree::TaxRate#adjust) in favor of `Spree::Config.tax_adjuster_class`.
 
       https://github.com/solidusio/solidus/pull/1462
 

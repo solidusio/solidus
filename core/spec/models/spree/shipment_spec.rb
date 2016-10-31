@@ -118,10 +118,23 @@ describe Spree::Shipment, type: :model do
   end
 
   context "#item_cost" do
+    let(:shipment) { order.shipments[0] }
+
+    let(:order) do
+      create(
+        :order_ready_to_ship,
+        line_items_attributes: [{ price: 10, variant: variant }],
+        ship_address: ship_address,
+      )
+    end
+
+    let!(:ship_address) { create(:address) }
+    let!(:tax_zone) { create(:global_zone) } # will include the above address
+    let!(:tax_rate) { create(:tax_rate, amount: 0.1, zone: tax_zone, tax_category: tax_category) }
+    let(:tax_category) { create(:tax_category) }
+    let(:variant) { create(:variant, tax_category: tax_category) }
+
     it 'should equal line items final amount with tax' do
-      shipment = create(:shipment, order: create(:order_with_totals))
-      create :tax_adjustment, adjustable: shipment.order.line_items.first, order: shipment.order
-      shipment.order.update!
       expect(shipment.item_cost).to eql(11.0)
     end
   end
