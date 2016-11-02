@@ -5,6 +5,10 @@ RSpec.describe Spree::Tax::ItemAdjuster do
   let(:order) { create(:order) }
   let(:item) { Spree::LineItem.new(order: order) }
 
+  def tax_adjustments
+    item.adjustments.tax.to_a
+  end
+
   describe 'initialization' do
     it 'sets order to item order' do
       expect(adjuster.order).to eq(item.order)
@@ -23,12 +27,9 @@ RSpec.describe Spree::Tax::ItemAdjuster do
     context 'when the order has no tax zone' do
       let(:address) { Spree::Tax::TaxLocation.new }
 
-      before do
+      it 'creates no adjustments' do
         adjuster.adjust!
-      end
-
-      it 'returns nil early' do
-        expect(adjuster.adjust!).to be_nil
+        expect(tax_adjustments).to eq([])
       end
     end
 
@@ -44,7 +45,8 @@ RSpec.describe Spree::Tax::ItemAdjuster do
         let(:rates_for_order_zone) { [] }
 
         it 'returns no adjustments' do
-          expect(adjuster.adjust!).to eq([])
+          adjuster.adjust!
+          expect(tax_adjustments).to eq([])
         end
       end
 
@@ -58,7 +60,8 @@ RSpec.describe Spree::Tax::ItemAdjuster do
           before { allow(item).to receive(:tax_category).and_return(item_tax_category) }
 
           it 'creates an adjustment for every matching rate' do
-            expect(adjuster.adjust!.length).to eq(1)
+            adjuster.adjust!
+            expect(tax_adjustments.length).to eq(1)
           end
         end
       end
