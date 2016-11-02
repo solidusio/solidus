@@ -141,7 +141,9 @@ describe Spree::ShippingRate, type: :model do
       end
 
       it "shows correct tax amount" do
-        expect(shipping_rate.display_price.to_s).to eq("$10.00 (+ $1.00 Sales Tax, + $0.50 Other Sales Tax)")
+        expect(shipping_rate.display_price.to_s).to match(/\$10.00 \(.*, .*\)/)
+        expect(shipping_rate.display_price.to_s).to include("+ $1.00 Sales Tax")
+        expect(shipping_rate.display_price.to_s).to include("+ $0.50 Other Sales Tax")
       end
 
       context "when cost is zero" do

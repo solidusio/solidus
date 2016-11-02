@@ -12,7 +12,9 @@ module Spree
 
       context "when no zones exist" do
         it "should return nil" do
-          expect(order.tax_zone).to be_nil
+          Spree::Deprecation.silence do
+            expect(order.tax_zone).to be_nil
+          end
         end
       end
 
@@ -22,7 +24,9 @@ module Spree
         it "should calculate using ship_address" do
           expect(Spree::Zone).to receive(:match).at_least(:once).with(ship_address)
           expect(Spree::Zone).not_to receive(:match).with(bill_address)
-          order.tax_zone
+          Spree::Deprecation.silence do
+            order.tax_zone
+          end
         end
       end
 
@@ -32,7 +36,9 @@ module Spree
         it "should calculate using bill_address" do
           expect(Spree::Zone).to receive(:match).at_least(:once).with(bill_address)
           expect(Spree::Zone).not_to receive(:match).with(ship_address)
-          order.tax_zone
+          Spree::Deprecation.silence do
+            order.tax_zone
+          end
         end
       end
 
@@ -46,7 +52,9 @@ module Spree
           before { allow(Spree::Zone).to receive_messages(match: zone) }
 
           it "should return the matching zone" do
-            expect(order.tax_zone).to eq(zone)
+            Spree::Deprecation.silence do
+              expect(order.tax_zone).to eq(zone)
+            end
           end
         end
 
@@ -54,7 +62,9 @@ module Spree
           before { allow(Spree::Zone).to receive_messages(match: nil) }
 
           it "should return the default tax zone" do
-            expect(order.tax_zone).to eq(@default_zone)
+            Spree::Deprecation.silence do
+              expect(order.tax_zone).to eq(@default_zone)
+            end
           end
         end
       end
@@ -66,7 +76,9 @@ module Spree
           before { allow(Spree::Zone).to receive_messages(match: zone) }
 
           it "should return the matching zone" do
-            expect(order.tax_zone).to eq(zone)
+            Spree::Deprecation.silence do
+              expect(order.tax_zone).to eq(zone)
+            end
           end
         end
 
@@ -74,10 +86,13 @@ module Spree
           before { allow(Spree::Zone).to receive_messages(match: nil) }
 
           it "should return nil" do
-            expect(order.tax_zone).to be_nil
+            Spree::Deprecation.silence do
+              expect(order.tax_zone).to be_nil
+            end
           end
         end
       end
+
     end
   end
 end

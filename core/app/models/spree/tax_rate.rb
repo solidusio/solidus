@@ -66,7 +66,7 @@ module Spree
     scope :included_in_price, -> { where(included_in_price: true) }
 
     # Creates necessary tax adjustments for the order.
-    def adjust(order_tax_zone, item)
+    def adjust(_order_tax_zone, item)
       amount = compute_amount(item)
       return if amount == 0
 

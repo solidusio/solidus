@@ -152,7 +152,7 @@ describe Spree::TaxRate, type: :model do
 
     describe 'adjustments' do
       before do
-        tax_rate.adjust(order.tax_zone, item)
+        tax_rate.adjust(nil, item)
       end
 
       let(:adjustment_label) { item.adjustments.tax.first.label }
