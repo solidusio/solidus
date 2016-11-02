@@ -760,6 +760,10 @@ en:
           edit_price: Edit Price
         new:
           new_price: New Price
+      promotions:
+        form:
+          starts_at_placeholder: Immediately
+          expires_at_placeholder: Never
       store_credits:
         add: "Add store credit"
         amount_authorized: "Amount Authorized"
