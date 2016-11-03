@@ -162,6 +162,8 @@ Spree.prepareImageUploader = function () {
       "clear" : "clear"
     },
 
+    className: 'col-sm-6 col-md-4 margin-bottom-one',
+
     attributes: function() {
       return {
         "data-upload-id": this.model.cid

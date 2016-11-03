@@ -1,11 +1,12 @@
-<div class="row row-xs-center margin-bottom-one">
-  <div class="col-xs-2">
-    <img src="{{ imgSrc }}" class="img-fluid">
-  </div>
+<div class="card progress-card">
+  <img src="{{ imgSrc }}" class="card-img-top img-fluid">
 
-  <div class="col-xs-10">
+  <div class="card-block">
     <progress min="0" max="100" value="{{ progress }}">{{ progress }}</progress>
+
     <summary>{{ summary }}</summary>
-    <error class="red {{#unless serverError}} hidden {{/unless}}">{{t 'admin.images.index.image_process_failed' }}</error>
+    <br>
+
+    <error class="text-danger {{#unless serverError}} hidden {{/unless}}">{{t 'admin.images.index.image_process_failed' }}</error>
   </div>
 </div>
