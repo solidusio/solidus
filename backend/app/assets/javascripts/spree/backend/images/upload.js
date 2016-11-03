@@ -23,7 +23,7 @@ Spree.prepareImageUploader = function () {
     },
 
     upload: function(file) {
-      if (!this.tests.formdata) return;
+      if (!FormData) return;
 
       var progressModel = new ProgressModel({file: file});
       progressModel.previewFile();
@@ -33,29 +33,26 @@ Spree.prepareImageUploader = function () {
       this.progressZone.appendChild(progressView.render().el);
     },
 
-    onDragOver: function() {
-      this.el.className = 'hover';
-      return false;
+    dragClass: 'with-images',
+
+    onDragOver: function(e) {
+      this.el.classList.add(this.dragClass);
+      e.preventDefault();
     },
 
     onDragLeave: function() {
-      this.el.className = '';
-      return false;
+      this.el.classList.remove(this.dragClass);
     },
 
     onDrop: function(e) {
-      this.el.className = '';
+      this.el.classList.remove(this.dragClass);
       e.preventDefault();
 
-      for (var i = 0; i < e.originalEvent.dataTransfer.files.length; i++) {
-        this.upload(e.originalEvent.dataTransfer.files[i]);
-      }
+      _.each(e.originalEvent.dataTransfer.files, this.upload, this);
     },
 
     onFileBrowserSelect: function(e) {
-      for (var i = 0; i < e.target.files.length; i++) {
-        this.upload(e.target.files[i]);
-      }
+      _.each(e.target.files, this.upload, this);
     },
 
     tests: {
@@ -153,7 +150,7 @@ Spree.prepareImageUploader = function () {
     tagName: "div",
 
     // Cache the template function for a single item.
-    template: _.template(document.getElementById('upload-progress-tmpl').innerHTML),
+    template: HandlebarsTemplates["products/upload_progress"],
 
     initialize: function() {
       this.listenTo(this.model, 'change:progress', this.updateProgressBar);

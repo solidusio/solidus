@@ -1,0 +1,11 @@
+<div class="row row-xs-center margin-bottom-one">
+  <div class="col-xs-2">
+    <img src="{{ imgSrc }}" class="img-fluid">
+  </div>
+
+  <div class="col-xs-10">
+    <progress min="0" max="100" value="{{ progress }}">{{ progress }}</progress>
+    <summary>{{ summary }}</summary>
+    <error class="red {{#unless serverError}} hidden {{/unless}}">Server failed to process the image</error>
+  </div>
+</div>

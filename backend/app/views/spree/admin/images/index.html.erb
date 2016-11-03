@@ -30,20 +30,6 @@
   <p id="formdata">XHR2's FormData is not supported</p>
   <p id="progress">XHR2's upload progress isn't supported</p>
 
-  <script type="text/template" id="upload-progress-tmpl">
-    <div class="row row-xs-center margin-bottom-one">
-      <div class="col-xs-2">
-        <img src="{{= imgSrc }}" class="img-fluid">
-      </div>
-
-      <div class="col-xs-10">
-        <progress min="0" max="100" value="{{= progress }}">{{= progress }}</progress>
-        <summary>{{= summary }}</summary>
-        <error class="red {{ if(!serverError) print('hidden'); }}">Server failed to process the image</error>
-      </div>
-    </div>
-  </script>
-
   <div id="progress-zone"></div>
 </fieldset>
 
