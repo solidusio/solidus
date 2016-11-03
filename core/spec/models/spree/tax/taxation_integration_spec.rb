@@ -624,6 +624,25 @@ RSpec.describe "Taxation system integration tests" do
           federal_books_tax.destroy!
           expect(line_item.adjustments.count).to eq(2)
         end
+
+        context 'when tax address is later cleared' do
+          before do
+            order.ship_address = nil
+            order.update!
+          end
+
+          it 'removes all tax adjustments' do
+            aggregate_failures do
+              expect(line_item.adjustments.tax.count).to eq(0)
+              expect(line_item).to have_attributes(
+                price: 20,
+                total: 20,
+                included_tax_total: 0,
+                additional_tax_total: 0
+              )
+            end
+          end
+        end
       end
 
       context 'an order with a book and a shipment' do
