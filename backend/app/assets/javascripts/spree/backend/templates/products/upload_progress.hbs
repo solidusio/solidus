@@ -6,6 +6,6 @@
   <div class="col-xs-10">
     <progress min="0" max="100" value="{{ progress }}">{{ progress }}</progress>
     <summary>{{ summary }}</summary>
-    <error class="red {{#unless serverError}} hidden {{/unless}}">Server failed to process the image</error>
+    <error class="red {{#unless serverError}} hidden {{/unless}}">{{t 'admin.images.index.image_process_failed' }}</error>
   </div>
 </div>

@@ -749,6 +749,7 @@ en:
       images:
         index:
           drag_images_to_upload: Drag images from your desktop on to the drop zone to upload
+          image_process_failed: Server failed to process the image
           upload_images: Upload Images
       payments:
         source_forms:
