@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Spree::PaymentMethod, type: :model do
   describe ".available" do
     let!(:payment_method_nil_display)  { create(:payment_method, active: true, display_on: nil) }
-    let!(:payment_method_both_display) { create(:payment_method, active: true, display_on: 'both') }
+    let!(:payment_method_both_display) { create(:payment_method, active: true, display_on: '') }
     let!(:payment_method_front_display){ create(:payment_method, active: true, display_on: 'front_end') }
     let!(:payment_method_back_display) { create(:payment_method, active: true, display_on: 'back_end') }
 
@@ -20,11 +20,11 @@ describe Spree::PaymentMethod, type: :model do
     end
 
     it "should return all methods available to front-end when display_on = :front_end" do
-      expect(Spree::PaymentMethod.available(:front_end).size).to eq(2)
+      expect(Spree::PaymentMethod.available(:front_end).size).to eq(3)
     end
 
     it "should return all methods available to back-end when display_on = :back_end" do
-      expect(Spree::PaymentMethod.available(:back_end).size).to eq(2)
+      expect(Spree::PaymentMethod.available(:back_end).size).to eq(3)
     end
 
     context 'with stores' do
