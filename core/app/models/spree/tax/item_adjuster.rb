@@ -22,14 +22,10 @@ module Spree
 
       # Deletes all existing tax adjustments and creates new adjustments for all
       # (geographically and category-wise) applicable tax rates.
-      #
-      # @return [Array<Spree::Adjustment>] newly created adjustments
       def adjust!
-        return unless order.tax_address.country_id
-
         item.adjustments.destroy(item.adjustments.select(&:tax?))
 
-        rates_for_item(item).map { |rate| rate.adjust(nil, item) }
+        rates_for_item(item).each { |rate| rate.adjust(nil, item) }
       end
     end
   end

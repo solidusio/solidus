@@ -3,7 +3,11 @@ require 'spec_helper'
 RSpec.describe Spree::Tax::ItemAdjuster do
   subject(:adjuster) { described_class.new(item) }
   let(:order) { create(:order) }
-  let(:item) { Spree::LineItem.new(order: order) }
+  let(:item) { create(:line_item, order: order) }
+
+  def tax_adjustments
+    item.adjustments.tax.to_a
+  end
 
   describe 'initialization' do
     it 'sets order to item order' do
@@ -15,6 +19,25 @@ RSpec.describe Spree::Tax::ItemAdjuster do
     end
   end
 
+  shared_examples_for 'untaxed item' do
+    it 'creates no adjustments' do
+      adjuster.adjust!
+      expect(tax_adjustments).to eq([])
+    end
+
+    context 'with an existing tax adjustment' do
+      let!(:existing_adjustment) { create(:tax_adjustment, adjustable: item) }
+
+      it 'removes the existing adjustment' do
+        adjuster.adjust!
+        aggregate_failures do
+          expect(tax_adjustments).to eq([])
+          expect(Spree::Adjustment).to_not be_exists(existing_adjustment.id)
+        end
+      end
+    end
+  end
+
   describe '#adjust!' do
     before do
       expect(order).to receive(:tax_address).at_least(:once).and_return(address)
@@ -23,16 +46,10 @@ RSpec.describe Spree::Tax::ItemAdjuster do
     context 'when the order has no tax zone' do
       let(:address) { Spree::Tax::TaxLocation.new }
 
-      before do
-        adjuster.adjust!
-      end
-
-      it 'returns nil early' do
-        expect(adjuster.adjust!).to be_nil
-      end
+      it_behaves_like 'untaxed item'
     end
 
-    context 'when the order has an address thats taxable' do
+    context 'when the order has a taxable address' do
       let(:item) { build_stubbed :line_item, order: order }
       let(:address) { order.tax_address }
 
@@ -43,9 +60,7 @@ RSpec.describe Spree::Tax::ItemAdjuster do
       context 'when there are no matching rates' do
         let(:rates_for_order_zone) { [] }
 
-        it 'returns no adjustments' do
-          expect(adjuster.adjust!).to eq([])
-        end
+        it_behaves_like 'untaxed item'
       end
 
       context 'when there are matching rates for the zone' do
@@ -58,7 +73,8 @@ RSpec.describe Spree::Tax::ItemAdjuster do
           before { allow(item).to receive(:tax_category).and_return(item_tax_category) }
 
           it 'creates an adjustment for every matching rate' do
-            expect(adjuster.adjust!.length).to eq(1)
+            adjuster.adjust!
+            expect(tax_adjustments.length).to eq(1)
           end
         end
       end
