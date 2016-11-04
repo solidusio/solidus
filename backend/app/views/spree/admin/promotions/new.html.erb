@@ -2,7 +2,7 @@
 <% admin_breadcrumb(Spree.t(:new_promotion)) %>
 
 
-<%= form_for :promotion, :url => collection_url do |f| %>
+<%= form_for @promotion, :url => collection_url do |f| %>
   <fieldset class="no-border-top">
     <%= render :partial => 'form', :locals => { :f => f } %>
     <%= render :partial => 'spree/admin/shared/new_resource_links' %>

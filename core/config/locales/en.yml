@@ -760,6 +760,10 @@ en:
           edit_price: Edit Price
         new:
           new_price: New Price
+      promotions:
+        form:
+          starts_at_placeholder: Immediately
+          expires_at_placeholder: Never
       store_credits:
         add: "Add store credit"
         amount_authorized: "Amount Authorized"
@@ -1172,6 +1176,9 @@ en:
         promotionable: "This determines whether or not promotions can apply to this product.<br/>Default: Checked"
         shipping_category: "This determines what kind of shipping this product requires.<br/> Default: Default"
         tax_category: "This determines what kind of taxation is applied to this product.<br/> Default: None"
+      spree/promotion:
+        starts_at: "This determines when the promotion can be applied to orders. <br/> If no value is specified, the promotion will be immediately available."
+        expires_at: "This determines when the promotion expires. <br/> If no value is specified, the promotion will never expires."
       spree/store:
         cart_tax_country_iso: "This determines which country is used for taxes on carts (orders which don't yet have an address).<br/> Default: None."
       spree/variant:
