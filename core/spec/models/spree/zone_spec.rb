@@ -60,7 +60,9 @@ describe Spree::Zone, type: :model do
       let(:address) { create(:address, country: country, state: country.states.first) }
 
       it "should return the qualifying zone" do
-        expect(Spree::Zone.match(address)).to eq(country_zone)
+        Spree::Deprecation.silence do
+          expect(Spree::Zone.match(address)).to eq(country_zone)
+        end
       end
     end
 
@@ -72,7 +74,9 @@ describe Spree::Zone, type: :model do
 
       context "when both zones have the same number of members" do
         it "should return the zone that was created first" do
-          expect(Spree::Zone.match(address)).to eq(country_zone)
+          Spree::Deprecation.silence do
+            expect(Spree::Zone.match(address)).to eq(country_zone)
+          end
         end
       end
 
@@ -82,7 +86,9 @@ describe Spree::Zone, type: :model do
         before { country_zone.members.create(zoneable: country2) }
 
         it "should return the zone with fewer members" do
-          expect(Spree::Zone.match(address)).to eq(second_zone)
+          Spree::Deprecation.silence do
+            expect(Spree::Zone.match(address)).to eq(second_zone)
+          end
         end
       end
     end
@@ -94,13 +100,17 @@ describe Spree::Zone, type: :model do
       before { state_zone.members.create(zoneable: country.states.first) }
 
       it "should return the zone with the more specific member type" do
-        expect(Spree::Zone.match(address)).to eq(state_zone)
+        Spree::Deprecation.silence do
+          expect(Spree::Zone.match(address)).to eq(state_zone)
+        end
       end
     end
 
     context "when there are no qualifying zones" do
       it "should return nil" do
-        expect(Spree::Zone.match(Spree::Address.new)).to be_nil
+        Spree::Deprecation.silence do
+          expect(Spree::Zone.match(Spree::Address.new)).to be_nil
+        end
       end
     end
   end
@@ -115,7 +125,9 @@ describe Spree::Zone, type: :model do
       before { country_zone.members.create(zoneable: country) }
 
       it 'should return a list of countries' do
-        expect(country_zone.country_list).to eq([country])
+        Spree::Deprecation.silence do
+          expect(country_zone.country_list).to eq([country])
+        end
       end
     end
 
@@ -125,7 +137,9 @@ describe Spree::Zone, type: :model do
       before { state_zone.members.create(zoneable: state) }
 
       it 'should return a list of countries' do
-        expect(state_zone.country_list).to eq([state.country])
+        Spree::Deprecation.silence do
+          expect(state_zone.country_list).to eq([state.country])
+        end
       end
     end
   end
