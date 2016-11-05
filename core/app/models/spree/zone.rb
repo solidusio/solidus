@@ -55,6 +55,8 @@ module Spree
     # A State zone wins over a country zone, and a zone with few members wins
     # over one with many members. If there is no match, returns nil.
     def self.match(address)
+      Spree::Deprecation.warn("Spree::Zone.match is deprecated. Please use Spree::Zone.for_address instead.", caller)
+
       return unless address && (matches =
                                   with_member_ids(address.state_id, address.country_id).
                                   order(:zone_members_count, :created_at, :id).
