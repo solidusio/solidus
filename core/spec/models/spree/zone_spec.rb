@@ -198,12 +198,16 @@ describe Spree::Zone, type: :model do
     end
 
     it "should contain itself" do
-      expect(@source.contains?(@source)).to be true
+      Spree::Deprecation.silence do
+        expect(@source.contains?(@source)).to be true
+      end
     end
 
     context "when both source and target have no members" do
       it "should be false" do
-        expect(@source.contains?(@target)).to be false
+        Spree::Deprecation.silence do
+          expect(@source.contains?(@target)).to be false
+        end
       end
     end
 
@@ -211,7 +215,9 @@ describe Spree::Zone, type: :model do
       before { @source.members.create(zoneable: country1) }
 
       it "should be false" do
-        expect(@source.contains?(@target)).to be false
+        Spree::Deprecation.silence do
+          expect(@source.contains?(@target)).to be false
+        end
       end
     end
 
@@ -219,7 +225,9 @@ describe Spree::Zone, type: :model do
       before { @target.members.create(zoneable: country1) }
 
       it "should be false" do
-        expect(@source.contains?(@target)).to be false
+        Spree::Deprecation.silence do
+          expect(@source.contains?(@target)).to be false
+        end
       end
     end
 
@@ -229,7 +237,9 @@ describe Spree::Zone, type: :model do
       end
 
       it "should be true" do
-        expect(@source.contains?(@target)).to be true
+        Spree::Deprecation.silence do
+          expect(@source.contains?(@target)).to be true
+        end
       end
     end
 
@@ -246,7 +256,9 @@ describe Spree::Zone, type: :model do
         end
 
         it "should be true" do
-          expect(@source.contains?(@target)).to be true
+          Spree::Deprecation.silence do
+            expect(@source.contains?(@target)).to be true
+          end
         end
       end
 
@@ -258,7 +270,9 @@ describe Spree::Zone, type: :model do
         end
 
         it "should be false" do
-          expect(@source.contains?(@target)).to be false
+          Spree::Deprecation.silence do
+            expect(@source.contains?(@target)).to be false
+          end
         end
       end
 
@@ -269,7 +283,9 @@ describe Spree::Zone, type: :model do
         end
 
         it "should be false" do
-          expect(@source.contains?(@target)).to be false
+          Spree::Deprecation.silence do
+            expect(@source.contains?(@target)).to be false
+          end
         end
       end
     end
@@ -281,7 +297,9 @@ describe Spree::Zone, type: :model do
       end
 
       it "should be false" do
-        expect(@source.contains?(@target)).to be false
+        Spree::Deprecation.silence do
+          expect(@source.contains?(@target)).to be false
+        end
       end
     end
 
@@ -295,7 +313,9 @@ describe Spree::Zone, type: :model do
         end
 
         it "should be true" do
-          expect(@source.contains?(@target)).to be true
+          Spree::Deprecation.silence do
+            expect(@source.contains?(@target)).to be true
+          end
         end
       end
 
@@ -307,7 +327,9 @@ describe Spree::Zone, type: :model do
         end
 
         it "should be false" do
-          expect(@source.contains?(@target)).to be false
+          Spree::Deprecation.silence do
+            expect(@source.contains?(@target)).to be false
+          end
         end
       end
 
@@ -318,7 +340,9 @@ describe Spree::Zone, type: :model do
         end
 
         it "should be false" do
-          expect(@source.contains?(@target)).to be false
+          Spree::Deprecation.silence do
+            expect(@source.contains?(@target)).to be false
+          end
         end
       end
     end

@@ -166,6 +166,7 @@ module Spree
         (target.zoneables.collect(&:country).collect(&:id) - zoneables.collect(&:id)).empty?
       end
     end
+    deprecate :contains?, deprecator: Spree::Deprecation
 
     private
 
