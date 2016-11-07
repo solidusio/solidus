@@ -119,6 +119,10 @@ module Spree::Promotion::Actions
         @line_item.price
       end
 
+      def order
+        @line_item.order
+      end
+
       def currency
         @line_item.currency
       end
