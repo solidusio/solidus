@@ -11,6 +11,10 @@ FactoryGirl.define do
     state 'checkout'
     response_code '12345'
 
+    trait :completed do
+      state 'completed'
+    end
+
     trait :failing do
       response_code '00000'
       association(:source, :failing, { factory: :credit_card })
