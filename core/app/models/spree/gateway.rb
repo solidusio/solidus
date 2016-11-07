@@ -51,7 +51,7 @@ module Spree
       if order.completed?
         sources_by_order(order)
       elsif order.user_id
-        credit_cards.where(user_id: order.user_id).with_payment_profile
+        order.user.wallet.wallet_payment_sources.collect(&:payment_source)
       else
         []
       end
