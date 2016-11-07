@@ -1,39 +1,5 @@
 <%= paginate variant_prices, theme: "solidus_admin" %>
 
-<div class="row">
-  <div class="col-xs-8">
-    <fieldset class="no-border-bottom">
-      <legend align="center"><%= I18n.t(:master_variant, scope: :spree) %> <%= admin_hint I18n.t(:master_variant, scope: :spree), I18n.t(:master_variant, scope: [:spree, :hints, "spree/price"]) %></legend>
-      <table class="index master_prices">
-        <thead data-hook="master_prices_header">
-          <tr>
-            <th><%= Spree::Price.human_attribute_name(:country) %></th>
-            <th><%= Spree::Price.human_attribute_name(:currency) %></th>
-            <th><%= Spree::Price.human_attribute_name(:amount) %></th>
-            <th class="actions"></th>
-          </tr>
-        </thead>
-        <% master_prices.each do |price| %>
-          <tr id="<%= spree_dom_id price %>" data-hook="prices_row" class="<%= "deleted" if price.deleted? %> <%= cycle('odd', 'even')%>">
-            <td><%= price.display_country %></td>
-            <td><%= price.currency %></td>
-            <td class="align-right"><%= price.money.to_html %></td>
-            <td class="actions">
-              <% if can?(:update, price) %>
-                <%= link_to_edit(price, :no_text => true) unless price.deleted? %>
-              <% end %>
-              <% if can?(:destroy, price) %>
-                &nbsp;
-                <%= link_to_delete(price, :no_text => true) unless price.deleted? %>
-              <% end %>
-            </td>
-          </tr>
-        <% end %>
-      </table>
-    </fieldset>
-  </div>
-</div>
-
 <fieldset class="no-border-bottom">
   <legend align="center"><%= I18n.t(:variant_pricing, scope: :spree) %></legend>
   <table class="index prices">
