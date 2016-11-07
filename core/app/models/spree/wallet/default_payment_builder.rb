@@ -1,5 +1,6 @@
 # This class is responsible for building a default payment on an order, using a
-# payment source that is already in the user's "wallet".
+# payment source that is already in the user's "wallet" and is marked
+# as being the default payment source.
 class Spree::Wallet::DefaultPaymentBuilder
   def initialize(order)
     @order = order
@@ -11,6 +12,7 @@ class Spree::Wallet::DefaultPaymentBuilder
   # @return [Payment] the unsaved payment to be added, or nil if none.
   def build
     if default = order.user.try!(:wallet).try!(:default)
+      && order.payments.where(payment_source: default.payment_source).count ==0
       Spree::Payment.new(
         payment_method: default.payment_source.payment_method,
         source: default.payment_source,

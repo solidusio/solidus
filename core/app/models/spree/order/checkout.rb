@@ -316,6 +316,7 @@ module Spree
           deprecate :persist_user_credit_card
 
           def add_default_payment_from_wallet
+            return if payments.present?
             builder = Spree::Config.default_payment_builder_class.new(self)
 
             if payment = builder.build
