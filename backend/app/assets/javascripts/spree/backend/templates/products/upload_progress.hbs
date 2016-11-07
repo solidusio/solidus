@@ -1,0 +1,12 @@
+<div class="card progress-card">
+  <img src="{{ imgSrc }}" class="card-img-top img-fluid">
+
+  <div class="card-block">
+    <progress min="0" max="100" value="{{ progress }}">{{ progress }}</progress>
+
+    <summary>{{ summary }}</summary>
+    <br>
+
+    <error class="text-danger {{#unless serverError}} hidden {{/unless}}">{{t 'admin.images.index.image_process_failed' }}</error>
+  </div>
+</div>

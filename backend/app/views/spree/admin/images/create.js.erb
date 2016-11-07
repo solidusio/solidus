@@ -1,0 +1,9 @@
+var uploadedRow = $('[data-upload-id="<%= params[:upload_id] %>"]');
+
+<% if @image.persisted? %>
+  uploadedRow.trigger('clear');
+  $('#images-table').removeClass('hidden').find('tbody').append('<%= j render partial: "image_row", locals: {image: @image } %>');
+  $('.no-objects-found').hide();
+<% else %>
+  uploadedRow.find('error').removeClass('hidden').html('<%= j @image.errors.full_messages.join("<br>").html_safe %>');
+<% end %>

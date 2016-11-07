@@ -35,3 +35,28 @@ div[data-hook="admin_products_index_search_buttons"] {
     color: $color-2;
   }
 }
+
+#upload-zone {
+  border: 10px dashed $color-border;
+  min-height: 100px;
+  padding: 1rem 5rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+
+  &.with-images {
+    border-color: $color-success;
+  }
+}
+
+progress {
+  width: 100%;
+}
+
+.margin-bottom-one {
+  margin-bottom: 1rem;
+}
+
+.progress-card {
+  height: 100%;
+  padding: 1rem;
+}
