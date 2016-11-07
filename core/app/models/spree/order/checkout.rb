@@ -78,7 +78,6 @@ module Spree
 
                 after_transition to: :complete, do: :add_payment_sources_to_wallet
                 before_transition to: :payment, do: :set_shipments_cost
-                before_transition to: :payment, do: :create_tax_charge!
                 before_transition to: :payment, do: :add_default_payment_from_wallet
 
                 before_transition to: :confirm, do: :add_store_credit_payments
