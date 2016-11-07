@@ -50,7 +50,7 @@ module Spree
 
     # Updates the following Order total values:
     #
-    # +payment_total+      The total value of all finalized Payments (NOTE: non-finalized Payments are excluded)
+    # +incoming_total+     The total value of all finalized Payments (NOTE: non-finalized Payments are excluded)
     # +item_total+         The total value of all LineItems
     # +adjustment_total+   The total value of all adjustments (promotions, credits, etc.)
     # +promo_total+        The total value of all promotion adjustments
@@ -73,7 +73,11 @@ module Spree
     end
 
     def update_payment_total
-      order.payment_total = payments.completed.includes(:refunds).map { |payment| payment.amount - payment.refunds.sum(:amount) }.sum
+      update_incoming_payment
+    end
+
+    def update_incoming_payment
+      order.incoming_payment = payments.completed.sum(&:amount)
     end
 
     def update_shipment_total

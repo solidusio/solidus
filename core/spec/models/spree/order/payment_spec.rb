@@ -20,7 +20,7 @@ module Spree
         updater.update_payment_state
 
         expect(order.payment_state).to eq('paid')
-        expect(order.payment_total).to eq(100)
+        expect(order.incoming_payment).to eq(100)
 
         expect(payment_1).to be_completed
         expect(payment_2).to be_completed
@@ -35,7 +35,7 @@ module Spree
         updater.update_payment_state
 
         expect(order.payment_state).to eq('paid')
-        expect(order.payment_total).to eq(100)
+        expect(order.incoming_payment).to eq(100)
 
         expect(payment_1).to be_completed
         expect(payment_2).to be_completed
@@ -51,7 +51,7 @@ module Spree
 
         order.process_payments!
 
-        expect(order.payment_total).to eq(50)
+        expect(order.incoming_payment).to eq(50)
       end
     end
 
@@ -155,28 +155,54 @@ module Spree
     end
 
     context "#outstanding_balance" do
-      it "should return positive amount when payment_total is less than total" do
-        order.payment_total = 20.20
+      it "should return positive amount when incoming_payment is less than total" do
+        order.incoming_payment = 20.20
         order.total = 30.30
         expect(order.outstanding_balance).to eq(10.10)
       end
-      it "should return negative amount when payment_total is greater than total" do
+
+      it "should return negative amount when incoming_payment is greater than total" do
         order.total = 8.20
-        order.payment_total = 10.20
+        order.incoming_payment = 10.20
         expect(order.outstanding_balance).to be_within(0.001).of(-2.00)
       end
 
+      let(:order){ create(:order_with_line_items) }
+
+      before do
+        create(:payment, amount: 20, state: :completed, order: order)
+      end
+
+      context "for canceled orders" do
+        before { order.update_attributes(state: 'canceled') }
+
+        it "it should be a negative amount" do
+          # -1 * (Payment Total + Reimbursed)
+          # -1 * (20 - 0) = -20
+          expect(order.outstanding_balance).to eq(-20)
+        end
+      end
+
+      context "for non-canceled orders" do
+        it 'should incorporate refund reimbursements' do
+          # Order Total - (Payment Total + Reimbursed)
+          # 110 - (20 - 0) = 90
+          expect(order.outstanding_balance).to eq 90
+        end
+      end
+
       context "with reimburesements on the order" do
-        let(:amount) { 10.0 }
+        let(:amount_paid) { 20.0 }
+        let(:amount_refunded) { 10.0 }
         let(:reimbursement) { create(:reimbursement) }
-        let(:order) { reimbursement.order.reload }
 
         before do
+          reimbursement.order = order
           # Set the payment amount to actually be the order total of 110
-          reimbursement.order.payments.first.update_column :amount, amount
+          reimbursement.order.payments.first.update_column :amount, amount_paid
           # Creates a refund of 110
-          create :refund, amount: amount,
-                          payment: reimbursement.order.payments.first,
+          create :refund, amount: amount_refunded,
+                          payment: order.payments.first,
                           reimbursement: reimbursement
           # Update the order totals so payment_total goes to 0 reflecting the refund..
           order.update!
@@ -186,6 +212,8 @@ module Spree
           before { order.update_attributes(state: 'canceled') }
 
           it "it should be a negative amount incorporating reimbursements" do
+            # -1 * (Payment Total + Reimbursed)
+            # -1 * (20 - 10) = -10
             expect(order.outstanding_balance).to eq(-10)
           end
         end
@@ -193,7 +221,7 @@ module Spree
         context "for non-canceled orders" do
           it 'should incorporate refund reimbursements' do
             # Order Total - (Payment Total + Reimbursed)
-            # 110 - (0 + 10) = 100
+            # 110 - (20 - 10) = 100
             expect(order.outstanding_balance).to eq 100
           end
         end
@@ -203,17 +231,17 @@ module Spree
     context "#outstanding_balance?" do
       it "should be true when total greater than payment_total" do
         order.total = 10.10
-        order.payment_total = 9.50
+        order.incoming_payment = 9.50
         expect(order.outstanding_balance?).to be true
       end
       it "should be true when total less than payment_total" do
         order.total = 8.25
-        order.payment_total = 10.44
+        order.incoming_payment = 10.44
         expect(order.outstanding_balance?).to be true
       end
       it "should be false when total equals payment_total" do
         order.total = 10.10
-        order.payment_total = 10.10
+        order.incoming_payment = 10.10
         expect(order.outstanding_balance?).to be false
       end
     end

@@ -85,7 +85,7 @@ module Spree
         :user_id, :created_at, :updated_at, :completed_at, :payment_total,
         :shipment_state, :payment_state, :email, :special_instructions, :channel,
         :included_tax_total, :additional_tax_total, :display_included_tax_total,
-        :display_additional_tax_total, :tax_total, :currency,
+        :display_additional_tax_total, :tax_total, :currency, :incoming_payment,
         :covered_by_store_credit, :display_total_applicable_store_credit,
         :order_total_after_store_credit, :display_order_total_after_store_credit,
         :total_applicable_store_credit, :display_total_available_store_credit,

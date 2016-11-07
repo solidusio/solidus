@@ -14,10 +14,10 @@ module Spree
       end
 
       context 'with refund' do
-        it "updates payment totals" do
+        it "updates payment incoming" do
           create(:payment_with_refund, order: order, amount: 33.25, refund_amount: 3)
-          Spree::OrderUpdater.new(order).update_payment_total
-          expect(order.payment_total).to eq(30.25)
+          Spree::OrderUpdater.new(order).update_incoming_payment
+          expect(order.incoming_payment).to eq(33.25)
         end
       end
 
@@ -360,7 +360,7 @@ module Spree
         it "is failed" do
           create(:payment, order: order, state: 'invalid')
           order.total = 1
-          order.payment_total = 0
+          order.incoming_payment = 0
 
           updater.update_payment_state
           expect(order.payment_state).to eq('failed')
@@ -371,7 +371,7 @@ module Spree
         it 'is paid' do
           order.payments << Spree::Payment.new(state: 'invalid')
           order.total = 0
-          order.payment_total = 0
+          order.incoming_payment = 0
 
           expect {
             updater.update_payment_state
@@ -381,7 +381,7 @@ module Spree
 
       context "payment total is greater than order total" do
         it "is credit_owed" do
-          order.payment_total = 2
+          order.incoming_payment = 2
           order.total = 1
 
           expect {
@@ -392,7 +392,7 @@ module Spree
 
       context "order total is greater than payment total" do
         it "is balance_due" do
-          order.payment_total = 1
+          order.incoming_payment = 1
           order.total = 2
 
           expect {
@@ -403,7 +403,7 @@ module Spree
 
       context "order total equals payment total" do
         it "is paid" do
-          order.payment_total = 30
+          order.incoming_payment = 30
           order.total = 30
 
           expect {
@@ -419,7 +419,7 @@ module Spree
 
         context "and is still unpaid" do
           it "is void" do
-            order.payment_total = 0
+            order.incoming_payment = 0
             order.total = 30
             expect {
               updater.update_payment_state
@@ -429,7 +429,7 @@ module Spree
 
         context "and is paid" do
           it "is credit_owed" do
-            order.payment_total = 30
+            order.incoming_payment = 30
             order.total = 30
             create(:payment, order: order, state: 'completed', amount: 30)
             expect {
@@ -440,7 +440,7 @@ module Spree
 
         context "and payment is refunded" do
           it "is void" do
-            order.payment_total = 0
+            order.incoming_payment = 0
             order.total = 30
             expect {
               updater.update_payment_state
