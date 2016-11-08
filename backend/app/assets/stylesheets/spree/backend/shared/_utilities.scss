@@ -20,6 +20,19 @@
   display: none;
 }
 
+/* hide and show elements based on editing */
+.editing .editing-hide {
+  display: none;
+}
+
+.editing .editing-show {
+  display: block;
+}
+
+.editing-show {
+  display: none;
+}
+
 // For block grids
 .frameless {
   margin-left: -10px;

@@ -16,7 +16,7 @@
         <td><%= link_to payment.number, spree.admin_order_payment_path(@order, payment) %></td>
         <td><%= pretty_time(payment.created_at) %></td>
         <td class="align-center amount">
-          <%= text_field_tag :amount, payment.amount, class: 'js-edit-amount edit-payment-amount editing-show' %>
+          <%= text_field_tag :amount, payment.amount, class: 'js-edit-amount align-right editing-show' %>
           <span class="js-display-amount editing-hide"><%= payment.display_amount.to_html %></span>
         </td>
         <td class="align-center"><%= payment_method_name(payment) %></td>

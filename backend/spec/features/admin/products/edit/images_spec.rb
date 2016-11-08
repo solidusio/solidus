@@ -30,22 +30,33 @@ describe "Product Images", type: :feature do
       click_button "Update"
       expect(page).to have_content("successfully created!")
 
+      # Icons are hidden, so hover to have them pop-up
+      find('tbody > tr').hover
       within_row(1) do
-        click_icon(:edit)
+        within ".actions" do
+          click_icon :edit
+        end
       end
+
       fill_in "image_alt", with: "ruby on rails t-shirt"
       click_button "Update"
-      expect(page).to have_content("successfully updated!")
-      expect(page).to have_content("ruby on rails t-shirt")
 
+      expect(page).to have_content "successfully updated!"
+      expect(page).to have_field "image[alt]", with: "ruby on rails t-shirt"
+
+      find('tbody > tr').hover
       accept_alert do
         click_icon :trash
       end
-      expect(page).not_to have_content("ruby on rails t-shirt")
+      expect(page).not_to have_field "image[alt]", with: "ruby on rails t-shirt"
     end
   end
 
   context 'Via the upload zone', js: true do
+    before do
+      create(:variant, product: product)
+    end
+
     it "uploads an image with ajax and appends it to the images table" do
       visit spree.admin_product_images_path(product)
       expect(page).to have_content("No images found")
@@ -58,24 +69,30 @@ describe "Product Images", type: :feature do
       expect(page).not_to have_content("No images found")
 
       within("table.index") do
-        expect(page).to have_css("tbody tr", count: 1)
+        expect(page).to have_css "tbody tr", count: 1
 
         within("tbody") do
-          expect(page).to have_xpath("//img[contains(@src,'ror_ringer')]")
+          expect(page).to have_xpath "//img[contains(@src,'ror_ringer')]"
+          expect(page).to have_content "All"
         end
+
+        # Change the image to the other variant
+        targetted_select2 "Size: S", from: "#s2id_image_viewable_id"
+        click_icon :check
+        expect(page).to have_content "Size: S"
       end
 
       expect(Spree::Image.last.viewable).to eq(product.master)
     end
   end
 
-  # Regression test for https://github.com/spree/spree/issues/2228
-  it "should see variant images" do
+  it "should see variant images and allow for inline changing the image's variant", js: true do
     variant = create(:variant)
     variant.images.create!(attachment: File.open(file_path))
     visit spree.admin_product_images_path(variant.product)
 
     expect(page).not_to have_content("No Images Found.")
+
     within("table.index") do
       expect(page).to have_content(variant.options_text)
 
@@ -87,10 +104,30 @@ describe "Product Images", type: :feature do
         expect(page).to have_content("Variant")
       end
 
-      # ensure variant header is displayed
       within("tbody") do
         expect(page).to have_content("Size: S")
       end
+
+      # Do an inline change of variant and alt
+      targetted_select2 "All", from: "#s2id_image_viewable_id"
+      fill_in 'image[alt]', with: 'ruby on rails t-shirt'
+      click_icon :check
+
+      expect(page).to have_content "All"
+      expect(page).to have_field "image[alt]", with: "ruby on rails t-shirt"
+
+      # test escape
+      find("#image_alt").click # to focus
+      fill_in 'image[alt]', with: 'red shirt'
+      find("#image_alt").send_keys(:escape)
+      expect(page).to have_field "image[alt]", with: "ruby on rails t-shirt"
+
+      # And then go back to Size S variant, but using Enter key
+      targetted_select2 "Size: S", from: "#s2id_image_viewable_id"
+      find("#s2id_image_viewable_id").send_keys(:return)
+
+      expect(page).to have_content "Size: S"
+      expect(page).to have_field "image[alt]", with: "ruby on rails t-shirt"
     end
   end
 

@@ -14,3 +14,5 @@
 //= require 'spree/backend/views/number_with_currency'
 //= require 'spree/backend/views/payment/new'
 //= require 'spree/backend/views/payment/edit_credit_card'
+//= require 'spree/backend/views/tables/editable_table'
+//= require 'spree/backend/views/tables/editable_table_row'

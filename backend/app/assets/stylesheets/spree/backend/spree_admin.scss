@@ -35,6 +35,7 @@
 @import 'spree/backend/components/sidebar';
 @import 'spree/backend/components/number_field_update';
 @import 'spree/backend/components/stock_table';
+@import 'spree/backend/components/editable_table';
 @import 'spree/backend/components/tabs';
 
 @import 'font-awesome';
@@ -56,4 +57,3 @@
 @import 'spree/backend/sections/transfer_items';
 @import 'spree/backend/sections/stock_transfers';
 @import 'spree/backend/sections/style_guide';
-@import 'spree/backend/sections/payments';
