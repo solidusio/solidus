@@ -51,16 +51,18 @@ module Spree
       end
     end
 
-    def sources_by_order(order)
+    def reuable_sources_by_order(order)
       source_ids = order.payments.where(payment_method_id: id).pluck(:source_id).uniq
-      payment_source_class.where(id: source_ids).with_payment_profile
+      payment_source_class.where(id: source_ids).select {|source| source.reusable?}
     end
+    alias_method :sources_by_order, :reuable_sources_by_order
+    deprecate :sources_by_order, deprecator: Spree::Deprecation
 
     def reusable_sources(order)
       if order.completed?
-        sources_by_order(order)
+        reuable_sources_by_order(order)
       elsif order.user_id
-        order.user.wallet.wallet_payment_sources.collect(&:payment_source)
+        order.user.wallet.wallet_payment_sources.collect(&:payment_source).select {|source| source.reusable?}
       else
         []
       end
