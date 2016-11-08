@@ -58,6 +58,22 @@ RSpec.describe "Outstanding balance integration tests" do
         it { should == -13 }
       end
     end
+
+    context 'with a returned item' do
+      it 'discounts the returned item amount'
+
+      context 'and there is a full refund' do
+        it 'has the correct amount'
+      end
+    end
+
+    context 'with a cancelled item' do
+      it 'discounts the cancelled item amount'
+
+      context 'and there is a full refund' do
+        it 'has the correct amount'
+      end
+    end
   end
 
   context 'when the order is partly paid' do
