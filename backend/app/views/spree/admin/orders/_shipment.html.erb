@@ -1,7 +1,11 @@
 <% admin_breadcrumb(plural_resource_name(Spree::Shipment)) %>
 
 
-<% manifest_items = Spree::ShippingManifest.new(inventory_units: shipment.inventory_units.where(carton_id: nil)).items %>
+<%
+  manifest_items = Spree::ShippingManifest.new(
+    inventory_units: shipment.inventory_units.where(carton_id: nil),
+  ).items.sort_by { |item| item.line_item.created_at }
+%>
 
 <div id="<%= "shipment_#{shipment.id}" %>" class="js-shipment-edit" data-hook="admin_shipment_form">
   <fieldset class="no-border-bottom">

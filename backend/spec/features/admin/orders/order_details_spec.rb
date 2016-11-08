@@ -438,6 +438,32 @@ describe "Order Details", type: :feature, js: true do
           end
         end
       end
+
+      describe 'line item sort order' do
+        let(:product2) { create(:product) }
+        let(:product3) { create(:product) }
+
+        before do
+          # grab this one first and then create others that should end up before
+          # and after
+          @middle_line_item = order.line_items[0]
+
+          @first_line_item  = order.contents.add(product2.master)
+          @first_line_item.update_columns(created_at: 1.day.ago)
+          @last_line_item  = order.contents.add(product3.master)
+          @last_line_item.update_columns(created_at: 1.day.from_now)
+        end
+
+        it 'orders the items in a shipment by created_at' do
+          visit spree.edit_admin_order_path(order)
+
+          stock_items = page.all(:css, '.stock-item', count: 3)
+
+          expect(stock_items[0]).to have_text(@first_line_item.variant.sku)
+          expect(stock_items[1]).to have_text(@middle_line_item.variant.sku)
+          expect(stock_items[2]).to have_text(@last_line_item.variant.sku)
+        end
+      end
     end
   end
 
