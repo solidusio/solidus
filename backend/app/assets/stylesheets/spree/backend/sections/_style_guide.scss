@@ -26,7 +26,8 @@
     @include flex(1);
   }
 
-  ul {
+  ul.example,
+  ul.example ul {
     list-style: none;
     padding-left: 0;
   }
