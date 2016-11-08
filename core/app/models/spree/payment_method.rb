@@ -36,6 +36,29 @@ module Spree
       raise ::NotImplementedError, "You must implement payment_source_class method for #{self.class}."
     end
 
+    # @deprecated Use {#available_to_users=} and {#available_to_admin=} instead
+    def display_on=(value)
+      Spree::Deprecation.warn "Spree::PaymentMethod#display_on= is deprecated."\
+        "Please use #available_to_users= and #available_to_admin= instead."
+      self.available_to_users = value.blank? || value == 'front_end'
+      self.available_to_admin = value.blank? || value == 'back_end'
+    end
+
+    # @deprecated Use {#available_to_users} and {#available_to_admin} instead
+    def display_on
+      Spree::Deprecation.warn "Spree::PaymentMethod#display_on is deprecated."\
+        "Please use #available_to_users and #available_to_admin instead."
+      if available_to_users? && available_to_admin?
+        ''
+      elsif available_to_users?
+        'front_end'
+      elsif available_to_admin?
+        'back_end'
+      else
+        'none'
+      end
+    end
+
     def self.available(display_on=nil, store: nil)
       Spree::Deprecation.warn "Spree::PaymentMethod.available is deprecated."\
         "Please use .active, .available_to_users, and .available_to_admin scopes instead."\

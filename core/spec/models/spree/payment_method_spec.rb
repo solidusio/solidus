@@ -220,4 +220,77 @@ describe Spree::PaymentMethod, type: :model do
       end
     end
   end
+
+  describe "display_on=" do
+    around do |example|
+      Spree::Deprecation.silence do
+        example.run
+      end
+    end
+    let(:payment) { described_class.new(display_on: display_on) }
+
+    context 'with empty string' do
+      let(:display_on) { "" }
+
+      it "should be available to admins" do
+        expect(payment.available_to_admin).to be true
+      end
+
+      it "should be available to users" do
+        expect(payment.available_to_users).to be true
+      end
+
+      it "should have the same value for display_on" do
+        expect(payment.display_on).to eq ""
+      end
+    end
+
+    context 'with "back_end"' do
+      let(:display_on) { "back_end" }
+
+      it "should be available to admins" do
+        expect(payment.available_to_admin).to be true
+      end
+
+      it "should not be available to users" do
+        expect(payment.available_to_users).to be false
+      end
+
+      it "should have the same value for display_on" do
+        expect(payment.display_on).to eq "back_end"
+      end
+    end
+
+    context 'with "front_end"' do
+      let(:display_on) { "front_end" }
+
+      it "should be available to admins" do
+        expect(payment.available_to_admin).to be false
+      end
+
+      it "should not be available to users" do
+        expect(payment.available_to_users).to be true
+      end
+
+      it "should have the same value for display_on" do
+        expect(payment.display_on).to eq "front_end"
+      end
+    end
+
+    context 'with any other string' do
+      let(:display_on) { "foobar" }
+
+      it "should be available to admins" do
+        expect(payment.available_to_admin).to be false
+      end
+
+      it "should not be available to users" do
+        expect(payment.available_to_users).to be false
+      end
+
+      it "should have none for display_on" do
+        expect(payment.display_on).to eq "none"
+      end
+    end
+  end
 end
