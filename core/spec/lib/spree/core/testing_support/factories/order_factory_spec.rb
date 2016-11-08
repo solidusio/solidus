@@ -75,6 +75,22 @@ RSpec.describe 'order factory' do
         )
       end
     end
+
+    context 'when shipments should be taxed' do
+      let!(:ship_address) { create(:address) }
+      let!(:tax_zone) { create(:global_zone) } # will include the above address
+      let!(:tax_rate) { create(:tax_rate, amount: 0.10, zone: tax_zone, tax_category: tax_category) }
+
+      let(:tax_category) { create(:tax_category) }
+      let(:shipping_method) { create(:shipping_method, tax_category: tax_category, zones: [tax_zone]) }
+
+      it 'shipments get a tax adjustment' do
+        order = create(factory, ship_address: ship_address, shipping_method: shipping_method)
+        shipment = order.shipments[0]
+
+        expect(shipment.additional_tax_total).to be > 0
+      end
+    end
   end
 
   describe 'order ready to complete' do
