@@ -71,4 +71,5 @@
 </div>
 <% end %>
 
-<%= render 'table', prices: @prices %>
+<%= render 'master_variant_table', master_prices: @master_prices, variants: @product.variants.any? %>
+<%= render 'table', variant_prices: @variant_prices if @product.variants.any? %>

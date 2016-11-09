@@ -30,12 +30,11 @@ describe 'Pricing' do
         expect(page).to have_content("Prices")
       end
 
-      within('table.prices') do
+      within('table.master_prices') do
         expect(page).to have_content("$19.99")
         expect(page).to have_content("USD")
         expect(page).to have_content("34.56 ₽")
         expect(page).to have_content("RUB")
-        expect(page).to have_content("Master")
         expect(page).to have_content("Any Country")
         expect(page).to have_content("Germany")
       end

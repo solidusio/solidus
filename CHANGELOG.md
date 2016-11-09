@@ -71,6 +71,9 @@
 
 *   The `lastname` field on `Address` is now optional. [#1369](https://github.com/solidusio/solidus/pull/1369)
 
+*   The admin prices listings page now shows master and variant prices
+    seperately. This changes `@prices` to `@master_prices` and `@variant_prices` in prices_controller
+
 *   Removals
 
     * Removed deprecated method `Spree::TaxRate.adjust` (not to be confused with
