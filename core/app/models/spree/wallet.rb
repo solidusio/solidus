@@ -48,8 +48,8 @@ class Spree::Wallet
   #
   # @param payment_source_id [Integer] The id of the PaymentSource
   # @return [WalletPaymentSource]
-  def find_by_payment_source(payment_source)
-    user.wallet_payment_sources.find_by(payment_source: payment_source)
+  def find_by_payment_source(payment_source_id)
+    user.wallet_payment_sources.find_by(payment_source_id: payment_source_id)
   end
 
   # Find the default WalletPaymentSource for this wallet, if any.
