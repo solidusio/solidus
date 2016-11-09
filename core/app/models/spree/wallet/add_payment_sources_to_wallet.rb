@@ -7,7 +7,7 @@ class Spree::Wallet::AddPaymentSourcesToWallet
   end
 
   # This is called after an order transistions to complete and should save the
-  # order's payment source/s in the user's "wallet" for future use.
+  # order's payment source in the user's "wallet" for future use.
   #
   # @return [void]
   def add_to_wallet
