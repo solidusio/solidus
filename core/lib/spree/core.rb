@@ -77,7 +77,6 @@ require 'spree/localized_number'
 require 'spree/money'
 require 'spree/permitted_attributes'
 
-require 'spree/core/delegate_belongs_to'
 require 'spree/core/importer'
 require 'spree/core/permalinks'
 require 'spree/core/product_duplicator'
