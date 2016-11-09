@@ -18,8 +18,9 @@
     <%= form_for [:admin, @product, Spree::Image.new],
         :html => { :multipart => true, id: 'upload-form' } do |f| %>
       <label>
-        <p><%= t(".drag_images_to_upload") %></p>
-        <%= f.file_field :attachment, multiple: '' %>
+        <span class="button"><%= t(".drag_images_to_upload") %></span>
+
+        <%= f.file_field :attachment, multiple: '', class: 'hidden' %>
         <%= f.hidden_field :viewable_id, value: @product.master.id %>
       </label>
     <% end %>
