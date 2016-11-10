@@ -560,12 +560,6 @@ RSpec.describe Spree::Order, type: :model do
         expect(order.state).to eq 'complete'
         expect(order.user.reload.wallet.default_wallet_payment_source.payment_source).to eq(order.credit_cards.first)
       end
-
-      it "does not assign a default credit card if temporary_payment_source is set" do
-        order.temporary_payment_source = true
-        order.complete!
-        expect(order.user.reload.wallet.default_wallet_payment_source).to be_nil
-      end
     end
 
     context "a payment fails during processing" do
