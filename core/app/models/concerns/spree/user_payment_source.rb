@@ -2,6 +2,8 @@ module Spree
   module UserPaymentSource
     extend ActiveSupport::Concern
 
+    # TODO: Remove this association when the deprecated methods below
+    # are removed.
     included do
       has_many :credit_cards, class_name: "Spree::CreditCard", foreign_key: :user_id
     end

@@ -2,6 +2,8 @@ module Spree
   # The default `source` of a `Spree::Payment`.
   #
   class CreditCard < Spree::PaymentSource
+    # TODO: Remove this association, we use `Spree::Wallet` now to have
+    # a default payment source. No longer need the user assocation here.
     belongs_to :user, class_name: Spree.user_class, foreign_key: 'user_id'
     belongs_to :address
 
