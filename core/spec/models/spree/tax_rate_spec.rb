@@ -104,7 +104,7 @@ describe Spree::TaxRate, type: :model do
       end
 
       context "when there is a default tax zone" do
-        let(:default_zone) { create(:zone, :with_country, default_tax: true) }
+        let(:default_zone) { create(:zone, :with_country) }
         let(:included_in_price) { false }
         let!(:rate) do
           create(:tax_rate, zone: default_zone, included_in_price: included_in_price)
@@ -152,7 +152,10 @@ describe Spree::TaxRate, type: :model do
 
     describe 'adjustments' do
       before do
-        tax_rate.adjust(nil, item)
+        # Please remove this silencing once we remove `Spree::Zone.default_tax`
+        Spree::Deprecation.silence do
+          tax_rate.adjust(nil, item)
+        end
       end
 
       let(:adjustment_label) { item.adjustments.tax.first.label }

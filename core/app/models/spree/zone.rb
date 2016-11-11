@@ -41,8 +41,14 @@ module Spree
 
     self.whitelisted_ransackable_attributes = ['description']
 
+    # Returns the zone marked as `default_tax`.
+    # @deprecated Please run the `solidus:migrations:create_vat_prices` rake task
     def self.default_tax
-      where(default_tax: true).first
+      default_tax_zone = where(default_tax: true).first
+      if default_tax_zone
+        Spree::Deprecation.warn("Please run the `solidus:migrations:create_vat_prices` rake task.", caller)
+        default_tax_zone
+      end
     end
 
     # Returns the most specific matching zone for an address. Specific means:

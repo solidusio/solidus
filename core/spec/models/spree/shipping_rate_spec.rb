@@ -19,8 +19,9 @@ describe Spree::ShippingRate, type: :model do
   end
 
   context "#display_price" do
-    let!(:default_zone) { create :zone, countries: [address.country], default_tax: true }
+    let!(:default_zone) { create :zone, countries: [address.country], default_tax: default_tax }
     let!(:other_zone) { create :zone, countries: [foreign_address.country] }
+    let(:default_tax) { false }
 
     before do
       allow(order).to receive(:tax_address).and_return(order_address)
@@ -57,6 +58,7 @@ describe Spree::ShippingRate, type: :model do
     end
 
     context 'with one tax rate that will be refunded' do
+      let(:default_tax) { true }
       let!(:tax_rate) do
         create :tax_rate,
         included_in_price: true,
@@ -68,7 +70,9 @@ describe Spree::ShippingRate, type: :model do
       let(:order_address) { foreign_address }
 
       before do
-        Spree::Tax::ShippingRateTaxer.new.tax(shipping_rate)
+        Spree::Deprecation.silence do
+          Spree::Tax::ShippingRateTaxer.new.tax(shipping_rate)
+        end
       end
 
       it "shows correct tax amount" do

@@ -160,7 +160,9 @@ describe Spree::Zone, type: :model do
 
       it "should be the correct zone" do
         create(:zone, name: 'foo')
-        expect(Spree::Zone.default_tax).to eq(@foo_zone)
+        Spree::Deprecation.silence do
+          expect(Spree::Zone.default_tax).to eq(@foo_zone)
+        end
       end
     end
 
