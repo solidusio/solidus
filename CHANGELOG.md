@@ -1,4 +1,13 @@
 ## Solidus 2.1.0 (master, unreleased)
+
+*   Deprecate methods related to Spree::Order#tax_zone
+
+    We're not using `Spree::Order#tax_zone`, `Spree::Zone.default_tax`,
+    `Spree::Zone.match`, or `Spree::Zone#contains?` in our code base anymore.
+    They will be removed soon. Please use `Spree::Order#tax_address`,
+    `Spree::Zone.for_address`, and `Spree::Zone.include?`, respectively,
+    instead.
+
 *   Prototypes were removed from the admin; the extension `solidus_prototype`
     provides the same functionality
 
