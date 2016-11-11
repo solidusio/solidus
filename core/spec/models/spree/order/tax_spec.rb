@@ -42,57 +42,25 @@ module Spree
         end
       end
 
-      context "when there is a default tax zone" do
-        before do
-          @default_zone = create(:zone, name: "foo_zone")
-          allow(Spree::Zone).to receive_messages default_tax: @default_zone
-        end
+      context "when there is a matching zone" do
+        before { allow(Spree::Zone).to receive_messages(match: zone) }
 
-        context "when there is a matching zone" do
-          before { allow(Spree::Zone).to receive_messages(match: zone) }
-
-          it "should return the matching zone" do
-            Spree::Deprecation.silence do
-              expect(order.tax_zone).to eq(zone)
-            end
-          end
-        end
-
-        context "when there is no matching zone" do
-          before { allow(Spree::Zone).to receive_messages(match: nil) }
-
-          it "should return the default tax zone" do
-            Spree::Deprecation.silence do
-              expect(order.tax_zone).to eq(@default_zone)
-            end
+        it "should return the matching zone" do
+          Spree::Deprecation.silence do
+            expect(order.tax_zone).to eq(zone)
           end
         end
       end
 
-      context "when no default tax zone" do
-        before { allow(Spree::Zone).to receive_messages default_tax: nil }
+      context "when there is no matching zone" do
+        before { allow(Spree::Zone).to receive_messages(match: nil) }
 
-        context "when there is a matching zone" do
-          before { allow(Spree::Zone).to receive_messages(match: zone) }
-
-          it "should return the matching zone" do
-            Spree::Deprecation.silence do
-              expect(order.tax_zone).to eq(zone)
-            end
-          end
-        end
-
-        context "when there is no matching zone" do
-          before { allow(Spree::Zone).to receive_messages(match: nil) }
-
-          it "should return nil" do
-            Spree::Deprecation.silence do
-              expect(order.tax_zone).to be_nil
-            end
+        it "should return nil" do
+          Spree::Deprecation.silence do
+            expect(order.tax_zone).to be_nil
           end
         end
       end
-
     end
   end
 end

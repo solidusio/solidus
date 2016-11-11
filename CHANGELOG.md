@@ -1,4 +1,12 @@
 ## Solidus 2.1.0 (master, unreleased)
+
+*   Remove the `default_tax` boolean from `Spree::Zone`, as well as
+    associated code paths.
+
+    In versions prior to Solidus 1.3, instead of changing prices for
+    different VAT territories, there was an assumption that backend
+    prices would include VAT, and the tax system was tasked with "refunding" that. This has since been changed so we could now delete a lot of code paths that performed these "refunds".
+
 *   Prototypes were removed from the admin; the extension `solidus_prototype`
     provides the same functionality
 

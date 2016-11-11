@@ -15,9 +15,7 @@ module Spree
       def initialize(item, options = {})
         @item = item
         @order = @item.order
-        # set instance variable so `TaxRate.match` is only called when necessary
         @rates_for_order = options[:rates_for_order]
-        @rates_for_default_zone = options[:rates_for_default_zone]
       end
 
       # Deletes all existing tax adjustments and creates new adjustments for all

@@ -70,14 +70,12 @@ module Spree
       amount = compute_amount(item)
       return if amount == 0
 
-      included = included_in_price && amount > 0
-
       item.adjustments.create!(
         source: self,
         amount: amount,
         order_id: item.order_id,
         label: adjustment_label(amount),
-        included: included
+        included: included_in_price
       )
     end
 
@@ -104,7 +102,6 @@ module Spree
 
     def translation_key(amount)
       key = included_in_price? ? "vat" : "sales_tax"
-      key += "_refund" if amount < 0
       key += "_with_rate" if show_rate_in_label?
       key.to_sym
     end

@@ -9,30 +9,22 @@ module Spree
     belongs_to :tax_rate, class_name: "Spree::TaxRate"
 
     extend DisplayMoney
-    money_methods :absolute_amount
+    money_methods :amount
 
     delegate :currency, to: :shipping_rate, allow_nil: true
 
     def label
       Spree.t translation_key,
         scope: 'shipping_rate_tax.label',
-        amount: display_absolute_amount,
+        amount: display_amount,
         tax_rate_name: tax_rate.name
-    end
-
-    def absolute_amount
-      amount.abs
     end
 
     private
 
     def translation_key
       if tax_rate.included_in_price?
-        if amount > 0
-           :vat
-         else
-           :vat_refund
-         end
+         :vat
        else
          :sales_tax
       end

@@ -104,7 +104,7 @@ describe Spree::TaxRate, type: :model do
       end
 
       context "when there is a default tax zone" do
-        let(:default_zone) { create(:zone, :with_country, default_tax: true) }
+        let(:default_zone) { create(:zone, :with_country) }
         let(:included_in_price) { false }
         let!(:rate) do
           create(:tax_rate, zone: default_zone, included_in_price: included_in_price)
@@ -136,9 +136,9 @@ describe Spree::TaxRate, type: :model do
   describe "#adjust" do
     let(:taxable_address) { create(:address) }
     let(:order) { create(:order_with_line_items, ship_address: order_address) }
-    let(:tax_zone) { create(:zone, countries: [taxable_address.country], default_tax: default_tax) }
+    let(:tax_zone) { create(:zone, countries: [taxable_address.country]) }
     let(:foreign_address) { create(:address, country_iso_code: "CA") }
-    let!(:foreign_zone) { create(:zone, countries: [foreign_address.country], default_tax: false) }
+    let!(:foreign_zone) { create(:zone, countries: [foreign_address.country]) }
     let(:tax_rate) do
       create(:tax_rate,
         included_in_price: included_in_price,
@@ -159,7 +159,6 @@ describe Spree::TaxRate, type: :model do
 
       context 'for included rates' do
         let(:included_in_price) { true }
-        let(:default_tax) { true }
 
         context 'when they are not refunded' do
           let(:order_address) { taxable_address }
@@ -185,42 +184,6 @@ describe Spree::TaxRate, type: :model do
 
             it 'does not have two consecutive spaces' do
               expect(adjustment_label).not_to include("  ")
-            end
-
-            it 'adds a remark that the rate is included in the price' do
-              expect(adjustment_label).to include("Included in Price")
-            end
-          end
-        end
-
-        context 'when they are refunded' do
-          let(:order_address) { foreign_address }
-
-          context 'with show rate in label' do
-            let(:show_rate_in_label) { true }
-
-            it 'shows the word "refund" in the label' do
-              expect(adjustment_label).to include("Refund")
-            end
-
-            it 'shows the rate in the label' do
-              expect(adjustment_label).to include("12.500%")
-            end
-
-            it 'adds a remark that the rate is included in the price' do
-              expect(adjustment_label).to include("Included in Price")
-            end
-          end
-
-          context 'with show rate in label turned off' do
-            let(:show_rate_in_label) { false }
-
-            it 'shows the word "refund" in the label' do
-              expect(adjustment_label).to include("Refund")
-            end
-
-            it 'does not show the rate in the label' do
-              expect(adjustment_label).not_to include("12.500%")
             end
 
             it 'adds a remark that the rate is included in the price' do
