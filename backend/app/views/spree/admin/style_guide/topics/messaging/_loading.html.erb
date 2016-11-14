@@ -16,13 +16,14 @@
 <script>
   function closeProgress() {
     $("#progress").toggle()
-    $(document).off('click', 'body', closeProgress)
+    $(document).off('mousedown', 'body', closeProgress)
   }
 
   $('#loading-test-button').on('click', function(){
     $("#progress").toggle({
+      duration: 0,
       complete: function(){
-        $(document).on('click', 'body', closeProgress)
+        $(document).on('mousedown', 'body', closeProgress)
       }
     })
   });
