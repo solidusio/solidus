@@ -37,10 +37,15 @@ div[data-hook="admin_products_index_search_buttons"] {
 }
 
 #upload-zone {
-  border: 10px dashed $color-border;
+  border: 2px dashed $color-border;
   padding: 2rem 5rem;
   text-align: center;
-  margin-bottom: 1.5rem;
+  margin: 1rem auto;
+  width: 70%;
+
+  label.upload {
+    display: block;
+  }
 
   &.with-images {
     border-color: $color-success;
