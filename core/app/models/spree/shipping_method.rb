@@ -4,7 +4,6 @@ module Spree
   class ShippingMethod < Spree::Base
     acts_as_paranoid
     include Spree::CalculatedAdjustments
-    DISPLAY = [:both, :front_end, :back_end]
 
     has_many :shipping_method_categories, dependent: :destroy
     has_many :shipping_categories, through: :shipping_method_categories
@@ -22,6 +21,9 @@ module Spree
     validates :name, presence: true
 
     validate :at_least_one_shipping_category
+
+    scope :available_to_users, -> { where(available_to_users: true) }
+    scope :available_to_admin, -> { where(available_to_admin: true) }
 
     # @param shipping_category_ids [Array<Integer>] ids of desired shipping categories
     # @return [ActiveRecord::Relation] shipping methods which are associated
@@ -81,7 +83,7 @@ module Spree
 
     # Some shipping methods are only meant to be set via backend
     def frontend?
-      display_on != "back_end"
+      available_to_users
     end
 
     private
