@@ -435,12 +435,10 @@ module Spree
     end
 
     def available_payment_methods
-      @available_payment_methods ||= (
-        PaymentMethod.available(:front_end, store: store) +
-        PaymentMethod.available(:both, store: store)
-      ).
-      uniq.
-      sort_by(&:position)
+      @available_payment_methods ||= Spree::PaymentMethod
+        .available_to_store(store)
+        .available_to_users
+        .sort_by(&:position)
     end
 
     def insufficient_stock_lines

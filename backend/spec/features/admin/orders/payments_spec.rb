@@ -27,7 +27,7 @@ describe 'Payments', type: :feature do
         create(:payment,
           order:          order,
           amount:         order.outstanding_balance,
-          payment_method: create(:check_payment_method) # Check
+          payment_method: create(:check_payment_method, available_to_admin: true) # Check
         )
       end
 

@@ -11,7 +11,7 @@ module Spree
       end
 
       def new
-        @payment_methods = Spree::PaymentMethod.available
+        @payment_methods = Spree::PaymentMethod.available_to_users.available_to_admin
         respond_with(@payment_method)
       end
 

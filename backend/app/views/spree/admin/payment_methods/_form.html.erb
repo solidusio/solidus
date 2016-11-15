@@ -25,9 +25,13 @@
 
           <div class="info warning js-gateway-settings-warning"><%= Spree.t(:provider_settings_warning) %></div>
         </div>
-        <div data-hook="display" class="field">
-          <%= f.label :display_on %>
-          <%= select(:payment_method, :display_on, Spree::PaymentMethod::DISPLAY.collect { |display| [Spree.t(display), display == :both ? nil : display.to_s] }, {}, {:class => 'select2 fullwidth'}) %>
+        <div data-hook="available_to_user" class="field">
+          <%= label_tag nil, Spree::PaymentMethod.human_attribute_name(:available_to_users) %>
+          <%= f.check_box :available_to_users %>
+        </div>
+        <div data-hook="available_to_user" class="field">
+          <%= label_tag nil, Spree::PaymentMethod.human_attribute_name(:available_to_admin) %>
+          <%= f.check_box :available_to_admin %>
         </div>
         <div data-hook="auto_capture" class="field">
           <%= f.label :auto_capture %>

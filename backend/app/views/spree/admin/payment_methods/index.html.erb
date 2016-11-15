@@ -19,8 +19,8 @@
       <col style="width: 10%">
       <col style="width: 13%">
       <col style="width: 33%">
-      <col style="width: 13%">
-      <col style="width: 19%">
+      <col style="width: 16%">
+      <col style="width: 16%">
       <col style="width: 19%">
       <col style="width: 13%">
     </colgroup>
@@ -29,7 +29,8 @@
         <th class="no-border"></th>
         <th><%= Spree::PaymentMethod.human_attribute_name(:name) %></th>
         <th><%= Spree::PaymentMethod.human_attribute_name(:type) %></th>
-        <th><%= Spree::PaymentMethod.human_attribute_name(:display_on) %></th>
+        <th><%= Spree::PaymentMethod.human_attribute_name(:available_to_users) %></th>
+        <th><%= Spree::PaymentMethod.human_attribute_name(:available_to_admin) %></th>
         <th><%= Spree::PaymentMethod.human_attribute_name(:active) %></th>
         <th data-hook="admin_payment_methods_index_header_actions" class="actions"></th>
       </tr>
@@ -40,7 +41,8 @@
           <td class="no-border"><span class="handle"></span></td>
           <td class="align-center"><%= method.name %></td>
           <td class="align-center"><%= method.type %></td>
-          <td class="align-center"><%= method.display_on.blank? ? Spree.t(:both) : Spree.t(method.display_on) %></td>
+          <td class="align-center"><%= method.available_to_users ? Spree.t(:say_yes) : Spree.t(:say_no) %></td>
+          <td class="align-center"><%= method.available_to_admin ? Spree.t(:say_yes) : Spree.t(:say_no) %></td>
           <td class="align-center"><%= method.active ? Spree.t(:say_yes) : Spree.t(:say_no) %></td>
           <td data-hook="admin_payment_methods_index_row_actions" class="actions">
             <% if can?(:update, method.becomes(Spree::PaymentMethod)) %>
