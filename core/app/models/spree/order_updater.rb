@@ -183,7 +183,7 @@ module Spree
         Spree::Config.promotion_chooser_class.new(promotion_adjustments).update
 
         item.promo_total = promotion_adjustments.select(&:eligible?).sum(&:amount)
-        item.save! if item.persisted?
+        item.save
       end
     end
 
