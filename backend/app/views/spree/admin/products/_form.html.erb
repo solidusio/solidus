@@ -2,7 +2,7 @@
 
   <div data-hook="admin_product_form_left" class="col-lg-8 col-xs-12">
 
-    <div class="row form-section">
+    <div class="form-section">
 
       <% if !@product.has_variants? %>
         <div class="col-xs-12">
@@ -51,7 +51,7 @@
 
     </div>
 
-    <div class="row form-section">
+    <div class="form-section">
 
       <div class="col-xs-12">
         <h4><%= I18n.t(:pricing, scope: [:spree, :product_sections]) %></h4>
@@ -121,7 +121,7 @@
 
     </div>
 
-    <div class="row form-section">
+    <div class="form-section">
 
       <div class="col-xs-12">
         <h4><%= I18n.t(:shipping, scope: [:spree, :product_sections]) %></h4>
@@ -160,7 +160,7 @@
   </div>
 
   <div data-hook="admin_product_form_right" class="col-lg-4 col-xs-12">
-    <div class="row form-section">
+    <div class="form-section">
 
       <div class="col-xs-12">
         <h4><%= I18n.t(:delay_publishing, scope: [:spree, :product_sections]) %></h4>
@@ -216,7 +216,7 @@
 
   <div class="col-lg-8 col-xs-12" >
 
-    <div class="row form-section">
+    <div class="form-section">
 
       <div class="col-xs-12">
         <h4><%= I18n.t(:search_engine_optimization, scope: [:spree, :product_sections]) %></h4>

@@ -308,6 +308,7 @@ fieldset {
 }
 
 .form-section {
+  @include make-row(0px);
   margin: 10px 0px;
   padding: 10px 0px;
   background: very-light($color-3, 4);
