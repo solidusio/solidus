@@ -34,6 +34,11 @@ body {
     @include margin(null auto);
     max-width: map-get($container-max-widths, "xl");
   }
+
+  &.max-width {
+    @include margin(null null auto null);
+    max-width: map-get($container-max-widths, "xl");
+  }
 }
 
 .content {
