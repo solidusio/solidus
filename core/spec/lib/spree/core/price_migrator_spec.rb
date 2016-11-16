@@ -114,7 +114,9 @@ describe Spree::PriceMigrator do
     end
 
     before do
-      Spree::PriceMigrator.migrate_default_vat_prices
+      Spree::Deprecation.silence do
+        Spree::PriceMigrator.migrate_default_vat_prices
+      end
       order.contents.add(variant)
     end
 

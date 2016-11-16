@@ -41,14 +41,22 @@ module Spree
 
     self.whitelisted_ransackable_attributes = ['description']
 
+    # Returns the zone marked as `default_tax`.
+    # @deprecated Please run the `solidus:migrations:create_vat_prices` rake task
     def self.default_tax
-      where(default_tax: true).first
+      default_tax_zone = where(default_tax: true).first
+      if default_tax_zone
+        Spree::Deprecation.warn("Please run the `solidus:migrations:create_vat_prices` rake task.", caller)
+        default_tax_zone
+      end
     end
 
     # Returns the most specific matching zone for an address. Specific means:
     # A State zone wins over a country zone, and a zone with few members wins
     # over one with many members. If there is no match, returns nil.
     def self.match(address)
+      Spree::Deprecation.warn("Spree::Zone.match is deprecated. Please use Spree::Zone.for_address instead.", caller)
+
       return unless address && (matches =
                                   with_member_ids(address.state_id, address.country_id).
                                   order(:zone_members_count, :created_at, :id).
@@ -158,6 +166,7 @@ module Spree
         (target.zoneables.collect(&:country).collect(&:id) - zoneables.collect(&:id)).empty?
       end
     end
+    deprecate :contains?, deprecator: Spree::Deprecation
 
     private
 

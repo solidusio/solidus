@@ -20,9 +20,11 @@ describe 'solidus:migrations:create_vat_prices' do
       let!(:zone) { create(:zone, :with_country, default_tax: true) }
 
       it 'runs' do
-        expect { task.invoke }.to output(
-          "Creating differentiated prices for VAT countries ... Success.\n"
-        ).to_stdout
+        Spree::Deprecation.silence do
+          expect { task.invoke }.to output(
+            "Creating differentiated prices for VAT countries ... Success.\n"
+          ).to_stdout
+        end
       end
     end
   end

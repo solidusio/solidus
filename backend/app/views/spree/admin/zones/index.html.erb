@@ -29,7 +29,6 @@
         <th>
           <%= sort_link @search,:description, Spree::Zone.human_attribute_name(:description), {}, {:title => 'zones_order_by_description_title'} %>
         </th>
-        <th><%= Spree.t(:default_tax) %></th>
         <th class="actions"></th>
       </tr>
     </thead>
@@ -38,7 +37,6 @@
         <tr id="<%= spree_dom_id zone %>" data-hook="zones_row" class="<%= cycle('odd', 'even')%>">
           <td class="align-center"><%= zone.name %></td>
           <td><%= zone.description %></td>
-          <td class="align-center"><%= zone.default_tax? ? Spree.t(:say_yes) : Spree.t(:say_no) %></td>
           <td class="actions">
             <% if can?(:update, zone) %>
               <%= link_to_edit zone, :no_text => true %>
