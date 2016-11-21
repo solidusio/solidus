@@ -78,7 +78,7 @@ module Spree::Promotion::Actions
     private
 
     def actionable_line_items(order)
-      order.line_items.reload.select do |item|
+      order.line_items.select do |item|
         promotion.line_item_actionable? order, item
       end
     end
