@@ -58,7 +58,12 @@ module Spree
         currency = gateway_options[:currency] || store_credit.currency
         originator = gateway_options[:originator]
 
-        store_credit.credit(amount_in_cents / 100.0.to_d, auth_code, currency, action_originator: originator)
+        store_credit.credit(
+          amount_in_cents / 100.0.to_d,
+          auth_code,
+          currency,
+          action_originator: originator
+        ) if amount_in_cents > 0
       end
 
       handle_action(action, :credit, auth_code)
