@@ -58,12 +58,16 @@ module Spree
         currency = gateway_options[:currency] || store_credit.currency
         originator = gateway_options[:originator]
 
-        store_credit.credit(
-          amount_in_cents / 100.0.to_d,
-          auth_code,
-          currency,
-          action_originator: originator
-        ) if amount_in_cents > 0
+        if amount_in_cents > 0
+          store_credit.credit(
+            ::Money.new(amount_in_cents, currency).to_d,
+            auth_code,
+            currency,
+            action_originator: originator
+          )
+        else
+          ActiveMerchant::Billing::Response.new(true, '')
+        end
       end
 
       handle_action(action, :credit, auth_code)
@@ -76,8 +80,12 @@ module Spree
       if store_credit_event.nil? || store_credit.nil?
         ActiveMerchant::Billing::Response.new(false, '', {}, {})
       elsif store_credit_event.capture_action?
-        amount_in_cents = (store_credit_event.amount * 100).round
-        credit(amount_in_cents, auth_code)
+        amount = if store_credit_event.originator_type == 'Spree::Payment'
+          store_credit_event.originator.credit_allowed_money.cents
+        else
+          (store_credit_event.amount * 100).round
+        end
+        credit(amount, auth_code, { originator: store_credit_event.originator })
       elsif store_credit_event.authorization_action?
         void(auth_code)
       else
