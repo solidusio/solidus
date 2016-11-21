@@ -214,6 +214,19 @@ module Spree::Promotion::Actions
       end
     end
 
+
+    context "with pre-set line_item changes" do
+      let(:calculator) { FactoryGirl.create :flat_rate_calculator }
+      let(:line_item) { order.line_items.first }
+
+      before {
+        order.line_items.first.promo_total = -11
+        action.compute_amount(line_item)
+      }
+
+      it { expect(order.line_items.first.promo_total).to eq -11 }
+    end
+
     describe Spree::Promotion::Actions::CreateQuantityAdjustments::PartialLineItem do
       let!(:item) { FactoryGirl.create :line_item, order: order, quantity: quantity, price: 10 }
       let(:quantity) { 5 }
