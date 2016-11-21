@@ -4,7 +4,8 @@ Spree::PaymentMethod.create_with(
   name: "Store Credit",
   description: "Store credit",
   active: true,
-  display_on: 'none'
+  available_to_admin: false,
+  available_to_users: false
 ).find_or_create_by!(
   type: "Spree::PaymentMethod::StoreCredit"
 )
