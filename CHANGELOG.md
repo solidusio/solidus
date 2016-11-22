@@ -1,5 +1,9 @@
 ## Solidus 2.1.0 (master, unreleased)
 
+*   Make frontend prices depend on `store.cart_tax_country_iso`
+
+    Prices in the frontend now depend on `store.cart_tax_country_iso` instead of `Spree::Config.admin_vat_country_iso`.
+
 *   Deprecate methods related to Spree::Order#tax_zone
 
     We're not using `Spree::Order#tax_zone`, `Spree::Zone.default_tax`,
