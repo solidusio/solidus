@@ -70,14 +70,12 @@ module Spree
       amount = compute_amount(item)
       return if amount == 0
 
-      included = included_in_price && amount > 0
-
       item.adjustments.create!(
         source: self,
         amount: amount,
         order_id: item.order_id,
         label: adjustment_label(amount),
-        included: included
+        included: included_in_price
       )
     end
 
