@@ -141,6 +141,17 @@ module Spree
       amount - (offsets_total.abs + refunds.sum(:amount))
     end
 
+    # The total amount this payment can be credited as a Spree::Money object
+    #
+    # @return [Spree::Money] The amount of this payment minus offets and refunds
+    #   as a money object with the associated currency.
+    def credit_allowed_money
+      Spree::Money.new(
+        credit_allowed,
+        currency: currency
+      )
+    end
+
     # @return [Boolean] true when this payment can be credited
     def can_credit?
       credit_allowed > 0
