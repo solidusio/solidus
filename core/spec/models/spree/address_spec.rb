@@ -159,6 +159,20 @@ describe Spree::Address, type: :model do
     end
   end
 
+  context 'after_validation' do
+    let(:address) { build(:address) }
+
+    it 'should call geocode' do
+      expect(address).to receive :geocode
+      address.valid?
+    end
+
+    it 'should be geocoded_by :full_address' do
+      options = Spree::Address.geocoder_options
+      expect(options[:user_address]).to eql :full_address
+    end
+  end
+
   context ".build_default" do
     context "no user given" do
       let!(:default_country) { create(:country) }
@@ -365,6 +379,17 @@ describe Spree::Address, type: :model do
     context 'both first and last names are blank' do
       let(:address) { stub_model(Spree::Address, firstname: nil, lastname: nil) }
       specify { expect(address.full_name).to eq('') }
+    end
+  end
+
+  describe '#full_address' do
+    subject { address }
+    let(:address) { build(:address) }
+
+    it { is_expected.to respond_to :full_address }
+    it 'should return the full address' do
+      target = "#{address.address1}, #{address.address2}, #{address.city}, #{address.state_text}, #{address.country.try(:iso)}"
+      expect(address.full_address).to eql target
     end
   end
 
