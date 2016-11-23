@@ -8,7 +8,6 @@ module Spree
           accessible_by(current_ability, :read).
           ransack(params[:q]).
           result.
-          includes(:states).
           order('name ASC')
 
         country = Country.order("updated_at ASC").last
