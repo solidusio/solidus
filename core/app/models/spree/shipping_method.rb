@@ -79,6 +79,18 @@ module Spree
       tracking_url.gsub(/:tracking/, ERB::Util.url_encode(tracking)) # :url_encode exists in 1.8.7 through 2.1.0
     end
 
+    def display_on
+      if available_to_users?
+        "both"
+      else
+        "back_end"
+      end
+    end
+
+    def display_on=(value)
+      self.available_to_users = (value != "back_end")
+    end
+
     # Some shipping methods are only meant to be set via backend
     def frontend?
       display_on != "back_end"
