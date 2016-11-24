@@ -15,7 +15,7 @@
 //= require ./backend/backbone-overrides
 //= require spree/backend/spree-select2
 //
-//= require_tree ./backend/templates
+//= require spree/backend/templates
 //
 //= require spree/backend/address_states
 //= require spree/backend/adjustments
