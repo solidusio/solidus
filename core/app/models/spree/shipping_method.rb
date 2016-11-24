@@ -86,15 +86,18 @@ module Spree
         "back_end"
       end
     end
+    deprecate display_on: :available_to_users?, deprecator: Spree::Deprecation
 
     def display_on=(value)
       self.available_to_users = (value != "back_end")
     end
+    deprecate 'display_on=': :available_to_users=, deprecator: Spree::Deprecation
 
     # Some shipping methods are only meant to be set via backend
     def frontend?
-      display_on != "back_end"
+      available_to_users?
     end
+    deprecate frontend?: :available_to_users?, deprecator: Spree::Deprecation
 
     private
 

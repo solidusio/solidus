@@ -213,7 +213,9 @@ describe Spree::ShippingMethod, type: :model do
 
   describe "display_on=" do
     subject do
-      described_class.new(display_on: display_on).available_to_users
+      Spree::Deprecation.silence do
+        described_class.new(display_on: display_on).available_to_users
+      end
     end
 
     context "with 'back_end'" do
@@ -234,7 +236,9 @@ describe Spree::ShippingMethod, type: :model do
 
   describe "display_on" do
     subject do
-      described_class.new(available_to_users: available_to_users).display_on
+      Spree::Deprecation.silence do
+        described_class.new(available_to_users: available_to_users).display_on
+      end
     end
 
     context "when available_to_users is true" do
