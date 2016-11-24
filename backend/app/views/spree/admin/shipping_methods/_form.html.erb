@@ -7,14 +7,6 @@
     <% end %>
   </div>
 
-  <div data-hook="admin_shipping_method_form_display_field" class="col-xs-5">
-    <%= f.field_container :display_on do %>
-      <%= f.label :display_on %><br />
-      <%= select(:shipping_method, :display_on, Spree::ShippingMethod::DISPLAY.collect { |display| [Spree.t(display), display == :both ? nil : display.to_s] }, {}, {:class => 'select2 fullwidth'}) %>
-      <%= error_message_on :shipping_method, :display_on %>
-    <% end %>
-  </div>
-
   <div data-hook="admin_shipping_method_form_internal_name_field" class="col-xs-5">
     <%= f.field_container :admin_name do %>
       <%= f.label :admin_name %><br />
@@ -55,6 +47,12 @@
     <% end %>
   </div>
 </div>
+
+<%= f.field_container :available_to_users do %>
+  <%= f.check_box(:available_to_users) %>
+  <%= f.label :available_to_users %>
+  <%= error_message_on :shipping_method, :available_to_users %>
+<% end %>
 
 <div class="row">
   <div class="col-xs-5">
