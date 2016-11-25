@@ -59,5 +59,21 @@ describe Spree::Core::ControllerHelpers::Pricing, type: :controller do
         it { is_expected.to eq('EUR') }
       end
     end
+
+    context "country_iso" do
+      subject { controller.current_pricing_options.country_iso }
+
+      let(:store) { FactoryGirl.create(:store, cart_tax_country_iso: cart_tax_country_iso) }
+
+      context "when the store has a cart tax country set" do
+        let(:cart_tax_country_iso) { "DE" }
+        it { is_expected.to eq("DE") }
+      end
+
+      context "when the store has no cart tax country set" do
+        let(:cart_tax_country_iso) { nil }
+        it { is_expected.to be_nil }
+      end
+    end
   end
 end
