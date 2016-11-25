@@ -1,5 +1,8 @@
 module Spree
   class PromotionCodeBatch < ActiveRecord::Base
+    class CantProcessStartedBatch < StandardError
+    end
+
     belongs_to :promotion, class_name: "Spree::Promotion"
     has_many :promotion_codes, class_name: "Spree::PromotionCode", dependent: :destroy
 
@@ -14,7 +17,7 @@ module Spree
       if promotion_codes.count.zero?
         PromotionCodeBatchJob.perform_later(self)
       else
-        raise "Batch already started"
+        raise CantProcessStartedBatch.new("Batch #{id} already started")
       end
     end
   end

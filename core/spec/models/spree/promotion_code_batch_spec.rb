@@ -29,7 +29,7 @@ describe Spree::PromotionCodeBatch, type: :model do
       end
 
       it "should raise an error" do
-        expect{ subject.process }.to raise_error RuntimeError
+        expect{ subject.process }.to raise_error Spree::PromotionCodeBatch::CantProcessStartedBatch
       end
     end
   end
