@@ -1533,6 +1533,11 @@ en:
         description: Makes all shipments for the order free
         name: Free shipping
     promotion_actions: Actions
+    promotion_code_batch_mailer:
+      promotion_code_batch_finished:
+        subject: Promotion code batch finished
+      promotion_code_batch_errored:
+        subject: Promotion code batch errored
     promotion_code_batches:
       email_subject:
         batch_finished: "Promotion code batch %{promotion_code_batch_id} finished"

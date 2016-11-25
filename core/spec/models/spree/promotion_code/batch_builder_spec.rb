@@ -29,7 +29,7 @@ describe Spree::PromotionCode::BatchBuilder do
         email = ActionMailer::Base.deliveries.last
 
         expect(email.to).to eq(["test@email.com"])
-        expect(email.subject).to eq("Promotion code batch #{promotion_code_batch.id} errored")
+        expect(email.subject).to eq("Promotion code batch errored")
         expect(email.body).to include("Errored: ")
       end
     end
@@ -59,7 +59,7 @@ describe Spree::PromotionCode::BatchBuilder do
         email = ActionMailer::Base.deliveries.last
 
         expect(email.to).to eq(["test@email.com"])
-        expect(email.subject).to eq("Promotion code batch #{promotion_code_batch.id} finished")
+        expect(email.subject).to eq("Promotion code batch finished")
         expect(email.body).to include("All 10 codes have been created.")
       end
     end
