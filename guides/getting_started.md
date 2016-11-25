@@ -90,7 +90,7 @@ Now, run `bundle install` to download `solidus` and `solidus_auth_devise` into y
 the following generators to get started:
 
 ```
-bundle exec rails g spree:install
+bundle exec rails g spree:install --user_class=Spree::User
 bundle exec rails g solidus:auth:install
 ```
 
