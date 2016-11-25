@@ -2,36 +2,46 @@
 #
 # Tiered Calculator
 #
+TieredCalculatorView = Backbone.View.extend
+  initialize: ->
+    @calculatorName = @$('.js-tiers').data('calculator')
+    @tierFieldsTemplate = HandlebarsTemplates["promotions/calculators/fields/#{@calculatorName}"]
+    @originalTiers = @$('.js-tiers').data('original-tiers')
+    @formPrefix = @$('.js-tiers').data('form-prefix')
 
-initTieredCalculators = ->
-  if $('.js-tiers').length
-    calculatorName = $('.js-tiers').data('calculator')
-    tierFieldsTemplate = HandlebarsTemplates["promotions/calculators/fields/#{calculatorName}"]
-    originalTiers = $('.js-tiers').data('original-tiers')
-    formPrefix = $('.js-tiers').data('form-prefix')
-
-    tierInputName = (base) ->
-      "#{formPrefix}[calculator_attributes][preferred_tiers][#{base}]"
-
-    $.each originalTiers, (base, value) ->
-      $('.js-tiers').append tierFieldsTemplate
+    for base, value of @originalTiers
+      @$('.js-tiers').append @tierFieldsTemplate
         baseField:
           value: base
         valueField:
-          name: tierInputName(base)
+          name: @tierInputName(base)
           value: value
 
-    $(document).on 'click', '.js-add-tier', (event) ->
-      event.preventDefault()
-      $('.js-tiers').append tierFieldsTemplate(valueField: name: null)
+  events:
+    'click .js-add-tier': 'onAdd'
+    'click .js-remove-tier': 'onRemove'
+    'change .js-base-input': 'onChange'
 
-    $(document).on 'click', '.js-remove-tier', (event) ->
-      event.preventDefault()
-      $(this).parents('.tier').remove()
+  tierInputName: (base) ->
+    "#{@formPrefix}[calculator_attributes][preferred_tiers][#{base}]"
 
-    $(document).on 'change', '.js-base-input', (event) ->
-      valueInput = $(this).parents('.tier').find('.js-value-input')
-      valueInput.attr 'name', tierInputName($(this).val())
+  onAdd: (event) ->
+    event.preventDefault()
+    @$('.js-tiers').append @tierFieldsTemplate(valueField: name: null)
+
+  onRemove: (event) ->
+    event.preventDefault()
+    $(event.target).parents('.tier').remove()
+
+  onChange: (event) ->
+    valueInput = $(event.target).parents('.tier').find('.js-value-input')
+    valueInput.attr 'name', @tierInputName($(event.target).val())
+
+initTieredCalculators = ->
+  $('.js-tiered-calculator').each ->
+    if !$(this).data('has-view')
+      $(this).data('has-view', true)
+      new TieredCalculatorView(el: this)
 
 window.initPromotionActions = ->
   # Add classes on promotion items for design
