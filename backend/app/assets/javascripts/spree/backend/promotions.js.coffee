@@ -8,23 +8,6 @@ window.initProductActions = ->
 
   $('#promotion-filters').find('.variant_autocomplete').variantAutocomplete()
 
-  $('.calculator-fields').each ->
-    $fields_container = $(this)
-    $type_select = $fields_container.find('.type-select')
-    $settings = $fields_container.find('.settings')
-    $warning = $fields_container.find('.warning')
-    originalType = $type_select.val()
-    $warning.hide()
-    $type_select.change ->
-      if $(this).val() == originalType
-        $warning.hide()
-        $settings.show()
-        $settings.find('input').removeProp 'disabled'
-      else
-        $warning.show()
-        $settings.hide()
-        $settings.find('input').prop 'disabled', 'disabled'
-
   #
   # Option Value Promo Rule
   #
