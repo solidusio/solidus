@@ -8,7 +8,7 @@
           <%= f.text_field :name, :class => 'fullwidth' %>
         <% end %>
 
-        <div class="field" id="promotion_single_code_field">
+        <div class="field" data-hook="promotion-single-code-field">
           <%= label_tag :single_code %>
           <%= text_field_tag :single_code, @promotion.codes.first.try!(:value), :readonly => !@promotion.new_record?, :class => 'fullwidth' %>
         </div>
