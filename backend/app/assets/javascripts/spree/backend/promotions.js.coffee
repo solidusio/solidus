@@ -1,4 +1,39 @@
-window.initProductActions = ->
+
+#
+# Tiered Calculator
+#
+
+initTieredCalculators = ->
+  if $('.js-tiers').length
+    calculatorName = $('.js-tiers').data('calculator')
+    tierFieldsTemplate = HandlebarsTemplates["promotions/calculators/fields/#{calculatorName}"]
+    originalTiers = $('.js-tiers').data('original-tiers')
+    formPrefix = $('.js-tiers').data('form-prefix')
+
+    tierInputName = (base) ->
+      "#{formPrefix}[calculator_attributes][preferred_tiers][#{base}]"
+
+    $.each originalTiers, (base, value) ->
+      $('.js-tiers').append tierFieldsTemplate
+        baseField:
+          value: base
+        valueField:
+          name: tierInputName(base)
+          value: value
+
+    $(document).on 'click', '.js-add-tier', (event) ->
+      event.preventDefault()
+      $('.js-tiers').append tierFieldsTemplate(valueField: name: null)
+
+    $(document).on 'click', '.js-remove-tier', (event) ->
+      event.preventDefault()
+      $(this).parents('.tier').remove()
+
+    $(document).on 'change', '.js-base-input', (event) ->
+      valueInput = $(this).parents('.tier').find('.js-value-input')
+      valueInput.attr 'name', tierInputName($(this).val())
+
+window.initPromotionActions = ->
   # Add classes on promotion items for design
   $(document).on 'mouseover', 'a.delete', (event) ->
     $(this).parent().addClass 'action-remove'
@@ -49,36 +84,6 @@ window.initProductActions = ->
       optionValueSelect.prop('disabled', $(this).val() == '').select2 'val', ''
       return
 
-  #
-  # Tiered Calculator
-  #
-  if $('.js-tiers').length
-    calculatorName = $('.js-tiers').data('calculator')
-    tierFieldsTemplate = HandlebarsTemplates["promotions/calculators/fields/#{calculatorName}"]
-    originalTiers = $('.js-tiers').data('original-tiers')
-    formPrefix = $('.js-tiers').data('form-prefix')
+  initTieredCalculators()
 
-    tierInputName = (base) ->
-      "#{formPrefix}[calculator_attributes][preferred_tiers][#{base}]"
-
-    $.each originalTiers, (base, value) ->
-      $('.js-tiers').append tierFieldsTemplate
-        baseField:
-          value: base
-        valueField:
-          name: tierInputName(base)
-          value: value
-
-    $(document).on 'click', '.js-add-tier', (event) ->
-      event.preventDefault()
-      $('.js-tiers').append tierFieldsTemplate(valueField: name: null)
-
-    $(document).on 'click', '.js-remove-tier', (event) ->
-      event.preventDefault()
-      $(this).parents('.tier').remove()
-
-    $(document).on 'change', '.js-base-input', (event) ->
-      valueInput = $(this).parents('.tier').find('.js-value-input')
-      valueInput.attr 'name', tierInputName($(this).val())
-
-$ initProductActions
+$ initPromotionActions
