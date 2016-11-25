@@ -14,10 +14,10 @@
   <table>
     <thead>
       <tr>
-        <th><%= Spree.t("promotion_code_batches.base_code") %></th>
-        <th><%= Spree.t("promotion_code_batches.total_codes") %></th>
-        <th><%= Spree.t("promotion_code_batches.status") %></th>
-        <th><%= Spree.t("promotion_code_batches.email") %></th>
+        <th><%= Spree::PromotionCodeBatch.human_attribute_name(:base_code) %></th>
+        <th><%= Spree::PromotionCodeBatch.human_attribute_name(:total_codes) %></th>
+        <th><%= Spree::PromotionCodeBatch.human_attribute_name(:status) %></th>
+        <th><%= Spree::PromotionCodeBatch.human_attribute_name(:email) %></th>
       </tr>
     </thead>
     <tbody>

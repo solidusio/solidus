@@ -1537,10 +1537,6 @@ en:
       email_subject:
         batch_finished: "Promotion code batch %{promotion_code_batch_id} finished"
         batch_errored: "Promotion code batch %{promotion_code_batch_id} errored"
-      base_code: Base code
-      total_codes: Total codes
-      status: Status
-      email: Email
       errored: "Errored: %{error}"
       finished: "All %{number_of_codes} codes have been created."
       processing: "Processing: %{number_of_codes_processed} / %{number_of_codes}"
