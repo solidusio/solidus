@@ -1,7 +1,7 @@
 class CreateSpreePromotionCodeBatch < ActiveRecord::Migration[5.0]
   def change
     create_table :spree_promotion_code_batches do |t|
-      t.references :promotion, null: false
+      t.references :promotion, null: false, index: true
       t.string :base_code, null: false
       t.integer :number_of_codes, null: false
       t.string :email
@@ -25,6 +25,11 @@ class CreateSpreePromotionCodeBatch < ActiveRecord::Migration[5.0]
       :spree_promotion_codes,
       :spree_promotion_code_batches,
       column: :promotion_code_batch_id
+    )
+
+    add_index(
+      :spree_promotion_codes,
+      :promotion_code_batch_id
     )
   end
 end
