@@ -77,7 +77,7 @@ describe "Order Details", type: :feature, js: true do
 
         within_row(1) do
           # Click "cancel" on confirmation dialog
-          dismiss_prompt do
+          dismiss_confirm do
             click_icon :trash
           end
         end
