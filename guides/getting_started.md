@@ -84,6 +84,10 @@ gem 'solidus_auth_devise'
 group :development, :test do
   gem 'rspec-rails', '~> 3.5'
 end
+
+group :development do
+  gem 'listen', '~> 3.0.5'
+end
 ```
 
 Now, run `bundle install` to download `solidus` and `solidus_auth_devise` into your new app, then run
