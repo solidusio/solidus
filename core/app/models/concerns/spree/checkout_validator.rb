@@ -1,5 +1,43 @@
 require 'active_support/concern'
 
+
+##
+# This Concern give the ability to make validation of the
+# Order model with standard rails ActiveRecord::Validation
+# whithout stop saving that.
+#
+# Example of a validation:
+#
+#
+# app/model/concerns/order_concern.rb
+#
+# require 'active_support/concern'
+#
+# module OrderConcern
+#   extend ActiveSupport::Concern
+#   # include CheckoutValidatorConcern
+#
+#   included do
+#
+#     checkout_validate :check_min_order
+#
+#     def check_min_order
+#       if self.line_items.map(&:amount).sum<100
+#         self.checkout_errors.add(:base, :min_order, :minimum => 100)
+#       end
+#     end
+#
+#   end
+#
+# end
+#
+#
+# app/models/spree/order_decorator
+#
+# Spree::Order.include OrderConcern
+#
+#
+
 module Spree
   module CheckoutValidator
     extend ActiveSupport::Concern
