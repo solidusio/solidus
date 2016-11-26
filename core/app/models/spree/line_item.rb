@@ -38,10 +38,6 @@ module Spree
     before_destroy :destroy_inventory_units
 
     delegate :name, :description, :sku, :should_track_inventory?, to: :variant
-    # @note This will return the product even if it has been deleted.
-    # @return [Spree::Product, nil] the product associated with this line
-    #   item, if there is one
-    delegate :product, to: :variant
     delegate :currency, to: :order, allow_nil: true
 
     attr_accessor :target_shipment
