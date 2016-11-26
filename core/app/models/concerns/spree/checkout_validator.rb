@@ -36,6 +36,12 @@ require 'active_support/concern'
 #
 # Spree::Order.include OrderConcern
 #
+# Then we can access to this errors in the shared partial
+# "_error_messages" like standard rails errors:
+# <% target.checkout_errors.full_messages.each do |msg| %>
+#   <li><%= msg %></li>
+# <% end if target.checkout_errors %>
+#
 #
 
 module Spree
