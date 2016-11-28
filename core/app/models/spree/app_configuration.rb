@@ -373,9 +373,12 @@ module Spree
 
     # Allows providing your own class for calculating taxes on an order.
     #
+    # This extension point is under development and may change in a future minor release.
+    #
     # @!attribute [rw] tax_adjuster_class
     # @return [Class] a class with the same public interfaces as
     #   Spree::Tax::OrderAdjuster
+    # @api experimental
     attr_writer :tax_adjuster_class
     def tax_adjuster_class
       @tax_adjuster_class ||= Spree::Tax::OrderAdjuster
