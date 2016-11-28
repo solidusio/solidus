@@ -50,26 +50,6 @@ describe Spree::BaseHelper, type: :helper do
     end
   end
 
-  # Regression test for https://github.com/spree/spree/issues/1436
-  context "defining custom image helpers" do
-    let(:product) { mock_model(Spree::Product, images: [], variant_images: []) }
-    before do
-      Spree::Image.class_eval do
-        attachment_definitions[:attachment][:styles][:very_strange] = '1x1'
-      end
-    end
-
-    it "should not raise errors when style exists" do
-      Spree::Deprecation.silence do
-        very_strange_image(product)
-      end
-    end
-
-    it "should raise NoMethodError when style is not exists" do
-      expect { another_strange_image(product) }.to raise_error(NoMethodError)
-    end
-  end
-
   # Regression test for https://github.com/spree/spree/issues/2034
   context "flash_message" do
     let(:flash) { { "notice" => "ok", "foo" => "foo", "bar" => "bar" } }
@@ -139,26 +119,6 @@ describe Spree::BaseHelper, type: :helper do
       tags = Nokogiri::HTML.parse(meta_data_tags)
       content = tags.css("meta[name=description]").first["content"]
       expect(content.length).to be <= 160
-    end
-  end
-
-  # Regression test for https://github.com/spree/spree/issues/5384
-  context "custom image helpers conflict with inproper statements" do
-    let(:product) { mock_model(Spree::Product, images: [], variant_images: []) }
-    before do
-      Spree::Image.class_eval do
-        attachment_definitions[:attachment][:styles][:foobar] = '1x1'
-      end
-    end
-
-    it "should not raise errors when helper method called" do
-      Spree::Deprecation.silence do
-        foobar_image(product)
-      end
-    end
-
-    it "should raise NoMethodError when statement with name equal to style name called" do
-      expect { foobar(product) }.to raise_error(NoMethodError)
     end
   end
 
