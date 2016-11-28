@@ -68,7 +68,6 @@ module Spree
     # Creates necessary tax adjustments for the order.
     def adjust(_order_tax_zone, item)
       amount = compute_amount(item)
-      return if amount == 0
 
       included = included_in_price && amount > 0
 
