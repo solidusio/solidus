@@ -1,9 +1,5 @@
 require 'spec_helper'
-require 'email_spec'
-
 describe Spree::PromotionCodeBatchMailer, type: :mailer do
-  include EmailSpec::Helpers
-  include EmailSpec::Matchers
   let(:promotion) { create(:promotion, name: "Promotion Test") }
   let(:promotion_code_batch) do
     Spree::PromotionCodeBatch.create!(

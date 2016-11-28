@@ -9,16 +9,13 @@ module Spree
         require "csv"
 
         @promotion_code_batch = Spree::PromotionCodeBatch.find(
-          id: params[:promotion_code_batch_id]
+          params[:promotion_code_batch_id]
         )
 
-        respond_to do |format|
-          format.csv do
-            filename = "promotion-code-batch-list-#{@promotion_code_batch.id}.csv"
-            headers["Content-Type"] = "text/csv"
-            headers["Content-disposition"] = "attachment; filename=\"#{filename}\""
-          end
-        end
+        send_data(
+          render_to_string,
+          filename: "promotion-code-batch-list-#{@promotion_code_batch.id}.csv"
+        )
       end
 
       private
