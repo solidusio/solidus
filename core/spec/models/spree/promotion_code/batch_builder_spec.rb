@@ -18,20 +18,12 @@ describe Spree::PromotionCode::BatchBuilder do
     context "with a failed build" do
       before do
         allow(subject).to receive(:generate_random_codes).and_raise "Error"
-        allow(Spree::PromotionCodeBatchMailer)
-          .to receive(:promotion_code_batch_errored)
-          .and_call_original
 
         expect { subject.build_promotion_codes }.to raise_error RuntimeError
       end
 
       it "updated the error on promotion batch" do
         expect(promotion_code_batch.reload.error).to eq("#<RuntimeError: Error>")
-      end
-
-      it "sends an error email" do
-        expect(Spree::PromotionCodeBatchMailer)
-          .to have_received(:promotion_code_batch_errored)
       end
     end
     context "with a successful build" do
@@ -58,11 +50,6 @@ describe Spree::PromotionCode::BatchBuilder do
       it "builds codes with the same base prefix" do
         values = subject.promotion.codes.map(&:value)
         expect(values.all? { |val| val.starts_with?("#{base_code}_") }).to be true
-      end
-
-      it "sends an error email" do
-        expect(Spree::PromotionCodeBatchMailer)
-          .to have_received(:promotion_code_batch_finished)
       end
     end
   end

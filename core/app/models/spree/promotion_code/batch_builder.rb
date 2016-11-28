@@ -13,15 +13,8 @@ class ::Spree::PromotionCode::BatchBuilder
 
   def build_promotion_codes
     generate_random_codes
-
-    Spree::PromotionCodeBatchMailer
-      .promotion_code_batch_finished(promotion_code_batch)
-      .deliver_now
   rescue => e
     promotion_code_batch.update!(error: e.inspect)
-    Spree::PromotionCodeBatchMailer
-      .promotion_code_batch_errored(promotion_code_batch)
-      .deliver_now
     raise e
   end
 
