@@ -2,7 +2,7 @@ require 'rails_helper'
 require 'shared_examples/calculator_shared_examples'
 
 RSpec.describe Spree::Calculator::Returns::DefaultRefundAmount, type: :model do
-  let(:line_item_quantity) { 2 }
+  let(:line_item_quantity) { 3 }
   let(:line_item_price) { 100.0 }
   let(:line_item) { create(:line_item, price: line_item_price, quantity: line_item_quantity) }
   let(:inventory_unit) { build(:inventory_unit, order: order, line_item: line_item) }
@@ -36,7 +36,13 @@ RSpec.describe Spree::Calculator::Returns::DefaultRefundAmount, type: :model do
         order.adjustments.first.update_attributes(amount: adjustment_amount)
       end
 
-      it { is_expected.to eq line_item_price - (adjustment_amount.abs / line_item_quantity) }
+      it 'will return the line item amount deducted of refund' do
+        # line_item_price    = 100
+        # line_item_quantity = 3
+        # adjustment_amount  = 10
+        # 100 - (10 / 3)     = 96.66666666666666667
+        expect(subject).to eq BigDecimal.new('96.66666666666666667')
+      end
     end
 
     context "shipping adjustments" do
