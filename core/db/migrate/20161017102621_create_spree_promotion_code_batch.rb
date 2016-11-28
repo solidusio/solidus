@@ -6,6 +6,7 @@ class CreateSpreePromotionCodeBatch < ActiveRecord::Migration[5.0]
       t.integer :number_of_codes, null: false
       t.string :email
       t.string :error
+      t.string :state, default: "pending"
       t.timestamps
     end
 

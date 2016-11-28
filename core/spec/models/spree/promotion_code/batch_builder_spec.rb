@@ -22,8 +22,9 @@ describe Spree::PromotionCode::BatchBuilder do
         expect { subject.build_promotion_codes }.to raise_error RuntimeError
       end
 
-      it "updated the error on promotion batch" do
+      it "updates the error and state on promotion batch" do
         expect(promotion_code_batch.reload.error).to eq("#<RuntimeError: Error>")
+        expect(promotion_code_batch.reload.state).to eq("failed")
       end
     end
     context "with a successful build" do
@@ -50,6 +51,10 @@ describe Spree::PromotionCode::BatchBuilder do
       it "builds codes with the same base prefix" do
         values = subject.promotion.codes.map(&:value)
         expect(values.all? { |val| val.starts_with?("#{base_code}_") }).to be true
+      end
+
+      it "updates the promotion code batch state to completed" do
+        expect(promotion_code_batch.state).to eq("completed")
       end
     end
   end
