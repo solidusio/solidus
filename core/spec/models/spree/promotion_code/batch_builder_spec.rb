@@ -18,6 +18,10 @@ describe Spree::PromotionCode::BatchBuilder do
     context "with a failed build" do
       before do
         allow(subject).to receive(:generate_random_codes).and_raise "Error"
+        allow(Spree::PromotionCodeBatchMailer)
+          .to receive(:promotion_code_batch_errored)
+          .and_call_original
+
         expect { subject.build_promotion_codes }.to raise_error RuntimeError
       end
 
@@ -26,15 +30,16 @@ describe Spree::PromotionCode::BatchBuilder do
       end
 
       it "sends an error email" do
-        email = ActionMailer::Base.deliveries.last
-
-        expect(email.to).to eq(["test@email.com"])
-        expect(email.subject).to eq("Promotion code batch errored")
-        expect(email.body).to include("Errored: ")
+        expect(Spree::PromotionCodeBatchMailer)
+          .to have_received(:promotion_code_batch_errored)
       end
     end
     context "with a successful build" do
       before do
+        allow(Spree::PromotionCodeBatchMailer)
+          .to receive(:promotion_code_batch_finished)
+          .and_call_original
+
         subject.build_promotion_codes
       end
 
@@ -56,11 +61,8 @@ describe Spree::PromotionCode::BatchBuilder do
       end
 
       it "sends an error email" do
-        email = ActionMailer::Base.deliveries.last
-
-        expect(email.to).to eq(["test@email.com"])
-        expect(email.subject).to eq("Promotion code batch finished")
-        expect(email.body).to include("All 10 codes have been created.")
+        expect(Spree::PromotionCodeBatchMailer)
+          .to have_received(:promotion_code_batch_finished)
       end
     end
   end
