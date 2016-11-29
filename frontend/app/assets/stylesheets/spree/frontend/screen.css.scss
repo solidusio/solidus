@@ -935,6 +935,14 @@ p[data-hook="use_billing"] {
   }
 }
 
+.terms_and_conditions {
+  .policy {
+    height: 100px;
+    width: 100%;
+    overflow: scroll;
+  }
+}
+
 /*--------------------------------------*/
 /* Cart
 /*--------------------------------------*/
