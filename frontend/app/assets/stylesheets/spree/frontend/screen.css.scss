@@ -216,6 +216,16 @@ input[type= "reset"], button, a.button {
   }
 }
 
+input[type=button],
+input[type=submit],
+button {
+  &.disabled {
+    background:#ccc;
+    border-color: #ccc;
+    text-shadow:none;
+  }
+}
+
 input[type="checkbox"], label {
   vertical-align: middle;
 }
