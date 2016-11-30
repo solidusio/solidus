@@ -91,6 +91,26 @@ module Spree
     # If stock was -20 and is now -15 (increase of 5 units), then we should process 5 inventory orders.
     # If stock was -20 but then was -25 (decrease of 5 units), do nothing.
     def process_backorders(number)
+      # Temporary workaround to disable this.
+      return
+      # The code below generates a query like this:
+      #   SELECT ...
+      #   FROM "spree_inventory_units"
+      #   LEFT OUTER JOIN "spree_shipments"
+      #     ON "spree_shipments"."id" = "spree_inventory_units"."shipment_id"
+      #   LEFT OUTER JOIN "spree_orders"
+      #     ON "spree_orders"."id" = "spree_inventory_units"."order_id"
+      #   WHERE (spree_shipments.state != ?)
+      #   AND "spree_inventory_units"."variant_id" = ?
+      #   AND (spree_orders.completed_at IS not null)
+      #   AND "spree_inventory_units"."state" = ?
+      #   AND "spree_shipments"."stock_location_id" = ?
+      #   ORDER BY "spree_orders"."completed_at" ASC
+      #   LIMIT ?
+      # Which is a slow query for us.
+
+      # TODO: Set `Spree::Config.track_inventory_levels` to false instead of
+      # disabling this.  And/or figure out how to do this more efficiently.
       if number > 0
         backordered_inventory_units.first(number).each(&:fill_backorder)
       end
