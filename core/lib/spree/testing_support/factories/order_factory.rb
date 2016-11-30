@@ -104,6 +104,8 @@ FactoryGirl.define do
           end
 
           factory :shipped_order do
+            shipment_state 'shipped'
+
             transient do
               with_cartons true
             end
