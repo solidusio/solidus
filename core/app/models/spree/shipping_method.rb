@@ -4,7 +4,11 @@ module Spree
   class ShippingMethod < Spree::Base
     acts_as_paranoid
     include Spree::CalculatedAdjustments
-    DISPLAY = [:both, :front_end, :back_end]
+    DISPLAY = ActiveSupport::Deprecation::DeprecatedObjectProxy.new(
+      [:both, :front_end, :back_end],
+      "Spree::ShippingMethod::DISPLAY is deprecated",
+      Spree::Deprecation
+    )
 
     has_many :shipping_method_categories, dependent: :destroy
     has_many :shipping_categories, through: :shipping_method_categories
