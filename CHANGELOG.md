@@ -87,6 +87,10 @@
 *   The admin prices listings page now shows master and variant prices
     seperately. This changes `@prices` to `@master_prices` and `@variant_prices` in prices_controller
 
+*   Admin javascript assets are now individually `require`d using sprockets
+    directives instead of using `require_tree`. This should fix issues where
+    JS assets could not be overridden in applications. [#1613](https://github.com/solidusio/solidus/pull/1613)
+
 *   Removals
 
     * Removed deprecated method `Spree::TaxRate.adjust` (not to be confused with
