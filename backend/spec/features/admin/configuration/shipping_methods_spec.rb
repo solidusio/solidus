@@ -26,7 +26,7 @@ describe "Shipping Methods", type: :feature do
         expect(column_text(1)).to eq(shipping_method.name)
         expect(column_text(2)).to eq(zone.name)
         expect(column_text(3)).to eq("Flat rate")
-        expect(column_text(4)).to eq("Both")
+        expect(column_text(4)).to eq("Yes")
       end
     end
   end

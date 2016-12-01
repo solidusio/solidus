@@ -210,4 +210,45 @@ describe Spree::ShippingMethod, type: :model do
       it { is_expected.to_not include(shipping_method) }
     end
   end
+
+  describe "display_on=" do
+    subject do
+      Spree::Deprecation.silence do
+        described_class.new(display_on: display_on).available_to_users
+      end
+    end
+
+    context "with 'back_end'" do
+      let(:display_on) { 'back_end' }
+      it { should be false }
+    end
+
+    context "with 'both'" do
+      let(:display_on) { 'both' }
+      it { should be true }
+    end
+
+    context "with 'front_end'" do
+      let(:display_on) { 'front_end' }
+      it { should be true }
+    end
+  end
+
+  describe "display_on" do
+    subject do
+      Spree::Deprecation.silence do
+        described_class.new(available_to_users: available_to_users).display_on
+      end
+    end
+
+    context "when available_to_users is true" do
+      let(:available_to_users) { true }
+      it { should == 'both' }
+    end
+
+    context "when available_to_users is false" do
+      let(:available_to_users) { false }
+      it { should == 'back_end' }
+    end
+  end
 end

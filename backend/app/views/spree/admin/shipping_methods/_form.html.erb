@@ -7,14 +7,6 @@
     <% end %>
   </div>
 
-  <div data-hook="admin_shipping_method_form_display_field" class="col-xs-5">
-    <%= f.field_container :display_on do %>
-      <%= f.label :display_on %><br />
-      <%= select(:shipping_method, :display_on, Spree::ShippingMethod::DISPLAY.collect { |display| [Spree.t(display), display == :both ? nil : display.to_s] }, {}, {:class => 'select2 fullwidth'}) %>
-      <%= error_message_on :shipping_method, :display_on %>
-    <% end %>
-  </div>
-
   <div data-hook="admin_shipping_method_form_internal_name_field" class="col-xs-5">
     <%= f.field_container :admin_name do %>
       <%= f.label :admin_name %><br />
@@ -56,9 +48,15 @@
   </div>
 </div>
 
+<%= f.field_container :available_to_users do %>
+  <%= f.check_box(:available_to_users) %>
+  <%= f.label :available_to_users %>
+  <%= error_message_on :shipping_method, :available_to_users %>
+<% end %>
+
 <div class="row">
   <div class="col-xs-5">
-    <div data-hook="admin_shipping_method_form_availability_fields" class="col-xs-5">
+    <div data-hook="admin_shipping_method_form_availability_fields">
       <fieldset class="categories no-border-bottom">
         <legend align="center"><%= plural_resource_name(Spree::ShippingCategory) %></legend>
         <%= f.field_container :categories do %>
@@ -73,7 +71,7 @@
       </fieldset>
     </div>
 
-    <div class="col-xs-5">
+    <div>
       <fieldset class="no-border-bottom">
         <legend align="center"><%= plural_resource_name(Spree::Zone) %></legend>
         <%= f.field_container :zones do %>
@@ -91,10 +89,10 @@
     </div>
   </div>
   <div class="col-xs-5">
-    <div data-hook="admin_shipping_method_form_calculator_fields" class="col-xs-5">
+    <div data-hook="admin_shipping_method_form_calculator_fields">
       <%= render :partial => 'spree/admin/shared/calculator_fields', :locals => { :f => f } %>
     </div>
-    <div class="col-xs-5">
+    <div>
       <fieldset class="tax_categories no-border-bottom">
         <legend align="center"><%= Spree::TaxCategory.model_name.human %></legend>
           <%= f.field_container :tax_categories do %>
