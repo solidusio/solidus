@@ -654,9 +654,21 @@ describe Spree::Shipment, type: :model do
 
   # Regression test for https://github.com/spree/spree/issues/3349
   context "#destroy" do
-    it "destroys linked shipping_rates" do
-      reflection = Spree::Shipment.reflect_on_association(:shipping_rates)
-      expect(reflection.options[:dependent]).to be(:delete_all)
+    let(:shipping_rate) do
+      Spree::ShippingRate.create!(
+        shipping_method: shipping_method,
+        selected: true,
+        taxes: [Spree::ShippingRateTax.new(amount: 20)]
+      )
+    end
+    it "destroys linked shipping_rates and shipping_rate_taxes" do
+      shipping_rate = shipment.shipping_rates.first
+      shipping_rate_tax = shipping_rate.taxes.first
+
+      shipment.destroy
+
+      expect{shipping_rate.reload}.to raise_error(ActiveRecord::RecordNotFound)
+      expect{shipping_rate_tax.reload}.to raise_error(ActiveRecord::RecordNotFound)
     end
   end
 
