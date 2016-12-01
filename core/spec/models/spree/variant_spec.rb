@@ -569,6 +569,16 @@ describe Spree::Variant, type: :model do
         end
       end
     end
+
+    describe "cache clearing on update" do
+      it "correctly reports after updating track_inventory" do
+        variant.stock_items.first.set_count_on_hand 0
+        expect(variant).not_to be_in_stock
+
+        variant.update!(track_inventory: false)
+        expect(variant).to be_in_stock
+      end
+    end
   end
 
   describe '#is_backorderable' do
