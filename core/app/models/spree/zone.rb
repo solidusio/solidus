@@ -16,16 +16,18 @@ module Spree
     after_save :remove_previous_default
 
     scope :with_member_ids, ->(state_ids, country_ids) do
-      return none if !state_ids.present? && !country_ids.present?
-
-      spree_zone_members_table = Spree::ZoneMember.arel_table
-      matching_state =
-        spree_zone_members_table[:zoneable_type].eq("Spree::State").
-        and(spree_zone_members_table[:zoneable_id].in(state_ids))
-      matching_country =
-        spree_zone_members_table[:zoneable_type].eq("Spree::Country").
-        and(spree_zone_members_table[:zoneable_id].in(country_ids))
-      joins(:zone_members).where(matching_state.or(matching_country)).distinct
+      if !state_ids.present? && !country_ids.present?
+        none
+      else
+        spree_zone_members_table = Spree::ZoneMember.arel_table
+        matching_state =
+          spree_zone_members_table[:zoneable_type].eq("Spree::State").
+          and(spree_zone_members_table[:zoneable_id].in(state_ids))
+        matching_country =
+          spree_zone_members_table[:zoneable_type].eq("Spree::Country").
+          and(spree_zone_members_table[:zoneable_id].in(country_ids))
+        joins(:zone_members).where(matching_state.or(matching_country)).distinct
+      end
     end
 
     scope :for_address, ->(address) do
