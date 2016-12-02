@@ -25,32 +25,60 @@ module Spree
 
     # Updates the order and advances to the next state (when possible.)
     def update
-      if OrderUpdateAttributes.new(@order, update_params, request_env: request.headers.env).apply
-        @order.temporary_address = !params[:save_user_address]
-        success = if @order.state == 'confirm'
-          @order.complete
-        else
-          @order.next
-        end
-        if !success
-          flash[:error] = @order.errors.full_messages.join("\n")
-          redirect_to(checkout_state_path(@order.state)) && return
-        end
+      if order_update
+
+        assign_temp_address
+
+        on_failure and return unless state_transition
 
         if @order.completed?
-          @current_order = nil
-          flash.notice = Spree.t(:order_processed_successfully)
-          flash['order_completed'] = true
-          redirect_to completion_route
+          finalize_order
         else
-          redirect_to checkout_state_path(@order.state)
+          send_to_next_state
         end
+
       else
         render :edit
       end
     end
 
     private
+
+    def order_update
+      OrderUpdateAttributes.new(@order, update_params, request_env: request.headers.env).apply
+    end
+
+    def assign_temp_address
+      @order.temporary_address = !params[:save_user_address]
+    end
+
+    def on_failure
+      flash[:error] = @order.errors.full_messages.join("\n")
+      redirect_to(checkout_state_path(@order.state))
+    end
+
+    def state_transition
+      if @order.confirm?
+        @order.complete
+      else
+        @order.next
+      end
+    end
+
+    def finalize_order
+      @current_order = nil
+      set_successful_flash_notice
+      redirect_to completion_route
+    end
+
+    def set_successful_flash_notice
+      flash.notice = Spree.t(:order_processed_successfully)
+      flash['order_completed'] = true
+    end
+
+    def send_to_next_state
+      redirect_to checkout_state_path(@order.state)
+    end
 
     def update_params
       if update_params = massaged_params[:order]
