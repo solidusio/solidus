@@ -1,4 +1,6 @@
-## Solidus 2.1.0 (master, unreleased)
+## Solidus 2.2.0 (master, unreleased)
+
+## Solidus 2.1.0 (unreleased)
 
 *   Make frontend prices depend on `store.cart_tax_country_iso`
 
