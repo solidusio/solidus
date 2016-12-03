@@ -5,6 +5,6 @@ unless Spree::Store.where(code: 'spree').exists?
     s.name              = 'Spree Demo Site'
     s.url               = 'demo.spreecommerce.com'
     s.mail_from_address = 'spree@example.com'
-    s.cart_tax_country_iso = Spree::Config.admin_vat_location
+    s.cart_tax_country_iso = 'US'
   end.save!
 end
