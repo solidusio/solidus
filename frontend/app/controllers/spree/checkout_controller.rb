@@ -25,11 +25,12 @@ module Spree
 
     # Updates the order and advances to the next state (when possible.)
     def update
-      if order_update
+      if update_order
 
         assign_temp_address
 
-        on_failure and return unless state_transition
+        redirect_on_failure and return unless transition_forward!
+
 
         if @order.completed?
           finalize_order
@@ -44,7 +45,7 @@ module Spree
 
     private
 
-    def order_update
+    def update_order
       OrderUpdateAttributes.new(@order, update_params, request_env: request.headers.env).apply
     end
 
@@ -52,12 +53,12 @@ module Spree
       @order.temporary_address = !params[:save_user_address]
     end
 
-    def on_failure
+    def redirect_on_failure
       flash[:error] = @order.errors.full_messages.join("\n")
       redirect_to(checkout_state_path(@order.state))
     end
 
-    def state_transition
+    def transition_forward!
       if @order.confirm?
         @order.complete
       else
