@@ -66,17 +66,19 @@ describe Spree::Variant, type: :model do
       let!(:high_vat) { create(:tax_rate, included_in_price: true, amount: 0.25, zone: high_vat_zone, tax_category: tax_category) }
       let!(:low_vat) { create(:tax_rate, included_in_price: true, amount: 0.15, zone: low_vat_zone, tax_category: tax_category) }
 
-      let(:product) { create(:product, tax_category: tax_category) }
+      let(:product) { build(:product, tax_category: tax_category) }
 
-      subject(:new_variant) { create(:variant, price: 15, product: product) }
+      subject(:new_variant) { build(:variant, price: 15) }
 
       it "creates the appropriate prices for them" do
-        # default price + FR, DE, DK
-        expect { new_variant }.to change { Spree::Price.count }.by(4)
+        product.variants << new_variant
+        product.save!
         expect(new_variant.prices.find_by(country_iso: "FR").amount).to eq(17.25)
         expect(new_variant.prices.find_by(country_iso: "DE").amount).to eq(18.75)
         expect(new_variant.prices.find_by(country_iso: "DK").amount).to eq(18.75)
         expect(new_variant.prices.find_by(country_iso: nil).amount).to eq(15.00)
+        # default price + FR, DE, DK
+        expect(new_variant.prices.count).to eq(4)
       end
 
       context "when the products price changes" do

@@ -30,9 +30,15 @@ describe Spree::Variant::VatPriceGenerator do
     end
 
     it "will not build prices that are already present" do
-      variant.prices.build(amount: 11, country_iso: "FR")
-      variant.prices.build(amount: 11, country_iso: nil)
       expect { subject }.not_to change { variant.prices.length }
+    end
+
+    # We need to remove the price for FR from the database so it is created in memory, and then run VatPriceGenerator twice to trigger the duplicate price issue.
+    it "will not build duplicate prices on multiple runs" do
+      variant.prices.where(country_iso: "FR").destroy_all
+      variant.reload
+      described_class.new(variant).run
+      expect { subject }.not_to change { variant.prices.size }
     end
   end
 

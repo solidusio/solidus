@@ -28,16 +28,19 @@ module Spree
           # Don't re-create the default price
           next if variant.default_price && variant.default_price.country_iso == country_iso
 
-          foreign_price = variant.prices.find_or_initialize_by(
-            country_iso: country_iso,
-            currency: variant.default_price.currency,
-          )
+          foreign_price = find_or_initialize_price_by(country_iso, variant.default_price.currency)
 
           foreign_price.amount = variant.default_price.net_amount * (1 + vat_for_country_iso(country_iso))
         end
       end
 
       private
+
+      def find_or_initialize_price_by(country_iso, currency)
+        variant.prices.detect do |price|
+          price.country_iso == country_iso && price.currency == currency
+        end || variant.prices.build(country_iso: country_iso, currency: currency)
+      end
 
       # nil is added to the array so we always have an export price.
       def country_isos_requiring_price
