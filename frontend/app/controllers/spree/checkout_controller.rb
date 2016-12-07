@@ -29,7 +29,10 @@ module Spree
 
         assign_temp_address
 
-        redirect_on_failure and return unless transition_forward!
+        unless transition_forward!
+          redirect_on_failure
+          return
+        end
 
 
         if @order.completed?
@@ -103,7 +106,7 @@ module Spree
     def ensure_valid_state
       unless skip_state_validation?
         if (params[:state] && !@order.has_checkout_step?(params[:state])) ||
-           (!params[:state] && !@order.has_checkout_step?(@order.state))
+          (!params[:state] && !@order.has_checkout_step?(@order.state))
           @order.state = 'cart'
           redirect_to checkout_state_path(@order.checkout_steps.first)
         end
@@ -165,7 +168,7 @@ module Spree
     def before_address
       # if the user has a default address, a callback takes care of setting
       # that; but if he doesn't, we need to build an empty one here
-      default = { country_id: Country.default.id }
+      default = {country_id: Country.default.id}
       @order.build_bill_address(default) unless @order.bill_address
       @order.build_ship_address(default) if @order.checkout_steps.include?('delivery') && !@order.ship_address
     end
