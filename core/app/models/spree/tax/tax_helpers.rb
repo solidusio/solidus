@@ -17,9 +17,9 @@ module Spree
       #
       # For further discussion, see https://github.com/spree/spree/issues/4397 and https://github.com/spree/spree/issues/4327.
       def applicable_rates(order)
-        order_zone_tax_categories = rates_for_order(order).map(&:tax_category)
+        order_zone_tax_category_ids = rates_for_order(order).map(&:tax_category_id)
         default_rates_with_unmatched_tax_category = rates_for_default_zone.to_a.delete_if do |default_rate|
-          order_zone_tax_categories.include?(default_rate.tax_category)
+          order_zone_tax_category_ids.include?(default_rate.tax_category_id)
         end
 
         (rates_for_order(order) + default_rates_with_unmatched_tax_category).uniq
@@ -38,7 +38,7 @@ module Spree
       end
 
       def rates_for_item(item)
-        applicable_rates(item.order).select { |rate| rate.tax_category == item.tax_category }
+        applicable_rates(item.order).select { |rate| rate.tax_category_id == item.tax_category_id }
       end
     end
   end

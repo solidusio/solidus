@@ -72,7 +72,7 @@ module Spree
     self.whitelisted_ransackable_associations = ['order']
     self.whitelisted_ransackable_attributes = ['number']
 
-    delegate :tax_category, to: :selected_shipping_rate, allow_nil: true
+    delegate :tax_category, :tax_category_id, to: :selected_shipping_rate, allow_nil: true
 
     def can_transition_from_pending_to_shipped?
       !requires_shipment?
