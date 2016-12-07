@@ -29,7 +29,7 @@ module Spree
 
         assign_temp_address
 
-        unless transition_forward!
+        unless transition_forward
           redirect_on_failure
           return
         end
@@ -61,7 +61,7 @@ module Spree
       redirect_to(checkout_state_path(@order.state))
     end
 
-    def transition_forward!
+    def transition_forward
       if @order.confirm?
         @order.complete
       else
