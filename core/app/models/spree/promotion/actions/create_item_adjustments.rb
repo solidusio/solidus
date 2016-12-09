@@ -31,7 +31,12 @@ module Spree
         def compute_amount(adjustable)
           order = adjustable.is_a?(Order) ? adjustable : adjustable.order
           return 0 unless promotion.line_item_actionable?(order, adjustable)
-          promotion_amount = calculator.compute(adjustable).to_f.abs
+          promotion_amount = calculator.compute(adjustable)
+          if !promotion_amount.is_a?(BigDecimal)
+            Spree::Deprecation.warn "#{calculator.class.name}#compute returned #{promotion_amount.inspect}, it should return a BigDecimal"
+          end
+          promotion_amount ||= BigDecimal.new(0)
+          promotion_amount = promotion_amount.abs
           [adjustable.amount, promotion_amount].min * -1
         end
 

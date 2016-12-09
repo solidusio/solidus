@@ -97,13 +97,13 @@ module Spree
 
           context "when the adjustable is actionable" do
             it "calls compute on the calculator" do
-              expect(action.calculator).to receive(:compute).with(line_item)
+              expect(action.calculator).to receive(:compute).with(line_item).and_call_original
               action.compute_amount(line_item)
             end
 
             context "calculator returns amount greater than item total" do
               before do
-                expect(action.calculator).to receive(:compute).with(line_item).and_return(300)
+                action.calculator.preferred_amount = 300
                 allow(line_item).to receive_messages(amount: 100)
               end
 
