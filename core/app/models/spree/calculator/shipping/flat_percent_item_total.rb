@@ -11,7 +11,7 @@ module Spree
 
       def compute_from_price(price)
         value = price * BigDecimal(preferred_flat_percent.to_s) / 100.0
-        (value * 100).round.to_f / 100
+        value.round(2)
       end
     end
   end
