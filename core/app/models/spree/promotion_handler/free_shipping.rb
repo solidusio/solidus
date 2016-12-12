@@ -10,38 +10,49 @@ module Spree
       end
 
       def activate
-        promotions.each do |promotion|
-          if order_promotion = existing_order_promotion(promotion)
-            promotion.activate(
-              order: order,
-              promotion_code: order_promotion.promotion_code,
-            )
-          elsif promotion.apply_automatically?
-            promotion.activate(order: order)
-          end
+        connected_promotions.each do |order_promotion|
+          order_promotion.promotion.activate(
+            order: order,
+            promotion_code: order_promotion.promotion_code,
+          )
+        end
+
+        not_connected_automatic_promotions.each do |promotion|
+          promotion.activate(order: order)
         end
       end
 
       private
 
-      def promotions
-        Spree::Promotion.
+      def not_connected_automatic_promotions
+        automatic_promotions - connected_promotions.map(&:promotion)
+      end
+
+      def automatic_promotions
+        @automatic_promotions ||= active_free_shipping_promotions.
+          where(apply_automatically: true).
+          to_a.
+          uniq
+      end
+
+      def connected_promotions
+        @connected_promotions ||= order.order_promotions.
+          joins(:promotion).
+          includes(:promotion).
+          merge(active_free_shipping_promotions).
+          to_a.
+          uniq
+      end
+
+      def active_free_shipping_promotions
+        Spree::Promotion.all.
           active.
           joins(:promotion_actions).
           merge(
             Spree::PromotionAction.of_type(
               Spree::Promotion::Actions::FreeShipping
             )
-          ).
-          distinct
-      end
-
-      def existing_order_promotion(promotion)
-        @lookup ||= order.order_promotions.map do |order_promotion|
-          [order_promotion.promotion_id, order_promotion]
-        end.to_h
-
-        @lookup[promotion.id]
+          )
       end
     end
   end
