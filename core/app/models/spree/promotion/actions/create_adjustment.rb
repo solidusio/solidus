@@ -35,7 +35,12 @@ module Spree
         # Ensure a negative amount which does not exceed the sum of the order's
         # item_total and ship_total
         def compute_amount(calculable)
-          amount = calculator.compute(calculable).to_f.abs
+          amount = calculator.compute(calculable)
+          if !amount.is_a?(BigDecimal)
+            Spree::Deprecation.warn "#{calculator.class.name}#compute returned #{amount.inspect}, it should return a BigDecimal"
+          end
+          amount ||= BigDecimal.new(0)
+          amount = amount.abs
           [(calculable.item_total + calculable.ship_total), amount].min * -1
         end
 

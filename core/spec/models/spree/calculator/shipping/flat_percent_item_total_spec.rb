@@ -21,6 +21,10 @@ module Spree
       it "should round result correctly" do
         expect(subject.compute(package)).to eq(4.04)
       end
+
+      it "should return a bigdecimal" do
+        expect(subject.compute(package)).to be_a(BigDecimal)
+      end
     end
   end
 end

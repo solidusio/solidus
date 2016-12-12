@@ -56,7 +56,7 @@ module Spree
             gateway_options
           )
           money = ::Money.new(amount, currency)
-          capture_events.create!(amount: money.to_f)
+          capture_events.create!(amount: money.to_d)
           update_attributes!(amount: captured_amount)
           handle_response(response, :complete, :failure)
         end
