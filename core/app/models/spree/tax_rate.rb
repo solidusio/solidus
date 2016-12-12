@@ -62,7 +62,13 @@ module Spree
     # Under no circumstances should negative adjustments be applied for the Spanish tax rates.
     #
     # Those rates should never come into play at all and only the French rates should apply.
-    scope :for_zone, ->(zone) { where(zone_id: Spree::Zone.with_shared_members(zone).pluck(:id)) }
+    scope :for_zone, ->(zone) do
+      if zone
+        where(zone_id: Spree::Zone.with_shared_members(zone).pluck(:id))
+      else
+        none
+      end
+    end
     scope :included_in_price, -> { where(included_in_price: true) }
 
     # Creates necessary tax adjustments for the order.
