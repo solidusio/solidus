@@ -69,6 +69,7 @@ module Spree
     after_create :set_position
     after_create :set_master_out_of_stock, unless: :is_master?
 
+    after_save :clear_in_stock_cache
     after_touch :clear_in_stock_cache
 
     after_real_destroy :destroy_option_values_variants
