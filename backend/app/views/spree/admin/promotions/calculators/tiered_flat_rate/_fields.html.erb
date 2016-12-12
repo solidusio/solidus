@@ -6,9 +6,11 @@
   type: calculator.preference_type(:base_amount)) %>
 
 <%= label_tag nil, Spree.t(:tiers) %>
-<%= content_tag :div, nil, class: "js-tiers", data: {
-  'original-tiers' => Hash[calculator.preferred_tiers.sort],
-  'form-prefix' => prefix,
-  'calculator' => 'tiered_flat_rate'
-} %>
-<button class="button js-add-tier"><%= Spree.t('actions.add') %></button>
+<div class="js-tiered-calculator">
+  <%= content_tag :div, nil, class: "js-tiers", data: {
+    'original-tiers' => Hash[calculator.preferred_tiers.sort],
+    'form-prefix' => prefix,
+    'calculator' => 'tiered_flat_rate'
+  } %>
+  <button class="button js-add-tier"><%= Spree.t('actions.add') %></button>
+</div>

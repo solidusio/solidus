@@ -4,7 +4,7 @@ module Spree
 
     included do
       has_one :calculator, class_name: "Spree::Calculator", as: :calculable, inverse_of: :calculable, dependent: :destroy, autosave: true
-      accepts_nested_attributes_for :calculator
+      accepts_nested_attributes_for :calculator, update_only: true
       validates :calculator, presence: true
     end
 

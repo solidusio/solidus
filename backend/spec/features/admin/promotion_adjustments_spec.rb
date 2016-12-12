@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "Promotion Adjustments", type: :feature do
+describe "Promotion Adjustments", type: :feature, js: true do
   stub_authorization!
 
   context "coupon promotions", js: true do

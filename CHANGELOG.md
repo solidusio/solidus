@@ -1,5 +1,8 @@
 ## Solidus 2.2.0 (master, unreleased)
 
+*   Promotion and Shipping calculators can be created or have their type
+    changed without saving and reloading the page. [#1618](https://github.com/solidusio/solidus/pull/1618)
+
 ## Solidus 2.1.0 (unreleased)
 
 *   The OrderUpdater (as used by `order.update!`) now fully updates taxes.

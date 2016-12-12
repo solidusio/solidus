@@ -1,16 +1,26 @@
-$(function() {
-  var calculator_select = $('select#calc_type')
-  var original_calc_type = calculator_select.prop('value');
-  $('.calculator-settings-warning').hide();
-  calculator_select.change(function() {
-    if (calculator_select.prop('value') == original_calc_type) {
-      $('div.calculator-settings').show();
-      $('.calculator-settings-warning').hide();
-      $('.calculator-settings').find('input,textarea').prop("disabled", false);
-    } else {
-      $('div.calculator-settings').hide();
-      $('.calculator-settings-warning').show();
-      $('.calculator-settings').find('input,texttarea').prop("disabled", true);
-    }
-  });
+Spree.CalculatorEditView = Backbone.View.extend({
+  events: {
+    "change .js-calculator-type": "render",
+  },
+
+  initialize: function() {
+    this.render();
+  },
+
+  render: function() {
+    var selected_class = this.$('.js-calculator-type option:selected').val();
+    this.$('.js-calculator-preferences').each(function() {
+      var selected = ($(this).data('calculator-type') === selected_class);
+      $(this).find(':input').prop("disabled", !selected);
+      $(this).toggle(selected);
+    });
+  }
 })
+
+$(function() {
+  $('.js-calculator-fields').each(function() {
+    new Spree.CalculatorEditView({
+      el: this
+    });
+  });
+});
