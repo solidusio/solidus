@@ -9,9 +9,49 @@ describe Spree::Calculator::TieredFlatRate, type: :model do
   describe "#valid?" do
     subject { calculator.valid? }
     context "when tiers is a hash" do
-      context "and one of the keys is not a positive number" do
+      context "and the key is not a positive number" do
         before { calculator.preferred_tiers = { "nope" => 20 } }
         it { is_expected.to be false }
+      end
+
+      context "and the key is an integer" do
+        before { calculator.preferred_tiers = { 20 => 20 } }
+        it "converts successfully" do
+          is_expected.to be true
+          expect(calculator.preferred_tiers).to eq({ BigDecimal.new('20') => BigDecimal.new('20') })
+        end
+      end
+
+      context "and the key is a float" do
+        before { calculator.preferred_tiers = { 20.5 => 20.5 } }
+        it "converts successfully" do
+          is_expected.to be true
+          expect(calculator.preferred_tiers).to eq({ BigDecimal.new('20.5') => BigDecimal.new('20.5') })
+        end
+      end
+
+      context "and the key is a string number" do
+        before { calculator.preferred_tiers = { "20" => 20 } }
+        it "converts successfully" do
+          is_expected.to be true
+          expect(calculator.preferred_tiers).to eq({ BigDecimal.new('20') => BigDecimal.new('20') })
+        end
+      end
+
+      context "and the key is a numeric string with spaces" do
+        before { calculator.preferred_tiers = { "  20 " => 20 } }
+        it "converts successfully" do
+          is_expected.to be true
+          expect(calculator.preferred_tiers).to eq({ BigDecimal.new('20') => BigDecimal.new('20') })
+        end
+      end
+
+      context "and the key is a string number with decimals" do
+        before { calculator.preferred_tiers = { "20.5" => "20.5" } }
+        it "converts successfully" do
+          is_expected.to be true
+          expect(calculator.preferred_tiers).to eq({ BigDecimal.new('20.5') => BigDecimal.new('20.5') })
+        end
       end
     end
   end
