@@ -25,32 +25,64 @@ module Spree
 
     # Updates the order and advances to the next state (when possible.)
     def update
-      if OrderUpdateAttributes.new(@order, update_params, request_env: request.headers.env).apply
-        @order.temporary_address = !params[:save_user_address]
-        success = if @order.state == 'confirm'
-          @order.complete
-        else
-          @order.next
-        end
-        if !success
-          flash[:error] = @order.errors.full_messages.join("\n")
-          redirect_to(checkout_state_path(@order.state)) && return
+      if update_order
+
+        assign_temp_address
+
+        unless transition_forward
+          redirect_on_failure
+          return
         end
 
+
         if @order.completed?
-          @current_order = nil
-          flash.notice = Spree.t(:order_processed_successfully)
-          flash['order_completed'] = true
-          redirect_to completion_route
+          finalize_order
         else
-          redirect_to checkout_state_path(@order.state)
+          send_to_next_state
         end
+
       else
         render :edit
       end
     end
 
     private
+
+    def update_order
+      OrderUpdateAttributes.new(@order, update_params, request_env: request.headers.env).apply
+    end
+
+    def assign_temp_address
+      @order.temporary_address = !params[:save_user_address]
+    end
+
+    def redirect_on_failure
+      flash[:error] = @order.errors.full_messages.join("\n")
+      redirect_to(checkout_state_path(@order.state))
+    end
+
+    def transition_forward
+      if @order.confirm?
+        @order.complete
+      else
+        @order.next
+      end
+    end
+
+    def finalize_order
+      @current_order = nil
+      set_successful_flash_notice
+      redirect_to completion_route
+    end
+
+    def set_successful_flash_notice
+      flash.notice = Spree.t(:order_processed_successfully)
+      flash['order_completed'] = true
+    end
+
+    def send_to_next_state
+      redirect_to checkout_state_path(@order.state)
+    end
 
     def update_params
       if update_params = massaged_params[:order]
@@ -74,7 +106,7 @@ module Spree
     def ensure_valid_state
       unless skip_state_validation?
         if (params[:state] && !@order.has_checkout_step?(params[:state])) ||
-           (!params[:state] && !@order.has_checkout_step?(@order.state))
+          (!params[:state] && !@order.has_checkout_step?(@order.state))
           @order.state = 'cart'
           redirect_to checkout_state_path(@order.checkout_steps.first)
         end
@@ -136,7 +168,7 @@ module Spree
     def before_address
       # if the user has a default address, a callback takes care of setting
       # that; but if he doesn't, we need to build an empty one here
-      default = { country_id: Country.default.id }
+      default = {country_id: Country.default.id}
       @order.build_bill_address(default) unless @order.bill_address
       @order.build_ship_address(default) if @order.checkout_steps.include?('delivery') && !@order.ship_address
     end
