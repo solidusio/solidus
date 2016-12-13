@@ -41,9 +41,9 @@ describe 'Product Details', type: :feature do
 
       fill_in "product_slug", with: ''
       click_button "Update"
-      within('#product_slug_field') { expect(page).to have_content("is too short") }
+      within('#product_slug_field') { expect(page).to have_content("can't be blank") }
 
-      fill_in "product_slug", with: 'another-random-slug-value'
+      fill_in "product_slug", with: 'x'
       click_button "Update"
       expect(page).to have_content("successfully updated!")
     end
