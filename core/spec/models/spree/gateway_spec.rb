@@ -85,7 +85,9 @@ describe Spree::Gateway, type: :model do
     context 'order is not complete but credit card has user' do
       let(:cc_user) { user }
       let(:completed_at) { nil }
-
+      before do
+        cc_user.wallet.add(cc)
+      end
       it "finds credit cards associated to the user" do
         expect(payment_method.reusable_sources(payment.order)).to eq [cc]
       end

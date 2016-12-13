@@ -198,7 +198,11 @@ describe 'Payments', type: :feature do
         create(:credit_card, user_id: order.user_id, payment_method: payment_method, gateway_customer_profile_id: "BGS-RFRE")
       end
 
-      before { visit spree.admin_order_payments_path(order) }
+      before do
+        order.user.wallet.add(cc)
+        order.user.wallet.default = cc
+        visit spree.admin_order_payments_path(order)
+      end
 
       it "is able to reuse customer payment source" do
         expect(find("#card_#{cc.id}")).to be_checked

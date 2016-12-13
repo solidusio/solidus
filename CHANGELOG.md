@@ -265,6 +265,9 @@
     This was unnecessary since it didn't update the order totals, and running
     order.update! would recalculate the adjustments and totals again.
 
+*   Filter orders by store when more than a single store is present. [#1149](https://github.com/solidusio/solidus/pull/1140)
+
+
 ## Solidus 1.3.0 (2016-06-22)
 
 *   Order now requires a `store_id` in validations

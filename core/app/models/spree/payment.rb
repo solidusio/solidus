@@ -36,6 +36,7 @@ module Spree
     # invalidate previously entered payments
     after_create :invalidate_old_payments
 
+    # FIXME: Deprecated in apply_source_attributes, marked for removal
     attr_accessor :source_attributes
     after_initialize :apply_source_attributes
 

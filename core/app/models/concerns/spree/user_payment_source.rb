@@ -2,15 +2,28 @@ module Spree
   module UserPaymentSource
     extend ActiveSupport::Concern
 
+    # TODO: Remove this association when the deprecated methods below
+    # are removed.
     included do
       has_many :credit_cards, class_name: "Spree::CreditCard", foreign_key: :user_id
     end
 
     def default_credit_card
-      credit_cards.default.first
+      ActiveSupport::Deprecation.warn(
+        "user.default_credit_card is deprecated. Please use user.wallet.default.payment_source instead.",
+        caller
+      )
+      default = wallet.default
+      if default && default.payment_source.is_a?(Spree::CreditCard)
+        default.payment_source
+      end
     end
 
     def payment_sources
+      ActiveSupport::Deprecation.warn(
+        "user.payment_sources is deprecated. Please use user.wallet.wallet_payment_sources instead.",
+        caller
+      )
       credit_cards.with_payment_profile
     end
 
