@@ -58,7 +58,7 @@ module Spree
         if @product
           variants = @product.variants_including_master
         else
-          variants = Variant
+          variants = Spree::Variant
         end
 
         if current_ability.can?(:manage, Variant) && params[:show_deleted]

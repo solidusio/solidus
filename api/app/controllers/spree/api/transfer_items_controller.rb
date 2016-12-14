@@ -3,7 +3,7 @@ module Spree
     class TransferItemsController < Spree::Api::BaseController
       def create
         authorize! :create, TransferItem
-        stock_transfer = StockTransfer.accessible_by(current_ability, :update).find_by(number: params[:stock_transfer_id])
+        stock_transfer = Spree::StockTransfer.accessible_by(current_ability, :update).find_by(number: params[:stock_transfer_id])
         @transfer_item = stock_transfer.transfer_items.build(transfer_item_params)
         if @transfer_item.save
           respond_with(@transfer_item, status: 201, default_template: :show)
@@ -14,7 +14,7 @@ module Spree
 
       def update
         authorize! :update, TransferItem
-        @transfer_item = TransferItem.accessible_by(current_ability, :update).find(params[:id])
+        @transfer_item = Spree::TransferItem.accessible_by(current_ability, :update).find(params[:id])
         if @transfer_item.update_attributes(transfer_item_params)
           respond_with(@transfer_item, status: 200, default_template: :show)
         else
@@ -24,7 +24,7 @@ module Spree
 
       def destroy
         authorize! :destroy, TransferItem
-        @transfer_item = TransferItem.accessible_by(current_ability, :destroy).find(params[:id])
+        @transfer_item = Spree::TransferItem.accessible_by(current_ability, :destroy).find(params[:id])
         if @transfer_item.destroy
           respond_with(@transfer_item, status: 200, default_template: :show)
         else

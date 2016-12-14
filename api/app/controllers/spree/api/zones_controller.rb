@@ -3,7 +3,7 @@ module Spree
     class ZonesController < Spree::Api::BaseController
       def create
         authorize! :create, Zone
-        @zone = Zone.new(zone_params)
+        @zone = Spree::Zone.new(zone_params)
         if @zone.save
           respond_with(@zone, status: 201, default_template: :show)
         else
@@ -18,7 +18,7 @@ module Spree
       end
 
       def index
-        @zones = Zone.
+        @zones = Spree::Zone.
           accessible_by(current_ability, :read).
           order('name ASC').
           ransack(params[:q]).

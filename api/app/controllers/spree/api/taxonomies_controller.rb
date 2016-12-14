@@ -20,7 +20,7 @@ module Spree
 
       def create
         authorize! :create, Taxonomy
-        @taxonomy = Taxonomy.new(taxonomy_params)
+        @taxonomy = Spree::Taxonomy.new(taxonomy_params)
         if @taxonomy.save
           respond_with(@taxonomy, status: 201, default_template: :show)
         else
@@ -55,7 +55,7 @@ module Spree
       end
 
       def taxonomy
-        @taxonomy ||= Taxonomy.accessible_by(current_ability, :read).find(params[:id])
+        @taxonomy ||= Spree::Taxonomy.accessible_by(current_ability, :read).find(params[:id])
       end
 
       def taxonomy_params

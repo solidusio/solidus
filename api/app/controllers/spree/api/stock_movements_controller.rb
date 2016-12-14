@@ -27,7 +27,7 @@ module Spree
       private
 
       def stock_location
-        @stock_location ||= StockLocation.accessible_by(current_ability, :read).find(params[:stock_location_id])
+        @stock_location ||= Spree::StockLocation.accessible_by(current_ability, :read).find(params[:stock_location_id])
       end
 
       def scope
