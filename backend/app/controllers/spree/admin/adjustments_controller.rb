@@ -36,7 +36,7 @@ module Spree
 
       def reasons_for(_adjustment)
         [
-          AdjustmentReason.active.to_a,
+          Spree::AdjustmentReason.active.to_a,
           @adjustment.adjustment_reason
         ].flatten.compact.uniq.sort_by { |r| r.name.downcase }
       end

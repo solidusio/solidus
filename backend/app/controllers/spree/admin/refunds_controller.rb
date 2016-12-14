@@ -20,7 +20,7 @@ module Spree
       end
 
       def refund_reasons
-        @refund_reasons ||= RefundReason.active.all
+        @refund_reasons ||= Spree::RefundReason.active.all
       end
 
       def build_resource

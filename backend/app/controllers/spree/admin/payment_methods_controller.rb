@@ -49,7 +49,7 @@ module Spree
       end
 
       def load_providers
-        @providers = PaymentMethod.providers.sort_by(&:name)
+        @providers = Spree::PaymentMethod.providers.sort_by(&:name)
       end
 
       def validate_payment_method_provider

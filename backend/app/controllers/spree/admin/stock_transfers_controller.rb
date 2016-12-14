@@ -133,12 +133,12 @@ module Spree
         @source_location ||= if params.key?(:transfer_receive_stock)
                                nil
                              else
-                               StockLocation.find(params[:transfer_source_location_id])
+                               Spree::StockLocation.find(params[:transfer_source_location_id])
                              end
       end
 
       def destination_location
-        @destination_location ||= StockLocation.find(params[:transfer_destination_location_id])
+        @destination_location ||= Spree::StockLocation.find(params[:transfer_destination_location_id])
       end
 
       def adjust_inventory

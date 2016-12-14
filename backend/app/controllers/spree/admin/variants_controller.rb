@@ -8,7 +8,7 @@ module Spree
       # override the destroy method to set deleted_at value
       # instead of actually deleting the product.
       def destroy
-        @variant = Variant.find(params[:id])
+        @variant = Spree::Variant.find(params[:id])
         if @variant.destroy
           flash[:success] = Spree.t('notice_messages.variant_deleted')
         else
@@ -42,7 +42,7 @@ module Spree
       end
 
       def load_data
-        @tax_categories = TaxCategory.order(:name)
+        @tax_categories = Spree::TaxCategory.order(:name)
       end
 
       def variant_includes

@@ -32,7 +32,7 @@ module Spree
       end
 
       def load_order
-        @order = Order.find_by_number!(params[:order_id])
+        @order = Spree::Order.find_by_number!(params[:order_id])
         authorize! action, @order
       end
 

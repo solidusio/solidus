@@ -6,9 +6,9 @@ module Spree
       private
 
       def load_data
-        @available_zones = Zone.order(:name)
-        @available_categories = TaxCategory.order(:name)
-        @calculators = TaxRate.calculators.sort_by(&:name)
+        @available_zones = Spree::Zone.order(:name)
+        @available_categories = Spree::TaxCategory.order(:name)
+        @calculators = Spree::TaxRate.calculators.sort_by(&:name)
       end
     end
   end
