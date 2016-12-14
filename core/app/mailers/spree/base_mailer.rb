@@ -15,7 +15,11 @@ module Spree
     helper_method :money
 
     def mail(headers = {}, &block)
-      super if Spree::Config[:send_core_emails]
+      if Spree::Config[:send_core_emails]
+        super
+      else
+        ActiveSupport::Deprecation.warn "Not sending mail due to `Spree::Config[:send_core_emails]`. This check will be removed from Spree::BaseMailer in the future, please use Spree::NotificationDispatch#deliver instead.", caller
+      end
     end
   end
 end

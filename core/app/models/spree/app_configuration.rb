@@ -334,6 +334,7 @@ module Spree
     # @return [ActionMailer::Base] an object that responds to "shipped_email"
     #   (e.g. an ActionMailer with a "shipped_email" method) with the same
     #   signature as Spree::CartonMailer.shipped_email.
+    # @deprecated use Spree::NotificationDispatch::ActionMailerDispatch.mailer_dispatch_table instead.
     attr_writer :carton_shipped_email_class
     def carton_shipped_email_class
       @carton_shipped_email_class ||= Spree::CartonMailer

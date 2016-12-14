@@ -4,7 +4,7 @@ module Spree
       def reimbursement
         reimbursement = Reimbursement.last
         raise "Your database needs at least one Reimbursement to render this preview" unless reimbursement
-        ReimbursementMailer.reimbursement_email(reimbursement)
+        Spree::NotificationDispatch::ActionMailerDispatch.new(:reimbursement_processed).action_mail_object(reimbursement)
       end
     end
   end
