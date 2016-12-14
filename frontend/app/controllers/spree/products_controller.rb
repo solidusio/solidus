@@ -37,9 +37,9 @@ module Spree
 
     def load_product
       if try_spree_current_user.try(:has_spree_role?, "admin")
-        @products = Product.with_deleted
+        @products = Spree::Product.with_deleted
       else
-        @products = Product.available
+        @products = Spree::Product.available
       end
       @product = @products.friendly.find(params[:id])
     end
