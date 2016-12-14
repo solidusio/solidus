@@ -20,7 +20,7 @@ module Spree
           updated_at: Time.current
         )
       else
-        self.root = Taxon.create!(taxonomy_id: id, name: name)
+        self.root = Spree::Taxon.create!(taxonomy_id: id, name: name)
       end
     end
   end

@@ -38,7 +38,7 @@ module Spree
     #   Refund.total_amount_reimbursed_for(reimbursement)
     # See the `reimbursement_generator` property regarding the generation of custom reimbursements.
     class_attribute :reimbursement_models
-    self.reimbursement_models = [Refund, Reimbursement::Credit]
+    self.reimbursement_models = [Spree::Refund, Spree::Reimbursement::Credit]
 
     # The reimbursement_performer property should be set to an object that responds to the following methods:
     # - #perform

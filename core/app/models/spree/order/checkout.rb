@@ -259,7 +259,7 @@ module Spree
               existing_card_id = @updating_params[:order] ? @updating_params[:order][:existing_card] : nil
 
               if existing_card_id.present?
-                credit_card = CreditCard.find existing_card_id
+                credit_card = Spree::CreditCard.find existing_card_id
                 if credit_card.user_id != user_id || credit_card.user_id.blank?
                   raise Core::GatewayError.new Spree.t(:invalid_credit_card)
                 end
@@ -275,7 +275,7 @@ module Spree
                 attributes[:payments_attributes].first[:request_env] = request_env
               end
 
-              update = OrderUpdateAttributes.new(self, attributes, request_env: request_env)
+              update = Spree::OrderUpdateAttributes.new(self, attributes, request_env: request_env)
               success = update.apply
             end
 
@@ -284,11 +284,11 @@ module Spree
           end
 
           def bill_address_attributes=(attributes)
-            self.bill_address = Address.immutable_merge(bill_address, attributes)
+            self.bill_address = Spree::Address.immutable_merge(bill_address, attributes)
           end
 
           def ship_address_attributes=(attributes)
-            self.ship_address = Address.immutable_merge(ship_address, attributes)
+            self.ship_address = Spree::Address.immutable_merge(ship_address, attributes)
           end
 
           def assign_default_addresses!

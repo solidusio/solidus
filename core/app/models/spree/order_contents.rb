@@ -80,7 +80,7 @@ module Spree
     end
 
     def order_updater
-      @updater ||= OrderUpdater.new(order)
+      @updater ||= Spree::OrderUpdater.new(order)
     end
 
     def reload_totals

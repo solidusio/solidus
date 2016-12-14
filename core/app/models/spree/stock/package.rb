@@ -101,7 +101,7 @@ module Spree
       # @return [Array<Spree::ShippingCategory>] the shipping categories of the
       #   variants in this package
       def shipping_categories
-        ShippingCategory.where(id: shipping_category_ids)
+        Spree::ShippingCategory.where(id: shipping_category_ids)
       end
 
       # @return [ActiveRecord::Relation] the [Spree::ShippingMethod]s available

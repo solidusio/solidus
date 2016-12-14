@@ -100,7 +100,7 @@ module Spree
 
       pre_expedited_exchange_hooks.each { |h| h.call items_to_exchange }
 
-      reimbursement = Reimbursement.new(return_items: items_to_exchange, order: order)
+      reimbursement = Spree::Reimbursement.new(return_items: items_to_exchange, order: order)
 
       if reimbursement.save
         reimbursement.perform!

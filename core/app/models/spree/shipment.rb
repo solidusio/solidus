@@ -136,9 +136,9 @@ module Spree
     def finalize!
       transaction do
         pending_units = inventory_units.select(&:pending?)
-        pending_manifest = ShippingManifest.new(inventory_units: pending_units)
+        pending_manifest = Spree::ShippingManifest.new(inventory_units: pending_units)
         pending_manifest.items.each { |item| manifest_unstock(item) }
-        InventoryUnit.finalize_units!(pending_units)
+        Spree::InventoryUnit.finalize_units!(pending_units)
       end
     end
 
