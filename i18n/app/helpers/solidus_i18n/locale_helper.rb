@@ -15,7 +15,7 @@ module SolidusI18n
     # Need to manually add en to the array because the en.yml was moved from
     # this project. solidusio/solidus now has those keys.
     def all_locales_options
-      Locale.all.map { |locale| locale_presentation(locale) }.push(['English (EN)', :en])
+      SolidusI18n::Locale.all.map { |locale| locale_presentation(locale) }.push(['English (EN)', :en])
     end
 
     private
