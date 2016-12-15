@@ -5,7 +5,7 @@
   <li>
     <%= button_link_to Spree.t(:new_order), new_admin_order_url, :id => 'admin_new_order' %>
   </li>
-<% end if can? :edit, Spree::Order.new %>
+<% end if can? :create, Spree::Order %>
 
 <% content_for :table_filter_title do %>
   <%= Spree.t(:search) %>

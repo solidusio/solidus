@@ -13,6 +13,21 @@ describe "Orders Listing", type: :feature, js: true do
     visit spree.admin_orders_path
   end
 
+  it 'displays the new order button' do
+    expect(page).to have_link('New Order')
+  end
+
+  context 'without create permission' do
+    custom_authorization! do |_user|
+      can :manage, Spree::Order
+      cannot :create, Spree::Order
+    end
+
+    it 'does not display the new order button' do
+      expect(page).to_not have_link('New Order')
+    end
+  end
+
   context "listing orders" do
     it "should list existing orders" do
       within_row(1) do
