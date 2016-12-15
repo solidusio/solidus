@@ -44,7 +44,7 @@ module Spree
 
     def disable_customer_profile(source)
       Spree::Deprecation.warn("Gateway#disable_customer_profile is deprecated")
-      if source.is_a? CreditCard
+      if source.is_a? Spree::CreditCard
         source.update_column :gateway_customer_profile_id, nil
       else
         raise 'You must implement disable_customer_profile method for this gateway.'

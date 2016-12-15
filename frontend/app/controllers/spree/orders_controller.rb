@@ -13,7 +13,7 @@ module Spree
     skip_before_action :verify_authenticity_token, only: [:populate]
 
     def show
-      @order = Order.find_by_number!(params[:id])
+      @order = Spree::Order.find_by_number!(params[:id])
     end
 
     def update
@@ -36,7 +36,7 @@ module Spree
 
     # Shows the current incomplete order from the session
     def edit
-      @order = current_order || Order.incomplete.find_or_initialize_by(guest_token: cookies.signed[:guest_token])
+      @order = current_order || Spree::Order.incomplete.find_or_initialize_by(guest_token: cookies.signed[:guest_token])
       associate_user
     end
 

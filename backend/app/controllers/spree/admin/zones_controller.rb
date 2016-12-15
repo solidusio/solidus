@@ -17,9 +17,9 @@ module Spree
       end
 
       def load_data
-        @countries = Country.order(:name)
-        @states = State.order(:name)
-        @zones = Zone.order(:name)
+        @countries = Spree::Country.order(:name)
+        @states = Spree::State.order(:name)
+        @zones = Spree::Zone.order(:name)
       end
     end
   end

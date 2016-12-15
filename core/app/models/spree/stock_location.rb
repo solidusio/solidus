@@ -110,12 +110,12 @@ module Spree
     private
 
     def create_stock_items
-      Variant.find_each { |variant| propagate_variant(variant) }
+      Spree::Variant.find_each { |variant| propagate_variant(variant) }
     end
 
     def ensure_one_default
       if default
-        StockLocation.where(default: true).where.not(id: id).each do |stock_location|
+        Spree::StockLocation.where(default: true).where.not(id: id).each do |stock_location|
           stock_location.default = false
           stock_location.save!
         end

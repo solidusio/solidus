@@ -17,7 +17,7 @@ module Spree
       private
 
       def promotion
-        @promotion ||= Promotion.active.find_by(path: path)
+        @promotion ||= Spree::Promotion.active.find_by(path: path)
       end
     end
   end

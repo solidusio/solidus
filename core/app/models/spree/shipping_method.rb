@@ -34,7 +34,7 @@ module Spree
       # Some extra care is needed with the having clause to ensure we are
       # counting distinct records of the join table. Otherwise a join could
       # cause this to return incorrect results.
-      join_table = ShippingMethodCategory.arel_table
+      join_table = Spree::ShippingMethodCategory.arel_table
       having = join_table[:id].count(true).eq(shipping_category_ids.count)
       joins(:shipping_method_categories).
         where(spree_shipping_method_categories: { shipping_category_id: shipping_category_ids }).
@@ -46,7 +46,7 @@ module Spree
     # @return [ActiveRecord::Relation] shipping methods which are available
     #   with the stock location or are marked available_to_all
     def self.available_in_stock_location(stock_location)
-      smsl_table = ShippingMethodStockLocation.arel_table
+      smsl_table = Spree::ShippingMethodStockLocation.arel_table
 
       # We are searching for either a matching entry in the stock location join
       # table or available_to_all being true.

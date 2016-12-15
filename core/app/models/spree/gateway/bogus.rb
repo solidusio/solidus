@@ -79,7 +79,7 @@ module Spree
       prefix = success ? 'BGS' : 'FAIL'
       while record
         random = "#{prefix}-#{Array.new(6){ rand(6) }.join}"
-        record = CreditCard.where(gateway_customer_profile_id: random).first
+        record = Spree::CreditCard.where(gateway_customer_profile_id: random).first
       end
       random
     end

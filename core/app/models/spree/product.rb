@@ -110,7 +110,7 @@ module Spree
 
     # @return [Spree::TaxCategory] tax category for this product, or the default tax category
     def tax_category
-      super || TaxCategory.find_by(is_default: true)
+      super || Spree::TaxCategory.find_by(is_default: true)
     end
 
     # Ensures option_types and product_option_types exist for keys in
@@ -232,8 +232,8 @@ module Spree
     def set_property(property_name, property_value)
       ActiveRecord::Base.transaction do
         # Works around spree_i18n https://github.com/spree/spree/issues/301
-        property = Property.create_with(presentation: property_name).find_or_create_by(name: property_name)
-        product_property = ProductProperty.where(product: self, property: property).first_or_initialize
+        property = Spree::Property.create_with(presentation: property_name).find_or_create_by(name: property_name)
+        product_property = Spree::ProductProperty.where(product: self, property: property).first_or_initialize
         product_property.value = property_value
         product_property.save!
       end

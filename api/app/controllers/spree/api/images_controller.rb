@@ -7,7 +7,7 @@ module Spree
       end
 
       def show
-        @image = Image.accessible_by(current_ability, :read).find(params[:id])
+        @image = Spree::Image.accessible_by(current_ability, :read).find(params[:id])
         respond_with(@image)
       end
 

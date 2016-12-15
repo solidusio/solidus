@@ -23,9 +23,9 @@ module Spree
       def products
         if params[:ids]
           # split here may be String#split or Array#split, so we must flatten the results
-          @products = Product.where(id: params[:ids].split(",").flatten)
+          @products = Spree::Product.where(id: params[:ids].split(",").flatten)
         else
-          @products = Product.ransack(params[:q]).result
+          @products = Spree::Product.ransack(params[:q]).result
         end
 
         @products = @products.distinct.page(params[:page]).per(params[:per_page])

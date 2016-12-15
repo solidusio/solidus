@@ -15,7 +15,7 @@ module Spree
       end
 
       def create
-        @taxonomy = Taxonomy.find(params[:taxonomy_id])
+        @taxonomy = Spree::Taxonomy.find(params[:taxonomy_id])
         @taxon = @taxonomy.taxons.build(params[:taxon])
         if @taxon.save
           respond_with(@taxon) do |format|
@@ -30,19 +30,19 @@ module Spree
       end
 
       def edit
-        @taxonomy = Taxonomy.find(params[:taxonomy_id])
+        @taxonomy = Spree::Taxonomy.find(params[:taxonomy_id])
         @taxon = @taxonomy.taxons.find(params[:id])
         @permalink_part = @taxon.permalink.split("/").last
       end
 
       def update
-        @taxonomy = Taxonomy.find(params[:taxonomy_id])
+        @taxonomy = Spree::Taxonomy.find(params[:taxonomy_id])
         @taxon = @taxonomy.taxons.find(params[:id])
         parent_id = params[:taxon][:parent_id]
         new_position = params[:taxon][:position]
 
         if parent_id
-          @taxon.parent = Taxon.find(parent_id.to_i)
+          @taxon.parent = Spree::Taxon.find(parent_id.to_i)
         end
 
         if new_position
@@ -65,7 +65,7 @@ module Spree
       end
 
       def destroy
-        @taxon = Taxon.find(params[:id])
+        @taxon = Spree::Taxon.find(params[:id])
         @taxon.destroy
         respond_with(@taxon) { |format| format.json { render json: '' } }
       end

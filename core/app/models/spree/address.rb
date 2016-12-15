@@ -166,7 +166,7 @@ module Spree
     # @return [Country] setter that sets self.country to the Country with a matching 2 letter iso
     # @raise [ActiveRecord::RecordNotFound] if country with the iso doesn't exist
     def country_iso=(iso)
-      self.country = Country.find_by!(iso: iso)
+      self.country = Spree::Country.find_by!(iso: iso)
     end
 
     private

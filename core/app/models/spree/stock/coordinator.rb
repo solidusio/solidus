@@ -80,10 +80,10 @@ module Spree
       # minimum required ActiveRecord objects.
       def stock_location_variant_ids
         # associate the variant ids we're interested in with stock location ids
-        location_variant_ids = StockItem.
+        location_variant_ids = Spree::StockItem.
           where(variant_id: unallocated_variant_ids).
           joins(:stock_location).
-          merge(StockLocation.active).
+          merge(Spree::StockLocation.active).
           pluck(:stock_location_id, :variant_id)
 
         # load activerecord objects for the stock location ids and turn them
@@ -92,7 +92,7 @@ module Spree
         #     <stock location id> => <stock location>,
         #     ...,
         #   }
-        location_lookup = StockLocation.
+        location_lookup = Spree::StockLocation.
           where(id: location_variant_ids.map(&:first).uniq).
           map { |l| [l.id, l] }.
           to_h

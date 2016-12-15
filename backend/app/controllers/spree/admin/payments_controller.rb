@@ -78,7 +78,7 @@ module Spree
 
       def load_data
         @amount = params[:amount] || load_order.total
-        @payment_methods = PaymentMethod.available_to_admin
+        @payment_methods = Spree::PaymentMethod.available_to_admin
         if @payment && @payment.payment_method
           @payment_method = @payment.payment_method
         else
@@ -87,13 +87,13 @@ module Spree
       end
 
       def load_order
-        @order = Order.find_by_number!(params[:order_id])
+        @order = Spree::Order.find_by_number!(params[:order_id])
         authorize! action, @order
         @order
       end
 
       def load_payment
-        @payment = Payment.find(params[:id])
+        @payment = Spree::Payment.find(params[:id])
       end
 
       def load_payment_for_fire

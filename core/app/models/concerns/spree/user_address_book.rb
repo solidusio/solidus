@@ -5,7 +5,7 @@ module Spree
     included do
       has_many :user_addresses, -> { active }, { foreign_key: "user_id", class_name: "Spree::UserAddress" } do
         def find_first_by_address_values(address_attrs)
-          detect { |ua| ua.address == Address.new(address_attrs) }
+          detect { |ua| ua.address == Spree::Address.new(address_attrs) }
         end
 
         # @note this method enforces only one default address per user
@@ -37,7 +37,7 @@ module Spree
     end
 
     def bill_address_attributes=(attributes)
-      self.bill_address = Address.immutable_merge(bill_address, attributes)
+      self.bill_address = Spree::Address.immutable_merge(bill_address, attributes)
     end
 
     def default_address=(address)
@@ -48,7 +48,7 @@ module Spree
       # see "Nested Attributes Examples" section of http://apidock.com/rails/ActionView/Helpers/FormHelper/fields_for
       # this #{fieldname}_attributes= method works with fields_for in the views
       # even without declaring accepts_nested_attributes_for
-      self.default_address = Address.immutable_merge(default_address, attributes)
+      self.default_address = Spree::Address.immutable_merge(default_address, attributes)
     end
 
     alias_method :ship_address_attributes=, :default_address_attributes=
@@ -94,7 +94,7 @@ module Spree
       return nil unless address_attributes.present?
       address_attributes = address_attributes.to_h.with_indifferent_access
 
-      new_address = Address.factory(address_attributes)
+      new_address = Spree::Address.factory(address_attributes)
       return new_address unless new_address.valid?
 
       first_one = user_addresses.empty?

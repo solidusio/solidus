@@ -227,7 +227,7 @@ module Spree
     # Returns the relevant zone (if any) to be used for taxation purposes.
     # Uses default tax zone unless there is a specific match
     def tax_zone
-      Zone.match(tax_address) || Zone.default_tax
+      Spree::Zone.match(tax_address) || Spree::Zone.default_tax
     end
     deprecate tax_zone: "Please use Spree::Order#tax_address instead.",
               deprecator: Spree::Deprecation
@@ -242,7 +242,7 @@ module Spree
     end
 
     def updater
-      @updater ||= OrderUpdater.new(self)
+      @updater ||= Spree::OrderUpdater.new(self)
     end
 
     def update!
@@ -388,12 +388,12 @@ module Spree
 
     def credit_cards
       credit_card_ids = payments.from_credit_card.pluck(:source_id).uniq
-      CreditCard.where(id: credit_card_ids)
+      Spree::CreditCard.where(id: credit_card_ids)
     end
 
     def valid_credit_cards
       credit_card_ids = payments.from_credit_card.valid.pluck(:source_id).uniq
-      CreditCard.where(id: credit_card_ids)
+      Spree::CreditCard.where(id: credit_card_ids)
     end
 
     # Finalizes an in progress order after checkout is complete.
@@ -425,7 +425,7 @@ module Spree
     end
 
     def deliver_order_confirmation_email
-      OrderMailer.confirm_email(self).deliver_later
+      Spree::OrderMailer.confirm_email(self).deliver_later
       update_column(:confirmation_delivered, true)
     end
 
@@ -766,7 +766,7 @@ module Spree
     end
 
     def send_cancel_email
-      OrderMailer.cancel_email(self).deliver_later
+      Spree::OrderMailer.cancel_email(self).deliver_later
     end
 
     def after_resume

@@ -109,7 +109,7 @@ module Spree
 
     def handle_action(action, action_name, auth_code)
       # Find first event with provided auth_code
-      store_credit = StoreCreditEvent.find_by_authorization_code(auth_code).try(:store_credit)
+      store_credit = Spree::StoreCreditEvent.find_by_authorization_code(auth_code).try(:store_credit)
 
       if store_credit.nil?
         ActiveMerchant::Billing::Response.new(false, Spree.t('store_credit.unable_to_find_for_action', auth_code: auth_code, action: action_name), {}, {})
@@ -119,8 +119,8 @@ module Spree
     end
 
     def auth_or_capture_event(auth_code)
-      capture_event = StoreCreditEvent.find_by(authorization_code: auth_code, action: Spree::StoreCredit::CAPTURE_ACTION)
-      auth_event = StoreCreditEvent.find_by(authorization_code: auth_code, action: Spree::StoreCredit::AUTHORIZE_ACTION)
+      capture_event = Spree::StoreCreditEvent.find_by(authorization_code: auth_code, action: Spree::StoreCredit::CAPTURE_ACTION)
+      auth_event = Spree::StoreCreditEvent.find_by(authorization_code: auth_code, action: Spree::StoreCredit::AUTHORIZE_ACTION)
       capture_event || auth_event
     end
   end

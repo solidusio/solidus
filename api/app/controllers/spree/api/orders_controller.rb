@@ -13,7 +13,7 @@ module Spree
       around_action :lock_order, except: [:create, :mine, :current, :index]
 
       # Dynamically defines our stores checkout steps to ensure we check authorization on each step.
-      Order.checkout_steps.keys.each do |step|
+      Spree::Order.checkout_steps.keys.each do |step|
         define_method step do
           authorize! :update, @order, params[:token]
         end
@@ -39,7 +39,7 @@ module Spree
 
       def index
         authorize! :index, Order
-        @orders = paginate(Order.ransack(params[:q]).result)
+        @orders = paginate(Spree::Order.ransack(params[:q]).result)
         respond_with(@orders)
       end
 

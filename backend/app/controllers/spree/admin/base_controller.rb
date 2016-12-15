@@ -46,7 +46,7 @@ module Spree
       end
 
       def lock_order
-        OrderMutex.with_lock!(@order) { yield }
+        Spree::OrderMutex.with_lock!(@order) { yield }
       rescue Spree::OrderMutex::LockFailed
         flash[:error] = Spree.t(:order_mutex_admin_error)
         redirect_to order_mutex_redirect_path

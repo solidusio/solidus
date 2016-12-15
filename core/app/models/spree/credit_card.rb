@@ -45,7 +45,7 @@ module Spree
     }.freeze
 
     def address_attributes=(attributes)
-      self.address = Address.immutable_merge(address, attributes)
+      self.address = Spree::Address.immutable_merge(address, attributes)
     end
 
     # Sets the expiry date on this credit card.
@@ -195,7 +195,7 @@ module Spree
 
     def ensure_one_default
       if user_id && default
-        CreditCard.where(default: true).where.not(id: id).where(user_id: user_id).each do |ucc|
+        Spree::CreditCard.where(default: true).where.not(id: id).where(user_id: user_id).each do |ucc|
           ucc.update_columns(default: false, updated_at: Time.current)
         end
       end
