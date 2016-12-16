@@ -1,12 +1,10 @@
 class AddDepthToSpreeTaxons < ActiveRecord::Migration[4.2]
   def up
-    if !Spree::Taxon.column_names.include?('depth')
-      add_column :spree_taxons, :depth, :integer
+    add_column :spree_taxons, :depth, :integer
 
-      say_with_time 'Update depth on all taxons' do
-        Spree::Taxon.reset_column_information
-        Spree::Taxon.all.each(&:save)
-      end
+    say_with_time 'Update depth on all taxons' do
+      Spree::Taxon.reset_column_information
+      Spree::Taxon.all.each(&:save)
     end
   end
 
