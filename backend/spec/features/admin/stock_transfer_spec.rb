@@ -85,7 +85,7 @@ describe 'Stock Transfers', type: :feature, js: true do
     describe 'with enough stock' do
       it 'ships stock transfer' do
         visit spree.tracking_info_admin_stock_transfer_path(stock_transfer)
-        click_on 'ship'
+        click_on 'Ship'
 
         expect(page).to have_current_path(spree.admin_stock_transfers_path)
         expect(stock_transfer.reload.shipped_at).to_not be_nil
@@ -102,7 +102,7 @@ describe 'Stock Transfers', type: :feature, js: true do
       it 'does not ship stock transfer' do
         visit spree.tracking_info_admin_stock_transfer_path(stock_transfer)
 
-        click_on 'ship'
+        click_on 'Ship'
 
         expect(page).to have_current_path(spree.tracking_info_admin_stock_transfer_path(stock_transfer))
         expect(stock_transfer.reload.shipped_at).to be_nil

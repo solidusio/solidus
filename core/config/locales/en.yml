@@ -642,7 +642,7 @@ en:
       unlock_instructions:
         subject: Unlock Instructions
     oauth_callbacks:
-      failure: Could not authorize you from %{kind} because "%{reason}".
+      failure: "Could not authorize you from %{kind} because %{reason}."
       success: Successfully authorized from %{kind} account.
     unlocks:
       send_instructions: You will receive an email with instructions about how to unlock your account in a few minutes.
@@ -688,14 +688,13 @@ en:
       list: List
       listing: Listing
       new: New
-      refund: Refund
       receive: Receive
+      refund: Refund
       remove: Remove
       save: Save
-      ship: ship
-      update: Update
+      ship: Ship
       split: Split
-      ship: ship
+      update: Update
     activate: Activate
     active: Active
     add: Add

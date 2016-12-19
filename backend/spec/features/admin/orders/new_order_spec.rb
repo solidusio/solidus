@@ -53,7 +53,7 @@ describe "New Order", type: :feature do
     click_icon "capture"
 
     click_on "Shipments"
-    click_on "ship"
+    click_on "Ship"
 
     within '.carton-state' do
       expect(page).to have_content('shipped')
