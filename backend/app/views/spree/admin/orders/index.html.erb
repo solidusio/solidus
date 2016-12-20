@@ -38,12 +38,12 @@
 
           <div class="field">
             <%= label_tag nil, Spree.t(:promotion) %>
-            <%= f.text_field :order_promotions_promotion_code_value_cont, size: 25 %>
+            <%= f.text_field :order_promotions_promotion_code_value_start, size: 25 %>
           </div>
 
           <div class="field">
             <%= label_tag nil, Spree.t(:shipment_number) %>
-            <%= f.text_field :shipments_number_cont %>
+            <%= f.text_field :shipments_number_start %>
           </div>
 
         </div>
@@ -52,13 +52,13 @@
           <div class="row">
             <div class="col-12 col-xl-6">
               <div class="field">
-                <%= label_tag :q_number_cont, Spree.t(:order_number, number: '') %>
-                <%= f.text_field :number_cont %>
+                <%= label_tag :q_number_start, Spree.t(:order_number, number: '') %>
+                <%= f.text_field :number_start %>
               </div>
 
               <div class="field">
-                <%= label_tag :q_email_cont, Spree.t(:email) %>
-                <%= f.text_field :email_cont %>
+                <%= label_tag :q_email_start, Spree.t(:email) %>
+                <%= f.text_field :email_start %>
               </div>
             </div>
 
