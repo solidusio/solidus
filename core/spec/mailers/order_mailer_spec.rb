@@ -28,20 +28,6 @@ describe Spree::OrderMailer, type: :mailer do
     expect(confirmation_email.body).not_to include("&quot;")
   end
 
-  it "confirm_email accepts an order id as an alternative to an Order object" do
-    expect(Spree::Order).to receive(:find).with(order.id).and_return(order)
-    Spree::Deprecation.silence do
-      Spree::OrderMailer.confirm_email(order.id).body
-    end
-  end
-
-  it "cancel_email accepts an order id as an alternative to an Order object" do
-    expect(Spree::Order).to receive(:find).with(order.id).and_return(order)
-    Spree::Deprecation.silence do
-      Spree::OrderMailer.cancel_email(order.id).body
-    end
-  end
-
   context "only shows eligible adjustments in emails" do
     before do
       create(

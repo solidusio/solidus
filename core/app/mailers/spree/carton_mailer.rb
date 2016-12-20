@@ -14,17 +14,9 @@ module Spree
     # signature is:
     #   def shipped_email(carton:, order:, resend: false)
     def shipped_email(options, deprecated_options = {})
-      if options.is_a?(Integer)
-        Spree::Deprecation.warn "Calling shipped_email with a carton_id is DEPRECATED. Instead use CartonMailer.shipped_email(order: order, carton: carton)"
-        @carton = Carton.find(options)
-        @order = @carton.orders.first # assume first order
-        @manifest = @carton.manifest # use the entire manifest, since we don't know the precise order
-        options = deprecated_options
-      else
-        @order = options.fetch(:order)
-        @carton = options.fetch(:carton)
-        @manifest = @carton.manifest_for_order(@order)
-      end
+      @order = options.fetch(:order)
+      @carton = options.fetch(:carton)
+      @manifest = @carton.manifest_for_order(@order)
       options = { resend: false }.merge(options)
       @store = @order.store
       subject = (options[:resend] ? "[#{Spree.t(:resend).upcase}] " : '')
