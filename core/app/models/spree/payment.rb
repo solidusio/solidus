@@ -36,9 +36,6 @@ module Spree
     # invalidate previously entered payments
     after_create :invalidate_old_payments
 
-    attr_accessor :source_attributes
-    after_initialize :apply_source_attributes
-
     attr_accessor :request_env
 
     validates :amount, numericality: true
@@ -147,25 +144,6 @@ module Spree
     # @return [Boolean] true when this payment can be credited
     def can_credit?
       credit_allowed > 0
-    end
-
-    # When this is a new record without a source, builds a new source based on
-    # this payment's payment method and associates it correctly.
-    #
-    # @see https://github.com/spree/spree/issues/981
-    #
-    # TODO: Move this into upcoming CartUpdate class
-    def apply_source_attributes
-      return unless new_record?
-      return if source_attributes.blank?
-
-      Spree::Deprecation.warn(<<WARN.squish)
-Building payment sources by assigning source_attributes on payments is
-deprecated. Instead use either the PaymentCreate class or the
-OrderUpdateAttributes class.
-WARN
-
-      PaymentCreate.new(order, { source_attributes: source_attributes }, payment: self, request_env: request_env).build
     end
 
     # @return [Array<String>] the actions available on this payment
