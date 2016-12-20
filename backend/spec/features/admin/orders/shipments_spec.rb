@@ -30,11 +30,25 @@ describe "Shipments", type: :feature do
       end
     end
 
-    it "can ship a completed order" do
+    def ship_shipment
       find(".ship-shipment-button").click
 
       expect(page).to have_content("shipped package")
       expect(order.reload.shipment_state).to eq("shipped")
+    end
+
+    it "can ship a completed order" do
+      expect {
+        ship_shipment
+      }.to change{ ActionMailer::Base.deliveries.count }.by(1)
+    end
+
+    it "doesn't send a shipping confirmation email when ask to suppress the mailer" do
+      uncheck 'Send Mailer'
+
+      expect {
+        ship_shipment
+      }.not_to change{ ActionMailer::Base.deliveries.count }
     end
   end
 
