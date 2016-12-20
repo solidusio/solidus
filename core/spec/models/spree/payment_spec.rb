@@ -686,25 +686,22 @@ describe Spree::Payment, type: :model do
 
       context "with multiple payment attempts" do
         let(:attributes) { attributes_for(:credit_card) }
-        around do |example|
-          Spree::Deprecation.silence{ example.run }
-        end
 
         it "should not try to create profiles on old failed payment attempts" do
           allow_any_instance_of(Spree::Payment).to receive(:payment_method) { gateway }
 
-          order.payments.create!(
+          Spree::PaymentCreate.new(order, {
             source_attributes: attributes,
             payment_method: gateway,
             amount: 100
-          )
+          }).build.save!
           expect(gateway).to receive(:create_profile).exactly :once
           expect(order.payments.count).to eq(1)
-          order.payments.create!(
+          Spree::PaymentCreate.new(order, {
             source_attributes: attributes,
             payment_method: gateway,
             amount: 100
-          )
+          }).build.save!
         end
       end
 
@@ -762,14 +759,8 @@ describe Spree::Payment, type: :model do
     end
   end
 
+  # This used to describe #apply_source_attributes, whose behaviour is now part of PaymentCreate
   describe "#apply_source_attributes" do
-    # This method is deprecated
-    around do |example|
-      Spree::Deprecation.silence do
-        example.run
-      end
-    end
-
     context 'with a new source' do
       let(:params) do
         {
@@ -785,14 +776,15 @@ describe Spree::Payment, type: :model do
       end
 
       it "should build the payment's source" do
-        payment = Spree::Payment.new(params)
+        payment = Spree::PaymentCreate.new(order, params).build
         expect(payment).to be_valid
         expect(payment.source).not_to be_nil
       end
 
       it "assigns user and gateway to payment source" do
         order = create(:order)
-        source = order.payments.new(params).source
+        payment = Spree::PaymentCreate.new(order, params).build
+        source = payment.source
 
         expect(source.user_id).to eq order.user_id
         expect(source.payment_method_id).to eq gateway.id
@@ -802,17 +794,11 @@ describe Spree::Payment, type: :model do
         params = { amount: 100, payment_method: gateway,
           source_attributes: { expiry: "1 / 12" } }
 
-        payment = Spree::Payment.new(params)
+        payment = Spree::PaymentCreate.new(order, params).build
         expect(payment).not_to be_valid
         expect(payment.source).not_to be_nil
         expect(payment.source.error_on(:number).size).to eq(1)
         expect(payment.source.error_on(:verification_value).size).to eq(1)
-      end
-
-      it "does not build a new source when duplicating the model with source_attributes set" do
-        payment = create(:payment)
-        payment.source_attributes = params[:source_attributes]
-        expect { payment.dup }.to_not change { payment.source }
       end
     end
 
@@ -830,58 +816,65 @@ describe Spree::Payment, type: :model do
         }
       end
 
-      it 'sets the existing card as the source for the new payment' do
-        expect {
-          order.payments.create!(params)
-        }.to change { Spree::Payment.count }.by(1)
-
-        expect(order.payments.last.source).to eq(credit_card)
-      end
-
-      it 'sets the payment payment_method to that of the credit card' do
-        order.payments.create!(params)
-        expect(order.payments.last.payment_method_id).to eq(credit_card.payment_method_id)
-      end
-
-      it 'sets the verification_value on the credit card' do
-        payment = order.payments.create!(params)
-        expect(payment.source.verification_value).to eq('321')
-      end
-
-      it 'sets the request_env on the payment' do
-        payment = order.payments.create!(params.merge(request_env: { 'USER_AGENT' => 'Firefox' }))
-        expect(payment.request_env).to eq({ 'USER_AGENT' => 'Firefox' })
-      end
-
-      context 'the credit card belongs to a different user' do
-        let(:other_user) { create(:user) }
-        before { credit_card.update!(user_id: other_user.id) }
-        it 'errors' do
-          expect { order.payments.create!(params) }.to raise_error(ActiveRecord::RecordNotFound)
+      describe "building a payment" do
+        subject do
+          Spree::PaymentCreate.new(order, params).build.save!
         end
-      end
 
-      context 'the credit card has no user' do
-        before { credit_card.update!(user_id: nil) }
-        it 'errors' do
-          expect { order.payments.create!(params) }.to raise_error(ActiveRecord::RecordNotFound)
-        end
-      end
+        it 'sets the existing card as the source for the new payment' do
+          expect {
+            subject
+          }.to change { Spree::Payment.count }.by(1)
 
-      context 'the order has no user' do
-        before { order.update_attributes!(user_id: nil) }
-        it 'errors' do
-          expect { order.payments.create!(params) }.to raise_error(ActiveRecord::RecordNotFound)
+          expect(order.payments.last.source).to eq(credit_card)
         end
-      end
 
-      context 'the order and the credit card have no user' do
-        before do
-          order.update_attributes!(user_id: nil)
-          credit_card.update!(user_id: nil)
+        it 'sets the payment payment_method to that of the credit card' do
+          subject
+          expect(order.payments.last.payment_method_id).to eq(credit_card.payment_method_id)
         end
-        it 'errors' do
-          expect { order.payments.create!(params) }.to raise_error(ActiveRecord::RecordNotFound)
+
+        it 'sets the verification_value on the credit card' do
+          subject
+          expect(order.payments.last.source.verification_value).to eq('321')
+        end
+
+        it 'sets the request_env on the payment' do
+          payment = Spree::PaymentCreate.new(order, params.merge(request_env: { 'USER_AGENT' => 'Firefox' })).build
+          payment.save!
+          expect(payment.request_env).to eq({ 'USER_AGENT' => 'Firefox' })
+        end
+
+        context 'the credit card belongs to a different user' do
+          let(:other_user) { create(:user) }
+          before { credit_card.update!(user_id: other_user.id) }
+          it 'errors' do
+            expect { subject }.to raise_error(ActiveRecord::RecordNotFound)
+          end
+        end
+
+        context 'the credit card has no user' do
+          before { credit_card.update!(user_id: nil) }
+          it 'errors' do
+            expect { subject }.to raise_error(ActiveRecord::RecordNotFound)
+          end
+        end
+
+        context 'the order has no user' do
+          before { order.update_attributes!(user_id: nil) }
+          it 'errors' do
+            expect { subject }.to raise_error(ActiveRecord::RecordNotFound)
+          end
+        end
+
+        context 'the order and the credit card have no user' do
+          before do
+            order.update_attributes!(user_id: nil)
+            credit_card.update!(user_id: nil)
+          end
+          it 'errors' do
+            expect { subject }.to raise_error(ActiveRecord::RecordNotFound)
+          end
         end
       end
     end
