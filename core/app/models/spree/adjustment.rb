@@ -95,18 +95,14 @@ module Spree
     # If the adjustment has no source (such as when created manually from the
     # admin) or is closed, this is a noop.
     #
-    # @param target [Spree::LineItem,Spree::Shipment,Spree::Order] Deprecated: the target to calculate against
     # @return [BigDecimal] New amount of this adjustment
-    def update!(target = nil)
-      if target
-        Spree::Deprecation.warn("Passing a target to Adjustment#update! is deprecated. The adjustment will use the correct target from it's adjustable association.", caller)
-      end
+    def update!
       return amount if finalized?
 
       # If the adjustment has no source, do not attempt to re-calculate the amount.
       # Chances are likely that this was a manually created adjustment in the admin backend.
       if source.present?
-        self.amount = source.compute_amount(target || adjustable)
+        self.amount = source.compute_amount(adjustable)
 
         if promotion?
           self.eligible = source.promotion.eligible?(adjustable, promotion_code: promotion_code)
