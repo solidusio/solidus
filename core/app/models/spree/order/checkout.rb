@@ -242,47 +242,6 @@ module Spree
             checkout_step_index(state) > checkout_step_index(self.state)
           end
 
-          define_callbacks :updating_from_params, terminator: deprecated_false_terminator
-
-          set_callback :updating_from_params, :before, :update_params_payment_source
-
-          # @deprecated Use {OrderUpdateAttributes} instead
-          def update_from_params(params, permitted_params, request_env = {})
-            Spree::Deprecation.warn "update_from_params is deprecated. Use the OrderUpdateAttributes class instead", caller
-            success = false
-            @updating_params = params
-            run_callbacks :updating_from_params do
-              attributes = @updating_params[:order] ? @updating_params[:order].permit(permitted_params).delete_if { |_k, v| v.nil? } : {}
-
-              # Set existing card after setting permitted parameters because
-              # rails would slice parameters containg ruby objects, apparently
-              existing_card_id = @updating_params[:order] ? @updating_params[:order][:existing_card] : nil
-
-              if existing_card_id.present?
-                credit_card = CreditCard.find existing_card_id
-                if credit_card.user_id != user_id || credit_card.user_id.blank?
-                  raise Core::GatewayError.new Spree.t(:invalid_credit_card)
-                end
-
-                credit_card.verification_value = params[:cvc_confirm] if params[:cvc_confirm].present?
-
-                attributes[:payments_attributes].first[:source] = credit_card
-                attributes[:payments_attributes].first[:payment_method_id] = credit_card.payment_method_id
-                attributes[:payments_attributes].first.delete :source_attributes
-              end
-
-              if attributes[:payments_attributes]
-                attributes[:payments_attributes].first[:request_env] = request_env
-              end
-
-              update = OrderUpdateAttributes.new(self, attributes, request_env: request_env)
-              success = update.apply
-            end
-
-            @updating_params = nil
-            success
-          end
-
           def bill_address_attributes=(attributes)
             self.bill_address = Address.immutable_merge(bill_address, attributes)
           end
