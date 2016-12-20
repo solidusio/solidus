@@ -172,8 +172,7 @@ module Spree
     end
 
     # Can't use add_search_scope for this as it needs a default argument
-    def self.available(available_on = nil, currency = nil)
-      Spree::Deprecation.warn("The second currency argument on Product.available has no effect, and is deprecated", caller) if currency
+    def self.available(available_on = nil)
       joins(master: :prices).where("#{Spree::Product.quoted_table_name}.available_on <= ?", available_on || Time.current)
     end
     search_scopes << :available
