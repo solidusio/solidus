@@ -178,14 +178,6 @@ describe Spree::Variant, type: :model do
     end
   end
 
-  context "#currency" do
-    it "returns the globally configured currency" do
-      Spree::Deprecation.silence do
-        expect(variant.currency).to eql "USD"
-      end
-    end
-  end
-
   context "#display_amount" do
     it "returns a Spree::Money" do
       variant.price = 21.22
