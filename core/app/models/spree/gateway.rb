@@ -42,15 +42,6 @@ module Spree
       source.has_payment_profile?
     end
 
-    def disable_customer_profile(source)
-      Spree::Deprecation.warn("Gateway#disable_customer_profile is deprecated")
-      if source.is_a? Spree::CreditCard
-        source.update_column :gateway_customer_profile_id, nil
-      else
-        raise 'You must implement disable_customer_profile method for this gateway.'
-      end
-    end
-
     def sources_by_order(order)
       source_ids = order.payments.where(payment_method_id: id).pluck(:source_id).uniq
       payment_source_class.where(id: source_ids).with_payment_profile
