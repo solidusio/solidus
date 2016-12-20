@@ -23,14 +23,6 @@ describe Spree::Store, type: :model do
 
     delegate :current, to: :described_class
 
-    context "with no argument" do
-      it 'should return default' do
-        Spree::Deprecation.silence do
-          expect(current).to eql(store_default)
-        end
-      end
-    end
-
     context "with no match" do
       it 'should return the default domain' do
         expect(current('foobar.com')).to eql(store_default)
