@@ -177,12 +177,6 @@ module Spree
     end
     search_scopes << :available
 
-    def self.active(currency = nil)
-      Spree::Deprecation.warn("This scope is deprecated, please use .available instead", caller)
-      not_deleted.available(nil, currency)
-    end
-    search_scopes << :active
-
     add_search_scope :taxons_name_eq do |name|
       group("spree_products.id").joins(:taxons).where(Spree::Taxon.arel_table[:name].eq(name))
     end
