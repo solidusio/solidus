@@ -33,15 +33,6 @@ module Spree
       new(country: Spree::Country.default)
     end
 
-    def self.default(user = nil, kind = "bill")
-      Spree::Deprecation.warn("Address.default is deprecated. Use User.default_address or Address.build_default", caller)
-      if user
-        user.send(:"#{kind}_address") || build_default
-      else
-        build_default
-      end
-    end
-
     # @return [Address] an equal address already in the database or a newly created one
     def self.factory(attributes)
       full_attributes = value_attributes(column_defaults, new(attributes).attributes)
