@@ -221,30 +221,6 @@ module Spree
           expect(json_response['payments'][0]['payment_method']['name']).to eq(@payment_method.name)
           expect(json_response['payments'][0]['amount']).to eq(order.total.to_s)
         end
-
-        context 'with deprecated payment_source parameters' do
-          let(:params) do
-            {
-              id: order.to_param,
-              order_token: order.guest_token,
-              order: {
-                payments_attributes: [
-                  { payment_method_id: @payment_method.id.to_s }
-                ]
-              },
-              payment_source: { @payment_method.id.to_s => attributes_for(:credit_card) }
-            }
-          end
-
-          it "succeeds" do
-            Spree::Deprecation.silence do
-              api_put(:update, params)
-            end
-            expect(response.status).to eq(200)
-            expect(json_response['payments'][0]['payment_method']['name']).to eq(@payment_method.name)
-            expect(json_response['payments'][0]['amount']).to eq(order.total.to_s)
-          end
-        end
       end
 
       context 'when source is missing attributes' do
@@ -276,36 +252,6 @@ module Spree
           expect(cc_errors).to include("Month is not a number")
           expect(cc_errors).to include("Year is not a number")
           expect(cc_errors).to include("Verification Value can't be blank")
-        end
-
-        context 'with deprecated payment_source parameters' do
-          let(:params) do
-            {
-              id: order.to_param,
-              order_token: order.guest_token,
-              order: {
-                payments_attributes: [
-                  { payment_method_id: @payment_method.id.to_s }
-                ]
-              },
-              payment_source: {
-                @payment_method.id.to_s => { name: "Spree" }
-              }
-            }
-          end
-
-          it 'returns errors' do
-            Spree::Deprecation.silence do
-              api_put(:update, params)
-            end
-
-            expect(response.status).to eq(422)
-            cc_errors = json_response['errors']['payments.Credit Card']
-            expect(cc_errors).to include("Card Number can't be blank")
-            expect(cc_errors).to include("Month is not a number")
-            expect(cc_errors).to include("Year is not a number")
-            expect(cc_errors).to include("Verification Value can't be blank")
-          end
         end
       end
 
@@ -347,35 +293,6 @@ module Spree
 
           expect(response.status).to eq 200
           expect(order.credit_cards).to match_array [credit_card]
-        end
-
-        context 'with deprecated existing_card parameters' do
-          let(:params) do
-            {
-              id: order.to_param,
-              order_token: order.guest_token,
-              order: {
-                existing_card: credit_card.id.to_s
-              },
-              cvc_confirm: '456'
-            }
-          end
-
-          it 'succeeds' do
-            # unfortunately the credit card gets reloaded by `@order.next` before
-            # the controller action finishes so this is the best way I could think
-            # of to test that the verification_value gets set.
-            expect_any_instance_of(Spree::CreditCard).to(
-              receive(:verification_value=).with('456').and_call_original
-            )
-
-            Spree::Deprecation.silence do
-              api_put(:update, params)
-            end
-
-            expect(response.status).to eq 200
-            expect(order.credit_cards).to match_array [credit_card]
-          end
         end
       end
 
@@ -451,50 +368,40 @@ module Spree
       end
     end
 
-    # NOTE: Temporarily making "next" behave just like "complete" when order is in confirm state
-    #       Using "next" this way is deprecated.
-    [:next, :complete].each do |action|
-      context action.to_s do
-        context "with order in confirm state" do
-          subject do
-            if action == :next
-              Spree::Deprecation.silence do
-                api_put action, params
-              end
-            else
-              api_put action, params
-            end
-          end
+    context "complete" do
+      context "with order in confirm state" do
+        subject do
+          api_put :complete, params
+        end
 
-          let(:params) { { id: order.to_param, order_token: order.guest_token } }
-          let(:order) { create(:order_with_line_items) }
+        let(:params) { { id: order.to_param, order_token: order.guest_token } }
+        let(:order) { create(:order_with_line_items) }
 
-          before do
-            order.update_column(:state, "confirm")
-          end
+        before do
+          order.update_column(:state, "confirm")
+        end
 
-          it "can transition from confirm to complete" do
-            allow_any_instance_of(Spree::Order).to receive_messages(payment_required?: false)
+        it "can transition from confirm to complete" do
+          allow_any_instance_of(Spree::Order).to receive_messages(payment_required?: false)
+          subject
+          expect(json_response['state']).to eq('complete')
+          expect(response.status).to eq(200)
+        end
+
+        it "returns a sensible error when no payment method is specified" do
+          # api_put :complete, :id => order.to_param, :order_token => order.token, :order => {}
+          subject
+          expect(json_response["errors"]["base"]).to include(Spree.t(:no_payment_found))
+        end
+
+        context "with mismatched expected_total" do
+          let(:params) { super().merge(expected_total: order.total + 1) }
+
+          it "returns an error if expected_total is present and does not match actual total" do
+            # api_put :complete, :id => order.to_param, :order_token => order.token, :expected_total => order.total + 1
             subject
-            expect(json_response['state']).to eq('complete')
-            expect(response.status).to eq(200)
-          end
-
-          it "returns a sensible error when no payment method is specified" do
-            # api_put :complete, :id => order.to_param, :order_token => order.token, :order => {}
-            subject
-            expect(json_response["errors"]["base"]).to include(Spree.t(:no_payment_found))
-          end
-
-          context "with mismatched expected_total" do
-            let(:params) { super().merge(expected_total: order.total + 1) }
-
-            it "returns an error if expected_total is present and does not match actual total" do
-              # api_put :complete, :id => order.to_param, :order_token => order.token, :expected_total => order.total + 1
-              subject
-              expect(response.status).to eq(400)
-              expect(json_response['errors']['expected_total']).to include(Spree.t(:expected_total_mismatch, scope: 'api.order'))
-            end
+            expect(response.status).to eq(400)
+            expect(json_response['errors']['expected_total']).to include(Spree.t(:expected_total_mismatch, scope: 'api.order'))
           end
         end
       end
