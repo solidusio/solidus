@@ -16,15 +16,6 @@ describe Spree::CartonMailer do
     expect(shipment_email.subject).to eq "#{order.store.name} Shipment Notification ##{order.number}"
   end
 
-  context "deprecated signature" do
-    it do
-      Spree::Deprecation.silence do
-        mail = Spree::CartonMailer.shipped_email(carton.id)
-        expect(mail.subject).to include "Shipment Notification"
-      end
-    end
-  end
-
   context "with resend option" do
     subject do
       Spree::CartonMailer.shipped_email(order: order, carton: carton, resend: true).subject

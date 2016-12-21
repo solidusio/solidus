@@ -127,13 +127,6 @@ module Spree
     class_attribute :line_item_comparison_hooks
     self.line_item_comparison_hooks = Set.new
 
-    class << self
-      def by_number(number)
-        where(number: number)
-      end
-      deprecate :by_number, deprecator: Spree::Deprecation
-    end
-
     scope :created_between, ->(start_date, end_date) { where(created_at: start_date..end_date) }
     scope :completed_between, ->(start_date, end_date) { where(completed_at: start_date..end_date) }
 
@@ -604,13 +597,6 @@ module Spree
       Spree::Deprecation.warn("Spree::Order#token is DEPRECATED, please use #guest_token instead.", caller)
       guest_token
     end
-
-    # @deprecated Do not use this method. Behaviour is unreliable.
-    def fully_discounted?
-      adjustment_total + line_items.map(&:final_amount).sum == 0.0
-    end
-    alias_method :fully_discounted, :fully_discounted?
-    deprecate :fully_discounted, deprecator: Spree::Deprecation
 
     def unreturned_exchange?
       # created_at - 1 is a hack to ensure that this doesn't blow up on MySQL,

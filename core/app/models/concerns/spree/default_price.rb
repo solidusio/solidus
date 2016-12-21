@@ -15,9 +15,8 @@ module Spree
       default_price || build_default_price(Spree::Config.default_pricing_options.desired_attributes)
     end
 
-    delegate :display_price, :display_amount, :price, :currency, to: :find_or_build_default_price
-    delegate :price=, :currency=, to: :find_or_build_default_price
-    deprecate :currency=, :currency, deprecator: Spree::Deprecation
+    delegate :display_price, :display_amount, :price, to: :find_or_build_default_price
+    delegate :price=, to: :find_or_build_default_price
 
     def has_default_price?
       !default_price.nil?

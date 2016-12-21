@@ -77,11 +77,8 @@ module Spree
         }
       end
 
-      # For the reason of this test, please see spree/spree_gateway#132
       it "keeps source attributes on assignment" do
-        Spree::Deprecation.silence do
-          order.update_attributes(payments_attributes: [payment_attributes])
-        end
+        OrderUpdateAttributes.new(order, payments_attributes: [payment_attributes]).apply
         expect(order.unprocessed_payments.last.source.number).to be_present
       end
 
