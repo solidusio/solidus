@@ -135,8 +135,6 @@ module Spree
                 order.logger.debug "Order #{order.number} halted transition on event #{transition.event} state #{transition.from}: #{order.errors.full_messages.join}"
               end
             end
-
-            alias_method :save_state, :save
           end
 
           def self.go_to_state(name, options = {})
