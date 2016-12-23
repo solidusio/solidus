@@ -6,7 +6,6 @@ module Spree
           class << self
             attr_accessor :next_event_transitions
             attr_accessor :previous_states
-            attr_accessor :checkout_flow
             attr_accessor :checkout_steps
             attr_accessor :removed_transitions
           end
