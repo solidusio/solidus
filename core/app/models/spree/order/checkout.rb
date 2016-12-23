@@ -3,11 +3,13 @@ module Spree
     module Checkout
       def self.included(klass)
         klass.class_eval do
-          class_attribute :next_event_transitions
-          class_attribute :previous_states
-          class_attribute :checkout_flow
-          class_attribute :checkout_steps
-          class_attribute :removed_transitions
+          class << self
+            attr_accessor :next_event_transitions
+            attr_accessor :previous_states
+            attr_accessor :checkout_flow
+            attr_accessor :checkout_steps
+            attr_accessor :removed_transitions
+          end
 
           def self.checkout_flow(&block)
             if block_given?
