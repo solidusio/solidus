@@ -381,6 +381,16 @@ module Spree
       @tax_adjuster_class ||= Spree::Tax::OrderAdjuster
     end
 
+    # Allows providing your own classes for validate the checkout stard process
+    #
+    # @!attribute [rw] checkout_blockers
+    # @return [Array<Spree::Checkout::Blockers::Base>] an array with multiple blockers,
+    #   Defaults to  [Spree::Checkout::Blockers::LineItemsRequired]
+    attr_writer :checkout_blockers
+    def checkout_blockers
+      @checkout_blockers ||= [Spree::Checkout::Blockers::LineItemsRequired]
+    end
+
     def static_model_preferences
       @static_model_preferences ||= Spree::Preferences::StaticModelPreferences.new
     end

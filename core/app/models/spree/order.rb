@@ -25,7 +25,6 @@ module Spree
     ORDER_NUMBER_PREFIX  = 'R'
 
     include Spree::Order::Checkout
-    include Spree::CheckoutValidator
     include Spree::Order::Payments
 
     class InsufficientStock < StandardError; end
@@ -203,12 +202,16 @@ module Spree
       completed_at.present?
     end
 
+    def checkout_validator
+      @checkout_validator ||= Spree::Checkout::Validator.new(self)
+    end
+
     # Indicates whether or not the user is allowed to proceed to checkout.
     # Currently this is implemented as a check for whether or not there is at
     # least one LineItem in the Order.  Feel free to override this logic in your
     # own application if you require additional steps before allowing a checkout.
     def checkout_allowed?
-      line_items.count > 0 and self.checkout_errors.empty?
+      checkout_validator.can_start?
     end
 
     # Is this a free order in which case the payment step should be skipped
