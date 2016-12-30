@@ -29,8 +29,9 @@ describe "Stock Locations", type: :feature do
     accept_alert do
       click_icon :trash
     end
-    # Wait for API request to complete.
-    wait_for_ajax
+
+    expect(page).to have_content('Stock Location "NY Warehouse" has been successfully removed')
+
     visit current_path
     expect(page).to have_content("No Stock Locations found")
   end
