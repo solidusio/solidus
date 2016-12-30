@@ -381,7 +381,7 @@ module Spree
       @tax_adjuster_class ||= Spree::Tax::OrderAdjuster
     end
 
-    # Allows providing your own classes for validate the checkout stard process
+    # Allows providing your own classes for validating the checkout start process
     #
     # @!attribute [rw] checkout_blockers
     # @return [Array<Spree::Checkout::Blockers::Base>] an array with multiple blockers,
