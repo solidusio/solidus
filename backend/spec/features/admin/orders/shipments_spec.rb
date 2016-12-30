@@ -32,7 +32,6 @@ describe "Shipments", type: :feature do
 
     it "can ship a completed order" do
       find(".ship-shipment-button").click
-      wait_for_ajax
 
       expect(page).to have_content("shipped package")
       expect(order.reload.shipment_state).to eq("shipped")
