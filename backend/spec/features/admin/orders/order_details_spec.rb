@@ -537,7 +537,6 @@ describe "Order Details", type: :feature, js: true do
       visit spree.edit_admin_order_path(order)
 
       find(".ship-shipment-button").click
-      wait_for_ajax
 
       within '.carton-state' do
         expect(page).to have_content('shipped')
