@@ -81,20 +81,20 @@ describe Spree::OrdersController, type: :controller do
         it "should render the edit view (on failure)" do
           # email validation is only after address state
           order.update_column(:state, "delivery")
-          put :update, params: { order: { email: "" } }, session: { order_id: order.id }
+          put :update, params: { order: { email: "" } }
           expect(response).to render_template :edit
         end
 
         it "should redirect to cart path (on success)" do
           allow(order).to receive(:update_attributes).and_return true
-          put :update, session: { order_id: 1 }
+          put :update
           expect(response).to redirect_to(spree.cart_path)
         end
 
         it "should advance the order if :checkout button is pressed" do
           allow(order).to receive(:update_attributes).and_return true
           expect(order).to receive(:next)
-          put :update, { checkout: true }, { order_id: 1 }
+          put :update, params: { checkout: true }
           expect(response).to redirect_to checkout_state_path('address')
         end
       end

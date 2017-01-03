@@ -58,7 +58,7 @@ describe Spree::CheckoutController, type: :controller do
       it "should associate the order with a user" do
         order.update_column :user_id, nil
         expect(order).to receive(:associate_user!).with(user)
-        get :edit, session: { order_id: 1 }
+        get :edit
       end
     end
   end
@@ -241,7 +241,7 @@ describe Spree::CheckoutController, type: :controller do
         end
 
         it "should remove completed order from current_order" do
-          post :update, params: { state: "confirm" }, session: { order_id: "foofah" }
+          post :update, params: { state: "confirm" }
           expect(assigns(:current_order)).to be_nil
           expect(assigns(:order)).to eql controller.current_order
         end
