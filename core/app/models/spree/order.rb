@@ -465,9 +465,8 @@ module Spree
       persist_totals
     end
 
-    def has_step?(step)
-      checkout_steps.include?(step)
-    end
+    alias_method :has_step?, :has_checkout_step?
+    deprecate has_step?: :has_checkout_step?, deprecator: Spree::Deprecation
 
     def state_changed(name)
       state = "#{name}_state"
@@ -785,7 +784,7 @@ module Spree
     end
 
     def ensure_inventory_units
-      if has_step?("delivery")
+      if has_checkout_step?("delivery")
         inventory_validator = Spree::Stock::InventoryValidator.new
 
         errors = line_items.map { |line_item| inventory_validator.validate(line_item) }.compact
