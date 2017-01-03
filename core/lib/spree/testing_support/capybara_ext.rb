@@ -100,6 +100,13 @@ module CapybaraExt
   end
 
   def wait_for_ajax
+
+    Spree::Deprecation.warn <<-WARN.squish, caller
+      wait_for_ajax has been deprecated.
+      Please refer to the capybara documentation on how to properly wait for asyncronous behavior:
+      https://github.com/teamcapybara/capybara#asynchronous-javascript-ajax-and-friends
+    WARN
+
     counter = 0
     while page.evaluate_script("typeof($) === 'undefined' || $.active > 0")
       counter += 1

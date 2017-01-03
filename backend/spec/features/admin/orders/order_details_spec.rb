@@ -229,7 +229,7 @@ describe "Order Details", type: :feature, js: true do
             within_row(1) { click_icon 'arrows-h' }
             complete_split_to(stock_location2, quantity: 'ff')
 
-            wait_for_ajax
+            accept_alert "undefined"
 
             expect(order.shipments.count).to eq(1)
             expect(order.shipments.first.inventory_units_for(product.master).count).to eq(2)
@@ -242,7 +242,7 @@ describe "Order Details", type: :feature, js: true do
             within_row(1) { click_icon 'arrows-h' }
             complete_split_to(stock_location2, quantity: 0)
 
-            wait_for_ajax
+            accept_alert "undefined"
 
             expect(order.shipments.count).to eq(1)
             expect(order.shipments.first.inventory_units_for(product.master).count).to eq(2)
@@ -251,7 +251,7 @@ describe "Order Details", type: :feature, js: true do
             fill_in 'item_quantity', with: -1
             click_icon :ok
 
-            wait_for_ajax
+            accept_alert "undefined"
 
             expect(order.shipments.count).to eq(1)
             expect(order.shipments.first.inventory_units_for(product.master).count).to eq(2)
@@ -282,7 +282,7 @@ describe "Order Details", type: :feature, js: true do
               within_row(1) { click_icon 'arrows-h' }
               complete_split_to(stock_location2, quantity: 2)
 
-              wait_for_ajax
+              accept_alert "undefined"
 
               expect(order.shipments.count).to eq(1)
               expect(order.shipments.first.inventory_units_for(product.master).count).to eq(2)
@@ -381,7 +381,7 @@ describe "Order Details", type: :feature, js: true do
               complete_split_to(@shipment2, quantity: 200)
             end
 
-            wait_for_ajax
+            accept_alert "undefined"
 
             expect(order.shipments.count).to eq(2)
             expect(order.shipments.first.inventory_units_for(product.master).count).to eq(1)
@@ -537,7 +537,6 @@ describe "Order Details", type: :feature, js: true do
       visit spree.edit_admin_order_path(order)
 
       find(".ship-shipment-button").click
-      wait_for_ajax
 
       within '.carton-state' do
         expect(page).to have_content('shipped')

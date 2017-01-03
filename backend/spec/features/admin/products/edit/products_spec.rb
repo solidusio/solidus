@@ -60,7 +60,7 @@ describe 'Product Details', type: :feature do
           click_icon :trash
         end
       end
-      wait_for_ajax
+      expect(page).to have_content('Product has been deleted')
     end
   end
 end
