@@ -216,6 +216,16 @@ input[type= "reset"], button, a.button {
   }
 }
 
+input[type=button],
+input[type=submit],
+button {
+  &.disabled {
+    background:#ccc;
+    border-color: #ccc;
+    text-shadow:none;
+  }
+}
+
 input[type="checkbox"], label {
   vertical-align: middle;
 }
@@ -922,6 +932,14 @@ p[data-hook="use_billing"] {
   }
   &.error, &.alert {
     color: $c_red;
+  }
+}
+
+.terms_and_conditions {
+  .policy {
+    height: 100px;
+    width: 100%;
+    overflow: scroll;
   }
 }
 
