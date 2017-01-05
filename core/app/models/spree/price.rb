@@ -18,7 +18,7 @@ module Spree
     validates :currency, inclusion: { in: ::Money::Currency.all.map(&:iso_code), message: :invalid_code }
     validates :country, presence: true, unless: -> { for_any_country? }
 
-    scope :currently_valid, -> { order("country_iso IS NULL, updated_at DESC") }
+    scope :currently_valid, -> { order("country_iso IS NULL, updated_at DESC, id DESC") }
     scope :for_master, -> { joins(:variant).where(spree_variants: { is_master: true }) }
     scope :for_variant, -> { joins(:variant).where(spree_variants: { is_master: false }) }
     scope :for_any_country, -> { where(country: nil) }
