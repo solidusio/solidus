@@ -53,8 +53,6 @@ describe "Product Images", type: :feature do
       within_fieldset 'Upload Image' do
         # Can also pass multiple files in the array, but SQLite gives a deadlock on insert
         attach_file('image_attachment', [file_path], visible: false)
-        expect(page).to have_css("progress", count: 1)
-        expect(page).to have_text("ror_ringer")
       end
 
       expect(page).not_to have_content("No images found")
