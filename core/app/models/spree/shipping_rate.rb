@@ -12,7 +12,7 @@ module Spree
              dependent: :destroy
 
     delegate :order, :currency, to: :shipment
-    delegate :name, :tax_category, to: :shipping_method
+    delegate :name, :tax_category, :tax_category_id, to: :shipping_method
     delegate :code, to: :shipping_method, prefix: true
     alias_attribute :amount, :cost
 
