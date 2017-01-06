@@ -9,7 +9,7 @@ module Spree
       if object && preferred_currency.casecmp(object.currency).zero?
         preferred_amount
       else
-        0
+        BigDecimal.new(0)
       end
     end
   end

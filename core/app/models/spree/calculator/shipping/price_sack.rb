@@ -9,7 +9,11 @@ module Spree
       preference :currency, :string, default: ->{ Spree::Config[:currency] }
 
       def compute_package(package)
-        compute_from_price(total(package.contents))
+        if package.order && preferred_currency.casecmp(package.order.currency).zero?
+          compute_from_price(total(package.contents))
+        else
+          BigDecimal.new(0)
+        end
       end
 
       def compute_from_price(price)

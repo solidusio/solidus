@@ -9,16 +9,20 @@ module Spree
 
     # as object we always get line items, as calculable we have Coupon, ShippingMethod
     def compute(object)
-      if object.is_a?(Array)
-        base = object.map { |o| o.respond_to?(:amount) ? o.amount : BigDecimal(o.to_s) }.sum
-      else
-        base = object.respond_to?(:amount) ? object.amount : BigDecimal(object.to_s)
-      end
+      if object && preferred_currency.casecmp(object.currency).zero?
+        if object.is_a?(Array)
+          base = object.map { |o| o.respond_to?(:amount) ? o.amount : BigDecimal(o.to_s) }.sum
+        else
+          base = object.respond_to?(:amount) ? object.amount : BigDecimal(object.to_s)
+        end
 
-      if base < preferred_minimal_amount
-        preferred_normal_amount
+        if base < preferred_minimal_amount
+          preferred_normal_amount
+        else
+          preferred_discount_amount
+        end
       else
-        preferred_discount_amount
+        BigDecimal.new(0)
       end
     end
   end
