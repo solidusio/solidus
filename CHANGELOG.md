@@ -164,11 +164,11 @@
 
     * Removed deprecated delegate_belongs_to
 
-## Solidus 2.0.0 (unreleased)
+## Solidus 2.0.0 (2016-09-26)
 
 *   Upgrade to rails 5.0
 
-## Solidus 1.4.0 (unreleased)
+## Solidus 1.4.0 (2016-09-26)
 
 *   Use in-memory objects in OrderUpdater and related areas.
 
