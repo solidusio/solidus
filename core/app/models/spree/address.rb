@@ -106,16 +106,17 @@ module Spree
     end
 
     def same_as?(other_address)
-      Spree::Deprecation.warn("Address.same_as? is deprecated. It's equivalent to Address.==", caller)
+      Spree::Deprecation.warn("Address#same_as? is deprecated. It's equivalent to Address.==", caller)
       self == other_address
     end
 
     def same_as(other_address)
-      Spree::Deprecation.warn("Address.same_as is deprecated. It's equivalent to Address.==", caller)
+      Spree::Deprecation.warn("Address#same_as is deprecated. It's equivalent to Address.==", caller)
       self == other_address
     end
 
     def empty?
+      Spree::Deprecation.warn("Address#empty? is deprecated.", caller)
       attributes.except('id', 'created_at', 'updated_at', 'country_id').all? { |_, v| v.nil? }
     end
 
