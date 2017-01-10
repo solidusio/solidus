@@ -84,7 +84,7 @@ de:
         lastname: Lieferanschrift Nachname
         phone: Lieferanschrift Telefon
         state: Lieferadresse Bundesland
-        zipcode: LIeferadresse Postleitzahl
+        zipcode: Lieferadresse Postleitzahl
       spree/payment:
         amount: Betrag
         number: Nummer
