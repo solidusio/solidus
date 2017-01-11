@@ -6,6 +6,10 @@
 *   Product slugs no longer have a minimum length validation to match the Product name validation.
     [#1616](https://github.com/solidusio/solidus/pull/1616)
 
+*   Changed the promotion field in the admin order search to only find orders
+    which used the specified promotion code, instead of any code on an applied
+    promotion. [#1662](https://github.com/solidusio/solidus/pull/1662)
+
 ## Solidus 2.1.0 (unreleased)
 
 *   The OrderUpdater (as used by `order.update!`) now fully updates taxes.
