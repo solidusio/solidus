@@ -35,7 +35,7 @@ describe "New Order", type: :feature do
       targetted_select2_search user.email, from: "#s2id_customer_search"
     end
 
-    check "order_use_billing"
+    expect(page).to have_checked_field('order_use_billing')
     fill_in_address
     click_on "Update"
 
@@ -73,7 +73,7 @@ describe "New Order", type: :feature do
       targetted_select2_search user.email, from: "#s2id_customer_search"
     end
 
-    check "order_use_billing"
+    expect(page).to have_checked_field('order_use_billing')
     fill_in_address
     click_on "Update"
 
@@ -108,7 +108,7 @@ describe "New Order", type: :feature do
         targetted_select2_search user.email, from: "#s2id_customer_search"
       end
 
-      check "order_use_billing"
+      expect(page).to have_checked_field('order_use_billing')
       fill_in_address
       click_on "Update"
 
@@ -157,7 +157,7 @@ describe "New Order", type: :feature do
         targetted_select2_search user.email, from: "#s2id_customer_search"
       end
 
-      check "order_use_billing"
+      expect(page).to have_checked_field('order_use_billing')
       fill_in_address
       click_on "Update"
 
