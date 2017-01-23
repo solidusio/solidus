@@ -17,6 +17,7 @@ module Spree
     def update
       @order.transaction do
         update_item_count
+        update_shipment_amounts
         update_totals
         if order.completed?
           update_payment_state
@@ -123,11 +124,16 @@ module Spree
       update_adjustment_total
     end
 
+    def update_shipment_amounts
+      shipments.each do |shipment|
+        shipment.update_amounts
+      end
+    end
+
     # give each of the shipments a chance to update themselves
     def update_shipments
       shipments.each do |shipment|
         shipment.update!(order)
-        shipment.update_amounts
       end
     end
 
