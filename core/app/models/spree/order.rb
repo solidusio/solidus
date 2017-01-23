@@ -472,12 +472,10 @@ module Spree
 
     def empty!
       line_items.destroy_all
-      updater.update_item_count
       adjustments.destroy_all
       shipments.destroy_all
 
-      update_totals
-      persist_totals
+      update!
     end
 
     alias_method :has_step?, :has_checkout_step?
