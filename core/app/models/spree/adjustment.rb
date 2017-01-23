@@ -105,7 +105,7 @@ module Spree
         self.amount = source.compute_amount(adjustable)
 
         if promotion?
-          self.eligible = source.promotion.eligible?(adjustable, promotion_code: promotion_code)
+          self.eligible = calculate_eligibility
         end
 
         # Persist only if changed
@@ -114,6 +114,18 @@ module Spree
         update_columns(eligible: eligible, amount: amount, updated_at: Time.current) if changed?
       end
       amount
+    end
+
+    # Calculates based on attached promotion (if this is a promotion
+    # adjustment) whether this promotion is still eligible.
+    # @api private
+    # @return [true,false] Whether this adjustment is eligible
+    def calculate_eligibility
+      if !finalized? && source && promotion?
+        source.promotion.eligible?(adjustable, promotion_code: promotion_code)
+      else
+        eligible?
+      end
     end
 
     private
