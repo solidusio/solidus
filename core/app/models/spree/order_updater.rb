@@ -126,7 +126,6 @@ module Spree
     # give each of the shipments a chance to update themselves
     def update_shipments
       shipments.each do |shipment|
-        next unless shipment.persisted?
         shipment.update!(order)
         shipment.update_amounts
       end
