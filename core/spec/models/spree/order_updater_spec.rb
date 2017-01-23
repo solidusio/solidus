@@ -488,11 +488,6 @@ module Spree
           updater.update
         end
 
-        it "refreshes shipment rates" do
-          expect(shipment).to receive(:refresh_rates)
-          updater.update
-        end
-
         it "updates the shipment amount" do
           expect(shipment).to receive(:update_amounts)
           updater.update
