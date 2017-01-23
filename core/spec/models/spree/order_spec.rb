@@ -107,8 +107,7 @@ describe Spree::Order, type: :model do
 
     it "update and persist totals" do
       expect(shipment).to receive :update_amounts
-      expect(order.updater).to receive :update_shipment_total
-      expect(order.updater).to receive :persist_totals
+      expect(order.updater).to receive :update
 
       order.set_shipments_cost
     end

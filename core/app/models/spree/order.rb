@@ -568,8 +568,7 @@ module Spree
 
     def set_shipments_cost
       shipments.each(&:update_amounts)
-      updater.update_shipment_total
-      persist_totals
+      update!
     end
 
     def is_risky?
