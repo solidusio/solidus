@@ -17,12 +17,7 @@ module Spree
       assign_order_attributes
       assign_payments_attributes
 
-      if order.save
-        order.set_shipments_cost if order.shipments.any?
-        true
-      else
-        false
-      end
+      order.save
     end
 
     private
