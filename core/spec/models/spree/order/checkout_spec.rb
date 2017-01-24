@@ -533,24 +533,9 @@ describe Spree::Order, type: :model do
           order.save!
         end
 
-        context 'when the exchange is for an unreturned item' do
-          before do
-            order.shipments.first.update_attributes!(created_at: order.created_at - 1.day)
-            expect(order.unreturned_exchange?).to eq true
-          end
-
-          it 'allows the order to complete' do
-            order.complete!
-
-            expect(order).to be_complete
-          end
-        end
-
-        context 'when the exchange is not for an unreturned item' do
-          it 'does not allow the order to completed' do
-            expect { order.complete! }.to raise_error Spree::Order::InsufficientStock
-            expect(order.payments.first.state).to eq('checkout')
-          end
+        it 'does not allow the order to completed' do
+          expect { order.complete! }.to raise_error Spree::Order::InsufficientStock
+          expect(order.payments.first.state).to eq('checkout')
         end
       end
     end
