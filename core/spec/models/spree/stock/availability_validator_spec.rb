@@ -26,6 +26,7 @@ module Spree
         end
 
         it "doesn't add a validation error" do
+          subject
           expect(line_item.errors).to be_empty
         end
       end
