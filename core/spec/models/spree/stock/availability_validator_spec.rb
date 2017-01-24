@@ -77,6 +77,14 @@ module Spree
           end
 
           include_examples "fails validation"
+
+          context "but inventory units are finalized" do
+            before do
+              Spree::InventoryUnit.update_all(pending: false)
+            end
+
+            include_examples "passes validation"
+          end
         end
       end
     end

@@ -8,6 +8,7 @@ module Spree
           ensure_in_stock(line_item, line_item.quantity)
         else
           units_by_shipment.each do |shipment, inventory_units|
+            inventory_units.select!(&:pending?)
             ensure_in_stock(line_item, inventory_units.size, shipment.stock_location)
           end
         end
