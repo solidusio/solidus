@@ -107,10 +107,6 @@ module Spree
     #   @return [Boolean] Request company field for billing and shipping addresses. (default: +false+)
     preference :company, :boolean, default: false
 
-    # @!attribute [rw] create_rma_for_unreturned_exchange
-    #   @return [Boolean] allows rma to be created for items after unreturned exchange charge has been made (default: +false+)
-    preference :create_rma_for_unreturned_exchange, :boolean, default: false
-
     # @!attribute [rw] currency
     #   Currency to use by default when not defined on the site (default: +"USD"+)
     #   @return [String] ISO 4217 Three letter currency code

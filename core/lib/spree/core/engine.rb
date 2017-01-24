@@ -4,10 +4,6 @@ module Spree
       isolate_namespace Spree
       engine_name 'spree'
 
-      rake_tasks do
-        load File.join(root, "lib", "tasks", "exchanges.rake")
-      end
-
       config.generators do |g|
         g.test_framework :rspec
       end
