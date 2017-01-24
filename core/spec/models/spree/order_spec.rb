@@ -109,7 +109,9 @@ describe Spree::Order, type: :model do
       expect(shipment).to receive :update_amounts
       expect(order.updater).to receive :update
 
-      order.set_shipments_cost
+      Spree::Deprecation.silence do
+        order.set_shipments_cost
+      end
     end
   end
 

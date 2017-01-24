@@ -570,6 +570,7 @@ module Spree
       shipments.each(&:update_amounts)
       update!
     end
+    deprecate set_shipments_cost: :update!, deprecator: Spree::Deprecation
 
     def is_risky?
       payments.risky.count > 0
