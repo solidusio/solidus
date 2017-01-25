@@ -128,21 +128,6 @@ module Spree
     #      prices are entered in the backend (default: nil)
     preference :admin_vat_country_iso, :string, default: nil
 
-    # @!attribute [rw] expedited_exchanges
-    #   Kicks off an exchange shipment upon return authorization save.
-    #   charge customer if they do not return items within timely manner.
-    #   @note this requires payment profiles to be supported on your gateway of
-    #     choice as well as a delayed job handler to be configured with
-    #     activejob.
-    #   @return [Boolean] Use expidited exchanges (default: +false+)
-    preference :expedited_exchanges, :boolean, default: false
-
-    # @!attribute [rw] expedited_exchanges_days_window
-    #   @return [Integer] Number of days the customer has to return their item
-    #     after the expedited exchange is shipped in order to avoid being
-    #     charged (default: +14+)
-    preference :expedited_exchanges_days_window, :integer, default: 14
-
     # @!attribute [rw] generate_api_key_for_all_roles
     #   @return [Boolean] Allow generating api key automatically for user
     #   at role_user creation for all roles. (default: +false+)
