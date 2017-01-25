@@ -16,6 +16,10 @@
     comparisons. A comparison will fail if the two objects do not use the same
     currency. [#1682](https://github.com/solidusio/solidus/pull/1682)
 
+*   Deprecations
+
+    * `cache_key_for_taxons` helper has been deprecated in favour of `cache [I18n.locale, @taxons]`
+
 ## Solidus 2.1.0 (unreleased)
 
 *   The OrderUpdater (as used by `order.update!`) now fully updates taxes.
