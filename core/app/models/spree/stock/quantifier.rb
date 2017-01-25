@@ -5,13 +5,12 @@ module Spree
 
       def initialize(variant, stock_location = nil)
         @variant = variant
-        where_args = { variant_id: @variant }
+        @stock_items = Spree::StockItem.joins(:stock_location).where(variant_id: variant)
         if stock_location
-          where_args[:stock_location] = stock_location
+          @stock_items.where!(stock_location: stock_location)
         else
-          where_args[Spree::StockLocation.table_name] = { active: true }
+          @stock_items.merge!(Spree::StockLocation.active)
         end
-        @stock_items = Spree::StockItem.joins(:stock_location).where(where_args)
       end
 
       # Returns the total number of inventory units on hand for the variant.
