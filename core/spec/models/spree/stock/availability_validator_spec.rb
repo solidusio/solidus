@@ -26,6 +26,7 @@ module Spree
         end
 
         it "doesn't add a validation error" do
+          subject
           expect(line_item.errors).to be_empty
         end
       end
@@ -76,6 +77,14 @@ module Spree
           end
 
           include_examples "fails validation"
+
+          context "but inventory units are finalized" do
+            before do
+              Spree::InventoryUnit.update_all(pending: false)
+            end
+
+            include_examples "passes validation"
+          end
         end
       end
     end
