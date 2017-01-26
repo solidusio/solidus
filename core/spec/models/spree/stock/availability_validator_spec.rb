@@ -54,33 +54,51 @@ module Spree
       context "line_item is part of a shipment" do
         let!(:order) { create(:order_with_line_items) }
 
-        context "has stock in all stock locations" do
+        context "has stock in one stock location" do
           let(:line_item)         { order.line_items.first }
 
           before do
-            variant_ids = order.line_items.map(&:variant_id)
-            Spree::StockItem.where(variant_id: variant_ids).update_all(count_on_hand: 10, backorderable: false)
+            line_item.variant.stock_items.update_all(count_on_hand: 10, backorderable: false)
           end
 
           include_examples "passes validation"
         end
 
-        context "doesn't have stock in a particular stock location" do
-          let(:variant)           { create(:variant) }
-          let(:line_item)         { order.line_items.find_by(variant_id: variant.id) }
+        context "with stock in multiple locations" do
+          let(:line_item)         { order.line_items.first }
+          let(:variant)           { line_item.variant }
           let!(:stock_location_1) { create(:stock_location, name: "Test Warehouse", active: false) }
 
           before do
-            order.contents.add(variant, 1, stock_location_quantities: { stock_location_1.id => 1 })
-            order.contents.advance
-            stock_location_1.stock_items.update_all(count_on_hand: 0, backorderable: false)
+            shipment = order.shipments.create(stock_location: stock_location_1)
+            order.contents.add(variant, 1, shipment: shipment)
           end
 
-          include_examples "fails validation"
+          context "but no stock in either location", skip: true do
+            before do
+              variant.stock_items.update_all(count_on_hand: 0, backorderable: false)
+            end
+            include_examples "fails validation"
+          end
+
+          context "but no stock in one location" do
+            before do
+              stock_location_1.stock_items.update_all(count_on_hand: 0, backorderable: false)
+            end
+
+            include_examples "fails validation"
+          end
+
+          context "with enough stock only across locations" do
+            before do
+              variant.stock_items.update_all(count_on_hand: 1, backorderable: false)
+            end
+            include_examples "passes validation"
+          end
 
           context "but inventory units are finalized" do
             before do
-              Spree::InventoryUnit.update_all(pending: false)
+              order.inventory_units.update_all(pending: false)
             end
 
             include_examples "passes validation"
