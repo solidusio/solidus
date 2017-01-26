@@ -105,12 +105,12 @@ module Spree
           include_examples "passes validation"
         end
 
-        context "and there is not enough stock", pending: true do
+        context "and there is not enough stock" do
           let(:count_on_hand) { 1 }
           include_examples "fails validation"
         end
 
-        context "and there is no available stock", skip: true do
+        context "and there is no available stock" do
           let(:count_on_hand) { 0 }
           include_examples "fails validation"
         end

@@ -2,14 +2,14 @@ module Spree
   module Stock
     class AvailabilityValidator < ActiveModel::Validator
       def validate(line_item)
-        units_by_shipment = line_item.inventory_units.group_by(&:shipment)
+        quantity_by_stock_location_id = line_item.inventory_units.pending.joins(:shipment).group(:stock_location_id).count
 
-        if units_by_shipment.blank?
+        if quantity_by_stock_location_id.blank?
           ensure_in_stock(line_item, line_item.quantity)
         else
-          units_by_shipment.each do |shipment, inventory_units|
-            inventory_units.select!(&:pending?)
-            ensure_in_stock(line_item, inventory_units.size, shipment.stock_location)
+          stock_locations = Spree::StockLocation.where(id: quantity_by_stock_location_id.keys).to_a
+          stock_locations.each do |stock_location|
+            ensure_in_stock(line_item, quantity_by_stock_location_id[stock_location.id], stock_location)
           end
         end
 
