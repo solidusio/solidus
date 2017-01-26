@@ -7,9 +7,8 @@ module Spree
         if quantity_by_stock_location_id.blank?
           ensure_in_stock(line_item, line_item.quantity)
         else
-          stock_locations = Spree::StockLocation.where(id: quantity_by_stock_location_id.keys).to_a
-          stock_locations.each do |stock_location|
-            ensure_in_stock(line_item, quantity_by_stock_location_id[stock_location.id], stock_location)
+          quantity_by_stock_location_id.each do |stock_location_id, quantity|
+            ensure_in_stock(line_item, quantity, stock_location_id)
           end
         end
 

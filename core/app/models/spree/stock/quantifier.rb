@@ -3,6 +3,8 @@ module Spree
     class Quantifier
       attr_reader :stock_items
 
+      # @param [Variant] variant The variant to check inventory for.
+      # @param [StockLocation, Integer] stock_location The stock_location to check inventory in. If unspecified it will check inventory in all available StockLocations
       def initialize(variant, stock_location = nil)
         @variant = variant
         @stock_items = Spree::StockItem.where(variant_id: variant)
