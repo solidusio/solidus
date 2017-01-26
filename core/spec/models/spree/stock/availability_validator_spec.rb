@@ -87,6 +87,34 @@ module Spree
           end
         end
       end
+
+      context "line_item is split across two shipments" do
+        let!(:order) { create(:order_with_line_items) }
+        let(:line_item) { order.line_items.first }
+        let(:variant) { line_item.variant }
+        let(:stock_location) { order.shipments.first.stock_location }
+
+        before do
+          shipment2 = order.shipments.create!(stock_location: order.shipments.first.stock_location)
+          order.contents.add(variant, 1, shipment: shipment2)
+          variant.stock_items.first.update_columns(count_on_hand: count_on_hand, backorderable: false)
+        end
+
+        context "and there is just enough stock" do
+          let(:count_on_hand) { 2 }
+          include_examples "passes validation"
+        end
+
+        context "and there is not enough stock", pending: true do
+          let(:count_on_hand) { 1 }
+          include_examples "fails validation"
+        end
+
+        context "and there is no available stock", skip: true do
+          let(:count_on_hand) { 0 }
+          include_examples "fails validation"
+        end
+      end
     end
   end
 end
