@@ -74,7 +74,7 @@ module Spree
             order.contents.add(variant, 1, shipment: shipment)
           end
 
-          context "but no stock in either location", skip: true do
+          context "but no stock in either location" do
             before do
               variant.stock_items.update_all(count_on_hand: 0, backorderable: false)
             end
