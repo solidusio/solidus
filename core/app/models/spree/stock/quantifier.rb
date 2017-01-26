@@ -5,11 +5,11 @@ module Spree
 
       def initialize(variant, stock_location = nil)
         @variant = variant
-        @stock_items = Spree::StockItem.joins(:stock_location).where(variant_id: variant)
+        @stock_items = Spree::StockItem.where(variant_id: variant)
         if stock_location
           @stock_items.where!(stock_location: stock_location)
         else
-          @stock_items.merge!(Spree::StockLocation.active)
+          @stock_items.joins!(:stock_location).merge!(Spree::StockLocation.active)
         end
       end
 
