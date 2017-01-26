@@ -26,7 +26,7 @@ class ::Spree::PromotionCode::CodeBuilder
   private
 
   def codes
-    if num_codes > 1
+    if (num_codes + promotion.codes.size) > 1
       generate_random_codes
     else
       [base_code]
