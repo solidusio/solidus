@@ -1,0 +1,28 @@
+/// Outputs a media-query block.
+///
+/// @param {String} $media-query
+///   A string corresponding to the media query to target.
+///
+/// @example scss - Usage
+///   .responsive-element {
+///      color: blue;
+///      @include media("screen and (min-width: 480px)") {
+///        color: red;
+///      }
+///   }
+///
+/// @example css - CSS Output
+///  .responsive-element {
+///    color: blue;
+///  }
+///  @media screen and (min-width: 480px) {
+///    .responsive-element {
+///      color: red;
+///    }
+///  }
+
+@mixin media($media-query) {
+  @media #{$media-query} {
+    @content;
+  }
+}

@@ -221,3 +221,13 @@ $z-index-navbar-flyout:          1000 !default;
 // Sidebar
 //--------------------------------------------------------------
 $border-sidebar:                 1px solid $color-sidebar-border !default;
+
+// Media queries
+//--------------------------------------------------------------
+$tablet-width: 959px + $width-sidebar;
+$mobile-portrait-width: 767px + $width-sidebar;
+$mobile-landscape-width: 480px + $width-sidebar;
+
+$tablet: "only screen and (min-width: #{$mobile-portrait-width + 1}) and (max-width: #{$tablet-width})";
+$mobile-portrait: "only screen and (max-width: #{$mobile-portrait-width})";
+$mobile-landscape: "only screen and (min-width: #{$mobile-landscape-width}) and (max-width: #{$mobile-portrait-width})";
