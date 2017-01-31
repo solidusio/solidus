@@ -150,7 +150,8 @@ module Spree
 
     def ensure_sufficient_stock_lines
       if @order.insufficient_stock_lines.present?
-        flash[:error] = Spree.t(:inventory_error_flash_for_insufficient_quantity)
+        out_of_stock_items = @order.insufficient_stock_lines.map { |l| "\"#{l.name}\"" }.join(', ')
+        flash[:error] = Spree.t(:inventory_error_flash_for_insufficient_quantity, item: out_of_stock_items)
         redirect_to spree.cart_path
       end
     end

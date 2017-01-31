@@ -1282,7 +1282,7 @@ en:
     inventory: Inventory
     inventory_adjustment: Inventory Adjustment
     inventory_canceled: Inventory canceled
-    inventory_error_flash_for_insufficient_quantity: An item in your cart has become unavailable.
+    inventory_error_flash_for_insufficient_quantity: "%{item} has become unavailable."
     inventory_not_available: Inventory not available for %{item}.
     inventory_state: Inventory State
     inventory_states:
