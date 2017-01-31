@@ -29,8 +29,11 @@ nav.menu {
   border-right: $border-sidebar;
   background: $color-sidebar-bg;
   z-index: $z-index-navbar-flyout;
-  @include media($mobile-landscape) {
+  @include media($desktop) {
     width: $width-sidebar-collapsed;
+  }
+  @include media($tablet) {
+    width: $width-sidebar;
   }
 }
 
@@ -44,15 +47,16 @@ nav.menu {
   a {
     display: inline-block;
     line-height: 58px;
+    @include media($desktop) {
+      display: none;
+    }
+    @include media($tablet) {
+      display: inline-block;
+    }
   }
 
   img {
     vertical-align: middle;
-    max-width: 100%;
-    max-height: 100%;
-    @include media($mobile-landscape) {
-      display: none;
-    }
   }
 }
 
@@ -76,7 +80,7 @@ nav.menu {
 
     &.selected {
       background: $color-navbar-active-bg;
-      @include media($mobile-landscape) {
+      @include media($desktop) {
         position: relative;
       }
 
@@ -86,8 +90,15 @@ nav.menu {
 
       // flyout nav
       > ul {
-        @include media($mobile-landscape) {
+        @include media($desktop) {
           @include flyout;
+        }
+        @include media($tablet) {
+          position: relative;
+          left: 0;
+          width: $width-sidebar;
+          border-top: 0;
+          border-bottom: 0;
         }
       }
     }
@@ -97,8 +108,11 @@ nav.menu {
     }
 
     &.selected:not(:hover) > ul {
-      @include media($mobile-landscape) {
+      @include media($desktop) {
         display: none;
+      }
+      @include media($tablet) {
+        display: block;
       }
     }
 
@@ -112,6 +126,9 @@ nav.menu {
       // flyout nav
       > ul {
         @include flyout;
+        @include media($tablet) {
+          display: none;
+        }
       }
     }
   }
@@ -125,8 +142,11 @@ nav.menu {
 
   .icon_link {
     text-indent: 2em;
-    @include media($mobile-landscape) {
+    @include media($desktop) {
       text-indent: 1.5em;
+    }
+    @include media($tablet) {
+      text-indent: 2em;
     }
 
     &:before {
@@ -141,9 +161,12 @@ nav.menu {
     font-family: $font-family-base;
     -webkit-font-smoothing: auto;
     -moz-osx-font-smoothing: auto;
-    @include media($mobile-landscape) {
-      @include hide-text;
+    @include media($desktop) {
+      overflow: hidden;
       display: block;
+    }
+    @include media($tablet) {
+      overflow: visible;
     }
   }
 
@@ -190,8 +213,11 @@ nav.menu {
   width: $width-sidebar;
   border-top: $border-sidebar;
   border-right: $border-sidebar;
-  @include media($mobile-landscape) {
+  @include media($desktop) {
     width: $width-sidebar-collapsed;
+  }
+  @include media($tablet) {
+    width: $width-sidebar;
   }
 }
 
@@ -202,8 +228,11 @@ nav.menu {
 
   li {
     padding: 0.3rem 1.2rem;
-    @include media($mobile-landscape) {
+    @include media($desktop) {
       padding: 0.3rem 0.5rem 0.3rem 1.1rem;
+    }
+    @include media($tablet) {
+      padding: 0.3rem 1.2rem;
     }
   }
 

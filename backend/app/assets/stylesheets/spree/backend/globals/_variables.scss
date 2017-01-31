@@ -225,10 +225,10 @@ $border-sidebar:                 1px solid $color-sidebar-border !default;
 
 // Media queries
 //--------------------------------------------------------------
-$tablet-width: 959px + $width-sidebar;
-$mobile-portrait-width: 767px + $width-sidebar;
-$mobile-landscape-width: 480px + $width-sidebar;
+$desktop-width: 959px;
+$tablet-width: 768px;
+$mobile-width: 480px;
 
-$tablet: "only screen and (min-width: #{$mobile-portrait-width + 1}) and (max-width: #{$tablet-width})";
-$mobile-portrait: "only screen and (max-width: #{$mobile-portrait-width})";
-$mobile-landscape: "only screen and (min-width: #{$mobile-landscape-width}) and (max-width: #{$mobile-portrait-width})";
+$desktop: "only screen and (max-width: #{$desktop-width})";
+$tablet: "only screen and (max-width: #{$tablet-width})";
+$mobile: "only screen and (max-width: #{$mobile-width})";
