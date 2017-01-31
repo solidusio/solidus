@@ -12,8 +12,8 @@ describe "Promotion Adjustments", type: :feature, js: true do
 
     it "should allow an admin to create a flat rate discount coupon promo" do
       fill_in "Name", with: "Promotion"
-      fill_in "Base code", with: "order"
-      fill_in "Number of codes", with: "1"
+      fill_in "Single code", with: "order"
+
       click_button "Create"
       expect(page).to have_content("PromotionsPromotion")
 
@@ -48,8 +48,8 @@ describe "Promotion Adjustments", type: :feature, js: true do
     it "should allow an admin to create a single user coupon promo with flat rate discount" do
       fill_in "Name", with: "Promotion"
       fill_in "promotion[usage_limit]", with: "1"
-      fill_in "Base code", with: "single_use"
-      fill_in "Number of codes", with: "1"
+      fill_in "Single code", with: "single_use"
+
       click_button "Create"
       expect(page).to have_content("PromotionsPromotion")
 

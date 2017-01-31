@@ -7,6 +7,10 @@
     <% if can?(:display, Spree::PromotionCode) %>
       <%= button_link_to Spree.t(:download_promotion_code_list), admin_promotion_promotion_codes_path(promotion_id: @promotion.id, format: :csv) %>
     <% end %>
+
+    <% if can?(:display, Spree::PromotionCodeBatch) %>
+      <%= button_link_to plural_resource_name(Spree::PromotionCodeBatch), admin_promotion_promotion_code_batches_path(promotion_id: @promotion.id) %>
+    <% end %>
   </li>
 <% end %>
 

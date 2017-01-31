@@ -8,17 +8,10 @@
           <%= f.text_field :name, :class => 'fullwidth' %>
         <% end %>
 
-        <%= fields_for :promotion_builder do |bf| %>
-          <%= bf.field_container :base_code do %>
-            <%= bf.label :base_code %>
-            <%= bf.text_field :base_code, :readonly => !@promotion.new_record?, :class => 'fullwidth' %>
-          <% end %>
-
-          <%= bf.field_container :number_of_codes do %>
-            <%= bf.label :number_of_codes %>
-            <%= bf.text_field :number_of_codes, :readonly => !@promotion.new_record?, class: 'fullwidth' %>
-          <% end %>
-        <% end %>
+        <div class="field" data-hook="promotion-single-code-field">
+          <%= label_tag :single_code %>
+          <%= text_field_tag :single_code, @promotion.codes.first.try!(:value), :readonly => !@promotion.new_record?, :class => 'fullwidth' %>
+        </div>
 
         <%= f.field_container :per_code_usage_limit do %>
           <%= f.label :per_code_usage_limit %>
