@@ -120,6 +120,7 @@ Spree::Core::Engine.routes.draw do
       end
     end
 
+    resource :general_settings, only: :edit
     resources :stores, only: [:index, :new, :create, :edit, :update]
 
     resources :return_items, only: [:update]
