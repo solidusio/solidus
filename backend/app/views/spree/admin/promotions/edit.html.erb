@@ -1,6 +1,7 @@
+<% admin_layout "full-width" %>
+
 <% admin_breadcrumb(link_to plural_resource_name(Spree::Promotion), spree.admin_promotions_path) %>
 <% admin_breadcrumb(@promotion.name) %>
-
 
 <% content_for :page_actions do %>
   <li>
@@ -15,12 +16,10 @@
 <% end %>
 
 <%= form_for @promotion, :url => object_url, :method => :put do |f| %>
-  <fieldset class="no-border-top">
-    <%= render :partial => 'form', :locals => { :f => f } %>
-    <% if can?(:update, @promotion) %>
-      <%= render :partial => 'spree/admin/shared/edit_resource_links' %>
-    <% end %>
-  </fieldset>
+  <%= render :partial => 'form', :locals => { :f => f } %>
+  <% if can?(:update, @promotion) %>
+    <%= render :partial => 'spree/admin/shared/edit_resource_links' %>
+  <% end %>
 <% end %>
 
 <div id="promotion-filters" class="row">

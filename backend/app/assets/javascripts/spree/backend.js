@@ -42,6 +42,7 @@
 //= require spree/backend/product_picker
 //= require spree/backend/progress
 //= require spree/backend/promotions
+//= require spree/backend/promotions/activation
 //= require spree/backend/returns/return_item_selection
 //= require spree/backend/routes
 //= require spree/backend/select_payments

@@ -166,12 +166,12 @@ en:
         code: Code
         description: Description
         event_name: Event Name
-        expires_at: Expiration
+        expires_at: Expiration date
         name: Name
         path: Path
         per_code_usage_limit: Per Code Usage Limit
         promotion_uses: Promotion Uses
-        starts_at: Starts
+        starts_at: Start date
         usage_limit: Overall Usage Limit
       spree/promotion_category:
         name: Name
@@ -778,6 +778,17 @@ en:
         form:
           starts_at_placeholder: Immediately
           expires_at_placeholder: Never
+          activation: Activation
+          general: General
+        activations_new:
+          auto: Apply to all orders
+          multiple_codes: Multiple promotion codes
+          path: URL Path
+          single_code: Single promotion code
+        activations_edit:
+          auto: All orders will attempt to use this promotion
+          single_code_html: "This promotion uses the promotion code: <code>%{code}</code>"
+          multiple_codes_html: "This promotion uses %{count} promotion codes"
       store_credits:
         add: "Add store credit"
         amount_authorized: "Amount Authorized"
