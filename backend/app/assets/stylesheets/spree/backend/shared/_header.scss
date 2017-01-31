@@ -7,6 +7,9 @@
 
   body:not(.new-layout) & {
     margin-left: $width-sidebar;
+    @include media($mobile-landscape) {
+      margin-left: $width-sidebar-collapsed;
+    }
   }
 
   @media print { display: none }

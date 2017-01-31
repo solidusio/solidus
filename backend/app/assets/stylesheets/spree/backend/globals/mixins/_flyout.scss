@@ -1,0 +1,16 @@
+@mixin flyout {
+  position: absolute;
+  top: 0;
+  left: 100%;
+  width: $width-sidebar-flyout;
+  margin-left: 0;
+  border: $border-sidebar;
+  background: $color-navbar-submenu-bg;
+  box-shadow: $box-shadow;
+  @include caret($direction: left, $color-caret: $color-navbar-submenu-bg);
+
+  &:before {
+    z-index: 1;
+    top: 1.5em;
+  }
+}

@@ -8,6 +8,9 @@ body {
 
   &.new-layout {
     padding-left: $width-sidebar;
+    @include media($mobile-landscape) {
+      padding-left: $width-sidebar-collapsed;
+    }
   }
 }
 
@@ -23,6 +26,9 @@ body {
 .content-wrapper {
   body:not(.new-layout) & {
     margin-left: $width-sidebar;
+    @include media($mobile-landscape) {
+      margin-left: $width-sidebar-collapsed;
+    }
     @media print { margin-left: 0 }
   }
 

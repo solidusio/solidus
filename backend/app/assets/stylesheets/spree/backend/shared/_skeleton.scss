@@ -130,7 +130,6 @@
     /* Note: Design for a width of 320px */
 
     @include media($mobile-portrait) {
-        .container { width: 300px; }
         .container .columns,
         .container .column { margin: 0; }
 
@@ -180,7 +179,6 @@
     /* Note: Design for a width of 480px */
 
     @include media($mobile-landscape) {
-        .container { width: 420px; }
         .container .columns,
         .container .column { margin: 0; }
 
