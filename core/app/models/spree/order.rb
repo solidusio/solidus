@@ -134,7 +134,6 @@ module Spree
 
     # shows completed orders first, by their completed_at date, then uncompleted orders by their created_at
     scope :reverse_chronological, -> { order('spree_orders.completed_at IS NULL', completed_at: :desc, created_at: :desc) }
-    scope :unreturned_exchange, -> { joins(:shipments).where('spree_orders.created_at > spree_shipments.created_at') }
 
     def self.by_customer(customer)
       joins(:user).where("#{Spree.user_class.table_name}.email" => customer)
@@ -507,8 +506,6 @@ module Spree
     end
 
     def create_proposed_shipments
-      return shipments if unreturned_exchange?
-
       if completed?
         raise CannotRebuildShipments.new(Spree.t(:cannot_rebuild_shipments_order_completed))
       elsif shipments.any? { |s| !s.pending? }
@@ -595,18 +592,6 @@ module Spree
     def token
       Spree::Deprecation.warn("Spree::Order#token is DEPRECATED, please use #guest_token instead.", caller)
       guest_token
-    end
-
-    def unreturned_exchange?
-      # created_at - 1 is a hack to ensure that this doesn't blow up on MySQL,
-      # records loaded from the DB on MySQL will have a precision of 1 second,
-      # but records in memory may still have miliseconds on them, causing this
-      # to be true where it shouldn't be.
-      #
-      # FIXME: find a better way to determine if an order is an unreturned
-      # exchange
-      shipment = shipments.first
-      shipment.present? ? (shipment.created_at < created_at - 1) : false
     end
 
     def tax_total

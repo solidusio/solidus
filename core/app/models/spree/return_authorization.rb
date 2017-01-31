@@ -13,19 +13,12 @@ module Spree
 
     before_create :generate_number
 
-    after_save :generate_expedited_exchange_reimbursements
-
     accepts_nested_attributes_for :return_items, allow_destroy: true
 
     validates :order, presence: true
     validates :stock_location, presence: true
     validate :must_have_shipped_units, on: :create
     validate :no_previously_exchanged_inventory_units, on: :create
-
-    # These are called prior to generating expedited exchanges shipments.
-    # Should respond to a "call" method that takes the list of return items
-    class_attribute :pre_expedited_exchange_hooks
-    self.pre_expedited_exchange_hooks = []
 
     state_machine initial: :authorized do
       before_transition to: :canceled, do: :cancel_return_items
@@ -87,27 +80,6 @@ module Spree
 
     def cancel_return_items
       return_items.each { |item| item.cancel! if item.can_cancel? }
-    end
-
-    def generate_expedited_exchange_reimbursements
-      return unless Spree::Config[:expedited_exchanges]
-
-      items_to_exchange = return_items.select(&:exchange_required?)
-      items_to_exchange.each(&:attempt_accept)
-      items_to_exchange.select!(&:accepted?)
-
-      return if items_to_exchange.blank?
-
-      pre_expedited_exchange_hooks.each { |h| h.call items_to_exchange }
-
-      reimbursement = Spree::Reimbursement.new(return_items: items_to_exchange, order: order)
-
-      if reimbursement.save
-        reimbursement.perform!
-      else
-        errors.add(:base, reimbursement.errors.full_messages)
-        raise ActiveRecord::RecordInvalid.new(self)
-      end
     end
   end
 end

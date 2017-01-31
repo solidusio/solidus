@@ -107,10 +107,6 @@ module Spree
     #   @return [Boolean] Request company field for billing and shipping addresses. (default: +false+)
     preference :company, :boolean, default: false
 
-    # @!attribute [rw] create_rma_for_unreturned_exchange
-    #   @return [Boolean] allows rma to be created for items after unreturned exchange charge has been made (default: +false+)
-    preference :create_rma_for_unreturned_exchange, :boolean, default: false
-
     # @!attribute [rw] currency
     #   Currency to use by default when not defined on the site (default: +"USD"+)
     #   @return [String] ISO 4217 Three letter currency code
@@ -131,21 +127,6 @@ module Spree
     #   @return [String, nil] Two-letter ISO code of that {Spree::Country} for which
     #      prices are entered in the backend (default: nil)
     preference :admin_vat_country_iso, :string, default: nil
-
-    # @!attribute [rw] expedited_exchanges
-    #   Kicks off an exchange shipment upon return authorization save.
-    #   charge customer if they do not return items within timely manner.
-    #   @note this requires payment profiles to be supported on your gateway of
-    #     choice as well as a delayed job handler to be configured with
-    #     activejob.
-    #   @return [Boolean] Use expidited exchanges (default: +false+)
-    preference :expedited_exchanges, :boolean, default: false
-
-    # @!attribute [rw] expedited_exchanges_days_window
-    #   @return [Integer] Number of days the customer has to return their item
-    #     after the expedited exchange is shipped in order to avoid being
-    #     charged (default: +14+)
-    preference :expedited_exchanges_days_window, :integer, default: 14
 
     # @!attribute [rw] generate_api_key_for_all_roles
     #   @return [Boolean] Allow generating api key automatically for user
