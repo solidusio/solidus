@@ -4,8 +4,8 @@
 <% content_for :tabs do %>
   <nav>
     <ul class="tabs" data-hook="admin_configurations_sidebar_menu">
-      <% if can?(:edit, :general_settings) %>
-        <%= settings_tab_item Spree.t(:settings), edit_admin_general_settings_path %>
+      <% if can?(:edit, Spree::Store) %>
+        <%= settings_tab_item plural_resource_name(Spree::Store), admin_stores_path %>
       <% end %>
     </ul>
   </nav>

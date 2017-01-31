@@ -520,6 +520,9 @@ en:
       spree/stock_transfer:
         one: Stock Transfer
         other: Stock Transfers
+      spree/store:
+        one: Store
+        other: Stores
       spree/store_credit:
         one: Store Credit
         other: Store Credits
@@ -745,8 +748,8 @@ en:
     adjustment_total: Adjustment Total
     adjustments: Adjustments
     admin:
-      general_settings:
-        edit:
+      stores:
+        form:
           no_cart_tax_country: "No taxes on carts without address"
       images:
         index:
@@ -818,7 +821,6 @@ en:
         checkout: Refunds and Returns
         configuration: Configuration
         display_order: Display Order
-        general: Store
         option_types: Option Types
         orders: Orders
         overview: Overview
@@ -834,6 +836,7 @@ en:
         stock: Stock
         stock_items: Store Stock
         stock_transfers: Stock Transfers
+        stores: Stores
         taxes: Taxes
         taxonomies: Taxonomies
         taxons: Taxons
@@ -1391,6 +1394,7 @@ en:
     new_stock_movement: New Stock Movement
     new_stock_transfer: New Stock Transfer
     new_store_credit: New Store Credit
+    new_store: New Store
     new_tax_category: New Tax Category
     new_tax_rate: New Tax Rate
     new_taxon: New Taxon

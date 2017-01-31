@@ -16,6 +16,9 @@
     comparisons. A comparison will fail if the two objects do not use the same
     currency. [#1682](https://github.com/solidusio/solidus/pull/1682)
 
+*   The "Stores" section of Settings in the admin now supports creating and
+    editing multiple stores.
+
 *   Deprecations
 
     * `cache_key_for_taxons` helper has been deprecated in favour of `cache [I18n.locale, @taxons]`

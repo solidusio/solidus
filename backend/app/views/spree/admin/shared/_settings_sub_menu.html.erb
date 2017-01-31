@@ -1,6 +1,6 @@
 <ul class="admin-subnav" data-hook="admin_settings_sub_tabs">
-  <% if can?(:edit, :general_settings) %>
-    <%= tab :general_settings, label: :general, url: spree.edit_admin_general_settings_path, match_path: /\/general_settings/ %>
+  <% if can?(:admin, Spree::Store) %>
+    <%= tab :stores, label: :stores, url: spree.admin_stores_path %>
   <% end %>
 
   <% if can?(:display, Spree::PaymentMethod) %>

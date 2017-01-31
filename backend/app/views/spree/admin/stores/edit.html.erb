@@ -1,0 +1,19 @@
+<%= render 'spree/admin/shared/general_tabs' %>
+
+<% admin_breadcrumb(link_to(plural_resource_name(Spree::Store), admin_stores_path)) %>
+<% admin_breadcrumb(@store.name) %>
+
+<% content_for :page_actions do %>
+  <li>
+    <%= button_link_to Spree.t(:new_store), new_admin_store_url %>
+  </li>
+<% end %>
+
+<%= form_for [:admin, @store] do |f| %>
+  <fieldset class="no-border-top">
+    <%= render 'form', f: f %>
+    <% if can? :update, @store %>
+      <%= render 'spree/admin/shared/edit_resource_links' %>
+    <% end %>
+  </fieldset>
+<% end %>
