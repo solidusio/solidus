@@ -7,8 +7,11 @@
 
   body:not(.new-layout) & {
     margin-left: $width-sidebar;
-    @include media($mobile-landscape) {
+    @include media($desktop) {
       margin-left: $width-sidebar-collapsed;
+    }
+    @include media($tablet) {
+      margin-left: 0;
     }
   }
 
