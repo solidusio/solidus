@@ -29,6 +29,9 @@ nav.menu {
   border-right: $border-sidebar;
   background: $color-sidebar-bg;
   z-index: $z-index-navbar-flyout;
+  @include media($mobile-landscape) {
+    width: $width-sidebar-collapsed;
+  }
 }
 
 .admin-nav-header {
@@ -47,6 +50,9 @@ nav.menu {
     vertical-align: middle;
     max-width: 100%;
     max-height: 100%;
+    @include media($mobile-landscape) {
+      display: none;
+    }
   }
 }
 
@@ -70,14 +76,30 @@ nav.menu {
 
     &.selected {
       background: $color-navbar-active-bg;
+      @include media($mobile-landscape) {
+        position: relative;
+      }
 
       > a {
         color: $color-navbar-active;
+      }
+
+      // flyout nav
+      > ul {
+        @include media($mobile-landscape) {
+          @include flyout;
+        }
       }
     }
 
     &.selected li {
       padding-left: 2em;
+    }
+
+    &.selected:not(:hover) > ul {
+      @include media($mobile-landscape) {
+        display: none;
+      }
     }
 
     &:not(.selected):not(:hover) > ul {
@@ -89,21 +111,8 @@ nav.menu {
 
       // flyout nav
       > ul {
-        position: absolute;
-        top: 0;
-        left: 100%;
-        width: $width-sidebar-flyout;
-        margin-left: 0;
-        border: $border-sidebar;
-        background: $color-navbar-submenu-bg;
-        box-shadow: $box-shadow;
-        @include caret($direction: left, $color-caret: $color-navbar-submenu-bg);
-
-      &:before {
-        z-index: 1;
-        top: 1.5em;
+        @include flyout;
       }
-     }
     }
   }
 
@@ -116,6 +125,9 @@ nav.menu {
 
   .icon_link {
     text-indent: 2em;
+    @include media($mobile-landscape) {
+      text-indent: 1.5em;
+    }
 
     &:before {
       position: absolute;
@@ -129,6 +141,10 @@ nav.menu {
     font-family: $font-family-base;
     -webkit-font-smoothing: auto;
     -moz-osx-font-smoothing: auto;
+    @include media($mobile-landscape) {
+      @include hide-text;
+      display: block;
+    }
   }
 
   .admin-subnav {
@@ -174,6 +190,9 @@ nav.menu {
   width: $width-sidebar;
   border-top: $border-sidebar;
   border-right: $border-sidebar;
+  @include media($mobile-landscape) {
+    width: $width-sidebar-collapsed;
+  }
 }
 
 .admin-login-nav {
@@ -183,6 +202,9 @@ nav.menu {
 
   li {
     padding: 0.3rem 1.2rem;
+    @include media($mobile-landscape) {
+      padding: 0.3rem 0.5rem 0.3rem 1.1rem;
+    }
   }
 
   a {

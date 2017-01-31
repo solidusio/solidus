@@ -1,3 +1,4 @@
 @import "mixins/caret";
+@import "mixins/flyout";
 @import "mixins/line_through";
 @import "mixins/media";
