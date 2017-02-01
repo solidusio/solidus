@@ -1,4 +1,7 @@
 .breadcrumb {
   font-size: 16px;
   margin-bottom: 0;
+  @include media($tablet) {
+    padding-left: 65px;
+  }
 }
