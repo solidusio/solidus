@@ -7,13 +7,17 @@ module Spree
         promotion_code_batch
       ).build_promotion_codes
 
-      Spree::PromotionCodeBatchMailer
-        .promotion_code_batch_finished(promotion_code_batch)
-        .deliver_now
+      if promotion_code_batch.email?
+        Spree::PromotionCodeBatchMailer
+          .promotion_code_batch_finished(promotion_code_batch)
+          .deliver_now
+      end
     rescue => e
-      Spree::PromotionCodeBatchMailer
-        .promotion_code_batch_errored(promotion_code_batch)
-        .deliver_now
+      if promotion_code_batch.email?
+        Spree::PromotionCodeBatchMailer
+          .promotion_code_batch_errored(promotion_code_batch)
+          .deliver_now
+      end
       raise e
     end
   end
