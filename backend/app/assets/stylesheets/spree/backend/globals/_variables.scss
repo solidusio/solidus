@@ -214,6 +214,7 @@ $desktop-width: 959px;
 $tablet-width: 768px;
 $mobile-width: 480px;
 
+$large-device: "only screen and (min-width: #{$tablet-width})";
 $desktop: "only screen and (max-width: #{$desktop-width})";
 $tablet: "only screen and (max-width: #{$tablet-width})";
 $mobile: "only screen and (max-width: #{$mobile-width})";

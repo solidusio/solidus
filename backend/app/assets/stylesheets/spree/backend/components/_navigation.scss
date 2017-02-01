@@ -2,6 +2,55 @@ $padding-x-navbar: 26px;
 $padding-y-navbar: 13px;
 $padding-y-navbar-submenu: 9px;
 
+.menu-button-icon {
+  position: absolute;
+  top: 22px;
+  left: 30px;
+  width: 34px;
+  height: 32px;
+  background: $color-btn-bg;
+  color: $color-btn-text;
+  border-radius: 4px;
+  text-align: center;
+  cursor: pointer;
+  display: none;
+  z-index: 1;
+  &:hover {
+    background: $color-btn-hover-bg;
+  }
+  @include media($tablet) {
+    display: block;
+  }
+
+  i {
+    padding-top: 7px;
+    color: $color-btn-text;
+    font-size: 18px;
+  }
+}
+
+#menu-button {
+  display: none;
+  &:checked ~ .admin-nav {
+    margin: 0;
+  }
+  &:checked ~ .menu-button-icon  {
+    left: $width-sidebar + 30px;
+  }
+  &:checked ~ .content-wrapper  {
+    transform:translate3d($width-sidebar, 0, 0);
+    @include media($large-device) {
+      transform: none;
+    }
+  }
+  &:checked ~ .main-header  {
+    transform:translate3d($width-sidebar, 0, 0);
+    @include media($large-device) {
+      transform: none;
+    }
+  }
+}
+
 nav.menu {
   ul {
     list-style: none;
@@ -33,6 +82,8 @@ nav.menu {
     width: $width-sidebar-collapsed;
   }
   @include media($tablet) {
+    position: fixed;
+    margin: 0 0 0 -200px;
     width: $width-sidebar;
   }
 }
