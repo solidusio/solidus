@@ -7,8 +7,8 @@
       <div class="row">
         <div class="col-xs-3">
           <%= f.field_container :name do %>
-            <%= f.label :name %>
-            <%= f.text_field :name, :class => 'fullwidth' %>
+            <%= f.label :name, class: 'required' %>
+            <%= f.text_field :name, class: 'fullwidth', required: true %>
           <% end %>
 
           <%= f.field_container :advertise do %>

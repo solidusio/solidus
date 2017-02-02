@@ -34,20 +34,20 @@
 
     <div data-activation-type="single_code">
       <div class="field">
-        <%= label_tag :single_code %>
-        <%= text_field_tag :single_code, @promotion.codes.first.try!(:value), class: "fullwidth" %>
+        <%= label_tag :single_code, Spree::PromotionCode.model_name.human, class: "required" %>
+        <%= text_field_tag :single_code, @promotion.codes.first.try!(:value), class: "fullwidth", required: true %>
       </div>
     </div>
 
     <div data-activation-type="multiple_codes">
       <%= fields_for :promotion_code_batch, @promotion_code_batch do |batch| %>
         <div class="field">
-          <%= batch.label :base_code %>
-          <%= batch.text_field :base_code, class: "fullwidth" %>
+          <%= batch.label :base_code, class: "required" %>
+          <%= batch.text_field :base_code, class: "fullwidth", required: true %>
         </div>
         <div class="field">
-          <%= batch.label :number_of_codes %>
-          <%= batch.text_field :number_of_codes, class: "fullwidth" %>
+          <%= batch.label :number_of_codes, class: "required" %>
+          <%= batch.number_field :number_of_codes, class: "fullwidth", min: 1, required: true %>
         </div>
         <div class="field">
           <%= f.label :per_code_usage_limit %>
@@ -58,8 +58,8 @@
 
     <div data-activation-type="path">
       <div class="field" id="promotion_path_field">
-        <%= f.label :path %>
-        <%= f.text_field :path, class: "fullwidth" %>
+        <%= f.label :path, class: "required" %>
+        <%= f.text_field :path, class: "fullwidth", required: true %>
       </div>
     </div>
   </div>
