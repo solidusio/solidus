@@ -471,6 +471,9 @@ en:
       spree/promotion_code_batch:
         one: Promotion Code Batch
         other: Promotion Code Batches
+      spree/promotion_code:
+        one: Promotion Code
+        other: Promotion Codes
       spree/property:
         one: Property Type
         other: Property Types
