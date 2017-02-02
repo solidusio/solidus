@@ -3,18 +3,15 @@ $padding-y-navbar: 13px;
 $padding-y-navbar-submenu: 9px;
 
 .menu-button-icon {
-  position: absolute;
-  top: 22px;
-  left: 30px;
   width: 34px;
   height: 32px;
+  margin-right: 10px;
   background: $color-btn-bg;
   color: $color-btn-text;
   border-radius: 4px;
   text-align: center;
   cursor: pointer;
   display: none;
-  z-index: 1;
   &:hover {
     background: $color-btn-hover-bg;
   }
@@ -31,20 +28,14 @@ $padding-y-navbar-submenu: 9px;
 
 #menu-button {
   display: none;
-  &:checked ~ .admin-nav {
+  &:checked ~ .admin-wrapper  {
+    overflow: hidden;
+  }
+  &:checked ~ .admin-wrapper .admin-nav {
     margin: 0;
   }
-  &:checked ~ .menu-button-icon  {
-    left: $width-sidebar + 30px;
-  }
-  &:checked ~ .content-wrapper  {
-    transform:translate3d($width-sidebar, 0, 0);
-    @include media($large-device) {
-      transform: none;
-    }
-  }
-  &:checked ~ .main-header  {
-    transform:translate3d($width-sidebar, 0, 0);
+  &:checked ~ .admin-wrapper .admin-content  {
+    @include transform(translate3d($width-sidebar, 0, 0));
     @include media($large-device) {
       transform: none;
     }

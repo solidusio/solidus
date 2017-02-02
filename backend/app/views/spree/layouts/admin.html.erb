@@ -5,42 +5,50 @@
   </head>
 
   <body class="admin <%= "new-layout" if @admin_layout %>">
-    <%= render "spree/admin/shared/navigation" %>
-    <%= render "spree/admin/shared/header" %>
-    <%= render "spree/admin/shared/flash" %>
-    <%= render "spree/admin/shared/spinner" %>
+    <input type="checkbox" id="menu-button" />
 
-    <div class="content-wrapper <%= @admin_layout.presence %> <%= "has-sidebar" if content_for?(:sidebar) %>" id="wrapper" data-hook>
-      <% if @admin_layout %>
-        <div class="content">
-          <div class="content-main">
-            <%= yield :tabs %>
-            <%= render "spree/admin/shared/table_filter" %>
-            <%= yield %>
-          </div>
+    <div class="admin-wrapper">
 
-          <%= render "spree/admin/shared/sidebar" %>
-        </div>
-      <% else %>
-        <% # Legacy layout %>
-        <div class="container">
-          <div class="<%= 'with-sidebar ' if content_for?(:sidebar) %>" id="content" data-hook>
-            <div class="row">
-              <% if content_for?(:tabs) %>
-                <div class="col-xs-12">
-                  <%= yield :tabs %>
-                </div>
-              <% end %>
-              <div class="js-content-below-tabs <%= if content_for?(:sidebar) then 'col-xs-9' else 'col-xs-12' end %>">
-                <%= render partial: 'spree/admin/shared/table_filter' %>
+      <%= render "spree/admin/shared/navigation" %>
+
+      <div class="admin-content">
+        <%= render "spree/admin/shared/header" %>
+        <%= render "spree/admin/shared/flash" %>
+        <%= render "spree/admin/shared/spinner" %>
+
+        <div class="content-wrapper <%= @admin_layout.presence %> <%= "has-sidebar" if content_for?(:sidebar) %>" id="wrapper" data-hook>
+          <% if @admin_layout %>
+            <div class="content">
+              <div class="content-main">
+                <%= yield :tabs %>
+                <%= render "spree/admin/shared/table_filter" %>
                 <%= yield %>
               </div>
 
-              <%= render 'spree/admin/shared/sidebar' %>
+              <%= render "spree/admin/shared/sidebar" %>
             </div>
-          </div>
+          <% else %>
+            <% # Legacy layout %>
+            <div class="container">
+              <div class="<%= 'with-sidebar ' if content_for?(:sidebar) %>" id="content" data-hook>
+                <div class="row">
+                  <% if content_for?(:tabs) %>
+                    <div class="col-xs-12">
+                      <%= yield :tabs %>
+                    </div>
+                  <% end %>
+                  <div class="js-content-below-tabs <%= if content_for?(:sidebar) then 'col-xs-9' else 'col-xs-12' end %>">
+                    <%= render partial: 'spree/admin/shared/table_filter' %>
+                    <%= yield %>
+                  </div>
+
+                  <%= render 'spree/admin/shared/sidebar' %>
+                </div>
+              </div>
+            </div>
+          <% end %>
         </div>
-      <% end %>
+      </div>
     </div>
 
     <div data-hook="admin_footer_scripts"></div>
