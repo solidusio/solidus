@@ -19,7 +19,7 @@ With Value-Added tax (VAT), as found most other parts of the world, the prices o
 Most taxes can be considered one of these two types. For instance, in Australia customers pay a Goods and Services Tax (GST). This is basically equivalent to VAT in Europe. See the example section at the bottom.
 
 ***
-Sales tax within the United States can get exceptionally complex, with different states, counties and even cities having different taxation rates. If you are shipping interstate within the United States, we would strongly advise you to use the an external service so that you get correct tax rates.
+Sales tax within the United States can get exceptionally complex, with different states, counties and even cities having different taxation rates. If you are shipping interstate within the United States, we would strongly advise you to use an external service so that you get correct tax rates.
 ***
 
 ### Tax Rates
