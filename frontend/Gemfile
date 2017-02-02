@@ -2,5 +2,6 @@ eval(File.read(File.dirname(__FILE__) + '/../common_spree_dependencies.rb'))
 
 gem 'solidus_core', path: '../core'
 gem 'solidus_api', path: '../api'
+gem 'generator_spec', group: :test
 
 gemspec
