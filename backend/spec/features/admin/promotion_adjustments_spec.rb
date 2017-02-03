@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "Promotion Adjustments", type: :feature, js: true do
   stub_authorization!
 
-  context "coupon promotions", js: true do
+  context "creating a new promotion", js: true do
     before(:each) do
       visit spree.admin_path
       click_link "Promotions"
@@ -12,7 +12,7 @@ describe "Promotion Adjustments", type: :feature, js: true do
 
     it "should allow an admin to create a flat rate discount coupon promo" do
       fill_in "Name", with: "Promotion"
-      fill_in "Single code", with: "order"
+      fill_in "Promotion Code", with: "order"
 
       click_button "Create"
       expect(page).to have_content("PromotionsPromotion")
@@ -48,7 +48,7 @@ describe "Promotion Adjustments", type: :feature, js: true do
     it "should allow an admin to create a single user coupon promo with flat rate discount" do
       fill_in "Name", with: "Promotion"
       fill_in "promotion[usage_limit]", with: "1"
-      fill_in "Single code", with: "single_use"
+      fill_in "Promotion Code", with: "single_use"
 
       click_button "Create"
       expect(page).to have_content("PromotionsPromotion")
@@ -73,6 +73,7 @@ describe "Promotion Adjustments", type: :feature, js: true do
 
     it "should allow an admin to create an automatic promo with flat percent discount" do
       fill_in "Name", with: "Promotion"
+      choose "Apply to all orders"
       click_button "Create"
       expect(page).to have_content("PromotionsPromotion")
 
@@ -107,6 +108,7 @@ describe "Promotion Adjustments", type: :feature, js: true do
       create(:product, name: "RoR Mug")
 
       fill_in "Name", with: "Promotion"
+      choose "Apply to all orders"
       click_button "Create"
       expect(page).to have_content("PromotionsPromotion")
 
@@ -138,6 +140,7 @@ describe "Promotion Adjustments", type: :feature, js: true do
 
     it "should allow an admin to create an automatic promotion with free shipping (no code)" do
       fill_in "Name", with: "Promotion"
+      choose "Apply to all orders"
       click_button "Create"
       expect(page).to have_content("PromotionsPromotion")
 
@@ -156,33 +159,52 @@ describe "Promotion Adjustments", type: :feature, js: true do
       expect(promotion.actions.first).to be_a(Spree::Promotion::Actions::FreeShipping)
     end
 
-    it "should allow an admin to create an automatic promo requiring a landing page to be visited" do
+    it "should allow an admin to create an automatic promotion" do
       fill_in "Name", with: "Promotion"
+      choose "Apply to all orders"
+      click_button "Create"
+      expect(page).to have_content("PromotionsPromotion")
+
+      promotion = Spree::Promotion.find_by_name("Promotion")
+      expect(promotion).to be_apply_automatically
+      expect(promotion.path).to be_nil
+      expect(promotion.codes).to be_empty
+      expect(promotion.rules).to be_blank
+    end
+
+    it "should allow an admin to create a promo requiring a landing page to be visited" do
+      fill_in "Name", with: "Promotion"
+      choose "URL Path"
       fill_in "Path", with: "content/cvv"
       click_button "Create"
       expect(page).to have_content("PromotionsPromotion")
 
-      select2 "Create whole-order adjustment", from: "Add action of type"
-      within('#action_fields') { click_button "Add" }
-      select2 "Flat Rate", from: "Calculator"
-      within('#actions_container') { click_button "Update" }
-      within('.calculator-fields') { fill_in "Amount", with: "4" }
-      within('#actions_container') { click_button "Update" }
-
       promotion = Spree::Promotion.find_by_name("Promotion")
       expect(promotion.path).to eq("content/cvv")
-      expect(promotion.codes.first).to be_nil
+      expect(promotion).not_to be_apply_automatically
+      expect(promotion.codes).to be_empty
+      expect(promotion.rules).to be_blank
+    end
+
+    it "should allow an admin to create a promo with generated codes" do
+      fill_in "Name", with: "Promotion"
+      choose "Multiple promotion codes"
+      fill_in "Base code", with: "testing"
+      fill_in "Number of codes", with: "10"
+      click_button "Create"
+      expect(page).to have_content("PromotionsPromotion")
+
+      promotion = Spree::Promotion.find_by_name("Promotion")
+      expect(promotion.path).to be_nil
+      expect(promotion).not_to be_apply_automatically
       expect(promotion.rules).to be_blank
 
-      first_action = promotion.actions.first
-      expect(first_action.class).to eq(Spree::Promotion::Actions::CreateAdjustment)
-      first_action_calculator = first_action.calculator
-      expect(first_action_calculator.class).to eq(Spree::Calculator::FlatRate)
-      expect(first_action_calculator.preferred_amount).to eq(4)
+      expect(promotion.codes.count).to eq(10)
     end
 
     it "ceasing to be eligible for a promotion with item total rule then becoming eligible again" do
       fill_in "Name", with: "Promotion"
+      choose "Apply to all orders"
       click_button "Create"
       expect(page).to have_content("PromotionsPromotion")
 

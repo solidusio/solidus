@@ -1,10 +1,9 @@
+<% admin_layout "full-width" %>
+
 <% admin_breadcrumb(link_to plural_resource_name(Spree::Promotion), spree.admin_promotions_path) %>
 <% admin_breadcrumb(Spree.t(:new_promotion)) %>
 
-
 <%= form_for @promotion, :url => collection_url do |f| %>
-  <fieldset class="no-border-top">
-    <%= render :partial => 'form', :locals => { :f => f } %>
-    <%= render :partial => 'spree/admin/shared/new_resource_links' %>
-  </fieldset>
+  <%= render :partial => 'form', :locals => { :f => f } %>
+  <%= render :partial => 'spree/admin/shared/new_resource_links' %>
 <% end %>
