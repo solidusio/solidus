@@ -524,6 +524,9 @@
     checks that the package is complete and raises `InsufficientStock` if it is
     incomplete for any reason.
 
+*   Removed `Spree::Zone.global` [#627](https://github.com/solidusio/solidus/pull/627)
+    Use the "GlobalZone" factory instead: `FactoryGirl.create(:global_zone)`
+
 ## Solidus 1.1.0 (2015-11-25)
 
 *   Address is immutable (Address#readonly? is always true)
