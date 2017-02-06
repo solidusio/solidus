@@ -40,15 +40,15 @@
   height: 30px;
   border: 6px solid rgba($color-spinner, 0.2);
   border-left-color: rgba($color-spinner, 1);
-  @include animation(spinner 1s infinite linear);
+  animation: spinner 1s infinite linear;
   border-radius: 50%;
 }
 
-@include keyframes(spinner) {
+@keyframes spinner {
   from {
-    @include transform(rotate(0));
+    transform: rotate(0);
   }
   to {
-    @include transform(rotate(360deg));
+    transform: rotate(360deg);
   }
 }
