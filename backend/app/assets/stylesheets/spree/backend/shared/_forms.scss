@@ -142,8 +142,8 @@ span.info {
 
   &.checkbox {
     min-height: 73px;
-    @include display(flex);
-    @include align-items(center);
+    display: flex;
+    align-items: center;
 
     input[type="checkbox"] {
       display: inline-block;

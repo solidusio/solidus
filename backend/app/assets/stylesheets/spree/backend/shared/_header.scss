@@ -1,6 +1,6 @@
 .main-header {
-  @include display(flex);
-  @include align-items(center);
+  display: flex;
+  align-items: center;
   padding: 15px $grid-gutter-width;
   background-color: very-light($color-3, 4);
   border-bottom: 1px solid $color-border;
@@ -25,7 +25,7 @@
 }
 
 .header-actions {
-  @include flex-grow(1);
+  flex-grow: 1;
   text-align: right;
   line-height: 38px;
 
