@@ -73,9 +73,12 @@ nav.menu {
     width: $width-sidebar-collapsed;
   }
   @include media($tablet) {
+    width: $width-sidebar;
     position: fixed;
     margin: 0 0 0 -200px;
-    width: $width-sidebar;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
   }
 }
 
@@ -260,6 +263,7 @@ nav.menu {
   }
   @include media($tablet) {
     width: $width-sidebar;
+    position: relative;
   }
 }
 

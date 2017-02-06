@@ -4,7 +4,18 @@ navHeight = ->
 checkSideBarFit = ->
   $('.admin-nav').toggleClass('fits', navHeight() < $(window).height())
 
-$ ->
-  $(".admin-nav-sticky, .admin-nav").stick_in_parent()
+checkSticky = ->
+  stickyElements = $('.admin-nav-sticky, .admin-nav')
+
+  if $(window).width() <= 768
+    stickyElements.trigger 'sticky_kit:detach'
+  else
+    stickyElements.stick_in_parent(spacer: false)
+
+adjustNavigation = ->
   checkSideBarFit()
-  $(window).on('resize', checkSideBarFit)
+  checkSticky()
+
+$ ->
+  adjustNavigation()
+  $(window).on('resize', adjustNavigation)
