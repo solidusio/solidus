@@ -119,7 +119,7 @@ nav.menu {
     &:before {
       position: absolute;
       left: 1em;
-      @include transform(translateX(-50%));
+      transform: translateX(-50%);
     }
   }
 
