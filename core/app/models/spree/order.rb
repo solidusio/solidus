@@ -2,11 +2,11 @@ require 'spree/core/validators/email'
 require 'spree/order/checkout'
 
 module Spree
-  # The customers cart until completed, then acts as permenent record of the transaction.
+  # The customers cart until completed, then acts as permanent record of the transaction.
   #
   # `Spree::Order` is the heart of the Solidus system, as it acts as the customer's
   # cart as they shop. Once an order is complete, it serves as the
-  # permenent record of their purchase. It has many responsibilities:
+  # permanent record of their purchase. It has many responsibilities:
   #
   # * Records and validates attributes like `total` and relationships like
   # `Spree::LineItem` as an ActiveRecord model.
