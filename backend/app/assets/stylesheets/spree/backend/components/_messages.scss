@@ -28,6 +28,12 @@
 .flash-wrapper {
   @include position(fixed, null 0 0 $width-sidebar);
   z-index: 1000;
+  @include media($desktop) {
+    @include position(fixed, null 0 0 $width-sidebar-collapsed);
+  }
+  @include media($desktop) {
+    @include position(fixed, null 0 0 0);
+  }
 }
 
 .flash {
