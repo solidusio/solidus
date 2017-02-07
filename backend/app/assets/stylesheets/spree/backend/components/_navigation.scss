@@ -33,11 +33,11 @@ $padding-y-navbar-submenu: 9px;
     overflow: hidden;
 
     .admin-nav {
-      @include transform(translateX(0));
+      transform: translateX(0);
     }
 
     .admin-content  {
-      @include transform(translateX($width-sidebar));
+      transform: translateX($width-sidebar);
       @include media($large-device) {
         transform: none;
       }
@@ -76,12 +76,12 @@ nav.menu {
     width: $width-sidebar-collapsed;
   }
   @include media($tablet) {
-    @include transform(translateX(-$width-sidebar));
     width: $width-sidebar;
     position: fixed;
     overflow-y: auto;
     overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
+    transform: translateX(-$width-sidebar)
   }
 }
 
