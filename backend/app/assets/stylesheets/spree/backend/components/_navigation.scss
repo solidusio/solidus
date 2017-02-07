@@ -28,16 +28,19 @@ $padding-y-navbar-submenu: 9px;
 
 #menu-button {
   display: none;
-  &:checked ~ .admin-wrapper  {
+
+  &:checked ~ .admin-wrapper {
     overflow: hidden;
-  }
-  &:checked ~ .admin-wrapper .admin-nav {
-    margin: 0;
-  }
-  &:checked ~ .admin-wrapper .admin-content  {
-    @include transform(translate3d($width-sidebar, 0, 0));
-    @include media($large-device) {
-      transform: none;
+
+    .admin-nav {
+      @include transform(translateX(0));
+    }
+
+    .admin-content  {
+      @include transform(translateX($width-sidebar));
+      @include media($large-device) {
+        transform: none;
+      }
     }
   }
 }
@@ -73,9 +76,9 @@ nav.menu {
     width: $width-sidebar-collapsed;
   }
   @include media($tablet) {
+    @include transform(translateX(-$width-sidebar));
     width: $width-sidebar;
     position: fixed;
-    margin: 0 0 0 -200px;
     overflow-y: auto;
     overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
@@ -129,11 +132,15 @@ nav.menu {
         position: relative;
       }
 
-      > a {
-        color: $color-navbar-active;
+      &:not(:hover) > ul {
+        @include media($desktop) {
+          display: none;
+        }
+        @include media($tablet) {
+          display: block;
+        }
       }
 
-      // flyout nav
       > ul {
         @include media($desktop) {
           @include flyout;
@@ -146,34 +153,28 @@ nav.menu {
           border-bottom: 0;
         }
       }
-    }
 
-    &.selected li {
-      padding-left: 2em;
-    }
-
-    &.selected:not(:hover) > ul {
-      @include media($desktop) {
-        display: none;
+      li {
+        padding-left: 2em;
       }
-      @include media($tablet) {
-        display: block;
-      }
-    }
 
-    &:not(.selected):not(:hover) > ul {
-      display: none;
+      > a {
+        color: $color-navbar-active;
+      }
     }
 
     &:not(.selected) {
       position: relative;
 
-      // flyout nav
       > ul {
         @include flyout;
         @include media($tablet) {
           display: none;
         }
+      }
+
+      &:not(:hover) > ul {
+        display: none;
       }
     }
   }
