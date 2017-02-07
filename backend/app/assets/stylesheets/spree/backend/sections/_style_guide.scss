@@ -1,5 +1,5 @@
 .style-guide {
-  @include display(flex);
+  display: flex;
 
   &-sidebar {
     width: 225px;
@@ -23,7 +23,7 @@
   }
 
   &-main-content {
-    @include flex(1);
+    flex: 1;
   }
 
   ul {
@@ -109,12 +109,12 @@
 }
 
 .color-variables {
-  @include display(flex);
-  @include flex-wrap(wrap);
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .color-variable {
-  @include flex-shrink(0);
+  flex-shrink: 0;
   width: 240px;
   padding: 1rem;
 

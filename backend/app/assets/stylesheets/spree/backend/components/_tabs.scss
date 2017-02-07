@@ -1,5 +1,5 @@
 .tabs {
-  @include display(flex);
+  display: flex;
   margin: 1em 0;
   border-bottom: 1px solid $color-border;
   white-space: nowrap;
@@ -18,8 +18,8 @@
 }
 
 .tabs > li:not(.in-dropdown) {
-  @include flex-grow(0);
-  @include flex-shrink(0);
+  flex-grow: 0;
+  flex-shrink: 0;
 
   // Move down one pixel to sit on top of the ul's border-bottom
   position: relative;
@@ -54,13 +54,13 @@
 }
 
 .tabs-overflowed.tabs > li:not(.tabs-dropdown) {
-  @include flex-grow(1);
-  @include flex-shrink(1);
+  flex-grow: 1;
+  flex-shrink: 1;
 }
 
 .tabs-dropdown {
-  @include flex-grow(0);
-  @include flex-shrink(0);
+  flex-grow: 0;
+  flex-shrink: 0;
   position: relative;
 
   .tabs:not(.tabs-overflowed) & {
