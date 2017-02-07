@@ -29,10 +29,10 @@
   @include position(fixed, null 0 0 $width-sidebar);
   z-index: 1000;
   @include media($desktop) {
-    @include position(fixed, null 0 0 $width-sidebar-collapsed);
+    left: $width-sidebar-collapsed;
   }
-  @include media($desktop) {
-    @include position(fixed, null 0 0 0);
+  @include media($tablet) {
+    left: 0;
   }
 }
 
