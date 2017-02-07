@@ -19,3 +19,8 @@ env:
     - SOLIDUS_BRANCH=v2.0 DB=mysql
     - SOLIDUS_BRANCH=v2.1 DB=mysql
     - SOLIDUS_BRANCH=master DB=mysql
+before_install:
+  - rvm use @global
+  - gem uninstall bundler -x
+  - gem install bundler --version=1.13.7
+  - bundler --version
