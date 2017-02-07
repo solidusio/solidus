@@ -826,6 +826,7 @@ fr:
     dismiss_banner: Non Merci ! Ça ne m'intéresse pas, ne pas afficher ce message les prochaines fois
     display: Afficher
     display_currency: Devise d'affichage
+    download_promotion_code_list: Télécharger liste des codes
     edit: Éditer
     editing_option_type: Édition du type d'option
     editing_payment_method: Édition de la méthode de paiement
@@ -906,6 +907,7 @@ fr:
     general_settings: Paramètres généraux
     google_analytics: Google Analytics
     google_analytics_id: ID Google Analytics
+    group_size: Taille du groupe
     guest_checkout: Passer la commande en tant qu'invité
     guest_user_account: Invité
     has_no_shipped_units: Aucune unité à été livré
@@ -1201,10 +1203,10 @@ fr:
     product_properties: Propriété du produit
     product_rule:
       choose_products: Choississez des produits
-      label:
+      label: Commande doit contenir %{select} de ces produits
       match_all: tout
       match_any: au moins un
-      match_none:
+      match_none: aucun
       product_source:
         group: Dans les groupes de produits
         manual: Choisir manuellement
@@ -1244,23 +1246,31 @@ fr:
         description: Le client doit avoir visité la page spécifiée
         name: Page de destination
       one_use_per_user:
-        description:
-        name:
+        description: Une seule utilisation par utilisateur
+        name: Une utilisation par utilisateur
       option_value:
-        description:
-        name:
+        description: Commande comprend produit(s) spécifique(s) correspondant à une valeur(s) d'option
+        name: Valeur(s) d'option
       product:
         description: La commande comprend le ou les produit(s) spécifié(s)
         name: Produit(s)
       taxon:
-        description:
-        name:
+        description: Commande comprend des produits avec spécifique(s) taxon(s)
+        name: Taxon(s)
       user:
         description: Disponible uniquement pour l'utilisateur spécifié
         name: Utilisateur
       user_logged_in:
         description: Disponible seulement aux utilisateurs enregistrés
         name: Utilisateur connecté
+      nth_order:
+        description: Appliquer une promotion à chaque nième commande que l'utilisateur a terminé
+        name: Nth Commande
+        form_text: Appliquer cette promotion sur Nième commande des utilisateurs
+      first_repeat_purchase_since:
+        description: Disponible uniquement à l'utilisateur qui n'a pas acheté dans un certain temps
+        name: Répétition première achat depuis
+        form_text: Appliquer cette promotion aux utilisateurs dont dernière commande était plus de X jours
     promotion_uses:
     promotionable:
     promotions: Promotions
@@ -1499,10 +1509,10 @@ fr:
     taxon_edit: Modifier l'aborescence
     taxon_placeholder: Ajouter un taxon
     taxon_rule:
-      choose_taxons:
-      label:
-      match_all:
-      match_any:
+      choose_taxons: Choisissez taxons
+      label: Commande doit contenir %{select} de ces taxons
+      match_all: tout
+      match_any: aucun
     taxonomies: Arborescences
     taxonomy: Taxonomy
     taxonomy_edit: Modifier l'aborescence
