@@ -382,14 +382,24 @@ ja:
         orders: "注文"
         overview:
         products: "商品"
-        promotions:
-        promotion_categories:
+        promotions: "プロモーション"
+        promotion_categories: "プロモーションカテゴリ"
         properties:
         prototypes:
         reports: "リポート"
         taxonomies:
         taxons:
         users: "ユーザー"
+        settings: "設定"
+        general: "一般設定"
+        payments: "支払い方法"
+        areas: "ゾーン"
+        taxes: "税金"
+        checkout: "決済"
+        shipping: "配送方法"
+        stock: "在庫"
+        stock_items: "在庫品"
+        stock_transfers: "在庫移動"
       user:
         account:
         addresses:
@@ -783,7 +793,7 @@ ja:
     new_payment_method: "支払い方法を追加"
     new_product: "新規商品"
     new_promotion: "新規プロモーション"
-    new_promotion_category:
+    new_promotion_category: "新規プロモーションカテゴリ"
     new_property: "新規属性"
     new_prototype: "新規プロトタイプ"
     new_refund:
@@ -960,6 +970,7 @@ ja:
         group: "商品グループから"
         manual: "手動で選択"
     products: "商品"
+    listing_products: "商品一覧"
     promotion: "プロモーション"
     promotion_action: "プロモーションアクション"
     promotion_action_types:
