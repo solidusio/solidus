@@ -741,6 +741,7 @@ ru:
       language: "Язык"
       localization_settings: "Настройки локализации"
       this_file_language: Russian
+      translations: "Перевод"
     icon: "Иконка"
     identifier:
     image: "Изображение"
@@ -1096,7 +1097,8 @@ ru:
     reference: "Ссылка"
     refund: "Возврат"
     refund_amount_must_be_greater_than_zero:
-    refund_reasons: "Причины возврата"
+    refund_reasons: "Причины возврата денег"
+    return_reasons: "Причины возврата товара"
     refunded_amount:
     refunds:
     register: "Зарегистрироваться как новый пользователь"
@@ -1275,7 +1277,7 @@ ru:
     states: "Регионы/Области"
     states_required: "Регионы обязательны"
     status: "Статус"
-    stock: "Управление запасами"
+    stock: "Запасы"
     stock_location: "Расположение склада"
     stock_location_info: "Подробности расположения склада"
     stock_locations: "Адреса складов"
