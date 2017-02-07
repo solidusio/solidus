@@ -111,6 +111,7 @@ module Spree
 
     validates :email, presence: true, if: :require_email
     validates :email, email: true, allow_blank: true
+    validates :guest_token, presence: { allow_nil: true }
     validates :number, presence: true, uniqueness: { allow_blank: true }
     validates :store_id, presence: true
 
