@@ -995,7 +995,7 @@ div[data-hook="inside_cart_form"] {
 }
 
 .cart-subtotal, .cart-total {
-  background: #00ADEE;
+  background: $link_text_color;
 
   td h5 {
     color: #fff;
