@@ -1,29 +1,4 @@
 
-lineItemURL = (id) ->
-  "#{Spree.routes.line_items_api(order_number)}/#{id}.json"
-
-adjustLineItem = (line_item_id, quantity) ->
-  url = lineItemURL(line_item_id)
-  Spree.ajax(
-    type: "PUT",
-    url: url,
-    data:
-      line_item:
-        quantity: quantity
-  ).done (msg) ->
-    window.Spree.advanceOrder()
-
-deleteLineItem = (line_item_id) ->
-  url = lineItemURL(line_item_id)
-  Spree.ajax(
-    type: "DELETE"
-    url: url
-  ).done (msg) ->
-    $('#line-item-' + line_item_id).remove()
-    if $('.line-items tr.line-item').length == 0
-      $('.line-items').remove()
-    window.Spree.advanceOrder()
-
 Spree.CartLineItemView = Backbone.View.extend
   tagName: 'tr'
   className: 'line-item'
@@ -44,17 +19,20 @@ Spree.CartLineItemView = Backbone.View.extend
 
   onSave: (e) ->
     e.preventDefault()
-    line_item_id = @model.id
     quantity = parseInt(@$('input.line_item_quantity').val())
-    adjustLineItem(line_item_id, quantity)
+    @model.save {quantity: quantity},
+      patch: true,
+      success: =>
+        window.Spree.advanceOrder()
     @$el.removeClass('editing')
 
   onDelete: (e) ->
     e.preventDefault()
     return unless confirm(Spree.translations.are_you_sure_delete)
-    line_item_id = @model.id
-    deleteLineItem(line_item_id)
-    @$el.removeClass('editing')
+    @remove()
+    @model.destroy
+      success: =>
+        window.Spree.advanceOrder()
 
   render: ->
     line_item = @model.attributes
