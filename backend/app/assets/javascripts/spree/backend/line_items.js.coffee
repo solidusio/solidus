@@ -5,6 +5,7 @@ Spree.CartLineItemView = Backbone.View.extend
 
   initialize: (options) ->
     @editing = options.editing || @model.isNew()
+    @noCancel = options.noCancel
 
   events:
     'click .edit-line-item': 'onEdit'
@@ -20,6 +21,7 @@ Spree.CartLineItemView = Backbone.View.extend
 
   onCancel: (e) ->
     e.preventDefault()
+    @trigger('cancel')
     if @model.isNew()
       @remove()
     else
@@ -55,7 +57,8 @@ Spree.CartLineItemView = Backbone.View.extend
       line_item: line_item,
       image: image,
       editing: @editing,
-      isNew: @model.isNew()
+      isNew: @model.isNew(),
+      noCancel: @noCancel
     )
     el = @$el.html(html)
     @$("[name=variant_id]").variantAutocomplete({ in_stock_only: true })
@@ -66,6 +69,14 @@ $ ->
     lineItemModel = Backbone.Model.extend
       urlRoot: Spree.routes.line_items_api(order_number)
 
+    add_button = $('.js-add-line-item')
+    add_button.click ->
+      add_button.prop("disabled", true)
+      view = new Spree.CartLineItemView(model: new lineItemModel())
+      view.render()
+      view.on('cancel', (event) -> add_button.prop("disabled", false))
+      $("table.line-items > tbody").append(view.el)
+
     Spree.ajax(url: url).done (result) ->
       for line_item in result.line_items
         model = new lineItemModel(line_item)
@@ -73,7 +84,8 @@ $ ->
         view.render()
         $("table.line-items > tbody").append(view.el)
 
-    $('.js-add-line-item').click ->
-      view = new Spree.CartLineItemView(model: new lineItemModel())
-      view.render()
-      $("table.line-items > tbody").append(view.el)
+      if !result.line_items.length
+        add_button.prop("disabled", true)
+        view = new Spree.CartLineItemView(model: new lineItemModel(), noCancel: true)
+        view.render()
+        $("table.line-items > tbody").append(view.el)

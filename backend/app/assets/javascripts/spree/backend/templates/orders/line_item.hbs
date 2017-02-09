@@ -32,7 +32,9 @@
 <td class="cart-line-item-delete actions" data-hook="cart_line_item_delete">
   {{#if editing}}
     <a class="save-line-item fa fa-ok no-text with-tip" href="#" title="{{ t "actions.save" }}"></a>
-    <a class="cancel-line-item fa fa-cancel no-text with-tip" href="#" title="{{ t "actions.cancel" }}"></a>
+    {{#unless noCancel}}
+      <a class="cancel-line-item fa fa-cancel no-text with-tip" href="#" title="{{ t "actions.cancel" }}"></a>
+    {{/unless}}
   {{else}}
     <a class="edit-line-item fa fa-edit no-text with-tip" href="#" title="{{ t "actions.edit" }}"></a>
     <a class="delete-line-item fa fa-trash no-text with-tip" href="#" title="{{ t "actions.delete" }}"></a>
