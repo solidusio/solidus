@@ -41,16 +41,16 @@ Spree.CartLineItemView = Backbone.View.extend
     el = @$el.html(html)
 
 $ ->
-  url = Spree.routes.orders_api + "/" + order_number
-  Spree.ajax(url: url).done (result) ->
-    lineItemModel = Backbone.Model.extend
-      urlRoot: Spree.routes.line_items_api(order_number)
+  if $("table.line-items").length
+    url = Spree.routes.orders_api + "/" + order_number
+    Spree.ajax(url: url).done (result) ->
+      lineItemModel = Backbone.Model.extend
+        urlRoot: Spree.routes.line_items_api(order_number)
 
-    for line_item in result.line_items
-      model = new lineItemModel(line_item)
-      view = new Spree.CartLineItemView(
-        model: model
-      )
-      view.render()
-      $("table.line-items > tbody").append(view.el)
-
+      for line_item in result.line_items
+        model = new lineItemModel(line_item)
+        view = new Spree.CartLineItemView(
+          model: model
+        )
+        view.render()
+        $("table.line-items > tbody").append(view.el)
