@@ -43,9 +43,8 @@ Spree.CartLineItemView = Backbone.View.extend
   render: ->
     line_item = @model.attributes
     image = line_item.variant.images[0]
-    html = HandlebarsTemplates['orders/line_item'](line_item: line_item, image: image)
+    html = HandlebarsTemplates['orders/line_item'](line_item: line_item, image: image, editing: @editing)
     el = @$el.html(html)
-    @$el.toggleClass('editing', @editing)
 
 $ ->
   if $("table.line-items").length
