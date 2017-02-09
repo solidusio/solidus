@@ -26,9 +26,7 @@ deleteLineItem = (line_item_id) ->
 
 Spree.CartLineItemView = Backbone.View.extend
   tagName: 'tr'
-
-  initialize: (options) ->
-    console.log(options)
+  className: 'line-item'
 
   events:
     'click .edit-line-item': 'onEdit'
@@ -46,30 +44,35 @@ Spree.CartLineItemView = Backbone.View.extend
 
   onSave: (e) ->
     e.preventDefault()
-    line_item = @$el
-    line_item_id = line_item.data('line-item-id')
-    quantity = parseInt(line_item.find('input.line_item_quantity').val())
+    line_item_id = @model.id
+    quantity = parseInt(@$('input.line_item_quantity').val())
     adjustLineItem(line_item_id, quantity)
     @$el.removeClass('editing')
 
   onDelete: (e) ->
     e.preventDefault()
     return unless confirm(Spree.translations.are_you_sure_delete)
-    line_item = @$el
-    line_item_id = line_item.data('line-item-id')
+    line_item_id = @model.id
     deleteLineItem(line_item_id)
     @$el.removeClass('editing')
+
+  render: ->
+    line_item = @model.attributes
+    image = line_item.variant.images[0]
+    html = HandlebarsTemplates['orders/line_item'](line_item: line_item, image: image)
+    el = @$el.html(html)
 
 $ ->
   url = Spree.routes.orders_api + "/" + order_number
   Spree.ajax(url: url).done (result) ->
-    for line_item in result.line_items
-      image = line_item.variant.images[0]
-      html = HandlebarsTemplates['orders/line_item'](line_item: line_item, image: image)
-      $("table.line-items > tbody").append(html)
+    lineItemModel = Backbone.Model.extend
+      urlRoot: Spree.routes.line_items_api(order_number)
 
-    $('.line-item').each ->
+    for line_item in result.line_items
+      model = new lineItemModel(line_item)
       view = new Spree.CartLineItemView(
-        el: $(@)
+        model: model
       )
+      view.render()
+      $("table.line-items > tbody").append(view.el)
 
