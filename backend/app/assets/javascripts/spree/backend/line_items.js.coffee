@@ -3,6 +3,9 @@ Spree.CartLineItemView = Backbone.View.extend
   tagName: 'tr'
   className: 'line-item'
 
+  initialize: (options) ->
+    @editing = options.editing || false
+
   events:
     'click .edit-line-item': 'onEdit'
     'click .cancel-line-item': 'onCancel'
@@ -11,11 +14,13 @@ Spree.CartLineItemView = Backbone.View.extend
 
   onEdit: (e) ->
     e.preventDefault()
-    @$el.addClass('editing')
+    @editing = true
+    @render()
 
   onCancel: (e) ->
     e.preventDefault()
-    @$el.removeClass('editing')
+    @editing = false
+    @render()
 
   onSave: (e) ->
     e.preventDefault()
@@ -24,7 +29,8 @@ Spree.CartLineItemView = Backbone.View.extend
       patch: true,
       success: =>
         window.Spree.advanceOrder()
-    @$el.removeClass('editing')
+    @editing = false
+    @render()
 
   onDelete: (e) ->
     e.preventDefault()
@@ -39,6 +45,7 @@ Spree.CartLineItemView = Backbone.View.extend
     image = line_item.variant.images[0]
     html = HandlebarsTemplates['orders/line_item'](line_item: line_item, image: image)
     el = @$el.html(html)
+    @$el.toggleClass('editing', @editing)
 
 $ ->
   if $("table.line-items").length
