@@ -28,8 +28,15 @@ Spree.CartLineItemView = Backbone.View.extend
       @editing = false
       @render()
 
+  validate: () ->
+    @$('[name=quantity]').toggleClass 'error', !@$('[name=quantity]').val()
+    @$('.select2-container').toggleClass 'error', !@$('[name=variant_id]').val()
+
+    !@$('.select2-container').hasClass('error') && !@$('[name=quantity]').hasClass('error')
+
   onSave: (e) ->
     e.preventDefault()
+    return unless @validate()
     attrs = {
       quantity: parseInt(@$('input.line_item_quantity').val())
     }
