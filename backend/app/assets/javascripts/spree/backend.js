@@ -32,12 +32,12 @@
 //= require spree/backend/images/index
 //= require spree/backend/images/new
 //= require spree/backend/images/upload
-//= require spree/backend/line_items
 //= require spree/backend/navigation
 //= require spree/backend/number_field_updater
 //= require spree/backend/option_type_autocomplete
 //= require spree/backend/option_value_picker
 //= require spree/backend/orders/edit
+//= require spree/backend/orders/line_items
 //= require spree/backend/payments/edit
 //= require spree/backend/payments/new
 //= require spree/backend/product_picker
