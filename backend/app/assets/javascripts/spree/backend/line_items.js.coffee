@@ -91,8 +91,8 @@ $ ->
         view.render()
         $("table.line-items > tbody").append(view.el)
 
+      add_button.prop("disabled", !result.line_items.length)
       if !result.line_items.length
-        add_button.prop("disabled", true)
         view = new Spree.CartLineItemView(model: new lineItemModel(), noCancel: true)
         view.render()
         $("table.line-items > tbody").append(view.el)
