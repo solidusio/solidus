@@ -4,7 +4,16 @@ Spree.Order || (Spree.Order = {});
 
 Spree.Order.OrderModel = Backbone.Model.extend({
   urlRoot: Spree.routes.orders_api,
-  idAttribute: "number"
+  idAttribute: "number",
+
+  advance: function(opts) {
+    var options = {
+      url: Spree.routes.checkouts_api + "/" + this.id + "/advance",
+      type: 'PUT',
+    };
+    _.extend(options, opts);
+    return this.fetch(options)
+  }
 });
 
 Spree.Order.OrderSummaryView = Backbone.View.extend({
