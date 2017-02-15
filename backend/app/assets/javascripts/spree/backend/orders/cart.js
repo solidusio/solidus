@@ -1,6 +1,7 @@
 //= require spree/backend/models
 //= require spree/backend/orders/line_items
 //= require spree/backend/orders/order_summary
+//= require spree/backend/orders/order_details
 
 Spree.Order || (Spree.Order = {})
 
@@ -21,6 +22,11 @@ Spree.Order.initCartPage = function(order_number) {
   new Spree.CartAddLineItemButtonView({
     el: $('.js-add-line-item'),
     collection: collection
+  });
+
+  new Spree.Order.OrderDetailsTotalView({
+    el: $('#order-total'),
+    model: order
   });
 
   order.fetch({
