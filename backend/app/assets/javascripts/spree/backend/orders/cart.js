@@ -46,14 +46,13 @@ Spree.Order.initCartPage = function(order_number) {
     model: order
   });
 
-  order.fetch({
-    success: function() {
-      /* If there are no existing items, start creating one immediately */
-      if(!collection.length) {
-        collection.push({});
-      }
+  order.on("sync", function() {
+    if(!collection.length) {
+      collection.push({});
     }
   })
+
+  order.fetch();
 }
 
 $(function() {
