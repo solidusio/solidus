@@ -22,26 +22,13 @@ addVariant = function() {
     $('#stock_details').hide();
 
     var variant_id = $('input.variant_autocomplete').val();
-    var total_quantity = 0;
-    var stock_location_quantities = {};
+    var total_quantity = $("input#variant_quantity").val();
 
-    if ($(".stock-levels.untracked-inventory").length > 0) {
-        total_quantity = $("input#variant_quantity").val();
-    }
-    else {
-        var quantities = $("input.quantity[data-variant-id='" + variant_id + "']");
-
-        quantities.each(function() {
-            total_quantity += Number($(this).val());
-            stock_location_quantities[$(this).attr('data-stock-location-id')] = $(this).val();
-        });
-    }
-
-    adjustLineItems(order_number, variant_id, total_quantity, stock_location_quantities);
+    adjustLineItems(order_number, variant_id, total_quantity);
     return 1
 }
 
-adjustLineItems = function(order_number, variant_id, quantity, stock_location_quantities){
+adjustLineItems = function(order_number, variant_id, quantity){
     var url = Spree.routes.orders_api + "/" + order_number + '/line_items';
 
     Spree.ajax({
@@ -50,8 +37,7 @@ adjustLineItems = function(order_number, variant_id, quantity, stock_location_qu
         data: {
           line_item: {
             variant_id: variant_id,
-            quantity: quantity,
-            stock_location_quantities: stock_location_quantities
+            quantity: quantity
           },
         }
     }).done(function( msg ) {

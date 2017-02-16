@@ -48,7 +48,7 @@ describe "Order Details", type: :feature, js: true do
       it "can add an item to a shipment" do
         select2_search "spree t-shirt", from: Spree.t(:name_or_sku)
         within("table.stock-levels") do
-          fill_in "quantity_0", with: 2
+          fill_in "variant_quantity", with: 2
         end
 
         click_button "Add"

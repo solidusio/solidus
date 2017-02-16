@@ -26,7 +26,7 @@ describe "New Order", type: :feature do
     click_on 'Cart'
     select2_search product.name, from: Spree.t(:name_or_sku)
 
-    fill_in_quantity("table.stock-levels", "quantity_0", 2)
+    fill_in "variant_quantity", with: 2
 
     click_button 'Add'
     click_on "Customer"
@@ -64,7 +64,7 @@ describe "New Order", type: :feature do
     click_on 'Cart'
     select2_search product.name, from: Spree.t(:name_or_sku)
 
-    fill_in_quantity("table.stock-levels", "quantity_0", 2)
+    fill_in "variant_quantity", with: 2
 
     click_button 'Add'
     click_on "Customer"
@@ -94,7 +94,7 @@ describe "New Order", type: :feature do
       click_on 'Cart'
       select2_search product.name, from: Spree.t(:name_or_sku)
 
-      fill_in_quantity('table.stock-levels', 'quantity_0', 2)
+      fill_in "variant_quantity", with: 2
 
       click_button 'Add'
 
@@ -130,7 +130,7 @@ describe "New Order", type: :feature do
       click_on 'Cart'
       select2_search product.name, from: Spree.t(:name_or_sku)
 
-      fill_in_quantity('table.stock-levels', 'quantity_0', 1)
+      fill_in "variant_quantity", with: 1
 
       click_button 'Add'
 
