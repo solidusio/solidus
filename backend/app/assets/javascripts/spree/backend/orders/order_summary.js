@@ -1,10 +1,15 @@
+//= require spree/backend/routes
+
 Spree.Order || (Spree.Order = {});
 
 Spree.Order.OrderModel = Backbone.Model.extend({
+  urlRoot: Spree.routes.orders_api,
+  idAttribute: "number"
 });
 
 Spree.Order.OrderSummaryView = Backbone.View.extend({
   initialize: function () {
+    this.listenTo(this.model, "change", this.render);
     this.render()
   },
 
@@ -40,15 +45,9 @@ Spree.Order.OrderSummaryView = Backbone.View.extend({
 });
 
 $(function(){
-  var url = Spree.routes.orders_api + "/" + order_number
-  $('#order_tab_summary').each(function(){
-    var el = this;
-    Spree.ajax({url: url}).done(function(result) {
-      var order = new Spree.Order.OrderModel(result);
-      new Spree.Order.OrderSummaryView({
-        el: el,
-        model: order
-      });
-    });
-  });
-})
+  if ($('#order_tab_summary').length) {
+    var model = new Spree.Order.OrderModel({number: order_number});
+    new Spree.Order.OrderSummaryView({el: $('#order_tab_summary'), model: model});
+    model.fetch();
+  }
+});
