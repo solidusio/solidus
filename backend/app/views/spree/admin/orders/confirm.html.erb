@@ -19,7 +19,7 @@
       order: @order,
       title: Spree.t(:line_item_adjustments),
     }
-  )
+  ) if @order.line_item_adjustments.eligible.any?
 %>
 
 <%=
@@ -30,7 +30,7 @@
       order: @order,
       title: Spree.t(:shipment_adjustments),
     }
-  )
+  ) if @order.shipment_adjustments.eligible.any?
 %>
 
 <%=
@@ -41,7 +41,7 @@
       order: @order,
       title: Spree.t(:order_adjustments),
     }
-  )
+  ) if @order.adjustments.eligible.any?
 %>
 
 <% if @order.line_items.exists? %>
