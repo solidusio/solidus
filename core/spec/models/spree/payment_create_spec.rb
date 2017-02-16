@@ -82,7 +82,7 @@ module Spree
       end
 
       around do |example|
-        ActiveSupport::Deprecation.silence { example.run }
+        Spree::Deprecation.silence { example.run }
       end
 
       it 'sets the existing card as the source for the new payment' do
