@@ -47,7 +47,7 @@ var ShipShipmentView = Backbone.View.extend({
       type: "PUT",
       url: Spree.routes.shipments_api + "/" + this.shipment_number + "/ship",
       data: {
-        send_mailer: this.$("[name='send_mailer']").val()
+        send_mailer: this.$("[name='send_mailer']").is(":checked")
       },
       success: function(){
         window.location.reload()

@@ -36,6 +36,15 @@ describe "Shipments", type: :feature do
       expect(page).to have_content("shipped package")
       expect(order.reload.shipment_state).to eq("shipped")
     end
+
+    it "doesn't send a shipping confirmation email when ask to suppress the mailer" do
+      find("#send_mailer").set(false)
+      
+      expect {
+        find(".ship-shipment-button").click
+        wait_for_ajax
+      }.not_to change{ ActionMailer::Base.deliveries.count }
+    end
   end
 
   context "moving variants between shipments", js: true do
