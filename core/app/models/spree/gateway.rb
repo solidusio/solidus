@@ -47,7 +47,7 @@ module Spree
       payment_source_class.where(id: source_ids).select(&:reusable?)
     end
     alias_method :sources_by_order, :reusable_sources_by_order
-    deprecate :sources_by_order, deprecator: Spree::Deprecation
+    deprecate sources_by_order: :reusable_sources_by_order, deprecator: Spree::Deprecation
 
     def reusable_sources(order)
       if order.completed?
