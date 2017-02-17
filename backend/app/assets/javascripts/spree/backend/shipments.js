@@ -380,6 +380,37 @@ var initOrderShipmentsPage = function(order) {
     var shipment_number = $(this).find('tbody').data('shipment-number');
     var shipment = shipments.findWhere({number: shipment_number});
     new ShipmentEditView({ el: this, model: shipment });
+
+    shipment.on("sync", function(){
+      order.fetch();
+    })
+  });
+
+  new Spree.Order.OrderSummaryView({
+    el: $('#order_tab_summary'),
+    model: order
+  });
+
+  new Spree.Order.OrderDetailsTotalView({
+    el: $('#order-total'),
+    model: order
+  });
+
+  new Spree.Order.OrderDetailsAdjustmentsView({
+    el: $('.js-order-line-item-adjustments'),
+    model: order,
+    collection: order.get("line_items")
+  });
+
+  new Spree.Order.OrderDetailsAdjustmentsView({
+    el: $('.js-order-shipment-adjustments'),
+    model: order,
+    collection: order.get("shipments")
+  });
+
+  new Spree.Order.OrderDetailsAdjustmentsView({
+    el: $('.js-order-adjustments'),
+    model: order
   });
 }
 
