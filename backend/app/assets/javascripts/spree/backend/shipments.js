@@ -335,13 +335,10 @@ var ShipmentEditView = Backbone.View.extend({
       });
     });
 
-    var shipmentData = _.findWhere(window.shipments, {number: this.shipment_number});
-    var model = new Spree.Models.Shipment(shipmentData);
-
-    var editMethodView = new ShipmentEditMethodView({model: model});
+    var editMethodView = new ShipmentEditMethodView({model: this.model});
     tbody.append(editMethodView.el);
 
-    var trackingView = new ShipmentTrackingView({model: model});
+    var trackingView = new ShipmentTrackingView({model: this.model});
     tbody.append(trackingView.el);
   },
 
@@ -369,12 +366,28 @@ var ShipmentEditView = Backbone.View.extend({
 
 });
 
-$(function(){
+var initOrderShipmentsPage = function(order) {
   $(".js-shipment-add-variant").each(function(){
     new ShipmentAddVariantView({el: this});
   });
 
+  var shipments = order.get("shipments");
+
   $(".js-shipment-edit").each(function(){
-    new ShipmentEditView({ el: this });
+    var shipment_number = $(this).find('tbody').data('shipment-number');
+    var shipment = shipments.findWhere({number: shipment_number});
+    new ShipmentEditView({ el: this, model: shipment });
   });
+}
+
+$(function(){
+  if($(".js-shipment-add-variant").length) {
+    var order_number = window.order_number;
+
+    var order = Spree.Models.Order.fetch(order_number, {
+      success: function() {
+        initOrderShipmentsPage(order);
+      }
+    })
+  }
 });
