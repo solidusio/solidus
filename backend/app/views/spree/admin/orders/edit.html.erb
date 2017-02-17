@@ -1,3 +1,5 @@
+<% admin_breadcrumb(plural_resource_name(Spree::Shipment)) %>
+
 <% content_for :page_actions do %>
   <% if can?(:fire, @order) %>
     <li><%= event_links %></li>
