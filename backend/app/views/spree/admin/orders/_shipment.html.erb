@@ -44,7 +44,7 @@
     </thead>
 
     <tbody data-shipment-number="<%= shipment.number %>" data-order-number="<%= order.number %>">
-      <%= render 'spree/admin/orders/shipment_manifest', { shipment_number: shipment.number, shipment_manifest: manifest_items } %>
+      <%#= render 'spree/admin/orders/shipment_manifest', { shipment_number: shipment.number, shipment_manifest: manifest_items } %>
 
       <% if order.special_instructions.present? %>
         <tr class='special_instructions'>

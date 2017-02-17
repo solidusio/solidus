@@ -210,6 +210,8 @@ var ShipmentSplitItemView = Backbone.View.extend({
 });
 
 var ShipmentItemView = Backbone.View.extend({
+  tagName: 'tr',
+
   initialize: function(options) {
     this.shipment_number = options.shipment_number
     this.order_number = options.order_number
