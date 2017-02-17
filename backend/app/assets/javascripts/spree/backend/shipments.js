@@ -217,6 +217,22 @@ var ShipmentItemView = Backbone.View.extend({
     this.order_number = options.order_number
     this.quantity = this.$el.data('item-quantity')
     this.variant_id = this.$el.data('variant-id')
+    this.render()
+  },
+
+  template: HandlebarsTemplates['orders/shipment_item_row'],
+  render: function() {
+    var price = this.model.get("line_item").price;
+    var currency = this.model.shipment.order.get("currency");
+    var image = this.model.get("variant").images[0];
+
+    this.$el.html(this.template({
+      image: image,
+      states: this.model.get("states"),
+      variant: this.model.get("variant"),
+      price: Spree.formatMoney(price, currency),
+      totalPrice: Spree.formatMoney(price * this.model.get("quantity"), currency),
+    }))
   },
 
   events: {
@@ -234,17 +250,18 @@ var ShipmentItemView = Backbone.View.extend({
     this.$('.split-item').toggle();
     this.$('.delete-item').toggle();
 
+    var model = this.model;
     var _this = this;
     Spree.ajax({
       type: "GET",
-      url: Spree.routes.variants_api + "/" + this.variant_id,
+      url: Spree.routes.variants_api + "/" + this.model.get("variant").id,
     }).success(function(variant){
       var split = new ShipmentSplitItemView({
         shipmentItemView: _this,
-        shipment_number: _this.shipment_number,
+        shipment_number: model.shipment.get("number"),
         variant: variant,
         shipments: window.shipments,
-        max_quantity: _this.quantity
+        max_quantity: model.get("quantity")
       });
 
       _this.$el.after(split.$el);
@@ -340,6 +357,9 @@ var ShipmentEditMethodView = Backbone.View.extend({
   }
 })
 
+var ManifestItem = Backbone.Model.extend({
+})
+
 var ShipmentEditView = Backbone.View.extend({
   initialize: function(){
     var tbody = this.$("tbody[data-order-number][data-shipment-number]");
@@ -353,12 +373,21 @@ var ShipmentEditView = Backbone.View.extend({
         shipment_number: shipmentView.shipment_number
       });
     });
-    this.$(".stock-item").each(function(){
-      new ShipmentItemView({
-        el: this,
+
+    var shipment = this.model;
+    var order = shipment.order;
+    var manifest = this.model.get("manifest");
+    _.each(manifest, function(manifest_item) {
+      var model = new ManifestItem(manifest_item);
+      model.shipment = shipment;
+
+      var view = new ShipmentItemView({
+        model: model,
         shipment_number: shipmentView.shipment_number,
         order_number: shipmentView.order_number
-      });
+      })
+      view.render();
+      tbody.append(view.el);
     });
 
     var editMethodView = new ShipmentEditMethodView({model: this.model});
