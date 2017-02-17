@@ -67,12 +67,16 @@ describe Spree::Wallet, type: :model do
     end
   end
 
-  describe "#default=" do
+  describe "#default_wallet_payment_source=" do
     context "with no current default" do
       let!(:wallet_credit_card) { subject.add(credit_card) }
 
       it "marks the passed in payment source as default" do
-        expect { subject.default = credit_card }.to change(subject, :default).from(nil).to(wallet_credit_card)
+        expect { subject.default_wallet_payment_source = credit_card }.to(
+          change(subject, :default_wallet_payment_source).
+            from(nil).
+            to(wallet_credit_card)
+        )
       end
     end
 
@@ -80,27 +84,31 @@ describe Spree::Wallet, type: :model do
       let!(:wallet_credit_card) { subject.add(credit_card) }
       let!(:wallet_store_credit) { subject.add(store_credit) }
 
-      before { subject.default = credit_card }
+      before { subject.default_wallet_payment_source = credit_card }
 
       it "sets the new payment source as the default" do
-        expect { subject.default = store_credit }.to change(subject,:default).from(wallet_credit_card).to(wallet_store_credit)
+        expect { subject.default_wallet_payment_source = store_credit }.to(
+          change(subject, :default_wallet_payment_source).
+            from(wallet_credit_card).
+            to(wallet_store_credit)
+        )
       end
     end
   end
 
-  describe "#default" do
+  describe "#default_wallet_payment_source" do
     context "with no default payment source present" do
       it "will return nil" do
-        expect(subject.default).to be_nil
+        expect(subject.default_wallet_payment_source).to be_nil
       end
     end
 
     context "with a default payment source" do
       let!(:wallet_credit_card) { subject.add(credit_card) }
-      before { subject.default = credit_card }
+      before { subject.default_wallet_payment_source = credit_card }
 
       it "will return the wallet payment source" do
-        expect(subject.default).to eql wallet_credit_card
+        expect(subject.default_wallet_payment_source).to eql wallet_credit_card
       end
     end
   end

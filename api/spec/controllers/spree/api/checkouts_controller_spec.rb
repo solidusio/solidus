@@ -268,7 +268,7 @@ module Spree
               payments_attributes: [
                 {
                   source_attributes: {
-                    existing_card_id: credit_card.id.to_s,
+                    wallet_payment_source_id: wallet_payment_source.id.to_param,
                     verification_value: '456'
                   }
                 }
@@ -277,7 +277,11 @@ module Spree
           }
         end
 
-        let!(:credit_card) do
+        let!(:wallet_payment_source) do
+          order.user.wallet.add(credit_card)
+        end
+
+        let(:credit_card) do
           create(:credit_card, user_id: order.user_id, payment_method_id: @payment_method.id)
         end
 
@@ -293,6 +297,34 @@ module Spree
 
           expect(response.status).to eq 200
           expect(order.credit_cards).to match_array [credit_card]
+        end
+
+        context 'with deprecated existing_card_id param' do
+          let(:params) do
+            {
+              id: order.to_param,
+              order_token: order.guest_token,
+              order: {
+                payments_attributes: [
+                  {
+                    source_attributes: {
+                      existing_card_id: credit_card.id.to_param,
+                      verification_value: '456'
+                    }
+                  }
+                ]
+              }
+            }
+          end
+
+          it 'succeeds' do
+            Spree::Deprecation.silence do
+              api_put(:update, params)
+            end
+
+            expect(response.status).to eq 200
+            expect(order.credit_cards).to match_array [credit_card]
+          end
         end
       end
 

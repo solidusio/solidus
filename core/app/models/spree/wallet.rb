@@ -46,7 +46,7 @@ class Spree::Wallet
 
   # Find the default WalletPaymentSource for this wallet, if any.
   # @return [WalletPaymentSource]
-  def default
+  def default_wallet_payment_source
     user.wallet_payment_sources.find_by(default: true)
   end
 
@@ -55,11 +55,11 @@ class Spree::Wallet
   #   It must be in the wallet already. Pass nil to clear the default.
   # @return [WalletPaymentSource] the associated WalletPaymentSource, or nil if clearing
   #   the default.
-  def default=(payment_source)
+  def default_wallet_payment_source=(payment_source)
     wallet_payment_source = payment_source && user.wallet_payment_sources.find_by!(payment_source: payment_source)
     wallet_payment_source.transaction do
       # Unset old default
-      default.try!(:update!, default: false)
+      default_wallet_payment_source.try!(:update!, default: false)
       # Set new default
       wallet_payment_source.try!(:update!, default: true)
     end

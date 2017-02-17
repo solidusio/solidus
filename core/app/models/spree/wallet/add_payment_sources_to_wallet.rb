@@ -27,7 +27,7 @@ class Spree::Wallet::AddPaymentSourcesToWallet
 
         # arbitrarily pick the last one for the default
         default_source = sources.sort_by(&:id).last
-        order.user.wallet.default = default_source
+        order.user.wallet.default_wallet_payment_source = default_source
       end
     end
   end
