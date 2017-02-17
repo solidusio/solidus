@@ -300,6 +300,26 @@ var ShipmentTrackingView = Backbone.View.extend({
   }
 })
 
+var ShipmentEditMethodView = Backbone.View.extend({
+  tagName: 'tr',
+
+  initialize: function(options) {
+    this.editing = false;
+    this.render()
+  },
+
+  render: function() {
+    var shippingRates = this.model.get("shipping_rates")
+    var selectedRate = _.findWhere(shippingRates, {id: this.model.get("selected_shipping_rate_id")})
+    this.$el.html(HandlebarsTemplates['orders/shipment_edit_method']({
+      editing: this.editing,
+      tracking: this.model.get("tracking"),
+      selectedRate: selectedRate,
+
+    }))
+  }
+})
+
 var ShipmentEditView = Backbone.View.extend({
   initialize: function(){
     var tbody = this.$("tbody[data-order-number][data-shipment-number]");
@@ -323,16 +343,18 @@ var ShipmentEditView = Backbone.View.extend({
 
     var shipmentData = _.findWhere(window.shipments, {number: this.shipment_number});
     var model = new Spree.Models.Shipment(shipmentData);
-    var trackingView = new ShipmentTrackingView({model: model});
 
-    tbody.append(trackingView.el)
+    var editMethodView = new ShipmentEditMethodView({model: model});
+    tbody.append(editMethodView.el);
+
+    var trackingView = new ShipmentTrackingView({model: model});
+    tbody.append(trackingView.el);
   },
 
   events: {
     "click a.edit-method": "toggleMethodEdit",
     "click a.cancel-method": "toggleMethodEdit",
     "click a.save-method": "saveMethod",
-
   },
 
   toggleMethodEdit: function(e){
