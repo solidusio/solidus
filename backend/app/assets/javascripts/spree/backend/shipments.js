@@ -29,12 +29,6 @@ var ShipmentAddVariantView = Backbone.View.extend({
   }
 });
 
-$(function(){
-  $(".js-shipment-add-variant").each(function(){
-    new ShipmentAddVariantView({el: this});
-  });
-});
-
 var ShipShipmentView = Backbone.View.extend({
   initialize: function(options){
     this.shipment_number = options.shipment_number;
@@ -376,6 +370,10 @@ var ShipmentEditView = Backbone.View.extend({
 });
 
 $(function(){
+  $(".js-shipment-add-variant").each(function(){
+    new ShipmentAddVariantView({el: this});
+  });
+
   $(".js-shipment-edit").each(function(){
     new ShipmentEditView({ el: this });
   });
