@@ -1,3 +1,5 @@
+<% admin_breadcrumb(plural_resource_name(Spree::Shipment)) %>
+
  <div data-hook="admin_order_form_fields">
   <% if @line_item.try(:errors).present? %>
     <%= render partial: 'spree/shared/error_messages', locals: { target: @line_item } %>
