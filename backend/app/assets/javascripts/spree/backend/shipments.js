@@ -51,18 +51,6 @@ var ShipShipmentView = Backbone.View.extend({
   }
 });
 
-updateShipment = function(shipment_number, attributes) {
-  var url = Spree.routes.shipments_api + '/' + shipment_number;
-
-  return Spree.ajax({
-    type: 'PUT',
-    url: url,
-    data: {
-      shipment: attributes
-    }
-  });
-};
-
 adjustShipmentItems = function(shipment_number, variant_id, quantity){
   var shipment = _.findWhere(shipments, {number: shipment_number});
   var inventory_units = _.where(shipment.inventory_units, {variant_id: variant_id});
