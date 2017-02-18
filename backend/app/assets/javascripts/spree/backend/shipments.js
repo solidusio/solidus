@@ -201,10 +201,6 @@ var ShipmentItemView = Backbone.View.extend({
   tagName: 'tr',
 
   initialize: function(options) {
-    this.shipment_number = options.shipment_number
-    this.order_number = options.order_number
-    this.quantity = this.$el.data('item-quantity')
-    this.variant_id = this.$el.data('variant-id')
     this.render()
   },
 
@@ -259,7 +255,7 @@ var ShipmentItemView = Backbone.View.extend({
   onDelete: function(e){
     e.preventDefault();
     if (confirm(Spree.translations.are_you_sure_delete)) {
-      adjustShipmentItems(this.shipment_number, this.variant_id, 0);
+      adjustShipmentItems(this.model.shipment.get("number"), this.model.get("variant").id, 0);
     }
   },
 });
@@ -350,18 +346,19 @@ var ManifestItem = Backbone.Model.extend({
 
 var ShipmentEditView = Backbone.View.extend({
   initialize: function(){
-    var tbody = this.$("tbody[data-order-number][data-shipment-number]");
-    this.shipment_number = tbody.data("shipment-number");
-    this.order_number = tbody.data("order-number");
-
     var shipmentView = this;
     this.$("form.admin-ship-shipment").each(function(el){
       new ShipShipmentView({
         el: this,
-        shipment_number: shipmentView.shipment_number
+        shipment_number: this.model.shipment.get("number")
       });
     });
 
+    this.render();
+  },
+
+  render: function() {
+    var tbody = this.$("tbody[data-order-number][data-shipment-number]");
     var shipment = this.model;
     var order = shipment.order;
     var manifest = this.model.get("manifest");
@@ -370,9 +367,7 @@ var ShipmentEditView = Backbone.View.extend({
       model.shipment = shipment;
 
       var view = new ShipmentItemView({
-        model: model,
-        shipment_number: shipmentView.shipment_number,
-        order_number: shipmentView.order_number
+        model: model
       })
       view.render();
       tbody.append(view.el);
