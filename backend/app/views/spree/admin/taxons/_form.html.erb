@@ -2,13 +2,13 @@
   <div class="col-xs-5">
     <%= f.field_container :name do %>
       <%= f.label :name, class: 'required' %><br />
-      <%= text_field :taxon, :name, :class => 'fullwidth' %>
-      <%= error_message_on :taxon, :name, :class => 'fullwidth title' %>
+      <%= text_field :taxon, :name, class: 'fullwidth' %>
+      <%= error_message_on :taxon, :name, class: 'fullwidth title' %>
     <% end %>
 
     <%= f.field_container :permalink_part do %>
       <%= label_tag :permalink_part, Spree::Taxon.human_attribute_name(:permalink), class: 'required' %><br />
-      <%= text_field_tag :permalink_part, @permalink_part, :class => 'fullwidth' %><br />
+      <%= text_field_tag :permalink_part, @permalink_part, class: 'fullwidth' %><br />
       <span class="info" id="permalink_part_display">
         <%= @taxon.permalink.split('/')[0...-1].join('/') + '/' %>
       </span>
@@ -24,24 +24,24 @@
   <div class="col-xs-5">
     <%= f.field_container :description do %>
       <%= f.label :description %><br />
-      <%= f.text_area :description, :class => 'fullwidth', :rows => 6 %>
+      <%= f.text_area :description, class: 'fullwidth', rows: 6 %>
     <% end %>
   </div>
 
   <div class="col-xs-10">
     <%= f.field_container :meta_title do %>
       <%= f.label :meta_title %><br />
-      <%= f.text_field :meta_title, :class => 'fullwidth' %>
+      <%= f.text_field :meta_title, class: 'fullwidth' %>
     <% end %>
 
     <%= f.field_container :meta_description do %>
       <%= f.label :meta_description %><br />
-      <%= f.text_field :meta_description, :class => 'fullwidth' %>
+      <%= f.text_field :meta_description, class: 'fullwidth' %>
     <% end %>
 
     <%= f.field_container :meta_keywords do %>
       <%= f.label :meta_keywords %><br />
-      <%= f.text_field :meta_keywords, :class => 'fullwidth' %>
+      <%= f.text_field :meta_keywords, class: 'fullwidth' %>
     <% end %>
   </div>
 </div>

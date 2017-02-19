@@ -1,4 +1,4 @@
-<%= render :partial => 'spree/admin/shared/order_tabs', :locals => { :current => 'Customer Returns' } %>
+<%= render partial: 'spree/admin/shared/order_tabs', locals: { current: 'Customer Returns' } %>
 
 <% admin_breadcrumb("#{Spree.t(:editing_reimbursement)} #{@reimbursement.number}") %>
 
@@ -7,7 +7,7 @@
   <li><%= button_link_to Spree.t(:back_to_customer_return), url_for([:edit, :admin, @order, @reimbursement.customer_return]) %></li>
 <% end %>
 
-<%= render :partial => 'spree/shared/error_messages', :locals => { :target => @reimbursement } %>
+<%= render partial: 'spree/shared/error_messages', locals: { target: @reimbursement } %>
 
 <%= form_for [:admin, @order, @reimbursement] do |f| %>
   <fieldset class='no-border-bottom'>

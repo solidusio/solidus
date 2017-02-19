@@ -1,4 +1,4 @@
-<%= render :partial => 'spree/admin/shared/order_tabs', locals: { current: 'Payments' }%>
+<%= render partial: 'spree/admin/shared/order_tabs', locals: { current: 'Payments' }%>
 
 <% admin_breadcrumb(Spree::Payment.model_name.human) %>
 <% admin_breadcrumb(plural_resource_name(Spree::LogEntry)) %>

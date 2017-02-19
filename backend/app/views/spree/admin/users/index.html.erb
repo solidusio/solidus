@@ -4,7 +4,7 @@
 <% content_for :page_actions do %>
   <% if can?(:admin, Spree.user_class) && can?(:create, Spree.user_class) %>
     <li>
-      <%= button_link_to Spree.t(:new_user), new_admin_user_url, :id => 'admin_new_user_link' %>
+      <%= button_link_to Spree.t(:new_user), new_admin_user_url, id: 'admin_new_user_link' %>
     </li>
   <% end %>
 <% end %>
@@ -16,7 +16,7 @@
   </colgroup>
   <thead>
     <tr data-hook="admin_users_index_headers">
-      <th><%= sort_link @search,:email, Spree::LegacyUser.model_name.human, {}, {:title => 'users_email_title'} %></th>
+      <th><%= sort_link @search,:email, Spree::LegacyUser.model_name.human, {}, {title: 'users_email_title'} %></th>
       <th data-hook="admin_users_index_header_actions" class="actions"></th>
     </tr>
   </thead>
@@ -26,10 +26,10 @@
         <td class='user_email'><%=link_to user.email, edit_admin_user_url(user) %></td>
         <td data-hook="admin_users_index_row_actions" class="actions">
           <% if can?(:edit, user) %>
-            <%= link_to_edit user, :no_text => true %>
+            <%= link_to_edit user, no_text: true %>
           <% end %>
           <% if can?(:destroy, user) %>
-            <%= link_to_delete user, :no_text => true %>
+            <%= link_to_delete user, no_text: true %>
           <% end %>
         </td>
       </tr>
@@ -48,7 +48,7 @@
     <%= search_form_for [:admin, @search], url: admin_users_url do |f| %>
       <div class="field">
         <%= f.label :email_cont, Spree.t(:email) %> <br>
-        <%= f.text_field :email_cont, :class => 'fullwidth' %>
+        <%= f.text_field :email_cont, class: 'fullwidth' %>
       </div>
       <div data-hook="admin_users_index_search_buttons">
         <%= button Spree.t(:search) %>

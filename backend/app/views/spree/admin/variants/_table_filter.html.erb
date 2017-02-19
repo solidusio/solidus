@@ -7,7 +7,7 @@
     <div class="col-xs-10">
       <div data-hook="admin_variants_index_search" class="field">
         <%= f.label :variant_search_term, Spree.t(:variant_search_placeholder) %>
-        <%= text_field_tag :variant_search_term, params[:variant_search_term], :class => "fullwidth", :placeholder => Spree.t(:variant_search_placeholder) %>
+        <%= text_field_tag :variant_search_term, params[:variant_search_term], class: "fullwidth", placeholder: Spree.t(:variant_search_placeholder) %>
       </div>
     </div>
 

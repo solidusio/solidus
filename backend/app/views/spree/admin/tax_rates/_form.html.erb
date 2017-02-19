@@ -6,11 +6,11 @@
         <div class="col-xs-5">
           <div data-hook="name" class="field">
             <%= f.label :name %>
-            <%= f.text_field :name, :class => 'fullwidth' %>
+            <%= f.text_field :name, class: 'fullwidth' %>
           </div>
           <div data-hook="rate" class="field">
             <%= f.label :amount %>
-            <%= f.text_field :amount, :class => 'fullwidth' %>
+            <%= f.text_field :amount, class: 'fullwidth' %>
             <br/><span class="info"><%= Spree.t(:tax_rate_amount_explanation) %></span>
           </div>
           <div data-hook="included" class="field">
@@ -22,11 +22,11 @@
         <div class="col-xs-5">
           <div data-hook="zone" class="field">
             <%= f.label :zone, Spree::Zone.model_name.human %>
-            <%= f.collection_select(:zone_id, @available_zones, :id, :name, {}, {:class => 'select2 fullwidth'}) %>
+            <%= f.collection_select(:zone_id, @available_zones, :id, :name, {}, {class: 'select2 fullwidth'}) %>
           </div>
           <div data-hook="category" class="field">
             <%= f.label :tax_category_id, Spree::TaxCategory.model_name.human %>
-            <%= f.collection_select(:tax_category_id, @available_categories,:id, :name, {}, {:class => 'select2 fullwidth'}) %>
+            <%= f.collection_select(:tax_category_id, @available_categories,:id, :name, {}, {class: 'select2 fullwidth'}) %>
           </div>
           <div data-hook="show_rate" class="field">
             <%= f.check_box :show_rate_in_label %>
@@ -38,5 +38,5 @@
 
   <div class="clear"></div>
 
-  <%= render 'spree/admin/shared/calculator_fields', :f => f %>
+  <%= render 'spree/admin/shared/calculator_fields', f: f %>
 </div>

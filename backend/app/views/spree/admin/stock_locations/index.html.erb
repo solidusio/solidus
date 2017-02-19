@@ -9,7 +9,7 @@
   <ul class="actions inline-menu">
     <% if can?(:create, Spree::StockLocation) %>
       <li>
-        <%= button_link_to Spree.t(:new_stock_location), new_object_url, { :id => 'admin_new_stock_location' } %>
+        <%= button_link_to Spree.t(:new_stock_location), new_object_url, { id: 'admin_new_stock_location' } %>
       </li>
     <% end %>
 
@@ -67,10 +67,10 @@
           </td>
           <td class="actions">
             <% if can?(:update, stock_location) %>
-              <%= link_to_edit stock_location, :no_text => true %>
+              <%= link_to_edit stock_location, no_text: true %>
             <% end %>
             <% if can?(:destroy, stock_location) %>
-              <%= link_to_delete stock_location, :no_text => true %>
+              <%= link_to_delete stock_location, no_text: true %>
             <% end %>
           </td>
         </tr>

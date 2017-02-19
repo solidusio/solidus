@@ -30,11 +30,11 @@
       <td class="align-center"><%= variant.sku %></td>
       <td class="actions">
         <% if can?(:update, variant) %>
-          <%= link_to_edit(variant, :no_text => true) unless variant.deleted? %>
+          <%= link_to_edit(variant, no_text: true) unless variant.deleted? %>
         <% end %>
         <% if can?(:destroy, variant) %>
           &nbsp;
-          <%= link_to_delete(variant, :no_text => true) unless variant.deleted? %>
+          <%= link_to_delete(variant, no_text: true) unless variant.deleted? %>
         <% end %>
       </td>
     </tr>

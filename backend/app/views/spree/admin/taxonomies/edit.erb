@@ -11,7 +11,7 @@
 
 <%= form_for [:admin, @taxonomy] do |f| %>
   <fieldset class="no-border-top">
-    <%= render :partial => 'form', :locals => { :f => f } %>
+    <%= render partial: 'form', locals: { f: f } %>
     <div class="filter-actions actions">
       <%= button Spree.t('actions.update') %>
       <%= button_link_to Spree.t('actions.cancel'), admin_taxonomies_path %>

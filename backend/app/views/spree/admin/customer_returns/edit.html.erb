@@ -1,4 +1,4 @@
-<%= render :partial => 'spree/admin/shared/order_tabs', :locals => { :current => 'Customer Returns' } %>
+<%= render partial: 'spree/admin/shared/order_tabs', locals: { current: 'Customer Returns' } %>
 
 <% admin_breadcrumb(link_to plural_resource_name(Spree::CustomerReturn), spree.admin_order_customer_returns_url(@order)) %>
 <% admin_breadcrumb(@customer_return.number) %>

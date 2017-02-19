@@ -1,4 +1,4 @@
-<%= render :partial => 'spree/admin/shared/order_tabs', :locals => { :current => 'Return Authorizations' } %>
+<%= render partial: 'spree/admin/shared/order_tabs', locals: { current: 'Return Authorizations' } %>
 
 <% content_for :page_actions do %>
   <% if @order.shipments.any? &:shipped? %>
@@ -33,10 +33,10 @@
           <td><%= pretty_time(return_authorization.created_at) %></td>
           <td class="actions">
             <% if can? :update, return_authorization %>
-              <%= link_to_edit return_authorization, :no_text => true, :class => 'edit' %>
+              <%= link_to_edit return_authorization, no_text: true, class: 'edit' %>
             <% end %>
             <% if can?(:destroy, return_authorization) && !return_authorization.customer_returned_items? %>
-              <%= link_to_delete return_authorization, :no_text => true %>
+              <%= link_to_delete return_authorization, no_text: true %>
             <% end %>
           </td>
         </tr>

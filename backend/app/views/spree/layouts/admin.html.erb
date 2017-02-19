@@ -32,7 +32,7 @@
                 </div>
               <% end %>
               <div class="js-content-below-tabs <%= if content_for?(:sidebar) then 'col-xs-9' else 'col-xs-12' end %>">
-                <%= render :partial => 'spree/admin/shared/table_filter' %>
+                <%= render partial: 'spree/admin/shared/table_filter' %>
                 <%= yield %>
               </div>
 

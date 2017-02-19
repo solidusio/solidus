@@ -1,4 +1,4 @@
-<%= render :partial => 'spree/admin/shared/order_tabs', :locals => { :current => 'Customer Returns' } %>
+<%= render partial: 'spree/admin/shared/order_tabs', locals: { current: 'Customer Returns' } %>
 
 <% admin_breadcrumb(link_to plural_resource_name(Spree::CustomerReturn), spree.admin_order_customer_returns_url(@order)) %>
 <% admin_breadcrumb(Spree.t(:new_customer_return)) %>
@@ -9,7 +9,7 @@
 
 <% if @rma_return_items.any? || @new_return_items.any? %>
 
-  <%= render :partial => 'spree/shared/error_messages', :locals => { :target => @customer_return } %>
+  <%= render partial: 'spree/shared/error_messages', locals: { target: @customer_return } %>
   <%= form_for [:admin, @order, @customer_return] do |f| %>
     <fieldset class="no-border-top">
       <div data-hook="admin_customer_return_form_fields">

@@ -4,22 +4,22 @@
 
 <%= render 'spree/admin/users/sidebar' %>
 <%= render 'spree/admin/users/tabs', current: :account %>
-<%= render :partial => 'spree/admin/users/user_page_actions' %>
+<%= render partial: 'spree/admin/users/user_page_actions' %>
 
 <fieldset data-hook="admin_user_edit_general_settings" class="col-xs-9">
   <legend><%= Spree.t(:general_settings) %></legend>
 
   <div data-hook="admin_user_edit_form_header">
-    <%= render :partial => 'spree/shared/error_messages', :locals => { :target => @user } %>
+    <%= render partial: 'spree/shared/error_messages', locals: { target: @user } %>
   </div>
 
   <div data-hook="admin_user_edit_form">
     <%= form_for [:admin, @user], as: :user, url: admin_user_url(@user), method: :put do |f| %>
-      <%= render :partial => 'form', :locals => { :f => f } %>
+      <%= render partial: 'form', locals: { f: f } %>
 
       <% if can?(:update, @user) %>
         <div data-hook="admin_user_edit_form_button">
-          <%= render :partial => 'spree/admin/shared/edit_resource_links', :locals => { :collection_url => admin_users_url } %>
+          <%= render partial: 'spree/admin/shared/edit_resource_links', locals: { collection_url: admin_users_url } %>
         </div>
       <% end %>
     <% end %>
@@ -28,29 +28,29 @@
 
 <% if can?(:update, @user) %>
   <fieldset data-hook="admin_user_api_key" id="admin_user_edit_api_key" class="col-xs-9">
-    <legend><%= Spree.t('access', :scope => 'api') %></legend>
+    <legend><%= Spree.t('access', scope: 'api') %></legend>
 
     <% if @user.spree_api_key.present? %>
       <div class="field">
-        <div id="current-api-key"><%= Spree.t('key', :scope => 'api') %>: (<%= Spree.t('hidden') %>)</div>
+        <div id="current-api-key"><%= Spree.t('key', scope: 'api') %>: (<%= Spree.t('hidden') %>)</div>
       </div>
       <div class="filter-actions actions">
-        <%= form_tag spree.clear_api_key_admin_user_path(@user), :method => :put do %>
-          <%= button Spree.t('clear_key', :scope => 'api') %>
+        <%= form_tag spree.clear_api_key_admin_user_path(@user), method: :put do %>
+          <%= button Spree.t('clear_key', scope: 'api') %>
         <% end %>
 
-        <%= form_tag spree.generate_api_key_admin_user_path(@user), :method => :put do %>
-          <%= button Spree.t('regenerate_key', :scope => 'api') %>
+        <%= form_tag spree.generate_api_key_admin_user_path(@user), method: :put do %>
+          <%= button Spree.t('regenerate_key', scope: 'api') %>
         <% end %>
       </div>
 
     <% else %>
 
-      <div class="no-objects-found"><%= Spree.t('no_key', :scope => 'api') %></div>
+      <div class="no-objects-found"><%= Spree.t('no_key', scope: 'api') %></div>
 
       <div class="filter-actions actions">
-        <%= form_tag spree.generate_api_key_admin_user_path(@user), :method => :put do %>
-          <%= button Spree.t('generate_key', :scope => 'api') %>
+        <%= form_tag spree.generate_api_key_admin_user_path(@user), method: :put do %>
+          <%= button Spree.t('generate_key', scope: 'api') %>
         <% end %>
       </div>
     <% end %>

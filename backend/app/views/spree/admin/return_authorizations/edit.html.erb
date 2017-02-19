@@ -6,18 +6,18 @@
   <% end %>
 <% end %>
 
-<%= render :partial => 'spree/admin/shared/order_tabs', :locals => { :current => 'Return Authorizations' } %>
+<%= render partial: 'spree/admin/shared/order_tabs', locals: { current: 'Return Authorizations' } %>
 
 <% admin_breadcrumb(link_to plural_resource_name(Spree::ReturnAuthorization), spree.admin_order_return_authorizations_url) %>
 <% admin_breadcrumb("#{@return_authorization.number} (#{Spree.t(@return_authorization.state.downcase)})") %>
 
 
-<%= render :partial => 'spree/shared/error_messages', :locals => { :target => @return_authorization } %>
+<%= render partial: 'spree/shared/error_messages', locals: { target: @return_authorization } %>
 
 <div data-hook="return-authorization-form-wrapper">
 	<%= form_for [:admin, @order, @return_authorization] do |f| %>
 	  <fieldset class="no-border-top">
-	    <%= render :partial => 'form', :locals => { :f => f } %>
+	    <%= render partial: 'form', locals: { f: f } %>
 
       <div class="form-buttons filter-actions actions" data-hook="buttons">
         <%= button Spree.t('actions.update') %>

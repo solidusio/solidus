@@ -21,7 +21,7 @@
         </td>
         <td class="align-center"><%= payment_method_name(payment) %></td>
         <td class="align-center"><%= payment.transaction_id %></td>
-        <td class="align-center"> <span class="state <%= payment.state %>"><%= Spree.t(payment.state, :scope => :payment_states, :default => payment.state.capitalize) %></span></td>
+        <td class="align-center"> <span class="state <%= payment.state %>"><%= Spree.t(payment.state, scope: :payment_states, default: payment.state.capitalize) %></span></td>
         <td class="actions">
           <div class="editing-show">
             <%= link_to_with_icon 'save', Spree.t('actions.save'), nil, no_text: true, class: "js-save", data: {action: 'save'} %>
@@ -38,7 +38,7 @@
               <% elsif action == 'capture' && !@order.completed? %>
                 <%# no capture prior to completion. payments get captured when the order completes. %>
               <% else %>
-                <%= link_to_with_icon action, Spree.t(action), fire_admin_order_payment_path(@order, payment, :e => action), :method => :put, :no_text => true, :data => {:action => action} %>
+                <%= link_to_with_icon action, Spree.t(action), fire_admin_order_payment_path(@order, payment, e: action), method: :put, no_text: true, data: {action: action} %>
               <% end %>
             <% end %>
           </div>

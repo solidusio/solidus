@@ -10,7 +10,7 @@
 <% end %>
 ============================================================
 
-<%= Spree.t('shipment_mailer.shipped_email.track_information', :tracking => @carton.tracking)     if @carton.tracking %>
+<%= Spree.t('shipment_mailer.shipped_email.track_information', tracking: @carton.tracking)     if @carton.tracking %>
 <%= Spree.t('shipment_mailer.shipped_email.track_link',        :url      => @carton.tracking_url) if @carton.tracking_url %>
 
 <%= Spree.t('shipment_mailer.shipped_email.thanks') %>

@@ -4,7 +4,7 @@
       <div class="col-xs-3">
         <div class="field" data-hook="sku">
           <%= f.label :sku %>
-          <%= f.text_field :sku, :class => 'fullwidth' %>
+          <%= f.text_field :sku, class: 'fullwidth' %>
         </div>
       </div>
       <div class="col-xs-3">
@@ -49,7 +49,7 @@
           <div class="field" data-hook="<%= field %>">
             <%= f.label field %>
             <%= f.text_field field,
-                            value: number_with_precision(@variant.send(field), :precision => 2),
+                            value: number_with_precision(@variant.send(field), precision: 2),
                             class: 'fullwidth' %>
           </div>
         </div>
@@ -66,7 +66,7 @@
       <div class="col-xs-3">
         <div class="field" data-hook="price">
           <%= f.label :price %>
-          <%= f.text_field :price, :value => number_to_currency(@variant.price, :unit => ''), :class => 'fullwidth' %>
+          <%= f.text_field :price, value: number_to_currency(@variant.price, unit: ''), class: 'fullwidth' %>
         </div>
       </div>
 
@@ -79,7 +79,7 @@
       <div class="col-xs-3">
         <div class="field" data-hook="cost_price">
           <%= f.label :cost_price %>
-          <%= f.text_field :cost_price, :value => number_to_currency(@variant.cost_price, :unit => ''), :class => 'fullwidth' %>
+          <%= f.text_field :cost_price, value: number_to_currency(@variant.cost_price, unit: ''), class: 'fullwidth' %>
         </div>
       </div>
 
@@ -91,8 +91,8 @@
                                   @tax_categories,
                                   :id,
                                   :name,
-                                  { :include_blank => t('.use_product_tax_category') },
-                                  { :class => 'select2 fullwidth' } %>
+                                  { include_blank: t('.use_product_tax_category') },
+                                  { class: 'select2 fullwidth' } %>
         </div>
       </div>
     </div>

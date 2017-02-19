@@ -8,7 +8,7 @@
   <ul class="actions inline-menu">
     <% if can?(:create, Spree::Country) %>
       <li>
-        <%= button_link_to Spree.t(:new_country), new_object_url, { :id => 'admin_new_country' } %>
+        <%= button_link_to Spree.t(:new_country), new_object_url, { id: 'admin_new_country' } %>
       </li>
     <% end %>
   </ul>
@@ -37,10 +37,10 @@
         <td class="align-center"><%= country.states_required? ? Spree.t(:say_yes) : Spree.t(:say_no) %></td>
         <td class="actions">
           <% if can?(:edit, country) %>
-            <%= link_to_edit country, :no_text => true %>
+            <%= link_to_edit country, no_text: true %>
           <% end %>
           <% if can?(:destroy, country) %>
-            <%= link_to_delete country, :no_text => true %>
+            <%= link_to_delete country, no_text: true %>
           <% end %>
         </td>
       </tr>

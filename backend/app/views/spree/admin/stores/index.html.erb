@@ -32,7 +32,7 @@
         <td><%= store.url %></td>
         <td class="actions">
           <% if can?(:edit, store) %>
-            <%= link_to_edit store, :no_text => true %>
+            <%= link_to_edit store, no_text: true %>
           <% end %>
         </td>
       </tr>

@@ -3,17 +3,17 @@
         <li><%= event_links %></li>
     <% end %>
     <% if can?(:resend, @order) && @order.completed? %>
-        <li><%= button_link_to Spree.t(:resend), resend_admin_order_url(@order), :method => :post %></li>
+        <li><%= button_link_to Spree.t(:resend), resend_admin_order_url(@order), method: :post %></li>
     <% end %>
 <% end %>
 
-<%= render :partial => 'spree/admin/shared/order_tabs', :locals => { :current => 'Cart' } %>
+<%= render partial: 'spree/admin/shared/order_tabs', locals: { current: 'Cart' } %>
 
 <% admin_breadcrumb(Spree.t(:cart)) %>
 
 
 <div data-hook="admin_order_edit_header">
-  <%= render :partial => 'spree/shared/error_messages', :locals => { :target => @order } %>
+  <%= render partial: 'spree/shared/error_messages', locals: { target: @order } %>
 </div>
 
 <% if @order.payments.exists? && @order.is_risky? %>
@@ -21,7 +21,7 @@
 <% end %>
 
 <% if can?(:update, @order) && can?(:create, Spree::LineItem) %>
-  <%= render :partial => 'add_line_item' %>
+  <%= render partial: 'add_line_item' %>
 <% end %>
 
 <% if @order.line_items.empty? %>
@@ -32,6 +32,6 @@
 
 <div data-hook="admin_order_edit_form">
   <div id="order-form-wrapper">
-    <%= render :partial => 'line_items_edit_form', :locals => { :order => @order } %>
+    <%= render partial: 'line_items_edit_form', locals: { order: @order } %>
   </div>
 </div>
