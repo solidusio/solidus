@@ -119,7 +119,6 @@ var ShipmentSplitItemView = Backbone.View.extend({
     this.shipments = options.shipments;
     this.shipment_number = options.shipment_number;
     this.max_quantity = options.max_quantity;
-    this.shipmentItemView = options.shipmentItemView;
     this.render()
   },
 
@@ -131,7 +130,7 @@ var ShipmentSplitItemView = Backbone.View.extend({
   cancelItemSplit: function(e){
     e.preventDefault();
 
-    this.shipmentItemView.removeSplit();
+    this.trigger("cancel")
     this.remove();
   },
 
@@ -241,12 +240,12 @@ var ShipmentItemView = Backbone.View.extend({
       url: Spree.routes.variants_api + "/" + this.model.get("variant").id,
     }).success(function(variant){
       var split = new ShipmentSplitItemView({
-        shipmentItemView: _this,
         shipment_number: model.shipment.get("number"),
         variant: variant,
         shipments: window.shipments,
         max_quantity: model.get("quantity")
       });
+      _this.listenTo(split, "cancel", _this.removeSplit);
 
       _this.$el.after(split.$el);
     });
