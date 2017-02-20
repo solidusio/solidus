@@ -855,6 +855,8 @@ en:
         taxonomies: Taxonomies
         taxons: Taxons
         users: Users
+      table:
+        actions: Actions
       taxons:
         display_order: Display Order
       user:

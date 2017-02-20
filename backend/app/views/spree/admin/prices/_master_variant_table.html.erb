@@ -16,7 +16,7 @@
             <th><%= Spree::Price.human_attribute_name(:country) %></th>
             <th><%= Spree::Price.human_attribute_name(:currency) %></th>
             <th><%= Spree::Price.human_attribute_name(:amount) %></th>
-            <th class="actions"></th>
+            <th class="actions"><%= Spree.t('admin.table.actions') %></th>
           </tr>
         </thead>
         <% master_prices.each do |price| %>

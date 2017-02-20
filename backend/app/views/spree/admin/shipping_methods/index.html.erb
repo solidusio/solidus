@@ -28,7 +28,9 @@
         <th><%= Spree::Zone.model_name.human %></th>
         <th><%= Spree::Calculator.model_name.human %></th>
         <th><%= Spree::ShippingMethod.human_attribute_name(:available_to_users) %></th>
-        <th data-hook="admin_shipping_methods_index_header_actions" class="actions"></th>
+        <th data-hook="admin_shipping_methods_index_header_actions" class="actions">
+          <%= Spree.t('admin.table.actions') %>
+        </th>
       </tr>
     </thead>
     <tbody>

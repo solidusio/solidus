@@ -16,7 +16,7 @@
       <th><%= Spree::StockLocation.model_name.human %></th>
       <th><%= Spree.t(:backorderable_header) %></th>
       <th><%= Spree.t(:count_on_hand) %></th>
-      <th class="actions"></th>
+      <th class="actions"><%= Spree.t('admin.table.actions') %></th>
     </tr>
   </thead>
   <% variants.each do |variant| %>

@@ -66,7 +66,9 @@
         <th><%= Spree::Variant.human_attribute_name(:sku) %></th>
         <th colspan="2"><%= sort_link @search,:name, Spree::Product.human_attribute_name(:name), { :default_order => "desc" }, {:title => 'admin_products_listing_name_title'} %></th>
         <th><%= sort_link @search,:master_default_price_amount, Spree::Product.human_attribute_name(:price), {}, {:title => 'admin_products_listing_price_title'} %></th>
-        <th data-hook="admin_products_index_header_actions" class="actions"></th>
+        <th data-hook="admin_products_index_header_actions" class="actions">
+          <%= Spree.t('admin.table.actions') %>
+        </th>
       </tr>
     </thead>
     <tbody>

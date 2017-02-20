@@ -23,7 +23,7 @@
       <tr data-hook="adjustment_reasons_header">
         <th><%= Spree::AdjustmentReason.human_attribute_name(:name) %></th>
         <th><%= Spree::AdjustmentReason.human_attribute_name(:state) %></th>
-        <th class="actions"></th>
+        <th class="actions"><%= Spree.t('admin.table.actions') %></th>
       </tr>
     </thead>
     <tbody>

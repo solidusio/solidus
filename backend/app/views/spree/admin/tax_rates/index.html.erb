@@ -34,7 +34,7 @@
         <th><%= Spree::TaxRate.human_attribute_name(:included_in_price) %></th>
         <th><%= Spree::TaxRate.human_attribute_name(:show_rate_in_label) %></th>
         <th><%= Spree::Calculator.model_name.human %></th>
-        <th class="actions"></th>
+        <th class="actions"><%= Spree.t('admin.table.actions') %></th>
       </tr>
     </thead>
     <tbody>

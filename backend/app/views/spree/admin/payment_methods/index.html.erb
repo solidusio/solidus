@@ -32,7 +32,9 @@
         <th><%= Spree::PaymentMethod.human_attribute_name(:available_to_users) %></th>
         <th><%= Spree::PaymentMethod.human_attribute_name(:available_to_admin) %></th>
         <th><%= Spree::PaymentMethod.human_attribute_name(:active) %></th>
-        <th data-hook="admin_payment_methods_index_header_actions" class="actions"></th>
+        <th data-hook="admin_payment_methods_index_header_actions" class="actions">
+          <%= Spree.t('admin.table.actions') %>
+        </th>
       </tr>
     </thead>
     <tbody>

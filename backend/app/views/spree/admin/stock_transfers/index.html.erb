@@ -82,7 +82,7 @@
         <th><%= sort_link @search, :received_items,  Spree.t(:received) %></th>
         <th><%= sort_link @search, :shipped_at,      Spree.t(:shipped) %></th>
         <th><%= sort_link @search, :status,          Spree.t(:status) %></th>
-        <th class="actions"></th>
+        <th class="actions"><%= Spree.t('admin.table.actions') %></th>
       </tr>
     </thead>
     <tbody>
