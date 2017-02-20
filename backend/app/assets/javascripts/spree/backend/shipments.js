@@ -116,9 +116,6 @@ var ShipmentSplitItemView = Backbone.View.extend({
 
   initialize: function(options) {
     this.variant = options.variant;
-    this.shipments = options.shipments;
-    this.shipment_number = options.shipment_number;
-    this.max_quantity = options.max_quantity;
     this.render()
   },
 
@@ -143,7 +140,7 @@ var ShipmentSplitItemView = Backbone.View.extend({
     var target_id = target[1];
 
     var split_attr = {
-      original_shipment_number: this.shipment_number,
+      original_shipment_number: this.model.shipment.get("number"),
       variant_id: this.variant.id,
       quantity: quantity
     };
@@ -179,12 +176,14 @@ var ShipmentSplitItemView = Backbone.View.extend({
 
   render: function() {
     /* Only display other shipments */
-    var shipments = _.reject(this.shipments, _.matcher({'number': this.shipment_number}))
+    var shipments = this.model.shipment.order.get("shipments");
+    shipments = shipments.reject(this.model.shipment);
+    shipments = shipments.map(function(s){ return s.attributes });
 
     var renderAttr = {
       variant: this.variant,
       shipments: shipments,
-      max_quantity: this.max_quantity
+      max_quantity: this.model.get("quantity")
     };
     this.$el.html(this.template(renderAttr));
 
@@ -240,10 +239,8 @@ var ShipmentItemView = Backbone.View.extend({
       url: Spree.routes.variants_api + "/" + this.model.get("variant").id,
     }).success(function(variant){
       var split = new ShipmentSplitItemView({
-        shipment_number: model.shipment.get("number"),
-        variant: variant,
-        shipments: window.shipments,
-        max_quantity: model.get("quantity")
+        model: model,
+        variant: variant
       });
       _this.listenTo(split, "cancel", _this.removeSplit);
 

@@ -6,7 +6,7 @@
   <option></option>
   <optgroup label="{{ t "existing_shipments" }}">
     {{#each shipments}}
-    <option value='shipment:{{this.number}}'>{{this.stock_location.name}}({{this.number}})</option>
+    <option value='shipment:{{this.number}}'>{{this.stock_location_name}}({{this.number}})</option>
     {{/each}}
   </optgroup>
   <optgroup label="{{ t "new_shipment_at_location" }}">
