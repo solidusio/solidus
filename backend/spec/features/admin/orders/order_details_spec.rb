@@ -332,7 +332,7 @@ describe "Order Details", type: :feature, js: true do
 
           expect(page).to have_css('.stock-item', count: 2)
 
-          within '[data-hook=admin_shipment_form]', text: @shipment2.number do
+          within '.shipment-edit', text: @shipment2.number do
             click_icon :trash
           end
 

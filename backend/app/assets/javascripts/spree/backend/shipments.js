@@ -221,6 +221,7 @@ var ShipmentSplitItemView = Backbone.View.extend({
 
 var ShipmentItemView = Backbone.View.extend({
   tagName: 'tr',
+  className: 'stock-item',
 
   initialize: function(options) {
     this.render()
@@ -358,6 +359,7 @@ var ManifestItem = Backbone.Model.extend({
 
 var ShipmentEditView = Backbone.View.extend({
   tagName: 'div',
+  className: 'shipment-edit',
 
   initialize: function(){
     this.shipShipmentView = new ShipShipmentView({
