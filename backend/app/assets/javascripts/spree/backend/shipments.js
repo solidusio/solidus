@@ -336,11 +336,12 @@ var ManifestItem = Backbone.Model.extend({
 
 var ShipmentEditView = Backbone.View.extend({
   initialize: function(){
+    var model = this.model;
     var shipmentView = this;
     this.$("form.admin-ship-shipment").each(function(el){
       new ShipShipmentView({
         el: this,
-        shipment_number: this.model.shipment.get("number")
+        shipment_number: model.shipment.get("number")
       });
     });
 
