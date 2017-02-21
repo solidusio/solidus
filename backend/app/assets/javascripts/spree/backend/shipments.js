@@ -157,6 +157,7 @@ var ShipmentSplitItemView = Backbone.View.extend({
   completeItemSplit: function(e){
     e.preventDefault();
 
+    var model = this.model;
     var quantity = this.$('.quantity').val();
     var target = this.$('[name="item_stock_location"]').val().split(':');
     var target_type = target[0];
@@ -191,7 +192,7 @@ var ShipmentSplitItemView = Backbone.View.extend({
     jqXHR.error(function(msg) {
       alert(msg.responseJSON['message']);
     }).done(function() {
-      window.Spree.advanceOrder();
+      model.shipment.order.advance();
     });
   },
 
@@ -363,7 +364,15 @@ var ShipmentEditView = Backbone.View.extend({
       model: this.model
     });
 
+    this.listenTo(this.model, 'remove', this.onRemove);
+    this.listenTo(this.model, 'change', this.render);
+
     this.render();
+  },
+
+  onRemove: function() {
+    this.shipShipmentView.remove();
+    this.remove();
   },
 
   render: function() {
@@ -402,6 +411,8 @@ var ShipmentEditView = Backbone.View.extend({
 
 var OrderEditShipmentsView = Backbone.View.extend({
   initialize: function(options){
+    this.listenTo(this.collection, 'add', this.addShipment)
+
     this.collection.each(this.addShipment.bind(this))
   },
 
