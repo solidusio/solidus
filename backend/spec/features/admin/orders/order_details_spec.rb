@@ -21,6 +21,10 @@ describe "Order Details", type: :feature, js: true do
     order.reload
   end
 
+  def within_shipment(shipment, &block)
+    within('.shipment-edit', text: shipment.number, &block)
+  end
+
   context 'as Admin' do
     stub_authorization!
 
@@ -98,7 +102,7 @@ describe "Order Details", type: :feature, js: true do
       it "can change the shipping method" do
         order = create(:completed_order_with_totals)
         visit spree.edit_admin_order_path(order)
-        within("table.index tr.show-method") do
+        within("table.index tr.shipment-edit-method") do
           click_icon :edit
         end
         select2 "Default", from: "Shipping Method"
@@ -349,8 +353,10 @@ describe "Order Details", type: :feature, js: true do
         it 'should delete the old shipment if enough are split off' do
           expect(order.shipments.count).to eq(2)
 
-          within_row(1) { click_icon 'arrows-h' }
-          complete_split_to(@shipment2, quantity: 2)
+          within_shipment(@shipment1) do
+            within_row(1) { click_icon 'arrows-h' }
+            complete_split_to(@shipment2, quantity: 2)
+          end
 
           expect(page).not_to have_content(/Move .* to/)
 
@@ -367,8 +373,10 @@ describe "Order Details", type: :feature, js: true do
             expect(order.shipments.count).to eq(2)
             expect(page).to have_css('.item-name', text: product.name, count: 1)
 
-            within_row(1) { click_icon 'arrows-h' }
-            complete_split_to(@shipment2, quantity: 1)
+            within_shipment(@shipment1) do
+              within_row(1) { click_icon 'arrows-h' }
+              complete_split_to(@shipment2, quantity: 1)
+            end
 
             expect(page).to have_css('.item-name', text: product.name, count: 2)
 
@@ -385,8 +393,10 @@ describe "Order Details", type: :feature, js: true do
           end
 
           it 'should not allow a shipment to split stock to itself' do
-            within_row(1) { click_icon 'arrows-h' }
-            click_on 'Choose location'
+            within_shipment(@shipment1) do
+              within_row(1) { click_icon 'arrows-h' }
+              click_on 'Choose location'
+            end
             within '.select2-results' do
               expect(page).to have_content(@shipment2.number)
               expect(page).not_to have_content(@shipment1.number)
@@ -398,8 +408,10 @@ describe "Order Details", type: :feature, js: true do
             order.contents.add(variant2, 2, shipment: @shipment2)
             order.reload
 
-            within_row(1) { click_icon 'arrows-h' }
-            complete_split_to(@shipment2, quantity: 1)
+            within_shipment(@shipment1) do
+              within_row(1) { click_icon 'arrows-h' }
+              complete_split_to(@shipment2, quantity: 1)
+            end
 
             expect(page).not_to have_content(/Move .* to/)
             expect(page).to have_css('.shipment', count: 2)
@@ -418,8 +430,10 @@ describe "Order Details", type: :feature, js: true do
             product.master.stock_items.last.update_column(:count_on_hand, 0)
             expect(@shipment2.reload.backordered?).to eq(false)
 
-            within_row(1) { click_icon 'arrows-h' }
-            complete_split_to(@shipment2, quantity: 1)
+            within_shipment(@shipment1) do
+              within_row(1) { click_icon 'arrows-h' }
+              complete_split_to(@shipment2, quantity: 1)
+            end
 
             expect(page).to have_content("1 x backordered")
 
@@ -517,7 +531,7 @@ describe "Order Details", type: :feature, js: true do
     it "can change the shipping method" do
       order = create(:completed_order_with_totals)
       visit spree.edit_admin_order_path(order)
-      within("table.index tr.show-method") do
+      within("table.index tr.shipment-edit-method") do
         click_icon :edit
       end
       select2 "Default", from: "Shipping Method"

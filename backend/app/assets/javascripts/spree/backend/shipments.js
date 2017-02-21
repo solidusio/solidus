@@ -312,6 +312,7 @@ var ShipmentTrackingView = Backbone.View.extend({
 
 var ShipmentEditMethodView = Backbone.View.extend({
   tagName: 'tr',
+  className: 'shipment-edit-method',
 
   initialize: function(options) {
     this.editing = false;
@@ -378,6 +379,7 @@ var ShipmentEditView = Backbone.View.extend({
   },
 
   render: function() {
+    this.$el.attr('id', "shipment_" + this.model.get("id"))
     this.$el.html(HandlebarsTemplates['shipments/edit_shipment']({
       shipment: this.model.attributes,
       order: this.model.order.attributes,
