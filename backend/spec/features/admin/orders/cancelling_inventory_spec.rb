@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "Cancel items" do
+describe "Cancel items", js: true do
   stub_authorization!
 
   let!(:order) do
