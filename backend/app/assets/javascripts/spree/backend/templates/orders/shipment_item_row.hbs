@@ -7,12 +7,9 @@
 </td>
 <td class="item-price align-center">{{ price }}</td>
 <td class="item-qty-show align-center">
-  {{#if states.on_hand}}
-    {{states.on_hand}} x {{ t "inventory_states.on_hand" }}<br/>
-  {{/if}}
-  {{#if states.backordered}}
-    {{states.backordered}} x {{ t "inventory_states.backordered" }}<br/>
-  {{/if}}
+  {{#each states}}
+    {{this}} x {{ t @key scope="inventory_states" }}
+  {{/each}}
 </td>
 <td class="item-total align-center">{{ totalPrice }}</td>
 
