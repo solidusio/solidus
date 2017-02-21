@@ -473,7 +473,7 @@ var initOrderShipmentsPage = function(order) {
 }
 
 $(function(){
-  if($(".js-shipment-add-variant").length) {
+  if($(".js-order-edit-shipments").length) {
     var order_number = window.order_number;
 
     var order = Spree.Models.Order.fetch(order_number, {
