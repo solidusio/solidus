@@ -9,7 +9,11 @@
       }, obj || self);
   }
 
-  Spree.t = function(key) {
+  Spree.t = function(key, options) {
+    options = (options || {});
+    if(options.scope) {
+      key = options.scope + "." + key;
+    }
     var translation = resolveObject(key, Spree.translations);
     if (translation) {
       return translation;

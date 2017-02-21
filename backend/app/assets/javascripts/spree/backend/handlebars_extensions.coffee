@@ -1,8 +1,8 @@
 #= require handlebars
 #= require spree/backend/translation
 
-Handlebars.registerHelper "t", (key) ->
-  Spree.t(key)
+Handlebars.registerHelper "t", (key, options) ->
+  Spree.t(key, options.hash)
 
 Handlebars.registerHelper "human_attribute_name", (model, attr) ->
   Spree.human_attribute_name(model, attr)
