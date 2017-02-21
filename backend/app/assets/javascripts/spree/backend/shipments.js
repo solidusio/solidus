@@ -34,7 +34,7 @@ var ShipShipmentView = Backbone.View.extend({
   className: 'admin-ship-shipment',
 
   initialize: function(options){
-    this.send_mailer = false;
+    this.send_mailer = true;
   },
 
   events: {
