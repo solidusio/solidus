@@ -18,4 +18,8 @@
       return key;
     }
   }
+
+  Spree.human_attribute_name = function(model, attr) {
+    return Spree.t("activerecord.attributes." + model + '.' + attr);
+  }
 })();
