@@ -6,7 +6,7 @@
 Spree.Order || (Spree.Order = {})
 
 Spree.Order.initCartPage = function(order_number) {
-  var order = new Spree.Models.Order({number: order_number, line_items: [], shipments: []})
+  var order = new Spree.Models.Order.fetch(order_number)
   var collection = order.get("line_items")
 
   new Spree.Order.OrderSummaryView({
@@ -51,8 +51,6 @@ Spree.Order.initCartPage = function(order_number) {
       collection.push({});
     }
   })
-
-  order.fetch();
 }
 
 $(function() {

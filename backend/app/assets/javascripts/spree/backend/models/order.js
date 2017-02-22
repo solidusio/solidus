@@ -21,3 +21,14 @@ Spree.Models.Order = Backbone.Model.extend({
     return this.fetch(options)
   }
 });
+
+Spree.Models.Order.fetch = function(number, opts) {
+  var options = (opts || {});
+  var model = new Spree.Models.Order({
+    number: number,
+    line_items: [],
+    shipments: []
+  });
+  model.fetch(options);
+  return model;
+}
