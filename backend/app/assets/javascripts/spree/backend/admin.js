@@ -210,7 +210,7 @@ $(document).ready(function(){
       data: {
         token: Spree.api_key
       },
-      url: Spree.routes.checkouts_api + "/" + order_number + "/advance"
+      url: Spree.routes.checkouts_api + "/" + window.order_number + "/advance"
     }).done(function() {
       window.location.reload();
     });
