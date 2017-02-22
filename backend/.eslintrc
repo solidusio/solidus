@@ -1,0 +1,21 @@
+{
+  "rules": {
+    "no-unused-vars": ["error", { "vars": "all", "args": "none" }],
+    "linebreak-style": ["error", "unix"]
+  },
+  "env": {
+    "es6": false,
+    "browser": true,
+    "jquery": true
+  },
+  "globals": {
+    "Spree": true,
+    "Backbone": true,
+    "HandlebarsTemplates": true,
+    "_": true,
+    "Select2": true,
+    "show_flash": true,
+    "update_state": true,
+  },
+  "extends": "eslint:recommended"
+}
