@@ -73,7 +73,7 @@ var ShipShipmentView = Backbone.View.extend({
 });
 
 adjustShipmentItems = function(shipment_number, variant_id, quantity){
-  var shipment = _.findWhere(shipments, {number: shipment_number});
+  var shipment = _.findWhere(window.shipments, {number: shipment_number});
   var inventory_units = _.where(shipment.inventory_units, {variant_id: variant_id});
 
   var url = Spree.routes.shipments_api + "/" + shipment_number;
@@ -106,7 +106,7 @@ adjustShipmentItems = function(shipment_number, variant_id, quantity){
 };
 
 addVariantFromStockLocation = function(stock_location_id, variant_id, quantity) {
-  var shipment = _.find(shipments, function(shipment){
+  var shipment = _.find(window.shipments, function(shipment){
     return shipment.stock_location_id == stock_location_id && (shipment.state == 'ready' || shipment.state == 'pending');
   });
 
