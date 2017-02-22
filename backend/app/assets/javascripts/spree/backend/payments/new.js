@@ -42,9 +42,5 @@ $(document).ready(function() {
       window.open($(this).prop('href'), window_name, window_options);
       event.preventDefault();
     });
-
-    $('select.jump_menu').change(function(){
-      window.location = this.options[this.selectedIndex].value;
-    });
   }
 });
