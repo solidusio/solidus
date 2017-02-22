@@ -126,7 +126,7 @@ Spree.prepareImageUploader = function () {
         processData: false,  // tell jQuery not to process the data
         contentType: false,  // tell jQuery not to set contentType
         xhr: function () {
-          xhr = $.ajaxSettings.xhr();
+          var xhr = $.ajaxSettings.xhr();
           if (xhr.upload) {
             xhr.upload.onprogress = function (event) {
               if (event.lengthComputable) {
