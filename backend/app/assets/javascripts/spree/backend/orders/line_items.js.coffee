@@ -80,7 +80,7 @@ $ ->
     add_button = $('.js-add-line-item')
     add_button.click ->
       add_button.prop("disabled", true)
-      model = new Spree.Models.LineItem({}, {collection: lineItems})
+      model = lineItems.push({})
       view = new Spree.CartLineItemView(model: model)
       view.render()
       view.on('cancel', (event) -> add_button.prop("disabled", false))
@@ -89,14 +89,14 @@ $ ->
     url = Spree.routes.orders_api + "/" + order_number
     Spree.ajax(url: url).done (result) ->
       for line_item in result.line_items
-        model = new Spree.Models.LineItem(line_item, {collection: lineItems})
+        model = lineItems.push(line_item)
         view = new Spree.CartLineItemView(model: model)
         view.render()
         $("table.line-items > tbody").append(view.el)
 
       add_button.prop("disabled", !result.line_items.length)
       if !result.line_items.length
-        model = new Spree.Models.LineItem({}, {collection: lineItems})
+        model = lineItems.push(line_item)
         view = new Spree.CartLineItemView(model: model, noCancel: true)
         view.render()
         $("table.line-items > tbody").append(view.el)
