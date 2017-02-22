@@ -18,7 +18,7 @@
     if (translation) {
       return translation;
     } else {
-      console.error("No translation found for " + key + ".");
+      console.warn("No translation found for " + key + ".");
       return key;
     }
   }
