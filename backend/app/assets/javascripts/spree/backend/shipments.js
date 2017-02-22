@@ -387,7 +387,6 @@ var ShipmentEditView = Backbone.View.extend({
     }))
 
     var shipment = this.model;
-    var order = shipment.order;
 
     var tbody = this.$("tbody[data-order-number][data-shipment-number]");
     var manifest = this.model.get("manifest");
@@ -438,11 +437,13 @@ var initOrderShipmentsPage = function(order) {
     collection: shipments
   });
 
-  shipments.each(function(shipment){
+  var watchShipment = function(shipment){
     shipment.on("sync", function(){
       order.fetch();
     })
-  });
+  };
+  shipments.each(watchShipment);
+  shipments.on('add', watchShipment);
 
   new Spree.Order.OrderSummaryView({
     el: $('#order_tab_summary'),
