@@ -46,9 +46,6 @@
         <div data-hook="card_code" class="field">
           <%= label_tag "card_code#{payment_method.id}", Spree::CreditCard.human_attribute_name(:card_code), class: 'required' %>
           <%= text_field_tag "#{param_prefix}[verification_value]", '', id: "card_code#{payment_method.id}", class: 'required fullwidth cardCode', size: 5 %>
-          <a href="/content/cvv" class="info cvvLink" target="_blank">
-            (<%= Spree.t(:what_is_this) %>)
-          </a>
         </div>
       </div>
     </div>
