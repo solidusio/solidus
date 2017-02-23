@@ -6,59 +6,66 @@
 
     <legend align="center"><%= Spree.t(:new_product) %></legend>
 
-    <%= f.field_container :name do %>
-      <%= f.label :name, class: 'required' %><br />
-      <%= f.text_field :name, :class => 'fullwidth title', :required => true %>
-      <%= f.error_message_on :name %>
-    <% end %>
+    <div class="row">
+      <div class="col-xl-8 col-xs-12">
+        <div class="row">
 
-    <div data-hook="new_product_attrs" class="row">
-      <% unless @product.has_variants? %>
-        <div data-hook="new_product_sku" class="col-xs-3">
-          <%= f.field_container :sku do %>
-            <%= f.label :sku, Spree.t(:sku) %><br />
-            <%= f.text_field :sku, :size => 16, :class => 'fullwidth' %>
-            <%= f.error_message_on :sku %>
+          <% unless @product.has_variants? %>
+            <div data-hook="new_product_sku" class="col-md-6 col-xs-12">
+              <%= f.field_container :sku do %>
+                <%= f.label :sku, Spree.t(:sku) %><br />
+                <%= f.text_field :sku, :size => 16, :class => 'fullwidth' %>
+                <%= f.error_message_on :sku %>
+              <% end %>
+            </div>
+            <div class="col-md-6 hidden-sm-down"></div>
           <% end %>
+
+          <div class="col-md-6 col-xs-12">
+            <%= f.field_container :name do %>
+              <%= f.label :name, class: 'required' %><br />
+              <%= f.text_field :name, :class => 'fullwidth title', :required => true %>
+              <%= f.error_message_on :name %>
+            <% end %>
+          </div>
+          <div class="col-md-6 hidden-sm-down"></div>
+
+          <div data-hook="new_product_price" class="col-md-3 col-xs-6">
+            <%= f.field_container :price do %>
+              <%= f.label :price, class: 'required' %><br />
+              <%= f.text_field :price, :value => number_to_currency(@product.price, :unit => ''), :class => 'fullwidth', :required => true %>
+              <%= f.error_message_on :price %>
+            <% end %>
+          </div>
+
+          <div data-hook="new_product_tax_category" class="col-md-3 col-xs-6">
+            <%= f.field_container :tax_category do %>
+              <%= f.label :tax_category_id, Spree::TaxCategory.model_name.human %>
+              <%= f.field_hint :tax_category %>
+              <%= f.collection_select(:tax_category_id, @tax_categories, :id, :name, { :include_blank => Spree.t('match_choices.none') }, { :class => 'select2 fullwidth' }) %>
+              <%= f.error_message_on :tax_category %>
+            <% end %>
+          </div>
+
+          <div data-hook="new_product_available_on" class="col-md-3 col-xs-6">
+            <%= f.field_container :available_on do %>
+              <%= f.label :available_on %>
+              <%= f.error_message_on :available_on %>
+              <%= f.text_field :available_on, :class => 'datepicker fullwidth' %>
+            <% end %>
+          </div>
+
+          <div data-hook="new_product_shipping_category" class="col-md-3 col-xs-6">
+            <%= f.field_container :shipping_category do %>
+              <%= f.label :shipping_category_id, Spree::ShippingCategory.
+                    model_name.human, class: 'required' %>
+              <%= f.field_hint :shipping_category %><br />
+              <%= f.collection_select(:shipping_category_id, @shipping_categories, :id, :name, { :include_blank => Spree.t('match_choices.none') }, { :class => 'select2 fullwidth' }) %>
+              <%= f.error_message_on :shipping_category_id %>
+            <% end %>
+          </div>
+
         </div>
-      <% end %>
-
-      <div data-hook="new_product_price" class="col-xs-3">
-        <%= f.field_container :price do %>
-          <%= f.label :price, class: 'required' %><br />
-          <%= f.text_field :price, :value => number_to_currency(@product.price, :unit => ''), :class => 'fullwidth', :required => true %>
-          <%= f.error_message_on :price %>
-        <% end %>
-      </div>
-
-      <div data-hook="new_product_available_on" class="col-xs-3">
-        <%= f.field_container :available_on do %>
-          <%= f.label :available_on %>
-          <%= f.error_message_on :available_on %>
-          <%= f.text_field :available_on, :class => 'datepicker fullwidth' %>
-        <% end %>
-      </div>
-
-    </div>
-
-    <div class='row'>
-      <div data-hook="new_product_shipping_category" class="col-xs-3">
-        <%= f.field_container :shipping_category do %>
-          <%= f.label :shipping_category_id, Spree::ShippingCategory.
-                model_name.human, class: 'required' %>
-          <%= f.field_hint :shipping_category %><br />
-          <%= f.collection_select(:shipping_category_id, @shipping_categories, :id, :name, { :include_blank => Spree.t('match_choices.none') }, { :class => 'select2 fullwidth' }) %>
-          <%= f.error_message_on :shipping_category_id %>
-        <% end %>
-      </div>
-
-      <div data-hook="new_product_tax_category" class="col-xs-3">
-        <%= f.field_container :tax_category do %>
-          <%= f.label :tax_category_id, Spree::TaxCategory.model_name.human %>
-          <%= f.field_hint :tax_category %>
-          <%= f.collection_select(:tax_category_id, @tax_categories, :id, :name, { :include_blank => Spree.t('match_choices.none') }, { :class => 'select2 fullwidth' }) %>
-          <%= f.error_message_on :tax_category %>
-        <% end %>
       </div>
     </div>
 

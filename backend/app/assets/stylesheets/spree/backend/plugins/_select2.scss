@@ -213,3 +213,9 @@ label .select2-container {
     }
   }
 }
+
+// Set the width of placeholders to 100% to force respecting parent width
+// https://github.com/t0m/select2-bootstrap-css/issues/42
+input.select2-input[placeholder] {
+  width: 100% !important;
+}
