@@ -1,8 +1,8 @@
 //= require_self
 $(document).ready(function() {
-  window.customerTemplate = HandlebarsTemplates['orders/customer_details/autocomplete'];
+  var customerTemplate = HandlebarsTemplates['orders/customer_details/autocomplete'];
 
-  formatCustomerResult = function(customer) {
+  var formatCustomerResult = function(customer) {
     return customerTemplate({
       customer: customer,
       bill_address: customer.bill_address,

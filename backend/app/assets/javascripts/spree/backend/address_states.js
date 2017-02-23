@@ -1,4 +1,4 @@
-var update_state = function (region, done) {
+window.update_state = function (region, done) {
   'use strict';
 
   var country = $('span#' + region + 'country .select2').select2('val');

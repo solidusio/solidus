@@ -6,9 +6,4 @@ jQuery(function($) {
     dropdownAutoWidth: true,
     minimumResultsForSearch: 8
   });
-
-  function format_taxons(taxon) {
-    new_taxon = taxon.text.replace('->', '<i class="fa fa-arrow-right">')
-    return new_taxon;
-  }
 })

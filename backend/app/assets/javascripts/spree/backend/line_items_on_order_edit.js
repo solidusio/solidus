@@ -24,7 +24,7 @@ addVariant = function() {
     var variant_id = $('input.variant_autocomplete').val();
     var total_quantity = $("input#variant_quantity").val();
 
-    adjustLineItems(order_number, variant_id, total_quantity);
+    adjustLineItems(window.order_number, variant_id, total_quantity);
     return 1
 }
 

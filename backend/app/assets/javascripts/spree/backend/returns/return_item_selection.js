@@ -1,24 +1,24 @@
 $(document).ready(function() {
+  function checkAddItemBox() {
+    $(this).closest('tr').find('input.add-item').attr('checked', 'checked');
+    updateSuggestedAmount();
+  }
+
+  function updateSuggestedAmount() {
+    var totalPretaxRefund = 0;
+    var checkedItems = formFields.find('input.add-item:checked');
+    $.each(checkedItems, function(i, checkbox) {
+      totalPretaxRefund += parseFloat($(checkbox).parents('tr').find('.refund-amount-input').val());
+    });
+
+    var displayTotal = isNaN(totalPretaxRefund) ? '' : totalPretaxRefund.toFixed(2);
+    formFields.find('span#total_pre_tax_refund').html(displayTotal);
+  }
+
   var formFields = $("[data-hook='admin_customer_return_form_fields'], \
                      [data-hook='admin_return_authorization_form_fields']");
 
   if(formFields.length > 0) {
-    function checkAddItemBox() {
-      $(this).closest('tr').find('input.add-item').attr('checked', 'checked');
-      updateSuggestedAmount();
-    }
-
-    function updateSuggestedAmount() {
-      var totalPretaxRefund = 0;
-      var checkedItems = formFields.find('input.add-item:checked');
-      $.each(checkedItems, function(i, checkbox) {
-        totalPretaxRefund += parseFloat($(checkbox).parents('tr').find('.refund-amount-input').val());
-      });
-
-      var displayTotal = isNaN(totalPretaxRefund) ? '' : totalPretaxRefund.toFixed(2);
-      formFields.find('span#total_pre_tax_refund').html(displayTotal);
-    }
-
     updateSuggestedAmount();
 
     formFields.find('input#select-all').on('change', function(ev) {

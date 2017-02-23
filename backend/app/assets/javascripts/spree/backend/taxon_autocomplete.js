@@ -55,8 +55,3 @@ $.fn.taxonAutocomplete = function () {
 $(document).ready(function () {
   $('#product_taxon_ids, .taxon_picker').taxonAutocomplete();
 });
-
-// for backwards compat...
-var set_taxon_select = function() {
-  $('#product_taxon_ids, .taxon_picker').taxonAutocomplete();
-}
