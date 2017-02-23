@@ -23,7 +23,7 @@
         <tr data-hook="product_properties_header">
           <th colspan="2"><%= Spree::Property.model_name.human %></th>
           <th><%= Spree::ProductProperty.human_attribute_name(:value) %></th>
-          <th class="actions"></th>
+          <th class="actions"><%= Spree.t('admin.table.actions') %></th>
         </tr>
       </thead>
       <tbody id="product_properties" data-hook>
@@ -72,7 +72,7 @@
             <tr data-hook="variant_property_values_header">
               <th colspan="2"><%= Spree::Property.model_name.human %></th>
               <th><%= Spree::ProductProperty.human_attribute_name(:value) %></th>
-              <th class="actions"></th>
+              <th class="actions"><%= Spree.t('admin.table.actions') %></th>
             </tr>
           </thead>
           <tbody id="variant_property_values" data-hook>

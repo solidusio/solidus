@@ -29,7 +29,7 @@
         <th>
           <%= sort_link @search,:description, Spree::Zone.human_attribute_name(:description), {}, {:title => 'zones_order_by_description_title'} %>
         </th>
-        <th class="actions"></th>
+        <th class="actions"><%= Spree.t('admin.table.actions') %></th>
       </tr>
     </thead>
     <tbody>

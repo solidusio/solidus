@@ -5,13 +5,13 @@
       <th><%= Spree::Adjustment.human_attribute_name(:label) %></th>
       <th><%= Spree::Adjustment.human_attribute_name(:amount) %></th>
       <th><%= Spree::Adjustment.human_attribute_name(:state) %></th>
-      <th class="actions"></th>
+      <th class="actions"><%= Spree.t('admin.table.actions') %></th>
     </tr>
   </thead>
   <tbody>
     <%= render :partial => "adjustment", :collection => @adjustments %>
     <tr data-hook="adjustment_buttons">
-      <td class="align-center" colspan='4'>
+      <td class="align-center" colspan="5">
         <% if can? :update, Spree::Adjustment %>
           <div>
             <%= button_to Spree.t(:unfinalize_all_adjustments), adjustments_unfinalize_admin_order_path(@order), method: :get %>
@@ -21,7 +21,6 @@
           </div>
         <% end %>
       </td>
-      <td class='actions'>&nbsp;</td>
     </tr>
   </tbody>
 </table>

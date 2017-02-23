@@ -140,7 +140,9 @@
         <% end %>
         <th><%= sort_link @search, :email %></th>
         <th><%= sort_link @search, :total %></th>
-        <th data-hook="admin_orders_index_header_actions" class="actions"></th>
+        <th data-hook="admin_orders_index_header_actions" class="actions">
+          <%= Spree.t('admin.table.actions') %>
+        </th>
       </tr>
     </thead>
     <tbody>

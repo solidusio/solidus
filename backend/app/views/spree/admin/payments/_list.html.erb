@@ -7,7 +7,7 @@
       <th><%= Spree::PaymentMethod.model_name.human %></th>
       <th><%= Spree::Payment.human_attribute_name(:response_code) %></th>
       <th><%= Spree::Payment.human_attribute_name(:state) %></th>
-      <th class="actions"></th>
+      <th class="actions"><%= Spree.t('admin.table.actions') %></th>
     </tr>
   </thead>
   <tbody>
