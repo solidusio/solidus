@@ -28,7 +28,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'ffaker', '~> 2.0'
   s.add_dependency 'friendly_id', '~> 5.0'
   s.add_dependency 'highline', '~> 1.7' # Necessary for the install generator
-  s.add_dependency 'kaminari', '~> 0.15', '>= 0.15.1'
+  s.add_dependency 'kaminari', '>= 0.17', '< 2.0'
   s.add_dependency 'monetize', '~> 1.1'
   s.add_dependency 'paperclip', '~> 4.2'
   s.add_dependency 'paranoia', '~> 2.2.0.pre'
