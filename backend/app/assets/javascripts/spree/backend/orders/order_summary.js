@@ -39,11 +39,3 @@ Spree.Order.OrderSummaryView = Backbone.View.extend({
       .text(state_name);
   }
 });
-
-$(function(){
-  if ($('#order_tab_summary').length) {
-    var model = new Spree.Models.Order({number: order_number});
-    new Spree.Order.OrderSummaryView({el: $('#order_tab_summary'), model: model});
-    model.fetch();
-  }
-});

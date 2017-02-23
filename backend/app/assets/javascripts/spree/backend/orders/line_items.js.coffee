@@ -46,7 +46,7 @@ Spree.CartLineItemView = Backbone.View.extend
     @model.save attrs,
       patch: true,
       success: =>
-        window.Spree.advanceOrder()
+        @model.order.advance()
     @editing = false
     @render()
 
@@ -56,7 +56,7 @@ Spree.CartLineItemView = Backbone.View.extend
     @remove()
     @model.destroy
       success: =>
-        window.Spree.advanceOrder()
+        @model.order.advance()
 
   render: ->
     line_item = @model.attributes
@@ -93,21 +93,3 @@ Spree.CartAddLineItemButtonView = Backbone.View.extend
 
   render: ->
     @$el.prop("disabled", !this.collection.length || this.collection.some( (item) -> item.isNew() ))
-
-$ ->
-  if $("table.line-items").length
-    order = new Spree.Models.Order({number: order_number})
-    collection = order.get("line_items")
-
-    new Spree.CartLineItemTableView
-      el: $("table.line-items > tbody")
-      collection: collection
-
-    new Spree.CartAddLineItemButtonView
-      el: $('.js-add-line-item')
-      collection: collection
-
-    order.fetch
-      success: ->
-        if !collection.length
-          collection.push({})
