@@ -76,13 +76,13 @@ module Spree
         require_ship_address
 
         unless @order.completed?
-          @order.refresh_shipment_rates
+          @order.refresh_shipment_rates(frontend_only: false)
         end
       end
 
       def cart
         unless @order.completed?
-          @order.refresh_shipment_rates
+          @order.refresh_shipment_rates(frontend_only: false)
         end
         if @order.shipped_shipments.count > 0
           redirect_to edit_admin_order_url(@order)

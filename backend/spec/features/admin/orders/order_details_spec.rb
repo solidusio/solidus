@@ -111,6 +111,23 @@ describe "Order Details", type: :feature, js: true do
         expect(page).to have_content("Default")
       end
 
+      context "with a backend only shipping method" do
+        let!(:backend_only_shipping_method) { create(:shipping_method, name: "Backend Shipping", display_on: "back_end") }
+
+        it "can change the shipping method for a backend only one" do
+          order = create(:order_with_line_items)
+          visit spree.edit_admin_order_path(order)
+          within("table.index tr.show-method") do
+            click_icon :edit
+          end
+          select2 "Backend Shipping", from: "Shipping Method"
+          click_icon :check
+
+          expect(page).not_to have_css('#selected_shipping_rate_id')
+          expect(page).to have_content("Backend Shipping")
+        end
+      end
+
       it "will show the variant sku" do
         order = create(:completed_order_with_totals)
         visit spree.edit_admin_order_path(order)

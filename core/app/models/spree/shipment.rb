@@ -168,14 +168,14 @@ module Spree
       ready? || pending?
     end
 
-    def refresh_rates
+    def refresh_rates(frontend_only: true)
       return shipping_rates if shipped? || order.completed?
       return [] unless can_get_rates?
 
       # StockEstimator.new assigment below will replace the current shipping_method
       original_shipping_method_id = shipping_method.try!(:id)
 
-      new_rates = Spree::Config.stock.estimator_class.new.shipping_rates(to_package)
+      new_rates = Spree::Config.stock.estimator_class.new.shipping_rates(to_package, frontend_only)
 
       # If one of the new rates matches the previously selected shipping
       # method, select that instead of the default provided by the estimator.

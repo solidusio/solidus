@@ -248,6 +248,30 @@ describe Spree::Shipment, type: :model do
           expect(shipment.to_package.shipment).to eq(shipment)
         end
       end
+
+      describe "passing arguments to the estimator" do
+        let(:shipment) { build_stubbed(:shipment) }
+        let(:package) { Spree::Stock::Package.new(shipment.stock_location) }
+
+        before do
+          expect(Spree::Stock::Estimator).to receive(:new).with(no_args).and_return(mock_estimator)
+          allow(shipment).to receive(:to_package).and_return(package)
+        end
+
+        context "when called with no arguments" do
+          it "calls estimator with frontend_only set to true" do
+            expect(mock_estimator).to receive(:shipping_rates).with(package, true) { shipping_rates }
+            shipment.refresh_rates
+          end
+        end
+
+        context "when called with frontend_only set to false" do
+          it "calls shipment#refresh_rates with frontend_only set to false" do
+            expect(mock_estimator).to receive(:shipping_rates).with(package, false) { shipping_rates }
+            shipment.refresh_rates(frontend_only: false)
+          end
+        end
+      end
     end
   end
 
