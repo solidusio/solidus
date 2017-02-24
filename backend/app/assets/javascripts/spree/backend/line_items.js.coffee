@@ -18,7 +18,7 @@ onDeleteLineItem = (e) ->
   e.preventDefault()
   return unless confirm(Spree.translations.are_you_sure_delete)
   line_item = $(this).closest('.line-item')
-  line_item_id = line_item.data('line-item-id');
+  line_item_id = line_item.data('line-item-id')
   deleteLineItem(line_item_id)
   editingDone(e)
 

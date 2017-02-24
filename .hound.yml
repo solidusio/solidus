@@ -3,6 +3,6 @@ ruby:
 scss:
   enabled: false
 coffeescript:
-  enabled: false
+  config_file: coffeelint.json
 javascript:
   enabled: false

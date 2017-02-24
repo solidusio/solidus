@@ -13,14 +13,14 @@ Spree.onCouponCodeApply = (e) ->
     }
   )
 
-  couponStatus.removeClass([successClass,errorClass].join(" "));
+  couponStatus.removeClass([successClass,errorClass].join(" "))
 
   req = Spree.ajax
     method: "PUT",
     url: url
 
   req.done (data) ->
-    window.location.reload();
+    window.location.reload()
     couponCodeField.val('')
     couponStatus.addClass(successClass).html("Coupon code applied successfully.")
 

@@ -86,15 +86,15 @@ get_create_handler = (taxonomy_id) ->
 setup_taxonomy_tree = (taxonomy_id) ->
   redraw_tree()
   $("#taxonomy_tree").on
-      sortstart: (e, ui) ->
-        resize_placeholder(ui)
-      sortover: (e, ui) ->
-        highlight_sort_targets(ui)
-      sortstop: restore_sort_targets
-      sortupdate: (e, ui) ->
-        handle_move(ui.item) unless ui.sender?
-    .on('click', '.js-taxon-delete', handle_delete)
-    .on('click', '.js-taxon-add-child', handle_add_child)
+    sortstart: (e, ui) ->
+      resize_placeholder(ui)
+    sortover: (e, ui) ->
+      highlight_sort_targets(ui)
+    sortstop: restore_sort_targets
+    sortupdate: (e, ui) ->
+      handle_move(ui.item) unless ui.sender?
+  .on('click', '.js-taxon-delete', handle_delete)
+  .on('click', '.js-taxon-add-child', handle_add_child)
   $('.add-taxon-button').on('click', get_create_handler(taxonomy_id))
 
 $ ->
