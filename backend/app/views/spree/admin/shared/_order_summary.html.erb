@@ -1,7 +1,7 @@
 <header id="order_tab_summary" data-hook>
   <dl class="additional-info">
     <dt id="order_status" data-hook><%= Spree.t(:status) %>:</dt>
-    <dd><span class="state <%= @order.state %>"><%= Spree.t(@order.state, :scope => :order_state) %></span></dd>
+    <dd><span class="state <%= @order.state %>"><%= Spree.t(@order.state, scope: :order_state) %></span></dd>
 
     <% if @order.user.present? %>
       <dt data-hook='admin_order_user_link'><%= Spree.t(:user) %>:</dt>
@@ -30,9 +30,9 @@
 
     <% if @order.completed? %>
       <dt><%= Spree::Shipment.model_name.human %>: </dt>
-      <dd id='shipment_status'><span class="state <%= @order.shipment_state %>"><%= Spree.t(@order.shipment_state, :scope => :shipment_states, :default => [:missing, "none"]) %></span></dd>
+      <dd id='shipment_status'><span class="state <%= @order.shipment_state %>"><%= Spree.t(@order.shipment_state, scope: :shipment_states, default: [:missing, "none"]) %></span></dd>
       <dt><%= Spree::Payment.model_name.human %>: </dt>
-      <dd id='payment_status'><span class="state <%= @order.payment_state %>"><%= Spree.t(@order.payment_state, :scope => :payment_states, :default => [:missing, "none"]) %></span></dd>
+      <dd id='payment_status'><span class="state <%= @order.payment_state %>"><%= Spree.t(@order.payment_state, scope: :payment_states, default: [:missing, "none"]) %></span></dd>
       <dt data-hook='admin_order_tab_date_completed_title'><%= Spree::Order.human_attribute_name(:completed_at) %>:</dt>
       <dd id='date_complete'><%= pretty_time(@order.completed_at) %></dd>
     <% end %>

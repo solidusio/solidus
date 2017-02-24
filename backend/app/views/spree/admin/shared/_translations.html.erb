@@ -5,18 +5,18 @@
   Spree.translations = <%==
     I18n.t("spree").merge({
     :date_picker    => Spree.t(:js_format,
-                              :scope => 'date_picker',
-                              :default => 'yy/mm/dd'),
-    :abbr_day_names           => I18n.t(:abbr_day_names, :scope => :date),
-    :destroy                  => Spree.t(:destroy, :scope => :actions),
-    :edit                     => Spree.t(:edit,    :scope => :actions),
-    :save                     => Spree.t(:save,    :scope => :actions),
-    :cancel                   => Spree.t(:cancel,  :scope => :actions),
+                              scope: 'date_picker',
+                              default: 'yy/mm/dd'),
+    :abbr_day_names           => I18n.t(:abbr_day_names, scope: :date),
+    :destroy                  => Spree.t(:destroy, scope: :actions),
+    :edit                     => Spree.t(:edit,    scope: :actions),
+    :save                     => Spree.t(:save,    scope: :actions),
+    :cancel                   => Spree.t(:cancel,  scope: :actions),
     :first_day                => Spree.t(:first_day,
-                                         :scope => 'date_picker',
-                                         :default => 0).to_i,
+                                         scope: 'date_picker',
+                                         default: 0).to_i,
     :item_stock_placeholder   => Spree.t(:choose_location),
-    :month_names              => I18n.t(:month_names, :scope => :date).reject(&:blank?),
+    :month_names              => I18n.t(:month_names, scope: :date).reject(&:blank?),
     :currency_separator       => I18n.t('number.currency.format.separator'),
     :activerecord             => I18n.t('activerecord')
   }).to_json

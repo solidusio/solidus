@@ -49,10 +49,10 @@
         <td class="align-center"><%=tax_rate.calculator.to_s %></td>
         <td class="actions">
           <% if can?(:update, tax_rate) %>
-            <%= link_to_edit tax_rate, :no_text => true %>
+            <%= link_to_edit tax_rate, no_text: true %>
           <% end %>
           <% if can?(:destroy, tax_rate) %>
-            <%= link_to_delete tax_rate, :no_text => true %>
+            <%= link_to_delete tax_rate, no_text: true %>
           <% end %>
         </td>
       </tr>

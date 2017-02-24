@@ -1,6 +1,6 @@
-<%= render :partial => 'spree/shared/error_messages', :locals => { :target => @product } %>
+<%= render partial: 'spree/shared/error_messages', locals: { target: @product } %>
 
-<%= form_for [:admin, @product], method: :post, url: admin_products_path, :html => { :multipart => true } do |f| %>
+<%= form_for [:admin, @product], method: :post, url: admin_products_path, html: { multipart: true } do |f| %>
 
   <fieldset data-hook="new_product">
 
@@ -8,7 +8,7 @@
 
     <%= f.field_container :name do %>
       <%= f.label :name, class: 'required' %><br />
-      <%= f.text_field :name, :class => 'fullwidth title', :required => true %>
+      <%= f.text_field :name, class: 'fullwidth title', required: true %>
       <%= f.error_message_on :name %>
     <% end %>
 
@@ -17,7 +17,7 @@
         <div data-hook="new_product_sku" class="col-xs-3">
           <%= f.field_container :sku do %>
             <%= f.label :sku, Spree.t(:sku) %><br />
-            <%= f.text_field :sku, :size => 16, :class => 'fullwidth' %>
+            <%= f.text_field :sku, size: 16, class: 'fullwidth' %>
             <%= f.error_message_on :sku %>
           <% end %>
         </div>
@@ -26,7 +26,7 @@
       <div data-hook="new_product_price" class="col-xs-3">
         <%= f.field_container :price do %>
           <%= f.label :price, class: 'required' %><br />
-          <%= f.text_field :price, :value => number_to_currency(@product.price, :unit => ''), :class => 'fullwidth', :required => true %>
+          <%= f.text_field :price, value: number_to_currency(@product.price, unit: ''), class: 'fullwidth', required: true %>
           <%= f.error_message_on :price %>
         <% end %>
       </div>
@@ -35,7 +35,7 @@
         <%= f.field_container :available_on do %>
           <%= f.label :available_on %>
           <%= f.error_message_on :available_on %>
-          <%= f.text_field :available_on, :class => 'datepicker fullwidth' %>
+          <%= f.text_field :available_on, class: 'datepicker fullwidth' %>
         <% end %>
       </div>
 
@@ -47,7 +47,7 @@
           <%= f.label :shipping_category_id, Spree::ShippingCategory.
                 model_name.human, class: 'required' %>
           <%= f.field_hint :shipping_category %><br />
-          <%= f.collection_select(:shipping_category_id, @shipping_categories, :id, :name, { :include_blank => Spree.t('match_choices.none') }, { :class => 'select2 fullwidth' }) %>
+          <%= f.collection_select(:shipping_category_id, @shipping_categories, :id, :name, { include_blank: Spree.t('match_choices.none') }, { class: 'select2 fullwidth' }) %>
           <%= f.error_message_on :shipping_category_id %>
         <% end %>
       </div>
@@ -56,13 +56,13 @@
         <%= f.field_container :tax_category do %>
           <%= f.label :tax_category_id, Spree::TaxCategory.model_name.human %>
           <%= f.field_hint :tax_category %>
-          <%= f.collection_select(:tax_category_id, @tax_categories, :id, :name, { :include_blank => Spree.t('match_choices.none') }, { :class => 'select2 fullwidth' }) %>
+          <%= f.collection_select(:tax_category_id, @tax_categories, :id, :name, { include_blank: Spree.t('match_choices.none') }, { class: 'select2 fullwidth' }) %>
           <%= f.error_message_on :tax_category %>
         <% end %>
       </div>
     </div>
 
-    <%= render :partial => 'spree/admin/shared/new_resource_links' %>
+    <%= render partial: 'spree/admin/shared/new_resource_links' %>
 
   </fieldset>
 <% end %>

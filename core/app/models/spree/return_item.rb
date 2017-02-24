@@ -124,7 +124,7 @@ module Spree
         transition to: :manual_intervention_required, from: [:accepted, :pending, :manual_intervention_required]
       end
 
-      after_transition any => any, :do => :persist_acceptance_status_errors
+      after_transition any => any, do: :persist_acceptance_status_errors
     end
 
     # @param inventory_unit [Spree::InventoryUnit] the inventory for which we

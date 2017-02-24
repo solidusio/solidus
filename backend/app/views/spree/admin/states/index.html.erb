@@ -8,7 +8,7 @@
 <% content_for :page_actions do %>
   <% if can?(:create, Spree::State) %>
     <li>
-      <%= button_link_to Spree.t(:new_state), new_admin_country_state_url(@country), { :id => 'new_state_link' } %>
+      <%= button_link_to Spree.t(:new_state), new_admin_country_state_url(@country), { id: 'new_state_link' } %>
     </li>
   <% end %>
 <% end %>
@@ -17,7 +17,7 @@
   <div class="col-xs-12">
     <div data-hook="country" class="field">
       <%= label_tag :country, Spree::Country.model_name.human %>
-      <select id="country" class='observe_field select2 fullwidth' data-base-url="<%=admin_states_path(:format => :js) %>?country_id=" data-update="#state-list">
+      <select id="country" class='observe_field select2 fullwidth' data-base-url="<%=admin_states_path(format: :js) %>?country_id=" data-update="#state-list">
       <%= options_from_collection_for_select(@countries, :id, :name, @country.id) %>
       </select>
     </div>
@@ -28,12 +28,12 @@
   <%= form_for [:admin, @country, Spree::State.new] do |f| %>
     <fieldset>
       <legend><%= Spree.t(:new_state) %></legend>
-      <%= render :partial => 'form', :locals => { :f => f } %>
-      <%= render :partial => 'spree/admin/shared/new_resource_links' %>
+      <%= render partial: 'form', locals: { f: f } %>
+      <%= render partial: 'spree/admin/shared/new_resource_links' %>
     </fieldset>
   <% end %>
 </div>
 
 <div id="state-list" data-hook>
-  <%= render :partial => 'state_list'%>
+  <%= render partial: 'state_list'%>
 </div>

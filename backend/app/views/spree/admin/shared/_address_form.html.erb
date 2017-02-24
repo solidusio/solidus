@@ -3,45 +3,45 @@
 <div id="<%= type %>" data-hook="address_fields">
   <div class="field <%= "#{type}-row" %>">
     <%= f.label :firstname %>
-    <%= f.text_field :firstname, :class => 'fullwidth' %>
+    <%= f.text_field :firstname, class: 'fullwidth' %>
   </div>
 
   <div class="field <%= "#{type}-row" %>">
     <%= f.label :lastname %>
-    <%= f.text_field :lastname, :class => 'fullwidth' %>
+    <%= f.text_field :lastname, class: 'fullwidth' %>
   </div>
 
   <% if Spree::Config[:company] %>
     <div class="field <%= "#{type}-row" %>">
       <%= f.label :company %>
-      <%= f.text_field :company, :class => 'fullwidth' %>
+      <%= f.text_field :company, class: 'fullwidth' %>
     </div>
   <% end %>
 
   <div class="field <%= "#{type}-row" %>">
     <%= f.label :address1 %>
-    <%= f.text_field :address1, :class => 'fullwidth' %>
+    <%= f.text_field :address1, class: 'fullwidth' %>
   </div>
 
   <div class="field <%= "#{type}-row" %>">
     <%= f.label :address2 %>
-    <%= f.text_field :address2, :class => 'fullwidth' %>
+    <%= f.text_field :address2, class: 'fullwidth' %>
   </div>
 
   <div class="field <%= "#{type}-row" %>">
     <%= f.label :city %>
-    <%= f.text_field :city, :class => 'fullwidth' %>
+    <%= f.text_field :city, class: 'fullwidth' %>
   </div>
 
   <div class="field <%= "#{type}-row" %>">
     <%= f.label :zipcode %>
-    <%= f.text_field :zipcode, :class => 'fullwidth' %>
+    <%= f.text_field :zipcode, class: 'fullwidth' %>
   </div>
 
   <div class="field <%= "#{type}-row" %>">
     <%= f.label :country_id, Spree::Country.model_name.human %>
     <span id="<%= s_or_b %>country">
-      <%= f.collection_select :country_id, available_countries, :id, :name, {}, {:class => 'select2 fullwidth'} %>
+      <%= f.collection_select :country_id, available_countries, :id, :name, {}, {class: 'select2 fullwidth'} %>
     </span>
   </div>
 
@@ -49,15 +49,15 @@
     <%= f.label :state_id, Spree::State.model_name.human %>
     <span id="<%= s_or_b %>state">
       <%= f.text_field :state_name,
-            :style => "display: #{f.object.country.states.empty? ? 'block' : 'none' };",
-           :disabled => !f.object.country.states.empty?, :class => 'fullwidth state_name' %>
-      <%= f.collection_select :state_id, f.object.country.states.sort, :id, :name, {:include_blank => true}, {:class => 'select2 fullwidth', :style => "display: #{f.object.country.states.empty? ? 'none' : 'block' };", :disabled => f.object.country.states.empty?} %>
+            style: "display: #{f.object.country.states.empty? ? 'block' : 'none' };",
+           disabled: !f.object.country.states.empty?, class: 'fullwidth state_name' %>
+      <%= f.collection_select :state_id, f.object.country.states.sort, :id, :name, {include_blank: true}, {class: 'select2 fullwidth', style: "display: #{f.object.country.states.empty? ? 'none' : 'block' };", disabled: f.object.country.states.empty?} %>
     </span>
   </div>
 
   <div class="field <%= "#{type}-row" %>">
     <%= f.label :phone %>
-    <%= f.phone_field :phone, :class => 'fullwidth' %>
+    <%= f.phone_field :phone, class: 'fullwidth' %>
   </div>
 </div>
 

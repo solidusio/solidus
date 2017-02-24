@@ -2,19 +2,19 @@
   <div class="col-xs-3">
     <%= f.field_container :name do %>
       <%= f.label :name %>
-      <%= f.text_field :name, :class => 'fullwidth' %>
+      <%= f.text_field :name, class: 'fullwidth' %>
     <% end %>
   </div>
 
   <div class="col-xs-2">
     <%= f.field_container :tax_code do %>
       <%= f.label :tax_code %>
-      <%= f.text_field :tax_code, :class => 'fullwidth' %>
+      <%= f.text_field :tax_code, class: 'fullwidth' %>
     <% end %>
   </div>
 
   <div class="col-xs-1">
-    <%= f.field_container :is_default, :class => ['checkbox'] do %>
+    <%= f.field_container :is_default, class: ['checkbox'] do %>
       <%= f.check_box :is_default %>
       <%= f.label :is_default %>
     <% end %>
@@ -23,7 +23,7 @@
   <div class="col-xs-4">
     <%= f.field_container :description do %>
       <%= f.label :description %><br>
-      <%= f.text_area :description, :class => 'fullwidth' %>
+      <%= f.text_area :description, class: 'fullwidth' %>
     <% end %>
   </div>
 </div>

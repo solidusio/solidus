@@ -9,11 +9,11 @@
 <% content_for :page_actions do %>
 <% end %>
 
-<%= render :partial => 'spree/shared/error_messages', :locals => { :target => @payment_method } %>
+<%= render partial: 'spree/shared/error_messages', locals: { target: @payment_method } %>
 
-<%= form_for @payment_method, :url => collection_url do |f| %>
+<%= form_for @payment_method, url: collection_url do |f| %>
   <fieldset class="no-border-top">
-    <%= render :partial => 'form', :locals => { :f => f } %>
+    <%= render partial: 'form', locals: { f: f } %>
     <div data-hook="buttons" class="filter-actions actions">
       <%= button Spree.t('actions.create') %>
     </div>

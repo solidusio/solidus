@@ -15,19 +15,19 @@
   </li>
 <% end %>
 
-<%= form_for @promotion, :url => object_url, :method => :put do |f| %>
-  <%= render :partial => 'form', :locals => { :f => f } %>
+<%= form_for @promotion, url: object_url, method: :put do |f| %>
+  <%= render partial: 'form', locals: { f: f } %>
   <% if can?(:update, @promotion) %>
-    <%= render :partial => 'spree/admin/shared/edit_resource_links' %>
+    <%= render partial: 'spree/admin/shared/edit_resource_links' %>
   <% end %>
 <% end %>
 
 <div id="promotion-filters" class="row">
   <div id="rules_container" class="col-xs-6">
-    <%= render :partial => 'rules' %>
+    <%= render partial: 'rules' %>
   </div>
 
   <div id="actions_container" class="col-xs-6">
-    <%= render :partial => 'actions' %>
+    <%= render partial: 'actions' %>
   </div>
 </div>

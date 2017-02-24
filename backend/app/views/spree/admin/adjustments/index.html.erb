@@ -1,4 +1,4 @@
-<%= render :partial => 'spree/admin/shared/order_tabs', :locals => { :current => 'Adjustments' } %>
+<%= render partial: 'spree/admin/shared/order_tabs', locals: { current: 'Adjustments' } %>
 
 <% admin_breadcrumb(plural_resource_name(Spree::Adjustment)) %>
 
@@ -10,12 +10,12 @@
   <% end %>
 <% end %>
 
-<%= render :partial => 'adjustments_table' %>
+<%= render partial: 'adjustments_table' %>
 
 <% if @order.can_add_coupon? %>
   <div data-hook="adjustments_new_coupon_code">
-    <%= text_field_tag "coupon_code", "", :placeholder => Spree.t(:coupon_code) %>
-    <%= button Spree.t(:add_coupon_code), nil, 'submit', :id => "add_coupon_code" %>
+    <%= text_field_tag "coupon_code", "", placeholder: Spree.t(:coupon_code) %>
+    <%= button Spree.t(:add_coupon_code), nil, 'submit', id: "add_coupon_code" %>
   </div>
 <% end %>
 <%= javascript_tag do -%>

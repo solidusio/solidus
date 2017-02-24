@@ -2,7 +2,7 @@
 
 <% content_for :page_actions do %>
   <li id="new_price_link">
-    <%= button_link_to t(".new_price"), new_object_url, { :remote => true, :id => 'admin_new_product' } %>
+    <%= button_link_to t(".new_price"), new_object_url, { remote: true, id: 'admin_new_product' } %>
   </li>
 <% end if can?(:create, Spree::Product) %>
 

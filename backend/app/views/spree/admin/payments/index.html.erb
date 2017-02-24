@@ -18,13 +18,13 @@
 
   <fieldset data-hook="payment_list" class="no-border-bottom">
     <legend align="center"><%= plural_resource_name(Spree::Payment) %></legend>
-    <%= render :partial => 'list', :locals => { :payments => @payments } %>
+    <%= render partial: 'list', locals: { payments: @payments } %>
   </fieldset>
 
   <% if @refunds.any? %>
     <fieldset data-hook="payment_list" class="no-border-bottom">
       <legend align="center"><%= plural_resource_name(Spree::Refund) %></legend>
-      <%= render :partial => 'spree/admin/shared/refunds', :locals => { :refunds => @refunds, show_actions: true } %>
+      <%= render partial: 'spree/admin/shared/refunds', locals: { refunds: @refunds, show_actions: true } %>
     </fieldset>
   <% end %>
 

@@ -9,7 +9,7 @@ describe "Order Details", type: :feature, js: true do
   let!(:tote) { create(:product, name: "Tote", price: 15.00) }
   let(:order) { create(:order, state: 'complete', completed_at: "2011-02-01 12:36:15", number: "R100") }
   let(:state) { create(:state) }
-  # let(:shipment) { create(:shipment, :order => order, :stock_location => stock_location) }
+  # let(:shipment) { create(:shipment, order: order, stock_location: stock_location) }
   let!(:shipping_method) { create(:shipping_method, name: "Default") }
 
   before do

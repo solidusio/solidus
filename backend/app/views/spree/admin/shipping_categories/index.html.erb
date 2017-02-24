@@ -31,11 +31,11 @@
       <td class="align-center" style="width:350px;"><%= shipping_category.name %></td>
       <td class="actions">
         <% if can?(:udpate, shipping_category) %>
-          <%= link_to_edit shipping_category, :no_text => true %>
+          <%= link_to_edit shipping_category, no_text: true %>
         <% end %>
 
         <% if can?(:destroy, shipping_category) %>
-          <%= link_to_delete shipping_category, :no_text => true %>
+          <%= link_to_delete shipping_category, no_text: true %>
         <% end %>
       </td>
     </tr>

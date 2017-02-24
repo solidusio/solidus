@@ -6,18 +6,18 @@
 <% content_for :page_actions do %>
   <li>
     <span id="new_add_option_value" data-hook>
-      <%= link_to_add_fields Spree.t(:add_option_value), "tbody#option_values", :class => 'button' %>
+      <%= link_to_add_fields Spree.t(:add_option_value), "tbody#option_values", class: 'button' %>
     </span>
   </li>
   <% end %>
 
-<%= render :partial => 'spree/shared/error_messages', :locals => { :target => @option_type } %>
+<%= render partial: 'spree/shared/error_messages', locals: { target: @option_type } %>
 
 <%= form_for [:admin, @option_type] do |f| %>
 
   <fieldset class="no-border-bottom">
     <legend><%= Spree::OptionType.model_name.human %></legend>
-    <%= render :partial => 'form', :locals => { :f => f } %>
+    <%= render partial: 'form', locals: { f: f } %>
   </fieldset>
 
   <fieldset>
@@ -32,10 +32,10 @@
       </thead>
       <tbody id="option_values">
         <%= f.fields_for :option_values, @option_values do |option_value_form| %>
-          <%= render :partial => 'option_value_fields', :locals => { :f => option_value_form } %>
+          <%= render partial: 'option_value_fields', locals: { f: option_value_form } %>
         <% end %>
       </tbody>
     </table>
-    <%= render :partial => 'spree/admin/shared/edit_resource_links' %>
+    <%= render partial: 'spree/admin/shared/edit_resource_links' %>
   </fieldset>
 <% end %>

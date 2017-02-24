@@ -55,7 +55,7 @@
     <% end %>
 
     <% if can?(:manage, Spree::OrderCancellations) && @order.inventory_units.cancelable.present? %>
-      <%= content_tag('li', class: "#{'active' if current == 'Cancel Inventory'}", :data => {:hook => 'admin_order_tabs_cancel_inventory'}) do %>
+      <%= content_tag('li', class: "#{'active' if current == 'Cancel Inventory'}", data: {hook: 'admin_order_tabs_cancel_inventory'}) do %>
         <%= link_to Spree.t(:cancel_inventory), spree.admin_order_cancellations_path(@order) %>
       <% end %>
     <% end %>

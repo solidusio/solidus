@@ -26,11 +26,11 @@
             <td class="align-right"><%= price.money.to_html %></td>
             <td class="actions">
               <% if can?(:update, price) %>
-                <%= link_to_edit(price, :no_text => true) unless price.deleted? %>
+                <%= link_to_edit(price, no_text: true) unless price.deleted? %>
               <% end %>
               <% if can?(:destroy, price) %>
                 &nbsp;
-                <%= link_to_delete(price, :no_text => true) unless price.deleted? %>
+                <%= link_to_delete(price, no_text: true) unless price.deleted? %>
               <% end %>
             </td>
           </tr>

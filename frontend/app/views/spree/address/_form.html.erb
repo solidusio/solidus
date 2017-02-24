@@ -51,7 +51,7 @@
         <%=
           form.collection_select(
             :state_id, address.country.states, :id, :name,
-            {:include_blank => true},
+            {include_blank: true},
             {
               class: have_states ? 'required' : '',
               style: have_states ? '' : 'display: none;',
@@ -70,7 +70,7 @@
         %>
       </span>
       <noscript>
-        <%= form.text_field :state_name, :class => 'required', autocomplete: address_type + ' address-level1' %>
+        <%= form.text_field :state_name, class: 'required', autocomplete: address_type + ' address-level1' %>
       </noscript>
     </p>
   <% end %>

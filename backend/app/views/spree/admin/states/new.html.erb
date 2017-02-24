@@ -1,6 +1,6 @@
 <%= render 'spree/admin/shared/areas_tabs' %>
 
-<%= render :partial => 'spree/shared/error_messages', :locals => { :target => @state } %>
+<%= render partial: 'spree/shared/error_messages', locals: { target: @state } %>
 
 <% admin_breadcrumb(Spree.t(:settings)) %>
 <% admin_breadcrumb(Spree.t('admin.tab.areas')) %>
@@ -11,7 +11,7 @@
 <%= form_for [:admin, @country, @state] do |f| %>
   <fieldset>
     <legend><%= Spree.t(:new_state) %></legend>
-    <%= render :partial => 'form', :locals => { :f => f } %>
-    <%= render :partial => 'spree/admin/shared/new_resource_links' %>
+    <%= render partial: 'form', locals: { f: f } %>
+    <%= render partial: 'spree/admin/shared/new_resource_links' %>
   </fieldset>
 <% end %>

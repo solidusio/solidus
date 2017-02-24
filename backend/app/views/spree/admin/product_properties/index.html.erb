@@ -1,5 +1,5 @@
-<%= render 'spree/admin/shared/product_tabs', :current => 'Product Properties' %>
-<%= render 'spree/shared/error_messages', :target => @product %>
+<%= render 'spree/admin/shared/product_tabs', current: 'Product Properties' %>
+<%= render 'spree/shared/error_messages', target: @product %>
 
 <% admin_breadcrumb(plural_resource_name(Spree::ProductProperty)) %>
 
@@ -7,13 +7,13 @@
   <% if can?(:create, Spree::ProductProperty) %>
     <ul class="tollbar inline-menu">
       <li>
-        <%= link_to_add_fields Spree.t(:add_product_properties), 'tbody#product_properties', :class => 'plus button' %>
+        <%= link_to_add_fields Spree.t(:add_product_properties), 'tbody#product_properties', class: 'plus button' %>
       </li>
     </ul>
   <% end %>
 <% end %>
 
-<%= form_for @product, :url => admin_product_url(@product), :method => :put do |f| %>
+<%= form_for @product, url: admin_product_url(@product), method: :put do |f| %>
   <fieldset>
     <legend align="center"><%= plural_resource_name(Spree::ProductProperty) %></legend>
     <div class="add_product_properties" data-hook="add_product_properties"></div>
@@ -28,7 +28,7 @@
       </thead>
       <tbody id="product_properties" data-hook>
         <%= f.fields_for :product_properties do |pp_form| %>
-          <%= render 'product_property_fields', :f => pp_form %>
+          <%= render 'product_property_fields', f: pp_form %>
         <% end %>
       </tbody>
     </table>

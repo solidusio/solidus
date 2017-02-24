@@ -1,4 +1,4 @@
-$('#actions').append('<%= escape_javascript( render(:partial => 'spree/admin/promotions/promotion_action', :object => @promotion_action) ) %>');
+$('#actions').append('<%= escape_javascript( render(partial: 'spree/admin/promotions/promotion_action', object: @promotion_action) ) %>');
 $('#actions .no-objects-found').hide();
 $(document).ready(function(){
   $(".variant_autocomplete").variantAutocomplete();

@@ -31,7 +31,7 @@
           </td>
           <td class="align-center">
             <span class="state <%= payment.state %>">
-              <%= Spree.t(payment.state, :scope => :payment_states, :default => payment.state.capitalize) %>
+              <%= Spree.t(payment.state, scope: :payment_states, default: payment.state.capitalize) %>
             </span>
           </td>
         </tr>

@@ -28,10 +28,10 @@
         <td><%= promotion_category.code%></td>
         <td class="actions">
           <% if can?(:update, promotion_category) %>
-            <%= link_to_edit promotion_category, :no_text => true %>
+            <%= link_to_edit promotion_category, no_text: true %>
           <% end %>
           <% if can?(:destroy, promotion_category) %>
-            <%= link_to_delete promotion_category, :no_text => true %>
+            <%= link_to_delete promotion_category, no_text: true %>
           <% end %>
         </td>
       </tr>

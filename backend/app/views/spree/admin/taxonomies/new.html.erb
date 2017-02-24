@@ -8,7 +8,7 @@
 
 <%= form_for [:admin, @taxonomy] do |f| %>
 
-  <%= render :partial => 'form', :locals => { :f => f } %>
+  <%= render partial: 'form', locals: { f: f } %>
   <fieldset class="no-border-top">
     <br>
     <div class="filter-actions actions" data-hook="buttons">

@@ -7,7 +7,7 @@
         <div id="preference-settings">
           <div class="field">
             <%= f.label :type %>
-            <%= collection_select(:payment_method, :type, @providers, :to_s, :name, {}, {:id => 'gtwy-type', :class => 'select2 fullwidth js-gateway-type'}) %>
+            <%= collection_select(:payment_method, :type, @providers, :to_s, :name, {}, {id: 'gtwy-type', class: 'select2 fullwidth js-gateway-type'}) %>
           </div>
 
           <div class="field js-preference-source-wrapper">
@@ -35,7 +35,7 @@
         </div>
         <div data-hook="auto_capture" class="field">
           <%= f.label :auto_capture %>
-          <%= select(:payment_method, :auto_capture, [["#{Spree.t(:use_app_default)} (#{Spree::Config[:auto_capture]})", ''], [Spree.t(:say_yes), true], [Spree.t(:say_no), false]], {}, {:class => 'select2 fullwidth'}) %>
+          <%= select(:payment_method, :auto_capture, [["#{Spree.t(:use_app_default)} (#{Spree::Config[:auto_capture]})", ''], [Spree.t(:say_yes), true], [Spree.t(:say_no), false]], {}, {class: 'select2 fullwidth'}) %>
         </div>
         <div data-hook="active" class="field">
           <%= label_tag nil, Spree::PaymentMethod.human_attribute_name(:active) %>
@@ -55,11 +55,11 @@
       <div class="col-xs-6">
         <div data-hook="name" class="field">
           <%= f.label :name %>
-          <%= f.text_field :name, :class => 'fullwidth' %>
+          <%= f.text_field :name, class: 'fullwidth' %>
         </div>
         <div data-hook="description" class="field">
           <%= f.label :description %>
-          <%= f.text_area :description, {:cols => 60, :rows => 6, :class => 'fullwidth'} %>
+          <%= f.text_area :description, {cols: 60, rows: 6, class: 'fullwidth'} %>
         </div>
       </div>
     </div>

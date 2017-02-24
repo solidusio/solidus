@@ -1,6 +1,6 @@
-<%= render :partial => 'spree/admin/shared/product_tabs', :locals => { :current => 'Images' } %>
+<%= render partial: 'spree/admin/shared/product_tabs', locals: { current: 'Images' } %>
 
-<%= render :partial => 'spree/shared/error_messages', :locals => { :target => @image } %>
+<%= render partial: 'spree/shared/error_messages', locals: { target: @image } %>
 
 <% admin_breadcrumb(link_to plural_resource_name(Spree::Image), admin_product_images_path(@product)) %>
 <% admin_breadcrumb(@image.attachment_file_name) %>
@@ -10,7 +10,7 @@
   <li><%= button_link_to Spree.t(:back_to_images_list), admin_product_images_url(@product) %></li>
 <% end %>
 
-<%= form_for [:admin, @product, @image], :html => { :multipart => true } do |f| %>
+<%= form_for [:admin, @product, @image], html: { multipart: true } do |f| %>
   <fieldset data-hook="edit_image">
     <legend align="center"><%= @image.attachment_file_name%></legend>
 
@@ -20,14 +20,14 @@
         <%= link_to image_tag(@image.attachment.url(:small)), @image.attachment.url(:product) %>
       </div>
       <div class="col-xs-10">
-        <%= render :partial => 'form', :locals => { :f => f } %>
+        <%= render partial: 'form', locals: { f: f } %>
       </div>
       <div class="clear"></div>
     </div>
 
     <div class="form-buttons filter-actions actions" data-hook="buttons">
       <%= button Spree.t('actions.update') %>
-      <%= link_to Spree.t('actions.cancel'), admin_product_images_url(@product), :id => 'cancel_link', :class => 'button' %>
+      <%= link_to Spree.t('actions.cancel'), admin_product_images_url(@product), id: 'cancel_link', class: 'button' %>
     </div>
   </fieldset>
 <% end %>
