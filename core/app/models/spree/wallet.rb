@@ -6,6 +6,8 @@
 # links a PaymentSource (e.g. a CreditCard) to a User. One of a user's
 # WalletPaymentSources may be the 'default' WalletPaymentSource.
 class Spree::Wallet
+  class Unauthorized < StandardError; end
+
   attr_reader :user
 
   def initialize(user)
@@ -51,18 +53,19 @@ class Spree::Wallet
   end
 
   # Change the default WalletPaymentSource for this wallet.
-  # @param source [PaymentSource] The payment source to set as the default.
+  # @param source [WalletPaymentSource] The payment source to set as the default.
   #   It must be in the wallet already. Pass nil to clear the default.
-  # @return [WalletPaymentSource] the associated WalletPaymentSource, or nil if clearing
-  #   the default.
-  def default_wallet_payment_source=(payment_source)
-    wallet_payment_source = payment_source && user.wallet_payment_sources.find_by!(payment_source: payment_source)
+  # @return [void]
+  def default_wallet_payment_source=(wallet_payment_source)
+    if wallet_payment_source && !find(wallet_payment_source.id)
+      raise Unauthorized, "wallet_payment_source #{wallet_payment_source.id} does not belong to wallet of user #{user.id}"
+    end
+
     wallet_payment_source.transaction do
       # Unset old default
       default_wallet_payment_source.try!(:update!, default: false)
       # Set new default
       wallet_payment_source.try!(:update!, default: true)
     end
-    wallet_payment_source
   end
 end

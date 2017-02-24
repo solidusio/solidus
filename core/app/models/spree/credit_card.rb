@@ -52,8 +52,8 @@ module Spree
     def default=(set_as_default)
       Spree::Deprecation.warn("CreditCard.default= is deprecated. Please use user.wallet.default_wallet_payment_source= instead.", caller)
       if set_as_default # setting this card as default
-        user.wallet.add(self)
-        user.wallet.default_wallet_payment_source = self
+        wallet_payment_source = user.wallet.add(self)
+        user.wallet.default_wallet_payment_source = wallet_payment_source
         true
       else # removing this card as default
         if user.wallet.default_wallet_payment_source.try!(:payment_source) == self

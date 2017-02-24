@@ -4,7 +4,7 @@ describe Spree::Wallet, type: :model do
   let(:user) { create(:user) }
   let(:credit_card) { create(:credit_card, user_id: user.id) }
   let(:store_credit) { create(:store_credit, user_id: user.id) }
-  subject { Spree::Wallet.new(user) }
+  subject(:wallet) { Spree::Wallet.new(user) }
 
   describe "#add" do
     context "with valid payment source" do
@@ -72,7 +72,7 @@ describe Spree::Wallet, type: :model do
       let!(:wallet_credit_card) { subject.add(credit_card) }
 
       it "marks the passed in payment source as default" do
-        expect { subject.default_wallet_payment_source = credit_card }.to(
+        expect { subject.default_wallet_payment_source = wallet_credit_card }.to(
           change(subject, :default_wallet_payment_source).
             from(nil).
             to(wallet_credit_card)
@@ -84,14 +84,27 @@ describe Spree::Wallet, type: :model do
       let!(:wallet_credit_card) { subject.add(credit_card) }
       let!(:wallet_store_credit) { subject.add(store_credit) }
 
-      before { subject.default_wallet_payment_source = credit_card }
+      before { subject.default_wallet_payment_source = wallet_credit_card }
 
       it "sets the new payment source as the default" do
-        expect { subject.default_wallet_payment_source = store_credit }.to(
+        expect { subject.default_wallet_payment_source = wallet_store_credit }.to(
           change(subject, :default_wallet_payment_source).
             from(wallet_credit_card).
             to(wallet_store_credit)
         )
+      end
+    end
+
+    context 'with a wallet payment source that does not belong to the wallet' do
+      let(:other_wallet_credit_card) { other_wallet.add(credit_card) }
+      let(:other_wallet) { Spree::Wallet.new(other_user) }
+      let(:other_credit_card) { create(:credit_card, user_id: other_user.id) }
+      let(:other_user) { create(:user) }
+
+      it 'raises an error' do
+        expect {
+          wallet.default_wallet_payment_source = other_wallet_credit_card
+        }.to raise_error(Spree::Wallet::Unauthorized)
       end
     end
   end
@@ -105,7 +118,7 @@ describe Spree::Wallet, type: :model do
 
     context "with a default payment source" do
       let!(:wallet_credit_card) { subject.add(credit_card) }
-      before { subject.default_wallet_payment_source = credit_card }
+      before { subject.default_wallet_payment_source = wallet_credit_card }
 
       it "will return the wallet payment source" do
         expect(subject.default_wallet_payment_source).to eql wallet_credit_card

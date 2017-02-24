@@ -363,8 +363,8 @@ describe Spree::Order, type: :model do
 
       before do
         user = create(:user, email: 'spree@example.org', bill_address: user_bill_address)
-        user.wallet.add(default_credit_card)
-        user.wallet.default_wallet_payment_source = default_credit_card
+        wallet_payment_source = user.wallet.add(default_credit_card)
+        user.wallet.default_wallet_payment_source = wallet_payment_source
         order.user = user
 
         allow(order).to receive_messages(payment_required?: true)
