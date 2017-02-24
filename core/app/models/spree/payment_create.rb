@@ -28,7 +28,7 @@ module Spree
       @payment.attributes = @attributes
 
       if source_attributes[:existing_card_id].present?
-        ActiveSupport::Deprecation.warn(
+        Spree::Deprecation.warn(
           "Passing existing_card_id to PaymentCreate is deprecated. Use wallet_payment_source_id instead.",
           caller,
         )

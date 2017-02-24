@@ -276,7 +276,7 @@ describe Spree::CreditCard, type: :model do
 
   describe 'default' do
     around do |example|
-      ActiveSupport::Deprecation.silence { example.run }
+      Spree::Deprecation.silence { example.run }
     end
 
     it 'ensures only one credit card per user is default at a time' do

@@ -20,7 +20,7 @@ module Spree
     scope :with_payment_profile, -> { where('gateway_customer_profile_id IS NOT NULL') }
 
     def self.default
-      ActiveSupport::Deprecation.warn("CreditCard.default is deprecated. Please use Spree::Wallet instead.")
+      Spree::Deprecation.warn("CreditCard.default is deprecated. Please use Spree::Wallet instead.")
       joins(:wallet_payment_sources).where(spree_wallet_payment_sources: { default: true })
     end
 
@@ -45,12 +45,12 @@ module Spree
     }.freeze
 
     def default
-      ActiveSupport::Deprecation.warn("CreditCard.default is deprecated. Please use user.wallet.default_wallet_payment_source instead.", caller)
+      Spree::Deprecation.warn("CreditCard.default is deprecated. Please use user.wallet.default_wallet_payment_source instead.", caller)
       user.wallet.default_wallet_payment_source.payment_source == self
     end
 
     def default=(set_as_default)
-      ActiveSupport::Deprecation.warn("CreditCard.default= is deprecated. Please use user.wallet.default_wallet_payment_source= instead.", caller)
+      Spree::Deprecation.warn("CreditCard.default= is deprecated. Please use user.wallet.default_wallet_payment_source= instead.", caller)
       if set_as_default # setting this card as default
         user.wallet.add(self)
         user.wallet.default_wallet_payment_source = self

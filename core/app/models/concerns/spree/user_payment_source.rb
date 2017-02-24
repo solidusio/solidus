@@ -3,7 +3,7 @@ module Spree
     extend ActiveSupport::Concern
 
     def default_credit_card
-      ActiveSupport::Deprecation.warn(
+      Spree::Deprecation.warn(
         "user.default_credit_card is deprecated. Please use user.wallet.default_wallet_payment_source instead.",
         caller
       )
@@ -14,7 +14,7 @@ module Spree
     end
 
     def payment_sources
-      ActiveSupport::Deprecation.warn(
+      Spree::Deprecation.warn(
         "user.payment_sources is deprecated. Please use user.wallet.wallet_payment_sources instead.",
         caller
       )
