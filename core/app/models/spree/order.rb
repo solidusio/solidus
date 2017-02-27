@@ -49,11 +49,8 @@ module Spree
     attr_reader :coupon_code
     attr_accessor :temporary_address, :temporary_credit_card
 
+    # Customer info
     belongs_to :user, class_name: Spree::UserClassHandle.new
-    belongs_to :created_by, class_name: Spree::UserClassHandle.new
-    belongs_to :approver, class_name: Spree::UserClassHandle.new
-    belongs_to :canceler, class_name: Spree::UserClassHandle.new
-
     belongs_to :bill_address, foreign_key: :bill_address_id, class_name: 'Spree::Address'
     alias_attribute :billing_address, :bill_address
 
@@ -62,36 +59,48 @@ module Spree
     alias_attribute :ship_total, :shipment_total
 
     belongs_to :store, class_name: 'Spree::Store'
-    has_many :state_changes, as: :stateful
+
+    # Items
     has_many :line_items, -> { order(:created_at, :id) }, dependent: :destroy, inverse_of: :order
-    has_many :payments, dependent: :destroy, inverse_of: :order
-    has_many :return_authorizations, dependent: :destroy, inverse_of: :order
-    has_many :reimbursements, inverse_of: :order
-    has_many :adjustments, -> { order(:created_at) }, as: :adjustable, inverse_of: :adjustable, dependent: :destroy
-    has_many :line_item_adjustments, through: :line_items, source: :adjustments
-    has_many :shipment_adjustments, through: :shipments, source: :adjustments
-    has_many :inventory_units, inverse_of: :order
-    has_many :products, through: :variants
     has_many :variants, through: :line_items
-    has_many :refunds, through: :payments
-    has_many :all_adjustments,
-             class_name: 'Spree::Adjustment',
-             foreign_key: :order_id,
-             dependent: :destroy,
-             inverse_of: :order
+    has_many :products, through: :variants
 
-    has_many :order_stock_locations, class_name: "Spree::OrderStockLocation"
-    has_many :stock_locations, through: :order_stock_locations
-
-    has_many :order_promotions, class_name: 'Spree::OrderPromotion'
-    has_many :promotions, through: :order_promotions
-
+    # Shipping
+    has_many :inventory_units, inverse_of: :order
     has_many :cartons, -> { distinct }, through: :inventory_units
     has_many :shipments, dependent: :destroy, inverse_of: :order do
       def states
         pluck(:state).uniq
       end
     end
+    has_many :order_stock_locations, class_name: "Spree::OrderStockLocation"
+    has_many :stock_locations, through: :order_stock_locations
+
+    # Adjustments and promotions
+    has_many :adjustments, -> { order(:created_at) }, as: :adjustable, inverse_of: :adjustable, dependent: :destroy
+    has_many :line_item_adjustments, through: :line_items, source: :adjustments
+    has_many :shipment_adjustments, through: :shipments, source: :adjustments
+    has_many :all_adjustments,
+             class_name: 'Spree::Adjustment',
+             foreign_key: :order_id,
+             dependent: :destroy,
+             inverse_of: :order
+    has_many :order_promotions, class_name: 'Spree::OrderPromotion'
+    has_many :promotions, through: :order_promotions
+
+    # Payments
+    has_many :payments, dependent: :destroy, inverse_of: :order
+
+    # Returns
+    has_many :return_authorizations, dependent: :destroy, inverse_of: :order
+    has_many :reimbursements, inverse_of: :order
+    has_many :refunds, through: :payments
+
+    # Logging
+    has_many :state_changes, as: :stateful
+    belongs_to :created_by, class_name: Spree::UserClassHandle.new
+    belongs_to :approver, class_name: Spree::UserClassHandle.new
+    belongs_to :canceler, class_name: Spree::UserClassHandle.new
 
     accepts_nested_attributes_for :line_items
     accepts_nested_attributes_for :bill_address
