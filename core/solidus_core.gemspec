@@ -30,7 +30,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'highline', '~> 1.7' # Necessary for the install generator
   s.add_dependency 'kaminari', '>= 0.17', '< 2.0'
   s.add_dependency 'monetize', '~> 1.1'
-  s.add_dependency 'paperclip', '~> 4.2'
+  s.add_dependency 'paperclip', ['>= 4.2', '< 6']
   s.add_dependency 'paranoia', '~> 2.2.0.pre'
   s.add_dependency 'premailer-rails'
   s.add_dependency 'rails', '~> 5.0.0'
