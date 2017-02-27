@@ -128,6 +128,20 @@ describe 'Users', type: :feature do
       expect(find_field('user_spree_role_admin')).to be_checked
     end
 
+    it 'can delete user roles' do
+      user_a.spree_roles << Spree::Role.create(name: "dummy")
+      click_link 'Account'
+
+      user_a.spree_roles.each do |role|
+        uncheck "user_spree_role_#{role.name}"
+      end
+
+      click_button 'Update'
+      expect(page).to have_text 'Account updated'
+      expect(find_field('user_spree_role_dummy')).not_to be_checked
+      expect(user_a.reload.spree_roles).to be_empty
+    end
+
     it 'can edit user shipping address' do
       click_link "Addresses"
 

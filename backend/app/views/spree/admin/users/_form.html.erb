@@ -16,6 +16,7 @@
         <%= label_tag nil, plural_resource_name(Spree::Role) %>
         <ul>
           <% if can? :manage, Spree::Role %>
+            <%= hidden_field_tag('user[spree_role_ids][]', nil) %>
             <% @roles.each do |role| %>
               <li>
                 <%= check_box_tag 'user[spree_role_ids][]', role.id, @user_roles.include?(role), id: "user_spree_role_#{role.name}" %>
