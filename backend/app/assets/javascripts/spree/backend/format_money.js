@@ -1,22 +1,6 @@
 //= require spree/backend/translation
 //= require solidus_admin/accounting
 
-Spree.currencyInfo = <%=
-Money::Currency.all.map { |c|
-  format =
-    if c.symbol == "" || c.symbol_first
-      "%s%v"
-    else
-      "%v %s"
-    end
-  [c.id.to_s.upcase, [
-    c.symbol || "¤",
-    c.exponent,
-    format
-  ]]
-}.to_h.to_json
-%>;
-
 Spree.formatMoney = function(amount, currency) {
   var currencyInfo = Spree.currencyInfo[currency];
 

@@ -21,7 +21,23 @@
       currency_delimiter:     I18n.t('number.currency.format.delimiter'),
       activerecord:           I18n.t('activerecord')
   }).to_json
-%>
+%>;
+
+  Spree.currencyInfo = <%==
+    Money::Currency.all.map { |c|
+      format =
+        if c.symbol == "" || c.symbol_first
+          "%s%v"
+        else
+          "%v %s"
+        end
+      [c.id.to_s.upcase, [
+        c.symbol || "¤",
+        c.exponent,
+        format
+      ]]
+    }.to_h.to_json
+%>;
 </script>
 <script data-hook='admin-custom-translations'>
 </script>
