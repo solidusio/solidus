@@ -21,6 +21,7 @@ module Spree
 
     before_destroy :ensure_can_destroy
 
+    scope :pending, -> { where pending: true }
     scope :backordered, -> { where state: 'backordered' }
     scope :on_hand, -> { where state: 'on_hand' }
     scope :pre_shipment, -> { where(state: PRE_SHIPMENT_STATES) }

@@ -19,6 +19,9 @@
 *   The "Stores" section of Settings in the admin now supports creating and
     editing multiple stores.
 
+*   The `AvailabilityValidator` now correctly detects out of stock when there
+    are multiple shipments from the same stock location.
+
 *   Deprecations
 
     * `cache_key_for_taxons` helper has been deprecated in favour of `cache [I18n.locale, @taxons]`

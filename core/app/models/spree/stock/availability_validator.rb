@@ -2,25 +2,9 @@ module Spree
   module Stock
     class AvailabilityValidator < ActiveModel::Validator
       def validate(line_item)
-        units_by_shipment = line_item.inventory_units.group_by(&:shipment)
-
-        if units_by_shipment.blank?
-          ensure_in_stock(line_item, line_item.quantity)
+        if is_valid?(line_item)
+          true
         else
-          units_by_shipment.each do |shipment, inventory_units|
-            inventory_units.select!(&:pending?)
-            ensure_in_stock(line_item, inventory_units.size, shipment.stock_location)
-          end
-        end
-
-        line_item.errors[:quantity].empty?
-      end
-
-      private
-
-      def ensure_in_stock(line_item, quantity, stock_location = nil)
-        quantifier = Stock::Quantifier.new(line_item.variant, stock_location)
-        unless quantifier.can_supply?(quantity)
           variant = line_item.variant
           display_name = variant.name.to_s
           display_name += %{ (#{variant.options_text})} unless variant.options_text.blank?
@@ -29,6 +13,20 @@ module Spree
             :selected_quantity_not_available,
             item: display_name.inspect
           )
+          false
+        end
+      end
+
+      private
+
+      def is_valid?(line_item)
+        if line_item.inventory_units.empty?
+          Stock::Quantifier.new(line_item.variant).can_supply?(line_item.quantity)
+        else
+          quantity_by_stock_location_id = line_item.inventory_units.pending.joins(:shipment).group(:stock_location_id).count
+          quantity_by_stock_location_id.all? do |stock_location_id, quantity|
+            Stock::Quantifier.new(line_item.variant, stock_location_id).can_supply?(quantity)
+          end
         end
       end
     end
