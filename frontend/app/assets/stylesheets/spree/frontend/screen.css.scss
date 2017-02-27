@@ -30,10 +30,6 @@ hr {
   border-bottom: $default_border;
 }
 
-/* Custom text-selection colors (remove any text shadows: twitter.com/miketaylr/status/12228805301) */
-::-moz-selection{background: $link_text_color; color: $layout_background_color; text-shadow: none;}
-::selection {background: $link_text_color; color: $layout_background_color; text-shadow: none;}
-
 /*  j.mp/webkit-tap-highlight-color */
 a:link {-webkit-tap-highlight-color: $link_text_color;}
 
