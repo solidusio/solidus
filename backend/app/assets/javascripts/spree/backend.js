@@ -32,7 +32,6 @@
 //= require spree/backend/images/new
 //= require spree/backend/images/upload
 //= require spree/backend/line_items
-//= require spree/backend/line_items_on_order_edit
 //= require spree/backend/navigation
 //= require spree/backend/number_field_updater
 //= require spree/backend/option_type_autocomplete
