@@ -1,5 +1,4 @@
 //= require spree/backend/orders/order_summary
-//= require spree/backend/orders/order_details
 
 Spree.Order || (Spree.Order = {})
 
@@ -22,24 +21,24 @@ Spree.Order.initCartPage = function(order_number) {
     collection: collection
   });
 
-  new Spree.Order.OrderDetailsTotalView({
+  new Spree.Views.Order.DetailsTotal({
     el: $('#order-total'),
     model: order
   });
 
-  new Spree.Order.OrderDetailsAdjustmentsView({
+  new Spree.Views.Order.DetailsAdjustments({
     el: $('.js-order-line-item-adjustments'),
     model: order,
     collection: order.get("line_items")
   });
 
-  new Spree.Order.OrderDetailsAdjustmentsView({
+  new Spree.Views.Order.DetailsAdjustments({
     el: $('.js-order-shipment-adjustments'),
     model: order,
     collection: order.get("shipments")
   });
 
-  new Spree.Order.OrderDetailsAdjustmentsView({
+  new Spree.Views.Order.DetailsAdjustments({
     el: $('.js-order-adjustments'),
     model: order
   });
