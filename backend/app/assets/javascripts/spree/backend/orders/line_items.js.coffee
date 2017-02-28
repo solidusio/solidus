@@ -1,9 +1,9 @@
-
 Spree.CartLineItemView = Backbone.View.extend
   tagName: 'tr'
   className: 'line-item'
 
   initialize: (options) ->
+    this.listenTo(@model, "change", @render)
     @editing = options.editing || @model.isNew()
     @noCancel = options.noCancel
 
