@@ -6,7 +6,7 @@
 Spree.Order || (Spree.Order = {})
 
 Spree.Order.initCartPage = function(order_number) {
-  var order = new Spree.Models.Order({number: order_number, line_items: []})
+  var order = new Spree.Models.Order({number: order_number, line_items: [], shipments: []})
   var collection = order.get("line_items")
 
   new Spree.Order.OrderSummaryView({
@@ -26,6 +26,23 @@ Spree.Order.initCartPage = function(order_number) {
 
   new Spree.Order.OrderDetailsTotalView({
     el: $('#order-total'),
+    model: order
+  });
+
+  new Spree.Order.OrderDetailsAdjustmentsView({
+    el: $('.js-order-line-item-adjustments'),
+    model: order,
+    collection: order.get("line_items")
+  });
+
+  new Spree.Order.OrderDetailsAdjustmentsView({
+    el: $('.js-order-shipment-adjustments'),
+    model: order,
+    collection: order.get("shipments")
+  });
+
+  new Spree.Order.OrderDetailsAdjustmentsView({
+    el: $('.js-order-adjustments'),
     model: order
   });
 

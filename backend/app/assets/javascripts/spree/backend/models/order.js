@@ -8,7 +8,8 @@ Spree.Models.Order = Backbone.Model.extend({
   idAttribute: "number",
 
   relations: {
-    "line_items": Spree.Collections.LineItems
+    "line_items": Spree.Collections.LineItems,
+    "shipments": Backbone.Collection
   },
 
   advance: function(opts) {
