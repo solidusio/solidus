@@ -19,6 +19,8 @@
 //= require spree/backend/format_money
 //
 //= require spree/backend/templates
+//= require spree/backend/models
+//= require spree/backend/collections
 //
 //= require spree/backend/address_states
 //= require spree/backend/adjustments
