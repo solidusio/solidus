@@ -1,28 +1,34 @@
-<%=
-  render "spree/admin/orders/adjustments", {
-    adjustments: order.line_item_adjustments,
-    order: order,
-    title: Spree.t(:line_item_adjustments)
-  }
-%>
-<%=
-  render "spree/admin/orders/adjustments", {
-    adjustments: order.shipment_adjustments,
-    order: order,
-    title: Spree.t(:shipment_adjustments)
-  }
-%>
-<%=
-  render "spree/admin/orders/adjustments", {
-    adjustments: order.adjustments,
-    order: order,
-    title: Spree.t(:order_adjustments)
-  }
-%>
+<div class="js-order-line-item-adjustments">
+  <%=
+    render "spree/admin/orders/adjustments", {
+      adjustments: order.line_item_adjustments,
+      order: order,
+      title: Spree.t(:line_item_adjustments)
+    }
+  %>
+</div>
+<div class="js-order-shipment-adjustments">
+  <%=
+    render "spree/admin/orders/adjustments", {
+      adjustments: order.shipment_adjustments,
+      order: order,
+      title: Spree.t(:shipment_adjustments)
+    }
+  %>
+</div>
+<div class="js-order-adjustments">
+  <%=
+    render "spree/admin/orders/adjustments", {
+      adjustments: order.adjustments,
+      order: order,
+      title: Spree.t(:order_adjustments)
+    }
+  %>
+</div>
 
 <% if order.line_items.exists? %>
-    <fieldset class="no-border-bottom" id="order-total" data-hook="order_details_total">
-      <legend><%= Spree.t(:order_total) %></legend>
-      <span class="order-total"><%= order.display_total %></span>
-    </fieldset>
+  <fieldset class="no-border-bottom" id="order-total" data-hook="order_details_total">
+    <legend><%= Spree.t(:order_total) %></legend>
+    <span class="order-total"><%= order.display_total %></span>
+  </fieldset>
 <% end %>
