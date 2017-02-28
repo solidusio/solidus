@@ -1,3 +1,5 @@
+#= require spree/backend/models
+
 Spree.CartLineItemView = Backbone.View.extend
   tagName: 'tr'
   className: 'line-item'
@@ -72,27 +74,29 @@ Spree.CartLineItemView = Backbone.View.extend
 
 $ ->
   if $("table.line-items").length
-    url = Spree.routes.orders_api + "/" + order_number
-    lineItemModel = Backbone.Model.extend
-      urlRoot: Spree.routes.line_items_api(order_number)
+    order = new Spree.Models.Order({number: order_number})
+    lineItems = new Spree.Collections.LineItems({order: orderModel})
 
     add_button = $('.js-add-line-item')
     add_button.click ->
       add_button.prop("disabled", true)
-      view = new Spree.CartLineItemView(model: new lineItemModel())
+      model = new Spree.Models.LineItem({}, {collection: lineItems})
+      view = new Spree.CartLineItemView(model: model)
       view.render()
       view.on('cancel', (event) -> add_button.prop("disabled", false))
       $("table.line-items > tbody").append(view.el)
 
+    url = Spree.routes.orders_api + "/" + order_number
     Spree.ajax(url: url).done (result) ->
       for line_item in result.line_items
-        model = new lineItemModel(line_item)
+        model = new Spree.Models.LineItem(line_item, {collection: lineItems})
         view = new Spree.CartLineItemView(model: model)
         view.render()
         $("table.line-items > tbody").append(view.el)
 
       add_button.prop("disabled", !result.line_items.length)
       if !result.line_items.length
-        view = new Spree.CartLineItemView(model: new lineItemModel(), noCancel: true)
+        model = new Spree.Models.LineItem({}, {collection: lineItems})
+        view = new Spree.CartLineItemView(model: model, noCancel: true)
         view.render()
         $("table.line-items > tbody").append(view.el)
