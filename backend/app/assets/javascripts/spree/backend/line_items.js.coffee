@@ -4,13 +4,14 @@ Spree.CartLineItemView = Backbone.View.extend
   className: 'line-item'
 
   initialize: (options) ->
-    @editing = options.editing || false
+    @editing = options.editing || @model.isNew()
 
   events:
     'click .edit-line-item': 'onEdit'
     'click .cancel-line-item': 'onCancel'
     'click .save-line-item': 'onSave'
     'click .delete-line-item': 'onDelete'
+    'change .js-select-variant': 'onChangeVariant'
 
   onEdit: (e) ->
     e.preventDefault()
@@ -19,13 +20,20 @@ Spree.CartLineItemView = Backbone.View.extend
 
   onCancel: (e) ->
     e.preventDefault()
-    @editing = false
-    @render()
+    if @model.isNew()
+      @remove()
+    else
+      @editing = false
+      @render()
 
   onSave: (e) ->
     e.preventDefault()
-    quantity = parseInt(@$('input.line_item_quantity').val())
-    @model.save {quantity: quantity},
+    attrs = {
+      quantity: parseInt(@$('input.line_item_quantity').val())
+    }
+    if @model.isNew()
+      attrs['variant_id'] = @$("[name=variant_id]").val()
+    @model.save attrs,
       patch: true,
       success: =>
         window.Spree.advanceOrder()
@@ -42,21 +50,30 @@ Spree.CartLineItemView = Backbone.View.extend
 
   render: ->
     line_item = @model.attributes
-    image = line_item.variant.images[0]
-    html = HandlebarsTemplates['orders/line_item'](line_item: line_item, image: image, editing: @editing)
+    image = line_item.variant && line_item.variant.images[0]
+    html = HandlebarsTemplates['orders/line_item'](
+      line_item: line_item,
+      image: image,
+      editing: @editing,
+      isNew: @model.isNew()
+    )
     el = @$el.html(html)
+    @$("[name=variant_id]").variantAutocomplete({ in_stock_only: true })
 
 $ ->
   if $("table.line-items").length
     url = Spree.routes.orders_api + "/" + order_number
-    Spree.ajax(url: url).done (result) ->
-      lineItemModel = Backbone.Model.extend
-        urlRoot: Spree.routes.line_items_api(order_number)
+    lineItemModel = Backbone.Model.extend
+      urlRoot: Spree.routes.line_items_api(order_number)
 
+    Spree.ajax(url: url).done (result) ->
       for line_item in result.line_items
         model = new lineItemModel(line_item)
-        view = new Spree.CartLineItemView(
-          model: model
-        )
+        view = new Spree.CartLineItemView(model: model)
         view.render()
         $("table.line-items > tbody").append(view.el)
+
+    $('.js-add-line-item').click ->
+      view = new Spree.CartLineItemView(model: new lineItemModel())
+      view.render()
+      $("table.line-items > tbody").append(view.el)

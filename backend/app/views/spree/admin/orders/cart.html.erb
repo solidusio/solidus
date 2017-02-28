@@ -20,16 +20,6 @@
     <%= render 'spree/admin/orders/risk_analysis', latest_payment: @order.payments.reorder("created_at DESC").first %>
 <% end %>
 
-<% if can?(:update, @order) && can?(:create, Spree::LineItem) %>
-  <%= render partial: 'add_line_item' %>
-<% end %>
-
-<% if @order.line_items.empty? %>
-    <div class="no-objects-found">
-      <%= Spree.t(:your_order_is_empty_add_product)%>
-    </div>
-<% end %>
-
 <div data-hook="admin_order_edit_form">
   <div id="order-form-wrapper">
     <%= render partial: 'line_items_edit_form', locals: { order: @order } %>

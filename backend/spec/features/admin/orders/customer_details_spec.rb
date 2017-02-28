@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe "Customer Details", type: :feature, js: true do
+  include OrderFeatureHelper
+
   stub_authorization!
 
   let(:country) { create(:country, name: "Kangaland") }
@@ -23,11 +25,9 @@ describe "Customer Details", type: :feature, js: true do
       click_link "Orders"
       click_link "New Order"
       click_on 'Cart'
-      select2_search product.name, from: Spree.t(:name_or_sku)
-      within("table.stock-levels") do
-        find('.variant_quantity').set(quantity)
-      end
-      click_button 'Add'
+
+      add_line_item product.name, quantity: quantity
+
       expect(page).to have_css('.line-item')
       click_link "Customer"
       targetted_select2 "foobar@example.com", from: "#s2id_customer_search"

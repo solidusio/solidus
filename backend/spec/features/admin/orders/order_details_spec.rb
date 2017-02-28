@@ -45,13 +45,8 @@ describe "Order Details", type: :feature, js: true do
         end
       end
 
-      it "can add an item to a shipment" do
-        select2_search "spree t-shirt", from: Spree.t(:name_or_sku)
-        within("table.stock-levels") do
-          fill_in "variant_quantity", with: 2
-        end
-
-        click_button "Add"
+      it "can add an item" do
+        add_line_item "spree t-shirt", quantity: 2
 
         within("#order_total") do
           expect(page).to have_content("$80.00")
@@ -67,7 +62,6 @@ describe "Order Details", type: :feature, js: true do
           end
         end
 
-        expect(page).to have_content("Your order is empty") # wait for page refresh
         expect(page).not_to have_content("spree t-shirt")
       end
 
@@ -134,12 +128,7 @@ describe "Order Details", type: :feature, js: true do
         end
 
         it "adds variant to order just fine" do
-          select2_search tote.name, from: Spree.t(:name_or_sku)
-          within("table.stock-levels") do
-            fill_in "variant_quantity", with: 1
-          end
-
-          click_button 'Add'
+          add_line_item tote.name
 
           within(".line-items") do
             expect(page).to have_content(tote.name)
@@ -154,7 +143,8 @@ describe "Order Details", type: :feature, js: true do
         end
 
         it "doesn't display the out of stock variant in the search results" do
-          select2_search_without_selection product.name, from: ".variant_autocomplete"
+          click_on 'Add Item'
+          select2_search_without_selection product.name, from: ".select-variant"
 
           expect(page).to have_selector('.select2-no-results')
           within(".select2-no-results") do

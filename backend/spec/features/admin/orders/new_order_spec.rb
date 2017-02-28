@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe "New Order", type: :feature do
+  include OrderFeatureHelper
+
   let!(:product) { create(:product_in_stock) }
   let!(:state) { create(:state) }
   let!(:store) { create(:store) }
@@ -24,11 +26,8 @@ describe "New Order", type: :feature do
 
   it "completes new order succesfully without using the cart", js: true do
     click_on 'Cart'
-    select2_search product.name, from: Spree.t(:name_or_sku)
+    add_line_item product.name
 
-    fill_in "variant_quantity", with: 2
-
-    click_button 'Add'
     click_on "Customer"
 
     within "#select-customer" do
@@ -62,11 +61,8 @@ describe "New Order", type: :feature do
 
   it 'can create split payments', js: true do
     click_on 'Cart'
-    select2_search product.name, from: Spree.t(:name_or_sku)
+    add_line_item product.name
 
-    fill_in "variant_quantity", with: 2
-
-    click_button 'Add'
     click_on "Customer"
 
     within "#select-customer" do
@@ -92,11 +88,7 @@ describe "New Order", type: :feature do
   context "adding new item to the order", js: true do
     it "inventory items show up just fine and are also registered as shipments" do
       click_on 'Cart'
-      select2_search product.name, from: Spree.t(:name_or_sku)
-
-      fill_in "variant_quantity", with: 2
-
-      click_button 'Add'
+      add_line_item product.name
 
       within(".line-items") do
         expect(page).to have_content(product.name)
@@ -128,11 +120,7 @@ describe "New Order", type: :feature do
 
     it "can still see line items" do
       click_on 'Cart'
-      select2_search product.name, from: Spree.t(:name_or_sku)
-
-      fill_in "variant_quantity", with: 1
-
-      click_button 'Add'
+      add_line_item product.name
 
       within(".line-items") do
         within(".line-item-name") do
@@ -185,12 +173,8 @@ describe "New Order", type: :feature do
     end
     it "transitions to delivery not to complete" do
       click_on 'Cart'
-      select2_search product.name, from: Spree.t(:name_or_sku)
-      within("table.stock-levels") do
-        find('.variant_quantity').set(1)
-      end
 
-      click_button 'Add'
+      add_line_item product.name
 
       expect(page).to have_css('.line-item')
 
