@@ -1,26 +1,3 @@
-editing = (e) ->
-  e.preventDefault()
-  $(e.delegateTarget).addClass('editing')
-
-editingDone = (e) ->
-  e.preventDefault()
-  $(e.delegateTarget).removeClass('editing')
-
-onSaveLineItem = (e) ->
-  e.preventDefault()
-  line_item = $(this).closest('.line-item')
-  line_item_id = line_item.data('line-item-id')
-  quantity = parseInt(line_item.find('input.line_item_quantity').val())
-  adjustLineItem(line_item_id, quantity)
-  editingDone(e)
-
-onDeleteLineItem = (e) ->
-  e.preventDefault()
-  return unless confirm(Spree.translations.are_you_sure_delete)
-  line_item = $(this).closest('.line-item')
-  line_item_id = line_item.data('line-item-id')
-  deleteLineItem(line_item_id)
-  editingDone(e)
 
 lineItemURL = (id) ->
   "#{Spree.routes.line_items_api(order_number)}/#{id}.json"
@@ -47,6 +24,42 @@ deleteLineItem = (line_item_id) ->
       $('.line-items').remove()
     window.Spree.advanceOrder()
 
+Spree.CartLineItemView = Backbone.View.extend
+  tagName: 'tr'
+
+  initialize: (options) ->
+    console.log(options)
+
+  events:
+    'click .edit-line-item': 'onEdit'
+    'click .cancel-line-item': 'onCancel'
+    'click .save-line-item': 'onSave'
+    'click .delete-line-item': 'onDelete'
+
+  onEdit: (e) ->
+    e.preventDefault()
+    @$el.addClass('editing')
+
+  onCancel: (e) ->
+    e.preventDefault()
+    @$el.removeClass('editing')
+
+  onSave: (e) ->
+    e.preventDefault()
+    line_item = @$el
+    line_item_id = line_item.data('line-item-id')
+    quantity = parseInt(line_item.find('input.line_item_quantity').val())
+    adjustLineItem(line_item_id, quantity)
+    @$el.removeClass('editing')
+
+  onDelete: (e) ->
+    e.preventDefault()
+    return unless confirm(Spree.translations.are_you_sure_delete)
+    line_item = @$el
+    line_item_id = line_item.data('line-item-id')
+    deleteLineItem(line_item_id)
+    @$el.removeClass('editing')
+
 $ ->
   url = Spree.routes.orders_api + "/" + order_number
   Spree.ajax(url: url).done (result) ->
@@ -55,9 +68,8 @@ $ ->
       html = HandlebarsTemplates['orders/line_item'](line_item: line_item, image: image)
       $("table.line-items > tbody").append(html)
 
-    $('.line-item')
-      .on('click', '.edit-line-item',   editing)
-      .on('click', '.cancel-line-item', editingDone)
-      .on('click', '.save-line-item',   onSaveLineItem)
-      .on('click', '.delete-line-item', onDeleteLineItem)
+    $('.line-item').each ->
+      view = new Spree.CartLineItemView(
+        el: $(@)
+      )
 
