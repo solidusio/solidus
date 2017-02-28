@@ -4,7 +4,7 @@
 
 Spree.Order || (Spree.Order = {})
 
-Spree.Order.initCartPage = function() {
+Spree.Order.initCartPage = function(order_number) {
   var order = new Spree.Models.Order({number: order_number, line_items: []})
   var collection = order.get("line_items")
 
@@ -34,7 +34,7 @@ Spree.Order.initCartPage = function() {
 }
 
 $(function() {
-  if ($("table.line-items").length) {
-    Spree.Order.initCartPage();
+  if ($(".js-order-cart-page").length) {
+    Spree.Order.initCartPage($(".js-order-cart-page").data("order-number"));
   }
 });
