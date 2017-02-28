@@ -711,6 +711,7 @@ en:
     add_action_of_type: Add action of type
     add_country: Add Country
     add_coupon_code: Add Coupon Code
+    add_line_item: Add Item
     add_new_header: Add New Header
     add_new_style: Add New Style
     add_one: Add One

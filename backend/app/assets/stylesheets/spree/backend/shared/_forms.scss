@@ -124,6 +124,11 @@ button, .button {
     width: 100%;
     text-align: center;
   }
+
+  &[disabled], &.disabled {
+    background-color: #c2c4c7;
+    cursor: default;
+  }
 }
 
 span.info {

@@ -1,4 +1,12 @@
 module OrderFeatureHelper
+  def add_line_item(product_name, quantity: 1)
+    find(".js-add-line-item:not([disabled]), .line-item [name=quantity]").click
+
+    targetted_select2_search product_name, from: ".select-variant"
+    fill_in "quantity", with: quantity
+    click_icon 'ok'
+  end
+
   def complete_split_to(destination, quantity: nil)
     if destination.is_a?(Spree::Shipment)
       destination = destination.number

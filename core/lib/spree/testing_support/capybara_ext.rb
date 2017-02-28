@@ -20,6 +20,12 @@ module CapybaraExt
   end
 
   def fill_in_quantity(table_column, selector, quantity)
+    Spree::Deprecation.warn <<-WARN.strip_heredoc
+      fill_in_quantity is deprecated. Instead use:
+        within(#{table_column.inspect}) do
+          fill_in #{selector.inspect}, with: #{quantity.inspect}
+        end
+    WARN
     within(table_column) do
       fill_in selector, with: quantity
     end
