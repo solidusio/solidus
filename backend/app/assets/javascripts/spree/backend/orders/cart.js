@@ -1,5 +1,3 @@
-//= require spree/backend/models
-//= require spree/backend/orders/line_items
 //= require spree/backend/orders/order_summary
 //= require spree/backend/orders/order_details
 
@@ -14,12 +12,12 @@ Spree.Order.initCartPage = function(order_number) {
     model: order
   });
 
-  new Spree.CartLineItemTableView({
+  new Spree.Views.Cart.LineItemTable({
     el: $("table.line-items > tbody"),
     collection: collection
   });
 
-  new Spree.CartAddLineItemButtonView({
+  new Spree.Views.Cart.AddLineItemButton({
     el: $('.js-add-line-item'),
     collection: collection
   });

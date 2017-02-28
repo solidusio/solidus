@@ -21,6 +21,7 @@
 //= require spree/backend/templates
 //= require spree/backend/models
 //= require spree/backend/collections
+//= require spree/backend/views
 //
 //= require spree/backend/address_states
 //= require spree/backend/adjustments
