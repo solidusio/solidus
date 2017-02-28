@@ -32,7 +32,7 @@
 
 <%= javascript_include_tag 'spree/backend/all' %>
 
-<%= render "spree/admin/shared/translations" %>
+<%= render "spree/admin/shared/js_locale_data" %>
 
 <%= javascript_tag do -%>
   Spree.api_key = "<%= try_spree_current_user.try(:spree_api_key) %>";

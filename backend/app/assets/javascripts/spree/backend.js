@@ -15,6 +15,7 @@
 //= require spree/backend/translation
 //= require spree/backend/backbone-overrides
 //= require spree/backend/spree-select2
+//= require spree/backend/format_money
 //
 //= require spree/backend/templates
 //
