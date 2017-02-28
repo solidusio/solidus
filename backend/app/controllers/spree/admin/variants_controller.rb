@@ -1,6 +1,8 @@
 module Spree
   module Admin
     class VariantsController < ResourceController
+      helper 'spree/admin/products'
+
       belongs_to 'spree/product', find_by: :slug
       new_action.before :new_before
       before_action :redirect_on_empty_option_values, only: [:new]
