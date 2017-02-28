@@ -22,13 +22,6 @@ onDeleteLineItem = (e) ->
   deleteLineItem(line_item_id)
   editingDone(e)
 
-$(document).ready ->
-  $('.line-item')
-    .on('click', '.edit-line-item',   editing)
-    .on('click', '.cancel-line-item', editingDone)
-    .on('click', '.save-line-item',   onSaveLineItem)
-    .on('click', '.delete-line-item', onDeleteLineItem)
-
 lineItemURL = (id) ->
   "#{Spree.routes.line_items_api(order_number)}/#{id}.json"
 
@@ -53,3 +46,18 @@ deleteLineItem = (line_item_id) ->
     if $('.line-items tr.line-item').length == 0
       $('.line-items').remove()
     window.Spree.advanceOrder()
+
+$ ->
+  url = Spree.routes.orders_api + "/" + order_number
+  Spree.ajax(url: url).done (result) ->
+    for line_item in result.line_items
+      image = line_item.variant.images[0]
+      html = HandlebarsTemplates['orders/line_item'](line_item: line_item, image: image)
+      $("table.line-items > tbody").append(html)
+
+    $('.line-item')
+      .on('click', '.edit-line-item',   editing)
+      .on('click', '.cancel-line-item', editingDone)
+      .on('click', '.save-line-item',   onSaveLineItem)
+      .on('click', '.delete-line-item', onDeleteLineItem)
+

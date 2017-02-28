@@ -1,0 +1,30 @@
+<tr class="line-item" data-line-item-id="{{ line_item.id }}">
+  <td class="line-item-image">
+    <img src="{{ image.mini_url }}">
+  </td>
+  <td class="line-item-name">
+    {{ line_item.variant.name }}<br>
+    {{#if line_item.variant.options_text }}
+      {{ line_item.variant.options_text }}<br/>
+    {{/if}}
+    <strong>{{ t "sku" }}:</strong> {{ line_item.variant.sku }}
+  </td>
+  <td class="line-item-price align-center">
+    {{ line_item.single_display_amount }}
+  </td>
+  <td class="line-item-qty-show align-center">
+    {{ line_item.quantity }}
+  </td>
+  <td class="line-item-qty-edit">
+    <input type="number" name="quantity" id="quantity" value="{{ line_item.quantity }}" min="0" class="line_item_quantity" size="5">
+  </td>
+  <td class="line-item-total align-center">
+    {{ line_item.display_amount }}
+  </td>
+  <td class="cart-line-item-delete actions" data-hook="cart_line_item_delete">
+    <a class="save-line-item fa fa-ok no-text with-tip" href="#" title="{{ t "actions.save" }}"></a>
+    <a class="cancel-line-item fa fa-cancel no-text with-tip" href="#" title="{{ t "actions.cancel" }}"></a>
+    <a class="edit-line-item fa fa-edit no-text with-tip" href="#" title="{{ t "actions.edit" }}"></a>
+    <a class="delete-line-item fa fa-trash no-text with-tip" href="#" title="{{ t "actions.delete" }}"></a>
+  </td>
+</tr>
