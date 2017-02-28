@@ -22,6 +22,12 @@
 *   The `AvailabilityValidator` now correctly detects out of stock when there
     are multiple shipments from the same stock location.
 
+*   The spree/admin/shared/\_translations partial has moved to
+    spree/admin/shared/\_js\_locale\_data.
+
+*   New method Spree.formatMoney(amount, currency) is available to javascript in
+    the admin.
+
 *   Deprecations
 
     * `cache_key_for_taxons` helper has been deprecated in favour of `cache [I18n.locale, @taxons]`
