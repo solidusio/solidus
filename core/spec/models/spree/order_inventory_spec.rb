@@ -100,6 +100,18 @@ describe Spree::OrderInventory, type: :model do
       expect(movement.originator).to eq(shipment)
       expect(movement.quantity).to eq(-5)
     end
+
+    context "calling multiple times" do
+      it "creates the correct number of inventory units" do
+        line_item.update_columns(quantity: 2)
+        subject.verify(shipment)
+        expect(line_item.inventory_units.count).to eq(2)
+
+        line_item.update_columns(quantity: 3)
+        subject.verify(shipment)
+        expect(line_item.inventory_units.count).to eq(3)
+      end
+    end
   end
 
   context "#determine_target_shipment" do
