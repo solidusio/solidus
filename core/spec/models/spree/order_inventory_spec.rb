@@ -3,37 +3,57 @@ require 'spec_helper'
 describe Spree::OrderInventory, type: :model do
   let(:order) { create :completed_order_with_totals }
   let(:line_item) { order.line_items.first }
+  let(:shipment) { order.shipments.first }
+  let(:variant) { subject.variant }
+  let(:stock_item) { shipment.stock_location.stock_item(variant) }
+
 
   subject { described_class.new(order, line_item) }
 
-  context "when order is missing inventory units" do
-    before { line_item.update_column(:quantity, 2) }
+  context "insufficient inventory units" do
+    let(:old_quantity) { 1 }
+    let(:new_quantity) { 3 }
+
+    before do
+      line_item.update_attributes!(quantity: old_quantity)
+
+      line_item.update_column(:quantity, new_quantity)
+      subject.line_item.reload
+    end
 
     it 'creates the proper number of inventory units' do
-      subject.verify
-      expect(subject.inventory_units.count).to eq 2
+      expect(line_item.inventory_units.count).to eq(old_quantity)
+      subject.verify(shipment)
+      expect(line_item.inventory_units.count).to eq(new_quantity)
     end
-  end
 
-  context "#add_to_shipment" do
-    let(:shipment) { order.shipments.first }
+    it "unstocks items" do
+      expect {
+        subject.verify(shipment)
+      }.to change { stock_item.reload.count_on_hand }.by(-2)
+    end
 
     context "order is not completed" do
-      before { allow(order).to receive_messages completed?: false }
+      before { order.update_columns completed_at: nil }
 
       it "doesn't unstock items" do
-        expect(shipment.stock_location).not_to receive(:unstock)
-        expect(subject.send(:add_to_shipment, shipment, 5)).to eq(5)
+        expect {
+          subject.verify(shipment)
+        }.not_to change { stock_item.reload.count_on_hand }
       end
     end
 
     context "inventory units state" do
       before { shipment.inventory_units.destroy_all }
+      let(:new_quantity) { 5 }
 
       it 'sets inventory_units state as per stock location availability' do
-        expect(shipment.stock_location).to receive(:fill_status).with(subject.variant, 5).and_return([3, 2])
+        stock_item.update_columns(
+          backorderable: true,
+          count_on_hand: 3
+        )
 
-        expect(subject.send(:add_to_shipment, shipment, 5)).to eq(5)
+        subject.verify
 
         units = shipment.inventory_units_for(subject.variant).group_by(&:state)
         expect(units['backordered'].size).to eq(2)
@@ -42,33 +62,31 @@ describe Spree::OrderInventory, type: :model do
     end
 
     context "store doesnt track inventory" do
-      let(:variant) { create(:variant) }
+      let(:new_quantity) { 1 }
 
       before { Spree::Config.track_inventory_levels = false }
 
-      it "creates only on hand inventory units" do
+      it "creates on hand inventory units" do
         variant.stock_items.destroy_all
 
-        # The before_save callback in LineItem would verify inventory
-        line_item = order.contents.add variant, 1, shipment: shipment
+        subject.verify(shipment)
 
-        units = shipment.inventory_units_for(line_item.variant)
+        units = shipment.inventory_units_for(variant)
         expect(units.count).to eq 1
         expect(units.first).to be_on_hand
       end
     end
 
     context "variant doesnt track inventory" do
-      let(:variant) { create(:variant) }
-      before { variant.track_inventory = false }
+      before { variant.update_attributes!(track_inventory: false) }
+      let(:new_quantity) { 1 }
 
-      it "creates only on hand inventory units" do
+      it "creates on hand inventory units" do
         variant.stock_items.destroy_all
 
-        line_item = order.contents.add variant, 1
         subject.verify(shipment)
 
-        units = shipment.inventory_units_for(line_item.variant)
+        units = shipment.inventory_units_for(variant)
         expect(units.count).to eq 1
         expect(units.first).to be_on_hand
       end
