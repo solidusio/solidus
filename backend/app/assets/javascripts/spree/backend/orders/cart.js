@@ -1,12 +1,10 @@
-//= require spree/backend/orders/order_summary
-
 Spree.Order || (Spree.Order = {})
 
 Spree.Order.initCartPage = function(order_number) {
   var order = new Spree.Models.Order.fetch(order_number)
   var collection = order.get("line_items")
 
-  new Spree.Order.OrderSummaryView({
+  new Spree.Views.Order.Summary({
     el: $('#order_tab_summary'),
     model: order
   });

@@ -1,9 +1,7 @@
-//= require spree/backend/routes
-//= require spree/backend/models/order
+Spree.Views || (Spree.Views = {});
+Spree.Views.Order || (Spree.Views.Order = {});
 
-Spree.Order || (Spree.Order = {});
-
-Spree.Order.OrderSummaryView = Backbone.View.extend({
+Spree.Views.Order.Summary = Backbone.View.extend({
   initialize: function () {
     this.listenTo(this.model, "change", this.render);
     this.render()
