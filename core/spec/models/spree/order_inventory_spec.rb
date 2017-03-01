@@ -202,9 +202,10 @@ describe Spree::OrderInventory, type: :model do
 
       it 'should destroy self if not inventory units remain' do
         allow(shipment.inventory_units).to receive_messages(count: 0)
-        expect(shipment).to receive(:destroy)
 
-        expect(subject.send(:remove_from_shipment, shipment, 1)).to eq(1)
+        expect {
+          expect(subject.send(:remove_from_shipment, shipment, 1)).to eq(1)
+        }.to change{ order.shipments.count }.from(1).to(0)
       end
 
       context "inventory unit line item and variant points to different products" do
