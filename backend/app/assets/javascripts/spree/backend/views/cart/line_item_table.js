@@ -1,6 +1,3 @@
-Spree.Views = (Spree.Views || {})
-Spree.Views.Cart = (Spree.Views.Cart || {})
-
 Spree.Views.Cart.LineItemTable = Backbone.View.extend({
   initialize: function() {
     this.listenTo(this.collection, 'add', this.add);
