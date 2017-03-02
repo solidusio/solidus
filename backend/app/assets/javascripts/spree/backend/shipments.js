@@ -30,24 +30,45 @@ var ShipmentAddVariantView = Backbone.View.extend({
 });
 
 var ShipShipmentView = Backbone.View.extend({
+  tagName: 'form',
+  className: 'admin-ship-shipment',
+
   initialize: function(options){
-    this.shipment_number = options.shipment_number;
+    this.send_mailer = false;
   },
+
   events: {
-    "submit": "onSubmit"
+    "change [name=send_mailer]": "onChange",
+    "click .ship-shipment-button": "onSubmit"
   },
-  onSubmit: function(e){
+
+  onChange: function() {
+    this.send_mailer = $("[name=send_mailer]").is(":checked");
+  },
+
+  onSubmit: function(e) {
+    var shipment_number = this.model.id;
     Spree.ajax({
       type: "PUT",
-      url: Spree.routes.shipments_api + "/" + this.shipment_number + "/ship",
+      url: Spree.routes.shipments_api + "/" + shipment_number + "/ship",
       data: {
-        send_mailer: this.$("[name='send_mailer']").is(":checked")
+        send_mailer: this.send_mailer
       },
       success: function(){
         window.location.reload()
       }
     });
     return false;
+  },
+
+  render: function() {
+    if(this.model.get("state") == "ready") {
+      this.$el.html(HandlebarsTemplates['shipments/ship_shipment']({
+        send_mailer: this.send_mailer
+      }));
+    } else {
+      this.$el.empty();
+    }
   }
 });
 
@@ -336,13 +357,8 @@ var ManifestItem = Backbone.Model.extend({
 
 var ShipmentEditView = Backbone.View.extend({
   initialize: function(){
-    var model = this.model;
-    var shipmentView = this;
-    this.$("form.admin-ship-shipment").each(function(el){
-      new ShipShipmentView({
-        el: this,
-        shipment_number: model.shipment.get("number")
-      });
+    this.shipShipmentView = new ShipShipmentView({
+      model: this.model
     });
 
     this.render();
@@ -369,6 +385,9 @@ var ShipmentEditView = Backbone.View.extend({
 
     var trackingView = new ShipmentTrackingView({model: this.model});
     tbody.append(trackingView.el);
+
+    this.shipShipmentView.render();
+    this.$el.find('fieldset').append(this.shipShipmentView.el);
   },
 });
 
