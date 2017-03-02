@@ -263,6 +263,43 @@ var ShipmentItemView = Backbone.View.extend({
   },
 });
 
+var ShipmentTrackingView = Backbone.View.extend({
+  tagName: 'tr',
+  className: 'shipment-edit-tracking',
+
+  initialize: function(options) {
+    this.editing = false;
+    this.render()
+  },
+
+  events: {
+    "click a.edit-tracking": "onToggleEdit",
+    "click a.cancel-tracking": "onToggleEdit",
+    "click a.save-tracking": "onSave",
+  },
+
+  onToggleEdit: function(e) {
+    e.preventDefault();
+    this.editing = !this.editing;
+    this.render();
+  },
+
+  onSave: function(e) {
+    e.preventDefault();
+    var tracking = this.$('[name="tracking"]').val();
+    this.model.save({tracking: tracking}, {patch: true});
+    this.editing = false;
+    this.render();
+  },
+
+  render: function() {
+    this.$el.html(HandlebarsTemplates['orders/shipment_tracking']({
+      editing: this.editing,
+      tracking: this.model.get("tracking")
+    }))
+  }
+})
+
 var ShipmentEditView = Backbone.View.extend({
   initialize: function(){
     var tbody = this.$("tbody[data-order-number][data-shipment-number]");
@@ -283,6 +320,12 @@ var ShipmentEditView = Backbone.View.extend({
         order_number: shipmentView.order_number
       });
     });
+
+    var shipmentData = _.findWhere(window.shipments, {number: this.shipment_number});
+    var model = new Spree.Models.Shipment(shipmentData);
+    var trackingView = new ShipmentTrackingView({model: model});
+
+    tbody.append(trackingView.el)
   },
 
   events: {
@@ -290,9 +333,6 @@ var ShipmentEditView = Backbone.View.extend({
     "click a.cancel-method": "toggleMethodEdit",
     "click a.save-method": "saveMethod",
 
-    "click a.edit-tracking": "toggleTrackingEdit",
-    "click a.cancel-tracking": "toggleTrackingEdit",
-    "click a.save-tracking": "saveTracking",
   },
 
   toggleMethodEdit: function(e){
@@ -311,29 +351,6 @@ var ShipmentEditView = Backbone.View.extend({
     });
   },
 
-  toggleTrackingEdit: function(e) {
-    e.preventDefault();
-    this.$("tr.edit-tracking").toggle();
-    this.$("tr.show-tracking").toggle();
-  },
-
-  saveTracking: function(e) {
-    e.preventDefault();
-    var tracking = this.$('[name="tracking"]').val();
-    var _this = this;
-    updateShipment(this.shipment_number, {
-      tracking: tracking
-    }).done(function (data) {
-      _this.$('tr.edit-tracking').toggle();
-
-      var show = _this.$('tr.show-tracking');
-      show.toggle()
-          .find('.tracking-value')
-          .html($("<strong>")
-          .html(Spree.translations.tracking + ": "))
-          .append(document.createTextNode(data.tracking));
-    });
-  }
 });
 
 $(function(){

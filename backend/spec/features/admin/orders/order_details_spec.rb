@@ -85,7 +85,7 @@ describe "Order Details", type: :feature, js: true do
       it "can add tracking information" do
         visit spree.edit_admin_order_path(order)
 
-        within(".show-tracking") do
+        within(".shipment-edit-tracking") do
           click_icon :edit
         end
         fill_in "tracking", with: "FOOBAR"
