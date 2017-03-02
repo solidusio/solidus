@@ -445,29 +445,29 @@ var initOrderShipmentsPage = function(order) {
   shipments.each(watchShipment);
   shipments.on('add', watchShipment);
 
-  new Spree.Order.OrderSummaryView({
+  new Spree.Views.Order.Summary({
     el: $('#order_tab_summary'),
     model: order
   });
 
-  new Spree.Order.OrderDetailsTotalView({
+  new Spree.Views.Order.DetailsTotal({
     el: $('#order-total'),
     model: order
   });
 
-  new Spree.Order.OrderDetailsAdjustmentsView({
+  new Spree.Views.Order.DetailsAdjustments({
     el: $('.js-order-line-item-adjustments'),
     model: order,
     collection: order.get("line_items")
   });
 
-  new Spree.Order.OrderDetailsAdjustmentsView({
+  new Spree.Views.Order.DetailsAdjustments({
     el: $('.js-order-shipment-adjustments'),
     model: order,
     collection: order.get("shipments")
   });
 
-  new Spree.Order.OrderDetailsAdjustmentsView({
+  new Spree.Views.Order.DetailsAdjustments({
     el: $('.js-order-adjustments'),
     model: order
   });
