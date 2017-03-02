@@ -391,6 +391,17 @@ var ShipmentEditView = Backbone.View.extend({
   },
 });
 
+var OrderEditShipmentsView = Backbone.View.extend({
+  initialize: function(options){
+    var shipments = this.collection;
+    $(".js-shipment-edit").each(function(){
+      var shipment_number = $(this).find('tbody').data('shipment-number');
+      var shipment = shipments.findWhere({number: shipment_number});
+      new ShipmentEditView({ el: this, model: shipment });
+    });
+  }
+});
+
 var initOrderShipmentsPage = function(order) {
   $(".js-shipment-add-variant").each(function(){
     new ShipmentAddVariantView({el: this});
@@ -398,11 +409,12 @@ var initOrderShipmentsPage = function(order) {
 
   var shipments = order.get("shipments");
 
-  $(".js-shipment-edit").each(function(){
-    var shipment_number = $(this).find('tbody').data('shipment-number');
-    var shipment = shipments.findWhere({number: shipment_number});
-    new ShipmentEditView({ el: this, model: shipment });
+  new OrderEditShipmentsView({
+    el: $(".js-order-edit-shipments"),
+    collection: shipments
+  });
 
+  shipments.each(function(shipment){
     shipment.on("sync", function(){
       order.fetch();
     })
