@@ -11,6 +11,7 @@
 //= require spree/backend/templates/promotions/rules/option_values
 //= require spree/backend/templates/promotions/rules/option_values_select
 //= require spree/backend/templates/shipments/ship_shipment
+//= require spree/backend/templates/shipments/edit_shipment
 //= require spree/backend/templates/stock_items/stock_location_stock_item
 //= require spree/backend/templates/stock_transfers/transfer_item
 //= require spree/backend/templates/taxons/_tree

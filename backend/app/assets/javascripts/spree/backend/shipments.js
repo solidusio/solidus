@@ -356,6 +356,8 @@ var ManifestItem = Backbone.Model.extend({
 })
 
 var ShipmentEditView = Backbone.View.extend({
+  tagName: 'div',
+
   initialize: function(){
     this.shipShipmentView = new ShipShipmentView({
       model: this.model
@@ -365,9 +367,16 @@ var ShipmentEditView = Backbone.View.extend({
   },
 
   render: function() {
-    var tbody = this.$("tbody[data-order-number][data-shipment-number]");
+    this.$el.html(HandlebarsTemplates['shipments/edit_shipment']({
+      shipment: this.model.attributes,
+      order: this.model.order.attributes,
+      shipment_state: Spree.t("shipment_states." + this.model.get("state"))
+    }))
+
     var shipment = this.model;
     var order = shipment.order;
+
+    var tbody = this.$("tbody[data-order-number][data-shipment-number]");
     var manifest = this.model.get("manifest");
     _.each(manifest, function(manifest_item) {
       var model = new ManifestItem(manifest_item);
@@ -393,12 +402,12 @@ var ShipmentEditView = Backbone.View.extend({
 
 var OrderEditShipmentsView = Backbone.View.extend({
   initialize: function(options){
-    var shipments = this.collection;
-    $(".js-shipment-edit").each(function(){
-      var shipment_number = $(this).find('tbody').data('shipment-number');
-      var shipment = shipments.findWhere({number: shipment_number});
-      new ShipmentEditView({ el: this, model: shipment });
-    });
+    this.collection.each(this.addShipment.bind(this))
+  },
+
+  addShipment: function(shipment) {
+    var view = new ShipmentEditView({ model: shipment });
+    this.$el.append(view.el);
   }
 });
 

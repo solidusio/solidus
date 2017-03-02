@@ -8,7 +8,6 @@
   <%= render :partial => "spree/admin/orders/carton", :collection => @order.cartons.order(:shipped_at), :locals => { :order => order } %>
 
   <div class="js-order-edit-shipments">
-    <%= render partial: "spree/admin/orders/shipment", collection: @order.shipments.order(:created_at), locals: { order: order } %>
   </div>
 
   <%= render "spree/admin/orders/order_details", { order: order } %>
