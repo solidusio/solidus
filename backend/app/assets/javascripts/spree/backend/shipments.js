@@ -302,15 +302,39 @@ var ShipmentEditMethodView = Backbone.View.extend({
     this.render()
   },
 
+  events: {
+    "click a.edit-method": "onToggleEdit",
+    "click a.cancel-method": "onToggleEdit",
+    "click a.save-method": "onSave",
+  },
+
+  onToggleEdit: function(e) {
+    e.preventDefault();
+    this.editing = !this.editing;
+    this.render()
+  },
+
+  onSave: function(e) {
+    e.preventDefault();
+    var selected_shipping_rate_id = this.$("[name=selected_shipping_rate_id]").val();
+    this.model.save({
+      selected_shipping_rate_id: Number(selected_shipping_rate_id)
+    }, {patch: true});
+    this.editing = false;
+    this.render();
+  },
+
   render: function() {
     var shippingRates = this.model.get("shipping_rates")
     var selectedRate = _.findWhere(shippingRates, {id: this.model.get("selected_shipping_rate_id")})
     this.$el.html(HandlebarsTemplates['orders/shipment_edit_method']({
       editing: this.editing,
-      tracking: this.model.get("tracking"),
       selectedRate: selectedRate,
-
+      selectedName: (selectedRate || {}).name,
+      selectedPrice: Spree.formatMoney((selectedRate || {}).cost, this.model.order.get("currency")),
+      shippingRates: shippingRates
     }))
+    this.$('select').select2()
   }
 })
 
@@ -341,29 +365,6 @@ var ShipmentEditView = Backbone.View.extend({
     var trackingView = new ShipmentTrackingView({model: this.model});
     tbody.append(trackingView.el);
   },
-
-  events: {
-    "click a.edit-method": "toggleMethodEdit",
-    "click a.cancel-method": "toggleMethodEdit",
-    "click a.save-method": "saveMethod",
-  },
-
-  toggleMethodEdit: function(e){
-    e.preventDefault();
-    this.$('tr.edit-method').toggle();
-    this.$('tr.show-method').toggle();
-  },
-
-  saveMethod: function(e) {
-    e.preventDefault();
-    var selected_shipping_rate_id = this.$("select#selected_shipping_rate_id").val();
-    updateShipment(this.shipment_number, {
-      selected_shipping_rate_id: selected_shipping_rate_id
-    }).done(function () {
-      window.location.reload();
-    });
-  },
-
 });
 
 var initOrderShipmentsPage = function(order) {
