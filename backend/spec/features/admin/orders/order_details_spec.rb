@@ -63,6 +63,9 @@ describe "Order Details", type: :feature, js: true do
         end
 
         expect(page).not_to have_content("spree t-shirt")
+
+        # Should have a new item row
+        expect(page).to have_field('quantity')
       end
 
       # Regression test for https://github.com/spree/spree/issues/3862
@@ -105,11 +108,14 @@ describe "Order Details", type: :feature, js: true do
         expect(page).to have_content("Default")
       end
 
-      it "will show the variant sku" do
-        order = create(:completed_order_with_totals)
-        visit spree.edit_admin_order_path(order)
-        sku = order.line_items.first.variant.sku
-        expect(page).to have_content("SKU: #{sku}")
+      context "with a completed order" do
+        let!(:order) { create(:completed_order_with_totals) }
+
+        it "will show the variant sku" do
+          visit spree.edit_admin_order_path(order)
+          sku = order.line_items.first.variant.sku
+          expect(page).to have_content("SKU: #{sku}")
+        end
       end
 
       context "with special_instructions present" do

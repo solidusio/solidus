@@ -8,6 +8,7 @@
 //= require jquery.sticky-kit.min
 //= require solidus_admin/underscore
 //= require solidus_admin/backbone
+//= require solidus_admin/backbone-nested-models
 //= require solidus_admin/tether
 //= require solidus_admin/bootstrap
 //= require prism
@@ -18,6 +19,9 @@
 //= require spree/backend/format_money
 //
 //= require spree/backend/templates
+//= require spree/backend/models
+//= require spree/backend/collections
+//= require spree/backend/views
 //
 //= require spree/backend/address_states
 //= require spree/backend/adjustments
@@ -32,12 +36,11 @@
 //= require spree/backend/images/index
 //= require spree/backend/images/new
 //= require spree/backend/images/upload
-//= require spree/backend/line_items
 //= require spree/backend/navigation
 //= require spree/backend/number_field_updater
 //= require spree/backend/option_type_autocomplete
 //= require spree/backend/option_value_picker
-//= require spree/backend/orders/edit
+//= require spree/backend/orders
 //= require spree/backend/payments/edit
 //= require spree/backend/payments/new
 //= require spree/backend/product_picker

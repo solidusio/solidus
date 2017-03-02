@@ -1,4 +1,4 @@
-<div data-hook="admin_order_form_fields">
+<div data-hook="admin_order_form_fields" class="js-order-cart-page" data-order-number="<%= @order.number %>">
   <% if @line_item.try(:errors).present? %>
       <%= render partial: 'spree/shared/error_messages', locals: { target: @line_item } %>
   <% end %>
@@ -9,35 +9,5 @@
     <button class="js-add-line-item" disabled><%= t('spree.add_line_item') %></button>
   <% end %>
 
-  <%= render partial: "spree/admin/orders/adjustments", locals: {
-          adjustments: @order.line_item_adjustments,
-          order: order,
-          title: Spree.t(:line_item_adjustments)
-  } %>
-  <%= render partial: "spree/admin/orders/adjustments", locals: {
-          adjustments: @order.shipment_adjustments,
-          order: order,
-          title: Spree.t(:shipment_adjustments)
-  } %>
-  <%= render partial: "spree/admin/orders/adjustments", locals: {
-          adjustments: @order.adjustments,
-          order: order,
-          title: Spree.t(:order_adjustments)
-  } %>
-
-  <% if order.line_items.exists? %>
-      <fieldset class="no-border-bottom" id="order-total" data-hook="order_details_total">
-        <legend><%= Spree.t(:order_total) %></legend>
-        <span class="order-total"><%= order.display_total %></span>
-      </fieldset>
-  <% end %>
-
-  <%= javascript_tag do -%>
-      var order_number = '<%= @order.number %>';
-      var shipments = [];
-
-      <% @order.shipments.each do |shipment| %>
-            shipments.push(<%== shipment.as_json(root: false, only: [:id, :tracking, :number, :state, :stock_location_id], include: [:inventory_units, :stock_location]).to_json %>);
-      <% end %>
-  <% end -%>
+  <%= render "spree/admin/orders/order_details", { order: order } %>
 </div>

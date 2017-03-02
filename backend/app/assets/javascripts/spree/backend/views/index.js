@@ -1,0 +1,6 @@
+//= require 'spree/backend/views/cart/add_line_item_button'
+//= require 'spree/backend/views/cart/line_item_row'
+//= require 'spree/backend/views/cart/line_item_table'
+//= require 'spree/backend/views/order/details_adjustments'
+//= require 'spree/backend/views/order/details_total'
+//= require 'spree/backend/views/order/summary'

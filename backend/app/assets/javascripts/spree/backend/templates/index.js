@@ -1,4 +1,5 @@
 //= require spree/backend/templates/orders/customer_details/autocomplete
+//= require spree/backend/templates/orders/details_adjustment_row
 //= require spree/backend/templates/orders/line_item
 //= require spree/backend/templates/products/sortable
 //= require spree/backend/templates/products/upload_progress

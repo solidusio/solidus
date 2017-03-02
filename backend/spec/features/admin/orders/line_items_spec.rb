@@ -17,7 +17,7 @@ describe "Order Line Items", type: :feature, js: true do
   end
 
   it "can edit a line item's quantity" do
-    visit spree.edit_admin_order_path(order)
+    visit spree.cart_admin_order_path(order)
     within(".line-items") do
       find(".edit-line-item").click
       fill_in "quantity", with: 10
@@ -32,7 +32,7 @@ describe "Order Line Items", type: :feature, js: true do
   end
 
   it "can delete a line item" do
-    visit spree.edit_admin_order_path(order)
+    visit spree.cart_admin_order_path(order)
 
     product_name = find(".line-items tr:nth-child(1) .line-item-name").text
 
