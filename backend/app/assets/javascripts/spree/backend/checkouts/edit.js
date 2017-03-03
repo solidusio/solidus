@@ -34,7 +34,6 @@ $(document).ready(function() {
           }
         }
       },
-      dropdownCssClass: 'customer_search',
       formatResult: formatCustomerResult,
       formatSelection: function (customer) {
         return Select2.util.escapeMarkup(customer.email);
