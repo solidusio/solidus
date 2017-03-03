@@ -1,5 +1,6 @@
 //= require spree/backend/routes
 //= require spree/backend/collections/line_items
+//= require spree/backend/collections/shipments
 
 Spree.Models.Order = Backbone.Model.extend({
   urlRoot: Spree.routes.orders_api,
@@ -7,7 +8,7 @@ Spree.Models.Order = Backbone.Model.extend({
 
   relations: {
     "line_items": Spree.Collections.LineItems,
-    "shipments": Backbone.Collection
+    "shipments":  Spree.Collections.Shipments
   },
 
   advance: function(opts) {
