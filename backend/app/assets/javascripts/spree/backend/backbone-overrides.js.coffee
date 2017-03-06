@@ -16,7 +16,7 @@ Backbone.sync = (method, model, options) ->
   if model?.paramRoot and !options.data and method in postMethods
     options.contentType = "application/json"
     data = {}
-    data[model.paramRoot] = model.toJSON(options)
+    data[model.paramRoot] = options.attrs || model.toJSON(options)
     options.data = JSON.stringify(data)
 
   oldSync method, model, options

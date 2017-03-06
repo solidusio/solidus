@@ -1,12 +1,17 @@
 //= require spree/backend/templates/orders/customer_details/autocomplete
 //= require spree/backend/templates/orders/details_adjustment_row
 //= require spree/backend/templates/orders/line_item
+//= require spree/backend/templates/orders/shipment_tracking
+//= require spree/backend/templates/orders/shipment_edit_method
+//= require spree/backend/templates/orders/shipment_item_row
 //= require spree/backend/templates/products/sortable
 //= require spree/backend/templates/products/upload_progress
 //= require spree/backend/templates/promotions/calculators/fields/tiered_flat_rate
 //= require spree/backend/templates/promotions/calculators/fields/tiered_percent
 //= require spree/backend/templates/promotions/rules/option_values
 //= require spree/backend/templates/promotions/rules/option_values_select
+//= require spree/backend/templates/shipments/ship_shipment
+//= require spree/backend/templates/shipments/edit_shipment
 //= require spree/backend/templates/stock_items/stock_location_stock_item
 //= require spree/backend/templates/stock_transfers/transfer_item
 //= require spree/backend/templates/taxons/_tree

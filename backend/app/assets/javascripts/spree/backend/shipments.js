@@ -29,48 +29,51 @@ var ShipmentAddVariantView = Backbone.View.extend({
   }
 });
 
-$(function(){
-  $(".js-shipment-add-variant").each(function(){
-    new ShipmentAddVariantView({el: this});
-  });
-});
-
 var ShipShipmentView = Backbone.View.extend({
+  tagName: 'form',
+  className: 'admin-ship-shipment',
+
   initialize: function(options){
-    this.shipment_number = options.shipment_number;
+    this.send_mailer = true;
   },
+
   events: {
-    "submit": "onSubmit"
+    "change [name=send_mailer]": "onChange",
+    "click .ship-shipment-button": "onSubmit"
   },
-  onSubmit: function(e){
+
+  onChange: function() {
+    this.send_mailer = $("[name=send_mailer]").is(":checked");
+  },
+
+  onSubmit: function(e) {
+    var shipment_number = this.model.id;
     Spree.ajax({
       type: "PUT",
-      url: Spree.routes.shipments_api + "/" + this.shipment_number + "/ship",
+      url: Spree.routes.shipments_api + "/" + shipment_number + "/ship",
       data: {
-        send_mailer: this.$("[name='send_mailer']").is(":checked")
+        send_mailer: this.send_mailer
       },
       success: function(){
         window.location.reload()
       }
     });
     return false;
+  },
+
+  render: function() {
+    if(this.model.get("state") == "ready") {
+      this.$el.html(HandlebarsTemplates['shipments/ship_shipment']({
+        send_mailer: this.send_mailer
+      }));
+    } else {
+      this.$el.empty();
+    }
   }
 });
 
-updateShipment = function(shipment_number, attributes) {
-  var url = Spree.routes.shipments_api + '/' + shipment_number;
-
-  return Spree.ajax({
-    type: 'PUT',
-    url: url,
-    data: {
-      shipment: attributes
-    }
-  });
-};
-
 adjustShipmentItems = function(shipment_number, variant_id, quantity){
-  var shipment = _.findWhere(shipments, {number: shipment_number});
+  var shipment = _.findWhere(window.shipments, {number: shipment_number});
   var inventory_units = _.where(shipment.inventory_units, {variant_id: variant_id});
 
   var url = Spree.routes.shipments_api + "/" + shipment_number;
@@ -103,7 +106,7 @@ adjustShipmentItems = function(shipment_number, variant_id, quantity){
 };
 
 addVariantFromStockLocation = function(stock_location_id, variant_id, quantity) {
-  var shipment = _.find(shipments, function(shipment){
+  var shipment = _.find(window.shipments, function(shipment){
     return shipment.stock_location_id == stock_location_id && (shipment.state == 'ready' || shipment.state == 'pending');
   });
 
@@ -133,12 +136,10 @@ var ShipmentSplitItemView = Backbone.View.extend({
   className: 'stock-item-split',
 
   initialize: function(options) {
-    this.variant = options.variant;
-    this.shipments = options.shipments;
-    this.shipment_number = options.shipment_number;
-    this.max_quantity = options.max_quantity;
-    this.shipmentItemView = options.shipmentItemView;
-    this.render()
+    this.variant = new Spree.Models.Variant({id: this.model.get("variant").id})
+    this.variant.fetch()
+
+    this.listenTo(this.variant, 'sync', this.render)
   },
 
   events: {
@@ -149,21 +150,22 @@ var ShipmentSplitItemView = Backbone.View.extend({
   cancelItemSplit: function(e){
     e.preventDefault();
 
-    this.shipmentItemView.removeSplit();
+    this.trigger("cancel")
     this.remove();
   },
 
   completeItemSplit: function(e){
     e.preventDefault();
 
+    var model = this.model;
     var quantity = this.$('.quantity').val();
     var target = this.$('[name="item_stock_location"]').val().split(':');
     var target_type = target[0];
     var target_id = target[1];
 
     var split_attr = {
-      original_shipment_number: this.shipment_number,
-      variant_id: this.variant.id,
+      original_shipment_number: this.model.shipment.get("number"),
+      variant_id: this.variant.get("id"),
       quantity: quantity
     };
     var jqXHR;
@@ -190,7 +192,7 @@ var ShipmentSplitItemView = Backbone.View.extend({
     jqXHR.error(function(msg) {
       alert(msg.responseJSON['message']);
     }).done(function() {
-      window.Spree.advanceOrder();
+      model.shipment.order.advance();
     });
   },
 
@@ -198,12 +200,14 @@ var ShipmentSplitItemView = Backbone.View.extend({
 
   render: function() {
     /* Only display other shipments */
-    var shipments = _.reject(this.shipments, _.matcher({'number': this.shipment_number}))
+    var shipments = this.model.shipment.order.get("shipments");
+    shipments = shipments.reject(this.model.shipment);
+    shipments = shipments.map(function(s){ return s.attributes });
 
     var renderAttr = {
-      variant: this.variant,
+      variant: this.variant.attributes,
       shipments: shipments,
-      max_quantity: this.max_quantity
+      max_quantity: this.model.get("quantity")
     };
     this.$el.html(this.template(renderAttr));
 
@@ -216,11 +220,26 @@ var ShipmentSplitItemView = Backbone.View.extend({
 });
 
 var ShipmentItemView = Backbone.View.extend({
+  tagName: 'tr',
+  className: 'stock-item',
+
   initialize: function(options) {
-    this.shipment_number = options.shipment_number
-    this.order_number = options.order_number
-    this.quantity = this.$el.data('item-quantity')
-    this.variant_id = this.$el.data('variant-id')
+    this.render()
+  },
+
+  template: HandlebarsTemplates['orders/shipment_item_row'],
+  render: function() {
+    var price = this.model.get("line_item").price;
+    var currency = this.model.shipment.order.get("currency");
+    var image = this.model.get("variant").images[0];
+
+    this.$el.html(this.template({
+      image: image,
+      states: this.model.get("states"),
+      variant: this.model.get("variant"),
+      price: Spree.formatMoney(price, currency),
+      totalPrice: Spree.formatMoney(price * this.model.get("quantity"), currency),
+    }))
   },
 
   events: {
@@ -238,106 +257,230 @@ var ShipmentItemView = Backbone.View.extend({
     this.$('.split-item').toggle();
     this.$('.delete-item').toggle();
 
-    var _this = this;
-    Spree.ajax({
-      type: "GET",
-      url: Spree.routes.variants_api + "/" + this.variant_id,
-    }).success(function(variant){
-      var split = new ShipmentSplitItemView({
-        shipmentItemView: _this,
-        shipment_number: _this.shipment_number,
-        variant: variant,
-        shipments: window.shipments,
-        max_quantity: _this.quantity
-      });
-
-      _this.$el.after(split.$el);
+    var split = new ShipmentSplitItemView({
+      model: this.model,
     });
+    this.$el.after(split.$el);
+
+    this.listenTo(split, "cancel", this.removeSplit);
   },
 
   onDelete: function(e){
     e.preventDefault();
     if (confirm(Spree.translations.are_you_sure_delete)) {
-      adjustShipmentItems(this.shipment_number, this.variant_id, 0);
+      adjustShipmentItems(this.model.shipment.get("number"), this.model.get("variant").id, 0);
     }
   },
 });
 
-var ShipmentEditView = Backbone.View.extend({
-  initialize: function(){
-    var tbody = this.$("tbody[data-order-number][data-shipment-number]");
-    this.shipment_number = tbody.data("shipment-number");
-    this.order_number = tbody.data("order-number");
+var ShipmentTrackingView = Backbone.View.extend({
+  tagName: 'tr',
+  className: 'shipment-edit-tracking',
 
-    var shipmentView = this;
-    this.$("form.admin-ship-shipment").each(function(el){
-      new ShipShipmentView({
-        el: this,
-        shipment_number: shipmentView.shipment_number
-      });
-    });
-    this.$(".stock-item").each(function(){
-      new ShipmentItemView({
-        el: this,
-        shipment_number: shipmentView.shipment_number,
-        order_number: shipmentView.order_number
-      });
-    });
+  initialize: function(options) {
+    this.editing = false;
+    this.render()
   },
 
   events: {
-    "click a.edit-method": "toggleMethodEdit",
-    "click a.cancel-method": "toggleMethodEdit",
-    "click a.save-method": "saveMethod",
-
-    "click a.edit-tracking": "toggleTrackingEdit",
-    "click a.cancel-tracking": "toggleTrackingEdit",
-    "click a.save-tracking": "saveTracking",
+    "click a.edit-tracking": "onToggleEdit",
+    "click a.cancel-tracking": "onToggleEdit",
+    "click a.save-tracking": "onSave",
   },
 
-  toggleMethodEdit: function(e){
+  onToggleEdit: function(e) {
     e.preventDefault();
-    this.$('tr.edit-method').toggle();
-    this.$('tr.show-method').toggle();
+    this.editing = !this.editing;
+    this.render();
   },
 
-  saveMethod: function(e) {
-    e.preventDefault();
-    var selected_shipping_rate_id = this.$("select#selected_shipping_rate_id").val();
-    updateShipment(this.shipment_number, {
-      selected_shipping_rate_id: selected_shipping_rate_id
-    }).done(function () {
-      window.location.reload();
-    });
-  },
-
-  toggleTrackingEdit: function(e) {
-    e.preventDefault();
-    this.$("tr.edit-tracking").toggle();
-    this.$("tr.show-tracking").toggle();
-  },
-
-  saveTracking: function(e) {
+  onSave: function(e) {
     e.preventDefault();
     var tracking = this.$('[name="tracking"]').val();
-    var _this = this;
-    updateShipment(this.shipment_number, {
-      tracking: tracking
-    }).done(function (data) {
-      _this.$('tr.edit-tracking').toggle();
+    this.model.save({tracking: tracking}, {patch: true});
+    this.editing = false;
+    this.render();
+  },
 
-      var show = _this.$('tr.show-tracking');
-      show.toggle()
-          .find('.tracking-value')
-          .html($("<strong>")
-          .html(Spree.translations.tracking + ": "))
-          .append(document.createTextNode(data.tracking));
+  render: function() {
+    this.$el.html(HandlebarsTemplates['orders/shipment_tracking']({
+      editing: this.editing,
+      tracking: this.model.get("tracking")
+    }))
+  }
+})
+
+var ShipmentEditMethodView = Backbone.View.extend({
+  tagName: 'tr',
+  className: 'shipment-edit-method',
+
+  initialize: function(options) {
+    this.editing = false;
+    this.render()
+  },
+
+  events: {
+    "click a.edit-method": "onToggleEdit",
+    "click a.cancel-method": "onToggleEdit",
+    "click a.save-method": "onSave",
+  },
+
+  onToggleEdit: function(e) {
+    e.preventDefault();
+    this.editing = !this.editing;
+    this.render()
+  },
+
+  onSave: function(e) {
+    e.preventDefault();
+    var selected_shipping_rate_id = this.$("[name=selected_shipping_rate_id]").val();
+    this.model.save({
+      selected_shipping_rate_id: Number(selected_shipping_rate_id)
+    }, {patch: true});
+    this.editing = false;
+    this.render();
+  },
+
+  render: function() {
+    var shippingRates = this.model.get("shipping_rates")
+    var selectedRate = _.findWhere(shippingRates, {id: this.model.get("selected_shipping_rate_id")})
+    this.$el.html(HandlebarsTemplates['orders/shipment_edit_method']({
+      editing: this.editing,
+      selectedRate: selectedRate,
+      selectedName: (selectedRate || {}).name,
+      selectedPrice: Spree.formatMoney((selectedRate || {}).cost, this.model.order.get("currency")),
+      shippingRates: shippingRates
+    }))
+    this.$('select').select2()
+  }
+})
+
+var ManifestItem = Backbone.Model.extend({
+})
+
+var ShipmentEditView = Backbone.View.extend({
+  tagName: 'div',
+  className: 'shipment-edit',
+
+  initialize: function(){
+    this.shipShipmentView = new ShipShipmentView({
+      model: this.model
     });
+
+    this.listenTo(this.model, 'remove', this.onRemove);
+    this.listenTo(this.model, 'change', this.render);
+
+    this.render();
+  },
+
+  onRemove: function() {
+    this.shipShipmentView.remove();
+    this.remove();
+  },
+
+  render: function() {
+    this.$el.attr('id', "shipment_" + this.model.get("id"))
+    this.$el.html(HandlebarsTemplates['shipments/edit_shipment']({
+      shipment: this.model.attributes,
+      order: this.model.order.attributes,
+      shipment_state: Spree.t("shipment_states." + this.model.get("state"))
+    }))
+
+    var shipment = this.model;
+
+    var tbody = this.$("tbody[data-order-number][data-shipment-number]");
+    var manifest = this.model.get("manifest");
+    _.each(manifest, function(manifest_item) {
+      var model = new ManifestItem(manifest_item);
+      model.shipment = shipment;
+
+      var view = new ShipmentItemView({
+        model: model
+      })
+      view.render();
+      tbody.append(view.el);
+    });
+
+    var editMethodView = new ShipmentEditMethodView({model: this.model});
+    tbody.append(editMethodView.el);
+
+    var trackingView = new ShipmentTrackingView({model: this.model});
+    tbody.append(trackingView.el);
+
+    this.shipShipmentView.render();
+    this.$el.find('fieldset').append(this.shipShipmentView.el);
+  },
+});
+
+var OrderEditShipmentsView = Backbone.View.extend({
+  initialize: function(options){
+    this.listenTo(this.collection, 'add', this.addShipment)
+
+    this.collection.each(this.addShipment.bind(this))
+  },
+
+  addShipment: function(shipment) {
+    var view = new ShipmentEditView({ model: shipment });
+    this.$el.append(view.el);
   }
 });
 
-$(function(){
-  $(".js-shipment-edit").each(function(){
-    new ShipmentEditView({ el: this });
+var initOrderShipmentsPage = function(order) {
+  $(".js-shipment-add-variant").each(function(){
+    new ShipmentAddVariantView({el: this});
   });
+
+  var shipments = order.get("shipments");
+
+  new OrderEditShipmentsView({
+    el: $(".js-order-edit-shipments"),
+    collection: shipments
+  });
+
+  var watchShipment = function(shipment){
+    shipment.on("sync", function(){
+      order.fetch();
+    })
+  };
+  shipments.each(watchShipment);
+  shipments.on('add', watchShipment);
+
+  new Spree.Views.Order.Summary({
+    el: $('#order_tab_summary'),
+    model: order
+  });
+
+  new Spree.Views.Order.DetailsTotal({
+    el: $('#order-total'),
+    model: order
+  });
+
+  new Spree.Views.Order.DetailsAdjustments({
+    el: $('.js-order-line-item-adjustments'),
+    model: order,
+    collection: order.get("line_items")
+  });
+
+  new Spree.Views.Order.DetailsAdjustments({
+    el: $('.js-order-shipment-adjustments'),
+    model: order,
+    collection: order.get("shipments")
+  });
+
+  new Spree.Views.Order.DetailsAdjustments({
+    el: $('.js-order-adjustments'),
+    model: order
+  });
+}
+
+$(function(){
+  if($(".js-order-edit-shipments").length) {
+    var order_number = window.order_number;
+
+    var order = Spree.Models.Order.fetch(order_number, {
+      success: function() {
+        initOrderShipmentsPage(order);
+      }
+    })
+  }
 });

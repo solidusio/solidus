@@ -7,5 +7,8 @@ Handlebars.registerHelper "t", (key, options) ->
 Handlebars.registerHelper "human_attribute_name", (model, attr) ->
   Spree.human_attribute_name(model, attr)
 
+Handlebars.registerHelper "human_attribute_name", (model, attr) ->
+  Spree.human_attribute_name(model, attr)
+
 Handlebars.registerHelper "admin_url", ->
   Spree.pathFor("admin")

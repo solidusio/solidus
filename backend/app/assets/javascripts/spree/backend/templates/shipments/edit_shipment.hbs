@@ -1,0 +1,41 @@
+<fieldset class="no-border-bottom">
+  <legend align="center" class="stock-location">
+    <span class="shipment-number">{{ shipment.number }}</span>
+    -
+    <span class="shipment-state">{{ shipment_state }}</span>
+    {{ t "package_from" }}
+    <strong class="stock-location-name">'{{ shipment.stock_location_name }}'</strong>
+  </legend>
+</fieldset>
+
+<table class="stock-contents shipment index">
+  <colgroup>
+    <col style="width: 10%;" />
+    <col style="width: 30%;" />
+    <col style="width: 15%;" />
+    <col style="width: 15%;" />
+    <col style="width: 15%;" />
+    <col style="width: 15%;" />
+  </colgroup>
+
+  <thead>
+    <tr>
+      <th colspan="2">{{ human_attribute_name "spree/line_item" "description" }}</th>
+      <th>{{ human_attribute_name "spree/line_item" "price" }}</th>
+      <th>{{ human_attribute_name "spree/line_item" "quantity" }}</th>
+      <th>{{ human_attribute_name "spree/line_item" "total" }}</th>
+      <th class="orders-actions actions"></th>
+    </tr>
+  </thead>
+
+  <tbody data-shipment-number="<%= shipment.number %>" data-order-number="<%= order.number %>">
+
+    {{#if order.special_instructions }}
+      <tr class='special_instructions'>
+        <td colspan="5">
+          <strong>{{ t "special_instructions" }}:&nbsp;</strong>{{ order.special_instructions }}
+        </td>
+      </tr>
+    {{/if}}
+  </tbody>
+</table>

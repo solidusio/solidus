@@ -29,4 +29,7 @@ child :manifest => :manifest do
   end
   node(:quantity) { |m| m.quantity }
   node(:states) { |m| m.states }
+  child :line_item => :line_item do
+    attribute :id, :price
+  end
 end

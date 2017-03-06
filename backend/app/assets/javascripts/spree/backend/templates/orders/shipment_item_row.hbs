@@ -1,0 +1,19 @@
+<td class="item-image">
+  <img src="{{ image.mini_url }}">
+</td>
+<td class="item-name">
+  {{ variant.name }}<br>
+  <strong>SKU:</strong> {{ variant.sku }}
+</td>
+<td class="item-price align-center">{{ price }}</td>
+<td class="item-qty-show align-center">
+  {{#each states}}
+    {{this}} x {{ t @key scope="inventory_states" }}
+  {{/each}}
+</td>
+<td class="item-total align-center">{{ totalPrice }}</td>
+
+<td class="cart-item-delete actions" data-hook="cart_item_delete">
+  <a class="split-item icon_link fa fa-arrows-h no-text with-tip" data-action="split" href="#" title="{{ t "actions.split" }}"></a>
+  <a class="delete-item fa fa-trash no-text with-tip" data-action="remove" href="#" title="{{ t "actions.delete" }}"></a>
+</td>

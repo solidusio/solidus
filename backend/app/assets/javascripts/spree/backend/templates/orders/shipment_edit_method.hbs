@@ -1,0 +1,38 @@
+{{#if editing}}
+	<td colspan="5">
+          <div class="row">
+            <div class="col-xs-4">
+              <div class="field">
+	      	<label for="selected_shipping_rate_id">Shipping Method</label>
+	      	<select name="selected_shipping_rate_id" class="fullwidth">
+			{{#each shippingRates}}
+			<option value="{{id}}" {{#if selected}}selected{{/if}}>
+			{{name}} {{display_cost}}
+			</option>
+			{{/each}}
+	      	</select>
+	      </div>
+	    </div>
+	  </div>
+	</td>
+	<td class="actions">
+		<a class="save-method fa fa-check no-text with-tip" data-action="save" title="" href="#" title="{{ t "actions.save" }}"></a>
+		<a class="cancel-method fa fa-cancel no-text with-tip" data-action="cancel" title="" href="#" title="{{ t "actions.cancel" }}"></a>
+	</td>
+{{else}}
+	{{#if selectedRate}}
+		<td colspan="4">
+			<strong>{{ selectedName }}</strong>
+		</td>
+		<td class="total" align="center">
+			<span>{{ selectedPrice }}</span>
+		</td>
+	{{else}}
+		<td colspan="5">
+			{{ t "no_shipping_method_selected" }}
+		</td>
+	{{/if}}
+	<td class="actions">
+		<a class="edit-method fa fa-edit no-text with-tip" data-action="edit" title="" href="#" title="{{ t "actions.edit" }}"></a>
+	</td>
+{{/if}}
