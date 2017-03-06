@@ -13,6 +13,7 @@
 //= require solidus_admin/bootstrap
 //= require prism
 //= require spree
+//= require spree/backend/namespaces
 //= require spree/backend/translation
 //= require spree/backend/backbone-overrides
 //= require spree/backend/spree-select2

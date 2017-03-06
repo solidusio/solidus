@@ -1,6 +1,3 @@
-Spree.Views = (Spree.Views || {})
-Spree.Views.Cart = (Spree.Views.Cart || {})
-
 Spree.Views.Cart.AddLineItemButton = Backbone.View.extend({
   initialize: function() {
     this.listenTo(this.collection, 'update', this.render);

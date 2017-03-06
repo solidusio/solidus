@@ -1,6 +1,3 @@
-Spree.Views = (Spree.Views || {})
-Spree.Views.Cart = (Spree.Views.Cart || {})
-
 Spree.Views.Cart.LineItemRow = Backbone.View.extend({
   tagName: 'tr',
   className: 'line-item',
