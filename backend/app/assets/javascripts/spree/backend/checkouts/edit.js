@@ -1,47 +1,10 @@
-//= require_self
 $(document).ready(function() {
-  var customerTemplate = HandlebarsTemplates['orders/customer_details/autocomplete'];
-
-  var formatCustomerResult = function(customer) {
-    return customerTemplate({
-      customer: customer,
-      bill_address: customer.bill_address,
-      ship_address: customer.ship_address
-    })
-  }
-
   if ($("#customer_search").length > 0) {
-    $("#customer_search").select2({
-      placeholder: Spree.translations.choose_a_customer,
-      ajax: {
-        url: Spree.routes.users_api,
-        params: { "headers": { "X-Spree-Token": Spree.api_key } },
-        datatype: 'json',
-        data: function(term, page) {
-          return {
-            q: {
-              m: 'or',
-              email_start: term,
-              addresses_firstname_start: term,
-              addresses_lastname_start: term
-            }
-          }
-        },
-        results: function(data, page) {
-          return {
-            results: data.users,
-            more: data.current_page < data.pages
-          }
-        }
-      },
-      formatResult: formatCustomerResult,
-      formatSelection: function (customer) {
-        return Select2.util.escapeMarkup(customer.email);
-      }
-    })
+    var customerSelect = new Spree.Views.Order.CustomerSelect({
+      el: $('#customer_search')
+    });
 
-    $("#customer_search").on("select2-selecting", function(e) {
-      var customer = e.choice;
+    customerSelect.on("select", function(customer) {
       $('#order_email').val(customer.email);
       $('#user_id').val(customer.id);
       $('#guest_checkout_true').prop("checked", false);

@@ -3,4 +3,5 @@
 //= require 'spree/backend/views/cart/line_item_table'
 //= require 'spree/backend/views/order/details_adjustments'
 //= require 'spree/backend/views/order/details_total'
+//= require 'spree/backend/views/order/customer_select'
 //= require 'spree/backend/views/order/summary'
