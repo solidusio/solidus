@@ -5,7 +5,7 @@
         {{#if variantImageURL }}
           <img alt="{{variantName}}" src="{{variantImageURL}}">
         {{ else }}
-          <img alt='{{variant.name}}' src='<%= image_path("noimage/small.png") %>' />
+          <span class="image-placeholder small"></span>
         {{/if}}
       </div>
       <div class='variant-details'>

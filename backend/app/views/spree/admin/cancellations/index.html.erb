@@ -25,7 +25,7 @@
       <% @inventory_units.each do |inventory_unit| %>
         <tr class="inventory-unit">
           <td class="inventory-unit-image">
-            <%= image_tag inventory_unit.variant.display_image.attachment(:mini) %>
+            <%= render 'spree/admin/shared/image', image: inventory_unit.variant.display_image, size: :mini %>
           </td>
           <td class="inventory-unit-name">
             <%= inventory_unit.variant.product.name %><br><%= "(" + variant_options(inventory_unit.variant) + ")" unless inventory_unit.variant.option_values.empty? %>

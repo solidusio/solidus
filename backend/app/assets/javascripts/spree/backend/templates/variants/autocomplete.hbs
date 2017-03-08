@@ -1,9 +1,9 @@
 <div class="variant-autocomplete-item media">
   <div class="media-left">
-    {{#if variant.image }}
+    {{#if image }}
       <img class="media-object" src='{{variant.image}}' />
     {{ else }}
-      <img class="media-object" src='<%= image_path("noimage/mini.png") %>' />
+      <span class="image-placeholder mini"></span>
     {{/if}}
   </div>
 
