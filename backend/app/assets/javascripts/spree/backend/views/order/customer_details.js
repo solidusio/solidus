@@ -1,54 +1,68 @@
 Spree.Views.Order.CustomerDetails = Backbone.View.extend({
   initialize: function() {
+    this.billAddressView =
+      new Spree.Views.Order.Address({
+        model: this.model.get("bill_address"),
+        el: this.$('.js-billing-address')
+      });
+
+    this.shipAddressView =
+      new Spree.Views.Order.Address({
+        model: this.model.get("ship_address"),
+        el: this.$('.js-shipping-address')
+      });
+
     this.customerSelectView =
       new Spree.Views.Order.CustomerSelect({
         el: this.$('#customer_search')
       });
     this.listenTo(this.customerSelectView, "select", this.onSelectCustomer);
 
-    this.onUseBillingChanged();
+    this.onGuestCheckoutChanged();
+    this.onChange();
+
+    this.listenTo(this.model, "change", this.render)
+    this.render()
   },
 
   events: {
-    "click #order_use_billing": "onUseBillingChanged",
-    "click #guest_checkout_true": "onGuestCheckoutChanged"
+    "click #guest_checkout_true": "onGuestCheckoutChanged",
+    "click #order_use_billing": "onChange",
+    "change #order_email": "onChange"
   },
 
   onGuestCheckoutChanged: function() {
-    $('#user_id').val("");
+    if(this.$('#guest_checkout_true').is(':checked')) {
+      this.model.set({user_id: null})
+    }
   },
 
-  onUseBillingChanged: function() {
-    if (!this.$('#order_use_billing').is(':checked')) {
-      $('#shipping').show();
-    } else {
-      $('#shipping').hide();
-    }
+  onChange: function() {
+    this.model.set({
+      use_billing: this.$('#order_use_billing').is(':checked'),
+      email: this.$("#order_email").val()
+    })
   },
 
   onSelectCustomer: function(customer) {
-    $('#order_email').val(customer.email);
-    $('#user_id').val(customer.id);
-    $('#guest_checkout_true').prop("checked", false);
-    $('#guest_checkout_false').prop("checked", true);
-    $('#guest_checkout_false').prop("disabled", false);
-
-    var billAddress = customer.bill_address;
-    if (billAddress) {
-      $('#order_bill_address_attributes_firstname').val(billAddress.firstname);
-      $('#order_bill_address_attributes_lastname').val(billAddress.lastname);
-      $('#order_bill_address_attributes_address1').val(billAddress.address1);
-      $('#order_bill_address_attributes_address2').val(billAddress.address2);
-      $('#order_bill_address_attributes_city').val(billAddress.city);
-      $('#order_bill_address_attributes_zipcode').val(billAddress.zipcode);
-      $('#order_bill_address_attributes_phone').val(billAddress.phone);
-
-      $('#order_bill_address_attributes_country_id').select2("val", billAddress.country_id).promise().done(function () {
-        update_state('b', function () {
-          $('#order_bill_address_attributes_state_id').select2("val", billAddress.state_id);
-        });
-      });
-    }
+    this.model.set({
+      email: customer.email,
+      user_id: customer.id,
+      bill_address: customer.bill_address
+    })
   },
+
+  render: function() {
+    var user_id = this.model.get("user_id")
+    this.$("#user_id").val(user_id);
+    this.$('#guest_checkout_true')
+      .prop("checked", !user_id);
+    this.$('#guest_checkout_false')
+      .prop("checked", !!user_id)
+      .prop("disabled", !user_id);
+
+    this.$('#shipping').toggleClass("hidden", !!this.model.get("use_billing"));
+    this.$('#order_email').val(this.model.get("email"))
+  }
 })
 
