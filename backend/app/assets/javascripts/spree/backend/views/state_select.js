@@ -30,25 +30,19 @@ Spree.Views.StateSelect = Backbone.View.extend({
 
   updateStates: function() {
     this.stopListening(this.states);
-    this.pending = true;
     var country_id = this.model.get("country_id");
     if (country_id) {
-      this.states = new Spree.Collections.States([], {country_id: country_id});
-      this.listenTo(this.states, "reset", this.onSync);
-      this.states.fetch({reset: true});
+      this.states = Spree.Views.StateSelect.stateCache(country_id);
+      this.listenTo(this.states, "sync", this.render);
+      this.render();
     }
-  },
-
-  onSync: function() {
-    this.pending = false;
-    this.render();
   },
 
   render: function() {
     this.$state_select.empty().select2("destroy").hide();
     this.$state_input.hide();
 
-    if (this.pending) {
+    if (!this.states.fetched) {
       this.$state_select.show().select2().select2("disable");
     } else if (this.states.length) {
       var $state_select = this.$state_select;
@@ -64,3 +58,14 @@ Spree.Views.StateSelect = Backbone.View.extend({
     }
   }
 })
+
+Spree.Views.StateSelect.stateCache = _.memoize(function(country_id) {
+  var states = new Spree.Collections.States([], {country_id: country_id})
+  states.fetched = false;
+  states.fetch({
+    success: function() {
+      states.fetched = true;
+    }
+  });
+  return states;
+});
