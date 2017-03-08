@@ -6,15 +6,17 @@
 <% content_for :page_actions do %>
 <% end %>
 
-<div id="select-customer" data-hook>
-  <fieldset class="no-border-bottom">
-    <legend align="center"><%= Spree.t(:customer_search) %></legend>
-    <%= hidden_field_tag :customer_search,  nil, class: 'fullwidth title' %>
-  </fieldset>
+<div class="js-customer-details" data-order-number="<%= @order.number %>">
+  <div id="select-customer" data-hook>
+    <fieldset class="no-border-bottom">
+      <legend align="center"><%= Spree.t(:customer_search) %></legend>
+      <%= hidden_field_tag :customer_search,  nil, class: 'fullwidth title' %>
+    </fieldset>
+  </div>
+
+  <%= render partial: 'spree/shared/error_messages', locals: { target: @order } %>
+
+  <%= form_for @order, url: admin_order_customer_url(@order) do |f| %>
+    <%= render 'form', f: f %>
+  <% end %>
 </div>
-
-<%= render partial: 'spree/shared/error_messages', locals: { target: @order } %>
-
-<%= form_for @order, url: admin_order_customer_url(@order) do |f| %>
-  <%= render 'form', f: f %>
-<% end %>
