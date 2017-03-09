@@ -47,6 +47,7 @@ Capybara.save_path = ENV['CIRCLE_ARTIFACTS'] if ENV['CIRCLE_ARTIFACTS']
 
 require 'capybara/poltergeist'
 Capybara.javascript_driver = :poltergeist
+Capybara.exact = true
 
 ActionView::Base.raise_on_missing_translations = true
 
