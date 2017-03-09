@@ -5,7 +5,9 @@
     <% end %>
   </td>
   <td>
-    <%= link_to image_tag(image.attachment.url(:mini)), image.attachment.url(:product) %>
+    <%= link_to image.attachment.url(:product) do %>
+      <%= render 'spree/admin/shared/image', image: image, size: :mini %>
+    <% end %>
   </td>
   <% if @product.has_variants? %>
     <td><%= options_text_for(image) %></td>

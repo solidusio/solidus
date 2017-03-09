@@ -1,7 +1,7 @@
 <% carton.manifest_for_order(order).each do |item| %>
   <tr class="stock-item" data-item-quantity="<%= item.quantity %>">
     <td class="item-image">
-      <%= image_tag item.variant.display_image.attachment(:mini) %>
+      <%= render 'spree/admin/shared/image', image: item.variant.display_image, size: :mini %>
     </td>
     <td class="item-name">
       <%= item.variant.product.name %><br><%= "(" + variant_options(item.variant) + ")" unless item.variant.option_values.empty? %>

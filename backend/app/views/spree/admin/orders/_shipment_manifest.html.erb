@@ -4,7 +4,7 @@
       data-variant-id="<%= item.variant.id %>"
       >
     <td class="item-image">
-      <%= image_tag item.variant.display_image.attachment(:mini) %>
+      <%= render 'spree/admin/shared/image', image: item.variant.display_image, size: :mini %>
     </td>
     <td class="item-name">
       <%= item.variant.product.name %><br><%= "(" + variant_options(item.variant) + ")" unless item.variant.option_values.empty? %>
