@@ -76,11 +76,8 @@ Spree.Views.Cart.LineItemRow = Backbone.View.extend({
   },
 
   render: function() {
-    var line_item = this.model.attributes
-    var image = line_item.variant && line_item.variant.images[0]
     var html = HandlebarsTemplates['orders/line_item']({
-      line_item: line_item,
-      image: image,
+      line_item: this.model.toJSON(),
       editing: this.editing,
       isNew: this.model.isNew(),
       noCancel: this.model.isNew() && this.model.collection.length == 1

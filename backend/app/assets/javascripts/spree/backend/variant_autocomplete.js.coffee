@@ -3,10 +3,8 @@
 variantTemplate = HandlebarsTemplates["variants/autocomplete"]
 
 formatVariantResult = (variant) ->
-  image = variant.images[0]
   variantTemplate(
     variant: variant
-    image: image
   )
 
 $.fn.variantAutocomplete = (searchOptions = {}) ->

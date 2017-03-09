@@ -4,7 +4,7 @@
   </td>
 {{else}}
   <td class="line-item-image">
-    {{> _image image=image size="mini" }}
+    {{> _image image=line_item.variant.images.[0] size="mini" }}
   </td>
   <td class="line-item-name">
     {{ line_item.variant.name }}<br>
