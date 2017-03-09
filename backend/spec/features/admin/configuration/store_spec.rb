@@ -14,7 +14,7 @@ describe "Store", type: :feature, js: true do
     visit spree.admin_path
     click_link "Settings"
     within('.admin-nav') do
-      click_link "Store"
+      click_link "Stores"
     end
   end
 

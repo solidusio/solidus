@@ -41,7 +41,7 @@ describe "Customer Details", type: :feature, js: true do
       expect(page).to have_field('Street Address', with: user.bill_address.address1)
       expect(page).to have_field("Street Address (cont'd)", with: user.bill_address.address2)
       expect(page).to have_field('City', with: user.bill_address.city)
-      expect(page).to have_field('Zip', with: user.bill_address.zipcode)
+      expect(page).to have_field('Zip Code', with: user.bill_address.zipcode)
       expect(page).to have_field('Country', with: user.bill_address.country_id)
       expect(page).to have_field('State', with: user.bill_address.state_id)
       expect(page).to have_field('Phone', with: user.bill_address.phone)
@@ -172,7 +172,7 @@ describe "Customer Details", type: :feature, js: true do
     fill_in "Street Address",          with: "100 first lane"
     fill_in "Street Address (cont'd)", with: "#101"
     fill_in "City",                    with: "Bethesda"
-    fill_in "Zip",                     with: "20170"
+    fill_in "Zip Code",                with: "20170"
     targetted_select2 "Alabama",       from: "#s2id_order_#{kind}_address_attributes_state_id"
     fill_in "Phone",                   with: "123-456-7890"
   end

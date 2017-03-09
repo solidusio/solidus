@@ -35,7 +35,7 @@ describe "Payment Methods", type: :feature do
       expect(page).to have_content("New Payment Method")
       fill_in "payment_method_name", with: "check90"
       fill_in "payment_method_description", with: "check90 desc"
-      select "PaymentMethod::Check", from: "gtwy-type"
+      select "Spree::PaymentMethod::Check", from: "gtwy-type"
       click_button "Create"
       expect(page).to have_content("successfully created!")
     end
