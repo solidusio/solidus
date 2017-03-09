@@ -4,11 +4,7 @@
   </td>
 {{else}}
   <td class="line-item-image">
-    {{#if image }}
-      <img src="{{ image.mini_url }}">
-    {{else}}
-      <span class="image-placeholder mini"></span>
-    {{/if}}
+    {{> _image image=image size="mini" }}
   </td>
   <td class="line-item-name">
     {{ line_item.variant.name }}<br>

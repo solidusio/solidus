@@ -84,7 +84,7 @@ class VariantForm
       variantId: transferItem.variant.id
       variantDisplayAttributes: formatVariantDisplayAttributes(transferItem.variant)
       variantOptions: formatVariantOptionValues(transferItem.variant)
-      variantImageURL: transferItem.variant.images[0]?.small_url
+      variantImage: transferItem.variant.images[0]
 
     if isReceiving
       templateAttributes["receivedQuantity"] = transferItem.received_quantity

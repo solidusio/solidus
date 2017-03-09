@@ -12,3 +12,7 @@ Handlebars.registerHelper("human_attribute_name", function(model, attr) {
 Handlebars.registerHelper("admin_url", function() {
   return Spree.pathFor("admin")
 });
+
+Handlebars.registerHelper("concat", function() {
+  return Array.prototype.slice.call(arguments, 0, -1).join('');
+});

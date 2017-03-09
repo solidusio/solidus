@@ -2,11 +2,7 @@
   <td class="align-center no-padding">
     <div class='variant-container' data-variant-id="{{variantId}}">
       <div class='variant-image'>
-        {{#if variantImageURL }}
-          <img alt="{{variantName}}" src="{{variantImageURL}}">
-        {{ else }}
-          <span class="image-placeholder small"></span>
-        {{/if}}
+        {{> _image image=variantImage size="small" alt=variantName }}
       </div>
       <div class='variant-details'>
         <table class='stock-variant-field-table'>
