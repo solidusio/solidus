@@ -20,11 +20,6 @@
             <%= hidden_field_tag "#{param_prefix}[cc_type]", '', {class: 'ccType'} %>
             <%= label_tag "card_number#{payment_method.id}", Spree::CreditCard.human_attribute_name(:number), class: 'required' %>
             <%= text_field_tag "#{param_prefix}[number]", '', class: 'required fullwidth cardNumber', id: "card_number#{payment_method.id}", maxlength: 19 %>
-            <span id="card_type" style="display:none;">
-              ( <span id="looks_like" ><%= Spree.t(:card_type_is) %> <span id="type"></span></span>
-                <span id="unrecognized"><%= Spree.t(:unrecognized_card_type) %></span>
-              )
-            </span>
           </div>
         </div>
       </div>
