@@ -92,7 +92,9 @@ describe Spree::LegacyUser, type: :model do
       end
 
       it "has payment sources" do
-        expect(user.payment_sources.first.gateway_customer_profile_id).not_to be_empty
+        Spree::Deprecation.silence do
+          expect(user.payment_sources.first.gateway_customer_profile_id).not_to be_empty
+        end
       end
     end
   end

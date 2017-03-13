@@ -116,6 +116,60 @@ module Spree
       params
     end
 
+    # This method handles the awkwardness of how the html forms are currently
+    # set up for frontend.
+    #
+    # This method expects a params hash in the format of:
+    #
+    #  {
+    #    order: {
+    #      wallet_payment_source_id: '123',
+    #      ...other params...
+    #    },
+    #    cvc_confirm: '456', # optional
+    #    ...other params...
+    #  }
+    #
+    # And this method modifies the params into the format of:
+    #
+    #  {
+    #    order: {
+    #      payments_attributes: [
+    #        {
+    #          source_attributes: {
+    #            wallet_payment_source_id: '123',
+    #            verification_value: '456',
+    #          },
+    #        },
+    #      ]
+    #      ...other params...
+    #    },
+    #    ...other params...
+    #  }
+    #
+    def move_wallet_payment_source_id_into_payments_attributes(params)
+      return params if params[:order].blank?
+
+      wallet_payment_source_id = params[:order][:wallet_payment_source_id].presence
+      cvc_confirm = params[:cvc_confirm].presence
+
+      return params if wallet_payment_source_id.nil?
+
+      params[:order][:payments_attributes] = [
+        {
+          source_attributes: {
+            wallet_payment_source_id: wallet_payment_source_id,
+            verification_value: cvc_confirm
+          }
+        }
+      ]
+
+      params[:order].delete(:wallet_payment_source_id)
+      params.delete(:cvc_confirm)
+
+      params
+    end
+
     # This is a strange thing to do since an order can have multiple payments
     # but we always assume that it only has a single payment and that its
     # amount should be the current order total.  Also, this is pretty much

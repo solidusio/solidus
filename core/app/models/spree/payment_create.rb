@@ -5,7 +5,8 @@ module Spree
     # @param attributes [Hash,ActionController::Parameters] attributes which are assigned to the new payment
     #   * :payment_method_id Id of payment method used for this payment
     #   * :source_attributes Attributes used to build the source of this payment. Usually a {CreditCard}
-    #     * :existing_card_id (Integer) The id of an existing {CreditCard} object to use
+    #     * :existing_card_id (Integer) Deprecated: The id of an existing {CreditCard} object to use
+    #     * :wallet_payment_source_id (Integer): The id of a {WalletPaymentSource} to use
     # @param request_env [Hash] rack env of user creating the payment
     # @param payment [Payment] Internal use only. Instead of making a new payment, change the attributes for an existing one.
     def initialize(order, attributes, payment: nil, request_env: {})
@@ -27,7 +28,13 @@ module Spree
       @payment.attributes = @attributes
 
       if source_attributes[:existing_card_id].present?
+        Spree::Deprecation.warn(
+          "Passing existing_card_id to PaymentCreate is deprecated. Use wallet_payment_source_id instead.",
+          caller,
+        )
         build_existing_card
+      elsif source_attributes[:wallet_payment_source_id].present?
+        build_from_wallet_payment_source
       else
         build_source
       end
@@ -44,20 +51,33 @@ module Spree
       if source_attributes.present? && payment_method.try(:payment_source_class)
         payment.source = payment_method.payment_source_class.new(source_attributes)
         payment.source.payment_method_id = payment_method.id
-        payment.source.user_id = order.user_id if order
+        if order && payment.source.respond_to?(:user=)
+          payment.source.user = order.user
+        end
       end
+    end
+
+    def build_from_wallet_payment_source
+      wallet_payment_source_id = source_attributes.fetch(:wallet_payment_source_id)
+      raise(ActiveRecord::RecordNotFound) if order.user.nil?
+      wallet_payment_source = order.user.wallet.find(wallet_payment_source_id)
+      raise(ActiveRecord::RecordNotFound) if wallet_payment_source.nil?
+      build_from_payment_source(wallet_payment_source.payment_source)
     end
 
     def build_existing_card
       credit_card = available_cards.find(source_attributes[:existing_card_id])
+      build_from_payment_source(credit_card)
+    end
 
+    def build_from_payment_source(payment_source)
       # FIXME: does this work?
       if source_attributes[:verification_value]
-        credit_card.verification_value = source_attributes[:verification_value]
+        payment_source.verification_value = source_attributes[:verification_value]
       end
 
-      payment.source = credit_card
-      payment.payment_method_id = credit_card.payment_method_id
+      payment.source = payment_source
+      payment.payment_method_id = payment_source.payment_method_id
     end
 
     def available_cards

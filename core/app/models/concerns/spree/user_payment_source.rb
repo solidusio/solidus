@@ -2,15 +2,22 @@ module Spree
   module UserPaymentSource
     extend ActiveSupport::Concern
 
-    included do
-      has_many :credit_cards, class_name: "Spree::CreditCard", foreign_key: :user_id
-    end
-
     def default_credit_card
-      credit_cards.default.first
+      Spree::Deprecation.warn(
+        "user.default_credit_card is deprecated. Please use user.wallet.default_wallet_payment_source instead.",
+        caller
+      )
+      default = wallet.default_wallet_payment_source
+      if default && default.payment_source.is_a?(Spree::CreditCard)
+        default.payment_source
+      end
     end
 
     def payment_sources
+      Spree::Deprecation.warn(
+        "user.payment_sources is deprecated. Please use user.wallet.wallet_payment_sources instead.",
+        caller
+      )
       credit_cards.with_payment_profile
     end
   end

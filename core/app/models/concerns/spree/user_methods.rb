@@ -23,12 +23,19 @@ module Spree
       has_many :store_credit_events, through: :store_credits
       money_methods :total_available_store_credit
 
+      has_many :credit_cards, class_name: "Spree::CreditCard", foreign_key: :user_id
+      has_many :wallet_payment_sources, foreign_key: 'user_id', class_name: 'Spree::WalletPaymentSource', inverse_of: :user
+
       after_create :auto_generate_spree_api_key
 
       include Spree::RansackableAttributes unless included_modules.include?(Spree::RansackableAttributes)
 
       self.whitelisted_ransackable_associations = %w[addresses]
       self.whitelisted_ransackable_attributes = %w[id email]
+    end
+
+    def wallet
+      Spree::Wallet.new(self)
     end
 
     # has_spree_role? simply needs to return true or false whether a user has a role or not.

@@ -47,7 +47,13 @@ module Spree
     self.whitelisted_ransackable_attributes = %w[completed_at created_at email number state payment_state shipment_state total store_id]
 
     attr_reader :coupon_code
-    attr_accessor :temporary_address, :temporary_credit_card
+    attr_accessor :temporary_address
+
+    attr_accessor :temporary_payment_source
+    alias_method :temporary_credit_card, :temporary_payment_source
+    alias_method :temporary_credit_card=, :temporary_payment_source=
+    deprecate temporary_credit_card: :temporary_payment_source, deprecator: Spree::Deprecation
+    deprecate :temporary_credit_card= => :temporary_payment_source=, deprecator: Spree::Deprecation
 
     # Customer info
     belongs_to :user, class_name: Spree::UserClassHandle.new
@@ -713,9 +719,9 @@ module Spree
         add_to_wallet
     end
     alias_method :persist_user_credit_card, :add_payment_sources_to_wallet
-    deprecate :persist_user_credit_card
+    deprecate persist_user_credit_card: :add_payment_sources_to_wallet, deprecator: Spree::Deprecation
 
-    def assign_default_credit_card
+    def add_default_payment_from_wallet
       builder = Spree::Config.default_payment_builder_class.new(self)
 
       if payment = builder.build
@@ -728,6 +734,8 @@ module Spree
         end
       end
     end
+    alias_method :assign_default_credit_card, :add_default_payment_from_wallet
+    deprecate assign_default_credit_card: :add_default_payment_from_wallet, deprecator: Spree::Deprecation
 
     private
 

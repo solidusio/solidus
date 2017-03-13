@@ -7,19 +7,28 @@ class Spree::Wallet::AddPaymentSourcesToWallet
   end
 
   # This is called after an order transistions to complete and should save the
-  # order's payment source/s in the user's "wallet" for future use.
+  # order's payment source in the user's "wallet" for future use.
   #
   # @return [void]
   def add_to_wallet
-    if !order.temporary_credit_card &&
-       order.user_id &&
-       order.valid_credit_cards.present?
-      # arbitrarily pick the first one for the default
-      default_cc = order.valid_credit_cards.first
-      # TODO: target for refactoring -- why is order checkout responsible for the user -> credit_card relationship?
-      default_cc.user_id = order.user_id
-      default_cc.default = true
-      default_cc.save
+    if !order.temporary_payment_source && order.user
+      # select valid sources
+      payments = order.payments.valid
+      sources = payments.map(&:source).
+        uniq.
+        compact.
+        select { |p| p.try(:reusable?) }
+
+      # add valid sources to wallet and optionally set a default
+      if sources.any?
+        # arbitrarily sort by id for picking a default
+        wallet_payment_sources = sources.sort_by(&:id).map do |source|
+          order.user.wallet.add(source)
+        end
+
+        order.user.wallet.default_wallet_payment_source =
+          wallet_payment_sources.last
+      end
     end
   end
 

@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Spree::CheckoutController, type: :controller do
   let(:token) { 'some_token' }
-  let(:user) { stub_model(Spree::LegacyUser) }
+  let(:user) { create(:user) }
   let(:order) { FactoryGirl.create(:order_with_totals) }
 
   let(:address_params) do

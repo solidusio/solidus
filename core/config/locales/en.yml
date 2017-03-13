@@ -630,6 +630,10 @@ en:
           attributes:
             user_id:
               default_address_exists: "already has a default address"
+        spree/wallet_payment_source:
+          attributes:
+            payment_source:
+              has_to_be_payment_source_class: "has to be a Spree::PaymentSource"
 
   devise:
     confirmations:

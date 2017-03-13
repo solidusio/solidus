@@ -16,6 +16,8 @@ describe Spree::CreditCard, type: :model do
 
   let(:credit_card) { Spree::CreditCard.new }
 
+  it_behaves_like 'a payment source'
+
   before(:each) do
     @order = create(:order)
     @payment = Spree::Payment.create(amount: 100, order: @order)
@@ -33,37 +35,6 @@ describe Spree::CreditCard, type: :model do
     )
 
     allow(@payment).to receive_messages payment_method: @payment_gateway
-  end
-
-  describe "#can_capture?" do
-    it "should be true if payment is pending" do
-      payment = mock_model(Spree::Payment, pending?: true, created_at: Time.current)
-      expect(credit_card.can_capture?(payment)).to be true
-    end
-
-    it "should be true if payment is checkout" do
-      payment = mock_model(Spree::Payment, pending?: false, checkout?: true, created_at: Time.current)
-      expect(credit_card.can_capture?(payment)).to be true
-    end
-  end
-
-  describe "#can_void?" do
-    it "should be true if payment is not void" do
-      payment = mock_model(Spree::Payment, failed?: false, void?: false)
-      expect(credit_card.can_void?(payment)).to be true
-    end
-  end
-
-  describe "#can_credit?" do
-    it "should be false if payment is not completed" do
-      payment = mock_model(Spree::Payment, completed?: false)
-      expect(credit_card.can_credit?(payment)).to be false
-    end
-
-    it "should be false when credit_allowed is zero" do
-      payment = mock_model(Spree::Payment, completed?: true, credit_allowed: 0, order: mock_model(Spree::Order, payment_state: 'credit_owed'))
-      expect(credit_card.can_credit?(payment)).to be false
-    end
   end
 
   describe "#valid?" do
@@ -283,32 +254,6 @@ describe Spree::CreditCard, type: :model do
     end
   end
 
-  describe "#associations" do
-    it "should be able to access its payments" do
-      credit_card.payments.to_a
-    end
-  end
-
-  describe "#first_name" do
-    before do
-      credit_card.name = "Ludwig van Beethoven"
-    end
-
-    it "extracts the first name" do
-      expect(credit_card.first_name).to eq "Ludwig"
-    end
-  end
-
-  describe "#last_name" do
-    before do
-      credit_card.name = "Ludwig van Beethoven"
-    end
-
-    it "extracts the last name" do
-      expect(credit_card.last_name).to eq "van Beethoven"
-    end
-  end
-
   describe "#to_active_merchant" do
     before do
       credit_card.number = "4111111111111111"
@@ -329,44 +274,40 @@ describe Spree::CreditCard, type: :model do
     end
   end
 
-  it 'ensures only one credit card per user is default at a time' do
-    user = FactoryGirl.create(:user)
-    first = FactoryGirl.create(:credit_card, user: user, default: true)
-    second = FactoryGirl.create(:credit_card, user: user, default: true)
+  describe 'default' do
+    around do |example|
+      Spree::Deprecation.silence { example.run }
+    end
 
-    expect(first.reload.default).to eq false
-    expect(second.reload.default).to eq true
+    it 'ensures only one credit card per user is default at a time' do
+      user = FactoryGirl.create(:user)
+      first = FactoryGirl.create(:credit_card, user: user, default: true)
+      second = FactoryGirl.create(:credit_card, user: user, default: true)
 
-    first.default = true
-    first.save!
+      expect(first.reload.default).to eq false
+      expect(second.reload.default).to eq true
 
-    expect(first.reload.default).to eq true
-    expect(second.reload.default).to eq false
-  end
+      first.default = true
 
-  it 'allows default credit cards for different users' do
-    first = FactoryGirl.create(:credit_card, user: FactoryGirl.create(:user), default: true)
-    second = FactoryGirl.create(:credit_card, user: FactoryGirl.create(:user), default: true)
+      expect(first.reload.default).to eq true
+      expect(second.reload.default).to eq false
+    end
 
-    expect(first.reload.default).to eq true
-    expect(second.reload.default).to eq true
-  end
+    it 'allows default credit cards for different users' do
+      first = FactoryGirl.create(:credit_card, user: FactoryGirl.create(:user), default: true)
+      second = FactoryGirl.create(:credit_card, user: FactoryGirl.create(:user), default: true)
 
-  it 'allows this card to save even if the previously default card has expired' do
-    user = FactoryGirl.create(:user)
-    first = FactoryGirl.create(:credit_card, user: user, default: true)
-    second = FactoryGirl.create(:credit_card, user: user, default: false)
-    first.update_columns(year: DateTime.current.year, month: 1.month.ago.month)
+      expect(first.reload.default).to eq true
+      expect(second.reload.default).to eq true
+    end
 
-    second.update_attributes!(default: true)
-  end
+    it 'allows this card to save even if the previously default card has expired' do
+      user = FactoryGirl.create(:user)
+      first = FactoryGirl.create(:credit_card, user: user, default: true)
+      second = FactoryGirl.create(:credit_card, user: user, default: false)
+      first.update_columns(year: DateTime.current.year, month: 1.month.ago.month)
 
-  it 'allows this card to save even if the previously default card has expired' do
-    user = FactoryGirl.create(:user)
-    first = FactoryGirl.create(:credit_card, user: user, default: true)
-    second = FactoryGirl.create(:credit_card, user: user, default: false)
-    first.update_columns(year: DateTime.current.year, month: 1.month.ago.month)
-
-    second.update_attributes!(default: true)
+      second.update_attributes!(default: true)
+    end
   end
 end
