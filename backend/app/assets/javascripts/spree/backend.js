@@ -57,7 +57,6 @@
 //= require spree/backend/stock_management/index_add_forms
 //= require spree/backend/stock_management/index_update_forms
 //= require spree/backend/stock_management/stock_item
-//= require spree/backend/stock_movement
 //= require spree/backend/stock_transfers/count_update_forms
 //= require spree/backend/stock_transfers/edit
 //= require spree/backend/stock_transfers/receive

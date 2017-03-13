@@ -167,7 +167,7 @@ Spree::Core::Engine.routes.draw do
     end
 
     resources :stock_locations do
-      resources :stock_movements, except: [:edit, :update, :destroy]
+      resources :stock_movements, only: [:index]
       collection do
         post :transfer_stock
         post :update_positions
