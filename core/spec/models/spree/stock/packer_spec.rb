@@ -66,7 +66,7 @@ module Spree
             Array.new(30) do
               build(
                 :inventory_unit,
-                order: order,
+                shipment: order.shipments.first,
                 line_item: line_item,
                 variant: variant
               )
