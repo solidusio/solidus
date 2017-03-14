@@ -9,8 +9,8 @@ module Spree
     let(:manifest) { described_class.new(inventory_units: inventory_units) }
 
     def build_unit(variant, attrs = {})
-      attrs = { order: order, variant: variant, shipment: shipment }.merge(attrs)
-      attrs[:line_item] = attrs[:order].contents.add(attrs[:variant])
+      attrs = { variant: variant, shipment: shipment }.merge(attrs)
+      attrs[:line_item] = order.contents.add(attrs[:variant])
       InventoryUnit.new(attrs)
     end
 
@@ -68,7 +68,7 @@ module Spree
     end
 
     describe "#for_order" do
-      let!(:order2) { Order.create! }
+      let!(:order2) { create(:order_with_line_items) }
       context 'single unit' do
         let(:inventory_units) { [build_unit(variant)] }
         it "has single ManifestItem in correct order" do
@@ -81,7 +81,7 @@ module Spree
       end
 
       context 'one units in each order' do
-        let(:inventory_units) { [build_unit(variant), build_unit(variant, order: order2)] }
+        let(:inventory_units) { [build_unit(variant), build_unit(variant, shipment: order2.shipments.first)] }
         it "has single ManifestItem in first order" do
           expect(manifest.for_order(order).items.count).to eq 1
         end

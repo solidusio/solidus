@@ -249,6 +249,7 @@ describe Spree::Shipment, type: :model do
         end
 
         before do
+          allow(line_item).to receive(:order) { order }
           allow(shipment).to receive(:inventory_units) { inventory_units }
           allow(inventory_units).to receive_message_chain(:includes, :joins).and_return inventory_units
         end
@@ -643,7 +644,7 @@ describe Spree::Shipment, type: :model do
     let(:inventory_units) { double }
 
     let(:params) do
-      { variant_id: variant.id, state: 'on_hand', order_id: order.id, line_item_id: line_item.id }
+      { variant_id: variant.id, state: 'on_hand', line_item_id: line_item.id }
     end
 
     before { allow(shipment).to receive_messages inventory_units: inventory_units }

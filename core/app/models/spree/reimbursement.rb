@@ -154,7 +154,7 @@ module Spree
     end
 
     def validate_return_items_belong_to_same_order
-      if return_items.any? { |ri| ri.inventory_unit.order_id != order_id }
+      if return_items.any? { |ri| ri.inventory_unit.order != order }
         errors.add(:base, :return_items_order_id_does_not_match)
       end
     end
