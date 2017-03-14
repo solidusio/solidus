@@ -42,8 +42,8 @@ describe "Customer Details", type: :feature, js: true do
       expect(page).to have_field("Street Address (cont'd)", with: user.bill_address.address2)
       expect(page).to have_field('City', with: user.bill_address.city)
       expect(page).to have_field('Zip Code', with: user.bill_address.zipcode)
-      expect(page).to have_field('Country', with: user.bill_address.country_id)
-      expect(page).to have_field('State', with: user.bill_address.state_id)
+      expect(page).to have_select('Country', selected: "United States of America", visible: false)
+      expect(page).to have_select('State', selected: user.bill_address.state.name, visible: false)
       expect(page).to have_field('Phone', with: user.bill_address.phone)
       click_button "Update"
       expect(Spree::Order.last.user).not_to be_nil
@@ -137,7 +137,7 @@ describe "Customer Details", type: :feature, js: true do
 
       it "sets default country when displaying form" do
         click_link "Customer"
-        expect(page).to have_field("order_bill_address_attributes_country_id", with: brazil.id)
+        expect(page).to have_field("order_bill_address_attributes_country_id", with: brazil.id, visible: false)
       end
     end
 
@@ -158,11 +158,15 @@ describe "Customer Details", type: :feature, js: true do
         fill_in "order_ship_address_attributes_city",       with: "Bethesda"
         fill_in "order_ship_address_attributes_zipcode",    with: "20170"
 
-        page.select('Alabama', from: 'order_ship_address_attributes_state_id')
+        select_state('Alabama', 'ship')
         fill_in "order_ship_address_attributes_phone", with: "123-456-7890"
         click_button "Update"
       end
     end
+  end
+
+  def select_state(state_name, kind = "bill")
+    targetted_select2 state_name, from: "#s2id_order_#{kind}_address_attributes_state_id"
   end
 
   def fill_in_address(kind = "bill")
@@ -173,7 +177,7 @@ describe "Customer Details", type: :feature, js: true do
     fill_in "Street Address (cont'd)", with: "#101"
     fill_in "City",                    with: "Bethesda"
     fill_in "Zip Code",                with: "20170"
-    targetted_select2 "Alabama",       from: "#s2id_order_#{kind}_address_attributes_state_id"
+    select_state("Alabama", kind)
     fill_in "Phone",                   with: "123-456-7890"
   end
 end
