@@ -45,7 +45,7 @@ describe "Orders Listing", type: :feature, js: true do
       within_row(1) { expect(page).to have_content("R100") }
       within_row(2) { expect(page).to have_content("R200") }
 
-      click_link "Completed At"
+      click_link "Completed At", exact: false
 
       # Completed at desc
       within_row(1) { expect(page).to have_content("R200") }
@@ -72,7 +72,7 @@ describe "Orders Listing", type: :feature, js: true do
       it "can find the orders belonging to a specific store" do
         main_store, other_store = stores
 
-        click_on "Filter"
+        click_on "Filter Results"
         select2 main_store.name, from: Spree.t(:store)
         click_on "Filter Results"
 
@@ -87,7 +87,7 @@ describe "Orders Listing", type: :feature, js: true do
 
     context "when there's a single store" do
       it "should be able to search orders" do
-        click_on 'Filter'
+        click_on "Filter Results"
         fill_in "q_number_cont", with: "R200"
         click_on 'Filter Results'
         within_row(1) do
@@ -99,7 +99,7 @@ describe "Orders Listing", type: :feature, js: true do
       end
 
       it "should be able to filter on variant_id" do
-        click_on 'Filter'
+        click_on "Filter Results"
         select2_search @order1.products.first.sku, from: Spree.t(:variant)
         click_on 'Filter Results'
 
@@ -123,20 +123,20 @@ describe "Orders Listing", type: :feature, js: true do
         # Regression test for https://github.com/spree/spree/issues/4004
         it "should be able to go from page to page for incomplete orders" do
           10.times { Spree::Order.create email: "incomplete@example.com" }
-          click_on 'Filter'
+          click_on "Filter Results"
           uncheck "q_completed_at_not_null"
           click_on 'Filter Results'
           within(".pagination", match: :first) do
             click_link "2"
           end
           expect(page).to have_content("incomplete@example.com")
-          click_on 'Filter'
+          click_on "Filter Results"
           expect(find("#q_completed_at_not_null")).not_to be_checked
         end
       end
 
       it "should be able to search orders using only completed at input" do
-        click_on 'Filter'
+        click_on "Filter Results"
         fill_in "q_created_at_gt", with: Date.current
 
         # Just so the datepicker gets out of poltergeists way.
@@ -160,7 +160,7 @@ describe "Orders Listing", type: :feature, js: true do
         end
 
         it "only shows the orders with the selected promotion" do
-          click_on 'Filter'
+          click_on "Filter Results"
           fill_in "q_order_promotions_promotion_code_value_cont", with: promotion.codes.first.value
           click_on 'Filter Results'
           within_row(1) { expect(page).to have_content("R100") }
@@ -175,7 +175,7 @@ describe "Orders Listing", type: :feature, js: true do
 
         it "shows both complete and incomplete orders" do
           check "q_completed_at_not_null"
-          click_on 'Filter'
+          click_on "Filter Results"
 
           expect(page).to have_content("R200")
           expect(page).to_not have_content("R300")

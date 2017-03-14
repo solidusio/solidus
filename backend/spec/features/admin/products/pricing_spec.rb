@@ -55,7 +55,7 @@ describe 'Pricing' do
             expect(page).to have_content("Search")
           end
         end
-        select variant.options_text, from: "q_variant_id_eq"
+        select variant.options_text, from: "q_variant_id_eq", exact: false
         click_button "Filter Results"
         expect(page).to have_content("20")
         expect(page).to_not have_content("49.99")

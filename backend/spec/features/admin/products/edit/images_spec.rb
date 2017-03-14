@@ -50,7 +50,7 @@ describe "Product Images", type: :feature do
       visit spree.admin_product_images_path(product)
       expect(page).to have_content("No images found")
 
-      within_fieldset 'Upload Image' do
+      within_fieldset 'Upload Images' do
         # Can also pass multiple files in the array, but SQLite gives a deadlock on insert
         attach_file('image_attachment', [file_path], visible: false)
       end
