@@ -41,7 +41,7 @@
   <div class="field <%= "#{type}-row" %>">
     <%= f.label :country_id, Spree::Country.model_name.human %>
     <span id="<%= s_or_b %>country">
-      <%= f.collection_select :country_id, available_countries, :id, :name, {}, {class: 'select2 fullwidth'} %>
+      <%= f.collection_select :country_id, available_countries, :id, :name, {}, {class: 'fullwidth js-country_id'} %>
     </span>
   </div>
 
@@ -50,8 +50,8 @@
     <span id="<%= s_or_b %>state">
       <%= f.text_field :state_name,
             style: "display: #{f.object.country.states.empty? ? 'block' : 'none' };",
-           disabled: !f.object.country.states.empty?, class: 'fullwidth state_name' %>
-      <%= f.collection_select :state_id, f.object.country.states.sort, :id, :name, {include_blank: true}, {class: 'select2 fullwidth', style: "display: #{f.object.country.states.empty? ? 'none' : 'block' };", disabled: f.object.country.states.empty?} %>
+           disabled: !f.object.country.states.empty?, class: 'fullwidth state_name js-state_name' %>
+      <%= f.collection_select :state_id, f.object.country.states.sort, :id, :name, {include_blank: true}, {class: 'fullwidth js-state_id', style: "display: #{f.object.country.states.empty? ? 'none' : 'block' };", disabled: f.object.country.states.empty?} %>
     </span>
   </div>
 
@@ -60,11 +60,3 @@
     <%= f.phone_field :phone, class: 'fullwidth' %>
   </div>
 </div>
-
-<% content_for :head do %>
-  <%= javascript_tag do -%>
-    $(document).ready(function(){
-      $('span#<%= s_or_b %>country .select2').on('change', function() { update_state('<%= s_or_b %>'); });
-    });
-  <% end -%>
-<% end %>

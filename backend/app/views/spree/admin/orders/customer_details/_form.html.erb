@@ -40,18 +40,20 @@
     <div class="col-xs-6" data-hook="ship_address_wrapper">
       <fieldset class="no-border-bottom">
         <legend align="center"><%= Spree.t(:shipping_address) %></legend>
-        <%= f.fields_for :ship_address do |sa_form| %>
-          <% if Spree::Config[:order_bill_address_used] %>
-            <div class="field" style="position: absolute;margin-top: -15px;left: 0;">
-              <span data-hook="use_billing">
-                <%= check_box_tag 'order[use_billing]', '1', (@order.ship_address.new_record? && @order.bill_address == @order.ship_address) %>
-                <%= label_tag 'order[use_billing]', Spree.t(:use_billing_address) %>
-              </span>
-            </div>
-          <% end %>
-
-          <%= render partial: 'spree/admin/shared/address_form', locals: { f: sa_form, type: 'shipping' } %>
+        <% if Spree::Config[:order_bill_address_used] %>
+          <div class="field" style="position: absolute;margin-top: -15px;left: 0;">
+            <span data-hook="use_billing">
+              <%= check_box_tag 'order[use_billing]', '1', (@order.ship_address.new_record? && @order.bill_address == @order.ship_address) %>
+              <%= label_tag 'order[use_billing]', Spree.t(:use_billing_address) %>
+            </span>
+          </div>
         <% end %>
+
+        <div class="js-shipping-address">
+          <%= f.fields_for :ship_address do |ba_form| %>
+            <%= render partial: 'spree/admin/shared/address_form', locals: { f: ba_form, type: "shipping" } %>
+          <% end %>
+        </div>
       </fieldset>
     </div>
 
@@ -59,9 +61,11 @@
       <div class="col-xs-6" data-hook="bill_address_wrapper">
         <fieldset class="no-border-bottom">
           <legend align="center"><%= Spree.t(:billing_address) %></legend>
-          <%= f.fields_for :bill_address do |ba_form| %>
-            <%= render partial: 'spree/admin/shared/address_form', locals: { f: ba_form, type: "billing" } %>
-          <% end %>
+          <div class="js-billing-address">
+            <%= f.fields_for :bill_address do |ba_form| %>
+              <%= render partial: 'spree/admin/shared/address_form', locals: { f: ba_form, type: "billing" } %>
+            <% end %>
+          </div>
         </fieldset>
       </div>
     <% end %>
