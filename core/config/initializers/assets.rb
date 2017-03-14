@@ -1,1 +1,1 @@
-Rails.application.config.assets.precompile += %w( logo/solidus_logo.png noimage/*.png )
+Rails.application.config.assets.precompile << 'solidus_core_manifest.js'
