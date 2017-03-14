@@ -1,6 +1,8 @@
 module Spree
   module Admin
     class ReimbursementsController < ResourceController
+      helper 'spree/admin/reimbursement_type'
+      helper 'spree/admin/customer_returns'
       belongs_to 'spree/order', find_by: :number
 
       before_action :load_stock_locations, only: :edit
