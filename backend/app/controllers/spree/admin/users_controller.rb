@@ -148,15 +148,8 @@ module Spree
       end
 
       def set_roles
-        # FIXME: user_params permits the roles that can be set, if spree_role_ids is set.
-        # when submitting a user with no roles, the param is not present. Because users can be updated
-        # with some users being able to set roles, and some users not being able to set roles, we have to check
-        # if the roles should be cleared, or unchanged again here. The roles form should probably hit a seperate
-        # action or controller to remedy this.
-        if user_params[:spree_role_ids]
+        if user_params[:spree_role_ids] && can?(:manage, Spree::Role)
           @user.spree_roles = Spree::Role.where(id: user_params[:spree_role_ids])
-        elsif can?(:manage, Spree::Role)
-          @user.spree_roles = []
         end
       end
 

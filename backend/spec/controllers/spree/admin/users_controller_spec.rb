@@ -149,8 +149,16 @@ describe Spree::Admin::UsersController, type: :controller do
       it "can clear roles" do
         user.spree_roles << dummy_role
         expect {
-          put :update, params: { id: user.id, user: { first_name: "Bob", spree_role_ids: [] } }
+          put :update, params: { id: user.id, user: { first_name: "Bob", spree_role_ids: [""] } }
         }.to change { user.reload.spree_roles.to_a }.to([])
+      end
+
+      context 'when no role params are present' do
+        it 'does not clear all present user roles' do
+          user.spree_roles << dummy_role
+          put :update, params: { id: user.id, user: { first_name: "Bob" } }
+          expect(user.reload.spree_roles).to_not be_empty
+        end
       end
     end
 
