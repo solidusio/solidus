@@ -119,6 +119,8 @@ FactoryGirl.define do
                   shipped_at: Time.current
                 )
               end
+              # We need to update the shipment_state after all callbacks have run
+              order.update_columns(shipment_state: 'shipped')
               order.reload
             end
           end
