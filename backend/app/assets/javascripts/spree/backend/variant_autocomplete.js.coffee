@@ -3,10 +3,8 @@
 variantTemplate = HandlebarsTemplates["variants/autocomplete"]
 
 formatVariantResult = (variant) ->
-  image = variant.images[0].mini_url if variant["images"][0] isnt undefined and variant["images"][0].mini_url isnt undefined
   variantTemplate(
     variant: variant
-    image: image
   )
 
 $.fn.variantAutocomplete = (searchOptions = {}) ->
