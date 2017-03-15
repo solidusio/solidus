@@ -201,7 +201,8 @@ RSpec.describe 'order factory' do
         expect(order).to have_attributes(
           total: 110,
           payment_total: 110,
-          payment_state: "paid"
+          payment_state: "paid",
+          shipment_state: "shipped"
         )
 
         expect(order.payments.count).to eq 1
