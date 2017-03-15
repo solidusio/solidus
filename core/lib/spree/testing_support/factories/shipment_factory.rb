@@ -1,7 +1,6 @@
 require 'spree/testing_support/factories/order_factory'
 require 'spree/testing_support/factories/stock_location_factory'
 require 'spree/testing_support/factories/shipping_method_factory'
-require 'spree/testing_support/factories/stock_location_factory'
 
 FactoryGirl.define do
   factory :shipment, class: Spree::Shipment do
