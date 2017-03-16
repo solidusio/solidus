@@ -3,6 +3,7 @@ _.extend(window.Spree, {
   Collections: {},
   Views: {
     Order: {},
-    Cart: {}
+    Cart: {},
+    Zones: {}
   }
 })
