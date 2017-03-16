@@ -8,3 +8,4 @@
 //= require 'spree/backend/views/order/customer_select'
 //= require 'spree/backend/views/order/summary'
 //= require 'spree/backend/views/state_select'
+//= require 'spree/backend/views/zones/form'
