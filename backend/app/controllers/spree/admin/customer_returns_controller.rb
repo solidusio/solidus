@@ -1,6 +1,8 @@
 module Spree
   module Admin
     class CustomerReturnsController < ResourceController
+      helper 'spree/admin/reimbursements'
+      helper 'spree/admin/reimbursement_type'
       belongs_to 'spree/order', find_by: :number
 
       before_action :parent # ensure order gets loaded to support our pseudo parent-child relationship
