@@ -49,7 +49,7 @@
 
   &:not(.active):hover > a {
     background: darken($color-tbl-thead, 5%);
-    color: $color-link;
+    color: $link-color;
   }
 }
 

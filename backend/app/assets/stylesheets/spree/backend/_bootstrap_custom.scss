@@ -93,10 +93,10 @@ $body-color:                 $color-body-text !default;
 //
 // Style anchor elements.
 
-$link-color:                 $brand-primary !default;
+$link-color:                 $color-link !default;
 $link-decoration:            none !default;
-$link-hover-color:           darken($link-color, 15%) !default;
-$link-hover-decoration:      underline !default;
+$link-hover-color:           $color-link-hover !default;
+$link-hover-decoration:      none !default;
 
 
 // Grid breakpoints

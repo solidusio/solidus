@@ -19,11 +19,9 @@ strong, b {
 // links
 //--------------------------------------------------------------
 a {
-  color: $color-link;
-  text-decoration: none;
   line-height: inherit;
 
-  &:active, &:hover {
+  &:active {
     text-decoration: none;
   }
   &:visited {
@@ -34,9 +32,6 @@ a {
   }
   &:active {
     color: $color-link-active;
-  }
-  &:hover {
-    color: $color-link-hover;
   }
 }
 
