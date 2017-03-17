@@ -178,7 +178,7 @@ $headings-margin-bottom:     ($spacer / 2) !default;
 $headings-font-family:       inherit !default;
 $headings-font-weight:       $font-weight-bold !default;
 $headings-line-height:       1.1 !default;
-$headings-color:             inherit !default;
+$headings-color:             $color-headers !default;
 
 $lead-font-size:             1.25rem !default;
 $lead-font-weight:           300 !default;
