@@ -58,6 +58,21 @@ RSpec.describe Spree::Api::ShipmentsController, type: :request do
         expect(parsed_response["error"]).to eq("The resource you were looking for could not be found.")
       end
     end
+
+    context "if the user is not authorized to update the shipment" do
+      let(:user) { create(:user, spree_api_key: 'abc123') }
+
+      custom_authorization! do |_|
+        can :read, Spree::Shipment
+        cannot :update, Spree::Shipment
+        can :create, Spree::Shipment
+      end
+
+      it "is not authorized" do
+        subject
+        expect(response).to be_unauthorized
+      end
+    end
   end
 
   describe "POST /api/shipments/transfer_to_shipment" do
