@@ -54,8 +54,11 @@ $color-navbar-footer-bg:        $color-sidebar-bg !default;
 $color-navbar-footer-active:    $color-2 !default;
 
 // Basic flash colors
+@include solidus-deprecated-variable("color-success", "brand-success");
 $color-success:                  $color-2 !default;
+@include solidus-deprecated-variable("color-notice", "brand-warning");
 $color-notice:                   $color-6 !default;
+@include solidus-deprecated-variable("color-error", "brand-danger");
 $color-error:                    $color-5 !default;
 
 // Color for spinner
