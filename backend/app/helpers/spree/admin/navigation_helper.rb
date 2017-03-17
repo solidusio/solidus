@@ -108,9 +108,9 @@ module Spree
       end
 
       def link_to_with_icon(icon_name, text, url, options = {})
-        options[:class] = (options[:class].to_s + " fa fa-#{icon_name} icon_link with-tip").strip
+        options[:class] = (options[:class].to_s + " fa fa-#{icon_name} icon_link").strip
         if options.delete(:no_text)
-          options[:class] += ' no-text'
+          options[:class] += ' with-tip no-text'
           options[:title] = text
           contents = ''
         else
