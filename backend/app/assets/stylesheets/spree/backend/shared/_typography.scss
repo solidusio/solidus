@@ -37,15 +37,14 @@ a {
 h1,h2,h3,h4,h5,h6 {
   font-weight: $font-weight-bold;
   color: $color-headers;
-  line-height: 1.1;
 }
 
-h1 { font-size: $h1-size; line-height: $h1-size + 6 }
-h2 { font-size: $h2-size; line-height: $h1-size + 4 }
-h3 { font-size: $h3-size; line-height: $h1-size + 2 }
-h4 { font-size: $h4-size; line-height: $h1-size }
-h5 { font-size: $h5-size; line-height: $h1-size }
-h6 { font-size: $h6-size; line-height: $h1-size }
+h1 { line-height: $font-size-h1 + 6 }
+h2 { line-height: $font-size-h1 + 4 }
+h3 { line-height: $font-size-h1 + 2 }
+h4 { line-height: $font-size-h1 }
+h5 { line-height: $font-size-h1 }
+h6 { line-height: $font-size-h1 }
 
 
 // Lists
