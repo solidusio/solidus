@@ -85,7 +85,7 @@ $border-width:               1px !default;
 //
 // Settings for the `<body>` element.
 
-$body-bg:                    #fff !default;
+$body-bg:                    $color-body-bg !default;
 $body-color:                 $gray-dark !default;
 
 

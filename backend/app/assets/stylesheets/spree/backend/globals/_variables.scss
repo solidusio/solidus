@@ -23,6 +23,7 @@ $color-7:                        #F4F4F4 !default;    // Light Gray
 $box-shadow:                     0px 3px 3px -2px hsla(0, 0%, 0%, 0.2) !default;
 
 // Body base colors
+@include solidus-deprecated-variable("color-body-bg", "body-bg");
 $color-body-bg:                  $color-1 !default;
 $color-body-text:                $color-4 !default;
 $color-headers:                  $color-4 !default;

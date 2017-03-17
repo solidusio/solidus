@@ -4,13 +4,12 @@ body {
   padding: 0;
   font-weight: 400;
   color: $color-body-text;
-  background: $color-body-bg;
   text-rendering: optimizeLegibility;
 }
 
 hr {
   border-top: 1px solid $color-border;
-  border-bottom: 1px solid $color-body-bg;
+  border-bottom: 1px solid $body-bg;
   border-left: none;
 }
 
