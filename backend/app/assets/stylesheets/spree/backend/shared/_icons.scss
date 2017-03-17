@@ -51,5 +51,5 @@ button, a {
 
 // Avoid ugly default browser font (usually a serif) when an element has an icon AND text
 .fa {
-  font-family: "FontAwesome", $base-font-family !important;
+  font-family: "FontAwesome", $font-family-base !important;
 }

@@ -4,6 +4,7 @@
 
 // Fonts
 //--------------------------------------------------------------
+@include solidus-deprecated-variable("base-font-family", "font-family-base");
 $base-font-family: "Open Sans", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif !default;
 
 // Colors
