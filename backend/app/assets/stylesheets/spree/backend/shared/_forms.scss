@@ -133,7 +133,7 @@ button, .button {
 
 span.info {
   font-size: 85%;
-  color: lighten($color-body-text, 15);
+  color: lighten($body-color, 15);
   display: block;
   line-height: 20px;
   margin: 5px 0;
@@ -247,7 +247,7 @@ fieldset {
   }
 
   label {
-    color: lighten($color-body-text, 8);
+    color: lighten($body-color, 8);
   }
 
   .filter-actions {

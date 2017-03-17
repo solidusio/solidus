@@ -3,7 +3,6 @@
 body {
   padding: 0;
   font-weight: 400;
-  color: $color-body-text;
   text-rendering: optimizeLegibility;
 }
 
@@ -86,7 +85,7 @@ dl {
   width: 100%;
   overflow: hidden;
   margin: 5px 0;
-  color: lighten($color-body-text, 15);
+  color: lighten($body-color, 15);
 
   dt, dd {
     float: left;
@@ -133,5 +132,5 @@ dl {
   text-align: center;
   font-size: 120%;
   padding: 40px 0px;
-  color: lighten($color-body-text, 15);
+  color: lighten($body-color, 15);
 }

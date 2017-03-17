@@ -25,6 +25,7 @@ $box-shadow:                     0px 3px 3px -2px hsla(0, 0%, 0%, 0.2) !default;
 // Body base colors
 @include solidus-deprecated-variable("color-body-bg", "body-bg");
 $color-body-bg:                  $color-1 !default;
+@include solidus-deprecated-variable("color-body-text", "body-color");
 $color-body-text:                $color-4 !default;
 $color-headers:                  $color-4 !default;
 $color-link:                     $color-3 !default;

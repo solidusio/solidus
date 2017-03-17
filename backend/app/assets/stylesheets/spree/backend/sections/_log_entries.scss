@@ -3,7 +3,7 @@
     background: lighten($color-2, 15);
 
     td h4 {
-      color: darken($color-body-text, 25);
+      color: darken($body-color, 25);
     }
   }
 
@@ -11,7 +11,7 @@
     background: lighten($color-5, 25);
 
     td h4 {
-      color: lighten($color-body-text, 50);
+      color: lighten($body-color, 50);
     }
   }
 }

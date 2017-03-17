@@ -44,7 +44,7 @@
   &.active:hover {
     background: white;
     border-bottom-color: white;
-    color: $color-body-text;
+    color: $body-color;
   }
 
   &:not(.active):hover > a {

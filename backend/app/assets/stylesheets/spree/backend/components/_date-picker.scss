@@ -98,7 +98,7 @@
       th {
         border-bottom: 1px solid $color-border;
         border-right: 1px solid $color-border;
-        color: $color-body-text;
+        color: $body-color;
         width: 33px;
 
         &:last-child {
@@ -121,7 +121,7 @@
           background-color: $color-1;
           background-image: none;
           font-size: 85%;
-          color: $color-body-text;
+          color: $body-color;
 
           &.ui-state-active {
             background-color: $color-2;
