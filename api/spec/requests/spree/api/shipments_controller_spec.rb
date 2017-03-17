@@ -59,12 +59,29 @@ RSpec.describe Spree::Api::ShipmentsController, type: :request do
       end
     end
 
-    context "if the user is not authorized to update the shipment" do
+    context "if the user can not update shipments" do
       let(:user) { create(:user, spree_api_key: 'abc123') }
 
       custom_authorization! do |_|
         can :read, Spree::Shipment
         cannot :update, Spree::Shipment
+        can :create, Spree::Shipment
+        can :destroy, Spree::Shipment
+      end
+
+      it "is not authorized" do
+        subject
+        expect(response).to be_unauthorized
+      end
+    end
+
+    context "if the user can not destroy shipments" do
+      let(:user) { create(:user, spree_api_key: 'abc123') }
+
+      custom_authorization! do |_|
+        can :read, Spree::Shipment
+        can :update, Spree::Shipment
+        cannot :destroy, Spree::Shipment
         can :create, Spree::Shipment
       end
 
