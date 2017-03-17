@@ -182,6 +182,8 @@ $actions-brd-colors: $color-action-edit-brd, $color-action-clone-brd, $color-act
 
 // Sizes
 //--------------------------------------------------------------
+
+@include solidus-deprecated-variable("body-font-size", "font-size-root");
 $body-font-size:                 13px !default;
 
 $h6-size:                        $body-font-size + 2 !default;
