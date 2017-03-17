@@ -5,28 +5,28 @@
 
   &.tooltip-top,
   &.bs-tether-element-attached-bottom {
-    .tooltip-arrow {
+    .tooltip-inner::before {
       border-top-color: $color;
     }
   }
 
   &.tooltip-right,
   &.bs-tether-element-attached-left {
-    .tooltip-arrow {
+    .tooltip-inner::before {
       border-right-color: $color;
     }
   }
 
   &.tooltip-bottom,
   &.bs-tether-element-attached-top {
-    .tooltip-arrow {
+    .tooltip-inner::before {
       border-bottom-color: $color;
     }
   }
 
   &.tooltip-left,
   &.bs-tether-element-attached-right {
-    .tooltip-arrow {
+    .tooltip-inner::before {
       border-left-color: $color;
     }
   }
