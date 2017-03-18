@@ -15,13 +15,28 @@ describe Spree::LineItem, type: :model do
       expect(line_item.reload.variant).to be_a Spree::Variant
     end
 
-    it "returns inventory when a line item is destroyed" do
-      expect_any_instance_of(Spree::OrderInventory).to receive(:verify)
-      line_item.destroy
-    end
-
     it "deletes inventory units" do
       expect { line_item.destroy }.to change { line_item.inventory_units.count }.from(1).to(0)
+    end
+
+    context "for a complete order" do
+      let!(:order) { create :completed_order_with_pending_payment, line_items_count: 1 }
+
+      it "returns inventory when a line item is destroyed" do
+        expect { line_item.destroy }.to change { line_item.variant.stock_items.first.count_on_hand }.by(1)
+      end
+
+      it "destroys empty shipments when a line item is destroyed" do
+        expect { line_item.destroy }.to change { line_item.order.shipments.count }.by(-1)
+      end
+    end
+
+    context "when the line item has a shipped inventory unit" do
+      let!(:order) { create :shipped_order, line_items_count: 1 }
+
+      it "can not be destroyed" do
+        expect { line_item.destroy }.not_to change(Spree::LineItem, :count)
+      end
     end
   end
 
