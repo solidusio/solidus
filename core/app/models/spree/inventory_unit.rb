@@ -141,7 +141,7 @@ module Spree
         throw :abort
       end
 
-      unless shipment.pending?
+      if shipment.shipped? || shipment.canceled?
         errors.add(:base, :cannot_destroy_shipment_state, state: shipment.state)
         throw :abort
       end

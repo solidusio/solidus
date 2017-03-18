@@ -289,11 +289,10 @@ describe Spree::InventoryUnit, type: :model do
       expect { inventory_unit.reload }.not_to raise_error
     end
 
-    it "cannot be destroyed if its shipment is ready" do
+    it "can be destroyed if its shipment is ready" do
       inventory_unit = create(:order_ready_to_ship).inventory_units.first
-      expect(inventory_unit.destroy).to eq false
-      expect(inventory_unit.errors.full_messages.join).to match /Cannot destroy/
-      expect { inventory_unit.reload }.not_to raise_error
+      expect(inventory_unit.destroy).to be_truthy
+      expect { inventory_unit.reload }.to raise_error(ActiveRecord::RecordNotFound)
     end
 
     it "cannot be destroyed if its shipment is shipped" do

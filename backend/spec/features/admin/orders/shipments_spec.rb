@@ -79,5 +79,26 @@ describe "Shipments", type: :feature do
       expect(page).to have_css("#shipment_#{shipment2.id} tr.stock-item", count: 2)
       expect(page).to have_css("#shipment_#{shipment1.id} tr.stock-item", count: 3)
     end
+
+    context "with a ready-to-ship order" do
+      let(:variant) { create(:variant) }
+      let!(:order) do
+        create(
+          :order_ready_to_ship,
+          number: "R100",
+          line_items_attributes: [{ variant: variant, quantity: 5 }]
+        )
+      end
+
+      it "can transfer all items to a new location" do
+        expect(order.shipments.count).to eq(1)
+
+        within_row(1) { click_icon 'arrows-h' }
+        complete_split_to('LA', quantity: 5)
+
+        expect(page).to_not have_content("package from 'NY Warehouse'")
+        expect(page).to have_content("package from 'LA'")
+      end
+    end
   end
 end

@@ -391,7 +391,7 @@ module Spree
     end
 
     def ensure_can_destroy
-      unless pending?
+      if shipped? || canceled?
         errors.add(:state, :cannot_destroy, state: state)
         throw :abort
       end
