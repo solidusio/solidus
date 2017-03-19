@@ -7,7 +7,7 @@ input[type="time"],
 input[type="url"],
 input[type="number"],
 input[type="tel"],
-textarea, fieldset {
+textarea {
   padding: 7px 10px;
   border: 1px solid $color-txt-brd;
   border-radius: $border-radius;
@@ -204,20 +204,12 @@ span.info {
 }
 
 fieldset {
-  box-shadow: none;
-  box-sizing: border-box;
-  border-color: $color-border;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  margin-left: 0;
-  margin-right: 0;
+  border: 1px solid $color-border;
   position: relative;
   margin-bottom: 35px;
   padding: 10px 0 15px 0;
-  background-color: transparent;
   border-left: none;
   border-right: none;
-  border-radius: 0;
 
   &.no-border-bottom {
     border-bottom: none;
@@ -230,7 +222,6 @@ fieldset {
   }
 
   legend {
-    background-color: $color-1;
     color: $color-2;
     font-size: 16px;
     font-weight: $font-weight-bold;
