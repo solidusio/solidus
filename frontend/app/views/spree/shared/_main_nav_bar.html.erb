@@ -3,7 +3,7 @@
     <li id="home-link" data-hook><%= link_to Spree.t(:home), spree.root_path %></li>
     <li id="link-to-cart" data-hook>
       <noscript>
-        <%= link_to Spree.t(:cart), '/cart' %>
+        <%= link_to Spree.t(:cart), spree.cart_path %>
       </noscript>
       &nbsp;
     </li>
