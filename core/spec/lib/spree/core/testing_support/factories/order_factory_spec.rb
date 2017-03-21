@@ -122,6 +122,8 @@ RSpec.describe 'order factory' do
           total: 110,
           state: 'complete'
         )
+        expect(order.inventory_units.where(pending: true)).to be_empty
+        expect(order.inventory_units.where(pending: false)).to_not be_empty
       end
     end
   end

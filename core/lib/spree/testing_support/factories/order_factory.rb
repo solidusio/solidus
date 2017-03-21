@@ -76,6 +76,9 @@ FactoryGirl.define do
 
         after(:create) do |order|
           order.refresh_shipment_rates
+          order.shipments.each do |shipment|
+            shipment.inventory_units.update_all state: 'on_hand', pending: false
+          end
           order.update_column(:completed_at, Time.current)
         end
 
@@ -96,7 +99,6 @@ FactoryGirl.define do
           after(:create) do |order, evaluator|
             create(evaluator.payment_type, amount: order.total, order: order, state: 'completed')
             order.shipments.each do |shipment|
-              shipment.inventory_units.update_all state: 'on_hand'
               shipment.update_column('state', 'ready')
             end
             order.reload
