@@ -237,25 +237,29 @@ describe Spree::Api::ShipmentsController, type: :controller do
         end
       end
 
-      context "send_mailer not present" do
-        it "sends the shipped shipments mailer" do
-          expect { subject }.to change { ActionMailer::Base.deliveries.size }.by(1)
-          expect(ActionMailer::Base.deliveries.last.subject).to match /Shipment Notification/
-        end
-      end
+      describe 'sent emails' do
+        subject { perform_enqueued_jobs { super() } }
 
-      context "send_mailer set to false" do
-        let(:send_mailer) { 'false' }
-        it "does not send the shipped shipments mailer" do
-          expect { subject }.to_not change { ActionMailer::Base.deliveries.size }
+        context "send_mailer not present" do
+          it "sends the shipped shipments mailer" do
+            expect { subject }.to change { ActionMailer::Base.deliveries.size }.by(1)
+            expect(ActionMailer::Base.deliveries.last.subject).to match /Shipment Notification/
+          end
         end
-      end
 
-      context "send_mailer set to true" do
-        let(:send_mailer) { 'true' }
-        it "sends the shipped shipments mailer" do
-          expect { subject }.to change { ActionMailer::Base.deliveries.size }.by(1)
-          expect(ActionMailer::Base.deliveries.last.subject).to match /Shipment Notification/
+        context "send_mailer set to false" do
+          let(:send_mailer) { 'false' }
+          it "does not send the shipped shipments mailer" do
+            expect { subject }.to_not change { ActionMailer::Base.deliveries.size }
+          end
+        end
+
+        context "send_mailer set to true" do
+          let(:send_mailer) { 'true' }
+          it "sends the shipped shipments mailer" do
+            expect { subject }.to change { ActionMailer::Base.deliveries.size }.by(1)
+            expect(ActionMailer::Base.deliveries.last.subject).to match /Shipment Notification/
+          end
         end
       end
     end

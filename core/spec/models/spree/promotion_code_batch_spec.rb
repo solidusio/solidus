@@ -1,8 +1,6 @@
 require "spec_helper"
 
 describe Spree::PromotionCodeBatch, type: :model do
-  include ActiveJob::TestHelper
-
   subject do
     described_class.create!(
       promotion_id: create(:promotion).id,
@@ -16,12 +14,8 @@ describe Spree::PromotionCodeBatch, type: :model do
   describe "#process" do
     context "with a pending code batch" do
       it "should call the worker" do
-        ActiveJob::Base.queue_adapter = :test
-
         expect { subject.process }
           .to have_enqueued_job(Spree::PromotionCodeBatchJob)
-
-        clear_enqueued_jobs
       end
 
       it "should update the state to processing" do
