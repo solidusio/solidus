@@ -80,7 +80,7 @@ module Spree
 
     after_initialize :ensure_master
 
-    after_save :run_touch_callbacks, if: :changed?
+    after_save :run_touch_callbacks, if: :saved_changes?
     after_touch :touch_taxons
 
     before_validation :normalize_slug, on: :update
