@@ -79,7 +79,6 @@ module Spree
               end
 
               after_transition to: :complete, do: :add_payment_sources_to_wallet
-              before_transition to: :payment, do: :set_shipments_cost
               before_transition to: :payment, do: :add_default_payment_from_wallet
 
               before_transition to: :confirm, do: :add_store_credit_payments
@@ -99,7 +98,6 @@ module Spree
               before_transition to: :delivery, do: :ensure_shipping_address
               before_transition to: :delivery, do: :create_proposed_shipments
               before_transition to: :delivery, do: :ensure_available_shipping_rates
-              before_transition to: :delivery, do: :set_shipments_cost
               before_transition from: :delivery, do: :apply_free_shipping_promotions
             end
 
@@ -125,8 +123,7 @@ module Spree
             after_transition to: :canceled, do: :after_cancel
 
             after_transition from: any - :cart, to: any - [:confirm, :complete] do |order|
-              order.update_totals
-              order.persist_totals
+              order.update!
             end
 
             after_transition do |order, transition|

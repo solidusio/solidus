@@ -39,44 +39,5 @@ module Spree
         end
       end
     end
-
-    context 'when changing shipping method' do
-      let!(:order) { create(:order_with_line_items, shipping_method: shipping_method1) }
-      let(:shipment){ order.shipments.first }
-      let!(:zone) { create(:zone) }
-      let!(:shipping_method1){ create(:shipping_method, cost: 10, zones: [zone]) }
-      let!(:shipping_method2){ create(:shipping_method, cost: 20, zones: [zone]) }
-
-      let(:attributes) do
-        {
-          shipments_attributes: {
-            0 => { selected_shipping_rate_id: shipping_method2, id: shipment.id }
-          }
-        }
-      end
-
-      it "updates shipment costs" do
-        zone.zone_members.create!(zoneable: order.ship_address.country)
-        order.create_proposed_shipments
-        order.set_shipments_cost
-
-        shipping_rate2 = shipment.shipping_rates.find_by(shipping_method_id: shipping_method2.id)
-
-        expect(order.shipment_total).to eq(10)
-
-        # We need an order which doesn't have shipping_rates loaded
-        order.reload
-
-        described_class.new(
-          order,
-          shipments_attributes: {
-            0 => { selected_shipping_rate_id: shipping_rate2.id, id: shipment.id }
-          }
-        ).apply
-
-        expect(order.shipment_total).to eq(20)
-        expect(order.shipments.first.cost).to eq(20)
-      end
-    end
   end
 end

@@ -472,12 +472,10 @@ module Spree
 
     def empty!
       line_items.destroy_all
-      updater.update_item_count
       adjustments.destroy_all
       shipments.destroy_all
 
-      update_totals
-      persist_totals
+      update!
     end
 
     alias_method :has_step?, :has_checkout_step?
@@ -570,9 +568,9 @@ module Spree
 
     def set_shipments_cost
       shipments.each(&:update_amounts)
-      updater.update_shipment_total
-      persist_totals
+      update!
     end
+    deprecate set_shipments_cost: :update!, deprecator: Spree::Deprecation
 
     def is_risky?
       payments.risky.count > 0
@@ -796,9 +794,12 @@ module Spree
     end
 
     def ensure_promotions_eligible
-      updater.update_adjustment_total
-      if promo_total_changed?
+      adjustment_changed = all_adjustments.eligible.promotion.any? do |adjustment|
+        !adjustment.calculate_eligibility
+      end
+      if adjustment_changed
         restart_checkout_flow
+        update!
         errors.add(:base, Spree.t(:promotion_total_changed_before_complete))
       end
       errors.empty?

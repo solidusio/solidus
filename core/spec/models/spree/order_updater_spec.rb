@@ -16,20 +16,22 @@ module Spree
       context 'with refund' do
         it "updates payment totals" do
           create(:payment_with_refund, order: order, amount: 33.25, refund_amount: 3)
-          Spree::OrderUpdater.new(order).update_payment_total
+          updater.update
           expect(order.payment_total).to eq(30.25)
         end
       end
 
       it "update item total" do
-        updater.update_item_total
-        expect(order.item_total).to eq(20)
+        expect {
+          updater.update
+        }.to change { order.item_total }.to 20
       end
 
       it "update shipment total" do
         create(:shipment, order: order, cost: 10)
-        updater.update_shipment_total
-        expect(order.shipment_total).to eq(10)
+        expect {
+          updater.update
+        }.to change { order.shipment_total }.to 10
       end
 
       context 'with order promotion followed by line item addition' do
@@ -60,7 +62,7 @@ module Spree
         create(:adjustment, adjustable: order, order: order, source: nil, amount: 10)
 
         expect {
-          updater.update_adjustment_total
+          updater.update
         }.to change {
           order.adjustment_total
         }.from(0).to(10)
@@ -483,17 +485,12 @@ module Spree
 
         it "updates each shipment" do
           expect(shipment).to receive(:update!)
-          updater.update_shipments
-        end
-
-        it "refreshes shipment rates" do
-          expect(shipment).to receive(:refresh_rates)
-          updater.update_shipments
+          updater.update
         end
 
         it "updates the shipment amount" do
           expect(shipment).to receive(:update_amounts)
-          updater.update_shipments
+          updater.update
         end
       end
     end

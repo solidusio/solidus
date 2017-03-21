@@ -164,21 +164,25 @@ RSpec.describe Spree::PromotionCode do
         order.complete!
       end
     end
+
     it "makes the promotion ineligible" do
       expect{
         order.complete
       }.to change{ promo_adjustment.reload.eligible }.to(false)
     end
+
     it "adjusts the promo_total" do
       expect{
         order.complete
       }.to change(order, :promo_total).by(10)
     end
+
     it "increases the total to remove the promo" do
       expect{
         order.complete
       }.to change(order, :total).from(30).to(40)
     end
+
     it "resets the state of the order" do
       expect{
         order.complete
