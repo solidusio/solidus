@@ -239,7 +239,7 @@ class Spree::StoreCredit < Spree::Base
   end
 
   def store_event
-    return unless amount_changed? || amount_used_changed? || amount_authorized_changed? || [ELIGIBLE_ACTION, INVALIDATE_ACTION].include?(action)
+    return unless saved_change_to_amount? || saved_change_to_amount_used? || saved_change_to_amount_authorized? || [ELIGIBLE_ACTION, INVALIDATE_ACTION].include?(action)
 
     event = if action
       store_credit_events.build(action: action)
