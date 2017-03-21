@@ -11,7 +11,7 @@ module Spree
 
     before_create :set_permalink
     before_update :set_permalink
-    after_update :update_child_permalinks, if: :permalink_changed?
+    after_update :update_child_permalinks, if: :saved_change_to_permalink?
 
     validates :name, presence: true
     validates :meta_keywords, length: { maximum: 255 }
