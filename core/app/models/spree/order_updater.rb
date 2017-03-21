@@ -44,26 +44,27 @@ module Spree
     #
     # The +shipment_state+ value helps with reporting, etc. since it provides a quick and easy way to locate Orders needing attention.
     def update_shipment_state
-      if order.backordered?
-        order.shipment_state = 'backorder'
-      else
-        # get all the shipment states for this order
-        shipment_states = shipments.states
-        if shipment_states.size > 1
-          # multiple shiment states means it's most likely partially shipped
-          order.shipment_state = 'partial'
+      log_state_change('shipment') do
+        if order.backordered?
+          order.shipment_state = 'backorder'
         else
-          # will return nil if no shipments are found
-          order.shipment_state = shipment_states.first
-          # TODO: inventory unit states?
-          # if order.shipment_state && order.inventory_units.where(:shipment_id => nil).exists?
-          #   shipments exist but there are unassigned inventory units
-          #   order.shipment_state = 'partial'
-          # end
+          # get all the shipment states for this order
+          shipment_states = shipments.states
+          if shipment_states.size > 1
+            # multiple shiment states means it's most likely partially shipped
+            order.shipment_state = 'partial'
+          else
+            # will return nil if no shipments are found
+            order.shipment_state = shipment_states.first
+            # TODO: inventory unit states?
+            # if order.shipment_state && order.inventory_units.where(:shipment_id => nil).exists?
+            #   shipments exist but there are unassigned inventory units
+            #   order.shipment_state = 'partial'
+            # end
+          end
         end
       end
 
-      order.state_changed('shipment')
       order.shipment_state
     end
 
@@ -76,17 +77,18 @@ module Spree
     #
     # The +payment_state+ value helps with reporting, etc. since it provides a quick and easy way to locate Orders needing attention.
     def update_payment_state
-      last_state = order.payment_state
-      if payments.present? && payments.valid.size == 0 && order.outstanding_balance != 0
-        order.payment_state = 'failed'
-      elsif order.state == 'canceled' && order.payment_total == 0
-        order.payment_state = 'void'
-      else
-        order.payment_state = 'balance_due' if order.outstanding_balance > 0
-        order.payment_state = 'credit_owed' if order.outstanding_balance < 0
-        order.payment_state = 'paid' if !order.outstanding_balance?
+      log_state_change('payment') do
+        if payments.present? && payments.valid.size == 0 && order.outstanding_balance != 0
+          order.payment_state = 'failed'
+        elsif order.state == 'canceled' && order.payment_total == 0
+          order.payment_state = 'void'
+        else
+          order.payment_state = 'balance_due' if order.outstanding_balance > 0
+          order.payment_state = 'credit_owed' if order.outstanding_balance < 0
+          order.payment_state = 'paid' if !order.outstanding_balance?
+        end
       end
-      order.state_changed('payment') if last_state != order.payment_state
+
       order.payment_state
     end
 
@@ -175,6 +177,21 @@ module Spree
 
     def persist_totals
       order.save!(validate: false)
+    end
+
+    def log_state_change(name)
+      state = "#{name}_state"
+      old_state = order.public_send(state)
+      yield
+      new_state = order.public_send(state)
+      if old_state != new_state
+        order.state_changes.new(
+          previous_state: old_state,
+          next_state:     new_state,
+          name:           name,
+          user_id:        order.user_id
+        )
+      end
     end
 
     def round_money(n)
