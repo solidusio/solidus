@@ -254,11 +254,6 @@ describe Spree::Order, type: :model do
           allow(order).to receive(:ensure_available_shipping_rates) { true }
         end
 
-        it 'should invoke set_shipment_cost' do
-          expect(order).to receive(:set_shipments_cost)
-          order.next!
-        end
-
         it 'should update shipment_total' do
           expect { order.next! }.to change{ order.shipment_total }.by(10.00)
         end
@@ -300,7 +295,6 @@ describe Spree::Order, type: :model do
         end
 
         it "transitions to payment" do
-          expect(order).to receive(:set_shipments_cost)
           order.next!
           assert_state_changed(order, 'delivery', 'payment')
           expect(order.state).to eq('payment')
