@@ -15,7 +15,7 @@ module Spree
     # @return [String] the name of this stock item's variant
     delegate :name, to: :variant, prefix: true
 
-    after_save :conditional_variant_touch, if: :changed?
+    after_save :conditional_variant_touch, if: :saved_changes?
     after_touch { variant.touch }
 
     self.whitelisted_ransackable_attributes = ['count_on_hand', 'stock_location_id']
