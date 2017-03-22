@@ -29,6 +29,7 @@
 //= require spree/backend/admin
 //= require spree/backend/calculator
 //= require spree/backend/checkouts/edit
+//= require spree/backend/components/number_with_currency
 //= require spree/backend/components/tabs
 //= require spree/backend/components/tooltips
 //= require spree/backend/flash

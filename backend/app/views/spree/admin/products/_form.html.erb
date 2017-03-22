@@ -44,22 +44,16 @@
 
       <div class="row">
 
-        <div data-hook="admin_product_form_cost_price" class="col-xs-6">
+        <div data-hook="admin_product_form_cost_price" class="col-xs-12">
           <%= f.field_container :cost_price do %>
             <%= f.label :cost_price %>
-            <%= f.text_field :cost_price, value: number_to_currency(@product.cost_price, unit: '') %>
-            <%= f.error_message_on :cost_price %>
-          <% end %>
-        </div>
 
-        <div data-hook="admin_product_form_cost_currency" class="col-xs-6">
-          <%= f.field_container :cost_currency do %>
-            <%= f.label :cost_currency %>
-            <%= f.text_field :cost_currency %>
+            <%= render "spree/admin/shared/number_with_currency", f: f, amount_attr: :cost_price, currency_attr: :cost_currency %>
+
+            <%= f.error_message_on :cost_price %>
             <%= f.error_message_on :cost_currency %>
           <% end %>
         </div>
-
       </div>
 
       <div class="clear"></div>
