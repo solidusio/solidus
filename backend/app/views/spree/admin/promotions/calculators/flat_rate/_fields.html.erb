@@ -1,0 +1,4 @@
+<%= fields_for "#{prefix}[calculator_attributes]", calculator do |f| %>
+  <%= f.label :preferred_amount %>
+  <%= render "spree/admin/shared/number_with_currency", f: f, amount_attr: :preferred_amount, currency_attr: :preferred_currency %>
+<% end %>
