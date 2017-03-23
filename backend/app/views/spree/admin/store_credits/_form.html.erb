@@ -4,14 +4,15 @@
       <%= f.label :amount, class: 'required' %><br />
       <%= f.number_field :amount, min: 0.00, step: :any %>
       <%= f.error_message_on :amount %>
+      <%= f.error_message_on :currency %>
     <% end %>
   </div>
   <div class="col-xs-12">
-    <%= f.field_container :category do %>
+    <%= f.field_container :category_id do %>
       <%= f.label :category_id, class: 'required' %><br />
       <%= f.select :category_id, options_from_collection_for_select(@credit_categories, :id, :name, f.object.category.try(:id)),
         { include_blank: true }, { class: 'select2 fullwidth', placeholder: Spree.t("admin.store_credits.select_reason") } %>
-      <%= f.error_message_on :category %>
+      <%= f.error_message_on :category_id %>
     <% end %>
   </div>
   <div data-hook="admin_store_credit_memo_field" class="col-xs-12">
