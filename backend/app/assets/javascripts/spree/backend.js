@@ -5,7 +5,6 @@
 //= require jquery-ui/datepicker
 //= require jquery-ui/sortable
 //= require jquery-ui/autocomplete
-//= require jquery.sticky-kit.min
 //= require solidus_admin/select2
 //= require solidus_admin/underscore
 //= require solidus_admin/backbone
@@ -66,7 +65,6 @@
 //= require spree/backend/stock_transfers/transfer_item_deleting
 //= require spree/backend/stock_transfers/variant_form
 //= require spree/backend/store_credits
-//= require spree/backend/style_guide
 //= require spree/backend/taxon_autocomplete
 //= require spree/backend/taxonomy
 //= require spree/backend/taxons
