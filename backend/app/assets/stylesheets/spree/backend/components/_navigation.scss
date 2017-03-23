@@ -2,6 +2,49 @@ $padding-x-navbar: 26px;
 $padding-y-navbar: 13px;
 $padding-y-navbar-submenu: 9px;
 
+.menu-button-icon {
+  width: 34px;
+  height: 32px;
+  margin-right: 10px;
+  background: $color-btn-bg;
+  color: $color-btn-text;
+  border-radius: 4px;
+  text-align: center;
+  cursor: pointer;
+  display: none;
+  &:hover {
+    background: $color-btn-hover-bg;
+  }
+  @media #{$tablet} {
+    display: block;
+  }
+
+  i {
+    padding-top: 7px;
+    color: $color-btn-text;
+    font-size: 18px;
+  }
+}
+
+#menu-button {
+  display: none;
+
+  &:checked ~ .admin-wrapper {
+    overflow: hidden;
+
+    .admin-nav {
+      transform: translateX(0);
+    }
+
+    .admin-content  {
+      transform: translateX($width-sidebar);
+      @media #{$large-device} {
+        transform: none;
+      }
+    }
+  }
+}
+
 nav.menu {
   ul {
     list-style: none;
@@ -29,25 +72,50 @@ nav.menu {
   border-right: $border-sidebar;
   background: $color-sidebar-bg;
   z-index: $z-index-navbar-flyout;
+  @media #{$desktop} {
+    width: $width-sidebar-collapsed;
+  }
+  @media #{$tablet} {
+    width: $width-sidebar;
+    position: fixed;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    transform: translateX(-$width-sidebar)
+  }
 }
 
 .admin-nav-header {
   padding: 15px;
-  height: 58px; // height of .page-title
+  height: 47px; // height of .page-title
   box-sizing: content-box;
   background-color: $color-1;
   border-bottom: 1px solid $color-border;
+  @media #{$tablet} {
+    height: 44px;
+  }
 
   a {
     display: inline-block;
-    line-height: 58px;
+    line-height: 47px;
+    @media #{$desktop} {
+      display: none;
+    }
+    @media #{$tablet} {
+      display: inline-block;
+      line-height: 44px;
+    }
   }
 
   img {
     vertical-align: middle;
-    max-width: 100%;
-    max-height: 100%;
   }
+}
+
+.admin-nav-main {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
 }
 
 .admin-nav-menu {
@@ -70,40 +138,54 @@ nav.menu {
 
     &.selected {
       background: $color-navbar-active-bg;
+      @media #{$desktop} {
+        position: relative;
+      }
+
+      &:not(:hover) > ul {
+        @media #{$desktop} {
+          display: none;
+        }
+        @media #{$tablet} {
+          display: block;
+        }
+      }
+
+      > ul {
+        @media #{$desktop} {
+          @include flyout;
+        }
+        @media #{$tablet} {
+          position: relative;
+          left: 0;
+          width: $width-sidebar;
+          border-top: 0;
+          border-bottom: 0;
+        }
+      }
+
+      li {
+        padding-left: 2em;
+      }
 
       > a {
         color: $color-navbar-active;
       }
     }
 
-    &.selected li {
-      padding-left: 2em;
-    }
-
-    &:not(.selected):not(:hover) > ul {
-      display: none;
-    }
-
     &:not(.selected) {
       position: relative;
 
-      // flyout nav
       > ul {
-        position: absolute;
-        top: 0;
-        left: 100%;
-        width: $width-sidebar-flyout;
-        margin-left: 0;
-        border: $border-sidebar;
-        background: $color-navbar-submenu-bg;
-        box-shadow: $box-shadow;
-        @include caret($direction: left, $color-caret: $color-navbar-submenu-bg);
-
-      &:before {
-        z-index: 1;
-        top: 1.5em;
+        @include flyout;
+        @media #{$tablet} {
+          display: none;
+        }
       }
-     }
+
+      &:not(:hover) > ul {
+        display: none;
+      }
     }
   }
 
@@ -116,6 +198,12 @@ nav.menu {
 
   .icon_link {
     text-indent: 2em;
+    @media #{$desktop} {
+      text-indent: 1.5em;
+    }
+    @media #{$tablet} {
+      text-indent: 2em;
+    }
 
     &:before {
       position: absolute;
@@ -129,6 +217,13 @@ nav.menu {
     font-family: $base-font-family;
     -webkit-font-smoothing: auto;
     -moz-osx-font-smoothing: auto;
+    @media #{$desktop} {
+      overflow: hidden;
+      display: block;
+    }
+    @media #{$tablet} {
+      overflow: visible;
+    }
   }
 
   .admin-subnav {
@@ -174,6 +269,13 @@ nav.menu {
   width: $width-sidebar;
   border-top: $border-sidebar;
   border-right: $border-sidebar;
+  @media #{$desktop} {
+    width: $width-sidebar-collapsed;
+  }
+  @media #{$tablet} {
+    width: $width-sidebar;
+    position: relative;
+  }
 }
 
 .admin-login-nav {
@@ -183,6 +285,12 @@ nav.menu {
 
   li {
     padding: 0.3rem 1.2rem;
+    @media #{$desktop} {
+      padding: 0.3rem 0.5rem 0.3rem 1.1rem;
+    }
+    @media #{$tablet} {
+      padding: 0.3rem 1.2rem;
+    }
   }
 
   a {

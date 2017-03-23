@@ -198,6 +198,7 @@ $font-weight-normal:             400 !default;
 
 $width-sidebar:                  200px !default;
 $width-sidebar-flyout:           225px !default;
+$width-sidebar-collapsed:        42px !default;
 
 // Stacking
 //--------------------------------------------------------------
@@ -206,3 +207,14 @@ $z-index-navbar-flyout:          1000 !default;
 // Sidebar
 //--------------------------------------------------------------
 $border-sidebar:                 1px solid $color-sidebar-border !default;
+
+// Media queries
+//--------------------------------------------------------------
+$desktop-width: 959px !default;
+$tablet-width: 768px !default;
+$mobile-width: 480px !default;
+
+$large-device: "only screen and (min-width: #{$tablet-width})";
+$desktop: "only screen and (max-width: #{$desktop-width})";
+$tablet: "only screen and (max-width: #{$tablet-width})";
+$mobile: "only screen and (max-width: #{$mobile-width})";

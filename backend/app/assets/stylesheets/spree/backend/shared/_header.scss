@@ -7,6 +7,12 @@
 
   body:not(.new-layout) & {
     margin-left: $width-sidebar;
+    @media #{$desktop} {
+      margin-left: $width-sidebar-collapsed;
+    }
+    @media #{$tablet} {
+      margin-left: 0;
+    }
   }
 
   @media print { display: none }
@@ -26,6 +32,7 @@
 
 .header-actions {
   flex-grow: 1;
+  padding: 0;
   text-align: right;
   line-height: 38px;
 
