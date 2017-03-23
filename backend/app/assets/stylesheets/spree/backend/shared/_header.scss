@@ -7,10 +7,10 @@
 
   body:not(.new-layout) & {
     margin-left: $width-sidebar;
-    @include media($desktop) {
+    @media #{$desktop} {
       margin-left: $width-sidebar-collapsed;
     }
-    @include media($tablet) {
+    @media #{$tablet} {
       margin-left: 0;
     }
   }
