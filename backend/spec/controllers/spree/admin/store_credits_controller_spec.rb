@@ -51,6 +51,7 @@ describe Spree::Admin::StoreCreditsController do
           user_id: user.id,
           store_credit: {
             amount: 1.00,
+            currency: "USD",
             category_id: a_credit_category.id
           }
         }

@@ -2,7 +2,7 @@
   <div class="col-xs-12">
     <%= f.field_container :amount do %>
       <%= f.label :amount, class: 'required' %><br />
-      <%= f.number_field :amount, min: 0.00, step: :any %>
+      <%= render "spree/admin/shared/number_with_currency", f: f, amount_attr: :amount, currency_attr: :currency, required: true %>
       <%= f.error_message_on :amount %>
       <%= f.error_message_on :currency %>
     <% end %>
