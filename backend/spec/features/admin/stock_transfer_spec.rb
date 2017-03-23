@@ -16,13 +16,13 @@ describe 'Stock Transfers', type: :feature, js: true do
       create(:stock_location, name: 'SF')
 
       visit spree.new_admin_stock_transfer_path
-      select "SF", from: 'stock_transfer[source_location_id]'
+      select "SF", from: 'stock_transfer[source_location_id]', visible: false
       fill_in 'stock_transfer_description', with: description
       click_button 'Continue'
 
       expect(page).to have_field('stock_transfer_description', with: description)
 
-      select "NY", from: 'stock_transfer[destination_location_id]'
+      select "NY", from: 'stock_transfer[destination_location_id]', visible: false
       within "form.edit_stock_transfer" do
         page.find('button').trigger('click')
       end

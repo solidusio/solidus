@@ -5,7 +5,7 @@
 
  *= require jquery-ui/datepicker
  *= require jquery-ui/autocomplete
- *= require select2
+ *= require solidus_admin/select2
  *= require prism
 
  *= require spree/backend/spree_admin

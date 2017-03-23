@@ -6,6 +6,7 @@
 //= require jquery-ui/sortable
 //= require jquery-ui/autocomplete
 //= require jquery.sticky-kit.min
+//= require solidus_admin/select2
 //= require solidus_admin/underscore
 //= require solidus_admin/backbone
 //= require solidus_admin/backbone-nested-models
@@ -16,7 +17,6 @@
 //= require spree/backend/namespaces
 //= require spree/backend/translation
 //= require spree/backend/backbone-overrides
-//= require spree/backend/spree-select2
 //= require spree/backend/format_money
 //
 //= require spree/backend/templates

@@ -38,13 +38,13 @@ describe "Store", type: :feature, js: true do
     end
 
     it "should be able to update the default cart tax country" do
-      expect(page).to have_select("Tax Country for Empty Carts", selected: "No taxes on carts without address")
+      expect(page).to have_select('Tax Country for Empty Carts', selected: 'No taxes on carts without address', visible: false)
 
-      select "Germany", from: "Tax Country for Empty Carts"
+      select "Germany", from: "Tax Country for Empty Carts", visible: false
       click_button "Update"
 
       expect(page).to have_content("has been successfully updated")
-      expect(page).to have_select("Tax Country for Empty Carts", selected: "Germany")
+      expect(page).to have_select("Tax Country for Empty Carts", selected: "Germany", visible: false)
     end
   end
 
