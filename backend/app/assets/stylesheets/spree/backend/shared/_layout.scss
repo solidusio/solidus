@@ -8,10 +8,10 @@ body {
 
   &.new-layout {
     padding-left: $width-sidebar;
-    @include media($desktop) {
+    @media #{$desktop} {
       padding-left: $width-sidebar-collapsed;
     }
-    @include media($tablet) {
+    @media #{$tablet} {
       padding-left: 0;
     }
   }
@@ -33,10 +33,10 @@ body {
 .content-wrapper {
   body:not(.new-layout) & {
     margin-left: $width-sidebar;
-    @include media($desktop) {
+    @media #{$desktop} {
       margin-left: $width-sidebar-collapsed;
     }
-    @include media($tablet) {
+    @media #{$tablet} {
       margin-left: 0;
     }
     @media print { margin-left: 0 }

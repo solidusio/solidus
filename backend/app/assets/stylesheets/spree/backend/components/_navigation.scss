@@ -15,7 +15,7 @@ $padding-y-navbar-submenu: 9px;
   &:hover {
     background: $color-btn-hover-bg;
   }
-  @include media($tablet) {
+  @media #{$tablet} {
     display: block;
   }
 
@@ -38,7 +38,7 @@ $padding-y-navbar-submenu: 9px;
 
     .admin-content  {
       transform: translateX($width-sidebar);
-      @include media($large-device) {
+      @media #{$large-device} {
         transform: none;
       }
     }
@@ -72,10 +72,10 @@ nav.menu {
   border-right: $border-sidebar;
   background: $color-sidebar-bg;
   z-index: $z-index-navbar-flyout;
-  @include media($desktop) {
+  @media #{$desktop} {
     width: $width-sidebar-collapsed;
   }
-  @include media($tablet) {
+  @media #{$tablet} {
     width: $width-sidebar;
     position: fixed;
     overflow-y: auto;
@@ -91,17 +91,17 @@ nav.menu {
   box-sizing: content-box;
   background-color: $color-1;
   border-bottom: 1px solid $color-border;
-  @include media($tablet) {
+  @media #{$tablet} {
     height: 44px;
   }
 
   a {
     display: inline-block;
     line-height: 47px;
-    @include media($desktop) {
+    @media #{$desktop} {
       display: none;
     }
-    @include media($tablet) {
+    @media #{$tablet} {
       display: inline-block;
       line-height: 44px;
     }
@@ -132,24 +132,24 @@ nav.menu {
 
     &.selected {
       background: $color-navbar-active-bg;
-      @include media($desktop) {
+      @media #{$desktop} {
         position: relative;
       }
 
       &:not(:hover) > ul {
-        @include media($desktop) {
+        @media #{$desktop} {
           display: none;
         }
-        @include media($tablet) {
+        @media #{$tablet} {
           display: block;
         }
       }
 
       > ul {
-        @include media($desktop) {
+        @media #{$desktop} {
           @include flyout;
         }
-        @include media($tablet) {
+        @media #{$tablet} {
           position: relative;
           left: 0;
           width: $width-sidebar;
@@ -172,7 +172,7 @@ nav.menu {
 
       > ul {
         @include flyout;
-        @include media($tablet) {
+        @media #{$tablet} {
           display: none;
         }
       }
@@ -192,10 +192,10 @@ nav.menu {
 
   .icon_link {
     text-indent: 2em;
-    @include media($desktop) {
+    @media #{$desktop} {
       text-indent: 1.5em;
     }
-    @include media($tablet) {
+    @media #{$tablet} {
       text-indent: 2em;
     }
 
@@ -211,11 +211,11 @@ nav.menu {
     font-family: $font-family-base;
     -webkit-font-smoothing: auto;
     -moz-osx-font-smoothing: auto;
-    @include media($desktop) {
+    @media #{$desktop} {
       overflow: hidden;
       display: block;
     }
-    @include media($tablet) {
+    @media #{$tablet} {
       overflow: visible;
     }
   }
@@ -263,10 +263,10 @@ nav.menu {
   width: $width-sidebar;
   border-top: $border-sidebar;
   border-right: $border-sidebar;
-  @include media($desktop) {
+  @media #{$desktop} {
     width: $width-sidebar-collapsed;
   }
-  @include media($tablet) {
+  @media #{$tablet} {
     width: $width-sidebar;
     position: relative;
   }
@@ -279,10 +279,10 @@ nav.menu {
 
   li {
     padding: 0.3rem 1.2rem;
-    @include media($desktop) {
+    @media #{$desktop} {
       padding: 0.3rem 0.5rem 0.3rem 1.1rem;
     }
-    @include media($tablet) {
+    @media #{$tablet} {
       padding: 0.3rem 1.2rem;
     }
   }
