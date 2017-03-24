@@ -6,7 +6,7 @@ class Spree::PromotionCode < Spree::Base
   validates :value, presence: true, uniqueness: { allow_blank: true }
   validates :promotion, presence: true
 
-  before_save :downcase_value
+  before_save :normalize_code
 
   self.whitelisted_ransackable_attributes = ['value']
 
@@ -36,7 +36,7 @@ class Spree::PromotionCode < Spree::Base
 
   private
 
-  def downcase_value
-    self.value = value.downcase
+  def normalize_code
+    self.value = value.downcase.strip
   end
 end
