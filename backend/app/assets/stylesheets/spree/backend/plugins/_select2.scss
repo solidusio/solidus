@@ -1,5 +1,5 @@
 .select2-container {
-  .select2-choice {
+  .select2-choice, .select2-choices {
     border: 1px solid $color-txt-brd;
     border-radius: 2px;
     background: white;
@@ -14,6 +14,16 @@
       color: $color-txt-text;
     }
   }
+}
+
+.select2-container-multi .select2-choices .select2-search-choice {
+  background: #e4e4e4;
+  border: 0;
+  line-height: 17px; /* Fill height of input */
+}
+
+.select2-search-choice-close {
+  top: 5px; /* Re-center with our increased line-height*/
 }
 
 .select2-search input {
