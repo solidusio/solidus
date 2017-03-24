@@ -1,4 +1,4 @@
-@mixin line-through($color: $color-2, $background: $color-1) {
+@mixin line-through($color: $color-2, $background: $body-bg) {
   position: relative;
   text-align: center;
 

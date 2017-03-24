@@ -253,11 +253,11 @@ fieldset {
     button, .button, input[type="submit"], input[type="button"] {
       border-radius: $border-radius;
 
-      -webkit-box-shadow: 0 0 0 15px $color-1;
-         -moz-box-shadow: 0 0 0 15px $color-1;
-          -ms-box-shadow: 0 0 0 15px $color-1;
-           -o-box-shadow: 0 0 0 15px $color-1;
-              box-shadow: 0 0 0 15px $color-1;
+      -webkit-box-shadow: 0 0 0 15px $body-bg;
+         -moz-box-shadow: 0 0 0 15px $body-bg;
+          -ms-box-shadow: 0 0 0 15px $body-bg;
+           -o-box-shadow: 0 0 0 15px $body-bg;
+              box-shadow: 0 0 0 15px $body-bg;
 
       &:hover {
         border-color: $color-1;
