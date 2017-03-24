@@ -9,17 +9,18 @@ input[type="number"],
 input[type="tel"],
 textarea {
   padding: 7px 10px;
-  border: 1px solid $color-txt-brd;
-  border-radius: $border-radius;
-  color: $color-txt-text;
+  color: $input-color;
+  border: 1px solid $input-border-color;
+  border-radius: $input-border-radius;
+  background: $input-bg;
   font-size: 90%;
 
   &:focus {
-    border-color: $color-txt-hover-brd;
+    border-color: $input-border-focus;
   }
 
-  &[disabled] {
-    opacity: 0.7;
+  &:disabled {
+    background: $input-bg-disabled;
   }
 }
 
