@@ -5,25 +5,21 @@ html {
 body {
   position: relative;
   min-height: 100%;
-
-  &.new-layout {
-    padding-left: $width-sidebar;
-    @media #{$desktop} {
-      padding-left: $width-sidebar-collapsed;
-    }
-    @media #{$tablet} {
-      padding-left: 0;
-    }
-  }
 }
 
 .admin-wrapper {
   min-height: 100vh;
 }
 
+.admin-content {
+  padding-left: $width-sidebar-collapsed;
+  @media #{$tablet} {
+    padding-left: 0;
+  }
+}
+
 .admin-nav {
   @include position(absolute, 0 null 0 0);
-  width: $width-sidebar;
   img {
     max-width: 100%;
   }
@@ -32,13 +28,7 @@ body {
 
 .content-wrapper {
   body:not(.new-layout) & {
-    margin-left: $width-sidebar;
-    @media #{$desktop} {
-      margin-left: $width-sidebar-collapsed;
-    }
-    @media #{$tablet} {
-      margin-left: 0;
-    }
+    @media #{$tablet} { margin-left: 0; }
     @media print { margin-left: 0 }
   }
 

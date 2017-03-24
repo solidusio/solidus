@@ -4,8 +4,8 @@
   left: 100%;
   width: $width-sidebar-flyout;
   margin-left: 0;
-  border: $border-sidebar;
   background: $color-navbar-submenu-bg;
+  border: $border-sidebar;
   box-shadow: $box-shadow;
   @include caret($direction: left, $color-caret: $color-navbar-submenu-bg);
 

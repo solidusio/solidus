@@ -33,13 +33,47 @@ $padding-y-navbar-submenu: 9px;
     overflow: hidden;
 
     .admin-nav {
+      width: $width-sidebar;
       transform: translateX(0);
+
+      .admin-nav-header a {
+        display: inline-block;
+      }
+
+      .admin-nav-footer {
+        width: $width-sidebar;
+      }
     }
 
-    .admin-content  {
+    .admin-nav-menu {
+      .collapse-menu-close {
+        display: block;
+        @media #{$tablet} {
+          display: none;
+        }
+      }
+
+      .collapse-menu-open {
+        display: none;
+      }
+
+      li.selected {
+        > ul {
+          display: block;
+          position: relative;
+          left: 0;
+          width: $width-sidebar;
+          border: none
+        }
+      }
+    }
+
+    .admin-content {
+      padding-left: 0;
       transform: translateX($width-sidebar);
       @media #{$large-device} {
         transform: none;
+        margin-left: $width-sidebar;
       }
     }
   }
@@ -72,16 +106,11 @@ nav.menu {
   border-right: $border-sidebar;
   background: $color-sidebar-bg;
   z-index: $z-index-navbar-flyout;
-  @media #{$desktop} {
-    width: $width-sidebar-collapsed;
-  }
+  width: $width-sidebar-collapsed;
+  position: fixed;
+  -webkit-overflow-scrolling: touch;
   @media #{$tablet} {
-    width: $width-sidebar;
-    position: fixed;
-    overflow-y: auto;
-    overflow-x: hidden;
-    -webkit-overflow-scrolling: touch;
-    transform: translateX(-$width-sidebar)
+    transform: translateX(-$width-sidebar-collapsed);
   }
 }
 
@@ -98,13 +127,7 @@ nav.menu {
   a {
     display: inline-block;
     line-height: 47px;
-    @media #{$desktop} {
-      display: none;
-    }
-    @media #{$tablet} {
-      display: inline-block;
-      line-height: 44px;
-    }
+    display: none;
   }
 
   img {
@@ -128,68 +151,36 @@ nav.menu {
   li {
     background: $color-navbar-bg;
 
+    > ul {
+      position: relative;
+      display: none;
+    }
+
     &:hover {
       background: $color-navbar-active-bg;
+      position: relative;
 
       > a {
         color: $color-navbar-active;
+      }
+
+      > ul {
+        @include flyout;
+        display: block;
       }
     }
 
     &.selected {
       background: $color-navbar-active-bg;
-      @media #{$desktop} {
-        position: relative;
-      }
-
-      &:not(:hover) > ul {
-        @media #{$desktop} {
-          display: none;
-        }
-        @media #{$tablet} {
-          display: block;
-        }
-      }
-
-      > ul {
-        @media #{$desktop} {
-          @include flyout;
-        }
-        @media #{$tablet} {
-          position: relative;
-          left: 0;
-          width: $width-sidebar;
-          border-top: 0;
-          border-bottom: 0;
-        }
-      }
-
-      li {
-        padding-left: 2em;
-      }
 
       > a {
         color: $color-navbar-active;
       }
     }
-
-    &:not(.selected) {
-      position: relative;
-
-      > ul {
-        @include flyout;
-        @media #{$tablet} {
-          display: none;
-        }
-      }
-
-      &:not(:hover) > ul {
-        display: none;
-      }
-    }
   }
 
   a {
+    overflow-x: hidden;
     display: block;
     padding: $padding-y-navbar $padding-x-navbar;
     color: $color-navbar;
@@ -197,13 +188,7 @@ nav.menu {
   }
 
   .icon_link {
-    text-indent: 2em;
-    @media #{$desktop} {
-      text-indent: 1.5em;
-    }
-    @media #{$tablet} {
-      text-indent: 2em;
-    }
+    text-indent: 1.5em;
 
     &:before {
       position: absolute;
@@ -224,6 +209,21 @@ nav.menu {
     @media #{$tablet} {
       overflow: visible;
     }
+  }
+
+  .collapse-menu {
+    cursor: pointer;
+
+    a {
+      pointer-events: none;
+    }
+
+    .collapse-menu-open {
+      @media #{$tablet} {
+        display: none;
+      }
+    }
+    .collapse-menu-close { display: none; }
   }
 
   .admin-subnav {
@@ -253,6 +253,7 @@ nav.menu {
 
 .admin-nav-footer {
   background-color: $color-navbar-footer-bg;
+  width: $width-sidebar-collapsed;
 
   a {
     color: $color-navbar-footer;
@@ -261,20 +262,12 @@ nav.menu {
       color: $color-navbar-footer-active;
     }
   }
-}
 
-.admin-nav.fits .admin-nav-footer {
-  position: fixed;
-  bottom: 0;
-  width: $width-sidebar;
-  border-top: $border-sidebar;
-  border-right: $border-sidebar;
-  @media #{$desktop} {
-    width: $width-sidebar-collapsed;
-  }
-  @media #{$tablet} {
-    width: $width-sidebar;
-    position: relative;
+  .admin-nav.fits & {
+    position: fixed;
+    bottom: 0;
+    border-top: $border-sidebar;
+    border-right: $border-sidebar;
   }
 }
 
@@ -284,13 +277,7 @@ nav.menu {
   padding: 1rem 0;
 
   li {
-    padding: 0.3rem 1.2rem;
-    @media #{$desktop} {
-      padding: 0.3rem 0.5rem 0.3rem 1.1rem;
-    }
-    @media #{$tablet} {
-      padding: 0.3rem 1.2rem;
-    }
+    padding: 0.3rem 1rem;
   }
 
   a {

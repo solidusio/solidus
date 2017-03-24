@@ -5,16 +5,6 @@
   background-color: very-light($color-3, 4);
   border-bottom: 1px solid $color-border;
 
-  body:not(.new-layout) & {
-    margin-left: $width-sidebar;
-    @media #{$desktop} {
-      margin-left: $width-sidebar-collapsed;
-    }
-    @media #{$tablet} {
-      margin-left: 0;
-    }
-  }
-
   @media print { display: none }
 }
 
