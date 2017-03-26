@@ -3,8 +3,6 @@ Spree.ready ($) ->
     # Hidden by default to support browsers with javascript disabled
     $('.js-address-fields').show()
 
-    $('#checkout_form_address').validate()
-
     getCountryId = (region) ->
       $('#' + region + 'country select').val()
 
