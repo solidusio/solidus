@@ -551,7 +551,7 @@ describe Spree::Order, type: :model do
       end
 
       it "respects the order of methods based on position" do
-        expect(subject).to eql([second_method, first_method])
+        expect(subject).to eq([second_method, first_method])
       end
     end
 

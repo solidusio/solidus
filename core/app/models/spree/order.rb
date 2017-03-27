@@ -446,7 +446,7 @@ module Spree
       @available_payment_methods ||= Spree::PaymentMethod
         .available_to_store(store)
         .available_to_users
-        .sort_by(&:position)
+        .order(:position)
     end
 
     def insufficient_stock_lines
