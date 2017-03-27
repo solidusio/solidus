@@ -197,18 +197,5 @@ table {
     &.no-border-top tr:first-child td {
       border-top: none;
     }
-
-    &.grand-total {
-      td {
-        border-color: $color-2 !important;
-        font-size: 110%;
-        font-weight: $font-weight-bold;
-        background-color: lighten($color-2, 50);
-      }
-      .total {
-        background-color: $color-2;
-        color: $color-1;
-      }
-    }
   }
 }
