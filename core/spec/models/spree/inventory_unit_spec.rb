@@ -5,6 +5,15 @@ describe Spree::InventoryUnit, type: :model do
   let(:stock_item) { stock_location.stock_items.order(:id).first }
   let(:line_item) { create(:line_item, variant: stock_item.variant) }
 
+  describe ".cancelable" do
+    let!(:pending_unit) { create(:inventory_unit, pending: true) }
+    let!(:non_pending_unit) { create(:inventory_unit, pending: false) }
+
+    subject { described_class.cancelable }
+
+    it { is_expected.to contain_exactly(non_pending_unit) }
+  end
+
   context "#backordered_for_stock_item" do
     let(:order) do
       order = create(:order, state: 'complete', ship_address: create(:ship_address))
