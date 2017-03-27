@@ -78,7 +78,7 @@
     text-transform: capitalize;
 
     span {
-      background: $color-body-bg;
+      background: $body-bg;
       @include padding(null 0.5em);
     }
 

@@ -84,7 +84,7 @@
     padding-left: 25px;
     padding-top: 6px;
     padding-bottom: 6px;
-    font-family: $base-font-family;
+    font-family: $font-family-base;
     font-size: 90%;
     box-shadow: none;
     background-image: none;
@@ -132,7 +132,7 @@
     }
 
     .select2-result-label {
-      color: $color-body-text;
+      color: $body-color;
       min-height: 22px;
       clear: both;
       overflow: auto;
@@ -149,7 +149,7 @@
     &.select2-no-results, &.select2-searching {
       padding: 5px;
       background-color: transparent;
-      color: $color-body-text;
+      color: $body-color;
       text-align: center;
       font-weight: $font-weight-bold;
     }

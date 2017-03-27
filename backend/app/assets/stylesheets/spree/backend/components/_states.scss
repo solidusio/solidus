@@ -7,9 +7,9 @@
     position: relative;
     display: inline-block;
     margin-right: 3px;
-    border-radius: $body-font-size/2;
-    width: $body-font-size - 4px;
-    height: $body-font-size - 4px;
+    border-radius: $font-size-root/2;
+    width: $font-size-root - 4px;
+    height: $font-size-root - 4px;
   }
 
   @each $state in $states {
@@ -27,7 +27,7 @@ table tbody tr {
   &[class*="state"] td:first-child {
     border-left-width: 3px;
   }
-  &.state-complete td:first-child { border-left-color: $color-success }
-  &.state-cart     td:first-child { border-left-color: very-light($color-notice, 6) }
-  &.state-canceled td:first-child { border-left-color: $color-error }
+  &.state-complete td:first-child { border-left-color: $brand-success }
+  &.state-cart     td:first-child { border-left-color: very-light($brand-warning, 6) }
+  &.state-canceled td:first-child { border-left-color: $brand-danger }
 }

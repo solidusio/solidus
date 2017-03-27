@@ -31,12 +31,12 @@
     }
 
     input.error {
-      border-color: $color-error;
+      border-color: $brand-danger;
     }
 
     .select2-container.error {
       border-radius: 4px;
-      border: 1px solid $color-error;
+      border: 1px solid $brand-danger;
     }
   }
 

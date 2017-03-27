@@ -2,32 +2,22 @@
 //--------------------------------------------------------------
 body {
   padding: 0;
-  font-family: $base-font-family;
-  font-size: $body-font-size;
   font-weight: 400;
-  color: $color-body-text;
-  background: $color-body-bg;
   text-rendering: optimizeLegibility;
 }
 
 hr {
   border-top: 1px solid $color-border;
-  border-bottom: 1px solid $color-body-bg;
+  border-bottom: 1px solid $body-bg;
   border-left: none;
-}
-
-strong, b {
-  font-weight: $font-weight-bold;
 }
 
 // links
 //--------------------------------------------------------------
 a {
-  color: $color-link;
-  text-decoration: none;
   line-height: inherit;
 
-  &:active, &:hover {
+  &:active {
     text-decoration: none;
   }
   &:visited {
@@ -39,26 +29,17 @@ a {
   &:active {
     color: $color-link-active;
   }
-  &:hover {
-    color: $color-link-hover;
-  }
 }
 
 // Headings
 //--------------------------------------------------------------
 
-h1,h2,h3,h4,h5,h6 {
-  font-weight: $font-weight-bold;
-  color: $color-headers;
-  line-height: 1.1;
-}
-
-h1 { font-size: $h1-size; line-height: $h1-size + 6 }
-h2 { font-size: $h2-size; line-height: $h1-size + 4 }
-h3 { font-size: $h3-size; line-height: $h1-size + 2 }
-h4 { font-size: $h4-size; line-height: $h1-size }
-h5 { font-size: $h5-size; line-height: $h1-size }
-h6 { font-size: $h6-size; line-height: $h1-size }
+h1 { line-height: $font-size-h1 + 6 }
+h2 { line-height: $font-size-h1 + 4 }
+h3 { line-height: $font-size-h1 + 2 }
+h4 { line-height: $font-size-h1 }
+h5 { line-height: $font-size-h1 }
+h6 { line-height: $font-size-h1 }
 
 
 // Lists
@@ -89,7 +70,7 @@ dl {
   width: 100%;
   overflow: hidden;
   margin: 5px 0;
-  color: lighten($color-body-text, 15);
+  color: lighten($body-color, 15);
 
   dt, dd {
     float: left;
@@ -136,5 +117,5 @@ dl {
   text-align: center;
   font-size: 120%;
   padding: 40px 0px;
-  color: lighten($color-body-text, 15);
+  color: lighten($body-color, 15);
 }

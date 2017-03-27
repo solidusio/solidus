@@ -133,7 +133,7 @@ button, .button {
 
 span.info {
   font-size: 85%;
-  color: lighten($color-body-text, 15);
+  color: lighten($body-color, 15);
   display: block;
   line-height: 20px;
   margin: 5px 0;
@@ -184,21 +184,21 @@ span.info {
   &.withError {
     .field_with_errors {
       label {
-        color: very-light($color-error, 30);
+        color: very-light($brand-danger, 30);
       }
 
       input {
-        border-color: very-light($color-error, 15);
+        border-color: very-light($brand-danger, 15);
       }
     }
     .formError {
-      color: very-light($color-error, 30);
+      color: very-light($brand-danger, 30);
       font-style: italic;
       font-size: 85%;
     }
     .select2-container {
       border-radius: 4px;
-      border: 1px solid very-light($color-error, 15);
+      border: 1px solid very-light($brand-danger, 15);
     }
   }
 }
@@ -233,12 +233,12 @@ fieldset {
     -moz-osx-font-smoothing: grayscale;
 
     i {
-      color: $color-link;
+      color: $link-color;
     }
   }
 
   label {
-    color: lighten($color-body-text, 8);
+    color: lighten($body-color, 8);
   }
 
   .filter-actions {

@@ -44,12 +44,12 @@
   &.active:hover {
     background: white;
     border-bottom-color: white;
-    color: $color-body-text;
+    color: $body-color;
   }
 
   &:not(.active):hover > a {
     background: darken($color-tbl-thead, 5%);
-    color: $color-link;
+    color: $link-color;
   }
 }
 

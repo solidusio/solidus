@@ -1,14 +1,14 @@
 .errorExplanation {
   padding: 5px;
-  border: 1px solid very-light($color-error, 12);
-  background-color: very-light($color-error, 6);
+  border: 1px solid very-light($brand-danger, 12);
+  background-color: very-light($brand-danger, 6);
   border-radius: 3px;
-  color: very-light($color-error, 30);
+  color: very-light($brand-danger, 30);
   margin-bottom: 15px;
 
   h2 {
     font-size: 140%;
-    color: very-light($color-error, 30);
+    color: very-light($brand-danger, 30);
     margin-bottom: 5px;
   }
 
@@ -37,9 +37,9 @@
   color: $color-1;
   font-weight: $font-weight-bold;
 
-  &.notice  { background-color: rgba($color-notice,  0.8) }
-  &.success { background-color: rgba($color-success, 0.8) }
-  &.error   { background-color: rgba($color-error,   0.8) }
+  &.notice  { background-color: rgba($brand-warning,  0.8) }
+  &.success { background-color: rgba($brand-success, 0.8) }
+  &.error   { background-color: rgba($brand-danger,   0.8) }
 }
 
 .alert {
@@ -50,5 +50,5 @@
     text-decoration: underline;
   }
 
-  &.error a { color: very-light($color-error, 10) }
+  &.error a { color: very-light($brand-danger, 10) }
 }
