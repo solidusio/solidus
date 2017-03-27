@@ -1,5 +1,9 @@
 ## Solidus 2.2.0 (master, unreleased)
 
+*   `Spree::Order#available_payment_methods now returns an `ActiveRecord::Relation`
+    object instead of an array.
+    [#1802](https://github.com/solidusio/solidus/pull/1802)
+
 *   Promotion and Shipping calculators can be created or have their type
     changed without saving and reloading the page.
     [#1618](https://github.com/solidusio/solidus/pull/1618)
