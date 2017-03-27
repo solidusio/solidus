@@ -1,10 +1,8 @@
 table {
-  width: 100%;
-  margin-bottom: 15px;
-  border-collapse: separate;
+  // Extend all tables with Bootstrap's default table style
+  @extend .table;
 
   th, td {
-    padding: 7px 5px;
     border-right: 1px solid $color-border;
     border-bottom: 1px solid $color-border;
     vertical-align: middle;
@@ -128,14 +126,16 @@ table {
 
   }
 
+  th, td.actions, td.no-wrap, .state {
+    white-space: nowrap;
+  }
+
   thead {
     th {
-      padding: 10px;
       border-top: 1px solid $color-border;
       border-bottom: none;
       background-color: $color-tbl-thead;
       text-align: center;
-      font-size: 90%;
       font-weight: $font-weight-bold;
     }
   }
