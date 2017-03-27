@@ -3,18 +3,25 @@ Spree.Views.NumberWithCurrency = Backbone.View.extend({
     'change input,select': "render"
   },
 
-  render: function() {
-    var currency, symbol = '';
+  getCurrency: function() {
     if (this.$('.currency-selector option:selected').length) {
-      currency = this.$('.currency-selector option:selected').val();
+      return this.$('.currency-selector option:selected').val();
     } else {
-      currency = this.$('[data-currency]').data("currency");
+      return this.$('[data-currency]').data("currency");
     }
+  },
+
+  getCurrencySymbol: function() {
+    var currency = this.getCurrency();
     if (currency) {
       var currencyInfo = Spree.currencyInfo[currency];
-      this.$('.currency-selector-symbol').text(currencyInfo[0])
+      return currencyInfo[0];
     } else {
-      this.$('.currency-selector-symbol').text("");
+      return '';
     }
+  },
+
+  render: function() {
+    this.$('.currency-selector-symbol').text(this.getCurrencySymbol());
   }
 });
