@@ -22,6 +22,6 @@ Spree.Views.NumberWithCurrency = Backbone.View.extend({
   },
 
   render: function() {
-    this.$('.currency-selector-symbol').text(this.getCurrencySymbol());
+    this.$('.number-with-currency-symbol').text(this.getCurrencySymbol());
   }
 });
