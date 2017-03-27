@@ -63,39 +63,16 @@ label {
 input[type="submit"],
 input[type="button"],
 button, .button {
-  display: inline-block;
-  padding: 6px 15px;
-  border: none;
-  border-radius: $border-radius;
-  background-color: $color-btn-bg;
-  color: $color-btn-text;
-  font-weight: $font-weight-bold !important;
-  white-space: nowrap;
-  line-height: $line-height;
+  @extend .btn;
+  @include button-variant($btn-primary-color, $btn-primary-bg, $btn-primary-border);
 
   &:before {
     font-weight: normal !important;
   }
 
-  &:visited, &:active, &:focus { color: $color-btn-text }
-
-  &:hover {
-    background-color: $color-btn-hover-bg;
-    color: $color-btn-hover-text;
-  }
-
-  &:active:focus {
-    box-shadow: 0 0 8px 0 darken($color-btn-hover-bg, 5) inset;
-  }
-
   &.fullwidth {
     width: 100%;
     text-align: center;
-  }
-
-  &[disabled], &.disabled {
-    background-color: #c2c4c7;
-    cursor: default;
   }
 }
 
