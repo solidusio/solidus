@@ -538,7 +538,7 @@ describe Spree::Order, type: :model do
       expect(order.available_payment_methods).to include(payment_method)
     end
 
-    it "does not include inactive payment methods", :pending do
+    it "does not include inactive payment methods" do
       Spree::PaymentMethod.create!({
         name: "Fake",
         active: false,

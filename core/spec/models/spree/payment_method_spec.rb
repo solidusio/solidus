@@ -67,6 +67,22 @@ describe Spree::PaymentMethod, type: :model do
 
       it { is_expected.to contain_exactly(payment_method_back_display, payment_method_both_display, payment_method_nil_display)}
     end
+
+    context "when searching for payment methods available to a store" do
+      subject { Spree::PaymentMethod.available_to_store(store) }
+
+      context "when the store is nil" do
+        let(:store) { nil }
+        it "raises an argument error" do
+          expect { subject }.to raise_error(ArgumentError, "You must provide a store")
+        end
+      end
+
+      context "when the store exists" do
+        let(:store) { create(:store, payment_methods: [payment_method_back_display]) }
+        it { is_expected.to contain_exactly(payment_method_back_display) }
+      end
+    end
   end
 
   describe ".available" do
