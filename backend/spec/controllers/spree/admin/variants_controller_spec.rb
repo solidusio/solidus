@@ -7,28 +7,34 @@ module Spree
 
       describe "#index" do
         let(:product) { create(:product) }
-        let!(:variant_1) { create(:variant, product: product) }
-        let!(:variant_2) { create(:variant, product: product) }
         let(:params) { { product_id: product.slug } }
-
-        before { variant_2.destroy }
 
         subject { get :index, params: params }
 
-        context "deleted is not requested" do
-          it "does not assign deleted variants for a requested product" do
-            subject
-            expect(assigns(:collection)).to include variant_1
-            expect(assigns(:collection)).not_to include variant_2
-          end
-        end
+        context "assigning @collection" do
+          let!(:variant) { create(:variant, product: product) }
+          let!(:deleted_variant) { create(:variant, product: product) }
 
-        context "deleted is requested" do
-          let(:params) { { product_id: product.slug, deleted: "on" } }
-          it "assigns deleted along with non-deleted variants for a requested product" do
-            subject
-            expect(assigns(:collection)).to include variant_1
-            expect(assigns(:collection)).to include variant_2
+          context "with deleted variants" do
+            before { deleted_variant.destroy }
+
+            context "deleted is not requested" do
+              it "does not assign deleted variants for a requested product" do
+                subject
+                expect(assigns(:collection)).to include variant
+                expect(assigns(:collection)).not_to include deleted_variant
+              end
+            end
+
+            context "deleted is requested" do
+              let(:params) { { product_id: product.slug, deleted: "on" } }
+
+              it "assigns deleted along with non-deleted variants for a requested product" do
+                subject
+                expect(assigns(:collection)).to include variant
+                expect(assigns(:collection)).to include deleted_variant
+              end
+            end
           end
         end
       end
