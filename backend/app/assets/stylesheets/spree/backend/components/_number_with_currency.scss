@@ -11,36 +11,24 @@
   &-addon {
     width: 5.5rem;
     text-align: left;
-    position: relative;
   }
 
-  .currency-selector {
-    position: absolute;
-    display: block;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 31px;
-    padding: 0 .5rem;
-    border: 0;
+  & &-select {
+    padding: 0;
+    background: #fff;
 
-    background-color: #fff;
-    background-image: none;
+    select {
+      @extend .c-select;
 
-    &:-moz-focusring {
-      color: transparent;
-      text-shadow: 0 0 0 #000;
-    }
-
-    // Unstyle the caret on `<select>`s in IE10+.
-    &::-ms-expand {
-      background-color: transparent;
+      display: inline-block;
+      width: 100%;
+      height: 31px;
       border: 0;
-    }
 
-
-    &:hover:not(:active) {
-      cursor: pointer;
+      &::-ms-expand {
+        // Required to see full text of selected value on IE11
+        display: none;
+      }
     }
   }
 }

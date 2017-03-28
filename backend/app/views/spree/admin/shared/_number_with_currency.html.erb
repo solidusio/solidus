@@ -11,8 +11,8 @@
       <%= ::Money::Currency.find(currency).iso_code %>
     </div>
   <% else %>
-    <div class="input-group-addon number-with-currency-addon">
-      <%= f.select currency_attr, ::Money::Currency.all.map(&:iso_code), {include_blank: true}, {class: 'currency-selector', required: required} %>
+    <div class="input-group-addon number-with-currency-addon number-with-currency-select">
+      <%= f.select currency_attr, ::Money::Currency.all.map(&:iso_code), {include_blank: true}, {required: required} %>
     </div>
   <% end %>
 </div>
