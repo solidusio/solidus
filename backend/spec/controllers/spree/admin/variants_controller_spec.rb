@@ -27,25 +27,25 @@ module Spree
           end
         end
 
-        context "assigning @collection" do
+        context "the value of @collection" do
           let!(:variant) { create(:variant, product: product) }
           let!(:deleted_variant) { create(:variant, product: product) }
 
           context "with deleted variants" do
             before { deleted_variant.destroy }
 
-            context "deleted is not requested" do
-              it "does not assign deleted variants for a requested product" do
+            context "when deleted is not requested" do
+              it "excludes deleted variants" do
                 subject
                 expect(assigns(:collection)).to include variant
                 expect(assigns(:collection)).not_to include deleted_variant
               end
             end
 
-            context "deleted is requested" do
+            context "when deleted is requested" do
               let(:params) { { product_id: product.slug, deleted: "on" } }
 
-              it "assigns deleted along with non-deleted variants for a requested product" do
+              it "includes deleted variants" do
                 subject
                 expect(assigns(:collection)).to include variant
                 expect(assigns(:collection)).to include deleted_variant
