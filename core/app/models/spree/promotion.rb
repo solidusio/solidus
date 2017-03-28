@@ -45,7 +45,7 @@ module Spree
     scope :applied, -> { joins(:order_promotions).distinct }
 
     self.whitelisted_ransackable_associations = ['codes']
-    self.whitelisted_ransackable_attributes = ['path', 'promotion_category_id']
+    self.whitelisted_ransackable_attributes = ['path', 'promotion_category_id', 'description', 'usage_limit', 'expires_at']
 
     # temporary code. remove after the column is dropped from the db.
     def columns

@@ -173,6 +173,8 @@ en:
         promotion_uses: Promotion Uses
         starts_at: Start date
         usage_limit: Overall Usage Limit
+      spree/promotion_code:
+        value: Code
       spree/promotion_category:
         name: Name
       spree/property:
