@@ -4,6 +4,8 @@ class Spree::Base < ActiveRecord::Base
 
   include Spree::RansackableAttributes
 
+  self.belongs_to_required_by_default = false
+
   def initialize_preference_defaults
     if has_attribute?(:preferences)
       self.preferences = default_preferences.merge(preferences)
