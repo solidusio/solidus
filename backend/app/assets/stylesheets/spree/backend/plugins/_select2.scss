@@ -8,6 +8,11 @@
     .select2-arrow {
       background: transparent;
       border-left: 0;
+      b {
+        // Inline icon taken from bootstrap's custom-select class
+        background: #fff url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAUCAMAAACzvE1FAAAADFBMVEUzMzMzMzMzMzMzMzMKAG/3AAAAA3RSTlMAf4C/aSLHAAAAPElEQVR42q3NMQ4AIAgEQTn//2cLdRKppSGzBYwzVXvznNWs8C58CiussPJj8h6NwgorrKRdTvuV9v16Afn0AYFOB7aYAAAAAElFTkSuQmCC) no-repeat right .75rem center;
+        background-size: 8px 10px;
+      }
     }
 
     >.select2-chosen {
