@@ -11,6 +11,22 @@ module Spree
 
         subject { get :index, params: params }
 
+        context "the value of @parent" do
+          it "is the product" do
+            subject
+            expect(assigns(:parent)).to eq product
+          end
+
+          context "with a deleted product" do
+            before { product.destroy! }
+
+            it "is the product" do
+              subject
+              expect(assigns(:parent)).to eq product
+            end
+          end
+        end
+
         context "assigning @collection" do
           let!(:variant) { create(:variant, product: product) }
           let!(:deleted_variant) { create(:variant, product: product) }
