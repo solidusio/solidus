@@ -73,7 +73,7 @@
     <thead>
       <tr>
         <th><%= sort_link @search, :name %></th>
-        <th><%= sort_link @search, :codes_value %></th>
+        <th><%= Spree::Promotion.human_attribute_name(:code) %></th>
         <th><%= sort_link @search, :description %></th>
         <th><%= sort_link @search, :usage_limit %></th>
         <th><%= Spree::Promotion.human_attribute_name :promotion_uses %></th>
