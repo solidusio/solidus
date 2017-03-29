@@ -214,31 +214,6 @@ fieldset {
       margin-left: 2em;
     }
   }
-
-  &.labels-inline {
-    .field {
-      margin-bottom: 0;
-      display: table;
-      width: 100%;
-
-      label, input {
-        display: table-cell !important;
-      }
-      input {
-        width: 100%;
-      }
-
-      &.checkbox {
-        input {
-          width: auto !important
-        }
-      }
-    }
-    .actions {
-      padding: 0;
-      text-align: right;
-    }
-  }
 }
 
 .form-actions {
