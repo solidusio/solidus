@@ -30,7 +30,7 @@ module Spree
         elsif content_for?(:page_title)
           content_for(:page_title)
         elsif admin_breadcrumbs.any?
-          strip_tags(admin_breadcrumbs.last)
+          admin_breadcrumbs.map{ |x| strip_tags(x) }.reverse.join(' - ')
         else
           Spree.t(controller.controller_name, default: controller.controller_name.titleize)
         end
