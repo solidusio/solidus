@@ -35,7 +35,7 @@
 
     * `cache_key_for_taxons` helper has been deprecated in favour of `cache [I18n.locale, @taxons]`
 
-## Solidus 2.1.0 (unreleased)
+## Solidus 2.1.0 (2017-01-17)
 
 *   The OrderUpdater (as used by `order.update!`) now fully updates taxes.
 
