@@ -1,9 +1,9 @@
 .select2-container {
   .select2-choice, .select2-choices {
-    border: 1px solid $color-txt-brd;
-    border-radius: 2px;
-    background: white;
-    height: 31px;
+    border: $input-btn-border-width solid $input-border-color;
+    @include border-radius($input-border-radius);
+    background: $input-bg;
+    height: $input-height;
 
     .select2-arrow {
       background: transparent;
@@ -16,7 +16,7 @@
     }
 
     >.select2-chosen {
-      color: $color-txt-text;
+      color: $input-color;
     }
   }
 }
@@ -49,7 +49,7 @@
 }
 
 .select2-drop-active {
-  border: 1px solid $input-border-focus;
+  border: $input-btn-border-width solid $input-border-focus;
   border-top: 0;
 }
 
