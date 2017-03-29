@@ -197,12 +197,7 @@ fieldset {
 
     button, .button, input[type="submit"], input[type="button"] {
       border-radius: $border-radius;
-
-      -webkit-box-shadow: 0 0 0 15px $body-bg;
-         -moz-box-shadow: 0 0 0 15px $body-bg;
-          -ms-box-shadow: 0 0 0 15px $body-bg;
-           -o-box-shadow: 0 0 0 15px $body-bg;
-              box-shadow: 0 0 0 15px $body-bg;
+      box-shadow: 0 0 0 15px $body-bg;
 
       &:hover {
         border-color: $color-1;
