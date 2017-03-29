@@ -1,7 +1,6 @@
 .number-with-currency {
   &-symbol {
     min-width: 2.5em;
-    text-align: center;
   }
 
   &-amount {
@@ -15,14 +14,13 @@
 
   & &-select {
     padding: 0;
-    background: #fff;
+    background: $input-bg;
 
     select {
       @extend .c-select;
 
-      display: inline-block;
       width: 100%;
-      height: 31px;
+      height: $input-height;
       border: 0;
 
       &::-ms-expand {
