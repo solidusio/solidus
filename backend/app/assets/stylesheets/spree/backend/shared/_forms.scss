@@ -8,15 +8,16 @@ input[type="url"],
 input[type="number"],
 input[type="tel"],
 textarea {
-  padding: 7px 10px;
+  padding: $input-padding-y $input-padding-x;
   color: $input-color;
-  border: 1px solid $input-border-color;
+  border: $input-btn-border-width solid $input-border-color;
   border-radius: $input-border-radius;
   background: $input-bg;
   font-size: 90%;
 
   &:focus {
     border-color: $input-border-focus;
+    outline: 0;
   }
 
   &:disabled {
