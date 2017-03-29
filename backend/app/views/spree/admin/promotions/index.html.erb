@@ -89,7 +89,7 @@
           <td><%= promotion.description %></td>
           <td class="align-center"><%= promotion.usage_limit.nil? ? "∞" : promotion.usage_limit  %></td>
           <td class="align-center"><%= Spree.t(:current_promotion_usage, count: promotion.usage_count) %></td>
-          <td class="align-center"><%= promotion.expires_at.to_date.to_s(:short_date) if promotion.expires_at %></td>
+          <td class="align-center"><%=l promotion.expires_at.to_date if promotion.expires_at %></td>
           <td class="actions">
             <% if can?(:edit, promotion) %>
               <%= link_to_edit promotion, no_text: true %>
