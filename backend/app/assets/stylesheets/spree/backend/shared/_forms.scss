@@ -196,12 +196,7 @@ fieldset {
     }
 
     button, .button, input[type="submit"], input[type="button"] {
-      border-radius: $border-radius;
       box-shadow: 0 0 0 15px $body-bg;
-
-      &:hover {
-        border-color: $color-1;
-      }
     }
 
     // Always make sure the choices at the bottom of a fieldset are spaced out
