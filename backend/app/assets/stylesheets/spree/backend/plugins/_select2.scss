@@ -21,6 +21,14 @@
   }
 }
 
+.select2-container-active, .select2-dropdown-open {
+  .select2-choices.select2-choices, /* Needs extra specificity */
+  .select2-choice {
+    box-shadow: none; /* Remove default outline */
+    border-color: $input-border-focus;
+  }
+}
+
 .select2-container-multi .select2-choices .select2-search-choice {
   background: #e4e4e4;
   border: 0;
@@ -41,7 +49,7 @@
 }
 
 .select2-drop-active {
-  border: 1px solid $color-txt-brd;
+  border: 1px solid $input-border-focus;
   border-top: 0;
 }
 
