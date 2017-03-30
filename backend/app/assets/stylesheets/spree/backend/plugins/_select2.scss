@@ -22,6 +22,18 @@
   }
 }
 
+.select2-container .select2-choice .select2-search-choice-close {
+  @extend .fa;
+  @extend .fa-times;
+  color: #333; /* matches bootstrap's custom-select arrow */
+
+  /* See https://github.com/solidusio/solidus/pull/1314 */
+  display: none;
+
+  /* Hide the default icon */
+  background-image: none;
+}
+
 .select2-container-active, .select2-dropdown-open {
   .select2-choices.select2-choices, /* Needs extra specificity */
   .select2-choice {
