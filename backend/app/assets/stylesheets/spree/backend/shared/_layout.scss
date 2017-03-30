@@ -36,10 +36,6 @@ body {
   }
 }
 
-.content {
-  @include make-row();
-}
-
 .content-main {
   @include make-col(12);
   overflow-x: hidden; // makes sure that the tabs are able to resize
