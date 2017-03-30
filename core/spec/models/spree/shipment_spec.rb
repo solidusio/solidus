@@ -753,6 +753,7 @@ describe Spree::Shipment, type: :model do
     before do
       stock_item.set_count_on_hand(10)
       stock_item.update_attributes!(backorderable: false)
+      inventory_unit.update_attributes!(pending: true)
     end
 
     subject { shipment.finalize! }
