@@ -1,6 +1,6 @@
 <div data-hook="admin_image_form_fields">
   <div class="row">
-    <div class="col-xs-3">
+    <div class="col-3">
       <div data-hook="file" class="field">
         <%= f.label :attachment %><br>
         <%= f.file_field :attachment %>
@@ -10,7 +10,7 @@
         <%= f.select :viewable_id, @variants, {}, { class: 'select2 fullwidth' } %>
       </div>
     </div>
-    <div data-hook="alt_text" class="field col-xs-4">
+    <div data-hook="alt_text" class="field col-4">
       <%= f.label :alt %><br>
       <%= f.text_area :alt, rows: 4, class: 'fullwidth' %>
     </div>

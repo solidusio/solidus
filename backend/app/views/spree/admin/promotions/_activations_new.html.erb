@@ -1,6 +1,6 @@
 <% activation_type = params[:activation_type] || 'single_code' %>
 <div class="row" id="js_promotion_activation">
-  <div class="col-xs-3">
+  <div class="col-3">
     <div class="form-check">
       <label class="form-check-label">
         <%= radio_button_tag('activation_type', 'auto', activation_type == 'auto') %>
@@ -26,7 +26,7 @@
       </label>
     </div>
   </div>
-  <div class="col-xs-9">
+  <div class="col-9">
     <input name="promotion[apply_automatically]" type="hidden" value="0">
     <div data-activation-type="auto">
       <input name="promotion[apply_automatically]" type="hidden" value="1">

@@ -1,7 +1,7 @@
 <div data-hook="admin_product_price_fields">
 
   <div data-hook="admin_product_price_form">
-      <div data-hook="admin_product_price_form_variant" class="col-xs-12">
+      <div data-hook="admin_product_price_form_variant" class="col-12">
         <%= f.field_container :variant do %>
           <%= f.label :variant %>
           <%= f.select :variant_id,
@@ -11,7 +11,7 @@
         <% end %>
       </div>
 
-      <div data-hook="admin_product_price_form_country" class="col-xs-12">
+      <div data-hook="admin_product_price_form_country" class="col-12">
         <%= f.field_container :country do %>
           <%= f.label :country %>
           <%= f.field_hint :country %>
@@ -24,7 +24,7 @@
         <% end %>
       </div>
 
-      <div data-hook="admin_product_price_form_amount" class="col-xs-4">
+      <div data-hook="admin_product_price_form_amount" class="col-4">
         <%= f.field_container :price do %>
           <%= f.label :price %>
           <%= render "spree/admin/shared/number_with_currency", f: f, amount_attr: :price, currency_attr: :currency %>

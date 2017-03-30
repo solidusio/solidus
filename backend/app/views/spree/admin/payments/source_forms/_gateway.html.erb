@@ -14,7 +14,7 @@
     <div class="clear"></div>
 
     <div class="row">
-      <div class="col-xs-5">
+      <div class="col-5">
         <div data-hook="card_number">
           <div class="field">
             <%= hidden_field_tag "#{param_prefix}[cc_type]", '', {class: 'ccType'} %>
@@ -28,7 +28,7 @@
           </div>
         </div>
       </div>
-      <div class="col-xs-5">
+      <div class="col-5">
         <div data-hook="card_name">
           <div class="field">
             <%= label_tag "card_name#{payment_method.id}", Spree::CreditCard.human_attribute_name(:name), class: 'required' %>
@@ -36,13 +36,13 @@
           </div>
         </div>
       </div>
-      <div class="col-xs-4">
+      <div class="col-4">
         <div data-hook="card_expiration" class="field">
           <%= label_tag "card_expiry#{payment_method.id}", Spree::CreditCard.human_attribute_name(:expiration), class: 'required' %>
           <%= text_field_tag "#{param_prefix}[expiry]", '', id: "card_expiry#{payment_method.id}", class: "required cardExpiry", placeholder: "MM / YY" %>
         </div>
       </div>
-      <div class="col-xs-3">
+      <div class="col-3">
         <div data-hook="card_code" class="field">
           <%= label_tag "card_code#{payment_method.id}", Spree::CreditCard.human_attribute_name(:card_code), class: 'required' %>
           <%= text_field_tag "#{param_prefix}[verification_value]", '', id: "card_code#{payment_method.id}", class: 'required fullwidth cardCode', size: 5 %>

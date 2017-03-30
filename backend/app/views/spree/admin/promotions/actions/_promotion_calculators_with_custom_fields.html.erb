@@ -1,7 +1,7 @@
-<div class="col-xs-12">
+<div class="col-12">
   <div class="calculator-fields js-calculator-fields row">
 
-    <div class="col-xs-6">
+    <div class="col-6">
       <div class="field">
         <% field_name = "#{param_prefix}[calculator_type]" %>
         <%= label_tag field_name, Spree::Calculator.model_name.human %>
@@ -11,7 +11,7 @@
       </div>
     </div>
 
-    <div class="col-xs-6">
+    <div class="col-6">
       <div class="settings field">
         <% calculators.each do |calculator_class| %>
           <% calculator = promotion_action.calculator.class == calculator_class ? promotion_action.calculator : calculator_class.new %>
