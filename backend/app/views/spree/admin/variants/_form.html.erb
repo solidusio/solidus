@@ -1,13 +1,13 @@
 <div data-hook="variants">
   <fieldset class="no-border-top no-border-bottom">
     <div class="row">
-      <div class="col-xs-3">
+      <div class="col-3">
         <div class="field" data-hook="sku">
           <%= f.label :sku %>
           <%= f.text_field :sku, class: 'fullwidth' %>
         </div>
       </div>
-      <div class="col-xs-3">
+      <div class="col-3">
         <div class="field checkbox" data-hook="track_inventory">
           <%= f.label :track_inventory do %>
             <%= f.check_box :track_inventory %>
@@ -21,7 +21,7 @@
     <fieldset class="no-border-top no-border-bottom">
       <div class="row">
       <% @product.option_types.each_with_index do |option_type, index| %>
-          <div class="col-xs-3">
+          <div class="col-3">
             <div class="field" data-hook="presentation">
               <%= label :new_variant, option_type.presentation %>
               <%= f.collection_select 'option_value_ids',
@@ -45,7 +45,7 @@
   <fieldset class="no-border-top no-border-bottom">
     <div class="row">
       <% [:weight, :height, :width, :depth].each_with_index do |field, index| %>
-        <div class="col-xs-3">
+        <div class="col-3">
           <div class="field" data-hook="<%= field %>">
             <%= f.label field %>
             <%= f.text_field field,
@@ -63,7 +63,7 @@
     <p> <%== t('.pricing_hint') %> </p>
 
     <div class="row">
-      <div class="col-xs-3">
+      <div class="col-3">
         <div class="field" data-hook="price">
           <%= f.label :price %>
           <%= render "spree/admin/shared/number_with_currency", f: f, amount_attr: :price, currency: @variant.default_price.currency %>
@@ -71,19 +71,19 @@
       </div>
 
       <% if show_rebuild_vat_checkbox? %>
-        <div class="col-xs-3">
+        <div class="col-3">
           <%= render "spree/admin/shared/rebuild_vat_prices_checkbox", form: f, model_name: "variant", wrapper_class: "field" %>
         </div>
       <% end %>
 
-      <div class="col-xs-3">
+      <div class="col-3">
         <div class="field" data-hook="cost_price">
           <%= f.label :cost_price %>
           <%= render "spree/admin/shared/number_with_currency", f: f, amount_attr: :cost_price, currency_attr: :cost_currency %>
         </div>
       </div>
 
-      <div class="col-xs-3">
+      <div class="col-3">
         <div class="field" data-hook="tax_category">
           <%= f.label :tax_category %>
           <%= f.field_hint :tax_category %>
