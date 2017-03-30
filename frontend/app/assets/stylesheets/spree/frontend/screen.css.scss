@@ -30,9 +30,6 @@ hr {
   border-bottom: $default_border;
 }
 
-/*  j.mp/webkit-tap-highlight-color */
-a:link {-webkit-tap-highlight-color: $link_text_color;}
-
 ins {background-color: $link_text_color; color: $layout_background_color; text-decoration: none;}
 mark {background-color: $link_text_color; color: $layout_background_color; font-style: italic; font-weight: bold;}
 
