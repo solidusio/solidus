@@ -66,7 +66,7 @@
       <div class="col-xs-3">
         <div class="field" data-hook="price">
           <%= f.label :price %>
-          <%= f.text_field :price, value: number_to_currency(@variant.price, unit: ''), class: 'fullwidth' %>
+          <%= render "spree/admin/shared/number_with_currency", f: f, amount_attr: :price, currency: @variant.default_price.currency %>
         </div>
       </div>
 
@@ -79,7 +79,7 @@
       <div class="col-xs-3">
         <div class="field" data-hook="cost_price">
           <%= f.label :cost_price %>
-          <%= f.text_field :cost_price, value: number_to_currency(@variant.cost_price, unit: ''), class: 'fullwidth' %>
+          <%= render "spree/admin/shared/number_with_currency", f: f, amount_attr: :cost_price, currency_attr: :cost_currency %>
         </div>
       </div>
 

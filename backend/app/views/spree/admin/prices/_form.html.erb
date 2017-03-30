@@ -1,8 +1,7 @@
 <div data-hook="admin_product_price_fields">
 
   <div data-hook="admin_product_price_form">
-    <div class="row">
-      <div class="col-xs-3" data-hook="admin_product_price_form_variant">
+      <div data-hook="admin_product_price_form_variant" class="col-xs-12">
         <%= f.field_container :variant do %>
           <%= f.label :variant %>
           <%= f.select :variant_id,
@@ -12,17 +11,7 @@
         <% end %>
       </div>
 
-      <div class="col-xs-2" data-hook="admin_product_price_form_currency">
-        <%= f.field_container :currency do %>
-          <%= f.label :currency %>
-          <%= f.select :currency,
-                      Money::Currency.all.map { |c| ["#{c.iso_code} (#{c.name})", c.iso_code] },
-                      {},
-                      class: "select2 fullwidth", disabled: !f.object.new_record? %>
-        <% end %>
-      </div>
-
-      <div class="col-xs-2" data-hook="admin_product_price_form_country">
+      <div data-hook="admin_product_price_form_country" class="col-xs-12">
         <%= f.field_container :country do %>
           <%= f.label :country %>
           <%= f.field_hint :country %>
@@ -35,10 +24,10 @@
         <% end %>
       </div>
 
-      <div class="col-xs-2" data-hook="admin_product_price_form_amount">
+      <div data-hook="admin_product_price_form_amount" class="col-xs-4">
         <%= f.field_container :price do %>
           <%= f.label :price %>
-          <%= f.text_field :price, value: f.object.money.format, class: 'fullwidth title' %>
+          <%= render "spree/admin/shared/number_with_currency", f: f, amount_attr: :price, currency_attr: :currency %>
         <% end %>
       </div>
   </div>

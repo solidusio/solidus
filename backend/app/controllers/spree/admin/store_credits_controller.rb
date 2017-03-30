@@ -68,8 +68,8 @@ module Spree
       private
 
       def permitted_resource_params
-        params.require(:store_credit).permit([:amount, :category_id, :memo]).
-          merge(currency: Spree::Config[:currency], created_by: try_spree_current_user)
+        params.require(:store_credit).permit([:amount, :currency, :category_id, :memo]).
+          merge(created_by: try_spree_current_user)
       end
 
       def collection
@@ -104,6 +104,12 @@ module Spree
         load_update_reasons
         flash[:error] = "#{Spree.t("admin.store_credits.unable_to_#{translation_key}")}: #{@store_credit.errors.full_messages.join(', ')}"
         render(template) && return
+      end
+
+      def build_resource
+        parent.store_credits.build(
+          currency: Spree::Config[:currency]
+        )
       end
     end
   end

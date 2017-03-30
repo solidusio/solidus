@@ -1,0 +1,32 @@
+.number-with-currency {
+  &-symbol {
+    min-width: 2.5em;
+  }
+
+  &-amount {
+    text-align: right;
+  }
+
+  &-addon {
+    width: 5.5rem;
+    text-align: left;
+  }
+
+  & &-select {
+    padding: 0;
+    background: $input-bg;
+
+    select {
+      @extend .c-select;
+
+      width: 100%;
+      height: $input-height;
+      border: 0;
+
+      &::-ms-expand {
+        // Required to see full text of selected value on IE11
+        display: none;
+      }
+    }
+  }
+}

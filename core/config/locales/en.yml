@@ -29,6 +29,8 @@ en:
         code: Code
         name: Name
         state: State
+      spree/calculator/flat_rate:
+        preferred_amount: Amount
       spree/calculator/tiered_flat_rate:
         preferred_base_amount: Base Amount
         preferred_tiers: Tiers
