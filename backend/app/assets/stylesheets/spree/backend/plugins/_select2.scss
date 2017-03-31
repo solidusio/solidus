@@ -3,7 +3,7 @@
     border: $input-btn-border-width solid $input-border-color;
     @include border-radius($input-border-radius);
     background: $input-bg;
-    height: $input-height;
+    height: calc(#{$input-height} + #{2*$input-btn-border-width});
 
     .select2-arrow {
       background: transparent;
@@ -17,6 +17,7 @@
     }
 
     >.select2-chosen {
+      line-height: $input-height;
       color: $input-color;
     }
   }
@@ -42,14 +43,23 @@
   }
 }
 
-.select2-container-multi .select2-choices .select2-search-choice {
-  background: #e4e4e4;
-  border: 0;
-  line-height: 17px; /* Fill height of input */
+.select2-container-multi .select2-choices {
+  .select2-search-choice, .select2-search-field {
+    line-height: 1.35; /* Fill height of input */
+  }
+
+  .select2-search-choice {
+    background: $label-default-bg;
+    border: 0;
+    margin: 2px 0 3px 5px; // adjust the margin to respect the adjusted line height
+  }
 }
 
 .select2-search-choice-close {
-  top: 5px; /* Re-center with our increased line-height*/
+  height: 12px; // fix the height to fit the actual content
+  /* Making the vertical position always respect the height of parent */
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .select2-search input {
@@ -70,5 +80,13 @@
   .select2-no-results, .select2-searching {
     /* Remove light grey background */
     background: transparent;
+    line-height: 2.5;
+  }
+
+  .select2-highlighted {
+    background-color: $dropdown-link-hover-bg;
+
+    // Ensure all remote results have correct colors on hover
+    * { color: $dropdown-link-hover-color }
   }
 }
