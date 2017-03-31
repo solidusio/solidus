@@ -54,9 +54,14 @@
     position: relative;
     padding-bottom: 10px;
 
+    > .row {
+      margin-left: 10px;
+    }
+
     .remove {
       position: absolute;
-      left: -15px;
+      cursor: pointer;
+      left: 0;
       top: 10px;
 
       &:hover {
