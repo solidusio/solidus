@@ -14,7 +14,7 @@
 
     <div data-hook="new_product_attrs" class="row">
       <% unless @product.has_variants? %>
-        <div data-hook="new_product_sku" class="col-xs-3">
+        <div data-hook="new_product_sku" class="col-3">
           <%= f.field_container :sku do %>
             <%= f.label :sku, Spree.t(:sku) %><br />
             <%= f.text_field :sku, size: 16, class: 'fullwidth' %>
@@ -23,7 +23,7 @@
         </div>
       <% end %>
 
-      <div data-hook="new_product_price" class="col-xs-3">
+      <div data-hook="new_product_price" class="col-3">
         <%= f.field_container :price do %>
           <%= f.label :price, class: 'required' %><br />
           <%= f.text_field :price, value: number_to_currency(@product.price, unit: ''), class: 'fullwidth', required: true %>
@@ -31,7 +31,7 @@
         <% end %>
       </div>
 
-      <div data-hook="new_product_available_on" class="col-xs-3">
+      <div data-hook="new_product_available_on" class="col-3">
         <%= f.field_container :available_on do %>
           <%= f.label :available_on %>
           <%= f.error_message_on :available_on %>
@@ -42,7 +42,7 @@
     </div>
 
     <div class='row'>
-      <div data-hook="new_product_shipping_category" class="col-xs-3">
+      <div data-hook="new_product_shipping_category" class="col-3">
         <%= f.field_container :shipping_category do %>
           <%= f.label :shipping_category_id, Spree::ShippingCategory.
                 model_name.human, class: 'required' %>
@@ -52,7 +52,7 @@
         <% end %>
       </div>
 
-      <div data-hook="new_product_tax_category" class="col-xs-3">
+      <div data-hook="new_product_tax_category" class="col-3">
         <%= f.field_container :tax_category do %>
           <%= f.label :tax_category_id, Spree::TaxCategory.model_name.human %>
           <%= f.field_hint :tax_category %>

@@ -1,7 +1,7 @@
 <div data-hook="admin_adjustment_form_fields">
   <div class="row">
 
-    <div class="col-xs-3">
+    <div class="col-3">
       <%= f.field_container :amount do %>
         <%= f.label :amount, class: 'required' %>
         <%= text_field :adjustment, :amount, class: 'fullwidth' %>
@@ -9,7 +9,7 @@
       <% end %>
     </div>
 
-    <div class="col-xs-6">
+    <div class="col-6">
       <%= f.field_container :label do %>
         <%= f.label :label, class: 'required' %>
         <%= text_field :adjustment, :label, class: 'fullwidth' %>
@@ -17,7 +17,7 @@
       <% end %>
     </div>
 
-    <div class="col-xs-3">
+    <div class="col-3">
       <%= f.field_container :label do %>
         <%= f.label :adjustment_reason_id %><br/>
         <%= f.collection_select(:adjustment_reason_id, reasons_for(@adjustment), :id, :name, {include_blank: true}, {"data-placeholder" => Spree.t(:select_a_reason), class: 'select2 fullwidth'}) %>

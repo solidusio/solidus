@@ -1,6 +1,7 @@
 table {
   // Extend all tables with Bootstrap's default table style
   @extend .table;
+  border-spacing: 0;
 
   th, td {
     border-right: 1px solid $color-border;

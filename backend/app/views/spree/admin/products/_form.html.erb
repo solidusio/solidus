@@ -2,7 +2,7 @@
 
   <div class="row">
 
-    <div class="left col-xs-9" data-hook="admin_product_form_left">
+    <div class="left col-9" data-hook="admin_product_form_left">
       <div data-hook="admin_product_form_name">
         <%= f.field_container :name do %>
           <%= f.label :name, class: 'required' %>
@@ -28,7 +28,7 @@
       </div>
     </div>
 
-    <div class="right col-xs-3" data-hook="admin_product_form_right">
+    <div class="right col-3" data-hook="admin_product_form_right">
       <div data-hook="admin_product_form_price">
         <%= f.field_container :price do %>
           <%= f.label :price, class: 'required' %>
@@ -44,7 +44,7 @@
 
       <div class="row">
 
-        <div data-hook="admin_product_form_cost_price" class="col-xs-12">
+        <div data-hook="admin_product_form_cost_price" class="col-12">
           <%= f.field_container :cost_price do %>
             <%= f.label :cost_price %>
 
@@ -105,7 +105,7 @@
 
         <div id="shipping_specs" class="row">
           <% [:height, :width, :depth, :weight].each_with_index do |field, index| %>
-            <div id="shipping_specs_<%= field %>_field" class="col-xs-6">
+            <div id="shipping_specs_<%= field %>_field" class="col-6">
               <div class="field">
                 <%= f.label field %>
                 <%= f.text_field field, value: number_with_precision(@product.send(field), precision: 2) %>
@@ -139,7 +139,7 @@
 
   <div class="row">
 
-    <div class="col-xs-9">
+    <div class="col-9">
       <div data-hook="admin_product_form_taxons">
         <%= f.field_container :taxons do %>
           <%= f.label :taxon_ids, plural_resource_name(Spree::Taxon) %><br />
