@@ -33,9 +33,8 @@ $color-headers:                  $color-4 !default;
 $color-link:                     $color-3 !default;
 @include solidus-deprecated-variable("color-link-hover", "link-hover-color");
 $color-link-hover:               $color-2 !default;
-$color-link-active:              $color-2 !default;
+@include solidus-deprecated-variable("color-link-focus", "link-hover-color");
 $color-link-focus:               $color-2 !default;
-$color-link-visited:             $color-3 !default;
 $color-border:                   very-light($color-3, 12) !default;
 
 // Basic navigation colors
@@ -104,8 +103,11 @@ $color-sel-disabled-bg:          $color-7 !default;
 $color-sel-disabled-text:        $color-4 !default;
 
 // Text inputs colors
+@include solidus-deprecated-variable("color-txt-brd", "input-border-color");
 $color-txt-brd:                  $color-border !default;
+@include solidus-deprecated-variable("color-txt-text", "input-color");
 $color-txt-text:                 $color-3 !default;
+@include solidus-deprecated-variable("color-txt-hover-brd", "input-border-focus");
 $color-txt-hover-brd:            $color-2 !default;
 
 // States label colors

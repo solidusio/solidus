@@ -12,25 +12,6 @@ hr {
   border-left: none;
 }
 
-// links
-//--------------------------------------------------------------
-a {
-  line-height: inherit;
-
-  &:active {
-    text-decoration: none;
-  }
-  &:visited {
-    color: $color-link-visited;
-  }
-  &:focus {
-    color: $color-link-focus;
-  }
-  &:active {
-    color: $color-link-active;
-  }
-}
-
 // Headings
 //--------------------------------------------------------------
 

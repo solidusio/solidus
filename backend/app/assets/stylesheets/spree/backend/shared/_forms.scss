@@ -8,18 +8,25 @@ input[type="url"],
 input[type="number"],
 input[type="tel"],
 textarea {
-  padding: 7px 10px;
-  border: 1px solid $color-txt-brd;
-  border-radius: $border-radius;
-  color: $color-txt-text;
-  font-size: 90%;
+  padding: $input-padding-y $input-padding-x;
+  color: $input-color;
+  border: $input-btn-border-width solid $input-border-color;
+  border-radius: $input-border-radius;
+  background: $input-bg;
 
   &:focus {
-    border-color: $color-txt-hover-brd;
+    border-color: $input-border-focus;
+    outline: 0;
   }
 
-  &[disabled] {
-    opacity: 0.7;
+  &:disabled {
+    background: $input-bg-disabled;
+  }
+
+  &::placeholder {
+    color: $input-color-placeholder;
+    // Override Firefox's unusual default opacity; see https://github.com/twbs/bootstrap/pull/11526.
+    opacity: 1;
   }
 }
 
@@ -29,45 +36,6 @@ textarea {
 
 .fullwidth {
   width: 100%;
-}
-
-.input-group {
-  position: relative;
-  display: table;
-  border-collapse: separate;
-
-  .form-control,
-  .input-group-addon {
-    display: table-cell;
-
-    &:first-child {
-      border-top-right-radius: 0;
-      border-bottom-right-radius: 0;
-    }
-    &:last-child {
-      border-top-left-radius: 0;
-      border-bottom-left-radius: 0;
-    }
-  }
-
-  .form-control {
-    width: 100%;
-  }
-
-  .input-group-addon {
-    padding: 6px 10px;
-    border: 1px solid #cee1f4;
-    background: #eff5fc;
-    border-radius: 3px;
-
-    &:first-child {
-      border-right: none;
-    }
-
-    &:last-child {
-      border-left: none;
-    }
-  }
 }
 
 label {
@@ -95,39 +63,16 @@ label {
 input[type="submit"],
 input[type="button"],
 button, .button {
-  display: inline-block;
-  padding: 6px 15px;
-  border: none;
-  border-radius: $border-radius;
-  background-color: $color-btn-bg;
-  color: $color-btn-text;
-  font-weight: $font-weight-bold !important;
-  white-space: nowrap;
-  line-height: $line-height;
+  @extend .btn;
+  @include button-variant($btn-primary-color, $btn-primary-bg, $btn-primary-border);
 
   &:before {
     font-weight: normal !important;
   }
 
-  &:visited, &:active, &:focus { color: $color-btn-text }
-
-  &:hover {
-    background-color: $color-btn-hover-bg;
-    color: $color-btn-hover-text;
-  }
-
-  &:active:focus {
-    box-shadow: 0 0 8px 0 darken($color-btn-hover-bg, 5) inset;
-  }
-
   &.fullwidth {
     width: 100%;
     text-align: center;
-  }
-
-  &[disabled], &.disabled {
-    background-color: #c2c4c7;
-    cursor: default;
   }
 }
 
@@ -251,47 +196,12 @@ fieldset {
     }
 
     button, .button, input[type="submit"], input[type="button"] {
-      border-radius: $border-radius;
-
-      -webkit-box-shadow: 0 0 0 15px $color-1;
-         -moz-box-shadow: 0 0 0 15px $color-1;
-          -ms-box-shadow: 0 0 0 15px $color-1;
-           -o-box-shadow: 0 0 0 15px $color-1;
-              box-shadow: 0 0 0 15px $color-1;
-
-      &:hover {
-        border-color: $color-1;
-      }
+      box-shadow: 0 0 0 15px $body-bg;
     }
 
     // Always make sure the choices at the bottom of a fieldset are spaced out
     > * + * {
       margin-left: 2em;
-    }
-  }
-
-  &.labels-inline {
-    .field {
-      margin-bottom: 0;
-      display: table;
-      width: 100%;
-
-      label, input {
-        display: table-cell !important;
-      }
-      input {
-        width: 100%;
-      }
-
-      &.checkbox {
-        input {
-          width: auto !important
-        }
-      }
-    }
-    .actions {
-      padding: 0;
-      text-align: right;
     }
   }
 }
