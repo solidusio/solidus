@@ -1,6 +1,6 @@
 .product-search-field-show-deleted.field.checkbox {
   // extra specificity to override styles
-  @include make-col-span(2);
+  @include make-col(2);
   min-height: initial; // override .field.checkbox
   margin-bottom: 0; // override .checkbox
 }
