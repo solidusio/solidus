@@ -1,215 +1,92 @@
 .select2-container {
-  &:hover .select2-choice, &.select2-container-active .select2-choice {
-    background-color: $color-sel-hover-bg !important;
-    border-color: $color-sel-hover-bg !important;
-  }
+  .select2-choice, .select2-choices {
+    border: $input-btn-border-width solid $input-border-color;
+    @include border-radius($input-border-radius);
+    background: $input-bg;
+    height: calc(#{$input-height} + #{2*$input-btn-border-width});
 
-  &.select2-container-disabled .select2-choice {
-    background-color: $color-sel-disabled-bg !important;
-    border-color: $color-sel-disabled-bg !important;
-    color: $color-sel-disabled-text !important;
-  }
-
-  .select2-choice {
-    background-image: none !important;
-    background-color: $color-sel-bg;
-    border: none !important;
-    border-radius: $border-radius;
-    box-shadow: none !important;
-    color: $color-1 !important;
-    font-size: 90%;
-    height: 31px;
-    line-height: inherit !important;
-    padding: 5px 15px 7px;
-
-    span {
-      display: block;
-      padding: 2px;
+    .select2-arrow {
+      background: transparent;
+      border-left: 0;
+      b {
+        // Need to be !important to override media query select2 defaults
+        // Inline icon taken from bootstrap's custom-select class
+        background: #fff url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAUCAMAAACzvE1FAAAADFBMVEUzMzMzMzMzMzMzMzMKAG/3AAAAA3RSTlMAf4C/aSLHAAAAPElEQVR42q3NMQ4AIAgEQTn//2cLdRKppSGzBYwzVXvznNWs8C58CiussPJj8h6NwgorrKRdTvuV9v16Afn0AYFOB7aYAAAAAElFTkSuQmCC) no-repeat right .75rem center !important;
+        background-size: 8px 10px !important;
+      }
     }
 
-    .select2-search-choice-close {
-      @extend .fa;
-      @extend .fa-times;
-      display: none;
-      margin-top: 2px;
-      font-size: 100% !important;
-      background-image: none !important;
-    }
-  }
-
-  &.select2-container-active {
-    .select2-choice {
-      box-shadow: none !important;
-    }
-
-    &.select2-dropdown-open .select2-choice div b {
-      @extend .fa-caret-up
+    >.select2-chosen {
+      line-height: $input-height;
+      color: $input-color;
     }
   }
 }
 
+.select2-container .select2-choice .select2-search-choice-close {
+  @extend .fa;
+  @extend .fa-times;
+  color: #333; /* matches bootstrap's custom-select arrow */
+
+  /* See https://github.com/solidusio/solidus/pull/1314 */
+  display: none;
+
+  /* Hide the default icon */
+  background-image: none;
+}
+
+.select2-container-active, .select2-dropdown-open {
+  .select2-choices.select2-choices, /* Needs extra specificity */
+  .select2-choice {
+    box-shadow: none; /* Remove default outline */
+    border-color: $input-border-focus;
+  }
+}
+
+.select2-container-multi .select2-choices {
+  .select2-search-choice, .select2-search-field {
+    line-height: 1.35; /* Fill height of input */
+  }
+
+  .select2-search-choice {
+    background: $label-default-bg;
+    border: 0;
+    margin: 2px 0 3px 5px; // adjust the margin to respect the adjusted line height
+  }
+}
+
+.select2-container-multi .select2-search-choice-close {
+  height: 12px; // fix the height to fit the actual content
+  /* Making the vertical position always respect the height of parent */
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.select2-search input {
+  background: white;
+}
 
 .select2-drop {
-  box-shadow: none !important;
-  z-index: 1000000;
-  max-width: auto !important;
-  border-top: 1px solid;
-  border-color: $color-sel-hover-bg;
-
-  &.select2-drop-above {
-    border-color: $color-sel-hover-bg;
-  }
+  /* Remove default shadow */
+  box-shadow: none;
 }
 
-.select2-search {
-  @extend .fa;
-  @extend .fa-search;
-
-  font-size: 100%;
-  color: darken($color-border, 15);
-  padding: 0 9px 0 0;
-
-  &:before {
-    @extend [class^="icon-"]:before;
-
-    position: absolute;
-    top: 16px;
-    left: 13px;
-  }
-
-  input {
-    @extend input[type="text"];
-    margin-top: 5px;
-    margin-left: 4px;
-    padding-left: 25px;
-    padding-top: 6px;
-    padding-bottom: 6px;
-    font-family: $font-family-base;
-    font-size: 90%;
-    box-shadow: none;
-    background-image: none;
-  }
-}
-
-.select2-container .select2-choice .select2-arrow {
-  background-image: none;
-  background: transparent;
-  border: 0;
-
-  b {
-    padding-top: 7px;
-    display: block;
-    width: 100%;
-    height: 100%;
-    background: none !important;
-    font-family: FontAwesome;
-    font-weight: 200 !important;
-
-    &:before {
-      content: "\f0d7";
-    }
-  }
+.select2-drop-active {
+  border: $input-btn-border-width solid $input-border-focus;
+  border-top: 0;
 }
 
 .select2-results {
-  margin: 4px 0;
-  padding: 0 4px;
-
-  li {
-    font-size: 85% !important;
-
-
-    &:nth-child(odd) {
-      background: #efefef;
-    }
-
-    &.select2-highlighted {
-      .select2-result-label {
-        &, .media-heading, .media-content, .customer-email {
-          color: $color-1 !important;
-        }
-      }
-    }
-
-    .select2-result-label {
-      color: $body-color;
-      min-height: 22px;
-      clear: both;
-      overflow: auto;
-
-      .variant-autocomplete-item {
-        .media-content {
-          dd {
-            margin: 0;
-          }
-        }
-      }
-    }
-
-    &.select2-no-results, &.select2-searching {
-      padding: 5px;
-      background-color: transparent;
-      color: $body-color;
-      text-align: center;
-      font-weight: $font-weight-bold;
-    }
+  .select2-no-results, .select2-searching {
+    /* Remove light grey background */
+    background: transparent;
+    line-height: 2.5;
   }
 
   .select2-highlighted {
-    background-color: $color-sel-bg !important;
-  }
-}
+    background-color: $dropdown-link-hover-bg;
 
-.select2-container-multi {
-  &.select2-container-active, &.select2-dropdown-open {
-    .select2-choices {
-      border-color: $color-sel-hover-bg !important;
-      box-shadow: none;
-      border-bottom-left-radius: 0;
-      border-bottom-right-radius: 0;
-    }
-  }
-  .select2-choices {
-    @extend input[type="text"];
-    padding: 6px 3px 3px 3px;
-    box-shadow: none;
-    background-image: none !important;
-
-    .select2-search-choice {
-      margin: 0 0 3px 3px;
-      background-image: none;
-      background-color: $color-sel-bg;
-      border: none;
-      border-radius: $border-radius;
-      box-shadow: none;
-      color: $color-1 !important;
-      font-size: 85%;
-
-      &:hover {
-        background-color: $color-sel-hover-bg;
-      }
-
-      .select2-search-choice-close {
-        background-image: none !important;
-        font-size: 85% !important;
-        @extend .fa;
-        @extend .fa-times;
-        margin-left: 2px;
-        color: $color-1;
-        &:before {
-          font-size: 11px;
-        }
-      }
-    }
-  }
-}
-
-label .select2-container {
-  margin-top: -6px;
-  .select2-choice {
-    span {
-      text-transform: none;
-      font-weight: normal;
-    }
+    // Ensure all remote results have correct colors on hover
+    * { color: $dropdown-link-hover-color }
   }
 }
