@@ -32,22 +32,9 @@ nav.menu {
 }
 
 .admin-nav-header {
-  padding: 15px;
-  height: 58px; // height of .page-title
-  box-sizing: content-box;
-  background-color: $color-1;
+  padding: 14px 0 8px;
   border-bottom: 1px solid $color-border;
-
-  a {
-    display: inline-block;
-    line-height: 58px;
-  }
-
-  img {
-    vertical-align: middle;
-    max-width: 100%;
-    max-height: 100%;
-  }
+  text-align: center;
 }
 
 .admin-nav-menu {
