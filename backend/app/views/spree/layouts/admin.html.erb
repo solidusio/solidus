@@ -12,6 +12,7 @@
 
     <div class="content-wrapper <%= @admin_layout.presence %> <%= "has-sidebar" if content_for?(:sidebar) %>" id="wrapper" data-hook>
       <% if @admin_layout %>
+        <% # Full width layout %>
         <div class="content">
           <div class="content-main">
             <%= yield :tabs %>
@@ -22,7 +23,7 @@
           <%= render "spree/admin/shared/sidebar" %>
         </div>
       <% else %>
-        <% # Legacy layout %>
+        <% # Centered layout %>
         <div class="container">
           <div class="<%= 'with-sidebar ' if content_for?(:sidebar) %>" id="content" data-hook>
             <div class="row">
