@@ -17,7 +17,7 @@
     background: $input-bg;
 
     select {
-      @extend .c-select;
+      @extend .custom-select;
 
       width: 100%;
       height: $input-height;

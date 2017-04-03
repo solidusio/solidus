@@ -3,6 +3,11 @@
 @mixin card-variant($background, $border) {
   background-color: $background;
   border-color: $border;
+
+  .card-header,
+  .card-footer {
+    background-color: transparent;
+  }
 }
 
 @mixin card-outline-variant($color) {
@@ -15,9 +20,12 @@
 //
 
 @mixin card-inverse {
+  color: rgba(255,255,255,.65);
+
   .card-header,
   .card-footer {
-    border-bottom: $card-border-width solid rgba(255,255,255,.2);
+    background-color: transparent;
+    border-color: rgba(255,255,255,.2);
   }
   .card-header,
   .card-footer,
@@ -27,7 +35,8 @@
   }
   .card-link,
   .card-text,
-  .card-blockquote > footer {
+  .card-subtitle,
+  .card-blockquote .blockquote-footer {
     color: rgba(255,255,255,.65);
   }
   .card-link {
