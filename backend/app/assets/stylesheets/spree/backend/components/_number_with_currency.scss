@@ -5,6 +5,14 @@
 
   &-amount {
     text-align: right;
+
+    /* Remove spinner from number input */
+    -moz-appearance: textfield;
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
   }
 
   &-addon {
