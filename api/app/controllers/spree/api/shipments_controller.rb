@@ -95,11 +95,11 @@ module Spree
       private
 
       def load_transfer_params
-        @original_shipment         = Spree::Shipment.where(number: params[:original_shipment_number]).first
+        @original_shipment         = Spree::Shipment.find_by!(number: params[:original_shipment_number])
         @order                     = @original_shipment.order
         @variant                   = Spree::Variant.find(params[:variant_id])
         @quantity                  = params[:quantity].to_i
-        authorize! :read, @original_shipment
+        authorize! [:update, :destroy], @original_shipment
         authorize! :create, Shipment
       end
 
