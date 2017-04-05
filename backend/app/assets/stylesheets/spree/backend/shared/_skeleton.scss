@@ -204,27 +204,6 @@
 
 /* #Clearing
 ================================================== */
-
-    /* Self Clearing Goodness */
-
-    /* Use clearfix class on parent to clear nested columns,
-    or wrap each row of columns in a <div class="row"> */
-    .clearfix:before,
-    .clearfix:after {
-      content: '\0020';
-      display: block;
-      overflow: hidden;
-      visibility: hidden;
-      width: 0;
-      height: 0;
-    }
-    .clearfix:after {
-      clear: both;
-    }
-    .clearfix {
-      zoom: 1;
-    }
-
     /* You can also use a <br class="clear" /> to clear columns */
     .clear {
       clear: both;
