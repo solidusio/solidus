@@ -32,9 +32,11 @@ nav.menu {
 }
 
 .admin-nav-header {
-  padding: 14px 0 8px;
   border-bottom: 1px solid $color-border;
   text-align: center;
+  // Using line height for proper vertical centering.
+  // As line height does not take the border width into account we need to subtract it.
+  line-height: $main-header-height - 1px;
 }
 
 .admin-nav-menu {
