@@ -1,0 +1,8 @@
+<%= javascript_include_tag *@suite.spec_assets, debug: @suite.config.expand_assets, allow_non_precompiled: true %>
+<%= render "spree/admin/shared/js_locale_data" %>
+<%= javascript_tag do -%>
+  Spree.env = "<%= Rails.env %>";
+<% end %>
+<script type="text/javascript">
+  Teaspoon.onWindowLoad(Teaspoon.execute);
+</script>
