@@ -12,16 +12,23 @@
     text-align: left;
   }
 
-  & &-select {
-    padding: 0;
-    background: $input-bg;
+  &-with-select {
+    .number-with-currency-amount {
+      border-right: 0;
 
-    select {
+      &:focus + .number-with-currency-select {
+        border-left-color: $input-border-focus;
+      }
+    }
+
+    .number-with-currency-select {
       @extend .custom-select;
 
-      width: 100%;
-      height: $input-height;
-      border: 0;
+      cursor: pointer;
+      width: 5.5rem;
+
+      @include border-radius($border-radius);
+      @include border-left-radius(0);
 
       &::-ms-expand {
         // Required to see full text of selected value on IE11
