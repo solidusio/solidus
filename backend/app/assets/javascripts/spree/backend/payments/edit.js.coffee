@@ -3,7 +3,6 @@ PaymentRowView = Backbone.View.extend
     "click .js-edit": "onEdit"
     "click .js-save": "onSave"
     "click .js-cancel": "onCancel"
-    "click .js-display-amount": "onEdit"
 
   onEdit: (e) ->
     e.preventDefault()

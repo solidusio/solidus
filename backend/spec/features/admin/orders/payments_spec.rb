@@ -113,16 +113,6 @@ describe 'Payments', type: :feature do
         end
       end
 
-      it 'allows the amount to be edited by clicking on the amount then saving' do
-        within_row(1) do
-          find('td.amount span').click
-          fill_in('amount', with: '$1.01')
-          click_icon(:save)
-          expect(page).to have_selector('td.amount span', text: '$1.01')
-          expect(payment.reload.amount).to eq(1.01)
-        end
-      end
-
       it 'allows the amount change to be cancelled by clicking on the cancel button' do
         within_row(1) do
           click_icon(:edit)
