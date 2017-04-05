@@ -90,3 +90,12 @@
     * { color: $dropdown-link-hover-color }
   }
 }
+
+.select2-choices::after {
+  content: "\f0d7"; // fa-caret-down
+  position: absolute;
+  font-family: "FontAwesome";
+  right: 10px;
+  bottom: 5px;
+  cursor: pointer;
+}

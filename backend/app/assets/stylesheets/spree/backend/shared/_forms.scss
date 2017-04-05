@@ -212,3 +212,15 @@ fieldset {
 .form-buttons {
   text-align: center;
 }
+
+.card.card-info {
+  border-color: darken($brand-info, 5%);
+}
+
+.input-group-addon {
+  line-height: initial;
+}
+
+.card-outline-none {
+  border: 0;
+}
