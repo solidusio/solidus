@@ -35,6 +35,10 @@
 *   Fix an issue where updating a user in the admin without specifying roles in
     the params would clear the user's roles.
 
+*   Allow destruction of shipments in the "ready" state.
+
+    [#1784](https://github.com/solidusio/solidus/pull/1784)
+
 *   Deprecations
 
     * `cache_key_for_taxons` helper has been deprecated in favour of `cache [I18n.locale, @taxons]`
