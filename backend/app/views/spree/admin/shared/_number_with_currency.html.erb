@@ -3,7 +3,7 @@
 <% currency ||= nil %>
 <% required ||= nil %>
 
-<div class="input-group number-with-currency js-number-with-currency">
+<div class="input-group number-with-currency <%= "number-with-currency-with-select" unless currency %> js-number-with-currency">
   <div class="input-group-addon number-with-currency-symbol"></div>
   <%= f.text_field amount_attr, value: number_to_currency(f.object.public_send(amount_attr), unit: ''), class: 'form-control number-with-currency-amount', required: required %>
   <% if currency %>
@@ -11,8 +11,6 @@
       <%= ::Money::Currency.find(currency).iso_code %>
     </div>
   <% else %>
-    <div class="input-group-addon number-with-currency-addon number-with-currency-select">
-      <%= f.select currency_attr, ::Money::Currency.all.map(&:iso_code), {include_blank: true}, {required: required} %>
-    </div>
+    <%= f.select currency_attr, ::Money::Currency.all.map(&:iso_code), {include_blank: true}, {required: required, class: 'number-with-currency-select'} %>
   <% end %>
 </div>

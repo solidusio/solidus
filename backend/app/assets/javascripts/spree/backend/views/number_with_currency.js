@@ -4,7 +4,7 @@ Spree.Views.NumberWithCurrency = Backbone.View.extend({
   },
 
   initialize: function() {
-    this.$currencySelector = this.$('.number-with-currency-select select');
+    this.$currencySelector = this.$('.number-with-currency-select');
   },
 
   getCurrency: function() {
