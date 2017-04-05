@@ -1,5 +1,10 @@
 // Base
 //--------------------------------------------------------------
+
+html {
+  font-size: $font-size-root;
+}
+
 body {
   padding: 0;
   font-weight: 400;

@@ -4,13 +4,13 @@
     <legend align="center"><%= Spree.t(:account) %></legend>
 
     <div data-hook="customer_fields" class="row">
-      <div class="col-xs-9">
+      <div class="col-9">
         <div class="field">
           <%= f.label :email %>
           <%= f.email_field :email, class: 'fullwidth' %>
         </div>
       </div>
-      <div class="col-xs-3">
+      <div class="col-3">
         <div class="field">
           <%= label_tag nil, Spree.t(:guest_checkout) %>
           <ul>
@@ -37,7 +37,7 @@
   </fieldset>
 
   <div class="row">
-    <div class="col-xs-6" data-hook="ship_address_wrapper">
+    <div class="col-6" data-hook="ship_address_wrapper">
       <fieldset class="no-border-bottom">
         <legend align="center"><%= Spree.t(:shipping_address) %></legend>
         <% if Spree::Config[:order_bill_address_used] %>
@@ -58,7 +58,7 @@
     </div>
 
     <% if Spree::Config[:order_bill_address_used] %>
-      <div class="col-xs-6" data-hook="bill_address_wrapper">
+      <div class="col-6" data-hook="bill_address_wrapper">
         <fieldset class="no-border-bottom">
           <legend align="center"><%= Spree.t(:billing_address) %></legend>
           <div class="js-billing-address">

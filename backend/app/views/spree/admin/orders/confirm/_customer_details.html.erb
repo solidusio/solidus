@@ -5,7 +5,7 @@
 
 <fieldset class="no-border-bottom no-border-top">
   <div class="row">
-    <div data-hook="bill_address_wrapper" class="col-xs-6">
+    <div data-hook="bill_address_wrapper" class="col-6">
       <fieldset class="no-border-bottom">
         <legend align="center"><%= Spree.t(:billing_address) %></legend>
         <% if order.bill_address %>
@@ -14,7 +14,7 @@
       </fieldset>
     </div>
 
-    <div class="col-xs-6" data-hook="ship_address_wrapper">
+    <div class="col-6" data-hook="ship_address_wrapper">
       <fieldset class="no-border-bottom">
         <legend align="center"><%= Spree.t(:shipping_address) %></legend>
         <% if order.ship_address %>

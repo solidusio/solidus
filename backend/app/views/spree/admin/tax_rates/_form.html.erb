@@ -3,7 +3,7 @@
       <legend align="center"><%= Spree.t(:general_settings) %></legend>
       <div class="row">
 
-        <div class="col-xs-5">
+        <div class="col-5">
           <div data-hook="name" class="field">
             <%= f.label :name %>
             <%= f.text_field :name, class: 'fullwidth' %>
@@ -19,7 +19,7 @@
           </div>
         </div>
 
-        <div class="col-xs-5">
+        <div class="col-5">
           <div data-hook="zone" class="field">
             <%= f.label :zone, Spree::Zone.model_name.human %>
             <%= f.collection_select(:zone_id, @available_zones, :id, :name, {}, {class: 'select2 fullwidth'}) %>

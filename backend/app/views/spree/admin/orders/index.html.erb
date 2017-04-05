@@ -17,7 +17,7 @@
   <div data-hook="admin_orders_index_search">
     <%= search_form_for [:admin, @search] do |f| %>
       <div class="row">
-        <div class="field-block col-xs-12 col-md-6 col-lg-4 col-xl-3">
+        <div class="field-block col-12 col-md-6 col-lg-4 col-xl-3">
           <div class="date-range-filter field">
             <%= label_tag :q_created_at_gt, Spree.t(:date_range) %>
             <div class="date-range-fields">
@@ -48,9 +48,9 @@
 
         </div>
 
-        <div class="col-xs-12 col-md-6 col-lg-4 col-xl-6">
+        <div class="col-12 col-md-6 col-lg-4 col-xl-6">
           <div class="row">
-            <div class="col-xs-12 col-xl-6">
+            <div class="col-12 col-xl-6">
               <div class="field">
                 <%= label_tag :q_number_cont, Spree.t(:order_number, number: '') %>
                 <%= f.text_field :number_cont %>
@@ -62,7 +62,7 @@
               </div>
             </div>
 
-            <div class="col-xs-12 col-xl-6">
+            <div class="col-12 col-xl-6">
               <div class="field">
                 <%= label_tag :q_bill_address_firstname_start, Spree.t(:first_name_begins_with) %>
                 <%= f.text_field :bill_address_firstname_start, size: 25 %>
@@ -73,7 +73,7 @@
               </div>
             </div>
 
-            <div class="col-xs-12 col-xl-6">
+            <div class="col-12 col-xl-6">
               <div class="field" data-hook="sku-select">
                 <%= label_tag :q_line_items_variant_id_in, Spree.t(:variant) %>
                 <%= f.text_field :line_items_variant_id_in, class: "variant_autocomplete fullwidth" %>
@@ -82,7 +82,7 @@
           </div>
         </div>
 
-        <div class="col-xs-12 col-md-6 col-lg-4 col-xl-3">
+        <div class="col-12 col-md-6 col-lg-4 col-xl-3">
           <% if Spree::Store.count > 1 %>
             <div class="field">
               <%= label_tag nil, Spree.t(:store) %>
@@ -171,7 +171,7 @@
     </tbody>
   </table>
 <% else %>
-  <div class="col-xs-9 no-objects-found">
+  <div class="col-9 no-objects-found">
     <%= render 'spree/admin/shared/no_objects_found',
                  resource: Spree::Order,
                  new_resource_url: spree.new_admin_order_path %>

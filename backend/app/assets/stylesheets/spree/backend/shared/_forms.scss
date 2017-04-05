@@ -13,6 +13,8 @@ textarea {
   border: $input-btn-border-width solid $input-border-color;
   border-radius: $input-border-radius;
   background: $input-bg;
+  font-size: $font-size-base;
+  line-height: $input-line-height;
 
   &:focus {
     border-color: $input-border-focus;

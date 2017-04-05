@@ -27,11 +27,11 @@
           <div class="<%= 'with-sidebar ' if content_for?(:sidebar) %>" id="content" data-hook>
             <div class="row">
               <% if content_for?(:tabs) %>
-                <div class="col-xs-12">
+                <div class="col-12">
                   <%= yield :tabs %>
                 </div>
               <% end %>
-              <div class="js-content-below-tabs <%= if content_for?(:sidebar) then 'col-xs-9' else 'col-xs-12' end %>">
+              <div class="js-content-below-tabs <%= if content_for?(:sidebar) then 'col-9' else 'col-12' end %>">
                 <%= render partial: 'spree/admin/shared/table_filter' %>
                 <%= yield %>
               </div>
