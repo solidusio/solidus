@@ -1,14 +1,14 @@
 <%= search_form_for @search, url: spree.sales_total_admin_reports_path  do |s| %>
-  <div class="date-range-filter field align-center">
-    <%= label_tag :q_completed_at_gt, Spree.t(:start), class: 'inline' %>
-    <%= s.text_field :completed_at_gt, class: 'datepicker datepicker-from', value: datepicker_field_value(params[:q][:completed_at_gt]) %>
+  <div class="date-range-filter field">
+    <div class="date-range-fields input-group">
+      <%= s.text_field :completed_at_gt, class: 'datepicker datepicker-from form-control', value: datepicker_field_value(params[:q][:completed_at_gt]), placeholder: Spree.t(:start) %>
 
-    <span class="range-divider">
-      <i class="fa fa-arrow-right"></i>
-    </span>
+      <span class="range-divider input-group-addon">
+        <i class="fa fa-arrow-right"></i>
+      </span>
 
-    <%= s.text_field :completed_at_lt, class: 'datepicker datepicker-to', value: datepicker_field_value(params[:q][:completed_at_lt]) %>
-    <%= label_tag :q_completed_at_lt, Spree.t(:end), class: 'inline' %>
+      <%= s.text_field :completed_at_lt, class: 'datepicker datepicker-to form-control', value: datepicker_field_value(params[:q][:completed_at_lt]), placeholder: Spree.t(:end) %>
+    </div>
   </div>
 
   <div class="actions filter-actions">
