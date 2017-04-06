@@ -1,3 +1,4 @@
+//= require ./support/show_errors
 //= require support/sinon
 //= require support/chai
 
