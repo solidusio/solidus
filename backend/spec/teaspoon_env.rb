@@ -1,3 +1,6 @@
+ENV['RAILS_ENV'] = 'test'
+require File.expand_path("../dummy/config/environment", __FILE__)
+
 Teaspoon.configure do |config|
   config.mount_at = "/teaspoon"
   config.root = Spree::Backend::Engine.root
