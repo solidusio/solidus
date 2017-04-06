@@ -127,7 +127,7 @@ table {
 
   }
 
-  th, td.actions, td.no-wrap, .state {
+  th:not(.wrap-text), td.actions, td.no-wrap, .state {
     white-space: nowrap;
   }
 
