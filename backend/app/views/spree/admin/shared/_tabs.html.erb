@@ -8,7 +8,11 @@
         url: menu_item.url.is_a?(Symbol) ? spree.public_send(menu_item.url) : menu_item.url
       ) do
     %>
-      <%- render partial: menu_item.partial if menu_item.partial %>
-    <%- end %>
+      <% if menu_item.partial %>
+        <% render partial: menu_item.partial %>
+      <% else %>
+        <% content_tag :ul, tab(menu_item.label), class: "admin-subnav with-single-element" %>
+      <% end %>
+    <% end %>
   <% end %>
 <% end %>

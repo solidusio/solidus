@@ -63,7 +63,16 @@ $padding-y-navbar-submenu: 9px;
           position: relative;
           left: 0;
           width: $width-sidebar;
-          border: none
+          border: none;
+        }
+      }
+
+      li,
+      li.selected {
+        > ul {
+          &.with-single-element {
+            display: none;
+          }
         }
       }
     }
@@ -229,6 +238,12 @@ nav.menu {
   .admin-subnav {
     background: $color-navbar-submenu-bg;
     @include padding($padding-y-navbar - $padding-y-navbar-submenu null);
+
+    &.with-single-element {
+      .selected > ul {
+        display: block;
+      }
+    }
 
     li {
       background: $color-navbar-submenu-bg;
