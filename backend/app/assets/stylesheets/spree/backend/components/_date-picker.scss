@@ -9,6 +9,7 @@
   border-radius: $border-radius;
   padding: 0;
   margin-top: 10px;
+  width: auto;
 
   &:before {
     content: '';
@@ -51,7 +52,7 @@
         background-image: none;
         text-indent: 0;
         color: $color-1;
-        width: 10px;
+        width: 13px;
         margin-left: -5px;
 
         &:hover {
