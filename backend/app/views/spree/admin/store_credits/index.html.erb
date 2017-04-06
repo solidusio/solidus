@@ -12,9 +12,11 @@
 <% end %>
 
 <% if @store_credits.any? %>
-  <div id='sc-current-balance'>
-    <strong><%= Spree.t("admin.store_credits.current_balance") %> </strong><%= @user.display_total_available_store_credit %>
-  </div>
+<fieldset id='sc-current-balance'>
+  <legend>
+    <%= Spree.t("admin.store_credits.current_balance") %>
+    <%= @user.display_total_available_store_credit %>
+  </legend>
 
   <table id="sc-table">
     <thead>
@@ -67,3 +69,4 @@
                  new_resource_url: new_object_url %>
   </div>
 <% end %>
+</fieldset>
