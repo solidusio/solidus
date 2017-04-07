@@ -163,7 +163,7 @@ describe Spree::Admin::OrdersController, type: :controller do
         end
 
         context 'when successful' do
-          before { allow(order).to receive(:confirm?).and_return(true) }
+          before { allow(order).to receive(:can_complete?).and_return(true) }
 
           it 'messages and redirects' do
             subject
@@ -174,7 +174,7 @@ describe Spree::Admin::OrdersController, type: :controller do
 
         context 'when unsuccessful' do
           before do
-            allow(order).to receive(:confirm?).and_return(false)
+            allow(order).to receive(:can_complete?).and_return(false)
             allow(order).to receive(:errors).and_return(double(full_messages: ['failed']))
           end
 
@@ -203,7 +203,7 @@ describe Spree::Admin::OrdersController, type: :controller do
       end
 
       context 'when in confirm' do
-        before { allow(order).to receive_messages completed?: false, confirm?: true }
+        before { allow(order).to receive_messages completed?: false, can_complete?: true }
 
         it 'renders the confirm page' do
           subject
@@ -213,7 +213,7 @@ describe Spree::Admin::OrdersController, type: :controller do
       end
 
       context 'when before confirm' do
-        before { allow(order).to receive_messages completed?: false, confirm?: false }
+        before { allow(order).to receive_messages completed?: false, can_complete?: false }
 
         it 'renders the confirm_advance template (to allow refreshing of the order)' do
           subject
