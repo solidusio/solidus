@@ -161,16 +161,40 @@ class Project
   # @return [Boolean]
   #   the success of the tests
   def run_tests
-    system(%w[bundle exec rspec] + rspec_arguments)
+    @success = true
+    run_test_cmd(%w[bundle exec rspec] + rspec_arguments)
+    if name == "backend"
+      run_test_cmd(%w[bundle exec teaspoon] + teaspoon_arguments)
+    end
+    @success
+  end
+
+  def run_test_cmd(*args)
+    puts "Run: #{args.join(' ')}"
+    result = system(*args)
+    puts(result ? "Success" : "Failed")
+    @success &&= result
+  end
+
+  def teaspoon_arguments
+    if report_dir
+      %W[--format documentation,junit>#{report_dir}/rspec/#{name}_js.xml]
+    else
+      %w[--format documentation]
+    end
   end
 
   def rspec_arguments
     args = []
     args += %w[--format documentation --profile 10]
-    if report_dir = ENV['CIRCLE_TEST_REPORTS']
+    if report_dir
       args += %W[-r rspec_junit_formatter --format RspecJunitFormatter -o #{report_dir}/rspec/#{name}.xml]
     end
     args
+  end
+
+  def report_dir
+    ENV['CIRCLE_TEST_REPORTS']
   end
 
   # Execute system command via execve

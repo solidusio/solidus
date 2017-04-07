@@ -6,7 +6,7 @@ machine:
   services:
     - postgresql
   ruby:
-    version: 2.3.0
+    version: 2.3.4
   pre:
     - sudo curl --output /usr/local/bin/phantomjs https://s3.amazonaws.com/circle-downloads/phantomjs-2.1.1
 dependencies:

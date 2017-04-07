@@ -26,7 +26,7 @@ cd api; set_gemfile; bundle update --quiet; bundle exec rspec spec
 echo "******************************************"
 echo "* Setup Spree Backend and running RSpec..."
 echo "******************************************"
-cd ../backend; set_gemfile; bundle update --quiet; bundle exec rspec spec
+cd ../backend; set_gemfile; bundle update --quiet; bundle exec rspec spec; bundle exec teaspoon
 
 # Spree Core
 echo "***************************************"

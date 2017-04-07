@@ -4,3 +4,6 @@ gem 'solidus_core', path: '../core'
 gem 'solidus_api', path: '../api'
 
 gemspec
+
+gem 'teaspoon'
+gem 'teaspoon-mocha'

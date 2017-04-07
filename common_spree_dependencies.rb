@@ -40,6 +40,7 @@ end
 group :test, :development do
   gem 'rubocop'
   gem 'pry'
+  gem 'listen', '~> 3.1.5'
 
   platforms :mri do
     gem 'byebug'

@@ -6,7 +6,36 @@ require 'spree/testing_support/common_rake'
 
 RSpec::Core::RakeTask.new
 
-task default: :spec
+task :dummy_environment do
+  ENV['RAILS_ENV'] = 'test'
+  require File.expand_path("../spec/dummy/config/environment", __FILE__)
+end
+
+desc "Run the javascript specs"
+task teaspoon: :dummy_environment do
+  require "teaspoon/console"
+
+  options = {
+    files: ENV["files"].nil? ? [] : ENV["files"].split(","),
+    suite: ENV["suite"],
+    coverage: ENV["coverage"],
+    driver_options: ENV["driver_options"],
+  }
+
+  options.delete_if { |k, v| v.nil? }
+
+  abort("rake teaspoon failed") if Teaspoon::Console.new(options).failures?
+end
+
+namespace :teaspoon do
+  task server: :dummy_environment do
+    require 'teaspoon/server'
+    server = Teaspoon::Server.new
+    server.start
+    puts "#{server.url}/teaspoon"
+    sleep
+  end
+end
 
 desc "Generates a dummy app for testing"
 task :test_app do
