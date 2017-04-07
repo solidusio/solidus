@@ -673,7 +673,7 @@ module Spree
     end
 
     def total_applicable_store_credit
-      if confirm? || complete?
+      if can_complete? || complete?
         payments.store_credits.valid.sum(:amount)
       else
         [total, (user.try(:total_available_store_credit) || 0.0)].min
