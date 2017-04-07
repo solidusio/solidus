@@ -16,11 +16,11 @@
       <thead>
         <tr>
           <th><%= Spree::Product.model_name.human %></th>
-          <th><%= Spree::ReturnItem.human_attribute_name(:preferred_reimbursement_type_id) %></th>
-          <th><%= Spree::ReturnItem.human_attribute_name(:override_reimbursement_type_id) %></th>
-          <th><%= Spree::ReturnItem.human_attribute_name(:amount) %></th>
+          <th class="wrap-text"><%= Spree::ReturnItem.human_attribute_name(:preferred_reimbursement_type_id) %></th>
+          <th class="wrap-text"><%= Spree::ReturnItem.human_attribute_name(:override_reimbursement_type_id) %></th>
+          <th class="wrap-text"><%= Spree::ReturnItem.human_attribute_name(:amount) %></th>
           <th><%= Spree::ReturnItem.human_attribute_name(:total) %></th>
-          <th><%= Spree::ReturnItem.human_attribute_name(:exchange_variant) %></th>
+          <th class="wrap-text"><%= Spree::ReturnItem.human_attribute_name(:exchange_variant) %></th>
         </tr>
       </thead>
       <tbody>

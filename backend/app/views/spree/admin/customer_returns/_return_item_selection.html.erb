@@ -6,12 +6,12 @@
       </th>
       <th><%= Spree::Product.model_name.human %></th>
       <th><%= Spree::Variant.human_attribute_name(:sku) %></th>
-      <th><%= Spree::ReturnItem.human_attribute_name(:amount) %></th>
-      <th><%= Spree::ReturnItem.human_attribute_name(:inventory_unit_state) %></th>
-      <th><%= Spree::ReturnItem.human_attribute_name(:exchange_variant) %></th>
+      <th class="wrap-text"><%= Spree::ReturnItem.human_attribute_name(:amount) %></th>
+      <th class="wrap-text"><%= Spree::ReturnItem.human_attribute_name(:inventory_unit_state) %></th>
+      <th class="wrap-text"><%= Spree::ReturnItem.human_attribute_name(:exchange_variant) %></th>
       <th><%= Spree::ReturnItem.human_attribute_name(:resellable) %></th>
-      <th><%= Spree::ReturnItem.human_attribute_name(:reception_status) %></th>
-      <th><%= Spree::ReturnItem.human_attribute_name(:return_reason) %></th>
+      <th class="wrap-text"><%= Spree::ReturnItem.human_attribute_name(:reception_status) %></th>
+      <th class="wrap-text"><%= Spree::ReturnItem.human_attribute_name(:return_reason) %></th>
     </tr>
   </thead>
   <tbody>

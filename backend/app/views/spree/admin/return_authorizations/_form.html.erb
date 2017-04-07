@@ -12,8 +12,8 @@
         <th class="return-item-product"><%= Spree::Product.model_name.human %></th>
         <th class="return-item-state"><%= Spree::ReturnAuthorization.human_attribute_name(:state) %></th>
         <th class="return-item-charged"><%= Spree::ReturnItem.human_attribute_name(:charged) %></th>
-        <th class="return-item-pre-tax-refund-amount"><%= Spree::ReturnItem.human_attribute_name(:amount) %></th>
-        <th class="return-item-reimbursement-type"><%= Spree::ReimbursementType.model_name.human %></th>
+        <th class="return-item-pre-tax-refund-amount wrap-text"><%= Spree::ReturnItem.human_attribute_name(:amount) %></th>
+        <th class="return-item-reimbursement-type wrap-text"><%= Spree::ReimbursementType.model_name.human %></th>
         <th class="return-item-exchange-for"><%= Spree::ReturnItem.human_attribute_name(:exchange_variant) %></th>
         <th class="return-item-reason"><%= Spree::ReturnItem.human_attribute_name(:return_reason) %></th>
       </tr>
