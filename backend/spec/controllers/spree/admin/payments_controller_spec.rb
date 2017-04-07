@@ -92,7 +92,7 @@ module Spree
               @payment_method = create(:check_payment_method, available_to_admin: true, active: false)
             end
 
-            it "does not load the payment method", :pending do
+            it "does not load the payment method" do
               get :new, params: { order_id: order.number }
               expect(response.status).to eq(200)
               expect(assigns[:payment_methods]).to be_empty
