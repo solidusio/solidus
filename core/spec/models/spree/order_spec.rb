@@ -215,6 +215,7 @@ describe Spree::Order, type: :model do
       expect(order.outstanding_balance).to be_negative
       expect(order.payment_state).to eq('credit_owed')
       create(:refund, amount: order.outstanding_balance.abs, payment: payment, transaction_id: nil)
+      order.reload
       expect(order.outstanding_balance).to eq(0)
       expect(order.payment_state).to eq('paid')
     end
