@@ -105,11 +105,13 @@ module Spree
       value_attributes == other_address.value_attributes
     end
 
+    # @deprecated Do not use this. Use Address.== instead.
     def same_as?(other_address)
       Spree::Deprecation.warn("Address#same_as? is deprecated. It's equivalent to Address.==", caller)
       self == other_address
     end
 
+    # @deprecated Do not use this. Use Address.== instead.
     def same_as(other_address)
       Spree::Deprecation.warn("Address#same_as is deprecated. It's equivalent to Address.==", caller)
       self == other_address
