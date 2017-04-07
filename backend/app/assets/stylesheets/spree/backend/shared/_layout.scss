@@ -14,9 +14,6 @@ body {
 .admin-nav {
   @include position(absolute, 0 null 0 0);
   width: $width-sidebar;
-  img {
-    max-width: 100%;
-  }
   @media print { display: none }
 }
 

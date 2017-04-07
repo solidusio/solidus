@@ -4,6 +4,7 @@
   padding: 15px map-get($grid-gutter-widths, "xl");
   background-color: very-light($color-3, 4);
   border-bottom: 1px solid $color-border;
+  height: $main-header-height;
 
   body:not(.new-layout) & {
     margin-left: $width-sidebar;
