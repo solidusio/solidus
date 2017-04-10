@@ -75,14 +75,28 @@ module Spree
       describe '#new' do
         # Regression test for https://github.com/spree/spree/issues/3233
         context "with a backend payment method" do
-          before do
-            @payment_method = create(:check_payment_method, available_to_admin: true)
+          context "and the payment method is active" do
+            before do
+              @payment_method = create(:check_payment_method, available_to_admin: true)
+            end
+
+            it "loads the payment method" do
+              get :new, params: { order_id: order.number }
+              expect(response.status).to eq(200)
+              expect(assigns[:payment_methods]).to include(@payment_method)
+            end
           end
 
-          it "loads backend payment methods" do
-            get :new, params: { order_id: order.number }
-            expect(response.status).to eq(200)
-            expect(assigns[:payment_methods]).to include(@payment_method)
+          context "and the payment method is inactive" do
+            before do
+              @payment_method = create(:check_payment_method, available_to_admin: true, active: false)
+            end
+
+            it "does not load the payment method" do
+              get :new, params: { order_id: order.number }
+              expect(response.status).to eq(200)
+              expect(assigns[:payment_methods]).to be_empty
+            end
           end
         end
       end

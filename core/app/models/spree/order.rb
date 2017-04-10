@@ -444,6 +444,7 @@ module Spree
 
     def available_payment_methods
       @available_payment_methods ||= Spree::PaymentMethod
+        .active
         .available_to_store(store)
         .available_to_users
         .order(:position)

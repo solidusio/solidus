@@ -17,7 +17,10 @@ module Spree
     scope :active, -> { where(active: true) }
     scope :available_to_users, -> { where(available_to_users: true) }
     scope :available_to_admin, -> { where(available_to_admin: true) }
-    scope :available_to_store, -> (store) { (store.present? && store.payment_methods.empty?) ? self : store.payment_methods }
+    scope :available_to_store, ->(store) do
+      raise ArgumentError, "You must provide a store" if store.nil?
+      store.payment_methods.empty? ? all : where(id: store.payment_method_ids)
+    end
 
     include Spree::Preferences::StaticallyConfigurable
 
