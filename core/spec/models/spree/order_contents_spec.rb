@@ -19,11 +19,34 @@ describe Spree::OrderContents, type: :model do
     end
 
     context 'given a shipment' do
+      let!(:shipment) { create(:shipment) }
+
       it "ensure shipment calls update_amounts instead of order calling ensure_updated_shipments" do
-        shipment = create(:shipment)
         expect(subject.order).to_not receive(:ensure_updated_shipments)
         expect(shipment).to receive(:update_amounts)
         subject.add(variant, 1, shipment: shipment)
+      end
+
+      context "with quantity=1" do
+        it "creates correct inventory" do
+          subject.add(variant, 1, shipment: shipment)
+          expect(order.inventory_units.count).to eq(1)
+        end
+      end
+
+      context "with quantity=2" do
+        it "creates correct inventory" do
+          subject.add(variant, 2, shipment: shipment)
+          expect(order.inventory_units.count).to eq(2)
+        end
+      end
+
+      context "called multiple times" do
+        it "creates correct inventory" do
+          subject.add(variant, 1, shipment: shipment)
+          subject.add(variant, 1, shipment: shipment)
+          expect(order.inventory_units.count).to eq(2)
+        end
       end
     end
 
