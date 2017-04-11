@@ -121,9 +121,15 @@ The admin UI was once again a focus in this release. We've made many incremental
 
 **Deprecations**
 
-- `cache_key_for_taxons` helper has been deprecated in favour of `cache [I18n.locale, @taxons]`
+- Deprecate `Order#has_step?` in favour of `has_checkout_step?` [#1667](https://github.com/solidusio/solidus/pull/1667) ([mamhoff](https://github.com/mamhoff))
+- Deprecate `Order#set_shipments_cost`, which is now done in `Order#update!` [\#1689](https://github.com/solidusio/solidus/pull/1689) ([jhawthorn](https://github.com/jhawthorn))
+- Deprecate `user.default_credit_card`, `user.payment_sources` for `user.wallet.default_wallet_payment_source` and `user.wallet.wallet_payment_sources`
+- Deprecate `CreditCard#default` in favour of `user.wallet.default_wallet_payment_source`
+- Deprecate `cache_key_for_taxons` helper favour of `cache [I18n.locale, @taxons]`
 - Deprecate admin sass variables in favour of bootstrap alternatives [\#1780](https://github.com/solidusio/solidus/pull/1780) ([tvdeyen](https://github.com/tvdeyen))
 - Deprecate Address\#empty? [\#1686](https://github.com/solidusio/solidus/pull/1686) ([jhawthorn](https://github.com/jhawthorn))
+- Deprecate `fill_in_quantity` capybara helper ![#1710](https://github.com/solidusio/solidus/pull/1710) ([jhawthorn](https://github.com/jhawthorn))
+- Deprecate `wait_for_ajax` capybara helper [#1668](https://github.com/solidusio/solidus/pull/1668) ([cbrunsdon](https://github.com/cbrunsdon))
 
 
 ## Solidus 2.1.0 (2017-01-17)
