@@ -5,6 +5,8 @@ describe 'Users', type: :feature do
   let!(:country) { create(:country) }
   let!(:user_a) { create(:user_with_addresses, email: 'a@example.com') }
   let!(:user_b) { create(:user_with_addresses, email: 'b@example.com') }
+  let!(:admin_role) { create(:role, name: 'admin') }
+  let!(:user_role) { create(:role, name: 'user') }
 
   let(:order) { create(:completed_order_with_totals, user: user_a, number: "R123") }
 
@@ -86,12 +88,28 @@ describe 'Users', type: :feature do
       end
     end
 
-    it 'displays the correct results for a user search' do
+    it 'displays the correct results for a user search by email' do
       fill_in 'q_email_cont', with: user_a.email
       click_button 'Search'
       within_table('listing_users') do
         expect(page).to have_text user_a.email
         expect(page).not_to have_text user_b.email
+      end
+    end
+
+    context 'with users having roles' do
+      before do
+        user_a.spree_roles << admin_role
+        user_b.spree_roles << user_role
+      end
+
+      it 'displays the correct results for a user search by role' do
+        select 'admin', from: Spree.user_class.human_attribute_name(:spree_roles)
+        click_button 'Search'
+        within_table('listing_users') do
+          expect(page).to have_text user_a.email
+          expect(page).not_to have_text user_b.email
+        end
       end
     end
   end
@@ -119,7 +137,6 @@ describe 'Users', type: :feature do
     end
 
     it 'can edit user roles' do
-      Spree::Role.create name: "admin"
       click_link 'Account'
 
       check 'user_spree_role_admin'

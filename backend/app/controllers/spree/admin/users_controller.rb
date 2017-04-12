@@ -5,7 +5,8 @@ module Spree
 
       after_action :sign_in_if_change_own_password, only: :update
 
-      before_action :load_roles, :load_stock_locations, only: [:edit, :new]
+      before_action :load_roles, only: [:index, :edit, :new]
+      before_action :load_stock_locations, only: [:edit, :new]
 
       def index
         respond_with(@collection) do |format|
@@ -108,7 +109,8 @@ module Spree
                             .limit(params[:limit] || 100)
         else
           @search = Spree.user_class.ransack(params[:q])
-          @collection = @search.result.page(params[:page]).per(Spree::Config[:admin_products_per_page])
+          @collection = @search.result.includes(:spree_roles)
+          @collection = @collection.page(params[:page]).per(Spree::Config[:admin_products_per_page])
         end
       end
 
@@ -140,7 +142,9 @@ module Spree
 
       def load_roles
         @roles = Spree::Role.all
-        @user_roles = @user.spree_roles
+        if @user
+          @user_roles = @user.spree_roles
+        end
       end
 
       def load_stock_locations
