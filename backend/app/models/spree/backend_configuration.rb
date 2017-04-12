@@ -98,6 +98,7 @@ module Spree
         MenuItem.new(
           PROMOTION_TABS,
           'bullhorn',
+          partial: 'spree/admin/shared/promotion_sub_menu',
           condition: -> { can?(:admin, Spree::Promotion) },
           url: :admin_promotions_path
         ),
