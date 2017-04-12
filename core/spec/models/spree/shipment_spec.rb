@@ -821,4 +821,25 @@ describe Spree::Shipment, type: :model do
       end
     end
   end
+
+  describe "#shipping_method" do
+    let(:shipment) { create(:shipment) }
+
+    subject { shipment.shipping_method }
+
+    context "when no shipping rate is selected" do
+      before do
+        shipment.shipping_rates.update_all(selected: false)
+        shipment.reload
+      end
+
+      it { is_expected.to be_nil }
+    end
+
+    context "when a shipping rate is selected" do
+      it "is expected to be the shipping rate's shipping method" do
+        expect(shipment.shipping_method).to eq(shipment.selected_shipping_rate.shipping_method)
+      end
+    end
+  end
 end
