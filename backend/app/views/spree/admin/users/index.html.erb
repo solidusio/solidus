@@ -16,17 +16,33 @@
   <div data-hook="admin_users_index_search">
     <%= search_form_for [:admin, @search], url: admin_users_url do |f| %>
       <div class="row">
-        <div class="col-xs-12 col-md-6">
+        <div class="col-xs-12 col-md-5">
           <div class="form-group">
             <%= f.label :email_cont, Spree.t(:email) %>
             <%= f.text_field :email_cont, class: "form-control" %>
           </div>
         </div>
-        <div class="col-xs-12 col-md-6">
+        <div class="col-xs-12 col-md-3">
           <div class="form-group">
             <%= f.label :spree_roles_id_in, Spree.user_class.human_attribute_name(:spree_roles) %>
             <%= f.collection_select :spree_roles_id_in, @roles, :id, :name, {},
               multiple: true, class: 'select2 fullwidth' %>
+          </div>
+        </div>
+        <div class="col-xs-12 col-md-4">
+          <div class="date-range-filter form-group">
+            <%= label_tag :q_created_at_gt, Spree.t(:member_since) %>
+            <div class="date-range-fields input-group">
+              <%= f.text_field :created_at_gt, class: 'datepicker form-control datepicker-from',
+                value: params[:q].try!("[]", :created_at_gt), placeholder: Spree.t(:start) %>
+
+              <span class="range-divider input-group-addon">
+                <i class="fa fa-arrow-right"></i>
+              </span>
+
+              <%= f.text_field :created_at_lt, class: 'datepicker form-control datepicker-to',
+                value: params[:q].try!("[]", :created_at_lt), placeholder: Spree.t(:stop) %>
+            </div>
           </div>
         </div>
       </div>
@@ -42,14 +58,16 @@
 
 <table class="index" id="listing_users" data-hook>
   <colgroup>
-    <col style="width: 45%">
-    <col style="width: 45%">
+    <col style="width: 50%">
+    <col style="width: 20%">
+    <col style="width: 20%">
     <col style="width: 10%">
   </colgroup>
   <thead>
     <tr data-hook="admin_users_index_headers">
-      <th><%= sort_link @search,:email, Spree::LegacyUser.model_name.human, {}, {title: 'users_email_title'} %></th>
+      <th><%= sort_link @search, :email, Spree::LegacyUser.model_name.human, {}, {title: 'users_email_title'} %></th>
       <th><%= Spree.user_class.human_attribute_name(:spree_roles) %></th>
+      <th><%= sort_link @search, :created_at, Spree.t(:member_since) %></th>
       <th data-hook="admin_users_index_header_actions" class="actions"></th>
     </tr>
   </thead>
@@ -58,6 +76,7 @@
       <tr id="<%= spree_dom_id user %>" data-hook="admin_users_index_rows">
         <td class='user_email'><%=link_to user.email, edit_admin_user_url(user) %></td>
         <td><%= user.spree_roles.map(&:name).to_sentence %></td>
+        <td class="align-center"><%= l user.created_at.to_date %></td>
         <td data-hook="admin_users_index_row_actions" class="actions">
           <% if can?(:edit, user) %>
             <%= link_to_edit user, no_text: true %>

@@ -64,7 +64,8 @@ describe 'Users', type: :feature do
 
     it "can sort desc" do
       within_table(table_id) do
-        click_link sort_link
+        # Ransack adds a ▲ to the sort link. With exact match Capybara is not able to find that link
+        click_link sort_link, exact: false
 
         expect(page).to have_text text_match_1
         expect(page).to have_text text_match_2
@@ -94,6 +95,25 @@ describe 'Users', type: :feature do
       within_table('listing_users') do
         expect(page).to have_text user_a.email
         expect(page).not_to have_text user_b.email
+      end
+    end
+
+    context "member since" do
+      it_behaves_like "a sortable attribute" do
+        let(:text_match_1) { user_a.email }
+        let(:text_match_2) { user_b.email }
+        let(:table_id) { "listing_users" }
+        let(:sort_link) { Spree.t(:member_since) }
+      end
+
+      it 'displays the correct results for a user search by creation date' do
+        user_a.update_column(:created_at, 2.weeks.ago)
+        fill_in 'q_created_at_lt', with: 1.week.ago
+        click_button 'Search'
+        within_table('listing_users') do
+          expect(page).to have_text user_a.email
+          expect(page).not_to have_text user_b.email
+        end
       end
     end
 
