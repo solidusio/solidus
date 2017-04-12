@@ -1,13 +1,13 @@
 body:not(.new-layout) #sidebar {
   overflow: visible;
-  border-top: 1px solid $color-border;
-  margin-top: 17px;
+  margin-top: 1.5rem;
 
   .sidebar-title {
     color: $color-2;
     text-align: center;
     font-size: 16px;
     font-weight: $font-weight-bold;
+    border-top: 1px solid $color-border;
 
     > span {
       display: inline;
