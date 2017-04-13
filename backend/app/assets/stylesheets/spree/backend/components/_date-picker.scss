@@ -1,13 +1,4 @@
 .date-range-filter {
-  input {
-    /* This is necessary to override the width: 100% applied to all inputs
-     * within #table-filter.
-     *
-     * This is necessary to fix the inputs overflowing the container in
-     * firefox.
-     */
-    width: 1% !important;
-  }
   .range-divider {
     color: $gray;
   }
