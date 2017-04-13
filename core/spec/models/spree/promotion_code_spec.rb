@@ -155,12 +155,12 @@ RSpec.describe Spree::PromotionCode do
     end
     let(:promo_adjustment) { order.adjustments.promotion.first }
     before do
-      order.next! until order.confirm?
+      order.next! until order.can_complete?
 
       FactoryGirl.create(:order_with_line_items, line_items_price: 40, shipment_cost: 0).tap do |order|
         FactoryGirl.create(:payment, amount: 30, order: order)
         promotion.activate(order: order, promotion_code: code)
-        order.next! until order.confirm?
+        order.next! until order.can_complete?
         order.complete!
       end
     end

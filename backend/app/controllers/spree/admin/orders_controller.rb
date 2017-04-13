@@ -98,7 +98,7 @@ module Spree
         else
           @order.contents.advance
 
-          if @order.confirm?
+          if @order.can_complete?
             flash[:success] = Spree.t('order_ready_for_confirm')
           else
             flash[:error] = @order.errors.full_messages
@@ -111,7 +111,7 @@ module Spree
       def confirm
         if @order.completed?
           redirect_to edit_admin_order_url(@order)
-        elsif !@order.confirm?
+        elsif !@order.can_complete?
           render template: 'spree/admin/orders/confirm_advance'
         end
       end

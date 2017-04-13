@@ -62,7 +62,7 @@ module Spree
     end
 
     def transition_forward
-      if @order.confirm?
+      if @order.can_complete?
         @order.complete
       else
         @order.next
