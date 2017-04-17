@@ -31,6 +31,7 @@ module Spree::Preferences
       define_method preference_setter_method(name) do |value|
         value = convert_preference_value(value, type)
         preferences[name] = value
+        db_preferences[name] = value if respond_to?(:db_preferences)
 
         # If this is an activerecord object, we need to inform
         # ActiveRecord::Dirty that this value has changed, since this is an
