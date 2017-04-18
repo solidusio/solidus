@@ -349,6 +349,18 @@ module Spree
       expect(response.status).to eq(201)
     end
 
+    it "can specify additional parameters via options for a line item" do
+      expect_any_instance_of(LineItem).to receive(:some_option=).with(4)
+      api_post :create, order: {
+        line_items: {
+          "0" => {
+            variant_id: variant.to_param, quantity: 5, options: { some_option: 4 }
+          }
+        }
+      }
+      expect(response.status).to eq(201)
+    end
+
     it "cannot arbitrarily set the line items price" do
       api_post :create, order: {
         line_items: {
