@@ -167,7 +167,7 @@ class Spree::Admin::ResourceController < Spree::Admin::BaseController
 
   def parent
     if parent_data.present?
-      @parent ||= parent_data[:model_class].send("find_by_#{parent_data[:find_by]}", params["#{parent_model_name}_id"])
+      @parent ||= parent_data[:model_class].find_by(parent_data[:find_by] => params["#{parent_model_name}_id"])
       instance_variable_set("@#{parent_model_name}", @parent)
     end
   end
