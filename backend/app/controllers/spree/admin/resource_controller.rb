@@ -122,9 +122,12 @@ class Spree::Admin::ResourceController < Spree::Admin::BaseController
     "Spree::#{controller_name.classify}".constantize
   end
 
-  def model_name
+  def parent_model_name
     parent_data[:model_name].gsub('spree/', '')
   end
+
+  alias_method :model_name, :parent_model_name
+  deprecate model_name: :parent_model_name, deprecator: Spree::Deprecation
 
   def object_name
     controller_name.singularize
@@ -164,8 +167,8 @@ class Spree::Admin::ResourceController < Spree::Admin::BaseController
 
   def parent
     if parent_data.present?
-      @parent ||= parent_data[:model_class].send("find_by_#{parent_data[:find_by]}", params["#{model_name}_id"])
-      instance_variable_set("@#{model_name}", @parent)
+      @parent ||= parent_data[:model_class].send("find_by_#{parent_data[:find_by]}", params["#{parent_model_name}_id"])
+      instance_variable_set("@#{parent_model_name}", @parent)
     end
   end
 
