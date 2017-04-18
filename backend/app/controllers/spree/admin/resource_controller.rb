@@ -166,14 +166,18 @@ class Spree::Admin::ResourceController < Spree::Admin::BaseController
   end
 
   def parent
-    if parent_data.present?
+    if parent?
       @parent ||= parent_data[:model_class].find_by(parent_data[:find_by] => params["#{parent_model_name}_id"])
       instance_variable_set("@#{parent_model_name}", @parent)
     end
   end
 
+  def parent?
+    parent_data.parent?
+  end
+
   def find_resource
-    if parent_data.present?
+    if parent?
       parent.send(controller_name).find(params[:id])
     else
       model_class.find(params[:id])
@@ -181,7 +185,7 @@ class Spree::Admin::ResourceController < Spree::Admin::BaseController
   end
 
   def build_resource
-    if parent_data.present?
+    if parent?
       parent.send(controller_name).build
     else
       model_class.new
@@ -189,7 +193,7 @@ class Spree::Admin::ResourceController < Spree::Admin::BaseController
   end
 
   def collection
-    return parent.send(controller_name) if parent_data.present?
+    return parent.send(controller_name) if parent?
     if model_class.respond_to?(:accessible_by) && !current_ability.has_block?(params[:action], model_class)
       model_class.accessible_by(current_ability, action)
     else
@@ -208,7 +212,7 @@ class Spree::Admin::ResourceController < Spree::Admin::BaseController
   # URL helpers
 
   def new_object_url(options = {})
-    if parent_data.present?
+    if parent?
       spree.new_polymorphic_url([:admin, parent, model_class], options)
     else
       spree.new_polymorphic_url([:admin, model_class], options)
@@ -216,7 +220,7 @@ class Spree::Admin::ResourceController < Spree::Admin::BaseController
   end
 
   def edit_object_url(object, options = {})
-    if parent_data.present?
+    if parent?
       spree.polymorphic_url([:edit, :admin, parent, object], options)
     else
       spree.polymorphic_url([:edit, :admin, object], options)
@@ -226,7 +230,7 @@ class Spree::Admin::ResourceController < Spree::Admin::BaseController
   def object_url(object = nil, options = {})
     target = object ? object : @object
 
-    if parent_data.present?
+    if parent?
       spree.polymorphic_url([:admin, parent, target], options)
     else
       spree.polymorphic_url([:admin, target], options)
@@ -234,7 +238,7 @@ class Spree::Admin::ResourceController < Spree::Admin::BaseController
   end
 
   def collection_url(options = {})
-    if parent_data.present?
+    if parent?
       spree.polymorphic_url([:admin, parent, model_class], options)
     else
       spree.polymorphic_url([:admin, model_class], options)
