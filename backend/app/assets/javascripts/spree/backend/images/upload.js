@@ -49,7 +49,11 @@ Spree.prepareImageUploader = function () {
 
   var ProgressModel = Backbone.Model.extend({
     initialize: function() {
-      this.set({summary: this.get("file").name});
+      var file = this.get("file");
+      this.set({
+        filename: file.name,
+        size: file.size ? (file.size/1024|0) + 'K' : ''
+      });
     },
 
     defaults: function() {
@@ -58,7 +62,8 @@ Spree.prepareImageUploader = function () {
         imgSrc: '',
         progress: 0,
         serverError: false,
-        summary: ''
+        filename: '',
+        size: ''
       }
     },
 
@@ -81,9 +86,6 @@ Spree.prepareImageUploader = function () {
         };
 
         reader.readAsDataURL(file);
-      } else {
-        var summary = 'Uploading ' + file.name + ' ' + (file.size ? (file.size/1024|0) + 'K' : '');
-        this.set({summary: summary});
       }
     },
 
@@ -153,7 +155,8 @@ Spree.prepareImageUploader = function () {
       var changedAttrs = Object.keys(this.model.changed);
       if(changedAttrs.length === 1 && changedAttrs[0] == 'progress') return this;
 
-      this.el.innerHTML = this.template(this.model.attributes);
+      this.el.innerHTML = this.template(this.model.toJSON());
+      this.updateProgressBar();
       return this;
     },
 
