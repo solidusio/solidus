@@ -173,7 +173,7 @@ class Spree::Admin::ResourceController < Spree::Admin::BaseController
   end
 
   def parent?
-    parent_data.parent?
+    parent_data.present?
   end
 
   def find_resource
