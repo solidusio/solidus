@@ -68,7 +68,6 @@ Spree.prepareImageUploader = function () {
       'image/gif': true
     },
 
-    variantId: document.querySelector('input[name="image[viewable_id]"]').value,
 
     previewFile: function () {
       var file = this.get('file'),
@@ -89,7 +88,7 @@ Spree.prepareImageUploader = function () {
           that = this;
 
       formData.append('image[attachment]', this.get('file'));
-      formData.append('image[viewable_id]', this.variantId);
+      formData.append('image[viewable_id]', this.get('variant_id'));
       formData.append('upload_id', this.cid);
 
       // send the image to the server
@@ -174,6 +173,7 @@ Spree.prepareImageUploader = function () {
   // Kick off by binding the events on the upload zone
   var imageUploads = new Backbone.Collection();
   var progressZone = document.getElementById('progress-zone');
+  var variantId = document.querySelector('input[name="image[viewable_id]"]').value;
 
   new UploadZone({
     el: uploadZone,
@@ -181,7 +181,8 @@ Spree.prepareImageUploader = function () {
   });
 
   imageUploads.on('add', function(progressModel) {
-    console.log(progressModel)
+    progressModel.set({variant_id: variantId});
+
     var progressView = new ProgressView({model: progressModel});
     progressZone.appendChild(progressView.render().el);
   });
