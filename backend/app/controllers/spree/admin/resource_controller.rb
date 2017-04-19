@@ -123,7 +123,7 @@ class Spree::Admin::ResourceController < Spree::Admin::BaseController
   end
 
   def parent_model_name
-    parent_data[:model_name].gsub('spree/', '')
+    self.class.parent_data[:model_name].gsub('spree/', '')
   end
 
   alias_method :model_name, :parent_model_name
@@ -164,16 +164,17 @@ class Spree::Admin::ResourceController < Spree::Admin::BaseController
   def parent_data
     self.class.parent_data
   end
+  deprecate :parent_data, deprecator: Spree::Deprecation
 
   def parent
     if parent?
-      @parent ||= parent_data[:model_class].find_by(parent_data[:find_by] => params["#{parent_model_name}_id"])
+      @parent ||= self.class.parent_data[:model_class].find_by(self.class.parent_data[:find_by] => params["#{parent_model_name}_id"])
       instance_variable_set("@#{parent_model_name}", @parent)
     end
   end
 
   def parent?
-    parent_data.present?
+    self.class.parent_data.present?
   end
 
   def find_resource
