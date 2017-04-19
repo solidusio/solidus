@@ -15,16 +15,7 @@ Spree.prepareImageUploader = function () {
 
     progressZone: document.getElementById('progress-zone'),
 
-    // Hide or highlight supported browser features
-    initialize: function() {
-      "filereader formdata progress".split(' ').forEach(function (api) {
-        this.support[api].className = (this.tests[api] === false) ? 'red' : 'hidden'
-      }, this);
-    },
-
     upload: function(file) {
-      if (!FormData) return;
-
       var progressModel = new ProgressModel({file: file});
       progressModel.previewFile();
       progressModel.uploadFile();
@@ -53,19 +44,6 @@ Spree.prepareImageUploader = function () {
 
     onFileBrowserSelect: function(e) {
       _.each(e.target.files, this.upload, this);
-    },
-
-    tests: {
-      filereader: typeof FileReader != 'undefined',
-      dnd: 'draggable' in document.createElement('span'),
-      formdata: !!window.FormData,
-      progress: "upload" in new XMLHttpRequest
-    },
-
-    support: {
-      filereader: document.getElementById('filereader'),
-      formdata:   document.getElementById('formdata'),
-      progress:   document.getElementById('progress')
     }
   });
 
