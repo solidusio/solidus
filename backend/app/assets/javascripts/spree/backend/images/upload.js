@@ -4,8 +4,6 @@ Spree.prepareImageUploader = function () {
   if(!uploadZone) return;
 
   var UploadZone = Backbone.View.extend({
-    el: uploadZone,
-
     events: {
       "dragover" : "onDragOver",
       "dragleave" : "onDragLeave",
@@ -13,15 +11,12 @@ Spree.prepareImageUploader = function () {
       'change input[type="file"]' : "onFileBrowserSelect"
     },
 
-    progressZone: document.getElementById('progress-zone'),
-
     upload: function(file) {
       var progressModel = new ProgressModel({file: file});
       progressModel.previewFile();
       progressModel.uploadFile();
 
-      var progressView = new ProgressView({model: progressModel});
-      this.progressZone.appendChild(progressView.render().el);
+      this.collection.add(progressModel);
     },
 
     dragClass: 'with-images',
@@ -177,7 +172,20 @@ Spree.prepareImageUploader = function () {
 
 
   // Kick off by binding the events on the upload zone
-  new UploadZone();
+  var imageUploads = new Backbone.Collection();
+  var progressZone = document.getElementById('progress-zone');
+
+  new UploadZone({
+    el: uploadZone,
+    collection: imageUploads
+  });
+
+  imageUploads.on('add', function(progressModel) {
+    console.log(progressModel)
+    var progressView = new ProgressView({model: progressModel});
+    progressZone.appendChild(progressView.render().el);
+  });
+
 
 }; // end prepareImageUploader
 
