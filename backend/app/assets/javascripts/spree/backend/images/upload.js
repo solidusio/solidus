@@ -140,7 +140,7 @@ Spree.prepareImageUploader = function () {
       "clear" : "clear"
     },
 
-    className: 'col-sm-6 col-md-4 margin-bottom-one',
+    className: 'col-sm-6 col-md-4 mb-3',
 
     attributes: function() {
       return {
@@ -158,8 +158,11 @@ Spree.prepareImageUploader = function () {
     },
 
     updateProgressBar: function() {
-      var progressBar = this.el.querySelector('progress');
-      progressBar.value = progressBar.innerHTML = this.model.get('progress');
+      var progressBar = this.el.querySelector('.progress-bar');
+      var percent = this.model.get('progress');
+      progressBar.setAttribute('aria-valuenow', percent);
+      progressBar.style.width = percent + '%';
+      progressBar.innerHTML = percent + '%';
       return this;
     },
 

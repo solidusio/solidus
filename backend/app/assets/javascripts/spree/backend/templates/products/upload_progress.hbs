@@ -2,7 +2,9 @@
   <img src="{{ imgSrc }}" class="card-img-top img-fluid">
 
   <div class="card-block">
-    <progress min="0" max="100" value="{{ progress }}">{{ progress }}</progress>
+    <div class="progress">
+      <div class="progress-bar progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
 
     <summary>{{ summary }}</summary>
     <br>
