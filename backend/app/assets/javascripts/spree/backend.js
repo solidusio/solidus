@@ -36,7 +36,6 @@
 //= require spree/backend/gateway
 //= require spree/backend/handlebars_extensions
 //= require spree/backend/images/index
-//= require spree/backend/images/new
 //= require spree/backend/images/upload
 //= require spree/backend/navigation
 //= require spree/backend/number_field_updater
