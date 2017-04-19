@@ -27,6 +27,7 @@ class Spree::StoreCredit < Spree::PaymentSource
   delegate :name, to: :category, prefix: true
   delegate :email, to: :created_by, prefix: true
 
+  scope :active, -> { where(expires_at: nil).or(where("expires_at > ?", DateTime.current)) }
   scope :order_by_priority, -> { includes(:credit_type).order('spree_store_credit_types.priority ASC') }
 
   after_save :store_event
