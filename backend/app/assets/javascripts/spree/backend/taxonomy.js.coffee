@@ -77,30 +77,33 @@ TaxonTreeView = Backbone.View.extend
     child_index = 0
     @create_taxon({name, parent_id, child_index})
 
-  get_create_handler: (taxonomy_id) ->
-    handle_create = (e) =>
-      e.preventDefault()
-      @get_taxonomy().done (taxonomy) =>
-        name = 'New node'
-        parent_id = taxonomy.root.id
-        child_index = 0
-        @create_taxon({name, parent_id, child_index})
+  handle_create: (e) ->
+    e.preventDefault()
+    @get_taxonomy().done (taxonomy) =>
+      name = 'New node'
+      parent_id = taxonomy.root.id
+      child_index = 0
+      @create_taxon({name, parent_id, child_index})
+
+  events: {
+    'sortstart': 'resize_placeholder',
+    'sortover': 'highlight_sort_targets',
+    'sortstop': 'restore_sort_targets',
+    'sortupdate': 'handle_move',
+
+    'click .js-taxon-delete': 'handle_delete',
+    'click .js-taxon-add-child': 'handle_add_child',
+  }
 
   initialize: ({taxonomy_id}) ->
-    _.bindAll(this, 'redraw_tree', 'highlight_sort_targets', 'handle_move', 'handle_delete')
+    _.bindAll(this, 'redraw_tree', 'handle_create')
+    $('.add-taxon-button').on('click', @handle_create)
 
     this.taxonomy_id = taxonomy_id
     @redraw_tree()
-    $("#taxonomy_tree").on
-      sortstart: @resize_placeholder
-      sortover: @highlight_sort_targets
-      sortstop: @restore_sort_targets
-      sortupdate: @handle_move
-    .on('click', '.js-taxon-delete', @handle_delete)
-    .on('click', '.js-taxon-add-child', @handle_add_child)
-    $('.add-taxon-button').on('click', @get_create_handler(taxonomy_id))
 
 $ ->
   if $('#taxonomy_tree').length
     new TaxonTreeView
+      el: $('#taxonomy_tree')
       taxonomy_id: $('#taxonomy_tree').data("taxonomy-id")
