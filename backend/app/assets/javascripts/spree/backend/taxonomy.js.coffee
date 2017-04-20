@@ -2,10 +2,6 @@ Handlebars.registerHelper 'isRootTaxon', ->
   !@parent_id?
 
 TaxonTreeView = Backbone.View.extend
-  get_taxonomy: ->
-    Spree.ajax
-      url: "#{Spree.routes.taxonomy_path}?set=nested"
-
   create_taxon: ({name, parent_id, child_index}) ->
     Spree.ajax
       type: "POST",
@@ -31,10 +27,10 @@ TaxonTreeView = Backbone.View.extend
       url: "#{Spree.routes.taxonomy_taxons_path}/#{id}"
       error: @redraw_tree
 
-  draw_tree: (taxonomy) ->
+  render: ->
     taxons_template = HandlebarsTemplates["taxons/tree"]
     this.$el
-      .html( taxons_template({ taxons: [taxonomy.root] }) )
+      .html( taxons_template({ taxons: [this.model.get("root")] }) )
       .find('ul')
       .sortable
         connectWith: '#taxonomy_tree ul'
@@ -43,7 +39,9 @@ TaxonTreeView = Backbone.View.extend
         cursorAt: { left: 5 }
 
   redraw_tree: ->
-    @get_taxonomy().done(@draw_tree)
+    this.model.fetch({
+      url: this.model.url() + '?set=nested'
+    })
 
   resize_placeholder: (e, ui) ->
     handleHeight = ui.helper.find('.sortable-handle').outerHeight()
@@ -79,11 +77,10 @@ TaxonTreeView = Backbone.View.extend
 
   handle_create: (e) ->
     e.preventDefault()
-    @get_taxonomy().done (taxonomy) =>
-      name = 'New node'
-      parent_id = taxonomy.root.id
-      child_index = 0
-      @create_taxon({name, parent_id, child_index})
+    name = 'New node'
+    parent_id = this.model.get("root").id
+    child_index = 0
+    @create_taxon({name, parent_id, child_index})
 
   events: {
     'sortstart': 'resize_placeholder',
@@ -95,15 +92,17 @@ TaxonTreeView = Backbone.View.extend
     'click .js-taxon-add-child': 'handle_add_child',
   }
 
-  initialize: ({taxonomy_id}) ->
-    _.bindAll(this, 'redraw_tree', 'draw_tree', 'handle_create')
+  initialize: ->
+    _.bindAll(this, 'redraw_tree', 'handle_create')
     $('.add-taxon-button').on('click', @handle_create)
 
-    this.taxonomy_id = taxonomy_id
+    this.listenTo(this.model, 'sync', this.render)
+
     @redraw_tree()
 
 $ ->
   if $('#taxonomy_tree').length
+    model = new Spree.Models.Taxonomy({id: $('#taxonomy_tree').data("taxonomy-id")})
     new TaxonTreeView
       el: $('#taxonomy_tree')
-      taxonomy_id: $('#taxonomy_tree').data("taxonomy-id")
+      model: model
