@@ -1198,6 +1198,7 @@ en:
     expected: Expected
     expected_items: Expected Items
     expiration: Expiration
+    expires_at: Expires at
     extension: Extension
     existing_shipments: Existing shipments
     hints:

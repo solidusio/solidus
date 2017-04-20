@@ -26,6 +26,7 @@
       <th class="wrap-text"><%= Spree::StoreCredit.human_attribute_name(:category_id) %></th>
       <th class="wrap-text"><%= Spree::StoreCredit.human_attribute_name(:created_by_id) %></th>
       <th class="wrap-text"><%= Spree::StoreCredit.human_attribute_name(:created_at) %></th>
+      <th class="wrap-text"><%= Spree::StoreCredit.human_attribute_name(:expires_at) %></th>
       <th class="wrap-text"><%= Spree::StoreCredit.human_attribute_name(:invalidated_at) %></th>
       <th data-hook="admin_store_credits_index_header_actions" class="actions"></th>
     <thead>
@@ -49,6 +50,9 @@
           </td>
           <td class='align-center'>
             <span><%= l store_credit.created_at.to_date %></span>
+          </td>
+          <td class='align-center'>
+            <span><%= l store_credit.expires_at.to_date if store_credit.expires_at %></span>
           </td>
           <td class='align-center'>
             <span><%= store_credit.invalidated? %></span>

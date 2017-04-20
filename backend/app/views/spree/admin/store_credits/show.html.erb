@@ -42,6 +42,13 @@
     <td><%= @store_credit.category_name %></td>
     <td class='actions'></td>
   </tr>
+  <tr>
+    <td>
+      <strong><%= Spree.t(:expires_at) %>:</strong>
+    </td>
+    <td><%= pretty_time(@store_credit.expires_at) if @store_credit.expires_at %></td>
+    <td class='actions'></td>
+  </tr>
   <tr id='memo-display-row'>
     <td>
       <strong><%= Spree::StoreCredit.human_attribute_name(:memo) %>:</strong>
