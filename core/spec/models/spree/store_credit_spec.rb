@@ -108,6 +108,26 @@ describe Spree::StoreCredit do
       end
     end
 
+    describe "expiring credits require an expiration date" do
+      subject { build(:store_credit, amount: 100.0, expires_at: nil) }
+
+      context "the credit has a non-expiring category" do
+        before { allow(subject.category).to receive(:non_expiring?) { true } }
+
+        it { is_expected.to be_valid }
+      end
+
+      context "the credit has an expiring category" do
+        it { is_expected.to_not be_valid }
+
+        it "sets a custom error message" do
+          subject.validate
+          expect(subject.errors.full_messages).
+            to eq ["Expires at is required for expiring credit types"]
+        end
+      end
+    end
+
     describe "editing category" do
       let!(:store_credit) { create(:store_credit) }
       let!(:test_category) { create(:store_credit_category, name: "Testing") }

@@ -628,6 +628,10 @@ en:
           attributes:
             base:
               cannot_destroy_default_store: Cannot destroy the default Store.
+        spree/store_credit:
+            attributes:
+              expires_at:
+                blank: "is required for expiring credit types"
         spree/user_address:
           attributes:
             user_id:
