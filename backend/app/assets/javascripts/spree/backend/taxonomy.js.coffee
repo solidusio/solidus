@@ -33,7 +33,7 @@ TaxonTreeView = Backbone.View.extend
 
   draw_tree: (taxonomy) ->
     taxons_template = HandlebarsTemplates["taxons/tree"]
-    $('#taxonomy_tree')
+    this.$el
       .html( taxons_template({ taxons: [taxonomy.root] }) )
       .find('ul')
       .sortable
@@ -96,7 +96,7 @@ TaxonTreeView = Backbone.View.extend
   }
 
   initialize: ({taxonomy_id}) ->
-    _.bindAll(this, 'redraw_tree', 'handle_create')
+    _.bindAll(this, 'redraw_tree', 'draw_tree', 'handle_create')
     $('.add-taxon-button').on('click', @handle_create)
 
     this.taxonomy_id = taxonomy_id
