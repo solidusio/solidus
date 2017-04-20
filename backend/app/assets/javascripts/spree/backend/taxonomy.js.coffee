@@ -45,18 +45,20 @@ TaxonTreeView = Backbone.View.extend
   redraw_tree: ->
     @get_taxonomy().done(@draw_tree)
 
-  resize_placeholder: (ui) ->
+  resize_placeholder: (e, ui) ->
     handleHeight = ui.helper.find('.sortable-handle').outerHeight()
     ui.placeholder.height(handleHeight)
 
   restore_sort_targets: ->
     $('.ui-sortable-over').removeClass('ui-sortable-over')
 
-  highlight_sort_targets: (ui) ->
+  highlight_sort_targets: (e, ui) ->
     @restore_sort_targets()
     ui.placeholder.parents('ul').addClass('ui-sortable-over')
 
-  handle_move: (el) ->
+  handle_move: (e, ui) ->
+    return if ui.sender?
+    el = ui.item
     @update_taxon
       id: el.data('taxon-id')
       parent_id: el.parent().closest('li').data('taxon-id')
@@ -85,18 +87,15 @@ TaxonTreeView = Backbone.View.extend
         @create_taxon({name, parent_id, child_index})
 
   initialize: ({taxonomy_id}) ->
-    _.bindAll(this, 'redraw_tree');
+    _.bindAll(this, 'redraw_tree', 'highlight_sort_targets', 'handle_move', 'handle_delete')
 
     this.taxonomy_id = taxonomy_id
     @redraw_tree()
     $("#taxonomy_tree").on
-      sortstart: (e, ui) ->
-        @resize_placeholder(ui)
-      sortover: (e, ui) ->
-        @highlight_sort_targets(ui)
+      sortstart: @resize_placeholder
+      sortover: @highlight_sort_targets
       sortstop: @restore_sort_targets
-      sortupdate: (e, ui) ->
-        @handle_move(ui.item) unless ui.sender?
+      sortupdate: @handle_move
     .on('click', '.js-taxon-delete', @handle_delete)
     .on('click', '.js-taxon-add-child', @handle_add_child)
     $('.add-taxon-button').on('click', @get_create_handler(taxonomy_id))
