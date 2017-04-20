@@ -1214,6 +1214,8 @@ en:
         expires_at: "This determines when the promotion expires. <br/> If no value is specified, the promotion will never expires."
       spree/store:
         cart_tax_country_iso: "This determines which country is used for taxes on carts (orders which don't yet have an address).<br/> Default: None."
+      spree/store_credit:
+        expires_at: "This determines when the store credit expires. <br/> If no value is specified, the store credit will never expire."
       spree/variant:
         tax_category: "This determines what kind of taxation is applied to this variant.<br/> Default: Use tax category of the product associated with this variant"
         deleted: "Deleted Variant"

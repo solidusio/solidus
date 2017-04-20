@@ -68,7 +68,7 @@ module Spree
       private
 
       def permitted_resource_params
-        params.require(:store_credit).permit([:amount, :currency, :category_id, :memo]).
+        params.require(:store_credit).permit(%i[amount currency category_id memo expires_at]).
           merge(created_by: try_spree_current_user)
       end
 
