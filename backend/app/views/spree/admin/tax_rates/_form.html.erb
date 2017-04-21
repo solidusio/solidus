@@ -25,8 +25,8 @@
             <%= f.collection_select(:zone_id, @available_zones, :id, :name, {}, {class: 'select2 fullwidth'}) %>
           </div>
           <div data-hook="category" class="field">
-            <%= f.label :tax_category_id, Spree::TaxCategory.model_name.human %>
-            <%= f.collection_select(:tax_category_id, @available_categories,:id, :name, {}, {class: 'select2 fullwidth'}) %>
+            <%= f.label :tax_category_ids, Spree::TaxCategory.model_name.human %>
+            <%= f.collection_select(:tax_category_ids, @available_categories, :id, :name, {}, {class: 'select2 fullwidth', multiple: "multiple"}) %>
           </div>
           <div data-hook="show_rate" class="field">
             <%= f.check_box :show_rate_in_label %>

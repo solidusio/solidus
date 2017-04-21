@@ -5,7 +5,7 @@ describe "Adjustments", type: :feature do
 
   let!(:ship_address) { create(:address) }
   let!(:tax_zone) { create(:global_zone) } # will include the above address
-  let!(:tax_rate) { create(:tax_rate, amount: 0.20, zone: tax_zone, tax_category: tax_category) }
+  let!(:tax_rate) { create(:tax_rate, amount: 0.20, zone: tax_zone, tax_categories: [tax_category]) }
 
   let!(:order) do
     create(

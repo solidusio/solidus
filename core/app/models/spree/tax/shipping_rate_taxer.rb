@@ -23,7 +23,7 @@ module Spree
 
       def tax_rates_for_shipping_rate(shipping_rate)
         applicable_rates(shipping_rate.order).select do |tax_rate|
-          tax_rate.tax_category == shipping_rate.tax_category
+          tax_rate.tax_categories.include?(shipping_rate.tax_category)
         end
       end
     end
