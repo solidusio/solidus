@@ -16,6 +16,13 @@ describe Spree::Admin::StoreCreditsController do
   let!(:a_credit_category) { create(:store_credit_category, name: "A category") }
   let!(:update_reason)     { create(:store_credit_update_reason) }
 
+  before do
+    Spree::StoreCreditCategory.non_expiring_credit_categories |= [
+      b_credit_category.name,
+      a_credit_category.name
+    ]
+  end
+
   describe "#show" do
     let!(:store_credit) { create(:store_credit, user: user, category: a_credit_category) }
     let!(:event)        { create(:store_credit_auth_event, store_credit: store_credit, created_at: 5.days.ago) }
