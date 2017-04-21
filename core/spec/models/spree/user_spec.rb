@@ -181,10 +181,19 @@ describe Spree.user_class, type: :model do
       let(:user)                     { create(:user) }
       let(:amount)                   { 120.25 }
       let(:additional_amount)        { 55.75 }
-      let(:store_credit)             { create(:store_credit, user: user, amount: amount, amount_used: 0.0) }
+      let(:expires_at)               { 2.days.from_now }
+      let(:store_credit)             { create(:store_credit, user: user, amount: amount, amount_used: 0.0, expires_at: expires_at) }
       let!(:additional_store_credit) { create(:store_credit, user: user, amount: additional_amount, amount_used: 0.0) }
 
       subject { store_credit.user }
+
+      context "store credit has expired" do
+        let(:expires_at) { 2.days.ago }
+
+        it "does not include expired credits in the total" do
+          expect(subject.total_available_store_credit).to eq(additional_amount)
+        end
+      end
 
       context "part of the store credit has been used" do
         let(:amount_used) { 35.00 }
