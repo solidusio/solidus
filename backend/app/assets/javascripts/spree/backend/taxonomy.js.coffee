@@ -6,7 +6,7 @@ TaxonTreeView = Backbone.View.extend
     Spree.ajax
       type: "POST",
       dataType: "json",
-      url: Spree.routes.taxonomy_taxons_path,
+      url: "#{this.model.url()}/taxons",
       data:
         taxon: {name, parent_id, child_index}
       complete: @redraw_tree
@@ -15,7 +15,7 @@ TaxonTreeView = Backbone.View.extend
     Spree.ajax
       type: "PUT"
       dataType: "json"
-      url: "#{Spree.routes.taxonomy_taxons_path}/#{id}"
+      url: "#{this.model.url()}/taxons/#{id}",
       data:
         taxon: {parent_id, child_index}
       error: @redraw_tree
@@ -24,7 +24,7 @@ TaxonTreeView = Backbone.View.extend
     Spree.ajax
       type: "DELETE"
       dataType: "json"
-      url: "#{Spree.routes.taxonomy_taxons_path}/#{id}"
+      url: "#{this.model.url()}/taxons/#{id}",
       error: @redraw_tree
 
   render: ->
