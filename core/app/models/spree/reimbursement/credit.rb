@@ -4,7 +4,7 @@ module Spree
     self.default_creditable_class = Spree::StoreCredit
 
     belongs_to :reimbursement, inverse_of: :credits
-    belongs_to :creditable, polymorphic: true
+    belongs_to :creditable, polymorphic: true, autosave: true
 
     validates :creditable, presence: true
 
