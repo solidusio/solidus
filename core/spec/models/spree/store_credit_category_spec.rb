@@ -5,7 +5,7 @@ describe Spree::StoreCreditCategory, type: :model do
     let(:store_credit_category) { build(:store_credit_category, name: category_name) }
 
     context "non-expiring type store credit" do
-      let(:category_name) { "Non-expiring" }
+      let(:category_name) { "Default" }
       it { expect(store_credit_category).to be_non_expiring }
     end
 

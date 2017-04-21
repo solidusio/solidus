@@ -20,27 +20,25 @@ describe Spree::StoreCredit do
     end
 
     context "category is a non-expiring type" do
-      let!(:secondary_credit_type) { create(:secondary_credit_type) }
-      let(:store_credit) { build(:store_credit, credit_type: nil) }
-
-      before do
-        allow(store_credit.category).to receive(:non_expiring?).and_return(true)
-      end
+      let(:store_credit_attrs) { { credit_type: nil } }
+      let!(:primary_credit_type) { create(:primary_credit_type) }
 
       it "sets the credit type to non-expiring" do
         subject
-        expect(store_credit.credit_type.name).to eq secondary_credit_type.name
+        expect(store_credit.credit_type.name).to eq primary_credit_type.name
       end
     end
 
     context "category is an expiring type" do
+      let(:store_credit_attrs) { { credit_type: nil } }
+      let!(:secondary_credit_type) { create(:secondary_credit_type) }
       before do
         allow(store_credit.category).to receive(:non_expiring?).and_return(false)
       end
 
       it "sets the credit type to expiring" do
         subject
-        expect(store_credit.credit_type.name).to eq "Expiring"
+        expect(store_credit.credit_type.name).to eq secondary_credit_type.name
       end
     end
 
@@ -112,12 +110,12 @@ describe Spree::StoreCredit do
       subject { build(:store_credit, amount: 100.0, expires_at: nil) }
 
       context "the credit has a non-expiring category" do
-        before { allow(subject.category).to receive(:non_expiring?) { true } }
-
         it { is_expected.to be_valid }
       end
 
       context "the credit has an expiring category" do
+        before { allow(subject.category).to receive(:non_expiring?) { false } }
+
         it { is_expected.to_not be_valid }
 
         it "sets a custom error message" do

@@ -44,7 +44,7 @@ describe "Store credits admin" do
     it "should create store credit and associate it with the user" do
       click_link "Add store credit"
       page.fill_in "store_credit_amount", with: "102.00"
-      select "Exchange", from: "store_credit_category_id"
+      select "Default", from: "store_credit_category_id"
       click_button "Create"
 
       expect(page.current_path).to eq spree.admin_user_store_credits_path(store_credit.user)

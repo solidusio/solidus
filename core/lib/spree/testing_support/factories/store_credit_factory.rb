@@ -9,7 +9,6 @@ FactoryGirl.define do
     association :category, factory: :store_credit_category
     amount 150.00
     currency "USD"
-    expires_at 1.day.from_now
     association :credit_type, factory: :primary_credit_type
   end
 end
