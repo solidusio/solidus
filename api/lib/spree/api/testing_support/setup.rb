@@ -4,7 +4,7 @@ module Spree
       module Setup
         def sign_in_as_admin!
           let!(:current_api_user) do
-            stub_model(Spree::LegacyUser, spree_roles: [Spree::Role.new(name: 'admin')])
+            stub_model(Spree::LegacyUser, spree_roles: [Spree::Role.find_or_initialize_by(name: 'admin')])
           end
         end
       end

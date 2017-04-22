@@ -6,6 +6,8 @@ module Spree
 
     after_create :auto_generate_spree_api_key
 
+    validates_uniqueness_of :role_id, scope: :user_id
+
     private
 
     def auto_generate_spree_api_key
