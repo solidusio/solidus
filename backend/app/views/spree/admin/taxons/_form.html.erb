@@ -8,10 +8,12 @@
 
     <%= f.field_container :permalink_part do %>
       <%= label_tag :permalink_part, Spree::Taxon.human_attribute_name(:permalink), class: 'required' %><br />
-      <%= text_field_tag :permalink_part, @permalink_part, class: 'fullwidth' %><br />
-      <span class="info" id="permalink_part_display">
-        <%= @taxon.permalink.split('/')[0...-1].join('/') + '/' %>
-      </span>
+      <div class="input-group">
+        <% if @taxon.parent %>
+          <span class="input-group-addon"><%= @taxon.permalink.split('/')[0...-1].join('/') + '/' %></span>
+        <% end %>
+        <%= text_field_tag :permalink_part, @permalink_part, class: 'fullwidth form-control' %><br />
+      </div>
     <% end %>
 
     <%= f.field_container :icon do %>
