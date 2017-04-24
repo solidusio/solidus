@@ -1,3 +1,4 @@
+//= require solidus_admin/turbolinks
 //= require solidus_admin/bind-polyfill
 //= require handlebars
 //= require jquery
