@@ -1,4 +1,4 @@
-$ ->
+Spree.ready ->
   ($ '#new_image_link').click (event) ->
     event.preventDefault()
 

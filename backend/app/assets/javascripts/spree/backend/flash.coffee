@@ -1,7 +1,7 @@
 showTime = 5000
 fadeOutTime = 500
 
-$ ->
+Spree.ready ->
   # Make flash messages dissapear
   # We only want to target the flash messages which are initially on the page.
   # Otherwise we risk hiding messages added by show_flash

@@ -45,6 +45,6 @@ $.fn.userAutocomplete = function () {
   });
 };
 
-$(document).ready(function () {
+Spree.ready(function () {
   $('.user_picker').userAutocomplete();
 });

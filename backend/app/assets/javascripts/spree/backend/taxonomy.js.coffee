@@ -100,7 +100,7 @@ TaxonTreeView = Backbone.View.extend
 
     @redraw_tree()
 
-$ ->
+Spree.ready ->
   if $('#taxonomy_tree').length
     model = new Spree.Models.Taxonomy({id: $('#taxonomy_tree').data("taxonomy-id")})
     new TaxonTreeView

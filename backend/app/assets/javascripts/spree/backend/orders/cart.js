@@ -48,7 +48,7 @@ Spree.Order.initCartPage = function(order_number) {
   })
 }
 
-$(function() {
+Spree.ready(function() {
   if ($(".js-order-cart-page").length) {
     Spree.Order.initCartPage($(".js-order-cart-page").data("order-number"));
   }

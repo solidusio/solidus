@@ -1,4 +1,4 @@
-$(document).ready(function() {
+Spree.ready(function() {
   function checkAddItemBox() {
     $(this).closest('tr').find('input.add-item').attr('checked', 'checked');
     updateSuggestedAmount();

@@ -1,4 +1,4 @@
-$ ->
+Spree.ready ->
   $(document).ajaxStart ->
     $("#progress").show()
 

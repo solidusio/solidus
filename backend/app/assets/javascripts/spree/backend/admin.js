@@ -67,7 +67,7 @@ var handle_date_picker_fields = function(){
   });
 }
 
-$(document).ready(function(){
+Spree.ready(function(){
   handle_date_picker_fields();
   $(".observe_field").on('change', function() {
     var target = $(this).data("update");

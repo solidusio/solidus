@@ -56,7 +56,7 @@ Spree.EditStockItemView = Backbone.View.extend
       error: errorHandler
     @model.save(force: true, options)
 
-$ ->
+Spree.ready ->
   $('.js-edit-stock-item').each ->
     $el = $(this)
     model = new Spree.StockItem($el.data('stock-item'))

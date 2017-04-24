@@ -1,4 +1,4 @@
-$(document).ready(function () {
+Spree.ready(function () {
   'use strict';
 
   function formatOptionType(option_type) {
