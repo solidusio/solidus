@@ -365,6 +365,17 @@ module Spree
       @tax_adjuster_class ||= Spree::Tax::OrderAdjuster
     end
 
+    # Allows providing your own class for calculating taxes on an order.
+    #
+    # @!attribute [rw] tax_calculator_class
+    # @return [Class] a class with the same public interfaces as
+    #   Spree::TaxCalculator::Default
+    # @api experimental
+    attr_writer :tax_calculator_class
+    def tax_calculator_class
+      @tax_calculator_class ||= Spree::TaxCalculator::Default
+    end
+
     def static_model_preferences
       @static_model_preferences ||= Spree::Preferences::StaticModelPreferences.new
     end
