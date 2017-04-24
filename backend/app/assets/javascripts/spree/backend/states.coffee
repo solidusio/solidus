@@ -1,4 +1,4 @@
-$ ->
+Spree.ready ->
   $new_state = $("#new_state")
   if $new_state.length
     $new_state_link = $("#new_state_link")

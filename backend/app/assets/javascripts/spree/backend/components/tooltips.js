@@ -1,4 +1,4 @@
-$(function(){
+Spree.ready(function(){
   $('body').popover({selector: '.hint-tooltip', html: true, trigger: 'hover', placement: 'top'});
 
   /* Animation has to be off to work around a bug in bootstrap 4.0.0.alpha6 */

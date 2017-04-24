@@ -1,4 +1,4 @@
-$(document).ready ->
+Spree.ready ->
   return unless $('#sc_memo_edit_form').length > 0
 
   $('.js-edit-memo').on('click', (ev) =>

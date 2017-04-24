@@ -29,7 +29,7 @@ var ShipmentAddVariantView = Backbone.View.extend({
   }
 });
 
-$(function(){
+Spree.ready(function(){
   $(".js-shipment-add-variant").each(function(){
     new ShipmentAddVariantView({el: this});
   });
@@ -292,7 +292,7 @@ var ShipmentEditView = Backbone.View.extend({
   }
 });
 
-$(function(){
+Spree.ready(function(){
   if($('.js-shipment-edit [data-order-number]').length) {
     $('.js-shipment-edit').hide();
     var orderNumber = $('.js-shipment-edit [data-order-number]').data('orderNumber');

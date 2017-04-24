@@ -17,7 +17,7 @@ Spree.PromotionActivationView = Backbone.View.extend({
   }
 });
 
-$(function(){
+Spree.ready(function(){
   if($("#js_promotion_activation").length) {
     new Spree.PromotionActivationView({
       el: $("#js_promotion_activation")

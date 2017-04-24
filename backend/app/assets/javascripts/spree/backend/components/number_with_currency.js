@@ -7,6 +7,6 @@ Spree.initNumberWithCurrency = function() {
   });
 }
 
-$(function() {
+Spree.ready(function() {
   Spree.initNumberWithCurrency()
 })

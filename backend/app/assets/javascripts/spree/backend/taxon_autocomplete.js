@@ -52,6 +52,6 @@ $.fn.taxonAutocomplete = function () {
     });
 };
 
-$(document).ready(function () {
+Spree.ready(function () {
   $('#product_taxon_ids, .taxon_picker').taxonAutocomplete();
 });

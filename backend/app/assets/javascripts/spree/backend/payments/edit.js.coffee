@@ -23,7 +23,7 @@ PaymentRowView = Backbone.View.extend
         show_flash 'error', response.responseJSON.error
     @model.save({ amount: amount }, options)
 
-$ ->
+Spree.ready ->
   order_id = $('#payments').data('order-id')
   Payment = Backbone.Model.extend
     urlRoot: Spree.routes.payments_api(order_id)

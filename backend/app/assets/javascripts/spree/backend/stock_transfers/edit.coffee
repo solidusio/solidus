@@ -1,4 +1,4 @@
-$(document).ready ->
+Spree.ready ->
   if $('#stock-transfer-transfer-items').length > 0
     Spree.StockTransfers.VariantForm.initializeForm(true)
     Spree.StockTransfers.VariantForm.beginListeningForAdd()
