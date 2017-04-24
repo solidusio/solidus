@@ -50,7 +50,6 @@
 //= require spree/backend/promotions/activation
 //= require spree/backend/returns/return_item_selection
 //= require spree/backend/routes
-//= require spree/backend/select_payments
 //= require spree/backend/shipments
 //= require spree/backend/spree-select2
 //= require spree/backend/states

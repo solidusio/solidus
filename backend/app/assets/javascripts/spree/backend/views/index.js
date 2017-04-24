@@ -12,3 +12,5 @@
 //= require 'spree/backend/views/state_select'
 //= require 'spree/backend/views/zones/form'
 //= require 'spree/backend/views/number_with_currency'
+//= require 'spree/backend/views/payment/new'
+//= require 'spree/backend/views/payment/edit_credit_card'

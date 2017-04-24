@@ -24,7 +24,7 @@
       <div class="payment-method-settings">
         <% @payment_methods.each do |method| %>
 
-          <div class="payment-methods" id="payment_method_<%= method.id %>">
+          <div class="payment-methods" id="payment_method_<%= method.id %>" data-payment-method-id="<%= method.id %>">
             <% if method.source_required? %>
               <br />
               <%= render partial: "spree/admin/payments/source_forms/#{method.method_type}",
