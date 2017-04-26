@@ -112,7 +112,7 @@ module Spree
       line_item.quantity -= quantity
       line_item.target_shipment = options[:shipment]
 
-      if line_item.quantity == 0
+      if line_item.quantity <= 0
         order.line_items.destroy(line_item)
       else
         line_item.save!

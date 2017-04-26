@@ -203,6 +203,13 @@ describe Spree::OrderContents, type: :model do
       expect(order.reload.find_line_item_by_variant(variant)).to be_nil
     end
 
+    it 'should remove line_item if quantity is greater than line_item quantity' do
+      subject.add(variant, 1)
+      subject.remove(variant, 2)
+
+      expect(order.reload.find_line_item_by_variant(variant)).to be_nil
+    end
+
     it "should update order totals" do
       expect(order.item_total.to_f).to eq(0.00)
       expect(order.total.to_f).to eq(0.00)
