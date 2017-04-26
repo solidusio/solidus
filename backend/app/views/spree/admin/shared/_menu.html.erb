@@ -1,5 +1,22 @@
 <nav class="admin-nav-menu">
   <ul data-hook="admin_tabs">
-    <%= render partial: 'spree/admin/shared/tabs' %>
+    <% menu = Spree::Backend::Config.menu %>
+    <% menu.sections.each do |section| %>
+      <li <% if section.name == @admin_menu_section %>class="selected"<% end %>>
+        <% label = Spree.t(section.label, scope: [:admin, :tab]) %>
+        <%= link_to_with_icon section.icon, label, '#', class: 'tab-with-icon' %>
+        <% if section.items.size > 1 %>
+          <ul class="admin-subnav">
+            <% section.items.each do |item| %>
+              <li <% if item.handle == @admin_menu_handle %>class="selected"<% end %>>
+                <% item_label = Spree.t(item.label, scope: [:admin, :tab]) %>
+                <%= link_to item_label, spree.public_send(item.url) if item.url %>
+              </li>
+            <% end %>
+          </ul>
+        <% end %>
+      </li>
+    <% end %>
+    <%#= render partial: 'spree/admin/shared/tabs' %>
   </ul>
 </nav>
