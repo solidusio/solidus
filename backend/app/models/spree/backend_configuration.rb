@@ -51,6 +51,10 @@ module Spree
       end
     end
 
+    def menu
+      @menu ||= Spree::Admin::Menu.new
+    end
+
     # Items can be added to the menu by using code like the following:
     #
     # Spree::Backend::Config.configure do |config|
