@@ -1,5 +1,5 @@
-<td>{{stockLocationName}}</td>
-<td>
+<td class="stock-location-name">{{stockLocationName}}</td>
+<td class="align-center">
   <input id="backorderable-{{id}}"
          name="backorderable"
          type="checkbox"
@@ -8,7 +8,7 @@
          {{#if backorderable}} checked="checked" {{/if}}
    >
 </td>
-<td>
+<td class="align-center">
   {{#if editing}}
     <form>
       <input

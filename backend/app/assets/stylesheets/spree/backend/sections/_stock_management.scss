@@ -4,6 +4,10 @@
     border-top-width: 1px;
   }
 
+  .stock-item-edit-row td {
+    height: 50px; // height of input field in edit mode
+  }
+
   td {
     input.error {
       border-color: theme-color("danger");
@@ -15,16 +19,30 @@
     }
   }
 
-  .stock-variant-field-table {
-    tr td {
-      padding: 2px;
+  .variant-stock-items {
+    border: 0 none;
+  }
+
+  table {
+    td {
+      padding: 4px 0;
       border: none;
-      text-align: left;
     }
-    tr td:first-child {
-      font-weight: bold;
+
+    &.stock-variant-field-table {
+      margin-bottom: 0;
+
+      td {
+        text-align: left;
+
+        &:first-child {
+          font-weight: bold;
+          text-align: left;
+          padding-right: 0.5rem;
+          width: 15%;
+        }
+      }
     }
-    margin-bottom: 0px;
   }
 
   > tbody {
@@ -41,5 +59,16 @@
     .variant-details {
       float: left;
     }
+    .variant-container {
+      overflow: hidden;
+    }
   }
+}
+
+.stock-location-items-cell {
+  padding: 0;
+}
+
+.stock-location-items-table {
+  margin-bottom: 0;
 }
