@@ -1,4 +1,4 @@
-#listing_product_stock {
+.stock-table {
 
   tbody + tbody {
     border-top-width: 1px;
@@ -12,6 +12,34 @@
     .select2-container.error {
       border-radius: 4px;
       border: 1px solid theme-color("danger");
+    }
+  }
+
+  .stock-variant-field-table {
+    tr td {
+      padding: 2px;
+      border: none;
+      text-align: left;
+    }
+    tr td:first-child {
+      font-weight: bold;
+    }
+    margin-bottom: 0px;
+  }
+
+  > tbody {
+    .variant-image {
+      width: 31%;
+      padding: 0 2%;
+      img { width: 100%; }
+    }
+    .variant-details {
+      width: 65%;
+      padding: 0px 5px;
+    }
+    .variant-image,
+    .variant-details {
+      float: left;
     }
   }
 }
