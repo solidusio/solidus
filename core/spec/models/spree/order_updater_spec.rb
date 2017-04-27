@@ -452,20 +452,6 @@ module Spree
       end
     end
 
-    it "state change" do
-      order.shipment_state = 'shipped'
-      state_changes = double
-      allow(order).to receive_messages state_changes: state_changes
-      expect(state_changes).to receive(:create).with(
-        previous_state: nil,
-        next_state: 'shipped',
-        name: 'shipment',
-        user_id: nil
-      )
-
-      order.state_changed('shipment')
-    end
-
     context "completed order" do
       before { allow(order).to receive_messages completed?: true }
 

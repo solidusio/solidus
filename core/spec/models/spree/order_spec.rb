@@ -491,7 +491,9 @@ describe Spree::Order, type: :model do
       order.update_column(:payment_state, 'balance_due')
       order.payment_state = 'paid'
       expect(order.state_changes).to be_empty
-      order.state_changed('payment')
+      Spree::Deprecation.silence do
+        order.state_changed('payment')
+      end
       state_change = order.state_changes.find_by(name: 'payment')
       expect(state_change.previous_state).to eq('balance_due')
       expect(state_change.next_state).to eq('paid')
@@ -500,7 +502,9 @@ describe Spree::Order, type: :model do
     it "does not do anything if state does not change" do
       order.update_column(:payment_state, 'balance_due')
       expect(order.state_changes).to be_empty
-      order.state_changed('payment')
+      Spree::Deprecation.silence do
+        order.state_changed('payment')
+      end
       expect(order.state_changes).to be_empty
     end
   end

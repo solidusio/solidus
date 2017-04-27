@@ -497,6 +497,7 @@ module Spree
         end
       end
     end
+    deprecate :state_changed, deprecator: Spree::Deprecation
 
     def coupon_code=(code)
       @coupon_code = begin
