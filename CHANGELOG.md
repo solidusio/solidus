@@ -1,7 +1,4 @@
-## Solidus 2.3.0 (master, unreleased)
-
-
-## Solidus 2.2.0 (unreleased)
+## Solidus 2.2.0 (2017-05-01)
 
 ### Major Changes
 
