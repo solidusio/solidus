@@ -1932,6 +1932,7 @@ en:
       user_has_no_store_credits: "User does not have any available store credit"
     store_credit_category:
       default: Default
+    store_credits_expired_error: "Your store credit expired and has been removed. Please check the new order amounts and try again."
     street_address: Street Address
     street_address_2: Street Address (cont'd)
     subtotal: Subtotal

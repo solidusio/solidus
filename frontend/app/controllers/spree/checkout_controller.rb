@@ -12,6 +12,7 @@ module Spree
     before_action :ensure_checkout_allowed
     before_action :ensure_sufficient_stock_lines
     before_action :ensure_valid_state
+    before_action :ensure_store_credits_eligible
 
     before_action :associate_user
     before_action :check_authorization
@@ -121,6 +122,18 @@ module Spree
       if params[:state] == "confirm" && @order.payment_required? && @order.payments.valid.empty?
         flash.keep
         redirect_to checkout_state_path("payment")
+      end
+    end
+
+    def ensure_store_credits_eligible
+      expired_payments = @order.payments.valid.store_credits.select { |p| p.source.expired? }
+
+      if expired_payments.any?
+        @order.payments.delete(*expired_payments)
+        @order.restart_checkout_flow
+        @order.update!
+        flash[:error] = Spree.t(:store_credits_expired_error)
+        redirect_to checkout_state_path(@order.state)
       end
     end
 

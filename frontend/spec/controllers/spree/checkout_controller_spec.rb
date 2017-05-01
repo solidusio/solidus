@@ -61,6 +61,30 @@ describe Spree::CheckoutController, type: :controller do
         get :edit
       end
     end
+
+    context "applied store credit has expired" do
+      let(:store_credit) { create(:store_credit, expires_at: 2.minutes.ago) }
+
+      before do
+        order.update_column(:state, "confirm")
+        order.payments << create(:store_credit_payment, source: store_credit)
+        order.update!
+      end
+
+      it "removes the store credit payments" do
+        expect { get :edit }.to change { order.payments.count }.from(1).to(0)
+      end
+
+      it "restarts checkout" do
+        get :edit
+        expect(response).to redirect_to spree.checkout_state_path('address')
+      end
+
+      it "sets an error message" do
+        get :edit
+        expect(flash[:error]).to eq(Spree.t('store_credits_expired_error'))
+      end
+    end
   end
 
   context "#update" do
