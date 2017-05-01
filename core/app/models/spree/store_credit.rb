@@ -171,6 +171,10 @@ class Spree::StoreCredit < Spree::PaymentSource
     !amount_remaining.zero?
   end
 
+  def expired?
+    expires_at.present? && expires_at < Time.current
+  end
+
   def invalidateable?
     !invalidated? && amount_authorized.zero?
   end

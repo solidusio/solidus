@@ -802,6 +802,24 @@ describe Spree::StoreCredit do
     end
   end
 
+  describe "#expired?" do
+    subject { store_credit.expired? }
+
+    context "expires_at is nil" do
+      it { is_expected.to be false }
+    end
+
+    context "expires_at is in the future" do
+      let(:store_credit_attrs) { { expires_at: 2.minutes.from_now } }
+      it { is_expected.to be false }
+    end
+
+    context "expires_at is in the past" do
+      let(:store_credit_attrs) { { expires_at: 2.minutes.ago } }
+      it { is_expected.to be true }
+    end
+  end
+
   describe "#update_amount" do
     let(:invalidation_user) { create(:user) }
     let(:invalidation_reason) { create(:store_credit_update_reason) }
