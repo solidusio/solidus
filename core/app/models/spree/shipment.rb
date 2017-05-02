@@ -11,6 +11,7 @@ module Spree
     has_many :shipping_methods, through: :shipping_rates
     has_many :state_changes, as: :stateful
     has_many :cartons, -> { uniq }, through: :inventory_units
+    has_one :selected_shipping_rate, -> { where(selected: true).order(:cost) }, class_name: "Spree::ShippingRate"
 
     before_validation :set_cost_zero_when_nil
 
@@ -193,10 +194,6 @@ module Spree
       save!
 
       shipping_rates
-    end
-
-    def selected_shipping_rate
-      shipping_rates.detect(&:selected?)
     end
 
     def manifest
