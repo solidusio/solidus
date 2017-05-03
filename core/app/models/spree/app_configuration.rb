@@ -230,8 +230,10 @@ module Spree
     # Default mail headers settings
 
     # @!attribute [rw] send_core_emails
-    #   @return [Boolean] Whether to send transactional emails (default: true)
-    preference :send_core_emails, :boolean, default: true
+    #   Whether to send transactional emails. Can be true or false,
+    #   or a hash with :only or :except.
+    #   @return Boolean or hash config on whether to send transactional emails (default: true)
+    preference :send_core_emails, :object, default: true
 
     # @!attribute [rw] mails_from
     #   @return [String] Email address used as +From:+ field in transactional emails.

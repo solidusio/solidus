@@ -10,7 +10,30 @@ module Spree
     helper_method :money
 
     def mail(headers = {}, &block)
-      super if Spree::Config[:send_core_emails]
+      super if should_send_mail?
+    end
+
+    private
+
+    def should_send_mail?
+      pref = Spree::Config[:send_core_emails]
+
+      if pref == true || pref == false
+        return pref
+      end
+
+      # let preference be expressed without the Spree:: prefix for convenience
+      class_names = [self.class.name.sub(/\ASpree::/, ''), self.class.name]
+
+      if pref[:only].present? && (pref[:only] & class_names).empty?
+        return false
+      end
+
+      if pref[:except].present? && (pref[:except] & class_names).present?
+        return false
+      end
+
+      !!pref
     end
   end
 end
