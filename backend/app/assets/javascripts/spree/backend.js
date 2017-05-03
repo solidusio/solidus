@@ -18,6 +18,7 @@
 //= require spree/backend/namespaces
 //= require spree/backend/translation
 //= require spree/backend/backbone-overrides
+//= require spree/backend/turbolinks-configuration
 //= require spree/backend/format_money
 //
 //= require spree/backend/templates

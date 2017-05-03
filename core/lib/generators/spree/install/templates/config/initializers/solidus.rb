@@ -65,6 +65,7 @@ Spree::Backend::Config.configure do |config|
   config.use_static_preferences!
 
   config.locale = 'en'
+  config.use_turbolinks = true
 end
 <% end -%>
 
