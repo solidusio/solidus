@@ -104,7 +104,11 @@ module Spree::Preferences::Preferable
     when :password
       value.to_s
     when :decimal
-      BigDecimal.new(value.to_s)
+      begin
+        value.to_s.to_d
+      rescue ArgumentError
+        BigDecimal.new(0)
+      end
     when :integer
       value.to_i
     when :boolean
