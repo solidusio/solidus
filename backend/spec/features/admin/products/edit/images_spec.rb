@@ -64,6 +64,8 @@ describe "Product Images", type: :feature do
           expect(page).to have_xpath("//img[contains(@src,'ror_ringer')]")
         end
       end
+
+      expect(Spree::Image.last.viewable).to eq(product.master)
     end
   end
 
