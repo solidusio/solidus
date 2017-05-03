@@ -139,6 +139,20 @@ include. This can be disabled by adding the following to
 config.assets.debug = false
 ```
 
+### Turbolinks
+
+To gain some extra speed you may enable Turbolinks inside of Solidus admin.
+
+Add `gem 'turbolinks', '~> 5.0.0'` into your `Gemfile` (if not already present) and append these lines to `vendor/assets/spree/backend/all.js`:
+
+```js
+//= require turbolinks
+//= require backend/app/assets/javascripts/spree/backend/turbolinks-integration.js
+```
+
+**CAUTION** Please be aware that Turbolinks can break extensions and/or customizations to the Solidus admin.
+Use at own risk.
+
 Developing Solidus
 ------------------
 
