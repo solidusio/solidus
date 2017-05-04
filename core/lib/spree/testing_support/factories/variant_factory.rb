@@ -26,6 +26,8 @@ FactoryGirl.define do
 
     factory :master_variant do
       is_master 1
+      before(:create){ |variant| variant.product.master = variant }
+      product { build(:base_product) }
     end
 
     factory :on_demand_variant do
