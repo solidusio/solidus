@@ -24,7 +24,6 @@ describe "Customer Details", type: :feature, js: true do
       visit spree.admin_path
       click_link "Orders"
       click_link "New Order"
-      click_on 'Cart'
 
       add_line_item product.name, quantity: quantity
 
@@ -136,6 +135,7 @@ describe "Customer Details", type: :feature, js: true do
       end
 
       it "sets default country when displaying form" do
+        click_link "Cart"
         click_link "Customer"
         expect(page).to have_field("order_bill_address_attributes_country_id", with: brazil.id, visible: false)
       end

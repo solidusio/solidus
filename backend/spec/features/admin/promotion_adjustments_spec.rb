@@ -8,6 +8,7 @@ describe "Promotion Adjustments", type: :feature, js: true do
       visit spree.admin_path
       click_link "Promotions"
       click_link "New Promotion"
+      expect(page).to have_title("New Promotion - Promotions")
     end
 
     it "should allow an admin to create a flat rate discount coupon promo" do
@@ -15,7 +16,7 @@ describe "Promotion Adjustments", type: :feature, js: true do
       fill_in "Promotion Code", with: "order"
 
       click_button "Create"
-      expect(page).to have_content("PromotionsPromotion")
+      expect(page).to have_title("Promotion - Promotions")
 
       select2 "Item total", from: "Add rule of type"
       within('#rule_fields') { click_button "Add" }
@@ -51,7 +52,7 @@ describe "Promotion Adjustments", type: :feature, js: true do
       fill_in "Promotion Code", with: "single_use"
 
       click_button "Create"
-      expect(page).to have_content("PromotionsPromotion")
+      expect(page).to have_title("Promotion - Promotions")
 
       select2 "Create whole-order adjustment", from: "Add action of type"
       within('#action_fields') { click_button "Add" }
@@ -75,7 +76,7 @@ describe "Promotion Adjustments", type: :feature, js: true do
       fill_in "Name", with: "Promotion"
       choose "Apply to all orders"
       click_button "Create"
-      expect(page).to have_content("PromotionsPromotion")
+      expect(page).to have_title("Promotion - Promotions")
 
       select2 "Item total", from: "Add rule of type"
       within('#rule_fields') { click_button "Add" }
@@ -110,7 +111,7 @@ describe "Promotion Adjustments", type: :feature, js: true do
       fill_in "Name", with: "Promotion"
       choose "Apply to all orders"
       click_button "Create"
-      expect(page).to have_content("PromotionsPromotion")
+      expect(page).to have_title("Promotion - Promotions")
 
       select2 "Product(s)", from: "Add rule of type"
       within("#rule_fields") { click_button "Add" }
@@ -142,7 +143,7 @@ describe "Promotion Adjustments", type: :feature, js: true do
       fill_in "Name", with: "Promotion"
       choose "Apply to all orders"
       click_button "Create"
-      expect(page).to have_content("PromotionsPromotion")
+      expect(page).to have_title("Promotion - Promotions")
 
       select2 "Item total", from: "Add rule of type"
       within('#rule_fields') { click_button "Add" }
@@ -163,7 +164,7 @@ describe "Promotion Adjustments", type: :feature, js: true do
       fill_in "Name", with: "Promotion"
       choose "Apply to all orders"
       click_button "Create"
-      expect(page).to have_content("PromotionsPromotion")
+      expect(page).to have_title("Promotion - Promotions")
 
       promotion = Spree::Promotion.find_by_name("Promotion")
       expect(promotion).to be_apply_automatically
@@ -177,7 +178,7 @@ describe "Promotion Adjustments", type: :feature, js: true do
       choose "URL Path"
       fill_in "Path", with: "content/cvv"
       click_button "Create"
-      expect(page).to have_content("PromotionsPromotion")
+      expect(page).to have_title("Promotion - Promotions")
 
       promotion = Spree::Promotion.find_by_name("Promotion")
       expect(promotion.path).to eq("content/cvv")
@@ -192,7 +193,7 @@ describe "Promotion Adjustments", type: :feature, js: true do
       fill_in "Base code", with: "testing"
       fill_in "Number of codes", with: "10"
       click_button "Create"
-      expect(page).to have_content("PromotionsPromotion")
+      expect(page).to have_title("Promotion - Promotions")
 
       promotion = Spree::Promotion.find_by_name("Promotion")
       expect(promotion.path).to be_nil
@@ -206,7 +207,7 @@ describe "Promotion Adjustments", type: :feature, js: true do
       fill_in "Name", with: "Promotion"
       choose "Apply to all orders"
       click_button "Create"
-      expect(page).to have_content("PromotionsPromotion")
+      expect(page).to have_title("Promotion - Promotions")
 
       select2 "Item total", from: "Add rule of type"
       within('#rule_fields') { click_button "Add" }
