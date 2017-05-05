@@ -61,6 +61,11 @@ class Spree::Wallet
       raise Unauthorized, "wallet_payment_source #{wallet_payment_source.id} does not belong to wallet of user #{user.id}"
     end
 
+    # Do not update the payment source if the passed source is already default
+    if default_wallet_payment_source.try(:id) == wallet_payment_source.id
+      return
+    end
+
     wallet_payment_source.transaction do
       # Unset old default
       default_wallet_payment_source.try!(:update!, default: false)
