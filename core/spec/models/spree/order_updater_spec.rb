@@ -301,18 +301,20 @@ module Spree
           end
         end
 
-        context 'with a custom tax_adjuster_class' do
-          let(:custom_adjuster_class) { double }
-          let(:custom_adjuster_instance) { double }
+        context 'with a custom tax_calculator_class' do
+          let(:custom_calculator_class) { double }
+          let(:custom_calculator_instance) { double }
 
           before do
             order # generate this first so we can expect it
-            Spree::Config.tax_adjuster_class = custom_adjuster_class
+            Spree::Config.tax_calculator_class = custom_calculator_class
           end
 
           it 'uses the configured class' do
-            expect(custom_adjuster_class).to receive(:new).with(order).at_least(:once).and_return(custom_adjuster_instance)
-            expect(custom_adjuster_instance).to receive(:adjust!).at_least(:once)
+            expect(custom_calculator_class).to receive(:new).with(order).at_least(:once).and_return(custom_calculator_instance)
+            expect(custom_calculator_instance).to receive(:calculate).at_least(:once).and_return(
+              Spree::Tax::TaxedOrder.new(id: order.id, line_item_taxes: [], shipment_taxes: [])
+            )
 
             order.update!
           end
