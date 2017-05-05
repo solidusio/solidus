@@ -1266,6 +1266,8 @@ en:
       available_locales: Available Locales
       fields: Fields
       language: Language
+      locales: Locales
+      locales_displayed_on_frontend_select_box: Locales displayed on frontend select box
       localization_settings: Localization Settings
       only_incomplete: Only incomplete
       only_complete: Only complete
