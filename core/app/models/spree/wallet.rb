@@ -62,7 +62,7 @@ class Spree::Wallet
     end
 
     # Do not update the payment source if the passed source is already default
-    if default_wallet_payment_source.try(:id) == wallet_payment_source.id
+    if default_wallet_payment_source.try(:id) == wallet_payment_source.try(:id)
       return
     end
 
