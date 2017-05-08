@@ -78,32 +78,45 @@ describe Spree::Wallet, type: :model do
             to(wallet_credit_card)
         )
       end
-    end
 
-    context "with other payment source already default" do
-      let!(:wallet_credit_card) { subject.add(credit_card) }
-      let!(:wallet_store_credit) { subject.add(store_credit) }
-
-      before { subject.default_wallet_payment_source = wallet_credit_card }
-
-      it "sets the new payment source as the default" do
-        expect { subject.default_wallet_payment_source = wallet_store_credit }.to(
-          change(subject, :default_wallet_payment_source).
-            from(wallet_credit_card).
-            to(wallet_store_credit)
-        )
+      context "assigning nil" do
+        it "remains unset" do
+          expect(subject.default_wallet_payment_source).to be_nil
+          subject.default_wallet_payment_source = nil
+          expect(subject.default_wallet_payment_source).to be_nil
+        end
       end
     end
 
-    context "with the same payment source already set to default" do
+    context "with a default" do
       let!(:wallet_credit_card) { subject.add(credit_card) }
 
       before { subject.default_wallet_payment_source = wallet_credit_card }
 
-      it "does not change the default payment source" do
-        expect { subject.default_wallet_payment_source = wallet_credit_card }.not_to(
-          change(subject, :default_wallet_payment_source)
-        )
+      context "assigning a new default" do
+        let!(:wallet_store_credit) { subject.add(store_credit) }
+
+        it "sets the new payment source as the default" do
+          expect {
+            subject.default_wallet_payment_source = wallet_store_credit
+          }.to change{ subject.default_wallet_payment_source }.from(wallet_credit_card).to(wallet_store_credit)
+        end
+      end
+
+      context "assigning same default" do
+        it "does not change the default payment source" do
+          expect {
+            subject.default_wallet_payment_source = wallet_credit_card
+          }.not_to change{ subject.default_wallet_payment_source }
+        end
+      end
+
+      context "assigning nil" do
+        it "clears the default payment source" do
+          expect {
+            subject.default_wallet_payment_source = nil
+          }.to change{ subject.default_wallet_payment_source }.to nil
+        end
       end
     end
 
