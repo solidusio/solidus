@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 describe Spree::Order, type: :model do
-  let(:store) { build_stubbed(:store) }
-  let(:user) { stub_model(Spree::LegacyUser, email: "spree@example.com") }
-  let(:order) { stub_model(Spree::Order, user: user, store: store) }
+  let(:store) { create(:store) }
+  let(:user) { create(:user, email: "spree@example.com") }
+  let(:order) { create(:order, user: user, store: store) }
 
   before do
     allow(Spree::LegacyUser).to receive_messages(current: mock_model(Spree::LegacyUser, id: 123))
@@ -665,6 +665,8 @@ describe Spree::Order, type: :model do
   end
 
   context "#generate_order_number" do
+    let(:order) { build(:order) }
+
     context "when no configure" do
       let(:default_length) { Spree::Order::ORDER_NUMBER_LENGTH + Spree::Order::ORDER_NUMBER_PREFIX.length }
       subject(:order_number) { order.generate_order_number }

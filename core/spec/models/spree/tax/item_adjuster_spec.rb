@@ -50,7 +50,7 @@ RSpec.describe Spree::Tax::ItemAdjuster do
     end
 
     context 'when the order has a taxable address' do
-      let(:item) { build_stubbed :line_item, order: order }
+      let(:item) { create :line_item, order: order }
       let(:address) { order.tax_address }
 
       before do
@@ -65,7 +65,8 @@ RSpec.describe Spree::Tax::ItemAdjuster do
 
       context 'when there are matching rates for the zone' do
         context 'and all rates have the same tax category as the item' do
-          let(:item_tax_category) { build_stubbed(:tax_category) }
+          let(:item) { create :line_item, order: order, tax_category: item_tax_category }
+          let(:item_tax_category) { create(:tax_category) }
           let(:rate_1) { create :tax_rate, tax_category: item_tax_category }
           let(:rate_2) { create :tax_rate }
           let(:rates_for_order_zone) { [rate_1, rate_2] }
