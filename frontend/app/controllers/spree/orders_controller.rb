@@ -13,7 +13,7 @@ module Spree
     skip_before_action :verify_authenticity_token, only: [:populate]
 
     def show
-      @order = Spree::Order.find_by_number!(params[:id])
+      @order = Spree::Order.find_by!(number: params[:id])
     end
 
     def update
@@ -93,7 +93,7 @@ module Spree
 
     def check_authorization
       cookies.permanent.signed[:guest_token] = params[:token] if params[:token]
-      order = Spree::Order.find_by_number(params[:id]) || current_order
+      order = Spree::Order.find_by(number: params[:id]) || current_order
 
       if order
         authorize! :edit, order, cookies.signed[:guest_token]

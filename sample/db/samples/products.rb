@@ -1,8 +1,8 @@
 Spree::Sample.load_sample("tax_categories")
 Spree::Sample.load_sample("shipping_categories")
 
-tax_category = Spree::TaxCategory.find_by_name!("Default")
-shipping_category = Spree::ShippingCategory.find_by_name!("Default")
+tax_category = Spree::TaxCategory.find_by!(name: "Default")
+shipping_category = Spree::ShippingCategory.find_by!(name: "Default")
 
 default_attrs = {
   description: FFaker::Lorem.paragraph,

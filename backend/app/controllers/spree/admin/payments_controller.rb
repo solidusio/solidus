@@ -24,7 +24,7 @@ module Spree
       def create
         @payment = PaymentCreate.new(@order, object_params).build
         if @payment.payment_method.source_required? && params[:card].present? && params[:card] != 'new'
-          @payment.source = @payment.payment_method.payment_source_class.find_by_id(params[:card])
+          @payment.source = @payment.payment_method.payment_source_class.find_by(id: params[:card])
         end
 
         begin
@@ -87,7 +87,7 @@ module Spree
       end
 
       def load_order
-        @order = Spree::Order.find_by_number!(params[:order_id])
+        @order = Spree::Order.find_by!(number: params[:order_id])
         authorize! action, @order
         @order
       end
