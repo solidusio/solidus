@@ -95,6 +95,18 @@ describe Spree::Wallet, type: :model do
       end
     end
 
+    context "with the same payment source already set to default" do
+      let!(:wallet_credit_card) { subject.add(credit_card) }
+
+      before { subject.default_wallet_payment_source = wallet_credit_card }
+
+      it "does not change the default payment source" do
+        expect { subject.default_wallet_payment_source = wallet_credit_card }.not_to(
+          change(subject, :default_wallet_payment_source)
+        )
+      end
+    end
+
     context 'with a wallet payment source that does not belong to the wallet' do
       let(:other_wallet_credit_card) { other_wallet.add(credit_card) }
       let(:other_wallet) { Spree::Wallet.new(other_user) }
