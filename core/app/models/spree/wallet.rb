@@ -66,7 +66,7 @@ class Spree::Wallet
       return
     end
 
-    wallet_payment_source.transaction do
+    Spree::WalletPaymentSource.transaction do
       # Unset old default
       default_wallet_payment_source.try!(:update!, default: false)
       # Set new default
