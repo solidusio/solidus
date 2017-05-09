@@ -1,3 +1,10 @@
+## Solidus 2.2.1 (2017-05-09)
+
+- Fix migrating CreditCards to WalletPaymentSource [\#1898](https://github.com/solidusio/solidus/pull/1898) ([jhawthorn](https://github.com/jhawthorn))
+- Fix setting the wallet's default payment source to the same value [\#1888](https://github.com/solidusio/solidus/pull/1888) ([ahoernecke](https://github.com/ahoernecke))
+- Fix assigning nil to `default_wallet_payment_source=` [\#1896](https://github.com/solidusio/solidus/pull/1896) ([jhawthorn](https://github.com/jhawthorn))
+
+
 ## Solidus 2.2.0 (2017-05-01)
 
 ### Major Changes
