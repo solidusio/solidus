@@ -8,10 +8,11 @@ Spree.Views.Images.UploadZone = Backbone.View.extend({
 
   upload: function(file) {
     var progressModel = new Spree.Models.ImageUpload({file: file});
-    progressModel.previewFile();
-    progressModel.uploadFile();
 
     this.collection.add(progressModel);
+
+    progressModel.previewFile();
+    progressModel.uploadFile();
   },
 
   dragClass: 'with-images',
