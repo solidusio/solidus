@@ -14,7 +14,7 @@ under the spree namespace that do stuff we find helpful.
 Hopefully, this will evolve into a propper class.
 **/
 
-jQuery(function($) {
+Spree.ready(function() {
   // Highlight hovered table column
   $('table').on("mouseenter", 'td.actions a, td.actions button', function(){
     var tr = $(this).closest('tr');

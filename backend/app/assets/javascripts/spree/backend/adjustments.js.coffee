@@ -1,4 +1,4 @@
-$(@).ready( ->
+Spree.ready( ->
   $('[data-hook=adjustments_new_coupon_code] #add_coupon_code').click ->
     return if $("#coupon_code").val().length == 0
     Spree.ajax

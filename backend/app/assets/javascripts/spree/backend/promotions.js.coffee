@@ -96,4 +96,4 @@ window.initPromotionActions = ->
 
   initTieredCalculators()
 
-$ initPromotionActions
+Spree.ready(initPromotionActions)

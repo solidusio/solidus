@@ -1,5 +1,5 @@
 //= require solidus_admin/select2
-jQuery(function($) {
+Spree.ready(function() {
   // Make select beautiful
   $('select.select2').select2({
     allowClear: true,
