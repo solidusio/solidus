@@ -25,7 +25,6 @@ describe "New Order", type: :feature do
   end
 
   it "completes new order succesfully without using the cart", js: true do
-    click_on 'Cart'
     add_line_item product.name
 
     click_on "Customer"
@@ -60,7 +59,6 @@ describe "New Order", type: :feature do
   end
 
   it 'can create split payments', js: true do
-    click_on 'Cart'
     add_line_item product.name
 
     click_on "Customer"
@@ -87,7 +85,6 @@ describe "New Order", type: :feature do
 
   context "adding new item to the order", js: true do
     it "inventory items show up just fine and are also registered as shipments" do
-      click_on 'Cart'
       add_line_item product.name
 
       within(".line-items") do
@@ -119,7 +116,6 @@ describe "New Order", type: :feature do
     end
 
     it "can still see line items" do
-      click_on 'Cart'
       add_line_item product.name
 
       within(".line-items") do
@@ -149,8 +145,7 @@ describe "New Order", type: :feature do
       fill_in_address
       click_on "Update"
 
-      click_on "Shipments"
-
+      # Automatically redirected to Shipments page
       select2_search product.name, from: Spree.t(:name_or_sku)
 
       click_icon :plus
@@ -175,8 +170,6 @@ describe "New Order", type: :feature do
     end
 
     it "transitions to delivery not to complete" do
-      click_on 'Cart'
-
       add_line_item product.name
 
       expect(page).to have_css('.line-item')
