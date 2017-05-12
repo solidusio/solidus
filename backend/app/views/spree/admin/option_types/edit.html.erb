@@ -15,12 +15,12 @@
 
 <%= form_for [:admin, @option_type] do |f| %>
 
-  <fieldset class="no-border-bottom">
+  <fieldset data-hook="option-type-edit-form" class="no-border-bottom">
     <legend><%= Spree::OptionType.model_name.human %></legend>
     <%= render partial: 'form', locals: { f: f } %>
   </fieldset>
 
-  <fieldset>
+  <fieldset data-hook="option-value-edit-form">
     <legend><%= plural_resource_name(Spree::OptionValue) %></legend>
     <table class="index sortable" data-hook data-sortable-link="<%= update_values_positions_admin_option_types_url %>">
       <thead data-hook="option_header">
