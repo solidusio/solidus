@@ -323,39 +323,18 @@ describe Spree::CheckoutController, type: :controller do
           expect(response).to redirect_to(spree.checkout_state_path('address'))
         end
       end
-    end
-
-    context "fails to transition to complete from confirm" do
-      let(:order) do
-        FactoryGirl.create(:order_with_line_items).tap(&:next!)
-      end
-
-      before do
-        allow(controller).to receive_messages current_order: order
-        allow(controller).to receive_messages check_authorization: true
-      end
 
       context "when the country is not a shippable country" do
-        before do
-          order.ship_address.tap do |address|
-            # A different country which is not included in the list of shippable countries
-            australia = create(:country, name: "Australia")
-            # update_columns to get around readonly restriction when testing
-            address.update_columns(country_id: australia.id, state_name: 'Victoria')
-          end
+        let(:foreign_address) { create(:address, country_iso_code: "CA") }
 
-          payment_method = FactoryGirl.create(:simple_credit_card_payment_method)
-          payment = FactoryGirl.create(:payment, payment_method: payment_method)
-          order.payments << payment
+        before do
+          order.update(shipping_address: foreign_address)
         end
 
         it "due to no available shipping rates for any of the shipments" do
-          expect(order.shipments.count).to eq(1)
-          order.shipments.first.shipping_rates.delete_all
-          order.update_attributes(state: 'confirm')
-          put :update, params: { state: order.state, order: {} }
+          put :update, params: { state: "address", order: {} }
           expect(flash[:error]).to eq(Spree.t(:items_cannot_be_shipped))
-          expect(response).to redirect_to(spree.checkout_state_path('confirm'))
+          expect(response).to redirect_to(spree.checkout_state_path('address'))
         end
       end
     end

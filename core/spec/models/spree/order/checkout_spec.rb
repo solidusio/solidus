@@ -589,22 +589,6 @@ describe Spree::Order, type: :model do
       end
     end
 
-    context 'a shipment has no shipping rates' do
-      let(:order) { create(:order_with_line_items, state: 'confirm') }
-      let(:shipment) { order.shipments.first }
-
-      before do
-        shipment.shipping_rates.destroy_all
-      end
-
-      it 'clears the shipments and fails the transition' do
-        expect(order.complete).to eq(false)
-        expect(order.errors[:base]).to include(Spree.t(:items_cannot_be_shipped))
-        expect(order.shipments.count).to eq(0)
-        expect(Spree::InventoryUnit.where(shipment_id: shipment.id).count).to eq(0)
-      end
-    end
-
     context 'the order is already paid' do
       let(:order) { create(:order_with_line_items) }
 
