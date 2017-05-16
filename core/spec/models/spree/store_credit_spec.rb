@@ -56,6 +56,39 @@ describe Spree::StoreCredit do
         expect{ subject }.to_not change{ store_credit.credit_type }
       end
     end
+
+    ['cart', 'address', 'delivery', 'payment'].each do |order_state|
+      context "completing order in the #{order_state} step" do
+        let(:order) { create(:order_with_line_items, state: order_state) }
+        let(:store_credit_attrs) { { user: order.user, amount: order.total } }
+
+        before do
+          subject
+          order.next! until order.can_complete?
+          order.complete!
+        end
+
+        it "creates a payment using the user's store credit" do
+          expect(order.payments.valid.store_credits).to_not be_empty
+        end
+      end
+    end
+
+    context "completing an order in the confirm step" do
+      let(:order) { create(:order_with_line_items, state: "payment") }
+      let!(:payment) { create(:payment, order: order) }
+      let(:store_credit_attrs) { { user: order.user } }
+
+      before do
+        order.next!
+        subject
+        order.reload.complete!
+      end
+
+      it "creates a payment using the user's store credit" do
+        expect(order.reload.payments.valid.store_credits).to_not be_empty
+      end
+    end
   end
 
   describe "validations" do
