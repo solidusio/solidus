@@ -314,6 +314,7 @@ module Spree
     # @!attribute [rw] shipping_rate_tax_calculator_class
     # @return [Class] a class with the same public interfaces as
     #   Spree::TaxCalculator::ShippingRate
+    # @api experimental
     attr_writer :shipping_rate_tax_calculator_class
     def shipping_rate_tax_calculator_class
       @shipping_rate_tax_calculator_class ||= Spree::TaxCalculator::ShippingRate
