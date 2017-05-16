@@ -23,14 +23,14 @@ RSpec.configure do |config|
     c.syntax = :expect
   end
 
-  config.before(:suite) do
+  config.before(:each) do
     DatabaseCleaner.clean_with(:truncation)
   end
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, comment the following line or assign false
   # instead of true.
-  config.use_transactional_fixtures = true
+  config.use_transactional_fixtures = false
 
   config.include FactoryGirl::Syntax::Methods
   config.fail_fast = ENV['FAIL_FAST'] || false
