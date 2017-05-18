@@ -86,12 +86,15 @@ es:
         tax_category: Categoría fiscal
       spree/promotion:
         advertise: Anuncio
+        apply_automatically: Aplicar automáticamente
         code: Código
         description: Descripción
         event_name: Nombre del Evento
         expires_at: Termina en
         name: Nombre
         path: Ruta
+        per_code_usage_limit: Límite de uso por código
+        promotion_uses: Usos de la Promoción
         starts_at: Empieza en
         usage_limit: Limite de Uso
       spree/promotion_category:
@@ -379,6 +382,10 @@ es:
     adjustment_total: Total del ajuste
     adjustments: Ajustes
     admin:
+      promotions:
+        form:
+          starts_at_placeholder: Inmediatamente
+          expires_at_placeholder: Nunca
       tab:
         configuration: Configuración
         option_types:
@@ -386,7 +393,7 @@ es:
         overview: Visión general
         products: Productos
         promotions: Promociones
-        promotion_categories:
+        promotion_categories: Categorías de promoción
         properties:
         prototypes:
         reports: Informes
@@ -642,6 +649,10 @@ es:
     exchange_for:
     excl:
     existing_shipments:
+    hints:
+      spree/promotion:
+        starts_at: "Determina cuando la promoción se puede aplicar a pedidos. <br/> Si no se especifica ningún valor, la promoción estará inmediatamente disponible."
+        expires_at: "Esto determina cuándo expira la promoción. <br/> Si no se especifica ningún valor, la promoción nunca expira."
     expedited_exchanges_warning:
     expiration: Vencimiento
     extension: Extensión
@@ -967,13 +978,13 @@ es:
     promotion_action_types:
       create_adjustment:
         description: Crea un ajuste de crédito en la promoción en el pedido
-        name: Crear ajuste
+        name: Crear un ajuste en todo el pedido
       create_item_adjustments:
-        description:
-        name:
-      create_line_items:
-        description: Rellena el carrito con la cuantía especificada de la variante
-        name: Crea líneas de artículos
+        description: Crea un ajuste de crédito de promoción en una línea del pedido
+        name: Crear un ajuste por línea del pedido
+      create_quantity_adjustments:
+        description: Crea un ajuste en una línea de pedido en función de la cantidad
+        name: Crear un ajuste por cantidades
       free_shipping:
         description: Hace gratuitos todos los tipos de envío para el pedido
         name: Envíos Gratuitos
@@ -994,26 +1005,38 @@ es:
         description: El ciente debe haber visitado la página especificada
         name: Página de destino
       one_use_per_user:
-        description: Descripción
-        name: Nombre
+        description: Sólo un uso por usuario
+        name: Un uso por usuario
       option_value:
-        description: Descripción
-        name: Nombre
+        description: El pedido incluye producto(s) específicos que coinciden con el valor(es) de la opción correspondiente
+        name: Valor(es) opción
       product:
         description: El pedido incluye productos específicos
         name: Producto(s)
-      taxon:
-        description: Descripción
-        name: Nombre
       user:
-        description: Disponible solamente a usuarios específicos
+        description: Disponible solamente para usuarios específicos
         name: Usuario
       user_logged_in:
         description: Disponible solamente a usuarios autorizados
         name: Usuario autorizado
-    promotion_uses:
-    promotionable:
+      taxon:
+        description: El pedido incluye productos con taxon(s) específicos
+        name: Taxon(s)
+      nth_order:
+        description: Aplicar una promoción a cada n-ésimo pedido que un usuario ha completado.
+        name: Enésimo pedido
+        form_text: "Aplicar esta promoción a los enésimos pedidos de los usuarios"
+      first_repeat_purchase_since:
+        description: Disponible sólo para usuarios que no han comprado durante un tiempo
+        name: Primera compra repetida desde
+        form_text: "Aplicar esta promoción a usuarios cuyo último pedido fue hace más de X días: "
+      user_role:
+        description: El pedido incluye al usuario con las siguientes funciones
+        name: Funciones de Usuario
     promotions: Promociones
+    promotion_successfully_created: ¡La promoción ha sido creada con éxito!
+    promotion_total_changed_before_complete: "Algunas de las promociones de su pedido no son aptas y se han eliminado. Por favor, compruebe de nuevo el importe del pedido y vuelva a intentarlo."
+    promotion_uses: Usos de la promoción
     propagate_all_variants:
     properties: Propiedades
     property: Propiedad
