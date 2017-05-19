@@ -1,6 +1,54 @@
 # coding: utf-8
 require 'spec_helper'
 
+module Examine
+  module_function
+
+  def examine(object, *attrs)
+    require 'date'
+
+    array = object.respond_to?(:to_ary) ? object.to_ary : [object]
+
+    keys = attrs.map { |attr| attr.is_a?(Hash) ? attr.keys.first : attr }
+    hashes = array.map { |item| pluck(item, attrs) }
+
+    max_widths = {}
+    keys.each do |key|
+      max_widths[key] = ([key.to_s.size] + hashes.map { |hash| hash[key].to_s.size }).max
+    end
+    keys_str = keys.map { |key| key.to_s.ljust(max_widths[key]) }.join('  ') + "\n"
+    keys_str + hashes.map do |hash|
+      hash.map { |key, val| val.to_s.ljust(max_widths[key]) }.join('  ')
+    end.join("\n")
+  end
+
+  def pluck(object, attrs)
+    key_vals = attrs.map do |item|
+      key = item.is_a?(Hash) ? item.keys.first : item
+      val = item.is_a?(Hash) ? item.values.first : item
+      val = if val.respond_to?(:call)
+              if val.respond_to?(:arity) && val.arity.abs > 0
+                val.call(object)
+              else
+                val.call
+              end
+            else
+              object.instance_eval(val.to_s)
+            end
+      [key, val]
+    end
+    Hash[key_vals]
+  end
+end
+
+module Kernel
+  module_function
+
+  def Examine(*args)
+    puts Examine.examine(*args)
+  end
+end
+
 describe "Order Details", type: :feature, js: true do
   include OrderFeatureHelper
 
@@ -304,7 +352,7 @@ describe "Order Details", type: :feature, js: true do
         end
 
         context 'multiple items in cart' do
-          it 'should have no problem splitting if multiple items are in the from shipment' do
+          it "should have no problem splitting if multiple items are in the from shipment" do
             order.contents.add(create(:variant), 2)
             order.reload
 
@@ -393,7 +441,8 @@ describe "Order Details", type: :feature, js: true do
             end
           end
 
-          it 'should split fine if more than one line_item is in the receiving shipment' do
+          10.times do |i|
+          it "should split fine if more than one line_item is in the receiving shipment #{i}" do
             variant2 = create(:variant)
             order.contents.add(variant2, 2, shipment: @shipment2)
             order.reload
@@ -407,8 +456,33 @@ describe "Order Details", type: :feature, js: true do
             expect(order.shipments.count).to eq(2)
             expect(order.shipments.first.inventory_units_for(product.master).count).to eq 1
             expect(order.shipments.last.inventory_units_for(product.master).count).to eq 1
+
+            puts "stock_location.id: #{stock_location.id}"
+            puts "stock_location2.id: #{stock_location2.id}"
+            puts "product.id: #{product.id}"
+            puts "tote.id: #{tote.id}"
+            puts "order.id: #{order.id}"
+            puts "variant2.id: #{variant2.id}"
+            puts "@shipment1.id: #{@shipment1.id}"
+            puts "@shipment2.id: #{@shipment2.id}"
+            puts "products:"
+            Examine(Spree::Product.all, :id)
+            puts "variants:"
+            Examine(Spree::Variant.all, :id, :product_id, :is_master)
+            puts "orders:"
+            Examine(Spree::Order.all, :id)
+            puts "line_items:"
+            Examine(Spree::LineItem.all, :id, :order_id, :variant_id, :quantity)
+            puts "shipments:"
+            Examine(Spree::Shipment.all, :id, :order_id, :stock_location_id)
+            puts "stock_locations:"
+            Examine(Spree::StockLocation.all, :id)
+            puts "inventory units:"
+            Examine(Spree::InventoryUnit.all, :id, :order_id, :shipment_id, :line_item_id, :variant_id)
+
             expect(order.shipments.first.inventory_units_for(variant2).count).to eq 0
             expect(order.shipments.last.inventory_units_for(variant2).count).to eq 2
+          end
           end
         end
 
