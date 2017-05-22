@@ -56,24 +56,24 @@ Variants which are not the master variant are unique based on [option type and o
 
 Images link to a product through its master variant. The sub-variants for the product may also have their own unique images to differentiate them in the frontend.
 
-Solidus automatically handles creation and storage of several size versions of each image (via the Paperclip plugin). The default styles are as follows:
+Solidus automatically handles creation and storage of several size versions of each image (via the Paperclip gem, documentation [here](https://github.com/thoughtbot/paperclip)). The default sizes can be changed by placing something like the below config in the paperclip initializer (/config/initializers/paperclip.rb - note that the below example sizes are the default). 
 
 ```ruby
-:styles => {
-  :mini => '48x48>',
-  :small => '100x100>',
-  :product => '240x240>',
-  :large => '600x600>'
+Spree::Image.attachment_definitions[:attachment][:styles] = {
+  mini: '48x48>',
+  small: '100x100>',
+  product: '240x240>',
+  large: '600x600>',
 }
 ```
 
-These sizes can be changed by altering the value of `Spree::Config[:attachment_styles]`. Once `Spree::Config[:attachment_styles]` has been changed, you *must* regenerate the paperclip thumbnails by running this command:
+You *must* regenerate the paperclip thumbnails by running this command:
 
 ```bash
 $ bundle exec rake paperclip:refresh:thumbnails CLASS=Spree::Image
 ```
 
-If you want to change the image that is displayed when a product has no image, simply create new versions of the files within [Solidus' app/assets/images/noimage directory](https://github.com/spree/spree/tree/master/frontend/app/assets/images/noimage). These image names must match the keys within `Spree::Config[:attachment_styles]`.
+If you want to change the image that is displayed when a product has no image, simply create new versions of the files within [Solidus' app/assets/images/noimage directory](https://github.com/solidusio/solidus/tree/master/core/app/assets/images/noimage). These image names must match the keys defined in the paperclip config.
 
 ## Product Properties
 
