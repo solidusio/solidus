@@ -8,15 +8,15 @@ FactoryGirl.define do
     cost 100.00
     state 'pending'
     order
-    stock_location
 
     transient do
       shipping_method nil
+      stock_location nil
     end
 
     after(:create) do |shipment, evalulator|
       shipping_method = evalulator.shipping_method || create(:shipping_method, cost: evalulator.cost)
-      shipment.add_shipping_method(shipping_method, true)
+      shipment.add_shipping_method(shipping_method, evalulator.stock_location, true)
 
       shipment.order.line_items.each do |line_item|
         line_item.quantity.times do
