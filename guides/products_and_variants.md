@@ -18,7 +18,7 @@ To understand how variants come to be, you must first understand option types an
 
 ## Option Types and Option Values
 
-Option types denote the different options for a variant. A typical option type would be a size, with that option type's values being something such as "Small", "Medium" and "Large". Another typical option type could be a color, such as "Red", "Green", or "Blue".
+Option types denote the different options for a variant. A few examples include **size** or **color**. An option type of **size** would have option values like "Small", "Medium" and "Large". Another typical option type could be **color**, with option values of "Red", "Green", "Blue", and so on.
 
 A product can be assigned many option types, but must be assigned at least one if you wish to create variants for that product.
 
@@ -30,7 +30,7 @@ Variant records can track some individual properties regarding a variant, such a
 
 ### Master Variants
 
-Every single product has a master variant, which tracks basic information such as a count on hand, a price and a SKU. Whenever a product is created, a master variant for that product will be created too.
+A master variant is like a template or set of defaults for other product variants.  Every product has a master variant, which tracks basic information such as a count on hand, a price and a SKU. Whenever a product is created, a master variant for that product will be created too.
 
 Master variants are automatically created along with a product and exist for the sole purpose of having a consistent API when associating variants and [line items](orders#line-items). If there were no master variant, then line items would need to track a polymorphic association which would either be a product or a variant.
 
