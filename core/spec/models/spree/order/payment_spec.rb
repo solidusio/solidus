@@ -62,6 +62,14 @@ module Spree
       end
     end
 
+    context "with multiple payments" do
+      it "should not fail transitioning to complete when paid" do
+        payment_1 = create(:payment, :amount => 50, :state => "completed")
+        payment_2 = create(:payment, :amount => 50, :state => "failed")
+        expect(order.process_payments!).to be true
+      end
+    end
+
     context "ensure source attributes stick around" do
       let(:order){ Spree::Order.create }
       let(:payment_method){ create(:credit_card_payment_method) }
