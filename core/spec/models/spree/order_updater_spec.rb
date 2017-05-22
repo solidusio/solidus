@@ -34,6 +34,17 @@ module Spree
         }.to change { order.shipment_total }.to 10
       end
 
+      context 'with a source-less line item adjustment' do
+        let(:line_item) { create(:line_item, order: order, price: 10) }
+        before do
+          create(:adjustment, source: nil, adjustable: line_item, order: order, amount: -5)
+        end
+
+        it "updates the line item total" do
+          expect { updater.update }.to change { line_item.reload.adjustment_total }.from(0).to(-5)
+        end
+      end
+
       context 'with order promotion followed by line item addition' do
         let(:promotion) { Spree::Promotion.create!(name: "10% off") }
         let(:calculator) { Calculator::FlatPercentItemTotal.new(preferred_flat_percent: 10) }
