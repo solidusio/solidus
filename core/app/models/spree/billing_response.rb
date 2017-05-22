@@ -32,14 +32,14 @@ module Spree
       @emv_authorization = options[:emv_authorization]
 
       @avs_result =
-        if options[:avs_result].kind_of?(AVSResult)
+        if options[:avs_result].is_a?(AVSResult)
           options[:avs_result].to_hash
         else
           AVSResult.new(options[:avs_result]).to_hash
         end
 
       @cvv_result =
-        if options[:cvv_result].kind_of?(CVVResult)
+        if options[:cvv_result].is_a?(CVVResult)
           options[:cvv_result].to_hash
         else
           CVVResult.new(options[:cvv_result]).to_hash
