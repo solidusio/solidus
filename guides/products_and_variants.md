@@ -30,11 +30,13 @@ Variant records can track some individual properties regarding a variant, such a
 
 ### Master Variants
 
-A master variant is like a template or set of defaults for other product variants.  Every product has a master variant, which tracks basic information such as a count on hand, a price and a SKU. Whenever a product is created, a master variant for that product will be created too.
+A master variant is like a template or set of defaults for other product variants.  Every product has a master variant. Whenever a product is created, a master variant for that product will also be created. If there are no option types on a product, then there is only 1 variant (the master variant). If 1 or more option types are created for a Product, the master variant becomes a template for the others, and is not actually "salable" itself.
 
-Master variants are automatically created along with a product and exist for the sole purpose of having a consistent API when associating variants and [line items](orders#line-items). If there were no master variant, then line items would need to track a polymorphic association which would either be a product or a variant.
+There are a couple advantages of the master variant concept:
 
-By having a master variant, the code within Solidus to track  is simplified.
+* Architecture simplification: [Line items](orders#line-items) simply need to store a variant_id, which in turn is associated with a product. More complex polymorphic relationships are avoided.
+* Master variant as template: each time you create a variant of a product, the variant details are initially copied from the master.  Price will also default to the master value if left blank in a variant.
+
 
 ### Normal Variants
 
