@@ -30,7 +30,7 @@ Variant records can track some individual properties regarding a variant, such a
 
 ### Master Variants
 
-A master variant is like a template or set of defaults for other product variants.  Every product has a master variant. Whenever a product is created, a master variant for that product will also be created. If there are no option types on a product, then there is only 1 variant (the master variant). If 1 or more option types are created for a Product, the master variant becomes a template for the others, and is not actually "salable" itself.
+A master variant acts as a template or set of defaults for other product variants.  Every product has a master variant. Whenever a product is created, a master variant for that product will also be created. If there are no option types on a product, then there is only 1 variant (the master variant). If 1 or more option types are created for a Product, the master variant becomes a template for the others, and is not actually "salable" itself.
 
 There are a couple advantages of the master variant concept:
 
@@ -115,10 +115,6 @@ To find a list of currencies that this product is available in, call `prices` to
 $ product.prices
 => [#<Spree::Price id: 2 ...]
 ```
-
-## Prototypes
-
-A prototype is a useful way to share common `OptionType` and `Property` combinations amongst many different products. For instance, if you're creating a lot of shirt products, you may wish to maintain the "Size" and "Color" option types, as well as a "Fitting Type" property.
 
 ## Taxons and Taxonomies
 
