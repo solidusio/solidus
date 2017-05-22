@@ -4,7 +4,6 @@ module Spree
   class Shipment < Spree::Base
     belongs_to :order, class_name: 'Spree::Order', touch: true, inverse_of: :shipments
     delegate :stock_location, to: :selected_shipping_rate, allow_nil: true
-    # belongs_to :stock_location, class_name: 'Spree::StockLocation'
 
     has_many :adjustments, as: :adjustable, inverse_of: :adjustable, dependent: :delete_all
     has_many :inventory_units, dependent: :destroy, inverse_of: :shipment
@@ -16,6 +15,15 @@ module Spree
     before_validation :set_cost_zero_when_nil
 
     before_destroy :ensure_can_destroy
+
+    #def stock_location=(stock_location)
+      #binding.pry
+      #found = shipping_rates.detect do |sr|
+        #sr.stock_location_id == stock_location.id
+      #end
+      #raise "Shipping Rate not found for that SL" if found == nil
+      #found
+    #end
 
     # TODO: remove the suppress_mailer temporary variable once we are calling 'ship'
     # from outside of the state machine and can actually pass variables through.
@@ -93,8 +101,8 @@ module Spree
     money_methods :cost, :amount, :discounted_cost, :final_price, :item_cost
     alias_attribute :amount, :cost
 
-    def add_shipping_method(shipping_method, selected = false)
-      shipping_rates.create(shipping_method: shipping_method, selected: selected, cost: cost)
+    def add_shipping_method(shipping_method, stock_location, selected = false)
+      shipping_rates.create(shipping_method: shipping_method, selected: selected, cost: cost, stock_location_id: stock_location.id)
     end
 
     def after_cancel
