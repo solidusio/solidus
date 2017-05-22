@@ -23,12 +23,12 @@ module Spree
     # @return [void]
     def apply(taxes)
       @order.line_items.each do |item|
-        taxed_items = taxes.line_item_taxes.select { |i| i.id == item.id }
+        taxed_items = taxes.line_item_taxes.select { |i| i.item_id == item.id }
         update_adjustments(item, taxed_items)
       end
 
       @order.shipments.each do |item|
-        taxed_items = taxes.shipment_taxes.select { |i| i.id == item.id }
+        taxed_items = taxes.shipment_taxes.select { |i| i.item_id == item.id }
         update_adjustments(item, taxed_items)
       end
     end
@@ -41,7 +41,7 @@ module Spree
     #
     # @private
     # @param [#adjustments] item a {Spree::LineItem} or {Spree::Shipment}
-    # @param [Array<Spree::Tax::TaxedItem>] taxed_items a list of calculated taxes for an item
+    # @param [Array<Spree::Tax::ItemTax>] taxed_items a list of calculated taxes for an item
     # @return [void]
     def update_adjustments(item, taxed_items)
       tax_adjustments = item.adjustments.select(&:tax?)
@@ -59,7 +59,7 @@ module Spree
     #
     # @private
     # @param [#adjustments] item a {Spree::LineItem} or {Spree::Shipment}
-    # @param [Spree::Tax::TaxedItem] tax_item calculated taxes for an item
+    # @param [Spree::Tax::ItemTax] tax_item calculated taxes for an item
     # @return [Spree::Adjustment] the created or updated tax adjustment
     def update_adjustment(item, tax_item)
       tax_adjustment = item.adjustments.detect do |adjustment|

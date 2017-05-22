@@ -34,8 +34,8 @@ RSpec.describe Spree::OrderTaxation do
     let(:line_item) { order.contents.add(book.master) }
 
     let(:line_item_tax) do
-      Spree::Tax::TaxedItem.new(
-        id: line_item.id,
+      Spree::Tax::ItemTax.new(
+        item_id: line_item.id,
         label: "Tax!",
         tax_rate: book_tax_rate,
         amount: 5,
@@ -65,8 +65,8 @@ RSpec.describe Spree::OrderTaxation do
 
     context "when new taxes are applied" do
       let(:new_line_item_tax) do
-        Spree::Tax::TaxedItem.new(
-          id: line_item.id,
+        Spree::Tax::ItemTax.new(
+          item_id: line_item.id,
           label: "Tax!",
           tax_rate: book_tax_rate,
           amount: 10,

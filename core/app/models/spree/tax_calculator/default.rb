@@ -39,7 +39,7 @@ module Spree
       # Calculate the taxes for line items.
       #
       # @private
-      # @return [Array<Spree::Tax::TaxedItem>] calculated taxes for the line items
+      # @return [Array<Spree::Tax::ItemTax>] calculated taxes for the line items
       def line_item_rates
         order.line_items.flat_map do |line_item|
           calculate_rates(line_item)
@@ -49,7 +49,7 @@ module Spree
       # Calculate the taxes for shipments.
       #
       # @private
-      # @return [Array<Spree::Tax::TaxedItem>] calculated taxes for the shipments
+      # @return [Array<Spree::Tax::ItemTax>] calculated taxes for the shipments
       def shipment_rates
         order.shipments.flat_map do |shipment|
           calculate_rates(shipment)
@@ -61,16 +61,16 @@ module Spree
       # The item could be either a {Spree::LineItem} or a {Spree::Shipment}.
       #
       # Will go through all applicable rates for an item and create a new
-      # {Spree::Tax::TaxedItem} containing the calculated taxes for the item.
+      # {Spree::Tax::ItemTax} containing the calculated taxes for the item.
       #
       # @private
-      # @return [Array<Spree::Tax::TaxedItem>] calculated taxes for the item
+      # @return [Array<Spree::Tax::ItemTax>] calculated taxes for the item
       def calculate_rates(item)
         rates_for_item(item).map do |rate|
           amount = rate.compute_amount(item)
 
-          Spree::Tax::TaxedItem.new(
-            id: item.id,
+          Spree::Tax::ItemTax.new(
+            item_id: item.id,
             label: rate.adjustment_label(amount),
             tax_rate: rate,
             amount: amount,

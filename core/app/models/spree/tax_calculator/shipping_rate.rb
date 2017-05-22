@@ -27,14 +27,14 @@ module Spree
 
       # Calculate taxes for a shipping rate.
       #
-      # @return [Array<Spree::Tax::TaxedItem>] the calculated taxes for the
+      # @return [Array<Spree::Tax::ItemTax>] the calculated taxes for the
       #   shipping rate
       def calculate
         rates_for_item(shipping_rate).map do |rate|
           amount = rate.compute_amount(shipping_rate)
 
-          Spree::Tax::TaxedItem.new(
-            id: shipping_rate.id,
+          Spree::Tax::ItemTax.new(
+            item_id: shipping_rate.id,
             label: rate.adjustment_label(amount),
             tax_rate: rate,
             amount: amount
