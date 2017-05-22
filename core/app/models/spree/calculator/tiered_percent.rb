@@ -4,6 +4,7 @@ module Spree
   class Calculator::TieredPercent < Calculator
     preference :base_percent, :decimal, default: 0
     preference :tiers, :hash, default: {}
+    preference :currency, :string, default: -> { Spree::Config[:currency] }
 
     before_validation do
       # Convert tier values to decimals. Strings don't do us much good.
@@ -22,8 +23,16 @@ module Spree
 
     def compute(object)
       order = object.is_a?(Order) ? object : object.order
-      _base, percent = preferred_tiers.sort.reverse.detect{ |b, _| order.item_total >= b }
-      (object.amount * (percent || preferred_base_percent) / 100).round(2)
+
+      _base, percent = preferred_tiers.sort.reverse.detect do |b, _|
+        order.item_total >= b
+      end
+
+      if preferred_currency.casecmp(order.currency).zero?
+        (object.amount * (percent || preferred_base_percent) / 100).round(2)
+      else
+        0
+      end
     end
 
     private

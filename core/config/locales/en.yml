@@ -36,6 +36,7 @@ en:
         preferred_tiers: Tiers
       spree/calculator/tiered_percent:
         preferred_base_percent: Base Percent
+        preferred_currency: Currency
         preferred_tiers: Tiers
       spree/carton:
         tracking: Tracking
