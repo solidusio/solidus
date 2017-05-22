@@ -11,6 +11,8 @@
 - Adjustments without a source are now included in `line_item.adjustment_total`
 [\#1933](https://github.com/solidusio/solidus/pull/1933) ([alexstoick](https://github.com/alexstoick))
 
+- Add `Spree::Config.allow_promotions_with_non_promotionable_items` to control promotions eligibility when having a non promotional line item [\#1925](https://github.com/solidusio/solidus/pull/1925) ([softr8](https://github.com/softr8))
+
 ## Solidus 2.2.1 (2017-05-09)
 
 - Fix migrating CreditCards to WalletPaymentSource [\#1898](https://github.com/solidusio/solidus/pull/1898) ([jhawthorn](https://github.com/jhawthorn))

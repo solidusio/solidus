@@ -46,6 +46,10 @@ module Spree
     #   @return [Boolean] When false, customers must create an account to complete an order (default: +true+)
     preference :allow_guest_checkout, :boolean, default: true
 
+    # @!attribute [rw] allow_promotions_with_non_promotionable_items
+    #   @return [Boolean] When true, customers can apply a promotion when the order has non promotionable items (default: +false+)
+    preference :allow_promotions_with_non_promotionable_items, :boolean, default: false
+
     # @!attribute [rw] allow_return_item_amount_editing
     #   @return [Boolean] Determines whether an admin is allowed to change a return item's pre-calculated amount (default: +false+)
     preference :allow_return_item_amount_editing, :boolean, default: false
