@@ -25,6 +25,9 @@ describe Spree::Core::ControllerHelpers::Order, type: :controller do
       allow(controller).to receive_messages(cookies: double(signed: { guest_token: order.guest_token }))
       expect(controller.simple_current_order).to eq order
     end
+    it 'assigns the current_store id' do
+      expect(controller.simple_current_order.store_id).to eq store.id
+    end
   end
 
   describe '#current_order' do
