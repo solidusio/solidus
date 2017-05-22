@@ -68,7 +68,27 @@ RSpec.describe "Outstanding balance integration tests" do
     end
 
     context 'with a cancelled item' do
-      it 'discounts the cancelled item amount'
+      let(:cancelations) { Spree::OrderCancellations.new(order) }
+      let(:cancelled_item) { order.line_items.first }
+
+      before do
+        # Required to refund
+        Spree::RefundReason.create!(name: Spree::RefundReason::RETURN_PROCESSING_REASON, mutable: false)
+
+        cancelations.cancel_unit(cancelled_item.inventory_units.first)
+        cancelations.reimburse_units(cancelled_item.inventory_units)
+
+        order.reload
+      end
+
+      it 'discounts the cancelled item amount' do
+        expect(order.refund_total).to eq(3)
+        expect(order.payment_total).to eq(16)
+        expect(order.outstanding_balance).to eq(0)
+
+        # Less sure about this one....
+        expect(order.total).to eq(19)
+      end
 
       context 'and there is a full refund' do
         it 'has the correct amount'
