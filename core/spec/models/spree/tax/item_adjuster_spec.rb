@@ -6,7 +6,7 @@ RSpec.describe Spree::Tax::ItemAdjuster do
   let(:item) { create(:line_item, order: order) }
 
   def tax_adjustments
-    item.adjustments.tax.to_a
+    item.adjustments.select(&:tax?).to_a
   end
 
   describe 'initialization' do
