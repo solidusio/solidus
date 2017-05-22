@@ -1,21 +1,18 @@
----
-title: "Products"
-section: core
----
+# Products and Variants
 
-## Overview
-
-`Product` records track unique products within your store. These differ from [Variants](#variants), which track the unique variations of a product. For instance, a product that's a T-shirt would have variants denoting its different colors. Together, Products and Variants describe what is for sale.
+`Product` records track unique products within your store. Products differ from [Variants](#variants), which track the unique variations of a product. For instance, a product that is a T-shirt would have variants denoting its different colors. Together, Products and Variants describe what is for sale.
 
 Products have the following attributes:
 
 * `name`: short name for the product
 * `description`: The most elegant, poetic turn of phrase for describing your product's benefits and features to your site visitors
-* `permalink`: An SEO slug based on the product name that is placed into the URL for the product
+* `slug`: An SEO slug based on the product name that is placed into the URL for the product
 * `available_on`: The first date the product becomes available for sale online in your shop. If you don't set the `available_on` attribute, the product will not appear among your store's products for sale.
 * `deleted_at`: The date the product is no longer available for sale in the store
 * `meta_description`: A description targeted at search engines for search engine optimization (SEO)
 * `meta_keywords`: Several words and short phrases separated by commas, also targeted at search engines
+* `meta_title`: Title to put in HTML header's `<title>` tag. If left blank, the product name will be used.
+* `promotionable`: Determines whether or not promotions can apply to the product. Labeled "Promotable" in the admin interface.
 
 To understand how variants come to be, you must first understand option types and option values.
 
@@ -37,7 +34,7 @@ Every single product has a master variant, which tracks basic information such a
 
 Master variants are automatically created along with a product and exist for the sole purpose of having a consistent API when associating variants and [line items](orders#line-items). If there were no master variant, then line items would need to track a polymorphic association which would either be a product or a variant.
 
-By having a master variant, the code within Spree to track  is simplified.
+By having a master variant, the code within Solidus to track  is simplified.
 
 ### Normal Variants
 
@@ -57,7 +54,7 @@ Variants which are not the master variant are unique based on [option type and o
 
 Images link to a product through its master variant. The sub-variants for the product may also have their own unique images to differentiate them in the frontend.
 
-Spree automatically handles creation and storage of several size versions of each image (via the Paperclip plugin). The default styles are as follows:
+Solidus automatically handles creation and storage of several size versions of each image (via the Paperclip plugin). The default styles are as follows:
 
 ```ruby
 :styles => {
@@ -74,7 +71,7 @@ These sizes can be changed by altering the value of `Spree::Config[:attachment_s
 $ bundle exec rake paperclip:refresh:thumbnails CLASS=Spree::Image
 ```
 
-If you want to change the image that is displayed when a product has no image, simply create new versions of the files within [Spree's app/assets/images/noimage directory](https://github.com/spree/spree/tree/master/frontend/app/assets/images/noimage). These image names must match the keys within `Spree::Config[:attachment_styles]`.
+If you want to change the image that is displayed when a product has no image, simply create new versions of the files within [Solidus' app/assets/images/noimage directory](https://github.com/spree/spree/tree/master/frontend/app/assets/images/noimage). These image names must match the keys within `Spree::Config[:attachment_styles]`.
 
 ## Product Properties
 
