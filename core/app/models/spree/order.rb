@@ -364,15 +364,18 @@ module Spree
     end
     deprecate create_tax_charge!: :update!, deprecator: Spree::Deprecation
 
+    def reimbursement_total
+      reimbursements.sum(:total)
+    end
+
     def outstanding_balance
       # If reimbursement has happened add it back to total to prevent balance_due payment state
       # See: https://github.com/spree/spree/issues/6229
-      adjusted_payment_total = payment_total + refund_total
 
       if state == 'canceled'
-        -1 * adjusted_payment_total
+        -1 * payment_total
       else
-        total - adjusted_payment_total
+        total - reimbursement_total - payment_total
       end
     end
 
