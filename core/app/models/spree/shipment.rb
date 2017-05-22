@@ -3,7 +3,8 @@ module Spree
   #
   class Shipment < Spree::Base
     belongs_to :order, class_name: 'Spree::Order', touch: true, inverse_of: :shipments
-    belongs_to :stock_location, class_name: 'Spree::StockLocation'
+    delegate :stock_location, to: :selected_shipping_rate, allow_nil: true
+    # belongs_to :stock_location, class_name: 'Spree::StockLocation'
 
     has_many :adjustments, as: :adjustable, inverse_of: :adjustable, dependent: :delete_all
     has_many :inventory_units, dependent: :destroy, inverse_of: :shipment
