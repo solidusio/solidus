@@ -31,7 +31,7 @@ module Spree
           # Find an existing adjustment from the same source.
           # All tax adjustments already have source_type == 'Spree::TaxRate' so
           # we need only check source_id.
-          adjustment = tax_adjustments.detect{|a| a.source_id == rate.id }
+          adjustment = tax_adjustments.detect { |a| a.source_id == rate.id }
           if adjustment
             adjustment.update!
             adjustment
