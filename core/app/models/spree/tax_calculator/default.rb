@@ -23,10 +23,10 @@ module Spree
 
       # Calculate taxes for an order.
       #
-      # @return [Spree::Tax::TaxedOrder] the calculated taxes for the order
+      # @return [Spree::Tax::OrderTax] the calculated taxes for the order
       def calculate
-        Spree::Tax::TaxedOrder.new(
-          id: order.id,
+        Spree::Tax::OrderTax.new(
+          order_id: order.id,
           line_item_taxes: line_item_rates,
           shipment_taxes: shipment_rates
         )

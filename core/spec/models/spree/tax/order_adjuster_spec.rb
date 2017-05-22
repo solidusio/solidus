@@ -24,7 +24,7 @@ RSpec.describe Spree::Tax::OrderAdjuster do
     it 'calls the configured tax calculator' do
       expect(custom_calculator_class).to receive(:new).with(order).at_least(:once).and_return(custom_calculator_instance)
       expect(custom_calculator_instance).to receive(:calculate).at_least(:once).and_return(
-        Spree::Tax::TaxedOrder.new(id: order.id, line_item_taxes: [], shipment_taxes: [])
+        Spree::Tax::OrderTax.new(order_id: order.id, line_item_taxes: [], shipment_taxes: [])
       )
 
       adjuster.adjust!

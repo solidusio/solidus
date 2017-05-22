@@ -1,5 +1,5 @@
 module Spree
-  # Relatively simple class used to apply a {Spree::Tax::TaxedOrder} to a
+  # Relatively simple class used to apply a {Spree::Tax::OrderTax} to a
   # {Spree::Order}.
   #
   # This class will create or update adjustments on the taxed items and remove
@@ -19,7 +19,7 @@ module Spree
     # shipments in the order to reflect the appropriate taxes passed in. It
     # will also remove any now inapplicable tax adjustments.
     #
-    # @param [Spree::Tax::TaxedOrder] taxes the taxes to apply to the order
+    # @param [Spree::Tax::OrderTax] taxes the taxes to apply to the order
     # @return [void]
     def apply(taxes)
       @order.line_items.each do |item|

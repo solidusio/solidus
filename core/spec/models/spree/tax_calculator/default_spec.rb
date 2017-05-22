@@ -35,7 +35,7 @@ RSpec.describe Spree::TaxCalculator::Default do
   describe '#calculate' do
     subject(:calculated_taxes) { calculator.calculate }
 
-    it { is_expected.to be_a Spree::Tax::TaxedOrder }
+    it { is_expected.to be_a Spree::Tax::OrderTax }
 
     it "has tax information for the line item", aggregate_failures: true do
       expect(calculated_taxes.line_item_taxes.count).to eq 1

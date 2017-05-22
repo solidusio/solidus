@@ -44,8 +44,8 @@ RSpec.describe Spree::OrderTaxation do
     end
 
     let(:taxes) do
-      Spree::Tax::TaxedOrder.new(
-        id: order.id,
+      Spree::Tax::OrderTax.new(
+        order_id: order.id,
         line_item_taxes: [line_item_tax],
         shipment_taxes: []
       )
@@ -75,8 +75,8 @@ RSpec.describe Spree::OrderTaxation do
       end
 
       let(:new_taxes) do
-        Spree::Tax::TaxedOrder.new(
-          id: order.id,
+        Spree::Tax::OrderTax.new(
+          order_id: order.id,
           line_item_taxes: [new_line_item_tax],
           shipment_taxes: []
         )
@@ -107,8 +107,8 @@ RSpec.describe Spree::OrderTaxation do
 
     context "when taxes are removed" do
       let(:new_taxes) do
-        Spree::Tax::TaxedOrder.new(
-          id: order.id,
+        Spree::Tax::OrderTax.new(
+          order_id: order.id,
           line_item_taxes: [],
           shipment_taxes: []
         )
