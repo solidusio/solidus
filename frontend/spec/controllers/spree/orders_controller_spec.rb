@@ -73,8 +73,8 @@ describe Spree::OrdersController, type: :controller do
           it "should populate order with 1 of given variant" do
             expect do
               post :populate, params: { variant_id: variant.id, quantity: '' }
-            end.to change { user.orders.count }.by(1)
-            order = user.orders.last
+            end.to change { Spree::Order.count }.by(1)
+            order = Spree::Order.last
             expect(response).to redirect_to spree.cart_path
             expect(order.line_items.size).to eq(1)
             line_item = order.line_items.first
@@ -87,8 +87,8 @@ describe Spree::OrdersController, type: :controller do
           it "should populate order with 1 of given variant" do
             expect do
               post :populate, params: { variant_id: variant.id, quantity: nil }
-            end.to change { user.orders.count }.by(1)
-            order = user.orders.last
+            end.to change { Spree::Order.count }.by(1)
+            order = Spree::Order.last
             expect(response).to redirect_to spree.cart_path
             expect(order.line_items.size).to eq(1)
             line_item = order.line_items.first
