@@ -1,5 +1,8 @@
 ## Solidus 2.3.0 (master, unreleased)
 
+- Deprecate `#simple_current_order`
+[\#1915](https://github.com/solidusio/solidus/pull/1915) ([ericsaupe](https://github.com/ericsaupe))
+
 ## Solidus 2.2.1 (2017-05-09)
 
 - Fix migrating CreditCards to WalletPaymentSource [\#1898](https://github.com/solidusio/solidus/pull/1898) ([jhawthorn](https://github.com/jhawthorn))

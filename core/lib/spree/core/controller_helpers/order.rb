@@ -14,7 +14,6 @@ module Spree
           helper_method :simple_current_order
         end
 
-        # Used in the link_to_cart helper.
         def simple_current_order
           return @simple_current_order if @simple_current_order
 
@@ -27,6 +26,7 @@ module Spree
             @simple_current_order = Spree::Order.new(current_order_params)
           end
         end
+        deprecate simple_current_order: :current_order, deprecator: Spree::Deprecation
 
         # The current incomplete order from the guest_token for use in cart and during checkout
         def current_order(options = {})
