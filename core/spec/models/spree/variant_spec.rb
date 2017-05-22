@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Spree::Variant, type: :model, skip: true do
+describe Spree::Variant, type: :model do
   let!(:variant) { create(:variant) }
 
   it_behaves_like 'default_price'

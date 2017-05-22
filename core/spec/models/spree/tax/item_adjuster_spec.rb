@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe Spree::Tax::ItemAdjuster, skip: true do
+RSpec.describe Spree::Tax::ItemAdjuster do
   subject(:adjuster) { described_class.new(item) }
   let(:order) { create(:order) }
   let(:item) { create(:line_item, order: order) }

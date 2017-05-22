@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::OrderCapturing, skip: true do
+describe Spree::OrderCapturing do
   describe '#capture_payments' do
     subject { Spree::OrderCapturing.new(order, payment_methods).capture_payments }
 

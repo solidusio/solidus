@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::Price, type: :model, skip: true do
+describe Spree::Price, type: :model do
   describe 'searchable columns' do
     subject { described_class.whitelisted_ransackable_attributes }
     it 'allows searching by variant_id' do

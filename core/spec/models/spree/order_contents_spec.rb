@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::OrderContents, type: :model, skip: true do
+describe Spree::OrderContents, type: :model do
   let!(:store) { create :store }
   let(:order) { create(:order) }
   let(:variant) { create(:variant) }

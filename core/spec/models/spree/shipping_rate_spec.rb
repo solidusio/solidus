@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Spree::ShippingRate, type: :model, skip: true do
+describe Spree::ShippingRate, type: :model do
   let(:address) { create(:address) }
   let(:foreign_address) { create :address, country_iso_code: "DE" }
   let(:order) { create :order, ship_address: address }

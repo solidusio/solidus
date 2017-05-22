@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'spree/testing_support/factories/order_factory'
 
-RSpec.describe 'order factory', skip: true do
+RSpec.describe 'order factory' do
   let(:factory_class) { Spree::Order }
 
   describe 'plain order' do

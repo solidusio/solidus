@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Spree::Variant::VatPriceGenerator, skip: true do
+describe Spree::Variant::VatPriceGenerator do
   let(:tax_category) { create(:tax_category) }
   let(:product) { variant.product }
   let(:variant) { create(:variant, price: 10, tax_category: tax_category) }

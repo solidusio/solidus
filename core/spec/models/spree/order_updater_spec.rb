@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 module Spree
-  describe OrderUpdater, type: :model, skip: true do
+  describe OrderUpdater, type: :model do
     let!(:store) { create :store }
     let(:order) { Spree::Order.create }
     let(:updater) { Spree::OrderUpdater.new(order) }
