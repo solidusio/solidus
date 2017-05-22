@@ -4,6 +4,7 @@ require 'spree/testing_support/factories/store_credit_update_reason_factory'
 FactoryGirl.define do
   factory :store_credit_event, class: Spree::StoreCreditEvent do
     store_credit
+    action             { Spree::StoreCredit::VOID_ACTION }
     amount             { 100.00 }
     authorization_code { "#{store_credit.id}-SC-20140602164814476128" }
 
