@@ -57,22 +57,41 @@ describe Spree::Calculator::TieredFlatRate, type: :model do
   end
 
   describe "#compute" do
-    let(:line_item) { mock_model Spree::LineItem, amount: amount }
+    let(:order) do
+      create(
+        :order_with_line_items,
+        line_items_count: 1,
+        line_items_price: amount
+      )
+    end
+    let(:line_item) { order.line_items.first }
+    let(:preferred_currency) { "USD" }
+
     before do
       calculator.preferred_base_amount = 10
       calculator.preferred_tiers = {
         100 => 15,
         200 => 20
       }
+      calculator.preferred_currency = preferred_currency
     end
+
     subject { calculator.compute(line_item) }
+
     context "when amount falls within the first tier" do
       let(:amount) { 50 }
       it { is_expected.to eq 10 }
     end
+
     context "when amount falls within the second tier" do
       let(:amount) { 150 }
       it { is_expected.to eq 15 }
+    end
+
+    context "when the order's currency does not match the calculator" do
+      let(:preferred_currency) { "CAD" }
+      let(:amount) { 50 }
+      it { is_expected.to eq 0 }
     end
   end
 end

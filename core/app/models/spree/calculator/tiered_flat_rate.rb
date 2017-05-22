@@ -4,6 +4,7 @@ module Spree
   class Calculator::TieredFlatRate < Calculator
     preference :base_amount, :decimal, default: 0
     preference :tiers, :hash, default: {}
+    preference :currency, :string, default: -> { Spree::Config[:currency] }
 
     before_validation do
       # Convert tier values to decimals. Strings don't do us much good.
@@ -17,8 +18,15 @@ module Spree
     validate :preferred_tiers_content
 
     def compute(object)
-      _base, amount = preferred_tiers.sort.reverse.detect{ |b, _| object.amount >= b }
-      amount || preferred_base_amount
+      _base, amount = preferred_tiers.sort.reverse.detect do |b, _|
+        object.amount >= b
+      end
+
+      if preferred_currency.casecmp(object.currency).zero?
+        amount || preferred_base_amount
+      else
+        0
+      end
     end
 
     private
