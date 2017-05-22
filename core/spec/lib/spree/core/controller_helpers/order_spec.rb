@@ -19,11 +19,26 @@ describe Spree::Core::ControllerHelpers::Order, type: :controller do
 
   describe '#simple_current_order' do
     it "returns an empty order" do
-      expect(controller.simple_current_order.item_count).to eq 0
+      Spree::Deprecation.silence do
+        expect(controller.simple_current_order.item_count).to eq 0
+      end
     end
     it 'returns Spree::Order instance' do
-      allow(controller).to receive_messages(cookies: double(signed: { guest_token: order.guest_token }))
-      expect(controller.simple_current_order).to eq order
+      Spree::Deprecation.silence do
+        allow(controller).to receive_messages(cookies: double(signed: { guest_token: order.guest_token }))
+        expect(controller.simple_current_order).to eq order
+      end
+    end
+    it 'assigns the current_store id' do
+      Spree::Deprecation.silence do
+        expect(controller.simple_current_order.store_id).to eq store.id
+      end
+    end
+    it 'is deprecated' do
+      Spree::Deprecation.silence do
+        expect(Spree::Deprecation).to(receive(:warn))
+        controller.simple_current_order
+      end
     end
   end
 
