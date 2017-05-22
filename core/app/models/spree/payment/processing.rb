@@ -197,15 +197,31 @@ module Spree
       end
 
       def protect_from_connection_error
-          yield
+        yield
       rescue ActiveMerchant::ConnectionError => e
-          gateway_error(e)
+        msg =
+          'Raising ActiveMerchant::ConnectionError is deprecated. ' \
+          'Please raise Spree::BillingConnectionError instead.'
+
+        Spree::Deprecation.warn(msg, caller)
+
+        gateway_error(e)
+      rescue Spree::BillingConnectionError => e
+        gateway_error(e)
       end
 
       def gateway_error(error)
         if error.is_a? Spree::BillingResponse
           text = error.params['message'] || error.params['response_reason_text'] || error.message
+        elsif error.is_a? Spree::BillingConnectionError
+          text = Spree.t(:unable_to_connect_to_gateway)
         elsif error.is_a? ActiveMerchant::ConnectionError
+          msg =
+            'Raising ActiveMerchant::ConnectionError is deprecated. ' \
+            'Please raise Spree::BillingConnectionError instead.'
+
+          Spree::Deprecation.warn(msg, caller)
+
           text = Spree.t(:unable_to_connect_to_gateway)
         else
           text = error.to_s

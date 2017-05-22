@@ -225,6 +225,14 @@ module Spree
 
       payment_method.create_profile(self)
     rescue ActiveMerchant::ConnectionError => e
+      msg =
+        'Raising ActiveMerchant::ConnectionError is deprecated. ' \
+        'Please raise Spree::BillingConnectionError instead.'
+
+      Spree::Deprecation.warn(msg, caller)
+
+      gateway_error e
+    rescue Spree::BillingConnectionError => e
       gateway_error e
     end
 
