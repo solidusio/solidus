@@ -203,7 +203,7 @@ module Spree
       end
 
       def gateway_error(error)
-        if error.is_a? ActiveMerchant::Billing::Response
+        if error.is_a? Spree::BillingResponse
           text = error.params['message'] || error.params['response_reason_text'] || error.message
         elsif error.is_a? ActiveMerchant::ConnectionError
           text = Spree.t(:unable_to_connect_to_gateway)

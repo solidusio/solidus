@@ -14,7 +14,7 @@ describe Spree::Refund, type: :model do
     let(:refund_reason) { create(:refund_reason) }
 
     let(:gateway_response) {
-      ActiveMerchant::Billing::Response.new(
+      Spree::BillingResponse.new(
         gateway_response_success,
         gateway_response_message,
         gateway_response_params,

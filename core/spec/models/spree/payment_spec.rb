@@ -28,7 +28,7 @@ describe Spree::Payment, type: :model do
   let(:amount_in_cents) { (payment.amount * 100).round }
 
   let!(:success_response) do
-    ActiveMerchant::Billing::Response.new(true, '', {}, {
+    Spree::BillingResponse.new(true, '', {}, {
       authorization: '123',
       cvv_result: cvv_code,
       avs_result: { code: avs_code }
@@ -36,7 +36,7 @@ describe Spree::Payment, type: :model do
   end
 
   let(:failed_response) do
-    ActiveMerchant::Billing::Response.new(false, '', {}, {})
+    Spree::BillingResponse.new(false, '', {}, {})
   end
 
   context '.risky' do
@@ -322,7 +322,7 @@ describe Spree::Payment, type: :model do
           expect(payment.response_code).to eq('123')
           expect(payment.avs_response).to eq(avs_code)
           expect(payment.cvv_response_code).to eq(cvv_code)
-          expect(payment.cvv_response_message).to eq(ActiveMerchant::Billing::CVVResult::MESSAGES[cvv_code])
+          expect(payment.cvv_response_message).to eq(Spree::CVVResult::MESSAGES[cvv_code])
         end
 
         it "should make payment pending" do
