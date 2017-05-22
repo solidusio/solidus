@@ -83,7 +83,7 @@ A `Property` should not be confused with an [`OptionType`](#option_type), which 
 
 You can retrieve the value for a property on a `Product` object by calling the `property` method on it and passing through that property's name:
 
-```bash
+```ruby
 $ product.property("material")
 => "100% Cotton"
 ```
@@ -104,14 +104,14 @@ This presence or lack of a price for a variant in a particular currency will det
 
 You may see what price a product would be in the current currency (`Spree::Config[:currency]`) by calling the `price` method on that instance:
 
-```bash
+```ruby
 $ product.price
 => "15.99"
 ```
 
 To find a list of currencies that this product is available in, call `prices` to get a list of related `Price` objects:
 
-```bash
+```ruby
 $ product.prices
 => [#<Spree::Price id: 2 ...]
 ```
