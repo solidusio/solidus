@@ -32,7 +32,10 @@
           </div>
           <%= link_to truncate(product.name, length: 50), url, class: 'info', itemprop: "name", title: product.name %>
           <span itemprop="offers" itemscope itemtype="http://schema.org/Offer">
-            <span class="price selling" itemprop="price"><%= display_price(product) %></span>
+            <span class="price selling" itemprop="price" content="<%= product.price_for(current_pricing_options).to_d %>">
+              <%= display_price(product) %>
+            </span>
+            <span itemprop="priceCurrency" content="<%= current_pricing_options.currency %>"></span>
           </span>
         <% end %>
       </li>
