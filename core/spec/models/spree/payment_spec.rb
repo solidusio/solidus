@@ -668,6 +668,30 @@ describe Spree::Payment, type: :model do
         allow(payment.source).to receive_messages has_payment_profile?: false
       end
 
+      context "when a ActiveMerchant ConnectionError is raised" do
+        it "reports a deprecation notice and raises a gateway error" do
+          expect(Spree::Deprecation).to(
+            receive(:warn).
+            with(/ActiveMerchant::ConnectionError is deprecated/, anything).
+            at_least(1)
+          )
+
+          expect(gateway). to(
+            receive(:create_profile).
+            and_raise(ActiveMerchant::ConnectionError.new("foo", nil))
+          )
+
+          expect do
+            Spree::Payment.create(
+              amount: 100,
+              order: order,
+              source: card,
+              payment_method: gateway
+            )
+          end.to raise_error(Spree::Core::GatewayError)
+        end
+      end
+
       context "when there is an error connecting to the gateway" do
         it "should call gateway_error " do
           expect(gateway).to receive(:create_profile).and_raise(Spree::BillingConnectionError.new("foo", nil))
