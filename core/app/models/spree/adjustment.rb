@@ -97,7 +97,9 @@ module Spree
     #
     # @return [BigDecimal] New amount of this adjustment
     def update!
-      return amount if finalized?
+      if finalized? && !tax?
+        return amount
+      end
 
       # If the adjustment has no source, do not attempt to re-calculate the amount.
       # Chances are likely that this was a manually created adjustment in the admin backend.

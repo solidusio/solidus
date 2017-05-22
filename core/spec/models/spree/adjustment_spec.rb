@@ -79,52 +79,96 @@ describe Spree::Adjustment, type: :model do
   end
 
   context '#update!' do
-    let(:adjustment) { Spree::Adjustment.create!(label: 'Adjustment', order: order, adjustable: order, amount: 5, finalized: finalized, source: source) }
-    let(:source) { mock_model(Spree::TaxRate, compute_amount: 10) }
-
     subject { adjustment.update! }
+    let(:adjustment) do
+      line_item.adjustments.create!(
+        label: 'Adjustment',
+        order: order,
+        adjustable: order,
+        amount: 5,
+        finalized: finalized,
+        source: source,
+      )
+    end
+    let(:order) { create(:order_with_line_items, line_items_price: 100) }
+    let(:line_item) { order.line_items.to_a.first }
 
-    context "when adjustment is closed" do
+    context "when adjustment is finalized" do
       let(:finalized) { true }
 
-      it "does not update the adjustment" do
-        expect(adjustment).to_not receive(:update_column)
-        subject
+      context 'with a promotion adjustment' do
+        let(:source) { promotion.actions.first! }
+        let(:promotion) { create(:promotion, :with_line_item_adjustment, adjustment_rate: 7) }
+
+        it 'does not update the adjustment' do
+          expect { subject }.not_to change { adjustment.amount }
+        end
+      end
+
+      context 'with a tax adjustment' do
+        let(:source) { mock_model(Spree::TaxRate, compute_amount: 10) }
+
+        it 'updates the adjustment' do
+          expect { subject }.to change { adjustment.amount }.from(5).to(10)
+        end
+      end
+
+      context 'with a sourceless adjustment' do
+        let(:source) { nil }
+
+        it 'does nothing' do
+          expect { subject }.not_to change { adjustment.amount }
+        end
       end
     end
 
     context "when adjustment isn't finalized" do
       let(:finalized) { false }
 
-      it "updates the amount" do
-        expect { subject }.to change { adjustment.amount }.to(10)
+      context 'with a promotion adjustment' do
+        let(:source) { promotion.actions.first! }
+        let(:promotion) { create(:promotion, :with_line_item_adjustment, adjustment_rate: 7) }
+
+        context 'when the promotion is eligible' do
+          it 'updates the adjustment' do
+            expect { subject }.to change { adjustment.amount }.from(5).to(-7)
+          end
+
+          it 'sets the adjustment elgiible to true' do
+            subject
+            expect(adjustment.eligible).to eq(true)
+          end
+        end
+
+        context 'when the promotion is not eligible' do
+          before do
+            promotion.update!(starts_at: 1.day.from_now)
+          end
+
+          it 'zeros out the adjustment' do
+            expect { subject }.to change { adjustment.amount }.from(5).to(0)
+          end
+
+          it 'sets the adjustment elgiible to false' do
+            subject
+            expect(adjustment.eligible).to eq(false)
+          end
+        end
       end
 
-      context "it is a promotion adjustment" do
-        let(:promotion) { create(:promotion, :with_order_adjustment, starts_at: promo_start_date) }
-        let(:promo_start_date) { nil }
-        let(:promotion_code) { promotion.codes.first }
-        let(:order) { create(:order_with_line_items, line_items_count: 1) }
+      context 'with a tax adjustment' do
+        let(:source) { mock_model(Spree::TaxRate, compute_amount: 10) }
 
-        let!(:adjustment) do
-          promotion.activate(order: order, promotion_code: promotion_code)
-          order.adjustments.first
+        it 'updates the adjustment' do
+          expect { subject }.to change { adjustment.amount }.from(5).to(10)
         end
+      end
 
-        context "the promotion is eligible" do
-          it "sets the adjustment elgiible to true" do
-            subject
-            expect(adjustment.eligible).to eq true
-          end
-        end
+      context 'with a sourceless adjustment' do
+        let(:source) { nil }
 
-        context "the promotion is not eligible" do
-          let(:promo_start_date) { Date.tomorrow }
-
-          it "sets the adjustment elgiible to false" do
-            subject
-            expect(adjustment.eligible).to eq false
-          end
+        it 'does nothing' do
+          expect { subject }.to_not change { adjustment.amount }
         end
       end
     end
