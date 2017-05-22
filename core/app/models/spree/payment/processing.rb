@@ -55,6 +55,9 @@ module Spree
             response_code,
             gateway_options
           )
+
+          check_deprecation(response)
+
           money = ::Money.new(amount, currency)
           capture_events.create!(amount: money.to_d)
           update_attributes!(amount: captured_amount)
@@ -65,14 +68,17 @@ module Spree
       def void_transaction!
         return true if void?
         protect_from_connection_error do
-          if payment_method.payment_profiles_supported?
-            # Gateways supporting payment profiles will need access to credit card object because this stores the payment profile information
-            # so supply the authorization itself as well as the credit card, rather than just the authorization code
-            response = payment_method.void(response_code, source, gateway_options)
-          else
-            # Standard ActiveMerchant void usage
-            response = payment_method.void(response_code, gateway_options)
-          end
+          response =
+            if payment_method.payment_profiles_supported?
+              # Gateways supporting payment profiles will need access to credit card object because this stores the payment profile information
+              # so supply the authorization itself as well as the credit card, rather than just the authorization code
+              payment_method.void(response_code, source, gateway_options)
+            else
+              # Standard ActiveMerchant void usage
+              payment_method.void(response_code, gateway_options)
+            end
+
+          check_deprecation(response)
 
           handle_void_response(response)
         end
@@ -80,6 +86,7 @@ module Spree
 
       def cancel!
         response = payment_method.cancel(response_code)
+        check_deprecation(response)
         handle_void_response(response)
       end
 
@@ -157,6 +164,7 @@ module Spree
           response = payment_method.send(action, money.money.cents,
                                          source,
                                          gateway_options)
+          check_deprecation(response)
           handle_response(response, success_state, :failure)
         end
       end
@@ -234,6 +242,21 @@ module Spree
       # The unique identifier to be passed in to the payment gateway
       def gateway_order_id
         "#{order.number}-#{number}"
+      end
+
+      # @param response [Spree::BillingResponse, ActiveMerchant::Billing::Response]
+      # @return [Spree::BillingResponse, ActiveMerchant::Billing::Response] same as response.
+      # Spit out a deprecation if response is an
+      # ActiveMerchant::Billing::Response.
+      def check_deprecation(response)
+        if response.is_a? ActiveMerchant::Billing::Response
+          msg = 'Returning an ActiveMerchant::Billing::Response from a gateway' \
+          ' is deprecated. Please return a Spree::BillingResponse instead.'
+
+          Spree::Deprecation.warn(msg, caller)
+        end
+
+        response
       end
     end
   end
