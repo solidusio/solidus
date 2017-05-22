@@ -175,6 +175,14 @@ en:
         promotion_uses: Promotion Uses
         starts_at: Start date
         usage_limit: Overall Usage Limit
+      spree/promotion/actions/create_adjustment:
+        description: Creates a promotion credit adjustment on the order
+      spree/promotion/actions/create_item_adjustments:
+        description: Creates a promotion credit adjustment on a line item
+      spree/promotion/actions/create_quantity_adjustments:
+        description: Creates an adjustment on a line item based on quantity
+      spree/promotion/actions/free_shipping:
+        description: Makes all shipments for the order free
       spree/promotion/rules/item_total:
         description: Order total meets these criteria
       spree/promotion/rules/first_order:
@@ -493,6 +501,10 @@ en:
       spree/promotion:
         one: Promotion
         other: Promotions
+      spree/promotion/actions/create_adjustment: Create whole-order adjustment
+      spree/promotion/actions/create_item_adjustments: Create per-line-item adjustment
+      spree/promotion/actions/create_quantity_adjustments: Create per-quantity adjustment
+      spree/promotion/actions/free_shipping: Free shipping
       spree/promotion/rules/first_order: First order
       spree/promotion/rules/item_total: Item total
       spree/promotion/rules/landing_page: Landing Page
@@ -1650,19 +1662,6 @@ en:
     promotion: Promotion
     promotionable: Promotable
     promotion_action: Promotion Action
-    promotion_action_types:
-      create_adjustment:
-        description: Creates a promotion credit adjustment on the order
-        name: Create whole-order adjustment
-      create_item_adjustments:
-        description: Creates a promotion credit adjustment on a line item
-        name: Create per-line-item adjustment
-      create_quantity_adjustments:
-        description: Creates an adjustment on a line item based on quantity
-        name: Create per-quantity adjustment
-      free_shipping:
-        description: Makes all shipments for the order free
-        name: Free shipping
     promotion_actions: Actions
     promotion_code_batch_mailer:
       promotion_code_batch_finished:
