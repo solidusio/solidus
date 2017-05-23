@@ -26,7 +26,7 @@ class Spree::Wallet::AddPaymentSourcesToWallet
           order.user.wallet.add(source)
         end
 
-        order.user.wallet.default_wallet_payment_source =
+        order.user.wallet.default_payment_source =
           wallet_payment_sources.last
       end
     end

@@ -129,8 +129,8 @@
 
 - Deprecate `Order#has_step?` in favour of `has_checkout_step?` [#1667](https://github.com/solidusio/solidus/pull/1667) ([mamhoff](https://github.com/mamhoff))
 - Deprecate `Order#set_shipments_cost`, which is now done in `Order#update!` [\#1689](https://github.com/solidusio/solidus/pull/1689) ([jhawthorn](https://github.com/jhawthorn))
-- Deprecate `user.default_credit_card`, `user.payment_sources` for `user.wallet.default_wallet_payment_source` and `user.wallet.wallet_payment_sources`
-- Deprecate `CreditCard#default` in favour of `user.wallet.default_wallet_payment_source`
+- Deprecate `user.default_credit_card`, `user.payment_sources` for `user.wallet.default_payment_source` and `user.wallet.payment_sources`
+- Deprecate `CreditCard#default` in favour of `user.wallet.default_payment_source`
 - Deprecate `cache_key_for_taxons` helper favour of `cache [I18n.locale, @taxons]`
 - Deprecate admin sass variables in favour of bootstrap alternatives [\#1780](https://github.com/solidusio/solidus/pull/1780) ([tvdeyen](https://github.com/tvdeyen))
 - Deprecate Address\#empty? [\#1686](https://github.com/solidusio/solidus/pull/1686) ([jhawthorn](https://github.com/jhawthorn))

@@ -17,9 +17,10 @@ class Spree::Wallet
   # Returns an array of the WalletPaymentSources in this wallet.
   #
   # @return [Array<WalletPaymentSource>]
-  def wallet_payment_sources
+  def payment_sources
     user.wallet_payment_sources.to_a
   end
+  alias_method :wallet_payment_sources, :payment_sources # Backward Compatibility
 
   # Add a PaymentSource to the wallet.
   #
@@ -48,29 +49,31 @@ class Spree::Wallet
 
   # Find the default WalletPaymentSource for this wallet, if any.
   # @return [WalletPaymentSource]
-  def default_wallet_payment_source
+  def default_payment_source
     user.wallet_payment_sources.find_by(default: true)
   end
+  alias_method :default_wallet_payment_source, :default_payment_source # Backward Compatibility
 
   # Change the default WalletPaymentSource for this wallet.
   # @param source [WalletPaymentSource] The payment source to set as the default.
   #   It must be in the wallet already. Pass nil to clear the default.
   # @return [void]
-  def default_wallet_payment_source=(wallet_payment_source)
+  def default_payment_source=(wallet_payment_source)
     if wallet_payment_source && !find(wallet_payment_source.id)
-      raise Unauthorized, "wallet_payment_source #{wallet_payment_source.id} does not belong to wallet of user #{user.id}"
+      raise Unauthorized, "payment_source #{wallet_payment_source.id} does not belong to wallet of user #{user.id}"
     end
 
     # Do not update the payment source if the passed source is already default
-    if default_wallet_payment_source == wallet_payment_source
+    if default_payment_source == wallet_payment_source
       return
     end
 
     Spree::WalletPaymentSource.transaction do
       # Unset old default
-      default_wallet_payment_source.try!(:update!, default: false)
+      default_payment_source.try!(:update!, default: false)
       # Set new default
       wallet_payment_source.try!(:update!, default: true)
     end
   end
+  alias_method :default_wallet_payment_source=, :default_payment_source= # Backward Compatibility
 end

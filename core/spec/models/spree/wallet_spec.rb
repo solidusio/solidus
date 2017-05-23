@@ -128,7 +128,7 @@ describe Spree::Wallet, type: :model do
 
       it 'raises an error' do
         expect {
-          wallet.default_wallet_payment_source = other_wallet_credit_card
+          wallet.default_payment_source = other_wallet_credit_card
         }.to raise_error(Spree::Wallet::Unauthorized)
       end
     end
