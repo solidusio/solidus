@@ -44,7 +44,7 @@ module Spree
     def populate
       @order   = current_order(create_order_if_necessary: true)
       variant  = Spree::Variant.find(params[:variant_id])
-      quantity = params[:quantity].to_i
+      quantity = params[:quantity].present? ? params[:quantity].to_i : 1
 
       # 2,147,483,647 is crazy. See issue https://github.com/spree/spree/issues/2695.
       if !quantity.between?(1, 2_147_483_647)

@@ -68,6 +68,34 @@ describe Spree::OrdersController, type: :controller do
             Spree.t(:please_enter_reasonable_quantity)
           )
         end
+
+        context "when quantity is empty string" do
+          it "should populate order with 1 of given variant" do
+            expect do
+              post :populate, params: { variant_id: variant.id, quantity: '' }
+            end.to change { Spree::Order.count }.by(1)
+            order = Spree::Order.last
+            expect(response).to redirect_to spree.cart_path
+            expect(order.line_items.size).to eq(1)
+            line_item = order.line_items.first
+            expect(line_item.variant_id).to eq(variant.id)
+            expect(line_item.quantity).to eq(1)
+          end
+        end
+
+        context "when quantity is nil" do
+          it "should populate order with 1 of given variant" do
+            expect do
+              post :populate, params: { variant_id: variant.id, quantity: nil }
+            end.to change { Spree::Order.count }.by(1)
+            order = Spree::Order.last
+            expect(response).to redirect_to spree.cart_path
+            expect(order.line_items.size).to eq(1)
+            line_item = order.line_items.first
+            expect(line_item.variant_id).to eq(variant.id)
+            expect(line_item.quantity).to eq(1)
+          end
+        end
       end
     end
 
