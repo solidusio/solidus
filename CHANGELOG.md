@@ -1,12 +1,15 @@
 ## Solidus 2.3.0 (master, unreleased)
 
+- Allow custom separator between a promotion's `base_code` and `suffix` [\#1951](https://github.com/solidusio/solidus/pull/1951) ([ericgross](https://github.com/ericgross))
 - Ignore `adjustment.finalized` on tax adjustments. [\#1936](https://github.com/solidusio/solidus/pull/1936) ([jordan-brough](https://github.com/jordan-brough))
 - Deprecate `#simple_current_order`
 [\#1915](https://github.com/solidusio/solidus/pull/1915) ([ericsaupe](https://github.com/ericsaupe))
 - Transform the relation between TaxRate and TaxCategory to a Many to Many [\#1851](https://github.com/solidusio/solidus/pull/1851) ([vladstoick](https://github.com/vladstoick))
 
   This fixes issue [\#1836](https://github.com/solidusio/solidus/issues/1836). By allowing a TaxRate to tax multiple categories, stores don't have to create multiple TaxRates with the same value if a zone doesn't have different tax rates for some tax categories.
-- [\#1951](https://github.com/solidusio/solidus/pull/1951) Allow custom separator between a promotion's `base_code` and `suffix` 
+
+- Adjustments without a source are now included in `line_item.adjustment_total`
+[\#1933](https://github.com/solidusio/solidus/pull/1933) ([alexstoick](https://github.com/alexstoick))
 
 ## Solidus 2.2.1 (2017-05-09)
 

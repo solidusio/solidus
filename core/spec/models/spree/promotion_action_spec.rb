@@ -22,6 +22,10 @@ describe Spree::PromotionAction, type: :model do
       @action_adjustment = order.adjustments.where(source: action).first!
     end
 
+    it "generates its own partial path" do
+      expect(action.to_partial_path).to eq 'spree/admin/promotions/actions/my_promotion_action'
+    end
+
     it 'removes the action adjustment' do
       expect(order.adjustments).to match_array([other_adjustment, @action_adjustment])
 
