@@ -20,6 +20,7 @@ describe EmailValidator do
   }
   let(:invalid_emails) {
     [
+    '\@email.com',
     'invalid email@email.com',
     '.invalid.email@email.com',
     'invalid.email.@email.com',
