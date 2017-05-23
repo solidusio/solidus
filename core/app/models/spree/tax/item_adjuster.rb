@@ -33,6 +33,7 @@ module Spree
           # we need only check source_id.
           adjustment = tax_adjustments.detect { |a| a.source_id == rate.id }
           if adjustment
+            adjustment.unfinalize!
             adjustment.update!
             adjustment
           else
