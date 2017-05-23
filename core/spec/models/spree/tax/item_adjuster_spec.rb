@@ -6,7 +6,7 @@ RSpec.describe Spree::Tax::ItemAdjuster do
   let(:item) { create(:line_item, order: order) }
 
   def tax_adjustments
-    item.adjustments.tax.to_a
+    item.adjustments.select(&:tax?).to_a
   end
 
   describe 'initialization' do
@@ -67,13 +67,32 @@ RSpec.describe Spree::Tax::ItemAdjuster do
         context 'and all rates have the same tax category as the item' do
           let(:item) { create :line_item, order: order, tax_category: item_tax_category }
           let(:item_tax_category) { create(:tax_category) }
-          let(:rate_1) { create :tax_rate, tax_category: item_tax_category }
+          let(:rate_1) { create :tax_rate, tax_category: item_tax_category, amount: 0.1 }
           let(:rate_2) { create :tax_rate }
           let(:rates_for_order_zone) { [rate_1, rate_2] }
 
           it 'creates an adjustment for every matching rate' do
             adjuster.adjust!
             expect(tax_adjustments.length).to eq(1)
+          end
+
+          context 'when the adjustment exists' do
+            before do
+              adjuster.adjust!
+            end
+
+            context 'when the existing adjustment is finalized' do
+              before do
+                tax_adjustments.first.finalize!
+              end
+
+              it 'updates the adjustment' do
+                item.update_columns(price: item.price * 2)
+                adjuster.adjust!
+                expect(tax_adjustments.length).to eq(1)
+                expect(tax_adjustments.first.amount).to eq(0.1 * item.price)
+              end
+            end
           end
         end
       end
