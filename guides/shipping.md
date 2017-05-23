@@ -1,19 +1,14 @@
----
-title: "Shipments"
-section: "core"
----
+# Shipping
 
-## Overview
+This guide explains how Solidus represents shipping options and how it calculates expected costs, and shows how you can configure the system with your own shipping methods. After reading it you should know:
 
-This guide explains how Spree represents shipping options and how it calculates expected costs, and shows how you can configure the system with your own shipping methods. After reading it you should know:
-
-* how shipments and shipping are implemented in Spree
+* how shipments and shipping are implemented in Solidus
 * how to specify your shipping structure
 * how split shipments work
 * how to configure products for special shipping treatment
 * how to capture shipping instructions
 
-Spree uses a very flexible and effective system to calculate shipping, accommodating the full range of shipment pricing: from simple flat rate to complex product-type- and weight-dependent calculations.
+Solidus uses a very flexible and effective system to calculate shipping, accommodating the full range of shipment pricing: from simple flat rate to complex product-type- and weight-dependent calculations.
 
 The Shipment model is used to track how items are delivered to the buyer.
 
@@ -24,6 +19,12 @@ Shipments have the following attributes:
 * `shipped_at`: The time when the shipment was shipped.
 * `state`: The current state of the shipment.
 * `stock_location_id`: The ID of the Stock Location where the items for this shipment will be sourced from.
+* `adjustment_total`
+* `additional_tax_total`
+* `promo_total`
+* `included_tax_total`
+* `cost`
+* `order_id`
 
 A shipment can go through many different states, as illustrated below.
 
@@ -36,13 +37,80 @@ An explanation of the different states:
 * `shipped`: The shipment is on its way to the buyer.
 * `canceled`: When an order is cancelled, all of its shipments will also be cancelled. When this happens, all items in the shipment will be restocked. If an order is "resumed", then the shipment will also be resumed.
 
-Explaining each piece of the shipment world inside of Spree separately and how each piece fits together can be a cumbersome task. Fortunately, using a few simple examples makes it much easier to grasp. In that spirit, the examples are shown first in this guide.
+Explaining each piece of the shipment world inside of Solidus separately and how each piece fits together can be a cumbersome task. Fortunately, using a few simple examples makes it much easier to grasp. In that spirit, the examples are shown first in this guide.
+
+## Definitions, Design, & Functionality
+
+To properly leverage Solidus' shipping system's flexibility you must understand a few key concepts:
+
+* Stock Locations
+* Shipping Methods
+* Zones
+* Shipping Categories
+* Calculators (through Shipping Rates)
+
+### Stock Locations
+Stock locations represent physical storage locations from which stock is shipped.
+
+### Shipping Methods
+
+Shipping methods identify the actual services or carriers used to ship the product. For example:
+
+* UPS Ground
+* UPS One Day
+* FedEx 2Day
+* FedEx Overnight
+* DHL International
+
+Each shipping method is only applicable to a specific geographic **Zone**. For example, you wouldn't be able to get a package delivered internationally using a domestic-only shipping method. You can't ship from Dallas, USA to Rio de Janeiro, Brazil using UPS Ground (a US-only carrier).
+
+If you are using shipping categories, these can be used to qualify or disqualify a given shipping method.
+
+**Note**: *Shipping methods can have multiple shipping categories assigned to them. This allows the shipping methods available to an order to be determined by the shipping categories of the items in a shipment.*
+
+### Zones
+
+Zones serve as a mechanism for grouping geographic areas together into a single entity. You can read all about how to configure and use Zones in the [Zones Guide](addresses#zones).
+
+The Shipping Address entered during checkout will define the zone the customer is in and limit the Shipping Methods available to him.
+
+### Shipping Categories
+
+Shipping Categories are useful if you sell products whose shipping pricing vary depending on the type of product (TVs and Mugs, for instance) or the handling of the product (frigile or large). Shipping categories can be assigned when editing a product.
+
+**Note:** *For simple setups, where shipping for all products is priced the same (ie. T-shirt-only shop), all products would be assigned to the default shipping category for the store.*
+
+Some examples of Shipping Categories would be:
+
+* Light (for lightweight items like stickers)
+* Regular
+* Heavy (for items over a certain weight)
+
+Shipping Categories are created in the admin interface (Settings -> Shipping -> Shipping Categories) and then assigned to products (Products -> Edit).
+
+During checkout, the shipping categories of the products in your order will determine which calculator will be used to price its shipping for each Shipping Method.
+
+### Shipping Calculators
+
+A Calculator is the component responsible for calculating the shipping price for each available Shipping Method.
+
+Solidus ships with 5 default Calculators:
+
+* Flat percent
+* Flat rate (per order)
+* Flat rate per package item
+* Flexible rate per package item
+* Price sack
+
+Flexible rate is defined as a flat rate for the first product, plus a different flat rate for each additional product.
+
+You can define your own calculator if you have more complex needs. In that case, check out the Calculators Guide (*this guide has not yet been ported from Spree as of this edit*).
 
 ## Examples
 
 ### Simple Setup
 
-Consider you sell T-shirts to the US and Europe and ship from a single location, and you work with 2 deliverers:
+Consider you sell T-shirts to the US and Europe and ship from a single location, and you work with 2 carriers:
 
 * USPS Ground (to US)
 * FedEx (to EU)
@@ -63,6 +131,9 @@ To achieve this setup you need the following configuration:
 |USPS Ground|US|Flexi Rate($5,$2)|
 |FedEx|EU_VAT|FlatRate-per-item($10)|
 
+With the above configuration, a customer shipping to the US would see the USPS Ground shipping option presented to them at checkout, while a customer shipping to the EU would see the FedEx option.  Shipping rate would be calculatd at checkout according to the calculator rules.
+
+
 ### Advanced Setup
 
 Consider you sell products to a single zone (US) and you ship from 2 locations (Stock Locations):
@@ -70,7 +141,7 @@ Consider you sell products to a single zone (US) and you ship from 2 locations (
 * New York
 * Los Angeles
 
-and you work with 3 deliverers (Shipping Methods):
+and you work with 3 carriers (Shipping Methods):
 
 * FedEx
 * DHL
@@ -103,85 +174,14 @@ USPS charges:
 To achieve this setup you need the following configuration:
 
 * 4 Shipping Categories: Default, Light, Regular and Heavy
-* 3 Shipping Methods (Configuration->Shipping Methods): FedEx, DHL, USPS
-* 2 Stock Locations (Configuration->Stock Locations): New York, Los Angeles
+* 3 Shipping Methods (Settings -> Shipping -> Shipping Methods): FedEx, DHL, USPS
+* 2 Stock Locations (Settings -> Shipping -> Stock Locations): New York, Los Angeles
 
 |S. Category / S. Method|DHL|FedEx|USPS|
 |---:|---:|---:|---:|
 |Light|Per Item ($5)|Flat Rate ($10)|Per Item ($8)|
 |Regular|Per Item ($5)|Per Item ($2)|Per Item ($8)|
 |Heavy|Per Item ($50)|Flexi Rate($20,$15)|Per Item ($20)|
-
-## Design & Functionality
-
-To properly leverage Spree's shipping system's flexibility you must understand a few key concepts:
-
-* Shipping Methods
-* Zones
-* Shipping Categories
-* Calculators (through Shipping Rates)
-
-### Shipping Methods
-
-Shipping methods are the actual services used to send the product. For example:
-
-* UPS Ground
-* UPS One Day
-* FedEx 2Day
-* FedEx Overnight
-* DHL International
-
-Each shipping method is only applicable to a specific `Zone`. For example, you wouldn't be able to get a package delivered internationally using a domestic-only shipping method. You can't ship from Dallas, USA to Rio de Janeiro, Brazil using UPS Ground (a US-only carrier).
-
-If you are using shipping categories, these can be used to qualify or disqualify a given shipping method.
-
-***
-**Note**: Shipping methods can now have multiple shipping categories assigned to them. This allows the shipping methods available to an order to be determined by the shipping categories of the items in a shipment.
-***
-
-### Zones
-
-Zones serve as a mechanism for grouping geographic areas together into a single entity. You can read all about how to configure and use Zones in the [Zones Guide](addresses#zones).
-
-The Shipping Address entered during checkout will define the zone the customer is in and limit the Shipping Methods available to him.
-
-### Shipping Categories
-
-Shipping Categories are useful if you sell products whose shipping pricing vary depending on the type of product (TVs and Mugs, for instance).
-
-***
-For simple setups, where shipping for all products is priced the same (ie. T-shirt-only shop), all products would be assigned to the default shipping category for the store.
-***
-
-Some examples of Shipping Categories would be:
-
-* Light (for lightweight items like stickers)
-* Regular
-* Heavy (for items over a certain weight)
-
-Shipping Categories are created in the admin interface ("Configuration" -> "Shipping Categories") and then assigned to products ("Products" -> "Edit").
-
-$$$
-Follow up: on a clean install + seed data I ended up with two Shipping Categories - "Default Shipping" and "Default"
-$$$
-
-During checkout, the shipping categories of the products in your order will determine which calculator will be used to price its shipping for each Shipping Method.
-
-### Calculators
-
-A Calculator is the component responsible for calculating the shipping price for each available Shipping Method.
-
-Spree ships with 5 default Calculators:
-
-* Flat rate (per order)
-* Flat rate (per item/product)
-* Flat percent
-* Flexible rate
-* Price sack
-
-Flexible rate is defined as a flat rate for the first product, plus a different flat rate for each additional product.
-
-You can define your own calculator if you have more complex needs. In that case, check out the [Calculators Guide](calculators).
 
 ## UI
 
@@ -193,21 +193,19 @@ After entering a shipping address, the system displays the available shipping op
 
 The customer must choose a shipping method for each shipment before proceeding to the next stage. At the confirmation step, the shipping cost will be shown and included in the order's total.
 
-***
-You can enable collection of extra _shipping instructions_ by setting the option `Spree::Config.shipping_instructions` to `true`. This is set to `false` by default. See [Shipping Instructions](#shipping-instructions) below.
-***
+**Note:** *You can enable collection of extra _shipping instructions_ by setting the option `Spree::Config.shipping_instructions` to `true`. This is set to `false` by default. See [Shipping Instructions](#shipping-instructions) below.*
 
 ### What the Order's Administrator Sees
 
-`Shipment` objects are created during checkout for an order. Initially each records just the shipping method and the order it applies to. The administrator can update the record with the actual shipping cost and a tracking code, and may also (once only) confirm the dispatch. This confirmation causes a shipping date to be set as the time of confirmation.
+**Shipment** objects are created during checkout for an order. Initially each records just the shipping method and the order it applies to. The administrator can update the record with the actual shipping cost and a tracking code, and may also (once only) confirm the dispatch. This confirmation causes a shipping date to be set as the time of confirmation.
 
 ## Advanced Shipping Methods
 
-Spree comes with a set of calculators that should fit most of the shipping situations that may arise. If the calculators that come with Spree are not enough for your needs, you might want to use an extension - if one exists to meet your needs - or create a custom one.
+Solidus comes with a set of calculators that should fit most of the shipping situations that may arise. If the calculators that come with Solidus are not enough for your needs, you might want to use an extension - if one exists to meet your needs - or create a custom one.
 
 ### Extensions
 
-There are a few Spree extensions which provide additional shipping methods, including special support for fees imposed by common carriers, or support for bulk orders. See the [Spree Extension Registry](http://spreecommerce.com/extensions) for the latest information.
+There are a few Solidus extensions which provide additional shipping methods, including special support for fees imposed by common carriers, or support for bulk orders. See the [Spree Extension Registry](http://spreecommerce.com/extensions) for the latest information.
 
 ### Writing Your Own
 
@@ -454,7 +452,7 @@ Let's take a look at what the default splitters do:
 
 Note that splitters can be customized, and creating your own can be done with relative ease. By inheriting from `Spree::Stock::Splitter::Base`, you can create your own splitter.
 
-For an example of a simple splitter, take a look at Spree's [weight based splitter](https://github.com/spree/spree/blob/235e470b242225d7c75c7c4c4c033ee3d739bb36/core/app/models/spree/stock/splitter/weight.rb). This splitter pulls items with a weight greater than 150 into their own shipment.
+For an example of a simple splitter, take a look at Solidus' [weight based splitter](https://github.com/spree/spree/blob/235e470b242225d7c75c7c4c4c033ee3d739bb36/core/app/models/spree/stock/splitter/weight.rb). This splitter pulls items with a weight greater than 150 into their own shipment.
 
 After creating your splitter, you need to add it to the array of splitters Spree
 uses. To do this, add the following to your application's spree initializer
@@ -511,3 +509,9 @@ end
 ### The Estimator
 
 The `Spree::Stock::Estimator` loops through the packages created by the packer in order to calculate and attach shipping rates to them. This information is then returned to the user so they can select shipments for their order and complete the checkout process.
+
+
+
+## Documentation ToDo
+* There were diagrams and images in the original Spree docs that seem to have been lossed.  Consider finding or creating them.
+
