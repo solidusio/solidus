@@ -309,6 +309,17 @@ module Spree
       @shipping_rate_taxer_class ||= Spree::Tax::ShippingRateTaxer
     end
 
+    # Allows providing your own class for calculating taxes on a shipping rate.
+    #
+    # @!attribute [rw] shipping_rate_tax_calculator_class
+    # @return [Class] a class with the same public interfaces as
+    #   Spree::TaxCalculator::ShippingRate
+    # @api experimental
+    attr_writer :shipping_rate_tax_calculator_class
+    def shipping_rate_tax_calculator_class
+      @shipping_rate_tax_calculator_class ||= Spree::TaxCalculator::ShippingRate
+    end
+
     # Allows providing your own Mailer for shipped cartons.
     #
     # @!attribute [rw] carton_shipped_email_class
@@ -363,6 +374,17 @@ module Spree
     attr_writer :tax_adjuster_class
     def tax_adjuster_class
       @tax_adjuster_class ||= Spree::Tax::OrderAdjuster
+    end
+
+    # Allows providing your own class for calculating taxes on an order.
+    #
+    # @!attribute [rw] tax_calculator_class
+    # @return [Class] a class with the same public interfaces as
+    #   Spree::TaxCalculator::Default
+    # @api experimental
+    attr_writer :tax_calculator_class
+    def tax_calculator_class
+      @tax_calculator_class ||= Spree::TaxCalculator::Default
     end
 
     def static_model_preferences

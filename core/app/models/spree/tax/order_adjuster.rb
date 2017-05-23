@@ -4,8 +4,6 @@ module Spree
     class OrderAdjuster
       attr_reader :order
 
-      include TaxHelpers
-
       # @param [Spree::Order] order to be adjusted
       def initialize(order)
         @order = order
@@ -14,18 +12,8 @@ module Spree
       # Creates tax adjustments for all taxable items (shipments and line items)
       # in the given order.
       def adjust!
-        (order.line_items + order.shipments).each do |item|
-          ItemAdjuster.new(item, order_wide_options).adjust!
-        end
-      end
-
-      private
-
-      def order_wide_options
-        {
-          rates_for_order: rates_for_order(order),
-          rates_for_default_zone: rates_for_default_zone
-        }
+        taxes = Spree::Config.tax_calculator_class.new(order).calculate
+        Spree::OrderTaxation.new(order).apply(taxes)
       end
     end
   end

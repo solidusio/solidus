@@ -98,8 +98,6 @@ module Spree
       calculator.compute(item)
     end
 
-    private
-
     def adjustment_label(amount)
       Spree.t(
         translation_key(amount),
@@ -108,6 +106,8 @@ module Spree
         amount: amount_for_adjustment_label
       )
     end
+
+    private
 
     def amount_for_adjustment_label
       ActiveSupport::NumberHelper::NumberToPercentageConverter.convert(
