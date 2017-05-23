@@ -58,6 +58,17 @@ describe Spree::Admin::OrdersController, type: :controller do
       end
     end
 
+    context "#resend" do
+      let(:order) { create(:completed_order_with_totals) }
+      it "resends order email" do
+        mail_message = double "Mail::Message"
+        expect(Spree::OrderMailer).to receive(:confirm_email).with(order, true).and_return mail_message
+        expect(mail_message).to receive :deliver_later
+        post :resend, params: { id: order.number }
+        expect(flash[:success]).to eq Spree.t(:order_email_resent)
+      end
+    end
+
     context "pagination" do
       it "can page through the orders" do
         get :index, params: { page: 2, per_page: 10 }
