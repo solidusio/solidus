@@ -3,6 +3,10 @@
 - Ignore `adjustment.finalized` on tax adjustments. [\#1936](https://github.com/solidusio/solidus/pull/1936) ([jordan-brough](https://github.com/jordan-brough))
 - Deprecate `#simple_current_order`
 [\#1915](https://github.com/solidusio/solidus/pull/1915) ([ericsaupe](https://github.com/ericsaupe))
+- Transform the relation between TaxRate and TaxCategory to a Many to Many [\#1851](https://github.com/solidusio/solidus/pull/1851) ([vladstoick](https://github.com/vladstoick))
+
+  This fixes issue [\#1836](https://github.com/solidusio/solidus/issues/1836). By allowing a TaxRate to tax multiple categories, stores don't have to create multiple TaxRates with the same value if a zone doesn't have different tax rates for some tax categories.
+
 
 ## Solidus 2.2.1 (2017-05-09)
 
