@@ -7,6 +7,8 @@
 
   This fixes issue [\#1836](https://github.com/solidusio/solidus/issues/1836). By allowing a TaxRate to tax multiple categories, stores don't have to create multiple TaxRates with the same value if a zone doesn't have different tax rates for some tax categories.
 
+- Adjustments without a source are now included in `line_item.adjustment_total`
+[\#1933](https://github.com/solidusio/solidus/pull/1933) ([alexstoick](https://github.com/alexstoick))
 
 ## Solidus 2.2.1 (2017-05-09)
 
