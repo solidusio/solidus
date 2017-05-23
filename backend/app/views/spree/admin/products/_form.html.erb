@@ -32,7 +32,8 @@
       <div data-hook="admin_product_form_price">
         <%= f.field_container :price do %>
           <%= f.label :price, class: 'required' %>
-          <%= render "spree/admin/shared/number_with_currency", f: f, amount_attr: :price, currency: @product.find_or_build_master.default_price.currency %>
+          <%= render "spree/admin/shared/number_with_currency", f: f, amount_attr: :price,
+                     currency: Spree::Config.default_pricing_options.currency %>
           <%= f.error_message_on :price %>
         <% end %>
       </div>

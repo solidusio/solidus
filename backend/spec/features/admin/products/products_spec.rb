@@ -69,6 +69,23 @@ describe "Products", type: :feature do
           end
         end
       end
+      context "when none of the product prices are in the same currency as the default in the store" do
+        before do
+          Spree::Config[:currency] = "MXN"
+        end
+
+        let!(:product) do
+          create(:product, name: "Just a product", price: 19.99)
+        end
+
+        it 'defaults it to Spree::Config.currency and sets the price as blank' do
+          Spree::Config[:currency] = "USD"
+          visit spree.admin_product_path(product)
+          within("#product_price_field") do
+            expect(page).to have_content("USD")
+          end
+        end
+      end
     end
 
     context "searching products" do
