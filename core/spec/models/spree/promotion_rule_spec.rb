@@ -23,5 +23,10 @@ module Spree
       p2.promotion_id = 1
       expect(p2).not_to be_valid
     end
+
+    it "generates its own partial path" do
+      rule = TestRule.new
+      expect(rule.to_partial_path).to eq 'spree/admin/promotions/rules/test_rule'
+    end
   end
 end
