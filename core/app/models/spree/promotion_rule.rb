@@ -30,6 +30,10 @@ module Spree
       @eligibility_errors ||= ActiveModel::Errors.new(self)
     end
 
+    def to_partial_path
+      "spree/admin/promotions/rules/#{model_name.element}"
+    end
+
     private
 
     def unique_per_promotion
