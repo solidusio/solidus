@@ -36,5 +36,9 @@ module Spree
         end
       end
     end
+
+    def to_partial_path
+      "spree/admin/promotions/actions/#{model_name.element}"
+    end
   end
 end
