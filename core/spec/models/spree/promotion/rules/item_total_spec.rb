@@ -6,7 +6,7 @@ describe Spree::Promotion::Rules::ItemTotal, type: :model do
   end
 
   context "preferred operator default value should be 'gt'" do
-    it { expect(default_rule.preferred_operator).to eq('gt')}
+    it { expect(default_rule.preferred_operator).to eq('gt') }
   end
 
   let(:rule) do
