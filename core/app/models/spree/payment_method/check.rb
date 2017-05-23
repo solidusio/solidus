@@ -1,7 +1,7 @@
 module Spree
   class PaymentMethod::Check < PaymentMethod
     def actions
-      %w{capture void}
+      %w{capture void credit}
     end
 
     # Indicates whether its possible to capture the payment
@@ -14,18 +14,26 @@ module Spree
       payment.state != 'void'
     end
 
-    def capture(*_args)
-      ActiveMerchant::Billing::Response.new(true, "", {}, {})
+    def capture(*)
+      simulated_successful_billing_response
     end
 
-    def cancel(response); end
+    def cancel(*); end
 
-    def void(*_args)
-      ActiveMerchant::Billing::Response.new(true, "", {}, {})
+    def void(*)
+      simulated_successful_billing_response
+    end
+
+    def credit(*)
+      simulated_successful_billing_response
     end
 
     def source_required?
       false
+    end
+
+    def simulated_successful_billing_response
+      ActiveMerchant::Billing::Response.new(true, "", {}, {})
     end
   end
 end
