@@ -698,7 +698,7 @@ module Spree
       self.ship_address = Spree::Address.immutable_merge(ship_address, attributes)
     end
 
-    def assign_default_addresses!
+    def assign_default_user_addresses!
       if user
         # this is one of 2 places still using User#bill_address
         self.bill_address ||= user.bill_address if user.bill_address.try!(:valid?)
