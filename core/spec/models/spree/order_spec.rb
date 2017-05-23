@@ -774,6 +774,88 @@ describe Spree::Order, type: :model do
     end
   end
 
+  context "#assign_default_addresses!" do
+    let(:order) { Spree::Order.new }
+
+    subject { order.assign_default_addresses! }
+
+    context "when no user is associated to the order" do
+      it "does not associate any bill address" do
+        expect { subject }.not_to change { order.bill_address }.from(nil)
+      end
+
+      it "does not associate any ship address" do
+        expect { subject }.not_to change { order.ship_address }.from(nil)
+      end
+    end
+
+    context "when user is associated to the order" do
+      let(:user)         { build_stubbed(:user) }
+      let(:bill_address) { nil }
+      let(:ship_address) { nil }
+
+      before do
+        order.associate_user!(user)
+        user.bill_address = bill_address
+        user.ship_address = ship_address
+      end
+
+      context "but has no bill address associated" do
+        it "does not associate any bill address" do
+          expect { subject }.not_to change { order.bill_address }.from(nil)
+        end
+      end
+
+      context "and has an invalid bill address associated " do
+        let(:bill_address) { build(:address, firstname: nil) } # invalid address
+
+        it "does not associate any bill address" do
+          expect { subject }.not_to change { order.bill_address }.from(nil)
+        end
+      end
+
+      context "and has a valid address associated " do
+        let(:bill_address) { build(:address) }
+
+        it "does associate user bill address" do
+          expect { subject }.to change { order.bill_address }.from(nil).to(bill_address)
+        end
+      end
+
+      context "but has no ship address associated" do
+        it "does not associate any ship address" do
+          expect { subject }.not_to change { order.ship_address }.from(nil)
+        end
+      end
+
+      context "and has an invalid ship address associated " do
+        let(:ship_address) { build(:address, firstname: nil) } # invalid address
+
+        it "does not associate any ship address" do
+          expect { subject }.not_to change { order.ship_address }.from(nil)
+        end
+      end
+
+      context "and has a valid ship address associated" do
+        let(:ship_address) { build(:address) }
+
+        it "does associate user ship address" do
+          expect { subject }.to change { order.ship_address }.from(nil).to(ship_address)
+        end
+
+        context 'when checkout step does not include delivery' do
+          before do
+            expect(order).to receive(:checkout_steps) { %w[some step] }
+          end
+
+          it "does not associate any ship address" do
+            expect { subject }.not_to change { order.ship_address }.from(nil)
+          end
+        end
+      end
+    end
+  end
+
   context "#can_ship?" do
     let(:order) { Spree::Order.create }
 
