@@ -67,9 +67,10 @@ module Spree
         ]
 
         app.config.spree.calculators.promotion_actions_create_item_adjustments = %w[
-          Spree::Calculator::PercentOnLineItem
+          Spree::Calculator::DistributedAmount
           Spree::Calculator::FlatRate
           Spree::Calculator::FlexiRate
+          Spree::Calculator::PercentOnLineItem
           Spree::Calculator::TieredPercent
         ]
 
