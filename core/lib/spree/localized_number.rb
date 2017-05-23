@@ -21,7 +21,8 @@ module Spree
       # then replace the locale-specific decimal separator with the standard separator if necessary
       number = number.gsub(separator, '.') unless separator == '.'
 
-      number.to_d
+      # Handle empty string for ruby 2.4 compatibility
+      BigDecimal.new(number.presence || 0)
     end
   end
 end
