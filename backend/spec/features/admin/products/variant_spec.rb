@@ -48,4 +48,24 @@ describe "Variants", type: :feature do
       end
     end
   end
+
+  context "editing existent variant" do
+    let!(:variant) { create(:variant, product: product) }
+
+    context "if product has an option type" do
+      let!(:option_type) { create(:option_type) }
+      let!(:option_value) { create(:option_value, option_type: option_type) }
+
+      before do
+        product.option_types << option_type
+        variant.option_values << option_value
+      end
+
+      it "page has a field for editing the option value", js: true do
+        visit spree.edit_admin_product_variant_path(product, variant)
+        expect(page).to have_css("label", text: option_type.presentation)
+        expect(page).to have_css(".select2-chosen", text: option_value.presentation)
+      end
+    end
+  end
 end
