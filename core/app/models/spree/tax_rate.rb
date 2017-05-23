@@ -98,6 +98,11 @@ module Spree
       calculator.compute(item)
     end
 
+    def active?
+      (starts_at.nil? || starts_at < Time.current) &&
+        (expires_at.nil? || expires_at > Time.current)
+    end
+
     def adjustment_label(amount)
       Spree.t(
         translation_key(amount),

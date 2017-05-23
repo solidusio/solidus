@@ -8,6 +8,7 @@ module Spree
     # Orders created before Spree 2.1 had tax adjustments applied to the order, as a whole.
     # Orders created with Spree 2.2 and after, have them applied to the line items individually.
     def compute_order(order)
+      return 0 unless rate.active?
       matched_line_items = order.line_items.select do |line_item|
         rate.tax_categories.include?(line_item.tax_category)
       end
@@ -23,6 +24,7 @@ module Spree
 
     # When it comes to computing shipments or line items: same same.
     def compute_item(item)
+      return 0 unless rate.active?
       if rate.included_in_price
         deduced_total_by_rate(item, rate)
       else
