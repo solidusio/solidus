@@ -116,9 +116,12 @@ module Spree
         link_to(text, url, options)
       end
 
-      def icon(icon_name)
+      def solidus_icon(icon_name)
         icon_name ? content_tag(:i, '', class: icon_name) : ''
       end
+
+      alias_method :icon, :solidus_icon
+      deprecate icon: :solidus_icon, deprecator: Spree::Deprecation
 
       def button(text, icon_name = nil, button_type = 'submit', options = {})
         class_names = "button"
