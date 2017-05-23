@@ -9,13 +9,20 @@ module Spree
     include Spree::AdjustmentSource
 
     belongs_to :zone, class_name: "Spree::Zone", inverse_of: :tax_rates
-    belongs_to :tax_category, class_name: "Spree::TaxCategory", inverse_of: :tax_rates
+
+    has_many :tax_rate_tax_categories,
+      class_name: Spree::TaxRateTaxCategory,
+      dependent: :destroy,
+      inverse_of: :tax_rate
+    has_many :tax_categories,
+      through: :tax_rate_tax_categories,
+      class_name: Spree::TaxCategory,
+      inverse_of: :tax_rates
 
     has_many :adjustments, as: :source
     has_many :shipping_rate_taxes, class_name: "Spree::ShippingRateTax"
 
     validates :amount, presence: true, numericality: true
-    validates :tax_category_id, presence: true
 
     # Finds all tax rates whose zones match a given address
     scope :for_address, ->(address) { joins(:zone).merge(Spree::Zone.for_address(address)) }
@@ -94,10 +101,12 @@ module Spree
     private
 
     def adjustment_label(amount)
-      Spree.t translation_key(amount),
-              scope: "adjustment_labels.tax_rates",
-              name: name.presence || tax_category.name,
-              amount: amount_for_adjustment_label
+      Spree.t(
+        translation_key(amount),
+        scope: "adjustment_labels.tax_rates",
+        name: name.presence || tax_categories.map(&:name).join(", "),
+        amount: amount_for_adjustment_label
+      )
     end
 
     def amount_for_adjustment_label

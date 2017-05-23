@@ -38,7 +38,7 @@ describe Spree::OrderCapturing do
 
       let!(:product) { create(:product, price: 10.00) }
       let!(:variant) do
-        create(:variant, price: 10, product: product, track_inventory: false, tax_category: tax_rate.tax_category)
+        create(:variant, price: 10, product: product, track_inventory: false, tax_category: tax_rate.tax_categories.first)
       end
       let!(:shipping_method) { create(:free_shipping_method) }
       let(:tax_rate) { create(:tax_rate, amount: 0.1, zone: create(:global_zone, name: "Some Tax Zone")) }

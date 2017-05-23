@@ -29,7 +29,7 @@
       <tr data-hook="rate_header">
         <th><%= Spree::TaxRate.human_attribute_name(:zone) %></th>
         <th><%= Spree::TaxRate.human_attribute_name(:name) %></th>
-        <th><%= Spree::TaxRate.human_attribute_name(:tax_category_id) %></th>
+        <th><%= Spree::TaxRate.human_attribute_name(:tax_categories) %></th>
         <th><%= Spree::TaxRate.human_attribute_name(:amount) %></th>
         <th><%= Spree::TaxRate.human_attribute_name(:included_in_price) %></th>
         <th><%= Spree::TaxRate.human_attribute_name(:show_rate_in_label) %></th>
@@ -42,7 +42,13 @@
       <tr id="<%= spree_dom_id tax_rate %>" data-hook="rate_row" class="<%= cycle('odd', 'even')%>">
         <td class="align-center"><%=tax_rate.zone.try(:name) || Spree.t(:not_available) %></td>
         <td class="align-center"><%=tax_rate.name %></td>
-        <td class="align-center"><%=tax_rate.tax_category.try(:name) || Spree.t(:not_available) %></td>
+        <td class="align-center">
+          <% if tax_rate.tax_categories.any? %>
+            <%= tax_rate.tax_categories.map(&:name).join(", ") %>
+          <% else %>
+            <%= Spree.t(:not_available) %>
+          <% end %>
+        </td>
         <td class="align-center"><%=tax_rate.amount %></td>
         <td class="align-center"><%=tax_rate.included_in_price? ? Spree.t(:say_yes) : Spree.t(:say_no) %></td>
         <td class="align-center"><%=tax_rate.show_rate_in_label? ? Spree.t(:say_yes) : Spree.t(:say_no) %></td>

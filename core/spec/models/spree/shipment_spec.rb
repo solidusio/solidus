@@ -130,7 +130,7 @@ describe Spree::Shipment, type: :model do
 
     let!(:ship_address) { create(:address) }
     let!(:tax_zone) { create(:global_zone) } # will include the above address
-    let!(:tax_rate) { create(:tax_rate, amount: 0.1, zone: tax_zone, tax_category: tax_category) }
+    let!(:tax_rate) { create(:tax_rate, amount: 0.1, zone: tax_zone, tax_categories: [tax_category]) }
     let(:tax_category) { create(:tax_category) }
     let(:variant) { create(:variant, tax_category: tax_category) }
 
@@ -548,7 +548,7 @@ describe Spree::Shipment, type: :model do
   context "changes shipping rate via general update" do
     let!(:ship_address) { create(:address) }
     let!(:tax_zone) { create(:global_zone) } # will include the above address
-    let!(:tax_rate) { create(:tax_rate, amount: 0.10, zone: tax_zone, tax_category: tax_category) }
+    let!(:tax_rate) { create(:tax_rate, amount: 0.10, zone: tax_zone, tax_categories: [tax_category]) }
     let(:tax_category) { create(:tax_category) }
 
     let(:order) do

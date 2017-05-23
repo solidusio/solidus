@@ -55,7 +55,7 @@ describe Spree::PriceMigrator do
         name: "German reduced VAT",
         included_in_price: true,
         amount: 0.07,
-        tax_category: books_category,
+        tax_categories: [books_category],
         zone: eu_zone
       )
     end
@@ -65,7 +65,7 @@ describe Spree::PriceMigrator do
         name: "German VAT",
         included_in_price: true,
         amount: 0.19,
-        tax_category: normal_category,
+        tax_categories: [normal_category],
         zone: eu_zone
       )
     end
@@ -75,7 +75,7 @@ describe Spree::PriceMigrator do
         name: "German VAT",
         included_in_price: true,
         amount: 0.19,
-        tax_category: digital_category,
+        tax_categories: [digital_category],
         zone: germany_zone
       )
     end
@@ -85,7 +85,7 @@ describe Spree::PriceMigrator do
         name: "Romanian VAT",
         included_in_price: true,
         amount: 0.24,
-        tax_category: digital_category,
+        tax_categories: [digital_category],
         zone: romania_zone
       )
     end

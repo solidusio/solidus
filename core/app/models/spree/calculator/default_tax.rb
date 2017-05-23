@@ -9,7 +9,7 @@ module Spree
     # Orders created with Spree 2.2 and after, have them applied to the line items individually.
     def compute_order(order)
       matched_line_items = order.line_items.select do |line_item|
-        line_item.tax_category == rate.tax_category
+        rate.tax_categories.include?(line_item.tax_category)
       end
 
       line_items_total = matched_line_items.sum(&:discounted_amount)

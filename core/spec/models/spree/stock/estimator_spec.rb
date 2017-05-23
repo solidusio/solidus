@@ -145,7 +145,7 @@ module Spree
           let!(:tax_rate) { create(:tax_rate, zone: zone) }
 
           before do
-            shipping_method.update!(tax_category: tax_rate.tax_category)
+            shipping_method.update!(tax_category: tax_rate.tax_categories.first)
           end
 
           it "links the shipping rate and the tax rate" do

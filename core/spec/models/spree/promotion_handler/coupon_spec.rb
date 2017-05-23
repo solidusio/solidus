@@ -255,7 +255,7 @@ module Spree
           let(:order) { create(:order, store: store) }
           let(:tax_category) { create(:tax_category, name: "Taxable Foo") }
           let(:zone) { create(:zone, :with_country) }
-          let!(:tax_rate) { create(:tax_rate, amount: 0.1, tax_category: tax_category, zone: zone )}
+          let!(:tax_rate) { create(:tax_rate, amount: 0.1, tax_categories: [tax_category], zone: zone ) }
 
           before(:each) do
             expect(order).to receive(:tax_address).at_least(:once).and_return(Spree::Tax::TaxLocation.new(country: zone.countries.first))
