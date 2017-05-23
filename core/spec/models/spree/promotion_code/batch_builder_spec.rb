@@ -12,7 +12,7 @@ describe Spree::PromotionCode::BatchBuilder do
     )
   end
 
-  subject { described_class.new promotion_code_batch }
+  subject { described_class.new(promotion_code_batch) }
 
   describe "#build_promotion_codes" do
     context "with a failed build" do
@@ -27,6 +27,7 @@ describe Spree::PromotionCode::BatchBuilder do
         expect(promotion_code_batch.reload.state).to eq("failed")
       end
     end
+
     context "with a successful build" do
       before do
         allow(Spree::PromotionCodeBatchMailer)
@@ -48,13 +49,34 @@ describe Spree::PromotionCode::BatchBuilder do
         expect(subject.promotion.codes.map(&:value).uniq.size).to eq(10)
       end
 
+      it "updates the promotion code batch state to completed" do
+        expect(promotion_code_batch.state).to eq("completed")
+      end
+    end
+  end
+
+  describe "#join_character" do
+    context "with the default join charachter _" do
       it "builds codes with the same base prefix" do
+        subject.build_promotion_codes
+
         values = subject.promotion.codes.map(&:value)
         expect(values.all? { |val| val.starts_with?("#{base_code}_") }).to be true
       end
+    end
 
-      it "updates the promotion code batch state to completed" do
-        expect(promotion_code_batch.state).to eq("completed")
+    context "with a custom join separator" do
+      around do |example|
+        Spree::PromotionCode::BatchBuilder.join_characters = "x"
+        example.run
+        Spree::PromotionCode::BatchBuilder.join_characters = "_"
+      end
+
+      it "builds codes with the same base prefix" do
+        subject.build_promotion_codes
+
+        values = subject.promotion.codes.map(&:value)
+        expect(values.all? { |val| val.starts_with?("#{base_code}x") }).to be true
       end
     end
   end
