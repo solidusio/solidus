@@ -707,6 +707,8 @@ module Spree
         self.ship_address ||= user.ship_address if user.ship_address.try!(:valid?) && checkout_steps.include?("delivery")
       end
     end
+    alias_method :assign_default_addresses!, :assign_default_user_addresses!
+    deprecate assign_default_addresses!: :assign_default_user_addresses!, deprecator: Spree::Deprecation
 
     def persist_user_address!
       if !temporary_address && user && user.respond_to?(:persist_order_address) && bill_address_id
