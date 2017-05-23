@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-6">
       <div class="field">
-        <%= Spree.t(:form_text, scope: "promotion_rule_types.nth_order")  %>
+        <%= Spree::Promotion::Rules::NthOrder.human_attribute_name(:form_text) %>
       </div>
     </div>
     <div class="col-6">

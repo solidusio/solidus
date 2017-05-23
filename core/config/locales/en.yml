@@ -177,6 +177,40 @@ en:
         promotion_uses: Promotion Uses
         starts_at: Start date
         usage_limit: Overall Usage Limit
+      spree/promotion/actions/create_adjustment:
+        description: Creates a promotion credit adjustment on the order
+      spree/promotion/actions/create_item_adjustments:
+        description: Creates a promotion credit adjustment on a line item
+      spree/promotion/actions/create_quantity_adjustments:
+        description: Creates an adjustment on a line item based on quantity
+      spree/promotion/actions/free_shipping:
+        description: Makes all shipments for the order free
+      spree/promotion/rules/item_total:
+        description: Order total meets these criteria
+      spree/promotion/rules/first_order:
+        description: Must be the customer's first order
+      spree/promotion/rules/landing_page:
+          description: Customer must have visited the specified page
+      spree/promotion/rules/one_use_per_user:
+        description: Only One Use Per User
+      spree/promotion/rules/option_value:
+        description: Order includes specified product(s) with matching option value(s)
+      spree/promotion/rules/product:
+        description: Order includes specified product(s)
+      spree/promotion/rules/user:
+        description: Available only to the specified users
+      spree/promotion/rules/user_logged_in:
+        description: Available only to logged in users
+      spree/promotion/rules/taxon:
+        description: Order includes products with specified taxon(s)
+      spree/promotion/rules/nth_order:
+        description: Apply a promotion to every nth order a user has completed.
+        form_text: "Apply this promotion on the users Nth order: "
+      spree/promotion/rules/first_repeat_purchase_since:
+        description: Available only to user who have not purchased in a while
+        form_text: "Apply this promotion to users whose last order was more than X days ago: "
+      spree/promotion/rules/user_role:
+        description: Order includes User with specified Role(s)
       spree/promotion_category:
         name: Name
       spree/property:
@@ -469,6 +503,22 @@ en:
       spree/promotion:
         one: Promotion
         other: Promotions
+      spree/promotion/actions/create_adjustment: Create whole-order adjustment
+      spree/promotion/actions/create_item_adjustments: Create per-line-item adjustment
+      spree/promotion/actions/create_quantity_adjustments: Create per-quantity adjustment
+      spree/promotion/actions/free_shipping: Free shipping
+      spree/promotion/rules/first_order: First order
+      spree/promotion/rules/item_total: Item total
+      spree/promotion/rules/landing_page: Landing Page
+      spree/promotion/rules/one_use_per_user: One Use Per User
+      spree/promotion/rules/option_value: Option Value(s)
+      spree/promotion/rules/product: Product(s)
+      spree/promotion/rules/user: User
+      spree/promotion/rules/user_logged_in: User Logged In
+      spree/promotion/rules/taxon: Taxon(s)
+      spree/promotion/rules/nth_order: Nth Order
+      spree/promotion/rules/first_repeat_purchase_since: First Repeat Purchase Since
+      spree/promotion/rules/user_role: User Role(s)
       spree/promotion_category:
         one: Promotion Category
         other: Promotion Categories
@@ -1614,19 +1664,6 @@ en:
     promotion: Promotion
     promotionable: Promotable
     promotion_action: Promotion Action
-    promotion_action_types:
-      create_adjustment:
-        description: Creates a promotion credit adjustment on the order
-        name: Create whole-order adjustment
-      create_item_adjustments:
-        description: Creates a promotion credit adjustment on a line item
-        name: Create per-line-item adjustment
-      create_quantity_adjustments:
-        description: Creates an adjustment on a line item based on quantity
-        name: Create per-quantity adjustment
-      free_shipping:
-        description: Makes all shipments for the order free
-        name: Free shipping
     promotion_actions: Actions
     promotion_code_batch_mailer:
       promotion_code_batch_finished:
@@ -1644,45 +1681,6 @@ en:
         all: Match all of these rules
         any: Match any of these rules
     promotion_rule: Promotion Rule
-    promotion_rule_types:
-      first_order:
-        description: Must be the customer's first order
-        name: First order
-      item_total:
-        description: Order total meets these criteria
-        name: Item total
-      landing_page:
-        description: Customer must have visited the specified page
-        name: Landing Page
-      one_use_per_user:
-        description: Only One Use Per User
-        name: One Use Per User
-      option_value:
-        description: Order includes specified product(s) with matching option value(s)
-        name: Option Value(s)
-      product:
-        description: Order includes specified product(s)
-        name: Product(s)
-      user:
-        description: Available only to the specified users
-        name: User
-      user_logged_in:
-        description: Available only to logged in users
-        name: User Logged In
-      taxon:
-        description: Order includes products with specified taxon(s)
-        name: Taxon(s)
-      nth_order:
-        description: Apply a promotion to every nth order a user has completed.
-        name: Nth Order
-        form_text: "Apply this promotion on the users Nth order: "
-      first_repeat_purchase_since:
-        description: Available only to user who have not purchased in a while
-        name: First Repeat Purchase Since
-        form_text: "Apply this promotion to users whose last order was more than X days ago: "
-      user_role:
-        description: Order includes User with specified Role(s)
-        name: User Role(s)
     promotions: Promotions
     promotion_successfully_created: Promotion has been successfully created!
     promotion_total_changed_before_complete: "One or more of the promotions on your order have become ineligible and were removed. Please check the new order amounts and try again."
