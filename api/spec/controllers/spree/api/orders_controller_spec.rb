@@ -65,6 +65,17 @@ module Spree
 
         it { is_expected.to be_success }
       end
+
+      context 'when the line items have custom attributes' do
+        it "can create an order with line items that have custom permitted attributes" do
+          PermittedAttributes.line_item_attributes << { options: [:some_option] }
+          expect_any_instance_of(Spree::LineItem).to receive(:some_option=).once.with('4')
+          api_post :create, order: { line_items: { "0" => { variant_id: variant.to_param, quantity: 5, options: { some_option: 4 } } } }
+          expect(response.status).to eq(201)
+          order = Order.last
+          expect(order.line_items.count).to eq(1)
+        end
+      end
     end
 
     describe "PUT update" do
