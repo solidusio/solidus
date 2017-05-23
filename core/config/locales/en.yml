@@ -1860,6 +1860,7 @@ en:
     rename: Rename
     resend: Resend
     reset_password: Reset my password
+    reset_user_password: Reset user password
     response_code: Response Code
     restock_inventory: Restock Inventory
     resume: Resume
