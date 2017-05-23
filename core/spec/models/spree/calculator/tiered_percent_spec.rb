@@ -73,8 +73,15 @@ describe Spree::Calculator::TieredPercent, type: :model do
   end
 
   describe "#compute" do
-    let(:order) { create(:order_with_line_items, line_items_count: line_item_count, line_items_price: price) }
+    let(:order) do
+      create(
+        :order_with_line_items,
+        line_items_count: line_item_count,
+        line_items_price: price
+      )
+    end
     let(:price) { 10 }
+    let(:preferred_currency) { "USD" }
 
     before do
       calculator.preferred_base_percent = 10
@@ -82,6 +89,7 @@ describe Spree::Calculator::TieredPercent, type: :model do
         20 => 15,
         30 => 20
       }
+      calculator.preferred_currency = preferred_currency
     end
 
     context "with a line item" do
@@ -122,6 +130,12 @@ describe Spree::Calculator::TieredPercent, type: :model do
           let(:price) { 30 }
           it { is_expected.to eq 6.0 }
         end
+      end
+
+      context "when the order's currency does not match the calculator" do
+        let(:preferred_currency) { "CAD" }
+        let(:line_item_count) { 1 }
+        it { is_expected.to eq 0 }
       end
     end
 
@@ -164,6 +178,11 @@ describe Spree::Calculator::TieredPercent, type: :model do
           let(:price) { 30 }
           it { is_expected.to eq 6.0 }
         end
+      end
+
+      context "when the order's currency does not match the calculator" do
+        let(:preferred_currency) { "CAD" }
+        it { is_expected.to eq 0 }
       end
     end
   end

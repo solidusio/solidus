@@ -33,9 +33,11 @@ en:
         preferred_amount: Amount
       spree/calculator/tiered_flat_rate:
         preferred_base_amount: Base Amount
+        preferred_currency: Currency
         preferred_tiers: Tiers
       spree/calculator/tiered_percent:
         preferred_base_percent: Base Percent
+        preferred_currency: Currency
         preferred_tiers: Tiers
       spree/carton:
         tracking: Tracking

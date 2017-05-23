@@ -1,16 +1,35 @@
-<%= label_tag "#{prefix}[calculator_attributes][preferred_base_percent]",
-  Spree.t(:base_percent) %>
-<%= preference_field_tag(
-  "#{prefix}[calculator_attributes][preferred_base_percent]",
-  calculator.preferred_base_percent,
-  type: calculator.preference_type(:base_percent)) %>
+<div class="field">
+  <%= label_tag "#{prefix}[calculator_attributes][preferred_base_percent]",
+    Spree.t(:base_percent) %>
+  <%= preference_field_tag(
+    "#{prefix}[calculator_attributes][preferred_base_percent]",
+    calculator.preferred_base_percent,
+    type: calculator.preference_type(:base_percent)) %>
+</div>
 
-<%= label_tag nil, Spree.t(:tiers) %>
-<div class="js-tiered-calculator">
-  <%= content_tag :div, nil, class: "js-tiers", data: {
-    'original-tiers' => Hash[calculator.preferred_tiers.sort],
-    'form-prefix' => prefix,
-    'calculator' => 'tiered_percent'
-  } %>
-  <button class="button js-add-tier"><%= Spree.t('actions.add') %></button>
+<div class="field">
+  <%= label_tag(
+    "#{prefix}[calculator_attributes][preferred_currency]",
+    Spree.t(:currency)
+  ) %>
+  <%= select_tag(
+    "#{prefix}[calculator_attributes][preferred_currency]",
+    options_for_select(
+      Money::Currency.all,
+      calculator.preferred_currency || Spree::Config[:currency]
+    ),
+    { class: 'select2 fullwidth' }
+  ) %>
+</div>
+
+<div class="field">
+  <%= label_tag nil, Spree.t(:tiers) %>
+  <div class="js-tiered-calculator">
+    <%= content_tag :div, nil, class: "js-tiers", data: {
+      'original-tiers' => Hash[calculator.preferred_tiers.sort],
+      'form-prefix' => prefix,
+      'calculator' => 'tiered_percent'
+    } %>
+    <button class="button js-add-tier"><%= Spree.t('actions.add') %></button>
+  </div>
 </div>
