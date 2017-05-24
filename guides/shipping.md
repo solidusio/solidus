@@ -19,18 +19,17 @@ Shipments have the following attributes:
 * `shipped_at`: The time when the shipment was shipped.
 * `state`: The current state of the shipment.
 * `stock_location_id`: The ID of the Stock Location where the items for this shipment will be sourced from.
-* `adjustment_total`
-* `additional_tax_total`
-* `promo_total`
-* `included_tax_total`
-* `cost`
-* `order_id`
+* Other attributes likely of interest to developers:
+  * `adjustment_total`
+  * `additional_tax_total`
+  * `promo_total`
+  * `included_tax_total`
+  * `cost`
+  * `order_id`
 
-A shipment can go through many different states, as illustrated below.
+**Needed:** shipment process flow diagram
 
-![Shipment flow](/images/developer/core/shipment_flow.jpg)
-
-An explanation of the different states:
+An explanation of the different shipment states:
 
 * `pending`: The shipment has backordered inventory units and/or the order is not paid for.
 * `ready`: The shipment has *no* backordered inventory units and the order is paid for.
@@ -205,7 +204,7 @@ Solidus comes with a set of calculators that should fit most of the shipping sit
 
 ### Extensions
 
-There are a few Solidus extensions which provide additional shipping methods, including special support for fees imposed by common carriers, or support for bulk orders. See the [Spree Extension Registry](http://spreecommerce.com/extensions) for the latest information.
+There are a few Solidus extensions which provide additional shipping capabilities. See the [Solidus Extension List](http://extensions.solidus.io/) for the latest information.
 
 ### Writing Your Own
 
@@ -213,21 +212,9 @@ For more detailed information, check out the section on [Calculators](calculator
 
 Your calculator should accept an array of `LineItem` objects and return a cost. It can look at any reachable data, but typically uses the address, the order and the information from variants which are contained in the line_items.
 
-## Product Configuration
+### Product & Variant Configuration
 
-Store administrators can assign products to specific ShippingCategories or include extra information in variants to enable the calculator to determine results.
-
-Each product has a `ShippingCategory`, which adds product-specific information to the calculations beyond the standard information from the shipment. Standard information includes:
-
-* Destination address
-* Variants and quantities
-* Weight and dimension information, if given, for a variant
-
-`ShippingCategory` is basically a wrapper for a string. One use is to code up specific rates, eg. "Fixed $20" or "Fixed $40", from which a calculator could extract imposed prices (and not go through its other calculations).
-
-### Variant Configuration
-
-Variants can be specified with weight and dimension information. Some shipping method calculators will use this information if it is present.
+Store administrators can assign products to specific Shipping Categories or include extra information in variants to enable custom calculators to determine results. Weight and dimension information can also be used in the calculator.
 
 ## Shipping Instructions
 
@@ -235,24 +222,24 @@ The option `Spree::Config[:shipping_instructions]` controls collection of additi
 
 ## The Active Shipping Extension
 
-The popular `spree_active_shipping` extension harnesses the `active_shipping` gem to interface with carrier APIs such as USPS, Fedex and UPS, ultimately providing Spree-compatible calculators for the different delivery services of those carriers.
+The solidus_active_shipping extension harnesses the active_shipping gem to interface with carrier APIs such as USPS, Fedex and UPS, ultimately providing Solidus-compatible calculators for the different delivery services of those carriers.
 
-To install the `spree-active-shipping` extension add the following to your `Gemfile`:
+To install the solidus_active_shipping extension add the following to your Gemfile:
 
 ```ruby
-gem 'spree_active_shipping'
+gem 'solidus_active_shipping'
 gem 'active_shipping', :git => 'git://github.com/Shopify/active_shipping.git'
 ```
 
 and run `bundle install` from the command line.
 
-As an example of how to use the [spree_active_shipping extension](https://github.com/spree/spree_active_shipping) we'll demonstrate how to configure it to work with the USPS API. The other carriers follow a very similar pattern.
+As an example of how to use the [solidus_active_shipping extension](https://github.com/solidusio-contrib/solidus_active_shipping) we'll demonstrate how to configure it to work with the USPS API. The other carriers follow a very similar pattern.
 
-For each USPS delivery service you want to offer (e.g. "USPS Media Mail"), you will need to create a `ShippingMethod` with a descriptive name ("Configuration" -> "Shipping Methods") and a `Calculator` (registered in the `active_shipping` extension) that ties the delivery service and the shipping method together.
+For each USPS delivery service you want to offer (e.g. "USPS Media Mail"), you will need to create a `ShippingMethod` with a descriptive name (Settings -> Shipping -> Shipping Methods) and a `Calculator` (registered in the `active_shipping` extension) that ties the delivery service and the shipping method together.
 
 ### Default Calculators
 
-The `spree_active_shipping` extension comes with several pre-configured calculators out of the box. For example, here are the ones provided for the USPS carrier:
+The `solidus_active_shipping` extension comes with several pre-configured calculators out of the box. For example, here are the ones provided for the USPS carrier:
 
 ```ruby
 def activate
@@ -297,9 +284,7 @@ class Calculator::Usps::FirstClassMailInternationalParcels < Calculator::Usps::B
 end
 ```
 
-!!!
-Note that, unlike calculators that you write yourself, these calculators do not have to implement a `compute` instance method that returns a shipping amount. The superclasses take care of that requirement.
-!!!
+**Note:** *unlike calculators that you write yourself, these calculators do not have to implement a `compute` instance method that returns a shipping amount. The superclasses take care of that requirement.*
 
 There is one gotcha to bear in mind: the string returned by the `description` method must _exactly_ match the name of the USPS delivery service. To determine the exact spelling of the delivery service, you'll need to examine what gets returned from the API:
 
@@ -330,7 +315,7 @@ class Calculator::ActiveShipping < Calculator
 end
 ```
 
-As you can see in the code above, the `spree_active_shipping` gem returns an array of services with their corresponding prices, which the `retrieve_rates` method converts into a hash. Below is what would get returned for an order with an international destination:
+As you can see in the code above, the `solidus_active_shipping` gem returns an array of services with their corresponding prices, which the `retrieve_rates` method converts into a hash. Below is what would get returned for an order with an international destination:
 
 ```ruby
 {
@@ -407,9 +392,9 @@ end
 
 ### Introduction
 
-Split shipments are a new feature as of Spree 2.0 that addresses the needs of complex Spree stores that require sophisticated shipping and warehouse logic. This includes detailed inventory management and allows for shipping from multiple locations.
+Split shipments is a feature that addresses the needs of complex Solidus stores that require sophisticated shipping and warehouse logic. This includes detailed inventory management and allows for shipping from multiple locations.
 
-![image](../images/developer/core/split_shipments_checkout.png)
+**_Spre Guide had an image here_**
 
 ### Creating Proposed Shipments
 
@@ -441,7 +426,7 @@ For example, we may have two splitters for a stock location. One splitter has a 
 
 #### Default Splitters
 
-Spree comes with two default splitters which are run in sequence. This means that the first splitter takes the packages array from the order, and each subsequent splitter takes the output of the splitter that came before it.
+Solidus comes with two default splitters which are run in sequence. This means that the first splitter takes the packages array from the order, and each subsequent splitter takes the output of the splitter that came before it.
 
 Let's take a look at what the default splitters do:
 
@@ -452,18 +437,18 @@ Let's take a look at what the default splitters do:
 
 Note that splitters can be customized, and creating your own can be done with relative ease. By inheriting from `Spree::Stock::Splitter::Base`, you can create your own splitter.
 
-For an example of a simple splitter, take a look at Solidus' [weight based splitter](https://github.com/spree/spree/blob/235e470b242225d7c75c7c4c4c033ee3d739bb36/core/app/models/spree/stock/splitter/weight.rb). This splitter pulls items with a weight greater than 150 into their own shipment.
+For an example of a simple splitter, take a look at Solidus' [weight based splitter](https://github.com/solidusio/solidus/blob/master/core/app/models/spree/stock/splitter/weight.rb). This splitter pulls items with a weight greater than 150 into their own shipment.
 
-After creating your splitter, you need to add it to the array of splitters Spree
-uses. To do this, add the following to your application's spree initializer
-`spree.rb` file:
+After creating your splitter, you need to add it to the array of splitters Solidus
+uses. To do this, add the following to your application's solidus initializer
+`solidus.rb` file:
 
 ```ruby
 Rails.application.config.spree.stock_splitters << Spree::Stock::Splitter::CustomSplitter
 ```
 
-You can also completely override the splitters used in Spree, rearrange them, etc.
-To do this, add the following to your `spree.rb` file:
+You can also completely override the splitters used in Solidus, rearrange them, etc.
+To do this, add the following to your `solidus.rb` file:
 
 ```ruby
 Rails.application.config.spree.stock_splitters = [
@@ -473,7 +458,7 @@ Rails.application.config.spree.stock_splitters = [
 ```
 
 Or if you don't want to split packages just set the option above to an empty
-array. e.g. a store with the following configuration in spree.rb won't have any
+array. e.g. a store with the following configuration in solidus.rb won't have any
 package splitted.
 
 ```ruby
@@ -494,7 +479,7 @@ The prioritizer is also a customization point. If you want to customize which pa
 
 The `Adjuster` visits each package in an order and ensures the correct number of items are in each package. To customize this functionality, you need to do two things:
 
-* Subclass the [Spree::Stock::Adjuster](https://github.com/spree/spree/blob/a55db75bbebc40f5705fc3010d1e5a2190bde79b/core/app/models/spree/stock/adjuster.rb) class and override the the `adjust` method to get the desired functionality.
+* Subclass the [Spree::Stock::Adjuster](https://github.com/solidusio/solidus/blob/master/core/app/models/spree/stock/adjuster.rb) class and override the the `adjust` method to get the desired functionality.
 * Decorate the `Spree::Stock::Coordinator` and override the `prioritize_packages` method, passing in your custom adjuster class to the `Prioritizer` initializer. For example, if our adjuster was called `Spree::Stock::CustomAdjuster`, we would do the following:
 
 ```ruby
@@ -512,6 +497,8 @@ The `Spree::Stock::Estimator` loops through the packages created by the packer i
 
 
 
-## Documentation ToDo
-* There were diagrams and images in the original Spree docs that seem to have been lossed.  Consider finding or creating them.
+## Documentation ToDo and notes
+* This guide was adapted from the original spree guide: https://github.com/spree/spree-guides/blob/master/content/developer/core/shipments.md
+* There were diagrams and screen shots in the original Spree docs that were dated.  It would be nice to add some diagrams and screenshots to this doc.
+* The examples of implementing custom calculators, shipping splitters, etc have been reviewed and seem accurate, but have not yet been validated in Solidus directly.
 
