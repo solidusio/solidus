@@ -10,6 +10,9 @@ module Spree
       Spree::Deprecation
     )
 
+    has_many :store_shipping_methods, inverse_of: :shipping_method
+    has_many :stores, through: :store_shipping_methods
+
     has_many :shipping_method_categories, dependent: :destroy
     has_many :shipping_categories, through: :shipping_method_categories
     has_many :shipping_rates, inverse_of: :shipping_method
@@ -44,12 +47,12 @@ module Spree
 
     # @param stock_location [Spree::StockLocation] stock location
     # @return [ActiveRecord::Relation] shipping methods which are available
-    #   with the stock location or are marked available_to_all
+    #   with the stock location or are marked available_to_all_stock_locations
     def self.available_in_stock_location(stock_location)
       smsl_table = Spree::ShippingMethodStockLocation.arel_table
 
       # We are searching for either a matching entry in the stock location join
-      # table or available_to_all being true.
+      # table or available_to_all_stock_locations being true.
       # We need to use an outer join otherwise a shipping method with no
       # associated stock locations will be filtered out of the results. In
       # rails 5 this will be easy using .left_join and .or, but for now we must
@@ -59,7 +62,7 @@ module Spree
         on(arel_table[:id].eq(smsl_table[:shipping_method_id])).
         join_sources
       arel_condition =
-        arel_table[:available_to_all].eq(true).or(smsl_table[:stock_location_id].eq(stock_location.id))
+        arel_table[:available_to_all_stock_locations].eq(true).or(smsl_table[:stock_location_id].eq(stock_location.id))
 
       joins(arel_join).where(arel_condition).distinct
     end
@@ -69,6 +72,20 @@ module Spree
     #   with zones matching the provided address
     def self.available_for_address(address)
       joins(:zones).merge(Zone.for_address(address))
+    end
+
+    def self.available_for_store(store = nil)
+      methods = ShippingMethod.arel_table
+      store_methods = StoreShippingMethod.arel_table
+
+      join_condition = methods.join(store_methods, Arel::Nodes::OuterJoin).
+        on(methods[:id].eq(store_methods[:shipping_method_id])).
+        join_sources
+
+      conditions = [methods[:available_to_all_stores].eq(true)]
+      conditions << store_methods[:store_id].eq(store.id) if store
+
+      joins(join_condition).where(conditions.inject(&:or)).distinct
     end
 
     def include?(address)
@@ -102,6 +119,23 @@ module Spree
       available_to_users?
     end
     deprecate frontend?: :available_to_users?, deprecator: Spree::Deprecation
+
+    def available_to_all=(val)
+      ActiveSupport::Deprecation.warn <<-EOS.squish, caller
+        ShippingMethod#available_to_all= has been deprecated. The column has
+        been renamed to available_to_all_stock_locations.
+      EOS
+      self.available_to_all_stock_locations = val
+    end
+
+    def available_to_all
+      ActiveSupport::Deprecation.warn <<-EOS.squish, caller
+        ShippingMethod#available_to_all has been deprecated. The column has
+        been renamed to available_to_all_stock_locations.
+      EOS
+      available_to_all_stock_locations
+    end
+    alias_method :available_to_all?, :available_to_all
 
     private
 

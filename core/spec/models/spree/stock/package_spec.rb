@@ -47,49 +47,96 @@ module Spree
         expect(item.quantity).to eq 1
       end
 
-      it 'builds the correct list of shipping methods based on stock location and categories' do
-        category1 = create(:shipping_category)
-        category2 = create(:shipping_category)
-        method1   = create(:shipping_method, available_to_all: true)
-        method2   = create(:shipping_method, stock_locations: [stock_location])
-        method1.shipping_categories = [category1, category2]
-        method2.shipping_categories = [category1, category2]
-        variant1 = mock_model(Variant, shipping_category_id: category1.id)
-        variant2 = mock_model(Variant, shipping_category_id: category2.id)
-        variant3 = mock_model(Variant, shipping_category_id: nil)
-        contents = [ContentItem.new(build(:inventory_unit, variant: variant1)),
-                    ContentItem.new(build(:inventory_unit, variant: variant1)),
-                    ContentItem.new(build(:inventory_unit, variant: variant2)),
-                    ContentItem.new(build(:inventory_unit, variant: variant3))]
+      describe "#shipping_methods" do
+        let(:store) { FactoryGirl.create(:store) }
+        let(:order) { FactoryGirl.build(:order, store: store) }
 
-        package = Package.new(stock_location, contents)
-        expect(package.shipping_methods).to match_array([method1, method2])
-      end
-      # Contains regression test for https://github.com/spree/spree/issues/2804
-      it 'builds a list of shipping methods common to all categories' do
-        category1 = create(:shipping_category)
-        category2 = create(:shipping_category)
-        method1   = create(:shipping_method)
-        method2   = create(:shipping_method)
-        method1.shipping_categories = [category1, category2]
-        method2.shipping_categories = [category1]
-        variant1 = mock_model(Variant, shipping_category_id: category1.id)
-        variant2 = mock_model(Variant, shipping_category_id: category2.id)
-        variant3 = mock_model(Variant, shipping_category_id: nil)
-        contents = [ContentItem.new(build(:inventory_unit, variant: variant1)),
-                    ContentItem.new(build(:inventory_unit, variant: variant1)),
-                    ContentItem.new(build(:inventory_unit, variant: variant2)),
-                    ContentItem.new(build(:inventory_unit, variant: variant3))]
+        let(:categories) { FactoryGirl.build_pair(:shipping_category) }
+        let(:contents) do
+          categories.map do |category|
+            ContentItem.new(
+              FactoryGirl.build(
+                :inventory_unit,
+                variant: mock_model(Variant, shipping_category_id: category.id),
+                order: order
+              )
+            )
+          end
+        end
 
-        package = Package.new(stock_location, contents)
-        expect(package.shipping_methods).to match_array([method1])
-      end
+        let(:package) { Package.new(stock_location, contents) }
 
-      it 'builds an empty list of shipping methods when no categories' do
-        variant  = mock_model(Variant, shipping_category_id: nil)
-        contents = [ContentItem.new(build(:inventory_unit, variant: variant))]
-        package  = Package.new(stock_location, contents)
-        expect(package.shipping_methods).to be_empty
+        subject { package.shipping_methods }
+
+        context "based on stock location and categories" do
+          let(:first_method) do
+            FactoryGirl.create(:shipping_method, available_to_all_stock_locations: true)
+          end
+          let(:second_method) do
+            FactoryGirl.create(:shipping_method, stock_locations: [stock_location])
+          end
+
+          before do
+            [first_method, second_method].each do |method|
+              method.shipping_categories = categories
+              method.stores = [store]
+            end
+          end
+
+          it { is_expected.to match_array [first_method, second_method] }
+        end
+
+        context "when the method is available to all stores" do
+          let!(:method) do
+            FactoryGirl.create(
+              :shipping_method,
+              shipping_categories: categories,
+              available_to_all_stores: true
+            )
+          end
+          let!(:other_method) do
+            FactoryGirl.create(
+              :shipping_method,
+              shipping_categories: categories,
+              available_to_all_stores: false
+            )
+          end
+
+          it { is_expected.to match_array [method] }
+        end
+
+        context "based on categories" do
+          let(:first_method) do
+            FactoryGirl.create(:shipping_method, shipping_categories: categories)
+          end
+          let(:second_method) do
+            FactoryGirl.create(:shipping_method, shipping_categories: [categories.first])
+          end
+
+          before do
+            [first_method, second_method].each do |method|
+              method.stores = [store]
+            end
+          end
+
+          # Regression test for https://github.com/spree/spree/issues/2804
+          it { is_expected.to match_array [first_method] }
+        end
+
+        context "when no categories" do
+          let(:contents) do
+            [
+              ContentItem.new(
+                FactoryGirl.build(
+                  :inventory_unit,
+                  variant: mock_model(Variant, shipping_category_id: nil),
+                  order: order
+                )
+              )
+            ]
+          end
+          it { is_expected.to be_empty }
+        end
       end
 
       it "can convert to a shipment" do
