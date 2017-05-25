@@ -62,7 +62,7 @@ module Spree
       end
     end
 
-    def self.available(display_on=nil, store: nil)
+    def self.available(display_on = nil, store: nil)
       Spree::Deprecation.warn "Spree::PaymentMethod.available is deprecated."\
         "Please use .active, .available_to_users, and .available_to_admin scopes instead."\
         "For payment methods associated with a specific store, use Spree::PaymentMethod.available_to_store(your_store)"\
