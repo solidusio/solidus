@@ -49,20 +49,7 @@ Try out Solidus with one-click on Heroku:
 Getting started
 ---------------
 
-Begin by making sure you have Imagemagick installed, which is required for Paperclip.
-
-* Option 1: Install using [Homebrew](https://brew.sh) (Mac only) - first, install Homebrew:
-    ```shell
-    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-    ```
-    Then, install ImageMagick:
-    ```shell
-    brew install imagemagick
-    ```
-
-* Option 2: Install [ImageMagick](http://www.imagemagick.org/script/index.php) on Unix / Windows:
-
-  Download a ready-to-run [Unix or Windows executable](https://www.imagemagick.org/script/download.php) -OR- Install Imagemagick from [Unix or Windows Source](https://www.imagemagick.org/script/install-source.php)
+Begin by making sure you have [Imagemagick](http://imagemagick.org/script/download.php) installed, which is required for Paperclip. (You can install it using [Homebrew](https://brew.sh) if you're on a Mac.)
 
 To add solidus, begin with a Rails 5 application. Add the following to your
 Gemfile.
