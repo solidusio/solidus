@@ -62,6 +62,10 @@ module Spree
     #   @return [Boolean] When true, site name is always appended to titles on the frontend (default: +true+)
     preference :always_put_site_name_in_title, :boolean, default: true
 
+    # @!attribute [rw] title_site_name_separator
+    #   @return [String] When always_put_site_name_in_title is true, insert a separator character before the site name in the title (default: '-')
+    preference :title_site_name_separator, :string, default: '-'
+
     # @!attribute [rw] auto_capture
     #   @note Setting this to true is not recommended. Performing an authorize
     #     and later capture has far superior error handing. VISA and MasterCard
