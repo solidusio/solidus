@@ -84,7 +84,7 @@ module Spree
       items = crumbs.each_with_index.collect do |crumb, i|
         content_tag(:li, itemprop: 'itemListElement', itemscope: '', itemtype: 'https://schema.org/ListItem') do
           link_to(crumb.last, itemprop: 'item') do
-            content_tag(:span, crumb.first, itemprop: 'name') + tag('meta', { itemprop: 'position', content: (i+1).to_s }, false, false)
+            content_tag(:span, crumb.first, itemprop: 'name') + tag('meta', { itemprop: 'position', content: (i + 1).to_s }, false, false)
           end + (crumb == crumbs.last ? '' : separator)
         end
       end
@@ -147,6 +147,5 @@ module Spree
     def plural_resource_name(resource_class)
       resource_class.model_name.human(count: Spree::I18N_GENERIC_PLURAL)
     end
-
   end
 end

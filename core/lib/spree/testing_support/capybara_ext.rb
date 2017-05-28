@@ -106,7 +106,6 @@ module CapybaraExt
   end
 
   def wait_for_ajax
-
     Spree::Deprecation.warn <<-WARN.squish, caller
       wait_for_ajax has been deprecated.
       Please refer to the capybara documentation on how to properly wait for asyncronous behavior:

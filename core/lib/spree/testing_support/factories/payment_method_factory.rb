@@ -25,6 +25,6 @@ FactoryGirl.define do
     active        true
     available_to_admin false
     available_to_users false
-    auto_capture  true
+    auto_capture true
   end
 end
