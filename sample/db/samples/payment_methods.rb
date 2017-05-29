@@ -1,4 +1,4 @@
-Spree::Gateway::Bogus.create!(
+Spree::PaymentMethod::BogusCreditCard.create!(
   {
     name: "Credit Card",
     description: "Bogus payment gateway",

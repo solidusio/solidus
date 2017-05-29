@@ -95,7 +95,7 @@ describe Spree::Gateway, type: :model do
   end
 
   context 'using preference_source' do
-    let(:klass){ Spree::Gateway::Bogus }
+    let(:klass){ Spree::PaymentMethod::BogusCreditCard }
     before do
       Spree::Config.static_model_preferences.add(klass, 'test_preference_source', server: 'bar')
     end

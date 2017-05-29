@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :payment_method, aliases: [:credit_card_payment_method], class: Spree::Gateway::Bogus do
+  factory :payment_method, aliases: [:credit_card_payment_method], class: Spree::PaymentMethod::BogusCreditCard do
     name 'Credit Card'
     available_to_admin true
     available_to_users true
@@ -13,7 +13,7 @@ FactoryGirl.define do
 
   # authorize.net was moved to spree_gateway.
   # Leaving this factory in place with bogus in case anyone is using it.
-  factory :simple_credit_card_payment_method, class: Spree::Gateway::BogusSimple do
+  factory :simple_credit_card_payment_method, class: Spree::PaymentMethod::SimpleBogusCreditCard do
     name 'Credit Card'
     available_to_admin true
     available_to_users true

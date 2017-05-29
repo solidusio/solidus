@@ -1,6 +1,15 @@
 module Spree
+  # @deprecated Use Spree::PaymentMethod::SimpleBogusCreditCard instead
+  class Gateway::BogusSimple
+    def initialize
+      Spree::Deprecation.warn \
+        'Spree::Gateway::BogusSimple is deprecated. ' \
+          'Please use Spree::PaymentMethod::SimpleBogusCreditCard instead'
+    end
+  end
+
   # Bogus Gateway that doesn't support payment profiles.
-  class Gateway::BogusSimple < Gateway::Bogus
+  class PaymentMethod::SimpleBogusCreditCard < PaymentMethod::BogusCreditCard
     def payment_profiles_supported?
       false
     end
