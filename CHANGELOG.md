@@ -1,5 +1,9 @@
 ## Solidus 2.3.0 (master, unreleased)
 
+- Renamed bogus payment methods [\#2000](https://github.com/solidusio/solidus/pull/2000) ([tvdeyen](https://github.com/tvdeyen))
+  `Spree::Gateway::BogusSimple` and `Spree::Gateway::Bogus` were renamed into `Spree::PaymentMethod::SimpleBogusCreditCard` and `Spree::PaymentMethod::BogusCreditCard`
+  Run `rake solidus:migrations:rename_gateways:up` to migrate your data.
+
 - Deprecate `Spree::Core::CurrentStore` in favor of `Spree::CurrentStoreSelector`. [\#1993](https://github.com/solidusio/solidus/pull/1993)
 - Deprecate `Spree::Order#assign_default_addresses!` in favor of `Order.new.assign_default_user_addresses`. [\#1954](https://github.com/solidusio/solidus/pull/1954) ([kennyadsl](https://github.com/kennyadsl))
 - Change how line item options are allowed in line items controller. [\#1943](https://github.com/solidusio/solidus/pull/1943)

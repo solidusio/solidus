@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe Spree::Gateway::BogusSimple, type: :model do
-  subject { Spree::Gateway::BogusSimple.new }
+describe Spree::PaymentMethod::SimpleBogusCreditCard, type: :model do
+  subject { Spree::PaymentMethod::SimpleBogusCreditCard.new }
 
   # regression test for https://github.com/spree/spree/issues/3824
   describe "#capture" do

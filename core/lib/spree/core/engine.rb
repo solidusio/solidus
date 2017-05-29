@@ -43,8 +43,8 @@ module Spree
 
       initializer "spree.register.payment_methods", before: :load_config_initializers do |app|
         app.config.spree.payment_methods = %w[
-          Spree::Gateway::Bogus
-          Spree::Gateway::BogusSimple
+          Spree::PaymentMethod::BogusCreditCard
+          Spree::PaymentMethod::SimpleBogusCreditCard
           Spree::PaymentMethod::StoreCredit
           Spree::PaymentMethod::Check
         ]

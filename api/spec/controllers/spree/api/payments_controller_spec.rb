@@ -37,7 +37,7 @@ module Spree
 
         context "payment source is not required" do
           before do
-            allow_any_instance_of(Spree::Gateway::Bogus).to receive(:source_required?).and_return(false)
+            allow_any_instance_of(Spree::PaymentMethod::BogusCreditCard).to receive(:source_required?).and_return(false)
           end
 
           it "can create a new payment" do
@@ -160,7 +160,7 @@ module Spree
           context "authorization fails" do
             before do
               fake_response = double(success?: false, to_s: "Could not authorize card")
-              expect_any_instance_of(Spree::Gateway::Bogus).to receive(:authorize).and_return(fake_response)
+              expect_any_instance_of(Spree::PaymentMethod::BogusCreditCard).to receive(:authorize).and_return(fake_response)
               api_put :authorize, id: payment.to_param
             end
 
@@ -187,7 +187,7 @@ module Spree
           context "capturing fails" do
             before do
               fake_response = double(success?: false, to_s: "Insufficient funds")
-              expect_any_instance_of(Spree::Gateway::Bogus).to receive(:capture).and_return(fake_response)
+              expect_any_instance_of(Spree::PaymentMethod::BogusCreditCard).to receive(:capture).and_return(fake_response)
             end
 
             it "returns a 422 status" do
@@ -209,7 +209,7 @@ module Spree
           context "purchasing fails" do
             before do
               fake_response = double(success?: false, to_s: "Insufficient funds")
-              expect_any_instance_of(Spree::Gateway::Bogus).to receive(:purchase).and_return(fake_response)
+              expect_any_instance_of(Spree::PaymentMethod::BogusCreditCard).to receive(:purchase).and_return(fake_response)
             end
 
             it "returns a 422 status" do
@@ -231,7 +231,7 @@ module Spree
           context "voiding fails" do
             before do
               fake_response = double(success?: false, to_s: "NO REFUNDS")
-              expect_any_instance_of(Spree::Gateway::Bogus).to receive(:void).and_return(fake_response)
+              expect_any_instance_of(Spree::PaymentMethod::BogusCreditCard).to receive(:void).and_return(fake_response)
             end
 
             it "returns a 422 status" do

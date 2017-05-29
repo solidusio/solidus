@@ -58,10 +58,10 @@ describe Spree::OrderCapturing do
       context "payment method ordering" do
         let(:secondary_payment_method) { SecondaryBogusPaymentMethod }
 
-        class SecondaryBogusPaymentMethod < Spree::Gateway::Bogus; end
+        class SecondaryBogusPaymentMethod < Spree::PaymentMethod::BogusCreditCard; end
 
         context "SecondaryBogusPaymentMethod payments are prioritized" do
-          let(:payment_methods) { [SecondaryBogusPaymentMethod, Spree::Gateway::Bogus] }
+          let(:payment_methods) { [SecondaryBogusPaymentMethod, Spree::PaymentMethod::BogusCreditCard] }
 
           it "captures SecondaryBogusPaymentMethod payments first" do
             @bogus_payment.update!(amount: bogus_total + 100)
@@ -72,7 +72,7 @@ describe Spree::OrderCapturing do
         end
 
         context "Bogus payments are prioritized" do
-          let(:payment_methods) { [Spree::Gateway::Bogus, SecondaryBogusPaymentMethod] }
+          let(:payment_methods) { [Spree::PaymentMethod::BogusCreditCard, SecondaryBogusPaymentMethod] }
 
           it "captures Bogus payments first" do
             @secondary_bogus_payment.update!(amount: secondary_total + 100)
@@ -89,7 +89,7 @@ describe Spree::OrderCapturing do
 
           before do
             allow(Spree::OrderCapturing).to receive(:sorted_payment_method_classes).and_return(
-              [SecondaryBogusPaymentMethod, Spree::Gateway::Bogus]
+              [SecondaryBogusPaymentMethod, Spree::PaymentMethod::BogusCreditCard]
             )
           end
 
@@ -103,7 +103,7 @@ describe Spree::OrderCapturing do
 
       context "when a payment is not needed to capture the entire order" do
         let(:secondary_payment_method) { SecondaryBogusPaymentMethod }
-        let(:payment_methods) { [Spree::Gateway::Bogus, SecondaryBogusPaymentMethod] }
+        let(:payment_methods) { [Spree::PaymentMethod::BogusCreditCard, SecondaryBogusPaymentMethod] }
 
         before do
           @bogus_payment.update!(amount: order.total)
@@ -132,9 +132,9 @@ describe Spree::OrderCapturing do
         let(:secondary_payment_method) { ExceptionallyBogusPaymentMethod }
         let(:bogus_total) { order.total - 1 }
         let(:secondary_total) { 1 }
-        let(:payment_methods) { [Spree::Gateway::Bogus, ExceptionallyBogusPaymentMethod] }
+        let(:payment_methods) { [Spree::PaymentMethod::BogusCreditCard, ExceptionallyBogusPaymentMethod] }
 
-        class ExceptionallyBogusPaymentMethod < Spree::Gateway::Bogus
+        class ExceptionallyBogusPaymentMethod < Spree::PaymentMethod::BogusCreditCard
           def capture(*_args)
             raise ActiveMerchant::ConnectionError.new("foo", nil)
           end

@@ -1,6 +1,6 @@
 module Spree
   # Bogus Gateway that doesn't support payment profiles.
-  class Gateway::BogusSimple < Gateway::Bogus
+  class PaymentMethod::SimpleBogusCreditCard < PaymentMethod::BogusCreditCard
     def payment_profiles_supported?
       false
     end

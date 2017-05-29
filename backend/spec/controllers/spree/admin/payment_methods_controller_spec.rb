@@ -28,13 +28,13 @@ module Spree
 
     context "tries to save invalid payment" do
       it "doesn't break, responds nicely" do
-        post :create, params: { payment_method: { name: "", type: "Spree::Gateway::Bogus" } }
+        post :create, params: { payment_method: { name: "", type: "Spree::PaymentMethod::BogusCreditCard" } }
       end
     end
 
     it "can create a payment method of a valid type" do
       expect {
-        post :create, params: { payment_method: { name: "Test Method", type: "Spree::Gateway::Bogus" } }
+        post :create, params: { payment_method: { name: "Test Method", type: "Spree::PaymentMethod::BogusCreditCard" } }
       }.to change(Spree::PaymentMethod, :count).by(1)
 
       expect(response).to be_redirect
