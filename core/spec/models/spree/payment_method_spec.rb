@@ -181,7 +181,7 @@ describe Spree::PaymentMethod, type: :model do
 
   describe '#auto_capture?' do
     class TestGateway < Spree::Gateway
-      def provider_class
+      def gateway_class
         Provider
       end
     end
@@ -311,7 +311,7 @@ describe Spree::PaymentMethod, type: :model do
   end
 
   describe 'ActiveMerchant methods' do
-    class Provider
+    class PaymentGateway
       def initialize(options)
       end
 
@@ -327,8 +327,8 @@ describe Spree::PaymentMethod, type: :model do
     end
 
     class TestPaymentMethod < Spree::PaymentMethod
-      def provider_class
-        Provider
+      def gateway_class
+        PaymentGateway
       end
     end
 

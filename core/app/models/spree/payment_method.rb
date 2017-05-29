@@ -25,7 +25,7 @@ module Spree
       store.payment_methods.empty? ? all : where(id: store.payment_method_ids)
     end
 
-    delegate :authorize, :purchase, :capture, :void, :credit, to: :provider
+    delegate :authorize, :purchase, :capture, :void, :credit, to: :gateway
 
     include Spree::Preferences::StaticallyConfigurable
 
@@ -33,18 +33,28 @@ module Spree
       Rails.application.config.spree.payment_methods
     end
 
-    def provider_class
-      raise ::NotImplementedError, "You must implement provider_class method for #{self.class}."
-    end
-
-    def provider
+    # Represents the gateway of this payment method
+    #
+    # The gateway is responsible for communicating with the providers API.
+    #
+    # It implements methods for:
+    #
+    #     - authorize
+    #     - purchase
+    #     - capture
+    #     - void
+    #     - credit
+    #
+    def gateway
       gateway_options = options
       gateway_options.delete :login if gateway_options.key?(:login) && gateway_options[:login].nil?
       if gateway_options[:server]
         ActiveMerchant::Billing::Base.mode = gateway_options[:server].to_sym
       end
-      @gateway ||= provider_class.new(gateway_options)
+      @gateway ||= gateway_class.new(gateway_options)
     end
+    alias_method :provider, :gateway
+    deprecate provider: :gateway, deprecator: Spree::Deprecation
 
     def options
       preferences.to_hash
@@ -143,5 +153,21 @@ module Spree
     def store_credit?
       is_a? Spree::PaymentMethod::StoreCredit
     end
+
+    protected
+
+    # Represents the gateway class of this payment method
+    #
+    def gateway_class
+      if respond_to? :provider_class
+        Spree::Deprecation.warn \
+          "provider_class is deprecated and will be removed from Solidus 3.0 " \
+          "(use gateway_class instead)"
+        public_send :provider_class
+      else
+        raise ::NotImplementedError, "You must implement gateway_class method for #{self.class}."
+      end
+    end
+    deprecate provider_class: :gateway_class, deprecator: Spree::Deprecation
   end
 end

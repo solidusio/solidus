@@ -9,7 +9,7 @@ module Spree
 
     attr_accessor :test
 
-    def provider_class
+    def gateway_class
       self.class
     end
 

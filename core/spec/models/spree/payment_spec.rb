@@ -209,7 +209,7 @@ describe Spree::Payment, type: :model do
       # Regression test for https://github.com/spree/spree/issues/4598
       it "should allow payments with a gateway_customer_profile_id" do
         payment.source.update!(gateway_customer_profile_id: "customer_1", brand: 'visa')
-        expect(payment.payment_method.provider_class).to receive(:supports?).with('visa').and_return(false)
+        expect(payment.payment_method.gateway_class).to receive(:supports?).with('visa').and_return(false)
         expect(payment).to receive(:started_processing!)
         payment.process!
       end
@@ -217,7 +217,7 @@ describe Spree::Payment, type: :model do
       # Another regression test for https://github.com/spree/spree/issues/4598
       it "should allow payments with a gateway_payment_profile_id" do
         payment.source.update!(gateway_payment_profile_id: "customer_1", brand: 'visa')
-        expect(payment.payment_method.provider_class).to receive(:supports?).with('visa').and_return(false)
+        expect(payment.payment_method.gateway_class).to receive(:supports?).with('visa').and_return(false)
         expect(payment).to receive(:started_processing!)
         payment.process!
       end
