@@ -16,7 +16,7 @@ describe "Payment Methods", type: :feature do
 
       within("table#listing_payment_methods") do
         expect(all("th")[1].text).to eq("Name")
-        expect(all("th")[2].text).to eq("Provider")
+        expect(all("th")[2].text).to eq("Type")
         expect(all("th")[3].text).to eq("Available to users")
         expect(all("th")[4].text).to eq("Available to admin")
         expect(all("th")[5].text).to eq("Active")
@@ -35,7 +35,7 @@ describe "Payment Methods", type: :feature do
       expect(page).to have_content("New Payment Method")
       fill_in "payment_method_name", with: "check90"
       fill_in "payment_method_description", with: "check90 desc"
-      select "Spree::PaymentMethod::Check", from: "Provider"
+      select "Spree::PaymentMethod::Check", from: "Type"
       click_button "Create"
       expect(page).to have_content("successfully created!")
     end
@@ -76,12 +76,12 @@ describe "Payment Methods", type: :feature do
       click_icon :edit
       expect(page).to have_content('Test Mode')
 
-      select 'Spree::PaymentMethod::Check', from: 'Provider'
+      select 'Spree::PaymentMethod::Check', from: 'Type'
       expect(page).to have_content('you must save first')
       expect(page).to have_no_content('Test Mode')
 
       # change back
-      select 'Spree::PaymentMethod::BogusCreditCard', from: 'Provider'
+      select 'Spree::PaymentMethod::BogusCreditCard', from: 'Type'
       expect(page).to have_no_content('you must save first')
       expect(page).to have_content('Test Mode')
     end
