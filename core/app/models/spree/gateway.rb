@@ -4,32 +4,8 @@ module Spree
   # offically supported payment gateway implementations.
   #
   class Gateway < PaymentMethod
-    delegate :authorize, :purchase, :capture, :void, :credit, to: :provider
-
-    validates :name, :type, presence: true
-
-    preference :server, :string, default: 'test'
-    preference :test_mode, :boolean, default: true
-
     def payment_source_class
       CreditCard
-    end
-
-    def provider
-      gateway_options = options
-      gateway_options.delete :login if gateway_options.key?(:login) && gateway_options[:login].nil?
-      if gateway_options[:server]
-        ActiveMerchant::Billing::Base.mode = gateway_options[:server].to_sym
-      end
-      @provider ||= provider_class.new(gateway_options)
-    end
-
-    def options
-      preferences.to_hash
-    end
-
-    def payment_profiles_supported?
-      false
     end
 
     def method_type

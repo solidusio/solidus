@@ -2,11 +2,14 @@ module Spree
   # An abstract class which is implemented most commonly as a `Spree::Gateway`.
   #
   class PaymentMethod < Spree::Base
+    preference :server, :string, default: 'test'
+    preference :test_mode, :boolean, default: true
+
     acts_as_paranoid
     acts_as_list
     DISPLAY = [:both, :front_end, :back_end]
 
-    validates :name, presence: true
+    validates :name, :type, presence: true
 
     has_many :payments, class_name: "Spree::Payment", inverse_of: :payment_method
     has_many :credit_cards, class_name: "Spree::CreditCard"
@@ -22,6 +25,8 @@ module Spree
       store.payment_methods.empty? ? all : where(id: store.payment_method_ids)
     end
 
+    delegate :authorize, :purchase, :capture, :void, :credit, to: :provider
+
     include Spree::Preferences::StaticallyConfigurable
 
     def self.providers
@@ -30,6 +35,19 @@ module Spree
 
     def provider_class
       raise ::NotImplementedError, "You must implement provider_class method for #{self.class}."
+    end
+
+    def provider
+      gateway_options = options
+      gateway_options.delete :login if gateway_options.key?(:login) && gateway_options[:login].nil?
+      if gateway_options[:server]
+        ActiveMerchant::Billing::Base.mode = gateway_options[:server].to_sym
+      end
+      @gateway ||= provider_class.new(gateway_options)
+    end
+
+    def options
+      preferences.to_hash
     end
 
     # The class that will process payments for this payment type, used for @payment.source
