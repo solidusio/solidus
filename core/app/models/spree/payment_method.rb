@@ -1,5 +1,13 @@
 module Spree
-  # An abstract class which is implemented most commonly as a `Spree::Gateway`.
+  # A base class which is used for implementing payment methods.
+  #
+  # See https://github.com/solidusio/solidus_gateway/ for
+  # offically supported payment method implementations.
+  #
+  # Uses STI (single table inheritance) to store all implemented payment methods
+  # in one table (+spree_payment_methods+).
+  #
+  # This class is not ment to be instantiated. Please create instances of concrete payment methods.
   #
   class PaymentMethod < Spree::Base
     preference :server, :string, default: 'test'
@@ -56,13 +64,20 @@ module Spree
     alias_method :provider, :gateway
     deprecate provider: :gateway, deprecator: Spree::Deprecation
 
+    # Represents all preferences as a Hash
+    #
+    # Each preference is a key holding the value(s) and gets passed to the gateway via +gateway_options+
+    #
+    # @return Hash
     def options
       preferences.to_hash
     end
 
-    # The class that will process payments for this payment type, used for @payment.source
-    # e.g. CreditCard in the case of a the Gateway payment type
-    # nil means the payment method doesn't require a source e.g. check
+    # The class that will store payment sources (re)usable with this payment method
+    #
+    # Used by Spree::Payment as source (e.g. Spree::CreditCard in the case of a credit card payment method).
+    #
+    # Returning nil means the payment method doesn't support storing sources (e.g. Spree::PaymentMethod::Check)
     def payment_source_class
       raise ::NotImplementedError, "You must implement payment_source_class method for #{self.class}."
     end
@@ -116,6 +131,22 @@ module Spree
       where(type: to_s, active: true).count > 0
     end
 
+    # Used as partial name for your payment method
+    #
+    # Currently your payment method needs to provide these partials:
+    #
+    #     1. app/views/spree/checkout/payment/_{method_type}.html.erb
+    #     The form your customer enters the payment information in during checkout
+    #
+    #     2. app/views/spree/checkout/existing_payment/_{method_type}.html.erb
+    #     The payment information of your customers resuable sources during checkout
+    #
+    #     3. app/views/spree/admin/payments/source_forms/_{method_type}.html.erb
+    #     The form an admin enters payment information in when creating orders in the backend
+    #
+    #     4. app/views/spree/admin/payments/source_views/_{method_type}.html.erb
+    #     The view that represents your payment method on orders in the backend
+    #
     def method_type
       type.demodulize.downcase
     end
@@ -142,6 +173,11 @@ module Spree
       auto_capture.nil? ? Spree::Config[:auto_capture] : auto_capture
     end
 
+    # Check if given source is supported by this payment method
+    #
+    # Please implement validation logic in your payment method implementation
+    #
+    # @see Spree::Gateway#supports?
     def supports?(_source)
       true
     end
