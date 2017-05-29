@@ -6,8 +6,8 @@
       <div class="col-3">
         <div id="preference-settings">
           <div class="field">
-            <%= label :payment_method, :type %>
-            <%= collection_select(:payment_method, :type, @payment_method_types, :to_s, :name, {}, {class: 'custom-select fullwidth js-gateway-type'}) %>
+            <%= f.label :type %>
+            <%= f.collection_select :type, @payment_method_types, :to_s, :name, {}, {class: 'custom-select fullwidth js-gateway-type'} %>
           </div>
 
           <div class="field js-preference-source-wrapper">
@@ -35,17 +35,17 @@
         </div>
         <div data-hook="auto_capture" class="field">
           <%= f.label :auto_capture %>
-          <%= select(:payment_method, :auto_capture, [["#{Spree.t(:use_app_default)} (#{Spree::Config[:auto_capture]})", ''], [Spree.t(:say_yes), true], [Spree.t(:say_no), false]], {}, {class: 'custom-select fullwidth'}) %>
+          <%= f.select :auto_capture, [["#{Spree.t(:use_app_default)} (#{Spree::Config[:auto_capture]})", ''], [Spree.t(:say_yes), true], [Spree.t(:say_no), false]], {}, {class: 'custom-select fullwidth'} %>
         </div>
         <div data-hook="active" class="field">
           <%= label_tag nil, Spree::PaymentMethod.human_attribute_name(:active) %>
           <ul>
             <li>
-              <%= radio_button :payment_method, :active, true %>
+              <%= f.radio_button :active, true %>
               <%= label_tag :payment_method_active_true, Spree.t(:say_yes) %>
             </li>
             <li>
-              <%= radio_button :payment_method, :active, false %>
+              <%= f.radio_button :active, false %>
               <%= label_tag :payment_method_active_false, Spree.t(:say_no) %>
             </li>
           </ul>

@@ -77,13 +77,7 @@ module Spree
       end
 
       def payment_method_params
-        superclass_params = params.require(:payment_method).permit!
-        subclass_params = params[ActiveModel::Naming.param_key(@payment_method_type)] || ActionController::Parameters.new
-
-        superclass_params = superclass_params.permit!
-        subclass_params = subclass_params.permit!
-
-        superclass_params.to_h.merge(subclass_params.to_h)
+        params.require(:payment_method).permit!
       end
     end
   end
