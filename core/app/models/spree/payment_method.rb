@@ -141,21 +141,23 @@ module Spree
     #
     # Currently your payment method needs to provide these partials:
     #
-    #     1. app/views/spree/checkout/payment/_{method_type}.html.erb
+    #     1. app/views/spree/checkout/payment/_{partial_name}.html.erb
     #     The form your customer enters the payment information in during checkout
     #
-    #     2. app/views/spree/checkout/existing_payment/_{method_type}.html.erb
+    #     2. app/views/spree/checkout/existing_payment/_{partial_name}.html.erb
     #     The payment information of your customers reusable sources during checkout
     #
-    #     3. app/views/spree/admin/payments/source_forms/_{method_type}.html.erb
+    #     3. app/views/spree/admin/payments/source_forms/_{partial_name}.html.erb
     #     The form an admin enters payment information in when creating orders in the backend
     #
-    #     4. app/views/spree/admin/payments/source_views/_{method_type}.html.erb
+    #     4. app/views/spree/admin/payments/source_views/_{partial_name}.html.erb
     #     The view that represents your payment method on orders in the backend
     #
-    def method_type
+    def partial_name
       type.demodulize.downcase
     end
+    alias_method :method_type, :partial_name
+    deprecate method_type: :partial_name, deprecator: Spree::Deprecation
 
     def payment_profiles_supported?
       false
