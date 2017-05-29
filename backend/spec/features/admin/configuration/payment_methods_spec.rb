@@ -23,7 +23,7 @@ describe "Payment Methods", type: :feature do
       end
 
       within('table#listing_payment_methods') do
-        expect(page).to have_content("Spree::PaymentMethod::Check")
+        expect(page).to have_content(Spree::PaymentMethod::Check.model_name.human)
       end
     end
   end
@@ -35,7 +35,7 @@ describe "Payment Methods", type: :feature do
       expect(page).to have_content("New Payment Method")
       fill_in "payment_method_name", with: "check90"
       fill_in "payment_method_description", with: "check90 desc"
-      select "Spree::PaymentMethod::Check", from: "Type"
+      select Spree::PaymentMethod::Check.model_name.human, from: "Type"
       click_button "Create"
       expect(page).to have_content("successfully created!")
     end
@@ -76,12 +76,12 @@ describe "Payment Methods", type: :feature do
       click_icon :edit
       expect(page).to have_content('Test Mode')
 
-      select 'Spree::PaymentMethod::Check', from: 'Type'
+      select Spree::PaymentMethod::Check.model_name.human, from: 'Type'
       expect(page).to have_content('you must save first')
       expect(page).to have_no_content('Test Mode')
 
       # change back
-      select 'Spree::PaymentMethod::BogusCreditCard', from: 'Type'
+      select Spree::PaymentMethod::BogusCreditCard.model_name.human, from: 'Type'
       expect(page).to have_no_content('you must save first')
       expect(page).to have_content('Test Mode')
     end

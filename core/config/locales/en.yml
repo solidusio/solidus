@@ -496,6 +496,10 @@ en:
       spree/payment_method:
         one: Payment Method
         other: Payment Methods
+      spree/payment_method/check: Check Payments
+      spree/payment_method/store_credit: Store Credit Payments
+      spree/payment_method/bogus_credit_card: Bogus Credit Card Payments
+      spree/payment_method/simple_bogus_credit_card: Simple Bogus Credit Card Payments
       spree/price:
         one: Price
         other: Prices
