@@ -1,5 +1,6 @@
 ## Solidus 2.3.0 (master, unreleased)
 
+- Renamed `PaymentMethod#method_type` into `partial_name` [\#1978](https://github.com/solidusio/solidus/pull/1978) ([tvdeyen](https://github.com/tvdeyen))
 - Order#outstanding_balance now uses reimbursements instead of refunds to calculate the amount that should be paid on an order. [#2002](https://github.com/solidusio/solidus/pull/2002) (many contributors :heart:)
 
 - Renamed `Spree::Gateway` payment method into `Spree::PaymentMethod::CreditCard` [\#2001](https://github/com/solidusio/solidus/pull/2001) ([tvdeyen](https://github.com/tvdeyen))
