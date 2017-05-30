@@ -6,6 +6,24 @@ describe Spree::Wallet, type: :model do
   let(:store_credit) { create(:store_credit, user_id: user.id) }
   subject(:wallet) { Spree::Wallet.new(user) }
 
+  describe '.payment_source_helper' do
+    let(:payment_source) { Object.const_set('FakePaymentSource', Class.new(Spree::PaymentSource)) }
+    let(:non_payment_source) { Object.const_set('FakeNonPaymentSource', Class.new) }
+
+    context 'when source is a Spree::PaymentSource' do
+      it 'defines a helper method for the class' do
+        described_class.payment_source_helper payment_source
+        expect(wallet.respond_to?(:fake_payment_sources)).to eql true
+      end
+    end
+
+    context 'when source is NOT a Spree::PaymentSource' do
+      it 'raises an ArgumentError' do
+        expect { described_class.payment_source_helper non_payment_source }.to raise_error ArgumentError
+      end
+    end
+  end
+
   describe "#add" do
     context "with valid payment source" do
       it "creates a wallet_payment_source for this user's wallet" do
