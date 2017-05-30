@@ -1,4 +1,4 @@
-<%= search_form_for @search, url: spree.sales_total_admin_reports_path  do |s| %>
+<%= search_form_for @search, url: spree.url_for(controller: 'admin/reports', action: action)  do |s| %>
   <div class="date-range-filter field">
     <div class="date-range-fields input-group">
       <%= s.text_field :completed_at_gt, class: 'datepicker datepicker-from form-control', value: datepicker_field_value(params[:q][:completed_at_gt]), placeholder: Spree.t(:start) %>
