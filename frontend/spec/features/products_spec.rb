@@ -78,6 +78,18 @@ describe "Visiting Products", type: :feature, inaccessible: true do
     end
   end
 
+  describe 'schema.org markup' do
+    let(:product) { Spree::Product.available.first }
+
+    it 'has correct schema.org/Offer attributes' do
+      expect(page).to have_css("#product_#{product.id} [itemprop='price'][content='19.99']")
+      expect(page).to have_css("#product_#{product.id} [itemprop='priceCurrency'][content='USD']")
+      click_link product.name
+      expect(page).to have_css("[itemprop='price'][content='19.99']")
+      expect(page).to have_css("[itemprop='priceCurrency'][content='USD']")
+    end
+  end
+
   context "using Russian Rubles as a currency" do
     before do
       Spree::Config[:currency] = "RUB"
