@@ -7,7 +7,7 @@ module Spree
   # Uses STI (single table inheritance) to store all implemented payment methods
   # in one table (+spree_payment_methods+).
   #
-  # This class is not ment to be instantiated. Please create instances of concrete payment methods.
+  # This class is not meant to be instantiated. Please create instances of concrete payment methods.
   #
   class PaymentMethod < Spree::Base
     preference :server, :string, default: 'test'
@@ -145,7 +145,7 @@ module Spree
     #     The form your customer enters the payment information in during checkout
     #
     #     2. app/views/spree/checkout/existing_payment/_{method_type}.html.erb
-    #     The payment information of your customers resuable sources during checkout
+    #     The payment information of your customers reusable sources during checkout
     #
     #     3. app/views/spree/admin/payments/source_forms/_{method_type}.html.erb
     #     The form an admin enters payment information in when creating orders in the backend
