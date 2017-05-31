@@ -39,8 +39,8 @@ integration.
 source (e.g. `Spree::CreditCard`) using a specific payment method (e.g
 `Solidus::Gateway::Braintree`).
 * `Spree::PaymentMethod` - An abstract class which is implemented most commonly
-as a `Spree::Gateway`.
-* `Spree::Gateway` - A concrete implementation of `Spree::PaymentMethod`
+as a `Spree::PaymentMethod::CreditCard`.
+* `Spree::PaymentMethod::CreditCard` - A concrete implementation of `Spree::PaymentMethod`
 intended to provide a base for extension. See
 https://github.com/solidusio/solidus_gateway/ for offically supported payment
 gateway implementations.

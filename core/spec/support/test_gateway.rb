@@ -1,2 +1,2 @@
-class Spree::Gateway::Test < Spree::Gateway
+class Spree::Gateway::Test < Spree::PaymentMethod::CreditCard
 end

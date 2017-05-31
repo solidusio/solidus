@@ -180,7 +180,7 @@ describe Spree::PaymentMethod, type: :model do
   end
 
   describe '#auto_capture?' do
-    class TestGateway < Spree::Gateway
+    class TestGateway < Spree::PaymentMethod::CreditCard
       def gateway_class
         Provider
       end

@@ -179,7 +179,7 @@ module Spree
     #
     # Please implement validation logic in your payment method implementation
     #
-    # @see Spree::Gateway#supports?
+    # @see Spree::PaymentMethod::CreditCard#supports?
     def supports?(_source)
       true
     end
