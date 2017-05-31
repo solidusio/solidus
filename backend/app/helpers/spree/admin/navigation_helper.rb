@@ -79,6 +79,7 @@ module Spree
 
       def link_to_clone(resource, options = {})
         options[:data] = { action: 'clone' }
+        options[:method] = :post
         link_to_with_icon('copy', Spree.t(:clone), clone_object_url(resource), options)
       end
 
