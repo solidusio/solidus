@@ -1,5 +1,14 @@
 module Spree
-  class Gateway::Bogus < Gateway
+  # @deprecated Use Spree::PaymentMethod::BogusCreditCard instead
+  class Gateway::Bogus
+    def initialize
+      Spree::Deprecation.warn \
+        'Spree::Gateway::Bogus is deprecated. ' \
+          'Please use Spree::PaymentMethod::BogusCreditCard instead'
+    end
+  end
+
+  class PaymentMethod::BogusCreditCard < Gateway
     TEST_VISA = ['4111111111111111', '4012888888881881', '4222222222222']
     TEST_MC   = ['5500000000000004', '5555555555554444', '5105105105105100']
     TEST_AMEX = ['378282246310005', '371449635398431', '378734493671000', '340000000000009']
