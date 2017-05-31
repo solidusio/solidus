@@ -37,8 +37,40 @@ module Spree
 
     include Spree::Preferences::StaticallyConfigurable
 
-    def self.providers
-      Rails.application.config.spree.payment_methods
+    class << self
+      def providers
+        Rails.application.config.spree.payment_methods
+      end
+
+      def available(display_on = nil, store: nil)
+        Spree::Deprecation.warn "Spree::PaymentMethod.available is deprecated."\
+          "Please use .active, .available_to_users, and .available_to_admin scopes instead."\
+          "For payment methods associated with a specific store, use Spree::PaymentMethod.available_to_store(your_store)"\
+          " as the base applying any further filtering"
+
+        display_on = display_on.to_s
+
+        available_payment_methods =
+          case display_on
+          when 'front_end'
+            active.available_to_users
+          when 'back_end'
+            active.available_to_admin
+          else
+            active.available_to_users.available_to_admin
+          end
+        available_payment_methods.select do |p|
+          store.nil? || store.payment_methods.empty? || store.payment_methods.include?(p)
+        end
+      end
+
+      def active?
+        where(type: to_s, active: true).count > 0
+      end
+
+      def find_with_destroyed(*args)
+        unscoped { find(*args) }
+      end
     end
 
     # Represents the gateway of this payment method
@@ -105,32 +137,6 @@ module Spree
       end
     end
 
-    def self.available(display_on = nil, store: nil)
-      Spree::Deprecation.warn "Spree::PaymentMethod.available is deprecated."\
-        "Please use .active, .available_to_users, and .available_to_admin scopes instead."\
-        "For payment methods associated with a specific store, use Spree::PaymentMethod.available_to_store(your_store)"\
-        " as the base applying any further filtering"
-
-      display_on = display_on.to_s
-
-      available_payment_methods =
-        case display_on
-        when 'front_end'
-          active.available_to_users
-        when 'back_end'
-          active.available_to_admin
-        else
-          active.available_to_users.available_to_admin
-        end
-      available_payment_methods.select do |p|
-        store.nil? || store.payment_methods.empty? || store.payment_methods.include?(p)
-      end
-    end
-
-    def self.active?
-      where(type: to_s, active: true).count > 0
-    end
-
     # Used as partial name for your payment method
     #
     # Currently your payment method needs to provide these partials:
@@ -149,10 +155,6 @@ module Spree
     #
     def method_type
       type.demodulize.downcase
-    end
-
-    def self.find_with_destroyed(*args)
-      unscoped { find(*args) }
     end
 
     def payment_profiles_supported?
