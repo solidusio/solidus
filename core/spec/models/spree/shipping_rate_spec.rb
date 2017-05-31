@@ -8,12 +8,21 @@ describe Spree::ShippingRate, type: :model do
   let(:order) { create :order, ship_address: address }
   let(:shipment) { create(:shipment, order: order) }
   let(:shipping_method) { create(:shipping_method, tax_category: tax_category) }
+  let(:backend_shipping_method) { create(:shipping_method, tax_category: tax_category, available_to_users: false) }
   let(:tax_category) { create :tax_category }
 
   subject(:shipping_rate) do
     Spree::ShippingRate.new(
       shipment: shipment,
       shipping_method: shipping_method,
+      cost: 10
+    )
+  end
+
+  subject(:backend_shipping_rate) do
+    Spree::ShippingRate.new(
+      shipment: shipment,
+      shipping_method: backend_shipping_method,
       cost: 10
     )
   end
@@ -183,6 +192,24 @@ describe Spree::ShippingRate, type: :model do
 
     it 'should be shipping_method.code' do
       expect(shipping_rate.shipping_method_code).to eq("THE_CODE")
+    end
+  end
+
+  context "#available_to_user?" do
+    it 'should return true if shipping_method is available_to_users' do
+      expect(shipping_rate.available_to_user?).to eq(true)
+    end
+
+    context "shipping_method not available_to_users" do
+      it 'should return false if not selected' do
+        expect(backend_shipping_rate.available_to_user?).to eq(false)
+      end
+
+      it 'should return true if selected' do
+        backend_shipping_rate.save
+        shipment.selected_shipping_rate_id = backend_shipping_rate.id
+        expect(backend_shipping_rate.available_to_user?).to eq(true)
+      end
     end
   end
 end

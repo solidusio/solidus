@@ -129,13 +129,13 @@ module Spree
           let!(:backend_method) { create(:shipping_method, available_to_users: false, cost: 0.00) }
           let!(:generic_method) { create(:shipping_method, cost: 5.00) }
 
-          it "does not return backend rates at all" do
-            expect(subject.shipping_rates(package).map(&:shipping_method_id)).to eq([generic_method.id])
+          it "returns all shipping rates" do
+            expect(subject.shipping_rates(package).map(&:shipping_method_id)).to eq([backend_method.id, generic_method.id])
           end
 
           # regression for https://github.com/spree/spree/issues/3287
           it "doesn't select backend rates even if they're more affordable" do
-            expect(subject.shipping_rates(package).map(&:selected)).to eq [true]
+            expect(subject.shipping_rates(package).select(&:selected).map(&:shipping_method_id)).to eq [generic_method.id]
           end
         end
 
