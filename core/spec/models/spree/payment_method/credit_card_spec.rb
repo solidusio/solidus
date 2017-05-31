@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::Gateway, type: :model do
+describe Spree::PaymentMethod::CreditCard, type: :model do
   context "fetching payment sources" do
     let(:store) { create :store }
     let(:user) { create :user }

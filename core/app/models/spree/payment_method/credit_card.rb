@@ -3,7 +3,7 @@ module Spree
   # base for extension. See https://github.com/solidusio/solidus_gateway/ for
   # offically supported payment gateway implementations.
   #
-  class Gateway < PaymentMethod
+  class PaymentMethod::CreditCard < PaymentMethod
     def payment_source_class
       CreditCard
     end

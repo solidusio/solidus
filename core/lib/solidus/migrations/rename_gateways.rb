@@ -4,6 +4,7 @@ module Solidus
   module Migrations
     class RenameGateways
       DEFAULT_MAPPING = {
+        'Spree::Gateway' => 'Spree::PaymentMethod::CreditCard',
         'Spree::Gateway::Bogus' => 'Spree::PaymentMethod::BogusCreditCard',
         'Spree::Gateway::BogusSimple' => 'Spree::PaymentMethod::SimpleBogusCreditCard'
       }
