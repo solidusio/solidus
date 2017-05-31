@@ -5,12 +5,9 @@ module Spree
     mattr_writer :line_item_attributes
   end
 
-  unless PermittedAttributes.line_item_attributes.include? :some_option
-    PermittedAttributes.line_item_attributes += [:some_option]
+  unless PermittedAttributes.line_item_attributes.include? :options
+    PermittedAttributes.line_item_attributes << { options: [:some_option] }
   end
-
-  # This should go in an initializer
-  Spree::Api::LineItemsController.line_item_options += [:some_option]
 
   describe Api::LineItemsController, type: :controller do
     render_views
