@@ -38,9 +38,7 @@ module Spree
       end
 
       def rates_for_item(item)
-        applicable_rates(item.order).select do |rate|
-          rate.tax_categories.map(&:id).include?(item.tax_category_id)
-        end
+        applicable_rates(item.order).select { |rate| rate.tax_categories.include?(item.tax_category) }
       end
     end
   end
