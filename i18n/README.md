@@ -57,6 +57,20 @@ you want your users to be able to select from the locale toggle on the frontend.
 
 ---
 
+## Updating Translations
+
+If you want to improve the translations on your language, run the tasks:
+
+    bundle exec rake solidus_i18n:update_default
+    bundle exec i18n-tasks add-missing --nil-value --locale <LOCALE>
+
+Substitute <LOCALE> with your locale code (e.g: `it`).
+
+This will do a cleanup and prepare `<LOCALE>.yml` with all the missing keys.
+You can then write the translations and open a pull request.
+
+---
+
 ## Model Translations
 
 We **removed** support for translating models into [a separate Gem](https://github.com/solidusio-contrib/solidus_globalize).

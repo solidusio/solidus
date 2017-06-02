@@ -13,6 +13,7 @@ gem 'mysql2'
 
 group :development, :test do
   gem "pry-rails"
+  gem 'i18n-tasks', '~> 0.9' if branch == 'master'
 end
 
 gemspec

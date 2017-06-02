@@ -6,7 +6,7 @@
 .localeapp/locales
 .project
 coverage
-default
+config/locales/en.yml
 Gemfile.lock
 tmp
 nbproject
