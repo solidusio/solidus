@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Spree::Core::CurrentStore do
   describe "#store" do
-    subject { Spree::Core::CurrentStore.new(request).store }
+    subject { Spree::Deprecation.silence { Spree::Core::CurrentStore.new(request).store } }
 
     context "with a default" do
       let(:request) { double(headers: {}, env: {}) }
@@ -31,6 +31,11 @@ describe Spree::Core::CurrentStore do
           end
         end
       end
+    end
+
+    it 'is deprecated' do
+      expect(Spree::Deprecation).to(receive(:warn))
+      Spree::Core::CurrentStore.new(double)
     end
   end
 end
