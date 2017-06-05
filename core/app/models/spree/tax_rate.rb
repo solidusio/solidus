@@ -82,14 +82,12 @@ module Spree
     def adjust(_order_tax_zone, item)
       amount = compute_amount(item)
 
-      included = included_in_price && amount > 0
-
       item.adjustments.create!(
         source: self,
         amount: amount,
         order_id: item.order_id,
         label: adjustment_label(amount),
-        included: included
+        included: included_in_price
       )
     end
 
