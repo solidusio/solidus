@@ -188,9 +188,9 @@ module Spree
 
         context "for non-canceled orders" do
           it 'should incorporate refund reimbursements' do
-            # Order Total - Payment Total
-            # 110 - 100 = 10
-            expect(order.outstanding_balance).to eq 10
+            # Order Total - Payment Total - Refund Total
+            # 110 - 100 - 10 = 0
+            expect(order.outstanding_balance).to eq 0
           end
         end
       end

@@ -368,7 +368,7 @@ module Spree
       if state == 'canceled'
         -1 * payment_total
       else
-        total - payment_total
+        total - payment_total - refund_total
       end
     end
 
