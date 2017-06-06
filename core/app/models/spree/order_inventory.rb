@@ -72,6 +72,8 @@ module Spree
         shipment.stock_location.unstock(variant, quantity, shipment)
       end
 
+      line_item.reload
+
       quantity
     end
 

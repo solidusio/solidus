@@ -64,6 +64,8 @@ describe Spree::LineItem, type: :model do
 
     # Specs for https://github.com/solidusio/solidus/pull/522#issuecomment-170668125
     context "with `#copy_price` defined" do
+      let(:order) { create :order }
+
       before(:context) do
         Spree::LineItem.class_eval do
           def copy_price
@@ -81,16 +83,17 @@ describe Spree::LineItem, type: :model do
 
       it 'should display a deprecation warning' do
         expect(Spree::Deprecation).to receive(:warn)
-        Spree::LineItem.new(variant: variant, order: order)
+        Spree::LineItem.new(variant: variant, order: order).save
       end
 
       it 'should run the user-defined copy_price method' do
         expect_any_instance_of(Spree::LineItem).to receive(:copy_price).and_call_original
         Spree::Deprecation.silence do
-          Spree::LineItem.new(variant: variant, order: order)
+          Spree::LineItem.new(variant: variant, order: order).save
         end
       end
     end
+
   end
 
   describe '.discounted_amount' do
