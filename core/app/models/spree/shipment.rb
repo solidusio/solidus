@@ -6,7 +6,7 @@ module Spree
     belongs_to :stock_location, class_name: 'Spree::StockLocation'
 
     has_many :adjustments, as: :adjustable, inverse_of: :adjustable, dependent: :delete_all
-    has_many :inventory_units, dependent: :destroy, inverse_of: :shipment
+    has_many :inventory_units, dependent: :delete_all, inverse_of: :shipment
     has_many :shipping_rates, -> { order(:cost) }, dependent: :destroy
     has_many :shipping_methods, through: :shipping_rates
     has_many :state_changes, as: :stateful

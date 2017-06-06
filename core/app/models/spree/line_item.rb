@@ -14,10 +14,15 @@ module Spree
     belongs_to :variant, -> { with_deleted }, class_name: "Spree::Variant", inverse_of: :line_items
     belongs_to :tax_category, class_name: "Spree::TaxCategory"
 
+    # This has to be defined before the has_many association to inventory units
+    # Cf. https://github.com/rails/rails/issues/3458
+    before_destroy :ensure_can_destroy
+    before_destroy :restock_inventory
+
     has_one :product, through: :variant
 
     has_many :adjustments, as: :adjustable, inverse_of: :adjustable, dependent: :destroy
-    has_many :inventory_units, inverse_of: :line_item
+    has_many :inventory_units, inverse_of: :line_item, dependent: :delete_all
 
     has_many :line_item_actions, dependent: :destroy
     has_many :actions, through: :line_item_actions
@@ -33,9 +38,6 @@ module Spree
     validates :price, numericality: true
 
     after_save :update_inventory
-
-    before_destroy :update_inventory
-    before_destroy :destroy_inventory_units
 
     delegate :name, :description, :sku, :should_track_inventory?, to: :variant
     delegate :currency, to: :order, allow_nil: true
@@ -180,8 +182,20 @@ module Spree
       end
     end
 
-    def destroy_inventory_units
-      inventory_units.destroy_all
+    def ensure_can_destroy
+      if inventory_units.where.not(state: ["on_hand", "backordered"]).size > 0
+        errors.add(:base, :cannot_destroy_line_item_with_shipped_inventory_units)
+        throw :abort
+      end
+    end
+
+    def restock_inventory
+      if order.completed?
+        inventory_units.group_by(&:shipment).each do |shipment, ius|
+          shipment.stock_location.restock(variant, ius.length, shipment)
+          shipment.destroy! if (shipment.inventory_unit_ids - inventory_unit_ids).empty?
+        end
+      end
     end
   end
 end
