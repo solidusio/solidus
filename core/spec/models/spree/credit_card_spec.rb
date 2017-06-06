@@ -286,7 +286,7 @@ describe Spree::CreditCard, type: :model do
 
       it 'uses the wallet information' do
         wallet_payment_source = user.wallet.add(credit_card)
-        user.wallet.default_wallet_payment_source = wallet_payment_source
+        user.wallet.default_payment_source = wallet_payment_source
 
         expect(default_with_silence(credit_card)).to be_truthy
       end
@@ -315,7 +315,7 @@ describe Spree::CreditCard, type: :model do
         Spree::Deprecation.silence do
           credit_card.default = true
         end
-        expect(user.wallet.default_wallet_payment_source.payment_source).to eq(credit_card)
+        expect(user.wallet.default_payment_source.payment_source).to eq(credit_card)
       end
     end
 

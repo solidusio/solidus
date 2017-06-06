@@ -53,7 +53,7 @@ module Spree
       if order.completed?
         reusable_sources_by_order(order)
       elsif order.user_id
-        order.user.wallet.wallet_payment_sources.map(&:payment_source).select(&:reusable?)
+        order.user.wallet.payment_sources.map(&:payment_source).select(&:reusable?)
       else
         []
       end
