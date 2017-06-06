@@ -85,6 +85,7 @@ module Spree
     end
 
     def activate(order:, line_item: nil, user: nil, path: nil, promotion_code: nil)
+      return unless eligible?(order)
       return unless self.class.order_activatable?(order)
 
       payload = {
