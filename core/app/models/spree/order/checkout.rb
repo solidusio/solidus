@@ -90,7 +90,7 @@ module Spree
             before_transition from: :cart, do: :ensure_line_items_present
 
             if states[:address]
-              before_transition to: :address, do: :assign_default_addresses!
+              before_transition to: :address, do: :assign_default_user_addresses!
               before_transition from: :address, do: :persist_user_address!
             end
 

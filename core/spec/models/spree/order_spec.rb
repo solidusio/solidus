@@ -785,10 +785,10 @@ describe Spree::Order, type: :model do
     end
   end
 
-  context "#assign_default_addresses!" do
+  context "#assign_default_user_addresses!" do
     let(:order) { Spree::Order.new }
 
-    subject { order.assign_default_addresses! }
+    subject { order.assign_default_user_addresses! }
 
     context "when no user is associated to the order" do
       it "does not associate any bill address" do
