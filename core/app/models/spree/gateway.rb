@@ -1,3 +1,5 @@
+require_dependency 'spree/credit_card'
+
 module Spree
   # A concrete implementation of `Spree::PaymentMethod` intended to provide a
   # base for extension. See https://github.com/solidusio/solidus_gateway/ for
