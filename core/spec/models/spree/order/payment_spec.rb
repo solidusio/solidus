@@ -151,48 +151,43 @@ module Spree
       it { is_expected.to be_truthy }
     end
 
-    context "#outstanding_balance" do
-      it "should return positive amount when payment_total is less than total" do
-        order.payment_total = 20.20
-        order.total = 30.30
-        expect(order.outstanding_balance).to eq(10.10)
-      end
-      it "should return negative amount when payment_total is greater than total" do
-        order.total = 8.20
-        order.payment_total = 10.20
-        expect(order.outstanding_balance).to be_within(0.001).of(-2.00)
+    context "with reimburesements on the order" do
+      let(:amount_paid) { 20.0 }
+      let(:amount_refunded) { 10.0 }
+      let(:order) { create(:order_with_line_items) }
+      let(:reimbursement) { create(:reimbursement) }
+      let(:payment) do
+        create(:payment, amount: amount_paid, state: :completed, order: order)
       end
 
-      context "with reimburesements on the order" do
-        let(:amount) { 10.0 }
-        let(:reimbursement) { create(:reimbursement) }
-        let(:order) { reimbursement.order.reload }
+      before do
+        reimbursement.order = order
 
-        before do
-          # Set the payment amount to actually be the order total of 110
-          reimbursement.order.payments.first.update_column :amount, amount
-          # Creates a refund of 110
-          create :refund, amount: amount,
-                          payment: reimbursement.order.payments.first,
-                          reimbursement: reimbursement
-          # Update the order totals so payment_total goes to 0 reflecting the refund..
-          order.update!
+        create(:refund, {
+          amount: amount_refunded,
+          payment: payment,
+          reimbursement: reimbursement
+        })
+
+        # Invoke OrderUpdater to update payment_total
+        order.update!
+      end
+
+      context "for canceled orders" do
+        before { order.update_attributes(state: 'canceled') }
+
+        it "it should be a negative amount incorporating reimbursements" do
+          # -1 * (Payment Total + Reimbursed)
+          # -1 * (20 - 10) = -10
+          expect(order.outstanding_balance).to eq(-10)
         end
+      end
 
-        context "for canceled orders" do
-          before { order.update_attributes(state: 'canceled') }
-
-          it "it should be a negative amount incorporating reimbursements" do
-            expect(order.outstanding_balance).to eq(-10)
-          end
-        end
-
-        context "for non-canceled orders" do
-          it 'should incorporate refund reimbursements' do
-            # Order Total - (Payment Total + Reimbursed)
-            # 110 - (0 + 10) = 100
-            expect(order.outstanding_balance).to eq 100
-          end
+      context "for non-canceled orders" do
+        it 'should incorporate refund reimbursements' do
+          # Order Total - (Payment Total + Reimbursed)
+          # 110 - (20 - 10) = 100
+          expect(order.outstanding_balance).to eq 100
         end
       end
     end
