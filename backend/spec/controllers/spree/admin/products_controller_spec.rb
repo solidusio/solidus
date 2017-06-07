@@ -166,6 +166,16 @@ describe Spree::Admin::ProductsController, type: :controller do
     end
   end
 
+  context "cloning a product" do
+    let!(:product) { create(:product) }
+
+    it "duplicates the product" do
+      expect do
+        post :clone, params: { id: product.id }
+      end.to change { Spree::Product.count }.by(1)
+    end
+  end
+
   # regression test for https://github.com/spree/spree/issues/801
   context "destroying a product" do
     let(:product) do
