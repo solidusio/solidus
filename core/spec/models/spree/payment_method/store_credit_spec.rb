@@ -257,8 +257,8 @@ describe Spree::PaymentMethod::StoreCredit do
     let(:captured_amount) { 10.0 }
 
     shared_examples "a spree payment method" do
-      it "returns an ActiveMerchant::Billing::Response" do
-        expect(subject).to be_instance_of(ActiveMerchant::Billing::Response)
+      it "returns an Spree::BillingResponse" do
+        expect(subject).to be_instance_of(Spree::BillingResponse)
       end
     end
 

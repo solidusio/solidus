@@ -65,6 +65,14 @@ module Spree
 
       response
     rescue ActiveMerchant::ConnectionError => e
+      msg =
+        'Raising ActiveMerchant::ConnectionError is deprecated. ' \
+        'Please raise Spree::BillingConnectionError instead.'
+
+      Spree::Deprecation.warn(msg, caller)
+      logger.error(Spree.t(:gateway_error) + "  #{e.inspect}")
+      raise Core::GatewayError.new(Spree.t(:unable_to_connect_to_gateway))
+    rescue Spree::BillingConnectionError => e
       logger.error(Spree.t(:gateway_error) + "  #{e.inspect}")
       raise Core::GatewayError.new(Spree.t(:unable_to_connect_to_gateway))
     end

@@ -7,7 +7,7 @@ describe "Log entries", type: :feature do
 
   context "with a successful log entry" do
     before do
-      response = ActiveMerchant::Billing::Response.new(
+      response = Spree::BillingResponse.new(
         true,
         "Transaction successful",
         transid: "ABCD1234"
@@ -31,7 +31,7 @@ describe "Log entries", type: :feature do
 
   context "with a failed log entry" do
     before do
-      response = ActiveMerchant::Billing::Response.new(
+      response = Spree::BillingResponse.new(
         false,
         "Transaction failed",
         transid: "ABCD1234"

@@ -14,7 +14,7 @@ describe Spree::Refund, type: :model do
     let(:refund_reason) { create(:refund_reason) }
 
     let(:gateway_response) {
-      ActiveMerchant::Billing::Response.new(
+      Spree::BillingResponse.new(
         gateway_response_success,
         gateway_response_message,
         gateway_response_params,
@@ -136,12 +136,12 @@ describe Spree::Refund, type: :model do
       end
     end
 
-    context 'with an activemerchant gateway connection error' do
+    context 'with a connection error' do
       before do
         expect(payment.payment_method)
           .to receive(:credit)
           .with(amount_in_cents, payment.source, payment.transaction_id, { originator: an_instance_of(Spree::Refund) })
-          .and_raise(ActiveMerchant::ConnectionError.new("foo", nil))
+          .and_raise(Spree::BillingConnectionError.new("foo", nil))
       end
 
       it 'raises Spree::Core::GatewayError' do
