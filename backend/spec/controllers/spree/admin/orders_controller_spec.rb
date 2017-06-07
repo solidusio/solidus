@@ -30,7 +30,7 @@ describe Spree::Admin::OrdersController, type: :controller do
     let(:adjustments) { double('adjustments') }
 
     before do
-      allow(Spree::Order).to receive_messages(find_by_number!: order)
+      allow(Spree::Order).to receive_message_chain(:includes, find_by!: order)
       allow(order).to receive_messages(contents: Spree::OrderContents.new(order))
     end
 
@@ -107,7 +107,7 @@ describe Spree::Admin::OrdersController, type: :controller do
 
       context "when a user_id is passed as a parameter" do
         let(:user)  { mock_model(Spree.user_class) }
-        before { allow(Spree.user_class).to receive_messages find_by_id: user }
+        before { allow(Spree.user_class).to receive_messages find_by: user }
 
         it "imports a new order and assigns the user to the order" do
           expect(Spree::Core::Importer::Order).to receive(:import)

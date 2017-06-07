@@ -8,7 +8,7 @@ describe Spree::Admin::Orders::CustomerDetailsController, type: :controller do
 
     let(:order) { create(:order, number: "R123456789") }
 
-    before { allow(Spree::Order).to receive(:find_by_number!) { order } }
+    before { allow(Spree::Order).to receive_message_chain(:includes, :find_by!) { order } }
 
     context "#update" do
       it "updates + progresses the order" do

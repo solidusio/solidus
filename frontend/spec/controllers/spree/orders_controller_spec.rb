@@ -19,7 +19,7 @@ describe Spree::OrdersController, type: :controller do
         post :populate
         expect(cookies.signed[:guest_token]).not_to be_blank
 
-        order_by_token = Spree::Order.find_by_guest_token(cookies.signed[:guest_token])
+        order_by_token = Spree::Order.find_by(guest_token: cookies.signed[:guest_token])
         assigned_order = assigns[:order]
 
         expect(assigned_order).to eq order_by_token
