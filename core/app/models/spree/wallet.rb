@@ -12,6 +12,7 @@ class Spree::Wallet
 
   def initialize(user)
     @user = user
+    define_payment_source_methods
   end
 
   # Returns an array of the WalletPaymentSources in this wallet.
@@ -71,6 +72,50 @@ class Spree::Wallet
       default_wallet_payment_source.try!(:update!, default: false)
       # Set new default
       wallet_payment_source.try!(:update!, default: true)
+    end
+  end
+
+  private
+
+  ##
+  # For every class that inherits `Spree::PaymentSource`, defines a method
+  # for said class to return those payment_source objects.
+  #
+  # @example For Spree::Credit Card
+  #   user.wallet.credit_cards
+  #   #=> [Array<Spree::CreditCard>]
+  #
+  #   user.wallet.store_credits
+  #   #=> [Array<Spree::StoreCredit>]
+  #
+  # @return [NilClass]
+  #
+  def define_payment_source_methods
+    # Loop through each available payment source class.
+    # @todo How do we compensate for lazy loading?
+    Spree::PaymentSource.descendants.each do |source|
+      # Underscore and pluralize
+      # Spree::CreditCard => 'credit_cards'
+      method_name = source.name.underscore.split('/').last.pluralize
+
+      # Define method such as 'credit_cards' on the wallet class.
+      unless respond_to?(method_name)
+        define_payment_source_method(source, method_name, user.id)
+      end
+    end
+
+    nil
+  end
+
+  ##
+  # Define method for to obtain the `Spree::WalletPaymentSource`
+  # payment source.
+  #
+  def define_payment_source_method(source, method_name, user_id)
+    self.class.send(:define_method, method_name) do
+      source.
+        joins(:wallet_payment_sources).
+        where(spree_wallet_payment_sources: { user_id: user_id })
     end
   end
 end
