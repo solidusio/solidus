@@ -40,6 +40,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'stringex', '~> 1.5.1'
   s.add_dependency 'truncate_html', '~> 0.9', '>= 0.9.2'
   s.add_dependency 'twitter_cldr', '>= 3.0', '< 5'
+  s.add_dependency 'validates_email_format_of'
 
   s.add_development_dependency 'email_spec', '~> 1.6'
 end
