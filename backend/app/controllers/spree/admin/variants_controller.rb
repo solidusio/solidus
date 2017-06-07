@@ -55,6 +55,11 @@ module Spree
       def redirect_on_empty_option_values
         redirect_to admin_product_variants_url(params[:product_id]) if @product.empty_option_values?
       end
+
+      def parent
+        @parent ||= Spree::Product.with_deleted.find_by(slug: params[:product_id])
+        @product = @parent
+      end
     end
   end
 end
