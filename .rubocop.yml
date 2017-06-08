@@ -126,6 +126,10 @@ Security/Eval:
 Style/VariableNumber:
   Enabled: false
 
+# Write empty methods as you wish.
+Style/EmptyMethod:
+  Enabled: false
+
 # From http://relaxed.ruby.style/
 
 Style/Alias:
