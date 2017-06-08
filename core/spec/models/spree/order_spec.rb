@@ -1488,4 +1488,23 @@ describe Spree::Order, type: :model do
       end
     end
   end
+
+  describe "#refresh_shipment_rates" do
+    let(:order) { Spree::Order.new(shipments: [shipment]) }
+    let(:shipment) { Spree::Shipment.new }
+
+    context "when called with no arguments" do
+      it "calls refresh rates with frontend_only set to true" do
+        expect(shipment).to receive(:refresh_rates).with(frontend_only: true)
+        order.refresh_shipment_rates
+      end
+    end
+
+    context "when called with frontend_only set to false" do
+      it "calls shipment#refresh_rates with frontend_only set to false" do
+        expect(shipment).to receive(:refresh_rates).with(frontend_only: false)
+        order.refresh_shipment_rates(frontend_only: false)
+      end
+    end
+  end
 end
