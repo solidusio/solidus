@@ -101,6 +101,11 @@ Style/TrailingCommaInLiteral:
 Style/SymbolArray:
   Enabled: false
 
+Rails/DynamicFindBy:
+  Whitelist:
+    - find_by_param
+    - find_by_param!
+
 # From http://relaxed.ruby.style/
 
 Style/Alias:
