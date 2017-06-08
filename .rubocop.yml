@@ -123,6 +123,9 @@ Security/Eval:
     - 'Gemfile'
     - '*/Gemfile'
 
+Style/VariableNumber:
+  Enabled: false
+
 # From http://relaxed.ruby.style/
 
 Style/Alias:
