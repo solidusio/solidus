@@ -106,6 +106,17 @@ Rails/DynamicFindBy:
     - find_by_param
     - find_by_param!
 
+# We use a lot of
+#
+#     expect {
+#       something
+#     }.to { happen }
+#
+# syntax in the specs files.
+Lint/AmbiguousBlockAssociation:
+  Exclude:
+    - '*/spec/**/*'
+
 # From http://relaxed.ruby.style/
 
 Style/Alias:
