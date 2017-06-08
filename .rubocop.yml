@@ -97,6 +97,10 @@ Style/TrailingCommaInArguments:
 Style/TrailingCommaInLiteral:
   Enabled: false
 
+# Symbol Arrays are ok and the %i syntax widely unknown
+Style/SymbolArray:
+  Enabled: false
+
 # From http://relaxed.ruby.style/
 
 Style/Alias:
