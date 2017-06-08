@@ -117,6 +117,12 @@ Lint/AmbiguousBlockAssociation:
   Exclude:
     - '*/spec/**/*'
 
+# We use eval to add common_spree_dependencies into the Gemfiles of each of our gems
+Security/Eval:
+  Exclude:
+    - 'Gemfile'
+    - '*/Gemfile'
+
 # From http://relaxed.ruby.style/
 
 Style/Alias:
