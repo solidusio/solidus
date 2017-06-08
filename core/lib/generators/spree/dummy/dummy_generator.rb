@@ -30,6 +30,15 @@ module Spree
       opts[:database] = 'sqlite3' if opts[:database].blank?
       opts[:force] = true
       opts[:skip_bundle] = true
+      opts[:skip_gemfile] = true
+      opts[:skip_git] = true
+      opts[:skip_keeps] = true
+      opts[:skip_listen] = true
+      opts[:skip_puma] = true
+      opts[:skip_rc] = true
+      opts[:skip_spring] = true
+      opts[:skip_test] = true
+      opts[:skip_yarn] = true
 
       puts "Generating dummy Rails application..."
       invoke Rails::Generators::AppGenerator,
