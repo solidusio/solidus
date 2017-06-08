@@ -138,7 +138,7 @@ describe "Product scopes", type: :model do
         end
       end
 
-      context "with multiple prices", pending: true do
+      context "with multiple prices" do
         let!(:second_price) { create(:price, variant: product.master) }
 
         it "includes the product only once" do

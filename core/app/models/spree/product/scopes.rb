@@ -171,9 +171,13 @@ module Spree
       where("#{Spree::Product.quoted_table_name}.deleted_at IS NULL or #{Spree::Product.quoted_table_name}.deleted_at >= ?", Time.current)
     end
 
+    scope :with_master_price, -> do
+      joins(:master).where(Spree::Price.where(Spree::Variant.arel_table[:id].eq(Spree::Price.arel_table[:variant_id])).exists)
+    end
+
     # Can't use add_search_scope for this as it needs a default argument
     def self.available(available_on = nil)
-      joins(master: :prices).where("#{Spree::Product.quoted_table_name}.available_on <= ?", available_on || Time.current)
+      with_master_price.where("#{Spree::Product.quoted_table_name}.available_on <= ?", available_on || Time.current)
     end
     search_scopes << :available
 
