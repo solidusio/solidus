@@ -17,9 +17,8 @@
       </div>
     </div>
   </fieldset>
-  <% if f.object.new_record? %>
-    <fieldset class="no-border-top no-border-bottom">
-      <div class="row">
+  <fieldset class="no-border-top no-border-bottom">
+    <div class="row">
       <% @product.option_types.each_with_index do |option_type, index| %>
           <div class="col-3">
             <div class="field" data-hook="presentation">
@@ -36,9 +35,8 @@
             </div>
           </div>
       <% end %>
-      </div>
-    </fieldset>
-  <% end %>
+    </div>
+  </fieldset>
 </div>
 
 <div data-hook="admin_variant_form_additional_fields">
