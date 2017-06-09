@@ -26,27 +26,7 @@ module Spree
       end
 
       def sales_total
-        params[:q] = {} unless params[:q]
-
-        if params[:q][:completed_at_gt].blank?
-          params[:q][:completed_at_gt] = Time.current.beginning_of_month
-        else
-          params[:q][:completed_at_gt] = begin
-                                           Time.zone.parse(params[:q][:completed_at_gt]).beginning_of_day
-                                         rescue
-                                           Time.current.beginning_of_month
-                                         end
-        end
-
-        if params[:q] && !params[:q][:completed_at_lt].blank?
-          params[:q][:completed_at_lt] = begin
-                                           Time.zone.parse(params[:q][:completed_at_lt]).end_of_day
-                                         rescue
-                                           ""
-                                         end
-        end
-
-        params[:q][:s] ||= "completed_at desc"
+        params[:q] = search_params
 
         @search = Order.complete.ransack(params[:q])
         @orders = @search.result
@@ -68,6 +48,29 @@ module Spree
       end
 
       @@available_reports = {}
+
+      private
+
+      def search_params
+        params.fetch(:q, {}).tap do |q|
+          q[:completed_at_gt] = adjust_start_date q[:completed_at_gt]
+          q[:completed_at_lt] = adjust_end_date(q[:completed_at_lt]) if q[:completed_at_lt].present?
+          q[:s] ||= 'completed_at desc'
+        end
+      end
+
+      def adjust_start_date(string_date = nil)
+        return Time.current.beginning_of_month if string_date.blank?
+        Time.zone.parse(string_date).beginning_of_day
+      rescue ArgumentError
+        Time.current.beginning_of_month
+      end
+
+      def adjust_end_date(string_date)
+        Time.zone.parse(string_date).end_of_day
+      rescue ArgumentError
+        ""
+      end
     end
   end
 end
