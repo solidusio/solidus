@@ -5,9 +5,15 @@
 <script>
   $('.trigger-flash').on('click', function(){
     type = $(this).data('flashType');
-    flash = $("<div class='flash'>")
-      .text(type)
-      .addClass(type)
-      .appendTo('.js-flash-wrapper');
+
+    if (!$('.flash.' + type).is('*')) {
+      flash = $("<div class='flash'>")
+        .text(type)
+        .addClass(type)
+        .appendTo('.js-flash-wrapper')
+        .on('click', function() {
+          $(this).remove();
+        });
+    }
   });
 </script>
