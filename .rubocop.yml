@@ -7,7 +7,7 @@ AllCops:
     - '*/spec/dummy/**/*'
     - 'sandbox/**/*'
     - '**/templates/**/*'
-  TargetRubyVersion: 2.1
+  TargetRubyVersion: 2.2
 
 # Sometimes I believe this reads better
 # This also causes spacing issues on multi-line fixes
@@ -67,34 +67,67 @@ Style/AsciiComments:
 Lint/EndAlignment:
   Enabled: false
 
-Style/ElseAlignment:
+Layout/ElseAlignment:
   Enabled: false
 
-Style/IndentationWidth:
+Layout/IndentationWidth:
   Enabled: false
 
-Style/AlignParameters:
+Layout/AlignParameters:
   Enabled: false
 
-Style/ClosingParenthesisIndentation:
+Layout/ClosingParenthesisIndentation:
   Enabled: false
 
-Style/MultilineMethodCallIndentation:
+Layout/MultilineMethodCallIndentation:
   Enabled: false
 
-Style/IndentArray:
+Layout/IndentArray:
   Enabled: false
 
-Style/IndentHash:
+Layout/IndentHash:
   Enabled: false
 
-Style/AlignHash:
+Layout/AlignHash:
   Enabled: false
 
 Style/TrailingCommaInArguments:
   Enabled: false
 
 Style/TrailingCommaInLiteral:
+  Enabled: false
+
+# Symbol Arrays are ok and the %i syntax widely unknown
+Style/SymbolArray:
+  Enabled: false
+
+Rails/DynamicFindBy:
+  Whitelist:
+    - find_by_param
+    - find_by_param!
+
+# We use a lot of
+#
+#     expect {
+#       something
+#     }.to { happen }
+#
+# syntax in the specs files.
+Lint/AmbiguousBlockAssociation:
+  Exclude:
+    - '*/spec/**/*'
+
+# We use eval to add common_spree_dependencies into the Gemfiles of each of our gems
+Security/Eval:
+  Exclude:
+    - 'Gemfile'
+    - '*/Gemfile'
+
+Style/VariableNumber:
+  Enabled: false
+
+# Write empty methods as you wish.
+Style/EmptyMethod:
   Enabled: false
 
 # From http://relaxed.ruby.style/
@@ -115,7 +148,7 @@ Style/Documentation:
   Enabled: false
   StyleGuide: http://relaxed.ruby.style/#styledocumentation
 
-Style/DotPosition:
+Layout/DotPosition:
   Enabled: false
   StyleGuide: http://relaxed.ruby.style/#styledotposition
 
@@ -183,11 +216,11 @@ Style/SingleLineMethods:
   Enabled: false
   StyleGuide: http://relaxed.ruby.style/#stylesinglelinemethods
 
-Style/SpaceBeforeBlockBraces:
+Layout/SpaceBeforeBlockBraces:
   Enabled: false
   StyleGuide: http://relaxed.ruby.style/#stylespacebeforeblockbraces
 
-Style/SpaceInsideParens:
+Layout/SpaceInsideParens:
   Enabled: false
   StyleGuide: http://relaxed.ruby.style/#stylespaceinsideparens
 
