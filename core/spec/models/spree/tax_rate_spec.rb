@@ -334,4 +334,26 @@ describe Spree::TaxRate, type: :model do
       end
     end
   end
+
+  describe '#tax_category (deprecated)' do
+    let(:tax_rate) { create(:tax_rate, tax_categories: [tax_category]) }
+    let(:tax_category) { create(:tax_category) }
+
+    it "returns the first tax category" do
+      tax_category = Spree::Deprecation.silence { tax_rate.tax_category }
+      expect(tax_category).to eq(tax_category)
+    end
+  end
+
+  describe '#tax_category= (deprecated)' do
+    let(:tax_rate) { Spree::TaxRate.new }
+    let(:tax_category) { create(:tax_category) }
+
+    it "can assign the tax categories" do
+      Spree::Deprecation.silence {
+        tax_rate.tax_category = tax_category
+      }
+      expect(tax_rate.tax_categories).to eq([tax_category])
+    end
+  end
 end
