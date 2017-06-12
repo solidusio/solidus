@@ -20,7 +20,8 @@
       <col style="width: 15%">
       <col style="width: 10%">
       <col style="width: 10%">
-      <col style="width: 10%">
+      <col style="width: 5%">
+      <col style="width: 5%">
       <col style="width: 10%">
       <col style="width: 15%">
       <col style="width: 15%">
@@ -33,6 +34,7 @@
         <th><%= Spree::TaxRate.human_attribute_name(:amount) %></th>
         <th><%= Spree::TaxRate.human_attribute_name(:included_in_price) %></th>
         <th><%= Spree::TaxRate.human_attribute_name(:show_rate_in_label) %></th>
+        <th><%= Spree::TaxRate.human_attribute_name(:expires_at) %></th>
         <th><%= Spree::Calculator.model_name.human %></th>
         <th class="actions"></th>
       </tr>
@@ -52,6 +54,7 @@
         <td class="align-center"><%=tax_rate.amount %></td>
         <td class="align-center"><%=tax_rate.included_in_price? ? Spree.t(:say_yes) : Spree.t(:say_no) %></td>
         <td class="align-center"><%=tax_rate.show_rate_in_label? ? Spree.t(:say_yes) : Spree.t(:say_no) %></td>
+        <td class="align-center"><%=tax_rate.expires_at.to_date.to_s(:short_date) if tax_rate.expires_at %></td>
         <td class="align-center"><%=tax_rate.calculator.to_s %></td>
         <td class="actions">
           <% if can?(:update, tax_rate) %>

@@ -264,4 +264,74 @@ describe Spree::TaxRate, type: :model do
       end
     end
   end
+
+  describe "#active?" do
+    subject(:rate) { create(:tax_rate, validity).active? }
+
+    context "when validity is not set" do
+      let(:validity) { {} }
+
+      it { is_expected.to eq(true) }
+    end
+
+    context "when starts_at is set" do
+      context "now" do
+        let(:validity) { { starts_at: DateTime.now } }
+
+        it { is_expected.to eq(true) }
+      end
+
+      context "in the past" do
+        let(:validity) { { starts_at: 1.day.ago } }
+
+        it { is_expected.to eq(true) }
+      end
+
+      context "in the future" do
+        let(:validity) { { starts_at: 1.day.from_now } }
+
+        it { is_expected.to eq(false) }
+      end
+    end
+
+    context "when expires_at is set" do
+      context "now" do
+        let(:validity) { { expires_at: DateTime.now } }
+
+        it { is_expected.to eq(false) }
+      end
+
+      context "in the past" do
+        let(:validity) { { expires_at: 1.day.ago } }
+
+        it { is_expected.to eq(false) }
+      end
+
+      context "in the future" do
+        let(:validity) { { expires_at: 1.day.from_now } }
+
+        it { is_expected.to eq(true) }
+      end
+    end
+
+    context "when starts_at and expires_at are set" do
+      context "so that today is in range" do
+        let(:validity) { { starts_at: 1.day.ago, expires_at: 1.day.from_now } }
+
+        it { is_expected.to eq(true) }
+      end
+
+      context "both in the past" do
+        let(:validity) { { starts_at: 2.days.ago, expires_at: 1.day.ago } }
+
+        it { is_expected.to eq(false) }
+      end
+
+      context "both in the future" do
+        let(:validity) { { starts_at: 1.day.from_now, expires_at: 2.days.from_now } }
+
+        it { is_expected.to eq(false) }
+      end
+    end
+  end
 end

@@ -349,6 +349,8 @@ en:
         included_in_price: Included In Price
         name: Name
         show_rate_in_label: Show Rate In Label
+        starts_at: Start date
+        expires_at: Expiration date
       spree/taxon:
         description: Description
         icon: Icon
@@ -1274,6 +1276,8 @@ en:
         deleted: "Deleted Variant"
         deleted_explanation: "This variant was deleted on %{date}."
         deleted_explanation_with_replacement: "This variant was deleted on %{date}. It has since been replaced by another with the same SKU."
+      spree/tax_rate:
+        validity_period: "This determines the validity period within which the tax rate is valid and will be applied to eligible items. <br /> If no start date value is specified, the tax rate will be immediately available. <br /> If no expiration date value is specified, the tax rate will never expire"
     failed_payment_attempts: Failed Payment Attempts
     failure: Failure
     filename: Filename
@@ -2034,6 +2038,7 @@ en:
       is_too_large: is too large -- stock on hand cannot cover requested quantity!
       must_be_int: must be an integer
       must_be_non_negative: must be a non-negative value
+    validity_period: Validity Period
     value: Value
     variant: Variant
     variant_placeholder: Choose a variant
