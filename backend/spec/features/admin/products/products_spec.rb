@@ -252,7 +252,7 @@ describe "Products", type: :feature do
     context 'deleting a product', js: true do
       let!(:product) { create(:product) }
 
-      it "is still viewable" do
+      it "product details are still viewable" do
         visit spree.admin_products_path
 
         expect(page).to have_content(product.name)
@@ -267,6 +267,9 @@ describe "Products", type: :feature do
         click_button "Search"
         click_link product.name
         expect(page).to have_field('Master Price', with: product.price.to_f)
+        expect(page).to_not have_content('Images')
+        expect(page).to_not have_content('Prices')
+        expect(page).to_not have_content('Product Properties')
       end
     end
   end

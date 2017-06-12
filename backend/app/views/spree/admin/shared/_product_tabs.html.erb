@@ -9,19 +9,19 @@
       <% end if can?(:admin, Spree::Product) %>
       <%= content_tag :li, class: ('active' if current == 'Images') do %>
         <%= link_to Spree.t(:images), spree.admin_product_images_url(@product) %>
-      <% end if can?(:admin, Spree::Image) %>
+      <% end if can?(:admin, Spree::Image) && !@product.deleted? %>
       <%= content_tag :li, class: ('active' if current == 'Variants') do %>
         <%= link_to plural_resource_name(Spree::Variant), spree.admin_product_variants_url(@product) %>
       <% end if can?(:admin, Spree::Variant) %>
       <%= content_tag :li, class: ('active' if current == 'Prices') do %>
         <%= link_to plural_resource_name(Spree::Price), spree.admin_product_prices_url(@product) %>
-      <% end if can?(:admin, Spree::Price) %>
+      <% end if can?(:admin, Spree::Price) && !@product.deleted? %>
       <%= content_tag :li, class: ('active' if current == 'Product Properties') do %>
         <%= link_to plural_resource_name(Spree::ProductProperty), spree.admin_product_product_properties_url(@product) %>
-      <% end if can?(:admin, Spree::ProductProperty) %>
+      <% end if can?(:admin, Spree::ProductProperty) && !@product.deleted? %>
       <%= content_tag :li, class: ('active' if current == 'Stock Management') do %>
         <%= link_to Spree.t(:stock_management), spree.admin_product_stock_url(@product) %>
-      <% end if can?(:admin, Spree::StockItem) %>
+      <% end if can?(:admin, Spree::StockItem) && !@product.deleted? %>
     </ul>
   </nav>
 <% end %>
