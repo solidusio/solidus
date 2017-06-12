@@ -82,7 +82,9 @@ describe Spree::Order, type: :model do
     end
 
     it "should send a cancel email" do
-      order.cancel!
+      perform_enqueued_jobs do
+        order.cancel!
+      end
 
       mail = ActionMailer::Base.deliveries.last
       expect(mail.subject).to include "Cancellation"

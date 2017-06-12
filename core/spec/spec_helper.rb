@@ -37,7 +37,7 @@ require 'spree/testing_support/factories'
 require 'spree/testing_support/preferences'
 require 'cancan/matchers'
 
-ActiveJob::Base.queue_adapter = :inline
+ActiveJob::Base.queue_adapter = :test
 
 RSpec.configure do |config|
   config.color = true
@@ -65,6 +65,7 @@ RSpec.configure do |config|
     reset_spree_preferences
   end
 
+  config.include ActiveJob::TestHelper
   config.include FactoryGirl::Syntax::Methods
   config.include Spree::TestingSupport::Preferences
   config.extend WithModel
