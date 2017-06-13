@@ -45,10 +45,12 @@ module Spree
     # @note This will cause backorders to be processed.
     # @param value [Fixnum] the desired count on hand
     def set_count_on_hand(value)
-      self.count_on_hand = value
-      process_backorders(count_on_hand - count_on_hand_was)
+      with_lock do
+        self.count_on_hand = value
+        process_backorders(count_on_hand - count_on_hand_was)
 
-      save!
+        save!
+      end
     end
 
     # @return [Boolean] true if this stock item's count on hand is not zero
