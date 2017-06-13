@@ -11,12 +11,12 @@ module Spree
     belongs_to :zone, class_name: "Spree::Zone", inverse_of: :tax_rates
 
     has_many :tax_rate_tax_categories,
-      class_name: Spree::TaxRateTaxCategory,
+      class_name: 'Spree::TaxRateTaxCategory',
       dependent: :destroy,
       inverse_of: :tax_rate
     has_many :tax_categories,
       through: :tax_rate_tax_categories,
-      class_name: Spree::TaxCategory,
+      class_name: 'Spree::TaxCategory',
       inverse_of: :tax_rates
 
     has_many :adjustments, as: :source
