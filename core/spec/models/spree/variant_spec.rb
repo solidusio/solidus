@@ -17,6 +17,12 @@ describe Spree::Variant, type: :model do
       variant.price = 0
       expect(variant).to be_valid
     end
+
+    it "should require a product" do
+      expect(variant).to be_valid
+      variant.product = nil
+      expect(variant).to be_invalid
+    end
   end
 
   context "after create" do
