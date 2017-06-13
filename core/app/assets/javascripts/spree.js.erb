@@ -23,7 +23,7 @@ Spree.pathFor = function(path) {
 };
 
 Spree.url = function(uri, query) {
-  if (Spree.env === 'development' || Spree.env === 'test') {
+  if (console && console.warn) {
     console.warn('Spree.url is deprecated, please use Spree.ajax for your request instead.');
   }
   if (uri.path === undefined) {
