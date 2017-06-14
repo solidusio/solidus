@@ -698,6 +698,9 @@ module Spree
       self.ship_address = Spree::Address.immutable_merge(ship_address, attributes)
     end
 
+    # Assigns a default bill_address and ship_address to the order based on the
+    # associated user's bill_address and ship_address.
+    # @note This doesn't persist the change bill_address or ship_address
     def assign_default_user_addresses!
       if user
         # this is one of 2 places still using User#bill_address
