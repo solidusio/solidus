@@ -11,13 +11,16 @@ module Spree
       #   those marked frontend if truthy
       # @return [Array<Spree::ShippingRate>] the shipping rates sorted by
       #   descending cost, with the least costly marked "selected"
-      def shipping_rates(package, frontend_only = true)
+      def shipping_rates(package, frontend_only = nil)
         raise ShipmentRequired if package.shipment.nil?
         raise OrderRequired if package.shipment.order.nil?
+        if frontend_only.present?
+          Spree::Deprecation.warn "Using frontend_only arg is deprecated. All shipping rates will always be returned.", caller
+        end
 
         rates = calculate_shipping_rates(package)
-        rates.select! { |rate| rate.shipping_method.available_to_users? } if frontend_only
-        choose_default_shipping_rate(rates)
+        frontend_rates = rates.select { |rate| rate.shipping_method.available_to_users? }
+        choose_default_shipping_rate(frontend_rates)
         Spree::Config.shipping_rate_sorter_class.new(rates).sort
       end
 
