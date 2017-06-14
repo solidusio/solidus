@@ -143,6 +143,13 @@ describe Spree::CheckoutController, type: :controller do
           order.update_columns(ship_address_id: create(:address).id, state: "address")
         end
 
+        context 'landing to address page' do
+          it "tries to associate user addresses to order" do
+            expect(order).to receive(:assign_default_user_addresses!)
+            get :edit
+          end
+        end
+
         context "with a billing and shipping address" do
           subject do
             post :update, params: {

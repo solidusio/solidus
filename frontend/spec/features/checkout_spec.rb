@@ -75,6 +75,140 @@ describe "Checkout", type: :feature, inaccessible: true do
     end
   end
 
+  context "displays default user addresses on address step" do
+    before do
+      stock_location.stock_items.update_all(count_on_hand: 1)
+    end
+
+    context "when user is logged in" do
+      let!(:user) do
+        create(:user, bill_address: saved_bill_address, ship_address: saved_ship_address)
+      end
+
+      let!(:order) do
+        order = Spree::Order.create!(
+          email: "spree@example.com",
+          store: Spree::Store.first || FactoryGirl.create(:store)
+        )
+
+        order.reload
+        order.user = user
+        order.update!
+        order
+      end
+
+      before do
+        allow_any_instance_of(Spree::CheckoutController).to receive_messages(current_order: order)
+        allow_any_instance_of(Spree::CheckoutController).to receive_messages(try_spree_current_user: user)
+        allow_any_instance_of(Spree::OrdersController).to receive_messages(try_spree_current_user: user)
+
+        add_mug_to_cart
+        click_button "Checkout"
+        # We need an order reload here to get newly associated addresses.
+        # Then we go back to address where we are supposed to be redirected.
+        order.reload
+        visit spree.checkout_state_path(:address)
+      end
+
+      context "when user has default addresses saved" do
+        let(:saved_bill_address) { create(:address, firstname: 'Bill') }
+        let(:saved_ship_address) { create(:address, firstname: 'Steve') }
+
+        it "shows the saved addresses" do
+          within("#billing") do
+            expect(find_field('First Name').value).to eq 'Bill'
+          end
+
+          within("#shipping") do
+            expect(find_field('First Name').value).to eq 'Steve'
+          end
+        end
+      end
+
+      context "when user does not have default addresses saved" do
+        let(:saved_bill_address) { nil }
+        let(:saved_ship_address) { nil }
+
+        it 'shows an empty address' do
+          within("#billing") do
+            expect(find_field('First Name').value).to be_nil
+          end
+
+          within("#shipping") do
+            expect(find_field('First Name').value).to be_nil
+          end
+        end
+      end
+    end
+
+    context "when user is not logged in" do
+      context "and proceeds with guest checkout" do
+        it 'shows empty addresses' do
+          add_mug_to_cart
+          click_button "Checkout"
+
+          within("#billing") do
+            expect(find_field('First Name').value).to be_nil
+          end
+
+          within("#shipping") do
+            expect(find_field('First Name').value).to be_nil
+          end
+        end
+      end
+
+      context "and proceeds logging in" do
+        let!(:user) do
+          create(:user, bill_address: saved_bill_address, ship_address: saved_ship_address)
+        end
+
+        before do
+          add_mug_to_cart
+          click_button "Checkout"
+
+          # Simulate user login
+          Spree::Order.last.associate_user!(user)
+          allow_any_instance_of(Spree::CheckoutController).to receive_messages(try_spree_current_user: user)
+          allow_any_instance_of(Spree::OrdersController).to receive_messages(try_spree_current_user: user)
+
+          # Simulate redirect back to address after login
+          visit spree.checkout_state_path(:address)
+        end
+
+        context "when does not have saved addresses" do
+          let(:saved_bill_address) { nil }
+          let(:saved_ship_address) { nil }
+
+          it 'shows empty addresses' do
+            within("#billing") do
+              expect(find_field('First Name').value).to be_nil
+            end
+
+            within("#shipping") do
+              expect(find_field('First Name').value).to be_nil
+            end
+          end
+        end
+
+        # Regression test for https://github.com/solidusio/solidus/issues/1811
+        context "when does have saved addresses" do
+          let(:saved_bill_address) { create(:address, firstname: 'Bill') }
+          let(:saved_ship_address) { create(:address, firstname: 'Steve') }
+
+          it 'shows empty addresses' do
+            within("#billing") do
+              expect(find_field('First Name').value).to eq 'Bill'
+            end
+
+            within("#shipping") do
+              expect(find_field('First Name').value).to eq 'Steve'
+            end
+          end
+        end
+      end
+    end
+  end
+
   # Regression test for https://github.com/spree/spree/issues/2694 and https://github.com/spree/spree/issues/4117
   context "doesn't allow bad credit card numbers" do
     before(:each) do
