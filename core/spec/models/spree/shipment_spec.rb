@@ -797,7 +797,7 @@ describe Spree::Shipment, type: :model do
 
   describe '#selected_shipping_rate_id=' do
     let!(:air_shipping_method) { create(:shipping_method, name: "Air") }
-    let(:new_rate) { shipment.add_shipping_method(air_shipping_method) }
+    let(:new_rate) { shipment.shipping_rates.create!(shipping_method: air_shipping_method) }
 
     context 'when the id exists' do
       it 'sets the new shipping rate as selected' do
