@@ -145,7 +145,7 @@ describe Spree::CheckoutController, type: :controller do
 
         context 'landing to address page' do
           it "tries to associate user addresses to order" do
-            expect(order).to receive(:assign_default_user_addresses!)
+            expect(order).to receive(:assign_default_user_addresses)
             get :edit
           end
         end
