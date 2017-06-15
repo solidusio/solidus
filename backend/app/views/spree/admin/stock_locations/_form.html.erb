@@ -114,7 +114,7 @@
 <% content_for :head do %>
   <%= javascript_tag do -%>
     $(document).ready(function(){
-      $('span#country .select2').on('change', function() { update_state(''); });
+      $('span#country select.select2').on('change', function() { update_state(''); });
     });
   <% end -%>
 <% end %>
