@@ -1,5 +1,8 @@
 # Default class for deciding what the current store is, given an HTTP request
-# This is an extension point used in Spree::Core::ControllerHelpers::Store
+#
+# To use a custom version of this class just set the preference:
+#   Spree::Config.current_store_selector_class = CustomCurrentStoreSelector
+#
 # Custom versions of this class must respond to a store instance method
 module Spree
   class CurrentStoreSelector
@@ -7,22 +10,12 @@ module Spree
       @request = request
     end
 
-    # Chooses the current store based on a request.
-    # Checks request headers for HTTP_SPREE_STORE and falls back to
-    # looking up by the requesting server's name.
+    # Select the store to be used. In this basic implementation the
+    # default store will be always selected.
+    #
     # @return [Spree::Store]
     def store
-      if store_key
-        Spree::Store.current(store_key)
-      else
-        Spree::Store.default
-      end
-    end
-
-    private
-
-    def store_key
-      @request.headers['HTTP_SPREE_STORE'] || @request.env['SERVER_NAME']
+      Spree::Store.default
     end
   end
 end
