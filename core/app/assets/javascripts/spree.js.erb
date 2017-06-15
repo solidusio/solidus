@@ -23,8 +23,8 @@ Spree.pathFor = function(path) {
 };
 
 Spree.url = function(uri, query) {
-  if (Spree.env === 'development' || Spree.env === 'test') {
-    console.warn('Spree.url is deprecated, please use Spree.ajax for your request instead.');
+  if (console && console.warn) {
+    console.warn('Spree.url is deprecated, and will be removed from a future Solidus version.');
   }
   if (uri.path === undefined) {
     uri = new Uri(uri);
