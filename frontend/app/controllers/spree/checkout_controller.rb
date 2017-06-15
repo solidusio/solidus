@@ -171,7 +171,7 @@ module Spree
     end
 
     def before_address
-      @order.assign_default_user_addresses!
+      @order.assign_default_user_addresses
       # If the user has a default address, the previous method call takes care
       # of setting that; but if he doesn't, we need to build an empty one here
       default = {country_id: Spree::Country.default.id}
