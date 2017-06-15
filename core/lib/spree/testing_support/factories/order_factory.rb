@@ -69,7 +69,6 @@ FactoryGirl.define do
           order.order_promotions.create!(promotion: promotion, promotion_code: promotion_code)
 
           # Complete the order after the promotion has been activated
-          order.refresh_shipment_rates
           order.update_column(:completed_at, Time.current)
           order.update_column(:state, "complete")
         end

@@ -1,6 +1,30 @@
 require 'spec_helper'
 require 'spree/testing_support/factories/order_factory'
 
+shared_examples "shipping methods are assigned" do
+  context "given a shipping method" do
+    let(:shipping_method) { create(:shipping_method) }
+
+    it "assigns the shipping method when created" do
+      expect(
+        create(
+          factory,
+          shipping_method: shipping_method
+        ).shipments.map(&:shipping_method)
+      ).to all(eq(shipping_method))
+    end
+
+    it "assigns the shipping method when built" do
+      expect(
+        build(
+          factory,
+          shipping_method: shipping_method
+        ).shipments.map(&:shipping_method)
+      ).to all(eq(shipping_method))
+    end
+  end
+end
+
 RSpec.shared_examples "an order with line items factory" do |expected_order_state, expected_inventory_unit_state|
   # This factory cannot be built correctly because Shipment#set_up_inventory
   # requires records to be saved.
@@ -162,6 +186,7 @@ RSpec.describe 'order factory' do
 
     it_behaves_like 'a working factory'
     it_behaves_like 'an order with line items factory', "cart", "on_hand"
+    it_behaves_like 'shipping methods are assigned'
   end
 
   describe 'completed order with promotion' do
@@ -169,6 +194,7 @@ RSpec.describe 'order factory' do
 
     it_behaves_like 'a working factory'
     it_behaves_like 'an order with line items factory', "complete", "on_hand"
+    it_behaves_like 'shipping methods are assigned'
 
     it "has the expected attributes" do
       order = create(factory)
@@ -207,6 +233,7 @@ RSpec.describe 'order factory' do
 
     it_behaves_like 'a working factory'
     it_behaves_like 'an order with line items factory', "confirm", "on_hand"
+    it_behaves_like 'shipping methods are assigned'
 
     it "is completable" do
       order = create(factory)
@@ -222,6 +249,7 @@ RSpec.describe 'order factory' do
 
     it_behaves_like 'a working factory'
     it_behaves_like 'an order with line items factory', "complete", "on_hand"
+    it_behaves_like 'shipping methods are assigned'
 
     it "has the expected attributes" do
       order = create(factory)
@@ -244,6 +272,7 @@ RSpec.describe 'order factory' do
 
     it_behaves_like 'a working factory'
     it_behaves_like 'an order with line items factory', "complete", "on_hand"
+    it_behaves_like 'shipping methods are assigned'
 
     it "has the expected attributes" do
       order = create(factory)
@@ -269,6 +298,7 @@ RSpec.describe 'order factory' do
 
     it_behaves_like 'a working factory'
     it_behaves_like 'an order with line items factory', "complete", "on_hand"
+    it_behaves_like 'shipping methods are assigned'
 
     it "has the expected attributes" do
       order = create(factory)
@@ -309,6 +339,7 @@ RSpec.describe 'order factory' do
 
     it_behaves_like 'a working factory'
     it_behaves_like 'an order with line items factory', "complete", "shipped"
+    it_behaves_like 'shipping methods are assigned'
 
     it "has the expected attributes" do
       order = create(factory)
