@@ -7,7 +7,7 @@
           <%= f.select :variant_id,
                       @product.variants_including_master.map { |v| [v.descriptive_name, v.id] },
                       {},
-                      class: "select2 fullwidth", disabled: !f.object.new_record? %>
+                      class: "custom-select fullwidth", disabled: !f.object.new_record? %>
         <% end %>
       </div>
 
@@ -20,7 +20,7 @@
                                     include_blank: t(:any_country, scope: [:spree, :admin, :prices]),
                                     selected: Spree::Config.admin_vat_country_iso
                                   },
-                                  { class: 'select2 fullwidth', disabled: !f.object.new_record? } %>
+                                  { class: 'custom-select fullwidth', disabled: !f.object.new_record? } %>
         <% end %>
       </div>
 
