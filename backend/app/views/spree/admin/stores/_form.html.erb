@@ -46,6 +46,6 @@
   <%= f.select :cart_tax_country_iso,
     Spree::Country.all.map { |c| [c.name, c.iso] },
     { include_blank: t(".no_cart_tax_country") },
-    { class: "select2 fullwidth" } %>
+    { class: "custom-select fullwidth" } %>
   <%= f.error_message_on :cart_tax_country_iso %>
 <% end %>
