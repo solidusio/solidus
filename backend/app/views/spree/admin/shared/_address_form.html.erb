@@ -41,7 +41,7 @@
   <div class="field <%= "#{type}-row" %>">
     <%= f.label :country_id, Spree::Country.model_name.human %>
     <span id="<%= s_or_b %>country">
-      <%= f.collection_select :country_id, available_countries, :id, :name, {}, {class: 'select2 fullwidth js-country_id'} %>
+      <%= f.collection_select :country_id, available_countries, :id, :name, {}, {class: 'custom-select fullwidth js-country_id'} %>
     </span>
   </div>
 
@@ -51,7 +51,7 @@
       <%= f.text_field :state_name,
             style: "display: #{f.object.country.states.empty? ? 'block' : 'none' };",
            disabled: !f.object.country.states.empty?, class: 'fullwidth state_name js-state_name' %>
-      <%= f.collection_select :state_id, f.object.country.states.sort, :id, :name, {include_blank: true}, {class: 'select2 fullwidth js-state_id', style: "display: #{f.object.country.states.empty? ? 'none' : 'block' };", disabled: f.object.country.states.empty?} %>
+      <%= f.collection_select :state_id, f.object.country.states.sort, :id, :name, {include_blank: true}, {class: 'custom-select fullwidth js-state_id', style: "display: #{f.object.country.states.empty? ? 'none' : 'block' };", disabled: f.object.country.states.empty?} %>
     </span>
   </div>
 
