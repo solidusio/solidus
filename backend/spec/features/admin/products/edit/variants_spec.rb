@@ -46,7 +46,7 @@ describe "Product Variants", type: :feature do
       within('nav > ul.tabs') { click_link "Variants" }
       click_link "New Variant"
 
-      targetted_select2 "black", from: "#s2id_variant_option_value_ids"
+      select "black", from: "Colors"
       fill_in "variant_sku", with: "A100"
       click_button "Create"
       expect(page).to have_content("successfully created!")
