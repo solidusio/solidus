@@ -73,7 +73,7 @@ describe "Orders Listing", type: :feature, js: true do
         main_store, other_store = stores
 
         click_on "Filter Results"
-        select2 main_store.name, from: Spree.t(:store)
+        select main_store.name, from: Spree.t(:store)
         click_on "Filter Results"
 
         within_row(1) do
