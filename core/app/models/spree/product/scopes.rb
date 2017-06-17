@@ -189,6 +189,8 @@ module Spree
     end
 
     def self.distinct_by_product_ids(sort_order = nil)
+      Spree::Deprecation.warn "Product.distinct_by_product_ids is deprecated and should not be used"
+
       sort_column = sort_order.split(" ").first
 
       # Postgres will complain when using ordering by expressions not present in
