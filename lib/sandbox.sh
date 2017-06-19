@@ -20,7 +20,15 @@ sqlite|'')
 esac
 
 rm -rf ./sandbox
-bundle exec rails new sandbox --skip-bundle --database="$RAILSDB"
+bundle exec rails new sandbox --database="$RAILSDB" \
+  --skip-bundle \
+  --skip-git \
+  --skip-keeps \
+  --skip-rc \
+  --skip-spring \
+  --skip-test \
+  --skip-yarn
+
 if [ ! -d "sandbox" ]; then
   echo 'sandbox rails application failed'
   exit 1
