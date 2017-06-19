@@ -48,7 +48,7 @@
       <% @option_types.each do |option_type, option_values| %>
         <div class="field">
           <%= label :option_type_presentation, option_type.presentation %>
-          <%= select_tag "ovi[]", options_from_collection_for_select(option_values, :id, :presentation, params[:ovi]), class: 'select2 fullwidth', include_blank: true, id: "#{option_type.name}_option_type_select" %>
+          <%= select_tag "ovi[]", options_from_collection_for_select(option_values, :id, :presentation, params[:ovi]), class: 'custom-select fullwidth', include_blank: true, id: "#{option_type.name}_option_type_select" %>
         </div>
       <% end %>
       <div class="form-buttons filter-actions actions">
