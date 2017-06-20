@@ -78,7 +78,7 @@ describe "Customer Details", type: :feature, js: true do
         click_link "Customer"
 
         within("#billing") do
-          targetted_select2 "Brazil", from: "#s2id_order_bill_address_attributes_country_id"
+          select "Brazil", from: "Country"
           fill_in "order_bill_address_attributes_state_name", with: "Piaui"
         end
 
@@ -94,8 +94,8 @@ describe "Customer Details", type: :feature, js: true do
       order.save!
 
       click_link "Customer"
-      within("#shipping") { fill_in_address "ship" }
-      within("#billing") { fill_in_address "bill" }
+      within("#shipping") { fill_in_address }
+      within("#billing") { fill_in_address }
 
       click_button "Update"
       click_link "Customer"
@@ -158,18 +158,17 @@ describe "Customer Details", type: :feature, js: true do
         fill_in "order_ship_address_attributes_city",       with: "Bethesda"
         fill_in "order_ship_address_attributes_zipcode",    with: "20170"
 
-        select_state('Alabama', 'ship')
+        within("#shipping") do
+          select 'Alabama', from: "State"
+        end
+
         fill_in "order_ship_address_attributes_phone", with: "123-456-7890"
         click_button "Update"
       end
     end
   end
 
-  def select_state(state_name, kind = "bill")
-    targetted_select2 state_name, from: "#s2id_order_#{kind}_address_attributes_state_id"
-  end
-
-  def fill_in_address(kind = "bill")
+  def fill_in_address
     fill_in "First Name",              with: "John 99"
     fill_in "Last Name",               with: "Doe"
     fill_in "Company",                 with: "Company"
@@ -177,7 +176,7 @@ describe "Customer Details", type: :feature, js: true do
     fill_in "Street Address (cont'd)", with: "#101"
     fill_in "City",                    with: "Bethesda"
     fill_in "Zip Code",                with: "20170"
-    select_state("Alabama", kind)
+    select 'Alabama', from: "State"
     fill_in "Phone",                   with: "123-456-7890"
   end
 end
