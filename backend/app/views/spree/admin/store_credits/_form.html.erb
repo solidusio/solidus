@@ -11,7 +11,7 @@
     <%= f.field_container :category_id do %>
       <%= f.label :category_id, class: 'required' %><br />
       <%= f.select :category_id, options_from_collection_for_select(@credit_categories, :id, :name, f.object.category.try(:id)),
-        { include_blank: true }, { class: 'select2 fullwidth', placeholder: Spree.t("admin.store_credits.select_reason") } %>
+        { include_blank: true }, { class: 'custom-select fullwidth', placeholder: Spree.t("admin.store_credits.select_reason") } %>
       <%= f.error_message_on :category_id %>
     <% end %>
   </div>
