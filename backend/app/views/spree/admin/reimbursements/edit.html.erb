@@ -39,7 +39,7 @@
               <%= item_fields.select(:override_reimbursement_type_id,
                 reimbursement_types.collect { |r| [r.name.humanize, r.id] },
                 {include_blank: true},
-                {class: 'select2 fullwidth'}
+                {class: 'custom-select fullwidth'}
               ) %>
             </td>
             <td class="align-center">
@@ -52,7 +52,7 @@
               <% if return_item.exchange_processed? %>
                 <%= return_item.exchange_variant.exchange_name %>
               <% else %>
-                <%= item_fields.collection_select :exchange_variant_id, return_item.eligible_exchange_variants(@stock_locations), :id, :exchange_name, { include_blank: true }, { class: "select2 fullwidth return-item-exchange-selection" } %>
+                <%= item_fields.collection_select :exchange_variant_id, return_item.eligible_exchange_variants(@stock_locations), :id, :exchange_name, { include_blank: true }, { class: "custom-select fullwidth return-item-exchange-selection" } %>
               <% end %>
             </td>
           </tr>
