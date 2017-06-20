@@ -4,7 +4,7 @@
   <div id="preference-settings">
     <div class="field">
       <%= f.label(:calculator_type, Spree::Calculator.model_name.human) %>
-      <%= f.select(:calculator_type, @calculators.map { |c| [c.description, c.name] }, {}, {class: 'select2 fullwidth js-calculator-type'}) %>
+      <%= f.select(:calculator_type, @calculators.map { |c| [c.description, c.name] }, {}, {class: 'custom-select fullwidth js-calculator-type'}) %>
     </div>
 
     <% @calculators.each do |calculator_class| %>
