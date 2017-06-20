@@ -69,7 +69,7 @@
       <% if display_add_row %>
         <tr class="js-add-stock-item stock-item-edit-row" data-variant-id="<%= variant.id %>">
           <td class='location-name-cell'>
-            <%= select_tag :stock_location_id, options_from_collection_for_select(locations_without_items, :id, :name), { include_blank: true, class: 'select2', "data-placeholder" => Spree.t(:add_to_stock_location), id: "variant-stock-location-#{variant.id}" } %>
+            <%= select_tag :stock_location_id, options_from_collection_for_select(locations_without_items, :id, :name), { include_blank: true, class: 'custom-select', "data-placeholder" => Spree.t(:add_to_stock_location), id: "variant-stock-location-#{variant.id}" } %>
           </td>
           <td class="align-center">
             <%= check_box_tag :backorderable, 'backorderable', false, id: "variant-backorderable-#{variant.id}" %>
