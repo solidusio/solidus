@@ -96,7 +96,7 @@
       <fieldset class="tax_categories no-border-bottom">
         <legend align="center"><%= Spree::TaxCategory.model_name.human %></legend>
           <%= f.field_container :tax_categories do %>
-            <%= f.select :tax_category_id, @tax_categories.map { |tc| [tc.name, tc.id] }, {include_blank: true}, class: "select2 fullwidth" %>
+            <%= f.select :tax_category_id, @tax_categories.map { |tc| [tc.name, tc.id] }, {include_blank: true}, class: "custom-select fullwidth" %>
             <%= error_message_on :shipping_method, :tax_category_id %>
           <% end %>
       </fieldset>
