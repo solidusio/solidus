@@ -21,7 +21,7 @@
         <div class="field-block col-3">
           <div class="field">
             <%= f.label nil, Spree::StockLocation.model_name.human %>
-            <%= f.select :source_location_id_or_destination_location_id_eq, options_from_collection_for_select(@stock_locations, :id, :name, params[:q][:source_location_id_or_destination_location_id_eq]), {include_blank: true}, {class: 'select2 fullwidth'} %>
+            <%= f.select :source_location_id_or_destination_location_id_eq, options_from_collection_for_select(@stock_locations, :id, :name, params[:q][:source_location_id_or_destination_location_id_eq]), {include_blank: true}, {class: 'custom-select fullwidth'} %>
           </div>
         </div>
 
