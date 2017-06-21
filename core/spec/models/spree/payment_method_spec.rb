@@ -180,8 +180,8 @@ describe Spree::PaymentMethod, type: :model do
   end
 
   describe '#auto_capture?' do
-    class TestGateway < Spree::Gateway
-      def provider_class
+    class TestGateway < Spree::PaymentMethod::CreditCard
+      def gateway_class
         Provider
       end
     end
@@ -307,6 +307,51 @@ describe Spree::PaymentMethod, type: :model do
       it "should have none for display_on" do
         expect(payment.display_on).to eq "none"
       end
+    end
+  end
+
+  describe 'ActiveMerchant methods' do
+    class PaymentGateway
+      def initialize(options)
+      end
+
+      def authorize; 'authorize'; end
+
+      def purchase; 'purchase'; end
+
+      def capture; 'capture'; end
+
+      def void; 'void'; end
+
+      def credit; 'credit'; end
+    end
+
+    class TestPaymentMethod < Spree::PaymentMethod
+      def gateway_class
+        PaymentGateway
+      end
+    end
+
+    let(:payment_method) { TestPaymentMethod.new }
+
+    it "passes through authorize" do
+      expect(payment_method.authorize).to eq 'authorize'
+    end
+
+    it "passes through purchase" do
+      expect(payment_method.purchase).to eq 'purchase'
+    end
+
+    it "passes through capture" do
+      expect(payment_method.capture).to eq 'capture'
+    end
+
+    it "passes through void" do
+      expect(payment_method.void).to eq 'void'
+    end
+
+    it "passes through credit" do
+      expect(payment_method.credit).to eq 'credit'
     end
   end
 end

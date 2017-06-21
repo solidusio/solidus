@@ -1,18 +1,12 @@
 require 'spec_helper'
 
-describe Spree::Gateway::BogusSimple, type: :model do
-  subject { Spree::Gateway::BogusSimple.new }
+describe Spree::Gateway::BogusSimple do
+  it 'is deprecated' do
+    expect(Spree::Deprecation).to receive(:warn)
+    described_class.new
+  end
 
-  # regression test for https://github.com/spree/spree/issues/3824
-  describe "#capture" do
-    it "returns success with the right response code" do
-      response = subject.capture(123, '12345', {})
-      expect(response.message).to include("success")
-    end
-
-    it "returns failure with the wrong response code" do
-      response = subject.capture(123, 'wrong', {})
-      expect(response.message).to include("failure")
-    end
+  it 'has Spree::PaymentMethod::SimpleBogusCreditCard as superclass' do
+    expect(described_class.ancestors).to include(Spree::PaymentMethod::SimpleBogusCreditCard)
   end
 end

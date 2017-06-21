@@ -523,7 +523,7 @@ describe Spree::Order, type: :model do
   # Regression test for https://github.com/spree/spree/issues/4199
   context "#available_payment_methods" do
     it "includes frontend payment methods" do
-      payment_method = Spree::PaymentMethod.create!({
+      payment_method = Spree::PaymentMethod::Check.create!({
         name: "Fake",
         active: true,
         available_to_users: true,
@@ -533,7 +533,7 @@ describe Spree::Order, type: :model do
     end
 
     it "includes 'both' payment methods" do
-      payment_method = Spree::PaymentMethod.create!({
+      payment_method = Spree::PaymentMethod::Check.create!({
         name: "Fake",
         active: true,
         available_to_users: true,
@@ -543,7 +543,7 @@ describe Spree::Order, type: :model do
     end
 
     it "does not include a payment method twice" do
-      payment_method = Spree::PaymentMethod.create!({
+      payment_method = Spree::PaymentMethod::Check.create!({
         name: "Fake",
         active: true,
         available_to_users: true,
@@ -554,7 +554,7 @@ describe Spree::Order, type: :model do
     end
 
     it "does not include inactive payment methods" do
-      Spree::PaymentMethod.create!({
+      Spree::PaymentMethod::Check.create!({
         name: "Fake",
         active: false,
         available_to_users: true,

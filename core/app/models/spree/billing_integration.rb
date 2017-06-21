@@ -5,11 +5,11 @@ module Spree
     preference :server, :string, default: 'test'
     preference :test_mode, :boolean, default: true
 
-    def provider
+    def gateway
       integration_options = options
       ActiveMerchant::Billing::Base.integration_mode = integration_options[:server].to_sym
       integration_options[:test] = true if integration_options[:test_mode]
-      @provider ||= provider_class.new(integration_options)
+      @gateway ||= gateway_class.new(integration_options)
     end
 
     def options

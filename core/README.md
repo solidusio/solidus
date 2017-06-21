@@ -38,13 +38,10 @@ integration.
 * `Spree::Payment` - Manage and process a payment for an order, from a specific
 source (e.g. `Spree::CreditCard`) using a specific payment method (e.g
 `Solidus::Gateway::Braintree`).
-* `Spree::PaymentMethod` - An abstract class which is implemented most commonly
-as a `Spree::Gateway`.
-* `Spree::Gateway` - A concrete implementation of `Spree::PaymentMethod`
-intended to provide a base for extension. See
-https://github.com/solidusio/solidus_gateway/ for offically supported payment
-gateway implementations.
-* `Spree::CreditCard` - The default `source` of a `Spree::Payment`.
+* `Spree::PaymentMethod` - A base class which is used for implementing payment methods.
+* `Spree::PaymentMethod::CreditCard` - An implementation of a `Spree::PaymentMethod` for credit card payments.
+See https://github.com/solidusio/solidus_gateway/ for officially supported payment method implementations.
+* `Spree::CreditCard` - The `source` of a `Spree::Payment` using `Spree::PaymentMethod::CreditCard` as payment method.
 
 ## The Inventory Sub-System
 * `Spree::ReturnAuthorization` - Models the return of Inventory Units to
