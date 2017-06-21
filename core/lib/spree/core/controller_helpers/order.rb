@@ -37,7 +37,7 @@ module Spree
           @current_order = find_order_by_token_or_user(options, true)
 
           if options[:create_order_if_necessary] && (@current_order.nil? || @current_order.completed?)
-            @current_order = Spree::Order.new(current_order_params)
+            @current_order = Spree::Order.new(new_order_params)
             @current_order.user ||= try_spree_current_user
             # See issue https://github.com/spree/spree/issues/3346 for reasons why this line is here
             @current_order.created_by ||= try_spree_current_user
@@ -45,7 +45,7 @@ module Spree
           end
 
           if @current_order
-            @current_order.last_ip_address = ip_address
+            @current_order.update(last_ip_address: ip_address)
             return @current_order
           end
         end
@@ -77,6 +77,10 @@ module Spree
 
         def current_order_params
           { currency: current_pricing_options.currency, guest_token: cookies.signed[:guest_token], store_id: current_store.id, user_id: try_spree_current_user.try(:id) }
+        end
+
+        def new_order_params
+          current_order_params.merge(last_ip_address: ip_address)
         end
 
         def find_order_by_token_or_user(options = {}, with_adjustments = false)

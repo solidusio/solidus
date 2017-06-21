@@ -49,16 +49,27 @@ describe Spree::Core::ControllerHelpers::Order, type: :controller do
         expect(controller.current_order).to eq order
       end
     end
+
     context 'create_order_if_necessary option is true' do
+      subject { controller.current_order(create_order_if_necessary: true) }
+
       it 'creates new order' do
         expect {
-          controller.current_order(create_order_if_necessary: true)
-        }.to change(Spree::Order, :count).to(1)
+          subject
+        }.to change(Spree::Order, :count).from(0).to(1)
       end
 
       it 'assigns the current_store id' do
-        controller.current_order(create_order_if_necessary: true)
+        subject
         expect(Spree::Order.last.store_id).to eq store.id
+      end
+
+      it 'records last_ip_address' do
+        expect {
+          subject
+        }.to change {
+          Spree::Order.last.try!(:last_ip_address)
+        }.from(nil).to("0.0.0.0")
       end
     end
   end
