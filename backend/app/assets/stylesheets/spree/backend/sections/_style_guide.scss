@@ -106,6 +106,15 @@
       border: 1px solid darken($color-7, 10%);
     }
   }
+
+  table.with-actions-borders {
+    th, td {
+      &.actions {
+        border-right: 1px solid #cee1f4 !important;
+        border-bottom: 1px solid #cee1f4 !important;
+      }
+    }
+  }
 }
 
 .color-variables {
