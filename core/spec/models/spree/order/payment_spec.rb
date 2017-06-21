@@ -169,9 +169,7 @@ module Spree
         let(:order) { reimbursement.order.reload }
 
         before do
-          # Set the payment amount to actually be the order total of 110
-          reimbursement.order.payments.first.update_column :amount, amount
-          # Creates a refund of 110
+          # Creates a refund of 10
           create :refund, amount: amount,
                           payment: reimbursement.order.payments.first,
                           reimbursement: reimbursement
@@ -183,15 +181,16 @@ module Spree
           before { order.update_attributes(state: 'canceled') }
 
           it "it should be a negative amount incorporating reimbursements" do
-            expect(order.outstanding_balance).to eq(-10)
+            # -1 * Payment Total
+            expect(order.outstanding_balance).to eq(-100)
           end
         end
 
         context "for non-canceled orders" do
           it 'should incorporate refund reimbursements' do
-            # Order Total - (Payment Total + Reimbursed)
-            # 110 - (0 + 10) = 100
-            expect(order.outstanding_balance).to eq 100
+            # Order Total - Payment Total - Refund Total
+            # 110 - 100 - 10 = 0
+            expect(order.outstanding_balance).to eq 0
           end
         end
       end
