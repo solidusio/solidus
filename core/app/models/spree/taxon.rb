@@ -2,6 +2,11 @@ module Spree
   class Taxon < Spree::Base
     acts_as_nested_set dependent: :destroy
 
+    # workaround for broken acts_as_nested_set
+    before_destroy do
+      children.destroy_all
+    end
+
     belongs_to :taxonomy, class_name: 'Spree::Taxonomy', inverse_of: :taxons
     has_many :classifications, -> { order(:position) }, dependent: :delete_all, inverse_of: :taxon
     has_many :products, through: :classifications
