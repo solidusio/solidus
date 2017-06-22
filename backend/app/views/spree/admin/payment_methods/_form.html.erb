@@ -6,8 +6,8 @@
       <div class="col-3">
         <div id="preference-settings">
           <div class="field">
-            <%= f.label :type %>
-            <%= collection_select(:payment_method, :type, @providers, :to_s, :name, {}, {id: 'gtwy-type', class: 'custom-select fullwidth js-gateway-type'}) %>
+            <%= label :payment_method, :type %>
+            <%= collection_select(:payment_method, :type, @providers, :to_s, :name, {}, {class: 'custom-select fullwidth js-gateway-type'}) %>
           </div>
 
           <div class="field js-preference-source-wrapper">

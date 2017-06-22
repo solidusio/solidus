@@ -35,7 +35,7 @@ describe "Payment Methods", type: :feature do
       expect(page).to have_content("New Payment Method")
       fill_in "payment_method_name", with: "check90"
       fill_in "payment_method_description", with: "check90 desc"
-      select "Spree::PaymentMethod::Check", from: "gtwy-type"
+      select "Spree::PaymentMethod::Check", from: "Provider"
       click_button "Create"
       expect(page).to have_content("successfully created!")
     end
@@ -76,12 +76,12 @@ describe "Payment Methods", type: :feature do
       click_icon :edit
       expect(page).to have_content('Test Mode')
 
-      select2_search 'Spree::PaymentMethod::Check', from: 'Provider'
+      select 'Spree::PaymentMethod::Check', from: 'Provider'
       expect(page).to have_content('you must save first')
       expect(page).to have_no_content('Test Mode')
 
       # change back
-      select2_search 'Spree::PaymentMethod::BogusCreditCard', from: 'Provider'
+      select 'Spree::PaymentMethod::BogusCreditCard', from: 'Provider'
       expect(page).to have_no_content('you must save first')
       expect(page).to have_content('Test Mode')
     end
@@ -94,12 +94,12 @@ describe "Payment Methods", type: :feature do
       click_icon :edit
       expect(page).to have_content('Test Mode')
 
-      select2_search 'my_prefs', from: 'Preference Source'
+      select 'my_prefs', from: 'Preference Source'
       expect(page).to have_content('you must save first')
       expect(page).to have_no_content('Test Mode')
 
       # change back
-      select2_search 'Custom', from: 'Preference Source'
+      select '(custom)', from: 'Preference Source'
       expect(page).to have_no_content('you must save first')
       expect(page).to have_content('Test Mode')
     end
@@ -111,13 +111,13 @@ describe "Payment Methods", type: :feature do
       click_link "Payment Methods"
       click_icon :edit
 
-      select2_search 'my_prefs', from: 'Preference Source'
+      select 'my_prefs', from: 'Preference Source'
       click_on 'Update'
       expect(page).to have_content('Using static preferences')
       expect(page).to have_no_content('secret')
 
       # change back
-      select2_search 'Custom', from: 'Preference Source'
+      select '(custom)', from: 'Preference Source'
       click_on 'Update'
       expect(page).to have_content('Test Mode')
       expect(page).to have_no_content('secret')
