@@ -182,8 +182,13 @@ module Spree
         context "for canceled orders" do
           before { order.update_attributes(state: 'canceled') }
 
-          it "it should be a negative amount incorporating reimbursements" do
-            expect(order.outstanding_balance).to eq(-10)
+          it "it should be zero" do
+            expect(order.total).to eq(110)
+            expect(order.payments.sum(:amount)).to eq(10)
+            expect(order.refund_total).to eq(10)
+            expect(order.reimbursement_total).to eq(10)
+            expect(order.payment_total).to eq(0)
+            expect(order.outstanding_balance).to eq(0)
           end
         end
 

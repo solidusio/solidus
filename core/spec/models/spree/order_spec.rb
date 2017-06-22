@@ -206,6 +206,21 @@ describe Spree::Order, type: :model do
     end
   end
 
+  context '#outstanding_balance' do
+    let(:order) { create(:order_ready_to_ship, line_items_count: 3) }
+    let(:payment) { order.payments.first }
+
+    it "should handle refunds properly" do
+      order.cancellations.short_ship([order.inventory_units.first])
+      expect(order.outstanding_balance).to be_negative
+      expect(order.payment_state).to eq('credit_owed')
+      create(:refund, amount: order.outstanding_balance.abs, payment: payment, transaction_id: nil)
+      order.reload
+      expect(order.outstanding_balance).to eq(0)
+      expect(order.payment_state).to eq('paid')
+    end
+  end
+
   context "#display_outstanding_balance" do
     it "returns the value as a spree money" do
       allow(order).to receive(:outstanding_balance) { 10.55 }
