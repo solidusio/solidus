@@ -104,7 +104,7 @@ module Spree
     self.whitelisted_ransackable_attributes = %w[slug]
 
     def self.ransackable_scopes(_auth_object = nil)
-      %i(with_deleted)
+      %i(with_deleted with_variant_sku_cont)
     end
 
     # @return [Boolean] true if there are any variants
