@@ -44,6 +44,7 @@ module Spree
 
       it "can update own details" do
         country = create(:country)
+        state = create(:state, country: country)
         api_put :update, id: user.id, token: user.spree_api_key, user: {
           email: "mine@example.com",
           bill_address_attributes: {
@@ -52,7 +53,7 @@ module Spree
             address1: '1 Test Rd',
             city: 'City',
             country_id: country.id,
-            state_id: 1,
+            state_id: state.id,
             zipcode: '55555',
             phone: '5555555555'
           },
@@ -62,7 +63,7 @@ module Spree
             address1: '1 Test Rd',
             city: 'City',
             country_id: country.id,
-            state_id: 1,
+            state_id: state.id,
             zipcode: '55555',
             phone: '5555555555'
           }
@@ -108,9 +109,9 @@ module Spree
         2.times { create(:user) }
 
         api_get :index
-        expect(Spree.user_class.count).to eq 2
-        expect(json_response['count']).to eq 2
-        expect(json_response['users'].size).to eq 2
+        expect(Spree.user_class.count).to eq 3
+        expect(json_response['count']).to eq 3
+        expect(json_response['users'].size).to eq 3
       end
 
       it 'can control the page size through a parameter' do
@@ -118,7 +119,7 @@ module Spree
         api_get :index, per_page: 1
         expect(json_response['count']).to eq(1)
         expect(json_response['current_page']).to eq(1)
-        expect(json_response['pages']).to eq(2)
+        expect(json_response['pages']).to eq(3)
       end
 
       it 'can query the results through a paramter' do
