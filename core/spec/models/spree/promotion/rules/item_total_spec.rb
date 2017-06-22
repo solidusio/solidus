@@ -1,6 +1,14 @@
 require 'spec_helper'
 
 describe Spree::Promotion::Rules::ItemTotal, type: :model do
+  let(:default_rule) do
+    Spree::Promotion::Rules::ItemTotal.new
+  end
+
+  context "preferred operator default value should be 'gt'" do
+    it { expect(default_rule.preferred_operator).to eq('gt') }
+  end
+
   let(:rule) do
     Spree::Promotion::Rules::ItemTotal.new(
       preferred_amount: preferred_amount,
