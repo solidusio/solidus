@@ -7,7 +7,7 @@ module Spree
     let!(:store) { create(:store, default: true) }
     let(:order_1) { Spree::Order.create }
     let(:order_2) { Spree::Order.create }
-    let(:user) { stub_model(Spree::LegacyUser, email: "spree@example.com") }
+    let(:user) { create(:user, email: "foo@example.com") }
     let(:subject) { Spree::OrderMerger.new(order_1) }
 
     it "destroys the other order" do
@@ -135,22 +135,6 @@ module Spree
         # No guarantee on ordering of line items, so we do this:
         expect(order_1.line_items.pluck(:quantity)).to match_array([1, 1])
         expect(order_1.line_items.pluck(:variant_id)).to match_array([variant.id, variant_2.id])
-      end
-    end
-
-    context "merging together orders with invalid line items" do
-      let(:variant_2) { create(:variant) }
-
-      before do
-        order_1.contents.add(variant, 1)
-        order_2.contents.add(variant_2, 1)
-      end
-
-      it "should create errors with invalid line items" do
-        variant_2.really_destroy!
-        order_2.line_items.to_a.first.reload # so that it registers as invalid
-        subject.merge!(order_2)
-        expect(order_1.errors.full_messages).not_to be_empty
       end
     end
   end

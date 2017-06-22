@@ -801,7 +801,7 @@ describe Spree::Order, type: :model do
     end
 
     context "when user is associated to the order" do
-      let(:user)         { build_stubbed(:user) }
+      let(:user)         { create(:user) }
       let(:bill_address) { nil }
       let(:ship_address) { nil }
 
