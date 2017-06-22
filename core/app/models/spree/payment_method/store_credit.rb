@@ -4,14 +4,6 @@ module Spree
       ::Spree::StoreCredit
     end
 
-    def can_capture?(payment)
-      ['checkout', 'pending'].include?(payment.state)
-    end
-
-    def can_void?(payment)
-      payment.pending?
-    end
-
     def authorize(amount_in_cents, provided_store_credit, gateway_options = {})
       if provided_store_credit.nil?
         ActiveMerchant::Billing::Response.new(false, Spree.t('store_credit.unable_to_find'), {}, {})
