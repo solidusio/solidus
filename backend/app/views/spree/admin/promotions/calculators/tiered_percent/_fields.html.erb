@@ -1,11 +1,6 @@
-<div class="field">
-  <%= label_tag "#{prefix}[calculator_attributes][preferred_base_percent]",
-    Spree.t(:base_percent) %>
-  <%= preference_field_tag(
-    "#{prefix}[calculator_attributes][preferred_base_percent]",
-    calculator.preferred_base_percent,
-    type: calculator.preference_type(:base_percent)) %>
-</div>
+<%= render "spree/admin/shared/preference_fields/#{calculator.preference_type(:base_percent)}",
+  name: "#{prefix}[calculator_attributes][preferred_base_percent]",
+  value: calculator.preferred_base_percent, label: Spree.t(:base_percent) %>
 
 <div class="field">
   <%= label_tag(
