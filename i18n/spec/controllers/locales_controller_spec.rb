@@ -1,11 +1,12 @@
 require 'spec_helper'
 
 RSpec.describe Spree::HomeController, type: :controller do
+  let(:store) { create(:store) }
   routes { Spree::Core::Engine.routes }
 
   before do
     reset_spree_preferences
-    SolidusI18n::Config.available_locales = [:en, :es]
+    store.update_attributes(preferred_available_locales: %i[en es])
   end
 
   context 'tries not supported fr locale' do

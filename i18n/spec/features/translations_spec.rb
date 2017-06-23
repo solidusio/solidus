@@ -1,12 +1,14 @@
 # encoding: utf-8
+
 require 'spec_helper'
 
 RSpec.feature 'Translations', :js do
   given(:language) { Spree.t(:this_file_language, scope: 'i18n', locale: 'pt-BR') }
+  given(:store) { create(:store) }
 
   background do
     reset_spree_preferences
-    SolidusI18n::Config.available_locales = [:en, :'pt-BR']
+    store.update_attributes(preferred_available_locales: %i[en pt-BR])
   end
 
   context 'page' do
