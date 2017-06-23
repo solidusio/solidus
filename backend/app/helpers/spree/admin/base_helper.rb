@@ -34,41 +34,25 @@ module Spree
         end
       end
 
+      # @deprecated Render `spree/admin/shared/preference_fields/\#{preference_type}' instead
       def preference_field_tag(name, value, options)
-        case options[:type]
-        when :integer
-          text_field_tag(name, value, preference_field_options(options))
-        when :boolean
-          hidden_field_tag(name, 0, id: "#{name}_hidden") +
-            check_box_tag(name, 1, value, preference_field_options(options))
-        when :string
-          text_field_tag(name, value, preference_field_options(options))
-        when :password
-          password_field_tag(name, value, preference_field_options(options))
-        when :text
-          text_area_tag(name, value, preference_field_options(options))
-        else
-          text_field_tag(name, value, preference_field_options(options))
-        end
+        render "spree/admin/shared/preference_fields/#{options.delete(:type)}",
+          name: name, value: value, html_options: options
       end
+      deprecate preference_field_tag:
+        "Render `spree/admin/shared/preference_fields/\#{preference_type}' instead",
+        deprecator: Spree::Deprecation
 
+      # @deprecated Render `spree/admin/shared/preference_fields/\#{preference_type}' instead
       def preference_field_for(form, field, options)
-        case options[:type]
-        when :integer
-          form.text_field(field, preference_field_options(options))
-        when :boolean
-          form.check_box(field, preference_field_options(options))
-        when :string
-          form.text_field(field, preference_field_options(options))
-        when :password
-          form.password_field(field, preference_field_options(options))
-        when :text
-          form.text_area(field, preference_field_options(options))
-        else
-          form.text_field(field, preference_field_options(options))
-        end
+        render "spree/admin/shared/preference_fields/#{options[:type]}",
+          form: form, attribute: field, html_options: options
       end
+      deprecate preference_field_for:
+        "Render `spree/admin/shared/preference_fields/\#{preference_type}' instead",
+        deprecator: Spree::Deprecation
 
+      # @deprecated Pass an `html_options' hash into preference field partial instead
       def preference_field_options(options)
         field_options = case options[:type]
                         when :integer
@@ -97,16 +81,29 @@ module Spree
           size: options[:size]
         })
       end
+      deprecate preference_field_options: "Pass an `html_options' hash into " \
+        "`render('spree/admin/shared/preference_fields/\#{preference_type}')` instead)",
+        deprecator: Spree::Deprecation
 
+      # @deprecated Please render each preference keys partial instead. Example:
+      # <% @object.preferences.keys.each do |key| %>
+      #   <%= render "spree/admin/shared/preference_fields/#{@object.preference_type(key)}",
+      #     form: f, attribute: "preferred_#{key}", label: Spree.t(key) %>
+      # <% end %>
       def preference_fields(object, form)
         return unless object.respond_to?(:preferences)
-        fields = object.preferences.keys.map { |key|
-          form.label("preferred_#{key}", Spree.t(key)) +
-            "<br />".html_safe +
-            preference_field_for(form, "preferred_#{key}", type: object.preference_type(key))
-        }
-        safe_join(fields, "<br />".html_safe)
+        capture do
+          object.preferences.keys.each do |key|
+            concat render("spree/admin/shared/preference_fields/#{object.preference_type(key)}",
+              form: form, attribute: "preferred_#{key}", label: Spree.t(key))
+          end
+        end
       end
+      deprecate preference_fields: "Please render each preference key's partial instead. Example: \n" \
+        "<% @object.preferences.keys.each do |key| %>\n" \
+          "<%= render \"spree/admin/shared/preference_fields/\#{@object.preference_type(key)}\", \n" \
+             "form: f, attribute: \"preferred_\#{key}\", label: Spree.t(key) %>\n" \
+        "<% end %>", deprecator: Spree::Deprecation
 
       def link_to_add_fields(name, target, options = {})
         name = '' if options[:no_text]
