@@ -141,10 +141,10 @@ module Spree
       end
 
       describe '#fire' do
-        describe 'authorization' do
-          let(:payment) { create(:payment, state: 'checkout') }
-          let(:order) { payment.order }
+        let(:payment) { create(:payment, state: 'checkout', amount: 120) }
+        let(:order) { payment.order }
 
+        describe 'authorization' do
           context 'the user is authorized' do
             class CaptureAllowedAbility
               include CanCan::Ability
@@ -156,6 +156,10 @@ module Spree
 
             before do
               Spree::Ability.register_ability(CaptureAllowedAbility)
+            end
+
+            after do
+              Spree::Ability.remove_ability(CaptureAllowedAbility)
             end
 
             it 'allows the action' do
@@ -177,12 +181,33 @@ module Spree
                 Spree::Ability.register_ability(CaptureNotAllowedAbility)
               end
 
+              after do
+                Spree::Ability.remove_ability(CaptureNotAllowedAbility)
+              end
+
               it 'does not allow the action' do
                 expect {
                   post(:fire, params: { id: payment.to_param, e: 'capture', order_id: order.to_param })
                 }.to_not change { payment.reload.state }
                 expect(flash[:error]).to eq('Authorization Failure')
               end
+            end
+          end
+
+        end
+
+        context 'partial capturing' do
+          it 'allows an amount to be set' do
+            expect {
+              post(:fire, params: { id: payment.to_param, e: 'capture', order_id: order.to_param, amount: "10.00"})
+            }.to change { payment.reload.state }.from('checkout').to('pending')
+          end
+
+          context 'when amount matches the payment amount' do
+            it 'changes the state to \'completed\'' do
+              expect {
+                post(:fire, params: { id: payment.to_param, e: 'capture', order_id: order.to_param, amount: "120.00"})
+              }.to change { payment.reload.state }.from('checkout').to('completed')
             end
           end
         end
