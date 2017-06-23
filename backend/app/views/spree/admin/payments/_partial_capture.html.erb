@@ -1,0 +1,4 @@
+<%= form_for [@order, @payment], url: fire_admin_order_payment_path(@order, @payment, e: "capture"), method: :put do %>
+  <%= text_field_tag "amount" %>
+  <%= submit_tag Spree.t(:capture) %>
+<% end %>
