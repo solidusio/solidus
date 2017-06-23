@@ -21,7 +21,12 @@ module Spree
 
     scope :by_url, lambda { |url| where("url like ?", "%#{url}%") }
 
+    class << self
+      deprecate :by_url, "Spree::Store.by_url is DEPRECATED", deprecator: Spree::Deprecation
+    end
+
     def self.current(store_key)
+      Spree::Deprecation.warn "Spree::Store.current is DEPRECATED"
       current_store = Store.find_by(code: store_key) || Store.by_url(store_key).first if store_key
       current_store || Store.default
     end

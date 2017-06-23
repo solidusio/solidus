@@ -12,17 +12,15 @@ module Spree
     # looking up by the requesting server's name.
     # @return [Spree::Store]
     def store
-      if store_key
-        Spree::Store.current(store_key)
-      else
-        Spree::Store.default
-      end
-    end
+      server_name = @request.env['SERVER_NAME']
 
-    private
+      # We select a store which either matches our server name, or is default.
+      # We sort by `default ASC` so that a store matching SERVER_NAME will come
+      # first, and we will find that instead of the default.
+      store = Spree::Store.where(url: server_name).or(Store.where(default: true)).order(default: :asc).first
 
-    def store_key
-      @request.headers['HTTP_SPREE_STORE'] || @request.env['SERVER_NAME']
+      # Provide a fallback, mostly for legacy/testing purposes
+      store || Spree::Store.new
     end
   end
 end
