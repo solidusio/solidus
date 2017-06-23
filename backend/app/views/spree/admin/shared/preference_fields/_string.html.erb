@@ -1,0 +1,12 @@
+<% label = local_assigns[:label].presence %>
+<% html_options = {class: 'input_string fullwidth'}.update(local_assigns[:html_options] || {}) %>
+
+<div class="field">
+  <% if local_assigns[:form] %>
+    <%= form.label attribute, label %>
+    <%= form.text_field attribute, html_options %>
+  <% else %>
+    <%= label_tag name, label %>
+    <%= text_field_tag name, value, html_options %>
+  <% end %>
+</div>
