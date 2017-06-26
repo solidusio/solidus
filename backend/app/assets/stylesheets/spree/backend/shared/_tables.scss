@@ -40,7 +40,7 @@ table {
         font-size: $font-size-base;
       }
 
-      [class*='fa-'].no-text {
+      .fa {
         font-size: 120%;
         background-color: very-light($color-3);
         border: 1px solid $color-border;

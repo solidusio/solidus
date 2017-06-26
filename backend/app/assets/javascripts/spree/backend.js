@@ -32,6 +32,7 @@
 //= require spree/backend/components/number_with_currency
 //= require spree/backend/components/tabs
 //= require spree/backend/components/tooltips
+//= require spree/backend/components/editable_table
 //= require spree/backend/flash
 //= require spree/backend/gateway
 //= require spree/backend/handlebars_extensions

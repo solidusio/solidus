@@ -38,10 +38,10 @@
   &.action-edit, &.action-save, &.action-capture, &.action-add {
     @include bootstrap-tooltip-color($brand-success);
   }
-  &.action-clone {
+  &.action-clone, &.action-cancel {
     @include bootstrap-tooltip-color($brand-warning);
   }
-  &.action-void, &.action-failure, &.action-cancel, &.action-remove {
+  &.action-void, &.action-failure, &.action-remove {
     @include bootstrap-tooltip-color($brand-danger);
   }
 }

@@ -1,22 +1,40 @@
 <tr id="<%= spree_dom_id image %>" data-hook="images_row" class="<%= cycle('odd', 'even')%>">
+
   <td class="no-border">
     <% if can?(:update_positions, Spree::Image) %>
       <span class="handle"></span>
     <% end %>
   </td>
+
   <td>
     <%= link_to image.attachment.url(:product) do %>
       <%= render 'spree/admin/shared/image', image: image, size: :mini %>
     <% end %>
   </td>
+
   <% if @product.has_variants? %>
-    <td><%= options_text_for(image) %></td>
-  <% end %>
-  <td><%= image.alt %></td>
+    <td>
+      <%= fields_for image do |f| %>
+        <%= f.select :viewable_id, options_for_select(@variants, image.viewable_id), {}, class: 'select2 fullwidth', autocomplete: "off" %>
+      <% end %>
+    </td>
+  <% end # @product.has_variants? %>
+
+  <td>
+    <%= fields_for image do |f| %>
+      <%= f.text_field :alt %>
+    <% end %>
+  </td>
+
   <td class="actions">
     <% if can?(:update, image) %>
-      <%= link_to_with_icon 'edit', Spree.t('actions.edit'), edit_admin_product_image_url(@product, image), no_text: true, data: {action: 'edit'} %>
+      <%= link_to_with_icon 'check', Spree.t('actions.save'), api_variant_image_path(@product, image), no_text: true, data: {action: 'save'} %>
+
+      <%= link_to_with_icon 'cancel', Spree.t('actions.cancel'), nil, no_text: true, data: {action: 'cancel'} %>
+
+      <%= link_to_with_icon 'edit', Spree.t('actions.edit'), edit_admin_product_image_path(@product, image), no_text: true, data: {action: 'edit'} %>
     <% end %>
+
     <% if can?(:destroy, image) %>
       <%= link_to_delete image, { url: admin_product_image_url(@product, image), no_text: true } %>
     <% end %>
