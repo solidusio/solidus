@@ -11,8 +11,6 @@ namespace 'spree:migrations:copy_order_bill_address_to_credit_card' do
   # This task should be safe to run multiple times.
 
   task up: :environment do
-    puts "Copying order bill addresses to credit cards"
-
     if Spree::CreditCard.connection.adapter_name =~ /postgres/i
       postgres_copy
     else
@@ -51,8 +49,6 @@ namespace 'spree:migrations:copy_order_bill_address_to_credit_card' do
   # slow.
   def postgres_copy
     batch_size = 10_000
-
-    puts "last id: #{last_credit_card_id}"
 
     current_start_id = 1
 
