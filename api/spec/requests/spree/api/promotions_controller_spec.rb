@@ -5,11 +5,13 @@ module Spree
 
     shared_examples "a JSON response" do
       it 'should be ok' do
-        expect(subject).to be_ok
+        subject
+        expect(response).to be_ok
       end
 
       it 'should return JSON' do
-        payload = HashWithIndifferentAccess.new(JSON.parse(subject.body))
+        subject
+        payload = HashWithIndifferentAccess.new(JSON.parse(response.body))
         expect(payload).to_not be_nil
         Spree::Api::ApiHelpers.promotion_attributes.each do |attribute|
           expect(payload).to be_has_key(attribute)
@@ -24,7 +26,7 @@ module Spree
     let(:promotion) { create :promotion, code: '10off' }
 
     describe 'GET #show' do
-      subject { get :show, params: { id: id } }
+      subject { get spree.api_promotion_path(id) }
 
       context 'when admin' do
         sign_in_as_admin!
@@ -45,7 +47,8 @@ module Spree
           let(:id) { 'argh' }
 
           it 'should be 404' do
-            expect(subject.status).to eq(404)
+            subject
+            expect(response.status).to eq(404)
           end
         end
       end
