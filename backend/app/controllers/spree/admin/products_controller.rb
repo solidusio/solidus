@@ -96,7 +96,7 @@ module Spree
       end
 
       def collection
-        return @collection if @collection.present?
+        return @collection if defined?(@collection)
         params[:q] ||= {}
         params[:q][:s] ||= "name asc"
         # @search needs to be defined as this is passed to search_form_for
