@@ -58,10 +58,10 @@ describe "Option Types", type: :feature do
 
   # Regression test for https://github.com/spree/spree/issues/2277
   it "can remove an option value from an option type", js: true do
-    create(:option_value)
+    option_value = create(:option_value)
     click_link "Option Types"
     within('table#listing_option_types') { click_icon :edit }
-    expect(page).to have_content("ProductsOption Typesfoo-size-")
+    expect(page).to have_title("#{option_value.option_type.name} - Option Types - Products")
     expect(page).to have_css("tbody#option_values tr", count: 1)
     within("tbody#option_values") do
       find('.spree_remove_fields').click
