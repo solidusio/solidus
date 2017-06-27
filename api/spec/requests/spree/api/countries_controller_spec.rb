@@ -10,7 +10,7 @@ module Spree
     end
 
     it "gets all countries" do
-      get :index
+      get spree.api_countries_path
       expect(json_response['countries'].first['iso3']).to eq @country.iso3
     end
 
@@ -18,20 +18,20 @@ module Spree
       before { @zambia = create(:country, name: "Zambia") }
 
       it "can view all countries" do
-        get :index
+        get spree.api_countries_path
         expect(json_response['count']).to eq(2)
         expect(json_response['current_page']).to eq(1)
         expect(json_response['pages']).to eq(1)
       end
 
       it 'can query the results through a paramter' do
-        get :index, params: { q: { name_cont: 'zam' } }
+        get spree.api_countries_path, params: { q: { name_cont: 'zam' } }
         expect(json_response['count']).to eq(1)
         expect(json_response['countries'].first['name']).to eq @zambia.name
       end
 
       it 'can control the page size through a parameter' do
-        get :index, params: { per_page: 1 }
+        get spree.api_countries_path, params: { per_page: 1 }
         expect(json_response['count']).to eq(1)
         expect(json_response['current_page']).to eq(1)
         expect(json_response['pages']).to eq(2)
@@ -39,7 +39,7 @@ module Spree
     end
 
     it "includes states" do
-      get :show, params: { id: @country.id }
+      get spree.api_country_path(@country.id)
       states = json_response['states']
       expect(states.first['name']).to eq @state.name
     end
