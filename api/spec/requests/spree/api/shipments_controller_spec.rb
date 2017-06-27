@@ -12,27 +12,27 @@ describe Spree::Api::ShipmentsController, type: :request do
 
   context "as a non-admin" do
     it "cannot make a shipment ready" do
-      api_put :ready
+      put :ready
       assert_unauthorized!
     end
 
     it "cannot make a shipment shipped" do
-      api_put :ship
+      put :ship
       assert_unauthorized!
     end
 
     it "cannot remove order contents from shipment" do
-      api_put :remove
+      put :remove
       assert_unauthorized!
     end
 
     it "cannot add contents to the shipment" do
-      api_put :add
+      put :add
       assert_unauthorized!
     end
 
     it "cannot update the shipment" do
-      api_put :update
+      put :update
       assert_unauthorized!
     end
   end
@@ -55,7 +55,7 @@ describe Spree::Api::ShipmentsController, type: :request do
       end
 
       subject do
-        api_post :create, params
+        post :create, params: params
       end
 
       [:variant_id, :stock_location_id].each do |field|
@@ -85,14 +85,14 @@ describe Spree::Api::ShipmentsController, type: :request do
         }
       }
 
-      api_put :update, params
+      put :update, params: params
       expect(response.status).to eq(200)
       expect(json_response['stock_location_name']).to eq(stock_location.name)
     end
 
     it "can make a shipment ready" do
       allow_any_instance_of(Spree::Order).to receive_messages(paid?: true, complete?: true)
-      api_put :ready
+      put :ready
       expect(json_response).to have_attributes(attributes)
       expect(json_response["state"]).to eq("ready")
       expect(shipment.reload.state).to eq("ready")
@@ -100,7 +100,7 @@ describe Spree::Api::ShipmentsController, type: :request do
 
     it "cannot make a shipment ready if the order is unpaid" do
       allow_any_instance_of(Spree::Order).to receive_messages(paid?: false)
-      api_put :ready
+      put :ready
       expect(json_response["error"]).to eq("Cannot ready shipment.")
       expect(response.status).to eq(422)
     end
@@ -110,7 +110,7 @@ describe Spree::Api::ShipmentsController, type: :request do
       let!(:resource_scoping) { { id: order.shipments.first.to_param, shipment: { order_id: order.to_param } } }
 
       it 'adds a variant to a shipment' do
-        api_put :add, { variant_id: variant.to_param, quantity: 2 }
+        put :add, params: { variant_id: variant.to_param, quantity: 2 }
         expect(response.status).to eq(200)
         expect(json_response['manifest'].detect { |h| h['variant']['id'] == variant.id }["quantity"]).to eq(2)
       end
@@ -118,7 +118,7 @@ describe Spree::Api::ShipmentsController, type: :request do
       it 'removes a variant from a shipment' do
         order.contents.add(variant, 2)
 
-        api_put :remove, { variant_id: variant.to_param, quantity: 1 }
+        put :remove, params: { variant_id: variant.to_param, quantity: 1 }
         expect(response.status).to eq(200)
         expect(json_response['manifest'].detect { |h| h['variant']['id'] == variant.id }["quantity"]).to eq(1)
       end
@@ -127,7 +127,7 @@ describe Spree::Api::ShipmentsController, type: :request do
         order.contents.add(variant, 2)
         variant.destroy
 
-        api_put :remove, { variant_id: variant.to_param, quantity: 1 }
+        put :remove, params: { variant_id: variant.to_param, quantity: 1 }
         expect(response.status).to eq(200)
         expect(json_response['manifest'].detect { |h| h['variant']['id'] == variant.id }["quantity"]).to eq(1)
       end
@@ -138,13 +138,13 @@ describe Spree::Api::ShipmentsController, type: :request do
       let!(:resource_scoping) { { id: order.shipments.first.to_param, shipment: { order_id: order.to_param } } }
 
       it 'adds a variant to a shipment' do
-        api_put :add, { variant_id: variant.to_param, quantity: 2 }
+        put :add, params: { variant_id: variant.to_param, quantity: 2 }
         expect(response.status).to eq(200)
         expect(json_response['manifest'].detect { |h| h['variant']['id'] == variant.id }["quantity"]).to eq(2)
       end
 
       it 'cannot remove a variant from a shipment' do
-        api_put :remove, { variant_id: variant.to_param, quantity: 1 }
+        put :remove, params: { variant_id: variant.to_param, quantity: 1 }
         expect(response.status).to eq(422)
         expect(json_response['errors']['base'].join).to match /Cannot remove items/
       end
@@ -152,7 +152,7 @@ describe Spree::Api::ShipmentsController, type: :request do
 
     describe '#mine' do
       subject do
-        api_get :mine, params
+        get :mine, params: params
       end
 
       let(:params) { {} }
@@ -222,7 +222,7 @@ describe Spree::Api::ShipmentsController, type: :request do
     let(:shipment) { create(:order_ready_to_ship).shipments.first }
 
     let(:send_mailer) { nil }
-    subject { api_put :ship, id: shipment.to_param, send_mailer: send_mailer }
+    subject { put :ship, params: { id: shipment.to_param, send_mailer: send_mailer } }
 
     context "the user is allowed to ship the shipment" do
       sign_in_as_admin!

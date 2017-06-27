@@ -13,21 +13,21 @@ module Spree
     context "as a normal user" do
       describe "#create" do
         it "cannot create a transfer item" do
-          api_post :create, stock_transfer_id: stock_transfer.to_param
+          post :create, params: { stock_transfer_id: stock_transfer.to_param }
           expect(response.status).to eq 401
         end
       end
 
       describe "#update" do
         it "cannot update a transfer item" do
-          api_put :update, stock_transfer_id: stock_transfer.to_param, id: transfer_item.to_param
+          put :update, params: { stock_transfer_id: stock_transfer.to_param, id: transfer_item.to_param }
           expect(response.status).to eq 401
         end
       end
 
       describe "#destroy" do
         it "cannot delete a transfer item" do
-          api_delete :destroy, stock_transfer_id: stock_transfer.to_param, id: transfer_item.to_param
+          delete :destroy, params: { stock_transfer_id: stock_transfer.to_param, id: transfer_item.to_param }
           expect(response.status).to eq 401
         end
       end
@@ -45,7 +45,7 @@ module Spree
               expected_quantity: 1
             }
           }
-          api_post :create, create_params
+          post :create, params: create_params
         end
 
         context "valid parameters" do
@@ -87,7 +87,7 @@ module Spree
       describe "#update" do
         subject do
           update_params = { id: transfer_item.to_param, stock_transfer_id: stock_transfer.to_param, transfer_item: { received_quantity: received_quantity } }
-          api_put :update, update_params
+          put :update, params: update_params
         end
 
         context "valid parameters" do
@@ -118,7 +118,7 @@ module Spree
       end
 
       describe "#destroy" do
-        subject { api_delete :destroy, id: transfer_item.to_param, stock_transfer_id: stock_transfer.to_param }
+        subject { delete :destroy, params: { id: transfer_item.to_param, stock_transfer_id: stock_transfer.to_param } }
 
         context "hasn't been finalized" do
           it "can delete a transfer item" do

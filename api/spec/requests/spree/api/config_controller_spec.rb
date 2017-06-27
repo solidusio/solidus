@@ -9,13 +9,13 @@ module Spree
     end
 
     it "returns Spree::Money settings" do
-      api_get :money
+      get :money
       expect(response).to be_success
       expect(json_response["symbol"]).to eq("$")
     end
 
     it "returns some configuration settings" do
-      api_get :show
+      get :show
       expect(response).to be_success
       expect(json_response["default_country_iso"]).to eq("US")
       expect(json_response["default_country_id"]).to eq(default_country.id)

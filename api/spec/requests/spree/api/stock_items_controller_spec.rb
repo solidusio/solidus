@@ -17,7 +17,7 @@ module Spree
     context "as a normal user" do
       describe "#index" do
         it "can list stock items for an active stock location" do
-          api_get :index, stock_location_id: stock_location.to_param
+          get :index, params: { stock_location_id: stock_location.to_param }
           expect(response).to be_success
           expect(json_response['stock_items'].first).to have_attributes(attributes)
           expect(json_response['stock_items'].first['variant']['sku']).to match /\ASKU-\d+\z/
@@ -25,21 +25,21 @@ module Spree
 
         it "cannot list stock items for an inactive stock location" do
           stock_location.update_attributes!(active: false)
-          api_get :index, stock_location_id: stock_location.to_param
+          get :index, params: { stock_location_id: stock_location.to_param }
           expect(response).to be_not_found
         end
       end
 
       describe "#show" do
         it "can see a stock item for an active stock location" do
-          api_get :show, stock_location_id: stock_location.to_param, id: stock_item.to_param
+          get :show, params: { stock_location_id: stock_location.to_param, id: stock_item.to_param }
           expect(json_response).to have_attributes(attributes)
           expect(json_response['count_on_hand']).to eq stock_item.count_on_hand
         end
 
         it "cannot see a stock item for an inactive stock location" do
           stock_location.update_attributes!(active: false)
-          api_get :show, stock_location_id: stock_location.to_param, id: stock_item.to_param
+          get :show, params: { stock_location_id: stock_location.to_param, id: stock_item.to_param }
           expect(response.status).to eq(404)
         end
       end
@@ -55,21 +55,21 @@ module Spree
             }
           }
 
-          api_post :create, params
+          post :create, params: params
           expect(response.status).to eq(401)
         end
       end
 
       describe "#update" do
         it "cannot update a stock item" do
-          api_put :update, stock_location_id: stock_location.to_param, id: stock_item.to_param
+          put :update, params: { stock_location_id: stock_location.to_param, id: stock_item.to_param }
           expect(response.status).to eq(404)
         end
       end
 
       describe "#destroy" do
         it "cannot destroy a stock item" do
-          api_delete :destroy, stock_location_id: stock_location.to_param, id: stock_item.to_param
+          delete :destroy, params: { stock_location_id: stock_location.to_param, id: stock_item.to_param }
           expect(response.status).to eq(404)
         end
       end
@@ -79,32 +79,32 @@ module Spree
       sign_in_as_admin!
 
       it 'cannot list of stock items' do
-        api_get :index, stock_location_id: stock_location.to_param
+        get :index, params: { stock_location_id: stock_location.to_param }
         expect(json_response['stock_items'].first).to have_attributes(attributes)
         expect(json_response['stock_items'].first['variant']['sku']).to include 'SKU'
       end
 
       it 'requires a stock_location_id to be passed as a parameter' do
-        api_get :index
+        get :index
         expect(json_response['exception']).to eq('param is missing or the value is empty: stock_location_id')
         expect(response.status).to eq(422)
       end
 
       it 'can control the page size through a parameter' do
-        api_get :index, stock_location_id: stock_location.to_param, per_page: 1
+        get :index, params: { stock_location_id: stock_location.to_param, per_page: 1 }
         expect(json_response['count']).to eq(1)
         expect(json_response['current_page']).to eq(1)
       end
 
       it 'can query the results through a paramter' do
         stock_item.update_column(:count_on_hand, 30)
-        api_get :index, stock_location_id: stock_location.to_param, q: { count_on_hand_eq: '30' }
+        get :index, params: { stock_location_id: stock_location.to_param, q: { count_on_hand_eq: '30' } }
         expect(json_response['count']).to eq(1)
         expect(json_response['stock_items'].first['count_on_hand']).to eq 30
       end
 
       it 'gets a stock item' do
-        api_get :show, stock_location_id: stock_location.to_param, id: stock_item.to_param
+        get :show, params: { stock_location_id: stock_location.to_param, id: stock_item.to_param }
         expect(json_response).to have_attributes(attributes)
         expect(json_response['count_on_hand']).to eq stock_item.count_on_hand
       end
@@ -128,7 +128,7 @@ module Spree
           }
         end
 
-        subject { api_post :create, params }
+        subject { post :create, params: params }
 
         it 'can create a new stock item' do
           subject
@@ -180,7 +180,7 @@ module Spree
           expect(stock_item.count_on_hand).to eq 10
         end
 
-        subject { api_put :update, params }
+        subject { put :update, params: params }
 
         context 'adjusting count_on_hand' do
           let(:count_on_hand) { 40 }
@@ -300,7 +300,7 @@ module Spree
       end
 
       it 'can delete a stock item' do
-        api_delete :destroy, id: stock_item.to_param
+        delete :destroy, params: { id: stock_item.to_param }
         expect(response.status).to eq(204)
         expect { Spree::StockItem.find(stock_item.id) }.to raise_error(ActiveRecord::RecordNotFound)
       end

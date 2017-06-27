@@ -22,7 +22,7 @@ module Spree
     end
 
     it "can learn how to create a new line item" do
-      api_get :new
+      get :new
       expect(json_response["attributes"]).to eq(["quantity", "price", "variant_id"])
       required_attributes = json_response["required_attributes"]
       expect(required_attributes).to include("quantity", "variant_id")
@@ -30,7 +30,7 @@ module Spree
 
     context "authenticating with a token" do
       it "can add a new line item to an existing order" do
-        api_post :create, line_item: { variant_id: product.master.to_param, quantity: 1 }, order_token: order.guest_token
+        post :create, params: { line_item: { variant_id: product.master.to_param, quantity: 1 }, order_token: order.guest_token }
         expect(response.status).to eq(201)
         expect(json_response).to have_attributes(attributes)
         expect(json_response["variant"]["name"]).not_to be_blank
@@ -38,7 +38,7 @@ module Spree
 
       it "can add a new line item to an existing order with token in header" do
         request.headers["X-Spree-Order-Token"] = order.guest_token
-        api_post :create, line_item: { variant_id: product.master.to_param, quantity: 1 }
+        post :create, params: { line_item: { variant_id: product.master.to_param, quantity: 1 } }
         expect(response.status).to eq(201)
         expect(json_response).to have_attributes(attributes)
         expect(json_response["variant"]["name"]).not_to be_blank
@@ -51,7 +51,7 @@ module Spree
       end
 
       it "can add a new line item to an existing order" do
-        api_post :create, line_item: { variant_id: product.master.to_param, quantity: 1 }
+        post :create, params: { line_item: { variant_id: product.master.to_param, quantity: 1 } }
         expect(response.status).to eq(201)
         expect(json_response).to have_attributes(attributes)
         expect(json_response["variant"]["name"]).not_to be_blank
@@ -59,17 +59,19 @@ module Spree
 
       it "can add a new line item to an existing order with options" do
         expect_any_instance_of(LineItem).to receive(:some_option=).with("foobar")
-        api_post :create,
-                 line_item: {
-                   variant_id: product.master.to_param,
-                   quantity: 1,
-                   options: { some_option: "foobar" }
-                 }
+        post :create,
+                 params: {
+                                    line_item: {
+                              variant_id: product.master.to_param,
+                              quantity: 1,
+                              options: { some_option: "foobar" }
+                            }
+        }
         expect(response.status).to eq(201)
       end
 
       it "default quantity to 1 if none is given" do
-        api_post :create, line_item: { variant_id: product.master.to_param }
+        post :create, params: { line_item: { variant_id: product.master.to_param } }
         expect(response.status).to eq(201)
         expect(json_response).to have_attributes(attributes)
         expect(json_response[:quantity]).to eq 1
@@ -77,7 +79,7 @@ module Spree
 
       it "increases a line item's quantity if it exists already" do
         order.line_items.create(variant_id: product.master.id, quantity: 10)
-        api_post :create, line_item: { variant_id: product.master.to_param, quantity: 1 }
+        post :create, params: { line_item: { variant_id: product.master.to_param, quantity: 1 } }
         expect(response.status).to eq(201)
         order.reload
         expect(order.line_items.count).to eq(2) # 1 original due to factory, + 1 in this test
@@ -87,7 +89,7 @@ module Spree
 
       it "can update a line item on the order" do
         line_item = order.line_items.first
-        api_put :update, id: line_item.id, line_item: { quantity: 101 }
+        put :update, params: { id: line_item.id, line_item: { quantity: 101 } }
         expect(response.status).to eq(200)
         order.reload
         expect(order.total).to eq(1010) # 10 original due to factory, + 1000 in this test
@@ -98,15 +100,17 @@ module Spree
       it "can update a line item's options on the order" do
         expect_any_instance_of(LineItem).to receive(:some_option=).with("foobar")
         line_item = order.line_items.first
-        api_put :update,
-                id: line_item.id,
-                line_item: { quantity: 1, options: { some_option: "foobar" } }
+        put :update,
+                params: {
+                  id: line_item.id,
+                  line_item: { quantity: 1, options: { some_option: "foobar" } }
+                }
         expect(response.status).to eq(200)
       end
 
       it "can delete a line item on the order" do
         line_item = order.line_items.first
-        api_delete :destroy, id: line_item.id
+        delete :destroy, params: { id: line_item.id }
         expect(response.status).to eq(204)
         order.reload
         expect(order.line_items.count).to eq(0) # 1 original due to factory, - 1 in this test
@@ -122,19 +126,19 @@ module Spree
 
         it "clear out shipments on create" do
           expect(order.reload.shipments).not_to be_empty
-          api_post :create, line_item: { variant_id: product.master.to_param, quantity: 1 }
+          post :create, params: { line_item: { variant_id: product.master.to_param, quantity: 1 } }
           expect(order.reload.shipments).to be_empty
         end
 
         it "clear out shipments on update" do
           expect(order.reload.shipments).not_to be_empty
-          api_put :update, id: line_item.id, line_item: { quantity: 1000 }
+          put :update, params: { id: line_item.id, line_item: { quantity: 1000 } }
           expect(order.reload.shipments).to be_empty
         end
 
         it "clear out shipments on delete" do
           expect(order.reload.shipments).not_to be_empty
-          api_delete :destroy, id: line_item.id
+          delete :destroy, params: { id: line_item.id }
           expect(order.reload.shipments).to be_empty
         end
 
@@ -146,7 +150,7 @@ module Spree
 
           it "doesn't destroy shipments or restart checkout flow" do
             expect(order.reload.shipments).not_to be_empty
-            api_post :create, line_item: { variant_id: product.master.to_param, quantity: 1 }
+            post :create, params: { line_item: { variant_id: product.master.to_param, quantity: 1 } }
             expect(order.reload.shipments).not_to be_empty
           end
         end
@@ -161,20 +165,20 @@ module Spree
       end
 
       it "cannot add a new line item to the order" do
-        api_post :create, line_item: { variant_id: product.master.to_param, quantity: 1 }
+        post :create, params: { line_item: { variant_id: product.master.to_param, quantity: 1 } }
         assert_unauthorized!
       end
 
       it "cannot update a line item on the order" do
         line_item = order.line_items.first
-        api_put :update, id: line_item.id, line_item: { quantity: 1000 }
+        put :update, params: { id: line_item.id, line_item: { quantity: 1000 } }
         assert_unauthorized!
         expect(line_item.reload.quantity).not_to eq(1000)
       end
 
       it "cannot delete a line item on the order" do
         line_item = order.line_items.first
-        api_delete :destroy, id: line_item.id
+        delete :destroy, params: { id: line_item.id }
         assert_unauthorized!
         expect { line_item.reload }.not_to raise_error
       end

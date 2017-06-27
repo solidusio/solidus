@@ -11,13 +11,13 @@ module Spree
     end
 
     it "gets list of zones" do
-      api_get :index
+      get :index
       expect(json_response['zones'].first).to have_attributes(attributes)
     end
 
     it 'can control the page size through a parameter' do
       create(:zone)
-      api_get :index, per_page: 1
+      get :index, params: { per_page: 1 }
       expect(json_response['count']).to eq(1)
       expect(json_response['current_page']).to eq(1)
       expect(json_response['pages']).to eq(2)
@@ -25,13 +25,13 @@ module Spree
 
     it 'can query the results through a paramter' do
       expected_result = create(:zone, name: 'South America')
-      api_get :index, q: { name_cont: 'south' }
+      get :index, params: { q: { name_cont: 'south' } }
       expect(json_response['count']).to eq(1)
       expect(json_response['zones'].first['name']).to eq expected_result.name
     end
 
     it "gets a zone" do
-      api_get :show, id: @zone.id
+      get :show, params: { id: @zone.id }
       expect(json_response).to have_attributes(attributes)
       expect(json_response['name']).to eq @zone.name
       expect(json_response['zone_members'].size).to eq @zone.zone_members.count
@@ -53,7 +53,7 @@ module Spree
           }
         }
 
-        api_post :create, params
+        post :create, params: params
         expect(response.status).to eq(201)
         expect(json_response).to have_attributes(attributes)
         expect(json_response["zone_members"]).not_to be_empty
@@ -72,14 +72,14 @@ module Spree
           }
         }
 
-        api_put :update, params
+        put :update, params: params
         expect(response.status).to eq(200)
         expect(json_response['name']).to eq 'North Pole'
         expect(json_response['zone_members']).not_to be_blank
       end
 
       it "can delete a zone" do
-        api_delete :destroy, id: @zone.id
+        delete :destroy, params: { id: @zone.id }
         expect(response.status).to eq(204)
         expect { @zone.reload }.to raise_error(ActiveRecord::RecordNotFound)
       end

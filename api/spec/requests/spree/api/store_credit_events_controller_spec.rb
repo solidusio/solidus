@@ -10,7 +10,7 @@ describe Spree::Api::StoreCreditEventsController, type: :request do
   end
 
   describe "GET mine" do
-    subject { api_get :mine, { format: :json } }
+    subject { get :mine, { format: :json } }
 
     before { allow(controller).to receive_messages(current_api_user: current_api_user) }
 

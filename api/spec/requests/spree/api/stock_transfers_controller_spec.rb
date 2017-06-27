@@ -13,7 +13,7 @@ module Spree
     context "as a normal user" do
       describe "#receive" do
         it "cannot receive transfer items from a stock transfer" do
-          api_post :receive, id: stock_transfer.to_param, variant_id: transfer_item.variant.to_param
+          post :receive, params: { id: stock_transfer.to_param, variant_id: transfer_item.variant.to_param }
           expect(response.status).to eq 401
         end
       end
@@ -24,7 +24,7 @@ module Spree
 
       describe "#receive" do
         subject do
-          api_post :receive, id: stock_transfer.to_param, variant_id: variant_id
+          post :receive, params: { id: stock_transfer.to_param, variant_id: variant_id }
         end
 
         context "valid parameters" do

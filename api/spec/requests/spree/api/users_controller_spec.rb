@@ -9,19 +9,19 @@ module Spree
 
     context "as a normal user" do
       it "can get own details" do
-        api_get :show, id: user.id, token: user.spree_api_key
+        get :show, params: { id: user.id, token: user.spree_api_key }
 
         expect(json_response['email']).to eq user.email
       end
 
       it "cannot get other users details" do
-        api_get :show, id: stranger.id, token: user.spree_api_key
+        get :show, params: { id: stranger.id, token: user.spree_api_key }
 
         assert_not_found!
       end
 
       it "can learn how to create a new user" do
-        api_get :new, token: user.spree_api_key
+        get :new, params: { token: user.spree_api_key }
         expect(json_response["attributes"]).to eq(attributes.map(&:to_s))
       end
 
@@ -30,20 +30,20 @@ module Spree
           email: 'new@example.com', password: 'spree123', password_confirmation: 'spree123'
         }
 
-        api_post :create, user: user_params, token: user.spree_api_key
+        post :create, params: { user: user_params, token: user.spree_api_key }
         expect(json_response['email']).to eq 'new@example.com'
       end
 
       # there's no validations on LegacyUser?
       xit "cannot create a new user with invalid attributes" do
-        api_post :create, user: {}, token: user.spree_api_key
+        post :create, params: {user: {}, token: user.spree_api_key}
         expect(response.status).to eq(422)
         expect(json_response["error"]).to eq("Invalid resource. Please fix errors and try again.")
       end
 
       it "can update own details" do
         country = create(:country)
-        api_put :update, id: user.id, token: user.spree_api_key, user: {
+        put :update, params: { id: user.id, token: user.spree_api_key, user: {
           email: "mine@example.com",
           bill_address_attributes: {
             first_name: 'First',
@@ -65,30 +65,30 @@ module Spree
             zipcode: '55555',
             phone: '5555555555'
           }
-        }
+        } }
         expect(json_response['email']).to eq 'mine@example.com'
         expect(json_response['bill_address']).to_not be_nil
         expect(json_response['ship_address']).to_not be_nil
       end
 
       it "cannot update other users details" do
-        api_put :update, id: stranger.id, token: user.spree_api_key, user: { email: "mine@example.com" }
+        put :update, params: { id: stranger.id, token: user.spree_api_key, user: { email: "mine@example.com" } }
         assert_not_found!
       end
 
       it "cannot delete itself" do
-        api_delete :destroy, id: user.id, token: user.spree_api_key
+        delete :destroy, params: { id: user.id, token: user.spree_api_key }
         expect(response.status).to eq(401)
       end
 
       it "cannot delete other user" do
-        api_delete :destroy, id: stranger.id, token: user.spree_api_key
+        delete :destroy, params: { id: stranger.id, token: user.spree_api_key }
         assert_not_found!
       end
 
       it "should only get own details on index" do
         2.times { create(:user) }
-        api_get :index, token: user.spree_api_key
+        get :index, params: { token: user.spree_api_key }
 
         expect(Spree.user_class.count).to eq 3
         expect(json_response['count']).to eq 1
@@ -106,7 +106,7 @@ module Spree
 
         2.times { create(:user) }
 
-        api_get :index
+        get :index
         expect(Spree.user_class.count).to eq 2
         expect(json_response['count']).to eq 2
         expect(json_response['users'].size).to eq 2
@@ -114,7 +114,7 @@ module Spree
 
       it 'can control the page size through a parameter' do
         2.times { create(:user) }
-        api_get :index, per_page: 1
+        get :index, params: { per_page: 1 }
         expect(json_response['count']).to eq(1)
         expect(json_response['current_page']).to eq(1)
         expect(json_response['pages']).to eq(2)
@@ -122,26 +122,26 @@ module Spree
 
       it 'can query the results through a paramter' do
         expected_result = create(:user, email: 'brian@spreecommerce.com')
-        api_get :index, q: { email_cont: 'brian' }
+        get :index, params: { q: { email_cont: 'brian' } }
         expect(json_response['count']).to eq(1)
         expect(json_response['users'].first['email']).to eq expected_result.email
       end
 
       it "can create" do
-        api_post :create, user: { email: "new@example.com", password: 'spree123', password_confirmation: 'spree123' }
+        post :create, params: { user: { email: "new@example.com", password: 'spree123', password_confirmation: 'spree123' } }
         expect(json_response).to have_attributes(attributes)
         expect(response.status).to eq(201)
       end
 
       it "can destroy user without orders" do
         user.orders.destroy_all
-        api_delete :destroy, id: user.id
+        delete :destroy, params: { id: user.id }
         expect(response.status).to eq(204)
       end
 
       it "cannot destroy user with orders" do
         create(:completed_order_with_totals, user: user)
-        api_delete :destroy, id: user.id
+        delete :destroy, params: { id: user.id }
         expect(json_response["exception"]).to eq "Spree::Core::DestroyWithOrdersError"
         expect(response.status).to eq(422)
       end

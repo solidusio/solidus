@@ -11,7 +11,7 @@ module Spree
       before { Spree::Api::Config[:requires_authentication] = false }
 
       it "retrieves a list of products" do
-        api_get :index
+        get :index
         expect(json_response["products"].first).to have_attributes(attributes)
         expect(json_response["count"]).to eq(1)
         expect(json_response["current_page"]).to eq(1)

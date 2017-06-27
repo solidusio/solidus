@@ -16,20 +16,18 @@ module Spree
 
       context "with their own address" do
         it "gets an address" do
-          api_get :show, id: @address.id, order_id: @order.number
+          get :show, params: { id: @address.id, order_id: @order.number }
           expect(json_response['address1']).to eq @address.address1
         end
 
         it "update replaces the readonly Address associated to the Order" do
-          api_put :update, id: @address.id, order_id: @order.number,
-                           address: { address1: "123 Test Lane" }
+          put :update, params: { id: @address.id, order_id: @order.number, address: { address1: "123 Test Lane" } }
           expect(Order.find(@order.id).bill_address_id).not_to eq @address.id
           expect(json_response['address1']).to eq '123 Test Lane'
         end
 
         it "receives the errors object if address is invalid" do
-          api_put :update, id: @address.id, order_id: @order.number,
-                           address: { address1: "" }
+          put :update, params: { id: @address.id, order_id: @order.number, address: { address1: "" } }
 
           expect(json_response['error']).not_to be_nil
           expect(json_response['errors']).not_to be_nil
@@ -45,12 +43,12 @@ module Spree
       end
 
       it "cannot retrieve address information" do
-        api_get :show, id: @address.id, order_id: @order.number
+        get :show, params: { id: @address.id, order_id: @order.number }
         assert_unauthorized!
       end
 
       it "cannot update address information" do
-        api_get :update, id: @address.id, order_id: @order.number
+        get :update, params: { id: @address.id, order_id: @order.number }
         assert_unauthorized!
       end
     end

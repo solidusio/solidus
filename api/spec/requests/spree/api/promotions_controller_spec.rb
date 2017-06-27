@@ -24,7 +24,7 @@ module Spree
     let(:promotion) { create :promotion, code: '10off' }
 
     describe 'GET #show' do
-      subject { api_get :show, id: id }
+      subject { get :show, params: { id: id } }
 
       context 'when admin' do
         sign_in_as_admin!

@@ -19,7 +19,7 @@ module Spree
       end
 
       it "the user id doesn't exist" do
-        api_get :index, user_id: 1000
+        get :index, params: { user_id: 1000 }
         expect(response.status).to eq(404)
       end
 
@@ -29,14 +29,14 @@ module Spree
         end
 
         it "no credit cards exist for user" do
-          api_get :index, user_id: normal_user.id
+          get :index, params: { user_id: normal_user.id }
 
           expect(response.status).to eq(200)
           expect(json_response["pages"]).to eq(0)
         end
 
         it "can view all credit cards for user" do
-          api_get :index, user_id: current_api_user.id
+          get :index, params: { user_id: current_api_user.id }
 
           expect(response.status).to eq(200)
           expect(json_response["pages"]).to eq(1)
@@ -54,13 +54,13 @@ module Spree
         let!(:card) { create(:credit_card, user_id: normal_user.id, gateway_customer_profile_id: "random") }
 
         it "can not view user" do
-          api_get :index, user_id: admin_user.id
+          get :index, params: { user_id: admin_user.id }
 
           expect(response.status).to eq(404)
         end
 
         it "can view own credit cards" do
-          api_get :index, user_id: normal_user.id
+          get :index, params: { user_id: normal_user.id }
 
           expect(response.status).to eq(200)
           expect(json_response["pages"]).to eq(1)
@@ -84,7 +84,7 @@ module Spree
 
         it 'updates the credit card' do
           expect {
-            api_put :update, id: credit_card.to_param, credit_card: { name: 'Jordan Brough' }
+            put :update, params: { id: credit_card.to_param, credit_card: { name: 'Jordan Brough' } }
           }.to change {
             credit_card.reload.name
           }.from('Joe Shmoe').to('Jordan Brough')
@@ -95,7 +95,7 @@ module Spree
         let(:current_api_user) { create(:user) }
 
         it 'rejects the request' do
-          api_put :update, id: credit_card.to_param, credit_card: { name: 'Jordan Brough' }
+          put :update, params: { id: credit_card.to_param, credit_card: { name: 'Jordan Brough' } }
           expect(response.status).to eq(401)
         end
       end

@@ -131,7 +131,7 @@ module Spree
           other_user.save_in_address_book(ron_address_attributes, false)
 
           get "/api/users/#{other_user.id}/address_book",
-          headers: { 'X-SPREE-TOKEN' => 'galleon' }
+            headers: { 'X-SPREE-TOKEN' => 'galleon' }
 
           json_response = JSON.parse(response.body)
           expect(response.status).to eq(200)
