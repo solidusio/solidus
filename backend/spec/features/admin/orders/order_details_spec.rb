@@ -217,19 +217,6 @@ describe "Order Details", type: :feature, js: true do
             expect(order.shipments.first.stock_location.id).to eq(stock_location2.id)
           end
 
-          it 'should not split anything if the input quantity is garbage' do
-            expect(order.shipments.first.stock_location.id).to eq(stock_location.id)
-
-            within_row(1) { click_icon 'arrows-h' }
-            complete_split_to(stock_location2, quantity: 'ff')
-
-            accept_alert "undefined"
-
-            expect(order.shipments.count).to eq(1)
-            expect(order.shipments.first.inventory_units_for(product.master).count).to eq(2)
-            expect(order.shipments.first.stock_location.id).to eq(stock_location.id)
-          end
-
           it 'should not allow less than or equal to zero qty' do
             expect(order.shipments.first.stock_location.id).to eq(stock_location.id)
 
