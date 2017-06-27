@@ -55,7 +55,7 @@ describe "Order Details", type: :feature, js: true do
         expect(page).to have_content("spree t-shirt")
 
         within_row(1) do
-          accept_alert do
+          accept_confirm "Are you sure you want to delete this record?" do
             click_icon :trash
           end
         end
@@ -72,7 +72,7 @@ describe "Order Details", type: :feature, js: true do
 
         within_row(1) do
           # Click "cancel" on confirmation dialog
-          dismiss_confirm do
+          dismiss_confirm "Are you sure you want to delete this record?" do
             click_icon :trash
           end
         end
@@ -221,18 +221,20 @@ describe "Order Details", type: :feature, js: true do
             expect(order.shipments.first.stock_location.id).to eq(stock_location.id)
 
             within_row(1) { click_icon 'arrows-h' }
-            complete_split_to(stock_location2, quantity: 0)
 
-            accept_alert "undefined"
+            accept_alert "Unable to complete split" do
+              complete_split_to(stock_location2, quantity: 0)
+            end
 
             expect(order.shipments.count).to eq(1)
             expect(order.shipments.first.inventory_units_for(product.master).count).to eq(2)
             expect(order.shipments.first.stock_location.id).to eq(stock_location.id)
 
             fill_in 'item_quantity', with: -1
-            click_icon :ok
 
-            accept_alert "undefined"
+            accept_alert "Unable to complete split" do
+              click_icon :ok
+            end
 
             expect(order.shipments.count).to eq(1)
             expect(order.shipments.first.inventory_units_for(product.master).count).to eq(2)
@@ -263,7 +265,7 @@ describe "Order Details", type: :feature, js: true do
               within_row(1) { click_icon 'arrows-h' }
               complete_split_to(stock_location2, quantity: 2)
 
-              accept_alert "undefined"
+              accept_alert "Unable to complete split"
 
               expect(order.shipments.count).to eq(1)
               expect(order.shipments.first.inventory_units_for(product.master).count).to eq(2)
@@ -318,7 +320,9 @@ describe "Order Details", type: :feature, js: true do
           expect(page).to have_css('.stock-item', count: 2)
 
           within '[data-hook=admin_shipment_form]', text: @shipment2.number do
-            click_icon :trash
+            accept_confirm "Are you sure you want to delete this record?" do
+              click_icon :trash
+            end
           end
 
           expect(page).to have_css('.stock-item', count: 1)
@@ -359,10 +363,11 @@ describe "Order Details", type: :feature, js: true do
 
             within(all('.stock-contents', count: 2).first) do
               within_row(1) { click_icon 'arrows-h' }
-              complete_split_to(@shipment2, quantity: 200)
-            end
 
-            accept_alert "undefined"
+              accept_alert("Unable to complete split") do
+                complete_split_to(@shipment2, quantity: 200)
+              end
+            end
 
             expect(order.shipments.count).to eq(2)
             expect(order.shipments.first.inventory_units_for(product.master).count).to eq(1)
