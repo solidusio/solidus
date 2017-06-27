@@ -65,8 +65,8 @@ describe 'Stock Transfers', type: :feature, js: true do
     let(:stock_transfer) { create(:stock_transfer_with_items) }
 
     before do
-      stock_transfer.transfer_items do |item|
-        item.update_attributes(expected_quantity: 1)
+      stock_transfer.transfer_items.each do |item|
+        item.update_attributes!(expected_quantity: 1)
       end
     end
 
@@ -85,7 +85,10 @@ describe 'Stock Transfers', type: :feature, js: true do
     describe 'with enough stock' do
       it 'ships stock transfer' do
         visit spree.tracking_info_admin_stock_transfer_path(stock_transfer)
-        click_on 'Ship'
+
+        accept_confirm Spree.t('ship_stock_transfer.confirm') do
+          click_on 'Ship'
+        end
 
         expect(page).to have_current_path(spree.admin_stock_transfers_path)
         expect(stock_transfer.reload.shipped_at).to_not be_nil
