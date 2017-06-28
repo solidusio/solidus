@@ -251,7 +251,7 @@ module Spree
     end
 
     def shipping_method
-      selected_shipping_rate.try(:shipping_method) || shipping_rates.first.try(:shipping_method)
+      selected_shipping_rate.try(:shipping_method)
     end
 
     # Only one of either included_tax_total or additional_tax_total is set
