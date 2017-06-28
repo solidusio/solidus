@@ -32,14 +32,17 @@ module Spree
       let(:target_user) { create :user }
       let(:date_override) { Time.parse('2015-01-01') }
 
-      subject { post :create, params: { order: { user_id: target_user.id, created_at: date_override, email: target_user.email } } }
+      subject do
+        post spree.api_orders_path, params: { order: { user_id: target_user.id, created_at: date_override, email: target_user.email } }
+        response
+      end
 
       context "when the current user cannot administrate the order" do
-        stub_authorization! do |_|
+        custom_authorization! do |_|
           can :create, Spree::Order
         end
 
-        it "does not include unpermitted params, or allow overriding the user", focus: true do
+        it "does not include unpermitted params, or allow overriding the user" do
           subject
           order = Spree::Order.last
           expect(order.user).to eq current_api_user
@@ -50,7 +53,7 @@ module Spree
       end
 
       context "when the current user can administrate the order" do
-        stub_authorization! do |_|
+        custom_authorization! do |_|
           can [:admin, :create], Spree::Order
         end
 
@@ -69,7 +72,7 @@ module Spree
         it "can create an order with line items that have custom permitted attributes" do
           PermittedAttributes.line_item_attributes << { options: [:some_option] }
           expect_any_instance_of(Spree::LineItem).to receive(:some_option=).once.with('4')
-          post :create, params: { order: { line_items: { "0" => { variant_id: variant.to_param, quantity: 5, options: { some_option: 4 } } } } }
+          post spree.api_orders_path, params: { order: { line_items: { "0" => { variant_id: variant.to_param, quantity: 5, options: { some_option: 4 } } } } }
           expect(response.status).to eq(201)
           order = Order.last
           expect(order.line_items.count).to eq(1)
@@ -81,10 +84,13 @@ module Spree
       let(:user) { create :user }
       let(:order_params) { { number: "anothernumber", user_id: user.id, email: "foo@foobar.com" } }
       let(:can_admin) { false }
-      subject { put :update, params: { id: order.to_param, order: order_params } }
+      subject do
+        put spree.api_order_path(order), params: { order: order_params }
+        response
+      end
 
       context "when the user cannot administer the order" do
-        stub_authorization! do |_|
+        custom_authorization! do |_|
           can [:update], Spree::Order
         end
 
@@ -110,7 +116,7 @@ module Spree
       end
 
       context "when the user can administer the order" do
-        stub_authorization! do |_|
+        custom_authorization! do |_|
           can [:admin, :update], Spree::Order
         end
 
@@ -128,7 +134,7 @@ module Spree
     end
 
     it "cannot view all orders" do
-      get :index
+      get spree.api_orders_path
       assert_unauthorized!
     end
 
@@ -136,7 +142,7 @@ module Spree
       let(:current_api_user) { nil }
 
       it "returns a 401" do
-        get :mine
+        get spree.api_my_orders_path
         expect(response.status).to eq(401)
       end
     end
@@ -147,8 +153,7 @@ module Spree
       let(:order) { create(:order, line_items: [line_item], store: store) }
 
       it "can view all of their own orders for the current store" do
-        request.env['SERVER_NAME'] = store.url
-        get :mine
+        get spree.api_my_orders_path, headers: { 'SERVER_NAME' => store.url }
 
         expect(response.status).to eq(200)
         expect(json_response["pages"]).to eq(1)
@@ -160,16 +165,14 @@ module Spree
       end
 
       it "cannot view orders for a different store" do
-        request.env['SERVER_NAME'] = "foo"
-        get :mine
+        get spree.api_my_orders_path, headers: { 'SERVER_NAME' => 'foo' }
 
         expect(response.status).to eq(200)
         expect(json_response["orders"].length).to eq(0)
       end
 
       it "can filter the returned results" do
-        request.env['SERVER_NAME'] = store.url
-        get :mine, params: { q: { completed_at_not_null: 1 } }
+        get spree.api_my_orders_path, params: { q: { completed_at_not_null: 1 } }, headers: { 'SERVER_NAME' => store.url }
 
         expect(response.status).to eq(200)
         expect(json_response["orders"].length).to eq(0)
@@ -185,8 +188,7 @@ module Spree
         order4 = Order.create user: order.user, completed_at: nil, created_at: 0.days.ago, store: store
         expect(order4.created_at).to be > order3.created_at
 
-        request.env['SERVER_NAME'] = store.url
-        get :mine
+        get spree.api_my_orders_path, headers: { 'SERVER_NAME' => store.url }
         expect(response.status).to eq(200)
         expect(json_response["pages"]).to eq(1)
         orders = json_response["orders"]
@@ -202,14 +204,14 @@ module Spree
       let!(:order) { create(:order, line_items: [line_item]) }
 
       it "uses the user's last_incomplete_spree_order logic with the current store" do
-        expect(current_api_user).to receive(:last_incomplete_spree_order).with(store: controller.current_store)
-        get :current, format: 'json'
+        expect(current_api_user).to receive(:last_incomplete_spree_order).with(store: Spree::Store.default)
+        get spree.api_current_order_path(format: 'json')
       end
     end
 
     it "can view their own order" do
       allow_any_instance_of(Order).to receive_messages user: current_api_user
-      get :show, params: { id: order.to_param }
+      get spree.api_order_path(order)
       expect(response.status).to eq(200)
       expect(json_response).to have_attributes(attributes)
       expect(json_response["adjustments"]).to be_empty
@@ -219,7 +221,7 @@ module Spree
       let(:order) { create :order_with_line_items }
       let(:adjustment) { FactoryGirl.create(:adjustment, adjustable: order, order: order) }
 
-      subject { get :show, params: { id: order.to_param } }
+      subject { get spree.api_order_path(order) }
 
       before do
         allow_any_instance_of(Order).to receive_messages user: current_api_user
@@ -270,7 +272,7 @@ module Spree
 
     it "orders contain the basic checkout steps" do
       allow_any_instance_of(Order).to receive_messages user: current_api_user
-      get :show, params: { id: order.to_param }
+      get spree.api_order_path(order)
       expect(response.status).to eq(200)
       expect(json_response["checkout_steps"]).to eq(%w[address delivery confirm complete])
     end
@@ -279,23 +281,22 @@ module Spree
     it "can view an order not in a standard state" do
       allow_any_instance_of(Order).to receive_messages user: current_api_user
       order.update_column(:state, 'shipped')
-      get :show, params: { id: order.to_param }
+      get spree.api_order_path(order)
     end
 
     it "can not view someone else's order" do
       allow_any_instance_of(Order).to receive_messages user: stub_model(Spree::LegacyUser)
-      get :show, params: { id: order.to_param }
+      get spree.api_order_path(order)
       assert_unauthorized!
     end
 
     it "can view an order if the token is known" do
-      get :show, params: { id: order.to_param, order_token: order.guest_token }
+      get spree.api_order_path(order), params: { order_token: order.guest_token }
       expect(response.status).to eq(200)
     end
 
     it "can view an order if the token is passed in header" do
-      request.headers["X-Spree-Order-Token"] = order.guest_token
-      get :show, params: { id: order.to_param }
+      get spree.api_order_path(order), headers: { "X-Spree-Order-Token" => order.guest_token }
       expect(response.status).to eq(200)
     end
 
@@ -306,7 +307,7 @@ module Spree
       it "can view an order" do
         user = build(:user, spree_roles: [Spree::Role.new(name: 'bar')])
         allow(Spree.user_class).to receive_messages find_by: user
-        get :show, params: { id: order.to_param }
+        get spree.api_order_path(order)
         expect(response.status).to eq(200)
       end
     end
@@ -314,12 +315,12 @@ module Spree
     it "cannot cancel an order that doesn't belong to them" do
       order.update_attribute(:completed_at, Time.current)
       order.update_attribute(:shipment_state, "ready")
-      put :cancel, params: { id: order.to_param }
+      put spree.cancel_api_order_path(order)
       assert_unauthorized!
     end
 
     it "can create an order" do
-      post :create, params: { order: { line_items: { "0" => { variant_id: variant.to_param, quantity: 5 } } } }
+      post spree.api_orders_path, params: { order: { line_items: { "0" => { variant_id: variant.to_param, quantity: 5 } } } }
       expect(response.status).to eq(201)
 
       order = Order.last
@@ -336,7 +337,7 @@ module Spree
     end
 
     it "assigns email when creating a new order" do
-      post :create, params: { order: { email: "guest@spreecommerce.com" } }
+      post spree.api_orders_path, params: { order: { email: "guest@spreecommerce.com" } }
       expect(json_response['email']).not_to eq controller.current_api_user
       expect(json_response['email']).to eq "guest@spreecommerce.com"
     end
@@ -348,8 +349,8 @@ module Spree
       allow(order).to receive_message_chain(:contents, :add).and_return(line_item = double('LineItem'))
       expect(line_item).to receive(:update_attributes!).with(hash_including("special" => "foo"))
 
-      allow(controller).to receive_messages(permitted_line_item_attributes: [:id, :variant_id, :quantity, :special])
-      post :create, params: {
+      allow_any_instance_of(Spree::Api::OrdersController).to receive_messages(permitted_line_item_attributes: [:id, :variant_id, :quantity, :special])
+      post spree.api_orders_path, params: {
         order: {
           line_items: {
             "0" => {
@@ -362,7 +363,7 @@ module Spree
     end
 
     it "cannot arbitrarily set the line items price" do
-      post :create, params: {
+      post spree.api_orders_path, params: {
         order: {
           line_items: {
             "0" => {
@@ -380,14 +381,14 @@ module Spree
       let!(:current_api_user) { create :admin_user }
 
       it "is able to set any default unpermitted attribute" do
-        post :create, params: { order: { number: "WOW" } }
+        post spree.api_orders_path, params: { order: { number: "WOW" } }
         expect(response.status).to eq 201
         expect(json_response['number']).to eq "WOW"
       end
     end
 
     it "can create an order without any parameters" do
-      post :create
+      post spree.api_orders_path
       expect(response.status).to eq(201)
       expect(json_response["state"]).to eq("cart")
     end
@@ -413,7 +414,7 @@ module Spree
       before { allow_any_instance_of(Order).to receive_messages user: current_api_user }
 
       it "updates quantities of existing line items" do
-        put :update, params: { id: order.to_param, order: {
+        put spree.api_order_path(order), params: { order: {
           line_items: {
             "0" => { id: line_item.id, quantity: 10 }
           }
@@ -426,7 +427,7 @@ module Spree
 
       it "adds an extra line item" do
         variant2 = create(:variant)
-        put :update, params: { id: order.to_param, order: {
+        put spree.api_order_path(order), params: { order: {
           line_items: {
             "0" => { id: line_item.id, quantity: 10 },
             "1" => { variant_id: variant2.id, quantity: 1 }
@@ -441,7 +442,7 @@ module Spree
       end
 
       it "cannot change the price of an existing line item" do
-        put :update, params: { id: order.to_param, order: {
+        put spree.api_order_path(order), params: { order: {
           line_items: {
             0 => { id: line_item.id, price: 0 }
           }
@@ -454,7 +455,7 @@ module Spree
       end
 
       it "can add billing address" do
-        put :update, params: { id: order.to_param, order: { bill_address_attributes: billing_address } }
+        put spree.api_order_path(order), params: { order: { bill_address_attributes: billing_address } }
 
         expect(order.reload.bill_address).to_not be_nil
       end
@@ -462,7 +463,7 @@ module Spree
       it "receives error message if trying to add billing address with errors" do
         billing_address[:firstname] = ""
 
-        put :update, params: { id: order.to_param, order: { bill_address_attributes: billing_address } }
+        put spree.api_order_path(order), params: { order: { bill_address_attributes: billing_address } }
 
         expect(json_response['error']).not_to be_nil
         expect(json_response['errors']).not_to be_nil
@@ -473,7 +474,7 @@ module Spree
         order.update_attributes!(ship_address_id: nil)
 
         expect {
-          put :update, params: { id: order.to_param, order: { ship_address_attributes: shipping_address } }
+          put spree.api_order_path(order), params: { order: { ship_address_attributes: shipping_address } }
         }.to change { order.reload.ship_address }.from(nil)
       end
 
@@ -482,7 +483,7 @@ module Spree
 
         shipping_address[:firstname] = ""
 
-        put :update, params: { id: order.to_param, order: { ship_address_attributes: shipping_address } }
+        put spree.api_order_path(order), params: { order: { ship_address_attributes: shipping_address } }
 
         expect(json_response['error']).not_to be_nil
         expect(json_response['errors']).not_to be_nil
@@ -492,7 +493,7 @@ module Spree
       it "cannot set the user_id for the order" do
         user = Spree.user_class.create
         original_id = order.user_id
-        post :update, params: { id: order.to_param, order: { user_id: user.id } }
+        put spree.api_order_path(order), params: { order: { user_id: user.id } }
         expect(response.status).to eq 200
         expect(json_response["user_id"]).to eq(original_id)
       end
@@ -501,7 +502,7 @@ module Spree
         before { order.create_proposed_shipments }
 
         it "clears out all existing shipments on line item udpate" do
-          put :update, params: { id: order.to_param, order: {
+          put spree.api_order_path(order), params: { order: {
             line_items: {
               0 => { id: line_item.id, quantity: 10 }
             }
@@ -515,7 +516,7 @@ module Spree
 
         it "can empty an order" do
           create(:adjustment, order: order, adjustable: order)
-          put :empty, params: { id: order.to_param }
+          put spree.empty_api_order_path(order)
           expect(response.status).to eq(204)
           order.reload
           expect(order.line_items).to be_empty
@@ -525,19 +526,19 @@ module Spree
         it "can list its line items with images" do
           order.line_items.first.variant.images.create!(attachment: image("thinking-cat.jpg"))
 
-          get :show, params: { id: order.to_param }
+          get spree.api_order_path(order)
 
           expect(json_response['line_items'].first['variant']).to have_attributes([:images])
         end
 
         it "lists variants product id" do
-          get :show, params: { id: order.to_param }
+          get spree.api_order_path(order)
 
           expect(json_response['line_items'].first['variant']).to have_attributes([:product_id])
         end
 
         it "includes the tax_total in the response" do
-          get :show, params: { id: order.to_param }
+          get spree.api_order_path(order)
 
           expect(json_response['included_tax_total']).to eq('0.0')
           expect(json_response['additional_tax_total']).to eq('0.0')
@@ -551,7 +552,7 @@ module Spree
             order: order,
             adjustable: order.line_items.first)
           adjustment.update_column(:amount, 5)
-          get :show, params: { id: order.to_param }
+          get spree.api_order_path(order)
 
           adjustment = json_response['line_items'].first['adjustments'].first
           expect(adjustment['label']).to eq("10% off!")
@@ -560,7 +561,7 @@ module Spree
 
         it "lists payments source without gateway info" do
           order.payments.push payment = create(:payment)
-          get :show, params: { id: order.to_param }
+          get spree.api_order_path(order)
 
           source = json_response[:payments].first[:source]
           expect(source[:name]).to eq payment.source.name
@@ -587,14 +588,14 @@ module Spree
           end
 
           it "includes the ship_total in the response" do
-            get :show, params: { id: order.to_param }
+            get spree.api_order_path(order)
 
             expect(json_response['ship_total']).to eq '10.0'
             expect(json_response['display_ship_total']).to eq '$10.00'
           end
 
           it "returns available shipments for an order" do
-            get :show, params: { id: order.to_param }
+            get spree.api_order_path(order)
             expect(response.status).to eq(200)
             expect(json_response["shipments"]).not_to be_empty
             shipment = json_response["shipments"][0]
@@ -633,7 +634,7 @@ module Spree
       context "with no orders" do
         before { Spree::Order.delete_all }
         it "still returns a root :orders key" do
-          get :index
+          get spree.api_orders_path
           expect(json_response["orders"]).to eq([])
         end
       end
@@ -645,7 +646,7 @@ module Spree
         end
 
         it "returns unique orders" do
-          get :index
+          get spree.api_orders_path
 
           orders = json_response[:orders]
           expect(orders.count).to be >= 3
@@ -657,7 +658,7 @@ module Spree
 
       it "lists payments source with gateway info" do
         order.payments.push payment = create(:payment)
-        get :show, params: { id: order.to_param }
+        get spree.api_order_path(order)
 
         source = json_response[:payments].first[:source]
         expect(source[:name]).to eq payment.source.name
@@ -673,7 +674,7 @@ module Spree
         before { create(:order) }
 
         it "can view all orders" do
-          get :index
+          get spree.api_orders_path
           expect(json_response["orders"].first).to have_attributes(attributes)
           expect(json_response["count"]).to eq(2)
           expect(json_response["current_page"]).to eq(1)
@@ -682,7 +683,7 @@ module Spree
 
         # Test for https://github.com/spree/spree/issues/1763
         it "can control the page size through a parameter" do
-          get :index, params: { per_page: 1 }
+          get spree.api_orders_path, params: { per_page: 1 }
           expect(json_response["orders"].count).to eq(1)
           expect(json_response["orders"].first).to have_attributes(attributes)
           expect(json_response["count"]).to eq(1)
@@ -700,7 +701,7 @@ module Spree
         let(:expected_result) { Spree::Order.last }
 
         it "can query the results through a parameter" do
-          get :index, params: { q: { email_cont: 'spree' } }
+          get spree.api_orders_path, params: { q: { email_cont: 'spree' } }
           expect(json_response["orders"].count).to eq(1)
           expect(json_response["orders"].first).to have_attributes(attributes)
           expect(json_response["orders"].first["email"]).to eq(expected_result.email)
@@ -712,13 +713,13 @@ module Spree
 
       context "creation" do
         it "can create an order without any parameters" do
-          post :create
+          post spree.api_orders_path
           expect(response.status).to eq(201)
           expect(json_response["state"]).to eq("cart")
         end
 
         it "can arbitrarily set the line items price" do
-          post :create, params: {
+          post spree.api_orders_path, params: {
             order: {
               line_items: {
                 "0" => {
@@ -733,7 +734,7 @@ module Spree
 
         it "can set the user_id for the order" do
           user = Spree.user_class.create
-          post :create, params: { order: { user_id: user.id } }
+          post spree.api_orders_path, params: { order: { user_id: user.id } }
           expect(response.status).to eq 201
           expect(json_response["user_id"]).to eq(user.id)
         end
@@ -742,7 +743,7 @@ module Spree
       context "updating" do
         it "can set the user_id for the order" do
           user = Spree.user_class.create
-          post :update, params: { id: order.number, order: { user_id: user.id } }
+          put spree.api_order_path(order), params: { order: { user_id: user.id } }
           expect(response.status).to eq 200
           expect(json_response["user_id"]).to eq(user.id)
         end
@@ -759,7 +760,7 @@ module Spree
         end
 
         specify do
-          put :cancel, params: { id: order.to_param }
+          put spree.cancel_api_order_path(order)
           expect(json_response["state"]).to eq("canceled")
           expect(json_response["canceler_id"]).to eq(current_api_user.id)
         end
@@ -778,7 +779,7 @@ module Spree
         let(:order) { create(:order_with_line_items) }
 
         it 'applies the coupon' do
-          put :apply_coupon_code, params: { id: order.to_param, coupon_code: promo_code.value }
+          put spree.apply_coupon_code_api_order_path(order), params: { coupon_code: promo_code.value }
 
           expect(response.status).to eq 200
           expect(order.reload.promotions).to eq [promo]
@@ -795,7 +796,7 @@ module Spree
         let(:order) { create(:order) } # no line items to apply the code to
 
         it 'returns an error' do
-          put :apply_coupon_code, params: { id: order.to_param, coupon_code: promo_code.value }
+          put spree.apply_coupon_code_api_order_path(order), params: { coupon_code: promo_code.value }
 
           expect(response.status).to eq 422
           expect(order.reload.promotions).to eq []
