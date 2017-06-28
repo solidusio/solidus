@@ -20,7 +20,7 @@ module Spree
 
     describe "#index" do
       it "can see a paginated list of variants" do
-        get :index
+        get spree.api_variants_path
         first_variant = json_response["variants"].first
         expect(first_variant).to have_attributes(show_attributes)
         expect(first_variant["stock_items"]).to be_present
@@ -31,7 +31,7 @@ module Spree
 
       it 'can control the page size through a parameter' do
         create(:variant)
-        get :index, params: { per_page: 1 }
+        get spree.api_variants_path, params: { per_page: 1 }
         expect(json_response['count']).to eq(1)
         expect(json_response['current_page']).to eq(1)
         expect(json_response['pages']).to eq(3)
@@ -39,13 +39,13 @@ module Spree
 
       it 'can query the results through a paramter' do
         expected_result = create(:variant, sku: 'FOOBAR')
-        get :index, params: { q: { sku_cont: 'FOO' } }
+        get spree.api_variants_path, params: { q: { sku_cont: 'FOO' } }
         expect(json_response['count']).to eq(1)
         expect(json_response['variants'].first['sku']).to eq expected_result.sku
       end
 
       it "variants returned contain option values data" do
-        get :index
+        get spree.api_variants_path
         option_values = json_response["variants"].last["option_values"]
         expect(option_values.first).to have_attributes([:name,
                                                         :presentation,
@@ -56,7 +56,7 @@ module Spree
       it "variants returned contain images data" do
         variant.images.create!(attachment: image("thinking-cat.jpg"))
 
-        get :index
+        get spree.api_variants_path
 
         expect(json_response["variants"].last).to have_attributes([:images])
         expect(json_response['variants'].first['images'].first).to have_attributes([:attachment_file_name,
@@ -76,12 +76,12 @@ module Spree
         end
 
         it "is not returned in the results" do
-          get :index
+          get spree.api_variants_path
           expect(json_response["variants"].count).to eq(0)
         end
 
         it "is not returned even when show_deleted is passed" do
-          get :index, params: { show_deleted: true }
+          get spree.api_variants_path, params: { show_deleted: true }
           expect(json_response["variants"].count).to eq(0)
         end
       end
@@ -89,7 +89,7 @@ module Spree
       context "stock filtering" do
 
         context "only variants in stock" do
-          subject { get :index, params: { in_stock_only: "true" } }
+          subject { get spree.api_variants_path, params: { in_stock_only: "true" } }
 
           context "variant is out of stock" do
             before do
@@ -115,7 +115,7 @@ module Spree
         end
 
         context "all variants" do
-          subject { get :index, params: { in_stock_only: "false" } }
+          subject { get spree.api_variants_path, params: { in_stock_only: "false" } }
 
           context "variant is out of stock" do
             before do
@@ -144,7 +144,7 @@ module Spree
       context "pagination" do
         it "can select the next page of variants" do
           create(:variant)
-          get :index, params: { page: 2, per_page: 1 }
+          get spree.api_variants_path, params: { page: 2, per_page: 1 }
           expect(json_response["variants"].first).to have_attributes(show_attributes)
           expect(json_response["total_count"]).to eq(3)
           expect(json_response["current_page"]).to eq(2)
@@ -157,7 +157,7 @@ module Spree
         let!(:inactive_stock_location) { create(:stock_location, propagate_all_variants: true, name: "My special stock location", active: false) }
 
         it "only returns stock items for active stock locations" do
-          get :index
+          get spree.api_variants_path
           variant = json_response['variants'].first
           stock_items = variant['stock_items'].map { |si| si['stock_location_name'] }
 
@@ -168,7 +168,9 @@ module Spree
     end
 
     describe "#show" do
-      subject { get :show, params: { id: variant.to_param } }
+      subject do
+        get spree.api_variant_path(variant)
+      end
 
       it "can see a single variant" do
         subject
@@ -223,30 +225,29 @@ module Spree
     end
 
     it "can learn how to create a new variant" do
-      get :new
+      get spree.new_api_variant_path(variant)
       expect(json_response["attributes"]).to eq(new_attributes.map(&:to_s))
       expect(json_response["required_attributes"]).to be_empty
     end
 
     it "cannot create a new variant if not an admin" do
-      post :create, params: { variant: { sku: "12345" } }
+      post spree.api_variants_path, params: { variant: { sku: "12345" } }
       assert_unauthorized!
     end
 
     it "cannot update a variant" do
-      put :update, params: { id: variant.to_param, variant: { sku: "12345" } }
+      put spree.api_variant_path(variant), params: { variant: { sku: "12345" } }
       assert_not_found!
     end
 
     it "cannot delete a variant" do
-      delete :destroy, params: { id: variant.to_param }
+      delete spree.api_variant_path(variant)
       assert_not_found!
       expect { variant.reload }.not_to raise_error
     end
 
     context "as an admin" do
       sign_in_as_admin!
-      let(:resource_scoping) { { product_id: variant.product.to_param } }
 
       # Test for https://github.com/spree/spree/issues/2141
       context "deleted variants" do
@@ -255,13 +256,13 @@ module Spree
         end
 
         it "are visible by admin" do
-          get :index, params: { show_deleted: 1 }
+          get spree.api_variants_path, params: { show_deleted: 1 }
           expect(json_response["variants"].count).to eq(1)
         end
       end
 
       it "can create a new variant" do
-        post :create, params: { variant: { sku: "12345" } }
+        post spree.api_product_variants_path(product), params: { variant: { sku: "12345" } }
         expect(json_response).to have_attributes(new_attributes)
         expect(response.status).to eq(201)
         expect(json_response["sku"]).to eq("12345")
@@ -272,26 +273,28 @@ module Spree
       it "creates new variants with nested option values" do
         option_values = create_list(:option_value, 2)
         expect do
-          post :create, params: {
-                                       variant: { sku: "12345",
-                                                                    option_value_ids: option_values.map(&:id) }
+          post spree.api_product_variants_path(product), params: {
+            variant: {
+              sku: "12345",
+              option_value_ids: option_values.map(&:id)
+            }
           }
         end.to change { Spree::OptionValuesVariant.count }.by(2)
       end
 
       it "can update a variant" do
-        put :update, params: { id: variant.to_param, variant: { sku: "12345" } }
+        put spree.api_variant_path(variant), params: { variant: { sku: "12345" } }
         expect(response.status).to eq(200)
       end
 
       it "can delete a variant" do
-        delete :destroy, params: { id: variant.to_param }
+        delete spree.api_variant_path(variant)
         expect(response.status).to eq(204)
         expect { Spree::Variant.find(variant.id) }.to raise_error(ActiveRecord::RecordNotFound)
       end
 
       it 'variants returned contain cost price data' do
-        get :index
+        get spree.api_variants_path
         expect(json_response["variants"].first.key?(:cost_price)).to eq true
       end
     end
