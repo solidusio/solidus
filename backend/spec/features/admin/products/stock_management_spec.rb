@@ -25,8 +25,6 @@ describe "Product Stock", type: :feature do
     # It is OK to still render the stock page, ensure no errors in this case
     context "with no stock location" do
       before do
-        @product = create(:product, name: 'apache baseball cap', price: 10)
-        @product.variants.create!(sku: 'FOOBAR')
         Spree::StockLocation.destroy_all
         find_by_id('content-header').click_link('Products')
         within_row(1) do
