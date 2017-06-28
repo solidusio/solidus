@@ -13,7 +13,7 @@ module Spree
     context "as a user" do
       describe "#index" do
         it "can see active stock locations" do
-          get :index
+          get spree.api_stock_locations_path
           expect(response).to be_success
           stock_locations = json_response['stock_locations'].map { |sl| sl['name'] }
           expect(stock_locations).to include stock_location.name
@@ -21,7 +21,7 @@ module Spree
 
         it "cannot see inactive stock locations" do
           stock_location.update_attributes!(active: false)
-          get :index
+          get spree.api_stock_locations_path
           expect(response).to be_success
           stock_locations = json_response['stock_locations'].map { |sl| sl['name'] }
           expect(stock_locations).not_to include stock_location.name
@@ -30,14 +30,14 @@ module Spree
 
       describe "#show" do
         it "can see active stock locations" do
-          get :show, params: { id: stock_location.id }
+          get spree.api_stock_location_path(stock_location)
           expect(response).to be_success
           expect(json_response['name']).to eq stock_location.name
         end
 
         it "cannot see inactive stock locations" do
           stock_location.update_attributes!(active: false)
-          get :show, params: { id: stock_location.id }
+          get spree.api_stock_location_path(stock_location)
           expect(response).to be_not_found
         end
       end
@@ -51,21 +51,21 @@ module Spree
             }
           }
 
-          post :create, params: params
+          post spree.api_stock_locations_path, params: params
           expect(response.status).to eq(401)
         end
       end
 
       describe "#update" do
         it "cannot update a stock location" do
-          put :update, params: { stock_location: { name: "South Pole" }, id: stock_location.to_param }
+          put spree.api_stock_location_path(stock_location), params: { stock_location: { name: "South Pole" } }
           expect(response.status).to eq(401)
         end
       end
 
       describe "#destroy" do
         it "cannot delete a stock location" do
-          put :destroy, params: { id: stock_location.to_param }
+          delete spree.api_stock_location_path(stock_location)
           expect(response.status).to eq(401)
         end
       end
@@ -76,7 +76,7 @@ module Spree
 
       describe "#index" do
         it "can see active stock locations" do
-          get :index
+          get spree.api_stock_locations_path
           expect(response).to be_success
           stock_locations = json_response['stock_locations'].map { |sl| sl['name'] }
           expect(stock_locations).to include stock_location.name
@@ -84,14 +84,14 @@ module Spree
 
         it "can see inactive stock locations" do
           stock_location.update_attributes!(active: false)
-          get :index
+          get spree.api_stock_locations_path
           expect(response).to be_success
           stock_locations = json_response['stock_locations'].map { |sl| sl['name'] }
           expect(stock_locations).to include stock_location.name
         end
 
         it "gets stock location information" do
-          get :index
+          get spree.api_stock_locations_path
           expect(json_response['stock_locations'].first).to have_attributes(attributes)
           expect(json_response['stock_locations'].first['country']).not_to be_nil
           expect(json_response['stock_locations'].first['state']).not_to be_nil
@@ -99,7 +99,7 @@ module Spree
 
         it 'can control the page size through a parameter' do
           create(:stock_location)
-          get :index, params: { per_page: 1 }
+          get spree.api_stock_locations_path, params: { per_page: 1 }
           expect(json_response['count']).to eq(1)
           expect(json_response['current_page']).to eq(1)
           expect(json_response['pages']).to eq(2)
@@ -107,7 +107,7 @@ module Spree
 
         it 'can query the results through a paramter' do
           expected_result = create(:stock_location, name: 'South America')
-          get :index, params: { q: { name_cont: 'south' } }
+          get spree.api_stock_locations_path, params: { q: { name_cont: 'south' } }
           expect(json_response['count']).to eq(1)
           expect(json_response['stock_locations'].first['name']).to eq expected_result.name
         end
@@ -115,14 +115,14 @@ module Spree
 
       describe "#show" do
         it "can see active stock locations" do
-          get :show, params: { id: stock_location.id }
+          get spree.api_stock_location_path(stock_location)
           expect(response).to be_success
           expect(json_response['name']).to eq stock_location.name
         end
 
         it "can see inactive stock locations" do
           stock_location.update_attributes!(active: false)
-          get :show, params: { id: stock_location.id }
+          get spree.api_stock_location_path(stock_location)
           expect(response).to be_success
           expect(json_response['name']).to eq stock_location.name
         end
@@ -137,7 +137,7 @@ module Spree
             }
           }
 
-          post :create, params: params
+          post spree.api_stock_locations_path, params: params
           expect(response.status).to eq(201)
           expect(json_response).to have_attributes(attributes)
         end
@@ -146,13 +146,12 @@ module Spree
       describe "#update" do
         it "can update a stock location" do
           params = {
-            id: stock_location.to_param,
             stock_location: {
               name: "South Pole"
             }
           }
 
-          put :update, params: params
+          put spree.api_stock_location_path(stock_location), params: params
           expect(response.status).to eq(200)
           expect(json_response['name']).to eq 'South Pole'
         end
@@ -160,7 +159,7 @@ module Spree
 
       describe "#destroy" do
         it "can delete a stock location" do
-          delete :destroy, params: { id: stock_location.to_param }
+          delete spree.api_stock_location_path(stock_location)
           expect(response.status).to eq(204)
           expect { stock_location.reload }.to raise_error(ActiveRecord::RecordNotFound)
         end
