@@ -193,7 +193,7 @@ module Spree
       # ensure state_name belongs to country without states, or that it matches a predefined state name/abbr
       if state_name.present?
         if country.states.present?
-          states = country.states.find_all_by_name_or_abbr(state_name)
+          states = country.states.with_name_or_abbr(state_name)
 
           if states.size == 1
             self.state = states.first

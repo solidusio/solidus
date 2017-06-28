@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 describe Spree::State, type: :model do
-  describe '.find_all_by_name_or_abbr' do
+  describe '.with_name_or_abbr' do
     subject do
-      Spree::State.find_all_by_name_or_abbr(search_term)
+      Spree::State.with_name_or_abbr(search_term)
     end
 
     let!(:state) { create(:state, name: "California", abbr: "CA") }
