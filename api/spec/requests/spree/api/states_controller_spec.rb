@@ -11,13 +11,13 @@ module Spree
     end
 
     it "gets all states" do
-      get :index
+      get spree.api_states_path
       expect(json_response["states"].first).to have_attributes(attributes)
       expect(json_response['states'].first['name']).to eq(state.name)
     end
 
     it "gets all the states for a particular country" do
-      get :index, params: { country_id: state.country.id }
+      get spree.api_country_states_path(state.country)
       expect(json_response["states"].first).to have_attributes(attributes)
       expect(json_response['states'].first['name']).to eq(state.name)
     end
@@ -25,7 +25,7 @@ module Spree
     context "pagination" do
       it "can select the next page and control page size" do
         create(:state)
-        get :index, params: { page: 2, per_page: 1 }
+        get spree.api_states_path, params: { page: 2, per_page: 1 }
 
         expect(json_response["states"].size).to eq(1)
         expect(json_response["pages"]).to eq(2)
@@ -42,25 +42,25 @@ module Spree
         state.country = country
         state.save
 
-        get :index, params: { country_id: country.id }
+        get spree.api_country_states_path(country)
         expect(json_response["states"].first).to have_attributes(attributes)
         expect(json_response["states"].count).to eq(1)
         json_response["states_required"] = true
       end
 
       it "can view all states" do
-        get :index
+        get spree.api_states_path
         expect(json_response["states"].first).to have_attributes(attributes)
       end
 
       it 'can query the results through a paramter' do
-        get :index, params: { q: { name_cont: 'Vic' } }
+        get spree.api_states_path, params: { q: { name_cont: 'Vic' } }
         expect(json_response['states'].first['name']).to eq("Victoria")
       end
     end
 
     it "can view a state" do
-      get :show, params: { id: state.id }
+      get spree.api_state_path(state)
       expect(json_response).to have_attributes(attributes)
     end
   end
