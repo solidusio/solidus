@@ -24,7 +24,7 @@ module Spree
       end
 
       it "can retrieve a list of all option values" do
-        get :index
+        get spree.api_option_values_path
         expect(json_response.count).to eq(2)
         expect(json_response.first).to have_attributes(attributes)
       end
@@ -34,14 +34,14 @@ module Spree
       let(:resource_scoping) { { option_type_id: option_type.id } }
 
       it "can list all option values" do
-        get :index
+        get spree.api_option_values_path
         expect(json_response.count).to eq(1)
         expect(json_response.first).to have_attributes(attributes)
       end
 
       it "can search for an option type" do
         create(:option_value, name: "buzz")
-        get :index, params: { q: { name_cont: option_value.name } }
+        get spree.api_option_values_path, params: { q: { name_cont: option_value.name } }
         expect(json_response.count).to eq(1)
         expect(json_response.first).to have_attributes(attributes)
       end
@@ -49,17 +49,17 @@ module Spree
       it "can retrieve a list of option types" do
         option_value_1 = create(:option_value, option_type: option_type)
         create(:option_value, option_type: option_type)
-        get :index, params: { ids: [option_value.id, option_value_1.id] }
+        get spree.api_option_values_path, params: { ids: [option_value.id, option_value_1.id] }
         expect(json_response.count).to eq(2)
       end
 
       it "can list a single option value" do
-        get :show, params: { id: option_value.id }
+        get spree.api_option_value_path(option_value.id)
         expect(json_response).to have_attributes(attributes)
       end
 
       it "cannot create a new option value" do
-        post :create, params: {
+        post spree.api_option_type_option_values_path(option_type), params: {
                           option_value: {
                                             name: "Option Value",
                                             presentation: "Option Value"
@@ -70,7 +70,7 @@ module Spree
 
       it "cannot alter an option value" do
         original_name = option_type.name
-        put :update, params: {
+        put spree.api_option_value_path(option_value.id), params: {
                             id: option_type.id,
                             option_value: {
                               name: "Option Value"
@@ -81,7 +81,7 @@ module Spree
       end
 
       it "cannot delete an option value" do
-        delete :destroy, params: { id: option_type.id }
+        delete spree.api_option_value_path(option_value)
         assert_not_found!
         expect { option_type.reload }.not_to raise_error
       end
@@ -90,10 +90,10 @@ module Spree
         sign_in_as_admin!
 
         it "can create an option value" do
-          post :create, params: {
+          post spree.api_option_type_option_values_path(option_type), params: {
                             option_value: {
                                               name: "Option Value",
-                                              presentation: "Option Value"
+                                              presentation: "Option Value",
                                             }
           }
           expect(json_response).to have_attributes(attributes)
@@ -101,12 +101,12 @@ module Spree
         end
 
         it "cannot create an option type with invalid attributes" do
-          post :create, params: {option_value: {}}
+          post spree.api_option_type_option_values_path(option_type), params: {option_value: {name: ""}}
           expect(response.status).to eq(422)
         end
 
         it "can update an option value" do
-          put :update, params: { id: option_value.id, option_value: {
+          put spree.api_option_value_path(option_value.id), params: { option_value: {
                                 name: "Option Value"
                               } }
           expect(response.status).to eq(200)
@@ -116,21 +116,19 @@ module Spree
         end
 
         it "permits the correct attributes" do
-          expect(controller).to receive(:permitted_option_value_attributes)
-          put :update, params: { id: option_value.id, option_value: {
-                            name: ""
-                           } }
+          expect_any_instance_of(Spree::Api::OptionValuesController).to receive(:permitted_option_value_attributes)
+          put spree.api_option_value_path(option_value), params: { option_value: { name: "" } }
         end
 
         it "cannot update an option value with invalid attributes" do
-          put :update, params: { id: option_value.id, option_value: {
+          put spree.api_option_value_path(option_value), params: { option_value: {
                             name: ""
                            } }
           expect(response.status).to eq(422)
         end
 
         it "can delete an option value" do
-          delete :destroy, params: { id: option_value.id }
+          delete spree.api_option_value_path(option_value)
           expect(response.status).to eq(204)
         end
       end
