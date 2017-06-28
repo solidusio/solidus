@@ -35,7 +35,7 @@ module Spree
       end
 
       def collection
-        return @collection if defined?(@collection)
+        return @collection if @collection
         params[:q] ||= HashWithIndifferentAccess.new
         params[:q][:s] ||= 'id desc'
 

@@ -8,7 +8,7 @@ module Spree
       private
 
       def collection
-        return @collection if @collection.present?
+        return @collection if @collection
         # params[:q] can be blank upon pagination
         params[:q] = {} if params[:q].blank?
 

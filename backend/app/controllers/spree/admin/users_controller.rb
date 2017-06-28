@@ -96,7 +96,7 @@ module Spree
       private
 
       def collection
-        return @collection if @collection.present?
+        return @collection if @collection
         if request.xhr? && params[:q].present?
           @collection = Spree.user_class.includes(:bill_address, :ship_address)
                             .where("spree_users.email #{LIKE} :search
