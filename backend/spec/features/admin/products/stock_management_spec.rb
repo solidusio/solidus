@@ -77,7 +77,7 @@ describe "Product Stock", type: :feature do
         visit current_url
         within('.variant-stock-items', text: variant.sku) do
           fill_in "variant-count-on-hand-#{variant.id}", with: '3'
-          targetted_select2_search "Other location", from: "#s2id_variant-stock-location-#{variant.id}"
+          select "Other location", from: "stock_location_id"
           click_icon(:plus)
         end
         expect(page).to have_content('Created successfully')

@@ -99,7 +99,7 @@ describe "Order Details", type: :feature, js: true do
         within("table.index tr.show-method") do
           click_icon :edit
         end
-        select2 "UPS Ground", from: "Shipping Method"
+        select "UPS Ground $100.00", from: "Shipping Method"
         click_icon :check
 
         expect(page).not_to have_css('#selected_shipping_rate_id')
@@ -518,7 +518,7 @@ describe "Order Details", type: :feature, js: true do
       within("table.index tr.show-method") do
         click_icon :edit
       end
-      select2 "UPS Ground", from: "Shipping Method"
+      select "UPS Ground $100.00", from: "Shipping Method"
       click_icon :check
 
       expect(page).not_to have_css('#selected_shipping_rate_id')

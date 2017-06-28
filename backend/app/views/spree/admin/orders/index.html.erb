@@ -33,7 +33,7 @@
 
           <div class="field">
             <%= label_tag :q_state_eq, Spree.t(:status) %>
-            <%= f.select :state_eq, Spree::Order.state_machines[:state].states.collect {|s| [Spree.t("order_state.#{s.name}"), s.value]}, {include_blank: true}, class: 'select2' %>
+            <%= f.select :state_eq, Spree::Order.state_machines[:state].states.collect {|s| [Spree.t("order_state.#{s.name}"), s.value]}, {include_blank: true}, class: 'custom-select fullwidth' %>
           </div>
 
           <div class="field">
@@ -85,8 +85,8 @@
         <div class="col-12 col-md-6 col-lg-4 col-xl-3">
           <% if Spree::Store.count > 1 %>
             <div class="field">
-              <%= label_tag nil, Spree.t(:store) %>
-              <%= f.select :store_id_eq, Spree::Store.all.map { |s| [s.name, s.id] }, { include_blank: true }, { class: "select2" } %>
+              <%= label_tag :q_store_id_eq, Spree.t(:store) %>
+              <%= f.select :store_id_eq, Spree::Store.all.map { |s| [s.name, s.id] }, { include_blank: true }, { class: "custom-select fullwidth" } %>
             </div>
           <% end %>
 

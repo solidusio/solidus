@@ -16,19 +16,19 @@ describe 'Stock Transfers', type: :feature, js: true do
       create(:stock_location, name: 'SF')
 
       visit spree.new_admin_stock_transfer_path
-      select "SF", from: 'stock_transfer[source_location_id]', visible: false
-      fill_in 'stock_transfer_description', with: description
+      select "SF", from: 'Source Location'
+      fill_in 'Description', with: description
       click_button 'Continue'
 
       expect(page).to have_field('stock_transfer_description', with: description)
 
-      select "NY", from: 'stock_transfer[destination_location_id]', visible: false
+      select "NY", from: 'Destination Location'
       within "form.edit_stock_transfer" do
         page.find('button').trigger('click')
       end
 
       expect(page).to have_content('Stock Transfer has been successfully updated')
-      expect(page).to have_content("NY")
+      expect(page).to have_select("Destination Location", selected: 'NY')
     end
 
     # Regression spec for Solidus issue #1087
@@ -36,7 +36,7 @@ describe 'Stock Transfers', type: :feature, js: true do
       create(:stock_location_with_items, name: 'NY')
       create(:stock_location, name: 'SF')
       visit spree.new_admin_stock_transfer_path
-      fill_in 'stock_transfer_description', with: description
+      fill_in 'Description', with: description
       click_button 'Continue'
 
       expect(page).to have_content("Source location can't be blank")

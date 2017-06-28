@@ -25,7 +25,7 @@
 
           <%= f.field_container :category do %>
             <%= f.label :promotion_category_id, Spree::PromotionCategory.model_name.human %><br />
-            <%= f.collection_select(:promotion_category_id, @promotion_categories, :id, :name, { include_blank: Spree.t('match_choices.none') }, { class: 'select2 fullwidth' }) %>
+            <%= f.collection_select(:promotion_category_id, @promotion_categories, :id, :name, { include_blank: Spree.t('match_choices.none') }, { class: 'custom-select fullwidth' }) %>
           <% end %>
         </div>
       </div>

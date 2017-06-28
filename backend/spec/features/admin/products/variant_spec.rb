@@ -64,7 +64,7 @@ describe "Variants", type: :feature do
       it "page has a field for editing the option value", js: true do
         visit spree.edit_admin_product_variant_path(product, variant)
         expect(page).to have_css("label", text: option_type.presentation)
-        expect(page).to have_css(".select2-chosen", text: option_value.presentation)
+        expect(page).to have_select('Size', selected: 'S')
       end
     end
   end

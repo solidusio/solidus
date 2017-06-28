@@ -6,13 +6,13 @@
       <div class="col-3">
         <div id="preference-settings">
           <div class="field">
-            <%= f.label :type %>
-            <%= collection_select(:payment_method, :type, @providers, :to_s, :name, {}, {id: 'gtwy-type', class: 'select2 fullwidth js-gateway-type'}) %>
+            <%= label :payment_method, :type %>
+            <%= collection_select(:payment_method, :type, @providers, :to_s, :name, {}, {class: 'custom-select fullwidth js-gateway-type'}) %>
           </div>
 
           <div class="field js-preference-source-wrapper">
             <%= f.label :preference_source %>
-            <%= f.select(:preference_source, [[Spree.t(:preference_source_none), nil]] + @object.class.available_preference_sources, {}, class: 'select2 fullwidth js-preference-source') %>
+            <%= f.select(:preference_source, [[Spree.t(:preference_source_none), nil]] + @object.class.available_preference_sources, {}, class: 'custom-select fullwidth js-preference-source') %>
           </div>
 
           <div class="gateway-settings js-gateway-settings">
@@ -35,7 +35,7 @@
         </div>
         <div data-hook="auto_capture" class="field">
           <%= f.label :auto_capture %>
-          <%= select(:payment_method, :auto_capture, [["#{Spree.t(:use_app_default)} (#{Spree::Config[:auto_capture]})", ''], [Spree.t(:say_yes), true], [Spree.t(:say_no), false]], {}, {class: 'select2 fullwidth'}) %>
+          <%= select(:payment_method, :auto_capture, [["#{Spree.t(:use_app_default)} (#{Spree::Config[:auto_capture]})", ''], [Spree.t(:say_yes), true], [Spree.t(:say_no), false]], {}, {class: 'custom-select fullwidth'}) %>
         </div>
         <div data-hook="active" class="field">
           <%= label_tag nil, Spree::PaymentMethod.human_attribute_name(:active) %>

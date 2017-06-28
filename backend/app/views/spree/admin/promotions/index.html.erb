@@ -40,7 +40,7 @@
         <div class="col-3">
           <div class="field">
             <%= label_tag :q_promotion_category_id_eq, Spree::PromotionCategory.model_name.human %><br>
-            <%= f.collection_select(:promotion_category_id_eq, @promotion_categories, :id, :name, { include_blank: Spree.t('match_choices.all') }, { class: 'select2 fullwidth' }) %>
+            <%= f.collection_select(:promotion_category_id_eq, @promotion_categories, :id, :name, { include_blank: Spree.t('match_choices.all') }, { class: 'custom-select fullwidth' }) %>
           </div>
         </div>
       </div>

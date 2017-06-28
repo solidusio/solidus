@@ -7,7 +7,7 @@
       <% if can?(:update, @promotion) %>
         <div class="field">
           <%= label_tag :promotion_rule_type, Spree.t(:add_rule_of_type) %>
-          <%= select_tag('promotion_rule[type]', options_for_promotion_rule_types(@promotion), class: 'select2 fullwidth') %>
+          <%= select_tag('promotion_rule[type]', options_for_promotion_rule_types(@promotion), class: 'custom-select fullwidth') %>
         </div>
         <div class="filter-actions actions">
           <%= button Spree.t('actions.add') %>

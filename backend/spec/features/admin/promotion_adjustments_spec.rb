@@ -18,15 +18,15 @@ describe "Promotion Adjustments", type: :feature, js: true do
       click_button "Create"
       expect(page).to have_title("Promotion - Promotions")
 
-      select2 "Item total", from: "Add rule of type"
+      select "Item total", from: "Add rule of type"
       within('#rule_fields') { click_button "Add" }
 
       find('[id$=_preferred_amount]').set(30)
       within('#rule_fields') { click_button "Update" }
 
-      select2 "Create whole-order adjustment", from: "Add action of type"
+      select "Create whole-order adjustment", from: "Add action of type"
       within('#action_fields') { click_button "Add" }
-      select2 "Flat Rate", from: "Calculator"
+      select "Flat Rate", from: "Base Calculator"
       within('#actions_container') { click_button "Update" }
 
       within('.calculator-fields') { fill_in "Amount", with: 5 }
@@ -54,9 +54,9 @@ describe "Promotion Adjustments", type: :feature, js: true do
       click_button "Create"
       expect(page).to have_title("Promotion - Promotions")
 
-      select2 "Create whole-order adjustment", from: "Add action of type"
+      select "Create whole-order adjustment", from: "Add action of type"
       within('#action_fields') { click_button "Add" }
-      select2 "Flat Rate", from: "Calculator"
+      select "Flat Rate", from: "Base Calculator"
       within('#actions_container') { click_button "Update" }
       within('#action_fields') { fill_in "Amount", with: "5" }
       within('#actions_container') { click_button "Update" }
@@ -78,15 +78,15 @@ describe "Promotion Adjustments", type: :feature, js: true do
       click_button "Create"
       expect(page).to have_title("Promotion - Promotions")
 
-      select2 "Item total", from: "Add rule of type"
+      select "Item total", from: "Add rule of type"
       within('#rule_fields') { click_button "Add" }
 
       find('[id$=_preferred_amount]').set(30)
       within('#rule_fields') { click_button "Update" }
 
-      select2 "Create whole-order adjustment", from: "Add action of type"
+      select "Create whole-order adjustment", from: "Add action of type"
       within('#action_fields') { click_button "Add" }
-      select2 "Flat Percent", from: "Calculator"
+      select "Flat Percent", from: "Base Calculator"
       within('#actions_container') { click_button "Update" }
       within('.calculator-fields') { fill_in "Flat Percent", with: "10" }
       within('#actions_container') { click_button "Update" }
@@ -113,14 +113,14 @@ describe "Promotion Adjustments", type: :feature, js: true do
       click_button "Create"
       expect(page).to have_title("Promotion - Promotions")
 
-      select2 "Product(s)", from: "Add rule of type"
+      select "Product(s)", from: "Add rule of type"
       within("#rule_fields") { click_button "Add" }
       select2_search "RoR Mug", from: "Choose products"
       within('#rule_fields') { click_button "Update" }
 
-      select2 "Create per-line-item adjustment", from: "Add action of type"
+      select "Create per-line-item adjustment", from: "Add action of type"
       within('#action_fields') { click_button "Add" }
-      select2 "Percent Per Item", from: "Calculator"
+      select "Percent Per Item", from: "Base Calculator"
       within('#actions_container') { click_button "Update" }
       within('.calculator-fields') { fill_in "Percent", with: "10" }
       within('#actions_container') { click_button "Update" }
@@ -145,12 +145,12 @@ describe "Promotion Adjustments", type: :feature, js: true do
       click_button "Create"
       expect(page).to have_title("Promotion - Promotions")
 
-      select2 "Item total", from: "Add rule of type"
+      select "Item total", from: "Add rule of type"
       within('#rule_fields') { click_button "Add" }
       find('[id$=_preferred_amount]').set(30)
       within('#rule_fields') { click_button "Update" }
 
-      select2 "Free shipping", from: "Add action of type"
+      select "Free shipping", from: "Add action of type"
       within('#action_fields') { click_button "Add" }
       expect(page).to have_content('Makes all shipments for the order free')
 
@@ -209,14 +209,14 @@ describe "Promotion Adjustments", type: :feature, js: true do
       click_button "Create"
       expect(page).to have_title("Promotion - Promotions")
 
-      select2 "Item total", from: "Add rule of type"
+      select "Item total", from: "Add rule of type"
       within('#rule_fields') { click_button "Add" }
       find('[id$=_preferred_amount]').set(50)
       within('#rule_fields') { click_button "Update" }
 
-      select2 "Create whole-order adjustment", from: "Add action of type"
+      select "Create whole-order adjustment", from: "Add action of type"
       within('#action_fields') { click_button "Add" }
-      select2 "Flat Rate", from: "Calculator"
+      select "Flat Rate", from: "Base Calculator"
       within('#actions_container') { click_button "Update" }
       within('.calculator-fields') { fill_in "Amount", with: "5" }
       within('#actions_container') { click_button "Update" }

@@ -57,7 +57,7 @@ describe "Shipping Methods", type: :feature do
         click_icon :edit
       end
 
-      select2_search('Flexible Rate', from: 'Calculator')
+      select 'Flexible Rate per package item', from: 'Base Calculator'
 
       fill_in 'First Item', with: 10
       fill_in 'Additional Item', with: 20

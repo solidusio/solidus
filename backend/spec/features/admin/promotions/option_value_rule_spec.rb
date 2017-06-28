@@ -14,7 +14,7 @@ feature 'Promotion with option value rule' do
   end
 
   scenario "adding an option value rule", js: true do
-    select2 "Option Value(s)", from: "Add rule of type"
+    select "Option Value(s)", from: "Add rule of type"
     within("#rules_container") { click_button "Add" }
 
     within("#rules_container .promotion-block") do
@@ -42,7 +42,7 @@ feature 'Promotion with option value rule' do
       option_value.update!(name: xss_string)
     end
     scenario "adding an option value rule", js: true do
-      select2 "Option Value(s)", from: "Add rule of type"
+      select "Option Value(s)", from: "Add rule of type"
       within("#rules_container") { click_button "Add" }
 
       within("#rules_container .promotion-block") do

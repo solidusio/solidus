@@ -26,7 +26,7 @@ describe "States", type: :feature do
   context "creating and editing states" do
     it "should allow an admin to edit existing states", js: true do
       go_to_states_page
-      select2 country.name, from: 'Country'
+      select country.name, from: 'Country'
 
       click_link "new_state_link"
       fill_in "state_name", with: "Calgary"
@@ -38,7 +38,7 @@ describe "States", type: :feature do
 
     it "should allow an admin to create states for non default countries", js: true do
       go_to_states_page
-      select2 hungary.name, from: 'Country'
+      select "Hungary", from: 'Country'
 
       click_link "new_state_link"
       fill_in "state_name", with: "Pest megye"
@@ -46,12 +46,12 @@ describe "States", type: :feature do
       click_button "Create"
       expect(page).to have_content("successfully created!")
       expect(page).to have_content("Pest megye")
-      expect(find("#s2id_country")).to have_content("Hungary")
+      expect(page).to have_select('Country', selected: "Hungary")
     end
 
     it "should show validation errors", js: true do
       go_to_states_page
-      select2 country.name, from: 'Country'
+      select country.name, from: 'Country'
 
       click_link "new_state_link"
 

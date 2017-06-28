@@ -22,7 +22,7 @@
       <% @product.option_types.each_with_index do |option_type, index| %>
           <div class="col-3">
             <div class="field" data-hook="presentation">
-              <%= label :new_variant, option_type.presentation %>
+              <%= label 'option_value_ids', option_type.presentation %>
               <%= f.collection_select 'option_value_ids',
                                       option_type.option_values,
                                       :id,
@@ -30,7 +30,8 @@
                                       { include_blank: true },
                                       {
                                         name: 'variant[option_value_ids][]',
-                                        class: "select2 fullwidth"
+                                        class: "custom-select fullwidth",
+                                        id: "option_value_ids_#{option_type.presentation}"
                                       } %>
             </div>
           </div>
@@ -90,7 +91,7 @@
                                   :id,
                                   :name,
                                   { include_blank: t('.use_product_tax_category') },
-                                  { class: 'select2 fullwidth' } %>
+                                  { class: 'custom-select fullwidth' } %>
         </div>
       </div>
     </div>

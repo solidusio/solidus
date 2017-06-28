@@ -22,7 +22,7 @@
         <div class="col-5">
           <div data-hook="zone" class="field">
             <%= f.label :zone, Spree::Zone.model_name.human %>
-            <%= f.collection_select(:zone_id, @available_zones, :id, :name, {}, {class: 'select2 fullwidth'}) %>
+            <%= f.collection_select(:zone_id, @available_zones, :id, :name, {}, {class: 'custom-select fullwidth'}) %>
           </div>
           <div data-hook="category" class="field">
             <%= f.label :tax_category_ids, Spree::TaxCategory.model_name.human %>

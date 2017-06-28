@@ -47,21 +47,21 @@
           </td>
           <td class="return-item-reimbursement-type">
             <% if editable %>
-              <%= item_fields.select :preferred_reimbursement_type_id, @reimbursement_types.collect{|r|[r.name.humanize, r.id]}, {include_blank: true}, {class: 'select2 fullwidth'} %>
+              <%= item_fields.select :preferred_reimbursement_type_id, @reimbursement_types.collect{|r|[r.name.humanize, r.id]}, {include_blank: true}, {class: 'custom-select fullwidth'} %>
             <% else %>
               <%= return_item.preferred_reimbursement_type.try(:name) %>
             <% end %>
           </td>
           <td class="return-item-exchange-for align-center">
             <% if editable %>
-              <%= item_fields.collection_select :exchange_variant_id, return_item.eligible_exchange_variants(@stock_locations), :id, :exchange_name, { include_blank: true }, { class: "select2 fullwidth return-item-exchange-selection" } %>
+              <%= item_fields.collection_select :exchange_variant_id, return_item.eligible_exchange_variants(@stock_locations), :id, :exchange_name, { include_blank: true }, { class: "custom-select fullwidth return-item-exchange-selection" } %>
             <% elsif return_item.exchange_processed? %>
               <%= return_item.exchange_variant.exchange_name %>
             <% end %>
           </td>
           <td class="return-item-reason">
             <% if editable %>
-              <%= item_fields.select :return_reason_id, @reasons.collect{|r|[r.name, r.id]}, {include_blank: true}, {class: 'select2 fullwidth'} %>
+              <%= item_fields.select :return_reason_id, @reasons.collect{|r|[r.name, r.id]}, {include_blank: true}, {class: 'custom-select fullwidth'} %>
             <% else %>
               <%= return_item.return_reason.try(:name) %>
             <% end %>
@@ -77,7 +77,7 @@
 
   <%= f.field_container :stock_location do %>
     <%= f.label :stock_location_id, Spree::StockLocation.model_name.human %>
-    <%= f.select :stock_location_id, @stock_locations.to_a.collect{|l|[l.name, l.id]}, {include_blank: true}, {class: 'select2 fullwidth', "data-placeholder" => Spree.t(:select_a_stock_location)} %>
+    <%= f.select :stock_location_id, @stock_locations.to_a.collect{|l|[l.name, l.id]}, {include_blank: true}, {class: 'custom-select fullwidth', "data-placeholder" => Spree.t(:select_a_stock_location)} %>
     <%= f.error_message_on :stock_location_id %>
   <% end %>
 
