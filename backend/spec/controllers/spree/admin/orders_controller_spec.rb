@@ -124,6 +124,7 @@ describe Spree::Admin::OrdersController, type: :controller do
     end
 
     # Regression test for https://github.com/spree/spree/issues/3684
+    # Rendering a form should under no circumstance mutate the order
     context "#edit" do
       it "does not refresh rates if the order is completed" do
         allow(order).to receive_messages completed?: true
@@ -131,9 +132,9 @@ describe Spree::Admin::OrdersController, type: :controller do
         get :edit, params: { id: order.number }
       end
 
-      it "does refresh the rates if the order is incomplete" do
+      it "does not refresh the rates if the order is incomplete" do
         allow(order).to receive_messages completed?: false
-        expect(order).to receive :refresh_shipment_rates
+        expect(order).not_to receive :refresh_shipment_rates
         get :edit, params: { id: order.number }
       end
 
