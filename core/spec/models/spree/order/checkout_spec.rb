@@ -147,7 +147,8 @@ describe Spree::Order, type: :model do
           it_behaves_like "it references the user's the default address" do
             let(:address_kind) { :bill }
             before do
-              order.user = FactoryGirl.create(:user, bill_address: default_address)
+              order.user = FactoryGirl.create(:user)
+              order.user.default_address = default_address
               order.next!
               order.reload
             end
