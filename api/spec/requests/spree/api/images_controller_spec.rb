@@ -19,12 +19,12 @@ module Spree
 
       it "can upload a new image for a variant" do
         expect do
-          post :create,
-                   params: {
-                                                    image: { attachment: upload_image('thinking-cat.jpg'),
-                                                      viewable_type: 'Spree::Variant',
-                                                      viewable_id: product.master.to_param },
-                                          product_id: product.id
+          post spree.api_product_images_path(product.id), params: {
+            image: {
+              attachment: upload_image('thinking-cat.jpg'),
+              viewable_type: 'Spree::Variant',
+              viewable_id: product.master.to_param
+            },
           }
           expect(response.status).to eq(201)
           expect(json_response).to have_attributes(attributes)
@@ -35,26 +35,26 @@ module Spree
         let!(:product_image) { product.master.images.create!(attachment: image('thinking-cat.jpg')) }
 
         it "can get a single product image" do
-          get :show, params: { id: product_image.id, product_id: product.id }
+          get spree.api_product_image_path(product.id, product_image)
           expect(response.status).to eq(200)
           expect(json_response).to have_attributes(attributes)
         end
 
         it "can get a single variant image" do
-          get :show, params: { id: product_image.id, variant_id: product.master.id }
+          get spree.api_variant_image_path(product.master.id, product_image)
           expect(response.status).to eq(200)
           expect(json_response).to have_attributes(attributes)
         end
 
         it "can get a list of product images" do
-          get :index, params: { product_id: product.id }
+          get spree.api_product_images_path(product.id)
           expect(response.status).to eq(200)
           expect(json_response).to have_key("images")
           expect(json_response["images"].first).to have_attributes(attributes)
         end
 
         it "can get a list of variant images" do
-          get :index, params: { variant_id: product.master.id }
+          get spree.api_variant_images_path(product.master.id)
           expect(response.status).to eq(200)
           expect(json_response).to have_key("images")
           expect(json_response["images"].first).to have_attributes(attributes)
@@ -62,14 +62,14 @@ module Spree
 
         it "can update image data" do
           expect(product_image.position).to eq(1)
-          post :update, params: { image: { position: 2 }, id: product_image.id, product_id: product.id }
+          put spree.api_variant_image_path(product.id, product_image), params: { image: { position: 2 } }
           expect(response.status).to eq(200)
           expect(json_response).to have_attributes(attributes)
           expect(product_image.reload.position).to eq(2)
         end
 
         it "can delete an image" do
-          delete :destroy, params: { id: product_image.id, product_id: product.id }
+          delete spree.api_variant_image_path(product.id, product_image)
           expect(response.status).to eq(204)
           expect { product_image.reload }.to raise_error(ActiveRecord::RecordNotFound)
         end
@@ -77,18 +77,20 @@ module Spree
     end
 
     context "as a non-admin" do
+      let(:product_image) { product.master.images.create!(attachment: image('thinking-cat.jpg')) }
+
       it "cannot create an image" do
-        post :create, params: { product_id: product.id }
+        post spree.api_product_images_path(product.id)
         assert_unauthorized!
       end
 
       it "cannot update an image" do
-        put :update, params: { id: 1, product_id: product.id }
+        put spree.api_product_image_path(product.id, product_image)
         assert_not_found!
       end
 
       it "cannot delete an image" do
-        delete :destroy, params: { id: 1, product_id: product.id }
+        delete spree.api_product_image_path(product.id, product_image)
         assert_not_found!
       end
     end
