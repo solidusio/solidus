@@ -7,7 +7,6 @@ module Spree
 
     let(:product) { create(:product) }
     let(:attributes) { [:id, :memo, :state] }
-    let(:resource_scoping) { { order_id: order.to_param } }
 
     before do
       stub_authentication!
@@ -20,7 +19,7 @@ module Spree
         rma_params = { stock_location_id: stock_location.id,
                        return_reason_id: reason.id,
                        memo: "Defective" }
-        post :create, params: { order_id: order.number, return_authorization: rma_params }
+        post spree.api_order_return_authorizations_path(order), params: { order_id: order.number, return_authorization: rma_params }
         expect(response.status).to eq(201)
         expect(json_response).to have_attributes(attributes)
         expect(json_response["state"]).not_to be_blank
@@ -33,29 +32,29 @@ module Spree
       end
 
       it "cannot see any return authorizations" do
-        get :index
+        get spree.api_order_return_authorizations_path(order)
         assert_unauthorized!
       end
 
       it "cannot see a single return authorization" do
-        get :show, params: { id: 1 }
+        get spree.api_order_return_authorization_path(order, 1)
         assert_unauthorized!
       end
 
       it "cannot learn how to create a new return authorization" do
-        get :new
+        get spree.new_api_order_return_authorization_path(order)
         assert_unauthorized!
       end
 
       it_behaves_like "a return authorization creator"
 
       it "cannot update a return authorization" do
-        put :update, params: { id: 0 }
+        put spree.api_order_return_authorization_path(order, 0)
         assert_not_found!
       end
 
       it "cannot delete a return authorization" do
-        delete :destroy, params: { id: 0 }
+        delete spree.api_order_return_authorization_path(order, 0)
         assert_not_found!
       end
     end
@@ -66,7 +65,7 @@ module Spree
       end
 
       it "cannot create a new return authorization" do
-        post :create
+        post spree.api_order_return_authorizations_path(order)
         assert_unauthorized!
       end
     end
@@ -77,7 +76,7 @@ module Spree
       it "can show return authorization" do
         FactoryGirl.create(:return_authorization, order: order)
         return_authorization = order.return_authorizations.first
-        get :show, params: { order_id: order.number, id: return_authorization.id }
+        get spree.api_order_return_authorization_path(order, return_authorization.id)
         expect(response.status).to eq(200)
         expect(json_response).to have_attributes(attributes)
         expect(json_response["state"]).not_to be_blank
@@ -86,7 +85,7 @@ module Spree
       it "can get a list of return authorizations" do
         FactoryGirl.create(:return_authorization, order: order)
         FactoryGirl.create(:return_authorization, order: order)
-        get :index, params: { order_id: order.number }
+        get spree.api_order_return_authorizations_path(order), params: { order_id: order.number }
         expect(response.status).to eq(200)
         return_authorizations = json_response["return_authorizations"]
         expect(return_authorizations.first).to have_attributes(attributes)
@@ -96,7 +95,7 @@ module Spree
       it 'can control the page size through a parameter' do
         FactoryGirl.create(:return_authorization, order: order)
         FactoryGirl.create(:return_authorization, order: order)
-        get :index, params: { order_id: order.number, per_page: 1 }
+        get spree.api_order_return_authorizations_path(order), params: { order_id: order.number, per_page: 1 }
         expect(json_response['count']).to eq(1)
         expect(json_response['current_page']).to eq(1)
         expect(json_response['pages']).to eq(2)
@@ -106,13 +105,13 @@ module Spree
         FactoryGirl.create(:return_authorization, order: order)
         expected_result = create(:return_authorization, memo: 'damaged')
         order.return_authorizations << expected_result
-        get :index, params: { q: { memo_cont: 'damaged' } }
+        get spree.api_order_return_authorizations_path(order), params: { q: { memo_cont: 'damaged' } }
         expect(json_response['count']).to eq(1)
         expect(json_response['return_authorizations'].first['memo']).to eq expected_result.memo
       end
 
       it "can learn how to create a new return authorization" do
-        get :new
+        get spree.new_api_order_return_authorization_path(order)
         expect(json_response["attributes"]).to eq(["id", "number", "state", "order_id", "memo", "created_at", "updated_at"])
         required_attributes = json_response["required_attributes"]
         expect(required_attributes).to include("order")
@@ -121,7 +120,7 @@ module Spree
       it "can update a return authorization on the order" do
         FactoryGirl.create(:return_authorization, order: order)
         return_authorization = order.return_authorizations.first
-        put :update, params: { id: return_authorization.id, return_authorization: { memo: "ABC" } }
+        put spree.api_order_return_authorization_path(order, return_authorization.id), params: { return_authorization: { memo: "ABC" } }
         expect(response.status).to eq(200)
         expect(json_response).to have_attributes(attributes)
       end
@@ -130,7 +129,7 @@ module Spree
         FactoryGirl.create(:new_return_authorization, order: order)
         return_authorization = order.return_authorizations.first
         expect(return_authorization.state).to eq("authorized")
-        delete :cancel, params: { id: return_authorization.id }
+        put spree.cancel_api_order_return_authorization_path(order, return_authorization.id)
         expect(response.status).to eq(200)
         expect(return_authorization.reload.state).to eq("canceled")
       end
@@ -138,7 +137,7 @@ module Spree
       it "can delete a return authorization on the order" do
         FactoryGirl.create(:return_authorization, order: order)
         return_authorization = order.return_authorizations.first
-        delete :destroy, params: { id: return_authorization.id }
+        delete spree.api_order_return_authorization_path(order, return_authorization.id)
         expect(response.status).to eq(204)
         expect { return_authorization.reload }.to raise_error(ActiveRecord::RecordNotFound)
       end
@@ -148,14 +147,14 @@ module Spree
 
     context "as just another user" do
       it "cannot add a return authorization to the order" do
-        post :create, params: { return_autorization: { order_id: order.number, memo: "Defective" } }
+        post spree.api_order_return_authorizations_path(order), params: { return_autorization: { order_id: order.number, memo: "Defective" } }
         assert_unauthorized!
       end
 
       it "cannot update a return authorization on the order" do
         FactoryGirl.create(:return_authorization, order: order)
         return_authorization = order.return_authorizations.first
-        put :update, params: { id: return_authorization.id, return_authorization: { memo: "ABC" } }
+        put spree.api_order_return_authorization_path(order, return_authorization.id), params: { return_authorization: { memo: "ABC" } }
         assert_unauthorized!
         expect(return_authorization.reload.memo).not_to eq("ABC")
       end
@@ -163,7 +162,7 @@ module Spree
       it "cannot delete a return authorization on the order" do
         FactoryGirl.create(:return_authorization, order: order)
         return_authorization = order.return_authorizations.first
-        delete :destroy, params: { id: return_authorization.id }
+        delete spree.api_order_return_authorization_path(order, return_authorization.id)
         assert_unauthorized!
         expect { return_authorization.reload }.not_to raise_error
       end
