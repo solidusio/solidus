@@ -17,6 +17,8 @@ module Spree
     has_one :unit_cancel, class_name: "Spree::UnitCancel"
     has_one :order, through: :shipment
 
+    delegate :order_id, to: :shipment
+
     validates_presence_of :shipment, :line_item, :variant
 
     before_destroy :ensure_can_destroy
