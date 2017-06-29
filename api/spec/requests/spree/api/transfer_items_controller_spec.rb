@@ -13,21 +13,21 @@ module Spree
     context "as a normal user" do
       describe "#create" do
         it "cannot create a transfer item" do
-          post :create, params: { stock_transfer_id: stock_transfer.to_param }
+          post spree.api_stock_transfer_transfer_items_path(stock_transfer)
           expect(response.status).to eq 401
         end
       end
 
       describe "#update" do
         it "cannot update a transfer item" do
-          put :update, params: { stock_transfer_id: stock_transfer.to_param, id: transfer_item.to_param }
+          put spree.api_stock_transfer_transfer_item_path(stock_transfer, transfer_item)
           expect(response.status).to eq 401
         end
       end
 
       describe "#destroy" do
         it "cannot delete a transfer item" do
-          delete :destroy, params: { stock_transfer_id: stock_transfer.to_param, id: transfer_item.to_param }
+          delete spree.api_stock_transfer_transfer_item_path(stock_transfer, transfer_item)
           expect(response.status).to eq 401
         end
       end
@@ -39,13 +39,12 @@ module Spree
       describe "#create" do
         subject do
           create_params = {
-            stock_transfer_id: stock_transfer.to_param,
             transfer_item: {
               variant_id: variant_id,
               expected_quantity: 1
             }
           }
-          post :create, params: create_params
+          post spree.api_stock_transfer_transfer_items_path(stock_transfer), params: create_params
         end
 
         context "valid parameters" do
@@ -86,8 +85,8 @@ module Spree
 
       describe "#update" do
         subject do
-          update_params = { id: transfer_item.to_param, stock_transfer_id: stock_transfer.to_param, transfer_item: { received_quantity: received_quantity } }
-          put :update, params: update_params
+          update_params = { transfer_item: { received_quantity: received_quantity } }
+          put spree.api_stock_transfer_transfer_item_path(stock_transfer, transfer_item), params: update_params
         end
 
         context "valid parameters" do
@@ -118,7 +117,7 @@ module Spree
       end
 
       describe "#destroy" do
-        subject { delete :destroy, params: { id: transfer_item.to_param, stock_transfer_id: stock_transfer.to_param } }
+        subject { delete spree.api_stock_transfer_transfer_item_path(stock_transfer, transfer_item) }
 
         context "hasn't been finalized" do
           it "can delete a transfer item" do
