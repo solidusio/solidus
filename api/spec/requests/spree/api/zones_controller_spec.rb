@@ -4,20 +4,20 @@ module Spree
   describe Api::ZonesController, type: :request do
 
     let!(:attributes) { [:id, :name, :zone_members] }
+    let!(:zone) { create(:zone, name: 'Europe') }
 
     before do
       stub_authentication!
-      @zone = create(:zone, name: 'Europe')
     end
 
     it "gets list of zones" do
-      get :index
+      get spree.api_zones_path
       expect(json_response['zones'].first).to have_attributes(attributes)
     end
 
     it 'can control the page size through a parameter' do
       create(:zone)
-      get :index, params: { per_page: 1 }
+      get spree.api_zones_path, params: { per_page: 1 }
       expect(json_response['count']).to eq(1)
       expect(json_response['current_page']).to eq(1)
       expect(json_response['pages']).to eq(2)
@@ -25,16 +25,16 @@ module Spree
 
     it 'can query the results through a paramter' do
       expected_result = create(:zone, name: 'South America')
-      get :index, params: { q: { name_cont: 'south' } }
+      get spree.api_zones_path, params: { q: { name_cont: 'south' } }
       expect(json_response['count']).to eq(1)
       expect(json_response['zones'].first['name']).to eq expected_result.name
     end
 
     it "gets a zone" do
-      get :show, params: { id: @zone.id }
+      get spree.api_zone_path(zone)
       expect(json_response).to have_attributes(attributes)
-      expect(json_response['name']).to eq @zone.name
-      expect(json_response['zone_members'].size).to eq @zone.zone_members.count
+      expect(json_response['name']).to eq zone.name
+      expect(json_response['zone_members'].size).to eq zone.zone_members.count
     end
 
     context "as an admin" do
@@ -53,14 +53,14 @@ module Spree
           }
         }
 
-        post :create, params: params
+        post spree.api_zones_path, params: params
         expect(response.status).to eq(201)
         expect(json_response).to have_attributes(attributes)
         expect(json_response["zone_members"]).not_to be_empty
       end
 
       it "updates a zone" do
-        params = { id: @zone.id,
+        params = {
           zone: {
             name: "North Pole",
             zone_members: [
@@ -72,16 +72,16 @@ module Spree
           }
         }
 
-        put :update, params: params
+        put spree.api_zone_path(zone), params: params
         expect(response.status).to eq(200)
         expect(json_response['name']).to eq 'North Pole'
         expect(json_response['zone_members']).not_to be_blank
       end
 
       it "can delete a zone" do
-        delete :destroy, params: { id: @zone.id }
+        delete spree.api_zone_path(zone)
         expect(response.status).to eq(204)
-        expect { @zone.reload }.to raise_error(ActiveRecord::RecordNotFound)
+        expect { zone.reload }.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
   end
