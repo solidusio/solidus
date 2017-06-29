@@ -17,7 +17,7 @@ module Spree
 
     context "as a normal user" do
       it "gets all taxons for a taxonomy" do
-        get :index, params: { taxonomy_id: taxonomy.id }
+        get spree.api_taxonomy_taxons_path(taxonomy)
 
         expect(json_response['taxons'].first['name']).to eq taxon.name
         children = json_response['taxons'].first['taxons']
@@ -28,7 +28,7 @@ module Spree
 
       # Regression test for https://github.com/spree/spree/issues/4112
       it "does not include children when asked not to" do
-        get :index, params: { taxonomy_id: taxonomy.id, without_children: 1 }
+        get spree.api_taxonomy_taxons_path(taxonomy), params: { without_children: 1 }
 
         expect(json_response['taxons'].first['name']).to eq(taxon.name)
         expect(json_response['taxons'].first['taxons']).to be_nil
@@ -38,7 +38,7 @@ module Spree
         new_taxon = create(:taxon, name: "Go", taxonomy: taxonomy)
         taxonomy.root.children << new_taxon
         expect(taxonomy.root.children.count).to eql(2)
-        get :index, params: { taxonomy_id: taxonomy.id, page: 1, per_page: 1 }
+        get spree.api_taxonomy_taxons_path(taxonomy), params: { page: 1, per_page: 1 }
         expect(json_response["count"]).to eql(1)
         expect(json_response["total_count"]).to eql(2)
         expect(json_response["current_page"]).to eql(1)
@@ -49,7 +49,7 @@ module Spree
       describe 'searching' do
         context 'with a name' do
           before do
-            get :index, params: { q: { name_cont: name } }
+            get spree.api_taxons_path, params: { q: { name_cont: name } }
           end
 
           context 'with one result' do
@@ -73,7 +73,7 @@ module Spree
 
         context 'with no filters' do
           it "gets all taxons" do
-            get :index
+            get spree.api_taxons_path
 
             expect(json_response['taxons'].first['name']).to eq taxonomy.root.name
             children = json_response['taxons'].first['taxons']
@@ -85,14 +85,14 @@ module Spree
       end
 
       it "gets a single taxon" do
-        get :show, params: { id: taxon.id, taxonomy_id: taxonomy.id }
+        get spree.api_taxonomy_taxon_path(taxonomy, taxon.id)
 
         expect(json_response['name']).to eq taxon.name
         expect(json_response['taxons'].count).to eq 1
       end
 
       it "gets all taxons in JSTree form" do
-        get :jstree, params: { taxonomy_id: taxonomy.id, id: taxon.id }
+        get spree.jstree_api_taxonomy_taxon_path(taxonomy, taxon.id)
         response = json_response.first
         expect(response["data"]).to eq(taxon2.name)
         expect(response["attr"]).to eq({ "name" => taxon2.name, "id" => taxon2.id })
@@ -100,24 +100,24 @@ module Spree
       end
 
       it "can learn how to create a new taxon" do
-        get :new, params: { taxonomy_id: taxonomy.id }
+        get spree.new_api_taxonomy_taxon_path(taxonomy)
         expect(json_response["attributes"]).to eq(attributes.map(&:to_s))
         required_attributes = json_response["required_attributes"]
         expect(required_attributes).to include("name")
       end
 
       it "cannot create a new taxon if not an admin" do
-        post :create, params: { taxonomy_id: taxonomy.id, taxon: { name: "Location" } }
+        post spree.api_taxonomy_taxons_path(taxonomy), params: { taxon: { name: "Location" } }
         assert_unauthorized!
       end
 
       it "cannot update a taxon" do
-        put :update, params: { taxonomy_id: taxonomy.id, id: taxon.id, taxon: { name: "I hacked your store!" } }
+        put spree.api_taxonomy_taxon_path(taxonomy, taxon.id), params: { taxon: { name: "I hacked your store!" } }
         assert_unauthorized!
       end
 
       it "cannot delete a taxon" do
-        delete :destroy, params: { taxonomy_id: taxonomy.id, id: taxon.id }
+        delete spree.api_taxonomy_taxon_path(taxonomy, taxon.id)
         assert_unauthorized!
       end
     end
@@ -126,7 +126,7 @@ module Spree
       sign_in_as_admin!
 
       it "can create" do
-        post :create, params: { taxonomy_id: taxonomy.id, taxon: { name: "Colors" } }
+        post spree.api_taxonomy_taxons_path(taxonomy), params: { taxon: { name: "Colors" } }
         expect(json_response).to have_attributes(attributes)
         expect(response.status).to eq(201)
 
@@ -139,14 +139,14 @@ module Spree
 
       it "can update the position in the list" do
         taxonomy.root.children << taxon2
-        put :update, params: { taxonomy_id: taxonomy.id, id: taxon.id, taxon: { parent_id: taxon.parent_id, child_index: 2 } }
+        put spree.api_taxonomy_taxon_path(taxonomy, taxon.id), params: { taxon: { parent_id: taxon.parent_id, child_index: 2 } }
         expect(response.status).to eq(200)
         expect(taxonomy.reload.root.children[0]).to eql taxon2
         expect(taxonomy.reload.root.children[1]).to eql taxon
       end
 
       it "cannot create a new taxon with invalid attributes" do
-        post :create, params: { taxonomy_id: taxonomy.id, taxon: { foo: :bar } }
+        post spree.api_taxonomy_taxons_path(taxonomy), params: { taxon: { foo: :bar } }
         expect(response.status).to eq(422)
         expect(json_response["error"]).to eq("Invalid resource. Please fix errors and try again.")
 
@@ -154,7 +154,7 @@ module Spree
       end
 
       it "cannot create a new taxon with invalid taxonomy_id" do
-        post :create, params: { taxonomy_id: 1000, taxon: { name: "Colors" } }
+        post spree.api_taxonomy_taxons_path(1000), params: { taxon: { name: "Colors" } }
         expect(response.status).to eq(422)
         expect(json_response["error"]).to eq("Invalid resource. Please fix errors and try again.")
 
@@ -166,7 +166,7 @@ module Spree
       end
 
       it "can destroy" do
-        delete :destroy, params: { taxonomy_id: taxonomy.id, id: taxon.id }
+        delete spree.api_taxonomy_taxon_path(taxonomy, taxon.id)
         expect(response.status).to eq(204)
       end
     end
