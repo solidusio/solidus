@@ -7,7 +7,7 @@ class Spree::ShippingManifest
 
   def for_order(order)
     Spree::ShippingManifest.new(
-      inventory_units: @inventory_units.select { |iu| iu.order == order }
+      inventory_units: @inventory_units.select { |iu| iu.order_id == order.id }
     )
   end
 
