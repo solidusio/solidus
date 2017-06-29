@@ -9,10 +9,16 @@ describe Spree::CustomerReturn, type: :model do
     describe "#return_items_belong_to_same_order" do
       let(:customer_return)       { build(:customer_return) }
 
-      let(:first_inventory_unit)  { build(:inventory_unit) }
+      let(:first_order) { create(:order_with_line_items) }
+      let(:second_order) { first_order }
+
+      let(:first_shipment) { first_order.shipments.first }
+      let(:second_shipment) { second_order.shipments.first }
+
+      let(:first_inventory_unit)  { build(:inventory_unit, shipment: first_shipment) }
       let(:first_return_item)     { build(:return_item, inventory_unit: first_inventory_unit) }
 
-      let(:second_inventory_unit) { build(:inventory_unit, order: second_order) }
+      let(:second_inventory_unit) { build(:inventory_unit, shipment: second_shipment) }
       let(:second_return_item)    { build(:return_item, inventory_unit: second_inventory_unit) }
 
       subject { customer_return.valid? }
@@ -23,7 +29,7 @@ describe Spree::CustomerReturn, type: :model do
       end
 
       context "return items are part of different orders" do
-        let(:second_order) { create(:order) }
+        let(:second_order) { create(:order_with_line_items) }
 
         it "is not valid" do
           expect(subject).to eq false
@@ -36,7 +42,7 @@ describe Spree::CustomerReturn, type: :model do
       end
 
       context "return items are part of the same order" do
-        let(:second_order) { first_inventory_unit.order }
+        let(:second_order) { first_order }
 
         it "is valid" do
           expect(subject).to eq true
