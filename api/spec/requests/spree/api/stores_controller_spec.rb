@@ -22,8 +22,8 @@ module Spree
         )
       end
 
-      it "I can list the available stores" do
-        get :index
+      it "can list the available stores" do
+        get spree.api_stores_path
         expect(json_response["stores"]).to match_array([
           {
             "id" => store.id,
@@ -52,8 +52,8 @@ module Spree
         ])
       end
 
-      it "I can get the store details" do
-        get :show, params: { id: store.id }
+      it "can get the store details" do
+        get spree.api_store_path(store)
         expect(json_response).to eq(
           "id" => store.id,
           "name" => "My Spree Store",
@@ -68,23 +68,23 @@ module Spree
         )
       end
 
-      it "I can create a new store" do
+      it "can create a new store" do
         store_hash = {
           code: "spree123",
           name: "Hack0rz",
           url: "spree123.example.com",
           mail_from_address: "me@example.com"
         }
-        post :create, params: { store: store_hash }
+        post spree.api_stores_path, params: { store: store_hash }
         expect(response.status).to eq(201)
       end
 
-      it "I can update an existing store" do
+      it "can update an existing store" do
         store_hash = {
           url: "spree123.example.com",
           mail_from_address: "me@example.com"
         }
-        put :update, params: { id: store.id, store: store_hash }
+        put spree.api_store_path(store), params: { store: store_hash }
         expect(response.status).to eq(200)
         expect(store.reload.url).to eql "spree123.example.com"
         expect(store.reload.mail_from_address).to eql "me@example.com"
@@ -92,7 +92,7 @@ module Spree
 
       context "deleting a store" do
         it "will fail if it's the default Store" do
-          delete :destroy, params: { id: store.id }
+          delete spree.api_store_path(store)
           expect(response.status).to eq(422)
           expect(json_response["errors"]["base"]).to eql(
             ["Cannot destroy the default Store."]
@@ -100,30 +100,30 @@ module Spree
         end
 
         it "will destroy the store" do
-          delete :destroy, params: { id: non_default_store.id }
+          delete spree.api_store_path(non_default_store)
           expect(response.status).to eq(204)
         end
       end
     end
 
     context "as an user" do
-      it "I cannot list all the stores" do
-        get :index
+      it "cannot list all the stores" do
+        get spree.api_stores_path
         expect(response.status).to eq(401)
       end
 
-      it "I cannot get the store details" do
-        get :show, params: { id: store.id }
+      it "cannot get the store details" do
+        get spree.api_store_path(store)
         expect(response.status).to eq(401)
       end
 
-      it "I cannot create a new store" do
-        post :create, params: {store: {}}
+      it "cannot create a new store" do
+        post spree.api_stores_path, params: {store: {}}
         expect(response.status).to eq(401)
       end
 
-      it "I cannot update an existing store" do
-        put :update, params: {id: store.id, store: {}}
+      it "cannot update an existing store" do
+        put spree.api_store_path(store), params: { store: {}}
         expect(response.status).to eq(401)
       end
     end
