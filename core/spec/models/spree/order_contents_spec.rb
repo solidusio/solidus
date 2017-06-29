@@ -19,7 +19,7 @@ RSpec.describe Spree::OrderContents, type: :model do
     end
 
     context 'given a shipment' do
-      let!(:shipment) { create(:shipment) }
+      let!(:shipment) { create(:shipment, order: order) }
 
       it "ensure shipment calls update_amounts instead of order calling ensure_updated_shipments" do
         expect(subject.order).to_not receive(:ensure_updated_shipments)
