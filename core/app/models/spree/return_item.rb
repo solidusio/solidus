@@ -261,7 +261,7 @@ module Spree
     def belongs_to_same_customer_order
       return unless customer_return && inventory_unit
 
-      if customer_return.order != inventory_unit.order
+      if customer_return.order_id != inventory_unit.order_id
         errors.add(:base, Spree.t(:return_items_cannot_be_associated_with_multiple_orders))
       end
     end
