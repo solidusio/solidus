@@ -72,7 +72,7 @@ module Spree
         let(:inventory_unit) { build_unit(variant) }
 
         before do
-          allow(inventory_unit).to receive(:order) { order }
+          allow(inventory_unit).to receive(:order_id) { order.id }
         end
 
         it "has single ManifestItem in correct order" do
@@ -91,8 +91,8 @@ module Spree
         let(:inventory_unit_two) { build_unit(variant) }
 
         before do
-          allow(inventory_unit_one).to receive(:order) { order }
-          allow(inventory_unit_two).to receive(:order) { order_2 }
+          allow(inventory_unit_one).to receive(:order_id) { order.id }
+          allow(inventory_unit_two).to receive(:order_id) { order_2.id }
         end
 
         it "has single ManifestItem in first order" do

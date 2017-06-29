@@ -25,7 +25,7 @@ class Spree::OrderCancellations
   #
   # @return [Array<UnitCancel>] the units that have been canceled due to short shipping
   def short_ship(inventory_units, whodunnit:nil)
-    if inventory_units.map(&:order).uniq != [@order]
+    if inventory_units.map(&:order_id).uniq != [@order.id]
       raise ArgumentError, "Not all inventory units belong to this order"
     end
 
