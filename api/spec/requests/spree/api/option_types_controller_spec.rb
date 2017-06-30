@@ -35,7 +35,7 @@ module Spree
     it "can retrieve a list of specific option types" do
       option_type_1 = create(:option_type)
       create(:option_type)
-      get spree.api_option_types_path, params: {ids: "#{option_type.id},#{option_type_1.id}"}
+      get spree.api_option_types_path, params: { ids: "#{option_type.id},#{option_type_1.id}" }
       expect(json_response.count).to eq(2)
 
       check_option_values(json_response.first["option_values"])
@@ -89,7 +89,7 @@ module Spree
       end
 
       it "cannot create an option type with invalid attributes" do
-        post spree.api_option_types_path, params: {option_type: {}}
+        post spree.api_option_types_path, params: { option_type: {} }
         expect(response.status).to eq(422)
       end
 

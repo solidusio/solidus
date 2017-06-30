@@ -35,16 +35,16 @@ describe Spree::Api::StoreCreditEventsController, type: :request do
       end
 
       context "the user has store credit" do
-        let!(:store_credit)     { create(:store_credit, user: current_api_user) }
+        let!(:store_credit) { create(:store_credit, user: current_api_user) }
 
         before { subject }
 
         it "should contain the store credit allocation event" do
           expect(json_response["store_credit_events"].size).to eq 1
           expect(json_response["store_credit_events"][0]).to include(
-            "display_amount"=>"$150.00",
-            "display_user_total_amount"=>"$150.00",
-            "display_action"=>"Added"
+            "display_amount" => "$150.00",
+            "display_user_total_amount" => "$150.00",
+            "display_action" => "Added"
           )
         end
 

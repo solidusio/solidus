@@ -36,7 +36,7 @@ module Spree
 
       # there's no validations on LegacyUser?
       xit "cannot create a new user with invalid attributes" do
-        post spree.api_users_path, params: {user: {}, token: user.spree_api_key}
+        post spree.api_users_path, params: { user: {}, token: user.spree_api_key }
         expect(response.status).to eq(422)
         expect(json_response["error"]).to eq("Invalid resource. Please fix errors and try again.")
       end

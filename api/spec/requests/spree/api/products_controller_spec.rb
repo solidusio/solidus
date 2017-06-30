@@ -345,7 +345,7 @@ module Spree
         end
 
         it "can create new variants on a product" do
-          put spree.api_product_path(product), params: { product: { variants: [attributes_for_variant, attributes_for_variant.merge(sku: "ABC-#{Kernel.rand(9999)}")] }}
+          put spree.api_product_path(product), params: { product: { variants: [attributes_for_variant, attributes_for_variant.merge(sku: "ABC-#{Kernel.rand(9999)}")] } }
           expect(response.status).to eq 200
           expect(json_response['variants'].count).to eq(2) # 2 variants
 

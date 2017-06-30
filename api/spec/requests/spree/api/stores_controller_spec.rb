@@ -118,12 +118,12 @@ module Spree
       end
 
       it "cannot create a new store" do
-        post spree.api_stores_path, params: {store: {}}
+        post spree.api_stores_path, params: { store: {} }
         expect(response.status).to eq(401)
       end
 
       it "cannot update an existing store" do
-        put spree.api_store_path(store), params: { store: {}}
+        put spree.api_store_path(store), params: { store: {} }
         expect(response.status).to eq(401)
       end
     end

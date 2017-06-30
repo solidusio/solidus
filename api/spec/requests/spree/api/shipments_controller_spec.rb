@@ -168,7 +168,6 @@ describe Spree::Api::ShipmentsController, type: :request do
         end
 
         describe 'json output' do
-
           let(:rendered_shipment_ids) { json_response['shipments'].map { |s| s['id'] } }
 
           it 'contains the shipments' do
