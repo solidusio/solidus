@@ -12,6 +12,8 @@ require 'spec_helper'
 
 RSpec.describe "Outstanding balance integration tests" do
   let!(:order) { create(:order_with_line_items, line_items_count: 2, line_items_price: 3, shipment_cost: 13) }
+  let(:item_1) { order.line_items[0] }
+  let(:item_2) { order.line_items[1] }
   before { order.update_attributes!(state: 'complete', completed_at: Time.now) }
 
   subject do
@@ -59,9 +61,26 @@ RSpec.describe "Outstanding balance integration tests" do
       end
     end
 
+    context 'with a removed item' do
+      before do
+        item_amount = item_1.final_amount
+        order.contents.remove(item_1.variant)
+        create(:refund, payment: payment, amount: item_amount)
+      end
+
+      it { should eq(0) }
+    end
+
+    context 'when the order is adjusted downward by an admin' do
+      let!(:adjustment) { create(:adjustment, order: order, adjustable: item_1, amount: -1, source: nil) }
+      let!(:refund) { create(:refund, payment: payment, amount: 1) }
+
+      it { should eq(0) }
+    end
+
     context 'with a cancelled item' do
       let(:cancelations) { Spree::OrderCancellations.new(order) }
-      let(:cancelled_item) { order.line_items.first }
+      let(:cancelled_item) { item_1 }
 
       before do
         # Required to refund
