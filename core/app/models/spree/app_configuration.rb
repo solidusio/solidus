@@ -397,6 +397,17 @@ module Spree
       @current_store_selector_class ||= Spree::CurrentStoreSelector
     end
 
+    # Allows providing your own class instance for generating order numbers.
+    #
+    # @!attribute [rw] order_number_generator
+    # @return [Class] a class instance with the same public interfaces as
+    #   Spree::Order::NumberGenerator
+    # @api experimental
+    attr_writer :order_number_generator
+    def order_number_generator
+      @order_number_generator ||= Spree::Order::NumberGenerator.new
+    end
+
     def static_model_preferences
       @static_model_preferences ||= Spree::Preferences::StaticModelPreferences.new
     end

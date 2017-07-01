@@ -705,41 +705,52 @@ describe Spree::Order, type: :model do
     end
   end
 
-  context "#generate_order_number" do
+  describe "#generate_order_number" do
     let(:order) { build(:order) }
 
-    context "when no configure" do
-      let(:default_length) { Spree::Order::ORDER_NUMBER_LENGTH + Spree::Order::ORDER_NUMBER_PREFIX.length }
-      subject(:order_number) { order.generate_order_number }
-
-      describe '#class' do
-        subject { super().class }
-        it { is_expected.to eq String }
-      end
-
-      describe '#length' do
-        subject { super().length }
-        it { is_expected.to eq default_length }
-      end
-      it { is_expected.to match /^#{Spree::Order::ORDER_NUMBER_PREFIX}/ }
-    end
-
-    context "when length option is 5" do
-      let(:option_length) { 5 + Spree::Order::ORDER_NUMBER_PREFIX.length }
-      it "should be option length for order number" do
-        expect(order.generate_order_number(length: 5).length).to eq option_length
+    context "with default app configuration" do
+      it 'calls the default order number generator' do
+        expect_any_instance_of(Spree::Order::NumberGenerator).to receive(:generate)
+        order.generate_order_number
       end
     end
 
-    context "when letters option is true" do
-      it "generates order number include letter" do
-        expect(order.generate_order_number(length: 100, letters: true)).to match /[A-Z]/
+    context "with order number generator configured" do
+      class TruthNumberGenerator
+        def initialize(options = {}); end
+
+        def generate
+          '42'
+        end
+      end
+
+      before do
+        expect(Spree::Config).to receive(:order_number_generator) do
+          TruthNumberGenerator.new
+        end
+      end
+
+      it 'calls the configured order number generator' do
+        order.generate_order_number
+        expect(order.number).to eq '42'
       end
     end
 
-    context "when prefix option is 'P'" do
-      it "generates order number and it prefix is 'P'" do
-        expect(order.generate_order_number(prefix: 'P')).to match /^P/
+    context "with number already present" do
+      before do
+        order.number = '123'
+      end
+
+      it 'does not generate new number' do
+        order.generate_order_number
+        expect(order.number).to eq '123'
+      end
+    end
+
+    context "passing options" do
+      it 'is deprecated' do
+        expect(Spree::Deprecation).to receive(:warn)
+        order.generate_order_number(length: 2)
       end
     end
   end
