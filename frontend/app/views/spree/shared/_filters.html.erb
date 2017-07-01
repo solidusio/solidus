@@ -11,17 +11,14 @@
           <% labels.each do |nm,val| %>
             <% label = "#{filter[:name]}_#{nm}".gsub(/\s+/,'_') %>
             <li class="nowrap">
-              <input type="checkbox"
-                     id="<%= label %>"
-                     name="search[<%= filter[:scope].to_s %>][]"
-                     value="<%= val %>"
-                     <%= params[:search] && params[:search][filter[:scope]] && params[:search][filter[:scope]].include?(val.to_s) ? "checked" : "" %> />
+            <%= check_box_tag "search[#{filter[:scope].to_s}][]", val,
+             params[:search] && params[:search][filter[:scope]] && params[:search][filter[:scope]].include?(val.to_s) ? true : false,
+             id: label , onclick: 'this.form.submit()' %>
               <label class="nowrap" for="<%= label %>"> <%= nm %> </label>
             </li>
           <% end %>
         </ul>
       </div>
     <% end %>
-    <%= submit_tag Spree.t(:search), name: nil %>
   <% end %>
 <% end %>
