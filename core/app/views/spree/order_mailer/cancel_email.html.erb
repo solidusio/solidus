@@ -15,8 +15,8 @@
           <tr>
             <td><%= item.variant.sku %></td>
             <td>
-              <%= raw(item.variant.product.name) %>
-              <%= raw(item.variant.options_text) -%>
+              <%= item.variant.product.name %>
+              <%= item.variant.options_text -%>
             </td>
             <td>(<%=item.quantity%>) @ <%= item.single_money %> = <%= item.display_amount %></td>
           </tr>
@@ -29,7 +29,7 @@
         <% @order.adjustments.eligible.each do |adjustment| %>
           <tr>
             <td></td>
-            <td><%= raw(adjustment.label) %></td>
+            <td><%= sanitize(adjustment.label) %></td>
             <td><%= adjustment.display_amount %></td>
           </tr>
         <% end %>

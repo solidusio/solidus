@@ -9,6 +9,8 @@
   `Spree::Gateway::BogusSimple` and `Spree::Gateway::Bogus` were renamed into `Spree::PaymentMethod::SimpleBogusCreditCard` and `Spree::PaymentMethod::BogusCreditCard`
   Run `rake solidus:migrations:rename_gateways:up` to migrate your data.
 
+- Add missing email html template for `shipped_email` and `inventory_cancellation`
+
 - Deprecate `Spree::Core::CurrentStore` in favor of `Spree::CurrentStoreSelector`. [\#1993](https://github.com/solidusio/solidus/pull/1993)
 - Deprecate `Spree::Order#assign_default_addresses!` in favor of `Order.new.assign_default_user_addresses`. [\#1954](https://github.com/solidusio/solidus/pull/1954) ([kennyadsl](https://github.com/kennyadsl))
 - Change how line item options are allowed in line items controller. [\#1943](https://github.com/solidusio/solidus/pull/1943)
