@@ -51,7 +51,7 @@ Getting started
 
 Begin by making sure you have [Imagemagick](http://imagemagick.org/script/download.php) installed, which is required for Paperclip. (You can install it using [Homebrew](https://brew.sh) if you're on a Mac.)
 
-To add solidus, begin with a Rails 5 application. Add the following to your
+To add solidus, begin with a Rails 5 application and a database configured and created. Add the following to your
 Gemfile.
 
 ```ruby
