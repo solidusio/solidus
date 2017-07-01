@@ -26,7 +26,8 @@
     flex: 1;
   }
 
-  ul {
+  ul.example,
+  ul.example ul {
     list-style: none;
     padding-left: 0;
   }
@@ -64,10 +65,6 @@
     margin: 4rem 0;
   }
 
-  &-section {
-    @include clearfix;
-  }
-
   &-section-header {
     @include margin(7rem 0 3rem);
     border-bottom: 1px solid darken($color-7, 10%);
@@ -88,13 +85,13 @@
   }
 
   .half {
-    width: 50%;
-    float: left;
+    display: inline-block;
+    width: 49%;
     padding-right: 1rem;
+    vertical-align: top;
 
     + .half {
-      float: none;
-      margin-left: 50%;
+      display: inline-block;
       padding-right: 0;
       padding-left: 1rem;
     }

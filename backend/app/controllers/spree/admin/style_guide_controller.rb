@@ -15,6 +15,10 @@ module Spree
           ],
           forms: [
             'building_forms',
+            'buttons',
+            'helper_text',
+            'inputs',
+            'labels',
             'validation'
           ],
           components: [
