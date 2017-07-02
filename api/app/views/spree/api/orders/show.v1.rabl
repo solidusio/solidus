@@ -2,7 +2,7 @@ object @order
 extends "spree/api/orders/order"
 
 child :available_payment_methods => :payment_methods do
-  attributes :id, :name, :method_type
+  attributes :id, :name, :method_type, :partial_name
 end
 
 child :billing_address => :bill_address do
