@@ -11,7 +11,7 @@ module Spree
       CreditCard
     end
 
-    def partial_name
+    def method_type
       'gateway'
     end
 
