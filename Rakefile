@@ -8,9 +8,15 @@ end
 
 task default: :test
 
+def print_title(gem_name = '')
+  title = ["Solidus", gem_name].join(' ')
+  puts "\n#{'-' * title.size}\n#{title}\n#{'-' * title.size}"
+end
+
 desc "Runs all tests in all Spree engines"
 task test: :test_app do
   %w(api backend core frontend sample).each do |gem_name|
+    print_title(gem_name)
     Dir.chdir("#{File.dirname(__FILE__)}/#{gem_name}") do
       sh 'rspec'
     end
@@ -20,6 +26,7 @@ end
 desc "Generates a dummy app for testing for every Spree engine"
 task :test_app do
   %w(api backend core frontend sample).each do |gem_name|
+    print_title(gem_name)
     Dir.chdir("#{File.dirname(__FILE__)}/#{gem_name}") do
       sh 'rake test_app'
     end
@@ -33,6 +40,7 @@ task :clean do
   rm_rf "pkg"
 
   %w(api backend core frontend sample).each do |gem_name|
+    print_title(gem_name)
     rm_f  "#{gem_name}/Gemfile.lock"
     rm_rf "#{gem_name}/pkg"
     rm_rf "#{gem_name}/spec/dummy"
@@ -47,8 +55,10 @@ namespace :gem do
 
   def for_each_gem
     %w(core api backend frontend sample).each do |gem_name|
+      print_title(gem_name)
       yield "pkg/solidus_#{gem_name}-#{version}.gem"
     end
+    print_title
     yield "pkg/solidus-#{version}.gem"
   end
 
@@ -64,6 +74,7 @@ namespace :gem do
       end
     end
 
+    print_title
     sh "gem build solidus.gemspec"
     mv "solidus-#{version}.gem", pkgdir
   end
