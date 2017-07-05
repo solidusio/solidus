@@ -21,7 +21,7 @@
               <% @wallet_payment_sources.each do |wallet_payment_source| %>
                 <%=
                   render(
-                    partial: "spree/checkout/existing_payment/#{wallet_payment_source.payment_source.payment_method.method_type}",
+                    partial: "spree/checkout/existing_payment/#{wallet_payment_source.payment_source.payment_method.partial_name}",
                     locals: {
                       wallet_payment_source: wallet_payment_source,
                       default: wallet_payment_source == @default_wallet_payment_source,
@@ -50,7 +50,7 @@
       <% @order.available_payment_methods.each do |method| %>
         <li id="payment_method_<%= method.id %>" class="<%= 'last' if method == @order.available_payment_methods.last %>" data-hook>
           <fieldset>
-            <%= render partial: "spree/checkout/payment/#{method.method_type}", locals: { payment_method: method } %>
+            <%= render partial: "spree/checkout/payment/#{method.partial_name}", locals: { payment_method: method } %>
           </fieldset>
         </li>
       <% end %>
