@@ -1,5 +1,18 @@
 # Loads seed data out of default dir
 default_path = File.join(File.dirname(__FILE__), 'default')
 
-Rake::Task['db:load_dir'].reenable
-Rake::Task['db:load_dir'].invoke(default_path)
+%w(
+  stores
+  store_credit
+  countries
+  return_reasons
+  states
+  stock_locations
+  zones
+  refund_reasons
+  roles
+  shipping_categories
+).each do |seed|
+  puts "Loading seed file: #{seed}"
+  require_relative "default/spree/#{seed}"
+end
