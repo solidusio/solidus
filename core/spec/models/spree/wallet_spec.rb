@@ -13,7 +13,7 @@ describe Spree::Wallet, type: :model do
     context 'when source is a Spree::PaymentSource' do
       it 'defines a helper method for the class' do
         described_class.payment_source_helper payment_source
-        expect(wallet.respond_to?(:fake_payment_sources)).to eql true
+        expect(wallet).to respond_to :fake_payment_sources
       end
     end
 
@@ -21,6 +21,25 @@ describe Spree::Wallet, type: :model do
       it 'raises an ArgumentError' do
         expect { described_class.payment_source_helper non_payment_source }.to raise_error ArgumentError
       end
+    end
+
+    it 'should define #credit_cards' do
+      expect(wallet).to respond_to :credit_cards
+      expect(wallet.credit_cards).to be_empty
+
+      wallet.add(credit_card)
+      wallet.add(store_credit)
+      expect(wallet.credit_cards).to_not be_empty
+      expect(wallet.credit_cards.size).to eql 1
+    end
+
+    it 'should define #store_credits' do
+      expect(wallet).to respond_to :store_credits
+
+      wallet.add(credit_card)
+      wallet.add(store_credit)
+      expect(wallet.store_credits).to_not be_empty
+      expect(wallet.store_credits.size).to eql 1
     end
   end
 
