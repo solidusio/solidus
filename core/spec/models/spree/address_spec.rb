@@ -4,25 +4,21 @@ describe Spree::Address, type: :model do
   subject { Spree::Address }
 
   context "aliased attributes" do
-    let(:address) { Spree::Address.new firstname: 'Ryan', lastname: 'Bigg' }
+    let(:address) { Spree::Address.new firstname: 'Ryan', lastname: 'Biggles' }
 
     it " first_name" do
       expect(address.first_name).to eq("Ryan")
     end
 
     it "last_name" do
-      expect(address.last_name).to eq("Bigg")
+      expect(address.last_name).to eq("Biggles")
     end
   end
 
   context "validation" do
-    let(:country) { mock_model(Spree::Country, states: [state], states_required: true) }
-    let(:state) { stub_model(Spree::State, name: 'maryland', abbr: 'md') }
+    let(:country) { create :country, states_required: true }
+    let(:state) { create :state, name: 'maryland', abbr: 'md' }
     let(:address) { build(:address, country: country) }
-
-    before do
-      allow(country.states).to receive_messages find_all_by_name_or_abbr: [state]
-    end
 
     context 'address does not require state' do
       before do
@@ -127,7 +123,7 @@ describe Spree::Address, type: :model do
         it 'does not have a zipcode' do
           address.zipcode = ""
           address.valid?
-          expect(address.errors['zipcode']).not_to include('is invalid')
+          expect(address.errors['zipcode']).to include('is invalid')
         end
 
         it 'does not have a supported country iso' do
