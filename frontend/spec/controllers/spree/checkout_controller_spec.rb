@@ -397,7 +397,7 @@ describe Spree::CheckoutController, type: :controller do
       end
 
       it "should set flash message for no inventory" do
-        expect(flash[:error]).to eq(Spree.t(:inventory_error_flash_for_insufficient_quantity, names: "'#{product.name}'" ))
+        expect(flash[:error]).to eq("Amazing Item became unavailable.")
       end
     end
   end
