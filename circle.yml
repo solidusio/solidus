@@ -3,6 +3,7 @@ machine:
   environment:
     DB: postgresql
     DEFAULT_MAX_WAIT_TIME: 10
+    SOLIDUS_RAISE_DEPRECATIONS: true
   services:
     - postgresql
   ruby:
