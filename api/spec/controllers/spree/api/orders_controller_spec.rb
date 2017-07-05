@@ -128,27 +128,32 @@ module Spree
       end
     end
 
-    it "cannot view all orders" do
-      api_get :index
-      assert_unauthorized!
-    end
+    context 'displaying orders' do
+      let(:current_api_user) { order.user }
+      let(:order) { create(:order, line_items: [line_item], store: Spree::Store.default) }
 
-    context "the current api user does not exist" do
-      let(:current_api_user) { nil }
+      it 'is not authorized to view an order of another user' do
+        another_user_order = create(:order, store: Spree::Store.default)
+        api_get :show, id: another_user_order.to_param
 
-      it "returns a 401" do
-        api_get :mine
         expect(response.status).to eq(401)
       end
-    end
 
-    context "the current api user is authenticated" do
-      let(:current_api_user) { order.user }
-      let(:store) { create(:store) }
-      let(:order) { create(:order, line_items: [line_item], store: store) }
+      it "can view one of its own order" do
+        api_get :show, id: order.to_param
 
-      it "can view all of their own orders for the current store" do
-        request.env['SERVER_NAME'] = store.url
+        expect(response.status).to eq(200)
+        expect(json_response).to have_attributes(attributes)
+        expect(json_response["adjustments"]).to be_empty
+      end
+
+      it "is not authorized to view all orders" do
+        api_get :index
+
+        expect(response.status).to eq(401)
+      end
+
+      it "can view all of their own orders" do
         api_get :mine
 
         expect(response.status).to eq(200)
@@ -160,16 +165,7 @@ module Spree
         expect(json_response["orders"].first["line_items"].first["id"]).to eq(line_item.id)
       end
 
-      it "cannot view orders for a different store" do
-        request.env['SERVER_NAME'] = "foo"
-        api_get :mine
-
-        expect(response.status).to eq(200)
-        expect(json_response["orders"].length).to eq(0)
-      end
-
       it "can filter the returned results" do
-        request.env['SERVER_NAME'] = store.url
         api_get :mine, q: { completed_at_not_null: 1 }
 
         expect(response.status).to eq(200)
@@ -178,16 +174,15 @@ module Spree
 
       it "returns orders in reverse chronological order by completed_at" do
         order.update_columns completed_at: Time.current, created_at: 3.days.ago
-
-        order2 = Order.create user: order.user, completed_at: Time.current - 1.day, created_at: 2.day.ago, store: store
+        order2 = Order.create user: order.user, completed_at: Time.current - 1.day, created_at: 2.day.ago
         expect(order2.created_at).to be > order.created_at
-        order3 = Order.create user: order.user, completed_at: nil, created_at: 1.day.ago, store: store
+        order3 = Order.create user: order.user, completed_at: nil, created_at: 1.day.ago
         expect(order3.created_at).to be > order2.created_at
-        order4 = Order.create user: order.user, completed_at: nil, created_at: 0.days.ago, store: store
+        order4 = Order.create user: order.user, completed_at: nil, created_at: 0.days.ago
         expect(order4.created_at).to be > order3.created_at
 
-        request.env['SERVER_NAME'] = store.url
         api_get :mine
+
         expect(response.status).to eq(200)
         expect(json_response["pages"]).to eq(1)
         orders = json_response["orders"]
@@ -195,6 +190,16 @@ module Spree
         expect(orders[0]["number"]).to eq(order.number)
         expect(orders[1]["number"]).to eq(order2.number)
         expect([orders[2]["number"], orders[3]["number"]]).to match_array([order3.number, order4.number])
+      end
+
+      context "when the current api user does not exist" do
+        let(:current_api_user) { nil }
+
+        it "is not authorized to list orders" do
+          api_get :mine
+
+          expect(response.status).to eq(401)
+        end
       end
     end
 
@@ -206,14 +211,6 @@ module Spree
         expect(current_api_user).to receive(:last_incomplete_spree_order).with(store: controller.current_store)
         api_get :current, format: 'json'
       end
-    end
-
-    it "can view their own order" do
-      allow_any_instance_of(Order).to receive_messages user: current_api_user
-      api_get :show, id: order.to_param
-      expect(response.status).to eq(200)
-      expect(json_response).to have_attributes(attributes)
-      expect(json_response["adjustments"]).to be_empty
     end
 
     describe 'GET #show' do
