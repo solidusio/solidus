@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe Spree::CurrentStoreSelector do
+describe Spree::StoreSelector::ByServerName do
   describe "#store" do
-    subject { Spree::CurrentStoreSelector.new(request).store }
+    subject { described_class.new(request).store }
 
     context "with a default" do
       let(:request) { double(headers: {}, env: {}) }
