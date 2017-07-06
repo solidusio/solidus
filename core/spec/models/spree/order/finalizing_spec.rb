@@ -32,7 +32,10 @@ describe Spree::Order, type: :model do
     end
 
     it "should change the shipment state to ready if order is paid" do
-      Spree::Shipment.create(order: order)
+      Spree::Shipment.state_machine.after_transition to: :ready, do: :callback
+      shipment = Spree::Shipment.create(order: order)
+      expect(shipment).to receive(:callback)
+
       order.shipments.reload
 
       allow(order).to receive_messages(paid?: true, complete?: true)
