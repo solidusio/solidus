@@ -176,7 +176,7 @@ module Spree
                           payment: reimbursement.order.payments.first,
                           reimbursement: reimbursement
           # Update the order totals so payment_total goes to 0 reflecting the refund..
-          order.update!
+          order.recalculate
         end
 
         context "for canceled orders" do

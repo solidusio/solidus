@@ -328,7 +328,7 @@ describe Spree::Order, type: :model do
         context "with a shipment that has a price" do
           before do
             shipment.shipping_rates.first.update_column(:cost, 10)
-            order.update!
+            order.recalculate
           end
 
           it "transitions to payment" do
@@ -595,7 +595,7 @@ describe Spree::Order, type: :model do
 
       it 'can complete the order' do
         create(:payment, state: 'completed', order: order, amount: order.total)
-        order.update!
+        order.recalculate
         expect(order.complete).to eq(true)
       end
     end

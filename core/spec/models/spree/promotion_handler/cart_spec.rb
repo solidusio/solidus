@@ -110,7 +110,7 @@ module Spree
 
         before do
           Spree::OrderPromotion.create!(promotion: promotion, order: order, promotion_code: promotion_code)
-          order.update!
+          order.recalculate
         end
 
         include_context "creates the adjustment"

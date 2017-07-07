@@ -53,7 +53,7 @@ FactoryGirl.define do
         create(:shipment, order: order, cost: evaluator.shipment_cost, shipping_method: evaluator.shipping_method, stock_location: evaluator.stock_location)
         order.shipments.reload
 
-        order.update!
+        order.recalculate
       end
 
       factory :completed_order_with_promotion do

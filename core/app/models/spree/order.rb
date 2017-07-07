@@ -254,8 +254,17 @@ module Spree
       @updater ||= Spree::OrderUpdater.new(self)
     end
 
-    def update!
+    def recalculate
       updater.update
+    end
+
+    def update!(*args)
+      if args.empty?
+        Spree::Deprecation.warn "Calling order.update! with no arguments as a way to invoke the OrderUpdater is deprecated, since it conflicts with AR::Base#update! Please use order.recalculate instead"
+        recalculate
+      else
+        super
+      end
     end
 
     def assign_billing_to_shipping_address
@@ -471,7 +480,7 @@ module Spree
       shipments.destroy_all
       order_promotions.destroy_all
 
-      update!
+      recalculate
     end
 
     alias_method :has_step?, :has_checkout_step?
@@ -529,7 +538,7 @@ module Spree
 
     def apply_free_shipping_promotions
       Spree::PromotionHandler::FreeShipping.new(self).activate
-      update!
+      recalculate
     end
 
     # Clean shipments and make order back to address state
@@ -565,7 +574,7 @@ module Spree
 
     def set_shipments_cost
       shipments.each(&:update_amounts)
-      update!
+      recalculate
     end
     deprecate set_shipments_cost: :update!, deprecator: Spree::Deprecation
 
@@ -806,7 +815,7 @@ module Spree
       end
       if adjustment_changed
         restart_checkout_flow
-        update!
+        recalculate
         errors.add(:base, Spree.t(:promotion_total_changed_before_complete))
       end
       errors.empty?
@@ -838,7 +847,7 @@ module Spree
       payments.store_credits.pending.each(&:void_transaction!)
 
       send_cancel_email
-      update!
+      recalculate
     end
 
     def send_cancel_email

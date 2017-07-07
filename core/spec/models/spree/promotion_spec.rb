@@ -764,7 +764,7 @@ describe Spree::Promotion, type: :model do
     context 'when the user has used this promo' do
       before do
         promotion.activate(order: order)
-        order.update!
+        order.recalculate
         order.completed_at = Time.current
         order.save!
       end
@@ -817,7 +817,7 @@ describe Spree::Promotion, type: :model do
       expect(order.adjustment_total).to eq 0
 
       promo.activate order: order, promotion_code: promotion_code
-      order.update!
+      order.recalculate
 
       expect(line_item.adjustments.size).to eq(1)
       expect(order.adjustment_total).to eq(-5)

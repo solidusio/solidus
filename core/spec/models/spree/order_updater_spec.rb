@@ -92,13 +92,13 @@ module Spree
 
           before do
             promotion.activate(order: order)
-            order.update!
+            order.recalculate
             line_item.update!(quantity: 2)
           end
 
           it 'updates the promotion amount' do
             expect {
-              order.update!
+              order.recalculate
             }.to change {
               line_item.promo_total
             }.from(-1).to(-2)
@@ -117,7 +117,7 @@ module Spree
           end
 
           it 'uses the defined promotion chooser' do
-            expect { order.update! }.to raise_error('Custom promotion chooser')
+            expect { order.recalculate }.to raise_error('Custom promotion chooser')
           end
         end
 
@@ -156,7 +156,7 @@ module Spree
                                 label: 'Some other credit')
             line_item.adjustments.each { |a| a.update_column(:eligible, true) }
 
-            order.update!
+            order.recalculate
 
             expect(line_item.adjustments.promotion.eligible.count).to eq(1)
             expect(line_item.adjustments.promotion.eligible.first.label).to eq('Promotion C')
@@ -170,7 +170,7 @@ module Spree
             end
             line_item.adjustments.each { |a| a.update_column(:eligible, true) }
 
-            order.update!
+            order.recalculate
 
             expect(line_item.adjustments.promotion.eligible.count).to eq(1)
             expect(line_item.adjustments.promotion.eligible.first.label).to eq('Promotion B')
@@ -184,7 +184,7 @@ module Spree
             end
             line_item.adjustments.each { |a| a.update_column(:eligible, true) }
 
-            order.update!
+            order.recalculate
 
             expect(line_item.adjustments.promotion.eligible.count).to eq(1)
             expect(line_item.adjustments.promotion.eligible.first.label).to eq('Promotion B')
@@ -212,7 +212,7 @@ module Spree
                   order_promos[promo_sequence[0]].activate order: order
                   order_promos[promo_sequence[1]].activate order: order
 
-                  order.update!
+                  order.recalculate
                   order.reload
                   expect(order.all_adjustments.count).to eq(2), 'Expected two adjustments'
                   expect(order.all_adjustments.eligible.count).to eq(1), 'Expected one elegible adjustment'
@@ -263,7 +263,7 @@ module Spree
 
             # regression for https://github.com/spree/spree/issues/3274
             it 'still makes the previous best eligible adjustment valid' do
-              order.update!
+              order.recalculate
               expect(line_item.adjustments.promotion.eligible.first.label).to eq('Promotion A')
             end
           end
@@ -273,7 +273,7 @@ module Spree
             create_adjustment('Promotion B', -200)
             create_adjustment('Promotion C', -200)
 
-            order.update!
+            order.recalculate
 
             expect(line_item.adjustments.promotion.eligible.count).to eq(1)
             expect(line_item.adjustments.promotion.eligible.first.amount.to_i).to eq(-200)
@@ -305,7 +305,7 @@ module Spree
 
           it 'updates the promotion amount' do
             expect {
-              order.update!
+              order.recalculate
             }.to change {
               line_item.additional_tax_total
             }.from(1).to(2)
@@ -327,7 +327,7 @@ module Spree
               Spree::Tax::OrderTax.new(order_id: order.id, line_item_taxes: [], shipment_taxes: [])
             )
 
-            order.update!
+            order.recalculate
           end
         end
       end
@@ -535,7 +535,7 @@ module Spree
         expect(line_item.promo_total).to eq(0)
         expect(order.promo_total).to eq(0)
 
-        order.update!
+        order.recalculate
 
         expect(line_item.promo_total).to eq(-1)
         expect(order.promo_total).to eq(-1)
@@ -548,7 +548,7 @@ module Spree
       it "updates the totals" do
         line_item.update!(adjustment_total: 100)
         expect {
-          order.update!
+          order.recalculate
         }.to change { line_item.reload.adjustment_total }.from(100).to(0)
       end
     end

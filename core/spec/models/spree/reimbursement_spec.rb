@@ -73,7 +73,7 @@ describe Spree::Reimbursement, type: :model do
         shipment.update_column('state', 'shipped')
       end
       order.reload
-      order.update!
+      order.recalculate
       if payment
         payment.save!
         order.next! # confirm

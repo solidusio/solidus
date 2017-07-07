@@ -73,7 +73,7 @@ class Spree::OrderShipping
 
     send_shipment_emails(carton) if stock_location.fulfillable? && !suppress_mailer # e.g. digital gift cards that aren't actually shipped
     fulfill_order_stock_locations(stock_location)
-    @order.update!
+    @order.recalculate
 
     carton
   end

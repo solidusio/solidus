@@ -235,7 +235,7 @@ module Spree::Promotion::Actions
 
       before do
         action.perform(order: order, promotion: promotion)
-        order.update!
+        order.recalculate
       end
 
       it 'updates the order totals' do
@@ -248,7 +248,7 @@ module Spree::Promotion::Actions
       context "after updating item quantity" do
         before do
           order.line_items.first.update!(quantity: 2, price: 30)
-          order.update!
+          order.recalculate
         end
 
         it 'updates the order totals' do
@@ -262,7 +262,7 @@ module Spree::Promotion::Actions
       context "after updating promotion amount" do
         before do
           calculator.update!(preferred_amount: 5)
-          order.update!
+          order.recalculate
         end
 
         it 'updates the order totals' do

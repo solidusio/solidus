@@ -22,7 +22,7 @@ describe "Adjustments", type: :feature do
   let!(:adjustment) { order.adjustments.create!(order: order, label: 'Rebate', amount: 10) }
 
   before(:each) do
-    order.update!
+    order.recalculate
 
     visit spree.admin_path
     click_link "Orders"

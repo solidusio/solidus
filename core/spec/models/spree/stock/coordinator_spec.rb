@@ -41,7 +41,7 @@ module Spree
         it "does not unintentionally add shipments to the order" do
           subject.shipments
           expect {
-            order.update!
+            order.recalculate
           }.not_to change {
             order.shipments.count
           }

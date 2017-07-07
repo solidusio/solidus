@@ -9,7 +9,7 @@ creditcard = Spree::CreditCard.create(cc_type: 'visa', month: 12, year: 2.years.
                                       name: 'Sean Schofield', gateway_customer_profile_id: 'BGS-1234')
 
 Spree::Order.all.each_with_index do |order, _index|
-  order.update!
+  order.recalculate
   payment = order.payments.create!(amount: order.total, source: creditcard.clone, payment_method: method)
   payment.update_columns(state: 'pending', response_code: '12345')
 end

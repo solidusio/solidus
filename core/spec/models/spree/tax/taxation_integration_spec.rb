@@ -663,7 +663,7 @@ RSpec.describe "Taxation system integration tests" do
         context 'when tax address is later cleared' do
           before do
             order.ship_address = nil
-            order.update!
+            order.recalculate
           end
 
           it 'removes all tax adjustments' do

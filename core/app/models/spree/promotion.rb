@@ -119,7 +119,7 @@ module Spree
       action_taken
     end
 
-    # called anytime order.update! happens
+    # called anytime order.recalculate happens
     def eligible?(promotable, promotion_code: nil)
       return false if inactive?
       return false if usage_limit_exceeded?

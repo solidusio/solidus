@@ -41,7 +41,7 @@ class Spree::OrderCancellations
         Spree::OrderMailer.inventory_cancellation_email(@order, inventory_units.to_a).deliver_later if Spree::OrderCancellations.send_cancellation_mailer
       end
 
-      @order.update!
+      @order.recalculate
 
       if short_ship_tax_notifier
         short_ship_tax_notifier.call(unit_cancels)
