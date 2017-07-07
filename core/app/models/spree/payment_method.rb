@@ -39,6 +39,8 @@ module Spree
 
     class << self
       def providers
+        Spree::Deprecation.warn 'Spree::PaymentMethod.providers is deprecated and will be deleted in Solidus 3.0. ' \
+          'Please use Rails.application.config.spree.payment_methods instead'
         Rails.application.config.spree.payment_methods
       end
 
