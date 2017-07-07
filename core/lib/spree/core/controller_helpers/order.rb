@@ -88,6 +88,7 @@ module Spree
 
           # Find any incomplete orders for the guest_token
           if with_adjustments
+            Spree::Deprecation.warn "The second argument to find_order_by_token_or_user is deprecated, and will be removed in a future version."
             order = Spree::Order.incomplete.includes(:adjustments).lock(options[:lock]).find_by(current_order_params)
           else
             order = Spree::Order.incomplete.lock(options[:lock]).find_by(current_order_params)
