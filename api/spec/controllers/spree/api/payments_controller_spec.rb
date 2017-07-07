@@ -18,6 +18,8 @@ module Spree
     end
 
     context "as a user" do
+      let!(:current_api_user) { create(:user) }
+
       context "when the order belongs to the user" do
         before do
           allow_any_instance_of(Order).to receive_messages user: current_api_user

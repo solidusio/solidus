@@ -118,7 +118,7 @@ describe Spree::Order, type: :model do
         end
 
         it "doesn't raise an error if the default address is invalid" do
-          order.user = mock_model(Spree::LegacyUser, ship_address: Spree::Address.new, bill_address: Spree::Address.new)
+          order.user = create(:user, ship_address: Spree::Address.new, bill_address: Spree::Address.new)
           order.next!
         end
 

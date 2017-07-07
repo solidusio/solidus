@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "Cancelling + Resuming", type: :feature do
   stub_authorization!
 
-  let(:user) { build_stubbed(:user, id: 123, spree_api_key: 'fake') }
+  let(:user) { create(:user, spree_api_key: 'fake') }
 
   before do
     allow(user).to receive(:has_spree_role?).and_return(true)

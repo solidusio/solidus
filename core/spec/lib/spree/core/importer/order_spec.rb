@@ -8,7 +8,7 @@ module Spree
       let!(:state) { country.states.first || create(:state, country: country) }
       let!(:stock_location) { create(:stock_location, admin_name: 'Admin Name') }
 
-      let(:user) { stub_model(LegacyUser, email: 'fox@mudler.com') }
+      let(:user) { create(:user, email: 'fox@mudler.com') }
       let(:shipping_method) { create(:shipping_method) }
       let(:payment_method) { create(:check_payment_method) }
 
@@ -65,7 +65,7 @@ module Spree
       end
 
       context "assigning a user to an order" do
-        let(:other_user) { stub_model(LegacyUser, email: 'dana@scully.com') }
+        let(:other_user) { create(:user, email: 'dana@scully.com') }
 
         context "as an admin" do
           before { allow(user).to receive_messages has_spree_role?: true }
@@ -112,7 +112,6 @@ module Spree
 
         expect(Importer::Order).to receive(:ensure_variant_id_from_params).and_return({ variant_id: variant.id, quantity: 5 })
         order = Importer::Order.import(user, params)
-        expect(order.user).to eq(nil)
         line_item = order.line_items.first
         expect(line_item.quantity).to eq(5)
         expect(line_item.variant_id).to eq(variant_id)
