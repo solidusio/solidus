@@ -189,8 +189,12 @@ var ShipmentSplitItemView = Backbone.View.extend({
     }
     jqXHR.error(function(msg) {
       alert(Spree.t("split_failed"));
-    }).done(function() {
-      window.Spree.advanceOrder();
+    }).done(function(response) {
+      if (response.success) {
+        window.Spree.advanceOrder();
+      } else {
+        alert(response.message);
+      };
     });
   },
 
