@@ -32,7 +32,9 @@ describe Spree::Shipment, type: :model do
 
       aggregate_failures("verifying new shipment attributes") do
         expect do
-          shipment.transfer_to_location(variant, 1, stock_location)
+          Spree::Deprecation.silence do
+            shipment.transfer_to_location(variant, 1, stock_location)
+          end
         end.to change { Spree::Shipment.count }.by(1)
 
         new_shipment = order.shipments.last
