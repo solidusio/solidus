@@ -14,24 +14,24 @@
   }
 }
 
-.fa-email:before     { @extend .fa-envelope:before }
-.fa-resume:before    { @extend .fa-refresh:before  }
-.fa-approve:before   { @extend .fa-check:before    }
+.fa-email     { @extend .fa-envelope }
+.fa-resume    { @extend .fa-refresh  }
+.fa-approve   { @extend .fa-check    }
 
-.fa-remove:before,
-.fa-cancel:before,
-.fa-void:before      { @extend .fa-times:before    }
+.fa-remove,
+.fa-cancel,
+.fa-void      { @extend .fa-times    }
 
-.fa-failure:before   { @extend .fa-thumbs-down:before }
+.fa-failure   { @extend .fa-thumbs-down }
 
-.fa-trash:before     { @extend .fa-trash-o:before  }
+.fa-trash     { @extend .fa-trash-o  }
 
-.fa-capture:before   { @extend .fa-check:before    }
-.fa-credit:before    { @extend .fa-check:before    }
-.fa-approve:before   { @extend .fa-check:before    }
-.fa-icon-cogs:before { @extend .fa-cogs:before     }
-.fa-ok:before,
-.fa-icon-ok:before   { @extend .fa-check:before    }
+.fa-capture   { @extend .fa-check    }
+.fa-credit    { @extend .fa-check    }
+.fa-approve   { @extend .fa-check    }
+.fa-icon-cogs { @extend .fa-cogs     }
+.fa-ok,
+.fa-icon-ok   { @extend .fa-check    }
 
 button, a {
   &.fa:before {
