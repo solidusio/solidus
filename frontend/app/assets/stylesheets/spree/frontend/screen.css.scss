@@ -401,8 +401,8 @@ nav#taxonomies {
 }
 
 .errorExplanation {
-  @extend .flash.error;
   @extend .flash;
+  background-color: $c_red;
 
   p {
     font-weight: normal;
@@ -450,13 +450,18 @@ nav#taxonomies {
   }
 }
 
-span.price {
+%price_text {
   font-weight: bold;
   color: $link_text_color;
+}
+
+span.price {
+  @extend %price_text;
 
   &.selling {
     font-size: $product_detail_price_font_size;
   }
+
   &.diff {
     font-weight: bold;
   }
@@ -715,7 +720,7 @@ ul#products {
     tr[data-hook="item_total"] {
       td:last-child {
         strong {
-          @extend span.price;
+          @extend %price_text;;
         }
       }
     }
@@ -725,7 +730,7 @@ ul#products {
     };
 
     #summary-order-total {
-      @extend span.price;
+      @extend %price_text;;
       font-size: $base_font_size + 2;
     }
   }
@@ -772,7 +777,7 @@ ul#products {
 
   td.price, td.total {
     span {
-      @extend span.price;
+      @extend %price_text;;
     }
   }
 
@@ -947,8 +952,8 @@ table#cart-detail {
     tr {
 
       td[data-hook="cart_item_price"], td[data-hook="cart_item_total"] {
-        @extend span.price;
-        @extend span.price.selling;
+        @extend %price_text;
+        font-size: $product_detail_price_font_size;
       }
       td[data-hook="cart_item_quantity"] {
         .line_item_quantity {
@@ -977,7 +982,7 @@ div[data-hook="inside_cart_form"] {
     margin-top: 15px;
 
     span.order-total {
-      @extend span.price;
+      @extend %price_text;
     }
   }
 }
