@@ -172,7 +172,7 @@ module Spree
     end
 
     def refresh_rates
-      return shipping_rates if shipped? || order.completed?
+      return shipping_rates if shipped?
       return [] unless can_get_rates?
 
       # StockEstimator.new assigment below will replace the current shipping_method
@@ -333,6 +333,7 @@ module Spree
         order.contents.add(variant, quantity, { shipment: new_shipment })
 
         refresh_rates
+        new_shipment.refresh_rates
         save!
         new_shipment.save!
       end
