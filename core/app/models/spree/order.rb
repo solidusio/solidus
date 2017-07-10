@@ -742,6 +742,12 @@ module Spree
     alias_method :assign_default_credit_card, :add_default_payment_from_wallet
     deprecate assign_default_credit_card: :add_default_payment_from_wallet, deprecator: Spree::Deprecation
 
+    def record_ip_address(ip_address)
+      if last_ip_address != ip_address
+        update_attributes!(last_ip_address: ip_address)
+      end
+    end
+
     private
 
     def process_payments_before_complete

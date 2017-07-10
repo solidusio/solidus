@@ -45,7 +45,7 @@ module Spree
           end
 
           if @current_order
-            @current_order.update(last_ip_address: ip_address)
+            @current_order.record_ip_address(ip_address)
             return @current_order
           end
         end
