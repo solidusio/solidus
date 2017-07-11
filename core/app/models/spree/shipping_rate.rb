@@ -35,10 +35,6 @@ module Spree
     end
     alias_method :display_cost, :display_price
 
-    def available_to_user?
-      shipping_method.available_to_users? || shipment.selected_shipping_rate == self
-    end
-
     private
 
     def tax_label_separator
