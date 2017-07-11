@@ -230,9 +230,9 @@ module Spree
 
     def invalidate_old_payments
       if !store_credit? && !['invalid', 'failed'].include?(state)
-        order.payments.select do |payment|
+        order.payments.select { |payment|
           payment.state == 'checkout' && !payment.store_credit? && payment.id != id
-        end.each(&:invalidate!)
+        }.each(&:invalidate!)
       end
     end
 
