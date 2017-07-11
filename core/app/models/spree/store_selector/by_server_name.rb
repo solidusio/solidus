@@ -1,6 +1,10 @@
-# Default class for deciding what the current store is, given an HTTP request
-# This is an extension point used in Spree::Core::ControllerHelpers::Store
-# Custom versions of this class must respond to a store instance method
+# Default implementation for finding the current store is given an HTTP request
+#
+# This is the new default behaviour, starting in Solidus 2.3.0. For the old
+# behaviour see Spree::StoreSelector::Legacy.
+#
+# This attempts to find a Spree::Store with a URL matching the domain name of
+# the request exactly. Failing that it will return the store marked as default.
 module Spree
   module StoreSelector
     class ByServerName
