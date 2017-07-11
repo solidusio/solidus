@@ -782,7 +782,7 @@ describe Spree::Payment, type: :model do
         let(:existing_payment_method) { create(:payment_method) }
         let(:existing_payment_source) { create(:credit_card) }
 
-        it 'invalidates existing payments', :pending do
+        it 'invalidates existing payments' do
           expect { payment.save! }.to change { order.payments.with_state(:invalid).count }
         end
       end

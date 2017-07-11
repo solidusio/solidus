@@ -36,8 +36,8 @@ module Spree
         end
       end
 
-      context 'with different payment methods' do
-        let!(:payment_2) { create(:payment, order: order, amount: 50) }
+      context 'with different payment methods that are store credit' do
+        let!(:payment_2) { create(:store_credit_payment, order: order, amount: 50) }
 
         it 'processes all checkout payments' do
           order.process_payments!
@@ -51,7 +51,7 @@ module Spree
         end
 
         context 'with over paid payments' do
-          let!(:payment_3) { create(:payment, order: order, amount: 50) }
+          let!(:payment_3) { create(:store_credit_payment, order: order, amount: 50) }
 
           it 'does not go over total for order' do
             order.process_payments!

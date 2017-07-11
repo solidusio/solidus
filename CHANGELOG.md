@@ -1,5 +1,7 @@
 ## Solidus 2.4.0 (master, unreleased)
 
+- Invalidate existing non store credit payments during checkout [2075](https://github.com/solidusio/solidus/pull/2075) ([tvdeyen](https://github.com/tvdeyen))
+
 - Change HTTP Status code for `Api::ShipmentsController#transfer_to_*` to be always 202 Accepted rather than 201 Created or 500.
   Speed up changing fulfilment for parts of a shipment [\#2070](https://github.com/solidusio/solidus/pull/2070) ([mamhoff](https://github.com/mamhoff))
 
