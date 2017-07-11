@@ -741,6 +741,43 @@ describe Spree::Payment, type: :model do
       expect(payment.reload.state).to eq('checkout')
     end
 
+    context 'with order having other payments' do
+      let(:existing_payment_method) { create(:store_credit_payment_method) }
+      let(:existing_payment_source) { create(:store_credit) }
+      let!(:existing_payment) do
+        create(:payment,
+          payment_method: existing_payment_method,
+          source: existing_payment_source,
+          order: order,
+          amount: 5)
+      end
+
+      let(:payment_method) { create(:payment_method) }
+      let(:payment_source) { create(:credit_card) }
+      let(:payment) do
+        build(:payment,
+          payment_method: payment_method,
+          source: payment_source,
+          order: order,
+          amount: 5)
+      end
+
+      context 'that are store credit payments' do
+        it 'does not invalidate existing payments' do
+          expect { payment.save! }.to_not change { order.payments.with_state(:invalid).count }
+        end
+      end
+
+      context 'when payment is a store credit payment' do
+        let(:payment_method) { existing_payment_method }
+        let(:payment_source) { existing_payment_source }
+
+        it 'does not invalidate existing payments' do
+          expect { payment.save! }.to_not change { order.payments.with_state(:invalid).count }
+        end
+      end
+    end
+
     describe "invalidating payments updates in memory objects" do
       before do
         Spree::PaymentCreate.new(order, amount: 1).build.save!
