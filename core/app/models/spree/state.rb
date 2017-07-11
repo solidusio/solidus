@@ -5,8 +5,16 @@ module Spree
 
     validates :country, :name, presence: true
 
-    def self.find_all_by_name_or_abbr(name_or_abbr)
-      where('name = ? OR abbr = ?', name_or_abbr, name_or_abbr)
+    scope :with_name_or_abbr, ->(name_or_abbr) do
+      where(
+        arel_table[:name].matches(name_or_abbr).or(
+          arel_table[:abbr].matches(name_or_abbr)
+        )
+      )
+    end
+    class << self
+      alias_method :find_all_by_name_or_abbr, :with_name_or_abbr
+      deprecate find_all_by_name_or_abbr: :with_name_or_abbr, deprecator: Spree::Deprecation
     end
 
     # table of { country.id => [ state.id , state.name ] }, arrays sorted by name

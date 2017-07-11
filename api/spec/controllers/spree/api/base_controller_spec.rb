@@ -24,19 +24,19 @@ describe Spree::Api::BaseController, type: :controller do
 
     context "with a correct order token" do
       it "succeeds" do
-        api_get :index, order_token: order.guest_token, order_id: order.number
+        get :index, params: { order_token: order.guest_token, order_id: order.number }
         expect(response.status).to eq(200)
       end
 
       it "succeeds with an order_number parameter" do
-        api_get :index, order_token: order.guest_token, order_number: order.number
+        get :index, params: { order_token: order.guest_token, order_number: order.number }
         expect(response.status).to eq(200)
       end
     end
 
     context "with an incorrect order token" do
       it "returns unauthorized" do
-        api_get :index, order_token: "NOT_A_TOKEN", order_id: order.number
+        get :index, params: { order_token: "NOT_A_TOKEN", order_id: order.number }
         expect(response.status).to eq(401)
       end
     end
@@ -44,7 +44,7 @@ describe Spree::Api::BaseController, type: :controller do
 
   context "cannot make a request to the API" do
     it "without an API key" do
-      api_get :index
+      get :index
       expect(json_response).to eq({ "error" => "You must specify an API key." })
       expect(response.status).to eq(401)
     end
@@ -117,7 +117,7 @@ describe Spree::Api::BaseController, type: :controller do
 
     it 'should notify notify_error_during_processing' do
       expect(MockHoneybadger).to receive(:notify_or_ignore).once.with(kind_of(Exception), rack_env: kind_of(Hash))
-      api_get :foo, token: 123
+      get :foo, params: { token: 123 }
       expect(response.status).to eq(422)
     end
   end
@@ -153,7 +153,7 @@ describe Spree::Api::BaseController, type: :controller do
 
     context 'without an existing lock' do
       it 'succeeds' do
-        api_get :index, order_token: order.guest_token, order_id: order.number
+        get :index, params: { order_token: order.guest_token, order_id: order.number }
         expect(response.status).to eq(200)
       end
     end
@@ -164,7 +164,7 @@ describe Spree::Api::BaseController, type: :controller do
       end
 
       it 'returns a 409 conflict' do
-        api_get :index, order_token: order.guest_token, order_id: order.number
+        get :index, params: { order_token: order.guest_token, order_id: order.number }
         expect(response.status).to eq(409)
       end
     end

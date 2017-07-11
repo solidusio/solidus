@@ -1,5 +1,6 @@
 ## Solidus 2.3.0 (master, unreleased)
 
+- Allow refreshing shipping rates for unshipped shipments on completed orders [\#1906](https://github.com/solidusio/solidus/pull/1906) ([mamhoff](https://github.com/mamhoff))
 - Renamed `PaymentMethod#method_type` into `partial_name` [\#1978](https://github.com/solidusio/solidus/pull/1978) ([tvdeyen](https://github.com/tvdeyen))
 - Order#outstanding_balance now uses reimbursements instead of refunds to calculate the amount that should be paid on an order. [#2002](https://github.com/solidusio/solidus/pull/2002) (many contributors :heart:)
 
@@ -25,6 +26,10 @@
 
 - Adjustments without a source are now included in `line_item.adjustment_total`
 [\#1933](https://github.com/solidusio/solidus/pull/1933) ([alexstoick](https://github.com/alexstoick))
+
+### Deprecations
+- Deprecate `PaymentMethod.providers` in favour of `Rails.application.config.spree.payment_methods` [\#1974](https://github.com/solidusio/solidus/pull/1974) ([tvdeyen](https://github.com/tvdeyen))
+- Deprecate `Spree::Admin::PaymentMethodsController#load_providers` in favour of `load_payment_methods` [\#1974](https://github.com/solidusio/solidus/pull/1974) ([tvdeyen](https://github.com/tvdeyen))
 
 ## Solidus 2.2.1 (2017-05-09)
 

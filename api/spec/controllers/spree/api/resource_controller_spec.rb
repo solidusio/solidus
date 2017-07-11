@@ -50,14 +50,14 @@ module Spree
       let!(:widget) { Widget.create!(name: "a widget") }
 
       it "returns no widgets" do
-        api_get :index, token: user.spree_api_key
+        get :index, params: { token: user.spree_api_key }, as: :json
         expect(response).to be_success
         expect(json_response['widgets']).to be_blank
       end
 
       context "it has authorization to read widgets" do
         it "returns widgets" do
-          api_get :index, token: admin_user.spree_api_key
+          get :index, params: { token: admin_user.spree_api_key }, as: :json
           expect(response).to be_success
           expect(json_response['widgets']).to include(hash_including(
             'name' => 'a widget',
@@ -69,26 +69,26 @@ module Spree
           let!(:widget2) { Widget.create!(name: "a widget") }
 
           it "returns both widgets from comma separated string" do
-            api_get :index, ids: [widget.id, widget2.id].join(','), token: admin_user.spree_api_key
+            get :index, params: { ids: [widget.id, widget2.id].join(','), token: admin_user.spree_api_key }, as: :json
             expect(response).to be_success
             expect(json_response['widgets'].size).to eq 2
           end
 
           it "returns both widgets from multiple arguments" do
-            api_get :index, ids: [widget.id, widget2.id], token: admin_user.spree_api_key
+            get :index, params: { ids: [widget.id, widget2.id], token: admin_user.spree_api_key }, as: :json
             expect(response).to be_success
             expect(json_response['widgets'].size).to eq 2
           end
 
           it "returns one requested widgets" do
-            api_get :index, ids: widget2.id.to_s, token: admin_user.spree_api_key
+            get :index, params: { ids: widget2.id.to_s, token: admin_user.spree_api_key }, as: :json
             expect(response).to be_success
             expect(json_response['widgets'].size).to eq 1
             expect(json_response['widgets'][0]['id']).to eq widget2.id
           end
 
           it "returns no widgets if empty" do
-            api_get :index, ids: '', token: admin_user.spree_api_key
+            get :index, params: { ids: '', token: admin_user.spree_api_key }, as: :json
             expect(response).to be_success
             expect(json_response['widgets']).to be_empty
           end
@@ -100,13 +100,13 @@ module Spree
       let(:widget) { Widget.create!(name: "a widget") }
 
       it "returns not found" do
-        api_get :show, id: widget.to_param, token: user.spree_api_key
+        get :show, params: { id: widget.to_param, token: user.spree_api_key }, as: :json
         assert_not_found!
       end
 
       context "it has authorization read widgets" do
         it "returns widget details" do
-          api_get :show, id: widget.to_param, token: admin_user.spree_api_key
+          get :show, params: { id: widget.to_param, token: admin_user.spree_api_key }, as: :json
           expect(response).to be_success
           expect(json_response['name']).to eq 'a widget'
         end
@@ -115,13 +115,13 @@ module Spree
 
     describe "#new" do
       it "returns unauthorized" do
-        api_get :new, token: user.spree_api_key
+        get :new, params: { token: user.spree_api_key }, as: :json
         expect(response).to be_unauthorized
       end
 
       context "it is allowed to view a new widget" do
         it "can learn how to create a new widget" do
-          api_get :new, token: admin_user.spree_api_key
+          get :new, params: { token: admin_user.spree_api_key }, as: :json
           expect(response).to be_success
           expect(json_response["attributes"]).to eq(['name'])
         end
@@ -131,7 +131,7 @@ module Spree
     describe "#create" do
       it "returns unauthorized" do
         expect {
-          api_post :create, widget: { name: "a widget" }, token: user.spree_api_key
+          post :create, params: { widget: { name: "a widget" }, token: user.spree_api_key }, as: :json
         }.not_to change(Widget, :count)
         expect(response).to be_unauthorized
       end
@@ -139,7 +139,7 @@ module Spree
       context "it is authorized to create widgets" do
         it "can create a widget" do
           expect {
-            api_post :create, widget: { name: "a widget" }, token: admin_user.spree_api_key
+            post :create, params: { widget: { name: "a widget" }, token: admin_user.spree_api_key }, as: :json
           }.to change(Widget, :count).by(1)
           expect(response).to be_created
           expect(json_response['name']).to eq 'a widget'
@@ -151,14 +151,14 @@ module Spree
     describe "#update" do
       let!(:widget) { Widget.create!(name: "a widget") }
       it "returns unauthorized" do
-        api_put :update, id: widget.to_param, widget: { name: "another widget" }, token: user.spree_api_key
+        put :update, params: { id: widget.to_param, widget: { name: "another widget" }, token: user.spree_api_key }, as: :json
         assert_not_found!
         expect(widget.reload.name).to eq 'a widget'
       end
 
       context "it is authorized to update widgets" do
         it "can update a widget" do
-          api_put :update, id: widget.to_param, widget: { name: "another widget" }, token: admin_user.spree_api_key
+          put :update, params: { id: widget.to_param, widget: { name: "another widget" }, token: admin_user.spree_api_key }, as: :json
           expect(response).to be_success
           expect(json_response['name']).to eq 'another widget'
           expect(widget.reload.name).to eq 'another widget'
@@ -169,14 +169,14 @@ module Spree
     describe "#destroy" do
       let!(:widget) { Widget.create!(name: "a widget") }
       it "returns unauthorized" do
-        api_delete :destroy, id: widget.to_param, token: user.spree_api_key
+        delete :destroy, params: { id: widget.to_param, token: user.spree_api_key }, as: :json
         assert_not_found!
         expect { widget.reload }.not_to raise_error
       end
 
       context "it is authorized to destroy widgets" do
         it "can destroy a widget" do
-          api_delete :destroy, id: widget.to_param, token: admin_user.spree_api_key
+          delete :destroy, params: { id: widget.to_param, token: admin_user.spree_api_key }, as: :json
           expect(response.status).to eq 204
           expect { widget.reload }.to raise_error(ActiveRecord::RecordNotFound)
         end

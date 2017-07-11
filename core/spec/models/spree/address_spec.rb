@@ -21,7 +21,7 @@ describe Spree::Address, type: :model do
     let(:address) { build(:address, country: country) }
 
     before do
-      allow(country.states).to receive_messages find_all_by_name_or_abbr: [state]
+      allow(country.states).to receive_messages with_name_or_abbr: [state]
     end
 
     context 'address does not require state' do

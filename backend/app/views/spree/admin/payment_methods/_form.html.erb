@@ -7,7 +7,7 @@
         <div id="preference-settings">
           <div class="field">
             <%= label :payment_method, :type %>
-            <%= collection_select(:payment_method, :type, @providers, :to_s, :name, {}, {class: 'custom-select fullwidth js-gateway-type'}) %>
+            <%= collection_select(:payment_method, :type, @payment_method_types, :to_s, :name, {}, {class: 'custom-select fullwidth js-gateway-type'}) %>
           </div>
 
           <div class="field js-preference-source-wrapper">
@@ -23,7 +23,7 @@
             <% end %>
           </div>
 
-          <div class="info warning js-gateway-settings-warning"><%= Spree.t(:provider_settings_warning) %></div>
+          <div class="info warning js-gateway-settings-warning"><%= Spree.t(:payment_method_settings_warning) %></div>
         </div>
         <div data-hook="available_to_user" class="field">
           <%= label_tag nil, Spree::PaymentMethod.human_attribute_name(:available_to_users) %>
