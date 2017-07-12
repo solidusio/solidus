@@ -53,9 +53,7 @@ module Spree
       def fire
         return unless (event = params[:e]) && @payment.payment_source
 
-        # Because we have a transition method also called void, we do this to avoid conflicts.
-        event = "void_transaction" if event == "void"
-        if @payment.send("#{event}!")
+        if fire_event(event)
           flash[:success] = Spree.t(:payment_updated)
         else
           flash[:error] = Spree.t(:cannot_perform_operation)
@@ -115,6 +113,16 @@ module Spree
       def insufficient_stock_error
         flash[:error] = Spree.t(:insufficient_stock_for_order)
         redirect_to new_admin_order_payment_url(@order)
+      end
+
+      def fire_event(event)
+        # Because we have a transition method also called void, we do this to avoid conflicts.
+        event = "void_transaction" if event == "void"
+        if event == "capture" && @amount.to_i > 0
+          @payment.capture!(Money.parse(@amount).cents)
+        else
+          @payment.send("#{event}!")
+        end
       end
     end
   end
