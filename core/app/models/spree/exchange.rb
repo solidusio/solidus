@@ -27,7 +27,7 @@ module Spree
       @order.shipments += shipments
       @order.save!
       shipments.each do |shipment|
-        shipment.update!(@order)
+        shipment.update_state
         shipment.finalize!
       end
     end
