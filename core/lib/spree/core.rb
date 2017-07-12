@@ -11,7 +11,6 @@ require 'paperclip'
 require 'paranoia'
 require 'ransack'
 require 'state_machines-activerecord'
-require 'responders'
 
 # This is required because ActiveModel::Validations#invalid? conflicts with the
 # invalid state of a Payment. In the future this should be removed.
@@ -75,7 +74,6 @@ require 'spree/core/controller_helpers/common'
 require 'spree/core/controller_helpers/order'
 require 'spree/core/controller_helpers/payment_parameters'
 require 'spree/core/controller_helpers/pricing'
-require 'spree/core/controller_helpers/respond_with'
 require 'spree/core/controller_helpers/search'
 require 'spree/core/controller_helpers/store'
 require 'spree/core/controller_helpers/strong_parameters'

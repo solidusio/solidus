@@ -9,11 +9,6 @@ describe Spree::Admin::OrdersController, type: :controller do
 
     before do
       request.env["HTTP_REFERER"] = "http://localhost:3000"
-
-      # ensure no respond_overrides are in effect
-      if Spree::BaseController.spree_responders[:OrdersController].present?
-        Spree::BaseController.spree_responders[:OrdersController].clear
-      end
     end
 
     let(:order) do
