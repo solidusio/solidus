@@ -18,7 +18,7 @@ RSpec.describe "Outstanding balance integration tests" do
 
   subject do
     order.reload
-    order.update!
+    order.recalculate
     order.outstanding_balance
   end
 

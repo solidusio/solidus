@@ -93,7 +93,7 @@ describe "Checkout", type: :feature, inaccessible: true do
 
         order.reload
         order.user = user
-        order.update!
+        order.recalculate
         order
       end
 
@@ -217,7 +217,7 @@ describe "Checkout", type: :feature, inaccessible: true do
 
       user = create(:user)
       order.user = user
-      order.update!
+      order.recalculate
 
       allow_any_instance_of(Spree::CheckoutController).to receive_messages(current_order: order)
       allow_any_instance_of(Spree::CheckoutController).to receive_messages(try_spree_current_user: user)
@@ -245,7 +245,7 @@ describe "Checkout", type: :feature, inaccessible: true do
 
       order.reload
       order.user = user
-      order.update!
+      order.recalculate
       order
     end
 
@@ -292,7 +292,7 @@ describe "Checkout", type: :feature, inaccessible: true do
       order = OrderWalkthrough.up_to(:delivery)
       allow(order).to receive_messages(available_payment_methods: [check_payment, credit_cart_payment])
       order.user = create(:user)
-      order.update!
+      order.recalculate
 
       allow_any_instance_of(Spree::CheckoutController).to receive_messages(current_order: order)
       allow_any_instance_of(Spree::CheckoutController).to receive_messages(try_spree_current_user: order.user)

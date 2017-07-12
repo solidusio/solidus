@@ -296,9 +296,9 @@ module Spree
       if update_attributes params
         if params.key? :selected_shipping_rate_id
           # Changing the selected Shipping Rate won't update the cost (for now)
-          # so we persist the Shipment#cost before running `order.update!`
+          # so we persist the Shipment#cost before running `order.recalculate`
           update_amounts
-          order.update!
+          order.recalculate
         end
 
         true

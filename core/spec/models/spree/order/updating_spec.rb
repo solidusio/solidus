@@ -9,7 +9,7 @@ describe Spree::Order, type: :model do
       after { Spree::Order.update_hooks.clear }
       it "should call each of the update hooks" do
         expect(order).to receive :foo
-        order.update!
+        order.recalculate
       end
     end
   end

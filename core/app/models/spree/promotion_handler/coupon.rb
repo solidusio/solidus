@@ -95,7 +95,7 @@ module Spree
         discount ||= order.adjustments.promotion.detect(&detector)
 
         if discount && discount.eligible
-          order.update!
+          order.recalculate
           set_success_code :coupon_code_applied
         elsif order.promotions.with_coupon_code(order.coupon_code)
           # if the promotion exists on an order, but wasn't found above,

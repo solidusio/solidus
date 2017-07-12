@@ -148,7 +148,7 @@ describe Spree::OrderCancellations do
           source: promotion_action,
           finalized: true,
         )
-        order.update!
+        order.recalculate
       end
 
       it "generates the correct total amount" do

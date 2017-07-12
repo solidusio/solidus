@@ -240,7 +240,7 @@ module Spree
 
     def update_order
       if order.completed? || completed? || void?
-        order.update!
+        order.recalculate
       end
     end
 

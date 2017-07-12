@@ -47,7 +47,7 @@ describe Spree::OrderCapturing do
 
       before do
         order.contents.add(variant, 3)
-        order.update!
+        order.recalculate
         @secondary_bogus_payment = create(:payment, order: order, amount: secondary_total, payment_method: secondary_payment_method.create!(name: 'So bogus'))
         @bogus_payment = create(:payment, order: order, amount: bogus_total)
         order.contents.advance

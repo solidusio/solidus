@@ -180,7 +180,7 @@ describe Spree::Order, type: :model do
       create(:shipment, order: order)
       create(:adjustment, adjustable: order, order: order)
       promotion.activate(order: order, promotion_code: code)
-      order.update!
+      order.recalculate
 
       # Make sure we are asserting changes
       expect(order.line_items).not_to be_empty
@@ -313,7 +313,7 @@ describe Spree::Order, type: :model do
     it "calls hook during update" do
       order = create(:order)
       expect(order).to receive(:add_awesome_sauce)
-      order.update!
+      order.recalculate
     end
 
     it "calls hook during finalize" do
@@ -1182,7 +1182,7 @@ describe Spree::Order, type: :model do
 
       context "there is enough store credit to pay for the entire order" do
         let(:store_credit) { create(:store_credit, amount: order_total) }
-        let(:order) { create(:order_with_totals, user: store_credit.user, line_items_price: order_total).tap(&:update!) }
+        let(:order) { create(:order_with_totals, user: store_credit.user, line_items_price: order_total).tap(&:recalculate) }
 
         context "there are no other payments" do
           before do
@@ -1210,7 +1210,7 @@ describe Spree::Order, type: :model do
         let(:order_total) { 500 }
         let(:store_credit_total) { order_total - 100 }
         let(:store_credit)       { create(:store_credit, amount: store_credit_total) }
-        let(:order) { create(:order_with_totals, user: store_credit.user, line_items_price: order_total).tap(&:update!) }
+        let(:order) { create(:order_with_totals, user: store_credit.user, line_items_price: order_total).tap(&:recalculate) }
 
         context "there are no other payments" do
           it "adds an error to the model" do
@@ -1255,7 +1255,7 @@ describe Spree::Order, type: :model do
           let(:amount_difference)       { 100 }
           let!(:primary_store_credit)   { create(:store_credit, amount: (order_total - amount_difference)) }
           let!(:secondary_store_credit) { create(:store_credit, amount: order_total, user: primary_store_credit.user, credit_type: create(:secondary_credit_type)) }
-          let(:order) { create(:order_with_totals, user: primary_store_credit.user, line_items_price: order_total).tap(&:update!) }
+          let(:order) { create(:order_with_totals, user: primary_store_credit.user, line_items_price: order_total).tap(&:recalculate) }
 
           before do
             subject
