@@ -394,7 +394,7 @@ module Spree
     #   Spree::CurrentStoreSelector
     attr_writer :current_store_selector_class
     def current_store_selector_class
-      @current_store_selector_class ||= Spree::CurrentStoreSelector
+      @current_store_selector_class ||= Spree::StoreSelector::ByServerName
     end
 
     # Allows providing your own class instance for generating order numbers.

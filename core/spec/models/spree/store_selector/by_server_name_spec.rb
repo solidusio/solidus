@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe Spree::CurrentStoreSelector do
+describe Spree::StoreSelector::ByServerName do
   describe "#store" do
-    subject { Spree::CurrentStoreSelector.new(request).store }
+    subject { described_class.new(request).store }
 
     context "with a default" do
       let(:request) { double(headers: {}, env: {}) }
@@ -19,16 +19,6 @@ describe Spree::CurrentStoreSelector do
 
         it "returns the store with the matching domain" do
           expect(subject).to eq(store_2)
-        end
-
-        context "with headers" do
-          let(:request) { double(headers: { "HTTP_SPREE_STORE" => headers_code }, env: {}) }
-          let(:headers_code) { "HEADERS" }
-          let!(:store_3) { create :store, code: headers_code, default: false }
-
-          it "returns the store with the matching code" do
-            expect(subject).to eq(store_3)
-          end
         end
       end
     end

@@ -7,7 +7,7 @@ module Spree
       def initialize(request)
         @request = request
         @current_store_selector = Spree::Config.current_store_selector_class.new(request)
-        Spree::Deprecation.warn "Using Spree::Core::CurrentStore is deprecated. Use Spree::CurrentStoreSelector instead", caller
+        Spree::Deprecation.warn "Using Spree::Core::CurrentStore is deprecated. Use Spree::Config.current_store_selector_class instead", caller
       end
 
       # Delegate store selection to Spree::Config.current_store_selector_class
