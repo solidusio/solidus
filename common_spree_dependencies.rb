@@ -25,6 +25,7 @@ group :test do
   gem 'email_spec'
   gem 'factory_girl_rails', '~> 4.8'
   gem 'launchy'
+  gem 'ffaker', '~> 2.0'
   gem 'rspec-activemodel-mocks', '~>1.0.2'
   gem 'rspec-collection_matchers'
   gem 'rspec-its'
