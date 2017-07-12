@@ -23,7 +23,7 @@ FactoryGirl.define do
 
     transient do
       cost 10.0
-      currency 'USD'
+      currency { Spree::Config[:currency] }
     end
 
     before(:create) do |shipping_method, _evaluator|
