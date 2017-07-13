@@ -156,10 +156,22 @@ module Spree
     #     The view that represents your payment method on orders in the backend
     #
     def partial_name
-      type.demodulize.downcase
+      deprecated_method_type_override || type.demodulize.downcase
     end
-    alias_method :method_type, :partial_name
-    deprecate method_type: :partial_name, deprecator: Spree::Deprecation
+
+    # :nodoc:
+    # If method_type has been overridden, call it and return the value, otherwise return nil
+    def deprecated_method_type_override
+      if method(:method_type).owner != Spree::PaymentMethod
+        Spree::Deprecation.warn "overriding PaymentMethod#method_type is deprecated and will be removed from Solidus 3.0 (override partial_name instead)", caller
+        method_type
+      end
+    end
+
+    def method_type
+      Spree::Deprecation.warn "method_type is deprecated and will be removed from Solidus 3.0 (use partial_name instead)", caller
+      partial_name
+    end
 
     def payment_profiles_supported?
       false
