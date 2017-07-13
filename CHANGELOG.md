@@ -1,4 +1,7 @@
-## Solidus 2.3.0 (master, unreleased)
+## Solidus 2.4.0 (master, unreleased)
+
+
+## Solidus 2.3.0 (unreleased)
 
 - Rails 5.1 [\#1895](https://github.com/solidusio/solidus/pull/1895) ([jhawthorn](https://github.com/jhawthorn))
 
