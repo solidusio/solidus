@@ -22,13 +22,13 @@ RSpec.feature 'Translations', :js do
     end
 
     scenario 'adds german to available locales' do
-      within(".store-id-#{store.id}") do
+      within("#store-id-#{store.id}") do
         expect(page).to_not have_content(language)
-        find('a.edit-available-locales').click
+        find('a[data-action="edit"]').click
 
-        targetted_select2_search(language, from: '#s2id_store_preferred_available_locales_')
+        targetted_select2_search(language, from: '.available-locales')
 
-        find('a.save-available-locales').click
+        find('a[data-action="save"]').click
 
         wait_for_ajax
 
@@ -38,13 +38,13 @@ RSpec.feature 'Translations', :js do
     end
 
     scenario 'adds french to available locales' do
-      within(".store-id-#{store.id}") do
+      within("#store-id-#{store.id}") do
         expect(page).to_not have_content(french)
-        find('a.edit-available-locales').click
+        find('a[data-action="edit"]').click
 
-        targetted_select2_search(french, from: '#s2id_store_preferred_available_locales_')
+        targetted_select2_search(french, from: '.available-locales')
 
-        find('a.save-available-locales').click
+        find('a[data-action="save"]').click
 
         wait_for_ajax
 
