@@ -18,8 +18,10 @@ module Spree
 
     scope :non_reimbursement, -> { where(reimbursement_id: nil) }
 
+    delegate :currency, to: :payment
+
     def money
-      Spree::Money.new(amount, { currency: payment.currency })
+      Spree::Money.new(amount, { currency: currency })
     end
     alias display_amount money
 
