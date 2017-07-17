@@ -35,7 +35,7 @@ FactoryGirl.define do
             adjustment.source.tax_categories = []
           end
           adjustment.source.save
-          adjustment.update!
+          adjustment.recalculate
         end
       end
     end

@@ -96,7 +96,7 @@ module Spree
     # admin) or is closed, this is a noop.
     #
     # @return [BigDecimal] New amount of this adjustment
-    def update!
+    def recalculate
       if finalized? && !tax?
         return amount
       end
@@ -116,6 +116,15 @@ module Spree
         update_columns(eligible: eligible, amount: amount, updated_at: Time.current) if changed?
       end
       amount
+    end
+
+    def update!(*args)
+      if args.empty?
+        Spree::Deprecation.warn "Calling adjustment.update! with no arguments to recalculate amounts and eligibility is deprecated, since it conflicts with AR::Base#update! Please use adjustment.recalculate instead"
+        recalculate
+      else
+        super
+      end
     end
 
     # Calculates based on attached promotion (if this is a promotion
