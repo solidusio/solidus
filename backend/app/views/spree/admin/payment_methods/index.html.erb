@@ -37,7 +37,7 @@
     </thead>
     <tbody>
       <% @payment_methods.each do |method|%>
-        <tr id="<%= spree_dom_id method %>" data-hook="admin_payment_methods_index_rows" class="<%= cycle('odd', 'even')%>">
+        <tr id="<%= spree_dom_id method %>" data-hook="admin_payment_methods_index_rows">
           <td><span class="handle"></span></td>
           <td><%= method.name %></td>
           <td><%= method.type %></td>

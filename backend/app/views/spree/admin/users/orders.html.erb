@@ -31,7 +31,7 @@
       </thead>
       <tbody>
       <% @orders.each do |order| %>
-        <tr data-hook="admin_orders_index_rows" class="state-<%= order.state.downcase %> <%= cycle('odd', 'even') %>">
+        <tr data-hook="admin_orders_index_rows" class="state-<%= order.state.downcase %>">
           <td class="order-completed-at"><%= l(order.completed_at.to_date) if order.completed_at %></td>
           <td class="order-number">
             <% if can?([:admin, :edit], order) %>

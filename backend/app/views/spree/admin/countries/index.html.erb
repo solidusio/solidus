@@ -31,7 +31,7 @@
   </thead>
   <tbody>
     <% @countries.each do |country| %>
-      <tr id="<%= spree_dom_id country %>" data-hook="country_row" class="<%= cycle('odd', 'even')%>">
+      <tr id="<%= spree_dom_id country %>" data-hook="country_row">
         <td><%= country.name %></td>
         <td><%= country.iso_name %></td>
         <td class="align-center"><%= country.states_required? ? Spree.t(:say_yes) : Spree.t(:say_no) %></td>

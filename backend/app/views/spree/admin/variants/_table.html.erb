@@ -19,7 +19,7 @@
   </thead>
   <tbody>
   <% variants.each do |variant| %>
-    <tr id="<%= spree_dom_id variant %>" data-hook="variants_row" class="<%= "deleted" if variant.deleted? %> <%= cycle('odd', 'even')%>">
+    <tr id="<%= spree_dom_id variant %>" data-hook="variants_row" class="<%= "deleted" if variant.deleted? %>">
       <td>
         <% if can? :update_positions, Spree::Variant %>
           <span class="handle"></span>

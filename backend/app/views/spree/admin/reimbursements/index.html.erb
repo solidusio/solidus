@@ -19,7 +19,7 @@
   </thead>
   <tbody>
     <% @reimbursements.each do |reimbursement| %>
-      <tr id="<%= spree_dom_id(reimbursement) %>" data-hook="reimbursement_row" class="<%= cycle('odd', 'even')%>">
+      <tr id="<%= spree_dom_id(reimbursement) %>" data-hook="reimbursement_row">
         <td><%= reimbursement.id %></td>
         <td><%= reimbursement.total %></td>
         <td><%= reimbursement.reimbursement_status %></td>

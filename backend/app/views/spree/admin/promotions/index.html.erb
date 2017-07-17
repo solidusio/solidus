@@ -83,7 +83,7 @@
     </thead>
     <tbody>
       <% @promotions.each do |promotion| %>
-        <tr id="<%= spree_dom_id promotion %>" class="<%= cycle('odd', 'even')%>">
+        <tr id="<%= spree_dom_id promotion %>">
           <td><%= promotion.name %></td>
           <td><%= (promotion.codes.size == 1) ? promotion.codes.first.try!(:value) : Spree.t(:number_of_codes, count: promotion.codes.size) %></td>
           <td><%= promotion.description %></td>
