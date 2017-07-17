@@ -91,8 +91,8 @@
           <td><%= handle_stock_transfer(stock_transfer) %></td>
           <td><%= stock_transfer.source_location.name %></td>
           <td><%= stock_transfer.destination_location.try(:name) %></td>
-          <td class="align-center"><%= stock_transfer.expected_item_count %></td>
-          <td class="align-center"><%= stock_transfer.received_item_count %></td>
+          <td><%= stock_transfer.expected_item_count %></td>
+          <td><%= stock_transfer.received_item_count %></td>
           <td><%= stock_transfer.shipped_at.try(:to_date) %></td>
           <td><%= stock_transfer_status(stock_transfer) %></td>
           <td class="actions">

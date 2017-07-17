@@ -26,21 +26,21 @@
     </colgroup>
     <thead>
       <tr data-hook="admin_payment_methods_index_headers">
-        <th class="no-border"></th>
+        <th></th>
         <th><%= Spree::PaymentMethod.human_attribute_name(:name) %></th>
         <th><%= Spree::PaymentMethod.human_attribute_name(:type) %></th>
-        <th><%= Spree::PaymentMethod.human_attribute_name(:available_to_users) %></th>
-        <th><%= Spree::PaymentMethod.human_attribute_name(:available_to_admin) %></th>
-        <th><%= Spree::PaymentMethod.human_attribute_name(:active) %></th>
+        <th class="align-center"><%= Spree::PaymentMethod.human_attribute_name(:available_to_users) %></th>
+        <th class="align-center"><%= Spree::PaymentMethod.human_attribute_name(:available_to_admin) %></th>
+        <th class="align-center"><%= Spree::PaymentMethod.human_attribute_name(:active) %></th>
         <th data-hook="admin_payment_methods_index_header_actions" class="actions"></th>
       </tr>
     </thead>
     <tbody>
       <% @payment_methods.each do |method|%>
         <tr id="<%= spree_dom_id method %>" data-hook="admin_payment_methods_index_rows" class="<%= cycle('odd', 'even')%>">
-          <td class="no-border"><span class="handle"></span></td>
-          <td class="align-center"><%= method.name %></td>
-          <td class="align-center"><%= method.type %></td>
+          <td><span class="handle"></span></td>
+          <td><%= method.name %></td>
+          <td><%= method.type %></td>
           <td class="align-center"><%= method.available_to_users ? Spree.t(:say_yes) : Spree.t(:say_no) %></td>
           <td class="align-center"><%= method.available_to_admin ? Spree.t(:say_yes) : Spree.t(:say_no) %></td>
           <td class="align-center"><%= method.active ? Spree.t(:say_yes) : Spree.t(:say_no) %></td>

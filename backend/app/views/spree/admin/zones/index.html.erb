@@ -35,7 +35,7 @@
     <tbody>
       <% @zones.each do |zone| %>
         <tr id="<%= spree_dom_id zone %>" data-hook="zones_row" class="<%= cycle('odd', 'even')%>">
-          <td class="align-center"><%= zone.name %></td>
+          <td><%= zone.name %></td>
           <td><%= zone.description %></td>
           <td class="actions">
             <% if can?(:update, zone) %>

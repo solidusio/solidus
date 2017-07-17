@@ -10,7 +10,7 @@
         <td><strong>
           <%= Spree.t(:failed_payment_attempts) %>:
         </strong></td>
-          <td class="align-center">
+          <td>
             <span class="<%= @order.payments.failed.count > 0 ? 'state void' : 'state complete' %>">
               <%= link_to Spree.t(:payments_failed_count,
                                   count: @order.payments.failed.count),
@@ -21,7 +21,7 @@
 
       <tr>
         <td><strong><%= Spree.t(:avs_response) %>:</strong></td>
-        <td class="align-center">
+        <td>
           <% if latest_payment.is_avs_risky? %>
             <span class="state void"><%= Spree.t(:error) %>:</span>
             <%= avs_response_code[latest_payment.avs_response] %>
@@ -33,7 +33,7 @@
 
       <tr>
         <td><strong><%= Spree.t(:cvv_response) %>:</strong></td>
-        <td class="align-center">
+        <td>
           <span class="<%= latest_payment.is_cvv_risky? ? 'state void' : 'state complete' %>">
             <% if latest_payment.is_cvv_risky? %>
               <%= "#{Spree.t(:error)}: #{cvv_response_code[latest_payment.cvv_response_code]}" %>

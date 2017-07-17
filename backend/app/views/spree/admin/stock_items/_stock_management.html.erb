@@ -25,7 +25,7 @@
     <%- row_count = @stock_item_stock_locations.count + 2 %>
     <tbody class="variant-stock-items">
       <tr id="<%= spree_dom_id variant %>">
-        <td class="align-center no-padding" rowspan="<%= row_count %>">
+        <td class="no-padding" rowspan="<%= row_count %>">
           <div class='variant-container'>
             <div class='variant-image'>
               <%= render 'spree/admin/shared/image', image: variant.display_image(fallback: false), size: :small %>
@@ -46,7 +46,7 @@
             </div>
           </div>
         </td>
-        <td class="align-center" rowspan="<%= row_count %>">
+        <td rowspan="<%= row_count %>">
           <table class='stock-variant-field-table'>
             <% variant.option_values.sort_by(&:option_type_name).each do |option_value| %>
               <tr>

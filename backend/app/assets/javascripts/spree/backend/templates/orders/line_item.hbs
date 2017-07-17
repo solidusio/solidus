@@ -14,7 +14,7 @@
     <strong>{{ t "sku" }}:</strong> {{ line_item.variant.sku }}
   </td>
 {{/if}}
-<td class="line-item-price align-center">
+<td class="line-item-price">
   {{ line_item.single_display_amount }}
 </td>
 {{#if editing}}
@@ -22,11 +22,11 @@
     <input type="number" name="quantity" value="{{ line_item.quantity }}" min="0" class="line_item_quantity" size="5">
   </td>
 {{else}}
-  <td class="line-item-qty-show align-center">
+  <td class="line-item-qty-show">
     {{ line_item.quantity }}
   </td>
 {{/if}}
-<td class="line-item-total align-center">
+<td class="line-item-total">
   {{ line_item.display_amount }}
 </td>
 <td class="cart-line-item-delete actions" data-hook="cart_line_item_delete">

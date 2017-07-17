@@ -28,11 +28,11 @@
     </thead>
     <tbody>
       <% @adjustment_reasons.each do |adjustment_reason| %>
-        <tr id="<%= spree_dom_id adjustment_reason %>" data-hook="adjustment_reason_row" class="<%= cycle('odd', 'even')%>">
-          <td class="align-center">
+        <tr id="<%= spree_dom_id adjustment_reason %>" data-hook="adjustment_reason_row">
+          <td>
             <%= adjustment_reason.name %>
           </td>
-          <td class="align-center">
+          <td>
             <%= Spree.t(adjustment_reason.active? ? :active : :inactive) %>
           </td>
           <td class="actions">

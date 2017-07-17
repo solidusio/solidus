@@ -7,11 +7,11 @@
         <th><%= Spree::Adjustment.human_attribute_name(:amount)%></th>
       </tr>
     </thead>
-    <tbody data-hook="order_details_adjustments"  class="with-border">
+    <tbody data-hook="order_details_adjustments">
       <% adjustments.eligible.group_by(&:label).each do |label, adjustments| %>
         <tr class="total">
           <td><strong><%= label %>:</strong></td>
-          <td class="total align-center"><span><%= Spree::Money.new(adjustments.sum(&:amount), currency: adjustments.first.order.try(:currency)) %></span></td>
+          <td class="total"><span><%= Spree::Money.new(adjustments.sum(&:amount), currency: adjustments.first.order.try(:currency)) %></span></td>
         </tr>
       <% end %>
     </tbody>

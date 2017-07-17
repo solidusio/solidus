@@ -32,10 +32,10 @@
     <tbody>
       <% @collection.each do |named_type| %>
         <tr id="<%= spree_dom_id named_type %>" data-hook="named_type_row" class="<%= cycle('odd', 'even')%>">
-          <td class="align-center">
+          <td>
             <%= named_type.name %>
           </td>
-          <td class="align-center">
+          <td>
             <%= Spree.t(named_type.active? ? :say_yes : :say_no) %>
           </td>
           <td class="actions">

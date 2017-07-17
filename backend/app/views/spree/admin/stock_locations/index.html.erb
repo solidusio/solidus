@@ -32,7 +32,7 @@
     </colgroup>
     <thead>
       <tr data-hook="stock_locations_header">
-        <th class="no-border"></th>
+        <th></th>
         <th><%= Spree::StockLocation.human_attribute_name(:name) %></th>
         <th><%= Spree::StockLocation.human_attribute_name(:state_id) %></th>
         <th><%= plural_resource_name(Spree::StockMovement) %></th>
@@ -45,20 +45,20 @@
            @delete_url = admin_stock_location_path(stock_location)
       %>
         <tr id="<%= spree_dom_id stock_location %>" data-hook="stock_location_row" class="<%= cycle('odd', 'even')%>">
-          <td class="no-border">
+          <td>
             <% if can?(:update_positions, Spree::StockLocation) %>
               <span class="handle"></span>
             <% end %>
           </td>
-          <td class="align-center"><%= admin_stock_location_display_name(stock_location) %></td>
-          <td class="align-center">
+          <td><%= admin_stock_location_display_name(stock_location) %></td>
+          <td>
             <% if stock_location.active? %>
               <span class="state active"><%= Spree.t('active') %></span>
             <% else %>
               <span class="state inactive"><%= Spree.t('inactive') %></span>
             <% end %>
           </td>
-          <td class="align-center">
+          <td>
             <% if can?(:display, Spree::StockMovement) %>
               <%= link_to plural_resource_name(Spree::StockMovement), admin_stock_location_stock_movements_path(stock_location.id) %>
             <% else %>

@@ -31,9 +31,9 @@
   <tbody>
     <% @option_types.each do |option_type| %>
       <tr class="spree_option_type <%= cycle('odd', 'even')%>" id="<%= spree_dom_id option_type %>" data-hook="option_row">
-        <td class="no-border"><span class="handle"></span></td>
-        <td class="align-center"><%= option_type.name %></td>
-        <td class="align-center presentation"><%= option_type.presentation %></td>
+        <td><span class="handle"></span></td>
+        <td><%= option_type.name %></td>
+        <td class="presentation"><%= option_type.presentation %></td>
         <td class="actions">
           <% if can?(:update, option_type) %>
             <%= link_to_edit(option_type, class: 'admin_edit_option_type', no_text: true) %>

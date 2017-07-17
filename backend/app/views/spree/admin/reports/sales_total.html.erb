@@ -24,7 +24,7 @@
   </thead>
   <tbody>
     <% @totals.each do |key, row| %>
-      <tr class="align-center">
+      <tr>
         <td><%= key %></td>
         <td><%= row[:item_total].format %></td>
         <td><%= row[:adjustment_total].format %></td>
