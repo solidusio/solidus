@@ -141,7 +141,7 @@ module Spree
     # give each of the shipments a chance to update themselves
     def update_shipments
       shipments.each do |shipment|
-        shipment.update!(order)
+        shipment.update_state
       end
     end
 
