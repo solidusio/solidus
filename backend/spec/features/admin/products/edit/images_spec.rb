@@ -147,7 +147,7 @@ describe "Product Images", type: :feature do
       end
 
       # ensure correct cell count
-      expect(page).to have_css("thead th", count: 3)
+      expect(page).to have_css("thead th", count: 4)
     end
   end
 end
