@@ -89,10 +89,6 @@ table {
       width: 100%;
     }
 
-    &.no-border {
-      border-right: none;
-    }
-
     .handle {
       @extend .fa;
       @extend .fa-bars;
