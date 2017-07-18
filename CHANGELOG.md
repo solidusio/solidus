@@ -1,5 +1,6 @@
 ## Solidus 2.4.0 (master, unreleased)
 
+- Customized responders have been removed. They are available in the `solidus_responders` extension
 
 ## Solidus 2.3.0 (unreleased)
 
