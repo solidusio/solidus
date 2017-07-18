@@ -757,6 +757,13 @@ describe Spree::Payment, type: :model do
         )
       end
     end
+
+    it 'invalidates old payments that have a different payment method' do
+      expect {
+        another_gateway = Spree::PaymentMethod::BogusCreditCard.new(active: true, name: 'Bogus gateway')
+        Spree::Payment.create!(source: card, order: order, payment_method: another_gateway, amount: 5)
+      }.to change { payment.reload.state }.from('checkout').to('invalid')
+    end
   end
 
   # This used to describe #apply_source_attributes, whose behaviour is now part of PaymentCreate
