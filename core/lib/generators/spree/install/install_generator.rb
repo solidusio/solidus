@@ -35,7 +35,7 @@ module Spree
     end
 
     def add_files
-      template 'config/initializers/solidus.rb', 'config/initializers/solidus.rb'
+      template 'config/initializers/spree.rb', 'config/initializers/spree.rb'
     end
 
     def additional_tweaks
