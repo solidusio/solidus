@@ -50,7 +50,8 @@
 
   <thead>
     <tr data-hook="images_header">
-      <th colspan="2"><%= Spree.t(:thumbnail) %></th>
+      <th></th>
+      <th><%= Spree.t(:thumbnail) %></th>
       <% if @product.has_variants? %>
         <th><%= Spree::Variant.model_name.human %></th>
       <% end %>
