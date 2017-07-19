@@ -39,6 +39,7 @@ custom frontend instead of using [`solidus_frontend`](https://github.com/solidus
 [![Circle CI](https://circleci.com/gh/solidusio/solidus/tree/master.svg?style=shield)](https://circleci.com/gh/solidusio/solidus/tree/master)
 [![Gem](https://img.shields.io/gem/v/solidus.svg)](https://rubygems.org/gems/solidus)
 [![License](http://img.shields.io/badge/license-BSD-yellowgreen.svg)](LICENSE.md)
+[![Slack](http://slack.solidus.io/badge.svg)](http://slack.solidus.io)
 
 Demo
 ----
