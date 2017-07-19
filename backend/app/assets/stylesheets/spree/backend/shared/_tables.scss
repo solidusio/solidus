@@ -35,7 +35,8 @@ table {
     &.actions {
       background-color: transparent;
       border: none !important;
-      text-align: center;
+      text-align: left;
+      padding-left: 1.25rem;
 
       span.text {
         font-size: $body-font-size;
@@ -43,23 +44,17 @@ table {
 
       [class*='fa-'].no-text {
         font-size: 120%;
-        background-color: lighten($color-3);
-        border: 1px solid $color-border;
-        border-radius: 15px;
-        width: 29px;
-        height: 29px;
         display: inline-block;
-        padding-top: 6px;
+        padding: 2px 0;
+        text-align: center;
+        border-bottom: none;
+        vertical-align: middle;
 
         &:before {
-          text-align: center !important;
           padding: 0;
           width: 27px;
           display: inline-block;
-        }
-
-        &:hover {
-          border-color: transparent;
+          vertical-align: middle;
         }
       }
 
@@ -73,33 +68,32 @@ table {
         padding-left: 0px;
 
         &:hover {
-          background-color: $color-3;
-          color: $color-1;
+          color: $color-3;
         }
       }
+
       .fa-trash:hover, .fa-void:hover, .fa-failure:hover {
-        background-color: $color-error;
-        color: $color-1;
+        color: $brand-danger;
       }
+
       .fa-cancel:hover {
-        background-color: $color-notice;
-        color: $color-1;
+        color: $brand-warning;
       }
+
       .fa-edit:hover, .fa-capture:hover, .fa-ok:hover, .fa-plus:hover, .fa-save:hover {
-        background-color: $color-success;
-        color: $color-1;
+        color: $brand-success;
       }
+
       .fa-copy:hover {
-        background-color: $color-notice;
-        color: $color-1;
+        color: $brand-warning;
       }
+
       .fa-thumbs-up:hover {
-        background-color: $color-success;
-        color: $color-1;
+        color: $brand-success;
       }
+
       .fa-thumbs-down:hover {
-        background-color: $color-error;
-        color: $color-1;
+        color: $brand-danger;
       }
     }
 
@@ -124,7 +118,6 @@ table {
     td, th {
       border: none !important;
     }
-
   }
 
   thead {
