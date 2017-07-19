@@ -1,0 +1,50 @@
+<p>
+  Bootstrap modals are ready to use by rendering the shared partial and creating
+  a trigger.
+</p>
+
+<p>The partial requires three locals:</p>
+
+<ul>
+  <li>
+    <code>target</code>: this should match the <code>data-target</code> in your
+    trigger
+  </li>
+  <li>
+    <code>title</code>: this will appear in the modal's header
+  </li>
+  <li>
+    <code>content</code>: this will appear in the modal's body. This content can
+    be whatever you like – even another partial.
+  </li>
+</ul>
+
+<%- snippet = capture do %>
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#your-target">
+    Launch demo modal
+  </button>
+
+  &lt;%= render(
+    "spree/admin/shared/modal",
+    target: "your-target",
+    title: "Your Title",
+    content: "The modal's content, could be another partial"
+  ) %&gt;
+<%- end %>
+
+<div class="style-guide-code half">
+  <pre><code class="language-html"><%= escape_once snippet %></code></pre>
+</div>
+
+<div class="style-guide-result half">
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#your-target">
+    Demo Modal
+  </button>
+
+  <%= render(
+    "spree/admin/shared/modal",
+    target: "your-target",
+    title: "Your Title",
+    content: "The modal's content, could be another partial"
+  ) %>
+</div>
