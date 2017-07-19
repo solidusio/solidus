@@ -64,9 +64,12 @@ label {
 
 input[type="submit"],
 input[type="button"],
-button, .button {
-  @extend .btn;
-  @include button-variant($btn-primary-color, $btn-primary-bg, $btn-primary-border);
+button,
+.button {
+  &:not(.close) {
+    @extend .btn;
+    @include button-variant($btn-primary-color, $btn-primary-bg, $btn-primary-border);
+  }
 
   &:before {
     font-weight: normal !important;
