@@ -1,35 +1,10 @@
 #listing_product_stock {
-  margin-left: 0px;
-  margin-right: 0px;
 
-  th {
-    border-bottom: 1px solid $color-border;
+  tbody + tbody {
+    border-top-width: 1px;
   }
 
-  > tbody {
-    > tr.stock-item-edit-row {
-      td {
-        background-color: $color-tbl-even;
-        border-left: none;
-      }
-      &:nth-child(even) td {
-        /* An nth-even child is actually an odd row */
-        background-color: $color-tbl-odd;
-      }
-    }
-    > tr {
-      &:first-child td {
-        border-top: none;
-      }
-    }
-  }
   td {
-    vertical-align: middle;
-
-    &.location-name-cell {
-      border-left: none;
-    }
-
     input.error {
       border-color: $brand-danger;
     }
@@ -37,12 +12,6 @@
     .select2-container.error {
       border-radius: 4px;
       border: 1px solid $brand-danger;
-    }
-  }
-
-  tr:hover {
-    .stock-variant-field-table td {
-      background-color: transparent;
     }
   }
 }
