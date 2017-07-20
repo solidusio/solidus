@@ -1,0 +1,50 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/solidus
+    environment:
+      DB: postgresql
+      DB_HOST: localhost
+      DEFAULT_MAX_WAIT_TIME: 10
+      SOLIDUS_RAISE_DEPRECATIONS: true
+      CIRCLE_TEST_REPORTS: /tmp/test-results
+      CIRCLE_ARTIFACTS: /tmp/test-artifacts
+    docker:
+      - image: circleci/ruby:2.4.1-node-browsers
+      - image: jhawthorn/circleci-postgres-fast
+        environment:
+          POSTGRES_USER: root
+    parallelism: 3
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys:
+            - solidus-gems-v1-{{ .Branch }}
+            - solidus-gems-v1
+
+      - run: |
+          bundle install --path=vendor/bundle
+          for project in api backend core frontend sample; do
+            (cd $project && bundle install --path=../vendor/bundle)
+          done
+
+      - cache-save:
+          key: solidus-gems-v1-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+          paths:
+            - vendor/bundle
+
+      - run:
+          name: Run Tests
+          command: ./build-ci.rb test
+
+      - store_artifacts:
+          path: /tmp/test-artifacts
+          destination: test-artifacts
+
+      - store_artifacts:
+          path: /tmp/test-results
+          destination: raw-test-output
+
+      - store_test_results:
+          path: /tmp/test-results
