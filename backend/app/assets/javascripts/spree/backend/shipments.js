@@ -224,8 +224,8 @@ var ShipmentItemView = Backbone.View.extend({
   },
 
   events: {
-    "click .delete-item": "onDelete",
-    "click .split-item": "onSplit",
+    "click button.delete-item": "onDelete",
+    "click button.split-item": "onSplit",
   },
 
   removeSplit: function() {
@@ -286,13 +286,13 @@ var ShipmentEditView = Backbone.View.extend({
   },
 
   events: {
-    "click a.edit-method": "toggleMethodEdit",
-    "click a.cancel-method": "toggleMethodEdit",
-    "click a.save-method": "saveMethod",
+    "click button.edit-method": "toggleMethodEdit",
+    "click button.cancel-method": "toggleMethodEdit",
+    "click button.save-method": "saveMethod",
 
-    "click a.edit-tracking": "toggleTrackingEdit",
-    "click a.cancel-tracking": "toggleTrackingEdit",
-    "click a.save-tracking": "saveTracking",
+    "click button.edit-tracking": "toggleTrackingEdit",
+    "click button.cancel-tracking": "toggleTrackingEdit",
+    "click button.save-tracking": "saveTracking",
   },
 
   toggleMethodEdit: function(e){
