@@ -141,7 +141,7 @@ module Spree
     # give each of the shipments a chance to update themselves
     def update_shipments
       shipments.each do |shipment|
-        shipment.update!(order)
+        shipment.update_state
       end
     end
 
@@ -208,7 +208,7 @@ module Spree
       [*line_items, *shipments].each do |item|
         promotion_adjustments = item.adjustments.select(&:promotion?)
 
-        promotion_adjustments.each(&:update!)
+        promotion_adjustments.each(&:recalculate)
         Spree::Config.promotion_chooser_class.new(promotion_adjustments).update
 
         item.promo_total = promotion_adjustments.select(&:eligible?).sum(&:amount)
@@ -221,7 +221,7 @@ module Spree
     # line items and/or shipments.
     def update_order_promotions
       promotion_adjustments = order.adjustments.select(&:promotion?)
-      promotion_adjustments.each(&:update!)
+      promotion_adjustments.each(&:recalculate)
       Spree::Config.promotion_chooser_class.new(promotion_adjustments).update
     end
 
@@ -244,7 +244,7 @@ module Spree
 
     def update_cancellations
       line_items.each do |line_item|
-        line_item.adjustments.select(&:cancellation?).each(&:update!)
+        line_item.adjustments.select(&:cancellation?).each(&:recalculate)
       end
     end
 

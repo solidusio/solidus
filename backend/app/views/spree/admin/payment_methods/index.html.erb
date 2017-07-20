@@ -40,7 +40,7 @@
         <tr id="<%= spree_dom_id method %>" data-hook="admin_payment_methods_index_rows">
           <td><span class="handle"></span></td>
           <td><%= method.name %></td>
-          <td><%= method.type %></td>
+          <td><%= method.model_name.human %></td>
           <td class="align-center"><%= method.available_to_users ? Spree.t(:say_yes) : Spree.t(:say_no) %></td>
           <td class="align-center"><%= method.available_to_admin ? Spree.t(:say_yes) : Spree.t(:say_no) %></td>
           <td class="align-center"><%= method.active ? Spree.t(:say_yes) : Spree.t(:say_no) %></td>

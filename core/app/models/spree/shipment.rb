@@ -305,10 +305,11 @@ module Spree
       end
     end
 
-    # Updates various aspects of the Shipment while bypassing any callbacks.  Note that this method takes an explicit reference to the
-    # Order object.  This is necessary because the association actually has a stale (and unsaved) copy of the Order and so it will not
-    # yield the correct results.
-    def update!(order)
+    # Updates the state of the Shipment bypassing any callbacks.
+    #
+    # If this moves the shipmnent to the 'shipped' state, after_ship will be
+    # called.
+    def update_state
       old_state = state
       new_state = determine_state(order)
       if new_state != old_state
@@ -317,6 +318,18 @@ module Spree
           updated_at: Time.current
         )
         after_ship if new_state == 'shipped'
+      end
+    end
+
+    def update!(order_or_attrs)
+      if order_or_attrs.is_a?(Spree::Order)
+        Spree::Deprecation.warn "Calling Shipment#update! with an order to update the shipments state is deprecated. Please use Shipment#update_state instead."
+        if order_or_attrs.object_id != order.object_id
+          Spree::Deprecation.warn "Additionally, update! is being passed an instance of order which isn't the same object as the shipment's order association"
+        end
+        update_state
+      else
+        super
       end
     end
 

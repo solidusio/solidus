@@ -78,8 +78,8 @@ describe Spree::Adjustment, type: :model do
     end
   end
 
-  context '#update!' do
-    subject { adjustment.update! }
+  context '#recalculate' do
+    subject { adjustment.recalculate }
     let(:adjustment) do
       line_item.adjustments.create!(
         label: 'Adjustment',
