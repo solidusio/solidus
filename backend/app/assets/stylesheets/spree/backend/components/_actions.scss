@@ -27,5 +27,9 @@ table tbody tr {
 
   td.actions {
     background-color: transparent !important;
+
+    button {
+      cursor: pointer;
+    }
   }
 }
