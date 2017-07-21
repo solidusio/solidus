@@ -73,61 +73,39 @@ describe "Product Images", type: :feature do
 
         within("tbody") do
           expect(page).to have_xpath "//img[contains(@src,'ror_ringer')]"
-          expect(page).to have_content "All"
+          expect(page).to have_select "image_viewable_id", selected: "All"
         end
-
-        # Change the image to the other variant
-        targetted_select2 "Size: S", from: "#s2id_image_viewable_id"
-        click_icon :check
-        expect(page).to have_content "Size: S"
       end
 
       expect(Spree::Image.last.viewable).to eq(product.master)
     end
   end
 
-  it "should see variant images and allow for inline changing the image's variant", js: true do
-    variant = create(:variant)
-    variant.images.create!(attachment: File.open(file_path))
-    visit spree.admin_product_images_path(variant.product)
+  context "Visiting the images index", js: true do
+    let!(:variant) { FactoryGirl.create :variant, sku: "TEST" }
+    let!(:image) { variant.images.create!(attachment: File.open(file_path)) }
 
-    expect(page).not_to have_content("No Images Found.")
+    it "allows admins to update images without leaving the page", js: true do
+      visit spree.admin_product_images_path(variant.product)
 
-    within("table.index") do
-      expect(page).to have_content(variant.options_text)
+      within("#spree_image_#{image.id}") do
+        expect(page).to have_select('image_viewable_id', selected: "TEST Size: S")
 
-      # ensure no duplicate images are displayed
-      expect(page).to have_css("tbody tr", count: 1)
+        # Update the image's alt text and variant
+        fill_in 'image[alt]', with: 'Alternative description'
+        select "All", from: "image_viewable_id"
+        click_icon :check
 
-      # ensure variant header is displayed
-      within("thead") do
-        expect(page).to have_content("Variant")
+        expect(page).to have_select "image_viewable_id", selected: "All"
+        expect(page).to have_field "image[alt]", with: "Alternative description"
       end
 
-      within("tbody") do
-        expect(page).to have_content("Size: S")
+      expect(page).to have_content "Updated successfully"
+
+      within("#spree_image_#{image.id}") do
+        expect(page).to have_select "image_viewable_id", selected: "All"
+        expect(page).to have_field "image[alt]", with: "Alternative description"
       end
-
-      # Do an inline change of variant and alt
-      targetted_select2 "All", from: "#s2id_image_viewable_id"
-      fill_in 'image[alt]', with: 'ruby on rails t-shirt'
-      click_icon :check
-
-      expect(page).to have_content "All"
-      expect(page).to have_field "image[alt]", with: "ruby on rails t-shirt"
-
-      # test escape
-      find("#image_alt").click # to focus
-      fill_in 'image[alt]', with: 'red shirt'
-      find("#image_alt").send_keys(:escape)
-      expect(page).to have_field "image[alt]", with: "ruby on rails t-shirt"
-
-      # And then go back to Size S variant, but using Enter key
-      targetted_select2 "Size: S", from: "#s2id_image_viewable_id"
-      find("#s2id_image_viewable_id").send_keys(:return)
-
-      expect(page).to have_content "Size: S"
-      expect(page).to have_field "image[alt]", with: "ruby on rails t-shirt"
     end
   end
 
