@@ -26,8 +26,11 @@ Spree.Views.Tables.EditableTableRow = Backbone.View.extend
       method: 'put'
       success: (response) =>
         @$el.removeClass("editing")
+        $(".has-danger", @$el).removeClass("has-danger")
         @storeValues()
       error: (response) =>
+        for field, errors of response.responseJSON.errors
+          $("input[name*='[#{field}]']", @$el).parent().addClass("has-danger")
         show_flash 'error', response.responseJSON.error
 
   ENTER_KEY: 13
