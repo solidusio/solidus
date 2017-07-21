@@ -1,7 +1,6 @@
 Spree.Views.Tables.EditableTableRow = Backbone.View.extend
   events:
-    "select2-open": "onEdit"
-    "focus input": "onEdit"
+    "focus :input": "onEdit"
     "click [data-action=save]": "onSave"
     "click [data-action=cancel]": "onCancel"
     'keyup input': 'onKeypress'
@@ -21,7 +20,7 @@ Spree.Views.Tables.EditableTableRow = Backbone.View.extend
     e.preventDefault()
 
     Spree.ajax @$el.find('.actions [data-action=save]').attr('href'),
-      data: @$el.find('select, input').serialize()
+      data: $(":input", @$el).serializeArray()
       dataType: 'json'
       method: 'put'
       success: (response) =>
