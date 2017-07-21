@@ -6,22 +6,16 @@ Spree.Views.Tables.EditableTableRow = Backbone.View.extend
     "click [data-action=cancel]": "onCancel"
     'keyup input': 'onKeypress'
 
-  onEdit: (e) ->
-    return if @$el.hasClass('editing')
-    @$el.addClass('editing')
+  initialize: ->
+    @storeValues()
 
-    @$el.find('input, select').each ->
-      $input = $(this)
-      $input.data 'original-value', $input.val()
+  onEdit: ->
+    @$el.addClass('editing')
 
   onCancel: (e) ->
     e.preventDefault()
     @$el.removeClass("editing")
-
-    @$el.find('input, select').each ->
-      $input = $(this)
-      originalValue = $input.data('original-value')
-      $input.val(originalValue).change()
+    @restoreOriginalValues()
 
   onSave: (e) ->
     e.preventDefault()
@@ -32,6 +26,7 @@ Spree.Views.Tables.EditableTableRow = Backbone.View.extend
       method: 'put'
       success: (response) =>
         @$el.removeClass("editing")
+        @storeValues()
       error: (response) =>
         show_flash 'error', response.responseJSON.error
 
@@ -43,3 +38,14 @@ Spree.Views.Tables.EditableTableRow = Backbone.View.extend
     switch key
       when @ENTER_KEY then @onSave(e)
       when @ESC_KEY then @onCancel(e)
+
+  storeValues: ->
+    $(":input", @$el).each ->
+      $input = $(this)
+      $input.data 'original-value', $input.val()
+
+  restoreOriginalValues: ->
+    $(":input", @$el).each ->
+      $input = $(this)
+      originalValue = $input.data('original-value')
+      $input.val(originalValue).change()
