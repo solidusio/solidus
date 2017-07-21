@@ -354,4 +354,20 @@ describe Spree::PaymentMethod, type: :model do
       expect(payment_method.credit).to eq 'credit'
     end
   end
+
+  describe 'model_name.human' do
+    context 'PaymentMethod itself' do
+      it "returns i18n value" do
+        expect(Spree::PaymentMethod.model_name.human).to eq('Payment Method')
+      end
+    end
+
+    context 'A subclass with no i18n key' do
+      let!(:klass) { stub_const("MyGem::SomeClass", Class.new(described_class)) }
+
+      it "returns default humanized value" do
+        expect(klass.model_name.human).to eq('Some class')
+      end
+    end
+  end
 end
