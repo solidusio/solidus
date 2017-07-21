@@ -37,6 +37,21 @@ module Spree
 
     include Spree::Preferences::StaticallyConfigurable
 
+    # Custom ModelName#human implementation to ensure we don't refer to
+    # subclasses as just "PaymentMethod"
+    class ModelName < ActiveModel::Name
+      # Similar to ActiveModel::Name#human, but skips lookup_ancestors
+      def human(options = {})
+        defaults = [
+          i18n_key,
+          options[:default],
+          @human
+        ].compact
+        options = { scope: [:activerecord, :models], count: 1, default: defaults }.merge!(options.except(:default))
+        I18n.translate(defaults.shift, options)
+      end
+    end
+
     class << self
       def providers
         Spree::Deprecation.warn 'Spree::PaymentMethod.providers is deprecated and will be deleted in Solidus 3.0. ' \
@@ -64,6 +79,10 @@ module Spree
         available_payment_methods.select do |p|
           store.nil? || store.payment_methods.empty? || store.payment_methods.include?(p)
         end
+      end
+
+      def model_name
+        ModelName.new(self, Spree)
       end
 
       def active?
