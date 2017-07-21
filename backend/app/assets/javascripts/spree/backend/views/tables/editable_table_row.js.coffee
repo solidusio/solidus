@@ -1,6 +1,7 @@
 Spree.Views.Tables.EditableTableRow = Backbone.View.extend
   events:
     "focus :input": "onEdit"
+    "blur :input": "onBlur"
     "click [data-action=save]": "onSave"
     "click [data-action=cancel]": "onCancel"
     'keyup input': 'onKeypress'
@@ -10,6 +11,10 @@ Spree.Views.Tables.EditableTableRow = Backbone.View.extend
 
   onEdit: ->
     @$el.addClass('editing')
+
+  onBlur: (e) ->
+    if $(":input", @$el).serialize() == @originalFormData
+      @onCancel(e)
 
   onCancel: (e) ->
     e.preventDefault()
@@ -43,6 +48,8 @@ Spree.Views.Tables.EditableTableRow = Backbone.View.extend
       when @ESC_KEY then @onCancel(e)
 
   storeValues: ->
+    @originalFormData = $(":input", @$el).serialize()
+
     $(":input", @$el).each ->
       $input = $(this)
       $input.data 'original-value', $input.val()
