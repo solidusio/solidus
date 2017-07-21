@@ -19,7 +19,7 @@ describe Spree::ReturnItem, type: :model do
   describe '#receive!' do
     let(:now)            { Time.current }
     let(:order)          { create(:shipped_order) }
-    let(:inventory_unit) { create(:inventory_unit, order: order, state: 'shipped') }
+    let(:inventory_unit) { create(:inventory_unit, state: 'shipped') }
     let!(:customer_return) { create(:customer_return_without_return_items, return_items: [return_item], stock_location_id: inventory_unit.shipment.stock_location_id) }
     let(:return_item) { create(:return_item, inventory_unit: inventory_unit) }
 
@@ -58,7 +58,7 @@ describe Spree::ReturnItem, type: :model do
     end
 
     context 'when the received item is actually the exchange (aka customer changed mind about exchange)' do
-      let(:exchange_inventory_unit) { create(:inventory_unit, order: order, state: 'shipped') }
+      let(:exchange_inventory_unit) { create(:inventory_unit, state: 'shipped') }
       let!(:return_item_with_exchange) { create(:return_item, inventory_unit: inventory_unit, exchange_inventory_unit: exchange_inventory_unit) }
       let!(:return_item_in_lieu) { create(:return_item, inventory_unit: exchange_inventory_unit) }
 
@@ -222,7 +222,8 @@ describe Spree::ReturnItem, type: :model do
   end
 
   describe "#receive" do
-    let(:inventory_unit) { create(:inventory_unit, order: create(:shipped_order)) }
+    let(:order) { create(:shipped_order) }
+    let(:inventory_unit) { create(:inventory_unit, shipment: order.shipments.first) }
     let(:return_item)    { create(:return_item, reception_status: status, inventory_unit: inventory_unit) }
 
     subject { return_item.receive! }
@@ -602,7 +603,6 @@ describe Spree::ReturnItem, type: :model do
           expect(subject).not_to be_persisted
           expect(subject.original_return_item).to eq return_item
           expect(subject.line_item).to eq return_item.inventory_unit.line_item
-          expect(subject.order).to eq return_item.inventory_unit.order
         end
       end
     end
