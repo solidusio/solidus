@@ -23,4 +23,5 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'solidus_core', gem.version
   gem.add_dependency 'rabl', '0.13.0' # FIXME: update for proper rails 5 support
   gem.add_dependency 'versioncake', '~> 3.0'
+  gem.add_dependency 'responders'
 end
