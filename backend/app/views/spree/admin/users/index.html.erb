@@ -1,6 +1,5 @@
 <% admin_breadcrumb(plural_resource_name(Spree::LegacyUser)) %>
 
-
 <% content_for :page_actions do %>
   <% if can?(:admin, Spree.user_class) && can?(:create, Spree.user_class) %>
     <li>
@@ -9,10 +8,29 @@
   <% end %>
 <% end %>
 
+<% content_for :table_filter_title do %>
+  <%= Spree.t(:search) %>
+<% end %>
+
+<% content_for :table_filter do %>
+  <div data-hook="admin_users_index_search">
+    <%= search_form_for [:admin, @search], url: admin_users_url do |f| %>
+      <div class="form-group">
+        <%= f.label :email_cont, Spree.t(:email) %>
+        <%= f.text_field :email_cont, class: "form-control" %>
+      </div>
+
+      <div class="actions filter-actions" data-hook="admin_users_index_search_buttons">
+        <%= button Spree.t(:search) %>
+      </div>
+    <% end %>
+  </div>
+<% end %>
+
 <table class="index" id="listing_users" data-hook>
   <colgroup>
-    <col style="width: 85%">
-    <col style="width: 15%">
+    <col style="width: 90%">
+    <col style="width: 10%">
   </colgroup>
   <thead>
     <tr data-hook="admin_users_index_headers">
@@ -38,21 +56,3 @@
 </table>
 
 <%= paginate @users, theme: "solidus_admin" %>
-
-<% content_for :sidebar_title do %>
-  <%= Spree.t(:search) %>
-<% end %>
-
-<% content_for :sidebar do %>
-  <div class="box align-center" data-hook="admin_users_index_search">
-    <%= search_form_for [:admin, @search], url: admin_users_url do |f| %>
-      <div class="field">
-        <%= f.label :email_cont, Spree.t(:email) %> <br>
-        <%= f.text_field :email_cont, class: 'fullwidth' %>
-      </div>
-      <div data-hook="admin_users_index_search_buttons">
-        <%= button Spree.t(:search) %>
-      </div>
-    <% end %>
-  </div>
-<% end %>
