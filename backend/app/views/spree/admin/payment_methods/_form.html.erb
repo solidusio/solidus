@@ -7,7 +7,7 @@
         <div id="preference-settings">
           <div class="field">
             <%= f.label :type %>
-            <%= f.select :type, @payment_method_types.map { |p| [p.model_name.human, p.to_s] }, {}, {class: 'custom-select fullwidth js-gateway-type'} %>
+            <%= f.select :type, @payment_method_types.map { |p| [p.model_name.instance_variable_get('@human'), p.to_s] }, {}, {class: 'custom-select fullwidth js-gateway-type'} %>
           </div>
 
           <div class="field js-preference-source-wrapper">
