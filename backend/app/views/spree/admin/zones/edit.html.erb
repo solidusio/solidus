@@ -1,7 +1,4 @@
-<%= render 'spree/admin/shared/areas_tabs' %>
-
 <% admin_breadcrumb(Spree.t(:settings)) %>
-<% admin_breadcrumb(Spree.t('admin.tab.areas')) %>
 <% admin_breadcrumb(link_to plural_resource_name(Spree::Zone), spree.admin_zones_path) %>
 <% admin_breadcrumb(@zone.name) %>
 

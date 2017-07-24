@@ -909,7 +909,6 @@ en:
           amount_used_not_zero: "is greater than zero. Can not delete store credit"
           update_reason_required: "A reason for the change must be selected"
       tab:
-        areas: Locations
         checkout: Refunds and Returns
         configuration: Configuration
         display_order: Display Order
@@ -933,6 +932,7 @@ en:
         taxonomies: Taxonomies
         taxons: Taxons
         users: Users
+        zones: Zones
       taxons:
         display_order: Display Order
       user:
@@ -1894,6 +1894,9 @@ en:
     state: State
     state_based: State Based
     states: States
+    states_count:
+      one: "%{count} State"
+      other: "%{count} States"
     states_required: States Required
     status: Status
     stock_location: Stock Location
