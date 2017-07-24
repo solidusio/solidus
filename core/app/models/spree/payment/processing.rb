@@ -79,9 +79,7 @@ module Spree
       end
 
       def cancel!
-        Spree::Payment::Cancellation.new(
-          reason: Spree::Payment::Cancellation::DEFAULT_REASON
-        ).cancel!(self)
+        Spree::Config.payment_canceller.cancel(self)
       end
 
       def gateway_options

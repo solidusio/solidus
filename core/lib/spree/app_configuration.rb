@@ -320,6 +320,17 @@ module Spree
     #   Spree::Wallet::DefaultPaymentBuilder.
     class_name_attribute :default_payment_builder_class, default: 'Spree::Wallet::DefaultPaymentBuilder'
 
+    # Allows providing your own class for canceling payments.
+    #
+    # @!attribute [rw] payment_canceller
+    # @return [Class] a class instance that responds to `cancel!(payment)`
+    attr_writer :payment_canceller
+    def payment_canceller
+      @payment_canceller ||= Spree::Payment::Cancellation.new(
+        reason: Spree::Payment::Cancellation::DEFAULT_REASON
+      )
+    end
+
     # Allows providing your own class for adding payment sources to a user's
     # "wallet" after an order moves to the complete state.
     #

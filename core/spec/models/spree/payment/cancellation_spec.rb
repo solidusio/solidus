@@ -15,8 +15,8 @@ RSpec.describe Spree::Payment::Cancellation do
     end
   end
 
-  describe '#cancel!' do
-    subject { described_class.new.cancel!(payment) }
+  describe '#cancel' do
+    subject { described_class.new.cancel(payment) }
 
     let(:payment_method) { create(:payment_method) }
     let(:payment) { create(:payment, payment_method: payment_method, amount: 10) }
