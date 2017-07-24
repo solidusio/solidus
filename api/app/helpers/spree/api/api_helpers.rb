@@ -32,6 +32,7 @@ module Spree
         :store_attributes,
         :store_credit_history_attributes,
         :stock_transfer_attributes,
+        :tax_category_attributes,
         :transfer_item_attributes,
         :transfer_item_variant_attributes,
         :variant_property_attributes
@@ -179,6 +180,8 @@ module Spree
       ]
 
       @@stock_transfer_attributes = [:id, :number]
+
+      @@tax_category_attributes = [:name, :description, :is_default, :tax_code]
 
       @@transfer_item_attributes = [:id, :expected_quantity, :received_quantity]
 
