@@ -3,27 +3,10 @@ require 'spec_helper'
 describe "Tax Categories", type: :feature do
   stub_authorization!
 
-  before(:each) do
-    visit spree.admin_path
-    click_link "Taxes"
-  end
-
-  context "admin visiting tax categories list" do
-    it "should display the existing tax categories" do
-      create(:tax_category, name: "Clothing", tax_code: "CL001", description: "For Clothing")
-      click_link "Tax Categories"
-      expect(page).to have_content("SettingsTaxesTax Categories")
-      within_row(1) do
-        expect(column_text(1)).to eq("Clothing")
-        expect(column_text(2)).to eq("CL001")
-        expect(column_text(3)).to eq("For Clothing")
-        expect(column_text(4)).to eq("No")
-      end
-    end
-  end
-
   context "admin creating new tax category" do
     before(:each) do
+      visit spree.admin_path
+      click_link "Taxes"
       click_link "Tax Categories"
       click_link "admin_new_tax_categories_link"
     end
@@ -42,15 +25,42 @@ describe "Tax Categories", type: :feature do
     end
   end
 
-  context "admin editing a tax category" do
-    it "should be able to update an existing tax category" do
-      create(:tax_category)
-      click_link "Tax Categories"
-      within_row(1) { click_icon :edit }
-      fill_in "tax_category_description", with: "desc 99"
-      click_button "Update"
-      expect(page).to have_content("successfully updated!")
-      expect(page).to have_content("desc 99")
+  context "Viewing the tax categories index", js: true do
+    let!(:tax_category) do
+      FactoryGirl.create(
+        :tax_category,
+        name: "Default",
+        tax_code: "ABC123",
+        description: "Description",
+        is_default: true
+      )
+    end
+
+    it "should be able to edit a tax category without leaving the page" do
+      visit spree.admin_tax_categories_path
+
+      within "#spree_tax_category_#{tax_category.id}" do
+        expect(page).to have_field "tax_category[name]", with: "Default"
+        expect(page).to have_field "tax_category[tax_code]", with: "ABC123"
+        expect(page).to have_field "tax_category[description]", with: "Description"
+        expect(page).to have_checked_field "tax_category[is_default]"
+
+        fill_in "tax_category[name]", with: "New Age Default"
+        fill_in "tax_category[tax_code]", with: "NEWCODE"
+        fill_in "tax_category[description]", with: "New description"
+        uncheck "tax_category[is_default]"
+
+        click_icon :check
+      end
+
+      expect(page).to have_content "Updated successfully"
+
+      within "#spree_tax_category_#{tax_category.id}" do
+        expect(page).to have_field "tax_category[name]", with: "New Age Default"
+        expect(page).to have_field "tax_category[tax_code]", with: "NEWCODE"
+        expect(page).to have_field "tax_category[description]", with: "New description"
+        expect(page).to have_no_checked_field "tax_category[is_default]"
+      end
     end
   end
 end
