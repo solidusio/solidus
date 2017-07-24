@@ -27,6 +27,7 @@ Spree.Views.Tables.EditableTableRow = Backbone.View.extend
         @$el.removeClass("editing")
         $(".has-danger", @$el).removeClass("has-danger")
         @storeValues()
+        show_flash "success", Spree.translations.updated_successfully
       error: (response) =>
         for field, errors of response.responseJSON.errors
           $("input[name*='[#{field}]']", @$el).parent().addClass("has-danger")
