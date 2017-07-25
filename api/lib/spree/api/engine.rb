@@ -29,10 +29,6 @@ module Spree
           config.extraction_strategy = :http_header
         end
       end
-
-      def self.root
-        @root ||= Pathname.new(File.expand_path('../../../../', __FILE__))
-      end
     end
   end
 end
