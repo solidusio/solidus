@@ -5,7 +5,7 @@ jobs:
     environment:
       DB: postgresql
       DB_HOST: localhost
-      DEFAULT_MAX_WAIT_TIME: 10
+      DEFAULT_MAX_WAIT_TIME: 30
       SOLIDUS_RAISE_DEPRECATIONS: true
       CIRCLE_TEST_REPORTS: /tmp/test-results
       CIRCLE_ARTIFACTS: /tmp/test-artifacts
