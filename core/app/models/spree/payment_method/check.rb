@@ -18,11 +18,10 @@ module Spree
       simulated_successful_billing_response
     end
 
-    def cancel(*); end
-
     def void(*)
       simulated_successful_billing_response
     end
+    alias_method :try_void, :void
 
     def credit(*)
       simulated_successful_billing_response
