@@ -12,7 +12,7 @@
         <% if @order.state == 'address' || !@order.email? %>
           <p class="field" style='clear: both'>
             <%= form.label :email %><br />
-            <%= form.text_field :email %>
+            <%= form.email_field :email %>
           </p>
         <% end %>
         <%= render @order.state, form: form %>
