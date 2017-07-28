@@ -1,10 +1,11 @@
 ## Solidus 2.4.0 (master, unreleased)
 
-- Change HTTP Status code for Api::ShipmentsController#transfer_to_* to be always 202 Accepted rather than 201 Created or 500.
+- Change HTTP Status code for `Api::ShipmentsController#transfer_to_*` to be always 202 Accepted rather than 201 Created or 500.
   Speed up changing fulfilment for parts of a shipment [\#2070](https://github.com/solidusio/solidus/pull/2070) ([mamhoff](https://github.com/mamhoff))
 
 - Customized responders have been removed. They are available in the `solidus_responders` extension
 
+- The all configuration objects now use static preferences by default. It's no longer necessary to call `use_static_preferences!`, as that is the new default. For the old behaviour of loading preferences from the DB, call `config.use_legacy_db_preferences!`. [\#2112](https://github.com/solidusio/solidus/pull/2112) ([jhawthorn](https://github.com/jhawthorn))
 
 ## Solidus 2.3.0 (unreleased)
 
