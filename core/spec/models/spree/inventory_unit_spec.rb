@@ -37,6 +37,7 @@ describe Spree::InventoryUnit, type: :model do
       unit = shipment.inventory_units.first
       unit.state = 'backordered'
       unit.variant_id = stock_item.variant.id
+      unit.order_id = order.id
       unit.line_item = line_item
       unit.tap(&:save!)
     end
@@ -58,6 +59,7 @@ describe Spree::InventoryUnit, type: :model do
     it "does not find inventory units that aren't backordered" do
       on_hand_unit = shipment.inventory_units.build
       on_hand_unit.state = 'on_hand'
+      on_hand_unit.order_id = order.id
       on_hand_unit.line_item = line_item
       on_hand_unit.variant = stock_item.variant
       on_hand_unit.save!
@@ -68,6 +70,7 @@ describe Spree::InventoryUnit, type: :model do
     it "does not find inventory units that don't match the stock item's variant" do
       other_variant_unit = shipment.inventory_units.build
       other_variant_unit.state = 'backordered'
+      other_variant_unit.order_id = order.id
       other_variant_unit.line_item = line_item
       other_variant_unit.variant = create(:variant)
       other_variant_unit.save!
@@ -104,6 +107,7 @@ describe Spree::InventoryUnit, type: :model do
         unit = other_shipment.inventory_units.build
         unit.state = 'backordered'
         unit.variant_id = stock_item.variant.id
+        unit.order_id = other_order.id
         unit.line_item = line_item
         unit.tap(&:save!)
       end
