@@ -38,11 +38,13 @@
           <%= return_item.display_amount %>
         </td>
         <td class="align-center">
-          <%= Spree.t(
-            return_item.inventory_unit.state,
-            scope: :inventory_states,
-            default: return_item.inventory_unit.state.humanize
-          ) %>
+          <span class="pill pill-<%= return_item.inventory_unit.state %>">
+            <%= Spree.t(
+              return_item.inventory_unit.state,
+              scope: :inventory_states,
+              default: return_item.inventory_unit.state.humanize
+            ) %>
+          </span>
         </td>
         <td class="align-center">
           <%= return_item.exchange_variant.try(:exchange_name) %>
