@@ -354,6 +354,21 @@ describe Spree::Api::ShipmentsController, type: :request do
         end
       end
 
+      context "for an unsuccessful transfer" do
+        before do
+          source_shipment
+          variant
+          stock_location.stock_items.update_all(backorderable: false)
+        end
+
+        it "returns the correct message" do
+          subject
+          expect(response).to be_accepted
+          expect(parsed_response["success"]).to be false
+          expect(parsed_response["message"]).to eq("Desired shipment not enough stock in desired stock location")
+        end
+      end
+
       context "if the source shipment can not be found" do
         let(:stock_location_id) { 9999 }
 
@@ -422,7 +437,7 @@ describe Spree::Api::ShipmentsController, type: :request do
 
         it "returns the correct message" do
           subject
-          expect(response).to be_success
+          expect(response).to be_accepted
           expect(parsed_response["success"]).to be true
           expect(parsed_response["message"]).to eq("Variants successfully transferred")
         end

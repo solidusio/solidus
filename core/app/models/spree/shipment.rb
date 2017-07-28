@@ -334,37 +334,19 @@ module Spree
     end
 
     def transfer_to_location(variant, quantity, stock_location)
-      if quantity <= 0
-        raise ArgumentError
-      end
-
-      transaction do
-        new_shipment = order.shipments.create!(stock_location: stock_location)
-
-        order.contents.remove(variant, quantity, { shipment: self })
-        order.contents.add(variant, quantity, { shipment: new_shipment })
-
-        refresh_rates
-        new_shipment.refresh_rates
-        save!
-        new_shipment.save!
-      end
+      Spree::Deprecation.warn("Please use the Spree::FulfilmentChanger class instead of Spree::Shipment#transfer_to_location", caller)
+      new_shipment = order.shipments.create!(stock_location: stock_location)
+      transfer_to_shipment(variant, quantity, new_shipment)
     end
 
     def transfer_to_shipment(variant, quantity, shipment_to_transfer_to)
-      if quantity <= 0 || self == shipment_to_transfer_to
-        raise ArgumentError
-      end
-
-      transaction do
-        order.contents.remove(variant, quantity, { shipment: self })
-        order.contents.add(variant, quantity, { shipment: shipment_to_transfer_to })
-
-        refresh_rates
-        save!
-        shipment_to_transfer_to.refresh_rates
-        shipment_to_transfer_to.save!
-      end
+      Spree::Deprecation.warn("Please use the Spree::FulfilmentChanger class instead of Spree::Shipment#transfer_to_location", caller)
+      Spree::FulfilmentChanger.new(
+        current_shipment: self,
+        desired_shipment: shipment_to_transfer_to,
+        variant: variant,
+        quantity: quantity
+      ).run!
     end
 
     def requires_shipment?

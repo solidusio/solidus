@@ -1,6 +1,10 @@
 ## Solidus 2.4.0 (master, unreleased)
 
+- Change HTTP Status code for Api::ShipmentsController#transfer_to_* to be always 202 Accepted rather than 201 Created or 500.
+  Speed up changing fulfilment for parts of a shipment [\#2070](https://github.com/solidusio/solidus/pull/2070) ([mamhoff](https://github.com/mamhoff))
+
 - Customized responders have been removed. They are available in the `solidus_responders` extension
+
 
 ## Solidus 2.3.0 (unreleased)
 

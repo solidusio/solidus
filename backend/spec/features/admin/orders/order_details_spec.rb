@@ -203,7 +203,7 @@ describe "Order Details", type: :feature, js: true do
             expect(order.shipments.first.stock_location.id).to eq(stock_location2.id)
           end
 
-          it 'should allow me to split more than I have if available there' do
+          it 'should not allow me to split more than I had in the original shipment' do
             expect(order.shipments.first.stock_location.id).to eq(stock_location.id)
 
             within_row(1) { click_icon 'arrows-h' }
@@ -213,7 +213,7 @@ describe "Order Details", type: :feature, js: true do
 
             expect(order.shipments.count).to eq(1)
             expect(order.shipments.last.backordered?).to eq(false)
-            expect(order.shipments.first.inventory_units_for(product.master).count).to eq(5)
+            expect(order.shipments.first.inventory_units_for(product.master).count).to eq(2)
             expect(order.shipments.first.stock_location.id).to eq(stock_location2.id)
           end
 
@@ -222,7 +222,7 @@ describe "Order Details", type: :feature, js: true do
 
             within_row(1) { click_icon 'arrows-h' }
 
-            accept_alert "Unable to complete split" do
+            accept_alert "Quantity must be greater than 0" do
               complete_split_to(stock_location2, quantity: 0)
             end
 
@@ -232,7 +232,7 @@ describe "Order Details", type: :feature, js: true do
 
             fill_in 'item_quantity', with: -1
 
-            accept_alert "Unable to complete split" do
+            accept_alert "Quantity must be greater than 0" do
               click_icon :ok
             end
 
@@ -265,7 +265,7 @@ describe "Order Details", type: :feature, js: true do
               within_row(1) { click_icon 'arrows-h' }
               complete_split_to(stock_location2, quantity: 2)
 
-              accept_alert "Unable to complete split"
+              accept_alert "Desired shipment not enough stock in desired stock location"
 
               expect(order.shipments.count).to eq(1)
               expect(order.shipments.first.inventory_units_for(product.master).count).to eq(2)
@@ -364,7 +364,7 @@ describe "Order Details", type: :feature, js: true do
             within(all('.stock-contents', count: 2).first) do
               within_row(1) { click_icon 'arrows-h' }
 
-              accept_alert("Unable to complete split") do
+              accept_alert("Desired shipment not enough stock in desired stock location") do
                 complete_split_to(@shipment2, quantity: 200)
               end
             end
@@ -404,6 +404,7 @@ describe "Order Details", type: :feature, js: true do
 
         context 'receiving shipment can backorder' do
           it 'should add more to the backorder' do
+            @shipment1.inventory_units.update_all(state: :on_hand)
             product.master.stock_items.last.update_column(:backorderable, true)
             product.master.stock_items.last.update_column(:count_on_hand, 0)
             expect(@shipment2.reload.backordered?).to eq(false)
