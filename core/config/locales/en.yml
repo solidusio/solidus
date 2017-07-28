@@ -1740,6 +1740,10 @@ en:
     reimbursed: Reimbursed
     reimbursement: Reimbursement
     reimbursement_perform_failed: "Reimbursement could not be performed.  Error: %{error}"
+    reimbursement_states:
+      errored: Errored
+      pending: Pending
+      reimbursed: Reimbursed
     reimbursement_status: Reimbursement status
     reimbursement_type: Reimbursement type
     reimbursement_type_override: Reimbursement Type Override
