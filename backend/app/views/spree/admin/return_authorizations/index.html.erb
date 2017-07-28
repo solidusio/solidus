@@ -28,7 +28,13 @@
       <% @return_authorizations.each do |return_authorization| %>
         <tr id="<%= spree_dom_id(return_authorization) %>" data-hook="rma_row" class="<%= cycle('odd', 'even')%>">
           <td><%= return_authorization.number %></td>
-          <td><%= Spree.t(return_authorization.state.downcase) %></td>
+          <td>
+            <%= Spree.t(
+              return_authorization.state,
+              scope: :return_authorization_states,
+              default: return_authorization.state.humanize
+            ) %>
+          </td>
           <td><%= return_authorization.display_pre_tax_total.to_html %></td>
           <td><%= pretty_time(return_authorization.created_at) %></td>
           <td class="actions">

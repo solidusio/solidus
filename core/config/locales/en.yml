@@ -1774,6 +1774,9 @@ en:
     resumed: Resumed
     return: return
     return_authorization: Return Merchandise Authorization
+    return_authorization_states:
+      authorized: Authorized
+      canceled: Canceled
     return_authorizations: Return Merchandise Authorizations
     return_authorization_updated: Return merchandise authorization updated
     return_item_inventory_unit_ineligible: Return item's inventory unit must be shipped
