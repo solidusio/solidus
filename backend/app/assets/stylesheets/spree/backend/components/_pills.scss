@@ -44,6 +44,7 @@
 
 // Extend pill states for custom order, payment, and shipment state names
 .pill-address,
+.pill-awaiting,
 .pill-awaiting_return,
 .pill-backorder,
 .pill-backordered,
@@ -53,6 +54,7 @@
 .pill-confirm,
 .pill-credit_owed,
 .pill-delivery,
+.pill-in_transit,
 .pill-on_hand,
 .pill-partial,
 .pill-payment,
@@ -63,10 +65,17 @@
 
 .pill-canceled,
 .pill-completed,
+.pill-expired,
+.pill-given_to_customer,
+.pill-lost_in_transit,
 .pill-paid,
+.pill-received,
 .pill-reimbursed,
 .pill-returned,
 .pill-shipped,
+.pill-shipped_wrong_item,
+.pill-short_shipped,
+.pill-unexchanged,
 .pill-void {
   @extend .pill-complete;
 }
