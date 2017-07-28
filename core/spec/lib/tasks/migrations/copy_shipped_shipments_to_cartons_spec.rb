@@ -25,7 +25,7 @@ describe 'spree:migrations:copy_shipped_shipments_to_cartons' do
 
     let(:shipped_order_without_units) do
       create(:shipped_order, line_items_count: 1) do |order|
-        order.shipments.each { |s| s.inventory_units.delete_all }
+        order.inventory_units.delete_all
       end
     end
 

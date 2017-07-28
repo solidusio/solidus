@@ -6,13 +6,15 @@ module Spree
     let(:order) { Order.create! }
     let(:variant) { create :variant }
     let!(:shipment) { create(:shipment, state: 'pending', order: order) }
-    subject(:manifest) { described_class.new(inventory_units: inventory_units) }
+    let(:manifest) { described_class.new(inventory_units: inventory_units) }
 
     def build_unit(variant, attrs = {})
-      attrs = { variant: variant, shipment: shipment }.merge(attrs)
-      attrs[:line_item] = order.contents.add(variant)
+      attrs = { order: order, variant: variant, shipment: shipment }.merge(attrs)
+      attrs[:line_item] = attrs[:order].contents.add(attrs[:variant])
       InventoryUnit.new(attrs)
     end
+
+    subject{ manifest }
 
     describe "#items" do
       context 'empty' do
@@ -66,15 +68,9 @@ module Spree
     end
 
     describe "#for_order" do
-      let!(:order2) { create(:order_with_line_items) }
+      let!(:order2) { Order.create! }
       context 'single unit' do
-        let(:inventory_units) { [inventory_unit] }
-        let(:inventory_unit) { build_unit(variant) }
-
-        before do
-          allow(inventory_unit).to receive(:order_id) { order.id }
-        end
-
+        let(:inventory_units) { [build_unit(variant)] }
         it "has single ManifestItem in correct order" do
           expect(manifest.for_order(order).items.count).to eq 1
         end
@@ -85,22 +81,13 @@ module Spree
       end
 
       context 'one units in each order' do
-        let(:order_2) { build_stubbed(:order) }
-        let(:inventory_units) { [inventory_unit_one, inventory_unit_two] }
-        let(:inventory_unit_one) { build_unit(variant) }
-        let(:inventory_unit_two) { build_unit(variant) }
-
-        before do
-          allow(inventory_unit_one).to receive(:order_id) { order.id }
-          allow(inventory_unit_two).to receive(:order_id) { order_2.id }
-        end
-
+        let(:inventory_units) { [build_unit(variant), build_unit(variant, order: order2)] }
         it "has single ManifestItem in first order" do
           expect(manifest.for_order(order).items.count).to eq 1
         end
 
         it "has single ManifestItem in second order" do
-          expect(manifest.for_order(order_2).items.count).to eq 1
+          expect(manifest.for_order(order2).items.count).to eq 1
         end
       end
     end

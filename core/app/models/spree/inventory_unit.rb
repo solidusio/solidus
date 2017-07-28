@@ -7,6 +7,7 @@ module Spree
     CANCELABLE_STATES = ['on_hand', 'backordered', 'shipped']
 
     belongs_to :variant, -> { with_deleted }, class_name: "Spree::Variant", inverse_of: :inventory_units
+    belongs_to :order, class_name: "Spree::Order", inverse_of: :inventory_units
     belongs_to :shipment, class_name: "Spree::Shipment", touch: true, inverse_of: :inventory_units
     belongs_to :return_authorization, class_name: "Spree::ReturnAuthorization", inverse_of: :inventory_units
     belongs_to :carton, class_name: "Spree::Carton", inverse_of: :inventory_units
@@ -15,11 +16,8 @@ module Spree
     has_many :return_items, inverse_of: :inventory_unit, dependent: :destroy
     has_one :original_return_item, class_name: "Spree::ReturnItem", foreign_key: :exchange_inventory_unit_id, dependent: :destroy
     has_one :unit_cancel, class_name: "Spree::UnitCancel"
-    has_one :order, through: :shipment
 
-    delegate :order_id, to: :shipment
-
-    validates_presence_of :shipment, :line_item, :variant
+    validates_presence_of :order, :shipment, :line_item, :variant
 
     before_destroy :ensure_can_destroy
 

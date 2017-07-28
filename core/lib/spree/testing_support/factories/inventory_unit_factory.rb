@@ -6,9 +6,10 @@ require 'spree/testing_support/factories/shipment_factory'
 FactoryGirl.define do
   factory :inventory_unit, class: Spree::InventoryUnit do
     variant
-    line_item { build(:line_item, variant: variant) }
+    order
+    line_item { build(:line_item, order: order, variant: variant) }
     state 'on_hand'
-    shipment { build(:shipment, state: 'pending', order: line_item.order) }
+    shipment { build(:shipment, state: 'pending', order: order) }
     # return_authorization
   end
 end
