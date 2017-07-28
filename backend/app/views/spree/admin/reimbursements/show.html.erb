@@ -30,19 +30,19 @@
             <div class="variant-name"><%= return_item.inventory_unit.variant.name %></div>
             <div class="variant-options"><%= return_item.inventory_unit.variant.options_text %></div>
           </td>
-          <td class="align-center">
+          <td>
             <%= reimbursement_type_name(return_item.preferred_reimbursement_type) %>
           </td>
-          <td class='align-center'>
+          <td>
             <%= reimbursement_type_name(return_item.override_reimbursement_type) %>
           </td>
           <td>
             <%= return_item.exchange_variant.try(:exchange_name) %>
           </td>
-          <td class="align-center">
+          <td>
             <%= return_item.display_amount %>
           </td>
-          <td class="align-center">
+          <td>
             <%= return_item.display_total %>
           </td>
         </tr>
@@ -63,7 +63,7 @@
     </thead>
     <tbody>
       <% @reimbursement.refunds.each do |refund| %>
-        <tr id="<%= spree_dom_id(refund) %>" data-hook="reimbursement_refund_row" class="reimbursement-refund <%= cycle('odd', 'even')%>">
+        <tr id="<%= spree_dom_id(refund) %>" data-hook="reimbursement_refund_row" class="reimbursement-refund">
           <td class="reimbursement-refund-description"><%= refund.description %></td>
           <td class="reimbursement-refund-amount"><%= refund.display_amount %></td>
         </tr>
@@ -83,7 +83,7 @@
     </thead>
     <tbody>
       <% @reimbursement.credits.each do |credit| %>
-        <tr id="<%= spree_dom_id(credit) %>" data-hook="reimbursement_refund_row" class="reimbursement-credit <%= cycle('odd', 'even')%>">
+        <tr id="<%= spree_dom_id(credit) %>" data-hook="reimbursement_refund_row" class="reimbursement-credit">
           <td class="reimbursement-credit-description"><%= credit.description %></td>
           <td class="reimbursement-credit-amount"><%= credit.display_amount %></td>
         </tr>

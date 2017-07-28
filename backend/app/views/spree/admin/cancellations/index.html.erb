@@ -14,10 +14,10 @@
 
   <thead>
     <th colspan="2"><%= Spree::LineItem.human_attribute_name(:description) %></th>
-    <th><%= Spree::OrderCancellations.human_attribute_name(:quantity) %></th>
+    <th class="align-center"><%= Spree::OrderCancellations.human_attribute_name(:quantity) %></th>
     <th><%= Spree::OrderCancellations.human_attribute_name(:state) %></th>
     <th><%= Spree::OrderCancellations.human_attribute_name(:shipment) %></th>
-    <th><%= Spree::OrderCancellations.human_attribute_name(:cancel) %></th>
+    <th class="align-right"><%= Spree::OrderCancellations.human_attribute_name(:cancel) %></th>
   </thead>
 
   <tbody>
@@ -34,9 +34,9 @@
             <% end %>
           </td>
           <td class="inventory-unit-quantity align-center">1</td>
-          <td class="inventory-unit-state align-center"><%= inventory_unit.state %></td>
-          <td class="inventory-unit-shipment align-center"><%= inventory_unit.shipment.number %></td>
-          <td class="inventory-unit-cancel align-center">
+          <td class="inventory-unit-state"><%= inventory_unit.state %></td>
+          <td class="inventory-unit-shipment"><%= inventory_unit.shipment.number %></td>
+          <td class="inventory-unit-cancel align-right">
             <%= check_box_tag 'inventory_unit_ids[]', inventory_unit.id %>
           </td>
         </tr>

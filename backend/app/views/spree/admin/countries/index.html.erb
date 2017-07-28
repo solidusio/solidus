@@ -25,13 +25,13 @@
     <tr data-hook="tax_header">
       <th><%= Spree::Country.human_attribute_name(:name) %></th>
       <th><%= Spree::Country.human_attribute_name(:iso_name) %></th>
-      <th><%= Spree::Country.human_attribute_name(:states_required) %></th>
+      <th class="align-center"><%= Spree::Country.human_attribute_name(:states_required) %></th>
       <th class="actions"></th>
     </tr>
   </thead>
   <tbody>
     <% @countries.each do |country| %>
-      <tr id="<%= spree_dom_id country %>" data-hook="country_row" class="<%= cycle('odd', 'even')%>">
+      <tr id="<%= spree_dom_id country %>" data-hook="country_row">
         <td><%= country.name %></td>
         <td><%= country.iso_name %></td>
         <td class="align-center"><%= country.states_required? ? Spree.t(:say_yes) : Spree.t(:say_no) %></td>

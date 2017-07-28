@@ -32,23 +32,23 @@
               <div class="variant-name"><%= return_item.inventory_unit.variant.name %></div>
               <div class="variant-options"><%= return_item.inventory_unit.variant.options_text %></div>
             </td>
-            <td class="align-center">
+            <td>
               <%= reimbursement_type_name(return_item.preferred_reimbursement_type) %>
             </td>
-            <td class='align-center'>
+            <td>
               <%= item_fields.select(:override_reimbursement_type_id,
                 reimbursement_types.collect { |r| [r.name.humanize, r.id] },
                 {include_blank: true},
                 {class: 'custom-select fullwidth'}
               ) %>
             </td>
-            <td class="align-center">
+            <td>
               <%= item_fields.text_field :amount, { class: 'refund-amount-input' } %>
             </td>
-            <td class="align-center">
+            <td>
               <%= return_item.display_total %>
             </td>
-            <td class="align-center">
+            <td>
               <% if return_item.exchange_processed? %>
                 <%= return_item.exchange_variant.exchange_name %>
               <% else %>
@@ -82,7 +82,7 @@
     </thead>
     <tbody>
       <% @reimbursement_objects.each do |reimbursement_object| %>
-        <tr id="<%= spree_dom_id(reimbursement_object) %>" data-hook="reimbursement_reimbursement_object_row" class="<%= cycle('odd', 'even')%>">
+        <tr id="<%= spree_dom_id(reimbursement_object) %>" data-hook="reimbursement_reimbursement_object_row">
           <td><%= reimbursement_object.class.name.demodulize %></td>
           <td><%= reimbursement_object.description %></td>
           <td><%= reimbursement_object.display_amount %></td>

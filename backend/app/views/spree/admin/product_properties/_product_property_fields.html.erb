@@ -1,5 +1,5 @@
 <tr class="product_property fields" id="spree_<%= dom_id(f.object) %>" data-hook="product_property">
-  <td class="no-border">
+  <td>
     <% if f.object.persisted? && can?(:update_positions, f.object) %>
       <span class="handle"></span>
       <%= f.hidden_field :id %>

@@ -1,5 +1,5 @@
 <tr class='new-row' data-transfer-item-id="{{id}}">
-  <td class="align-center no-padding">
+  <td class="no-padding">
     <div class='variant-container' data-variant-id="{{variantId}}">
       <div class='variant-image'>
         {{> _image image=variantImage size="small" alt=variantName }}
@@ -18,7 +18,7 @@
       </div>
     </div>
   </td>
-  <td class="align-center">
+  <td>
     <table class='stock-variant-field-table'>
       {{#each variantOptions}}
         <tr>
@@ -28,7 +28,7 @@
       {{/each}}
     </table>
   </td>
-  <td class='align-center' id="number-update-{{id}}">
+  <td id="number-update-{{id}}">
     {{#if isReceiving }}
       <span class='js-number-update-text'>{{receivedQuantity}}</span>
       <input class="fullwidth js-number-update-input" name="received_quantity" type="number" value="">

@@ -26,7 +26,7 @@
     </thead>
     <tbody>
       <% @return_authorizations.each do |return_authorization| %>
-        <tr id="<%= spree_dom_id(return_authorization) %>" data-hook="rma_row" class="<%= cycle('odd', 'even')%>">
+        <tr id="<%= spree_dom_id(return_authorization) %>" data-hook="rma_row">
           <td><%= return_authorization.number %></td>
           <td><%= Spree.t(return_authorization.state.downcase) %></td>
           <td><%= return_authorization.display_pre_tax_total.to_html %></td>

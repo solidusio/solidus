@@ -14,8 +14,8 @@
   </thead>
   <tbody>
     <% @reimbursement_types.each do |reimbursement_type| %>
-      <tr id="<%= spree_dom_id reimbursement_type %>" data-hook="reimbursement_type_row" class="<%= cycle('odd', 'even')%>">
-        <td class="align-center">
+      <tr id="<%= spree_dom_id reimbursement_type %>" data-hook="reimbursement_type_row">
+        <td>
           <%= reimbursement_type.name.humanize %>
         </td>
         <td>

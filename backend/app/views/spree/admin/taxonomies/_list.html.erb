@@ -6,20 +6,20 @@
   </colgroup>
   <thead>
     <tr data-hook="taxonomies_header">
-      <th class="no-border"></th>
+      <th></th>
       <th><%= Spree::Taxonomy.human_attribute_name(:name) %></th>
       <th class="actions"></th>
     </tr>
   </thead>
   <tbody>
     <% @taxonomies.each do |taxonomy| %>
-      <tr id="<%= spree_dom_id taxonomy %>" data-hook="taxonomies_row" class="<%= cycle('odd', 'even')%>">
-        <td class="no-border">
+      <tr id="<%= spree_dom_id taxonomy %>" data-hook="taxonomies_row">
+        <td>
           <% if can?(:update_positions, Spree::Taxonomy) %>
             <span class="handle"></span>
           <% end %>
         </td>
-        <td class="align-center"><%= taxonomy.name %></td>
+        <td><%= taxonomy.name %></td>
         <td class="actions">
           <% if can?(:update, taxonomy) %>
             <%= link_to_edit taxonomy, no_text: true %>

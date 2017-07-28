@@ -4,12 +4,12 @@
 %>
 <tr id="<%= spree_dom_id(adjustment) %>"
     data-hook="adjustment_row"
-    class="<%= cycle('odd', 'even')%> <%= "adjustment-ineligible" if !adjustment.eligible? %>"
+    class="<%= "adjustment-ineligible" if !adjustment.eligible? %>"
     >
-  <td class="align-center"><%= display_adjustable(adjustment.adjustable) %></td>
-  <td class="align-center"><%= adjustment.label %></td>
-  <td class="align-center"><%= adjustment.display_amount.to_html %></td>
-  <td class="align-center"><%= adjustment_state(adjustment) %></td>
+  <td><%= display_adjustable(adjustment.adjustable) %></td>
+  <td><%= adjustment.label %></td>
+  <td><%= adjustment.display_amount.to_html %></td>
+  <td><%= adjustment_state(adjustment) %></td>
   <td class='actions'>
     <% unless adjustment.finalized? %>
       <% if can?(:update, adjustment) %>

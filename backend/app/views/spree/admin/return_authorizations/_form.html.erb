@@ -24,7 +24,7 @@
         <% inventory_unit = return_item.inventory_unit %>
         <% editable = inventory_unit.shipped? && !inventory_unit.exchange_requested? && allow_return_item_changes && return_item.reimbursement.nil? %>
         <tr>
-          <td class="return-item-checkbox align-center inventory-unit-checkbox">
+          <td class="return-item-checkbox inventory-unit-checkbox">
             <% if editable %>
               <%= item_fields.hidden_field :inventory_unit_id %>
               <%= item_fields.check_box :_destroy, {checked: return_item.persisted?, class: 'add-item', "data-price" => return_item.amount}, '0', '1' %>
@@ -34,11 +34,11 @@
             <div class="variant-name"><%= inventory_unit.variant.name %></div>
             <div class="variant-options"><%= inventory_unit.variant.options_text %></div>
           </td>
-          <td class="return-item-state align-center"><%= inventory_unit.state.humanize %></td>
-          <td class="return-item-charged align-center">
+          <td class="return-item-state"><%= inventory_unit.state.humanize %></td>
+          <td class="return-item-charged">
             <%= return_item.display_amount %>
           </td>
-          <td class="return-item-pre-tax-refund-amount align-center">
+          <td class="return-item-pre-tax-refund-amount">
             <% if editable %>
               <%= item_fields.text_field :amount, { class: 'refund-amount-input' } %>
             <% else %>
@@ -52,7 +52,7 @@
               <%= return_item.preferred_reimbursement_type.try(:name) %>
             <% end %>
           </td>
-          <td class="return-item-exchange-for align-center">
+          <td class="return-item-exchange-for">
             <% if editable %>
               <%= item_fields.collection_select :exchange_variant_id, return_item.eligible_exchange_variants(@stock_locations), :id, :exchange_name, { include_blank: true }, { class: "custom-select fullwidth return-item-exchange-selection" } %>
             <% elsif return_item.exchange_processed? %>

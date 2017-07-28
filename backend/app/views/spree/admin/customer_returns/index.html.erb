@@ -24,7 +24,7 @@
     </thead>
     <tbody>
       <% @customer_returns.each do |customer_return| %>
-        <tr id="<%= spree_dom_id(customer_return) %>" data-hook="customer_return_row" class="<%= cycle('odd', 'even')%>">
+        <tr id="<%= spree_dom_id(customer_return) %>" data-hook="customer_return_row">
           <td><%= link_to customer_return.number, edit_admin_order_customer_return_path(@order, customer_return) %></td>
           <td><%= customer_return.display_pre_tax_total.to_html %></td>
           <td><%= customer_return.display_total.to_html %></td>
