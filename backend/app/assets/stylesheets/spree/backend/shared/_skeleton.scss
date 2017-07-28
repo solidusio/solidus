@@ -21,7 +21,6 @@
 /* #Base 960 Grid
 ================================================== */
 
-    .container                                  { position: relative; width: 960px; margin: 0 auto; padding: 0; }
     .container .column,
     .container .columns                         { float: left; display: inline; margin-left: 10px; margin-right: 10px; }
     .row                                        { margin-bottom: 20px; }
@@ -77,7 +76,6 @@
     /* Note: Design for a width of 768px */
 
     @media only screen and (min-width: 768px + $width-sidebar) and (max-width: 959px + $width-sidebar) {
-        .container                                  { width: 768px; }
         .container .column,
         .container .columns                         { margin-left: 10px; margin-right: 10px;  }
         .column.alpha, .columns.alpha               { margin-left: 0; margin-right: 10px; }
@@ -130,7 +128,6 @@
     /* Note: Design for a width of 320px */
 
     @media only screen and (max-width: 767px + $width-sidebar) {
-        .container { width: 300px; }
         .container .columns,
         .container .column { margin: 0; }
 
@@ -180,7 +177,6 @@
     /* Note: Design for a width of 480px */
 
     @media only screen and (min-width: 480px + $width-sidebar) and (max-width: 767px + $width-sidebar) {
-        .container { width: 420px; }
         .container .columns,
         .container .column { margin: 0; }
 
@@ -208,29 +204,6 @@
 
 /* #Clearing
 ================================================== */
-
-    /* Self Clearing Goodness */
-    .container:after { content: "\0020"; display: block; height: 0; clear: both; visibility: hidden; }
-
-    /* Use clearfix class on parent to clear nested columns,
-    or wrap each row of columns in a <div class="row"> */
-    .clearfix:before,
-    .clearfix:after,
-    .row:before,
-    .row:after {
-      content: '\0020';
-      display: block;
-      overflow: hidden;
-      visibility: hidden;
-      width: 0;
-      height: 0; }
-    .row:after,
-    .clearfix:after {
-      clear: both; }
-    .row,
-    .clearfix {
-      zoom: 1; }
-
     /* You can also use a <br class="clear" /> to clear columns */
     .clear {
       clear: both;
