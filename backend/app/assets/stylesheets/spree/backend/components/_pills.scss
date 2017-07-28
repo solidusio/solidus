@@ -41,3 +41,41 @@
     }
   }
 }
+
+// Extend pill states for custom order, payment, and shipment state names
+.pill-address,
+.pill-awaiting_return,
+.pill-backorder,
+.pill-backordered,
+.pill-balance_due,
+.pill-cart,
+.pill-checkout,
+.pill-confirm,
+.pill-credit_owed,
+.pill-delivery,
+.pill-on_hand,
+.pill-partial,
+.pill-payment,
+.pill-processing,
+.pill-resumed {
+  @extend .pill-pending;
+}
+
+.pill-canceled,
+.pill-completed,
+.pill-paid,
+.pill-reimbursed,
+.pill-returned,
+.pill-shipped,
+.pill-void {
+  @extend .pill-complete;
+}
+
+.pill-failed {
+  @extend .pill-warning;
+}
+
+.pill-errored,
+.pill-invalid {
+  @extend .pill-error;
+}
