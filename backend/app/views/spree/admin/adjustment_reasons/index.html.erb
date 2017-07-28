@@ -33,7 +33,9 @@
             <%= adjustment_reason.name %>
           </td>
           <td class="align-center">
-            <%= Spree.t(adjustment_reason.active? ? :active : :inactive) %>
+            <span class="pill pill-<%= adjustment_reason.active? ? 'active' : 'inactive' %>">
+              <%= Spree.t(adjustment_reason.active? ? :active : :inactive) %>
+            </span>
           </td>
           <td class="actions">
             <%= link_to_edit adjustment_reason, no_text: true %>
