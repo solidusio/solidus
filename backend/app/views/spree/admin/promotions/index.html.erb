@@ -81,7 +81,9 @@
             <%= (promotion.codes.size == 1) ? promotion.codes.first.try!(:value) : Spree.t(:number_of_codes, count: promotion.codes.size) %>
           </td>
           <td class="align-center">
-            <%= Spree.t(promotion.active?? :active : :inactive) %>
+            <span class="pill pill-<%= promotion.active? ? 'active' : 'inactive' %>">
+              <%= Spree.t(promotion.active?? :active : :inactive) %>
+            </span>
           </td>
           <td class="align-center">
             <%= promotion.usage_limit.nil? ? "∞" : promotion.usage_limit %>
