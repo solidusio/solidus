@@ -53,9 +53,13 @@
               <td class="align-center item-quantity"><%= item.quantity %></td>
               <td class="align-center item-total"><%= item.money.to_html %></td>
               <td class="align-center order-state">
-                <div class="state <%= order.state.downcase %>">
-                  <%= Spree.t("order_state.#{order.state.downcase}") %>
-                </div>
+                <span class="pill pill-<%= order.state %>">
+                  <%= Spree.t(
+                    order.state,
+                    scope: :order_state,
+                    default: order.state.humanize
+                  ) %>
+                </span>
               </td>
               <td class="align-center order-number">
                 <% if can?([:admin, :edit], order) %>
