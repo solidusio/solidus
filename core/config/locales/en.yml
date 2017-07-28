@@ -1726,6 +1726,17 @@ en:
     received_successfully: Received Successfully
     receiving: Receiving
     receiving_match: Receiving match
+    reception_states:
+      awaiting: Awaiting
+      canceled: Canceled
+      expired: Expired
+      given_to_customer: Given to customer
+      in_transit: In transit
+      lost_in_transit: Lost in transit
+      received: Received
+      shipped_wrong_item: Wrong item
+      short_shipped: Short shipped
+      unexchanged: Unexchanged
     reception_status: Reception Status
     reference: Reference
     refund: Refund
