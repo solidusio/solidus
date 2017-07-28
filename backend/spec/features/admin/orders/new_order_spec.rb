@@ -54,7 +54,7 @@ describe "New Order", type: :feature do
     click_on "Ship"
 
     within '.carton-state' do
-      expect(page).to have_content('shipped')
+      expect(page).to have_content('Shipped')
     end
   end
 
@@ -156,7 +156,7 @@ describe "New Order", type: :feature do
       click_on "Continue"
 
       within(".additional-info .state") do
-        expect(page).to have_content("confirm")
+        expect(page).to have_content("Confirm")
       end
     end
   end

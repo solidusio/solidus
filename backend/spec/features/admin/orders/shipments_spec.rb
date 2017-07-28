@@ -33,7 +33,7 @@ describe "Shipments", type: :feature do
     def ship_shipment
       find(".ship-shipment-button").click
 
-      expect(page).to have_content("shipped package")
+      expect(page).to have_content("Shipped package")
       expect(order.reload.shipment_state).to eq("shipped")
     end
 

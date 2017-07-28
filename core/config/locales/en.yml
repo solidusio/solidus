@@ -1383,11 +1383,11 @@ en:
     inventory_not_available: Inventory not available for %{item}.
     inventory_state: Inventory State
     inventory_states:
-      backordered: backordered
-      canceled: canceled
-      on_hand: on hand
-      returned: returned
-      shipped: shipped
+      backordered: Backordered
+      canceled: Canceled
+      on_hand: On hand
+      returned: Returned
+      shipped: Shipped
     is_not_available_to_shipment_address: is not available to shipment address
     iso_name: Iso Name
     item: Item
@@ -1592,16 +1592,16 @@ en:
     order_refresh_totals: Refresh Totals
     order_resumed: Order resumed
     order_state:
-      address: address
-      awaiting_return: awaiting return
-      canceled: canceled
-      cart: cart
-      complete: complete
-      confirm: confirm
-      delivery: delivery
-      payment: payment
-      resumed: resumed
-      returned: returned
+      address: Address
+      awaiting_return: Awaiting return
+      canceled: Canceled
+      cart: Cart
+      complete: Complete
+      confirm: Confirm
+      delivery: Delivery
+      payment: Payment
+      resumed: Resumed
+      returned: Returned
     order_summary: Order Summary
     order_sure_want_to: Are you sure you want to %{event} this order?
     order_total: Order Total
@@ -1635,15 +1635,15 @@ en:
     payment_processor_choose_link: our payments page
     payment_state: Payment State
     payment_states:
-      balance_due: balance due
-      checkout: checkout
-      completed: completed
-      credit_owed: credit owed
-      failed: failed
-      paid: paid
-      pending: pending
-      processing: processing
-      void: void
+      balance_due: Balance due
+      checkout: Checkout
+      completed: Completed
+      credit_owed: Credit owed
+      failed: Failed
+      paid: Paid
+      pending: Pending
+      processing: Processing
+      void: Void
     payment_updated: Payment Updated
     payments: Payments
     percent: Percent
@@ -1840,12 +1840,12 @@ en:
     shipment_numbers: Shipment numbers
     shipment_state: Shipment State
     shipment_states:
-      backorder: backorder
-      canceled: canceled
-      partial: partial
-      pending: pending
-      ready: ready
-      shipped: shipped
+      backorder: Backorder
+      canceled: Canceled
+      partial: Partial
+      pending: Pending
+      ready: Ready
+      shipped: Shipped
     shipment_transfer_success: 'Variants successfully transferred'
     shipment_transfer_error: 'There was an error transferring variants'
     shipments: Shipments

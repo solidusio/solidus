@@ -103,7 +103,7 @@ describe "Customer Details", type: :feature, js: true do
       # Regression test for https://github.com/spree/spree/issues/2950 and https://github.com/spree/spree/issues/2433
       # This act should transition the state of the order as far as it will go too
       within("#order_tab_summary") do
-        expect(find("dt#order_status + dd")).to have_content("complete")
+        expect(find("dt#order_status + dd")).to have_content("Complete")
       end
     end
 
