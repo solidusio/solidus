@@ -19,6 +19,10 @@ module Spree
 
     delegate :order_id, to: :shipment
 
+    def order=(_)
+      raise "The order association has been removed from InventoryUnit. The order is now determined from the shipment."
+    end
+
     validates_presence_of :shipment, :line_item, :variant
 
     before_destroy :ensure_can_destroy
