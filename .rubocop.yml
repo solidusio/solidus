@@ -116,6 +116,7 @@ Rails/DynamicFindBy:
 Lint/AmbiguousBlockAssociation:
   Exclude:
     - '*/spec/**/*'
+    - 'spec/**/*' # For the benefit of apps that inherit from this config
 
 # We use eval to add common_spree_dependencies into the Gemfiles of each of our gems
 Security/Eval:

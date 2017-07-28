@@ -72,6 +72,15 @@ RSpec.configure do |config|
     DatabaseCleaner.clean_with :truncation
   end
 
+  config.when_first_matching_example_defined(type: :feature) do
+    config.before :suite do
+      # Preload assets
+      # This should avoid capybara timeouts, and avoid counting asset compilation
+      # towards the timing of the first feature spec.
+      Rails.application.precompiled_assets
+    end
+  end
+
   config.prepend_before(:each) do
     if RSpec.current_example.metadata[:js]
       DatabaseCleaner.strategy = :truncation

@@ -27,12 +27,15 @@ module Spree
 
         def retrieve_products
           @products = get_base_scope
-          curr_page = page || 1
 
           unless Spree::Config.show_products_without_price
             @products = @products.joins(:prices).merge(Spree::Price.where(pricing_options.search_arguments)).distinct
           end
-          @products = @products.page(curr_page).per(per_page)
+          if @properties[:page]
+            curr_page = @properties[:page] || 1
+            @products = @products.page(curr_page).per(@properties[:per_page])
+          end
+          @products
         end
 
         def method_missing(name)
@@ -101,9 +104,14 @@ module Spree
           @properties[:search] = params[:search]
           @properties[:include_images] = params[:include_images]
 
-          per_page = params[:per_page].to_i
-          @properties[:per_page] = per_page > 0 ? per_page : Spree::Config[:products_per_page]
-          @properties[:page] = (params[:page].to_i <= 0) ? 1 : params[:page].to_i
+          if params[:per_page].present? || params[:page].present?
+            Spree::Deprecation.warn "Pagination inside the searcher is no longer supported." \
+              "Please paginate the results of the searcher yourself."
+
+            per_page = params[:per_page].to_i
+            @properties[:per_page] = per_page > 0 ? per_page : Spree::Config[:products_per_page]
+            @properties[:page] = (params[:page].to_i <= 0) ? 1 : params[:page].to_i
+          end
         end
       end
     end

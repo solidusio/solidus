@@ -483,7 +483,7 @@ module Spree
         let(:shipment){ order.shipments[0] }
 
         it "updates each shipment" do
-          expect(shipment).to receive(:update!)
+          expect(shipment).to receive(:update_state)
           updater.update
         end
 

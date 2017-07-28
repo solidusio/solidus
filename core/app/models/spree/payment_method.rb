@@ -37,6 +37,21 @@ module Spree
 
     include Spree::Preferences::StaticallyConfigurable
 
+    # Custom ModelName#human implementation to ensure we don't refer to
+    # subclasses as just "PaymentMethod"
+    class ModelName < ActiveModel::Name
+      # Similar to ActiveModel::Name#human, but skips lookup_ancestors
+      def human(options = {})
+        defaults = [
+          i18n_key,
+          options[:default],
+          @human
+        ].compact
+        options = { scope: [:activerecord, :models], count: 1, default: defaults }.merge!(options.except(:default))
+        I18n.translate(defaults.shift, options)
+      end
+    end
+
     class << self
       def providers
         Spree::Deprecation.warn 'Spree::PaymentMethod.providers is deprecated and will be deleted in Solidus 3.0. ' \
@@ -64,6 +79,10 @@ module Spree
         available_payment_methods.select do |p|
           store.nil? || store.payment_methods.empty? || store.payment_methods.include?(p)
         end
+      end
+
+      def model_name
+        ModelName.new(self, Spree)
       end
 
       def active?
@@ -156,10 +175,22 @@ module Spree
     #     The view that represents your payment method on orders in the backend
     #
     def partial_name
-      type.demodulize.downcase
+      deprecated_method_type_override || type.demodulize.downcase
     end
-    alias_method :method_type, :partial_name
-    deprecate method_type: :partial_name, deprecator: Spree::Deprecation
+
+    # :nodoc:
+    # If method_type has been overridden, call it and return the value, otherwise return nil
+    def deprecated_method_type_override
+      if method(:method_type).owner != Spree::PaymentMethod
+        Spree::Deprecation.warn "overriding PaymentMethod#method_type is deprecated and will be removed from Solidus 3.0 (override partial_name instead)", caller
+        method_type
+      end
+    end
+
+    def method_type
+      Spree::Deprecation.warn "method_type is deprecated and will be removed from Solidus 3.0 (use partial_name instead)", caller
+      partial_name
+    end
 
     def payment_profiles_supported?
       false

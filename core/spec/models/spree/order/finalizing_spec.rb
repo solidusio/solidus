@@ -18,7 +18,7 @@ describe Spree::Order, type: :model do
 
     it "should sell inventory units" do
       order.shipments.each do |shipment|
-        expect(shipment).to receive(:update!)
+        expect(shipment).to receive(:update_state)
         expect(shipment).to receive(:finalize!)
       end
       order.finalize!

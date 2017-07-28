@@ -267,13 +267,13 @@ describe Spree::Shipment, type: :model do
     end
   end
 
-  context "#update!" do
+  context "#update_state" do
     shared_examples_for "immutable once shipped" do
       before { shipment.update_columns(state: 'shipped') }
 
       it "should remain in shipped state once shipped" do
         expect {
-          shipment.update!(order)
+          shipment.update_state
         }.not_to change { shipment.state }
       end
     end
@@ -285,7 +285,7 @@ describe Spree::Shipment, type: :model do
 
         allow(shipment).to receive_messages(inventory_units: [mock_model(Spree::InventoryUnit, allow_ship?: false, canceled?: false)])
         expect(shipment).to receive(:update_columns).with(state: 'pending', updated_at: kind_of(Time))
-        shipment.update!(order)
+        shipment.update_state
       end
     end
 
@@ -295,7 +295,7 @@ describe Spree::Shipment, type: :model do
         # Set as ready so we can test for change
         shipment.update_attributes!(state: 'ready')
         expect(shipment).to receive(:update_columns).with(state: 'pending', updated_at: kind_of(Time))
-        shipment.update!(order)
+        shipment.update_state
       end
     end
 
@@ -303,7 +303,7 @@ describe Spree::Shipment, type: :model do
       before { allow(order).to receive_messages paid?: true }
       it "should result in a 'ready' state" do
         expect(shipment).to receive(:update_columns).with(state: 'ready', updated_at: kind_of(Time))
-        shipment.update!(order)
+        shipment.update_state
       end
       it_should_behave_like 'immutable once shipped'
       it_should_behave_like 'pending if backordered'
@@ -316,7 +316,7 @@ describe Spree::Shipment, type: :model do
 
       it "should result in a 'ready' state" do
         expect(shipment).to receive(:update_columns).with(state: 'ready', updated_at: kind_of(Time))
-        shipment.update!(order)
+        shipment.update_state
       end
       it_should_behave_like 'immutable once shipped'
       it_should_behave_like 'pending if backordered'
@@ -327,7 +327,7 @@ describe Spree::Shipment, type: :model do
       it "should result in a 'pending' state" do
         shipment.state = 'ready'
         expect(shipment).to receive(:update_columns).with(state: 'pending', updated_at: kind_of(Time))
-        shipment.update!(order)
+        shipment.update_state
       end
       it_should_behave_like 'immutable once shipped'
       it_should_behave_like 'pending if backordered'
@@ -338,7 +338,7 @@ describe Spree::Shipment, type: :model do
       it "should result in a 'ready' state" do
         shipment.state = 'pending'
         expect(shipment).to receive(:update_columns).with(state: 'ready', updated_at: kind_of(Time))
-        shipment.update!(order)
+        shipment.update_state
       end
       it_should_behave_like 'immutable once shipped'
       it_should_behave_like 'pending if backordered'
@@ -350,7 +350,7 @@ describe Spree::Shipment, type: :model do
         expect(shipment).to receive :after_ship
         allow(shipment).to receive_messages determine_state: 'shipped'
         expect(shipment).to receive(:update_columns).with(state: 'shipped', updated_at: kind_of(Time))
-        shipment.update!(order)
+        shipment.update_state
       end
 
       # Regression test for https://github.com/spree/spree/issues/4347

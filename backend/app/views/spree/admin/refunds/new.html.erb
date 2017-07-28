@@ -23,7 +23,7 @@
       <div class="col-3">
         <div class="field">
           <%= f.label :amount %><br/>
-          <%= f.text_field :amount, class: 'fullwidth' %>
+          <%= render "spree/admin/shared/number_with_currency", f: f, amount_attr: :amount, currency: @refund.currency, required: true %>
         </div>
       </div>
       <div class="col-3">

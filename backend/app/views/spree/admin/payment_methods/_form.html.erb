@@ -3,11 +3,11 @@
   <div data-hook="payment_method">
 
     <div class="row">
-      <div class="col-3">
+      <div class="col-4">
         <div id="preference-settings">
           <div class="field">
-            <%= label :payment_method, :type %>
-            <%= collection_select(:payment_method, :type, @payment_method_types, :to_s, :name, {}, {class: 'custom-select fullwidth js-gateway-type'}) %>
+            <%= f.label :type %>
+            <%= f.select :type, @payment_method_types.map { |p| [p.model_name.human, p.to_s] }, {}, {class: 'custom-select fullwidth js-gateway-type'} %>
           </div>
 
           <div class="field js-preference-source-wrapper">
@@ -25,34 +25,25 @@
 
           <div class="info warning js-gateway-settings-warning"><%= Spree.t(:payment_method_settings_warning) %></div>
         </div>
-        <div data-hook="available_to_user" class="field">
-          <%= label_tag nil, Spree::PaymentMethod.human_attribute_name(:available_to_users) %>
-          <%= f.check_box :available_to_users %>
-        </div>
-        <div data-hook="available_to_user" class="field">
-          <%= label_tag nil, Spree::PaymentMethod.human_attribute_name(:available_to_admin) %>
-          <%= f.check_box :available_to_admin %>
-        </div>
         <div data-hook="auto_capture" class="field">
           <%= f.label :auto_capture %>
-          <%= select(:payment_method, :auto_capture, [["#{Spree.t(:use_app_default)} (#{Spree::Config[:auto_capture]})", ''], [Spree.t(:say_yes), true], [Spree.t(:say_no), false]], {}, {class: 'custom-select fullwidth'}) %>
+          <%= f.select :auto_capture, [["#{Spree.t(:use_app_default)} (#{Spree::Config[:auto_capture]})", ''], [Spree.t(:say_yes), true], [Spree.t(:say_no), false]], {}, {class: 'custom-select fullwidth'} %>
+        </div>
+        <div data-hook="available_to_user" class="field">
+          <%= f.check_box :available_to_users %>
+          <%= f.label :available_to_users %>
+        </div>
+        <div data-hook="available_to_user" class="field">
+          <%= f.check_box :available_to_admin %>
+          <%= f.label :available_to_admin %>
         </div>
         <div data-hook="active" class="field">
-          <%= label_tag nil, Spree::PaymentMethod.human_attribute_name(:active) %>
-          <ul>
-            <li>
-              <%= radio_button :payment_method, :active, true %>
-              <%= label_tag :payment_method_active_true, Spree.t(:say_yes) %>
-            </li>
-            <li>
-              <%= radio_button :payment_method, :active, false %>
-              <%= label_tag :payment_method_active_false, Spree.t(:say_no) %>
-            </li>
-          </ul>
+          <%= f.check_box :active %>
+          <%= f.label :active %>
         </div>
       </div>
 
-      <div class="col-6">
+      <div class="col-8">
         <div data-hook="name" class="field">
           <%= f.label :name %>
           <%= f.text_field :name, class: 'fullwidth' %>
