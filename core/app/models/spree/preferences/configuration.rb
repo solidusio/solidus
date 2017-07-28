@@ -31,10 +31,10 @@ module Spree::Preferences
     end
 
     # @!attribute preference_store
-    # Storage method for preferences. Default is {ScopedStore}
+    # Storage method for preferences.
     attr_writer :preference_store
     def preference_store
-      @preference_store ||= ScopedStore.new(self.class.name.underscore)
+      @preference_store ||= default_preferences
     end
 
     # Replace the default legacy preference store, which stores preferences in
@@ -48,6 +48,12 @@ module Spree::Preferences
     # initializer.
     def use_static_preferences!
       @preference_store = default_preferences
+    end
+
+    # Replace the new static preference store with the legacy store which
+    # fetches preferences from the DB.
+    def use_legacy_db_preferences!
+      @preference_store = ScopedStore.new(self.class.name.underscore)
     end
 
     alias_method :preferences, :preference_store
