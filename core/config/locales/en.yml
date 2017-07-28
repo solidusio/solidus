@@ -1089,6 +1089,7 @@ en:
     clear_cache_warning: Clearing cache will temporarily reduce the performance of your store.
     clone: Clone
     close: Close
+    closed: Closed
     close_stock_transfer:
       confirm: "Are you sure you want to close this stock transfer?\n\nStock levels will be changed for the received items and you will no longer be able to edit the stock transfer."
     code: Code
