@@ -72,12 +72,12 @@
     </colgroup>
     <thead>
       <tr>
-        <th><%= Spree::Promotion.human_attribute_name(:name) %></th>
+        <th><%= sort_link @search, :name %></th>
         <th><%= Spree::Promotion.human_attribute_name(:code) %></th>
-        <th><%= Spree::Promotion.human_attribute_name(:description) %></th>
-        <th><%= Spree::Promotion.human_attribute_name(:usage_limit) %></th>
-        <th><%= Spree::Promotion.human_attribute_name(:promotion_uses) %></th>
-        <th><%= Spree::Promotion.human_attribute_name(:expires_at) %></th>
+        <th><%= sort_link @search, :description %></th>
+        <th><%= sort_link @search, :usage_limit %></th>
+        <th><%= Spree::Promotion.human_attribute_name :promotion_uses %></th>
+        <th><%= sort_link @search, :expires_at %></th>
         <th class="actions"></th>
       </tr>
     </thead>
@@ -89,7 +89,7 @@
           <td><%= promotion.description %></td>
           <td class="align-center"><%= promotion.usage_limit.nil? ? "∞" : promotion.usage_limit  %></td>
           <td class="align-center"><%= Spree.t(:current_promotion_usage, count: promotion.usage_count) %></td>
-          <td class="align-center"><%= promotion.expires_at.to_date.to_s(:short_date) if promotion.expires_at %></td>
+          <td class="align-center"><%=l promotion.expires_at.to_date if promotion.expires_at %></td>
           <td class="actions">
             <% if can?(:edit, promotion) %>
               <%= link_to_edit promotion, no_text: true %>
