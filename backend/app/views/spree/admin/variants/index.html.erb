@@ -2,10 +2,11 @@
 
 <% admin_breadcrumb(plural_resource_name(Spree::Variant)) %>
 
-
 <% if @variants.any? || @product.variants.only_deleted.any?%>
-  <%= render "table_filter", product: @product %>
-  <%= render "table", variants: @variants %>
+  <div data-js="product-variants">
+    <%= render "table_filter", product: @product %>
+    <%= render "table", variants: @variants %>
+  </div>
 <% else %>
   <% if !Spree::OptionType.any? %>
     <p class='first_add_option_types no-objects-found' data-hook="first_add_option_types">
