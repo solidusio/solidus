@@ -3,6 +3,10 @@ table {
   @extend .table;
   border-spacing: 0;
 
+  &.sortable td {
+    vertical-align: middle;
+  }
+
   th, td {
     text-overflow: ellipsis;
 
