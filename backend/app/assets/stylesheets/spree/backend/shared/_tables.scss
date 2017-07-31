@@ -7,9 +7,12 @@ table {
     text-overflow: ellipsis;
 
     .handle {
+      @extend .fa;
+      @extend .fa-bars;
+      cursor: move;
       display: block !important;
       text-align: center;
-      padding-right: 0;
+      padding: 3px 0;
     }
 
     &.actions {
@@ -83,13 +86,6 @@ table {
     input[type="text"] {
       width: 100%;
     }
-
-    .handle {
-      @extend .fa;
-      @extend .fa-bars;
-      cursor: move;
-    }
-
   }
 
   &.no-borders {
