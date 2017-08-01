@@ -30,12 +30,6 @@ $color-body-bg:                  $color-1 !default;
 $color-body-text:                $color-4 !default;
 @include solidus-deprecated-variable("color-headers", "headings-color");
 $color-headers:                  $color-4 !default;
-@include solidus-deprecated-variable("color-link", "link-color");
-$color-link:                     $color-3 !default;
-@include solidus-deprecated-variable("color-link-hover", "link-hover-color");
-$color-link-hover:               $color-2 !default;
-@include solidus-deprecated-variable("color-link-focus", "link-hover-color");
-$color-link-focus:               $color-2 !default;
 $color-border:                   very-light($color-3, 12) !default;
 
 // Basic navigation colors
