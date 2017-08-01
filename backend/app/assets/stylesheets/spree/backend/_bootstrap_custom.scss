@@ -16,8 +16,8 @@ $brand-danger:              $color-5 !default;
 //
 // Settings for the `<body>` element.
 
-$body-bg:       $color-body-bg !default;
-$body-color:    $color-body-text !default;
+$body-bg:       $color-1 !default;
+$body-color:    $color-4 !default;
 
 // Links
 //
@@ -40,7 +40,7 @@ $grid-gutter-width-base:     1.875rem !default;
 
 $font-family-sans-serif: "Helvetica Neue", Helvetica, Arial, sans-serif !default;
 $font-family-monospace:  Menlo, Monaco, Consolas, "Courier New", monospace !default;
-$font-family-base:       $base-font-family !default;
+$font-family-base:       "Open Sans", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif !default;
 
 $font-size-root: $body-font-size !default;
 
@@ -55,7 +55,7 @@ $font-size-h5: $h5-size !default;
 $font-size-h6: $h6-size !default;
 
 $headings-font-weight:   $font-weight-bold !default;
-$headings-color:         $color-headers !default;
+$headings-color:         $color-4 !default;
 
 // Components
 //

@@ -4,8 +4,6 @@
 
 // Fonts
 //--------------------------------------------------------------
-@include solidus-deprecated-variable("base-font-family", "font-family-base");
-$base-font-family: "Open Sans", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif !default;
 $font-size-pill: 11px;
 
 // Colors
@@ -24,16 +22,10 @@ $color-7:                        #F4F4F4 !default;    // Light Gray
 $box-shadow:                     0px 3px 3px -2px hsla(0, 0%, 0%, 0.2) !default;
 
 // Body base colors
-@include solidus-deprecated-variable("color-body-bg", "body-bg");
-$color-body-bg:                  $color-1 !default;
-@include solidus-deprecated-variable("color-body-text", "body-color");
-$color-body-text:                $color-4 !default;
-@include solidus-deprecated-variable("color-headers", "headings-color");
-$color-headers:                  $color-4 !default;
 $color-border:                   very-light($color-3, 12) !default;
 
 // Basic navigation colors
-$color-sidebar-bg:              $color-body-bg !default;
+$color-sidebar-bg:              $color-1 !default;
 $color-sidebar-border:          $color-border !default;
 $color-navbar:                  $color-1 !default;
 $color-navbar-bg:               $color-3 !default;
