@@ -232,9 +232,6 @@ $h2-size:                        $h3-size + 2 !default;
 @include solidus-deprecated-variable("h1-size", "font-size-h1");
 $h1-size:                        $h2-size + 2 !default;
 
-$font-weight-bold:               600 !default;
-$font-weight-normal:             400 !default;
-
 $width-sidebar:                  200px !default;
 $width-sidebar-flyout:           225px !default;
 
