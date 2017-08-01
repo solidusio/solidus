@@ -28,7 +28,7 @@ nav.menu {
 .admin-nav {
   border-right: $border-sidebar;
   background: $color-sidebar-bg;
-  z-index: $z-index-navbar-flyout;
+  z-index: $zindex-navbar;
 }
 
 .admin-nav-header {
