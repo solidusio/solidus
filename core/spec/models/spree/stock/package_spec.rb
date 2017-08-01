@@ -165,7 +165,7 @@ module Spree
 
           it "returns an order" do
             expect(subject.order).to be_a_kind_of Spree::Order
-            expect(subject.order).to eq unit.order
+            expect(subject.order).to eq order
           end
         end
 
