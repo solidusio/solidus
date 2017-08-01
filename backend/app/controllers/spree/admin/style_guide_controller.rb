@@ -10,8 +10,7 @@ module Spree
             'fonts',
             'colors',
             'lists',
-            'icons',
-            'tags'
+            'icons'
           ],
           forms: [
             'building_forms',
