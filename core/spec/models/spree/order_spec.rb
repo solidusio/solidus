@@ -1222,7 +1222,7 @@ describe Spree::Order, type: :model do
         context "there is a completed credit card payment" do
           let!(:cc_payment) { create(:payment, order: order, state: "completed", amount: 100) }
 
-          it "successfully creates the store credit payments", skip: "Failing example for payment bug" do
+          it "successfully creates the store credit payments" do
             expect { subject }.to change { order.payments.count }.from(1).to(2)
             expect(order.errors).to be_empty
           end
