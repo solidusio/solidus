@@ -47,12 +47,12 @@ $font-size-root: $body-font-size !default;
 $font-weight-normal: 400 !default;
 $font-weight-bold: 600 !default;
 
-$font-size-h1: $h1-size !default;
-$font-size-h2: $h2-size !default;
-$font-size-h3: $h3-size !default;
-$font-size-h4: $h4-size !default;
-$font-size-h5: $h5-size !default;
-$font-size-h6: $h6-size !default;
+$font-size-h1: $body-font-size + 12 !default;
+$font-size-h2: $body-font-size + 10 !default;
+$font-size-h3: $body-font-size + 8 !default;
+$font-size-h4: $body-font-size + 6 !default;
+$font-size-h5: $body-font-size + 4 !default;
+$font-size-h6: $body-font-size + 2 !default;
 
 $headings-font-weight:   $font-weight-bold !default;
 $headings-color:         $color-4 !default;
