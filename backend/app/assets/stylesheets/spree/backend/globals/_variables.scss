@@ -110,14 +110,6 @@ $color-sel-hover-text:           $color-1 !default;
 $color-sel-disabled-bg:          $color-7 !default;
 $color-sel-disabled-text:        $color-4 !default;
 
-// Text inputs colors
-@include solidus-deprecated-variable("color-txt-brd", "input-border-color");
-$color-txt-brd:                  $color-border !default;
-@include solidus-deprecated-variable("color-txt-text", "input-color");
-$color-txt-text:                 $color-3 !default;
-@include solidus-deprecated-variable("color-txt-hover-brd", "input-border-focus");
-$color-txt-hover-brd:            $color-2 !default;
-
 // Available states
 $states: (
   active,
