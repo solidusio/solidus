@@ -14,8 +14,7 @@
     #{ @return_authorization.number }
     (#{ Spree.t(
       @return_authorization.state,
-      scope: :return_authorization_states,
-      default: @return_authorization.state.humanize
+      scope: :return_authorization_states
     ) })
   """
 ) %>

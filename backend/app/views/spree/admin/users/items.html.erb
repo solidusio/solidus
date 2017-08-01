@@ -54,11 +54,7 @@
               <td class="align-center item-total"><%= item.money.to_html %></td>
               <td class="align-center order-state">
                 <span class="pill pill-<%= order.state %>">
-                  <%= Spree.t(
-                    order.state,
-                    scope: :order_state,
-                    default: order.state.humanize
-                  ) %>
+                  <%= Spree.t(order.state, scope: :order_state) %>
                 </span>
               </td>
               <td class="align-center order-number">

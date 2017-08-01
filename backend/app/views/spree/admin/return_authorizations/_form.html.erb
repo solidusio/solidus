@@ -36,11 +36,7 @@
           </td>
           <td class="return-item-state align-center">
             <span class="pill pill-<%= inventory_unit.state %>">
-              <%= Spree.t(
-                inventory_unit.state,
-                scope: :inventory_states,
-                default: inventory_unit.state.humanize
-              ) %>
+              <%= Spree.t(inventory_unit.state, scope: :inventory_states) %>
             </span>
           </td>
           <td class="return-item-charged align-center">

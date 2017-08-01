@@ -4,11 +4,7 @@
 <% admin_breadcrumb do %>
   <%= payment_method_name(@payment) %>
   <span class="pill pill-<%= @payment.state %>">
-    <%= Spree.t(
-      @payment.state,
-      scope: :payment_states,
-      default: @payment.state.humanize
-    ) %>
+    <%= Spree.t(@payment.state, scope: :payment_states ) %>
   </span>
 <% end %>
 

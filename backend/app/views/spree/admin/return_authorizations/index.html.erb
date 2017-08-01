@@ -32,8 +32,7 @@
             <span class="pill pill-<%= return_authorization.state %>">
               <%= Spree.t(
                 return_authorization.state,
-                scope: :return_authorization_states,
-                default: return_authorization.state.humanize
+                scope: :return_authorization_states
               ) %>
             </span>
           </td>

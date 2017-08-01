@@ -31,11 +31,7 @@
           </td>
           <td class="align-center">
             <span class="pill pill-<%= payment.state %>">
-              <%= Spree.t(
-                payment.state,
-                scope: :payment_states,
-                default: payment.state.humanize
-              ) %>
+              <%= Spree.t(payment.state, scope: :payment_states) %>
             </span>
           </td>
         </tr>
