@@ -199,17 +199,10 @@ $actions: edit, clone, remove, void, capture, save, cancel, mail, failure !defau
 $actions-bg-colors: $color-action-edit-bg, $color-action-clone-bg, $color-action-remove-bg, $color-action-void-bg, $color-action-capture-bg, $color-action-save-bg, $color-action-cancel-bg, $color-action-mail-bg, $color-action-failure-bg !default;
 $actions-brd-colors: $color-action-edit-brd, $color-action-clone-brd, $color-action-remove-brd, $color-action-void-brd, $color-action-capture-brd, $color-action-save-brd, $color-action-cancel-brd, $color-action-mail-brd, $color-action-failure-brd !default;
 
-// Sizes
-//--------------------------------------------------------------
-
-@include solidus-deprecated-variable("body-font-size", "font-size-root");
-$body-font-size:                 13px !default;
-
-$width-sidebar:                  200px !default;
-$width-sidebar-flyout:           225px !default;
-
 // Sidebar
 //--------------------------------------------------------------
+$width-sidebar:                  200px !default;
+$width-sidebar-flyout:           225px !default;
 $border-sidebar:                 1px solid $color-sidebar-border !default;
 
 // Main

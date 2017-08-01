@@ -42,17 +42,17 @@ $font-family-sans-serif: "Helvetica Neue", Helvetica, Arial, sans-serif !default
 $font-family-monospace:  Menlo, Monaco, Consolas, "Courier New", monospace !default;
 $font-family-base:       "Open Sans", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif !default;
 
-$font-size-root: $body-font-size !default;
+$font-size-root: 13px !default;
 
 $font-weight-normal: 400 !default;
 $font-weight-bold: 600 !default;
 
-$font-size-h1: $body-font-size + 12 !default;
-$font-size-h2: $body-font-size + 10 !default;
-$font-size-h3: $body-font-size + 8 !default;
-$font-size-h4: $body-font-size + 6 !default;
-$font-size-h5: $body-font-size + 4 !default;
-$font-size-h6: $body-font-size + 2 !default;
+$font-size-h1: $font-size-root + 12 !default;
+$font-size-h2: $font-size-root + 10 !default;
+$font-size-h3: $font-size-root + 8 !default;
+$font-size-h4: $font-size-root + 6 !default;
+$font-size-h5: $font-size-root + 4 !default;
+$font-size-h6: $font-size-root + 2 !default;
 
 $headings-font-weight:   $font-weight-bold !default;
 $headings-color:         $color-4 !default;
