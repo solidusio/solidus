@@ -1645,6 +1645,7 @@ en:
       pending: Pending
       processing: Processing
       void: Void
+      invalid: Invalid
     payment_updated: Payment Updated
     payments: Payments
     percent: Percent
