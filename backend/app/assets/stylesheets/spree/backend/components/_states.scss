@@ -22,12 +22,3 @@
     }
   }
 }
-
-table tbody tr {
-  &[class*="state"] td:first-child {
-    border-left-width: 3px;
-  }
-  &.state-complete td:first-child { border-left-color: $brand-success }
-  &.state-cart     td:first-child { border-left-color: very-light($brand-warning, 6) }
-  &.state-canceled td:first-child { border-left-color: $brand-danger }
-}

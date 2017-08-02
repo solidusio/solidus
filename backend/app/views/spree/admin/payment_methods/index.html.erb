@@ -31,7 +31,7 @@
         <th><%= Spree::PaymentMethod.human_attribute_name(:type) %></th>
         <th><%= Spree::PaymentMethod.human_attribute_name(:available_to_users) %></th>
         <th><%= Spree::PaymentMethod.human_attribute_name(:available_to_admin) %></th>
-        <th><%= Spree::PaymentMethod.human_attribute_name(:active) %></th>
+        <th><%= Spree::PaymentMethod.human_attribute_name(:state) %></th>
         <th data-hook="admin_payment_methods_index_header_actions" class="actions"></th>
       </tr>
     </thead>
@@ -43,7 +43,11 @@
           <td class="align-center"><%= method.model_name.human %></td>
           <td class="align-center"><%= method.available_to_users ? Spree.t(:say_yes) : Spree.t(:say_no) %></td>
           <td class="align-center"><%= method.available_to_admin ? Spree.t(:say_yes) : Spree.t(:say_no) %></td>
-          <td class="align-center"><%= method.active ? Spree.t(:say_yes) : Spree.t(:say_no) %></td>
+          <td class="align-center">
+            <span class="pill pill-<%= method.active ? 'active' : 'inactive' %>">
+              <%= Spree.t(method.active? ? :active : :inactive) %>
+            </span>
+          </td>
           <td data-hook="admin_payment_methods_index_row_actions" class="actions">
             <% if can?(:update, method.becomes(Spree::PaymentMethod)) %>
               <%= link_to_edit method.becomes(Spree::PaymentMethod), no_text: true %>

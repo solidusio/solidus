@@ -66,17 +66,17 @@ describe 'Payments', type: :feature do
       within_row(1) do
         expect(column_text(3)).to eq('$150.00')
         expect(column_text(4)).to eq('Credit Card')
-        expect(column_text(6)).to eq('checkout')
+        expect(column_text(6)).to eq('Checkout')
       end
 
       click_icon :void
-      expect(page).to have_css('#payment_status', text: 'balance due')
+      expect(page).to have_css('#payment_status', text: 'Balance due')
       expect(page).to have_content('Payment Updated')
 
       within_row(1) do
         expect(column_text(3)).to eq('$150.00')
         expect(column_text(4)).to eq('Credit Card')
-        expect(column_text(6)).to eq('void')
+        expect(column_text(6)).to eq('Void')
       end
 
       click_on 'New Payment'
@@ -86,7 +86,7 @@ describe 'Payments', type: :feature do
 
       click_icon(:capture)
 
-      expect(page).to have_selector('#payment_status', text: 'paid')
+      expect(page).to have_selector('#payment_status', text: 'Paid')
       expect(page).not_to have_selector('#new_payment_section')
     end
 

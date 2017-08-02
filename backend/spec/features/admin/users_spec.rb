@@ -260,7 +260,7 @@ describe 'Users', type: :feature do
       end
     end
 
-    [:number, :state, :total].each do |attr|
+    [:number, :total].each do |attr|
       context attr do
         it_behaves_like "a sortable attribute" do
           let(:text_match_1) { order.send(attr).to_s }
@@ -269,6 +269,13 @@ describe 'Users', type: :feature do
           let(:sort_link) { "orders_#{attr}_title" }
         end
       end
+    end
+
+    context "state" do
+      let(:text_match_1) { "Complete" }
+      let(:text_match_2) { "Complete" }
+      let(:table_id) { "listing_orders" }
+      let(:sort_link) { "orders_#{attr}_title" }
     end
   end
 
@@ -290,15 +297,18 @@ describe 'Users', type: :feature do
       end
     end
 
-    [:number, :state].each do |attr|
-      context attr do
-        it_behaves_like "a sortable attribute" do
-          let(:text_match_1) { order.send(attr).to_s }
-          let(:text_match_2) { order_2.send(attr).to_s }
-          let(:table_id) { "listing_items" }
-          let(:sort_link) { "orders_#{attr}_title" }
-        end
-      end
+    context "number" do
+      let(:text_match_1) { "R123" }
+      let(:text_match_2) { "R456" }
+      let(:table_id) { "listing_items" }
+      let(:sort_link) { "orders_#{attr}_title" }
+    end
+
+    context "state" do
+      let(:text_match_1) { "Complete" }
+      let(:text_match_2) { "Complete" }
+      let(:table_id) { "listing_items" }
+      let(:sort_link) { "orders_#{attr}_title" }
     end
 
     it "has item attributes" do

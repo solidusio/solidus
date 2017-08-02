@@ -94,7 +94,11 @@
           <td class="align-center"><%= stock_transfer.expected_item_count %></td>
           <td class="align-center"><%= stock_transfer.received_item_count %></td>
           <td><%= stock_transfer.shipped_at.try(:to_date) %></td>
-          <td><%= stock_transfer_status(stock_transfer) %></td>
+          <td>
+            <span class="pill pill-<%= stock_transfer.closed? ? 'complete' : 'pending' %>">
+              <%= Spree.t(stock_transfer.closed? ? :closed : :open) %>
+            </span>
+          </td>
           <td class="actions">
             <% if stock_transfer.receivable? && can?(:edit, stock_transfer) %>
               <%= link_to_with_icon 'download', Spree.t('actions.receive'), receive_admin_stock_transfer_path(stock_transfer), no_text: true, data: { action: 'green' } %>

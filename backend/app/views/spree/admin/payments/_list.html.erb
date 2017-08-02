@@ -21,7 +21,11 @@
         </td>
         <td class="align-center"><%= payment_method_name(payment) %></td>
         <td class="align-center"><%= payment.transaction_id %></td>
-        <td class="align-center"> <span class="state <%= payment.state %>"><%= Spree.t(payment.state, scope: :payment_states, default: payment.state.capitalize) %></span></td>
+        <td class="align-center">
+          <span class="pill pill-<%= payment.state %>">
+            <%= Spree.t(payment.state, scope: :payment_states) %>
+          </span>
+        </td>
         <td class="actions">
           <div class="editing-show">
             <%= link_to_with_icon 'save', Spree.t('actions.save'), nil, no_text: true, class: "js-save", data: {action: 'save'} %>

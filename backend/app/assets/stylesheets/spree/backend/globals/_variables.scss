@@ -6,6 +6,7 @@
 //--------------------------------------------------------------
 @include solidus-deprecated-variable("base-font-family", "font-family-base");
 $base-font-family: "Open Sans", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif !default;
+$font-size-pill: 11px;
 
 // Colors
 //--------------------------------------------------------------
@@ -73,6 +74,27 @@ $color-btn-bg:                   $color-3 !default;
 $color-btn-text:                 $color-1 !default;
 $color-btn-hover-bg:             $color-2 !default;
 $color-btn-hover-text:           $color-1 !default;
+
+// Pill colors
+//
+// For now these are custom assigned colors just for this section. As we go
+// about updating other areas of the admin we will likely want to pull these
+// colors out into better named variables.
+$color-pill-text: #1f2933;
+$color-pill-neutral: #e6e6e6;
+$color-pill-neutral-text: $color-pill-text;
+$color-pill-complete: #c8d8e8;
+$color-pill-complete-text: $color-pill-text;
+$color-pill-active: #bbe5b3;
+$color-pill-active-text: $color-pill-text;
+$color-pill-inactive: $color-pill-neutral;
+$color-pill-inactive-text: lighten($color-pill-text, 30%);
+$color-pill-pending: #ffe87d;
+$color-pill-pending-text: $color-pill-text;
+$color-pill-warning: #f9b36d;
+$color-pill-warning-text: $color-pill-text;
+$color-pill-error: #ff967b;
+$color-pill-error-text: $color-pill-text;
 
 // Actions colors
 $color-action-edit-bg:           very-light($color-success, 5  ) !default;

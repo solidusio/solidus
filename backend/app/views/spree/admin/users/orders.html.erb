@@ -25,13 +25,17 @@
         <tr data-hook="admin_orders_index_headers">
           <th><%= sort_link @search, :completed_at,   Spree::Order.human_attribute_name(:completed_at), {}, {title: 'orders_completed_at_title'} %></th>
           <th><%= sort_link @search, :number,         Spree::Order.human_attribute_name(:number), {}, {title: 'orders_number_title'} %></th>
-          <th><%= sort_link @search, :state,          Spree::Order.human_attribute_name(:state), {}, {title: 'orders_state_title'} %></th>
+          <th><%= sort_link @search, :state %></th>
+          <th><%= sort_link @search, :payment_state %></th>
+          <% if Spree::Order.checkout_step_names.include?(:delivery) %>
+            <th><%= sort_link @search, :shipment_state %></th>
+          <% end %>
           <th><%= sort_link @search, :total,          Spree::Order.human_attribute_name(:total), {}, {title: 'orders_total_title'} %></th>
         </tr>
       </thead>
       <tbody>
       <% @orders.each do |order| %>
-        <tr data-hook="admin_orders_index_rows" class="state-<%= order.state.downcase %> <%= cycle('odd', 'even') %>">
+        <tr data-hook="admin_orders_index_rows" class="<%= cycle('odd', 'even') %>">
           <td class="align-center order-completed-at"><%= l(order.completed_at.to_date) if order.completed_at %></td>
           <td class="align-center order-number">
             <% if can?([:admin, :edit], order) %>
@@ -40,15 +44,27 @@
               <%= order.number %>
             <% end %>
           </td>
-          <td class="align-center order-state">
-            <div class="state <%= order.state.downcase %>"><%= Spree.t("order_state.#{order.state.downcase}") %></div>
-            <% if order.payment_state %>
-              <div class="state <%= order.payment_state %>"><%= link_to Spree.t("payment_states.#{order.payment_state}"), admin_order_payments_path(order) %></div>
-            <% end %>
-            <% if Spree::Order.checkout_step_names.include?(:delivery) && order.shipment_state %>
-              <div class="state <%= order.shipment_state %>"><%= Spree.t("shipment_states.#{order.shipment_state}") %></div>
+          <td class="align-center">
+            <span class="pill pill-<%= order.state %>">
+              <%= Spree.t(order.state, scope: :order_state) %>
+            </span>
+          </td>
+          <td class="align-center">
+            <% if order.payment_state  %>
+              <span class="pill pill-<%= order.payment_state %>">
+                <%= Spree.t(order.payment_state, scope: :payment_states) %>
+              </span>
             <% end %>
           </td>
+          <% if Spree::Order.checkout_step_names.include?(:delivery) %>
+            <td class="align-center">
+              <% if order.shipment_state %>
+                <span class="pill pill-<%= order.shipment_state %>">
+                  <%= Spree.t(@order.shipment_state, scope: :shipment_states) %>
+                </span>
+              <% end %>
+            </td>
+          <% end %>
           <td class="align-center order-total"><%= order.display_total.to_html %></td>
         </tr>
       <% end %>

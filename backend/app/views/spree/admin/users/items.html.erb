@@ -53,13 +53,9 @@
               <td class="align-center item-quantity"><%= item.quantity %></td>
               <td class="align-center item-total"><%= item.money.to_html %></td>
               <td class="align-center order-state">
-                <div class="state <%= order.state.downcase %>"><%= Spree.t("order_state.#{order.state.downcase}") %></div>
-                <% if order.payment_state %>
-                  <div class="state <%= order.payment_state %>"><%= link_to Spree.t("payment_states.#{order.payment_state}"), admin_order_payments_path(order) %></div>
-                <% end %>
-                <% if Spree::Order.checkout_step_names.include?(:delivery) && order.shipment_state %>
-                  <div class="state <%= order.shipment_state %>"><%= Spree.t("shipment_states.#{order.shipment_state}") %></div>
-                <% end %>
+                <span class="pill pill-<%= order.state %>">
+                  <%= Spree.t(order.state, scope: :order_state) %>
+                </span>
               </td>
               <td class="align-center order-number">
                 <% if can?([:admin, :edit], order) %>

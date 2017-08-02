@@ -1,7 +1,11 @@
 <header id="order_tab_summary" data-hook>
   <dl class="additional-info">
     <dt class="order-state" id="order_status" data-hook><%= Spree.t(:status) %>:</dt>
-    <dd class="order-state"><span class="state <%= @order.state %>"><%= Spree.t(@order.state, scope: :order_state) %></span></dd>
+    <dd class="order-state">
+      <span class="pill pill-<%= @order.state %>">
+        <%= Spree.t(@order.state, scope: :order_state) %>
+      </span>
+    </dd>
 
     <% if @order.user.present? %>
       <dt data-hook='admin_order_user_link'><%= Spree.t(:user) %>:</dt>
@@ -25,11 +29,23 @@
     <dt data-hook='admin_order_tab_total_title'><%= Spree::Order.human_attribute_name(:total) %>:</dt>
     <dd id='order_total'><%= @order.display_total.to_html %></dd>
 
-    <dt class="order-shipment_state <%= "hidden" unless @order.completed? %>"><%= Spree::Shipment.model_name.human %>: </dt>
-    <dd class="order-shipment_state <%= "hidden" unless @order.completed? %>" id='shipment_status'><span class="state <%= @order.shipment_state %>"><%= Spree.t(@order.shipment_state, scope: :shipment_states, default: [:missing, "none"]) %></span></dd>
+    <% if @order.shipment_state %>
+      <dt class="order-shipment_state"><%= Spree::Shipment.model_name.human %>: </dt>
+      <dd class="order-shipment_state" id='shipment_status'>
+        <span class="pill pill-<%= @order.shipment_state %>">
+          <%= Spree.t(@order.shipment_state, scope: :shipment_states) %>
+        </span>
+      </dd>
+    <% end %>
 
-    <dt class="order-payment_state <%= "hidden" unless @order.completed? %>"><%= Spree::Payment.model_name.human %>: </dt>
-    <dd class="order-payment_state <%= "hidden" unless @order.completed? %>" id='payment_status'><span class="state <%= @order.payment_state %>"><%= Spree.t(@order.payment_state, scope: :payment_states, default: [:missing, "none"]) %></span></dd>
+    <% if @order.payment_state %>
+      <dt class="order-payment_state"><%= Spree::Payment.model_name.human %>: </dt>
+      <dd class="order-payment_state" id='payment_status'>
+        <span class="pill pill-<%= @order.payment_state %>">
+          <%= Spree.t(@order.payment_state, scope: :payment_states) %>
+        </span>
+      </dd>
+    <% end %>
 
     <% if @order.completed? %>
       <dt data-hook='admin_order_tab_date_completed_title'><%= Spree::Order.human_attribute_name(:completed_at) %>:</dt>

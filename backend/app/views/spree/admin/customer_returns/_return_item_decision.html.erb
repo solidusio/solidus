@@ -39,7 +39,12 @@
           <%= return_item.acceptance_status_errors %>
         </td>
         <td class-"align-center">
-          <%= return_item.reception_status.humanize %>
+          <span class="pill pill-<%= return_item.reception_status %>">
+            <%= Spree.t(
+              return_item.reception_status,
+              scope: :reception_states
+            ) %>
+          </span>
         </td>
         <% unless return_item.received? %>
           <td class='align-center'>

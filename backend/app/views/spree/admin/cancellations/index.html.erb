@@ -34,7 +34,11 @@
             <% end %>
           </td>
           <td class="inventory-unit-quantity align-center">1</td>
-          <td class="inventory-unit-state align-center"><%= inventory_unit.state %></td>
+          <td class="inventory-unit-state align-center">
+            <span class="pill pill-<%= inventory_unit.state %>">
+              <%= Spree.t(inventory_unit.state, scope: :inventory_states) %>
+            </span>
+          </td>
           <td class="inventory-unit-shipment align-center"><%= inventory_unit.shipment.number %></td>
           <td class="inventory-unit-cancel align-center">
             <%= check_box_tag 'inventory_unit_ids[]', inventory_unit.id %>

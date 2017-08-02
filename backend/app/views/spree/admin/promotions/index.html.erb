@@ -61,22 +61,14 @@
 
 <% if @promotions.any? %>
   <table class="index">
-    <colgroup>
-      <col style="width: 20%">
-      <col style="width: 10%">
-      <col style="width: 30%">
-      <col style="width: 10%">
-      <col style="width: 10%">
-      <col style="width: 10%">
-      <col style="width: 10%">
-    </colgroup>
     <thead>
       <tr>
         <th><%= Spree::Promotion.human_attribute_name(:name) %></th>
         <th><%= Spree::Promotion.human_attribute_name(:code) %></th>
-        <th><%= Spree::Promotion.human_attribute_name(:description) %></th>
+        <th><%= Spree::Promotion.human_attribute_name(:status) %></th>
         <th><%= Spree::Promotion.human_attribute_name(:usage_limit) %></th>
-        <th><%= Spree::Promotion.human_attribute_name(:promotion_uses) %></th>
+        <th><%= Spree::Promotion.human_attribute_name(:uses) %></th>
+        <th><%= Spree::Promotion.human_attribute_name(:starts_at) %></th>
         <th><%= Spree::Promotion.human_attribute_name(:expires_at) %></th>
         <th class="actions"></th>
       </tr>
@@ -85,11 +77,26 @@
       <% @promotions.each do |promotion| %>
         <tr id="<%= spree_dom_id promotion %>" class="<%= cycle('odd', 'even')%>">
           <td><%= promotion.name %></td>
-          <td class="align-center"><%= (promotion.codes.size == 1) ? promotion.codes.first.try!(:value) : Spree.t(:number_of_codes, count: promotion.codes.size) %></td>
-          <td><%= promotion.description %></td>
-          <td class="align-center"><%= promotion.usage_limit.nil? ? "∞" : promotion.usage_limit  %></td>
-          <td class="align-center"><%= Spree.t(:current_promotion_usage, count: promotion.usage_count) %></td>
-          <td class="align-center"><%= promotion.expires_at.to_date.to_s(:short_date) if promotion.expires_at %></td>
+          <td class="align-center">
+            <%= (promotion.codes.size == 1) ? promotion.codes.first.try!(:value) : Spree.t(:number_of_codes, count: promotion.codes.size) %>
+          </td>
+          <td class="align-center">
+            <span class="pill pill-<%= promotion.active? ? 'active' : 'inactive' %>">
+              <%= Spree.t(promotion.active?? :active : :inactive) %>
+            </span>
+          </td>
+          <td class="align-center">
+            <%= promotion.usage_limit.nil? ? "∞" : promotion.usage_limit %>
+          </td>
+          <td class="align-center">
+            <%= promotion.usage_count %>
+          </td>
+          <td class="align-center">
+            <%= promotion.starts_at.to_date.to_s(:short_date) if promotion.starts_at %>
+          </td>
+          <td class="align-center">
+            <%= promotion.expires_at.to_date.to_s(:short_date) if promotion.expires_at %>
+          </td>
           <td class="actions">
             <% if can?(:edit, promotion) %>
               <%= link_to_edit promotion, no_text: true %>

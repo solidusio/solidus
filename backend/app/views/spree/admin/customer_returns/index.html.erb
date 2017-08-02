@@ -31,9 +31,9 @@
           <td><%= pretty_time(customer_return.created_at) %></td>
           <td>
             <% if customer_return.fully_reimbursed? %>
-              <span class="state success"><%= Spree.t(:reimbursed) %></span>
+              <span class="pill pill-complete"><%= Spree.t(:reimbursed) %></span>
             <% else %>
-              <span class="state notice"><%= Spree.t(:incomplete) %></span>
+              <span class="pill pill-pending"><%= Spree.t(:incomplete) %></span>
             <% end %>
           </td>
           <td class='actions align-center' data-hook="admin_orders_customer_returns_index_row_actions">

@@ -30,8 +30,8 @@
             <%= payment.transaction_id %>
           </td>
           <td class="align-center">
-            <span class="state <%= payment.state %>">
-              <%= Spree.t(payment.state, scope: :payment_states, default: payment.state.capitalize) %>
+            <span class="pill pill-<%= payment.state %>">
+              <%= Spree.t(payment.state, scope: :payment_states) %>
             </span>
           </td>
         </tr>

@@ -195,7 +195,7 @@ describe "Order Details", type: :feature, js: true do
             within_row(1) { click_icon 'arrows-h' }
             complete_split_to(stock_location2, quantity: 2)
 
-            expect(page).to have_content("pending package from 'Clarksville'")
+            expect(page).to have_content("Pending package from 'Clarksville'")
 
             expect(order.shipments.count).to eq(1)
             expect(order.shipments.last.backordered?).to eq(false)
@@ -209,7 +209,7 @@ describe "Order Details", type: :feature, js: true do
             within_row(1) { click_icon 'arrows-h' }
             complete_split_to(stock_location2, quantity: 5)
 
-            expect(page).to have_content("pending package from 'Clarksville'")
+            expect(page).to have_content("Pending package from 'Clarksville'")
 
             expect(order.shipments.count).to eq(1)
             expect(order.shipments.last.backordered?).to eq(false)
@@ -281,7 +281,7 @@ describe "Order Details", type: :feature, js: true do
               within_row(1) { click_icon 'arrows-h' }
               complete_split_to(stock_location2, quantity: 2)
 
-              expect(page).to have_content("pending package from 'Clarksville'")
+              expect(page).to have_content("Pending package from 'Clarksville'")
 
               expect(order.shipments.count).to eq(1)
               expect(order.shipments.first.inventory_units_for(product.master).count).to eq(2)
@@ -412,16 +412,16 @@ describe "Order Details", type: :feature, js: true do
             within_row(1) { click_icon 'arrows-h' }
             complete_split_to(@shipment2, quantity: 1)
 
-            expect(page).to have_content("1 x backordered")
+            expect(page).to have_content("1 x Backordered")
 
-            within('.stock-contents', text: "1 x on hand") do
+            within('.stock-contents', text: "1 x On hand") do
               within_row(1) { click_icon 'arrows-h' }
               complete_split_to(@shipment2, quantity: 1)
             end
 
             # Empty shipment should be removed
             expect(page).to have_css('.stock-contents', count: 1)
-            expect(page).to have_content("2 x backordered")
+            expect(page).to have_content("2 x Backordered")
           end
         end
       end
@@ -526,7 +526,7 @@ describe "Order Details", type: :feature, js: true do
       find(".ship-shipment-button").click
 
       within '.carton-state' do
-        expect(page).to have_content('shipped')
+        expect(page).to have_content('Shipped')
       end
     end
   end

@@ -9,8 +9,15 @@
 <%= render partial: 'spree/admin/shared/order_tabs', locals: { current: 'Return Authorizations' } %>
 
 <% admin_breadcrumb(link_to plural_resource_name(Spree::ReturnAuthorization), spree.admin_order_return_authorizations_url) %>
-<% admin_breadcrumb("#{@return_authorization.number} (#{Spree.t(@return_authorization.state.downcase)})") %>
-
+<% admin_breadcrumb(
+  """
+    #{ @return_authorization.number }
+    (#{ Spree.t(
+      @return_authorization.state,
+      scope: :return_authorization_states
+    ) })
+  """
+) %>
 
 <%= render partial: 'spree/shared/error_messages', locals: { target: @return_authorization } %>
 

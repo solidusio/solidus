@@ -22,7 +22,14 @@
       <tr id="<%= spree_dom_id(reimbursement) %>" data-hook="reimbursement_row" class="<%= cycle('odd', 'even')%>">
         <td><%= reimbursement.id %></td>
         <td><%= reimbursement.total %></td>
-        <td><%= reimbursement.reimbursement_status %></td>
+        <td>
+          <span class="pill pill-<%= reimbursement.reimbursement_status %>">
+            <%= Spree.t(
+              reimbursement.reimbursement_status,
+              scope: :reimbursement_states
+            ) %>
+          </span>
+        </td>
         <td><%= pretty_time(reimbursement.created_at) %></td>
       </tr>
     <% end %>
