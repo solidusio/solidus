@@ -102,14 +102,6 @@ $color-action-mail-brd:          very-light($color-success, 20 ) !default;
 $color-action-failure-bg:        very-light($color-error,   10 ) !default;
 $color-action-failure-brd:       very-light($color-error,   20 ) !default;
 
-// Select2 select field colors
-$color-sel-bg:                   $color-3 !default;
-$color-sel-text:                 $color-1 !default;
-$color-sel-hover-bg:             $color-2 !default;
-$color-sel-hover-text:           $color-1 !default;
-$color-sel-disabled-bg:          $color-7 !default;
-$color-sel-disabled-text:        $color-4 !default;
-
 // Available states
 $states: (
   active,
