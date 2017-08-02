@@ -34,7 +34,6 @@ $color-navbar-active-bg:        $color-2 !default;
 $color-navbar-submenu:          $color-3 !default;
 $color-navbar-submenu-bg:       very-light($color-navbar-bg, 4) !default;
 $color-navbar-submenu-active:   $color-2 !default;
-$color-navbar-submenu-active-bg: $color-navbar-submenu-bg !default;
 $color-navbar-footer:           $color-3 !default;
 $color-navbar-footer-bg:        $color-sidebar-bg !default;
 $color-navbar-footer-active:    $color-2 !default;
@@ -54,12 +53,6 @@ $color-spinner: #fff;
 $color-tbl-odd:                  $color-1 !default;
 $color-tbl-even:                 very-light($color-3, 4) !default;
 $color-tbl-thead:                very-light($color-3, 4) !default;
-
-// Button colors
-$color-btn-bg:                   $color-3 !default;
-$color-btn-text:                 $color-1 !default;
-$color-btn-hover-bg:             $color-2 !default;
-$color-btn-hover-text:           $color-1 !default;
 
 // Pill colors
 //
