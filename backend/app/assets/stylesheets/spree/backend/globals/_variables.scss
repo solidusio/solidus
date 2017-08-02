@@ -49,6 +49,16 @@ $color-error:                    $color-5 !default;
 // Color for spinner
 $color-spinner: #fff;
 
+// Style Guide
+$color-style-guide-code: darken($color-7, 10%);
+$color-style-guide-link: darken($color-7, 65%);
+$color-style-guide-nav: $color-7;
+$color-style-guide-nav-border: darken($color-7, 5%);
+$color-style-guide-nav-link: darken($color-7, 65%);
+$color-style-guide-nav-link-hover: darken($color-7, 5%);
+$color-style-guide-section-border: darken($color-7, 10%);
+$color-style-guide-swatch-border: darken($color-7, 10%);
+
 // Table colors
 $color-tbl-odd:                  $color-1 !default;
 $color-tbl-even:                 very-light($color-3, 4) !default;
