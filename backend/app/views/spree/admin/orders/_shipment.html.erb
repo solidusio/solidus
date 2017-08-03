@@ -62,9 +62,9 @@
           </td>
           <td class="actions">
             <% if can? :update, shipment %>
-              <%= link_to '', '#', class: 'save-method fa fa-check no-text with-tip',
+              <%= button_tag '', class: 'save-method fa fa-check no-text with-ti, type: :button',
                 data: {'shipment-number' => shipment.number, action: 'save'}, title: Spree.t('actions.save') %>
-              <%= link_to '', '#', class: 'cancel-method fa fa-cancel no-text with-tip',
+              <%= button_tag '', class: 'cancel-method fa fa-cancel no-text with-ti, type: :button',
                 data: {action: 'cancel'}, title: Spree.t('actions.cancel') %>
             <% end %>
           </td>
@@ -85,7 +85,7 @@
 
           <td class="actions">
             <% if can?(:update, shipment) && !shipment.shipped? %>
-              <%= link_to '', '#', class: 'edit-method fa fa-edit no-text with-tip', data: {action: 'edit'}, title: Spree.t('actions.edit') %>
+              <%= button_tag '', class: 'edit-method fa fa-edit no-text with-tip', data: {action: 'edit'}, title: Spree.t('actions.edit'), type: :button %>
             <% end %>
           </td>
         </tr>
@@ -97,8 +97,8 @@
         </td>
         <td class="actions">
           <% if can? :update, shipment %>
-            <%= link_to '', '#', class: 'save-tracking fa fa-check no-text with-tip', data: {'shipment-number' => shipment.number, action: 'save'}, title: Spree.t('actions.save') %>
-            <%= link_to '', '#', class: 'cancel-tracking fa fa-cancel no-text with-tip', data: {action: 'cancel'}, title: Spree.t('actions.cancel') %>
+            <%= button_tag '', class: 'save-tracking fa fa-check no-text with-tip', data: { action: 'save', 'shipment-number' => shipment.number }, title: Spree.t('actions.save'), type: :button %>
+            <%= button_tag '', class: 'cancel-tracking fa fa-cancel no-text with-tip', data: { action: 'cancel' }, title: Spree.t('actions.cancel'), type: :button %>
           <% end %>
         </td>
       </tr>
@@ -121,7 +121,7 @@
         </td>
         <td class="actions">
           <% if can? :update, shipment %>
-            <%= link_to '', '#', class: 'edit-tracking fa fa-edit no-text with-tip', data: {action: 'edit'}, title: Spree.t('actions.edit') %>
+            <%= button_tag '', class: 'edit-tracking fa fa-edit no-text with-tip', data: {action: 'edit'}, title: Spree.t('actions.edit'), type: :button %>
           <% end %>
         </td>
       </tr>
