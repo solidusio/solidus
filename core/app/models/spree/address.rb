@@ -171,6 +171,10 @@ module Spree
       self.country = Spree::Country.find_by!(iso: iso)
     end
 
+    def country_iso
+      country && country.iso
+    end
+
     private
 
     def state_validate
