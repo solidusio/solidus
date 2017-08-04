@@ -115,8 +115,7 @@ module Spree
       ]
 
       @@inventory_unit_attributes = [
-        :id, :state, :variant_id, :shipment_id,
-        :return_authorization_id
+        :id, :state, :variant_id, :shipment_id
       ]
 
       @@return_authorization_attributes = [
