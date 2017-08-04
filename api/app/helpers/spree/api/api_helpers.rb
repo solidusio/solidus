@@ -115,7 +115,7 @@ module Spree
       ]
 
       @@inventory_unit_attributes = [
-        :id, :lock_version, :state, :variant_id, :shipment_id,
+        :id, :state, :variant_id, :shipment_id,
         :return_authorization_id
       ]
 
@@ -159,7 +159,7 @@ module Spree
       @@stock_movement_attributes = [:id, :quantity, :stock_item_id]
 
       @@stock_item_attributes = [
-        :id, :count_on_hand, :backorderable, :lock_version, :stock_location_id,
+        :id, :count_on_hand, :backorderable, :stock_location_id,
         :variant_id
       ]
 
