@@ -115,7 +115,8 @@ module Spree
 
       def after_update_attributes
         if params[:order] && params[:order][:coupon_code].present?
-          handler = PromotionHandler::Coupon.new(@order).apply
+          handler = PromotionHandler::Coupon.new(@order)
+          handler.apply
 
           if handler.error.present?
             @coupon_message = handler.error
