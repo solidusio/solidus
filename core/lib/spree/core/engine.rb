@@ -105,6 +105,12 @@ module Spree
         ]
       end
 
+      initializer 'spree.promo.register.promotions.shipping_actions', before: :load_config_initializers do |app|
+        app.config.spree.promotions.shipping_actions = %w[
+          Spree::Promotion::Actions::FreeShipping
+        ]
+      end
+
       # Filter sensitive information during logging
       initializer "spree.params.filter", before: :load_config_initializers do |app|
         app.config.filter_parameters += [

@@ -1,7 +1,7 @@
 module Spree
   module PromotionHandler
     # Used for activating promotions with shipping rules
-    class FreeShipping
+    class Shipping
       attr_reader :order
       attr_accessor :error, :success
 
@@ -29,7 +29,7 @@ module Spree
       end
 
       def automatic_promotions
-        @automatic_promotions ||= active_free_shipping_promotions.
+        @automatic_promotions ||= active_shipping_promotions.
           where(apply_automatically: true).
           to_a.
           uniq
@@ -39,20 +39,16 @@ module Spree
         @connected_promotions ||= order.order_promotions.
           joins(:promotion).
           includes(:promotion).
-          merge(active_free_shipping_promotions).
+          merge(active_shipping_promotions).
           to_a.
           uniq
       end
 
-      def active_free_shipping_promotions
+      def active_shipping_promotions
         Spree::Promotion.all.
           active.
           joins(:promotion_actions).
-          merge(
-            Spree::PromotionAction.of_type(
-              Spree::Promotion::Actions::FreeShipping
-            )
-          )
+          merge(Spree::PromotionAction.shipping)
       end
     end
   end

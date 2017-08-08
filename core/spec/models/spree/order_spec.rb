@@ -646,15 +646,15 @@ describe Spree::Order, type: :model do
     end
   end
 
-  context "#apply_free_shipping_promotions" do
-    it "calls out to the FreeShipping promotion handler" do
-      expect_any_instance_of(Spree::PromotionHandler::FreeShipping).to(
+  context "#apply_shipping_promotions" do
+    it "calls out to the Shipping promotion handler" do
+      expect_any_instance_of(Spree::PromotionHandler::Shipping).to(
         receive(:activate)
       ).and_call_original
 
       expect(order.updater).to receive(:update).and_call_original
 
-      order.apply_free_shipping_promotions
+      order.apply_shipping_promotions
     end
   end
 

@@ -5,6 +5,7 @@ module Spree
 
       add_class_set :rules
       add_class_set :actions
+      add_class_set :shipping_actions
     end
   end
 end

@@ -527,10 +527,11 @@ module Spree
       end
     end
 
-    def apply_free_shipping_promotions
-      Spree::PromotionHandler::FreeShipping.new(self).activate
+    def apply_shipping_promotions
+      Spree::PromotionHandler::Shipping.new(self).activate
       update!
     end
+    deprecate apply_free_shipping_promotions: :apply_shipping_promotions, deprecator: Spree::Deprecation
 
     # Clean shipments and make order back to address state
     #
