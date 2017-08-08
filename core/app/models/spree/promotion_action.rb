@@ -8,7 +8,8 @@ module Spree
 
     belongs_to :promotion, class_name: 'Spree::Promotion', inverse_of: :promotion_actions
 
-    scope :of_type, ->(t) { where(type: t.to_s) }
+    scope :of_type, ->(t) { where(type: Array.wrap(t).map(&:to_s)) }
+    scope :shipping, -> { of_type(Rails.application.config.spree.promotions.shipping_actions.to_a) }
 
     # Updates the state of the order or performs some other action depending on
     # the subclass options will contain the payload from the event that

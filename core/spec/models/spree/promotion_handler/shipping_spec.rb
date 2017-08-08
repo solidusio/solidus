@@ -2,13 +2,13 @@ require 'spec_helper'
 
 module Spree
   module PromotionHandler
-    describe FreeShipping, type: :model do
+    describe Shipping, type: :model do
       let(:order) { create(:order) }
       let(:shipment) { create(:shipment, order: order ) }
 
       let(:action) { Spree::Promotion::Actions::FreeShipping.new }
 
-      subject { Spree::PromotionHandler::FreeShipping.new(order) }
+      subject { Spree::PromotionHandler::Shipping.new(order) }
 
       context 'with apply_automatically' do
         let!(:promotion) { create(:promotion, apply_automatically: true, promotion_actions: [action]) }
@@ -39,6 +39,31 @@ module Spree
               subject.activate
             }.to_not change { shipment.adjustments.count }
           end
+        end
+      end
+
+      context 'with a custom shipping action' do
+        before do
+          stub_const('CustomShippingAction', custom_klass)
+
+          @old_shipping_actions = Rails.application.config.spree.promotions.shipping_actions
+          Rails.application.config.spree.promotions.shipping_actions = ['CustomShippingAction']
+
+          order.order_promotions.create!(promotion: promotion, promotion_code: promotion.codes.first)
+        end
+
+        after do
+          Rails.application.config.spree.promotions.shipping_actions = @old_shipping_actions
+        end
+
+        let(:action) { custom_klass.new }
+        let(:custom_klass) { Class.new(Spree::Promotion::Actions::FreeShipping) }
+        let(:promotion) { create(:promotion, code: 'customshipping', promotion_actions: [action]) }
+
+        it 'adjusts the shipment' do
+          expect {
+            subject.activate
+          }.to change { shipment.adjustments.count }
         end
       end
     end
