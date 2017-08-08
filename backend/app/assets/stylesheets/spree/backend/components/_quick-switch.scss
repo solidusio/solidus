@@ -1,0 +1,56 @@
+.quick-switch-form {
+  position: relative;
+  display: flex;
+}
+
+.quick-switch-query-input {
+  flex: 1;
+}
+
+.quick-switch-button,
+.quick-switch-spinner {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.quick-switch-spinner {
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  width: 20px;
+  height: 20px;
+  margin-top: -10px;
+  border-width: 2px;
+  border-left-color: $color-3;
+  background: $color-1;
+
+  .quick-switch-form:not(.searching) & {
+    display: none;
+  }
+}
+
+.quick-switch-help {
+  font-size: 0.8rem;
+}
+
+.quick-switch-help button {
+  padding-left: 0;
+  box-shadow: none;
+  font-size: inherit;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.quick-switch-help ul {
+  margin: 0.5rem 0 0;
+  padding-left: 2rem;
+}
+
+.quick-switch-dialog .alert {
+  margin-top: 1rem;
+}

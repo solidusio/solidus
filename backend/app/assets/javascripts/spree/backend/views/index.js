@@ -18,3 +18,4 @@
 //= require 'spree/backend/views/payment/edit_credit_card'
 //= require 'spree/backend/views/tables/editable_table'
 //= require 'spree/backend/views/tables/editable_table_row'
+//= require 'spree/backend/views/quick_switch'
