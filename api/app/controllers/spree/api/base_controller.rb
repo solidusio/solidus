@@ -24,6 +24,7 @@ module Spree
       before_action :load_user_roles
 
       rescue_from StandardError, with: :error_during_processing
+      rescue_from ActionController::ParameterMissing, with: :parameter_missing_error
       rescue_from ActiveRecord::RecordNotFound, with: :not_found
       rescue_from CanCan::AccessDenied, with: :unauthorized
       rescue_from Spree::Core::GatewayError, with: :gateway_error
@@ -79,6 +80,14 @@ module Spree
       def gateway_error(exception)
         @order.errors.add(:base, exception.message)
         invalid_resource!(@order)
+      end
+
+      def parameter_missing_error(exception)
+        render json: {
+          exception: exception.message,
+          error: exception.message,
+          missing_param: exception.param
+        }, status: 422
       end
 
       def requires_authentication?
