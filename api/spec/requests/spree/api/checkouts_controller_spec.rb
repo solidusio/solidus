@@ -351,6 +351,13 @@ module Spree
         put spree.api_checkout_path(order.to_param), params: { order_token: order.guest_token, order: { coupon_code: "foobar" } }
         expect(response.status).to eq(200)
       end
+
+      it "renders error failing to apply coupon" do
+        order.update_column(:state, "payment")
+        put spree.api_checkout_path(order.to_param), params: { order_token: order.guest_token, order: { coupon_code: "foobar" } }
+        expect(response.status).to eq(422)
+        expect(json_response).to eq({ "error" => "The coupon code you entered doesn't exist. Please try again." })
+      end
     end
 
     context "PUT 'next'" do
