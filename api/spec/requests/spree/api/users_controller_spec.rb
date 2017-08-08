@@ -142,8 +142,8 @@ module Spree
       it "cannot destroy user with orders" do
         create(:completed_order_with_totals, user: user)
         delete spree.api_user_path(user)
-        expect(json_response["exception"]).to eq "Spree::Core::DestroyWithOrdersError"
         expect(response.status).to eq(422)
+        expect(json_response).to eq({ "error" => "Cannot delete record." })
       end
     end
   end

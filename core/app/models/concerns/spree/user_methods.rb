@@ -17,7 +17,7 @@ module Spree
       has_many :stock_locations, through: :user_stock_locations
 
       has_many :spree_orders, foreign_key: "user_id", class_name: "Spree::Order"
-      has_many :orders, foreign_key: "user_id", class_name: "Spree::Order"
+      has_many :orders, foreign_key: "user_id", class_name: "Spree::Order", dependent: :restrict_with_exception
 
       has_many :store_credits, -> { includes(:credit_type) }, foreign_key: "user_id", class_name: "Spree::StoreCredit"
       has_many :store_credit_events, through: :store_credits

@@ -38,4 +38,23 @@ describe Spree::UserMethods do
       it { is_expected.to be_nil }
     end
   end
+
+  describe "deleting user" do
+    context "with no orders" do
+      it "fails validation" do
+        test_user.destroy!
+        expect(test_user).to be_destroyed
+      end
+    end
+
+    context "with an order" do
+      let!(:order) { create(:order, user: test_user) }
+
+      it "fails validation" do
+        expect {
+          test_user.destroy!
+        }.to raise_error(ActiveRecord::DeleteRestrictionError)
+      end
+    end
+  end
 end
