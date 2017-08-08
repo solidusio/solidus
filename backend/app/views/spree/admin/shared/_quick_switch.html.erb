@@ -1,0 +1,37 @@
+<div class="modal fade" id="quick-switch" tabindex="-1" role="dialog" aria-hidden="true" data-js="quick-switch">
+  <div class="modal-dialog quick-switch-dialog" role="document" data-js="quick-switch-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <%= form_tag spree.admin_quick_switch_path, method: "get", class: "quick-switch-form" do %>
+          <input class="form-control quick-switch-query-input" type="text" name="quick_switch_query" placeholder="o R1234" data-js="quick-switch-input">
+
+          <button class="quick-switch-button btn btn-link">
+            <svg width="15" viewBox="0 0 25 25" xmlns="http://www.w3.org/2000/svg"><g fill-rule="nonzero" fill="#5498DA"><path d="M10.49 20.886c-4.228.02-8.05-2.513-9.68-6.414-1.633-3.9-.75-8.4 2.233-11.397C6.027.08 10.523-.823 14.43.79c3.91 1.616 6.457 5.427 6.456 9.656.006 5.75-4.645 10.42-10.396 10.44zm0-17.84c-2.996-.02-5.71 1.77-6.87 4.534-1.16 2.763-.54 5.953 1.572 8.08 2.112 2.126 5.298 2.768 8.07 1.626 2.77-1.142 4.577-3.843 4.577-6.84.01-4.07-3.28-7.38-7.35-7.4z"/><path d="M22.696 24.755l-6.577-6.537 2.153-2.156 6.574 6.537"/></g></svg>
+          </button>
+
+          <span class="quick-switch-spinner spinner"></span>
+        <% end %>
+
+        <div class="quick-switch-help">
+          <button class="btn btn-link" data-toggle="collapse" data-toggle="collapse" data-target="#quick-switch-help-content" aria-expanded="false" aria-controls="quick-switch-help-content">
+            <%= I18n.t("help_button", scope: "spree.quick_switch") %>
+          </button>
+
+          <div id="quick-switch-help-content" class="collapse">
+            <div class="card">
+              <div class="card-body">
+                <%= I18n.t("help_intro", scope: "spree.quick_switch") %>
+
+                <ul>
+                  <% Spree::Backend::Config.quick_switch_items.each do |item| %>
+                    <li><%= item.help_text %></li>
+                  <% end %>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
