@@ -56,6 +56,8 @@ class Spree::Api::ResourceController < Spree::Api::BaseController
     else
       invalid_resource!(@object)
     end
+  rescue ActiveRecord::DeleteRestrictionError
+    render "spree/api/errors/delete_restriction", status: 422
   end
 
   protected
