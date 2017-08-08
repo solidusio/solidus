@@ -2,6 +2,7 @@ Spree::Core::Engine.routes.draw do
   namespace :admin do
     get '/search/users', to: "search#users", as: :search_users
     get '/search/products', to: "search#products", as: :search_products
+    get "/quick-switch", to: "quick_switch#find_object", as: :quick_switch
 
     resources :dashboards, only: [] do
       collection do
