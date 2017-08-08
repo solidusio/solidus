@@ -86,5 +86,85 @@ module Spree
         )
       ]
     end
+
+    # New quick switch items can be added to the admin:
+    #
+    # Spree::Backend::Config.configure do |config|
+    #   config.quick_switch_items << config.class::QuickSwitchItem.new(
+    #     search_triggers: [:o, :order],
+    #     finder: ->(searched_value) do
+    #       Spree::Order.find_by(number: searched_value)
+    #     end,
+    #     url: ->(order) do
+    #       Spree::Core::Engine.routes.url_helpers.edit_admin_order_path(order)
+    #     end,
+    #     help_text_key: :order_help,
+    #     not_found_text_key: :order_not_found
+    #   )
+    # end
+    #
+    # @!attribute quick_switch_items
+    #   @return [Array<Spree::QuickSwitchItem>]
+    attr_writer :quick_switch_items
+
+    # Return the quick switch items that administrators can search by
+    #
+    # @api public
+    # @return [Array<Spree::QuickSwitchItem>]
+    def quick_switch_items
+      @quick_switch_items ||= [
+        Spree::QuickSwitchItem.new(
+          search_triggers: [:o, :order],
+          finder: ->(searched_value) do
+            Spree::Order.find_by(number: searched_value)
+          end,
+          url: ->(order) do
+            Spree::Core::Engine.routes.url_helpers.edit_admin_order_path(order)
+          end,
+          help_text_key: :order_help,
+          not_found_text_key: :order_not_found
+        ),
+        Spree::QuickSwitchItem.new(
+          search_triggers: [:s, :shipment],
+          finder: ->(searched_value) do
+            Spree::Shipment.find_by(number: searched_value)
+          end,
+          url: ->(shipment) do
+            Spree::Core::Engine.routes.url_helpers.
+              edit_admin_order_path(shipment.order)
+          end,
+          help_text_key: :shipment_help,
+          not_found_text_key: :shipment_not_found
+        ),
+        Spree::QuickSwitchItem.new(
+          search_triggers: [:email, :u, :user],
+          finder: ->(searched_value) do
+            Spree.user_class.find_by(email: searched_value)
+          end,
+          url: ->(user) do
+            Spree::Core::Engine.routes.url_helpers.edit_admin_user_path(user)
+          end,
+          help_text_key: :user_help,
+          not_found_text_key: :user_not_found
+        ),
+        Spree::QuickSwitchItem.new(
+          search_triggers: [:p, :product, :sku, :v, :variant],
+          finder: ->(searched_value) do
+            Spree::Variant.find_by(sku: searched_value)
+          end,
+          url: ->(variant) do
+            if variant.is_master?
+              Spree::Core::Engine.routes.url_helpers.
+                edit_admin_product_path(variant.product)
+            else
+              Spree::Core::Engine.routes.url_helpers.
+                edit_admin_product_variant_path(variant.product, variant)
+            end
+          end,
+          help_text_key: :variant_help,
+          not_found_text_key: :variant_not_found
+        )
+      ]
+    end
   end
 end

@@ -1727,6 +1727,18 @@ en:
     quantity: Quantity
     quantity_returned: Quantity Returned
     quantity_shipped: Quantity Shipped
+    quick_switch:
+      help_button: How do I use this?
+      help_intro: "Use shortcodes to quickly access specific resources:"
+      invalid_query: Invalid or missing search key.
+      order_help: o ORDER_NUMBER
+      order_not_found: Order %{value} could not be found.
+      shipment_help: s SHIPMENT_NUMBER
+      shipment_not_found: Shipment %{value} could not be found.
+      user_help: u USER_EMAIL
+      user_not_found: Unable to find a user with an email matching %{value}.
+      variant_help: v VARIANT_SKU
+      variant_not_found: Unable to find a variant with a SKU matching %{value}.
     rate: Rate
     ready_to_ship: Ready to ship
     reason: Reason
