@@ -1,4 +1,5 @@
 .style-guide {
+  padding-left: 0; // override regular admin layout
   display: flex;
 
   &-sidebar {

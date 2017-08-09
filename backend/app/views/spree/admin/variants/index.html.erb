@@ -2,6 +2,17 @@
 
 <% admin_breadcrumb(plural_resource_name(Spree::Variant)) %>
 
+<% content_for :page_actions do %>
+  <% if can?(:create, Spree::Variant) && !@product.empty_option_values? %>
+    <li id="new_var_link" data-hook>
+      <%= link_to(
+        Spree.t(:new_variant),
+        new_admin_product_variant_url(@product),
+        class: 'button'
+      ) %>
+    </li>
+  <% end %>
+<% end %>
 
 <% if @variants.any? || @product.variants.only_deleted.any?%>
   <%= render "table_filter", product: @product %>
@@ -25,23 +36,8 @@
     <div class="col-9 no-objects-found">
       <%= Spree.t(:no_resource, resource: plural_resource_name(Spree::Variant)) %>
       <% if can? :create, Spree::Variant %>
-        <%= link_to Spree.t(:create_one), new_object_url, remote: true %>
+        <%= link_to Spree.t(:create_one), new_object_url %>
       <% end %>
     </div>
-  <% end %>
-<% end %>
-
-<% if !@product.empty_option_values? %>
-  <% content_for :page_actions do %>
-    <ul class="inline-menu" data-hook="toolbar">
-      <% if can?(:create, Spree::Variant) %>
-        <li id="new_var_link" data-hook>
-          <%= link_to Spree.t(:new_variant),
-                      new_admin_product_variant_url(@product),
-                      remote: :true,
-                      class: 'button' %>
-        </li>
-      <% end %>
-    </ul>
   <% end %>
 <% end %>

@@ -25,7 +25,7 @@
 <fieldset>
   <legend align='center'><%= Spree.t(:tracking_info) %></legend>
     <%= form_for [:admin, @stock_transfer] do |f| %>
-    <div class='field-block alpha'>
+    <div class='field-block'>
       <div class='field'>
         <%= f.label :tracking_number %>
         <%= f.text_field :tracking_number, value: @stock_transfer.tracking_number, maxlength: 255, size: 0, class: 'fullwidth' %>

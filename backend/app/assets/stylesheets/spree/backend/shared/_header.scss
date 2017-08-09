@@ -6,10 +6,6 @@
   border-bottom: 1px solid $color-border;
   height: $main-header-height;
 
-  body:not(.new-layout) & {
-    margin-left: $width-sidebar;
-  }
-
   @media print { display: none }
 }
 

@@ -4,43 +4,22 @@
     <%= render 'spree/admin/shared/head' %>
   </head>
 
-  <body class="admin <%= "new-layout" if @admin_layout %>">
+  <body class="admin">
     <%= render "spree/admin/shared/navigation" %>
     <%= render "spree/admin/shared/header" %>
     <%= render "spree/admin/shared/flash" %>
     <%= render "spree/admin/shared/spinner" %>
 
-    <div class="content-wrapper <%= @admin_layout.presence %> <%= "has-sidebar" if content_for?(:sidebar) %>" id="wrapper" data-hook>
-      <% if @admin_layout %>
-        <div class="content">
-          <div class="content-main">
-            <%= yield :tabs %>
-            <%= render "spree/admin/shared/table_filter" %>
-            <%= yield %>
-          </div>
-
-          <%= render "spree/admin/shared/sidebar" %>
+    <div class="content-wrapper <%= @admin_layout.presence %> <%= "has-sidebar" if content_for?(:sidebar) %> <%= "has-tabs" if content_for?(:tabs) %>" id="wrapper" data-hook>
+      <div class="content row">
+        <div class="content-main col-<%= content_for?(:sidebar) ? '9' : '12' %>">
+          <%= yield :tabs %>
+          <%= render "spree/admin/shared/table_filter" %>
+          <%= yield %>
         </div>
-      <% else %>
-        <% # Legacy layout %>
-        <div class="container">
-          <div class="<%= 'with-sidebar ' if content_for?(:sidebar) %>" id="content" data-hook>
-            <div class="row">
-              <% if content_for?(:tabs) %>
-                <div class="col-12">
-                  <%= yield :tabs %>
-                </div>
-              <% end %>
-              <div class="js-content-below-tabs <%= if content_for?(:sidebar) then 'col-9' else 'col-12' end %>">
-                <%= render partial: 'spree/admin/shared/table_filter' %>
-                <%= yield %>
-              </div>
 
-              <%= render 'spree/admin/shared/sidebar' %>
-            </div>
-          </div>
-        </div>
-      <% end %>
+        <%= render "spree/admin/shared/sidebar" %>
+      </div>
     </div>
 
     <div data-hook="admin_footer_scripts"></div>

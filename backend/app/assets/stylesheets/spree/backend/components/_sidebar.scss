@@ -1,43 +1,18 @@
-body:not(.new-layout) #sidebar {
-  overflow: visible;
-  margin-top: 1.5rem;
+.content-sidebar {
+  padding-top: 0.65rem;
 
-  .sidebar-title {
-    color: $color-2;
-    text-align: center;
-    font-size: 16px;
-    font-weight: $font-weight-bold;
-    border-top: 1px solid $color-border;
-
-    > span {
-      display: inline;
-      background: #fff;
-      padding: 5px 10px;
-      position: relative;
-      top: -14px;
-
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
+  .has-tabs & {
+    padding-top: 3.25rem;
   }
 
-  dl {
-    dt, dd {
-      min-height: 3em;
-    }
-  }
-
-  @media print { display: none }
-}
-
-body.new-layout .content-sidebar {
   ul {
     padding-left: 0;
   }
 }
 
-body.new-layout .sidebar-title {
-  @include line-through();
+.sidebar-title {
+  @include line-through($color: $color-border);
   color: $color-2;
   font-size: 14px;
+  font-weight: $font-weight-normal;
 }
