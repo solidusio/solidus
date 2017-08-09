@@ -1,5 +1,7 @@
 ## Solidus 2.4.0 (master, unreleased)
 
+- Remove `ffaker` as a runtime dependency in production [\#2140](https://github.com/solidusio/solidus/pull/2140) ([cbrunsdon](https://github.com/cbrunsdon))
+
 - Invalidate existing non store credit payments during checkout [2075](https://github.com/solidusio/solidus/pull/2075) ([tvdeyen](https://github.com/tvdeyen))
 
 - Change HTTP Status code for `Api::ShipmentsController#transfer_to_*` to be always 202 Accepted rather than 201 Created or 500.
