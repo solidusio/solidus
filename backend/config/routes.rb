@@ -26,7 +26,7 @@ Spree::Core::Engine.routes.draw do
       resources :states
     end
     resources :states
-    resources :tax_categories
+    resources :tax_categories, only: [:index, :new, :create, :destroy]
 
     resources :products do
       resources :product_properties do

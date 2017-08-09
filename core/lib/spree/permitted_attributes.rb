@@ -25,6 +25,7 @@ module Spree
       :stock_location_attributes,
       :stock_movement_attributes,
       :store_attributes,
+      :tax_category_attributes,
       :taxon_attributes,
       :taxonomy_attributes,
       :transfer_item_attributes,
@@ -123,6 +124,8 @@ module Spree
     # admin owns. creating a user with an email is handled separate at the
     # controller level
     @@user_attributes = [:password, :password_confirmation]
+
+    @@tax_category_attributes = [:name, :description, :is_default, :tax_code]
 
     @@variant_attributes = [
       :name, :presentation, :cost_price, :lock_version,

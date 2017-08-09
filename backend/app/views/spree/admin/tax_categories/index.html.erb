@@ -4,7 +4,6 @@
 <% admin_breadcrumb(Spree.t('admin.tab.taxes')) %>
 <% admin_breadcrumb(plural_resource_name(Spree::TaxCategory)) %>
 
-
 <% content_for :page_actions do %>
   <ul class="actions inline-menu">
     <% if can?(:create, Spree::TaxCategory) %>
@@ -16,13 +15,13 @@
 <% end %>
 
 <% if @tax_categories.any? %>
-<table class="index" id='listing_tax_categories' data-hook>
+<table class="index inline-editable-table" id='listing_tax_categories' data-hook>
   <colgroup>
-    <col style="width: 20%" />
-    <col style="width: 10%" />
+    <col style="width: 25%" />
+    <col style="width: 15%" />
     <col style="width: 40%" />
-    <col style="width: 15%" />
-    <col style="width: 15%" />
+    <col style="width: 10%" />
+    <col style="width: 10%" />
   </colgroup>
   <thead>
     <tr data-hook="tax_header">
@@ -34,18 +33,47 @@
     </tr>
   </thead>
   <tbody>
-    <% @tax_categories.each do |tax_category|
-         @edit_url = edit_admin_tax_category_path(tax_category)
-         @delete_url = admin_tax_category_path(tax_category)
-    %>
+    <% @tax_categories.each do |tax_category| %>
       <tr id="<%= spree_dom_id tax_category %>" data-hook="tax_row" class="<%= cycle('odd', 'even')%>">
-        <td class="align-center"><%= tax_category.name %></td>
-        <td class="align-center"><%= tax_category.tax_code %></td>
-        <td class="align-center"><%= tax_category.description %></td>
-        <td class="align-center"><%= tax_category.is_default? ? Spree.t(:say_yes) : Spree.t(:say_no) %></td>
+        <td class="align-center">
+          <%= fields_for tax_category do |f| %>
+            <%= f.text_field :name, class: "form-control" %>
+          <% end %>
+        </td>
+        <td class="align-center">
+          <%= fields_for tax_category do |f| %>
+            <%= f.text_field :tax_code, class: "form-control" %>
+          <% end %>
+        </td>
+        <td class="align-center">
+          <%= fields_for tax_category do |f| %>
+            <%= f.text_field :description, class: "form-control" %>
+          <% end %>
+        </td>
+        <td class="align-center">
+          <%= fields_for tax_category do |f| %>
+            <%= f.check_box(
+              :is_default,
+              class: "form-control"
+            ) %>
+          <% end %>
+        </td>
         <td class="actions">
           <% if can?(:update, tax_category) %>
-            <%= link_to_edit tax_category, no_text: true %>
+            <%= link_to_with_icon(
+              'check',
+              Spree.t('actions.save'),
+              api_tax_category_path(tax_category),
+              no_text: true,
+              data: { action: 'save' }
+            ) %>
+            <%= link_to_with_icon(
+              'cancel',
+              Spree.t('actions.cancel'),
+              nil,
+              no_text: true,
+              data: { action: 'cancel' }
+            ) %>
           <% end %>
           <% if can?(:destroy, tax_category) %>
             <%= link_to_delete tax_category, no_text: true %>

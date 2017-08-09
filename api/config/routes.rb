@@ -135,6 +135,8 @@ Spree::Core::Engine.routes.draw do
       end
     end
 
+    resources :tax_categories, only: :update
+
     get '/config/money', to: 'config#money'
     get '/config', to: 'config#show'
     put '/classifications', to: 'classifications#update', as: :classifications
