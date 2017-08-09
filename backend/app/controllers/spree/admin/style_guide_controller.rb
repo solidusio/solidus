@@ -23,6 +23,7 @@ module Spree
           ],
           components: [
             'pills',
+            'modals',
             'tabs'
           ],
           messaging: [
