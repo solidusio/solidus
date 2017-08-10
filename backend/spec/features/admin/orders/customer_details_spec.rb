@@ -48,6 +48,13 @@ describe "Customer Details", type: :feature, js: true do
       expect(Spree::Order.last.user).not_to be_nil
     end
 
+    # Regression test for https://github.com/solidusio/solidus/pull/2176
+    it "does not reset guest checkout to true when returning to customer tab" do
+      click_button "Update"
+      click_link "Customer"
+      expect(find('#guest_checkout_true')).not_to be_checked
+    end
+
     context "when required quantity is more than available" do
       let(:quantity) { 11 }
       let!(:product) { create(:product_not_backorderable) }
