@@ -1,7 +1,11 @@
 {{#each taxons}}
   <li data-taxon-id="{{id}}" data-taxon-taxonomy-id="{{taxonomy_id}}">
-    <div  class="sortable-handle">
-      {{#if (isRootTaxon) }}{{else}}<i class="fa fa-arrows"></i>{{/if}}
+    {{#if (isRootTaxon) }}
+    <div class="taxon">
+    {{else}}
+    <div class="taxon sortable">
+      <i class="fa fa-arrows"></i>
+    {{/if}}
       {{name}}
       <div class="actions right">
         <a href="#" class="js-taxon-add-child fa fa-plus icon_link no-text"></a>
