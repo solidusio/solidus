@@ -66,5 +66,20 @@ module Spree
     def total_available_store_credit
       store_credits.reload.to_a.sum(&:amount_remaining)
     end
+
+    # can be called by solidus_auth_devise, or other auth integration, upon
+    # a succesful user login, does what Solidus needs to be done, such
+    # as associating guest orders in session with the user record.
+    #
+    # Call will normally look something like:
+    #
+    #    logged_in_user.on_sign_in(guest_token: auth.cookies.signed[:guest_token])
+    def on_sign_in(guest_token:)
+      if guest_token.present?
+        Spree::Order.incomplete.where(guest_token: guest_token, user_id: nil).each do |order|
+          order.associate_user!(self)
+        end
+      end
+    end
   end
 end
