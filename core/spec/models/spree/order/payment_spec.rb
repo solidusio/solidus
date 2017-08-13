@@ -7,51 +7,82 @@ module Spree
 
     context "processing payments" do
       let(:order) { create(:order_with_line_items, shipment_cost: 0, line_items_price: 100) }
+
       before do
         # So that Payment#purchase! is called during processing
         Spree::Config[:auto_capture] = true
       end
 
-      it 'processes all checkout payments' do
-        payment_1 = create(:payment, order: order, amount: 50)
-        payment_2 = create(:payment, order: order, amount: 50)
+      let(:payment_method) { create(:credit_card_payment_method) }
 
-        order.process_payments!
-        updater.update_payment_state
-
-        expect(order.payment_state).to eq('paid')
-        expect(order.payment_total).to eq(100)
-
-        expect(payment_1).to be_completed
-        expect(payment_2).to be_completed
+      let!(:payment_1) do
+        create(:payment, payment_method: payment_method, order: order, amount: 50)
       end
 
-      it 'does not go over total for order' do
-        payment_1 = create(:payment, order: order, amount: 50)
-        payment_2 = create(:payment, order: order, amount: 50)
-        payment_3 = create(:payment, order: order, amount: 50)
+      context 'sharing the same payment method' do
+        let!(:payment_2) do
+          create(:payment, payment_method: payment_method, order: order, amount: 50)
+        end
 
-        order.process_payments!
-        updater.update_payment_state
+        it 'processes only new payments' do
+          order.process_payments!
+          updater.update_payment_state
 
-        expect(order.payment_state).to eq('paid')
-        expect(order.payment_total).to eq(100)
+          expect(order.payment_state).to eq('balance_due')
+          expect(order.payment_total).to eq(50)
 
-        expect(payment_1).to be_completed
-        expect(payment_2).to be_completed
-        expect(payment_3).to be_checkout
+          expect(payment_1).to be_invalid
+          expect(payment_2).to be_completed
+        end
       end
 
-      it "does not use failed payments" do
-        payment1 = create(:payment, order: order, amount: 50)
-        payment2 = create(:payment, order: order, amount: 50, state: 'failed')
+      context 'with different payment methods that are store credit' do
+        let!(:payment_2) { create(:store_credit_payment, order: order, amount: 50) }
 
-        expect(payment1).to receive(:process!).and_call_original
-        expect(payment2).not_to receive(:process!)
+        it 'processes all checkout payments' do
+          order.process_payments!
+          updater.update_payment_state
 
-        order.process_payments!
+          expect(order.payment_state).to eq('paid')
+          expect(order.payment_total).to eq(100)
 
-        expect(order.payment_total).to eq(50)
+          expect(payment_1).to be_completed
+          expect(payment_2).to be_completed
+        end
+
+        context 'with over paid payments' do
+          let!(:payment_3) { create(:store_credit_payment, order: order, amount: 50) }
+
+          it 'does not go over total for order' do
+            order.process_payments!
+            updater.update_payment_state
+
+            expect(order.payment_state).to eq('paid')
+            expect(order.payment_total).to eq(100)
+            expect(payment_1).to be_completed
+            expect(payment_2).to be_completed
+            expect(payment_3).to be_checkout
+          end
+        end
+      end
+
+      context 'with failed payments' do
+        let!(:payment_2) do
+          create(:payment,
+            payment_method: payment_method,
+            order: order,
+            amount: 50,
+            state: 'failed')
+        end
+
+        it "does not use failed payments" do
+          expect(payment_1).to receive(:process!).and_call_original
+          expect(payment_2).not_to receive(:process!)
+
+          order.process_payments!
+
+          expect(order.payment_total).to eq(50)
+        end
       end
     end
 
