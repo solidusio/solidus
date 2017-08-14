@@ -277,13 +277,6 @@ module Spree
       expect(json_response["checkout_steps"]).to eq(%w[address delivery confirm complete])
     end
 
-    # Regression test for https://github.com/spree/spree/issues/1992
-    it "can view an order not in a standard state" do
-      allow_any_instance_of(Order).to receive_messages user: current_api_user
-      order.update_column(:state, 'shipped')
-      get spree.api_order_path(order)
-    end
-
     it "can not view someone else's order" do
       allow_any_instance_of(Order).to receive_messages user: stub_model(Spree::LegacyUser)
       get spree.api_order_path(order)

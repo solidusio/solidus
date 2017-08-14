@@ -1,7 +1,7 @@
 module Spree
   module Admin
     class UsersController < ResourceController
-      rescue_from Spree::Core::DestroyWithOrdersError, with: :user_destroy_with_orders_error
+      rescue_from ActiveRecord::DeleteRestrictionError, with: :user_destroy_with_orders_error
 
       after_action :sign_in_if_change_own_password, only: :update
 

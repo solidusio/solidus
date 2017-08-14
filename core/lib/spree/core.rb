@@ -12,6 +12,8 @@ require 'paranoia'
 require 'ransack'
 require 'state_machines-activerecord'
 
+require 'spree/deprecation'
+
 # This is required because ActiveModel::Validations#invalid? conflicts with the
 # invalid state of a Payment. In the future this should be removed.
 StateMachines::Machine.ignore_method_conflicts = true
@@ -45,7 +47,9 @@ module Spree
     autoload :ProductFilters, "spree/core/product_filters"
 
     class GatewayError < RuntimeError; end
-    class DestroyWithOrdersError < StandardError; end
+
+    include ActiveSupport::Deprecation::DeprecatedConstantAccessor
+    deprecate_constant 'DestroyWithOrdersError', ActiveRecord::DeleteRestrictionError, deprecator: Spree::Deprecation
   end
 end
 
@@ -80,6 +84,5 @@ require 'spree/core/controller_helpers/strong_parameters'
 require 'spree/core/role_configuration'
 require 'spree/core/stock_configuration'
 require 'spree/permission_sets'
-require 'spree/deprecation'
 
 require 'spree/core/price_migrator'
