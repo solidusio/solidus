@@ -14,32 +14,25 @@
     margin-bottom: 0.5em;
   }
 
-  > li {
-    > .sortable-handle {
-      text-indent: 2em;
-
-      * {
-        text-indent: 0;
-      }
-    }
-
-    > .ui-sortable {
-      padding-bottom: 5em;
-    }
-  }
-
-  .sortable-handle ,
+  .taxon,
   .sortable-placeholder {
     border-radius: $border-radius;
   }
 
-  .sortable-handle {
+  .sortable-placeholder {
+    margin: 0.5em 0;
+  }
+
+  .taxon {
     background-color: very-light($color-3);
     border: 1px solid $color-border;
     color: $body-color;
     font-weight: $font-weight-bold;
     padding: 0.5em;
-    cursor: move;
+
+    &.sortable {
+      cursor: move;
+    }
 
     i {
       @include margin(null 4px 0 6px);

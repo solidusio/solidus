@@ -44,7 +44,7 @@ TaxonTreeView = Backbone.View.extend
     })
 
   resize_placeholder: (e, ui) ->
-    handleHeight = ui.helper.find('.sortable-handle').outerHeight()
+    handleHeight = ui.helper.find('.taxon').outerHeight()
     ui.placeholder.height(handleHeight)
 
   restore_sort_targets: ->
