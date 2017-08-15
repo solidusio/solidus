@@ -1,24 +1,11 @@
+// The state component has been deprecated in favour of Pills. This will be
+// removed in a future version of Solidus.
 .state {
-  font-size: 90%;
-  font-weight: $font-weight-bold;
-
-  &:before {
-    content: '';
-    position: relative;
-    display: inline-block;
-    margin-right: 3px;
-    border-radius: $font-size-root/2;
-    width: $font-size-root - 4px;
-    height: $font-size-root - 4px;
-  }
+  @extend .pill;
 
   @each $state in $states {
-    &.#{$state}:before {
-      background-color: get-value($states, $states-bg-colors, $state);
-
-      // &, a {
-      //   color: get-value($states, $states-text-colors, $state);
-      // }
+    &.#{$state} {
+      @extend .pill-#{$state};
     }
   }
 }

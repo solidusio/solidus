@@ -7,7 +7,7 @@
   color: $color-pill-neutral-text;
   white-space: nowrap;
 
-  $states: (
+  $pill-states: (
     complete: (
       background: $color-pill-complete,
       color: $color-pill-complete-text
@@ -34,7 +34,7 @@
     )
   );
 
-  @each $name, $colors in $states {
+  @each $name, $colors in $pill-states {
     &-#{$name} {
       background: map-get($colors, background);
       color: map-get($colors, color);
@@ -59,6 +59,7 @@
 .pill-partial,
 .pill-payment,
 .pill-processing,
+.pill-ready,
 .pill-resumed {
   @extend .pill-pending;
 }
