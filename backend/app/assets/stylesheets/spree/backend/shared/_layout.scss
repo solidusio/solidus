@@ -15,7 +15,7 @@ body {
 }
 
 .content-wrapper {
-  @include padding(1rem map-get($grid-gutter-widths, "xl") null);
+  @include padding(1rem $grid-gutter-width null);
 
   &:not(.full-width) {
     @include margin(null auto);

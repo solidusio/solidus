@@ -36,12 +36,12 @@
   pointer-events: none;
 
   &.action-edit, &.action-save, &.action-capture, &.action-add {
-    @include bootstrap-tooltip-color($brand-success);
+    @include bootstrap-tooltip-color(theme-color("success"));
   }
   &.action-clone, &.action-cancel {
-    @include bootstrap-tooltip-color($brand-warning);
+    @include bootstrap-tooltip-color(theme-color("warning"));
   }
   &.action-void, &.action-failure, &.action-remove {
-    @include bootstrap-tooltip-color($brand-danger);
+    @include bootstrap-tooltip-color(theme-color("danger"));
   }
 }

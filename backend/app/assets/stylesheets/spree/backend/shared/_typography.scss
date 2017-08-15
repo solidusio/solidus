@@ -20,12 +20,12 @@ hr {
 // Headings
 //--------------------------------------------------------------
 
-h1 { line-height: $font-size-h1 + 6 }
-h2 { line-height: $font-size-h1 + 4 }
-h3 { line-height: $font-size-h1 + 2 }
-h4 { line-height: $font-size-h1 }
-h5 { line-height: $font-size-h1 }
-h6 { line-height: $font-size-h1 }
+h1 { line-height: $h1-font-size + 6 }
+h2 { line-height: $h1-font-size + 4 }
+h3 { line-height: $h1-font-size + 2 }
+h4 { line-height: $h1-font-size }
+h5 { line-height: $h1-font-size }
+h6 { line-height: $h1-font-size }
 
 
 // Lists
