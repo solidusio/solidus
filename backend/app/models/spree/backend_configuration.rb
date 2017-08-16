@@ -20,39 +20,6 @@ module Spree
     STOCK_TABS         ||= [:stock_items]
     USER_TABS          ||= [:users, :store_credits]
 
-    # An item which should be drawn in the admin menu
-    class MenuItem
-      attr_reader :icon, :label, :partial, :condition, :sections, :url
-
-      # @param sections [Array<Symbol>] The sections which are contained within
-      #   this admin menu section.
-      # @param icon [String] The icon to draw for this menu item
-      # @param condition [Proc] A proc which returns true if this menu item
-      #   should be drawn. If nil, it will be replaced with a proc which always
-      #   returns true.
-      # @param label [Symbol] The translation key for a label to use for this
-      #   menu item.
-      # @param partial [String] A partial to draw within this menu item for use
-      #   in declaring a submenu
-      # @param url [String] A url where this link should send the user to
-      def initialize(
-        sections,
-        icon,
-        condition: nil,
-        label: nil,
-        partial: nil,
-        url: nil
-      )
-
-        @condition = condition || -> { true }
-        @sections = sections
-        @icon = icon
-        @label = label || sections.first
-        @partial = partial
-        @url = url
-      end
-    end
-
     # Items can be added to the menu by using code like the following:
     #
     # Spree::Backend::Config.configure do |config|
@@ -64,32 +31,32 @@ module Spree
     # end
     #
     # @!attribute menu_items
-    #   @return [Array<Spree::BackendConfiguration::MenuItem>]
+    #   @return [Array<Spree::MenuItem>]
     attr_writer :menu_items
 
     # Return the menu items which should be drawn in the menu
     #
     # @api public
-    # @return [Array<Spree::BackendConfiguration::MenuItem>]
+    # @return [Array<Spree::MenuItem>]
     def menu_items
       @menu_items ||= [
-        MenuItem.new(
+        Spree::MenuItem.new(
           ORDER_TABS,
           'shopping-cart',
           condition: -> { can?(:admin, Spree::Order) },
         ),
-        MenuItem.new(
+        Spree::MenuItem.new(
           PRODUCT_TABS,
           'th-large',
           condition: -> { can?(:admin, Spree::Product) },
           partial: 'spree/admin/shared/product_sub_menu'
         ),
-        MenuItem.new(
+        Spree::MenuItem.new(
           REPORT_TABS,
           'file',
           condition: -> { can?(:admin, :reports) },
         ),
-        MenuItem.new(
+        Spree::MenuItem.new(
           CONFIGURATION_TABS,
           'wrench',
           condition: -> { can?(:admin, Spree::Store) },
@@ -97,21 +64,21 @@ module Spree
           partial: 'spree/admin/shared/settings_sub_menu',
           url: :admin_stores_path
         ),
-        MenuItem.new(
+        Spree::MenuItem.new(
           PROMOTION_TABS,
           'bullhorn',
           partial: 'spree/admin/shared/promotion_sub_menu',
           condition: -> { can?(:admin, Spree::Promotion) },
           url: :admin_promotions_path
         ),
-        MenuItem.new(
+        Spree::MenuItem.new(
           STOCK_TABS,
           'cubes',
           condition: -> { can?(:admin, Spree::StockItem) },
           label: :stock,
           url: :admin_stock_items_path
         ),
-        MenuItem.new(
+        Spree::MenuItem.new(
           USER_TABS,
           'user',
           condition: -> { Spree.user_class && can?(:admin, Spree.user_class) },
