@@ -66,7 +66,12 @@ input[type="submit"],
 input[type="button"],
 button,
 .button {
-  &:not(.close) {
+  &:not(.close):not([class*="btn"]) {
+    // We want to apply the primary button coloring to all buttons that do not
+    // currently use the Bootstrap class naming convention (`btn`).
+    //
+    // In order to avoid the clashing between using `:not(.btn)` and
+    // `@extend .btn` we need to use an attribute selector of `[class*="btn"]`.
     @extend .btn;
     @include button-variant(theme-color("primary"), theme-color("primary"));
   }
