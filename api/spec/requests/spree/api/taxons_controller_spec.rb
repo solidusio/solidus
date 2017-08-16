@@ -120,6 +120,31 @@ module Spree
         delete spree.api_taxonomy_taxon_path(taxonomy, taxon.id)
         assert_unauthorized!
       end
+
+      context "with caching enabled" do
+        let!(:product) { create(:product, taxons: [taxon]) }
+
+        before do
+          ActionController::Base.perform_caching = true
+        end
+
+        it "handles exclude_data correctly" do
+          get spree.api_taxon_products_path, params: { id: taxon.id, simple: true }
+          expect(response).to be_success
+          simple_response = json_response
+
+          get spree.api_taxon_products_path, params: { id: taxon.id }
+          expect(response).to be_success
+          full_response = json_response
+
+          expect(simple_response["products"][0]["description"]).to be_nil
+          expect(full_response["products"][0]["description"]).not_to be_nil
+        end
+
+        after do
+          ActionController::Base.perform_caching = false
+        end
+      end
     end
 
     context "as an admin" do
