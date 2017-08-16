@@ -77,24 +77,24 @@
       <% @promotions.each do |promotion| %>
         <tr id="<%= spree_dom_id promotion %>" class="<%= cycle('odd', 'even')%>">
           <td><%= promotion.name %></td>
-          <td class="align-center">
+          <td>
             <%= (promotion.codes.size == 1) ? promotion.codes.first.try!(:value) : Spree.t(:number_of_codes, count: promotion.codes.size) %>
           </td>
-          <td class="align-center">
+          <td>
             <span class="pill pill-<%= promotion.active? ? 'active' : 'inactive' %>">
               <%= Spree.t(promotion.active?? :active : :inactive) %>
             </span>
           </td>
-          <td class="align-center">
+          <td>
             <%= promotion.usage_limit.nil? ? "∞" : promotion.usage_limit %>
           </td>
-          <td class="align-center">
+          <td>
             <%= promotion.usage_count %>
           </td>
-          <td class="align-center">
+          <td>
             <%= promotion.starts_at.to_date.to_s(:short_date) if promotion.starts_at %>
           </td>
-          <td class="align-center">
+          <td>
             <%= promotion.expires_at.to_date.to_s(:short_date) if promotion.expires_at %>
           </td>
           <td class="actions">
