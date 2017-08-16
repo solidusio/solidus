@@ -3,7 +3,8 @@
     border: $input-btn-border-width solid $input-border-color;
     @include border-radius($input-border-radius);
     background: $input-bg;
-    height: calc(#{$input-height} + #{2*$input-btn-border-width});
+    height: $input-height;
+    padding: 0;
 
     .select2-arrow {
       background: transparent;
@@ -17,7 +18,8 @@
     }
 
     >.select2-chosen {
-      line-height: $input-height;
+      padding: $input-btn-padding-y $input-btn-padding-x;
+      line-height: $input-btn-line-height;
       color: $input-color;
     }
   }
@@ -39,7 +41,7 @@
   .select2-choices.select2-choices, /* Needs extra specificity */
   .select2-choice {
     box-shadow: none; /* Remove default outline */
-    border-color: $input-border-focus;
+    border-color: $input-focus-border-color;
   }
 }
 
@@ -49,7 +51,7 @@
   }
 
   .select2-search-choice {
-    background: $badge-default-bg;
+    background: $gray-200;
     border: 0;
     margin: 2px 0 3px 5px; // adjust the margin to respect the adjusted line height
   }
@@ -72,7 +74,7 @@
 }
 
 .select2-drop-active {
-  border: $input-btn-border-width solid $input-border-focus;
+  border: $input-btn-border-width solid $input-focus-border-color;
   border-top: 0;
 }
 

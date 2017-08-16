@@ -3,30 +3,26 @@
     background-color: $color;
   }
 
-  &.tooltip-top,
-  &.bs-tether-element-attached-bottom {
-    .tooltip-inner::before {
+  &.bs-tooltip-top {
+    .arrow::before {
       border-top-color: $color;
     }
   }
 
-  &.tooltip-right,
-  &.bs-tether-element-attached-left {
-    .tooltip-inner::before {
+  &.bs-tooltip-right {
+    .arrow::before {
       border-right-color: $color;
     }
   }
 
-  &.tooltip-bottom,
-  &.bs-tether-element-attached-top {
-    .tooltip-inner::before {
+  &.bs-tooltip-bottom {
+    .arrow::before {
       border-bottom-color: $color;
     }
   }
 
-  &.tooltip-left,
-  &.bs-tether-element-attached-right {
-    .tooltip-inner::before {
+  &.bs-tooltip-left {
+    .arrow::before {
       border-left-color: $color;
     }
   }
@@ -36,12 +32,12 @@
   pointer-events: none;
 
   &.action-edit, &.action-save, &.action-capture, &.action-add {
-    @include bootstrap-tooltip-color($brand-success);
+    @include bootstrap-tooltip-color(theme-color("success"));
   }
   &.action-clone, &.action-cancel {
-    @include bootstrap-tooltip-color($brand-warning);
+    @include bootstrap-tooltip-color(theme-color("warning"));
   }
   &.action-void, &.action-failure, &.action-remove {
-    @include bootstrap-tooltip-color($brand-danger);
+    @include bootstrap-tooltip-color(theme-color("danger"));
   }
 }

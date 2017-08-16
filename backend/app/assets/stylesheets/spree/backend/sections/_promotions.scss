@@ -121,7 +121,7 @@
     cursor: pointer;
 
     &:hover {
-      color: $brand-danger;
+      color: theme-color("danger");
     }
   }
 }

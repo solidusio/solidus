@@ -7,10 +7,10 @@
 //
 // Grayscale and brand colors for use across Bootstrap.
 
-$brand-primary:             $color-3 !default;
-$brand-success:             $color-2 !default;
-$brand-warning:             $color-6 !default;
-$brand-danger:              $color-5 !default;
+$blue:   $color-3 !default;
+$red:    $color-5 !default;
+$orange: $color-6 !default;
+$green:  $color-2 !default;
 
 // Body
 //
@@ -23,10 +23,9 @@ $body-color:    $color-4 !default;
 //
 // Style anchor elements.
 
-$link-color:                 $color-3 !default;
-$link-decoration:            none !default;
-$link-hover-color:           $color-2 !default;
-$link-hover-decoration:      none !default;
+$link-decoration:       none !default;
+$link-hover-color:      $color-2 !default;
+$link-hover-decoration: none !default;
 
 // Grid columns
 //
@@ -47,12 +46,12 @@ $font-size-root: 13px !default;
 $font-weight-normal: 400 !default;
 $font-weight-bold: 600 !default;
 
-$font-size-h1: $font-size-root + 12 !default;
-$font-size-h2: $font-size-root + 10 !default;
-$font-size-h3: $font-size-root + 8 !default;
-$font-size-h4: $font-size-root + 6 !default;
-$font-size-h5: $font-size-root + 4 !default;
-$font-size-h6: $font-size-root + 2 !default;
+$h1-font-size: $font-size-root + 12 !default;
+$h2-font-size: $font-size-root + 10 !default;
+$h3-font-size: $font-size-root + 8 !default;
+$h4-font-size: $font-size-root + 6 !default;
+$h5-font-size: $font-size-root + 4 !default;
+$h6-font-size: $font-size-root + 2 !default;
 
 $headings-font-weight:   $font-weight-bold !default;
 $headings-color:         $color-4 !default;
@@ -67,9 +66,9 @@ $border-radius:          3px !default;
 
 $input-color:                    $color-3 !default;
 $input-border-color:             $color-border !default;
-$input-border-focus:             $color-2 !default;
+$input-focus-border-color:       $color-2 !default;
 
-$custom-select-focus-border-color: $input-border-focus !default;
+$custom-select-focus-border-color: $input-focus-border-color !default;
 
 // Dropdowns
 //
@@ -77,10 +76,6 @@ $custom-select-focus-border-color: $input-border-focus !default;
 
 $dropdown-link-hover-color:      #fff !default;
 $dropdown-link-hover-bg:         $color-3 !default;
-
-// Badges
-
-$badge-default-bg:            $color-7 !default;
 
 // Breadcrumbs
 

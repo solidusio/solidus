@@ -6,6 +6,7 @@ require 'sass-rails'
 require 'bourbon'
 require 'handlebars_assets'
 require 'font-awesome-rails'
+require 'autoprefixer-rails'
 require 'jbuilder'
 
 require 'spree_core'

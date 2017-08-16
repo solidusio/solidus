@@ -34,4 +34,5 @@ Gem::Specification.new do |s|
   s.add_dependency 'jbuilder', '~> 2.6'
 
   s.add_dependency 'handlebars_assets', '~> 0.23'
+  s.add_dependency 'autoprefixer-rails', '~> 7.1'
 end

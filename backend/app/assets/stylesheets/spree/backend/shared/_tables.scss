@@ -74,27 +74,27 @@ table {
       }
 
       .fa-trash:hover, .fa-void:hover, .fa-failure:hover {
-        color: $brand-danger;
+        color: theme-color("danger");
       }
 
       .fa-cancel:hover {
-        color: $brand-warning;
+        color: theme-color("warning");
       }
 
       .fa-edit:hover, .fa-capture:hover, .fa-ok:hover, .fa-plus:hover, .fa-save:hover {
-        color: $brand-success;
+        color: theme-color("success");
       }
 
       .fa-copy:hover {
-        color: $brand-warning;
+        color: theme-color("warning");
       }
 
       .fa-thumbs-up:hover {
-        color: $brand-success;
+        color: theme-color("success");
       }
 
       .fa-thumbs-down:hover {
-        color: $brand-danger;
+        color: theme-color("danger");
       }
     }
 
@@ -159,8 +159,8 @@ table {
       }
 
       &.deleted td {
-        background-color: very-light($brand-danger, 6);
-        border-color: very-light($brand-danger, 15);
+        background-color: very-light(theme-color("danger"), 6);
+        border-color: very-light(theme-color("danger"), 15);
       }
 
       &.ui-sortable-placeholder td {

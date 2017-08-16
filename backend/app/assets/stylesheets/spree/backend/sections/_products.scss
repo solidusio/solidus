@@ -48,7 +48,7 @@ div[data-hook="admin_products_index_search_buttons"] {
   }
 
   &.with-images {
-    border-color: $brand-success;
+    border-color: theme-color("success");
   }
 }
 

@@ -17,7 +17,7 @@
       border-right: 0;
 
       &:focus + .number-with-currency-select {
-        border-left-color: $input-border-focus;
+        border-left-color: $input-focus-border-color;
       }
     }
 
