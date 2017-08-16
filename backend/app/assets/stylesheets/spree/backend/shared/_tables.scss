@@ -4,22 +4,8 @@ table {
   border-spacing: 0;
 
   th, td {
-    border-right: 1px solid $color-border;
-    border-bottom: 1px solid $color-border;
     vertical-align: middle;
     text-overflow: ellipsis;
-
-    &:first-child {
-      border-left: 1px solid $color-border;
-    }
-
-    a {
-      border-bottom: 1px dotted lighten($link-color, 10);
-
-      &:hover {
-        border-color: lighten($link-hover-color, 10);
-      }
-    }
 
     .handle {
       display: block !important;
@@ -121,31 +107,8 @@ table {
     white-space: nowrap;
   }
 
-  thead {
-    th {
-      border-top: 1px solid $color-border;
-      border-bottom: none;
-      background-color: $color-tbl-thead;
-      text-align: center;
-      font-weight: $font-weight-bold;
-      vertical-align: top;
-    }
-  }
-
   tbody {
     tr {
-      &:first-child th,
-      &:first-child td {
-        border-top: 1px solid $color-border;
-      }
-      &.even td {
-        background-color: $color-tbl-even;
-      }
-
-      &:hover td {
-        background-color: very-light($color-3, 5);
-      }
-
       &.deleted td {
         background-color: very-light(theme-color("danger"), 6);
         border-color: very-light(theme-color("danger"), 15);
