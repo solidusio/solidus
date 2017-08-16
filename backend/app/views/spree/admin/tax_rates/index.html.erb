@@ -42,20 +42,20 @@
     <tbody>
       <% @tax_rates.each do |tax_rate|%>
       <tr id="<%= spree_dom_id tax_rate %>" data-hook="rate_row" class="<%= cycle('odd', 'even')%>">
-        <td class="align-center"><%=tax_rate.zone.try(:name) || Spree.t(:not_available) %></td>
-        <td class="align-center"><%=tax_rate.name %></td>
-        <td class="align-center">
+        <td><%=tax_rate.zone.try(:name) || Spree.t(:not_available) %></td>
+        <td><%=tax_rate.name %></td>
+        <td>
           <% if tax_rate.tax_categories.any? %>
             <%= tax_rate.tax_categories.map(&:name).join(", ") %>
           <% else %>
             <%= Spree.t(:not_available) %>
           <% end %>
         </td>
-        <td class="align-center"><%=tax_rate.amount %></td>
-        <td class="align-center"><%=tax_rate.included_in_price? ? Spree.t(:say_yes) : Spree.t(:say_no) %></td>
-        <td class="align-center"><%=tax_rate.show_rate_in_label? ? Spree.t(:say_yes) : Spree.t(:say_no) %></td>
-        <td class="align-center"><%=tax_rate.expires_at.to_date.to_s(:short_date) if tax_rate.expires_at %></td>
-        <td class="align-center"><%=tax_rate.calculator.to_s %></td>
+        <td><%=tax_rate.amount %></td>
+        <td><%=tax_rate.included_in_price? ? Spree.t(:say_yes) : Spree.t(:say_no) %></td>
+        <td><%=tax_rate.show_rate_in_label? ? Spree.t(:say_yes) : Spree.t(:say_no) %></td>
+        <td><%=tax_rate.expires_at.to_date.to_s(:short_date) if tax_rate.expires_at %></td>
+        <td><%=tax_rate.calculator.to_s %></td>
         <td class="actions">
           <% if can?(:update, tax_rate) %>
             <%= link_to_edit tax_rate, no_text: true %>

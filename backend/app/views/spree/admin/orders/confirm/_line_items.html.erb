@@ -17,13 +17,13 @@
           <td class="line-item-name">
             <%= item.variant.product.name %><br><%= "(" + variant_options(item.variant) + ")" unless item.variant.option_values.empty? %>
           </td>
-          <td class="line-item-price align-center">
+          <td class="line-item-price">
             <%= item.single_money.to_html %>
           </td>
-          <td class="line-item-qty-show align-center">
+          <td class="line-item-qty-show">
             <%= item.quantity %>
           </td>
-          <td class="line-item-total align-center">
+          <td class="line-item-total">
             <%= line_item_shipment_price(item, item.quantity) %>
           </td>
         </tr>

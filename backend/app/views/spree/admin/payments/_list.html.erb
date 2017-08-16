@@ -15,13 +15,13 @@
       <tr id="<%= dom_id(payment) %>" data-hook="payments_row" class="payment <%= cycle('odd', 'even', name: 'payment_table_cycle')%>" data-payment-id="<%= payment.id %>">
         <td><%= link_to payment.number, spree.admin_order_payment_path(@order, payment) %></td>
         <td><%= pretty_time(payment.created_at) %></td>
-        <td class="align-center amount">
+        <td class="amount">
           <%= text_field_tag :amount, payment.amount, class: 'js-edit-amount align-right editing-show' %>
           <span class="js-display-amount editing-hide"><%= payment.display_amount.to_html %></span>
         </td>
-        <td class="align-center"><%= payment_method_name(payment) %></td>
-        <td class="align-center"><%= payment.transaction_id %></td>
-        <td class="align-center">
+        <td><%= payment_method_name(payment) %></td>
+        <td><%= payment.transaction_id %></td>
+        <td>
           <span class="pill pill-<%= payment.state %>">
             <%= Spree.t(payment.state, scope: :payment_states) %>
           </span>

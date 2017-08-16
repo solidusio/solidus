@@ -163,7 +163,7 @@
           <% end %>
         </td>
         <% if Spree::Order.checkout_step_names.include?(:delivery) %>
-          <td class="align-center">
+          <td>
             <% if order.shipment_state %>
               <span class="pill pill-<%= order.shipment_state %>">
                 <%= Spree.t(order.shipment_state, scope: :shipment_states) %>

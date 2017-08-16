@@ -10,19 +10,19 @@
         <td><strong>
           <%= Spree.t(:failed_payment_attempts) %>:
         </strong></td>
-          <td class="align-center">
-            <span class="pill pill-<%= @order.payments.failed.count > 0 ? 'warning' : 'complete' %>">
-              <%= Spree.t(
-                :payments_failed_count,
-                count: @order.payments.failed.count
-              ) %>
-            </span>
+        <td>
+          <span class="pill pill-<%= @order.payments.failed.count > 0 ? 'warning' : 'complete' %>">
+            <%= Spree.t(
+              :payments_failed_count,
+              count: @order.payments.failed.count
+            ) %>
+          </span>
         </td>
       </tr>
 
       <tr>
         <td><strong><%= Spree.t(:avs_response) %>:</strong></td>
-        <td class="align-center">
+        <td>
           <span class="pill pill-<%= latest_payment.is_avs_risky? ? 'warning' : 'complete' %>">
             <% if latest_payment.is_avs_risky? %>
               <%= avs_response_code[latest_payment.avs_response] %>
@@ -35,7 +35,7 @@
 
       <tr>
         <td><strong><%= Spree.t(:cvv_response) %>:</strong></td>
-        <td class="align-center">
+        <td>
           <span class="pill pill-<%= latest_payment.is_cvv_risky? ? 'warning' : 'complete' %>">
             <% if latest_payment.is_cvv_risky? %>
               <%= cvv_response_code[latest_payment.cvv_response_code] %>

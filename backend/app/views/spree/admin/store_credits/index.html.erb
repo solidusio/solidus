@@ -32,25 +32,25 @@
     <tbody>
       <% @store_credits.each do |store_credit| %>
         <tr>
-          <td class='align-center'>
+          <td>
             <span><%= store_credit.display_amount.to_html %></span>
           </td>
-          <td class='align-center'>
+          <td>
             <span><%= store_credit.display_amount_used.to_html %></span>
           </td>
-          <td class='align-center'>
+          <td>
             <span><%= store_credit.display_amount_authorized.to_html %></span>
           </td>
-          <td class='align-center'>
+          <td>
             <span><%= store_credit.category_name %></span>
           </td>
           <td>
             <span><%= store_credit.created_by_email %></span>
           </td>
-          <td class='align-center'>
+          <td>
             <span><%= l store_credit.created_at.to_date %></span>
           </td>
-          <td class='align-center'>
+          <td>
             <span><%= store_credit.invalidated? %></span>
           </td>
           <td class="actions" data-hook="admin_store_credits_index_row_actions">

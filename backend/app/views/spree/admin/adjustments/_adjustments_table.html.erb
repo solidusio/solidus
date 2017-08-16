@@ -11,14 +11,14 @@
   <tbody>
     <%= render partial: "adjustment", collection: @adjustments %>
     <tr data-hook="adjustment_buttons">
-      <td class="align-center" colspan='4'>
+      <td class="align-right" colspan="2" style="width: 50%">
         <% if can? :update, Spree::Adjustment %>
-          <div>
-            <%= button_to Spree.t(:unfinalize_all_adjustments), adjustments_unfinalize_admin_order_path(@order), method: :get %>
-          </div>
-          <div>
-            <%= button_to Spree.t(:finalize_all_adjustments), adjustments_finalize_admin_order_path(@order), method: :get %>
-          </div>
+          <%= button_to Spree.t(:unfinalize_all_adjustments), adjustments_unfinalize_admin_order_path(@order), method: :get %>
+        <% end %>
+      </td>
+      <td colspan="2" style="width: 50%">
+        <% if can? :update, Spree::Adjustment %>
+          <%= button_to Spree.t(:finalize_all_adjustments), adjustments_finalize_admin_order_path(@order), method: :get %>
         <% end %>
       </td>
       <td class='actions'>&nbsp;</td>
