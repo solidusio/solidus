@@ -35,6 +35,7 @@ group :test do
   gem 'with_model'
   gem 'rspec_junit_formatter'
   gem 'rails-controller-testing'
+  gem 'ffaker'
 end
 
 group :test, :development do
