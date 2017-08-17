@@ -26,19 +26,19 @@
         <td>
           <%= return_item.inventory_unit.variant.sku %>
         </td>
-        <td class="align-center">
+        <td>
           <%= return_item.display_amount %>
         </td>
-        <td class="align-center">
+        <td>
           <%= reimbursement_type_name(return_item.preferred_reimbursement_type) %>
         </td>
-        <td class="align-center">
+        <td>
           <%= return_item.exchange_variant.try(:exchange_name) %>
         </td>
-        <td class="align-center">
+        <td>
           <%= return_item.acceptance_status_errors %>
         </td>
-        <td class-"align-center">
+        <td>
           <span class="pill pill-<%= return_item.reception_status %>">
             <%= Spree.t(
               return_item.reception_status,
@@ -47,7 +47,7 @@
           </span>
         </td>
         <% unless return_item.received? %>
-          <td class='align-center'>
+          <td>
             <%= form_for [:admin, return_item] do |f| %>
               <%= f.hidden_field 'reception_status_event', value: 'receive' %>
               <%= f.button Spree.t('actions.receive'), class: 'with-tip', "data-action" => 'save' %>

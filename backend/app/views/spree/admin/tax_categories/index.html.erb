@@ -38,11 +38,11 @@
          @edit_url = edit_admin_tax_category_path(tax_category)
          @delete_url = admin_tax_category_path(tax_category)
     %>
-      <tr id="<%= spree_dom_id tax_category %>" data-hook="tax_row" class="<%= cycle('odd', 'even')%>">
-        <td class="align-center"><%= tax_category.name %></td>
-        <td class="align-center"><%= tax_category.tax_code %></td>
-        <td class="align-center"><%= tax_category.description %></td>
-        <td class="align-center"><%= tax_category.is_default? ? Spree.t(:say_yes) : Spree.t(:say_no) %></td>
+      <tr id="<%= spree_dom_id tax_category %>" data-hook="tax_row">
+        <td><%= tax_category.name %></td>
+        <td><%= tax_category.tax_code %></td>
+        <td><%= tax_category.description %></td>
+        <td><%= tax_category.is_default? ? Spree.t(:say_yes) : Spree.t(:say_no) %></td>
         <td class="actions">
           <% if can?(:update, tax_category) %>
             <%= link_to_edit tax_category, no_text: true %>

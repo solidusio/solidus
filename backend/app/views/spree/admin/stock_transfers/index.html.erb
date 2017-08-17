@@ -87,12 +87,12 @@
     </thead>
     <tbody>
       <% @stock_transfers.each do |stock_transfer| %>
-        <tr id="<%= spree_dom_id stock_transfer %>" class="<%= cycle('odd', 'even') %>">
+        <tr id="<%= spree_dom_id stock_transfer %>">
           <td><%= handle_stock_transfer(stock_transfer) %></td>
           <td><%= stock_transfer.source_location.name %></td>
           <td><%= stock_transfer.destination_location.try(:name) %></td>
-          <td class="align-center"><%= stock_transfer.expected_item_count %></td>
-          <td class="align-center"><%= stock_transfer.received_item_count %></td>
+          <td><%= stock_transfer.expected_item_count %></td>
+          <td><%= stock_transfer.received_item_count %></td>
           <td><%= stock_transfer.shipped_at.try(:to_date) %></td>
           <td>
             <span class="pill pill-<%= stock_transfer.closed? ? 'complete' : 'pending' %>">

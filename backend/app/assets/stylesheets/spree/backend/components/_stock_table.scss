@@ -12,15 +12,6 @@
   }
 
   > tbody {
-    > tr {
-      &:hover {
-        .stock-variant-field-table {
-          td {
-            background-color: $color-1;
-          }
-        }
-      }
-    }
     .variant-image {
       width: 31%;
       padding: 0 2%;
@@ -33,9 +24,6 @@
     .variant-image,
     .variant-details {
       float: left;
-    }
-    .variant-container {
-      padding-top: 10px;
     }
   }
 }
