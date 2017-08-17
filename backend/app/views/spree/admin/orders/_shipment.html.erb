@@ -116,7 +116,7 @@
           <% if shipment.tracking.present? %>
             <strong><%= Spree::Shipment.human_attribute_name(:tracking) %>:</strong> <%= shipment.tracking %>
           <% else %>
-            <%= Spree.t(:no_tracking_present) %>
+            <i><%= Spree.t(:no_tracking_present) %></i>
           <% end %>
         </td>
         <td class="actions">

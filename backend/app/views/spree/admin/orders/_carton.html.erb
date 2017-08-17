@@ -52,7 +52,7 @@
           <% if carton.tracking.present? %>
             <strong><%= Spree::Carton.human_attribute_name(:tracking) %>:</strong> <%= carton.tracking %>
           <% else %>
-            <%= Spree.t(:no_tracking_present) %>
+            <i><%= Spree.t(:no_tracking_present) %></i>
           <% end %>
         </td>
       </tr>
