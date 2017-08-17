@@ -3,10 +3,11 @@ require 'spec_helper'
 module Spree
   module Stock
     describe Packer, type: :model do
-      let!(:inventory_units) { Array.new(5) { build(:inventory_unit) } }
+      let(:order) { build(:order) }
+      let!(:inventory_units) { Array.new(5) { build(:inventory_unit, order: order) } }
       let(:stock_location) { create(:stock_location) }
 
-      subject { Packer.new(stock_location, inventory_units) }
+      subject { Packer.new(order, stock_location, inventory_units) }
 
       context 'packages' do
         it 'builds an array of packages' do
@@ -38,7 +39,7 @@ module Spree
 
         context "location doesn't have order items in stock" do
           let(:stock_location) { create(:stock_location, propagate_all_variants: false) }
-          let(:packer) { Packer.new(stock_location, inventory_units) }
+          let(:packer) { Packer.new(order, stock_location, inventory_units) }
 
           it "builds an empty package" do
             expect(packer.default_package).to be_empty
@@ -46,7 +47,7 @@ module Spree
         end
 
         context "none on hand and not backorderable" do
-          let(:packer) { Packer.new(stock_location, inventory_units) }
+          let(:packer) { Packer.new(order, stock_location, inventory_units) }
 
           before do
             stock_location.stock_items.update_all(backorderable: false)

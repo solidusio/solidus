@@ -1,9 +1,15 @@
 module Spree
   module Stock
     class Packer
-      attr_reader :stock_location, :inventory_units, :splitters
+      attr_reader :order, :stock_location, :inventory_units, :splitters
 
-      def initialize(stock_location, inventory_units, splitters = [Splitter::Base])
+      # @param order [Spree::Order] the order the inventory units originate from
+      # @param stock_location [Spree::StockLocation] the stock location the inventory units will be sent from
+      # @param inventory_units [Array<Spree::Stock::ContentItem>] the inventory units to be packed
+      # @param splitters [Array<Spree::Stock::Splitter::Base>] the splitter classes that will be used
+      #        to split the initial default package
+      def initialize(order, stock_location, inventory_units, splitters = [Splitter::Base])
+        @order = order
         @stock_location = stock_location
         @inventory_units = inventory_units
         @splitters = splitters
@@ -18,7 +24,7 @@ module Spree
       end
 
       def default_package
-        package = Package.new(stock_location)
+        package = Package.new(order, stock_location)
         inventory_units.group_by(&:variant).each do |variant, variant_inventory_units|
           units = variant_inventory_units.clone
           if variant.should_track_inventory?

@@ -8,7 +8,7 @@ module Spree
       let(:order) { build(:order) }
       let(:line_item) { build(:line_item, order: order) }
 
-      subject { Package.new(stock_location) }
+      subject { Package.new(order, stock_location) }
 
       def build_inventory_unit
         build(:inventory_unit, variant: variant, line_item: line_item)
@@ -63,7 +63,7 @@ module Spree
                     ContentItem.new(build(:inventory_unit, variant: variant2)),
                     ContentItem.new(build(:inventory_unit, variant: variant3))]
 
-        package = Package.new(stock_location, contents)
+        package = Package.new(order, stock_location, contents)
         expect(package.shipping_methods).to match_array([method1, method2])
       end
       # Contains regression test for https://github.com/spree/spree/issues/2804
@@ -82,14 +82,14 @@ module Spree
                     ContentItem.new(build(:inventory_unit, variant: variant2)),
                     ContentItem.new(build(:inventory_unit, variant: variant3))]
 
-        package = Package.new(stock_location, contents)
+        package = Package.new(order, stock_location, contents)
         expect(package.shipping_methods).to match_array([method1])
       end
 
       it 'builds an empty list of shipping methods when no categories' do
         variant  = mock_model(Variant, shipping_category_id: nil)
         contents = [ContentItem.new(build(:inventory_unit, variant: variant))]
-        package  = Package.new(stock_location, contents)
+        package  = Package.new(order, stock_location, contents)
         expect(package.shipping_methods).to be_empty
       end
 
@@ -159,20 +159,8 @@ module Spree
       end
 
       describe "#order" do
-        let(:unit) { build_inventory_unit }
-        context "there is an inventory unit" do
-          before { subject.add unit }
-
-          it "returns an order" do
-            expect(subject.order).to be_a_kind_of Spree::Order
-            expect(subject.order).to eq order
-          end
-        end
-
-        context "there is no inventory unit" do
-          it "returns nil" do
-            expect(subject.order).to eq nil
-          end
+        it "returns the order the package has been initialized with" do
+          expect(subject.order).to eq(order)
         end
       end
     end

@@ -18,7 +18,7 @@ module Spree
       end
 
       def pack
-        package = Package.new(order)
+        package = Package.new(order, stock_location)
         yield(package) if block_given?
         package
       end

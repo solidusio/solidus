@@ -5,13 +5,14 @@ module Spree
     module Splitter
       describe Backordered, type: :model do
         let(:variant) { build(:variant) }
+        let(:order) { build(:order) }
 
-        let(:packer) { build(:stock_packer) }
+        let(:packer) { build(:stock_packer, order: order) }
 
         subject { Backordered.new(packer) }
 
         it 'splits packages by status' do
-          package = Package.new(packer.stock_location)
+          package = Package.new(order, packer.stock_location)
           4.times { package.add build(:inventory_unit, variant: variant) }
           5.times { package.add build(:inventory_unit, variant: variant), :backordered }
 

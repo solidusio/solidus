@@ -138,7 +138,7 @@ module Spree
       end
 
       def build_packer(stock_location, inventory_units)
-        Packer.new(stock_location, inventory_units, splitters(stock_location))
+        Packer.new(order, stock_location, inventory_units, splitters(stock_location))
       end
 
       def splitters(_stock_location)
