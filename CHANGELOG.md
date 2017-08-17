@@ -1,5 +1,7 @@
 ## Solidus 2.5.0 (master, unreleased)
 
+- Replace order foreign key from `Spree::InventoryUnit` with a delegate to the inventory unit's `Spree::Shipment`. `Spree::Stock::Package` and `Spree::Stock::Packer` now have to be initialized with a mandatory order argument. [\#2125](https://github.com/solidusio/solidus/pull/2125) ([jhawthorn](https://github.com/jhawthorn), [mamhoff](https://github.com/mamhoff))
+
 ## Solidus 2.4.0 (unreleased)
 
 ### Major changes
