@@ -4,10 +4,14 @@ json.payment_methods(order.available_payment_methods) do |payment_method|
   json.method_type payment_method.partial_name
 end
 json.bill_address do
-  json.partial!("spree/api/addresses/address", address: order.billing_address)
+  if order.billing_address
+    json.partial!("spree/api/addresses/address", address: order.billing_address)
+  end
 end
 json.ship_address do
-  json.partial!("spree/api/addresses/address", address: order.shipping_address)
+  if order.shipping_address
+    json.partial!("spree/api/addresses/address", address: order.shipping_address)
+  end
 end
 json.line_items(order.line_items) do |line_item|
   json.partial!("spree/api/line_items/line_item", line_item: line_item)
