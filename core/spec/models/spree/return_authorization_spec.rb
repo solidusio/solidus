@@ -101,6 +101,18 @@ describe Spree::ReturnAuthorization, type: :model do
     end
   end
 
+  describe "#amount" do
+    let(:return_item1) { create(:return_item, amount: 10) }
+    let(:return_item2) { create(:return_item, amount: 5) }
+    let(:return_authorization) { create(:return_authorization, return_items: [return_item1, return_item2]) }
+
+    subject { return_authorization.amount }
+
+    it "sums the return items' amounts", skip: "failing test to demonstrate bug" do
+      expect(subject).to eq(15)
+    end
+  end
+
   describe "#refundable_amount" do
     let(:line_item_price) { 5.0 }
     let(:line_item_count) { return_authorization.order.line_items.count }
