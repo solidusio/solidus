@@ -14,7 +14,7 @@
     </thead>
     <tbody>
       <% variant_prices.each do |price| %>
-        <tr id="<%= spree_dom_id price %>" data-hook="prices_row" class="<%= "deleted" if price.deleted? %> <%= cycle('odd', 'even')%>">
+        <tr id="<%= spree_dom_id price %>" data-hook="prices_row" class="<%= "deleted" if price.deleted? %>">
           <td><%= price.variant.descriptive_name %></td>
           <td><%= price.display_country %></td>
           <td><%= price.currency %></td>

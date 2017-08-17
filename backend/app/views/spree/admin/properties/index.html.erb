@@ -59,7 +59,7 @@
   </thead>
   <tbody>
     <% @properties.each do |property| %>
-      <tr id="<%= spree_dom_id property %>" data-hook="listing_properties_row" class="<%= cycle('odd', 'even')%>">
+      <tr id="<%= spree_dom_id property %>" data-hook="listing_properties_row">
         <td style="padding-left:1em"><%= property.name %></td>
         <td style="padding-left:1em"><%= property.presentation %></td>
         <td class="actions">

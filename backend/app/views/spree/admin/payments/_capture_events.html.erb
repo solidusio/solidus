@@ -9,7 +9,7 @@
     </thead>
     <tbody>
       <% @payment.capture_events.each do |capture_event| %>
-        <tr id="<%= dom_id(capture_event) %>" data-hook="capture_events_row" class="<%= cycle('odd', 'even')%>">
+        <tr id="<%= dom_id(capture_event) %>" data-hook="capture_events_row">
           <td><%= pretty_time(capture_event.created_at) %></td>
           <td><%= capture_event.display_amount %></td>
         </tr>

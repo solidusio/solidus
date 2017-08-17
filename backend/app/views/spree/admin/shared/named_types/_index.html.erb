@@ -31,7 +31,7 @@
     </thead>
     <tbody>
       <% @collection.each do |named_type| %>
-        <tr id="<%= spree_dom_id named_type %>" data-hook="named_type_row" class="<%= cycle('odd', 'even')%>">
+        <tr id="<%= spree_dom_id named_type %>" data-hook="named_type_row">
           <td>
             <%= named_type.name %>
           </td>

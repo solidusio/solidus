@@ -14,7 +14,7 @@
   </thead>
   <tbody>
     <% refunds.each do |refund| %>
-      <tr id="<%= dom_id(refund) %>" data-hook="refunds_row" class="<%= cycle('odd', 'even', name: 'refund_table_cycle')%>">
+      <tr id="<%= dom_id(refund) %>" data-hook="refunds_row">
         <td><%= pretty_time(refund.created_at) %></td>
         <td><%= refund.payment.identifier %></td>
         <td class="amount"><%= refund.display_amount %></td>
