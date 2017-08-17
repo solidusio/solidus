@@ -50,6 +50,10 @@ table {
         background-color: transparent;
         border: 0 none;
         padding: 0 !important;
+
+        &:hover {
+          background-color: transparent;
+        }
       }
 
       .fa-envelope-alt, .fa-eye-open {
@@ -69,7 +73,8 @@ table {
         color: theme-color("warning");
       }
 
-      .fa-edit:hover, .fa-capture:hover, .fa-ok:hover, .fa-plus:hover, .fa-save:hover {
+      .fa-edit:hover, .fa-capture:hover, .fa-ok:hover, .fa-plus:hover,
+      .fa-save:hover, .fa-arrows-h:hover, .fa-check:hover {
         color: theme-color("success");
       }
 
