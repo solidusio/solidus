@@ -36,6 +36,11 @@ module Spree
         end
       end
 
+      def admin_menu(handle)
+        @admin_menu_section = handle.split('/').first
+        @admin_menu_handle = handle
+      end
+
       # Make an admin tab that coveres one or more resources supplied by symbols
       # Option hash may follow. Valid options are
       #   * :label to override link text, otherwise based on the first resource name (translated)
