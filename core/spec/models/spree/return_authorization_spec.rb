@@ -108,7 +108,7 @@ describe Spree::ReturnAuthorization, type: :model do
 
     subject { return_authorization.amount }
 
-    it "sums the return items' amounts", skip: "failing test to demonstrate bug" do
+    it "sums the return items' amounts" do
       expect(subject).to eq(15)
     end
   end

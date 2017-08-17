@@ -38,7 +38,7 @@ module Spree
     end
 
     def amount
-      return_item.sum(:amount)
+      return_items.sum(:amount)
     end
 
     def currency
