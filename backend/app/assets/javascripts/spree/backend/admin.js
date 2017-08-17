@@ -69,18 +69,6 @@ var handle_date_picker_fields = function(){
 
 $(document).ready(function(){
   handle_date_picker_fields();
-  $(".observe_field").on('change', function() {
-    var target = $(this).data("update");
-    $(target).hide();
-    Spree.ajax({ dataType: 'html',
-             url: $(this).data("base-url")+encodeURIComponent($(this).val()),
-             type: 'get',
-             success: function(data){
-               $(target).html(data);
-               $(target).show();
-             }
-    });
-  });
   var uniqueId = 1;
   $('.spree_add_fields').click(function() {
     var target = $(this).data("target");
