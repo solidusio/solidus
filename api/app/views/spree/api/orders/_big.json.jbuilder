@@ -22,10 +22,9 @@ json.payments(order.payments) do |payment|
   if payment.source
     json.source do
       json.(payment.source, *payment_source_attributes)
+
       if @current_user_roles.include?("admin")
-        json.(payment.source, *(payment_source_attributes + [:gateway_customer_profile_id, :gateway_payment_profile_id]))
-      else
-        json.(payment.source, *payment_source_attributes)
+        json.(payment.source, :gateway_customer_profile_id, :gateway_payment_profile_id)
       end
     end
   end
