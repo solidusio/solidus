@@ -74,10 +74,10 @@
         <tr class="show-method total">
           <% if rate = shipment.selected_shipping_rate %>
             <td colspan="4">
-              <strong><%= rate.name %></strong>
+              <%= rate.name %>
             </td>
             <td class="total">
-              <span><%= shipment.display_cost %></span>
+              <%= shipment.display_cost %>
             </td>
           <% else %>
             <td colspan='5'><%= Spree.t(:no_shipping_method_selected) %></td>
@@ -116,7 +116,7 @@
           <% if shipment.tracking.present? %>
             <strong><%= Spree::Shipment.human_attribute_name(:tracking) %>:</strong> <%= shipment.tracking %>
           <% else %>
-            <%= Spree.t(:no_tracking_present) %>
+            <i><%= Spree.t(:no_tracking_present) %></i>
           <% end %>
         </td>
         <td class="actions">
