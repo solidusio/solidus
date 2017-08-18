@@ -25,12 +25,12 @@
 
   <table class="stock-contents shipment index" data-hook="stock-contents">
     <colgroup>
-      <col style="width: 10%;" />
+      <col style="width: 17.5%;" />
       <col style="width: 30%;" />
+      <col style="width: 12.5%;" />
       <col style="width: 15%;" />
       <col style="width: 15%;" />
-      <col style="width: 15%;" />
-      <col style="width: 15%;" />
+      <col style="width: 10%;" />
     </colgroup>
 
     <thead>
@@ -48,17 +48,11 @@
 
       <% unless shipment.shipped? %>
         <tr class="edit-method hidden total">
-          <td colspan="5">
-            <div class="row">
-              <div class="col-12">
-                <div class="field">
-                  <%= label_tag 'selected_shipping_rate_id', Spree::ShippingMethod.model_name.human %>
-                  <%= select_tag :selected_shipping_rate_id,
-                        options_for_select(shipment.shipping_rates.map {|sr| ["#{sr.name} #{sr.display_price}", sr.id] }, shipment.selected_shipping_rate_id),
-                        {class: 'custom-select fullwidth', data: {'shipment-number' => shipment.number } } %>
-                </div>
-              </div>
-            </div>
+          <th><%= Spree::ShippingMethod.model_name.human %></th>
+          <td colspan="4">
+            <%= select_tag :selected_shipping_rate_id,
+              options_for_select(shipment.shipping_rates.map {|sr| ["#{sr.name} #{sr.display_price}", sr.id] }, shipment.selected_shipping_rate_id),
+              {class: 'custom-select fullwidth', data: {'shipment-number' => shipment.number } } %>
           </td>
           <td class="actions">
             <% if can? :update, shipment %>
@@ -73,14 +67,15 @@
 
         <tr class="show-method total">
           <% if rate = shipment.selected_shipping_rate %>
-            <td colspan="4">
+            <th><%= Spree::ShippingMethod.model_name.human %></th>
+            <td colspan="3">
               <%= rate.name %>
             </td>
             <td class="total">
               <%= shipment.display_cost %>
             </td>
           <% else %>
-            <td colspan='5'><%= Spree.t(:no_shipping_method_selected) %></td>
+            <td colspan="5"><%= Spree.t(:no_shipping_method_selected) %></td>
           <% end %>
 
           <td class="actions">
@@ -91,8 +86,8 @@
         </tr>
 
       <tr class="edit-tracking hidden total">
-        <td colspan="5">
-          <label><%= Spree::Shipment.human_attribute_name(:tracking) %>:</label>
+        <th><%= Spree::Shipment.human_attribute_name(:tracking) %></th>
+        <td colspan="4">
           <%= text_field_tag :tracking, shipment.tracking, id: nil %>
         </td>
         <td class="actions">
@@ -112,9 +107,10 @@
       <% end %>
 
       <tr class="show-tracking total">
-        <td colspan="5" class="tracking-value">
+        <th><%= Spree::Shipment.human_attribute_name(:tracking) %></th>
+        <td colspan="4" class="tracking-value">
           <% if shipment.tracking.present? %>
-            <strong><%= Spree::Shipment.human_attribute_name(:tracking) %>:</strong> <%= shipment.tracking %>
+            <%= shipment.tracking %>
           <% else %>
             <i><%= Spree.t(:no_tracking_present) %></i>
           <% end %>
