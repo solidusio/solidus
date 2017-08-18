@@ -62,9 +62,9 @@
           </td>
           <td class="actions">
             <% if can? :update, shipment %>
-              <%= button_tag '', class: 'save-method fa fa-check no-text with-ti, type: :button',
+              <%= button_tag '', class: 'save-method fa fa-check no-text with-tip',
                 data: {'shipment-number' => shipment.number, action: 'save'}, title: Spree.t('actions.save') %>
-              <%= button_tag '', class: 'cancel-method fa fa-cancel no-text with-ti, type: :button',
+              <%= button_tag '', class: 'cancel-method fa fa-cancel no-text with-tip',
                 data: {action: 'cancel'}, title: Spree.t('actions.cancel') %>
             <% end %>
           </td>
