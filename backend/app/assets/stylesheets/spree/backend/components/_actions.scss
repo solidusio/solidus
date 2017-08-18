@@ -17,14 +17,6 @@ table tbody tr {
     }
   }
 
-  &.before-highlight {
-    @each $action in $actions {
-      &.action-#{$action} td {
-        border-bottom-color: get-value($actions, $actions-brd-colors, $action);
-      }
-    }
-  }
-
   td.actions {
     button {
       cursor: pointer;
