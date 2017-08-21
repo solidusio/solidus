@@ -160,6 +160,14 @@ describe Spree::Refund, type: :model do
         }
       end
     end
+
+    context 'when payment is not present' do
+      let(:refund) { build(:refund, payment: nil) }
+
+      it 'returns a validation error' do
+        expect { refund.save! }.to raise_error 'Validation failed: Payment can\'t be blank'
+      end
+    end
   end
 
   describe 'total_amount_reimbursed_for' do
