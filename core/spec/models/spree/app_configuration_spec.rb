@@ -13,6 +13,9 @@ describe Spree::AppConfiguration, type: :model do
   it "should be available as Spree::Config for legacy access" do
     expect(Spree::Config.instance).to be_a Spree::AppConfiguration
   end
+
+  it 'should be available for use in a block when `Spree.config` is called' do
+    expect { |some_block| Spree.config(&some_block) }.to yield_with_args Spree::AppConfiguration
   end
 
   it "uses base searcher class by default" do
