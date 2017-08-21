@@ -284,7 +284,12 @@ class Spree::StoreCredit < Spree::PaymentSource
 
   def associate_credit_type
     unless type_id
-      credit_type_name = category.try(:non_expiring?) ? Spree.t("store_credit.non_expiring") : Spree.t("store_credit.expiring")
+      credit_type_name =
+        if category.try(:non_expiring?)
+          Spree::StoreCreditType::NON_EXPIRING
+        else
+          Spree::StoreCreditType::EXPIRING
+        end
       self.credit_type = Spree::StoreCreditType.find_by(name: credit_type_name)
     end
   end

@@ -11,7 +11,7 @@ class CreateStoreCreditTypes < ActiveRecord::Migration[4.2]
     add_index :spree_store_credits, :type_id
     add_index :spree_store_credit_types, :priority
 
-    Spree::StoreCreditType.create_with(priority: 1).find_or_create_by!(name: Spree.t("store_credit.expiring"))
-    Spree::StoreCreditType.create_with(priority: 2).find_or_create_by!(name: Spree.t("store_credit.non_expiring"))
+    Spree::StoreCreditType.create_with(priority: 1).find_or_create_by!(name: Spree::StoreCreditType::EXPIRING)
+    Spree::StoreCreditType.create_with(priority: 2).find_or_create_by!(name: Spree::StoreCreditType::NON_EXPIRING)
   end
 end

@@ -5,7 +5,7 @@ FactoryGirl.define do
   end
 
   factory :secondary_credit_type, class: Spree::StoreCreditType do
-    name      { "Non-expiring" }
+    name      { Spree::StoreCreditType::NON_EXPIRING }
     priority  { "2" }
   end
 end

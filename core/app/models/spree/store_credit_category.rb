@@ -1,6 +1,6 @@
 class Spree::StoreCreditCategory < Spree::Base
   class_attribute :non_expiring_credit_types
-  self.non_expiring_credit_types = [Spree.t("store_credit.non_expiring")]
+  self.non_expiring_credit_types = [Spree::StoreCreditType::NON_EXPIRING]
 
   class_attribute :reimbursement_category_name
   self.reimbursement_category_name = Spree.t("store_credit_category.default")
