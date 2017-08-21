@@ -12,6 +12,7 @@ require 'paranoia'
 require 'ransack'
 require 'state_machines-activerecord'
 
+require 'spree/config'
 require 'spree/deprecation'
 
 # This is required because ActiveModel::Validations#invalid? conflicts with the
