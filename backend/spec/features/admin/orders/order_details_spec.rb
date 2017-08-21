@@ -90,7 +90,7 @@ describe "Order Details", type: :feature, js: true do
         click_icon :check
 
         expect(page).not_to have_css("input[name=tracking]")
-        expect(page).to have_content("Tracking: FOOBAR")
+        expect(page).to have_content("Tracking Number FOOBAR")
       end
 
       it "can change the shipping method" do
@@ -99,7 +99,7 @@ describe "Order Details", type: :feature, js: true do
         within("table.index tr.show-method") do
           click_icon :edit
         end
-        select "UPS Ground $100.00", from: "Shipping Method"
+        select "UPS Ground $100.00", from: "selected_shipping_rate_id"
         click_icon :check
 
         expect(page).not_to have_css('#selected_shipping_rate_id')
@@ -511,7 +511,7 @@ describe "Order Details", type: :feature, js: true do
       within("table.index tr.show-method") do
         click_icon :edit
       end
-      select "UPS Ground $100.00", from: "Shipping Method"
+      select "UPS Ground $100.00", from: "selected_shipping_rate_id"
       click_icon :check
 
       expect(page).not_to have_css('#selected_shipping_rate_id')

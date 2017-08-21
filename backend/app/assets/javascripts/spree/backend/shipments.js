@@ -332,10 +332,8 @@ var ShipmentEditView = Backbone.View.extend({
 
       var show = _this.$('tr.show-tracking');
       show.toggle()
-          .find('.tracking-value')
-          .html($("<strong>")
-          .html(Spree.translations.tracking + ": "))
-          .append(document.createTextNode(data.tracking));
+        .find('.tracking-value')
+        .text(data.tracking);
     });
   }
 });
