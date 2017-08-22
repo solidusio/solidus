@@ -1,8 +1,10 @@
 json.cache! [I18n.locale, shipment] do
   json.(shipment, *shipment_attributes)
-  if shipment.selected_shipping_rate
-    json.selected_shipping_rate do
+  json.selected_shipping_rate do
+    if shipment.selected_shipping_rate
       json.partial!("spree/api/shipping_rates/shipping_rate", shipping_rate: shipment.selected_shipping_rate)
+    else
+      json.nil!
     end
   end
   json.inventory_units(shipment.inventory_units) do |inventory_unit|
@@ -24,7 +26,11 @@ json.cache! [I18n.locale, shipment] do
   json.order do
     json.partial!("spree/api/orders/order", order: shipment.order)
     json.bill_address do
-      json.partial!("spree/api/addresses/address", address: shipment.order.billing_address)
+      if shipment.order.billing_address
+        json.partial!("spree/api/addresses/address", address: shipment.order.billing_address)
+      else
+        json.nil!
+      end
     end
     json.ship_address do
       json.partial!("spree/api/addresses/address", address: shipment.order.shipping_address)

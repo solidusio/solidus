@@ -1,7 +1,15 @@
 json.(stock_location, *stock_location_attributes)
-if stock_location.country
-  json.country { json.(stock_location.country, *country_attributes) }
+json.country do
+  if stock_location.country
+    json.(stock_location.country, *country_attributes)
+  else
+    json.nil!
+  end
 end
-if stock_location.state
-  json.state { json.(stock_location.state, *state_attributes) }
+json.state do
+  if stock_location.state
+    json.(stock_location.state, *state_attributes)
+  else
+    json.nil!
+  end
 end

@@ -5,9 +5,11 @@ json.cache! [I18n.locale, shipment] do
   json.shipping_rates(shipment.shipping_rates) do |shipping_rate|
     json.partial!("spree/api/shipping_rates/shipping_rate", shipping_rate: shipping_rate)
   end
-  if shipment.selected_shipping_rate
-    json.selected_shipping_rate do
+  json.selected_shipping_rate do
+    if shipment.selected_shipping_rate
       json.partial!("spree/api/shipping_rates/shipping_rate", shipping_rate: shipment.selected_shipping_rate)
+    else
+      json.nil!
     end
   end
   json.shipping_methods(shipment.shipping_methods) do |shipping_method|
