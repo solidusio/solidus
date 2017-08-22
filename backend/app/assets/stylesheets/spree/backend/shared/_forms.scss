@@ -117,19 +117,19 @@ span.info {
   }
 
   ul {
-    border-top: 1px solid $color-border;
     list-style: none;
-    padding-top: 5px;
+    margin: 5px 0;
+    padding-left: 0;
 
     li {
       display: inline-block;
       padding-right: 10px;
 
-
       label {
         font-weight: normal;
         text-transform: none;
       }
+
       &.white-space-nowrap {
         white-space: nowrap;
       }
