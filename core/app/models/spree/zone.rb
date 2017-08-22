@@ -8,7 +8,7 @@ module Spree
       has_many :states, source_type: "Spree::State"
     end
 
-    has_many :shipping_method_zones
+    has_many :shipping_method_zones, dependent: :destroy
     has_many :shipping_methods, through: :shipping_method_zones
 
     validates :name, presence: true, uniqueness: { allow_blank: true }

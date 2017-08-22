@@ -16,7 +16,7 @@ module Spree
     has_many :shipments, through: :shipping_rates
     has_many :cartons, inverse_of: :shipping_method
 
-    has_many :shipping_method_zones
+    has_many :shipping_method_zones, dependent: :destroy
     has_many :zones, through: :shipping_method_zones
 
     belongs_to :tax_category, -> { with_deleted }, class_name: 'Spree::TaxCategory'
