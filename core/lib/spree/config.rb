@@ -17,7 +17,15 @@ module Spree
     end
 
     def self.method_missing(method, *args, &block)
-      Spree::Config.instance.send(method, *args, &block)
+      if Spree::Config.instance.respond_to?(method, true)
+        Spree::Config.instance.send(method, *args, &block)
+      else
+        super
+      end
+    end
+
+    def self.respond_to_missing?(method, include_private = true)
+      Spree::Config.instance.respond_to?(method, include_private) || super
     end
   end
 end
