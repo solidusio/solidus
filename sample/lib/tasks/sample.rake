@@ -1,4 +1,3 @@
-require 'ffaker'
 require 'pathname'
 require 'spree/sample'
 

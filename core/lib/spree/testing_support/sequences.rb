@@ -1,5 +1,10 @@
 require 'factory_girl'
-require 'ffaker'
+
+begin
+  require 'ffaker'
+rescue LoadError
+  abort "Solidus factories require FFaker. Please add `ffaker` to your `Gemfile`."
+end
 
 FactoryGirl.define do
   sequence(:random_code)        { FFaker::Lorem.characters(10) }
