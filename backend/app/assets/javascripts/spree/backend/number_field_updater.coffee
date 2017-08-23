@@ -24,7 +24,7 @@ class NumberFieldUpdater
     $("#number-update-#{id} span").css('display', cssDisplay)
 
   toggleForm = (id, show) ->
-    toggleButtonVisibility('void', id, show)
+    toggleButtonVisibility('cancel', id, show)
     toggleButtonVisibility('check', id, show)
     cssDisplay = if show then 'block' else 'none'
     $("#number-update-#{id} input[type='number']").css('display', cssDisplay)

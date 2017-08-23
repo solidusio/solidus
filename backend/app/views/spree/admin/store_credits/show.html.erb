@@ -67,7 +67,7 @@
     <td class='actions'>
       <% if can?(:update, @store_credit) %>
         <%= link_to '', '#', class: 'js-save-memo fa fa-check no-text with-tip', data: { user_id: @user.id, store_credit_id: @store_credit.id, action: 'save' }, title: Spree.t('actions.save') %>
-        <%= link_to '', '#', class: 'js-cancel-memo fa fa-void no-text with-tip', data: { action: 'void' }, title: Spree.t('actions.cancel') %>
+        <%= link_to '', '#', class: 'js-cancel-memo fa fa-cancel no-text with-tip', data: { action: 'cancel' }, title: Spree.t('actions.cancel') %>
       <% end %>
     </td>
   </tr>
