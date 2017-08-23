@@ -256,20 +256,14 @@ module Spree
     preference :can_restrict_stock_management, :boolean, default: false
 
     # searcher_class allows spree extension writers to provide their own Search class
-    attr_writer :searcher_class
-    def searcher_class
-      @searcher_class ||= Spree::Core::Search::Base
-    end
+    class_name_attribute :searcher_class, default: 'Spree::Core::Search::Base'
 
     # Allows implementing custom pricing for variants
     # @!attribute [rw] variant_price_selector_class
     # @see Spree::Variant::PriceSelector
     # @return [Class] an object that conforms to the API of
     #   the standard variant price selector class Spree::Variant::PriceSelector.
-    attr_writer :variant_price_selector_class
-    def variant_price_selector_class
-      @variant_price_selector_class ||= Spree::Variant::PriceSelector
-    end
+    class_name_attribute :variant_price_selector_class, default: 'Spree::Variant::PriceSelector'
 
     # Shortcut for getting the variant price selector's pricing options class
     #
@@ -283,31 +277,16 @@ module Spree
       pricing_options_class.new
     end
 
-    attr_writer :variant_search_class
-    def variant_search_class
-      @variant_search_class ||= Spree::Core::Search::Variant
-    end
+    class_name_attribute :variant_search_class, default: 'Spree::Core::Search::Variant'
 
     # promotion_chooser_class allows extensions to provide their own PromotionChooser
-    attr_writer :promotion_chooser_class
-    def promotion_chooser_class
-      @promotion_chooser_class ||= Spree::PromotionChooser
-    end
+    class_name_attribute :promotion_chooser_class, default: 'Spree::PromotionChooser'
 
-    attr_writer :shipping_rate_sorter_class
-    def shipping_rate_sorter_class
-      @shipping_rate_sorter_class ||= Spree::Stock::ShippingRateSorter
-    end
+    class_name_attribute :shipping_rate_sorter_class, default: 'Spree::Stock::ShippingRateSorter'
 
-    attr_writer :shipping_rate_selector_class
-    def shipping_rate_selector_class
-      @shipping_rate_selector_class ||= Spree::Stock::ShippingRateSelector
-    end
+    class_name_attribute :shipping_rate_selector_class, default: 'Spree::Stock::ShippingRateSelector'
 
-    attr_writer :shipping_rate_taxer_class
-    def shipping_rate_taxer_class
-      @shipping_rate_taxer_class ||= Spree::Tax::ShippingRateTaxer
-    end
+    class_name_attribute :shipping_rate_taxer_class, default: 'Spree::Tax::ShippingRateTaxer'
 
     # Allows providing your own class for calculating taxes on a shipping rate.
     #
@@ -315,10 +294,7 @@ module Spree
     # @return [Class] a class with the same public interfaces as
     #   Spree::TaxCalculator::ShippingRate
     # @api experimental
-    attr_writer :shipping_rate_tax_calculator_class
-    def shipping_rate_tax_calculator_class
-      @shipping_rate_tax_calculator_class ||= Spree::TaxCalculator::ShippingRate
-    end
+    class_name_attribute :shipping_rate_tax_calculator_class, default: 'Spree::TaxCalculator::ShippingRate'
 
     # Allows providing your own Mailer for shipped cartons.
     #
@@ -326,20 +302,14 @@ module Spree
     # @return [ActionMailer::Base] an object that responds to "shipped_email"
     #   (e.g. an ActionMailer with a "shipped_email" method) with the same
     #   signature as Spree::CartonMailer.shipped_email.
-    attr_writer :carton_shipped_email_class
-    def carton_shipped_email_class
-      @carton_shipped_email_class ||= Spree::CartonMailer
-    end
+    class_name_attribute :carton_shipped_email_class, default: 'Spree::CartonMailer'
 
     # Allows providing your own class for merging two orders.
     #
     # @!attribute [rw] order_merger_class
     # @return [Class] a class with the same public interfaces
     #   as Spree::OrderMerger.
-    attr_writer :order_merger_class
-    def order_merger_class
-      @order_merger_class ||= Spree::OrderMerger
-    end
+    class_name_attribute :order_merger_class, default: 'Spree::OrderMerger'
 
     # Allows providing your own class for adding default payments to a user's
     # order from their "wallet".
@@ -347,10 +317,7 @@ module Spree
     # @!attribute [rw] default_payment_builder_class
     # @return [Class] a class with the same public interfaces as
     #   Spree::Wallet::DefaultPaymentBuilder.
-    attr_writer :default_payment_builder_class
-    def default_payment_builder_class
-      @default_payment_builder_class ||= Spree::Wallet::DefaultPaymentBuilder
-    end
+    class_name_attribute :default_payment_builder_class, default: 'Spree::Wallet::DefaultPaymentBuilder'
 
     # Allows providing your own class for adding payment sources to a user's
     # "wallet" after an order moves to the complete state.
@@ -358,10 +325,7 @@ module Spree
     # @!attribute [rw] add_payment_sources_to_wallet_class
     # @return [Class] a class with the same public interfaces
     #   as Spree::Wallet::AddPaymentSourcesToWallet.
-    attr_writer :add_payment_sources_to_wallet_class
-    def add_payment_sources_to_wallet_class
-      @add_payment_sources_to_wallet_class ||= Spree::Wallet::AddPaymentSourcesToWallet
-    end
+    class_name_attribute :add_payment_sources_to_wallet_class, default: 'Spree::Wallet::AddPaymentSourcesToWallet'
 
     # Allows providing your own class for calculating taxes on an order.
     #
@@ -371,10 +335,7 @@ module Spree
     # @return [Class] a class with the same public interfaces as
     #   Spree::Tax::OrderAdjuster
     # @api experimental
-    attr_writer :tax_adjuster_class
-    def tax_adjuster_class
-      @tax_adjuster_class ||= Spree::Tax::OrderAdjuster
-    end
+    class_name_attribute :tax_adjuster_class, default: 'Spree::Tax::OrderAdjuster'
 
     # Allows providing your own class for calculating taxes on an order.
     #
@@ -382,20 +343,14 @@ module Spree
     # @return [Class] a class with the same public interfaces as
     #   Spree::TaxCalculator::Default
     # @api experimental
-    attr_writer :tax_calculator_class
-    def tax_calculator_class
-      @tax_calculator_class ||= Spree::TaxCalculator::Default
-    end
+    class_name_attribute :tax_calculator_class, default: 'Spree::TaxCalculator::Default'
 
     # Allows providing your own class for choosing which store to use.
     #
     # @!attribute [rw] current_store_selector_class
     # @return [Class] a class with the same public interfaces as
     #   Spree::CurrentStoreSelector
-    attr_writer :current_store_selector_class
-    def current_store_selector_class
-      @current_store_selector_class ||= Spree::StoreSelector::ByServerName
-    end
+    class_name_attribute :current_store_selector_class, default: 'Spree::StoreSelector::ByServerName'
 
     # Allows providing your own class instance for generating order numbers.
     #

@@ -80,5 +80,24 @@ module Spree::Preferences
       alias_method name.to_s, "preferred_#{name}"
       alias_method "#{name}=", "preferred_#{name}="
     end
+
+    def self.class_name_attribute(name, default:)
+      ivar = :"@#{name}"
+
+      define_method("#{name}=") do |class_name|
+        # If this is a named class constant, we should store it as a string to
+        # allow code reloading.
+        class_name = class_name.name if class_name.is_a?(Class) && class_name.name
+
+        instance_variable_set(ivar, class_name)
+      end
+
+      define_method(name) do
+        class_name = instance_variable_get(ivar)
+        class_name ||= default
+        class_name = class_name.constantize if class_name.is_a?(String)
+        class_name
+      end
+    end
   end
 end
