@@ -1180,7 +1180,7 @@ describe Spree::Order, type: :model do
       end
 
       context 'there is store credit in another currency' do
-        let(:order) { create(:order_with_totals, user: user, line_items_price: order_total).tap(&:recalculate) }
+        let(:order) { create(:order_with_totals, user: user, line_items_price: order_total).tap(&:update!) }
         let!(:store_credit_usd) { create(:store_credit, user: user, amount: 1, currency: 'USD') }
         let!(:store_credit_gbp) { create(:store_credit, user: user, amount: 1, currency: 'GBP') }
         let(:user) { create(:user) }
@@ -1294,65 +1294,43 @@ describe Spree::Order, type: :model do
     end
 
     describe "#covered_by_store_credit" do
-      context "order doesn't have an associated user" do
-        subject { create(:order, user: nil) }
+      subject do
+        order.covered_by_store_credit
+      end
 
-        it "returns false" do
-          expect(subject.covered_by_store_credit).to be false
-        end
+      let(:order) { create(:order_with_line_items, user: user, store: store) }
+
+      context "order doesn't have an associated user" do
+        let(:user) { nil }
+        it { is_expected.to eq(false) }
       end
 
       context "order has an associated user" do
-        let(:user) { create(:user) }
-
-        subject    { create(:order, user: user) }
-
         context "user has enough store credit to pay for the order" do
-          before do
-            allow(user).to receive_messages(total_available_store_credit: 10.0)
-            allow(subject).to receive_messages(total: 5.0)
-          end
-
-          it "returns true" do
-            expect(subject.covered_by_store_credit).to be true
-          end
+          let!(:credit) { create(:store_credit, user: user, amount: 1000) }
+          it { is_expected.to eq(true) }
         end
 
         context "user does not have enough store credit to pay for the order" do
-          before do
-            allow(user).to receive_messages(total_available_store_credit: 0.0)
-            allow(subject).to receive_messages(total: 5.0)
-          end
-
-          it "returns false" do
-            expect(subject.covered_by_store_credit).to be false
-          end
+          let!(:credit) { create(:store_credit, user: user, amount: 1) }
+          it { is_expected.to eq(false) }
         end
       end
     end
 
     describe "#total_available_store_credit" do
-      context "order does not have an associated user" do
-        subject { create(:order, user: nil) }
+      subject do
+        order.total_available_store_credit
+      end
 
-        it "returns 0" do
-          expect(subject.total_available_store_credit).to be_zero
-        end
+      context "order does not have an associated user" do
+        let(:user) { nil }
+        it { is_expected.to eq(0) }
       end
 
       context "order has an associated user" do
-        let(:user)                   { create(:user) }
-        let(:available_store_credit) { 25.0 }
-
-        subject { create(:order, user: user) }
-
-        before do
-          allow(user).to receive_messages(total_available_store_credit: available_store_credit)
-        end
-
-        it "returns the user's available store credit" do
-          expect(subject.total_available_store_credit).to eq available_store_credit
-        end
+        let!(:credit) { create(:store_credit, user: user, amount: 25) }
+        it { is_expected.to eq(25) }
       end
     end
 
