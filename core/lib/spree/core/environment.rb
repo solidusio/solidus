@@ -9,8 +9,10 @@ module Spree
       attr_accessor :calculators, :preferences, :promotions
 
       def initialize
+        require 'spree/config'
+
         @calculators = Calculators.new
-        @preferences = Spree::AppConfiguration.new
+        @preferences = Spree::Config
         @promotions = Spree::Promo::Environment.new
       end
     end
