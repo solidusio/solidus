@@ -12,6 +12,7 @@ module Spree
         can :manage, Spree::Taxonomy
         can :manage, Spree::Taxon
         can :manage, Spree::Classification
+        can :manage, Spree::Price
       end
     end
   end
