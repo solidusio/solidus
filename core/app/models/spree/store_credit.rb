@@ -66,7 +66,6 @@ class Spree::StoreCredit < Spree::PaymentSource
       })
       authorization_code
     else
-      errors.add(:base, Spree.t('store_credit.insufficient_authorized_amount'))
       false
     end
   end
