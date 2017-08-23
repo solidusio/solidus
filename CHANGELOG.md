@@ -27,6 +27,8 @@
 
 - Remove Skeleton Grid CSS from the admin and complete its transition to Bootstrap. [\#2127](https://github.com/solidusio/solidus/pull/2127) ([graygilmore](https://github.com/graygilmore))
 
+- Move preferences namespace to /lib. Initializes the Spree::Config object in its own file. [\#2178](https://github.com/solidusio/solidus/pull/2178) ([cbrunsdon](https://github.com/cbrunsdon))
+
 ## Solidus 2.3.0 (unreleased)
 
 - Rails 5.1 [\#1895](https://github.com/solidusio/solidus/pull/1895) ([jhawthorn](https://github.com/jhawthorn))
