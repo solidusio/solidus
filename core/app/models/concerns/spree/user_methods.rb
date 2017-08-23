@@ -30,8 +30,8 @@ module Spree
 
       include Spree::RansackableAttributes unless included_modules.include?(Spree::RansackableAttributes)
 
-      self.whitelisted_ransackable_associations = %w[addresses]
-      self.whitelisted_ransackable_attributes = %w[id email]
+      self.whitelisted_ransackable_associations = %w[addresses spree_roles]
+      self.whitelisted_ransackable_attributes = %w[id email created_at]
     end
 
     def wallet

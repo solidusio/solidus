@@ -84,6 +84,7 @@ en:
         email: Email
         password: Password
         password_confirmation: Password Confirmation
+        spree_roles: Roles
       spree/line_item:
         description: Item Description
         name: Name
@@ -380,6 +381,8 @@ en:
         email: Email
         password: Password
         password_confirmation: Password Confirmation
+        spree_roles: Roles
+        lifetime_value: Total spent
       spree/variant:
         cost_currency: Cost Currency
         cost_price: Cost Price
