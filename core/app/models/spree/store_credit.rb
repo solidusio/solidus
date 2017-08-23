@@ -250,7 +250,7 @@ class Spree::StoreCredit < Spree::PaymentSource
     event.update_attributes!({
       amount: action_amount || amount,
       authorization_code: action_authorization_code || event.authorization_code || generate_authorization_code,
-      user_total_amount: user.total_available_store_credit,
+      user_total_amount: user.available_store_credit_total(currency: currency),
       originator: action_originator,
       update_reason: update_reason
     })
