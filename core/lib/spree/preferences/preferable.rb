@@ -118,9 +118,9 @@ module Spree
           value.to_i
         when :boolean
           if !value ||
-              value == 0 ||
-              value =~ /\A(f|false|0)\Z/i ||
-              (value.respond_to?(:empty?) && value.empty?)
+             value == 0 ||
+             value =~ /\A(f|false|0)\Z/i ||
+             (value.respond_to?(:empty?) && value.empty?)
             false
           else
             true
