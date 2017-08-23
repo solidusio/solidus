@@ -27,6 +27,7 @@ module Spree
         create(:state)
         get spree.api_states_path, params: { page: 2, per_page: 1 }
 
+        expect(json_response).to be_paginated
         expect(json_response["states"].size).to eq(1)
         expect(json_response["pages"]).to eq(2)
         expect(json_response["current_page"]).to eq(2)
