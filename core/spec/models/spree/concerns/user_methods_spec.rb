@@ -38,4 +38,63 @@ describe Spree::UserMethods do
       it { is_expected.to be_nil }
     end
   end
+
+  describe '#available_store_credit_total' do
+    subject do
+      test_user.available_store_credit_total(currency: 'USD')
+    end
+
+    context 'when the user does not have any credit' do
+      it { is_expected.to eq(0) }
+    end
+
+    context 'when the user has credits' do
+      let!(:credit_1) { create(:store_credit, user: test_user, amount: 100) }
+      let!(:credit_2) { create(:store_credit, user: test_user, amount: 200) }
+
+      it { is_expected.to eq(100 + 200) }
+
+      context 'when some has been used' do
+        before { credit_1.update_attributes!(amount_used: 35) }
+
+        it { is_expected.to eq(100 + 200 - 35) }
+
+        context 'when some has been authorized' do
+          before { credit_1.update_attributes!(amount_authorized: 10) }
+
+          it { is_expected.to eq(100 + 200 - 35 - 10) }
+        end
+      end
+
+      context 'when some has been authorized' do
+        before { credit_1.update_attributes!(amount_authorized: 10) }
+
+        it { is_expected.to eq(100 + 200 - 10) }
+      end
+
+      context 'with credits of multiple currencies' do
+        let!(:credit_3) { create(:store_credit, user: test_user, amount: 400, currency: 'GBP') }
+
+        it 'separates the currencies' do
+          expect(test_user.available_store_credit_total(currency: 'USD')).to eq(100 + 200)
+          expect(test_user.available_store_credit_total(currency: 'GBP')).to eq(400)
+        end
+      end
+    end
+  end
+
+  describe '#display_available_store_credit_total' do
+    subject do
+      test_user.display_available_store_credit_total(currency: 'USD')
+    end
+
+    context 'without credit' do
+      it { is_expected.to eq(Spree::Money.new(0)) }
+    end
+
+    context 'with credit' do
+      let!(:credit) { create(:store_credit, user: test_user, amount: 100) }
+      it { is_expected.to eq(Spree::Money.new(100)) }
+    end
+  end
 end

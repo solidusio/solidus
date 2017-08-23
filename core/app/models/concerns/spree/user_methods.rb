@@ -66,5 +66,18 @@ module Spree
     def total_available_store_credit
       store_credits.reload.to_a.sum(&:amount_remaining)
     end
+
+    def available_store_credit_total(currency:)
+      store_credits.reload.to_a.
+        select { |c| c.currency == currency }.
+        sum(&:amount_remaining)
+    end
+
+    def display_available_store_credit_total(currency:)
+      Spree::Money.new(
+        available_store_credit_total(currency: currency),
+        currency: currency,
+      )
+    end
   end
 end
