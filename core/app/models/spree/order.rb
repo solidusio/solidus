@@ -612,7 +612,7 @@ module Spree
 
     def add_store_credit_payments
       return if user.nil?
-      return if payments.store_credits.checkout.empty? && user.total_available_store_credit.zero?
+      return if payments.store_credits.checkout.empty? && user.available_store_credit_total(currency: currency).zero?
 
       payments.store_credits.checkout.each(&:invalidate!)
 
@@ -623,10 +623,12 @@ module Spree
 
       remaining_total = outstanding_balance - authorized_total
 
-      if user.store_credits.any?
+      matching_store_credits = user.store_credits.where(currency: currency)
+
+      if matching_store_credits.any?
         payment_method = Spree::PaymentMethod::StoreCredit.first
 
-        user.store_credits.order_by_priority.each do |credit|
+        matching_store_credits.order_by_priority.each do |credit|
           break if remaining_total.zero?
           next if credit.amount_remaining.zero?
 
