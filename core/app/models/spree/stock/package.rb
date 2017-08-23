@@ -1,12 +1,14 @@
 module Spree
   module Stock
     class Package
-      attr_reader :stock_location, :contents
+      attr_reader :order, :stock_location, :contents
       attr_accessor :shipment
 
-      # @param stock_location [Spree::StockLocation] the stock location this package originates from
+      # @param order [Spree::Order] the order this package originates from
+      # @param stock_location [Spree::StockLocation] the stock location this package will be sent from
       # @param contents [Array<Spree::Stock::ContentItem>] the contents of this package
-      def initialize(stock_location, contents = [])
+      def initialize(order, stock_location, contents = [])
+        @order = order
         @stock_location = stock_location
         @contents = contents
       end
@@ -38,13 +40,6 @@ module Spree
       def remove(inventory_unit)
         item = find_item(inventory_unit)
         @contents -= [item] if item
-      end
-
-      # @return [Spree::Order] the order associated with this package
-      def order
-        # Fix regression that removed package.order.
-        # Find it dynamically through an inventory_unit.
-        contents.detect { |item| !!item.try(:line_item).try(:order) }.try(:line_item).try(:order)
       end
 
       # @return [Float] the summed weight of the contents of this package

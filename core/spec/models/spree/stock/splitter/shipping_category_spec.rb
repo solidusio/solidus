@@ -22,16 +22,16 @@ module Spree
         end
       end
 
-      let(:packer) { build(:stock_packer) }
+      let(:packer) { build(:stock_packer, order: order) }
 
       subject { described_class.new(packer) }
 
       it 'splits each package by shipping category' do
-        package1 = Package.new(packer.stock_location)
+        package1 = Package.new(order, packer.stock_location)
         4.times { package1.add inventory_unit1 }
         8.times { package1.add inventory_unit2 }
 
-        package2 = Package.new(packer.stock_location)
+        package2 = Package.new(order, packer.stock_location)
         6.times { package2.add inventory_unit1 }
         9.times { package2.add inventory_unit2, :backordered }
 
