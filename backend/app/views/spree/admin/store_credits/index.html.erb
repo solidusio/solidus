@@ -12,56 +12,57 @@
 <% end %>
 
 <% if @store_credits.any? %>
-<fieldset id='sc-current-balance'>
-  <legend>
-    <%= Spree.t("admin.store_credits.current_balance") %>
-    <%= @user.display_total_available_store_credit %>
-  </legend>
+  <fieldset id='sc-current-balance'>
+    <legend>
+      <%= Spree.t("admin.store_credits.current_balance") %>
+      <%= @user.display_total_available_store_credit %>
+    </legend>
 
-  <table id="sc-table">
-    <thead>
-      <th class="wrap-text"><%= Spree::StoreCredit.human_attribute_name(:amount_credited) %></th>
-      <th class="wrap-text"><%= Spree::StoreCredit.human_attribute_name(:amount_used) %></th>
-      <th class="wrap-text"><%= Spree::StoreCredit.human_attribute_name(:amount_authorized) %></th>
-      <th class="wrap-text"><%= Spree::StoreCredit.human_attribute_name(:category_id) %></th>
-      <th class="wrap-text"><%= Spree::StoreCredit.human_attribute_name(:created_by_id) %></th>
-      <th class="wrap-text"><%= Spree::StoreCredit.human_attribute_name(:created_at) %></th>
-      <th class="wrap-text"><%= Spree::StoreCredit.human_attribute_name(:invalidated_at) %></th>
-      <th data-hook="admin_store_credits_index_header_actions" class="actions"></th>
-    <thead>
-    <tbody>
-      <% @store_credits.each do |store_credit| %>
-        <tr>
-          <td class='align-center'>
-            <span><%= store_credit.display_amount.to_html %></span>
-          </td>
-          <td class='align-center'>
-            <span><%= store_credit.display_amount_used.to_html %></span>
-          </td>
-          <td class='align-center'>
-            <span><%= store_credit.display_amount_authorized.to_html %></span>
-          </td>
-          <td class='align-center'>
-            <span><%= store_credit.category_name %></span>
-          </td>
-          <td>
-            <span><%= store_credit.created_by_email %></span>
-          </td>
-          <td class='align-center'>
-            <span><%= l store_credit.created_at.to_date %></span>
-          </td>
-          <td class='align-center'>
-            <span><%= store_credit.invalidated? %></span>
-          </td>
-          <td class="actions" data-hook="admin_store_credits_index_row_actions">
-            <% if can?(:show, store_credit) %>
-              <%= link_to_edit_url admin_user_store_credit_path(@user, store_credit), { no_text: true, class: 'edit' } %>
-            <% end %>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+    <table id="sc-table">
+      <thead>
+        <th class="wrap-text"><%= Spree::StoreCredit.human_attribute_name(:amount_credited) %></th>
+        <th class="wrap-text"><%= Spree::StoreCredit.human_attribute_name(:amount_used) %></th>
+        <th class="wrap-text"><%= Spree::StoreCredit.human_attribute_name(:amount_authorized) %></th>
+        <th class="wrap-text"><%= Spree::StoreCredit.human_attribute_name(:category_id) %></th>
+        <th class="wrap-text"><%= Spree::StoreCredit.human_attribute_name(:created_by_id) %></th>
+        <th class="wrap-text"><%= Spree::StoreCredit.human_attribute_name(:created_at) %></th>
+        <th class="wrap-text"><%= Spree::StoreCredit.human_attribute_name(:invalidated_at) %></th>
+        <th data-hook="admin_store_credits_index_header_actions" class="actions"></th>
+      <thead>
+      <tbody>
+        <% @store_credits.each do |store_credit| %>
+          <tr>
+            <td class='align-center'>
+              <span><%= store_credit.display_amount.to_html %></span>
+            </td>
+            <td class='align-center'>
+              <span><%= store_credit.display_amount_used.to_html %></span>
+            </td>
+            <td class='align-center'>
+              <span><%= store_credit.display_amount_authorized.to_html %></span>
+            </td>
+            <td class='align-center'>
+              <span><%= store_credit.category_name %></span>
+            </td>
+            <td>
+              <span><%= store_credit.created_by_email %></span>
+            </td>
+            <td class='align-center'>
+              <span><%= l store_credit.created_at.to_date %></span>
+            </td>
+            <td class='align-center'>
+              <span><%= store_credit.invalidated? %></span>
+            </td>
+            <td class="actions" data-hook="admin_store_credits_index_row_actions">
+              <% if can?(:show, store_credit) %>
+                <%= link_to_edit_url admin_user_store_credit_path(@user, store_credit), { no_text: true, class: 'edit' } %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </fieldset>
 <% else %>
   <div class="col-9 no-objects-found">
     <%= render 'spree/admin/shared/no_objects_found',
@@ -69,4 +70,3 @@
                  new_resource_url: new_object_url %>
   </div>
 <% end %>
-</fieldset>
