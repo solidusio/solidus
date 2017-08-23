@@ -6,14 +6,16 @@ describe "Payment Methods", type: :feature do
   before(:each) do
     visit spree.admin_path
     click_link "Settings"
-    click_link "Payments"
   end
 
   context "admin visiting payment methods listing page" do
-    it "should display existing payment methods" do
+    before do
       create(:check_payment_method)
-      click_link "Payment Methods"
+    end
 
+    it "should display existing payment methods" do
+      click_link "Payments"
+      expect(page).to have_link 'Payment Methods'
       within("table#listing_payment_methods") do
         expect(all("th")[1].text).to eq("Name")
         expect(all("th")[2].text).to eq("Type")
@@ -30,7 +32,8 @@ describe "Payment Methods", type: :feature do
 
   context "admin creating a new payment method" do
     it "should be able to create a new payment method" do
-      click_link "Payment Methods"
+      click_link "Payments"
+      expect(page).to have_link 'Payment Methods'
       click_link "admin_new_payment_methods_link"
       expect(page).to have_content("New Payment Method")
       fill_in "payment_method_name", with: "check90"
@@ -44,7 +47,8 @@ describe "Payment Methods", type: :feature do
   context "admin editing a payment method" do
     before(:each) do
       create(:check_payment_method)
-      click_link "Payment Methods"
+      click_link "Payments"
+      expect(page).to have_link 'Payment Methods'
       within("table#listing_payment_methods") do
         click_icon(:edit)
       end
@@ -65,14 +69,13 @@ describe "Payment Methods", type: :feature do
   end
 
   context "changing type and payment_source", js: true do
-    after do
-      # cleanup
-      Spree::Config.static_model_preferences.for_class(Spree::PaymentMethod::BogusCreditCard).clear
+    before do
+      create(:credit_card_payment_method)
     end
 
     it "displays message when changing type" do
-      create(:credit_card_payment_method)
-      click_link "Payment Methods"
+      click_link "Payments"
+      expect(page).to have_link 'Payment Methods'
       click_icon :edit
       expect(page).to have_content('Test Mode')
 
@@ -89,8 +92,8 @@ describe "Payment Methods", type: :feature do
     it "displays message when changing preference source" do
       Spree::Config.static_model_preferences.add(Spree::PaymentMethod::BogusCreditCard, 'my_prefs', {})
 
-      create(:credit_card_payment_method)
-      click_link "Payment Methods"
+      click_link "Payments"
+      expect(page).to have_link 'Payment Methods'
       click_icon :edit
       expect(page).to have_content('Test Mode')
 
@@ -107,8 +110,8 @@ describe "Payment Methods", type: :feature do
     it "updates successfully and keeps secrets" do
       Spree::Config.static_model_preferences.add(Spree::PaymentMethod::BogusCreditCard, 'my_prefs', { server: 'secret' })
 
-      create(:credit_card_payment_method)
-      click_link "Payment Methods"
+      click_link "Payments"
+      expect(page).to have_link 'Payment Methods'
       click_icon :edit
 
       select 'my_prefs', from: 'Preference Source'
@@ -121,6 +124,11 @@ describe "Payment Methods", type: :feature do
       click_on 'Update'
       expect(page).to have_content('Test Mode')
       expect(page).to have_no_content('secret')
+    end
+
+    after do
+      # cleanup
+      Spree::Config.static_model_preferences.for_class(Spree::PaymentMethod::BogusCreditCard).clear
     end
   end
 end
