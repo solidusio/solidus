@@ -1177,7 +1177,24 @@ describe Spree::Order, type: :model do
             expect(order.payments.first.amount).to eq order_total
           end
         end
+      end
 
+      context 'there is store credit in another currency' do
+        let(:order) { create(:order_with_totals, user: user, line_items_price: order_total).tap(&:recalculate) }
+        let!(:store_credit_usd) { create(:store_credit, user: user, amount: 1, currency: 'USD') }
+        let!(:store_credit_gbp) { create(:store_credit, user: user, amount: 1, currency: 'GBP') }
+        let(:user) { create(:user) }
+
+        it 'only adds the credit in the matching currency' do
+          expect {
+            order.add_store_credit_payments
+          }.to change {
+            order.payments.count
+          }.by(1)
+
+          applied_store_credits = order.payments.store_credits.map(&:source)
+          expect(applied_store_credits).to match_array([store_credit_usd])
+        end
       end
 
       context "there is enough store credit to pay for the entire order" do
