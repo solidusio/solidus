@@ -13,14 +13,14 @@
 
 <% if @store_credits.any? %>
   <% @store_credits.group_by(&:currency).each do |currency, credits| %>
-    <fieldset id='sc-current-balance'>
+    <fieldset class="sc-current-balance">
       <legend>
         <%= currency %> <%= Spree.t("admin.store_credits.current_balance") %>
         <% total = credits.sum(&:amount_remaining) %>
         <%= Spree::Money.new(total, currency: currency) %>
       </legend>
 
-      <table id="sc-table">
+      <table class="sc-table">
         <thead>
           <th class="wrap-text"><%= Spree::StoreCredit.human_attribute_name(:amount_credited) %></th>
           <th class="wrap-text"><%= Spree::StoreCredit.human_attribute_name(:amount_used) %></th>
