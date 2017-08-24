@@ -21,7 +21,9 @@ module Spree
 
       has_many :store_credits, -> { includes(:credit_type) }, foreign_key: "user_id", class_name: "Spree::StoreCredit"
       has_many :store_credit_events, through: :store_credits
+
       money_methods :total_available_store_credit
+      deprecate display_total_available_store_credit: :display_available_store_credit_total, deprecator: Spree::Deprecation
 
       has_many :credit_cards, class_name: "Spree::CreditCard", foreign_key: :user_id
       has_many :wallet_payment_sources, foreign_key: 'user_id', class_name: 'Spree::WalletPaymentSource', inverse_of: :user
@@ -66,6 +68,7 @@ module Spree
     def total_available_store_credit
       store_credits.reload.to_a.sum(&:amount_remaining)
     end
+    deprecate total_available_store_credit: :available_store_credit_total, deprecator: Spree::Deprecation
 
     def available_store_credit_total(currency:)
       store_credits.reload.to_a.
