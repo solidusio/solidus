@@ -78,6 +78,45 @@ describe "Coupon code promotions", type: :feature, js: true do
           end
         end
       end
+
+      context 'as logged user' do
+        let!(:user) { create(:user, bill_address: create(:address), ship_address: create(:address)) }
+
+        before do
+          allow_any_instance_of(Spree::CheckoutController).to receive_messages(try_spree_current_user: user)
+          allow_any_instance_of(Spree::OrdersController).to receive_messages(try_spree_current_user: user)
+        end
+
+        context 'with saved credit card' do
+          let(:bogus) { create(:credit_card_payment_method) }
+          let!(:credit_card) do
+            create(:credit_card, user_id: user.id, payment_method: bogus, gateway_customer_profile_id: "BGS-WEFWF")
+          end
+
+          before do
+            user.wallet.add(credit_card)
+
+            visit spree.root_path
+            click_link "RoR Mug"
+            click_button "add-to-cart-button"
+            # To Cart
+            click_button "Checkout"
+            # To shipping method screen, address is auto-populated
+            # with user's saved addresses
+            click_button "Save and Continue"
+            # To payment screen
+            click_button "Save and Continue"
+          end
+
+          it "shows wallet payments on coupon code errors" do
+            fill_in "order_coupon_code", with: "coupon_codes_rule_man"
+            click_button "Save and Continue"
+
+            expect(page).to have_content("The coupon code you entered doesn't exist. Please try again.")
+            expect(page).to have_content("Use an existing card")
+          end
+        end
+      end
     end
 
     # CheckoutController
