@@ -452,7 +452,7 @@ nav#taxonomies {
 
 %price_text {
   font-weight: bold;
-  color: $link_text_color;
+  color: $product_price_text_color;
 }
 
 span.price {
@@ -520,7 +520,7 @@ ul#products {
     }
 
     .price {
-      color: $link_text_color;
+      color: $product_price_text_color;
       font-size: $product_list_price_font_size;
       padding-top: 5px;
       display: block;
