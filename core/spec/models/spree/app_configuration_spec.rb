@@ -8,8 +8,14 @@ describe Spree::AppConfiguration, type: :model do
     expect(prefs.layout).to eq "my/layout"
   end
 
+  # Spree::Config#method_missing forwards calls to Spree::Config.instance
+  # Callers don't need to know about .instance
   it "should be available as Spree::Config for legacy access" do
-    expect(Spree::Config).to be_a Spree::AppConfiguration
+    expect(Spree::Config.instance).to be_a Spree::AppConfiguration
+  end
+
+  it 'should be available for use in a block when `Spree.config` is called' do
+    expect { |some_block| Spree.config(&some_block) }.to yield_with_args Spree::AppConfiguration
   end
 
   it "uses base searcher class by default" do

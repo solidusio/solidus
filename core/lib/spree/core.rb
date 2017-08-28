@@ -12,6 +12,7 @@ require 'paranoia'
 require 'ransack'
 require 'state_machines-activerecord'
 
+require 'spree/config'
 require 'spree/deprecation'
 
 # This is required because ActiveModel::Validations#invalid? conflicts with the
@@ -40,7 +41,7 @@ module Spree
   # This method is defined within the core gem on purpose.
   # Some people may only wish to use the Core part of Spree.
   def self.config(&_block)
-    yield(Spree::Config)
+    yield(Spree::Config.instance)
   end
 
   module Core
