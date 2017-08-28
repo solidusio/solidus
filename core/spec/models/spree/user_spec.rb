@@ -168,7 +168,16 @@ describe Spree.user_class, type: :model do
     end
   end
 
+  # TODO: Remove this after the method has been fully removed
   describe "#total_available_store_credit" do
+    before do
+      allow_any_instance_of(Spree::LegacyUser).to receive(:total_available_store_credit).and_wrap_original do |method, *args|
+        Spree::Deprecation.silence do
+          method.call(*args)
+        end
+      end
+    end
+
     context "user does not have any associated store credits" do
       subject { create(:user) }
 
