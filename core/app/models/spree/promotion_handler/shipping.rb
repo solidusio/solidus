@@ -18,7 +18,9 @@ module Spree
         end
 
         not_connected_automatic_promotions.each do |promotion|
-          promotion.activate(order: order)
+          if promotion.eligible?(order)
+            promotion.activate(order: order)
+          end
         end
       end
 
