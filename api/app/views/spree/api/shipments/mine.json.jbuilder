@@ -1,6 +1,4 @@
-json.count(@shipments.count)
-json.current_page(@shipments.current_page)
-json.pages(@shipments.total_pages)
+json.partial! 'spree/api/shared/pagination', pagination: @shipments
 json.shipments(@shipments) do |shipment|
   json.partial!("spree/api/shipments/big", shipment: shipment)
 end
