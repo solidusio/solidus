@@ -19,19 +19,19 @@ class NumberFieldUpdater
 
   toggleReadOnly = (id, show) ->
     toggleButtonVisibility('edit', id, show)
-    toggleButtonVisibility('trash', id, show)
+    toggleButtonVisibility('remove', id, show)
     cssDisplay = if show then 'block' else 'none'
     $("#number-update-#{id} span").css('display', cssDisplay)
 
   toggleForm = (id, show) ->
-    toggleButtonVisibility('void', id, show)
-    toggleButtonVisibility('check', id, show)
+    toggleButtonVisibility('cancel', id, show)
+    toggleButtonVisibility('save', id, show)
     cssDisplay = if show then 'block' else 'none'
     $("#number-update-#{id} input[type='number']").css('display', cssDisplay)
 
-  toggleButtonVisibility = (buttonIcon, id, show) ->
+  toggleButtonVisibility = (buttonAction, id, show) ->
     cssDisplay = if show then 'inline-block' else 'none'
-    $(".fa-#{buttonIcon}[data-id='#{id}']").css('display', cssDisplay)
+    $("[data-action='#{buttonAction}'][data-id='#{id}']").css('display', cssDisplay)
 
   resetInput = (id) ->
     tableCell = $("#number-update-#{id}")

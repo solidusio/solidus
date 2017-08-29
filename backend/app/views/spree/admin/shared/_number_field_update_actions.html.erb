@@ -1,5 +1,5 @@
 <% if can?(:update, resource) %>
   <%= link_to_with_icon 'edit', Spree.t('actions.edit'), '#', no_text: true, data: { action: 'edit', id: resource.id } %>
-  <%= link_to_with_icon 'check', Spree.t('actions.update'), '#', no_text: true, data: update_data.merge(action: 'green', id: resource.id) %>
-  <%= link_to_with_icon 'void', Spree.t('actions.cancel'), '#', no_text: true, data: { action: 'red', id: resource.id } %>
+  <%= link_to_with_icon 'check', Spree.t('actions.update'), '#', no_text: true, data: update_data.merge(action: 'save', id: resource.id) %>
+  <%= link_to_with_icon 'cancel', Spree.t('actions.cancel'), '#', no_text: true, data: { action: 'cancel', id: resource.id } %>
 <% end %>

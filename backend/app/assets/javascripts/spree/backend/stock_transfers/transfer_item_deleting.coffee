@@ -1,6 +1,6 @@
 class TransferItemDeleting
   @beginListening: ->
-    $('body').on 'click', '#listing_transfer_items .fa-trash', (ev) =>
+    $('body').on 'click', '#listing_transfer_items [data-action="remove"]', (ev) =>
       ev.preventDefault()
       if confirm(Spree.translations.are_you_sure_delete)
         transferItemId = $(ev.currentTarget).data('id')
