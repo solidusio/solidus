@@ -11,10 +11,12 @@ module Spree
 
       def activate
         connected_promotions.each do |order_promotion|
-          order_promotion.promotion.activate(
-            order: order,
-            promotion_code: order_promotion.promotion_code,
-          )
+          if order_promotion.promotion.eligible?(order)
+            order_promotion.promotion.activate(
+              order: order,
+              promotion_code: order_promotion.promotion_code,
+            )
+          end
         end
 
         not_connected_automatic_promotions.each do |promotion|
