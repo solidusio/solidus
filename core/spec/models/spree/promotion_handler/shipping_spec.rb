@@ -43,6 +43,22 @@ module Spree
               subject.activate
             }.to change { shipment.adjustments.count }
           end
+
+          context 'when currently ineligible' do
+            let(:promotion) do
+              create(:promotion, :with_item_total_rule, item_total_threshold_amount: 1_000, code: 'freeshipping', promotion_actions: [action])
+            end
+
+            before do
+              order.order_promotions.create!(promotion: promotion, promotion_code: promotion.codes.first)
+            end
+
+            it 'does not adjust the shipment' do
+              expect {
+                subject.activate
+              }.to_not change { shipment.adjustments.count }
+            end
+          end
         end
 
         context 'when not already applied' do
