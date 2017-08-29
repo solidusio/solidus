@@ -17,6 +17,8 @@ module Spree
     alias_attribute :amount, :cost
 
     alias_method :discounted_amount, :amount
+    deprecate discounted_amount: :final_amount_without_additional_tax, deprecator: Spree::Deprecation
+    alias_method :final_amount_without_additional_tax, :amount
 
     extend DisplayMoney
     money_methods :amount

@@ -93,19 +93,36 @@ describe Spree::LineItem, type: :model do
     end
   end
 
-  describe '.discounted_amount' do
+  # TODO: Remove this spec after the method has been removed.
+  describe '#discounted_amount' do
     it "returns the amount minus any discounts" do
       line_item.price = 10
       line_item.quantity = 2
       line_item.promo_total = -5
-      expect(line_item.discounted_amount).to eq(15)
+      expect(Spree::Deprecation.silence { line_item.discounted_amount }).to eq(15)
     end
   end
 
+  # TODO: Remove this spec after the method has been removed.
   describe "#discounted_money" do
     it "should return a money object with the discounted amount" do
-      expect(line_item.discounted_amount).to eq(10.00)
-      expect(line_item.discounted_money.to_s).to eq "$10.00"
+      expect(Spree::Deprecation.silence { line_item.discounted_amount }).to eq(10.00)
+      expect(Spree::Deprecation.silence { line_item.discounted_money.to_s }).to eq "$10.00"
+    end
+  end
+
+  describe '#final_amount_without_additional_tax' do
+    before do
+      line_item.update!(price: 10, quantity: 2)
+    end
+    let!(:admin_adjustment) { create(:adjustment, adjustable: line_item, order: line_item.order, amount: -1, source: nil) }
+    let!(:promo_adjustment) { create(:adjustment, adjustable: line_item, order: line_item.order, amount: -2, source: promo_action) }
+    let!(:ineligible_promo_adjustment) { create(:adjustment, eligible: false, adjustable: line_item, order: line_item.order, amount: -4, source: promo_action) }
+    let(:promo_action) { promo.actions[0] }
+    let(:promo) { create(:promotion, :with_line_item_adjustment) }
+
+    it 'returns the amount minus any adjustments' do
+      expect(line_item.final_amount_without_additional_tax).to eq(20 - 1 - 2)
     end
   end
 

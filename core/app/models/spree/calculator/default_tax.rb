@@ -13,7 +13,7 @@ module Spree
         rate.tax_categories.include?(line_item.tax_category)
       end
 
-      line_items_total = matched_line_items.sum(&:discounted_amount)
+      line_items_total = matched_line_items.sum(&:final_amount_without_additional_tax)
       if rate.included_in_price
         order_tax_amount = round_to_two_places(line_items_total - ( line_items_total / (1 + rate.amount) ) )
         refund_if_necessary(order_tax_amount, order.tax_address)
@@ -28,7 +28,7 @@ module Spree
       if rate.included_in_price
         deduced_total_by_rate(item, rate)
       else
-        round_to_two_places(item.discounted_amount * rate.amount)
+        round_to_two_places(item.final_amount_without_additional_tax * rate.amount)
       end
     end
 
@@ -47,7 +47,7 @@ module Spree
     end
 
     def deduced_total_by_rate(item, rate)
-      unrounded_net_amount = item.discounted_amount / (1 + sum_of_included_tax_rates(item))
+      unrounded_net_amount = item.final_amount_without_additional_tax / (1 + sum_of_included_tax_rates(item))
       refund_if_necessary(
         round_to_two_places(unrounded_net_amount * rate.amount),
         item.order.tax_address

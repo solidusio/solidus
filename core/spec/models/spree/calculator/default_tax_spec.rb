@@ -136,7 +136,14 @@ describe Spree::Calculator::DefaultTax, type: :model do
   end
 
   shared_examples_for 'computing any item' do
-    let(:promo_total) { 0 }
+    let(:adjustment_total) { 0 }
+    let(:adjustments) do
+      if adjustment_total.zero?
+        []
+      else
+       [Spree::Adjustment.new(included: false, source: nil, amount: adjustment_total)]
+      end
+    end
     let(:order) { build_stubbed(:order, ship_address: address) }
 
     context "when tax is included in price" do
@@ -157,9 +164,9 @@ describe Spree::Calculator::DefaultTax, type: :model do
         end
 
         context "when line item is discounted" do
-          let(:promo_total) { -1 }
+          let(:adjustment_total) { -1 }
 
-          it "should be equal to the item's discounted total * rate" do
+          it "should be equal to the item's adjusted total * rate" do
             expect(calculator.compute(item)).to eql 1.38
           end
         end
@@ -182,8 +189,8 @@ describe Spree::Calculator::DefaultTax, type: :model do
     end
 
     context "when tax is not included in price" do
-      context "when the line item is discounted" do
-        let(:promo_total) { -1 }
+      context "when the item has an adjustment" do
+        let(:adjustment_total) { -1 }
 
         it "should be equal to the item's pre-tax total * rate" do
           expect(calculator.compute(item)).to eq(1.45)
@@ -222,7 +229,7 @@ describe Spree::Calculator::DefaultTax, type: :model do
         :line_item,
         price: 10,
         quantity: 3,
-        promo_total: promo_total,
+        adjustments: adjustments,
         order: order,
         tax_category: tax_category
       )
@@ -251,7 +258,7 @@ describe Spree::Calculator::DefaultTax, type: :model do
       build_stubbed(
         :shipment,
         cost: 30,
-        promo_total: promo_total,
+        adjustments: adjustments,
         order: order,
         shipping_rates: [shipping_rate]
       )
@@ -276,12 +283,12 @@ describe Spree::Calculator::DefaultTax, type: :model do
     end
 
     let(:item) do
-      # cost and discounted_amount for shipping rates are the same as they
-      # can not be discounted. for the sake of passing tests, the cost is
+      # cost and adjusted amount for shipping rates are the same as they
+      # can not be adjusted. for the sake of passing tests, the cost is
       # adjusted here.
       build_stubbed(
         :shipping_rate,
-        cost: 30 + promo_total,
+        cost: 30 + adjustment_total,
         selected: true,
         shipping_method: shipping_method,
         shipment: shipment

@@ -57,6 +57,13 @@ module Spree
     def discounted_amount
       amount + promo_total
     end
+    deprecate discounted_amount: :final_amount_without_additional_tax, deprecator: Spree::Deprecation
+
+    # @return [BigDecimal] the amount of this item, taking into consideration
+    #   all non-tax adjustments.
+    def final_amount_without_additional_tax
+      amount + adjustments.select { |a| !a.tax? && a.eligible? }.sum(&:amount)
+    end
 
     # @return [BigDecimal] the amount of this line item, taking into
     #   consideration all its adjustments.
@@ -68,13 +75,16 @@ module Spree
     # @return [BigDecimal] the amount of this line item before included tax
     # @note just like `amount`, this does not include any additional tax
     def pre_tax_amount
-      discounted_amount - included_tax_total
+      final_amount_without_additional_tax - included_tax_total
     end
 
     extend Spree::DisplayMoney
     money_methods :amount, :discounted_amount, :final_amount, :pre_tax_amount, :price,
-                  :included_tax_total, :additional_tax_total
+                  :included_tax_total, :additional_tax_total,
+                  :final_amount_without_additional_tax
+    deprecate display_discounted_amount: :display_final_amount_without_additional_tax, deprecator: Spree::Deprecation
     alias discounted_money display_discounted_amount
+    deprecate discounted_money: :display_final_amount_without_additional_tax, deprecator: Spree::Deprecation
 
     # @return [Spree::Money] the price of this line item
     alias money_price display_price

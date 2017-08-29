@@ -45,7 +45,7 @@
           <tr>
             <td></td>
             <td><%= Spree.t(:shipping) %> <%= name %>:</td>
-            <td><%= Spree::Money.new(shipments.sum(&:discounted_cost), currency: @order.currency) %></td>
+            <td><%= Spree::Money.new(shipments.sum(&:final_amount_without_additional_tax), currency: @order.currency) %></td>
           </tr>
         <% end %>
         <% if @order.all_adjustments.eligible.tax.exists? %>

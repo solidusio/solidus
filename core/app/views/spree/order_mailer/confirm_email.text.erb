@@ -19,7 +19,7 @@
 <% end %>
 
 <% @order.shipments.group_by { |s| s.selected_shipping_rate.try(:name) }.each do |name, shipments| %>
-<%= Spree.t(:shipping) %>: <%= name %> <%= Spree::Money.new(shipments.sum(&:discounted_cost), currency: @order.currency) %>
+<%= Spree.t(:shipping) %>: <%= name %> <%= Spree::Money.new(shipments.sum(&:final_amount_without_additional_tax), currency: @order.currency) %>
 <% end %>
 
 <% if @order.all_adjustments.eligible.tax.exists? %>
