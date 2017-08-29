@@ -145,7 +145,22 @@ describe Spree::Shipment, type: :model do
     shipment = create(:shipment)
     shipment.cost = 10
     shipment.promo_total = -1
-    expect(shipment.discounted_cost).to eq(9)
+    expect(Spree::Deprecation.silence { shipment.discounted_cost }).to eq(9)
+  end
+
+  describe '#total_before_tax' do
+    before do
+      shipment.update_attributes!(cost: 10)
+    end
+    let!(:admin_adjustment) { create(:adjustment, adjustable: shipment, order: shipment.order, amount: -1, source: nil) }
+    let!(:promo_adjustment) { create(:adjustment, adjustable: shipment, order: shipment.order, amount: -2, source: promo_action) }
+    let!(:ineligible_promo_adjustment) { create(:adjustment, eligible: false, adjustable: shipment, order: shipment.order, amount: -4, source: promo_action) }
+    let(:promo_action) { promo.actions[0] }
+    let(:promo) { create(:promotion, :with_line_item_adjustment) }
+
+    it 'returns the amount minus any adjustments' do
+      expect(shipment.total_before_tax).to eq(10 - 1 - 2)
+    end
   end
 
   it "#tax_total with included taxes" do

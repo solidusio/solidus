@@ -194,6 +194,11 @@ module Spree
     def discounted_item_amount
       line_items.to_a.sum(&:discounted_amount)
     end
+    deprecate discounted_item_amount: :item_total_before_tax, deprecator: Spree::Deprecation
+
+    def item_total_before_tax
+      line_items.to_a.sum(&:total_before_tax)
+    end
 
     def currency
       self[:currency] || Spree::Config[:currency]

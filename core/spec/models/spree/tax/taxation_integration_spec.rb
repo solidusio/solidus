@@ -282,7 +282,7 @@ RSpec.describe "Taxation system integration tests" do
         end
 
         it 'has a constant amount pre tax' do
-          expect(line_item.discounted_amount - line_item.included_tax_total).to eq(18.69)
+          expect(line_item.total_before_tax - line_item.included_tax_total).to eq(18.69)
         end
       end
 
@@ -320,7 +320,7 @@ RSpec.describe "Taxation system integration tests" do
         end
 
         it 'has a constant amount pre tax' do
-          expect(line_item.discounted_amount - line_item.included_tax_total).to eq(25.21)
+          expect(line_item.total_before_tax - line_item.included_tax_total).to eq(25.21)
         end
       end
 
@@ -358,7 +358,7 @@ RSpec.describe "Taxation system integration tests" do
         end
 
         it 'has a constant amount pre tax' do
-          expect(line_item.discounted_amount - line_item.included_tax_total).to eq(8.40)
+          expect(line_item.total_before_tax - line_item.included_tax_total).to eq(8.40)
         end
       end
 
@@ -409,7 +409,7 @@ RSpec.describe "Taxation system integration tests" do
         end
 
         it 'has a constant amount pre tax' do
-          expect(line_item.discounted_amount - line_item.included_tax_total).to eq(18.69)
+          expect(line_item.total_before_tax - line_item.included_tax_total).to eq(18.69)
         end
       end
     end
@@ -442,7 +442,7 @@ RSpec.describe "Taxation system integration tests" do
         end
 
         it 'has a constant amount pre tax' do
-          expect(line_item.discounted_amount - line_item.included_tax_total).to eq(18.69)
+          expect(line_item.total_before_tax - line_item.included_tax_total).to eq(18.69)
         end
 
         context 'an order with a book and a shipment' do
@@ -484,7 +484,7 @@ RSpec.describe "Taxation system integration tests" do
         end
 
         it 'has a constant amount pre tax' do
-          expect(line_item.discounted_amount - line_item.included_tax_total).to eq(25.21)
+          expect(line_item.total_before_tax - line_item.included_tax_total).to eq(25.21)
         end
 
         context 'an order with a sweater and a shipment' do
@@ -526,7 +526,7 @@ RSpec.describe "Taxation system integration tests" do
         end
 
         it 'has a constant amount pre tax' do
-          expect(line_item.discounted_amount - line_item.included_tax_total).to eq(8.40)
+          expect(line_item.total_before_tax - line_item.included_tax_total).to eq(8.40)
         end
       end
 
