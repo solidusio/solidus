@@ -22,16 +22,16 @@ module Spree
         end
       end
 
-      let(:packer) { build(:stock_packer) }
+      let(:stock_location) { mock_model(Spree::StockLocation) }
 
-      subject { described_class.new(packer) }
+      subject { described_class.new(stock_location) }
 
       it 'splits each package by shipping category' do
-        package1 = Package.new(packer.stock_location)
+        package1 = Package.new(stock_location)
         4.times { package1.add inventory_unit1 }
         8.times { package1.add inventory_unit2 }
 
-        package2 = Package.new(packer.stock_location)
+        package2 = Package.new(stock_location)
         6.times { package2.add inventory_unit1 }
         9.times { package2.add inventory_unit2, :backordered }
 

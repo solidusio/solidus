@@ -30,7 +30,7 @@ module Spree::Stock
       end
 
       it 'builds the splitters correctly' do
-        expect(splitter1).to receive(:new).with(subject, nil).and_call_original
+        expect(splitter1).to receive(:new).with(stock_location, nil).and_call_original
 
         subject.split(packages)
       end
@@ -40,8 +40,8 @@ module Spree::Stock
       let(:splitters) { [splitter1, splitter2] }
 
       it 'builds the splitters in order' do
-        expect(splitter1).to receive(:new).with(subject, splitter2).and_call_original
-        expect(splitter2).to receive(:new).with(subject, nil).and_call_original
+        expect(splitter1).to receive(:new).with(stock_location, splitter2).and_call_original
+        expect(splitter2).to receive(:new).with(stock_location, nil).and_call_original
 
         subject.split(packages)
       end

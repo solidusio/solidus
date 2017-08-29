@@ -23,7 +23,7 @@ module Spree
       def build_splitter
         splitter = nil
         @splitter_classes.reverse_each do |klass|
-          splitter = klass.new(self, splitter)
+          splitter = klass.new(stock_location, splitter)
         end
         splitter
       end

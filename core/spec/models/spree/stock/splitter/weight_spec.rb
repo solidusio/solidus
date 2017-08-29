@@ -4,20 +4,20 @@ module Spree
   module Stock
     module Splitter
       describe Weight, type: :model do
-        let(:packer) { build(:stock_packer) }
+        let(:stock_location) { mock_model(Spree::StockLocation) }
         let(:variant) { build(:base_variant, weight: 100) }
 
-        subject { Weight.new(packer) }
+        subject { Weight.new(stock_location) }
 
         it 'splits and keeps splitting until all packages are underweight' do
-          package = Package.new(packer.stock_location)
+          package = Package.new(stock_location)
           4.times { package.add build(:inventory_unit, variant: variant) }
           packages = subject.split([package])
           expect(packages.size).to eq 4
         end
 
         it 'handles packages that can not be reduced' do
-          package = Package.new(packer.stock_location)
+          package = Package.new(stock_location)
           allow(variant).to receive_messages(weight: 200)
           2.times { package.add build(:inventory_unit, variant: variant) }
           packages = subject.split([package])
