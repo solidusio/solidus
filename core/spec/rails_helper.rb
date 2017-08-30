@@ -1,19 +1,5 @@
-if ENV["COVERAGE"]
-  # Run Coverage report
-  require 'simplecov'
-  SimpleCov.start do
-    add_group 'Controllers', 'app/controllers'
-    add_group 'Helpers', 'app/helpers'
-    add_group 'Mailers', 'app/mailers'
-    add_group 'Models', 'app/models'
-    add_group 'Views', 'app/views'
-    add_group 'Jobs', 'app/jobs'
-    add_group 'Libraries', 'lib'
-  end
-end
+require 'spec_helper'
 
-# This file is copied to ~/spec when you run 'ruby script/generate rspec'
-# from the project root directory.
 ENV["RAILS_ENV"] ||= 'test'
 
 begin
@@ -25,9 +11,10 @@ end
 
 require 'rspec/rails'
 require 'database_cleaner'
-require 'ffaker'
 
 Dir["./spec/support/**/*.rb"].sort.each { |f| require f }
+
+require 'ffaker'
 
 if ENV["CHECK_TRANSLATIONS"]
   require "spree/testing_support/i18n"
@@ -40,16 +27,9 @@ require 'cancan/matchers'
 ActiveJob::Base.queue_adapter = :test
 
 RSpec.configure do |config|
-  config.color = true
-  config.infer_spec_type_from_file_location!
-  config.expect_with :rspec do |c|
-    c.syntax = :expect
-  end
-  config.mock_with :rspec do |c|
-    c.syntax = :expect
-  end
-
   config.fixture_path = File.join(File.expand_path(File.dirname(__FILE__)), "fixtures")
+
+  config.infer_spec_type_from_file_location!
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, comment the following line or assign false
@@ -62,22 +42,8 @@ RSpec.configure do |config|
 
   config.before :each do
     Rails.cache.clear
-    reset_spree_preferences
   end
 
   config.include ActiveJob::TestHelper
   config.include FactoryGirl::Syntax::Methods
-  config.include Spree::TestingSupport::Preferences
-  config.extend WithModel
-
-  config.fail_fast = ENV['FAIL_FAST'] || false
-
-  config.filter_run focus: true
-  config.run_all_when_everything_filtered = true
-
-  config.example_status_persistence_file_path = "./spec/examples.txt"
-
-  config.order = :random
-
-  Kernel.srand config.seed
 end
