@@ -363,6 +363,16 @@ module Spree
       @order_number_generator ||= Spree::Order::NumberGenerator.new
     end
 
+    # Allows providing your own classes for validating the checkout start process
+    #
+    # @!attribute [rw] checkout_blockers
+    # @return [Array<Spree::Checkout::Blockers::Base>] an array with multiple blockers,
+    #   Defaults to  [Spree::Checkout::Blockers::LineItemsRequired]
+    attr_writer :checkout_blockers
+    def checkout_blockers
+      @checkout_blockers ||= [Spree::Checkout::Blockers::LineItemsRequired]
+    end
+
     def static_model_preferences
       @static_model_preferences ||= Spree::Preferences::StaticModelPreferences.new
     end
