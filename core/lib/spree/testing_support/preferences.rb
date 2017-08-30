@@ -16,8 +16,7 @@ module Spree
       end
 
       def configure_spree_preferences
-        config = Rails.application.config.spree.preferences
-        yield(config) if block_given?
+        yield(Spree::Config) if block_given?
       end
 
       def assert_preference_unset(preference)
