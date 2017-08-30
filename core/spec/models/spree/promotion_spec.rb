@@ -558,6 +558,14 @@ describe Spree::Promotion, type: :model do
           it { is_expected.to be false }
         end
 
+        context "and at least one item is non-promotionable but Spree::Config.allow_promotions_with_non_promotionable_items is enabled" do
+          before do
+            Spree::Config.allow_promotions_with_non_promotionable_items = true
+            line_item.product.update_column(:promotionable, false)
+          end
+          it { is_expected.to be true }
+        end
+
         context "and the items are all non-promotionable" do
           before do
             line_item.product.update_column(:promotionable, false)

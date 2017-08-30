@@ -237,8 +237,13 @@ module Spree
       when Spree::LineItem
         !promotable.product.promotionable?
       when Spree::Order
-        promotable.line_items.any? &&
-          promotable.line_items.joins(:product).where(spree_products: { promotionable: false }).any?
+        should_be_blacklisted = if Spree::Config.allow_promotions_with_non_promotionable_items
+                                  !promotable.line_items.joins(:product).where(spree_products: { promotionable: true }).exists?
+                                else
+                                  promotable.line_items.joins(:product).where(spree_products: { promotionable: false }).any?
+                                end
+
+        promotable.line_items.any? && should_be_blacklisted
       end
     end
 
