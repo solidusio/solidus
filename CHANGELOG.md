@@ -1,5 +1,17 @@
 ## Solidus 2.4.0 (master, unreleased)
 
+- Remove `set_current_order` calls in `Spree::Core::ControllerHelpers::Order`
+  [\#2185](https://github.com/solidusio/solidus/pull/2185) ([Murph33](https://github.com/murph33))
+
+  Previously a before filter added in
+  `core/lib/spree/core/controller_helpers/order.rb` would cause SQL queries to
+  be used on almost every request in the frontend. If you do not use Solidus
+  Auth you will need to hook into this helper and call `set_current_order` where
+  your user signs in. This merges incomplete orders a user has going with their
+  current cart. If you do use Solidus Auth you will need to make sure you use a
+  current enough version (>= v1.5.0) that includes this explicit call. This
+  addresses [\#1116](https://github.com/solidusio/solidus/issues/1116).
+
 - Remove `ffaker` as a runtime dependency in production [\#2140](https://github.com/solidusio/solidus/pull/2140) ([cbrunsdon](https://github.com/cbrunsdon))
 
 - Invalidate existing non store credit payments during checkout [2075](https://github.com/solidusio/solidus/pull/2075) ([tvdeyen](https://github.com/tvdeyen))
