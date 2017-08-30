@@ -10,7 +10,6 @@ module Spree
 
       initializer "spree.environment", before: :load_config_initializers do |app|
         app.config.spree = Spree::Core::Environment.new
-        Spree::Config = app.config.spree.preferences # legacy access
       end
 
       initializer "spree.default_permissions", before: :load_config_initializers do |_app|

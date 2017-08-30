@@ -1,3 +1,5 @@
+require 'spree/config'
+
 module Spree
   module Core
     class Environment
@@ -10,7 +12,7 @@ module Spree
 
       def initialize
         @calculators = Calculators.new
-        @preferences = Spree::AppConfiguration.new
+        @preferences = Spree::Config
         @promotions = Spree::Promo::Environment.new
       end
     end

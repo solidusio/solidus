@@ -1,3 +1,5 @@
+require 'spree/preferences/statically_configurable'
+
 module Spree
   # A base class which is used for implementing payment methods.
   #

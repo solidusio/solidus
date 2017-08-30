@@ -1,3 +1,5 @@
+require 'spree/preferences/preferable'
+
 module Spree::Preferences
   # This takes the preferrable methods and adds some
   # syntatic sugar to access the preferences
