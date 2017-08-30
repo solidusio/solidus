@@ -1,4 +1,5 @@
-require 'rails_helper'
+require 'spec_helper'
+require 'spree/localized_number'
 
 describe Spree::LocalizedNumber do
   context ".parse" do
