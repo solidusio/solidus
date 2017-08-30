@@ -1,4 +1,5 @@
-require 'rails_helper'
+require 'spec_helper'
+require 'spree/core/class_constantizer'
 
 module ClassConstantizerTest
   ClassA = Class.new
