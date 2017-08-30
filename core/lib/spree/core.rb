@@ -44,8 +44,6 @@ module Spree
   end
 
   module Core
-    autoload :ProductFilters, "spree/core/product_filters"
-
     class GatewayError < RuntimeError; end
 
     include ActiveSupport::Deprecation::DeprecatedConstantAccessor
