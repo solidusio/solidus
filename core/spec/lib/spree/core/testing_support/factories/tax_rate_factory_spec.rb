@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 require 'spree/testing_support/factories/tax_rate_factory'
 
 RSpec.describe 'tax rate factory' do

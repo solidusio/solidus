@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Spree::Promotion::Rules::OptionValue do
   let(:rule) { Spree::Promotion::Rules::OptionValue.new }

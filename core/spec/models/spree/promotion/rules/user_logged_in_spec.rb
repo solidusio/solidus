@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Spree::Promotion::Rules::UserLoggedIn, type: :model do
   let(:rule) { Spree::Promotion::Rules::UserLoggedIn.new }

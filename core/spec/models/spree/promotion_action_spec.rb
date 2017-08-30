@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Spree::PromotionAction, type: :model do
   describe '#remove_from' do

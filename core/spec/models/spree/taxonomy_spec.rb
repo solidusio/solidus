@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Spree::Taxonomy, type: :model do
   context "#destroy" do

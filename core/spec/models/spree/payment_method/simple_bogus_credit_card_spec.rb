@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Spree::PaymentMethod::SimpleBogusCreditCard, type: :model do
   subject { Spree::PaymentMethod::SimpleBogusCreditCard.new }

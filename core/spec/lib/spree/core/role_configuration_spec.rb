@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Spree::RoleConfiguration do
   class DummyPermissionSet < Spree::PermissionSets::Base

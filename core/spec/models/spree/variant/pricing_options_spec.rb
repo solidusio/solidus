@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Spree::Variant::PricingOptions do
   subject { described_class.new }

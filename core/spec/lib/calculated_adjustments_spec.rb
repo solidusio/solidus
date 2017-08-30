@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Spree::CalculatedAdjustments do
   let(:calculator_class) { Spree::Calculator::FlatRate }

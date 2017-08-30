@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 require 'spree/core/product_filters'
 
 describe 'product filters', type: :model do

@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Spree::ReturnItem::EligibilityValidator::InventoryShipped do
   let(:return_item) { create(:return_item) }

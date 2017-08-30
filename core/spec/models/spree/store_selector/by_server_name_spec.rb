@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Spree::StoreSelector::ByServerName do
   describe "#store" do

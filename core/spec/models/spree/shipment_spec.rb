@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 require 'benchmark'
 
 describe Spree::Shipment, type: :model do

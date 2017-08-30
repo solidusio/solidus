@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 RSpec.describe Spree::Tax::OrderAdjuster do
   subject(:adjuster) { described_class.new(order) }

@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 RSpec.describe Spree::TestingSupport::Preferences do
   describe 'resetting the app configuration' do

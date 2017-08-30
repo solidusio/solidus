@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Spree::Variant::PriceSelector do
   let(:variant) { build_stubbed(:variant) }

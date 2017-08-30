@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 require 'spree/testing_support/factories/return_authorization_factory'
 
 RSpec.describe 'return authorization factory' do

@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Spree::StoreCreditEvent do
   describe ".exposed_events" do

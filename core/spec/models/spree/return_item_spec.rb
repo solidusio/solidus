@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 shared_examples "an invalid state transition" do |status, expected_status|
   let(:status) { status }

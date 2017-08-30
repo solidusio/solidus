@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 module Spree
   describe Reimbursement::ReimbursementTypeEngine, type: :model do

@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Spree::OrderCapturing do
   describe '#capture_payments' do

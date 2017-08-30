@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Spree::TaxCategory, type: :model do
   context 'default tax category' do

@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Spree::Gateway::Bogus do
   it 'is deprecated' do

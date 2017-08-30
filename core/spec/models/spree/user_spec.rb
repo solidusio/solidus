@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Spree::LegacyUser, type: :model do
   context "#last_incomplete_order" do

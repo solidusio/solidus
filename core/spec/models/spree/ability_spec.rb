@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 require 'cancan/matchers'
 require 'spree/testing_support/ability_helpers'
 require 'spree/testing_support/bar_ability'

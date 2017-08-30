@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 require 'spree/testing_support/factories/credit_card_factory'
 
 RSpec.describe 'credit card factory' do

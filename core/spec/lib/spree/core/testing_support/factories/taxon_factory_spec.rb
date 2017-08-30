@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 require 'spree/testing_support/factories/taxon_factory'
 
 RSpec.describe 'taxon factory' do

@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 class DummyShippingCalculator < Spree::ShippingCalculator
 end

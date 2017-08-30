@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Spree::Promotion::Rules::UserRole, type: :model do
   let(:rule) { described_class.new(preferred_role_ids: roles_for_rule) }

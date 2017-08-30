@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Spree::Promotion, type: :model do
   let(:promotion) { Spree::Promotion.new }

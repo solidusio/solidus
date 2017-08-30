@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Spree::ReturnItem::EligibilityValidator::TimeSincePurchase, type: :model do
   let(:inventory_unit) { create(:inventory_unit, order: create(:shipped_order)) }

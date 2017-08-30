@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 require 'spree/testing_support/factories/customer_return_factory'
 
 RSpec.describe 'customer return factory' do

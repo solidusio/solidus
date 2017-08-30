@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Spree::PriceMigrator do
   let(:order) { create :order, ship_address: shipping_address, state: "delivery" }

@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'spree:migrations:copy_shipped_shipments_to_cartons' do
   include_context(

@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 require 'spree/testing_support/factories/product_option_type_factory'
 
 RSpec.describe 'product option type factory' do

@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Spree::Validations::DbMaximumLengthValidator, type: :model do
   with_model 'LimitedProduct', scope: :all do

@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Spree::TaxonsHelper, type: :helper do
   # Regression test for https://github.com/spree/spree/issues/4382

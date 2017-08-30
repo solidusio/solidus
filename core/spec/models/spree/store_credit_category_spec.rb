@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Spree::StoreCreditCategory, type: :model do
   describe "#non_expiring?" do

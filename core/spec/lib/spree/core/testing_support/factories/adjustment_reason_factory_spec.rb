@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 require 'spree/testing_support/factories/adjustment_reason_factory'
 
 RSpec.describe 'adjustment reason factory' do

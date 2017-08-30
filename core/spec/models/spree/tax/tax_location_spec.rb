@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 RSpec.describe Spree::Tax::TaxLocation do
   let(:country) { build_stubbed(:country) }

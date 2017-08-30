@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Spree::PromotionCategory, type: :model do
   describe 'validation' do

@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Spree::PermissionSets::RestrictedStockManagement do
   let(:ability) { Spree::Ability.new(user) }

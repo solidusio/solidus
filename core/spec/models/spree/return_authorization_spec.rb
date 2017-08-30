@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Spree::ReturnAuthorization, type: :model do
   let(:order) { create(:shipped_order) }

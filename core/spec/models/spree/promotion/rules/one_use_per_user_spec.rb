@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Spree::Promotion::Rules::OneUsePerUser, type: :model do
   let(:rule) { described_class.new }

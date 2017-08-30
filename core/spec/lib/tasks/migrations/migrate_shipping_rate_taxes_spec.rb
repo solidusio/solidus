@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'solidus:migrations:migrate_shipping_rate_taxes' do
   describe 'up' do

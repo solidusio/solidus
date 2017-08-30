@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-require 'spec_helper'
+require 'rails_helper'
 
 describe Spree::Variant, type: :model do
   let!(:variant) { create(:variant) }

@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Spree::OrderContents, type: :model do
   let!(:store) { create :store }

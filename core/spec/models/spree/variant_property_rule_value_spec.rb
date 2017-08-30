@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Spree::VariantPropertyRuleValue, type: :model do
   context "touching" do

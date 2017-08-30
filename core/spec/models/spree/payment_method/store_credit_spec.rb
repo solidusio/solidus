@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Spree::PaymentMethod::StoreCredit do
   let(:order)           { create(:order) }

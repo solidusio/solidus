@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 # Regression tests for https://github.com/spree/spree/issues/2179
 module Spree
