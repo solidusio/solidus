@@ -33,6 +33,8 @@
 #   s.save!
 
 require 'spree/preferences/preferable_class_methods'
+require 'active_support/concern'
+require 'active_support/core_ext/hash/keys'
 
 module Spree
   module Preferences
