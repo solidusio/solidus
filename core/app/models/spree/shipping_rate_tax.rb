@@ -28,11 +28,7 @@ module Spree
 
     def translation_key
       if tax_rate.included_in_price?
-        if amount > 0
-           :vat
-         else
-           :vat_refund
-         end
+         :vat
        else
          :sales_tax
       end
