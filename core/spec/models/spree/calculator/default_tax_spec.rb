@@ -3,7 +3,7 @@ require 'shared_examples/calculator_shared_examples'
 
 describe Spree::Calculator::DefaultTax, type: :model do
   let(:address) { create(:address) }
-  let!(:zone) { create(:zone, name: "Country Zone", default_tax: default_tax, countries: [tax_rate_country]) }
+  let!(:zone) { create(:zone, name: "Country Zone", countries: [tax_rate_country]) }
   let(:tax_rate_country) { address.country }
   let(:tax_category) { create(:tax_category) }
   let(:starts_at) { nil }
@@ -14,7 +14,6 @@ describe Spree::Calculator::DefaultTax, type: :model do
                       starts_at: starts_at, expires_at: expires_at)
   end
   let(:included_in_price) { false }
-  let(:default_tax) { false }
   subject(:calculator) { Spree::Calculator::DefaultTax.new(calculable: rate ) }
 
   it_behaves_like 'a calculator with a description'
@@ -105,32 +104,6 @@ describe Spree::Calculator::DefaultTax, type: :model do
             expect(calculator.compute(order)).to eq(0)
           end
         end
-
-        context "when the order's tax address is outside the default VAT zone" do
-          let(:default_tax) { true }
-          let(:default_vat_country) { create(:country, iso: "DE") }
-
-          before do
-            rate.zone.update(countries: [default_vat_country])
-          end
-
-          it 'creates a negative amount, indicating a VAT refund' do
-            Spree::Deprecation.silence do
-              expect(subject.compute(order)).to eq(-2.86)
-            end
-          end
-
-          context "when rate is not in its validity period" do
-            let(:starts_at) { 1.day.from_now }
-            let(:expires_at) { 2.days.from_now }
-
-            it "should be 0" do
-              Spree::Deprecation.silence do
-                expect(calculator.compute(order)).to eq(0)
-              end
-            end
-          end
-        end
       end
     end
   end
@@ -161,21 +134,6 @@ describe Spree::Calculator::DefaultTax, type: :model do
 
           it "should be equal to the item's discounted total * rate" do
             expect(calculator.compute(item)).to eql 1.38
-          end
-        end
-
-        context "when the order's tax address is outside the default VAT zone" do
-          let(:default_vat_country) { create(:country, iso: "DE") }
-          let(:default_tax) { true }
-
-          before do
-            rate.zone.update(countries: [default_vat_country])
-          end
-
-          it 'creates a negative amount, indicating a VAT refund' do
-            Spree::Deprecation.silence do
-              expect(subject.compute(item)).to eq(-1.43)
-            end
           end
         end
       end
