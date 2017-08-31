@@ -823,10 +823,6 @@ en:
         vat: '%{name} (Included in Price)'
         sales_tax_with_rate: '%{name} %{amount}'
         vat_with_rate: '%{name} %{amount} (Included in Price)'
-        sales_tax_refund: 'Refund: %{name}'
-        vat_refund: 'Refund: %{name} (Included in Price)'
-        sales_tax_refund_with_rate: 'Refund: %{name} %{amount}'
-        vat_refund_with_rate: 'Refund: %{name} %{amount} (Included in Price)'
     adjustment_reasons: Adjustment Reasons
     adjustment_successfully_closed: Adjustment has been successfully closed!
     adjustment_successfully_opened: Adjustment has been successfully opened!
@@ -1892,7 +1888,6 @@ en:
       label:
         sales_tax: "+ %{amount} %{tax_rate_name}"
         vat: "incl. %{amount} %{tax_rate_name}"
-        vat_refund: "excl. %{amount} %{tax_rate_name}"
     shipping_total: Shipping total
     shop_by_taxonomy: Shop by %{taxonomy}
     shopping_cart: Shopping Cart
