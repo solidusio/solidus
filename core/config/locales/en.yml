@@ -396,7 +396,6 @@ en:
       spree/zone:
         description: Description
         name: Name
-        default_tax: Default Tax Zone
     models:
       # LegacyUser maps to this model_name so we want to provide translations for it
       user:
@@ -1173,8 +1172,6 @@ en:
     date_range: Date Range
     default: Default
     default_refund_amount: Default Refund Amount
-    default_tax: Default Tax
-    default_tax_zone: Default Tax Zone
     delete: Delete
     deleted_variants_present: Some line items in this order have products that are no longer available.
     deleted_successfully: Deleted successfully
