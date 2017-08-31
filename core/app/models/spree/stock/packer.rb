@@ -10,11 +10,7 @@ module Spree
       end
 
       def packages
-        if splitters.empty?
-          [default_package]
-        else
-          build_splitter.split [default_package]
-        end
+        Spree::Stock::SplitterChain.new(stock_location, splitters).split([default_package])
       end
 
       def default_package
@@ -49,14 +45,6 @@ module Spree
           where(stock_location_id: stock_location.id).
           map { |stock_item| [stock_item.variant_id, stock_item] }.
           to_h # there is only one stock item per variant in a stock location
-      end
-
-      def build_splitter
-        splitter = nil
-        splitters.reverse_each do |klass|
-          splitter = klass.new(self, splitter)
-        end
-        splitter
       end
     end
   end

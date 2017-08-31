@@ -6,12 +6,12 @@ module Spree
       describe Backordered, type: :model do
         let(:variant) { build(:variant) }
 
-        let(:packer) { build(:stock_packer) }
+        let(:stock_location) { mock_model(Spree::StockLocation) }
 
-        subject { Backordered.new(packer) }
+        subject { Backordered.new(stock_location) }
 
         it 'splits packages by status' do
-          package = Package.new(packer.stock_location)
+          package = Package.new(stock_location)
           4.times { package.add build(:inventory_unit, variant: variant) }
           5.times { package.add build(:inventory_unit, variant: variant), :backordered }
 
