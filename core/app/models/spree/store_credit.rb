@@ -144,20 +144,8 @@ class Spree::StoreCredit < Spree::PaymentSource
     end
   end
 
-  def actions
-    [CAPTURE_ACTION, VOID_ACTION, CREDIT_ACTION]
-  end
-
-  def can_capture?(payment)
-    payment.pending? || payment.checkout?
-  end
-
   def can_void?(payment)
     payment.pending?
-  end
-
-  def can_credit?(payment)
-    payment.completed? && payment.credit_allowed > 0
   end
 
   def generate_authorization_code
