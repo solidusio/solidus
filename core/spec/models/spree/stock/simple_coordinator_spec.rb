@@ -208,6 +208,55 @@ module Spree
             end
           end
         end
+
+        context 'with three stock locations' do
+          let!(:stock_location_2) { create(:stock_location, propagate_all_variants: false, active: true) }
+          let!(:stock_location_3) { create(:stock_location, propagate_all_variants: false, active: true) }
+          before do
+            stock_item2 = variant.stock_items.create!(stock_location: stock_location_2, backorderable: false)
+            stock_item2.set_count_on_hand(location_2_inventory)
+
+            stock_item3 = variant.stock_items.create!(stock_location: stock_location_3, backorderable: false)
+            stock_item3.set_count_on_hand(location_3_inventory)
+          end
+
+          # Regression test for https://github.com/solidusio/solidus/issues/2122
+          context "with sufficient inventory in first two locations" do
+            let(:location_1_inventory) { 3 }
+            let(:location_2_inventory) { 3 }
+            let(:location_3_inventory) { 3 }
+
+            it_behaves_like "a fulfillable package"
+
+            it "creates only two packages" do
+              expect(shipments.count).to eq(2)
+            end
+          end
+
+          context "with sufficient inventory only across all three locations" do
+            let(:location_1_inventory) { 2 }
+            let(:location_2_inventory) { 2 }
+            let(:location_3_inventory) { 2 }
+
+            it_behaves_like "a fulfillable package"
+
+            it "creates three packages" do
+              expect(shipments.count).to eq(3)
+            end
+          end
+
+          context "with sufficient inventory only across all three locations" do
+            let(:location_1_inventory) { 2 }
+            let(:location_2_inventory) { 2 }
+            let(:location_3_inventory) { 2 }
+
+            it_behaves_like "a fulfillable package"
+
+            it "creates three packages" do
+              expect(shipments.count).to eq(3)
+            end
+          end
+        end
       end
     end
   end
