@@ -236,6 +236,9 @@ Style/StringLiterals:
 Style/SymbolProc:
   Enabled: false
 
+Style/TernaryParentheses:
+  Enabled: false
+
 Style/WhileUntilModifier:
   Enabled: false
   StyleGuide: http://relaxed.ruby.style/#stylewhileuntilmodifier
