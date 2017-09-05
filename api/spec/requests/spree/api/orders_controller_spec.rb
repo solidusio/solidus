@@ -506,6 +506,7 @@ module Spree
 
       context "with a line item" do
         let(:order) { create(:order_with_line_items) }
+        let(:line_item) { order.line_items.first }
 
         it "can empty an order" do
           create(:adjustment, order: order, adjustable: order)
