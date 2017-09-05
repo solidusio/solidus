@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Spree::Order do
   context "when an order has an adjustment that zeroes the total, but another adjustment for shipping that raises it above zero" do

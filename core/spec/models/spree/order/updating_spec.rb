@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Spree::Order, type: :model do
   let(:order) { create(:order) }

@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 require 'spree/testing_support/factories/order_factory'
 
 shared_examples "shipping methods are assigned" do

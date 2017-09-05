@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 RSpec.describe Spree::TaxCalculator::Default do
   let(:shipping_address) { FactoryGirl.create(:address, state: new_york) }

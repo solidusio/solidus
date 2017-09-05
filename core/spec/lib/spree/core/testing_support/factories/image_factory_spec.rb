@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 require 'spree/testing_support/factories/image_factory'
 
 RSpec.describe 'image factory' do

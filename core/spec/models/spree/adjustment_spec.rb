@@ -1,7 +1,7 @@
 # encoding: utf-8
 #
 
-require 'spec_helper'
+require 'rails_helper'
 
 describe Spree::Adjustment, type: :model do
   let!(:store) { create :store }

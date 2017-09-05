@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Spree::Refund, type: :model do
   describe 'create' do

@@ -1,4 +1,4 @@
-require "spec_helper"
+require "rails_helper"
 
 describe Spree::PromotionCodeBatch, type: :model do
   subject do

@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Spree::Preferences::ScopedStore, type: :model do
   let(:scoped_store){ described_class.new(prefix, suffix) }

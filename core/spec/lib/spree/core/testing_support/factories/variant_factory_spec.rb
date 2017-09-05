@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 require 'spree/testing_support/factories/variant_factory'
 
 RSpec.describe 'variant factory' do

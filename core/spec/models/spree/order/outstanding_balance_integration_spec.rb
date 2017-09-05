@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 # This method in particular has been difficult to get right.
 # Many things will affect this amount

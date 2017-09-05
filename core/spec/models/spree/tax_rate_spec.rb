@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Spree::TaxRate, type: :model do
   it { is_expected.to respond_to(:shipping_rate_taxes) }

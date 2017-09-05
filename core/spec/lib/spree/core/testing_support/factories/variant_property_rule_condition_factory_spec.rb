@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 require 'spree/testing_support/factories/variant_property_rule_condition_factory'
 
 RSpec.describe 'variant property rule condition factory' do

@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Spree::AppConfiguration, type: :model do
   let(:prefs) { Rails.application.config.spree.preferences }

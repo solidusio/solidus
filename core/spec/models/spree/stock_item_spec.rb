@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Spree::StockItem, type: :model do
   let(:stock_location) { create(:stock_location_with_items) }

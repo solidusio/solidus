@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Spree::CreditCard, type: :model do
   let(:valid_credit_card_attributes) do

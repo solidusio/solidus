@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Spree::PermissionSets::UserDisplay do
   let(:ability) { DummyAbility.new }

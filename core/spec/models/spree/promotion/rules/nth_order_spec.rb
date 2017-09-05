@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Spree::Promotion::Rules::NthOrder do
   describe "#applicable?" do

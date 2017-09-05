@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 RSpec.describe Spree::Core::StockConfiguration do
   describe '#coordinator_class' do

@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Spree::Promotion::Rules::ItemTotal, type: :model do
   let(:rule) do

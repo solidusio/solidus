@@ -1,4 +1,4 @@
-require "spec_helper"
+require "rails_helper"
 
 describe Spree::Variant::VatPriceGenerator do
   let(:tax_category) { create(:tax_category) }

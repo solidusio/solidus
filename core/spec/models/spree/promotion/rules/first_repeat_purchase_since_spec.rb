@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Spree::Promotion::Rules::FirstRepeatPurchaseSince do
   describe "#applicable?" do

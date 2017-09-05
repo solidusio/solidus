@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Spree::PermissionSets::DefaultCustomer do
   context 'as Guest User' do

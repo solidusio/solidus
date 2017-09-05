@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'solidus:migrations:create_vat_prices' do
   describe 'up' do

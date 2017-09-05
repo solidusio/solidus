@@ -1,6 +1,6 @@
 # coding: UTF-8
 
-require 'spec_helper'
+require 'rails_helper'
 
 describe Spree::Taxon, type: :model do
   describe '#to_param' do

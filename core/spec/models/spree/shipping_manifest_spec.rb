@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 module Spree
   describe ShippingManifest, type: :model do

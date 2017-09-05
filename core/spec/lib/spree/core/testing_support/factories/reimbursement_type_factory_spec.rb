@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 require 'spree/testing_support/factories/reimbursement_type_factory'
 
 RSpec.describe 'reimbursement type factory' do

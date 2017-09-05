@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 class FakesController < ApplicationController
   include Spree::Core::ControllerHelpers::StrongParameters

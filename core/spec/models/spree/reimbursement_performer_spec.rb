@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Spree::ReimbursementPerformer, type: :model do
   let(:reimbursement)           { create(:reimbursement, return_items_count: 1) }

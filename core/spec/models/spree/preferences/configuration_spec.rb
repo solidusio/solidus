@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Spree::Preferences::Configuration, type: :model do
   before :all do

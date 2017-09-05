@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 require 'spree/testing_support/factories/refund_factory'
 
 RSpec.describe 'refund factory' do

@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'solidus:upgrade:one_point_three' do
   include_context(

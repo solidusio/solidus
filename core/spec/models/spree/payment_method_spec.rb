@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Spree::PaymentMethod, type: :model do
   let!(:payment_method_nil_display)  { create(:payment_method, active: true,

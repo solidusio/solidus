@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Spree::State, type: :model do
   describe '.with_name_or_abbr' do

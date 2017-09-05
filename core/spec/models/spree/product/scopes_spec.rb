@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe "Product scopes", type: :model do
   let!(:product) { create(:product) }

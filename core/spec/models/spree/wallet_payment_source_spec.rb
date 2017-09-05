@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Spree::WalletPaymentSource, type: :model do
   subject { Spree::WalletPaymentSource }

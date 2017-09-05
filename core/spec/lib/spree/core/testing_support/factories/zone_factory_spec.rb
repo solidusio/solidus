@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 require 'spree/testing_support/factories/zone_factory'
 
 RSpec.describe 'zone factory' do

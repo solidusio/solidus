@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 require 'shared_examples/calculator_shared_examples'
 
 describe Spree::Calculator::FlexiRate, type: :model do
