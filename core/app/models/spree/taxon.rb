@@ -1,3 +1,5 @@
+require 'spree/core/product_filters'
+
 module Spree
   class Taxon < Spree::Base
     acts_as_nested_set dependent: :destroy
