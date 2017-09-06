@@ -1,5 +1,8 @@
 ## Solidus 2.4.0 (master, unreleased)
 
+- Deprecates several preference fields helpers in favor of preference field partials. [\#2040](https://github.com/solidusio/solidus/pull/2040) ([tvdeyen](https://github.com/tvdeyen))
+  Please render `spree/admin/shared/preference_fields/\#{preference_type}' instead
+
 - Remove `set_current_order` calls in `Spree::Core::ControllerHelpers::Order`
   [\#2185](https://github.com/solidusio/solidus/pull/2185) ([Murph33](https://github.com/murph33))
 

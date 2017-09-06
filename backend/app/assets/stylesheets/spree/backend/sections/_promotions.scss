@@ -74,9 +74,11 @@
     text-align: right;
   }
 
-  .field {
+  .calculator-fields {
     padding-bottom: 10px;
+  }
 
+  .field {
     &.alpha {
       margin-left: -1px;
       padding-left: 11px;

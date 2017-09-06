@@ -12,7 +12,7 @@
     </div>
 
     <div class="col-6">
-      <div class="settings field">
+      <div class="settings">
         <% calculators.each do |calculator_class| %>
           <% calculator = promotion_action.calculator.class == calculator_class ? promotion_action.calculator : calculator_class.new %>
           <div class="js-calculator-preferences" data-calculator-type="<%= calculator_class %>">

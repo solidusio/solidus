@@ -11,7 +11,10 @@
       <% calculator = f.object.calculator.class == calculator_class ? f.object.calculator : calculator_class.new %>
       <div class="js-calculator-preferences" data-calculator-type="<%= calculator_class %>">
         <%= f.fields_for :calculator, calculator do |calculator_form| %>
-          <%= preference_fields(calculator, calculator_form) %>
+          <% calculator.preferences.keys.each do |key| %>
+            <%= render "spree/admin/shared/preference_fields/#{calculator.preference_type(key)}",
+               form: calculator_form, attribute: "preferred_#{key}", label: Spree.t(key) %>
+          <% end %>
         <% end %>
       </div>
     <% end %>
