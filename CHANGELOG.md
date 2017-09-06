@@ -410,6 +410,18 @@
 
 ## Solidus 1.4.0 (2016-09-26)
 
+*   Order Merging on Sign In:
+
+    Previously a before filter added in `core/lib/spree/core/controller_helpers/order.rb`
+    would cause sql queries to be used on almost every request in the frontend.
+    If you do not use Solidus Auth you will need to hook into this helper and
+    call `set_current_order` where your user signs in. This merges incomplete
+    orders a user has going with their current cart.  If you do use
+    Solidus Auth you will need to make sure you use a current enough
+    version that includes this explicit call. If you do use Solidus Auth but do _not_
+    use Solidus Frontend you will also need to hook into this helper and call
+    `set_current_order` where your user signs in.
+
 *   Use in-memory objects in OrderUpdater and related areas.
 
     Solidus now uses in-memory data for updating orders in and around
