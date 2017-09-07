@@ -36,6 +36,7 @@ group :test do
   gem 'rspec_junit_formatter'
   gem 'rails-controller-testing'
   gem 'ffaker', require: false
+  gem 'selenium-webdriver'
 end
 
 group :test, :development do
