@@ -50,5 +50,9 @@ module Spree
         rate.amount * item.discounted_amount / (1 + sum_of_included_tax_rates(item))
       )
     end
+
+    def sum_of_included_tax_rates(item)
+      rates_for_item(item).map(&:amount).sum
+    end
   end
 end
