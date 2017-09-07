@@ -189,20 +189,19 @@ module Spree
         end
 
         it 'uses the configured shipping rate taxer' do
-          class Spree::Tax::TestTaxer
-            def initialize
+          class Spree::Tax::TestTaxCalculator
+            def initialize(_order)
             end
 
-            def tax(_)
-              Spree::ShippingRate.new
+            def calculate(_shipping_rate)
+              [
+                Spree::Tax::ItemTax.new(label: "TAX", amount: 5)
+              ]
             end
           end
-          Spree::Config.shipping_rate_taxer_class = Spree::Tax::TestTaxer
+          Spree::Config.shipping_rate_tax_calculator_class = Spree::Tax::TestTaxCalculator
 
-          shipping_rate = Spree::ShippingRate.new
-          allow(Spree::ShippingRate).to receive(:new).and_return(shipping_rate)
-
-          expect(Spree::Tax::TestTaxer).to receive(:new).and_call_original
+          expect(Spree::Tax::TestTaxCalculator).to receive(:new).and_call_original
           subject.shipping_rates(package)
         end
       end
