@@ -23,9 +23,7 @@ describe 'Stock Transfers', type: :feature, js: true do
       expect(page).to have_field('stock_transfer_description', with: description)
 
       select "NY", from: 'Destination Location'
-      within "form.edit_stock_transfer" do
-        page.find('button').trigger('click')
-      end
+      click_on 'Save'
 
       expect(page).to have_content('Stock Transfer has been successfully updated')
       expect(page).to have_select("Destination Location", selected: 'NY')
