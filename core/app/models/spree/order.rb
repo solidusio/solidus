@@ -185,11 +185,6 @@ module Spree
       line_items.map(&:amount).sum
     end
 
-    # Sum of all line item amounts pre-tax
-    def pre_tax_item_amount
-      line_items.to_a.sum(&:pre_tax_amount)
-    end
-
     # Sum of all line item amounts after promotions, before added tax
     def discounted_item_amount
       line_items.to_a.sum(&:discounted_amount)
@@ -199,6 +194,13 @@ module Spree
     def item_total_before_tax
       line_items.to_a.sum(&:total_before_tax)
     end
+
+    # Sum of all line item amounts pre-tax
+    def item_total_excluding_vat
+      line_items.to_a.sum(&:total_excluding_vat)
+    end
+    alias pre_tax_item_amount item_total_excluding_vat
+    deprecate pre_tax_item_amount: :item_total_excluding_vat, deprecator: Spree::Deprecation
 
     def currency
       self[:currency] || Spree::Config[:currency]

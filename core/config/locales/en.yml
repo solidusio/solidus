@@ -72,6 +72,7 @@ en:
         number: Return Number
         pre_tax_total: Pre-Tax Total
         total: Total
+        total_excluding_vat: Pre-Tax Total
         created_at: "Date/Time"
         reimbursement_status: Reimbursement status
         name: Name
@@ -250,6 +251,7 @@ en:
       spree/return_authorization:
         amount: Amount
         pre_tax_total: Pre-Tax Total
+        total_excluding_vat: Pre-Tax Total
       spree/return_item:
         acceptance_status: Acceptance status
         acceptance_status_errors: Acceptance errors
@@ -2017,6 +2019,7 @@ en:
     to: to
     to_add_variants_you_must_first_define: To add variants, you must first define
     total: Total
+    total_excluding_vat: Pre-Tax Total
     total_per_item: Total per item
     total_pre_tax_refund: Total Pre-Tax Refund
     total_price: Total price

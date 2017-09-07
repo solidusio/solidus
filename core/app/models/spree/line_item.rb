@@ -59,30 +59,37 @@ module Spree
     end
     deprecate discounted_amount: :total_before_tax, deprecator: Spree::Deprecation
 
+    # @return [BigDecimal] the amount of this line item, taking into
+    #   consideration all its adjustments.
+    def total
+      amount + adjustment_total
+    end
+    alias final_amount total
+    deprecate final_amount: :total, deprecator: Spree::Deprecation
+
     # @return [BigDecimal] the amount of this item, taking into consideration
     #   all non-tax adjustments.
     def total_before_tax
       amount + adjustments.select { |a| !a.tax? && a.eligible? }.sum(&:amount)
     end
 
-    # @return [BigDecimal] the amount of this line item, taking into
-    #   consideration all its adjustments.
-    def final_amount
-      amount + adjustment_total
-    end
-    alias total final_amount
-
-    # @return [BigDecimal] the amount of this line item before included tax
+    # @return [BigDecimal] the amount of this line item before VAT tax
     # @note just like `amount`, this does not include any additional tax
-    def pre_tax_amount
+    def total_excluding_vat
       total_before_tax - included_tax_total
     end
+    alias pre_tax_amount total_excluding_vat
+    deprecate pre_tax_amount: :total_excluding_vat, deprecator: Spree::Deprecation
 
     extend Spree::DisplayMoney
-    money_methods :amount, :discounted_amount, :final_amount, :pre_tax_amount, :price,
+    money_methods :amount, :discounted_amount, :price,
                   :included_tax_total, :additional_tax_total,
-                  :total_before_tax
+                  :total, :total_before_tax, :total_excluding_vat
     deprecate display_discounted_amount: :display_total_before_tax, deprecator: Spree::Deprecation
+    alias display_final_amount display_total
+    deprecate display_final_amount: :display_total, deprecator: Spree::Deprecation
+    alias display_pre_tax_amount display_total_excluding_vat
+    deprecate display_pre_tax_amount: :display_total_excluding_vat, deprecator: Spree::Deprecation
     alias discounted_money display_discounted_amount
     deprecate discounted_money: :display_total_before_tax, deprecator: Spree::Deprecation
 

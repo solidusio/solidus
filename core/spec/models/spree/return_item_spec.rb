@@ -140,13 +140,13 @@ describe Spree::ReturnItem, type: :model do
     end
   end
 
-  describe "#display_pre_tax_amount" do
+  describe "#display_total_excluding_vat" do
     let(:amount) { 21.22 }
     let(:included_tax_total) { 1.22 }
     let(:return_item) { build(:return_item, amount: amount, included_tax_total: included_tax_total) }
 
     it "returns a Spree::Money" do
-      expect(return_item.display_pre_tax_amount).to eq Spree::Money.new(amount - included_tax_total)
+      expect(return_item.display_total_excluding_vat).to eq Spree::Money.new(amount - included_tax_total)
     end
   end
 
@@ -558,7 +558,7 @@ describe Spree::ReturnItem, type: :model do
     end
   end
 
-  describe "exchange pre_tax_amount" do
+  describe "exchange amount" do
     let(:return_item) { build(:return_item) }
 
     context "the return item is intended to be exchanged" do

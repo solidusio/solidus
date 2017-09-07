@@ -150,7 +150,7 @@ describe Spree::InventoryUnit, type: :model do
   end
 
   describe "#current_or_new_return_item" do
-    before { allow(inventory_unit).to receive_messages(pre_tax_amount: 100.0) }
+    before { allow(inventory_unit).to receive_messages(total_excluding_vat: 100.0) }
 
     subject { inventory_unit.current_or_new_return_item }
 

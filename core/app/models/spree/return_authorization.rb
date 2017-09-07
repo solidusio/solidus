@@ -29,13 +29,16 @@ module Spree
     end
 
     extend DisplayMoney
-    money_methods :pre_tax_total, :amount
+    money_methods :pre_tax_total, :amount, :total_excluding_vat
+    deprecate display_pre_tax_total: :display_total_excluding_vat, deprecator: Spree::Deprecation
 
     self.whitelisted_ransackable_attributes = ['memo']
 
-    def pre_tax_total
-      return_items.map(&:pre_tax_amount).sum
+    def total_excluding_vat
+      return_items.map(&:total_excluding_vat).sum
     end
+    alias pre_tax_total total_excluding_vat
+    deprecate pre_tax_total: :total_excluding_vat, deprecator: Spree::Deprecation
 
     def amount
       return_items.sum(:amount)

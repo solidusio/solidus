@@ -77,7 +77,7 @@ describe Spree::ReturnAuthorization, type: :model do
     end
   end
 
-  describe "#pre_tax_total" do
+  describe "#total_excluding_vat" do
     let(:amount_1) { 15.0 }
     let!(:return_item_1) { create(:return_item, return_authorization: return_authorization, amount: amount_1) }
 
@@ -87,17 +87,17 @@ describe Spree::ReturnAuthorization, type: :model do
     let(:amount_3) { 5.0 }
     let!(:return_item_3) { create(:return_item, return_authorization: return_authorization, amount: amount_3) }
 
-    subject { return_authorization.reload.pre_tax_total }
+    subject { return_authorization.reload.total_excluding_vat }
 
     it "sums it's associated return_item's amounts" do
       expect(subject).to eq(amount_1 + amount_2 + amount_3)
     end
   end
 
-  describe "#display_pre_tax_total" do
+  describe "#display_total_excluding_vat" do
     it "returns a Spree::Money" do
-      allow(return_authorization).to receive_messages(pre_tax_total: 21.22)
-      expect(return_authorization.display_pre_tax_total).to eq(Spree::Money.new(21.22))
+      allow(return_authorization).to receive_messages(total_excluding_vat: 21.22)
+      expect(return_authorization.display_total_excluding_vat).to eq(Spree::Money.new(21.22))
     end
   end
 
