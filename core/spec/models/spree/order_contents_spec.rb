@@ -301,7 +301,13 @@ RSpec.describe Spree::OrderContents, type: :model do
   end
 
   context "completed order" do
-    let(:order) { Spree::Order.create! state: 'complete', completed_at: Time.current }
+    let(:order) do
+      Spree::Order.create!(
+        state: 'complete',
+        completed_at: Time.current,
+        email: "test@example.com"
+      )
+    end
 
     before { order.shipments.create! stock_location_id: variant.stock_location_ids.first }
 
