@@ -62,6 +62,8 @@ feature "Tiered Calculator Promotions" do
 
       within('#actions_container') { click_button "Update" }
 
+      expect(page).to have_text('has been successfully updated!')
+
       calculator = promotion.actions.first.calculator
       expect(calculator.preferred_tiers).to eq({
         BigDecimal.new(100) => 10,
