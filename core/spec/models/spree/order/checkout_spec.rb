@@ -520,7 +520,8 @@ RSpec.describe Spree::Order, type: :model do
       context 'when the line items are not available' do
         before do
           order.line_items << FactoryBot.create(:line_item)
-          order.store = FactoryBot.build(:store)
+          order.store = FactoryBot.create(:store)
+
           Spree::OrderUpdater.new(order).update
 
           order.save!
