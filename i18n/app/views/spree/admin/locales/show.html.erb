@@ -15,18 +15,7 @@
 </table>
 
 <script>
-$(function(){
-  if ($(".locales-settings").length) {
-    var available_locales = Spree.ajax({
-      type: 'GET',
-      url: "/api/config/available_locales",
-      success: function(data) {
-        new Spree.InlineTableLocales({
-          el: $("table.locales-settings > tbody"),
-          collection: data
-        });
-      }
-    })
-  }
-});
+Spree.ready(function(){
+  new Spree.InlineTableLocales({ el: $("table.locales-settings > tbody") });
+})
 </script>
