@@ -49,12 +49,12 @@ module Spree
       # 2,147,483,647 is crazy. See issue https://github.com/spree/spree/issues/2695.
       if !quantity.between?(1, 2_147_483_647)
         @order.errors.add(:base, Spree.t(:please_enter_reasonable_quantity))
-      end
-
-      begin
-        @line_item = @order.contents.add(variant, quantity)
-      rescue ActiveRecord::RecordInvalid => e
-        @order.errors.add(:base, e.record.errors.full_messages.join(", "))
+      else
+        begin
+          @line_item = @order.contents.add(variant, quantity)
+        rescue ActiveRecord::RecordInvalid => e
+          @order.errors.add(:base, e.record.errors.full_messages.join(", "))
+        end
       end
 
       respond_with(@order) do |format|
