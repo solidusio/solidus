@@ -186,7 +186,7 @@ module Spree
     end
 
     def persist_totals
-      order.save!(validate: false)
+      order.save!
     end
 
     def log_state_change(name)
