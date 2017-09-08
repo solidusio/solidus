@@ -522,7 +522,7 @@ describe Spree::Order, type: :model do
       context 'when the line items are not available' do
         before do
           order.line_items << FactoryGirl.create(:line_item)
-          order.store = FactoryGirl.build(:store)
+          order.store = FactoryGirl.create(:store)
           Spree::OrderUpdater.new(order).update
 
           order.save!
