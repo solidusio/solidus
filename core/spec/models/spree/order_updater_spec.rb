@@ -552,5 +552,15 @@ module Spree
         }.to change { line_item.reload.adjustment_total }.from(100).to(0)
       end
     end
+
+    context "with invalid associated objects" do
+      let(:order) { Spree::Order.create(ship_address: Spree::Address.new) }
+
+      subject { updater.update }
+
+      it "raises because of the invalid object" do
+        expect { subject }.to raise_exception(ActiveRecord::RecordInvalid)
+      end
+    end
   end
 end
