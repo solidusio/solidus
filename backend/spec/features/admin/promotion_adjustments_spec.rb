@@ -188,14 +188,14 @@ describe "Promotion Adjustments", type: :feature, js: true do
     end
 
     it "should allow an admin to create a promo with generated codes" do
-      fill_in "Name", with: "Promotion"
+      fill_in "Name", with: "SAVE SAVE SAVE"
       choose "Multiple promotion codes"
       fill_in "Base code", with: "testing"
       fill_in "Number of codes", with: "10"
       click_button "Create"
-      expect(page).to have_title("Promotion - Promotions")
+      expect(page).to have_title("SAVE SAVE SAVE - Promotions")
 
-      promotion = Spree::Promotion.find_by(name: "Promotion")
+      promotion = Spree::Promotion.find_by(name: "SAVE SAVE SAVE")
       expect(promotion.path).to be_nil
       expect(promotion).not_to be_apply_automatically
       expect(promotion.rules).to be_blank
