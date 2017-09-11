@@ -233,14 +233,6 @@ module Spree
       shipments.any?(&:backordered?)
     end
 
-    # Returns the relevant zone (if any) to be used for taxation purposes.
-    # Uses default tax zone unless there is a specific match
-    def tax_zone
-      Spree::Zone.match(tax_address) || Spree::Zone.default_tax
-    end
-    deprecate tax_zone: "Please use Spree::Order#tax_address instead.",
-              deprecator: Spree::Deprecation
-
     # Returns the address for taxation based on configuration
     def tax_address
       if Spree::Config[:tax_using_ship_address]

@@ -396,7 +396,6 @@ en:
       spree/zone:
         description: Description
         name: Name
-        default_tax: Default Tax Zone
     models:
       # LegacyUser maps to this model_name so we want to provide translations for it
       user:
@@ -823,10 +822,6 @@ en:
         vat: '%{name} (Included in Price)'
         sales_tax_with_rate: '%{name} %{amount}'
         vat_with_rate: '%{name} %{amount} (Included in Price)'
-        sales_tax_refund: 'Refund: %{name}'
-        vat_refund: 'Refund: %{name} (Included in Price)'
-        sales_tax_refund_with_rate: 'Refund: %{name} %{amount}'
-        vat_refund_with_rate: 'Refund: %{name} %{amount} (Included in Price)'
     adjustment_reasons: Adjustment Reasons
     adjustment_successfully_closed: Adjustment has been successfully closed!
     adjustment_successfully_opened: Adjustment has been successfully opened!
@@ -1177,8 +1172,6 @@ en:
     date_range: Date Range
     default: Default
     default_refund_amount: Default Refund Amount
-    default_tax: Default Tax
-    default_tax_zone: Default Tax Zone
     delete: Delete
     deleted_variants_present: Some line items in this order have products that are no longer available.
     deleted_successfully: Deleted successfully
@@ -1892,7 +1885,6 @@ en:
       label:
         sales_tax: "+ %{amount} %{tax_rate_name}"
         vat: "incl. %{amount} %{tax_rate_name}"
-        vat_refund: "excl. %{amount} %{tax_rate_name}"
     shipping_total: Shipping total
     shop_by_taxonomy: Shop by %{taxonomy}
     shopping_cart: Shopping Cart
