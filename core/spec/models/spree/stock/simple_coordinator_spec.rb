@@ -2,21 +2,12 @@ require 'rails_helper'
 
 module Spree
   module Stock
-    describe Coordinator, type: :model do
+    describe SimpleCoordinator, type: :model do
       let(:order) { create(:order_with_line_items, line_items_count: 2) }
 
-      subject { Coordinator.new(order) }
+      subject { SimpleCoordinator.new(order) }
 
       describe "#shipments" do
-        it "builds, prioritizes and estimates" do
-          expect(subject).to receive(:build_location_configured_packages).ordered.and_call_original
-          expect(subject).to receive(:build_packages).ordered.and_call_original
-          expect(subject).to receive(:prioritize_packages).ordered.and_call_original
-          expect(subject).to receive(:estimate_packages).ordered.and_call_original
-          expect(subject).to receive(:validate_packages).ordered.and_call_original
-          subject.shipments
-        end
-
         it 'uses the pluggable estimator class' do
           expect(Spree::Config.stock).to receive(:estimator_class).and_call_original
           subject.shipments
@@ -173,7 +164,6 @@ module Spree
           context "with sufficient inventory only across both locations" do
             let(:location_1_inventory) { 2 }
             let(:location_2_inventory) { 3 }
-            before { pending "This is broken. The coordinator packages this incorrectly" }
             it_behaves_like "a fulfillable package"
           end
 
@@ -214,28 +204,57 @@ module Spree
             context "and insufficient inventory" do
               let(:location_1_inventory) { 0 }
               let(:location_2_inventory) { 3 }
-              before { pending "This is broken. The coordinator packages this incorrectly" }
               it_behaves_like "an unfulfillable package"
             end
           end
         end
-      end
 
-      context "build location configured packages" do
-        context "there are configured stock locations" do
-          let!(:stock_location) { order.variants.first.stock_locations.first }
-          let!(:stock_location_2) { create(:stock_location) }
-
+        context 'with three stock locations' do
+          let!(:stock_location_2) { create(:stock_location, propagate_all_variants: false, active: true) }
+          let!(:stock_location_3) { create(:stock_location, propagate_all_variants: false, active: true) }
           before do
-            line_item_1 = order.line_items.first
-            line_item_2 = order.line_items.last
-            order.order_stock_locations.create(stock_location_id: stock_location.id, quantity: line_item_1.quantity, variant_id: line_item_1.variant_id)
-            order.order_stock_locations.create(stock_location_id: stock_location_2.id, quantity: line_item_2.quantity, variant_id: line_item_2.variant_id)
+            stock_item2 = variant.stock_items.create!(stock_location: stock_location_2, backorderable: false)
+            stock_item2.set_count_on_hand(location_2_inventory)
+
+            stock_item3 = variant.stock_items.create!(stock_location: stock_location_3, backorderable: false)
+            stock_item3.set_count_on_hand(location_3_inventory)
           end
 
-          it "builds a shipment for each associated stock location" do
-            shipments = subject.shipments
-            expect(shipments.map(&:stock_location)).to match_array([stock_location, stock_location_2])
+          # Regression test for https://github.com/solidusio/solidus/issues/2122
+          context "with sufficient inventory in first two locations" do
+            let(:location_1_inventory) { 3 }
+            let(:location_2_inventory) { 3 }
+            let(:location_3_inventory) { 3 }
+
+            it_behaves_like "a fulfillable package"
+
+            it "creates only two packages" do
+              expect(shipments.count).to eq(2)
+            end
+          end
+
+          context "with sufficient inventory only across all three locations" do
+            let(:location_1_inventory) { 2 }
+            let(:location_2_inventory) { 2 }
+            let(:location_3_inventory) { 2 }
+
+            it_behaves_like "a fulfillable package"
+
+            it "creates three packages" do
+              expect(shipments.count).to eq(3)
+            end
+          end
+
+          context "with sufficient inventory only across all three locations" do
+            let(:location_1_inventory) { 2 }
+            let(:location_2_inventory) { 2 }
+            let(:location_3_inventory) { 2 }
+
+            it_behaves_like "a fulfillable package"
+
+            it "creates three packages" do
+              expect(shipments.count).to eq(3)
+            end
           end
         end
       end

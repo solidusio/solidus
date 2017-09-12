@@ -1066,7 +1066,7 @@ describe Spree::Order, type: :model do
     subject(:order) { create(:order) }
     it "assigns the coordinator returned shipments to its shipments" do
       shipment = build(:shipment)
-      allow_any_instance_of(Spree::Stock::Coordinator).to receive(:shipments).and_return([shipment])
+      allow_any_instance_of(Spree::Stock::SimpleCoordinator).to receive(:shipments).and_return([shipment])
       subject.create_proposed_shipments
       expect(subject.shipments).to eq [shipment]
     end
