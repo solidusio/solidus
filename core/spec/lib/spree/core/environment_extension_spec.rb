@@ -1,4 +1,5 @@
-require 'rails_helper'
+require 'spec_helper'
+require 'spree/core/environment_extension'
 
 class DummyClass
   include Spree::Core::EnvironmentExtension

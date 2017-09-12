@@ -1,6 +1,8 @@
 # encoding: utf-8
 
 require 'money'
+require 'monetize'
+require 'active_support/core_ext/string/output_safety'
 
 module Spree
   # Spree::Money is a relatively thin wrapper around Monetize which handles

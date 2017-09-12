@@ -1,5 +1,6 @@
 require 'i18n'
 require 'active_support/core_ext/array/extract_options'
+require 'action_view'
 
 module Spree
   class TranslationHelperWrapper # :nodoc:
