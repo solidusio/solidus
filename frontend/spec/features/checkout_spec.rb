@@ -658,6 +658,12 @@ describe "Checkout", type: :feature, inaccessible: true do
       click_on "Save and Continue"
 
       expect(page).to have_current_path("/checkout/confirm")
+
+      payments = Spree::Order.last.payments
+      expect(payments.count).to eq(1)
+      expect(payments.first.source.number).to eq("4111111111111111")
+      click_button "Place Order"
+      expect(page).to have_content("Your order has been processed successfully")
     end
   end
 
