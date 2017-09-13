@@ -10,6 +10,16 @@ describe Spree::Calculator, type: :model do
   class SimpleComputable
   end
 
+  describe "#calculators" do
+    subject { Spree::Calculator.calculators }
+
+    it 'returns the (deprecated) calculator step' do
+      Spree::Deprecation.silence do
+        expect(subject).to be_a Spree::Core::Environment::Calculators
+      end
+    end
+  end
+
   context "with computable" do
     let(:calculator) { SimpleCalculator.new }
     let(:computable) { SimpleComputable.new }
