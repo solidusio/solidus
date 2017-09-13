@@ -64,7 +64,7 @@ Capybara::Screenshot.register_driver(:chrome_headless) do |driver, path|
   driver.browser.save_screenshot(path)
 end
 
-Capybara.javascript_driver = :chrome_headless
+Capybara.javascript_driver = (ENV['CAPYBARA_DRIVER'] || :chrome_headless).to_sym
 
 ActionView::Base.raise_on_missing_translations = true
 
