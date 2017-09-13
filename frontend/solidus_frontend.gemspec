@@ -21,7 +21,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = '>= 1.8.23'
 
   s.add_dependency 'solidus_api', s.version
-  s.add_dependency 'solidus_core', s.version
+  s.add_dependency 'solidus_rails', s.version
 
   s.add_dependency 'canonical-rails', '~> 0.2.0'
   s.add_dependency 'jquery-rails'
