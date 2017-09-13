@@ -20,6 +20,10 @@ development:
   encoding: utf8
 test:
   adapter: mysql2
+  <% if ENV['TRAVIS'] %>
+  username: root
+  password:
+  <% end %>
   database: <%= database_prefix %><%= options[:lib_name] %>_solidus_test
   encoding: utf8
 production:
