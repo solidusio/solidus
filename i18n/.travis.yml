@@ -1,3 +1,6 @@
+# Need to stay on precise until Travis fixes their MySQL problems
+# See: https://github.com/travis-ci/travis-ci/issues/8331
+dist: precise
 sudo: false
 cache: bundler
 language: ruby
