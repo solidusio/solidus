@@ -25,7 +25,7 @@ module Spree
       def estimated_rates
         authorize! :update, @shipment
         estimator = Spree::Config.stock.estimator_class.new
-        @shipping_rates = estimator.shipping_rates(@shipment.to_package)
+        @shipping_rates = estimator.shipping_rates(@shipment.to_package, false)
       end
 
       def create
