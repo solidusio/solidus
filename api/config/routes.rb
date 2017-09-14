@@ -82,6 +82,8 @@ Spree::Core::Engine.routes.draw do
       end
 
       member do
+        get :estimated_rates
+
         put :ready
         put :ship
         put :add

@@ -237,6 +237,35 @@ describe Spree::Api::ShipmentsController, type: :request do
     end
   end
 
+  describe "#estimated_rates" do
+    let(:shipping_method) { shipment.shipping_method }
+
+    sign_in_as_admin!
+
+    subject do
+      get spree.estimated_rates_api_shipment_path(shipment)
+    end
+
+    it "returns the correct response" do
+      subject
+
+      expect(response).to be_success
+      expect(json_response).to eq(
+        "shipping_rates"=> [
+          {
+            "id" => nil,
+            "name" => shipping_method.name,
+            "cost" => "100.0",
+            "selected" => true,
+            "shipping_method_id" => shipping_method.id,
+            "shipping_method_code" => shipping_method.code,
+            "display_cost" => "$100.00"
+          }
+        ]
+      )
+    end
+  end
+
   describe "#ship" do
     let(:shipment) { create(:order_ready_to_ship).shipments.first }
 
