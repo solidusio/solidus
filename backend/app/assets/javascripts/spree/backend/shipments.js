@@ -269,9 +269,8 @@ var ShipmentItemView = Backbone.View.extend({
 
 var ShipmentEditView = Backbone.View.extend({
   initialize: function(){
-    var tbody = this.$("tbody[data-order-number][data-shipment-number]");
-    this.shipment_number = tbody.data("shipment-number");
-    this.order_number = tbody.data("order-number");
+    this.shipment_number = this.model.get('number')
+    this.order_number = this.model.collection.parent.get('number')
 
     var shipmentView = this;
     this.$("form.admin-ship-shipment").each(function(el){
