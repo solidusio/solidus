@@ -339,7 +339,18 @@ var ShipmentEditView = Backbone.View.extend({
 });
 
 $(function(){
-  $(".js-shipment-edit").each(function(){
-    new ShipmentEditView({ el: this });
-  });
+  if($('.js-shipment-edit [data-order-number]').length) {
+    $('.js-shipment-edit').hide();
+    var orderNumber = $('.js-shipment-edit [data-order-number]').data('orderNumber');
+    var order = Spree.Models.Order.fetch(orderNumber, {
+      success: function(order){
+        $('.js-shipment-edit').show();
+        $(".js-shipment-edit").each(function(){
+          var shipmentNumber = $('[data-shipment-number]', this).data('shipmentNumber')
+          var shipment = order.get("shipments").find({number: shipmentNumber})
+          new ShipmentEditView({ el: this, model: shipment });
+        });
+      }
+    });
+  }
 });
