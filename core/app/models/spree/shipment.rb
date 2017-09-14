@@ -219,6 +219,14 @@ module Spree
       shipping_rates
     end
 
+    def select_shipping_method(shipping_method)
+      estimator = Spree::Config.stock.estimator_class.new
+      rates = estimator.shipping_rates(to_package, false)
+      rate = rates.detect { |r| r.shipping_method_id == shipping_method.id }
+      rate.selected = true
+      self.shipping_rates = [rate]
+    end
+
     def selected_shipping_rate
       shipping_rates.detect(&:selected?)
     end
