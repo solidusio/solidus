@@ -2,7 +2,7 @@ module Spree
   module Api
     class ShipmentsController < Spree::Api::BaseController
       before_action :find_order_on_create, only: :create
-      before_action :find_shipment, only: [:update, :ship, :ready, :add, :remove]
+      before_action :find_shipment, only: [:update, :ship, :ready, :add, :remove, :estimated_rates]
       before_action :load_transfer_params, only: [:transfer_to_location, :transfer_to_shipment]
       around_action :lock_order, except: [:mine]
       before_action :update_shipment, only: [:ship, :ready, :add, :remove]
@@ -20,6 +20,12 @@ module Spree
         else
           render "spree/api/errors/unauthorized", status: :unauthorized
         end
+      end
+
+      def estimated_rates
+        authorize! :update, @shipment
+        estimator = Spree::Config.stock.estimator_class.new
+        @shipping_rates = estimator.shipping_rates(@shipment.to_package)
       end
 
       def create
