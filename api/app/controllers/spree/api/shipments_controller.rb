@@ -4,7 +4,7 @@ module Spree
       before_action :find_order_on_create, only: :create
       before_action :find_shipment, only: [:update, :ship, :ready, :add, :remove, :estimated_rates]
       before_action :load_transfer_params, only: [:transfer_to_location, :transfer_to_shipment]
-      around_action :lock_order, except: [:mine]
+      around_action :lock_order, except: [:mine, :estimated_rates]
       before_action :update_shipment, only: [:ship, :ready, :add, :remove]
 
       def mine
