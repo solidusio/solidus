@@ -16,7 +16,7 @@
     <% refunds.each do |refund| %>
       <tr id="<%= dom_id(refund) %>" data-hook="refunds_row" class="<%= cycle('odd', 'even', name: 'refund_table_cycle')%>">
         <td><%= pretty_time(refund.created_at) %></td>
-        <td class="align-center"><%= refund.payment.identifier %></td>
+        <td class="align-center"><%= refund.payment.number %></td>
         <td class="align-center amount"><%= refund.display_amount %></td>
         <td class="align-center"><%= payment_method_name(refund.payment) %></td>
         <td class="align-center"><%= refund.transaction_id %></td>
