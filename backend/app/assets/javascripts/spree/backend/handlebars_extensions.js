@@ -9,6 +9,10 @@ Handlebars.registerHelper("human_attribute_name", function(model, attr) {
   return Spree.human_attribute_name(model, attr);
 });
 
+Handlebars.registerHelper("human_model_name", function(model) {
+  return Spree.human_model_name(model);
+});
+
 Handlebars.registerHelper("admin_url", function() {
   return Spree.pathFor("admin")
 });
