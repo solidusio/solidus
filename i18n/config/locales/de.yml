@@ -493,9 +493,12 @@ de:
       spree/refund:
         one: Rückerstattung
         other: Rückerstattungen
+      spree/store_credit:
+        one: Guthaben
+        other: Guthaben
       spree/store_credit_category:
-        one: Kategorie
-        other: Kategorien
+        one: Guthabenkategorie
+        other: Guthabenkategorien
   devise:
     confirmations:
       confirmed: Ihr Konto wurde erfolgreich bestätigt. Sie sind jetzt angemeldet.
@@ -525,7 +528,7 @@ de:
       user:
         cannot_be_blank: Ihr Passwort darf nicht leer sein.
         send_instructions: Sie erhalten in wenigen Minuten eine E-Mail mit einer Anleitung zum Zurücksetzen Ihres Passworts.
-        updated: Ihr Password wurde erfolgreich geändert. SIe sind jetzt angemeldet.
+        updated: Ihr Password wurde erfolgreich geändert. Sie sind jetzt angemeldet.
     user_registrations:
       destroyed: Auf Wiedersehen! Ihr Konto wurde erfolgreich gelöscht. Wir hoffen sie bald wieder begrüßen zu dürfen.
       inactive_signed_up: Sie haben sich erfolgreich registriert. Wir konnten sie aber nicht anmelden, denn %{reason}.
@@ -603,7 +606,10 @@ de:
     adjustment: Anpassung
     adjustment_amount: Betrag
     adjustment_labels:
+      order: "%{promotion} %{promotion_name} wurde angewendet"
       tax_rates:
+        sales_tax_with_rate: "%{amount} %{name}"
+        vat_with_rate: "inkl. %{amount} %{name}"
         excluding_tax: "%{name}%{amount}"
         including_tax: "%{name}%{amount} (Im Preis enthalten)"
     adjustment_successfully_closed: Anpassung wurde erfolgreich geschlossen!
@@ -687,6 +693,7 @@ de:
         regenerate_key: Schlüssel neu generieren
       key_cleared: Schlüssel gelöscht
       key_generated: Schlüssel generiert
+    apply_code: Gutschein anwenden
     approve: Zustimmen
     approved_at: Zugestimmt am
     approver: Zustimmer
@@ -726,6 +733,7 @@ de:
     calculator: Rechner
     calculator_settings_warning: Wenn Sie den Berechungs-Typ ändern, müssen Sie erst speichern, bevor Sie die Berechnungs-Einstellungen bearbeiten können
     cancel: abbrechen
+    cancel_inventory: Inventar löschen
     canceled_at: Abgebrochen am
     canceler: Abgebrochen von
     cannot_create_customer_returns: Kann Rücksendung nicht durchführen.
@@ -763,10 +771,12 @@ de:
     code: Code
     company: Firma
     complete: komplett
+    complete_order: Bestellung abschließen
     configuration: Konfiguration
     configurations: Konfigurationen
     confirm: Bestätigen
     confirm_delete: Löschen bestätigen
+    confirm_order: Bestellung bestätigen
     confirm_password: Passwort bestätigen
     continue: fortfahren
     continue_shopping: Weiter Einkaufen
@@ -928,6 +938,8 @@ de:
     filter: Filter
     filter_results: Ergebnisse filtern
     finalize: abschließen
+    finalize_all_adjustments: Alle Anpassungen finalisieren
+    unfinalize_all_adjustments: Alle Anpassungen definalisieren
     finalized: abgeschlossen
     find_a_taxon: Klassifizierung suchen
     first_item: Kosten für das erste Produkt
@@ -939,6 +951,7 @@ de:
     forgot_password: Passwort vergessen?
     free_shipping: Versandkostenfrei
     free_shipping_amount: Versandkostenfreibetrag
+    from: von
     front_end: Shop-Ansicht
     gateway: Schnittstelle
     gateway_config_unavailable: Schnittstelle für diese Umgebung nicht erhältlich
@@ -1148,6 +1161,7 @@ de:
     order_already_updated: Bestellung bereits geändert
     order_approved: Bestellung freigegeben
     order_canceled: Bestellung storniert
+    order_completed: Bestellung erfolgreich abgeschlossen
     order_details: Details der Bestellung
     order_email_resent: Bestellbestätigung erneut versendet
     order_has_no_payments: Bestellung hat keine Bezahlungen
@@ -1155,29 +1169,28 @@ de:
     order_line_items: Bestellposten
     order_mailer:
       cancel_email:
-        dear_customer: 'Sehr geehrte Kundin, geehrter Kunde,
-
-'
-        instructions: Ihre Bestellung wurde storniert. Bitte bewahren Sie diese Stornierung für Ihre Unterlagen auf.
+        dear_customer: 'Sehr geehrte Kundin, geehrter Kunde,'
+        instructions: Ihre Bestellung wurde storniert. Bitte bewahren Sie diese Information für Ihre Unterlagen auf.
         order_summary_canceled: Bestellzusammenfassung [STORNO]
         subject: Bestellung storniert
         subtotal: Zwischensumme
         total: Gesamtsumme
       confirm_email:
-        dear_customer: Sehr geehrter Kunde,\n
-        instructions: bitte prüfen Sie noch einmal die folgende Bestellung und bewahren die Bestellbestätigung für Ihre Unterlagen auf.
-        order_summary: Bestellzusammenfassung
+        dear_customer: Sehr geehrte Kundin, geehrter Kunde,
+        order_summary: Folgende Artikel wurden von Ihnen bestellt
         subject: Bestellbestätigung
         subtotal: Zwischensumme
-        thanks: Vielen Dank für Ihre Bestellung.
         total: Gesamtsumme
       inventory_cancellation:
-        dear_customer: 'Sehr geehrte Kundin, geehrter Kunde,
-
-'
+        dear_customer: 'Sehr geehrte Kundin, geehrter Kunde,'
+        instructions: ein oder mehrere Artikel aus Ihrer Bestellung wurden storniert. Bitte bewahren Sie diese Information für Ihre Unterlagen auf.
+        order_summary_canceled: Stornierte Artikel
+        subject: Stornierung von Artikeln
     order_not_found: Wir konnten Ihre Bestellung nicht finden. Bitte versuchen Sie es später noch einmal.
     order_number: Bestellnummer %{number}
+    order_please_refresh: Die Bestellung muss aktualisiert werden
     order_processed_successfully: Ihre Bestellung wurde erfolgreich bearbeitet
+    order_refresh_totals: Preise der Bestellung aktualisieren
     order_resumed: Bestellung fortgeführt
     order_state:
       address: Adresse
@@ -1185,7 +1198,7 @@ de:
       canceled: Storniert
       cart: Warenkorb
       complete: Abgeschlossen
-      confirm: Bestätigt
+      confirm: Überprüfen
       considered_risky: Riskant
       delivery: Versand
       payment: Bezahlung
@@ -1239,7 +1252,7 @@ de:
     percent_per_item: Prozent pro Artikel
     permalink: Permalink
     phone: Telefon
-    place_order: Bestellung ausführen
+    place_order: Zahlungspflichtig bestellen
     please_define_payment_methods: Bitte definieren Sie zuerst mindestens eine Zahlungsmethode.
     please_enter_reasonable_quantity: Bitte geben Sie eine zumutbare Menge ein
     populate_get_error: Da ist etwas schief gelaufen. Bitte versuchen sie den Artikel erneut in den Warenkob zu tun.
@@ -1357,7 +1370,7 @@ de:
     reimbursement_mailer:
       reimbursement_email:
         days_to_send: Tage verbleibend
-        dear_customer: Sehr geehrte/r Kunde/in
+        dear_customer: Sehr geehrte Kundin, geehrter Kunde,
         exchange_summary: Übersicht Umtausch
         for: für
         instructions: Anweisungen
@@ -1413,7 +1426,6 @@ de:
     sales_total: Gesamtumsatz
     sales_total_description: Gesamtsumme aller Bestellungen
     sales_totals: Gesamtumsätze
-    save_and_continue: Speichern und fortsetzen
     save_my_address: Adresse speichern
     say_no: false
     say_yes: true
@@ -1439,14 +1451,13 @@ de:
     ship_total: Versand gesamt
     shipment: Sendung
     shipment_adjustments: Sendung anpassen
-    shipment_details: Versendungsdetails
+    shipment_details: "%{shipping_method}"
     shipment_mailer:
       shipped_email:
-        dear_customer: 'Sehr geehrte/r Kunde/in,'
+        dear_customer: Sehr geehrte Kundin, geehrter Kunde,
         instructions: Ihre Bestellung wurde versandt.
         shipment_summary: Versandzusammenfassung
         subject: Versand-Benachrichtigung
-        thanks: Vielen Dank für Ihre Bestellung.
         track_information: 'Sendungsverfolgung: %{tracking}'
         track_link: 'Sendungsverfolgung: %{url}'
     shipment_state: Versandstatus
@@ -1472,6 +1483,13 @@ de:
     shipping_method: Versandart
     shipping_methods: Versandarten
     shipping_price_sack: Preis füllen
+    shipping_rate:
+      display_price:
+        display_price_with_explanations: "%{price} (inkl. %{explanations})"
+    shipping_rate_tax:
+      label:
+        sales_tax: "%{amount} %{tax_rate_name}"
+        vat: "%{amount} %{tax_rate_name}"
     shipping_rates:
       display_price:
         excluding_tax: "%{price} (+ %{tax_amount} %{tax_rate_name})"
@@ -1664,6 +1682,7 @@ de:
     cannot_create_payment_link: Bitte definieren Sie zuerst mindestens eine Zahlungsmethode.
     inventory_states:
       canceled: Storniert
+      on_hand: auf Lager
       returned: zurück erstattet
       shipped: Ausgeliefert
     no_resource_found_link: Hinzufügen
