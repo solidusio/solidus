@@ -8,7 +8,6 @@ Gem::Specification.new do |s|
   s.summary     = 'Sample data (including images) for use with Solidus.'
   s.description = s.summary
 
-  s.required_ruby_version = '>= 2.1.0'
   s.author      = 'Solidus Team'
   s.email       = 'contact@solidus.io'
   s.homepage    = 'http://solidus.io/'

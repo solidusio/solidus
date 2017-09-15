@@ -8,7 +8,6 @@ Gem::Specification.new do |s|
   s.summary     = 'Cart and storefront for the Solidus e-commerce project.'
   s.description = s.summary
 
-  s.required_ruby_version = '>= 2.1.0'
   s.author      = 'Solidus Team'
   s.email       = 'contact@solidus.io'
   s.homepage    = 'http://solidus.io/'
