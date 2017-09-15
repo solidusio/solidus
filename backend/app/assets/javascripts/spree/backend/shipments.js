@@ -57,18 +57,6 @@ var ShipShipmentView = Backbone.View.extend({
   }
 });
 
-updateShipment = function(shipment_number, attributes) {
-  var url = Spree.routes.shipments_api + '/' + shipment_number;
-
-  return Spree.ajax({
-    type: 'PUT',
-    url: url,
-    data: {
-      shipment: attributes
-    }
-  });
-};
-
 adjustShipmentItems = function(shipment_number, variant_id, quantity){
   var shipment = _.findWhere(shipments, {number: shipment_number});
   var inventory_units = _.where(shipment.inventory_units, {variant_id: variant_id});
@@ -295,33 +283,11 @@ var ShipmentEditView = Backbone.View.extend({
         shipment_number: shipmentView.shipment_number
       });
     });
-  },
-
-  events: {
-    "click button.edit-tracking": "toggleTrackingEdit",
-    "click button.cancel-tracking": "toggleTrackingEdit",
-    "click button.save-tracking": "saveTracking",
-  },
-
-  toggleTrackingEdit: function(e) {
-    e.preventDefault();
-    this.$("tr.edit-tracking").toggle();
-    this.$("tr.show-tracking").toggle();
-  },
-
-  saveTracking: function(e) {
-    e.preventDefault();
-    var tracking = this.$('[name="tracking"]').val();
-    var _this = this;
-    updateShipment(this.shipment_number, {
-      tracking: tracking
-    }).done(function (data) {
-      _this.$('tr.edit-tracking').toggle();
-
-      var show = _this.$('tr.show-tracking');
-      show.toggle()
-        .find('.tracking-value')
-        .text(data.tracking);
+    this.$(".edit-tracking").each(function(el){
+      new Spree.Views.Order.ShipmentTracking({
+        el: this,
+        model: shipment
+      });
     });
   }
 });

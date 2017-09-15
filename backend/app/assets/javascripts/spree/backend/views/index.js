@@ -8,6 +8,7 @@
 //= require 'spree/backend/views/order/details_total'
 //= require 'spree/backend/views/order/customer_details'
 //= require 'spree/backend/views/order/customer_select'
+//= require 'spree/backend/views/order/shipment_tracking'
 //= require 'spree/backend/views/order/shipping_method'
 //= require 'spree/backend/views/order/summary'
 //= require 'spree/backend/views/state_select'

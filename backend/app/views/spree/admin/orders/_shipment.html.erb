@@ -51,17 +51,7 @@
         </tr>
       <% end %>
 
-      <tr class="edit-tracking hidden total">
-        <th><%= Spree::Shipment.human_attribute_name(:tracking) %></th>
-        <td colspan="4">
-          <%= text_field_tag :tracking, shipment.tracking, id: nil %>
-        </td>
-        <td class="actions">
-          <% if can? :update, shipment %>
-            <%= button_tag '', class: 'save-tracking fa fa-check no-text with-tip', data: { action: 'save', 'shipment-number' => shipment.number }, title: Spree.t('actions.save'), type: :button %>
-            <%= button_tag '', class: 'cancel-tracking fa fa-cancel no-text with-tip', data: { action: 'cancel' }, title: Spree.t('actions.cancel'), type: :button %>
-          <% end %>
-        </td>
+      <tr class="edit-tracking">
       </tr>
 
       <% if order.special_instructions.present? %>
@@ -71,22 +61,6 @@
           </td>
         </tr>
       <% end %>
-
-      <tr class="show-tracking total">
-        <th><%= Spree::Shipment.human_attribute_name(:tracking) %></th>
-        <td colspan="4" class="tracking-value">
-          <% if shipment.tracking.present? %>
-            <%= shipment.tracking %>
-          <% else %>
-            <i><%= Spree.t(:no_tracking_present) %></i>
-          <% end %>
-        </td>
-        <td class="actions">
-          <% if can? :update, shipment %>
-            <%= button_tag '', class: 'edit-tracking fa fa-edit no-text with-tip', data: {action: 'edit'}, title: Spree.t('actions.edit'), type: :button %>
-          <% end %>
-        </td>
-      </tr>
     </tbody>
   </table>
 </div>
