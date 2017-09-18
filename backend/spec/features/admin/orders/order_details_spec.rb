@@ -537,7 +537,7 @@ describe "Order Details", type: :feature, js: true do
       within("tr", text: "Shipping Method") do
         click_icon :edit
       end
-      select "UPS Ground $100.00", from: "selected_shipping_rate_id"
+      select "UPS Ground $100.00"
       click_icon :check
 
       expect(page).not_to have_css('#selected_shipping_rate_id')
