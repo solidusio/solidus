@@ -119,6 +119,19 @@ describe "Order Details", type: :feature, js: true do
           expect(page).to have_content("UPS Ground")
         end
 
+        it "can change the shipping method" do
+          visit spree.edit_admin_order_path(order)
+
+          within("tr", text: "Shipping Method") do
+            click_icon :edit
+            select "UPS Ground $100.00"
+            click_icon :check
+          end
+
+          expect(page).not_to have_css('#selected_shipping_rate_id')
+          expect(page).to have_content("UPS Ground")
+        end
+
         it "will show the variant sku" do
           visit spree.edit_admin_order_path(order)
           sku = order.line_items.first.variant.sku
@@ -537,7 +550,7 @@ describe "Order Details", type: :feature, js: true do
       within("tr", text: "Shipping Method") do
         click_icon :edit
       end
-      select "UPS Ground $100.00", from: "selected_shipping_rate_id"
+      select "UPS Ground $100.00"
       click_icon :check
 
       expect(page).not_to have_css('#selected_shipping_rate_id')
