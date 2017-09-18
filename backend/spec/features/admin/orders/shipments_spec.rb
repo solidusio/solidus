@@ -67,7 +67,7 @@ describe "Shipments", type: :feature do
       expect(order.shipments.count).to eq(1)
       shipment1 = order.shipments[0]
 
-      within_row(1) { click_icon 'arrows-h' }
+      within('tr', text: order.line_items[0].sku) { click_icon 'arrows-h' }
       complete_split_to('LA')
 
       expect(page).to have_css("#shipment_#{shipment1.id} tr.stock-item", count: 4)
@@ -77,7 +77,7 @@ describe "Shipments", type: :feature do
         expect(page).to have_content("UPS Ground")
       end
 
-      within_row(2) { click_icon 'arrows-h' }
+      within('tr', text: order.line_items[1].sku) { click_icon 'arrows-h' }
       complete_split_to("LA(#{shipment2.number})")
       expect(page).to have_css("#shipment_#{shipment2.id} tr.stock-item", count: 2)
       expect(page).to have_css("#shipment_#{shipment1.id} tr.stock-item", count: 3)
@@ -100,7 +100,7 @@ describe "Shipments", type: :feature do
       it "can transfer all items to a new location" do
         expect(order.shipments.count).to eq(1)
 
-        within_row(1) { click_icon 'arrows-h' }
+        within('tr', text: order.line_items[0].sku) { click_icon 'arrows-h' }
         complete_split_to('LA', quantity: 5)
 
         expect(page).to_not have_content("package from 'NY Warehouse'")
