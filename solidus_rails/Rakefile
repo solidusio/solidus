@@ -1,0 +1,12 @@
+require 'rubygems'
+require 'rake'
+require 'rake/testtask'
+require 'rspec/core/rake_task'
+require 'spree/testing_support/common_rake'
+
+ENV['LIB_NAME'] = 'solidus_rails'
+
+RSpec::Core::RakeTask.new
+task default: :spec
+
+task test_app: 'db:reset'
