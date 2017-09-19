@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
   s.license     = 'BSD-3-Clause'
 
   s.files        = `git ls-files`.split("\n")
-  s.require_path = 'lib'
+  s.require_path = ['lib', 'app/models/concerns', 'app/models']
 
   s.required_ruby_version     = '>= 2.2.2'
   s.required_rubygems_version = '>= 1.8.23'
@@ -38,5 +38,6 @@ Gem::Specification.new do |s|
   s.add_dependency 'paranoia', '~> 2.3'
   s.add_dependency 'ransack', '~> 1.8'
   s.add_dependency 'state_machines-activerecord', '~> 0.4'
-  s.add_dependency 'stringex', '~> 1.5.1'
+
+  s.add_development_dependency 'standalone_migrations'
 end

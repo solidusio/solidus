@@ -6,7 +6,14 @@ require 'spree/testing_support/dummy_app/rake_tasks'
 
 ENV['LIB_NAME'] = 'solidus_core'
 
+require 'standalone_migrations'
+StandaloneMigrations::Tasks.load_tasks
+
 RSpec::Core::RakeTask.new
+
 task default: :spec
 
-task test_app: 'db:reset'
+task :test_app do
+  Rake::Task['db:create'].invoke
+  Rake::Task['db:migrate'].invoke
+end
