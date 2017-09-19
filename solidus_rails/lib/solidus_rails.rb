@@ -1,3 +1,5 @@
+require 'solidus_rails/engine'
+
 require 'spree/core/controller_helpers/auth'
 require 'spree/core/controller_helpers/common'
 require 'spree/core/controller_helpers/order'
