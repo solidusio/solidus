@@ -1,3 +1,4 @@
+require 'spree/base'
 require 'spree/preferences/statically_configurable'
 
 module Spree

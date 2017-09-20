@@ -1,3 +1,4 @@
+require 'spree/base'
 module Spree
   class Zone < Spree::Base
     has_many :zone_members, dependent: :destroy, class_name: "Spree::ZoneMember", inverse_of: :zone

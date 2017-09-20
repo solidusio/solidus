@@ -1,3 +1,9 @@
+require 'spree'
+require 'spree/preferences/preferable'
+require 'spree/ransackable_attributes'
+
+require 'kaminari'
+
 class Spree::Base < ActiveRecord::Base
   include Spree::Preferences::Preferable
   serialize :preferences, Hash

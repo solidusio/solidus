@@ -1,3 +1,4 @@
+require 'spree/base'
 module Spree
   class ProductProperty < Spree::Base
     include Spree::OrderedPropertyValueList

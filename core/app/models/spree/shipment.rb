@@ -1,3 +1,4 @@
+require 'spree/base'
 module Spree
   # An order's planned shipments including tracking and cost.
   #

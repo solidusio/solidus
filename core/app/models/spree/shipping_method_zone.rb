@@ -1,3 +1,4 @@
+require 'spree/base'
 module Spree
   class ShippingMethodZone < Spree::Base
     belongs_to :zone

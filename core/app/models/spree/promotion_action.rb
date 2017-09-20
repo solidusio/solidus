@@ -1,3 +1,4 @@
+require 'spree/base'
 module Spree
   # Base class for all types of promotion action.
   #

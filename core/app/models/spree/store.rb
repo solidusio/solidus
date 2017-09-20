@@ -1,3 +1,4 @@
+require 'spree/base'
 module Spree
   # Records store specific configuration such as store name and URL.
   #

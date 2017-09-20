@@ -1,3 +1,4 @@
+require 'spree/base'
 module Spree
   class RoleUser < Spree::Base
     self.table_name = "spree_roles_users"

@@ -1,3 +1,4 @@
+require 'spree/base'
 # The reason for variant properties not being associated with variants
 # (either directly or through an association table) is performance.
 #

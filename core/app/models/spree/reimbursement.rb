@@ -1,3 +1,4 @@
+require 'spree/base'
 module Spree
   class Reimbursement < Spree::Base
     class IncompleteReimbursementError < StandardError; end

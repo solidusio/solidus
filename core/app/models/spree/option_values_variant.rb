@@ -1,3 +1,4 @@
+require 'spree/base'
 module Spree
   class OptionValuesVariant < Spree::Base
     belongs_to :variant

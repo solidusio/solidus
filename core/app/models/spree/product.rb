@@ -1,3 +1,4 @@
+require 'spree/base'
 module Spree
   # Products represent an entity for sale in a store. Products can have
   # variations, called variants. Product properties include description,

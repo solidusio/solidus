@@ -1,3 +1,4 @@
+require 'spree/base'
 module Spree
   # Tracks the state of line items' fulfillment.
   #

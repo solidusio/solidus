@@ -1,3 +1,4 @@
+require 'spree/base'
 require 'spree/core/product_filters'
 
 module Spree

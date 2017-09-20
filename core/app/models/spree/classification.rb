@@ -1,3 +1,4 @@
+require 'spree/base'
 module Spree
   class Classification < Spree::Base
     self.table_name = 'spree_products_taxons'

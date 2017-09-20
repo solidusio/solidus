@@ -1,3 +1,4 @@
+require 'spree/base'
 class Spree::Preference < Spree::Base
   serialize :value
 

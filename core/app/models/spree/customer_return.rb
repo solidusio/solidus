@@ -1,3 +1,4 @@
+require 'spree/base'
 module Spree
   class CustomerReturn < Spree::Base
     belongs_to :stock_location

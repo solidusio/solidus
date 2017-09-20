@@ -1,3 +1,4 @@
+require 'spree/base'
 module Spree
   class LogEntry < Spree::Base
     belongs_to :source, polymorphic: true

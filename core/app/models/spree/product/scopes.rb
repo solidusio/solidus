@@ -1,3 +1,4 @@
+require 'spree/base'
 module Spree
   class Product < Spree::Base
     cattr_accessor :search_scopes do

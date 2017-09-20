@@ -1,3 +1,4 @@
+require 'spree/base'
 module Spree
   class StateChange < Spree::Base
     belongs_to :user

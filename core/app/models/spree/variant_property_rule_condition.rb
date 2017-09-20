@@ -1,3 +1,4 @@
+require 'spree/base'
 module Spree
   class VariantPropertyRuleCondition < Spree::Base
     belongs_to :option_value

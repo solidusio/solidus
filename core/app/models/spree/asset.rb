@@ -1,3 +1,4 @@
+require 'spree/base'
 module Spree
   class Asset < Spree::Base
     belongs_to :viewable, polymorphic: true, touch: true

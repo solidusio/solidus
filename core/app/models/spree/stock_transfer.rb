@@ -1,3 +1,4 @@
+require 'spree/base'
 module Spree
   class StockTransfer < Spree::Base
     class InvalidTransferMovement < StandardError; end

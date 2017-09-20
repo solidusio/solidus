@@ -1,3 +1,4 @@
+require 'spree/base'
 module Spree
   class Taxonomy < Spree::Base
     acts_as_list

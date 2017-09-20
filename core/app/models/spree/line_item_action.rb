@@ -1,3 +1,4 @@
+require 'spree/base'
 module Spree
   class LineItemAction < Spree::Base
     belongs_to :line_item

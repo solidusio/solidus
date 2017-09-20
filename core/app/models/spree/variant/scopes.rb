@@ -1,3 +1,4 @@
+require 'spree/base'
 module Spree
   class Variant < Spree::Base
     # FIXME: WARNING tested only under sqlite and postgresql

@@ -1,3 +1,4 @@
+require 'spree/base'
 module Spree
   class PromotionRuleTaxon < Spree::Base
     belongs_to :promotion_rule

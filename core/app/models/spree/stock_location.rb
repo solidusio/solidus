@@ -1,3 +1,4 @@
+require 'spree/base'
 module Spree
   # Records the name and addresses from which stock items are fulfilled in
   # cartons.

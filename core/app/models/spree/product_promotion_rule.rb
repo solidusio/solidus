@@ -1,3 +1,4 @@
+require 'spree/base'
 module Spree
   class ProductPromotionRule < Spree::Base
     belongs_to :product

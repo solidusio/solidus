@@ -1,3 +1,4 @@
+require 'spree/base'
 module Spree
   class Order < Spree::Base
     module Payments

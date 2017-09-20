@@ -1,3 +1,4 @@
+require 'spree/base'
 module Spree
   # Default implementation of User.
   #

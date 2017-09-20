@@ -1,3 +1,4 @@
+require 'spree/base'
 module Spree
   class TaxRate < Spree::Base
     acts_as_paranoid

@@ -1,3 +1,4 @@
+require 'spree/base'
 module Spree
   class StorePaymentMethod < Spree::Base
     belongs_to :store, inverse_of: :store_payment_methods

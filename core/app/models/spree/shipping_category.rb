@@ -1,3 +1,4 @@
+require 'spree/base'
 module Spree
   class ShippingCategory < Spree::Base
     validates :name, presence: true

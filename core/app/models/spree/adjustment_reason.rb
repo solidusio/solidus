@@ -1,3 +1,4 @@
+require 'spree/base'
 module Spree
   class AdjustmentReason < Spree::Base
     has_many :adjustments, inverse_of: :adjustment_reason

@@ -1,3 +1,4 @@
+require 'spree/base'
 module Spree
   class TaxRateTaxCategory < Spree::Base
     belongs_to :tax_rate, class_name: 'Spree::TaxRate', inverse_of: :tax_rate_tax_categories

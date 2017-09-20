@@ -1,3 +1,4 @@
+require 'spree/base'
 module Spree
   class VariantPropertyRuleValue < Spree::Base
     include Spree::OrderedPropertyValueList

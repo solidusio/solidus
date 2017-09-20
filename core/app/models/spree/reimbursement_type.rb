@@ -1,3 +1,4 @@
+require 'spree/base'
 module Spree
   class ReimbursementType < Spree::Base
     include Spree::NamedType

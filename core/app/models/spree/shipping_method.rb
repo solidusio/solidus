@@ -1,3 +1,4 @@
+require 'spree/base'
 module Spree
   # Represents a means of having a shipment delivered, such as FedEx or UPS.
   #

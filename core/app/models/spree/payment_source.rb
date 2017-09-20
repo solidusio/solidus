@@ -1,3 +1,4 @@
+require 'spree/base'
 module Spree
   class PaymentSource < Spree::Base
     self.abstract_class = true

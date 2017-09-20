@@ -1,3 +1,4 @@
+require 'spree/base'
 module Spree
   class Promotion < Spree::Base
     MATCH_POLICIES = %w(all any)

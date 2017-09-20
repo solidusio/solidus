@@ -1,3 +1,4 @@
+require 'spree/base'
 module Spree
   # Variants placed in the Order at a particular price.
   #

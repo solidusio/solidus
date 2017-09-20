@@ -1,3 +1,4 @@
+require 'spree/base'
 require 'spree/core/validators/email'
 require 'spree/order/checkout'
 require 'spree/order/number_generator'

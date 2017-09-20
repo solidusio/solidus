@@ -1,3 +1,4 @@
+require 'spree/base'
 module Spree
   class ReturnReason < Spree::Base
     include Spree::NamedType

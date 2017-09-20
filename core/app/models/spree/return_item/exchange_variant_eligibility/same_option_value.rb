@@ -1,3 +1,4 @@
+require 'spree/base'
 module Spree
   class ReturnItem < Spree::Base
     module ExchangeVariantEligibility

@@ -1,3 +1,4 @@
+require 'spree/base'
 module Spree
   class Calculator < Spree::Base
     belongs_to :calculable, polymorphic: true

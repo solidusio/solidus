@@ -1,3 +1,4 @@
+require 'spree/base'
 class Spree::StoreCreditCategory < Spree::Base
   class_attribute :non_expiring_credit_types
   self.non_expiring_credit_types = [Spree::StoreCreditType::NON_EXPIRING]

@@ -1,3 +1,4 @@
+require 'spree/base'
 module Spree
   class StockMovement < Spree::Base
     belongs_to :stock_item, class_name: 'Spree::StockItem', inverse_of: :stock_movements

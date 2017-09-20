@@ -1,3 +1,4 @@
+require 'spree/base'
 module Spree
   class StoreCreditType < Spree::Base
     EXPIRING = 'Expiring'

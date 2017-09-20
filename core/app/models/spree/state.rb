@@ -1,3 +1,4 @@
+require 'spree/base'
 module Spree
   class State < Spree::Base
     belongs_to :country, class_name: 'Spree::Country'

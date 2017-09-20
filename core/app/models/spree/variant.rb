@@ -1,3 +1,4 @@
+require 'spree/base'
 module Spree
   # == Master Variant
   #

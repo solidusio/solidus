@@ -1,3 +1,4 @@
+require 'spree/base'
 module Spree
   class Country < Spree::Base
     has_many :states, -> { order(:name) }, dependent: :destroy

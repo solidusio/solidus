@@ -1,3 +1,4 @@
+require 'spree/base'
 module Spree
   # Spree::OrderPromotion represents the relationship between:
   #

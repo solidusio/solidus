@@ -1,3 +1,4 @@
+require 'spree/base'
 module Spree
   class PromotionCategory < Spree::Base
     validates_presence_of :name

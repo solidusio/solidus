@@ -1,3 +1,4 @@
+require 'spree/base'
 module Spree
   # Option types denote the different options for a variant. A typical option
   # type would be a size, with that option type’s values being something such
