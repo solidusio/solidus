@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::Preferences::Store, type: :model do
+RSpec.describe Spree::Preferences::Store, type: :model do
   before :each do
     @store = Spree::Preferences::StoreInstance.new
   end

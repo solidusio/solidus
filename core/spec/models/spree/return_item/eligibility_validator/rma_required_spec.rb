@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::ReturnItem::EligibilityValidator::RMARequired, type: :model do
+RSpec.describe Spree::ReturnItem::EligibilityValidator::RMARequired, type: :model do
   let(:return_item) { create(:return_item) }
   let(:validator) { Spree::ReturnItem::EligibilityValidator::RMARequired.new(return_item) }
 

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::Reimbursement, type: :model do
+RSpec.describe Spree::Reimbursement, type: :model do
   describe ".before_create" do
     describe "#generate_number" do
       context "number is assigned" do

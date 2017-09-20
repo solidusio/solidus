@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::Zone, type: :model do
+RSpec.describe Spree::Zone, type: :model do
   describe 'for_address' do
     let(:new_york_address) { create(:address, state_code: "NY") }
     let(:alabama_address) { create(:address) }

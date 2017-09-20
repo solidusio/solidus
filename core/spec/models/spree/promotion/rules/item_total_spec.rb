@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::Promotion::Rules::ItemTotal, type: :model do
+RSpec.describe Spree::Promotion::Rules::ItemTotal, type: :model do
   let(:rule) do
     Spree::Promotion::Rules::ItemTotal.new(
       preferred_amount: preferred_amount,

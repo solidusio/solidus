@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::StockQuantities, type: :model do
+RSpec.describe Spree::StockQuantities, type: :model do
   let(:variant1) { mock_model(Spree::Variant) }
   let(:variant2) { mock_model(Spree::Variant) }
 

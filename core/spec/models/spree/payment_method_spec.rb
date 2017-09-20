@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::PaymentMethod, type: :model do
+RSpec.describe Spree::PaymentMethod, type: :model do
   let!(:payment_method_nil_display)  { create(:payment_method, active: true,
                                               available_to_users: true,
                                               available_to_admin: true) }

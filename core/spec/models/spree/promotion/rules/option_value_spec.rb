@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::Promotion::Rules::OptionValue do
+RSpec.describe Spree::Promotion::Rules::OptionValue do
   let(:rule) { Spree::Promotion::Rules::OptionValue.new }
 
   describe "#preferred_eligible_values" do

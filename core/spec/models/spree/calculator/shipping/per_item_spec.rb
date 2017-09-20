@@ -3,7 +3,7 @@ require 'shared_examples/calculator_shared_examples'
 
 module Spree
   module Calculator::Shipping
-    describe PerItem, type: :model do
+    RSpec.describe PerItem, type: :model do
       let(:variant1) { build(:variant) }
       let(:variant2) { build(:variant) }
 

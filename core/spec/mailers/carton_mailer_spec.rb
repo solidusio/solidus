@@ -1,7 +1,7 @@
 require 'rails_helper'
 require 'email_spec'
 
-describe Spree::CartonMailer do
+RSpec.describe Spree::CartonMailer do
   include EmailSpec::Helpers
   include EmailSpec::Matchers
 

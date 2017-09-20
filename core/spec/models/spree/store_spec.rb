@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::Store, type: :model do
+RSpec.describe Spree::Store, type: :model do
   it { is_expected.to respond_to(:cart_tax_country_iso) }
 
   describe ".by_url (deprecated)" do

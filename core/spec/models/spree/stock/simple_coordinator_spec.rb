@@ -2,7 +2,7 @@ require 'rails_helper'
 
 module Spree
   module Stock
-    describe SimpleCoordinator, type: :model do
+    RSpec.describe SimpleCoordinator, type: :model do
       let(:order) { create(:order_with_line_items, line_items_count: 2) }
 
       subject { SimpleCoordinator.new(order) }

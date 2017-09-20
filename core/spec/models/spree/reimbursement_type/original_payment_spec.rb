@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 module Spree
-  describe ReimbursementType::OriginalPayment, type: :model do
+  RSpec.describe ReimbursementType::OriginalPayment, type: :model do
     let(:reimbursement)           { create(:reimbursement, return_items_count: 1) }
     let(:return_item)             { reimbursement.return_items.first }
     let(:payment)                 { reimbursement.order.payments.first }

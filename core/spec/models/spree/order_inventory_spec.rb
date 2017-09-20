@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::OrderInventory, type: :model do
+RSpec.describe Spree::OrderInventory, type: :model do
   let(:order) { create :completed_order_with_totals }
   let(:line_item) { order.line_items.first }
   let(:shipment) { order.shipments.first }

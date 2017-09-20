@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::Order, type: :model do
+RSpec.describe Spree::Order, type: :model do
   let(:order) { stub_model(Spree::Order) }
   before do
     Spree::Order.define_state_machine!

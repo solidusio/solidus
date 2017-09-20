@@ -3,7 +3,7 @@
 require 'spec_helper'
 require 'spree/money'
 
-describe Spree::Money do
+RSpec.describe Spree::Money do
   before do
     configure_spree_preferences do |config|
       config.currency = "USD"

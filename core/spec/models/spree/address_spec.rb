@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::Address, type: :model do
+RSpec.describe Spree::Address, type: :model do
   subject { Spree::Address }
 
   context "aliased attributes" do

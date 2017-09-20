@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::Variant::PricingOptions do
+RSpec.describe Spree::Variant::PricingOptions do
   subject { described_class.new }
 
   context '.default_price_attributes' do

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::StoreCreditCategory, type: :model do
+RSpec.describe Spree::StoreCreditCategory, type: :model do
   describe "#non_expiring?" do
     let(:store_credit_category) { build(:store_credit_category, name: category_name) }
 

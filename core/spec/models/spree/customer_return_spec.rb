@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::CustomerReturn, type: :model do
+RSpec.describe Spree::CustomerReturn, type: :model do
   before do
     allow_any_instance_of(Spree::Order).to receive_messages(return!: true)
   end

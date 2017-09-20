@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::Core::CurrentStore do
+RSpec.describe Spree::Core::CurrentStore do
   describe "#store" do
     subject { Spree::Deprecation.silence { Spree::Core::CurrentStore.new(request).store } }
 

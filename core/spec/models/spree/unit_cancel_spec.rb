@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::UnitCancel do
+RSpec.describe Spree::UnitCancel do
   let(:unit_cancel) { Spree::UnitCancel.create!(inventory_unit: inventory_unit, reason: Spree::UnitCancel::SHORT_SHIP) }
   let(:inventory_unit) { create(:inventory_unit) }
 

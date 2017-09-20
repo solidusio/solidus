@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe "Variant scopes", type: :model do
+RSpec.describe "Variant scopes", type: :model do
   let!(:product) { create(:product) }
   let!(:variant_1) { create(:variant, product: product) }
   let!(:variant_2) { create(:variant, product: product) }

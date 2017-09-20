@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::RoleConfiguration do
+RSpec.describe Spree::RoleConfiguration do
   class DummyPermissionSet < Spree::PermissionSets::Base
     def activate!
       can :manage, :things

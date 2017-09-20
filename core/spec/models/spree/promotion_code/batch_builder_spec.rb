@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe Spree::PromotionCode::BatchBuilder do
+RSpec.describe Spree::PromotionCode::BatchBuilder do
   let(:promotion) { create(:promotion) }
   let(:base_code) { "abc" }
   let(:promotion_code_batch) do

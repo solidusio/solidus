@@ -2,7 +2,7 @@ require 'rails_helper'
 
 module Spree
   module ReturnItem::ExchangeVariantEligibility
-    describe SameOptionValue, type: :model do
+    RSpec.describe SameOptionValue, type: :model do
       describe ".eligible_variants" do
         let(:color_option_type) { create(:option_type, name: "color") }
         let(:waist_option_type) { create(:option_type, name: "waist") }

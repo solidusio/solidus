@@ -3,7 +3,7 @@ require 'rails_helper'
 module Spree
   module Stock
     module Splitter
-      describe Weight, type: :model do
+      RSpec.describe Weight, type: :model do
         let(:stock_location) { mock_model(Spree::StockLocation) }
         let(:variant) { build(:base_variant, weight: 100) }
 

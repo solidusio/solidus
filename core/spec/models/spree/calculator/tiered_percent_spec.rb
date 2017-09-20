@@ -1,7 +1,7 @@
 require 'rails_helper'
 require 'shared_examples/calculator_shared_examples'
 
-describe Spree::Calculator::TieredPercent, type: :model do
+RSpec.describe Spree::Calculator::TieredPercent, type: :model do
   let(:calculator) { Spree::Calculator::TieredPercent.new }
 
   it_behaves_like 'a calculator with a description'

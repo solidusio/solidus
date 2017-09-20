@@ -1,7 +1,7 @@
 require 'rails_helper'
 require 'shared_examples/calculator_shared_examples'
 
-describe Spree::Calculator::Returns::DefaultRefundAmount, type: :model do
+RSpec.describe Spree::Calculator::Returns::DefaultRefundAmount, type: :model do
   let(:line_item_quantity) { 2 }
   let(:line_item_price) { 100.0 }
   let(:line_item) { create(:line_item, price: line_item_price, quantity: line_item_quantity) }

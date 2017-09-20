@@ -5,7 +5,7 @@ class FakesController < ApplicationController
   def index; render plain: 'index'; end
 end
 
-describe Spree::Core::ControllerHelpers::Auth, type: :controller do
+RSpec.describe Spree::Core::ControllerHelpers::Auth, type: :controller do
   controller(FakesController) {}
 
   describe '#current_ability' do

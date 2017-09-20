@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::Core::ControllerHelpers::PaymentParameters, type: :controller do
+RSpec.describe Spree::Core::ControllerHelpers::PaymentParameters, type: :controller do
   controller(ApplicationController) do
     include Spree::Core::ControllerHelpers::PaymentParameters
   end

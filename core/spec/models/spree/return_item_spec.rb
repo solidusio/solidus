@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-shared_examples "an invalid state transition" do |status, expected_status|
+RSpec.shared_examples "an invalid state transition" do |status, expected_status|
   let(:status) { status }
 
   it "cannot transition to #{expected_status}" do
@@ -8,7 +8,7 @@ shared_examples "an invalid state transition" do |status, expected_status|
   end
 end
 
-describe Spree::ReturnItem, type: :model do
+RSpec.describe Spree::ReturnItem, type: :model do
   all_reception_statuses = Spree::ReturnItem.state_machines[:reception_status].states.map(&:name).map(&:to_s)
   all_acceptance_statuses = Spree::ReturnItem.state_machines[:acceptance_status].states.map(&:name).map(&:to_s)
 

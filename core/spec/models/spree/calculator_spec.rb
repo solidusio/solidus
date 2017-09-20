@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::Calculator, type: :model do
+RSpec.describe Spree::Calculator, type: :model do
   class SimpleCalculator < Spree::Calculator
     def compute_simple_computable(_line_item)
       'computed'

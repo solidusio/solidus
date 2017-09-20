@@ -1,7 +1,7 @@
 require 'rails_helper'
 require 'spree/core/product_filters'
 
-describe 'product filters', type: :model do
+RSpec.describe 'product filters', type: :model do
   # Regression test for https://github.com/spree/spree/issues/1709
   context 'finds products filtered by brand' do
     let(:product) { create(:product) }

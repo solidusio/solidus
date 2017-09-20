@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 module Spree
-  describe ProductsHelper, type: :helper do
+  RSpec.describe ProductsHelper, type: :helper do
     include ProductsHelper
 
     let(:product) { create(:product, price: product_price) }

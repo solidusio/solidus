@@ -3,7 +3,7 @@ require 'rails_helper'
 module Spree
   module Stock
     module Splitter
-      describe Base, type: :model do
+      RSpec.describe Base, type: :model do
         let(:stock_location) { mock_model(Spree::StockLocation) }
 
         it 'continues to splitter chain' do

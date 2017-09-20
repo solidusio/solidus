@@ -1,7 +1,7 @@
 require 'rails_helper'
 require 'email_spec'
 
-describe Spree::OrderMailer, type: :mailer do
+RSpec.describe Spree::OrderMailer, type: :mailer do
   include EmailSpec::Helpers
   include EmailSpec::Matchers
 

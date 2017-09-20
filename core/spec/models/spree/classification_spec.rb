@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 module Spree
-  describe Classification, type: :model do
+  RSpec.describe Classification, type: :model do
     # Regression test for https://github.com/spree/spree/issues/3494
     it "cannot link the same taxon to the same product more than once" do
       product = create(:product)

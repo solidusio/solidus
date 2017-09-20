@@ -2,7 +2,7 @@ require 'rails_helper'
 
 module Spree
   module Stock
-    describe Differentiator, type: :model do
+    RSpec.describe Differentiator, type: :model do
       let(:variant1) { mock_model(Variant) }
       let(:variant2) { mock_model(Variant) }
 

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 module Spree
   module Stock
-    describe Splitter::ShippingCategory, type: :model do
+    RSpec.describe Splitter::ShippingCategory, type: :model do
       let(:order) { create(:order_with_line_items, line_items_count: 1) }
       let(:line_item) { order.line_items.first }
       let(:variant1) { build(:variant) }

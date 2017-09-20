@@ -2,7 +2,7 @@ require 'rails_helper'
 
 module Spree
   module PromotionHandler
-    describe Coupon, type: :model do
+    RSpec.describe Coupon, type: :model do
       let(:order) { double("Order", coupon_code: "10off").as_null_object }
 
       subject { Coupon.new(order) }
