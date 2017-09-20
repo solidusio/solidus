@@ -79,8 +79,7 @@ module Spree
       end
 
       def cancel!
-        response = payment_method.cancel(response_code)
-        handle_void_response(response)
+        Spree::Config.payment_canceller.cancel(self)
       end
 
       def gateway_options

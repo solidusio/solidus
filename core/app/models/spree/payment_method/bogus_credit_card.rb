@@ -55,7 +55,8 @@ module Spree
       ActiveMerchant::Billing::Response.new(true, 'Bogus Gateway: Forced success', {}, test: true, authorization: '12345')
     end
 
-    def cancel(_response_code)
+    # @see Spree::PaymentMethod#try_void
+    def try_void(_payment)
       ActiveMerchant::Billing::Response.new(true, 'Bogus Gateway: Forced success', {}, test: true, authorization: '12345')
     end
 

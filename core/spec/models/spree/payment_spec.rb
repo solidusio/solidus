@@ -481,25 +481,34 @@ describe Spree::Payment, type: :model do
     end
 
     describe "#cancel!" do
+      subject { payment.cancel! }
+
       before do
         payment.response_code = 'abc'
         payment.state = 'pending'
       end
 
-      context "if successful" do
+      context "if void returns successful response" do
+        before do
+          expect(gateway).to receive(:try_void) { success_response }
+        end
+
+        it "should update the state to void" do
+          expect { subject }.to change { payment.state }.to('void')
+        end
+
         it "should update the response_code with the authorization from the gateway" do
-          # Change it to something different
-          allow(gateway).to receive_messages cancel: success_response
-          payment.cancel!
-          expect(payment.state).to eq('void')
-          expect(payment.response_code).to eq('123')
+          expect { subject }.to change { payment.response_code }.to('123')
         end
       end
 
-      context "if unsuccessful" do
-        it "should not void the payment" do
-          allow(gateway).to receive_messages cancel: failed_response
-          expect { payment.cancel! }.to raise_error(Spree::Core::GatewayError)
+      context "if void returns failed response" do
+        before do
+          expect(gateway).to receive(:try_void) { failed_response }
+        end
+
+        it "should raise gateway error and not change payment state or response_code", :aggregate_failures do
+          expect { subject }.to raise_error(Spree::Core::GatewayError)
           expect(payment.state).to eq('pending')
           expect(payment.response_code).to eq('abc')
         end
