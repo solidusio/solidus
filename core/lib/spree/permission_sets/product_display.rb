@@ -5,7 +5,6 @@ module Spree
     class ProductDisplay < PermissionSets::Base
       def activate!
         can [:display, :admin, :edit], Spree::Product
-        can [:display, :admin], Spree::Image
         can [:display, :admin], Spree::Variant
         can [:display, :admin], Spree::OptionValue
         can [:display, :admin], Spree::ProductProperty
