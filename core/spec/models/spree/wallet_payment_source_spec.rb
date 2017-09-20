@@ -14,7 +14,7 @@ describe Spree::WalletPaymentSource, type: :model do
 
       let(:payment_source) { NonPaymentSource.create! }
 
-      it "errors when `payment_source` does not implement `reusable`" do
+      it "errors when `payment_source` is not a `Spree::PaymentSource`" do
         wallet_payment_source = Spree::WalletPaymentSource.new(
           payment_source: payment_source,
           user: create(:user)
@@ -22,7 +22,7 @@ describe Spree::WalletPaymentSource, type: :model do
 
         expect(wallet_payment_source).not_to be_valid
         expect(wallet_payment_source.errors.messages).to eq(
-          { payment_source: ["has to implement `reusable?`"] }
+          { payment_source: ["has to be a Spree::PaymentSource"] }
         )
       end
     end

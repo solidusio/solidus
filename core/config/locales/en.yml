@@ -711,7 +711,7 @@ en:
         spree/wallet_payment_source:
           attributes:
             payment_source:
-              has_to_be_payment_source_class: "has to implement `reusable?`"
+              has_to_be_payment_source_class: "has to be a Spree::PaymentSource"
 
   devise:
     confirmations:
