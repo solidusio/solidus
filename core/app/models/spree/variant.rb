@@ -56,8 +56,6 @@ module Spree
     has_many :option_values_variants
     has_many :option_values, through: :option_values_variants
 
-    has_many :images, -> { order(:position) }, as: :viewable, dependent: :destroy, class_name: "Spree::Image"
-
     has_many :prices,
       class_name: 'Spree::Price',
       dependent: :destroy,
@@ -370,18 +368,6 @@ module Spree
     # @return [Boolean] true if inventory tracking is enabled
     def should_track_inventory?
       track_inventory? && Spree::Config.track_inventory_levels
-    end
-
-    # Image that can be used for the variant.
-    #
-    # Will first search for images on the variant. If it doesn't find any,
-    # it'll fallback to any variant image (unless +fallback+ is +false+) or to
-    # a new {Spree::Image}.
-    # @param fallback [Boolean] whether or not we should fallback to an image
-    #   not from this variant
-    # @return [Spree::Image] the image to display
-    def display_image(fallback: true)
-      images.first || (fallback && product.variant_images.first) || Spree::Image.new
     end
 
     # Determines the variant's property values by verifying which of the product's
