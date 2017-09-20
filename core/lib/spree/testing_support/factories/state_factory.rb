@@ -25,6 +25,7 @@ FactoryBot.define do
     name { carmen_subregion.name }
 
     country do |country|
+      require 'spree/country'
       Spree::Country.find_by(iso: country_iso) ||
         country.association(:country, iso: country_iso)
     end

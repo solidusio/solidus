@@ -1,4 +1,6 @@
-require 'rails_helper'
+require 'db_helper'
+require 'spree/state'
+require 'spree/testing_support/factories/state_factory'
 
 RSpec.describe Spree::State, type: :model do
   describe '.with_name_or_abbr' do
