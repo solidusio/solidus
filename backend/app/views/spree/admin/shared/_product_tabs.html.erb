@@ -7,9 +7,6 @@
       <%= content_tag :li, class: ('active' if current == 'Product Details') do %>
         <%= link_to t('spree.product_details'), spree.edit_admin_product_url(@product) %>
       <% end if can?(:admin, Spree::Product) %>
-      <%= content_tag :li, class: ('active' if current == 'Images') do %>
-        <%= link_to t('spree.images'), spree.admin_product_images_url(@product) %>
-      <% end if can?(:admin, Spree::Image) && !@product.deleted? %>
       <%= content_tag :li, class: ('active' if current == 'Variants') do %>
         <%= link_to plural_resource_name(Spree::Variant), spree.admin_product_variants_url(@product) %>
       <% end if can?(:admin, Spree::Variant) %>
