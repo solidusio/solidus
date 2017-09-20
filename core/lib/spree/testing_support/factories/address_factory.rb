@@ -1,6 +1,5 @@
 require 'spree/testing_support/factories/state_factory'
 require 'spree/testing_support/factories/country_factory'
-require 'twitter_cldr'
 
 FactoryGirl.define do
   factory :address, class: Spree::Address do
@@ -16,7 +15,7 @@ FactoryGirl.define do
     address1 '10 Lovely Street'
     address2 'Northwest'
     city 'Herndon'
-    zipcode { TwitterCldr::Shared::PostalCodes.for_territory(country_iso_code).sample.first }
+    zipcode { FFaker::AddressUS.zip_code }
     phone '555-555-0199'
     alternative_phone '555-555-0199'
 
