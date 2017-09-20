@@ -7,51 +7,8 @@ module Spree
     let(:product) { create(:product, properties: [create(:property, name: "MyProperty")]) }
     let!(:duplicator) { Spree::ProductDuplicator.new(product) }
 
-    let(:image) { File.open(File.expand_path('../../fixtures/thinking-cat.jpg', __dir__)) }
-    let(:params) { { viewable_id: product.master.id, viewable_type: 'Spree::Variant', attachment: image, alt: "position 1", position: 1 } }
-
-    before do
-      Spree::Image.create(params)
-    end
-
     it "will duplicate the product" do
       expect{ duplicator.duplicate }.to change{ Spree::Product.count }.by(1)
-    end
-
-    context 'when image duplication enabled' do
-      it "will duplicate the product images" do
-        expect{ duplicator.duplicate }.to change{ Spree::Image.count }.by(1)
-      end
-    end
-
-    context 'when image duplication disabled' do
-      let!(:duplicator) { Spree::ProductDuplicator.new(product, false) }
-
-      it "will not duplicate the product images" do
-        expect{ duplicator.duplicate }.to change{ Spree::Image.count }.by(0)
-      end
-    end
-
-    context 'image duplication default' do
-      context 'when default is set to true' do
-        it 'clones images if no flag passed to initializer' do
-          expect{ duplicator.duplicate }.to change{ Spree::Image.count }.by(1)
-        end
-      end
-
-      context 'when default is set to false' do
-        before do
-          ProductDuplicator.clone_images_default = false
-        end
-
-        after do
-          ProductDuplicator.clone_images_default = true
-        end
-
-        it 'does not clone images if no flag passed to initializer' do
-          expect{ ProductDuplicator.new(product).duplicate }.to change{ Spree::Image.count }.by(0)
-        end
-      end
     end
 
     context "product attributes" do
