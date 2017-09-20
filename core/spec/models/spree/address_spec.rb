@@ -103,41 +103,6 @@ describe Spree::Address, type: :model do
       expect(address.errors['zipcode']).to include("can't be blank")
     end
 
-    context "zipcode validation" do
-      it "validates the zipcode" do
-        allow(address.country).to receive(:iso).and_return('US')
-        address.zipcode = 'abc'
-        address.valid?
-        expect(address.errors['zipcode']).to include('is invalid')
-      end
-
-      context 'does not validate' do
-        it 'does not have a country' do
-          address.country = nil
-          address.valid?
-          expect(address.errors['zipcode']).not_to include('is invalid')
-        end
-
-        it 'does not have an iso' do
-          allow(address.country).to receive(:iso).and_return(nil)
-          address.valid?
-          expect(address.errors['zipcode']).not_to include('is invalid')
-        end
-
-        it 'does not have a zipcode' do
-          address.zipcode = ""
-          address.valid?
-          expect(address.errors['zipcode']).not_to include('is invalid')
-        end
-
-        it 'does not have a supported country iso' do
-          allow(address.country).to receive(:iso).and_return('BO')
-          address.valid?
-          expect(address.errors['zipcode']).not_to include('is invalid')
-        end
-      end
-    end
-
     context "phone not required" do
       before { allow(address).to receive_messages require_phone?: false }
 
