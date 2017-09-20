@@ -11,6 +11,7 @@ require 'paranoia'
 require 'ransack'
 require 'state_machines-activerecord'
 
+require 'spree'
 require 'spree/deprecation'
 
 # This is required because ActiveModel::Validations#invalid? conflicts with the
@@ -18,16 +19,6 @@ require 'spree/deprecation'
 StateMachines::Machine.ignore_method_conflicts = true
 
 module Spree
-  mattr_accessor :user_class
-
-  def self.user_class
-    if @@user_class.is_a?(Class)
-      raise "Spree.user_class MUST be a String or Symbol object, not a Class object."
-    elsif @@user_class.is_a?(String) || @@user_class.is_a?(Symbol)
-      @@user_class.to_s.constantize
-    end
-  end
-
   # Used to configure Spree.
   #
   # Example:
