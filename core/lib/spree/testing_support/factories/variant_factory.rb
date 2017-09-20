@@ -6,7 +6,7 @@ require 'spree/testing_support/factories/product_factory'
 FactoryGirl.define do
   sequence(:random_float) { BigDecimal.new("#{rand(200)}.#{rand(99)}") }
 
-  factory :base_variant, class: Spree::Variant do
+  factory :base_variant, class: 'Spree::Variant' do
     price 19.99
     cost_price 17.00
     sku { generate(:sku) }

@@ -1,7 +1,7 @@
 require 'carmen'
 
 FactoryGirl.define do
-  factory :country, class: Spree::Country do
+  factory :country, class: 'Spree::Country' do
     iso 'US'
 
     transient do

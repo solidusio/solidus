@@ -6,7 +6,7 @@ require 'spree/testing_support/factories/line_item_factory'
 require 'spree/testing_support/factories/payment_factory'
 
 FactoryGirl.define do
-  factory :order, class: Spree::Order do
+  factory :order, class: 'Spree::Order' do
     user
     bill_address
     ship_address

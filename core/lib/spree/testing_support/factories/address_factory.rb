@@ -3,7 +3,7 @@ require 'spree/testing_support/factories/country_factory'
 require 'twitter_cldr'
 
 FactoryGirl.define do
-  factory :address, class: Spree::Address do
+  factory :address, class: 'Spree::Address' do
     transient do
       # There's `Spree::Address#country_iso=`, prohibiting me from using `country_iso` here
       country_iso_code 'US'
