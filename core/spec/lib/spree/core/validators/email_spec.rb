@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'spree/core/validators/email'
 
 describe EmailValidator do
   class Tester
