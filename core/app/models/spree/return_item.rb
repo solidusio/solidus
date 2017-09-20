@@ -93,7 +93,8 @@ module Spree
     end
 
     extend DisplayMoney
-    money_methods :pre_tax_amount, :amount, :total
+    money_methods :pre_tax_amount, :amount, :total, :total_excluding_vat
+    deprecate display_pre_tax_amount: :display_total_excluding_vat, deprecator: Spree::Deprecation
 
     # @return [Boolean] true when this retur item is in a complete reception
     #   state
@@ -159,10 +160,12 @@ module Spree
       amount + additional_tax_total
     end
 
-    # @return [BigDecimal] the cost of the item before tax
-    def pre_tax_amount
+    # @return [BigDecimal] the cost of the item before VAT tax
+    def total_excluding_vat
       amount - included_tax_total
     end
+    alias pre_tax_amount total_excluding_vat
+    deprecate pre_tax_amount: :total_excluding_vat, deprecator: Spree::Deprecation
 
     # @note This uses the exchange_variant_engine configured on the class.
     # @param stock_locations [Array<Spree::StockLocation>] the stock locations to check

@@ -105,10 +105,10 @@ describe Spree::Shipment, type: :model do
     end
   end
 
-  context "display_final_price" do
+  context "display_total" do
     it "retuns a Spree::Money" do
-      allow(shipment).to receive(:final_price) { 21.22 }
-      expect(shipment.display_final_price).to eq(Spree::Money.new(21.22))
+      allow(shipment).to receive(:total) { 21.22 }
+      expect(shipment.display_total).to eq(Spree::Money.new(21.22))
     end
   end
 
@@ -145,7 +145,22 @@ describe Spree::Shipment, type: :model do
     shipment = create(:shipment)
     shipment.cost = 10
     shipment.promo_total = -1
-    expect(shipment.discounted_cost).to eq(9)
+    expect(Spree::Deprecation.silence { shipment.discounted_cost }).to eq(9)
+  end
+
+  describe '#total_before_tax' do
+    before do
+      shipment.update_attributes!(cost: 10)
+    end
+    let!(:admin_adjustment) { create(:adjustment, adjustable: shipment, order: shipment.order, amount: -1, source: nil) }
+    let!(:promo_adjustment) { create(:adjustment, adjustable: shipment, order: shipment.order, amount: -2, source: promo_action) }
+    let!(:ineligible_promo_adjustment) { create(:adjustment, eligible: false, adjustable: shipment, order: shipment.order, amount: -4, source: promo_action) }
+    let(:promo_action) { promo.actions[0] }
+    let(:promo) { create(:promotion, :with_line_item_adjustment) }
+
+    it 'returns the amount minus any adjustments' do
+      expect(shipment.total_before_tax).to eq(10 - 1 - 2)
+    end
   end
 
   it "#tax_total with included taxes" do
@@ -162,12 +177,12 @@ describe Spree::Shipment, type: :model do
     expect(shipment.tax_total).to eq(10)
   end
 
-  it "#final_price" do
+  it "#total" do
     shipment = Spree::Shipment.new
     shipment.cost = 10
     shipment.adjustment_total = -2
     shipment.included_tax_total = 1
-    expect(shipment.final_price).to eq(8)
+    expect(shipment.total).to eq(8)
   end
 
   context "manifest" do

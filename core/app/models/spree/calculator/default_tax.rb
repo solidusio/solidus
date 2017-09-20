@@ -13,7 +13,7 @@ module Spree
         rate.tax_categories.include?(line_item.tax_category)
       end
 
-      line_items_total = matched_line_items.sum(&:discounted_amount)
+      line_items_total = matched_line_items.sum(&:total_before_tax)
       if rate.included_in_price
         round_to_two_places(line_items_total - ( line_items_total / (1 + rate.amount) ) )
       else
@@ -27,7 +27,7 @@ module Spree
       if rate.included_in_price
         deduced_total_by_rate(item, rate)
       else
-        round_to_two_places(item.discounted_amount * rate.amount)
+        round_to_two_places(item.total_before_tax * rate.amount)
       end
     end
 
@@ -47,7 +47,7 @@ module Spree
 
     def deduced_total_by_rate(item, rate)
       round_to_two_places(
-        rate.amount * item.discounted_amount / (1 + sum_of_included_tax_rates(item))
+        rate.amount * item.total_before_tax / (1 + sum_of_included_tax_rates(item))
       )
     end
 

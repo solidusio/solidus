@@ -16,7 +16,8 @@ module Spree
     accepts_nested_attributes_for :return_items
 
     extend DisplayMoney
-    money_methods :pre_tax_total, :total, :amount
+    money_methods :pre_tax_total, :total, :total_excluding_vat, :amount
+    deprecate display_pre_tax_total: :display_total_excluding_vat, deprecator: Spree::Deprecation
 
     delegate :currency, to: :order
     delegate :id, to: :order, prefix: true, allow_nil: true
@@ -25,9 +26,11 @@ module Spree
       return_items.map(&:total).sum
     end
 
-    def pre_tax_total
-      return_items.map(&:pre_tax_amount).sum
+    def total_excluding_vat
+      return_items.map(&:total_excluding_vat).sum
     end
+    alias pre_tax_total total_excluding_vat
+    deprecate pre_tax_total: :total_excluding_vat, deprecator: Spree::Deprecation
 
     def amount
       return_items.sum(:amount)
