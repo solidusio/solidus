@@ -1,5 +1,3 @@
-require 'twitter_cldr'
-
 module Spree
   # `Spree::Address` provides the foundational ActiveRecord model for recording and
   # validating address information for `Spree::Order`, `Spree::Shipment`,
@@ -15,7 +13,7 @@ module Spree
     validates :zipcode, presence: true, if: :require_zipcode?
     validates :phone, presence: true, if: :require_phone?
 
-    validate :state_validate, :postal_code_validate
+    validate :state_validate
 
     alias_attribute :first_name, :firstname
     alias_attribute :last_name, :lastname
@@ -195,14 +193,6 @@ module Spree
 
       # ensure at least one state field is populated
       errors.add :state, :blank if state.blank? && state_name.blank?
-    end
-
-    def postal_code_validate
-      return if country.blank? || country.iso.blank? || !require_zipcode?
-      return if !TwitterCldr::Shared::PostalCodes.territories.include?(country.iso.downcase.to_sym)
-
-      postal_code = TwitterCldr::Shared::PostalCodes.for_territory(country.iso)
-      errors.add(:zipcode, :invalid) if !postal_code.valid?(zipcode.to_s)
     end
   end
 end
