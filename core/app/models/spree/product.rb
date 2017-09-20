@@ -99,10 +99,13 @@ module Spree
              :rebuild_vat_prices=,
              to: :find_or_build_master
 
+<<<<<<< 2269b1c5414317501cb1ea8082ff6b46d9c6ec8c
     alias_method :master_images, :images
 
     has_many :variant_images, -> { order(:position) }, source: :images, through: :variants_including_master
 
+=======
+>>>>>>> Remove images from Spree::Product
     after_create :build_variants_from_option_values_hash, if: :option_values_hash
 
     after_destroy :punch_slug
@@ -289,15 +292,6 @@ module Spree
       else
         stock_items.sum(:count_on_hand)
       end
-    end
-
-    # Image that can be used for the product.
-    #
-    # Will first search for images on the product, then those belonging to the
-    # variants. If all else fails, will return a new image object.
-    # @return [Spree::Image] the image to display
-    def display_image
-      images.first || variant_images.first || Spree::Image.new
     end
 
     # Finds the variant property rule that matches the provided option value ids.

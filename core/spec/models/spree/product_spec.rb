@@ -24,7 +24,6 @@ RSpec.describe Spree::Product, type: :model do
         expect(clone.name).to eq('COPY OF ' + product.name)
         expect(clone.master.sku).to eq('COPY OF ' + product.master.sku)
         expect(clone.taxons).to eq(product.taxons)
-        expect(clone.images.size).to eq(product.images.size)
       end
 
       it 'calls #duplicate_extra' do
@@ -479,6 +478,7 @@ RSpec.describe Spree::Product, type: :model do
     end
   end
 
+<<<<<<< 2269b1c5414317501cb1ea8082ff6b46d9c6ec8c
   context "#images" do
     let(:product) { create(:product) }
     let(:image) { File.open(File.expand_path('../../fixtures/thinking-cat.jpg', __dir__)) }
@@ -499,6 +499,8 @@ RSpec.describe Spree::Product, type: :model do
     end
   end
 
+=======
+>>>>>>> Remove images from Spree::Product
   # Regression tests for https://github.com/spree/spree/issues/2352
   context "classifications and taxons" do
     it "is joined through classifications" do
