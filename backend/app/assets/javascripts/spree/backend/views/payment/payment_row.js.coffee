@@ -1,4 +1,4 @@
-PaymentRowView = Backbone.View.extend
+Spree.Views.Payment.PaymentRow = Backbone.View.extend
   events:
     "click .js-edit": "onEdit"
     "click .js-save": "onSave"
@@ -30,4 +30,4 @@ Spree.ready ->
 
   $('tr.payment').each ->
     model = new Payment({id: $(@).data('payment-id')})
-    new PaymentRowView({el: @, model: model})
+    new Spree.Views.Payment.PaymentRow({el: @, model: model})

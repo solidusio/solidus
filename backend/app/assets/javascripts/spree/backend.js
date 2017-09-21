@@ -42,7 +42,6 @@
 //= require spree/backend/option_type_autocomplete
 //= require spree/backend/option_value_picker
 //= require spree/backend/orders
-//= require spree/backend/payments/edit
 //= require spree/backend/payments/new
 //= require spree/backend/product_picker
 //= require spree/backend/progress
