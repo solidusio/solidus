@@ -19,6 +19,7 @@ module Spree
     # which needs it)
     def apply_coupon_code
       if params[:order] && params[:order][:coupon_code]
+        Spree::Deprecation.warn("Passing params[:order][:coupon_code] is deprecated and will have no effect in a future version.", caller)
         @order.coupon_code = params[:order][:coupon_code]
 
         handler = PromotionHandler::Coupon.new(@order).apply
