@@ -4,3 +4,4 @@
 //= require spree/backend/models/shipment
 //= require spree/backend/models/taxonomy
 //= require spree/backend/models/payment
+//= require spree/backend/models/stock_item
