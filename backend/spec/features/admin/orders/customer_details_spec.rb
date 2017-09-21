@@ -121,14 +121,29 @@ describe "Customer Details", type: :feature, js: true do
       expect(page).to have_content("Shipping address first name can't be blank")
     end
 
-    it "updates order email for an existing order with a user" do
-      order.update_columns(ship_address_id: ship_address.id, bill_address_id: bill_address.id, state: "confirm", completed_at: nil)
-      previous_user = order.user
-      click_link "Customer"
-      fill_in "order_email", with: "newemail@example.com"
-      expect { click_button "Update" }.to change { order.reload.email }.to "newemail@example.com"
-      expect(order.user_id).to eq previous_user.id
-      expect(order.user.email).to eq previous_user.email
+    context "for an order in confirm state with a user" do
+      let(:user) { order.user }
+
+      before do
+        order.update_columns(
+          ship_address_id: ship_address.id,
+          bill_address_id: bill_address.id,
+          state: "confirm",
+          completed_at: nil
+        )
+      end
+
+      it "updating order email works" do
+        click_link "Customer"
+        fill_in "order_email", with: "newemail@example.com"
+        click_button "Update"
+        expect(page).to have_content 'Customer Details Updated'
+        click_link "Customer"
+        expect(page).to have_field 'Customer E-Mail', with: order.reload.email
+        within '#order_user_link' do
+          expect(page).to have_link user.email
+        end
+      end
     end
 
     context "country associated was removed" do
