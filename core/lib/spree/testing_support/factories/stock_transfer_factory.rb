@@ -1,9 +1,12 @@
 FactoryGirl.define do
+  sequence(:source_code) { |n| "SRC#{n}" }
+  sequence(:destination_code) { |n| "DEST#{n}" }
+
   factory :stock_transfer, class: Spree::StockTransfer do
-    source_location { Spree::StockLocation.create!(name: "Source Location", code: "SRC", admin_name: "Source") }
+    source_location { Spree::StockLocation.create!(name: "Source Location", code: generate(:source_code), admin_name: "Source") }
 
     factory :stock_transfer_with_items do
-      destination_location { Spree::StockLocation.create!(name: "Destination Location", code: "DEST", admin_name: "Destination") }
+      destination_location { Spree::StockLocation.create!(name: "Destination Location", code: generate(:destination_code), admin_name: "Destination") }
 
       after(:create) do |stock_transfer, _evaluator|
         variant_1 = create(:variant)
