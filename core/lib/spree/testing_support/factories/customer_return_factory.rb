@@ -3,7 +3,7 @@ require 'spree/testing_support/factories/order_factory'
 require 'spree/testing_support/factories/return_item_factory'
 
 FactoryGirl.define do
-  factory :customer_return, class: Spree::CustomerReturn do
+  factory :customer_return, class: 'Spree::CustomerReturn' do
     association(:stock_location, factory: :stock_location)
 
     transient do
