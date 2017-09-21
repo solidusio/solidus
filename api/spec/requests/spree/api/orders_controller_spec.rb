@@ -598,14 +598,6 @@ module Spree
           expect(order.adjustments).to be_empty
         end
 
-        it "can list its line items with images" do
-          order.line_items.first.variant.images.create!(attachment: image("thinking-cat.jpg"))
-
-          get spree.api_order_path(order)
-
-          expect(json_response['line_items'].first['variant']).to have_attributes([:images])
-        end
-
         it "lists variants product id" do
           get spree.api_order_path(order)
 
