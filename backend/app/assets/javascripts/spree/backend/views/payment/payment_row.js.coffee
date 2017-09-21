@@ -22,12 +22,3 @@ Spree.Views.Payment.PaymentRow = Backbone.View.extend
       error: (model, response, options) =>
         show_flash 'error', response.responseJSON.error
     @model.save({ amount: amount }, options)
-
-Spree.ready ->
-  order_id = $('#payments').data('order-id')
-  Payment = Backbone.Model.extend
-    urlRoot: Spree.routes.payments_api(order_id)
-
-  $('tr.payment').each ->
-    model = new Payment({id: $(@).data('payment-id')})
-    new Spree.Views.Payment.PaymentRow({el: @, model: model})
