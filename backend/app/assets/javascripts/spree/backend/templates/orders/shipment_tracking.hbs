@@ -3,7 +3,9 @@
 </th>
 <td colspan="4">
   {{#if editing}}
-    <input type="text" name="tracking" class="fullwidth" value="{{tracking}}">
+    <form>
+      <input type="text" name="tracking" class="fullwidth" value="{{tracking}}">
+    </form>
   {{else}}
     {{#if tracking}}
       {{ tracking }}

@@ -5,7 +5,8 @@ Spree.Views.Order.ShippingMethod = Backbone.View.extend({
   events: {
     "click .js-edit":   "onEdit",
     "click .js-save":   "onSave",
-    "click .js-cancel": "onCancel",
+    "submit form":      "onSave",
+    "click .js-cancel": "onCancel"
   },
 
   initialize: function(options) {
@@ -29,6 +30,8 @@ Spree.Views.Order.ShippingMethod = Backbone.View.extend({
         window.location.reload();
       }
     });
+
+    return false;
   },
 
   onCancel: function(event) {

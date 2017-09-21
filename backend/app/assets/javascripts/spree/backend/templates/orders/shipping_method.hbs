@@ -3,11 +3,13 @@
 </th>
 {{#if editing}}
 <td colspan="4">
-  <select class="custom-select fullwidth" name="selected_shipping_rate_id">
-    {{#each shipping_rates}}
-    <option value="{{ id }}">{{name}} {{display_cost}}</option>
-    {{/each}}
-  </select>
+  <form>
+    <select class="custom-select fullwidth" name="selected_shipping_rate_id">
+      {{#each shipping_rates}}
+      <option value="{{ id }}">{{name}} {{display_cost}}</option>
+      {{/each}}
+    </select>
+  </form>
 </td>
 {{else}}
 <td colspan="3">
