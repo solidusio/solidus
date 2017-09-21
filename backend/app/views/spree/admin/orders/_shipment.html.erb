@@ -47,11 +47,11 @@
       <%= render 'spree/admin/orders/shipment_manifest', { shipment_number: shipment.number, shipment_manifest: manifest_items } %>
 
       <% unless shipment.shipped? %>
-        <tr class="edit-shipping-method">
+        <tr class="edit-shipping-method vertical-middle">
         </tr>
       <% end %>
 
-      <tr class="edit-tracking">
+      <tr class="edit-tracking vertical-middle">
       </tr>
 
       <% if order.special_instructions.present? %>
