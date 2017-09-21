@@ -125,9 +125,7 @@ module Spree
       end
 
       it "gets a single product" do
-        product.master.images.create!(attachment: image("thinking-cat.jpg"))
         product.variants.create!
-        product.variants.first.images.create!(attachment: image("thinking-cat.jpg"))
         product.set_property("spree", "rocks")
         product.taxons << create(:taxon)
 
@@ -137,17 +135,7 @@ module Spree
         expect(json_response['variants'].first).to have_attributes([:name,
                                                                     :is_master,
                                                                     :price,
-                                                                    :images,
                                                                     :in_stock])
-
-        expect(json_response['variants'].first['images'].first).to have_attributes([:attachment_file_name,
-                                                                                    :attachment_width,
-                                                                                    :attachment_height,
-                                                                                    :attachment_content_type,
-                                                                                    :mini_url,
-                                                                                    :small_url,
-                                                                                    :product_url,
-                                                                                    :large_url])
 
         expect(json_response["product_properties"].first).to have_attributes([:value,
                                                                               :product_id,
