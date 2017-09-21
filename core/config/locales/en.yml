@@ -76,9 +76,6 @@ en:
         created_at: "Date/Time"
         reimbursement_status: Reimbursement status
         name: Name
-      spree/image:
-        alt: Alternative Text
-        attachment: Filename
       spree/inventory_unit:
         state: State
       spree/legacy_user:
@@ -473,9 +470,6 @@ en:
       spree/exchange:
         one: Exchange
         other: Exchanges
-      spree/image:
-        one: Image
-        other: Images
       spree/inventory_unit:
         one: Inventory Unit
         other: Inventory Units
@@ -830,12 +824,6 @@ en:
       stores:
         form:
           no_cart_tax_country: "No taxes on carts without address"
-      images:
-        index:
-          choose_files: Choose files to upload
-          drag_and_drop: or drag and drop them here
-          image_process_failed: Server failed to process the image
-          upload_images: Upload Images
       payments:
         source_forms:
           storecredit:
@@ -1016,7 +1004,6 @@ en:
     back_to_countries_list: Back To Countries List
     back_to_customer_return: Back To Customer Return
     back_to_customer_return_list: Back To Customer Return List
-    back_to_images_list: Back To Images List
     back_to_option_types_list: Back To Option Types List
     back_to_orders_list: Back To Orders List
     back_to_payment: Back To Payment
@@ -1364,8 +1351,6 @@ en:
     icon: Icon
     id: ID
     identifier: Identifier
-    image: Image
-    images: Images
     implement_eligible_for_return: "Must implement #eligible_for_return? for your EligibilityValidator."
     implement_requires_manual_intervention: "Must implement #requires_manual_intervention? for your EligibilityValidator."
     inactive: Inactive
@@ -1478,7 +1463,6 @@ en:
     new_customer: New Customer
     new_customer_return: New Customer Return
     new_country: New Country
-    new_image: New Image
     new_option_type: New Option Type
     new_order: New Order
     new_order_completed: New Order Completed
@@ -1511,7 +1495,6 @@ en:
     new_zone: New Zone
     next: Next
     no_actions_added: No actions added
-    no_images_found: No images found
     no_inventory_selected: No inventory selected
     no_orders_found: No orders found
     no_option_values_on_product_html: "This product has no associated option values. Add some to it through Option Types in the %{link}."
