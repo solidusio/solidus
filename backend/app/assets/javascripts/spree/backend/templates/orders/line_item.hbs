@@ -19,7 +19,9 @@
 </td>
 {{#if editing}}
   <td class="line-item-qty-edit">
-    <input type="number" name="quantity" value="{{ line_item.quantity }}" min="0" class="line_item_quantity" size="5">
+    <form>
+      <input type="number" name="quantity" value="{{ line_item.quantity }}" min="0" class="line_item_quantity" size="5">
+    </form>
   </td>
 {{else}}
   <td class="line-item-qty-show">
