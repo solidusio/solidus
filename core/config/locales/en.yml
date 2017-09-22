@@ -1948,7 +1948,6 @@ en:
     select: Select
     select_a_reason: Select a reason
     select_a_stock_location: Select a stock location
-    select_stock: Select stock
     selected_quantity_not_available: selected of %{item} is not available.
     send_copy_of_all_mails_to: Send Copy of All Mails To
     send_mailer: Send Mailer
@@ -2229,8 +2228,7 @@ en:
     you_cannot_undo_action: You will not be able to undo this action
     you_have_no_orders_yet: You have no orders yet
     your_cart_is_empty: Your cart is empty
-    your_order_is_empty_add_product: Your order is empty, please search for and add
-      a product above
+    your_order_is_empty_add_product: Your order is empty. Please add products first.
     zip: Zip
     zipcode: Zip Code
     zone: Zone

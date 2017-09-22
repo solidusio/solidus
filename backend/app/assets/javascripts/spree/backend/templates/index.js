@@ -13,6 +13,5 @@
 //= require spree/backend/templates/taxons/_tree
 //= require spree/backend/templates/taxons/tree
 //= require spree/backend/templates/variants/autocomplete
-//= require spree/backend/templates/variants/autocomplete_stock
 //= require spree/backend/templates/variants/line_items_autocomplete_stock
 //= require spree/backend/templates/variants/split

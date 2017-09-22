@@ -2,9 +2,13 @@
 
 ### Major Changes
 
+- Removes the "Add product" section from admin orders shipments tab
+
 ### Core
 
 ### Backend
+
+- Removes the "Add product" section from admin orders shipments tab
 
 ### API
 
