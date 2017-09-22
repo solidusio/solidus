@@ -11,7 +11,6 @@ module Spree
       :checkout_attributes,
       :credit_card_update_attributes,
       :customer_return_attributes,
-      :image_attributes,
       :inventory_unit_attributes,
       :line_item_attributes,
       :option_type_attributes,
@@ -54,8 +53,6 @@ module Spree
     ]
 
     @@customer_return_attributes = [:stock_location_id, return_items_attributes: [:id, :inventory_unit_id, :return_authorization_id, :returned, :amount, :reception_status_event, :acceptance_status, :exchange_variant_id, :resellable]]
-
-    @@image_attributes = [:alt, :attachment, :position, :viewable_type, :viewable_id]
 
     @@inventory_unit_attributes = [:shipment, :variant_id]
 
