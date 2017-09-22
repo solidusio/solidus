@@ -78,8 +78,8 @@ module Spree
           # `where` constraints affecting joined tables are added to the search;
           # which is the case as soon as a taxon is added to the base scope.
           scope = scope.preload(master: :currently_valid_prices)
-          scope = scope.preload(master: :images) if @properties[:include_images]
           scope
+          scope.preload(master: :currently_valid_prices)
         end
 
         def add_search_scopes(base_scope)
@@ -108,7 +108,6 @@ module Spree
           @properties[:taxon] = params[:taxon].blank? ? nil : Spree::Taxon.find(params[:taxon])
           @properties[:keywords] = params[:keywords]
           @properties[:search] = params[:search]
-          @properties[:include_images] = params[:include_images]
 
           per_page = params[:per_page].to_i
           @properties[:per_page] = per_page > 0 ? per_page : Spree::Config[:products_per_page]

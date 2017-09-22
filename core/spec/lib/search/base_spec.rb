@@ -19,22 +19,6 @@ RSpec.describe Spree::Core::Search::Base do
     expect(searcher.retrieve_products.count).to eq(2)
   end
 
-  context "when include_images is included in the initalization params" do
-    let(:params) { { include_images: true, keyword: @product1.name, taxon: @taxon.id } }
-    subject { described_class.new(params).retrieve_products }
-
-    before do
-      @product1.master.images.create(attachment_file_name: "Test", position: 2)
-      @product1.master.images.create(attachment_file_name: "Test1", position: 1)
-      @product1.reload
-    end
-
-    it "returns images in correct order" do
-      expect(subject.first).to eq @product1
-      expect(subject.first.images).to eq @product1.master.images
-    end
-  end
-
   it "switches to next page according to the page parameter" do
     @product3 = create(:product, name: "RoR Pants", price: 14.00)
 
