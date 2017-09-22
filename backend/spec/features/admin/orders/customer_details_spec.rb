@@ -159,7 +159,6 @@ describe "Customer Details", type: :feature, js: true do
       end
 
       it "sets default country when displaying form" do
-        click_link "Cart"
         click_link "Customer"
         expect(page).to have_field("order_bill_address_attributes_country_id", with: brazil.id, visible: false)
       end
