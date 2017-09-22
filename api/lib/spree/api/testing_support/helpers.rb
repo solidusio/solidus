@@ -32,14 +32,6 @@ module Spree
         def current_api_user
           @current_api_user ||= stub_model(Spree::LegacyUser, email: "spree@example.com", spree_roles: [])
         end
-
-        def image(filename)
-          File.open(Spree::Api::Engine.root + "spec/fixtures" + filename)
-        end
-
-        def upload_image(filename)
-          fixture_file_upload(image(filename).path, 'image/jpg')
-        end
       end
     end
   end

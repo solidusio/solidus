@@ -7,7 +7,6 @@ module Spree
         :product_attributes,
         :product_property_attributes,
         :variant_attributes,
-        :image_attributes,
         :option_value_attributes,
         :order_attributes,
         :line_item_attributes,
@@ -67,11 +66,6 @@ module Spree
 
       @@variant_property_attributes = [
         :id, :property_id, :value, :property_name
-      ]
-
-      @@image_attributes = [
-        :id, :position, :attachment_content_type, :attachment_file_name, :type,
-        :attachment_updated_at, :attachment_width, :attachment_height, :alt
       ]
 
       @@option_value_attributes = [
