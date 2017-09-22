@@ -524,8 +524,6 @@ describe "Order Details", type: :feature, js: true do
       expect(page).not_to have_css('.delete-item')
       expect(page).not_to have_css('.split-item')
       expect(page).not_to have_css('.edit-tracking')
-
-      expect(page).not_to have_css('#add-line-item')
     end
   end
 
