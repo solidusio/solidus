@@ -24,6 +24,12 @@ describe "New Order", type: :feature do
     expect(current_path).to eql(spree.edit_admin_order_customer_path(Spree::Order.last))
   end
 
+  it "default line item quantity is 1", js: true do
+    within ".line-items" do
+      expect(page).to have_field 'quantity', with: '1'
+    end
+  end
+
   it "completes new order succesfully without using the cart", js: true do
     add_line_item product.name
 
