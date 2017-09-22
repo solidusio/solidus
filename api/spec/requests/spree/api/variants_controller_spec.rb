@@ -54,22 +54,6 @@ module Spree
                                                         :option_type_id])
       end
 
-      it "variants returned contain images data" do
-        variant.images.create!(attachment: image("thinking-cat.jpg"))
-
-        get spree.api_variants_path
-
-        expect(json_response["variants"].last).to have_attributes([:images])
-        expect(json_response['variants'].first['images'].first).to have_attributes([:attachment_file_name,
-                                                                                    :attachment_width,
-                                                                                    :attachment_height,
-                                                                                    :attachment_content_type,
-                                                                                    :mini_url,
-                                                                                    :small_url,
-                                                                                    :product_url,
-                                                                                    :large_url])
-      end
-
       # Regression test for https://github.com/spree/spree/issues/2141
       context "a deleted variant" do
         before do
@@ -202,19 +186,6 @@ module Spree
         subject
         expect(json_response).to have_attributes(show_attributes)
         expect(json_response["stock_items"]).to be_present
-        option_values = json_response["option_values"]
-        expect(option_values.first).to have_attributes([:name,
-                                                        :presentation,
-                                                        :option_type_name,
-                                                        :option_type_id])
-      end
-
-      it "can see a single variant with images" do
-        variant.images.create!(attachment: image("thinking-cat.jpg"))
-
-        subject
-
-        expect(json_response).to have_attributes(show_attributes + [:images])
         option_values = json_response["option_values"]
         expect(option_values.first).to have_attributes([:name,
                                                         :presentation,
