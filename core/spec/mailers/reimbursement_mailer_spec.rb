@@ -1,7 +1,7 @@
 require 'rails_helper'
 require 'email_spec'
 
-describe Spree::ReimbursementMailer, type: :mailer do
+RSpec.describe Spree::ReimbursementMailer, type: :mailer do
   include EmailSpec::Helpers
   include EmailSpec::Matchers
 

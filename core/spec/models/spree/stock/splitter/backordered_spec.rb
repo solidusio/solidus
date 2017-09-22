@@ -3,7 +3,7 @@ require 'rails_helper'
 module Spree
   module Stock
     module Splitter
-      describe Backordered, type: :model do
+      RSpec.describe Backordered, type: :model do
         let(:variant) { build(:variant) }
 
         let(:stock_location) { mock_model(Spree::StockLocation) }

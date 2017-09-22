@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'solidus:migrations:migrate_shipping_rate_taxes' do
+RSpec.describe 'solidus:migrations:migrate_shipping_rate_taxes' do
   describe 'up' do
     include_context(
       'rake',

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::Tax::ShippingRateTaxer do
+RSpec.describe Spree::Tax::ShippingRateTaxer do
   let(:shipping_rate) { build_stubbed(:shipping_rate) }
 
   subject(:taxer) { described_class.new(shipping_rate) }

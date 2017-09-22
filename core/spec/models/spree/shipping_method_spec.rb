@@ -3,7 +3,7 @@ require 'rails_helper'
 class DummyShippingCalculator < Spree::ShippingCalculator
 end
 
-describe Spree::ShippingMethod, type: :model do
+RSpec.describe Spree::ShippingMethod, type: :model do
   # Regression test for https://github.com/spree/spree/issues/4492
   context "#shipments" do
     let!(:shipping_method) { create(:shipping_method) }

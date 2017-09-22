@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::ProductProperty, type: :model do
+RSpec.describe Spree::ProductProperty, type: :model do
   context "touching" do
     let(:product_property) { create(:product_property) }
     let(:product) { product_property.product }

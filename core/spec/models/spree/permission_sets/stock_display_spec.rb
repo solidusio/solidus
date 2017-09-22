@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::PermissionSets::StockDisplay do
+RSpec.describe Spree::PermissionSets::StockDisplay do
   let(:ability) { DummyAbility.new }
 
   subject { ability }

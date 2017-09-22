@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::ReturnItem::EligibilityValidator::InventoryShipped do
+RSpec.describe Spree::ReturnItem::EligibilityValidator::InventoryShipped do
   let(:return_item) { create(:return_item) }
   let(:validator)   { Spree::ReturnItem::EligibilityValidator::InventoryShipped.new(return_item) }
 

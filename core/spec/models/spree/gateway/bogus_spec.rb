@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::Gateway::Bogus do
+RSpec.describe Spree::Gateway::Bogus do
   it 'is deprecated' do
     expect(Spree::Deprecation).to receive(:warn)
     described_class.new

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 module Spree
   module Core
-    describe Importer::Order do
+    RSpec.describe Importer::Order do
       let!(:store) { create(:store) }
       let!(:country) { create(:country) }
       let!(:state) { country.states.first || create(:state, country: country) }

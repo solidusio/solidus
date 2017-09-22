@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::Preference, type: :model do
+RSpec.describe Spree::Preference, type: :model do
   it "should require a key" do
     @preference = Spree::Preference.new
     @preference.key = :test

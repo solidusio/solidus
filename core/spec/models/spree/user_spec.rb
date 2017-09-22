@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::LegacyUser, type: :model do
+RSpec.describe Spree::LegacyUser, type: :model do
   context "#last_incomplete_order" do
     let!(:user) { create(:user) }
 
@@ -100,7 +100,7 @@ describe Spree::LegacyUser, type: :model do
   end
 end
 
-describe Spree.user_class, type: :model do
+RSpec.describe Spree.user_class, type: :model do
   context "reporting" do
     let(:order_value) { BigDecimal.new("80.94") }
     let(:order_count) { 4 }

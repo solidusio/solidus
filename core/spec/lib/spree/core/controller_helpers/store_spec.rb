@@ -4,7 +4,7 @@ class FakesController < ApplicationController
   include Spree::Core::ControllerHelpers::Store
 end
 
-describe Spree::Core::ControllerHelpers::Store, type: :controller do
+RSpec.describe Spree::Core::ControllerHelpers::Store, type: :controller do
   controller(FakesController) {}
 
   describe '#current_store' do

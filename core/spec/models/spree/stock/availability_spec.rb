@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 module Spree::Stock
-  describe Availability do
+  RSpec.describe Availability do
     let(:variants) { Spree::Variant.all.to_a }
     let(:infinity) { Float::INFINITY }
 

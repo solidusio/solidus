@@ -3,7 +3,7 @@ require 'shared_examples/calculator_shared_examples'
 
 module Spree
   module Calculator::Shipping
-    describe FlatPercentItemTotal, type: :model do
+    RSpec.describe FlatPercentItemTotal, type: :model do
       let(:variant1) { build(:variant, price: 10.11) }
       let(:variant2) { build(:variant, price: 20.2222) }
 

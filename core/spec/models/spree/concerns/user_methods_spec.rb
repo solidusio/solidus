@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::UserMethods do
+RSpec.describe Spree::UserMethods do
   let(:test_user) { create :user }
 
   describe '#has_spree_role?' do

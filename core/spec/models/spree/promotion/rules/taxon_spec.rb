@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::Promotion::Rules::Taxon, type: :model do
+RSpec.describe Spree::Promotion::Rules::Taxon, type: :model do
   let(:rule) do
     Spree::Promotion::Rules::Taxon.create!(promotion: create(:promotion))
   end

@@ -1,7 +1,7 @@
 require 'rails_helper'
 require 'spree/testing_support/order_walkthrough'
 
-describe Spree::Order, type: :model do
+RSpec.describe Spree::Order, type: :model do
   let!(:store) { create(:store) }
   let(:order) { Spree::Order.new(store: store) }
 

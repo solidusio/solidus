@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::Preferences::Configuration, type: :model do
+RSpec.describe Spree::Preferences::Configuration, type: :model do
   before :all do
     class AppConfig < Spree::Preferences::Configuration
       preference :color, :string, default: :blue

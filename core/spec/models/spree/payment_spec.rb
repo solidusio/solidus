@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::Payment, type: :model do
+RSpec.describe Spree::Payment, type: :model do
   let(:store) { create :store }
   let(:order) { Spree::Order.create(store: store) }
   let(:refund_reason) { create(:refund_reason) }

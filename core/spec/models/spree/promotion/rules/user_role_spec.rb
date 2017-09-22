@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::Promotion::Rules::UserRole, type: :model do
+RSpec.describe Spree::Promotion::Rules::UserRole, type: :model do
   let(:rule) { described_class.new(preferred_role_ids: roles_for_rule) }
   let(:user) { create(:user, spree_roles: roles_for_user) }
   let(:roles_for_rule) { [] }

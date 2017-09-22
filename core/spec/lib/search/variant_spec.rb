@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 module Spree
-  describe Core::Search::Variant do
+  RSpec.describe Core::Search::Variant do
     def assert_found(query_string, variant)
       expect(described_class.new(query_string).results).to include variant
     end

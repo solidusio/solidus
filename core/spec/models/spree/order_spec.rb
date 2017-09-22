@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::Order, type: :model do
+RSpec.describe Spree::Order, type: :model do
   let(:store) { create(:store) }
   let(:user) { create(:user, email: "spree@example.com") }
   let(:order) { create(:order, user: user, store: store) }

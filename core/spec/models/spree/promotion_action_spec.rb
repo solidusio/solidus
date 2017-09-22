@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::PromotionAction, type: :model do
+RSpec.describe Spree::PromotionAction, type: :model do
   describe '#remove_from' do
     class MyPromotionAction < Spree::PromotionAction
       def perform(options = {})

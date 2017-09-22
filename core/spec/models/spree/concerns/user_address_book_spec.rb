@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 module Spree
-  describe UserAddressBook do
+  RSpec.describe UserAddressBook do
     #
     # Using LegacyUser as a subject
     # since it uses the UserAddressBookExtension
@@ -315,42 +315,42 @@ module Spree
         end
 
         it "does not call save_in_address_book on bill address" do
-        order = build(:order)
-        order.bill_address = nil
+          order = build(:order)
+          order.bill_address = nil
 
-        user.persist_order_address(order)
+          user.persist_order_address(order)
         end
       end
     end
-  end
 
-  context "generating a new user with a ship_address at once" do
-    let(:ship_address) { build(:ship_address) }
-    subject { create(:user, ship_address: ship_address) }
+    describe "generating a new user with a ship_address at once" do
+      let(:ship_address) { build(:ship_address) }
+      subject { create(:user, ship_address: ship_address) }
 
-    it "stores the ship_address" do
-      expect(subject.ship_address).to eq ship_address
+      it "stores the ship_address" do
+        expect(subject.ship_address).to eq ship_address
+      end
+
+      it "is also available as default_address" do
+        expect(subject.default_address).to eq ship_address
+      end
     end
 
-    it "is also available as default_address" do
-      expect(subject.default_address).to eq ship_address
-    end
-  end
+    describe "ship_address=" do
+      let!(:user) { create(:user) }
+      let!(:address) { create(:address) }
 
-  describe "ship_address=" do
-    let!(:user) { create(:user) }
-    let!(:address) { create(:address) }
+      # https://github.com/solidusio/solidus/issues/1241
+      it "resets the association and persists" do
+        # Load (which will cache) the has_one association
+        expect(user.ship_address).to be_nil
 
-    # https://github.com/solidusio/solidus/issues/1241
-    it "resets the association and persists" do
-      # Load (which will cache) the has_one association
-      expect(user.ship_address).to be_nil
+        user.update!(ship_address: address)
+        expect(user.ship_address).to eq(address)
 
-      user.update!(ship_address: address)
-      expect(user.ship_address).to eq(address)
-
-      user.reload
-      expect(user.ship_address).to eq(address)
+        user.reload
+        expect(user.ship_address).to eq(address)
+      end
     end
   end
 end

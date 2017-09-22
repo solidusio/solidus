@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::TransferItem do
+RSpec.describe Spree::TransferItem do
   let(:stock_location) { create(:stock_location, name: "Warehouse") }
   let(:stock_transfer) { create(:stock_transfer_with_items, source_location: stock_location) }
   let(:transfer_item)  { stock_transfer.transfer_items.first }

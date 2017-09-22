@@ -3,7 +3,7 @@ require 'rails_helper'
 module Spree
   class Promotion
     module Actions
-      describe CreateItemAdjustments, type: :model do
+      RSpec.describe CreateItemAdjustments, type: :model do
         let(:order) { create(:order_with_line_items, line_items_count: 1) }
         let(:promotion) { create(:promotion, :with_line_item_adjustment, adjustment_rate: adjustment_amount) }
         let(:adjustment_amount) { 10 }

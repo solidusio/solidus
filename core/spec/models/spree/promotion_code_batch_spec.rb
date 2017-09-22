@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe Spree::PromotionCodeBatch, type: :model do
+RSpec.describe Spree::PromotionCodeBatch, type: :model do
   subject do
     described_class.create!(
       promotion_id: create(:promotion).id,

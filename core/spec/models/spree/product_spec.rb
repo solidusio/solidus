@@ -9,7 +9,7 @@ module ThirdParty
   end
 end
 
-describe Spree::Product, type: :model do
+RSpec.describe Spree::Product, type: :model do
   context 'product instance' do
     let(:product) { create(:product) }
     let(:variant) { create(:variant, product: product) }

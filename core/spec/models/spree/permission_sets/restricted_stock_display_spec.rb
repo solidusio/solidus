@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::PermissionSets::RestrictedStockDisplay do
+RSpec.describe Spree::PermissionSets::RestrictedStockDisplay do
   let(:ability) { Spree::Ability.new(user) }
   let(:user) { create :user }
 

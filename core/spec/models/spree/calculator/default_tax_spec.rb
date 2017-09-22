@@ -1,7 +1,7 @@
 require 'rails_helper'
 require 'shared_examples/calculator_shared_examples'
 
-describe Spree::Calculator::DefaultTax, type: :model do
+RSpec.describe Spree::Calculator::DefaultTax, type: :model do
   let(:address) { create(:address) }
   let!(:zone) { create(:zone, name: "Country Zone", countries: [tax_rate_country]) }
   let(:tax_rate_country) { address.country }

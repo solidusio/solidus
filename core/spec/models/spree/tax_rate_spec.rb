@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::TaxRate, type: :model do
+RSpec.describe Spree::TaxRate, type: :model do
   it { is_expected.to respond_to(:shipping_rate_taxes) }
 
   context '.for_address' do

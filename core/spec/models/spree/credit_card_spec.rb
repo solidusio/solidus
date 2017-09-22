@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::CreditCard, type: :model do
+RSpec.describe Spree::CreditCard, type: :model do
   let(:valid_credit_card_attributes) do
     {
       number: '4111111111111111',

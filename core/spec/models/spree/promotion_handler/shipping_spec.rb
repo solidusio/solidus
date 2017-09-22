@@ -2,7 +2,7 @@ require 'rails_helper'
 
 module Spree
   module PromotionHandler
-    describe Shipping, type: :model do
+    RSpec.describe Shipping, type: :model do
       let(:order) { create(:order) }
       let(:shipment) { create(:shipment, order: order ) }
 

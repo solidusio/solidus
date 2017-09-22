@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::ReturnItem::EligibilityValidator::NoReimbursements do
+RSpec.describe Spree::ReturnItem::EligibilityValidator::NoReimbursements do
   let(:validator) { Spree::ReturnItem::EligibilityValidator::NoReimbursements.new(return_item) }
 
   describe "#eligible_for_return?" do

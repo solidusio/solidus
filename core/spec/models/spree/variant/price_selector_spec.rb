@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::Variant::PriceSelector do
+RSpec.describe Spree::Variant::PriceSelector do
   let(:variant) { build_stubbed(:variant) }
 
   subject { described_class.new(variant) }

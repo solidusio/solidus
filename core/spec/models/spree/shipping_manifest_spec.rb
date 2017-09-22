@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 module Spree
-  describe ShippingManifest, type: :model do
+  RSpec.describe ShippingManifest, type: :model do
     let!(:store) { create :store }
     let(:order) { Order.create! }
     let(:variant) { create :variant }

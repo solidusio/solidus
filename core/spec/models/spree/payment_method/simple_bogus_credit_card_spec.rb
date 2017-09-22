@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::PaymentMethod::SimpleBogusCreditCard, type: :model do
+RSpec.describe Spree::PaymentMethod::SimpleBogusCreditCard, type: :model do
   subject { Spree::PaymentMethod::SimpleBogusCreditCard.new }
 
   # regression test for https://github.com/spree/spree/issues/3824

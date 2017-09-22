@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::PermissionSets::DefaultCustomer do
+RSpec.describe Spree::PermissionSets::DefaultCustomer do
   context 'as Guest User' do
     context 'for Order' do
       context 'guest_token is empty string' do

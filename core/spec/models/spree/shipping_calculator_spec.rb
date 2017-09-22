@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 module Spree
-  describe ShippingCalculator, type: :model do
+  RSpec.describe ShippingCalculator, type: :model do
     let(:variant1) { build(:variant, price: 10) }
     let(:variant2) { build(:variant, price: 20) }
 

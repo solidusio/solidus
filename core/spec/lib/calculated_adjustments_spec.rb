@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::CalculatedAdjustments do
+RSpec.describe Spree::CalculatedAdjustments do
   let(:calculator_class) { Spree::Calculator::FlatRate }
 
   with_model :Calculable, scope: :all do

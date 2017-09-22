@@ -1,7 +1,7 @@
 require 'rails_helper'
 require 'shared_examples/calculator_shared_examples'
 
-describe Spree::Calculator::FlexiRate, type: :model do
+RSpec.describe Spree::Calculator::FlexiRate, type: :model do
   let(:calculator) do
     Spree::Calculator::FlexiRate.new(
       preferred_first_item: first_item,

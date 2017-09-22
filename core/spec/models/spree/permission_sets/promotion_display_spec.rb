@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::PermissionSets::PromotionDisplay do
+RSpec.describe Spree::PermissionSets::PromotionDisplay do
   let(:ability) { DummyAbility.new }
 
   subject { ability }

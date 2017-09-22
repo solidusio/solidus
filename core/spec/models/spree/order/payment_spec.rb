@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 module Spree
-  describe Spree::Order, type: :model do
+  RSpec.describe Spree::Order, type: :model do
     let(:order) { stub_model(Spree::Order) }
     let(:updater) { Spree::OrderUpdater.new(order) }
 

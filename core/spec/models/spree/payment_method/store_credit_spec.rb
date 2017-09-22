@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::PaymentMethod::StoreCredit do
+RSpec.describe Spree::PaymentMethod::StoreCredit do
   let(:order)           { create(:order) }
   let(:payment)         { create(:payment, order: order) }
   let(:gateway_options) { payment.gateway_options }

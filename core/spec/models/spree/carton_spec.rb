@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::Carton do
+RSpec.describe Spree::Carton do
   let(:carton) { create(:carton) }
 
   describe "#create" do

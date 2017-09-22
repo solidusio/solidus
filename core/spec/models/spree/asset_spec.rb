@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::Asset, type: :model do
+RSpec.describe Spree::Asset, type: :model do
   describe "#viewable" do
     it "touches association" do
       product = build(:custom_product)

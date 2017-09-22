@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::Stock::ShippingRateSelector do
+RSpec.describe Spree::Stock::ShippingRateSelector do
   describe '#sort' do
     it 'sorts by increasing cost' do
       cheapest_shipping_rate = Spree::ShippingRate.new(cost: 1.00)

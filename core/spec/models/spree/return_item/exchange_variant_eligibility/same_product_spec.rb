@@ -2,7 +2,7 @@ require 'rails_helper'
 
 module Spree
   module ReturnItem::ExchangeVariantEligibility
-    describe SameProduct, type: :model do
+    RSpec.describe SameProduct, type: :model do
       describe ".eligible_variants" do
         context "product has no variants" do
           it "returns the master variant for the same product" do

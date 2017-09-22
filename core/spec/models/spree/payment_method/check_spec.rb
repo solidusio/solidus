@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::PaymentMethod::Check do
+RSpec.describe Spree::PaymentMethod::Check do
   let(:order) { create(:order) }
   subject { described_class.new }
 
