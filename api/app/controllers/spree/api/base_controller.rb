@@ -128,7 +128,7 @@ module Spree
       end
 
       def variants_associations
-        [{ option_values: :option_type }, :default_price, :images]
+        [{ option_values: :option_type }, :default_price]
       end
 
       def product_includes
