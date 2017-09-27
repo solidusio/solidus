@@ -19,20 +19,6 @@ require 'spree/deprecation'
 StateMachines::Machine.ignore_method_conflicts = true
 
 module Spree
-  # Used to configure Spree.
-  #
-  # Example:
-  #
-  #   Spree.config do |config|
-  #     config.track_inventory_levels = false
-  #   end
-  #
-  # This method is defined within the core gem on purpose.
-  # Some people may only wish to use the Core part of Spree.
-  def self.config(&_block)
-    yield(Spree::Config)
-  end
-
   module Core
     class GatewayError < RuntimeError; end
 

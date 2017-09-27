@@ -6,6 +6,9 @@ module Spree
       raise "Spree.user_class MUST be a String or Symbol object, not a Class object."
     elsif @@user_class.is_a?(String) || @@user_class.is_a?(Symbol)
       @@user_class.to_s.constantize
+    else
+      require 'spree/legacy_user'
+      Spree::LegacyUser
     end
   end
 
