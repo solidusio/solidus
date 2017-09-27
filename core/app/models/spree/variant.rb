@@ -2,6 +2,8 @@ require 'spree/base'
 require 'paranoia'
 require 'acts_as_list'
 
+require 'spree/default_price'
+
 module Spree
   # == Master Variant
   #

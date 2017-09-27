@@ -3,6 +3,8 @@ require 'spree/base'
 require 'friendly_id'
 require 'paranoia'
 
+require 'spree/variant'
+
 module Spree
   # Products represent an entity for sale in a store. Products can have
   # variations, called variants. Product properties include description,
