@@ -1,4 +1,8 @@
-require 'rails_helper'
+require 'db_helper'
+require 'spree/store'
+require 'spree/testing_support/factories/country_factory'
+require 'spree/testing_support/factories/store_factory'
+require 'spree/tax/tax_location'
 
 RSpec.describe Spree::Store, type: :model do
   it { is_expected.to respond_to(:cart_tax_country_iso) }

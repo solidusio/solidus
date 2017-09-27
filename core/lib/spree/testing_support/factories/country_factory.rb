@@ -1,4 +1,5 @@
 require 'carmen'
+require 'spree/country'
 
 FactoryBot.define do
   factory :country, class: 'Spree::Country' do
