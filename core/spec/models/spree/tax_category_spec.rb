@@ -1,4 +1,6 @@
-require 'rails_helper'
+require 'db_helper'
+require 'spree/tax_category'
+require 'spree/testing_support/factories/tax_category_factory'
 
 RSpec.describe Spree::TaxCategory, type: :model do
   context 'default tax category' do
