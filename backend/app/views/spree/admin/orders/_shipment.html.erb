@@ -47,43 +47,9 @@
       <%= render 'spree/admin/orders/shipment_manifest', { shipment_number: shipment.number, shipment_manifest: manifest_items } %>
 
       <% unless shipment.shipped? %>
-        <tr class="edit-method hidden total">
-          <th><%= Spree::ShippingMethod.model_name.human %></th>
-          <td colspan="4">
-            <%= select_tag :selected_shipping_rate_id,
-              options_for_select(shipment.shipping_rates.map {|sr| ["#{sr.name} #{sr.display_price}", sr.id] }, shipment.selected_shipping_rate_id),
-              {class: 'custom-select fullwidth', data: {'shipment-number' => shipment.number } } %>
-          </td>
-          <td class="actions">
-            <% if can? :update, shipment %>
-              <%= button_tag '', class: 'save-method fa fa-check no-text with-tip',
-                data: {'shipment-number' => shipment.number, action: 'save'}, title: Spree.t('actions.save') %>
-              <%= button_tag '', class: 'cancel-method fa fa-cancel no-text with-tip',
-                data: {action: 'cancel'}, title: Spree.t('actions.cancel') %>
-            <% end %>
-          </td>
+        <tr class="edit-shipping-method">
         </tr>
-        <% end %>
-
-        <tr class="show-method total">
-          <% if rate = shipment.selected_shipping_rate %>
-            <th><%= Spree::ShippingMethod.model_name.human %></th>
-            <td colspan="3">
-              <%= rate.name %>
-            </td>
-            <td class="total">
-              <%= shipment.display_cost %>
-            </td>
-          <% else %>
-            <td colspan="5"><%= Spree.t(:no_shipping_method_selected) %></td>
-          <% end %>
-
-          <td class="actions">
-            <% if can?(:update, shipment) && !shipment.shipped? %>
-              <%= button_tag '', class: 'edit-method fa fa-edit no-text with-tip', data: {action: 'edit'}, title: Spree.t('actions.edit'), type: :button %>
-            <% end %>
-          </td>
-        </tr>
+      <% end %>
 
       <tr class="edit-tracking hidden total">
         <th><%= Spree::Shipment.human_attribute_name(:tracking) %></th>

@@ -272,6 +272,8 @@ var ShipmentEditView = Backbone.View.extend({
     this.shipment_number = this.model.get('number')
     this.order_number = this.model.collection.parent.get('number')
 
+    var shipment = this.model;
+
     var shipmentView = this;
     this.$("form.admin-ship-shipment").each(function(el){
       new ShipShipmentView({
@@ -286,32 +288,19 @@ var ShipmentEditView = Backbone.View.extend({
         order_number: shipmentView.order_number
       });
     });
+    this.$(".edit-shipping-method").each(function(el){
+      new Spree.Views.Order.ShippingMethod({
+        el: this,
+        model: shipment,
+        shipment_number: shipmentView.shipment_number
+      });
+    });
   },
 
   events: {
-    "click button.edit-method": "toggleMethodEdit",
-    "click button.cancel-method": "toggleMethodEdit",
-    "click button.save-method": "saveMethod",
-
     "click button.edit-tracking": "toggleTrackingEdit",
     "click button.cancel-tracking": "toggleTrackingEdit",
     "click button.save-tracking": "saveTracking",
-  },
-
-  toggleMethodEdit: function(e){
-    e.preventDefault();
-    this.$('tr.edit-method').toggle();
-    this.$('tr.show-method').toggle();
-  },
-
-  saveMethod: function(e) {
-    e.preventDefault();
-    var selected_shipping_rate_id = this.$("select#selected_shipping_rate_id").val();
-    updateShipment(this.shipment_number, {
-      selected_shipping_rate_id: selected_shipping_rate_id
-    }).done(function () {
-      window.location.reload();
-    });
   },
 
   toggleTrackingEdit: function(e) {
