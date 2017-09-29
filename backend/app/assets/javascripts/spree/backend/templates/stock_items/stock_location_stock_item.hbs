@@ -10,7 +10,9 @@
 </td>
 <td>
   {{#if editing}}
-    <input class="fullwidth" name="count_on_hand" type="number" value="{{count_on_hand}}">
+    <form>
+      <input class="fullwidth" name="count_on_hand" type="number" value="{{count_on_hand}}">
+    </form>
   {{else}}
     <span>{{count_on_hand}}</span>
   {{/if}}
