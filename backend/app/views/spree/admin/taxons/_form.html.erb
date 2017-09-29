@@ -19,12 +19,6 @@
         <%= text_field_tag :permalink_part, @permalink_part, class: 'fullwidth form-control' %><br />
       </div>
     <% end %>
-
-    <%= f.field_container :icon do %>
-      <%= f.label :icon %><br />
-      <%= f.file_field :icon %>
-      <%= image_tag f.object.icon(:mini) if f.object.icon.present? %>
-    <% end %>
   </div>
 
   <div class="col-5">
