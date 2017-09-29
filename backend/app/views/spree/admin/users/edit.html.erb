@@ -35,13 +35,8 @@
         <div id="current-api-key"><%= t('.key') %>: (<%= Spree.t('.hidden') %>)</div>
       </div>
       <div class="filter-actions actions">
-        <%= form_tag spree.clear_api_key_admin_user_path(@user), method: :put do %>
-          <%= button t('.clear_key') %>
-        <% end %>
-
-        <%= form_tag spree.generate_api_key_admin_user_path(@user), method: :put do %>
-          <%= button t('.regenerate_key') %>
-        <% end %>
+        <%= button_link_to t('.clear_key'), spree.clear_api_key_admin_user_path(@user), method: :put, data: { confirm: t('.confirm_clear_key') }, class: 'btn btn-primary' %>
+        <%= button_link_to t('.regenerate_key'), spree.generate_api_key_admin_user_path(@user), method: :put, data: { confirm: t('.confirm_regenerate_key') }, class: 'btn btn-primary' %>
       </div>
 
     <% else %>
@@ -49,9 +44,7 @@
       <div class="no-objects-found"><%= t('.no_key') %></div>
 
       <div class="filter-actions actions">
-        <%= form_tag spree.generate_api_key_admin_user_path(@user), method: :put do %>
-          <%= button t('.generate_key') %>
-        <% end %>
+        <%= button_link_to t('.generate_key'), spree.generate_api_key_admin_user_path(@user), method: :put, class: 'btn btn-primary' %>
       </div>
     <% end %>
   </fieldset>
