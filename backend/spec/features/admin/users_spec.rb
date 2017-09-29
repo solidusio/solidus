@@ -238,7 +238,7 @@ describe 'Users', type: :feature do
       it 'can generate a new api key' do
         within("#admin_user_edit_api_key") do
           expect(user_a.spree_api_key).to be_blank
-          click_button Spree.t('generate_key', scope: 'api')
+          click_button "Generate API key"
         end
 
         expect(user_a.reload.spree_api_key).to be_present
@@ -257,7 +257,7 @@ describe 'Users', type: :feature do
       it 'can clear an api key' do
         expect(page).to have_css('#current-api-key')
 
-        click_button Spree.t('clear_key', scope: 'api')
+        click_button "Clear key"
 
         expect(page).to have_no_css('#current-api-key')
 
@@ -268,7 +268,7 @@ describe 'Users', type: :feature do
         old_key = user_a.spree_api_key
 
         within("#admin_user_edit_api_key") do
-          click_button Spree.t('regenerate_key', scope: 'api')
+          click_button "Regenerate key"
         end
 
         expect(user_a.reload.spree_api_key).to be_present

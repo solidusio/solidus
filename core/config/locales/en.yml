@@ -949,6 +949,13 @@ en:
       users:
         user_page_actions:
           create_order: Create order for this user
+        edit:
+          api_access: "API Access"
+          clear_key: "Clear key"
+          generate_key: "Generate API key"
+          key: "Key"
+          no_key: "No key"
+          regenerate_key: "Regenerate key"
       variants:
         table_filter:
           show_deleted: Show deleted variants
