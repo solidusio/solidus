@@ -1538,4 +1538,14 @@ RSpec.describe Spree::Order, type: :model do
       end
     end
   end
+
+  context 'update_params_payment_source' do
+    subject { described_class.new }
+
+    it 'is deprecated' do
+      subject.instance_variable_set('@updating_params', {})
+      expect(Spree::Deprecation).to receive(:warn)
+      subject.update_params_payment_source
+    end
+  end
 end

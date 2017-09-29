@@ -794,6 +794,7 @@ module Spree
         @updating_params[:order][:payments_attributes].first[:amount] = total
       end
     end
+    deprecate update_params_payment_source: :set_payment_parameters_amount, deprecator: Spree::Deprecation
 
     def associate_store
       self.store ||= Spree::Store.default
