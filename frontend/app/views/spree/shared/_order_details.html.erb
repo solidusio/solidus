@@ -61,6 +61,7 @@
   <tbody data-hook>
     <% order.line_items.each do |item| %>
       <tr data-hook="order_details_line_item_row">
+<<<<<<< d39fdf22a0be1e344ae56913d5c517e0b515b556
         <td data-hook="order_item_image">
           <% if item.variant.images.empty? %>
             <%= link_to(render('spree/shared/image', image: item.variant.product.display_image, size: :small), item.variant.product) %>
@@ -68,6 +69,8 @@
             <%= link_to(render('spree/shared/image', image: item.variant.images.first, size: :small), item.variant.product) %>
           <% end %>
         </td>
+=======
+>>>>>>> Remove images from frontend views
         <td data-hook="order_item_description">
           <h4><%= item.variant.product.name %></h4>
           <%= truncated_product_description(item.variant.product) %>
