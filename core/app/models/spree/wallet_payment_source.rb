@@ -10,7 +10,7 @@ class Spree::WalletPaymentSource < ActiveRecord::Base
   private
 
   def check_for_payment_source_class
-    if !payment_source.respond_to?(:reusable?)
+    if !payment_source.is_a?(Spree::PaymentSource)
       errors.add(:payment_source, :has_to_be_payment_source_class)
     end
   end
