@@ -14,7 +14,6 @@ Spree::Core::Engine.routes.draw do
     resources :promotions, only: [:show]
 
     resources :products do
-      resources :images
       resources :variants
       resources :product_properties
     end
@@ -50,9 +49,7 @@ Spree::Core::Engine.routes.draw do
       end
     end
 
-    resources :variants do
-      resources :images
-    end
+    resources :variants
 
     resources :option_types do
       resources :option_values
