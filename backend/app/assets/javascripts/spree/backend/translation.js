@@ -26,4 +26,13 @@
   Spree.human_attribute_name = function(model, attr) {
     return Spree.t("activerecord.attributes." + model + '.' + attr);
   }
+
+  Spree.human_model_name = function(model) {
+    var model_name = Spree.t("activerecord.models." + model);
+    if(_.isString(model_name)) {
+      return model_name;
+    } else {
+      return model_name.one;
+    }
+  }
 })();
