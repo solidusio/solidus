@@ -28,7 +28,7 @@ module Spree
       def sales_total
         params[:q] = search_params
 
-        @search = Order.complete.ransack(params[:q])
+        @search = Order.complete.not_canceled.ransack(params[:q])
         @orders = @search.result
 
         @totals = {}
