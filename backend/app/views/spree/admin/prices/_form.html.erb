@@ -17,8 +17,7 @@
           <%= f.field_hint :country %>
           <%= f.collection_select :country_iso, available_countries, :iso, :name,
                                   {
-                                    include_blank: t(:any_country, scope: [:spree, :admin, :prices]),
-                                    selected: Spree::Config.admin_vat_country_iso
+                                    include_blank: t(:any_country, scope: [:spree, :admin, :prices])
                                   },
                                   { class: 'custom-select fullwidth', disabled: !f.object.new_record? } %>
         <% end %>
