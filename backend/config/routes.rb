@@ -39,11 +39,6 @@ Spree::Core::Engine.routes.draw do
           post :update_positions
         end
       end
-      resources :images do
-        collection do
-          post :update_positions
-        end
-      end
       member do
         post :clone
       end
