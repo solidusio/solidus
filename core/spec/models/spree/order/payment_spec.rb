@@ -94,8 +94,9 @@ module Spree
     end
 
     context "ensure source attributes stick around" do
-      let(:order){ Spree::Order.create }
-      let(:payment_method){ create(:credit_card_payment_method) }
+      let(:store) { create(:store) }
+      let(:order) { Spree::Order.create(store: store) }
+      let(:payment_method) { create(:credit_card_payment_method) }
       let(:payment_attributes) do
         {
           payment_method_id: payment_method.id,

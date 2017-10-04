@@ -903,7 +903,8 @@ RSpec.describe Spree::Order, type: :model do
   end
 
   context "#can_ship?" do
-    let(:order) { Spree::Order.create }
+    let(:store) { create(:store) }
+    let(:order) { Spree::Order.create(store: store) }
 
     it "should be true for order in the 'complete' state" do
       allow(order).to receive_messages(complete?: true)
@@ -997,7 +998,8 @@ RSpec.describe Spree::Order, type: :model do
 
   # Regression test for https://github.com/spree/spree/issues/4923
   context "locking" do
-    let(:order) { Spree::Order.create } # need a persisted in order to test locking
+    let(:store) { create(:store) } # need a persisted in order to test locking
+    let(:order) { Spree::Order.create(store: store) } # need a persisted in order to test locking
 
     it 'can lock' do
       order.with_lock {}
