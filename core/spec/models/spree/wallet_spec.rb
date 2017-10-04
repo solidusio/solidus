@@ -6,6 +6,43 @@ RSpec.describe Spree::Wallet, type: :model do
   let(:store_credit) { create(:store_credit, user_id: user.id) }
   subject(:wallet) { Spree::Wallet.new(user) }
 
+  describe '.payment_source_helper' do
+    let(:payment_source) { Object.const_set('FakePaymentSource', Class.new(Spree::PaymentSource)) }
+    let(:non_payment_source) { Object.const_set('FakeNonPaymentSource', Class.new) }
+
+    context 'when source is a Spree::PaymentSource' do
+      it 'defines a helper method for the class' do
+        described_class.payment_source_helper payment_source
+        expect(wallet).to respond_to :fake_payment_sources
+      end
+    end
+
+    context 'when source is NOT a Spree::PaymentSource' do
+      it 'raises an ArgumentError' do
+        expect { described_class.payment_source_helper non_payment_source }.to raise_error ArgumentError
+      end
+    end
+
+    it 'should define #credit_cards' do
+      expect(wallet).to respond_to :credit_cards
+      expect(wallet.credit_cards).to be_empty
+
+      wallet.add(credit_card)
+      wallet.add(store_credit)
+      expect(wallet.credit_cards).to_not be_empty
+      expect(wallet.credit_cards.size).to eql 1
+    end
+
+    it 'should define #store_credits' do
+      expect(wallet).to respond_to :store_credits
+
+      wallet.add(credit_card)
+      wallet.add(store_credit)
+      expect(wallet.store_credits).to_not be_empty
+      expect(wallet.store_credits.size).to eql 1
+    end
+  end
+
   describe "#add" do
     context "with valid payment source" do
       it "creates a wallet_payment_source for this user's wallet" do

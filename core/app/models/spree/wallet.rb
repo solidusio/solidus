@@ -10,6 +10,41 @@ class Spree::Wallet
 
   attr_reader :user
 
+  ##
+  # Define a helper for payment source class which
+  # acts like a scope. (By default Spree::CreditCard and Spree::StoreCredit
+  # is defined)
+  #
+  # @example Get Credit Cards for wallet.
+  #   user.wallet.credit_cards
+  #   #=> [Array<Spree::CreditCard>]
+  #
+  # @example Define helper for Spree::GiftCard
+  #   Spree::Wallet.payment_source_helper Spree::GiftCard
+  #   user.wallet.gift_cards
+  #   #=> [Array<Spree::GiftCard>]
+  #
+  # @param source [Spree::PaymentSource] The payment source to define a helper for.
+  # @raise [ArgumentError] Raises an `ArgumentError` if the klass is not of type `Spree::PaymentSource`
+  # @return [NilClass]
+  #
+  def self.payment_source_helper(source)
+    raise ArgumentError, 'source must be type of Spree::PaymentSource' unless source < Spree::PaymentSource
+
+    method_name = source.name.demodulize.tableize
+    unless method_defined?(method_name)
+      define_method(method_name) do
+        source.
+          joins(:wallet_payment_sources).
+          where(spree_wallet_payment_sources: { user_id: user.id })
+      end
+    end
+  end
+
+  # Define Spree payment source helpers
+  payment_source_helper Spree::CreditCard
+  payment_source_helper Spree::StoreCredit
+
   def initialize(user)
     @user = user
   end
