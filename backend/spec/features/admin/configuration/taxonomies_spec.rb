@@ -3,16 +3,11 @@ require 'spec_helper'
 describe "Taxonomies", type: :feature do
   stub_authorization!
 
-  before(:each) do
-    visit spree.admin_path
-    click_link "Settings"
-  end
-
   context "show" do
     it "should display existing taxonomies" do
       create(:taxonomy, name: 'Brand')
       create(:taxonomy, name: 'Categories')
-      click_nav "Products", "Taxonomies"
+      visit spree.admin_taxonomies_path
       within_row(1) { expect(page).to have_content("Brand") }
       within_row(2) { expect(page).to have_content("Categories") }
     end
@@ -20,7 +15,7 @@ describe "Taxonomies", type: :feature do
 
   context "create" do
     before(:each) do
-      click_nav "Products", "Taxonomies"
+      visit spree.admin_taxonomies_path
       click_link "admin_new_taxonomy_link"
     end
 
@@ -41,7 +36,7 @@ describe "Taxonomies", type: :feature do
   context "edit" do
     it "should allow an admin to update an existing taxonomy" do
       create(:taxonomy)
-      click_nav "Products", "Taxonomies"
+      visit spree.admin_taxonomies_path
       within_row(1) { click_icon :edit }
       fill_in "taxonomy_name", with: "sports 99"
       click_button "Update"
