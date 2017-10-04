@@ -975,6 +975,10 @@ en:
           use_product_tax_category: Use Product Tax Category
           pricing: Pricing
           pricing_hint: These values are populated from the product details page and can be overridden below
+      stock_transfers:
+        create_additional_stock_location: Create additional stock locations.
+        create_new_stock_transfer: Create a new stock transfer.
+        no_stock_locations_found: More than one stock location must be set to transfer stock.
     administration: Administration
     agree_to_privacy_policy: Agree to Privacy Policy
     agree_to_terms_of_service: Agree to Terms of Service
@@ -1253,6 +1257,7 @@ en:
       messages:
         cannot_modify_transfer_item_closed_stock_transfer: Transfer items that are part of a closed stock transfer cannot be modified.
         cannot_delete_finalized_stock_transfer: Finalized stock transfers cannot be destroyed.
+        cannot_delete_finalized_stock_location: Stock Location cannot be destroyed if you have open stock transfers.
         cannot_delete_transfer_item_with_finalized_stock_transfer: Transfer items that are part of a finalized stock transfer cannot be destroyed.
         cannot_update_expected_transfer_item_with_finalized_stock_transfer: The expected quantity cannot be updated on transfer items that are part of a finalized stock transfer.
         could_not_create_taxon: Could not create taxon
