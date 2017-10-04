@@ -85,7 +85,8 @@
 
   <p class="field" id=<%="#{address_id}phone" %>>
     <%= form.label :phone, t('spree.phone') %><% if address.require_phone? %><span class="required">*</span><% end %><br />
-    <%= form.phone_field :phone, class: "#{'required' if address.require_phone?}", autocomplete: address_type + ' home tel', required: true, pattern: '^([+]?\d{1,2}[-\s]?|)\d{3}[-\s]?\d{3}[-\s]?\d{4}$' %>
+    <% phone_hash = address.require_phone? ? { class: 'required', required: true } : {} %>
+    <%= form.phone_field :phone, phone_hash.merge({ autocomplete: address_type + ' home tel' }) %>
   </p>
 
   <% if Spree::Config[:alternative_shipping_phone] %>
