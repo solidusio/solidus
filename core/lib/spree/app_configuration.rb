@@ -287,8 +287,6 @@ module Spree
 
     class_name_attribute :shipping_rate_selector_class, default: 'Spree::Stock::ShippingRateSelector'
 
-    class_name_attribute :shipping_rate_taxer_class, default: 'Spree::Tax::ShippingRateTaxer'
-
     # Allows providing your own class for calculating taxes on a shipping rate.
     #
     # @!attribute [rw] shipping_rate_tax_calculator_class
