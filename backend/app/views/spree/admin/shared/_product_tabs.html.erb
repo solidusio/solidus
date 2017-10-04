@@ -22,6 +22,9 @@
       <%= content_tag :li, class: ('active' if current == 'Stock Management') do %>
         <%= link_to Spree.t(:stock_management), spree.admin_product_stock_url(@product) %>
       <% end if can?(:admin, Spree::StockItem) && !@product.deleted? %>
+      <%= content_tag :li, class: ('active' if current == 'Orders') do %>
+        <%= link_to Spree.t(:orders), spree.admin_product_orders_url(@product) %>
+      <% end %>
     </ul>
   </nav>
 <% end %>

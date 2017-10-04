@@ -1,0 +1,61 @@
+<%= render partial: 'spree/admin/shared/product_tabs', locals: { current: 'Orders' } %>
+
+<% admin_breadcrumb(Spree.t(:orders)) %>
+
+<%= paginate @orders, theme: "solidus_admin" %>
+
+<% if @orders.any? %>
+  <table class="index responsive" id="listing_orders" data-hook>
+    <colgroup>
+       <col style="width: 13%;">
+       <col style="width: 10%;">
+       <col style="width: 10%;">
+       <col style="width: 12%;">
+       <% if Spree::Order.checkout_step_names.include?(:delivery) %>
+         <col style="width: 12%;">
+       <% end %>
+       <col style="width: 25%;">
+       <col style="width: 10%;">
+       <col style="width: 8%;">
+    </colgroup>
+    <thead>
+      <tr data-hook="admin_orders_index_headers">
+        <th><%= sort_link @search, :completed_at, Spree::Order.human_attribute_name(:completed_at) %></th>
+        <th><%= sort_link @search, :number, Spree::Order.human_attribute_name(:number) %></th>
+        <th><%= sort_link @search, :state, Spree::Order.human_attribute_name(:state) %></th>
+        <th><%= sort_link @search, :payment_state, Spree::Order.human_attribute_name(:payment_state) %></th>
+         <% if Spree::Order.checkout_step_names.include?(:delivery) %>
+          <th><%= sort_link @search, :shipment_state, Spree::Order.human_attribute_name(:shipment_state) %></th>
+         <% end %>
+        <th><%= sort_link @search, :email,  Spree::Order.human_attribute_name(:email) %></th>
+        <th><%= sort_link @search, :total,  Spree::Order.human_attribute_name(:total) %></th>
+        <th data-hook="admin_orders_index_header_actions" class="actions"></th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @orders.each do |order| %>
+      <tr data-hook="admin_orders_index_rows" class="state-<%= order.state.downcase %> <%= cycle('odd', 'even') %>">
+        <td class="align-center"><%= l order.completed_at.to_date %></td>
+        <td class="align-center"><%= link_to order.number, edit_admin_order_path(order) %></td>
+        <td class="align-center"><span class="state <%= order.state.downcase %>"><%= Spree.t("order_state.#{order.state.downcase}") %></span></td>
+        <td class="align-center"><span class="state <%= order.payment_state %>"><%= link_to Spree.t("payment_states.#{order.payment_state}"), admin_order_payments_path(order) if order.payment_state %></span></td>
+          <% if Spree::Order.checkout_step_names.include?(:delivery) %>
+            <td class="align-center"><span class="state <%= order.shipment_state %>"><%= Spree.t("shipment_states.#{order.shipment_state}") if order.shipment_state %></span></td>
+          <% end %>
+        <td><%= mail_to order.email %></td>
+        <td class="align-center"><%= order.display_total.to_html %></td>
+        <td class='actions align-center' data-hook="admin_orders_index_row_actions">
+          <%= link_to_edit_url edit_admin_order_path(order), title: "edit_admin_#{dom_id(order)}", no_text: true %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div class="alpha twelve columns no-objects-found">
+    <%= Spree.t(:no_resource_found, resource: Spree.t(:other, scope: 'activerecord.models.spree/order')) %>,
+    <%= link_to Spree.t(:add_one), spree.new_admin_order_path %>!
+  </div>
+<% end %>
+
+<%= paginate @orders, theme: "solidus_admin" %>
