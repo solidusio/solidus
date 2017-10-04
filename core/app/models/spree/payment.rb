@@ -146,6 +146,11 @@ module Spree
       credit_allowed > 0
     end
 
+    # @return [Boolean] true when this payment has been fully refunded
+    def fully_refunded?
+      refunds.map(&:amount).sum == amount
+    end
+
     # @return [Array<String>] the actions available on this payment
     def actions
       sa = source_actions

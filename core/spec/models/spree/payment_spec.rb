@@ -630,6 +630,25 @@ RSpec.describe Spree::Payment, type: :model do
     end
   end
 
+  describe "#fully_refunded?" do
+    subject { payment.fully_refunded? }
+
+    before { payment.amount = 100 }
+
+    context 'before refund' do
+      it { is_expected.to be false }
+    end
+
+    context 'when refund total equals payment amount' do
+      before do
+        create(:refund, payment: payment, amount: 50)
+        create(:refund, payment: payment, amount: 50)
+      end
+
+      it { is_expected.to be true }
+    end
+  end
+
   describe "#save" do
     context "captured payments" do
       it "update order payment total" do

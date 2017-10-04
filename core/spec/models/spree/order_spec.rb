@@ -43,6 +43,8 @@ RSpec.describe Spree::Order, type: :model do
   end
 
   describe "#cancel!" do
+    subject { order.cancel! }
+
     context "with captured store credit" do
       let!(:store_credit_payment_method) { create(:store_credit_payment_method) }
       let(:order_total) { 500.00 }
@@ -55,7 +57,20 @@ RSpec.describe Spree::Order, type: :model do
         order.capture_payments!
       end
 
-      subject { order.cancel! }
+      it "cancels the order" do
+        expect{ subject }.to change{ order.can_cancel? }.from(true).to(false)
+        expect(order).to be_canceled
+      end
+    end
+
+    context "with fully refunded payment" do
+      let(:order) { create(:completed_order_with_totals) }
+      let(:payment_amount) { 50 }
+      let(:payment) { create(:payment, order: order, amount: payment_amount, state: 'completed') }
+
+      before do
+        create(:refund, payment: payment, amount: payment_amount)
+      end
 
       it "cancels the order" do
         expect{ subject }.to change{ order.can_cancel? }.from(true).to(false)
