@@ -1,7 +1,8 @@
-.select2-container {
+.select2-container,
+.select2-container.select2-drop-above {
   .select2-choice, .select2-choices {
     border: $input-btn-border-width solid $input-border-color;
-    @include border-radius($input-border-radius);
+    border-radius: $input-border-radius;
     background: $input-bg;
     height: $input-height;
     padding: 0;
@@ -25,6 +26,20 @@
   }
 }
 
+.select2-container.select2-dropdown-open {
+  .select2-choice,
+  .select2-choices {
+    border-radius: $input-border-radius $input-border-radius 0 0;
+  }
+
+  &.select2-drop-above {
+    .select2-choice,
+    .select2-choices {
+      border-radius: 0 0 $input-border-radius $input-border-radius;
+    }
+  }
+}
+
 .select2-container .select2-choice .select2-search-choice-close {
   @extend .fa;
   @extend .fa-times;
@@ -37,7 +52,9 @@
   background-image: none;
 }
 
-.select2-container-active, .select2-dropdown-open {
+.select2-container-active, .select2-dropdown-open,
+.select2-container-active.select2-drop-above,
+.select2-dropdown-open.select2-drop-above {
   .select2-choices.select2-choices, /* Needs extra specificity */
   .select2-choice {
     box-shadow: none; /* Remove default outline */
@@ -71,11 +88,19 @@
 .select2-drop {
   /* Remove default shadow */
   box-shadow: none;
-}
 
-.select2-drop-active {
-  border: $input-btn-border-width solid $input-focus-border-color;
-  border-top: 0;
+  &.select2-drop-active,
+  &.select2-drop-active.select2-drop-above {
+    border: $input-btn-border-width solid $input-focus-border-color;
+  }
+
+  &.select2-drop-active {
+    border-top: 0;
+
+    &.select2-drop-above {
+      border-bottom: 0;
+    }
+  }
 }
 
 .select2-results {
