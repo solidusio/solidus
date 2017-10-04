@@ -101,8 +101,12 @@ module Spree
         return amount
       end
 
-      # If the adjustment has no source, do not attempt to re-calculate the amount.
-      # Chances are likely that this was a manually created adjustment in the admin backend.
+      # If the adjustment has no source, do not attempt to re-calculate the
+      # amount.
+      # Some scenarios where this happens:
+      #   - Adjustments that are manually created via the admin backend
+      #   - PromotionAction adjustments where the PromotionAction was deleted
+      #     after the order was completed.
       if source.present?
         self.amount = source.compute_amount(adjustable)
 
