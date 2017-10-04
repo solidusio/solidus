@@ -82,6 +82,9 @@ describe "Product Images", type: :feature do
         expect(page).to have_content "Size: S"
       end
 
+      # Save is completed
+      expect(page).not_to have_css('#progress')
+
       expect(Spree::Image.last.viewable).to eq(product.master)
     end
   end
@@ -124,7 +127,7 @@ describe "Product Images", type: :feature do
 
       # And then go back to Size S variant, but using Enter key
       targetted_select2 "Size: S", from: "#s2id_image_viewable_id"
-      find("#s2id_image_viewable_id").send_keys(:return)
+      #find("#s2id_image_viewable_id").send_keys(:return)
 
       expect(page).to have_content "Size: S"
       expect(page).to have_field "image[alt]", with: "ruby on rails t-shirt"
