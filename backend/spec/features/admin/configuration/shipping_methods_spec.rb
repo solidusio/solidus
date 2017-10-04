@@ -33,7 +33,7 @@ describe "Shipping Methods", type: :feature do
       end
 
       click_on "Create"
-      expect(current_path).to eql(spree.edit_admin_shipping_method_path(Spree::ShippingMethod.last))
+      expect(page).to have_current_path(spree.edit_admin_shipping_method_path(Spree::ShippingMethod.last))
     end
   end
 
