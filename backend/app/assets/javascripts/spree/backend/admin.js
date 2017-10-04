@@ -67,7 +67,7 @@ var handle_date_picker_fields = function(){
   });
 }
 
-$(document).ready(function(){
+Spree.ready(function(){
   handle_date_picker_fields();
   var uniqueId = 1;
   $('.spree_add_fields').click(function() {

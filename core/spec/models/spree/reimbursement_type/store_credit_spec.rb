@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 module Spree
-  describe ReimbursementType::StoreCredit do
+  RSpec.describe ReimbursementType::StoreCredit do
     let(:reimbursement)           { create(:reimbursement, return_items_count: 2) }
     let(:return_item)             { reimbursement.return_items.first }
     let(:return_item2)            { reimbursement.return_items.last }

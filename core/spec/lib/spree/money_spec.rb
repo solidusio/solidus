@@ -1,7 +1,9 @@
 # coding: utf-8
-require 'rails_helper'
 
-describe Spree::Money do
+require 'spec_helper'
+require 'spree/money'
+
+RSpec.describe Spree::Money do
   before do
     configure_spree_preferences do |config|
       config.currency = "USD"

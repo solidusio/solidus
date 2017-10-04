@@ -10,20 +10,18 @@ module Spree
         delegate :eligible?, to: :promotion
 
         before_validation :ensure_action_has_calculator
-        before_destroy :deals_with_adjustments_for_deleted_source
+        before_destroy :remove_adjustments_from_incomplete_orders
 
         def perform(payload = {})
           order = payload[:order]
           promotion = payload[:promotion]
           promotion_code = payload[:promotion_code]
 
-          result = false
-
-          line_items_to_adjust(promotion, order).each do |line_item|
-            current_result = create_adjustment(line_item, order, promotion_code)
-            result ||= current_result
+          results = line_items_to_adjust(promotion, order).map do |line_item|
+            create_adjustment(line_item, order, promotion_code)
           end
-          result
+
+          results.any?
         end
 
         # Ensure a negative amount which does not exceed the sum of the order's

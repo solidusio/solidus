@@ -1,6 +1,7 @@
 require 'rails_helper'
+require 'spree/core/validators/email'
 
-describe EmailValidator do
+RSpec.describe EmailValidator do
   class Tester
     include ActiveModel::Validations
     attr_accessor :email_address

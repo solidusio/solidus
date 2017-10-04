@@ -16,12 +16,12 @@ module Spree
       end
 
       def weighted_line_item_amount(inventory_unit)
-        inventory_unit.line_item.discounted_amount * percentage_of_line_item(inventory_unit)
+        inventory_unit.line_item.total_before_tax * percentage_of_line_item(inventory_unit)
       end
 
       def percentage_of_order_total(inventory_unit)
-        return 0.0 if inventory_unit.order.discounted_item_amount.zero?
-        weighted_line_item_amount(inventory_unit) / inventory_unit.order.discounted_item_amount
+        return 0.0 if inventory_unit.order.item_total_before_tax.zero?
+        weighted_line_item_amount(inventory_unit) / inventory_unit.order.item_total_before_tax
       end
 
       def percentage_of_line_item(inventory_unit)

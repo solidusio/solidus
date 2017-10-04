@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::PermissionSets::OrderDisplay do
+RSpec.describe Spree::PermissionSets::OrderDisplay do
   let(:ability) { DummyAbility.new }
 
   subject { ability }

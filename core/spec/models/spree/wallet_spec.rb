@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::Wallet, type: :model do
+RSpec.describe Spree::Wallet, type: :model do
   let(:user) { create(:user) }
   let(:credit_card) { create(:credit_card, user_id: user.id) }
   let(:store_credit) { create(:store_credit, user_id: user.id) }

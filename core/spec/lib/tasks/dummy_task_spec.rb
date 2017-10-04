@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'dummy_task' do
+RSpec.describe 'dummy_task' do
   include_context(
     'rake',
     task_name: 'dummy_task',

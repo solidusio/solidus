@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::Refund, type: :model do
+RSpec.describe Spree::Refund, type: :model do
   describe 'create' do
     let(:amount) { 100.0 }
     let(:amount_in_cents) { amount * 100 }

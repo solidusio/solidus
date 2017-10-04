@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::Calculator, type: :model do
+RSpec.describe Spree::Calculator, type: :model do
   class SimpleCalculator < Spree::Calculator
     def compute_simple_computable(_line_item)
       'computed'
@@ -8,6 +8,16 @@ describe Spree::Calculator, type: :model do
   end
 
   class SimpleComputable
+  end
+
+  describe "#calculators" do
+    subject { Spree::Calculator.calculators }
+
+    it 'returns the (deprecated) calculator step' do
+      Spree::Deprecation.silence do
+        expect(subject).to be_a Spree::Core::Environment::Calculators
+      end
+    end
   end
 
   context "with computable" do

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::PaymentMethod::CreditCard, type: :model do
+RSpec.describe Spree::PaymentMethod::CreditCard, type: :model do
   context "fetching payment sources" do
     let(:store) { create :store }
     let(:user) { create :user }

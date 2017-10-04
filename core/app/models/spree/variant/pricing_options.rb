@@ -1,5 +1,5 @@
 module Spree
-  class Variant
+  class Variant < Spree::Base
     # Instances of this class represent the set of circumstances that influence how expensive a
     # variant is. For this particular pricing options class, country_iso and currency influence
     # the price of a variant.

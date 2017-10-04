@@ -4,7 +4,7 @@ class FakesController < ApplicationController
   include Spree::Core::ControllerHelpers::Order
 end
 
-describe Spree::Core::ControllerHelpers::Order, type: :controller do
+RSpec.describe Spree::Core::ControllerHelpers::Order, type: :controller do
   controller(FakesController) {}
 
   let(:user) { create(:user) }

@@ -64,15 +64,16 @@ module Spree
       handle_action(action, :credit, auth_code)
     end
 
-    def cancel(auth_code)
+    # @see Spree::PaymentMethod#try_void
+    def try_void(payment)
+      auth_code = payment.response_code
       store_credit_event = auth_or_capture_event(auth_code)
       store_credit = store_credit_event.try(:store_credit)
 
       if store_credit_event.nil? || store_credit.nil?
         ActiveMerchant::Billing::Response.new(false, '', {}, {})
       elsif store_credit_event.capture_action?
-        amount_in_cents = (store_credit_event.amount * 100).round
-        credit(amount_in_cents, auth_code)
+        false # payment#cancel! handles the refund
       elsif store_credit_event.authorization_action?
         void(auth_code)
       else

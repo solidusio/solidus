@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::Country, type: :model do
+RSpec.describe Spree::Country, type: :model do
   describe '.default' do
     before do
       create(:country, iso: "DE", id: 1)

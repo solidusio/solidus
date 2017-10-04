@@ -55,12 +55,6 @@ module Spree
 
       context 'with an included tax rate' do
         let(:tax_rate) { build_stubbed(:tax_rate, included_in_price: true, name: "VAT") }
-        context 'with a negative amount' do
-          let(:amount) { -2.2 }
-          it 'labels a refund' do
-            expect(subject).to eq("excl. $2.20 VAT")
-          end
-        end
 
         context 'with a positive amount' do
           let(:amount) { 2.2 }

@@ -185,15 +185,22 @@ module Spree
       line_items.map(&:amount).sum
     end
 
-    # Sum of all line item amounts pre-tax
-    def pre_tax_item_amount
-      line_items.to_a.sum(&:pre_tax_amount)
-    end
-
     # Sum of all line item amounts after promotions, before added tax
     def discounted_item_amount
       line_items.to_a.sum(&:discounted_amount)
     end
+    deprecate discounted_item_amount: :item_total_before_tax, deprecator: Spree::Deprecation
+
+    def item_total_before_tax
+      line_items.to_a.sum(&:total_before_tax)
+    end
+
+    # Sum of all line item amounts pre-tax
+    def item_total_excluding_vat
+      line_items.to_a.sum(&:total_excluding_vat)
+    end
+    alias pre_tax_item_amount item_total_excluding_vat
+    deprecate pre_tax_item_amount: :item_total_excluding_vat, deprecator: Spree::Deprecation
 
     def currency
       self[:currency] || Spree::Config[:currency]
@@ -232,14 +239,6 @@ module Spree
     def backordered?
       shipments.any?(&:backordered?)
     end
-
-    # Returns the relevant zone (if any) to be used for taxation purposes.
-    # Uses default tax zone unless there is a specific match
-    def tax_zone
-      Spree::Zone.match(tax_address) || Spree::Zone.default_tax
-    end
-    deprecate tax_zone: "Please use Spree::Order#tax_address instead.",
-              deprecator: Spree::Deprecation
 
     # Returns the address for taxation based on configuration
     def tax_address
@@ -795,6 +794,7 @@ module Spree
         @updating_params[:order][:payments_attributes].first[:amount] = total
       end
     end
+    deprecate update_params_payment_source: :set_payment_parameters_amount, deprecator: Spree::Deprecation
 
     def associate_store
       self.store ||= Spree::Store.default
@@ -852,7 +852,7 @@ module Spree
 
     def after_cancel
       shipments.each(&:cancel!)
-      payments.completed.each(&:cancel!)
+      payments.completed.each { |payment| payment.cancel! unless payment.fully_refunded? }
       payments.store_credits.pending.each(&:void_transaction!)
 
       send_cancel_email

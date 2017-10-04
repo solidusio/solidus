@@ -1,0 +1,24 @@
+<th>
+  {{ human_attribute_name "spree/shipment" "tracking" }}
+</th>
+<td colspan="4">
+  {{#if editing}}
+    <form>
+      <input type="text" name="tracking" class="fullwidth" value="{{tracking}}">
+    </form>
+  {{else}}
+    {{#if tracking}}
+      {{ tracking }}
+    {{else}}
+      {{ t "no_tracking_present" }}
+    {{/if}}
+  {{/if}}
+</td>
+<td class="actions">
+  {{#if editing}}
+    <button class="js-save fa fa-check no-text with-tip" data-action="save" title="{{ t "actions.save" }}"></button>
+    <button class="js-cancel fa fa-cancel no-text with-tip" data-action="cancel" title="{{ t "actions.cancel" }}"></button>
+  {{else}}
+    <button class="js-edit fa fa-edit no-text with-tip" data-action="edit" title=""{{ t "actions.edit" }}"></button>
+  {{/if}}
+</td>

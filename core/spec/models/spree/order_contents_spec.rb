@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::OrderContents, type: :model do
+RSpec.describe Spree::OrderContents, type: :model do
   let!(:store) { create :store }
   let(:order) { create(:order) }
   let(:variant) { create(:variant) }

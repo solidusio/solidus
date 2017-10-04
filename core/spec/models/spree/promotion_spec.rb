@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::Promotion, type: :model do
+RSpec.describe Spree::Promotion, type: :model do
   let(:promotion) { Spree::Promotion.new }
 
   describe "validations" do

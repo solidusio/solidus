@@ -48,6 +48,6 @@ $.fn.productAutocomplete = function (options) {
   });
 };
 
-$(document).ready(function () {
+Spree.ready(function () {
   $('.product_picker').productAutocomplete();
 });

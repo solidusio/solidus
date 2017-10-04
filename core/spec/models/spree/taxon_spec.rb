@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Spree::Taxon, type: :model do
+RSpec.describe Spree::Taxon, type: :model do
   describe '#to_param' do
     let(:taxon) { FactoryGirl.build(:taxon, name: "Ruby on Rails") }
 
@@ -133,6 +133,41 @@ describe Spree::Taxon, type: :model do
 
     it "does not error out" do
       taxonomy.root.children.unscoped.where(name: "Some name").first_or_create
+    end
+  end
+
+  context 'leaves of the taxon tree' do
+    let(:taxonomy) { create(:taxonomy, name: 't') }
+    let(:root) { taxonomy.root }
+    let(:taxon) { create(:taxon, name: 't1', taxonomy: taxonomy, parent: root) }
+    let(:child) { create(:taxon, name: 'child taxon', taxonomy: taxonomy, parent: taxon) }
+    let(:grandchild) { create(:taxon, name: 'grandchild taxon', taxonomy: taxonomy, parent: child) }
+    let(:product1) { create(:product) }
+    let(:product2) { create(:product) }
+    let(:product3) { create(:product) }
+    before do
+      product1.taxons << taxon
+      product2.taxons << child
+      product3.taxons << grandchild
+      taxon.reload
+
+      [product1, product2, product3].each { |p| 2.times.each { create(:variant, product: p) } }
+    end
+
+    describe '#all_products' do
+      it 'returns all descendant products' do
+        products = taxon.all_products
+        expect(products.count).to eq(3)
+        expect(products).to match_array([product1, product2, product3])
+      end
+    end
+
+    describe '#all_variants' do
+      it 'returns all descendant variants' do
+        variants = taxon.all_variants
+        expect(variants.count).to eq(9)
+        expect(variants).to match_array([product1, product2, product3].map{ |p| p.variants_including_master }.flatten)
+      end
     end
   end
 end

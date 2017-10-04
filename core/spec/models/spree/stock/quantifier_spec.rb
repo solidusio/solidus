@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-shared_examples_for 'unlimited supply' do
+RSpec.shared_examples_for 'unlimited supply' do
   it 'can_supply? any amount' do
     expect(subject.can_supply?(1)).to eq true
     expect(subject.can_supply?(101)).to eq true
@@ -10,7 +10,7 @@ end
 
 module Spree
   module Stock
-    describe Quantifier, type: :model do
+    RSpec.describe Quantifier, type: :model do
       let(:target_stock_location) { nil }
       let!(:stock_location) { create :stock_location_with_items }
       let!(:stock_item) { stock_location.stock_items.order(:id).first }

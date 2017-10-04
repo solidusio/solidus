@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::OrderMutex do
+RSpec.describe Spree::OrderMutex do
   let(:order) { create(:order) }
 
   context "without an existing lock" do

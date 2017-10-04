@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::Promotion::Rules::UserLoggedIn, type: :model do
+RSpec.describe Spree::Promotion::Rules::UserLoggedIn, type: :model do
   let(:rule) { Spree::Promotion::Rules::UserLoggedIn.new }
 
   context "#eligible?(order)" do

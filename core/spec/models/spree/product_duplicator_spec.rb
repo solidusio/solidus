@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 module Spree
-  describe Spree::ProductDuplicator, type: :model do
+  RSpec.describe Spree::ProductDuplicator, type: :model do
     let(:product) { create(:product, properties: [create(:property, name: "MyProperty")]) }
     let!(:duplicator) { Spree::ProductDuplicator.new(product) }
 

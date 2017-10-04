@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::Order, type: :model do
+RSpec.describe Spree::Order, type: :model do
   let(:store) { create(:store) }
   let(:user) { create(:user, email: "spree@example.com") }
   let(:order) { create(:order, user: user, store: store) }
@@ -43,6 +43,8 @@ describe Spree::Order, type: :model do
   end
 
   describe "#cancel!" do
+    subject { order.cancel! }
+
     context "with captured store credit" do
       let!(:store_credit_payment_method) { create(:store_credit_payment_method) }
       let(:order_total) { 500.00 }
@@ -55,7 +57,20 @@ describe Spree::Order, type: :model do
         order.capture_payments!
       end
 
-      subject { order.cancel! }
+      it "cancels the order" do
+        expect{ subject }.to change{ order.can_cancel? }.from(true).to(false)
+        expect(order).to be_canceled
+      end
+    end
+
+    context "with fully refunded payment" do
+      let(:order) { create(:completed_order_with_totals) }
+      let(:payment_amount) { 50 }
+      let(:payment) { create(:payment, order: order, amount: payment_amount, state: 'completed') }
+
+      before do
+        create(:refund, payment: payment, amount: payment_amount)
+      end
 
       it "cancels the order" do
         expect{ subject }.to change{ order.can_cancel? }.from(true).to(false)
@@ -995,14 +1010,14 @@ describe Spree::Order, type: :model do
     end
   end
 
-  describe "#pre_tax_item_amount" do
+  describe "#item_total_excluding_vat" do
     it "sums all of the line items' pre tax amounts" do
       subject.line_items = [
         Spree::LineItem.new(price: 10, quantity: 2, included_tax_total: 15.0),
         Spree::LineItem.new(price: 30, quantity: 1, included_tax_total: 16.0)
       ]
       # (2*10)-15 + 30-16 = 5 + 14 = 19
-      expect(subject.pre_tax_item_amount).to eq 19.0
+      expect(subject.item_total_excluding_vat).to eq 19.0
     end
   end
 
@@ -1066,7 +1081,7 @@ describe Spree::Order, type: :model do
     subject(:order) { create(:order) }
     it "assigns the coordinator returned shipments to its shipments" do
       shipment = build(:shipment)
-      allow_any_instance_of(Spree::Stock::Coordinator).to receive(:shipments).and_return([shipment])
+      allow_any_instance_of(Spree::Stock::SimpleCoordinator).to receive(:shipments).and_return([shipment])
       subject.create_proposed_shipments
       expect(subject.shipments).to eq [shipment]
     end
@@ -1536,6 +1551,16 @@ describe Spree::Order, type: :model do
           expect(store_credit.amount_remaining).to eq 100
         end
       end
+    end
+  end
+
+  context 'update_params_payment_source' do
+    subject { described_class.new }
+
+    it 'is deprecated' do
+      subject.instance_variable_set('@updating_params', {})
+      expect(Spree::Deprecation).to receive(:warn)
+      subject.update_params_payment_source
     end
   end
 end

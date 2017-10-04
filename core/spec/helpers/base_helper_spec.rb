@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::BaseHelper, type: :helper do
+RSpec.describe Spree::BaseHelper, type: :helper do
   include Spree::BaseHelper
 
   let(:current_store){ create :store }

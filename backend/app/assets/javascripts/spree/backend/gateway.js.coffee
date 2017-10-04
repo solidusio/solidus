@@ -1,4 +1,4 @@
-$ ->
+Spree.ready ->
   $gateway_type = $('select.js-gateway-type')
   $preference_source = $('select.js-preference-source')
 

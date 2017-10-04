@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::Promotion::Rules::FirstOrder, type: :model do
+RSpec.describe Spree::Promotion::Rules::FirstOrder, type: :model do
   let(:rule) { Spree::Promotion::Rules::FirstOrder.new }
   let(:order) { mock_model(Spree::Order, user: nil, email: nil) }
   let(:user) { mock_model(Spree::LegacyUser) }

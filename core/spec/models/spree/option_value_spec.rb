@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::OptionValue, type: :model do
+RSpec.describe Spree::OptionValue, type: :model do
   context "touching" do
     let!(:variant) do
       Timecop.freeze(1.day.ago) do

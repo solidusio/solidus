@@ -19,7 +19,7 @@
       <tr>
         <th><%= Spree::ReturnAuthorization.human_attribute_name(:number) %></th>
         <th><%= Spree::ReturnAuthorization.human_attribute_name(:state) %></th>
-        <th><%= Spree::ReturnAuthorization.human_attribute_name(:pre_tax_total) %></th>
+        <th><%= Spree::ReturnAuthorization.human_attribute_name(:total_excluding_vat) %></th>
         <th><%= Spree::ReturnAuthorization.human_attribute_name(:created_at) %></th>
         <th class="actions"></th>
       </tr>
@@ -36,7 +36,7 @@
               ) %>
             </span>
           </td>
-          <td><%= return_authorization.display_pre_tax_total.to_html %></td>
+          <td><%= return_authorization.display_total_excluding_vat.to_html %></td>
           <td><%= pretty_time(return_authorization.created_at) %></td>
           <td class="actions">
             <% if can? :update, return_authorization %>

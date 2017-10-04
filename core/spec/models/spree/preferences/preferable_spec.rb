@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::Preferences::Preferable, type: :model do
+RSpec.describe Spree::Preferences::Preferable, type: :model do
   before :all do
     class A
       include Spree::Preferences::Preferable

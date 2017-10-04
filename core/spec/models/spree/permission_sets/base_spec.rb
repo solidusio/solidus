@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::PermissionSets::Base do
+RSpec.describe Spree::PermissionSets::Base do
   let(:ability) { Spree::Ability.new nil }
   subject { described_class.new(ability).activate! }
 

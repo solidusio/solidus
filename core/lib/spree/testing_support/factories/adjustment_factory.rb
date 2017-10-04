@@ -5,7 +5,7 @@ require 'spree/testing_support/factories/tax_rate_factory'
 require 'spree/testing_support/factories/zone_factory'
 
 FactoryGirl.define do
-  factory :adjustment, class: Spree::Adjustment do
+  factory :adjustment, class: 'Spree::Adjustment' do
     order
     adjustable { order }
     amount 100.0

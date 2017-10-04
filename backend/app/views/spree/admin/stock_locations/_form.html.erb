@@ -1,105 +1,102 @@
-<div data-hook="admin_stock_locations_form_fields" class="row">
-  <div class="col-7" data-hook="stock_location_names">
-    <div data-hook="stock_location_name">
-      <%= f.field_container :name do %>
-        <%= f.label :name, class: 'required' %><br />
-        <%= f.text_field :name, class: 'fullwidth', required: true %>
-      <% end %>
-    </div>
-    <div data-hook="stock_location_code">
-      <%= f.field_container :code do %>
-        <%= f.label :code %>
-        <%= f.text_field :code, class: 'fullwidth', label: false %>
-      <% end %>
-    </div>
-    <div data-hook="stock_location_admin_name">
-      <%= f.field_container :admin_name do %>
-        <%= f.label :admin_name %>
-        <%= f.text_field :admin_name, class: 'fullwidth', label: false %>
-      <% end %>
-    </div>
-  </div>
+<div data-hook="admin_stock_locations_form_fields">
+  <fieldset class="no-border-bottom">
+    <legend><%= t('.general') %></legend>
 
-  <div class="col-3" data-hook="stock_location_status">
+     <%= f.field_container :name do %>
+       <%= f.label :name, class: 'required' %><br />
+       <%= f.text_field :name, class: 'fullwidth', required: true %>
+     <% end %>
+
+     <%= f.field_container :code do %>
+       <%= f.label :code %>
+       <%= f.text_field :code, :class => 'fullwidth', :label => false %>
+     <% end %>
+
+     <%= f.field_container :admin_name do %>
+       <%= f.label :admin_name %>
+       <%= f.text_field :admin_name, class: 'fullwidth', label: false %>
+     <% end %>
+  </fieldset>
+
+  <fieldset class="no-border-bottom">
+    <legend><%= t('.settings') %></legend>
+
     <%= f.field_container :active do %>
-      <label for="active"><%= Spree.t(:status) %></label>
-      <ul>
-        <li class="fullwidth" data-hook="stock_location_active">
-          <%= f.check_box :active %>
-          <%= f.label :active %>
-        </li>
-        <li class="fullwidth" data-hook="stock_location_default">
-          <%= f.check_box :default %>
-          <%= f.label :default %>
-        </li>
-        <li class="fullwidth" data-hook="stock_location_backorderable_default">
-          <%= f.check_box :backorderable_default %>
-          <%= f.label :backorderable_default %>
-        </li>
-        <li class="fullwidth" data-hook="stock_location_propagate_all_variants">
-          <%= f.check_box :propagate_all_variants %>
-          <%= f.label :propagate_all_variants %>
-        </li>
-        <li class="fullwidth">
-          <%= f.check_box :restock_inventory %>
-          <%= f.label :restock_inventory %>
-        </li>
-        <li>
-          <%= f.check_box :fulfillable %>
-          <%= f.label :fulfillable %>
-        </li>
-        <li class="fullwidth">
-          <%= f.check_box :check_stock_on_transfer %>
-          <%= f.label :check_stock_on_transfer %>
-        </li>
-      </ul>
+      <%= f.check_box :active %>
+      <%= f.label :active %>
+      <%= f.field_hint :active %>
     <% end %>
-  </div>
 
-  <div class="col-5" data-hook="stock_location_address1">
-    <div class="field">
+    <%= f.field_container :default do %>
+      <%= f.check_box :default %>
+      <%= f.label :default %>
+    <% end %>
+
+    <%= f.field_container :backorderable_default do %>
+      <%= f.check_box :backorderable_default %>
+      <%= f.label :backorderable_default %>
+      <%= f.field_hint :backorderable_default %>
+    <% end %>
+
+    <%= f.field_container :propagate_all_variants do %>
+      <%= f.check_box :propagate_all_variants %>
+      <%= f.label :propagate_all_variants %>
+      <%= f.field_hint :propagate_all_variants %>
+    <% end %>
+
+    <%= f.field_container :restock_inventory do %>
+      <%= f.check_box :restock_inventory %>
+      <%= f.label :restock_inventory %>
+      <%= f.field_hint :restock_inventory %>
+    <% end %>
+
+    <%= f.field_container :fulfillable do %>
+      <%= f.check_box :fulfillable %>
+      <%= f.label :fulfillable %>
+      <%= f.field_hint :fulfillable %>
+    <% end %>
+
+    <%= f.field_container :check_stock_on_transfer do %>
+      <%= f.check_box :check_stock_on_transfer %>
+      <%= f.label :check_stock_on_transfer %>
+      <%= f.field_hint :check_stock_on_transfer %>
+    <% end %>
+  </fieldset>
+
+  <fieldset>
+    <legend><%= t('.address') %></legend>
+
+    <%= f.field_container :check_stock_on_transfer do %>
       <%= f.label :address1 %>
       <%= f.text_field :address1, class: 'fullwidth' %>
-    </div>
-  </div>
+    <% end %>
 
-  <div class="col-5" data-hook="stock_location_city">
-    <div class="field">
-      <%= f.label :city %>
-      <%= f.text_field :city, class: 'fullwidth' %>
-    </div>
-  </div>
-
-  <div class="col-5" data-hook="stock_location_address2">
-    <div class="field">
+    <%= f.field_container :address2 do %>
       <%= f.label :address2 %>
       <%= f.text_field :address2, class: 'fullwidth' %>
-    </div>
-  </div>
+    <% end %>
 
-  <div class="col-2" data-hook="stock_location_zipcode">
-    <div class="field">
+    <%= f.field_container :city do %>
+      <%= f.label :city %>
+      <%= f.text_field :city, class: 'fullwidth' %>
+    <% end %>
+
+    <%= f.field_container :zipcode do %>
       <%= f.label :zipcode %>
       <%= f.text_field :zipcode, class: 'fullwidth' %>
-    </div>
-  </div>
+    <% end %>
 
-  <div class="col-3" data-hook="stock_location_phone">
-    <div class="field">
+    <%= f.field_container :phone do %>
       <%= f.label :phone %>
       <%= f.phone_field :phone, class: 'fullwidth' %>
-    </div>
-  </div>
+    <% end %>
 
-  <div class="col-5" data-hook="stock_location_country">
-    <div class="field">
+    <%= f.field_container :country_id do %>
       <%= f.label :country_id %>
       <span id="country"><%= f.collection_select :country_id, available_countries, :id, :name, {}, { class: 'select2 fullwidth' } %></span>
-    </div>
-  </div>
+    <% end %>
 
-  <div class="col-5" data-hook="stock_location_state">
-    <div class="field">
+    <%= f.field_container :state do %>
       <% if f.object.country %>
         <%= f.label :state_id %>
         <span id="state" class="region">
@@ -107,13 +104,13 @@
           <%= f.collection_select :state_id, f.object.country.states.sort, :id, :name, { include_blank: true }, {class: 'select2 fullwidth', style: "display: #{f.object.country.states.empty? ? 'none' : 'block' };", disabled: f.object.country.states.empty?} %>
         </span>
       <% end %>
-    </div>
-  </div>
+    <% end %>
+  </fieldset>
 </div>
 
 <% content_for :head do %>
   <%= javascript_tag do -%>
-    $(document).ready(function(){
+    Spree.ready(function(){
       $('span#country select.select2').on('change', function() { update_state(''); });
     });
   <% end -%>

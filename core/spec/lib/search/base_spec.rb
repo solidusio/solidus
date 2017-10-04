@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::Core::Search::Base do
+RSpec.describe Spree::Core::Search::Base do
   before do
     include Spree::Core::ProductFilters
     @taxon = create(:taxon, name: "Ruby on Rails")

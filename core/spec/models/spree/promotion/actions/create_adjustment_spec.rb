@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::Promotion::Actions::CreateAdjustment, type: :model do
+RSpec.describe Spree::Promotion::Actions::CreateAdjustment, type: :model do
   let(:order) { create(:order_with_line_items, line_items_count: 1) }
   let(:promotion) { create(:promotion) }
   let(:action) { Spree::Promotion::Actions::CreateAdjustment.new }

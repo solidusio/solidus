@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe "Product scopes", type: :model do
+RSpec.describe "Product scopes", type: :model do
   let!(:product) { create(:product) }
 
   context "A product assigned to parent and child taxons" do

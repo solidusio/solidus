@@ -1,5 +1,5 @@
 require 'rails_helper'
-describe Spree::PromotionCodeBatchMailer, type: :mailer do
+RSpec.describe Spree::PromotionCodeBatchMailer, type: :mailer do
   let(:promotion) { create(:promotion, name: "Promotion Test") }
   let(:promotion_code_batch) do
     Spree::PromotionCodeBatch.create!(

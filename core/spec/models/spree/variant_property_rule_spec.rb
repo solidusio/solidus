@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::VariantPropertyRule, type: :model do
+RSpec.describe Spree::VariantPropertyRule, type: :model do
   context "touching" do
     let(:rule) { create(:variant_property_rule) }
 

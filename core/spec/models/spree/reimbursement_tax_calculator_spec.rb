@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::ReimbursementTaxCalculator, type: :model do
+RSpec.describe Spree::ReimbursementTaxCalculator, type: :model do
   let!(:tax_rate) { nil }
 
   let(:reimbursement) { create(:reimbursement, return_items_count: 1) }

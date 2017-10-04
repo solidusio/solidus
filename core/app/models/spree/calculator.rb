@@ -27,6 +27,8 @@ module Spree
 
     # Returns all calculators applicable for kind of work
     def self.calculators
+      Spree::Deprecation.warn("Calling .calculators is deprecated. Please access through Rails.application.config.spree.calculators")
+
       Rails.application.config.spree.calculators
     end
 

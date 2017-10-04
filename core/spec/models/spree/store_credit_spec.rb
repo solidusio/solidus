@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::StoreCredit do
+RSpec.describe Spree::StoreCredit do
   let(:currency) { "TEST" }
   let(:store_credit) { build(:store_credit, store_credit_attrs) }
   let(:store_credit_attrs) { {} }

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::Payment, type: :model do
+RSpec.describe Spree::Payment, type: :model do
   let(:store) { create :store }
   let(:order) { Spree::Order.create(store: store) }
   let(:refund_reason) { create(:refund_reason) }
@@ -481,25 +481,34 @@ describe Spree::Payment, type: :model do
     end
 
     describe "#cancel!" do
+      subject { payment.cancel! }
+
       before do
         payment.response_code = 'abc'
         payment.state = 'pending'
       end
 
-      context "if successful" do
+      context "if void returns successful response" do
+        before do
+          expect(gateway).to receive(:try_void) { success_response }
+        end
+
+        it "should update the state to void" do
+          expect { subject }.to change { payment.state }.to('void')
+        end
+
         it "should update the response_code with the authorization from the gateway" do
-          # Change it to something different
-          allow(gateway).to receive_messages cancel: success_response
-          payment.cancel!
-          expect(payment.state).to eq('void')
-          expect(payment.response_code).to eq('123')
+          expect { subject }.to change { payment.response_code }.to('123')
         end
       end
 
-      context "if unsuccessful" do
-        it "should not void the payment" do
-          allow(gateway).to receive_messages cancel: failed_response
-          expect { payment.cancel! }.to raise_error(Spree::Core::GatewayError)
+      context "if void returns failed response" do
+        before do
+          expect(gateway).to receive(:try_void) { failed_response }
+        end
+
+        it "should raise gateway error and not change payment state or response_code", :aggregate_failures do
+          expect { subject }.to raise_error(Spree::Core::GatewayError)
           expect(payment.state).to eq('pending')
           expect(payment.response_code).to eq('abc')
         end
@@ -618,6 +627,25 @@ describe Spree::Payment, type: :model do
     it "is false if credit_allowed is 0" do
       allow(payment).to receive(:credit_allowed).and_return(0)
       expect(payment.can_credit?).to be false
+    end
+  end
+
+  describe "#fully_refunded?" do
+    subject { payment.fully_refunded? }
+
+    before { payment.amount = 100 }
+
+    context 'before refund' do
+      it { is_expected.to be false }
+    end
+
+    context 'when refund total equals payment amount' do
+      before do
+        create(:refund, payment: payment, amount: 50)
+        create(:refund, payment: payment, amount: 50)
+      end
+
+      it { is_expected.to be true }
     end
   end
 

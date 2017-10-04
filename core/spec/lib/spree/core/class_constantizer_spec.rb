@@ -1,4 +1,5 @@
-require 'rails_helper'
+require 'spec_helper'
+require 'spree/core/class_constantizer'
 
 module ClassConstantizerTest
   ClassA = Class.new
@@ -12,7 +13,7 @@ module ClassConstantizerTest
   end
 end
 
-describe Spree::Core::ClassConstantizer::Set do
+RSpec.describe Spree::Core::ClassConstantizer::Set do
   let(:set) { described_class.new }
 
   describe "#concat" do

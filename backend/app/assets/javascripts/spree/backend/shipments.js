@@ -29,7 +29,7 @@ var ShipmentAddVariantView = Backbone.View.extend({
   }
 });
 
-$(function(){
+Spree.ready(function(){
   $(".js-shipment-add-variant").each(function(){
     new ShipmentAddVariantView({el: this});
   });
@@ -56,18 +56,6 @@ var ShipShipmentView = Backbone.View.extend({
     return false;
   }
 });
-
-updateShipment = function(shipment_number, attributes) {
-  var url = Spree.routes.shipments_api + '/' + shipment_number;
-
-  return Spree.ajax({
-    type: 'PUT',
-    url: url,
-    data: {
-      shipment: attributes
-    }
-  });
-};
 
 adjustShipmentItems = function(shipment_number, variant_id, quantity){
   var shipment = _.findWhere(shipments, {number: shipment_number});
@@ -269,9 +257,10 @@ var ShipmentItemView = Backbone.View.extend({
 
 var ShipmentEditView = Backbone.View.extend({
   initialize: function(){
-    var tbody = this.$("tbody[data-order-number][data-shipment-number]");
-    this.shipment_number = tbody.data("shipment-number");
-    this.order_number = tbody.data("order-number");
+    this.shipment_number = this.model.get('number')
+    this.order_number = this.model.collection.parent.get('number')
+
+    var shipment = this.model;
 
     var shipmentView = this;
     this.$("form.admin-ship-shipment").each(function(el){
@@ -287,59 +276,35 @@ var ShipmentEditView = Backbone.View.extend({
         order_number: shipmentView.order_number
       });
     });
-  },
-
-  events: {
-    "click button.edit-method": "toggleMethodEdit",
-    "click button.cancel-method": "toggleMethodEdit",
-    "click button.save-method": "saveMethod",
-
-    "click button.edit-tracking": "toggleTrackingEdit",
-    "click button.cancel-tracking": "toggleTrackingEdit",
-    "click button.save-tracking": "saveTracking",
-  },
-
-  toggleMethodEdit: function(e){
-    e.preventDefault();
-    this.$('tr.edit-method').toggle();
-    this.$('tr.show-method').toggle();
-  },
-
-  saveMethod: function(e) {
-    e.preventDefault();
-    var selected_shipping_rate_id = this.$("select#selected_shipping_rate_id").val();
-    updateShipment(this.shipment_number, {
-      selected_shipping_rate_id: selected_shipping_rate_id
-    }).done(function () {
-      window.location.reload();
+    this.$(".edit-shipping-method").each(function(el){
+      new Spree.Views.Order.ShippingMethod({
+        el: this,
+        model: shipment,
+        shipment_number: shipmentView.shipment_number
+      });
     });
-  },
-
-  toggleTrackingEdit: function(e) {
-    e.preventDefault();
-    this.$("tr.edit-tracking").toggle();
-    this.$("tr.show-tracking").toggle();
-  },
-
-  saveTracking: function(e) {
-    e.preventDefault();
-    var tracking = this.$('[name="tracking"]').val();
-    var _this = this;
-    updateShipment(this.shipment_number, {
-      tracking: tracking
-    }).done(function (data) {
-      _this.$('tr.edit-tracking').toggle();
-
-      var show = _this.$('tr.show-tracking');
-      show.toggle()
-        .find('.tracking-value')
-        .text(data.tracking);
+    this.$(".edit-tracking").each(function(el){
+      new Spree.Views.Order.ShipmentTracking({
+        el: this,
+        model: shipment
+      });
     });
   }
 });
 
-$(function(){
-  $(".js-shipment-edit").each(function(){
-    new ShipmentEditView({ el: this });
-  });
+Spree.ready(function(){
+  if($('.js-shipment-edit [data-order-number]').length) {
+    $('.js-shipment-edit').hide();
+    var orderNumber = $('.js-shipment-edit [data-order-number]').data('orderNumber');
+    var order = Spree.Models.Order.fetch(orderNumber, {
+      success: function(order){
+        $('.js-shipment-edit').show();
+        $(".js-shipment-edit").each(function(){
+          var shipmentNumber = $('[data-shipment-number]', this).data('shipmentNumber')
+          var shipment = order.get("shipments").find({number: shipmentNumber})
+          new ShipmentEditView({ el: this, model: shipment });
+        });
+      }
+    });
+  }
 });

@@ -1,4 +1,5 @@
-require 'rails_helper'
+require 'spec_helper'
+require 'spree/core/environment_extension'
 
 class DummyClass
   include Spree::Core::EnvironmentExtension
@@ -8,7 +9,7 @@ class C1; end
 class C2; end
 class C3; end
 
-describe Spree::Core::EnvironmentExtension do
+RSpec.describe Spree::Core::EnvironmentExtension do
   subject { DummyClass.new }
 
   before { subject.add_class('random_name') }

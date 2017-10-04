@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::WalletPaymentSource, type: :model do
+RSpec.describe Spree::WalletPaymentSource, type: :model do
   subject { Spree::WalletPaymentSource }
 
   describe "validation" do

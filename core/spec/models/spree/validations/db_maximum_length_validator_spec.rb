@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::Validations::DbMaximumLengthValidator, type: :model do
+RSpec.describe Spree::Validations::DbMaximumLengthValidator, type: :model do
   with_model 'LimitedProduct', scope: :all do
     table do |t|
       t.string :slug, limit: 255

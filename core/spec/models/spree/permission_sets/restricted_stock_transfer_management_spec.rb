@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::PermissionSets::RestrictedStockTransferManagement do
+RSpec.describe Spree::PermissionSets::RestrictedStockTransferManagement do
   let(:ability) { Spree::Ability.new(user) }
 
   subject { ability }

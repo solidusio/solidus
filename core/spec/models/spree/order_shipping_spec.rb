@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::OrderShipping do
+RSpec.describe Spree::OrderShipping do
   let(:order) { create(:order_ready_to_ship, line_items_count: 1) }
 
   def emails

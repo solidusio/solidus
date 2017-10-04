@@ -1,8 +1,8 @@
-require 'rspec/expectations'
+require 'spec_helper'
 require 'spree/i18n'
 require 'spree/testing_support/i18n'
 
-describe "i18n" do
+RSpec.describe "i18n" do
   before do
     I18n.backend.store_translations(:en,
     {

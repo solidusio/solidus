@@ -8,7 +8,6 @@ Gem::Specification.new do |s|
   s.summary     = 'Essential models, mailers, and classes for the Solidus e-commerce project.'
   s.description = s.summary
 
-  s.required_ruby_version = '>= 2.1.0'
   s.author      = 'Solidus Team'
   s.email       = 'contact@solidus.io'
   s.homepage    = 'http://solidus.io'
@@ -34,7 +33,6 @@ Gem::Specification.new do |s|
   s.add_dependency 'ransack', '~> 1.8'
   s.add_dependency 'state_machines-activerecord', '~> 0.4'
   s.add_dependency 'stringex', '~> 1.5.1'
-  s.add_dependency 'twitter_cldr', '>= 3.0', '< 5'
 
   s.add_development_dependency 'email_spec', '~> 1.6'
 end

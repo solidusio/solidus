@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::OrderCapturing do
+RSpec.describe Spree::OrderCapturing do
   describe '#capture_payments' do
     subject { Spree::OrderCapturing.new(order).capture_payments }
 

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::PermissionSets::OrderManagement do
+RSpec.describe Spree::PermissionSets::OrderManagement do
   let(:ability) { DummyAbility.new }
 
   subject { ability }

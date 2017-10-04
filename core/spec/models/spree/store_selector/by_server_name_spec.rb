@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::StoreSelector::ByServerName do
+RSpec.describe Spree::StoreSelector::ByServerName do
   describe "#store" do
     subject { described_class.new(request).store }
 

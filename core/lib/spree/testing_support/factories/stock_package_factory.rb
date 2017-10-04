@@ -2,7 +2,7 @@ require 'spree/testing_support/factories/inventory_unit_factory'
 require 'spree/testing_support/factories/variant_factory'
 
 FactoryGirl.define do
-  factory :stock_package, class: Spree::Stock::Package do
+  factory :stock_package, class: 'Spree::Stock::Package' do
     skip_create
 
     transient do

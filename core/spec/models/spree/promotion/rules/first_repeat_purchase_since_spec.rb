@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Spree::Promotion::Rules::FirstRepeatPurchaseSince do
+RSpec.describe Spree::Promotion::Rules::FirstRepeatPurchaseSince do
   describe "#applicable?" do
     subject { described_class.new.applicable?(promotable) }
 

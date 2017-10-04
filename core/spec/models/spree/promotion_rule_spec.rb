@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 module Spree
-  describe Spree::PromotionRule, type: :model do
+  RSpec.describe Spree::PromotionRule, type: :model do
     class BadTestRule < Spree::PromotionRule; end
 
     class TestRule < Spree::PromotionRule

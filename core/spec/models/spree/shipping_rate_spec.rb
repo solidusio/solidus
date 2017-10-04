@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Spree::ShippingRate, type: :model do
+RSpec.describe Spree::ShippingRate, type: :model do
   let(:address) { create(:address) }
   let(:foreign_address) { create :address, country_iso_code: "DE" }
   let(:order) { create :order, ship_address: address }
@@ -19,9 +19,8 @@ describe Spree::ShippingRate, type: :model do
   end
 
   context "#display_price" do
-    let!(:default_zone) { create :zone, countries: [address.country], default_tax: default_tax }
+    let!(:default_zone) { create :zone, countries: [address.country] }
     let!(:other_zone) { create :zone, countries: [foreign_address.country] }
-    let(:default_tax) { false }
 
     before do
       allow(order).to receive(:tax_address).and_return(order_address)
@@ -44,39 +43,6 @@ describe Spree::ShippingRate, type: :model do
 
       it "shows correct tax amount" do
         expect(shipping_rate.display_price.to_s).to eq("$10.00 (incl. $0.91 #{tax_rate.name})")
-      end
-
-      context "when cost is zero" do
-        before do
-          shipping_rate.cost = 0
-        end
-
-        it "shows no tax amount" do
-          expect(shipping_rate.display_price.to_s).to eq("$0.00")
-        end
-      end
-    end
-
-    context 'with one tax rate that will be refunded' do
-      let(:default_tax) { true }
-      let!(:tax_rate) do
-        create :tax_rate,
-        included_in_price: true,
-        name: "VAT",
-        zone: default_zone,
-        tax_categories: [tax_category]
-      end
-
-      let(:order_address) { foreign_address }
-
-      before do
-        Spree::Deprecation.silence do
-          Spree::Tax::ShippingRateTaxer.new.tax(shipping_rate)
-        end
-      end
-
-      it "shows correct tax amount" do
-        expect(shipping_rate.display_price.to_s).to eq("$10.00 (excl. $0.91 #{tax_rate.name})")
       end
 
       context "when cost is zero" do
