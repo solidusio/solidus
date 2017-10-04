@@ -1,0 +1,50 @@
+<%= render 'search' %>
+
+<% if @stock_transfers.any? %>
+  <table class="index" id="listing_stock_transfers">
+    <thead>
+      <tr>
+        <th><%= sort_link @search, :number,          Spree.t(:number) %></th>
+        <th><%= sort_link @search, :from,            Spree.t(:from) %></th>
+        <th><%= sort_link @search, :to,              Spree.t(:to) %></th>
+        <th><%= sort_link @search, :expected_items,  Spree.t(:expected) %></th>
+        <th><%= sort_link @search, :received_items,  Spree.t(:received) %></th>
+        <th><%= sort_link @search, :shipped_at,      Spree.t(:shipped) %></th>
+        <th><%= sort_link @search, :status,          Spree.t(:status) %></th>
+        <th class="actions"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @stock_transfers.each do |stock_transfer| %>
+        <tr id="<%= spree_dom_id stock_transfer %>" class="<%= cycle('odd', 'even') %>">
+          <td><%= handle_stock_transfer(stock_transfer) %></td>
+          <td><%= stock_transfer.source_location.name %></td>
+          <td><%= stock_transfer.destination_location.try(:name) %></td>
+          <td class="align-center"><%= stock_transfer.expected_item_count %></td>
+          <td class="align-center"><%= stock_transfer.received_item_count %></td>
+          <td><%= stock_transfer.shipped_at.try(:to_date) %></td>
+          <td>
+            <span class="pill pill-<%= stock_transfer.closed? ? 'complete' : 'pending' %>">
+              <%= Spree.t(stock_transfer.closed? ? :closed : :open) %>
+            </span>
+          </td>
+          <td class="actions">
+            <% if stock_transfer.receivable? && can?(:edit, stock_transfer) %>
+              <%= link_to_with_icon 'download', Spree.t('actions.receive'), receive_admin_stock_transfer_path(stock_transfer), no_text: true, data: { action: 'green' } %>
+            <% elsif !stock_transfer.closed? && can?(:edit, stock_transfer) %>
+              <%= link_to_with_icon 'edit', Spree.t('actions.edit'), stock_transfer_edit_or_ship_path(stock_transfer), no_text: true, data: { action: 'edit' } %>
+            <% elsif can?(:show, stock_transfer) %>
+              <%= link_to_with_icon 'eye', Spree.t(:show), admin_stock_transfer_path(stock_transfer), no_text: true, data: { action: 'green' } %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div class="alpha sixteen columns no-objects-found">
+    <%= render 'spree/admin/shared/no_objects_found',
+                  resource: Spree::StockTransfer,
+                  new_resource_url: new_object_url %>
+  </div>
+<% end %>
