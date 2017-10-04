@@ -13,8 +13,20 @@ module Spree
       context 'with apply_automatically' do
         let!(:promotion) { create(:promotion, apply_automatically: true, promotion_actions: [action]) }
 
-        it "creates the adjustment" do
-          expect { subject.activate }.to change { shipment.adjustments.count }.by(1)
+        context 'for eligible promotion' do
+          it "creates the adjustment" do
+            expect { subject.activate }.to change { shipment.adjustments.count }.by(1)
+          end
+        end
+
+        context 'for ineligible promotion' do
+          let!(:promotion) do
+            create(:promotion, :with_item_total_rule, item_total_threshold_amount: 1_000, apply_automatically: true, promotion_actions: [action])
+          end
+
+          it "does not create the adjustment" do
+            expect { subject.activate }.to change { shipment.adjustments.count }.by(0)
+          end
         end
       end
 
@@ -30,6 +42,22 @@ module Spree
             expect {
               subject.activate
             }.to change { shipment.adjustments.count }
+          end
+
+          context 'when currently ineligible' do
+            let(:promotion) do
+              create(:promotion, :with_item_total_rule, item_total_threshold_amount: 1_000, code: 'freeshipping', promotion_actions: [action])
+            end
+
+            before do
+              order.order_promotions.create!(promotion: promotion, promotion_code: promotion.codes.first)
+            end
+
+            it 'does not adjust the shipment' do
+              expect {
+                subject.activate
+              }.to_not change { shipment.adjustments.count }
+            end
           end
         end
 
