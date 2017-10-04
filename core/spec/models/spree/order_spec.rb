@@ -61,6 +61,14 @@ RSpec.describe Spree::Order, type: :model do
         expect{ subject }.to change{ order.can_cancel? }.from(true).to(false)
         expect(order).to be_canceled
       end
+
+      it "places the order into the canceled scope" do
+        expect{ subject }.to change{ Spree::Order.canceled.include?(order) }.from(false).to(true)
+      end
+
+      it "removes the order from the not_canceled scope" do
+        expect{ subject }.to change{ Spree::Order.not_canceled.include?(order) }.from(true).to(false)
+      end
     end
 
     context "with fully refunded payment" do
