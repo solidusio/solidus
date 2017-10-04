@@ -133,7 +133,7 @@ module Spree
             before do
               allow(order).to receive_messages coupon_code: "10off"
               calculator = Calculator::FlatRate.new(preferred_amount: 10)
-              general_promo = create(:promotion, name: "General Promo")
+              general_promo = create(:promotion, apply_automatically: true, name: "General Promo")
               Promotion::Actions::CreateItemAdjustments.create(promotion: general_promo, calculator: calculator)
 
               order.contents.add create(:variant)
@@ -145,6 +145,31 @@ module Spree
               expect(subject).to be_successful
               expect_order_connection(order: order, promotion: promotion, promotion_code: promotion_code)
               order.line_items.each do |line_item|
+                expect_adjustment_creation(adjustable: line_item, promotion: promotion, promotion_code: promotion_code)
+              end
+            end
+          end
+
+          context "applied alongside another valid promotion " do
+            let!(:order) { Order.create }
+
+            before do
+              allow(order).to receive_messages :coupon_code => "10off"
+              calculator = Calculator::FlatPercentItemTotal.new(preferred_flat_percent: 10)
+              general_promo = create(:promotion, apply_automatically: true, name: "General Promo")
+              general_action = Promotion::Actions::CreateItemAdjustments.create!(promotion: general_promo, calculator: calculator)
+
+              order.contents.add create(:variant, price: 500)
+              order.contents.add create(:variant, price: 10)
+
+              Spree::PromotionHandler::Cart.new(order).activate
+            end
+
+            it "successfully activates both promotions and returns success" do
+              subject.apply
+              expect(subject).to be_successful
+              order.line_items.each do |line_item|
+                expect(line_item.adjustments.count).to eq 2
                 expect_adjustment_creation(adjustable: line_item, promotion: promotion, promotion_code: promotion_code)
               end
             end
