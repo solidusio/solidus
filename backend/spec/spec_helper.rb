@@ -42,10 +42,29 @@ require 'spree/testing_support/capybara_ext'
 
 require 'capybara-screenshot/rspec'
 Capybara.save_path = ENV['CIRCLE_ARTIFACTS'] if ENV['CIRCLE_ARTIFACTS']
-
-require 'capybara/poltergeist'
-Capybara.javascript_driver = :poltergeist
 Capybara.exact = true
+
+require "selenium/webdriver"
+
+Capybara.register_driver :chrome do |app|
+  Capybara::Selenium::Driver.new(app, browser: :chrome)
+end
+
+Capybara.register_driver :chrome_headless do |app|
+  capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
+    chromeOptions: { args: %w(headless disable-gpu window-size=1440,1080) }
+  )
+
+  Capybara::Selenium::Driver.new app,
+    browser: :chrome,
+    desired_capabilities: capabilities
+end
+
+Capybara::Screenshot.register_driver(:chrome_headless) do |driver, path|
+  driver.browser.save_screenshot(path)
+end
+
+Capybara.javascript_driver = (ENV['CAPYBARA_DRIVER'] || :chrome_headless).to_sym
 
 ActionView::Base.raise_on_missing_translations = true
 
@@ -91,7 +110,7 @@ RSpec.configure do |config|
   config.before do
     Rails.cache.clear
     reset_spree_preferences
-    if RSpec.current_example.metadata[:js]
+    if RSpec.current_example.metadata[:js] && page.driver.browser.respond_to?(:url_blacklist)
       page.driver.browser.url_blacklist = ['http://fonts.googleapis.com']
     end
   end

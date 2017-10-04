@@ -177,7 +177,7 @@ describe "New Order", type: :feature do
       click_link "Customer"
       targetted_select2 user.email, from: "#s2id_customer_search"
       click_button "Update"
-      expect(Spree::Order.last.state).to eq 'delivery'
+      expect(page).to have_css('.order-state', text: 'Delivery')
     end
   end
 

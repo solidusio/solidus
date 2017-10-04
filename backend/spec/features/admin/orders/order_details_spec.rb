@@ -268,9 +268,9 @@ describe "Order Details", type: :feature, js: true do
               product.master.stock_items.last.update_column(:count_on_hand, 0)
 
               within('tr', text: line_item.sku) { click_icon 'arrows-h' }
-              complete_split_to(stock_location2, quantity: 2)
-
-              accept_alert "Desired shipment not enough stock in desired stock location"
+              accept_alert "Desired shipment not enough stock in desired stock location" do
+                complete_split_to(stock_location2, quantity: 2)
+              end
 
               expect(order.shipments.count).to eq(1)
               expect(order.shipments.first.inventory_units_for(product.master).count).to eq(2)

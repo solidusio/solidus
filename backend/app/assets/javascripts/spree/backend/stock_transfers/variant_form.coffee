@@ -30,7 +30,7 @@ class VariantForm
     @variantAutocomplete
 
   resetVariantAutocomplete = ->
-    autoCompleteEl().select2('val', '').trigger('change').select2('open')
+    autoCompleteEl().select2('val', '').trigger('change')
 
   createTransferItem = (variantId) ->
     stockTransferNumber = $("#stock_transfer_number").val()
