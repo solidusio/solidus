@@ -1,4 +1,4 @@
-$ ->
+Spree.ready ->
   productTemplate = HandlebarsTemplates['products/sortable']
 
   productListTemplate = (products) ->

@@ -51,7 +51,7 @@ Spree.AddStockItemView = Backbone.View.extend
         show_flash("error", response.responseText)
     @model.save(null, options)
 
-$ ->
+Spree.ready ->
   $('.js-add-stock-item').each ->
     $el = $(this)
     model = new Spree.StockItem

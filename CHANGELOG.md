@@ -1,5 +1,7 @@
 ## Solidus 2.5.0 (master, unreleased)
 
+- Add support for using Tubolinks in Solidus admin [#1863](https://github.com/solidusio/solidus/pull/1863) ([tvdeyen](https://github.com/tvdeyen))
+
 ## Solidus 2.4.0 (unreleased)
 
 ### Major changes
