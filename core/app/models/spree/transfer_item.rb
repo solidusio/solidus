@@ -1,4 +1,6 @@
 require 'spree/base'
+require 'paranoia'
+
 module Spree
   class TransferItem < Spree::Base
     acts_as_paranoid

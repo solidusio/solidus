@@ -1,4 +1,7 @@
 require 'spree/base'
+require 'paranoia'
+require 'acts_as_list'
+
 module Spree
   # == Master Variant
   #

@@ -1,4 +1,6 @@
 require 'spree/base'
+require 'paranoia'
+
 module Spree
   # Base class for all types of promotion action.
   #

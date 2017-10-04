@@ -1,4 +1,6 @@
 require 'spree/base'
+require 'acts_as_list'
+
 module Spree
   class ProductProperty < Spree::Base
     include Spree::OrderedPropertyValueList

@@ -1,5 +1,7 @@
 require 'spree/base'
 require 'spree/preferences/statically_configurable'
+require 'paranoia'
+require 'acts_as_list'
 
 module Spree
   # A base class which is used for implementing payment methods.

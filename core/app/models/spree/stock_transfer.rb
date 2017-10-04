@@ -1,4 +1,6 @@
 require 'spree/base'
+require 'paranoia'
+
 module Spree
   class StockTransfer < Spree::Base
     class InvalidTransferMovement < StandardError; end

@@ -1,4 +1,6 @@
 require 'spree/base'
+require 'acts_as_list'
+
 module Spree
   class Classification < Spree::Base
     self.table_name = 'spree_products_taxons'

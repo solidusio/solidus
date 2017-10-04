@@ -1,4 +1,6 @@
 require 'spree/base'
+require 'acts_as_list'
+
 module Spree
   class Asset < Spree::Base
     belongs_to :viewable, polymorphic: true, touch: true

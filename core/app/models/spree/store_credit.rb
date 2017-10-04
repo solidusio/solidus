@@ -1,3 +1,5 @@
+require 'paranoia'
+
 class Spree::StoreCredit < Spree::PaymentSource
   acts_as_paranoid
 

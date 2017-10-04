@@ -1,4 +1,6 @@
 require 'spree/base'
+require 'paranoia'
+
 module Spree
   class StockItem < Spree::Base
     acts_as_paranoid
