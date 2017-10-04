@@ -1,5 +1,5 @@
 module Spree
-  class Variant
+  class Variant < Spree::Base
     # This class is responsible for selecting a price for a variant given certain pricing options.
     # A variant can have multiple or even dynamic prices. The `price_for`
     # method determines which price applies under the given circumstances.
