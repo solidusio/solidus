@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe "spree/admin/shared/_navigation_footer", type: :view do
-  let(:user) { create(:admin_user) }
+  let(:user) { FactoryGirl.build_stubbed(:admin_user) }
   before do
     allow(view).to receive(:try_spree_current_user).and_return(user)
   end
