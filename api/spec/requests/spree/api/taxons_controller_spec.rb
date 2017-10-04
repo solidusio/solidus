@@ -92,6 +92,7 @@ module Spree
       end
 
       it "gets all taxons in JSTree form" do
+        expect(Spree::Deprecation).to(receive(:warn))
         get spree.jstree_api_taxonomy_taxon_path(taxonomy, taxon.id)
         response = json_response.first
         expect(response["data"]).to eq(taxon2.name)
