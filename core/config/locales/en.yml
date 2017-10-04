@@ -1288,6 +1288,13 @@ en:
       spree/promotion:
         starts_at: "This determines when the promotion can be applied to orders. <br/> If no value is specified, the promotion will be immediately available."
         expires_at: "This determines when the promotion expires. <br/> If no value is specified, the promotion will never expire."
+      spree/stock_location:
+        active: "This determines whether stock from this location can be used when building packages.<br/> Default: Checked"
+        backorderable_default: "When checked, stock items in this location will default to allowing backorders.<br/> Default: Unchecked"
+        propagate_all_variants: "When checked, this will create a stock item for in this stock location.<br/> Default: Checked"
+        restock_inventory: "When checked, returned inventory can be added back to this location's stock levels.<br/> Default: checked"
+        fulfillable: "When unchecked, this indicates that items in this location don't require actual fulfilment. Stock will not be checked when shipping and emails will not be sent.<br/> Default: Checked"
+        check_stock_on_transfer: "When checked, inventory levels will be checked when performing stock transfers.<br/> Default: Checked"
       spree/store:
         cart_tax_country_iso: "This determines which country is used for taxes on carts (orders which don't yet have an address).<br/> Default: None."
       spree/variant:

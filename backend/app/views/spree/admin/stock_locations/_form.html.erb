@@ -24,6 +24,7 @@
     <%= f.field_container :active do %>
       <%= f.check_box :active %>
       <%= f.label :active %>
+      <%= f.field_hint :active %>
     <% end %>
 
     <%= f.field_container :default do %>
@@ -34,26 +35,31 @@
     <%= f.field_container :backorderable_default do %>
       <%= f.check_box :backorderable_default %>
       <%= f.label :backorderable_default %>
+      <%= f.field_hint :backorderable_default %>
     <% end %>
 
     <%= f.field_container :propagate_all_variants do %>
       <%= f.check_box :propagate_all_variants %>
       <%= f.label :propagate_all_variants %>
+      <%= f.field_hint :propagate_all_variants %>
     <% end %>
 
     <%= f.field_container :restock_inventory do %>
       <%= f.check_box :restock_inventory %>
       <%= f.label :restock_inventory %>
+      <%= f.field_hint :restock_inventory %>
     <% end %>
 
     <%= f.field_container :fulfillable do %>
       <%= f.check_box :fulfillable %>
       <%= f.label :fulfillable %>
+      <%= f.field_hint :fulfillable %>
     <% end %>
 
     <%= f.field_container :check_stock_on_transfer do %>
       <%= f.check_box :check_stock_on_transfer %>
       <%= f.label :check_stock_on_transfer %>
+      <%= f.field_hint :check_stock_on_transfer %>
     <% end %>
   </fieldset>
 
