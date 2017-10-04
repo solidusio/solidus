@@ -852,8 +852,7 @@ module Spree
 
     def after_cancel
       shipments.each(&:cancel!)
-      payments.completed.each(&:cancel!)
-      payments.store_credits.pending.each(&:void_transaction!)
+      payments.select { |p| p.pending? || p.completed? }.each(&:cancel!)
 
       send_cancel_email
       recalculate
