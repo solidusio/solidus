@@ -1,29 +1,30 @@
 require 'rails_helper'
 
 RSpec.describe Spree::Promotion::Rules::Taxon, type: :model do
+  let(:taxon)   { create :taxon, name: 'first' }
+  let(:taxon2)  { create :taxon, name: 'second' }
+  let(:order)   { create :order_with_line_items }
+  let(:product) { order.products.first }
+
   let(:rule) do
     Spree::Promotion::Rules::Taxon.create!(promotion: create(:promotion))
   end
 
   context '#eligible?(order)' do
-    let(:taxon){ create :taxon, name: 'first' }
-    let(:taxon2){ create :taxon, name: 'second' }
-    let(:order){ create :order_with_line_items }
-
     context 'with any match policy' do
       before do
         rule.update!(preferred_match_policy: 'any')
       end
 
       it 'is eligible if order does have any prefered taxon' do
-        order.products.first.taxons << taxon
+        product.taxons << taxon
         rule.taxons << taxon
         expect(rule).to be_eligible(order)
       end
 
       context 'when order contains items from different taxons' do
         before do
-          order.products.first.taxons << taxon
+          product.taxons << taxon
           rule.taxons << taxon
         end
 
@@ -50,7 +51,7 @@ RSpec.describe Spree::Promotion::Rules::Taxon, type: :model do
       context 'when a product has a taxon child of a taxon rule' do
         before do
           taxon.children << taxon2
-          order.products.first.taxons << taxon2
+          product.taxons << taxon2
           rule.taxons << taxon
         end
 
@@ -64,7 +65,7 @@ RSpec.describe Spree::Promotion::Rules::Taxon, type: :model do
       end
 
       it 'is eligible order has all prefered taxons' do
-        order.products.first.taxons << taxon2
+        product.taxons << taxon2
         order.products.last.taxons << taxon
 
         rule.taxons = [taxon, taxon2]
@@ -83,17 +84,16 @@ RSpec.describe Spree::Promotion::Rules::Taxon, type: :model do
       end
 
       context 'when a product has a taxon child of a taxon rule' do
-        let(:taxon3){ create :taxon }
+        let(:taxon3) { create :taxon }
 
         before do
           taxon.children << taxon2
-          order.products.first.taxons << taxon2
-          order.products.last.taxons << taxon3
-          rule.taxons << taxon2
-          rule.taxons << taxon3
+          taxon.save!
+          product.taxons = [taxon2, taxon3]
+          rule.taxons = [taxon, taxon3]
         end
 
-        it{ expect(rule).to be_eligible(order) }
+        it { expect(rule).to be_eligible(order) }
       end
     end
 

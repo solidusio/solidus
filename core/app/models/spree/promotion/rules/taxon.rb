@@ -16,25 +16,29 @@ module Spree
         end
 
         def eligible?(order, _options = {})
-          order_taxons = taxons_in_order_including_parents(order)
+          order_taxons = taxons_in_order(order)
 
           case preferred_match_policy
           when 'all'
-            unless (taxons.to_a - order_taxons).empty?
+            matches_all = taxons.all? do |rule_taxon|
+              order_taxons.where(id: rule_taxon.self_and_descendants.ids).exists?
+            end
+
+            unless matches_all
               eligibility_errors.add(:base, eligibility_error_message(:missing_taxon))
             end
           when 'any'
-            unless taxons.any?{ |taxon| order_taxons.include? taxon }
+            unless order_taxons.where(id: rule_taxon_ids_with_children).exists?
               eligibility_errors.add(:base, eligibility_error_message(:no_matching_taxons))
             end
           when 'none'
-            unless taxons.none?{ |taxon| order_taxons.include? taxon }
+            if order_taxons.where(id: rule_taxon_ids_with_children).exists?
               eligibility_errors.add(:base, eligibility_error_message(:has_excluded_taxon))
             end
           else
             # Change this to an exception in a future version of Solidus
             warn_invalid_match_policy(assume: 'any')
-            unless taxons.any? { |taxon| order_taxons.include? taxon }
+            unless order_taxons.where(id: rule_taxon_ids_with_children).exists?
               eligibility_errors.add(:base, eligibility_error_message(:no_matching_taxons))
             end
           end
@@ -42,16 +46,24 @@ module Spree
           eligibility_errors.empty?
         end
 
+        # TODO: Fix bug - well described by jhawthorn in #1409:
+        # `eligible?` checks the configured taxons and all descendants,
+        # `actionable?` only seems to check against the taxons themselves (not children)
         def actionable?(line_item)
+          found = Spree::Classification.where(
+            product_id: line_item.variant.product_id,
+            taxon_id: taxon_ids
+          ).exists?
+
           case preferred_match_policy
           when 'any', 'all'
-            taxon_product_ids.include?(line_item.variant.product_id)
+            found
           when 'none'
-            taxon_product_ids.exclude? line_item.variant.product_id
+            !found
           else
             # Change this to an exception in a future version of Solidus
             warn_invalid_match_policy(assume: 'any')
-            taxon_product_ids.include?(line_item.variant.product_id)
+            found
           end
         end
 
@@ -74,27 +86,16 @@ module Spree
         end
 
         # All taxons in an order
-        def order_taxons(order)
-          Spree::Taxon.joins(products: { variants_including_master: :line_items }).where(spree_line_items: { order_id: order.id }).distinct
+        def taxons_in_order(order)
+          Spree::Taxon.joins(products: { variants_including_master: :line_items })
+            .where(spree_line_items: { order_id: order.id }).distinct
         end
 
         # ids of taxons rules and taxons rules children
-        def taxons_including_children_ids
-          taxons.flat_map { |taxon| taxon.self_and_descendants.ids }
+        def rule_taxon_ids_with_children
+          taxons.flat_map { |taxon| taxon.self_and_descendants.ids }.uniq
         end
 
-        # taxons order vs taxons rules and taxons rules children
-        def order_taxons_in_taxons_and_children(order)
-          order_taxons(order).where(id: taxons_including_children_ids)
-        end
-
-        def taxons_in_order_including_parents(order)
-          order_taxons_in_taxons_and_children(order).flat_map(&:self_and_ancestors).uniq
-        end
-
-        def taxon_product_ids
-          Spree::Product.joins(:taxons).where(spree_taxons: { id: taxons.pluck(:id) }).pluck(:id).uniq
-        end
       end
     end
   end
