@@ -6,11 +6,12 @@ module Spree
       let(:variant) { build(:variant, weight: 25.0) }
       let(:stock_location) { build(:stock_location) }
       let(:order) { build(:order) }
+      let(:line_item) { build(:line_item, order: order) }
 
       subject { Package.new(stock_location) }
 
       def build_inventory_unit
-        build(:inventory_unit, variant: variant, order: order)
+        build(:inventory_unit, variant: variant, line_item: line_item)
       end
 
       it 'calculates the weight of all the contents' do
@@ -164,7 +165,7 @@ module Spree
 
           it "returns an order" do
             expect(subject.order).to be_a_kind_of Spree::Order
-            expect(subject.order).to eq unit.order
+            expect(subject.order).to eq order
           end
         end
 

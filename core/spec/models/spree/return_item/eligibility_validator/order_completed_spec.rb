@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Spree::ReturnItem::EligibilityValidator::OrderCompleted do
-  let(:inventory_unit) { create(:inventory_unit, order: order) }
+  let(:shipment)       { create(:shipment, order: order) }
+  let(:inventory_unit) { create(:inventory_unit, shipment: shipment) }
   let(:return_item)    { create(:return_item, inventory_unit: inventory_unit) }
   let(:validator)      { Spree::ReturnItem::EligibilityValidator::OrderCompleted.new(return_item) }
 
