@@ -15,8 +15,6 @@ module Spree
     # @param [Hash] :options Options for the adding proccess
     #   Valid options:
     #     shipment: [Spree::Shipment] LineItem target shipment
-    #     stock_location_quantities:
-    #       stock_location_id: The stock location to source from
     #
     # @return [Spree::LineItem]
     def add(variant, quantity = 1, options = {})
@@ -98,10 +96,6 @@ module Spree
       line_item.quantity += quantity.to_i
       line_item.options = ActionController::Parameters.new(options).permit(PermittedAttributes.line_item_attributes).to_h
 
-      if line_item.new_record?
-        create_order_stock_locations(line_item, options[:stock_location_quantities])
-      end
-
       line_item.target_shipment = options[:shipment]
       line_item.save!
       line_item
@@ -129,14 +123,6 @@ module Spree
       end
 
       line_item
-    end
-
-    def create_order_stock_locations(line_item, stock_location_quantities)
-      return unless stock_location_quantities.present?
-      order = line_item.order
-      stock_location_quantities.each do |stock_location_id, quantity|
-        order.order_stock_locations.create!(stock_location_id: stock_location_id, quantity: quantity, variant_id: line_item.variant_id) unless quantity.to_i.zero?
-      end
     end
   end
 end
