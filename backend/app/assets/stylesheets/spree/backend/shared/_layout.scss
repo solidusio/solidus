@@ -15,7 +15,7 @@ body {
 }
 
 .content-wrapper {
-  @include padding(1rem $grid-gutter-width null);
+  @include padding($main-header-height + $font-size-root $grid-gutter-width null);
 
   &:not(.full-width) {
     @include margin(null auto);

@@ -1,10 +1,14 @@
 .main-header {
   display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: $main-header-height;
   align-items: center;
-  padding: 15px $grid-gutter-width;
+  padding: 15px $grid-gutter-width 15px $width-sidebar + $grid-gutter-width;
   background-color: very-light($color-3, 4);
   border-bottom: 1px solid $color-border;
-  height: $main-header-height;
 
   @media print { display: none }
 }
