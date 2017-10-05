@@ -525,14 +525,6 @@ RSpec.describe Spree::Shipment, type: :model do
           allow(shipment).to receive_messages(require_inventory: false, update_order: true, state: state)
         end
 
-        it "should call fulfill_order_with_stock_location" do
-          expect(Spree::OrderStockLocation).to(
-            receive(:fulfill_for_order_with_stock_location).
-            with(order, stock_location)
-          )
-          shipment.ship!
-        end
-
         it "finalizes adjustments" do
           shipment.adjustments.each do |adjustment|
             expect(adjustment).to receive(:finalize!)
