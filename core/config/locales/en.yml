@@ -864,6 +864,7 @@ en:
           multiple_codes: Multiple promotion codes
           path: URL Path
           single_code: Single promotion code
+          single_code_title: Can't contain spaces
         activations_edit:
           auto: All orders will attempt to use this promotion
           single_code_html: "This promotion uses the promotion code: <code>%{code}</code>"
