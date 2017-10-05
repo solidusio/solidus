@@ -184,29 +184,6 @@ module Spree
             let(:location_2_inventory) { 5 }
             it_behaves_like "a fulfillable package"
           end
-
-          context "with a location configured package" do
-            before do
-              order.order_stock_locations.create(
-                stock_location: stock_location_2,
-                quantity: 3,
-                variant: variant
-              )
-            end
-            let(:location_quantity) { 3 }
-
-            context "and sufficient inventory" do
-              let(:location_1_inventory) { 5 }
-              let(:location_2_inventory) { 5 }
-              it_behaves_like "a fulfillable package"
-            end
-
-            context "and insufficient inventory" do
-              let(:location_1_inventory) { 0 }
-              let(:location_2_inventory) { 3 }
-              it_behaves_like "an unfulfillable package"
-            end
-          end
         end
 
         context 'with three stock locations' do
