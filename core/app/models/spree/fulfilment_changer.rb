@@ -48,7 +48,7 @@ module Spree
       ActiveRecord::Base.transaction do
         if handle_stock_counts?
           # We only run this query if we need it.
-          current_on_hand_quantity = [current_shipment.inventory_units.on_hand.size, quantity].min
+          current_on_hand_quantity = [current_shipment.inventory_units.pre_shipment.size, quantity].min
 
           # Restock things we will not fulfil from the current shipment anymore
           current_stock_location.restock(variant, current_on_hand_quantity, current_shipment)
