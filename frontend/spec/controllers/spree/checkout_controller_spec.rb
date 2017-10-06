@@ -485,6 +485,18 @@ describe Spree::CheckoutController, type: :controller do
 
     before { cookies.signed[:guest_token] = order.guest_token }
 
+    context "when coupon code is empty" do
+      let(:coupon_code) { "" }
+
+      it 'does not try to apply coupon code' do
+        expect(Spree::PromotionHandler::Coupon).not_to receive :new
+
+        put :update, params: { state: order.state, order: { coupon_code: coupon_code } }
+
+        expect(response).to redirect_to(spree.checkout_state_path('confirm'))
+      end
+    end
+
     context "when coupon code is applied" do
       let(:promotion_handler) { instance_double('Spree::PromotionHandler::Coupon', error: nil, success: 'Coupon Applied!') }
 

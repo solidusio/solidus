@@ -20,7 +20,7 @@ module Spree
     # and OrdersController can both reference it (or any other controller
     # which needs it)
     def apply_coupon_code
-      if params[:order] && params[:order][:coupon_code]
+      if params[:order] && params[:order][:coupon_code].present?
         @order.coupon_code = params[:order][:coupon_code]
 
         handler = PromotionHandler::Coupon.new(@order).apply

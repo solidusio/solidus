@@ -133,6 +133,18 @@ describe Spree::OrdersController, type: :controller do
           let(:order) { create(:order_with_line_items, state: 'cart') }
           let(:coupon_code) { "coupon_code" }
 
+          context "when coupon code is empty" do
+            let(:coupon_code) { "" }
+
+            it 'does not try to apply coupon code' do
+              expect(Spree::PromotionHandler::Coupon).not_to receive :new
+
+              put :update, params: { state: order.state, order: { coupon_code: coupon_code } }
+
+              expect(response).to redirect_to(spree.cart_path)
+            end
+          end
+
           context "when coupon code is applied" do
             let(:promotion_handler) { instance_double('Spree::PromotionHandler::Coupon', error: nil, success: 'Coupon Applied!') }
 
