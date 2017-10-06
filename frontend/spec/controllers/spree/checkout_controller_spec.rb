@@ -478,4 +478,41 @@ describe Spree::CheckoutController, type: :controller do
       post :update, params: { state: "payment" }
     }.to change { order.line_items.to_a.size }.from(1).to(0)
   end
+
+  context 'trying to apply a coupon code' do
+    let(:order) { create(:order_with_line_items, state: 'payment', guest_token: 'a token') }
+    let(:coupon_code) { "coupon_code" }
+
+    before { cookies.signed[:guest_token] = order.guest_token }
+
+    context "when coupon code is applied" do
+      let(:promotion_handler) { instance_double('Spree::PromotionHandler::Coupon', error: nil, success: 'Coupon Applied!') }
+
+      it "continues checkout flow normally" do
+        expect(Spree::PromotionHandler::Coupon)
+          .to receive_message_chain(:new, :apply)
+          .and_return(promotion_handler)
+
+        put :update, params: { state: order.state, order: { coupon_code: coupon_code } }
+
+        expect(response).to redirect_to(spree.checkout_state_path('confirm'))
+        expect(flash.now[:success]).to eq('Coupon Applied!')
+      end
+
+      context "when coupon code is not applied" do
+        let(:promotion_handler) { instance_double('Spree::PromotionHandler::Coupon', error: 'Some error', success: false) }
+
+        it "render cart with coupon error" do
+          expect(Spree::PromotionHandler::Coupon)
+            .to receive_message_chain(:new, :apply)
+            .and_return(promotion_handler)
+
+          put :update, params: { state: order.state, order: { coupon_code: coupon_code } }
+
+          expect(response).to render_template :edit
+          expect(flash.now[:error]).to eq('Some error')
+        end
+      end
+    end
+  end
 end
