@@ -110,12 +110,12 @@ RSpec.describe Spree::FulfilmentChanger do
           stock_item.update(backorderable: true)
         end
 
-        it "restocks five at the original stock location" do
+        it "restocks seven at the original stock location" do
           expect { subject }.to change { current_shipment.stock_location.count_on_hand(variant) }.by(7)
         end
 
-        it "unstocks five at the desired stock location" do
-          expect { subject }.to change { desired_shipment.stock_location.count_on_hand(variant) }.by(-5)
+        it "unstocks seven at the desired stock location" do
+          expect { subject }.to change { desired_shipment.stock_location.count_on_hand(variant) }.by(-7)
         end
 
         it "creates a shipment with the correct number of on hand and backordered units" do

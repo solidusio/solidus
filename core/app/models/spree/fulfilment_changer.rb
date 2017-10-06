@@ -44,6 +44,7 @@ module Spree
       desired_shipment.save! if desired_shipment.new_record?
 
       new_on_hand_quantity = [desired_shipment.stock_location.count_on_hand(variant), quantity].min
+      unstock_quantity = desired_shipment.stock_location.backorderable?(variant) ? quantity : new_on_hand_quantity
 
       ActiveRecord::Base.transaction do
         if handle_stock_counts?
@@ -53,7 +54,7 @@ module Spree
           # Restock things we will not fulfil from the current shipment anymore
           current_stock_location.restock(variant, current_on_hand_quantity, current_shipment)
           # Unstock what we will fulfil with the new shipment
-          desired_stock_location.unstock(variant, new_on_hand_quantity, desired_shipment)
+          desired_stock_location.unstock(variant, unstock_quantity, desired_shipment)
         end
 
         # These two statements are the heart of this class. We change the number
