@@ -36,7 +36,8 @@ module Spree
 
       # @deprecated Render `spree/admin/shared/preference_fields/\#{preference_type}' instead
       def preference_field_tag(name, value, options)
-        render "spree/admin/shared/preference_fields/#{options.delete(:type)}",
+        type = options.delete(:type) || :text
+        render "spree/admin/shared/preference_fields/#{type}",
           name: name, value: value, html_options: options
       end
       deprecate preference_field_tag:
@@ -45,7 +46,8 @@ module Spree
 
       # @deprecated Render `spree/admin/shared/preference_fields/\#{preference_type}' instead
       def preference_field_for(form, field, options)
-        render "spree/admin/shared/preference_fields/#{options[:type]}",
+        type = options.delete(:type) || :text
+        render "spree/admin/shared/preference_fields/#{type}",
           form: form, attribute: field, html_options: options
       end
       deprecate preference_field_for:
