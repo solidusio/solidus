@@ -21,11 +21,6 @@ describe Spree::Api::ShipmentsController, type: :request do
       assert_unauthorized!
     end
 
-    it "cannot remove order contents from shipment" do
-      put spree.remove_api_shipment_path(shipment)
-      assert_unauthorized!
-    end
-
     it "cannot add contents to the shipment" do
       put spree.add_api_shipment_path(shipment)
       assert_unauthorized!
@@ -115,23 +110,6 @@ describe Spree::Api::ShipmentsController, type: :request do
         expect(response.status).to eq(200)
         expect(json_response['manifest'].detect { |h| h['variant']['id'] == variant.id }["quantity"]).to eq(2)
       end
-
-      it 'removes a variant from a shipment' do
-        order.contents.add(variant, 2)
-
-        put spree.remove_api_shipment_path(shipment), params: { variant_id: variant.to_param, quantity: 1 }
-        expect(response.status).to eq(200)
-        expect(json_response['manifest'].detect { |h| h['variant']['id'] == variant.id }["quantity"]).to eq(1)
-      end
-
-      it 'removes a destroyed variant from a shipment' do
-        order.contents.add(variant, 2)
-        variant.destroy
-
-        put spree.remove_api_shipment_path(shipment), params: { variant_id: variant.to_param, quantity: 1 }
-        expect(response.status).to eq(200)
-        expect(json_response['manifest'].detect { |h| h['variant']['id'] == variant.id }["quantity"]).to eq(1)
-      end
     end
 
     context "for shipped shipments" do
@@ -142,12 +120,6 @@ describe Spree::Api::ShipmentsController, type: :request do
         put spree.add_api_shipment_path(shipment), params: { variant_id: variant.to_param, quantity: 2 }
         expect(response.status).to eq(200)
         expect(json_response['manifest'].detect { |h| h['variant']['id'] == variant.id }["quantity"]).to eq(2)
-      end
-
-      it 'cannot remove a variant from a shipment' do
-        put spree.remove_api_shipment_path(shipment), params: { variant_id: variant.to_param, quantity: 1 }
-        expect(response.status).to eq(422)
-        expect(json_response['errors']['base'].join).to match /Cannot remove items/
       end
     end
 
