@@ -2,17 +2,19 @@ require 'rubygems'
 require 'rake'
 require 'rake/testtask'
 require 'rspec/core/rake_task'
-require 'spree/testing_support/common_rake'
+
+require 'solidus_backend'
+require 'spree/testing_support/dummy_app/rake_tasks'
 
 RSpec::Core::RakeTask.new
 
 task :dummy_environment do
   ENV['RAILS_ENV'] = 'test'
-  require File.expand_path("../spec/dummy/config/environment", __FILE__)
+  require 'spree/testing_support/dummy_app'
 end
 
 desc "Run the javascript specs"
-task teaspoon: :dummy_environment do
+task :teaspoon do
   require "teaspoon/console"
 
   options = {
@@ -28,8 +30,7 @@ task teaspoon: :dummy_environment do
 end
 
 namespace :teaspoon do
-  task server: :dummy_environment do
-    require 'teaspoon/server'
+  task :server  do
     server = Teaspoon::Server.new
     server.start
     puts "#{server.url}/teaspoon"
@@ -37,8 +38,4 @@ namespace :teaspoon do
   end
 end
 
-desc "Generates a dummy app for testing"
-task :test_app do
-  ENV['LIB_NAME'] = 'spree/backend'
-  Rake::Task['common:test_app'].invoke
-end
+task test_app: 'db:reset'

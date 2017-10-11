@@ -1,0 +1,31 @@
+<% if agent_number = ENV['TC_AGENT_NUMBER']
+database_prefix = agent_number + '_'
+end %>
+<% case ENV['DB']
+when 'mysql' %>
+test:
+  adapter: mysql2
+  <% if ENV['TRAVIS'] %>
+  username: root
+  password:
+  <% end %>
+  database: <%= database_prefix %>_solidus_test
+  encoding: utf8
+<% when 'postgres', 'postgresql' %>
+<% db_host = ENV['DB_HOST'] %>
+test:
+  adapter: postgresql
+  database: <%= database_prefix %>_solidus_test
+  username: postgres
+  min_messages: warning
+<% unless db_host.blank? %>
+  host: <%= db_host %>
+<% end %>
+<% when 'sqlite', '', nil %>
+test:
+  adapter: sqlite3
+  database: db/solidus_test.sqlite3
+  timeout: 10000
+<% else %>
+  <% raise "Invalid DB specified: #{ENV['DB']}" %>
+<% end %>

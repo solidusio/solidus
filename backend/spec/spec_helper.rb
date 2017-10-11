@@ -15,13 +15,11 @@ end
 # from the project root directory.
 ENV["RAILS_ENV"] ||= 'test'
 
-begin
-  require File.expand_path("../dummy/config/environment", __FILE__)
-rescue LoadError
-  $stderr.puts "Could not load dummy application. Please ensure you have run `bundle exec rake test_app`"
-  exit 1
-end
+require 'solidus_backend'
+require 'spree/testing_support/dummy_app'
+require 'spree/testing_support/dummy_app/auto_migrate'
 
+require 'rails-controller-testing'
 require 'rspec/rails'
 
 # Requires supporting files with custom matchers and macros, etc,
@@ -30,6 +28,7 @@ Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
 
 require 'database_cleaner'
 require 'ffaker'
+require 'with_model'
 
 require 'spree/testing_support/authorization_helpers'
 require 'spree/testing_support/factories'
