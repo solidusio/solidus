@@ -19,6 +19,13 @@ Gem::Specification.new do |s|
   s.required_ruby_version     = '>= 2.2.2'
   s.required_rubygems_version = '>= 1.8.23'
 
+  %w[
+    actionmailer actionpack actionview activejob activemodel activerecord
+    activesupport railties
+  ].each do |rails_dep|
+    s.add_dependency rails_dep, '~> 5.1.0'
+  end
+
   s.add_dependency 'activemerchant', '~> 1.48'
   s.add_dependency 'acts_as_list', '~> 0.3'
   s.add_dependency 'awesome_nested_set', '~> 3.0', '>= 3.0.1'
@@ -29,7 +36,6 @@ Gem::Specification.new do |s|
   s.add_dependency 'monetize', '~> 1.1'
   s.add_dependency 'paperclip', ['>= 4.2', '< 6']
   s.add_dependency 'paranoia', '~> 2.3'
-  s.add_dependency 'rails', '~> 5.1.0'
   s.add_dependency 'ransack', '~> 1.8'
   s.add_dependency 'state_machines-activerecord', '~> 0.4'
   s.add_dependency 'stringex', '~> 1.5.1'
