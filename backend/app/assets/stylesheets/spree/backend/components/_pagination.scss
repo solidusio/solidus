@@ -1,0 +1,5 @@
+.pagination .page-item.active .page-link {
+  // overwrite a weird `z-index: 2` from Bootstrap,
+  // so it does not peak out of the sticky header
+  z-index: auto;
+}

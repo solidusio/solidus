@@ -6,7 +6,6 @@
 
   <body class="admin">
     <%= render "spree/admin/shared/navigation" %>
-    <%= render "spree/admin/shared/header" %>
     <%= render "spree/admin/shared/flash" %>
     <%= render "spree/admin/shared/spinner" %>
 
@@ -21,6 +20,8 @@
         <%= render "spree/admin/shared/sidebar" %>
       </div>
     </div>
+    <%# Has to be here because it's sticky, should sit on top of the content and using z-index is lame %>
+    <%= render "spree/admin/shared/header" %>
 
     <div data-hook="admin_footer_scripts"></div>
   </body>
