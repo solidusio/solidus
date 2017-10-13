@@ -1735,7 +1735,7 @@ en:
     receiving_match: Receiving match
     reception_states:
       awaiting: Awaiting
-      canceled: Canceled
+      cancelled: Canceled
       expired: Expired
       given_to_customer: Given to customer
       in_transit: In transit
