@@ -124,6 +124,24 @@ RSpec.describe Spree::FulfilmentChanger do
           expect(desired_shipment.inventory_units.backordered.count).to eq(2)
         end
 
+        context "when the desired stock location already has a backordered units" do
+          let(:desired_count_on_hand) { -1 }
+
+          it "restocks seven at the original stock location" do
+            expect { subject }.to change { current_shipment.stock_location.count_on_hand(variant) }.by(7)
+          end
+
+          it "unstocks seven at the desired stock location" do
+            expect { subject }.to change { desired_shipment.stock_location.count_on_hand(variant) }.by(-7)
+          end
+
+          it "creates a shipment with the correct number of on hand and backordered units" do
+            subject
+            expect(desired_shipment.inventory_units.on_hand.count).to eq(0)
+            expect(desired_shipment.inventory_units.backordered.count).to eq(7)
+          end
+        end
+
         context "when the original shipment has on hand and backordered units" do
           before do
             current_shipment.inventory_units.limit(6).update_all(state: :backordered)
