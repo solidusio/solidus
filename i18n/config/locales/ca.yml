@@ -1027,7 +1027,18 @@ ca:
     receive: rebre
     receive_stock:
     received: Rebut
-    reception_status:
+    reception_states:
+      awaiting: En espera
+      cancelled: Cancel·lat
+      expired: Expirat
+      given_to_customer: Entregat al client
+      in_transit: En trànsit
+      lost_in_transit: Perdut en trànsit
+      received: Rebut
+      shipped_wrong_item: Article incorrecte
+      short_shipped: No inclòs en l'enviament
+      unexchanged: Sense canvis
+    reception_status: Estat de recepció
     reference:
     refund: Retornar
     refund_amount_must_be_greater_than_zero:
