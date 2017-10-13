@@ -29,10 +29,6 @@ When running the application there is a styleguide available at:
 
 ## Testing
 
-Create the test site
-
-    bundle exec rake test_app
-
 Run the tests
 
-    bundle exec rake spec
+    bundle exec rspec
