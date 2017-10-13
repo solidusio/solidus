@@ -43,7 +43,6 @@ class Project
   #   the success of the build
   def pass?
     chdir do
-      setup_test_app
       run_tests
     end
   end
@@ -147,13 +146,6 @@ class Project
       --jobs=#{BUNDLER_JOBS}
       --retry=#{BUNDLER_RETRIES}
     ])
-  end
-
-  # Setup the test app
-  #
-  # @return [void]
-  def setup_test_app
-    system(%w[bundle exec rake test_app]) || fail('Failed to setup the test app')
   end
 
   # Run tests for subproject
