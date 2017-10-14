@@ -514,6 +514,15 @@ describe Spree::CheckoutController, type: :controller do
       context "when coupon code is not applied" do
         let(:promotion_handler) { instance_double('Spree::PromotionHandler::Coupon', error: 'Some error', success: false) }
 
+        it "setups the current step correctly before rendering" do
+          expect(Spree::PromotionHandler::Coupon)
+            .to receive_message_chain(:new, :apply)
+            .and_return(promotion_handler)
+          expect(controller).to receive(:setup_for_current_state)
+
+          put :update, params: { state: order.state, order: { coupon_code: coupon_code } }
+        end
+
         it "render cart with coupon error" do
           expect(Spree::PromotionHandler::Coupon)
             .to receive_message_chain(:new, :apply)
