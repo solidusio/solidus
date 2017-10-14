@@ -166,6 +166,21 @@ module Spree
       spree.order_path(@order)
     end
 
+    def apply_coupon_code
+      if params[:order] && params[:order][:coupon_code].present?
+        @order.coupon_code = params[:order][:coupon_code]
+
+        handler = PromotionHandler::Coupon.new(@order).apply
+
+        if handler.error.present?
+          flash.now[:error] = handler.error
+          respond_with(@order) { |format| format.html { render :edit } } && return
+        elsif handler.success
+          flash[:success] = handler.success
+        end
+      end
+    end
+
     def setup_for_current_state
       method_name = :"before_#{@order.state}"
       send(method_name) if respond_to?(method_name, true)
