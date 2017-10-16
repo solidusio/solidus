@@ -1,4 +1,4 @@
-require 'rails_helper'
+require 'mailer_helper'
 
 RSpec.describe Spree::TestMailer, type: :mailer do
   let(:user) { create(:user) }

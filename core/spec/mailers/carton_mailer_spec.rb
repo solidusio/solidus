@@ -1,4 +1,4 @@
-require 'rails_helper'
+require 'mailer_helper'
 
 RSpec.describe Spree::CartonMailer do
   let(:carton) { create(:carton) }

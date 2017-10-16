@@ -1,4 +1,4 @@
-require 'rails_helper'
+require 'mailer_helper'
 
 RSpec.describe Spree::ReimbursementMailer, type: :mailer do
   let(:reimbursement) { create(:reimbursement) }
