@@ -52,7 +52,7 @@ RSpec.describe Spree::CreditCard, type: :model do
 
     it "validates name presence" do
       credit_card.valid?
-      expect(credit_card.error_on(:name).size).to eq(1)
+      expect(credit_card.errors[:name].size).to eq(1)
     end
 
     it "should only validate on create" do

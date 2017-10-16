@@ -293,14 +293,14 @@ RSpec.describe Spree::StockItem, type: :model do
       shared_examples_for 'valid count_on_hand' do
         it 'has :no errors_on' do
           expect(subject).to be_valid
-          expect(subject.errors_on(:count_on_hand).size).to eq(0)
+          expect(subject.errors[:count_on_hand].size).to eq(0)
         end
       end
 
       shared_examples_for 'invalid count_on_hand' do
         it 'has the correct error on count_on_hand' do
           expect(subject).not_to be_valid
-          expect(subject.error_on(:count_on_hand).size).to eq(1)
+          expect(subject.errors[:count_on_hand].size).to eq(1)
           expect(subject.errors[:count_on_hand]).to include('must be greater than or equal to 0')
         end
       end
