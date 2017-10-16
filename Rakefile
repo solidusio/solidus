@@ -1,6 +1,3 @@
-require 'rake'
-require 'thor/group'
-
 task default: :spec
 
 def print_title(gem_name = '')
