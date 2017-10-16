@@ -22,7 +22,6 @@ module SpreeSample
       Spree::Sample.load_sample("product_properties")
       Spree::Sample.load_sample("variants")
       Spree::Sample.load_sample("stock")
-      Spree::Sample.load_sample("assets")
 
       Spree::Sample.load_sample("orders")
       Spree::Sample.load_sample("payments")
