@@ -14,6 +14,7 @@ end
 # This file is copied to ~/spec when you run 'ruby script/generate rspec'
 # from the project root directory.
 ENV["RAILS_ENV"] ||= 'test'
+ENV["LIB_NAME"] = 'solidus_frontend'
 
 require 'solidus_frontend'
 require 'spree/testing_support/dummy_app'

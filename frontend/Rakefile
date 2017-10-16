@@ -4,8 +4,9 @@ require 'rake/testtask'
 require 'rspec/core/rake_task'
 require 'spree/testing_support/dummy_app/rake_tasks'
 
-RSpec::Core::RakeTask.new
+ENV['LIB_NAME'] = 'solidus_frontend'
 
+RSpec::Core::RakeTask.new
 task default: :spec
 
 task test_app: 'db:reset'

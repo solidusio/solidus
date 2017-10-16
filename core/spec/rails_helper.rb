@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 ENV["RAILS_ENV"] ||= 'test'
+ENV["LIB_NAME"] = 'solidus_core'
 
 require 'spree/testing_support/dummy_app'
 require 'spree/testing_support/dummy_app/auto_migrate'
