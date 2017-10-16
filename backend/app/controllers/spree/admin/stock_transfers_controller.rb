@@ -129,18 +129,6 @@ module Spree
         authorize! :read, Spree::StockLocation.find(permitted_resource_params[:source_location_id])
       end
 
-      def source_location
-        @source_location ||= if params.key?(:transfer_receive_stock)
-                               nil
-                             else
-                               Spree::StockLocation.find(params[:transfer_source_location_id])
-                             end
-      end
-
-      def destination_location
-        @destination_location ||= Spree::StockLocation.find(params[:transfer_destination_location_id])
-      end
-
       def adjust_inventory
         @stock_movements = @stock_transfer.transfer_items.received.map do |transfer_item|
           @stock_transfer.destination_location.move(transfer_item.variant, transfer_item.received_quantity, @stock_transfer)
