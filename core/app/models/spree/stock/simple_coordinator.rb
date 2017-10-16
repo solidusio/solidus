@@ -10,7 +10,7 @@ module Spree
     #   * Combine allocated and on hand inventory into a single shipment per-location
     #
     # After allocation, splitters are run on each Package (as configured in
-    # Rails.application.config.spree.stock_splitters)
+    # Spree::Config.environment.stock_splitters)
     #
     # Finally, shipping rates are calculated using the class configured as
     # Spree::Config.stock.estimator_class.
@@ -20,7 +20,7 @@ module Spree
       def initialize(order, inventory_units = nil)
         @order = order
         @inventory_units = inventory_units || InventoryUnitBuilder.new(order).units
-        @splitters = Rails.application.config.spree.stock_splitters
+        @splitters = Spree::Config.environment.stock_splitters
         @stock_locations = Spree::StockLocation.active
 
         @inventory_units_by_variant = @inventory_units.group_by(&:variant)

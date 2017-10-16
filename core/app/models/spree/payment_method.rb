@@ -58,7 +58,7 @@ module Spree
       def providers
         Spree::Deprecation.warn 'Spree::PaymentMethod.providers is deprecated and will be deleted in Solidus 3.0. ' \
           'Please use Rails.application.config.spree.payment_methods instead'
-        Rails.application.config.spree.payment_methods
+        Spree::Config.environment.payment_methods
       end
 
       def available(display_on = nil, store: nil)

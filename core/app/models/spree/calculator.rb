@@ -29,7 +29,7 @@ module Spree
     def self.calculators
       Spree::Deprecation.warn("Calling .calculators is deprecated. Please access through Rails.application.config.spree.calculators")
 
-      Rails.application.config.spree.calculators
+      Spree::Config.environment.calculators
     end
 
     def to_s
