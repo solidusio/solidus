@@ -7,6 +7,9 @@ require 'active_record'
 
 ActiveRecord::Base.establish_connection ENV['DATABASE_URL']
 
+require 'logger'
+ActiveRecord::Base.logger = Logger.new('test.log')
+
 RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
 
