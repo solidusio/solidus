@@ -1,15 +1,21 @@
-require 'spec_helper'
+require 'db_helper'
 
 ENV["RAILS_ENV"] ||= 'test'
 ENV["LIB_NAME"] = 'solidus_core'
 
-require 'spree/testing_support/dummy_app'
-DummyApp::Migrations.auto_migrate
-
-require 'rspec/rails'
 require 'rspec-activemodel-mocks'
+
+# enable auto loading
+require 'active_support'
+require 'active_support/dependencies'
+relative_load_paths = %w[app/models app/models/concerns app/mailers app/jobs]
+ActiveSupport::Dependencies.autoload_paths += relative_load_paths
+
+require 'rails/all'
 require 'database_cleaner'
 require 'timecop'
+
+require 'spree/core'
 
 Dir["./spec/support/**/*.rb"].sort.each { |f| require f }
 
@@ -17,22 +23,19 @@ require 'spree/testing_support/factories'
 require 'spree/testing_support/preferences'
 require 'cancan/matchers'
 
+# provides mock_model/stub_model, will want to remove eventually.
+require 'rspec/active_model/mocks'
+
+# manually load our i18n. We have tests that require it.
+I18n.config.load_path += [File.join('config', 'locales', 'en.yml')]
+
+# since we aren't loading a full rails app, we need to init paperclip ourselves
+ActiveRecord::Base.send(:include, Paperclip::Glue)
+
 ActiveJob::Base.queue_adapter = :test
 
+Rails.cache = ActiveSupport::Cache::MemoryStore.new
 RSpec.configure do |config|
-  config.fixture_path = File.join(File.expand_path(File.dirname(__FILE__)), "fixtures")
-
-  config.infer_spec_type_from_file_location!
-
-  # If you're not using ActiveRecord, or you'd prefer not to run each of your
-  # examples within a transaction, comment the following line or assign false
-  # instead of true.
-  config.use_transactional_fixtures = true
-
-  config.before :suite do
-    DatabaseCleaner.clean_with :truncation
-  end
-
   config.before :each do
     Rails.cache.clear
   end
