@@ -1,3 +1,5 @@
+require 'spree/config'
+
 module Spree
   module Core
     class Engine < ::Rails::Engine
@@ -9,7 +11,7 @@ module Spree
       end
 
       initializer "spree.environment", before: :load_config_initializers do |app|
-        app.config.spree = Spree::Core::Environment.new
+        app.config.spree = Spree::Config.environment
       end
 
       initializer "spree.default_permissions", before: :load_config_initializers do |_app|

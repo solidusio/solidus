@@ -18,6 +18,7 @@
 require "spree/core/search/base"
 require "spree/core/search/variant"
 require 'spree/preferences/configuration'
+require 'spree/core/environment'
 
 module Spree
   class AppConfiguration < Preferences::Configuration
@@ -379,6 +380,10 @@ module Spree
 
     def stock
       @stock_configuration ||= Spree::Core::StockConfiguration.new
+    end
+
+    def environment
+      @environment ||= Spree::Core::Environment.new(self)
     end
 
     # Default admin VAT location
