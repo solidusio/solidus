@@ -1,10 +1,5 @@
 require 'rake'
 require 'thor/group'
-begin
-  require 'spree/testing_support/common_rake'
-rescue LoadError
-  raise "Could not find spree/testing_support/common_rake. You need to run this command using Bundler."
-end
 
 task default: :spec
 
