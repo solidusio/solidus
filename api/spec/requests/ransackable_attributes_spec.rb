@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe "Ransackable Attributes" do
+  let!(:store) { create(:store) }
   let(:user) { create(:user).tap(&:generate_spree_api_key!) }
   let(:order) { create(:order_with_line_items, user: user) }
   context "filtering by attributes one association away" do

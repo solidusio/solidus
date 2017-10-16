@@ -4,6 +4,8 @@ require 'spec_helper'
 # So we need to use one of the controllers inside Spree.
 # ProductsController is good.
 describe Spree::ProductsController, type: :controller do
+  let!(:store) { create(:store) }
+
   before do
     I18n.enforce_available_locales = false
     Spree::Frontend::Config[:locale] = :de

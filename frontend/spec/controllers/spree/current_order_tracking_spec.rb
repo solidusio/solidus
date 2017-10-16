@@ -31,6 +31,7 @@ describe 'current order tracking', type: :controller do
 end
 
 describe Spree::OrdersController, type: :controller do
+  let!(:store) { create(:store) }
   let(:user) { create(:user) }
 
   before { allow(controller).to receive_messages(try_spree_current_user: user) }

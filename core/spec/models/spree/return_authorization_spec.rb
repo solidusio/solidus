@@ -14,7 +14,8 @@ RSpec.describe Spree::ReturnAuthorization, type: :model do
   end
 
   context "save" do
-    let(:order) { Spree::Order.create }
+    let(:store) { create(:store) }
+    let(:order) { Spree::Order.create(store: store) }
 
     it "should be invalid when order has no inventory units" do
       order.inventory_units.each(&:delete)

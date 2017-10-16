@@ -5,10 +5,7 @@ describe "Stock Locations", type: :feature do
 
   before(:each) do
     create(:country)
-    visit spree.admin_path
-    click_link "Settings"
-    click_link "Shipping"
-    click_link "Stock Locations"
+    visit spree.admin_stock_locations_path
   end
 
   it "can create a new stock location" do

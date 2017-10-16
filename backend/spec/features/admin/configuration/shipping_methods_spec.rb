@@ -6,9 +6,7 @@ describe "Shipping Methods", type: :feature do
   let!(:shipping_method) { create(:shipping_method, zones: [zone]) }
 
   before do
-    visit spree.admin_path
-    click_link "Settings"
-    click_link "Shipping"
+    visit spree.admin_shipping_methods_path
   end
 
   context "show" do
@@ -33,7 +31,7 @@ describe "Shipping Methods", type: :feature do
       end
 
       click_on "Create"
-      expect(current_path).to eql(spree.edit_admin_shipping_method_path(Spree::ShippingMethod.last))
+      expect(page).to have_current_path(spree.edit_admin_shipping_method_path(Spree::ShippingMethod.last))
     end
   end
 

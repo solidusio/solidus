@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe "viewing products", type: :feature, inaccessible: true do
+  let!(:store) { create(:store) }
   let!(:taxonomy) { create(:taxonomy, name: "Category") }
   let!(:super_clothing) { taxonomy.root.children.create(name: "Super Clothing") }
   let!(:t_shirts) { super_clothing.children.create(name: "T-Shirts") }
@@ -10,9 +11,6 @@ describe "viewing products", type: :feature, inaccessible: true do
     product.taxons << t_shirts
   end
   let(:metas) { { meta_description: 'Brand new Ruby on Rails TShirts', meta_title: "Ruby On Rails TShirt", meta_keywords: 'ror, tshirt, ruby' } }
-  let(:store_name) do
-    ((first_store = Spree::Store.first) && first_store.name).to_s
-  end
 
   # Regression test for https://github.com/spree/spree/issues/1796
   it "can see a taxon's products, even if that taxon has child taxons" do
@@ -42,7 +40,7 @@ describe "viewing products", type: :feature, inaccessible: true do
 
     it 'displays title from taxon root and taxon name' do
       visit '/t/category/super-clothing/t-shirts'
-      expect(page).to have_title('Category - T-Shirts - ' + store_name)
+      expect(page).to have_title('Category - T-Shirts - ' + store.name)
     end
 
     # Regression test for https://github.com/spree/spree/issues/2814
@@ -57,7 +55,7 @@ describe "viewing products", type: :feature, inaccessible: true do
     it 'uses taxon name in title when meta_title set to empty string' do
       t_shirts.update_attributes meta_title: ''
       visit '/t/category/super-clothing/t-shirts'
-      expect(page).to have_title('Category - T-Shirts - ' + store_name)
+      expect(page).to have_title('Category - T-Shirts - ' + store.name)
     end
   end
 

@@ -4,6 +4,7 @@ describe "Rabl Cache", type: :request, caching: true do
   let!(:user)  { create(:admin_user) }
 
   before do
+    create(:store)
     create(:variant)
     user.generate_spree_api_key!
     expect(Spree::Product.count).to eq(1)
