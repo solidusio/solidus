@@ -62,8 +62,8 @@ module Spree
           expect(new_payment).not_to be_persisted
           expect(new_payment.source).not_to be_persisted
           expect(new_payment.source).not_to be_valid
-          expect(new_payment.source.error_on(:number)).to be_present
-          expect(new_payment.source.error_on(:verification_value).size).to be_present
+          expect(new_payment.source.errors[:number]).to be_present
+          expect(new_payment.source.errors[:verification_value].size).to be_present
         end
       end
     end

@@ -157,7 +157,7 @@ RSpec.describe Spree::LineItem, type: :model do
 
       it "is a valid line item" do
         expect(line_item.valid?).to be_truthy
-        expect(line_item.error_on(:price).size).to eq(0)
+        expect(line_item.errors[:price].size).to eq(0)
       end
     end
 
@@ -166,7 +166,7 @@ RSpec.describe Spree::LineItem, type: :model do
 
       it "is not a valid line item" do
         expect(line_item.valid?).to be_falsey
-        expect(line_item.error_on(:price).size).to eq(1)
+        expect(line_item.errors[:price].size).to eq(1)
       end
     end
   end

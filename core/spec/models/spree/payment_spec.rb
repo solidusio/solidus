@@ -872,8 +872,8 @@ RSpec.describe Spree::Payment, type: :model do
         payment = Spree::PaymentCreate.new(order, params).build
         expect(payment).not_to be_valid
         expect(payment.source).not_to be_nil
-        expect(payment.source.error_on(:number).size).to eq(1)
-        expect(payment.source.error_on(:verification_value).size).to eq(1)
+        expect(payment.source.errors[:number].size).to eq(1)
+        expect(payment.source.errors[:verification_value].size).to eq(1)
       end
     end
 
