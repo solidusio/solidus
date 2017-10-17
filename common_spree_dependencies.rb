@@ -27,7 +27,8 @@ group :test do
   gem 'launchy'
   gem 'rspec-activemodel-mocks', '~>1.0.2'
   gem 'rspec-its'
-  gem 'rspec-rails', '~> 3.5'
+  gem 'rspec-rails', '~> 3.7'
+  gem 'puma' # required for rspec-rails 3.7.0 https://github.com/rspec/rspec-rails/issues/1882
   gem 'simplecov'
   gem 'poltergeist', '~> 1.9'
   gem 'timecop'
