@@ -27,7 +27,7 @@ group :test do
   gem 'launchy'
   gem 'rspec-activemodel-mocks', '~>1.0.2'
   gem 'rspec-its'
-  gem 'rspec-rails', '~> 3.5'
+  gem 'rspec-rails', '~> 3.6.0'
   gem 'simplecov'
   gem 'poltergeist', '~> 1.9'
   gem 'timecop'
