@@ -34,28 +34,3 @@ div[data-hook="admin_products_index_search_buttons"] {
     color: $color-2;
   }
 }
-
-#upload-zone {
-  border: 2px dashed $color-border;
-  padding: 2rem 5rem;
-  text-align: center;
-  margin: 1rem auto;
-  width: 70%;
-
-  label.upload {
-    display: block;
-  }
-
-  &.with-images {
-    border-color: theme-color("success");
-  }
-}
-
-.progress-card {
-  height: 100%;
-  padding: 1rem;
-}
-
-.modal-image-trigger {
-  cursor: zoom-in;
-}
