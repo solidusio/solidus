@@ -19,6 +19,13 @@ class FooAbility
 end
 
 RSpec.describe Spree::Ability, type: :model do
+  before(:all) do
+    Spree::RoleConfiguration.configure do |config|
+      config.assign_permissions :default, [Spree::PermissionSets::DefaultCustomer]
+      config.assign_permissions :admin, [Spree::PermissionSets::SuperUser]
+    end
+  end
+
   let(:user) { build(:user) }
   let(:ability) { Spree::Ability.new(user) }
   let(:token) { nil }
