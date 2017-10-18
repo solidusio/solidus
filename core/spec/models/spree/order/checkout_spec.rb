@@ -7,7 +7,7 @@ RSpec.describe Spree::Order, type: :model do
 
   def assert_state_changed(order, from, to)
     state_change_exists = order.state_changes.where(previous_state: from, next_state: to).exists?
-    assert state_change_exists, "Expected order to transition from #{from} to #{to}, but didn't."
+    expect(state_change_exists).to be(true), "Expected order to transition from #{from} to #{to}, but didn't."
   end
 
   context "with default state machine" do
