@@ -371,7 +371,7 @@ RSpec.describe Spree::Product, type: :model do
     context "#really_destroy!" do
       it "destroy the product" do
         product.really_destroy!
-        expect(product).not_to be_persisted
+        expect { product.reload }.to raise_error { ActiveRecord::RecordNotFound }
       end
     end
   end
