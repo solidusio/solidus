@@ -28,7 +28,7 @@ RSpec.describe Spree::Core::Search::Base do
 
     it "returns images in correct order" do
       expect(subject.first).to eq @product1
-      expect(subject.first.images).to eq @product1.master.images
+      expect(subject.first.images).to eq @product1.master.gallery
     end
   end
 
