@@ -34,12 +34,18 @@ ActiveRecord::Base.send(:include, Paperclip::Glue)
 
 ActiveJob::Base.queue_adapter = :test
 
+require 'rspec/rails/matchers/active_job'
+
+ActionMailer::Base.perform_deliveries = false
+
 Rails.cache = ActiveSupport::Cache::MemoryStore.new
+
 RSpec.configure do |config|
   config.before :each do
     Rails.cache.clear
   end
 
+  config.include RSpec::Rails::Matchers
   config.include ActiveJob::TestHelper
   config.include FactoryBot::Syntax::Methods
 end
