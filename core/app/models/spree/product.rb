@@ -280,6 +280,19 @@ module Spree
       end
     end
 
+    # An enumerable of media that goes along with a product
+    # Stores may not necessarily want to attach images to products (variants)
+    # This provides a more robust interface
+    #
+    # @return [Enumerable] of media for a product (and its variants)
+    def gallery
+      if Product.method_defined?(:variant_images)
+        association(:variant_images).reader
+      else
+        []
+      end
+    end
+
     private
 
     def any_variants_not_track_inventory?
