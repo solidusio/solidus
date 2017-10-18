@@ -1,4 +1,4 @@
-require 'rails_helper'
+require 'mailer_helper'
 
 RSpec.describe Spree::Order, type: :model do
   let(:order) { create(:order_with_line_items) }

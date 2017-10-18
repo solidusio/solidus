@@ -1,4 +1,4 @@
-require 'rails_helper'
+require 'mailer_helper'
 RSpec.describe Spree::PromotionCodeBatchJob, type: :job do
   let(:email) { "test@email.com" }
   let(:promotion_code_batch) do
