@@ -10,6 +10,13 @@ ActiveRecord::Base.establish_connection ENV['DATABASE_URL']
 require 'logger'
 ActiveRecord::Base.logger = Logger.new('test.log')
 
+# we use activerecord globalid's in job serialization
+require 'globalid'
+GlobalID.app = 'solidus-core-test'
+
+require 'global_id/identification'
+ActiveRecord::Base.send :include, GlobalID::Identification
+
 RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
 
