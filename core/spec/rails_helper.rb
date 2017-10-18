@@ -32,6 +32,13 @@ I18n.config.load_path += [File.join('config', 'locales', 'en.yml')]
 # since we aren't loading a full rails app, we need to init paperclip ourselves
 ActiveRecord::Base.send(:include, Paperclip::Glue)
 
+# set paperclip to interpolate rails_root, since we don't have one
+# sans rails
+Paperclip.interpolates :rails_root do |attachment, style|
+  'tmp'
+end
+
+
 ActiveJob::Base.queue_adapter = :test
 
 require 'rspec/rails/matchers/active_job'
