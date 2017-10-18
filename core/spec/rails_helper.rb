@@ -38,12 +38,12 @@ Paperclip.interpolates :rails_root do |attachment, style|
   'tmp'
 end
 
-
 ActiveJob::Base.queue_adapter = :test
 
 require 'rspec/rails/matchers/active_job'
 
-ActionMailer::Base.perform_deliveries = false
+ActionMailer::Base.delivery_method = :test
+ActionMailer::Base.raise_delivery_errors = false
 
 Rails.cache = ActiveSupport::Cache::MemoryStore.new
 
