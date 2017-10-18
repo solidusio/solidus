@@ -3,6 +3,7 @@ jobs:
   build:
     working_directory: ~/solidus
     environment:
+      DATABASE_URL: postgres://root@127.0.0.1:5432/solidus_test
       DB: postgresql
       DB_HOST: localhost
       DEFAULT_MAX_WAIT_TIME: 10
