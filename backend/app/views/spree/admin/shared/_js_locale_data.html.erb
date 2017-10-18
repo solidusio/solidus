@@ -16,7 +16,6 @@
         first_day:              Spree.t(:first_day,
                                          scope: 'date_picker',
                                          default: 0).to_i,
-        item_stock_placeholder: Spree.t(:choose_location),
         month_names:            I18n.t(:month_names, scope: :date).reject(&:blank?),
         currency_separator:     I18n.t('number.currency.format.separator'),
         currency_delimiter:     I18n.t('number.currency.format.delimiter'),
