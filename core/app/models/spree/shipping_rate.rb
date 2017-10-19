@@ -9,6 +9,7 @@ module Spree
     has_many :taxes,
              class_name: "Spree::ShippingRateTax",
              foreign_key: "shipping_rate_id",
+             inverse_of: :shipping_rate,
              dependent: :destroy
 
     delegate :order, :currency, to: :shipment
