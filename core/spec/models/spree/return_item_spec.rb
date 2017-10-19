@@ -45,7 +45,7 @@ RSpec.describe Spree::ReturnItem, type: :model do
       let!(:return_item_with_dupe_inventory_unit) { create(:return_item, inventory_unit: inventory_unit, reception_status: 'received') }
 
       before do
-        assert_raises(StateMachines::InvalidTransition) { subject }
+        expect { subject }.to raise_error { StateMachines::InvalidTransition }
       end
 
       it 'does not receive the return item' do
