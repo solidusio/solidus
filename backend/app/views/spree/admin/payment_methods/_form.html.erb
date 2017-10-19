@@ -12,25 +12,25 @@
 
           <div class="field js-preference-source-wrapper">
             <%= f.label :preference_source %>
-            <%= f.select(:preference_source, [[Spree.t(:preference_source_none), nil]] + @object.class.available_preference_sources, {}, class: 'custom-select fullwidth js-preference-source') %>
+            <%= f.select(:preference_source, [[t('spree.preference_source_none'), nil]] + @object.class.available_preference_sources, {}, class: 'custom-select fullwidth js-preference-source') %>
           </div>
 
           <div class="gateway-settings js-gateway-settings">
             <% if @object.preference_source.present? %>
-              <%= Spree.t :preference_source_using, name: @object.preference_source %>
+              <%= t('spree.preference_source_using', name: @object.preference_source) %>
             <% elsif !@object.new_record? %>
               <% @object.preferences.keys.each do |key| %>
                 <%= render "spree/admin/shared/preference_fields/#{@object.preference_type(key)}",
-                   form: f, attribute: "preferred_#{key}", label: Spree.t(key) %>
+                   form: f, attribute: "preferred_#{key}", label: t(key, scope: 'spree') %>
               <% end %>
             <% end %>
           </div>
 
-          <div class="info warning js-gateway-settings-warning"><%= Spree.t(:payment_method_settings_warning) %></div>
+          <div class="info warning js-gateway-settings-warning"><%= t('spree.payment_method_settings_warning') %></div>
         </div>
         <div data-hook="auto_capture" class="field">
           <%= f.label :auto_capture %>
-          <%= f.select :auto_capture, [["#{Spree.t(:use_app_default)} (#{Spree::Config[:auto_capture]})", ''], [Spree.t(:say_yes), true], [Spree.t(:say_no), false]], {}, {class: 'custom-select fullwidth'} %>
+          <%= f.select :auto_capture, [["#{t('spree.use_app_default')} (#{Spree::Config[:auto_capture]})", ''], [t('spree.say_yes'), true], [t('spree.say_no'), false]], {}, {class: 'custom-select fullwidth'} %>
         </div>
         <div data-hook="available_to_user" class="field">
           <%= f.check_box :available_to_users %>

@@ -1,11 +1,11 @@
 <%= render "spree/admin/shared/preference_fields/#{calculator.preference_type(:base_amount)}",
   name: "#{prefix}[calculator_attributes][preferred_base_amount]",
-  value: calculator.preferred_base_amount, label: Spree.t(:base_amount) %>
+  value: calculator.preferred_base_amount, label: t('spree.base_amount') %>
 
 <div class="field">
   <%= label_tag(
     "#{prefix}[calculator_attributes][preferred_currency]",
-    Spree.t(:currency)
+    t('spree.currency')
   ) %>
   <%= select_tag(
     "#{prefix}[calculator_attributes][preferred_currency]",
@@ -18,13 +18,13 @@
 </div>
 
 <div class="field">
-  <%= label_tag nil, Spree.t(:tiers) %>
+  <%= label_tag nil, t('spree.tiers') %>
   <div class="js-tiered-calculator">
     <%= content_tag :div, nil, class: "js-tiers", data: {
       'original-tiers' => Hash[calculator.preferred_tiers.sort],
       'form-prefix' => prefix,
       'calculator' => 'tiered_flat_rate'
     } %>
-    <button class="button js-add-tier"><%= Spree.t('actions.add') %></button>
+    <button class="button js-add-tier"><%= t('spree.actions.add') %></button>
   </div>
 </div>

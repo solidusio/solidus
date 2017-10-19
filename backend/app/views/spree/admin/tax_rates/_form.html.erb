@@ -1,6 +1,6 @@
 <div data-hook="admin_tax_rate_form_fields">
     <fieldset data-hook="tax_rates" class=" no-border-bottom">
-      <legend align="center"><%= Spree.t(:general_settings) %></legend>
+      <legend align="center"><%= t('spree.general_settings') %></legend>
       <div class="row">
 
         <div class="col-5">
@@ -11,11 +11,11 @@
           <div data-hook="rate" class="field">
             <%= f.label :amount %>
             <%= f.text_field :amount, class: 'fullwidth' %>
-            <br/><span class="info"><%= Spree.t(:tax_rate_amount_explanation) %></span>
+            <br/><span class="info"><%= t('spree.tax_rate_amount_explanation') %></span>
           </div>
           <div data-hook="included" class="field">
             <%= f.check_box :included_in_price %>
-            <%= f.label :included_in_price, Spree.t(:included_in_price) %>
+            <%= f.label :included_in_price, t('spree.included_in_price') %>
           </div>
         </div>
 
@@ -30,12 +30,12 @@
           </div>
           <div data-hook="show_rate" class="field">
             <%= f.check_box :show_rate_in_label %>
-            <%= f.label :show_rate_in_label, Spree.t(:show_rate_in_label) %>
+            <%= f.label :show_rate_in_label, t('spree.show_rate_in_label') %>
           </div>
 
           <div class="date-range-filter field">
-            <%= label_tag :validity_period, Spree.t(:validity_period) %>
-            <%= admin_hint Spree.t(:validity_period), Spree.t(:validity_period, scope: [:hints, "spree/tax_rate"]) %>
+            <%= label_tag :validity_period, t('spree.validity_period') %>
+            <%= admin_hint t('spree.validity_period'), t(:validity_period, scope: [:spree, :hints, "spree/tax_rate"]) %>
             <div class="date-range-fields input-group">
               <%= f.text_field :starts_at, class: 'datepicker form-control datepicker-from', value: datepicker_field_value(f.object.starts_at), placeholder: Spree::TaxRate.human_attribute_name(:starts_at) %>
 

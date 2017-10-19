@@ -15,15 +15,15 @@
     <td class="item-price"><%= item.line_item.single_money.to_html %></td>
     <td class="item-qty-show">
         <% item.states.each do |state,count| %>
-          <%= count %> x <%= Spree.t(state, scope: 'inventory_states') %>
+          <%= count %> x <%= t(state, scope: 'spree.inventory_states') %>
         <% end %>
     </td>
     <td class="item-total"><%= line_item_shipment_price(item.line_item, item.quantity) %></td>
 
     <td class="cart-item-delete actions" data-hook="cart_item_delete">
       <% if can? :update, item %>
-        <%= button_tag '', class: 'split-item icon_link fa fa-arrows-h no-text with-tip', data: { action: 'edit', 'variant-id' => item.variant.id }, title: Spree.t('actions.split'), type: :button %>
-        <%= button_tag '', class: 'delete-item fa fa-trash no-text with-tip', data: { action: 'remove', 'variant-id' => item.variant.id }, title: Spree.t('actions.delete'), type: :button %>
+        <%= button_tag '', class: 'split-item icon_link fa fa-arrows-h no-text with-tip', data: { action: 'edit', 'variant-id' => item.variant.id }, title: t('spree.actions.split'), type: :button %>
+        <%= button_tag '', class: 'delete-item fa fa-trash no-text with-tip', data: { action: 'remove', 'variant-id' => item.variant.id }, title: t('spree.actions.delete'), type: :button %>
       <% end %>
     </td>
   </tr>

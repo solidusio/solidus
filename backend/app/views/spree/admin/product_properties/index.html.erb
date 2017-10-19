@@ -7,7 +7,7 @@
   <% if can?(:create, Spree::ProductProperty) %>
     <ul class="tollbar inline-menu">
       <li>
-        <%= link_to_add_fields Spree.t(:add_product_properties), 'tbody#product_properties', class: 'plus button' %>
+        <%= link_to_add_fields t('spree.add_product_properties'), 'tbody#product_properties', class: 'plus button' %>
       </li>
     </ul>
   <% end %>
@@ -44,7 +44,7 @@
 
 <%= form_tag admin_product_product_properties_path, method: :get, id: 'variant_option_value_selections' do %>
   <fieldset class='no-border-bottom'>
-    <legend align="center"><%= Spree.t(:variant_properties) %></legend>
+    <legend align="center"><%= t('spree.variant_properties') %></legend>
     <fieldset class='no-border-top'>
       <% @option_types.each do |option_type, option_values| %>
         <div class="field">
@@ -53,9 +53,9 @@
         </div>
       <% end %>
       <div class="form-buttons filter-actions actions">
-        <%= button Spree.t(:filter_results) %>
+        <%= button t('spree.filter_results') %>
         <% if @option_value_ids.present? %>
-          <%= link_to_add_fields Spree.t(:add_variant_properties), 'tbody#variant_property_values', class: 'plus button' %>
+          <%= link_to_add_fields t('spree.add_variant_properties'), 'tbody#variant_property_values', class: 'plus button' %>
         <% end %>
       </div>
     </fieldset>

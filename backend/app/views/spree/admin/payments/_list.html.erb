@@ -23,26 +23,26 @@
         <td><%= payment.transaction_id %></td>
         <td>
           <span class="pill pill-<%= payment.state %>">
-            <%= Spree.t(payment.state, scope: :payment_states) %>
+            <%= t(payment.state, scope: 'spree.payment_states') %>
           </span>
         </td>
         <td class="actions">
           <div class="editing-show">
-            <%= link_to_with_icon 'save', Spree.t('actions.save'), nil, no_text: true, class: "js-save", data: {action: 'save'} %>
-            <%= link_to_with_icon 'cancel', Spree.t('actions.cancel'), nil, no_text: true, class: "js-cancel", data: {action: 'cancel'} %>
+            <%= link_to_with_icon 'save', t('spree.actions.save'), nil, no_text: true, class: "js-save", data: {action: 'save'} %>
+            <%= link_to_with_icon 'cancel', t('spree.actions.cancel'), nil, no_text: true, class: "js-cancel", data: {action: 'cancel'} %>
           </div>
           <div class="editing-hide">
             <% if payment.pending? %>
-              <%= link_to_with_icon 'edit', Spree.t('actions.edit'), nil, no_text: true, class: "js-edit", data: {action: 'edit'} %>
+              <%= link_to_with_icon 'edit', t('spree.actions.edit'), nil, no_text: true, class: "js-edit", data: {action: 'edit'} %>
             <% end %>
             <% allowed_actions = payment.actions.select { |a| can?(a.to_sym, payment) } %>
             <% allowed_actions.each do |action| %>
               <% if action == 'credit' %>
-                <%= link_to_with_icon 'reply', Spree.t(:refund), new_admin_order_payment_refund_path(@order, payment), no_text: true %>
+                <%= link_to_with_icon 'reply', t('spree.refund'), new_admin_order_payment_refund_path(@order, payment), no_text: true %>
               <% elsif action == 'capture' && !@order.completed? %>
                 <%# no capture prior to completion. payments get captured when the order completes. %>
               <% else %>
-                <%= link_to_with_icon action, Spree.t(action), fire_admin_order_payment_path(@order, payment, e: action), method: :put, no_text: true, data: {action: action} %>
+                <%= link_to_with_icon action, t(action, scope: 'spree'), fire_admin_order_payment_path(@order, payment, e: action), method: :put, no_text: true, data: {action: action} %>
               <% end %>
             <% end %>
           </div>

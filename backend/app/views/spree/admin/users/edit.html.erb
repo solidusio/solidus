@@ -36,7 +36,7 @@
         <% if @user == try_spree_current_user %>
           <%= @user.spree_api_key %>
         <% else %>
-          <i>(<%= Spree.t('hidden') %>)</i>
+          <i>(<%= t('spree.hidden') %>)</i>
         <% end %>
 
       </div>

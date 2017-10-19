@@ -16,7 +16,7 @@
       <li data-hook="user-logout-link">
         <%= link_to spree_logout_path do %>
           <i class='fa fa-sign-out'></i>
-          <%= Spree.t(:logout) %>
+          <%= t('spree.logout') %>
         <% end %>
       </li>
     <% end %>
@@ -25,7 +25,7 @@
       <li data-hook="store-frontend-link">
         <%= link_to spree.root_path, target: '_blank' do %>
           <i class='fa fa-external-link'></i>
-          <%= Spree.t(:back_to_store) %>
+          <%= t('spree.back_to_store') %>
         <% end %>
       </li>
     <% end %>

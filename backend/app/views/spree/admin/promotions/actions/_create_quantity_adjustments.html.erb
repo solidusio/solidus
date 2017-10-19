@@ -3,7 +3,7 @@
     <div class="col-12">
       <div class="field">
         <% field_name = "#{param_prefix}[preferred_group_size]" %>
-        <%= label_tag field_name, Spree.t(:group_size) %>
+        <%= label_tag field_name, t('spree.group_size') %>
         <%= number_field_tag field_name, promotion_action.preferred_group_size, class: "fullwidth", min: 1 %>
       </div>
     </div>

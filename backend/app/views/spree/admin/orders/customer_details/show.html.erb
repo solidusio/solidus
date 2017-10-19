@@ -1,27 +1,27 @@
 <%= render partial: 'spree/admin/shared/order_tabs', locals: { current: 'Customer Details' } %>
 
-<% admin_breadcrumb(Spree.t(:customer_details)) %>
+<% admin_breadcrumb(t('spree.customer_details')) %>
 
 
 <% content_for :page_actions do %>
-  <li><%= button_link_to Spree.t(:back_to_orders_list), admin_orders_path %></li>
+  <li><%= button_link_to t('spree.back_to_orders_list'), admin_orders_path %></li>
 <% end %>
 
 
 <main class="col-5">
   <section>
-    <%= content_tag :h4, Spree.t(:account) %>
-    <%= Spree.t(:email) %>: <%= @order.email %><br>
-    <%= Spree.t(:guest_checkout) %>: <%= @order.user ? Spree.t(:yes) : Spree.t(:no) %>
+    <%= content_tag :h4, t('spree.account') %>
+    <%= t('spree.email') %>: <%= @order.email %><br>
+    <%= t('spree.guest_checkout') %>: <%= @order.user ? t('spree.yes') : t('spree.no') %>
   </section>
 
   <section>
-    <%= content_tag :h4, Spree.t(:billing_address) %>
+    <%= content_tag :h4, t('spree.billing_address') %>
     <%= render "spree/admin/shared/address", address: @order.bill_address %>
   </section>
 
   <section>
-    <%= content_tag :h4, Spree.t(:shipping_address) %>
+    <%= content_tag :h4, t('spree.shipping_address') %>
     <%= render "spree/admin/shared/address", address: @order.ship_address %>
   </section>
 </main>

@@ -2,7 +2,7 @@
 <%= render partial: 'spree/shared/error_messages', locals: { target: @variant } %>
 
 <% admin_breadcrumb(link_to plural_resource_name(Spree::Variant), admin_product_variants_path(@product)) %>
-<% admin_breadcrumb(Spree.t(:new_variant)) %>
+<% admin_breadcrumb(t('spree.new_variant')) %>
 
 <%= form_for [:admin, @product, @variant] do |f| %>
   <fieldset class="no-border-top" data-hook="admin_variant_new_form">

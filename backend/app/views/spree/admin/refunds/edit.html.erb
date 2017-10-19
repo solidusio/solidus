@@ -2,7 +2,7 @@
 
 <% admin_breadcrumb(link_to plural_resource_name(Spree::Payment), spree.admin_order_payments_path(@order)) %>
 <% admin_breadcrumb(link_to "#{Spree::Payment.model_name.human} #{@refund.payment.id}", admin_order_payment_path(@refund.payment.order, @refund.payment)) %>
-<% admin_breadcrumb("#{Spree.t(:editing_refund)} #{@refund.id}") %>
+<% admin_breadcrumb("#{t('spree.editing_refund')} #{@refund.id}") %>
 
 <%= form_for [:admin, @refund.payment.order, @refund.payment, @refund] do |f| %>
   <fieldset class="no-border-top">
@@ -22,8 +22,8 @@
     </div>
 
     <div class="form-buttons filter-actions actions" data-hook="buttons">
-      <%= button Spree.t('actions.save') %>
-      <%= button_link_to Spree.t('actions.cancel'), admin_order_payments_url(@refund.payment.order) %>
+      <%= button t('spree.actions.save') %>
+      <%= button_link_to t('spree.actions.cancel'), admin_order_payments_url(@refund.payment.order) %>
     </div>
   </fieldset>
 <% end %>

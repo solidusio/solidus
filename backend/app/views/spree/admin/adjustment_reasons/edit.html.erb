@@ -1,7 +1,7 @@
 <%= render 'spree/admin/shared/settings_checkout_tabs' %>
 
-<% admin_breadcrumb Spree.t(:settings) %>
-<% admin_breadcrumb Spree.t('admin.tab.checkout') %>
+<% admin_breadcrumb t('spree.settings') %>
+<% admin_breadcrumb t('spree.admin.tab.checkout') %>
 <% admin_breadcrumb link_to plural_resource_name(Spree::AdjustmentReason), spree.admin_adjustment_reasons_path %>
 <% admin_breadcrumb @object.name %>
 

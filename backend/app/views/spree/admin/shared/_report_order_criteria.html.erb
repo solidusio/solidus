@@ -1,17 +1,17 @@
 <%= search_form_for @search, url: spree.url_for(controller: 'admin/reports', action: action)  do |s| %>
   <div class="date-range-filter field">
     <div class="date-range-fields input-group">
-      <%= s.text_field :completed_at_gt, class: 'datepicker datepicker-from form-control', value: datepicker_field_value(params[:q][:completed_at_gt]), placeholder: Spree.t(:start) %>
+      <%= s.text_field :completed_at_gt, class: 'datepicker datepicker-from form-control', value: datepicker_field_value(params[:q][:completed_at_gt]), placeholder: t('spree.start') %>
 
       <span class="range-divider input-group-addon">
         <i class="fa fa-arrow-right"></i>
       </span>
 
-      <%= s.text_field :completed_at_lt, class: 'datepicker datepicker-to form-control', value: datepicker_field_value(params[:q][:completed_at_lt]), placeholder: Spree.t(:end) %>
+      <%= s.text_field :completed_at_lt, class: 'datepicker datepicker-to form-control', value: datepicker_field_value(params[:q][:completed_at_lt]), placeholder: t('spree.end') %>
     </div>
   </div>
 
   <div class="actions filter-actions">
-    <%= button Spree.t(:search)  %>
+    <%= button t('spree.search')  %>
   </div>
 <% end %>

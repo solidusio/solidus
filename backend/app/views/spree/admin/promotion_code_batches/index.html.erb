@@ -5,7 +5,7 @@
 <% content_for :page_actions do %>
   <li>
     <% if can?(:create, Spree::PromotionCodeBatch) %>
-      <%= button_link_to Spree.t(:new_promotion_code_batch), new_object_url %>
+      <%= button_link_to t('spree.new_promotion_code_batch'), new_object_url %>
     <% end %>
   </li>
 <% end %>
@@ -27,25 +27,25 @@
           <td><%= promotion_code_batch.number_of_codes %></td>
           <td>
             <% if promotion_code_batch.error.present? %>
-              <%= Spree.t(
-                "promotion_code_batches.errored",
+              <%= t(
+                "spree.promotion_code_batches.errored",
                 error: promotion_code_batch.error
               ) %>
             <% elsif promotion_code_batch.finished? %>
-              <%= Spree.t(
-                "promotion_code_batches.finished",
+              <%= t(
+                "spree.promotion_code_batches.finished",
                 number_of_codes: promotion_code_batch.number_of_codes
               ) %>
               <%= link_to(
-                Spree.t(:download_promotion_code_list),
+                t('spree.download_promotion_code_list'),
                 admin_promotion_promotion_code_batch_download_path(
                   promotion_code_batch_id: promotion_code_batch.id,
                   format: :csv
                 )
               ) %>
             <% else %>
-              <%= Spree.t(
-                "promotion_code_batches.processing",
+              <%= t(
+                "spree.promotion_code_batches.processing",
                 number_of_codes: promotion_code_batch.number_of_codes,
                 number_of_codes_processed: promotion_code_batch.promotion_codes.count
               ) %>

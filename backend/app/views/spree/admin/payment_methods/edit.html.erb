@@ -1,6 +1,6 @@
 <%= render 'spree/admin/shared/payments_tabs' %>
 
-<% admin_breadcrumb(Spree.t(:settings)) %>
+<% admin_breadcrumb(t('spree.settings')) %>
 <% admin_breadcrumb(plural_resource_name(Spree::Payment)) %>
 <% admin_breadcrumb(link_to plural_resource_name(Spree::PaymentMethod), spree.admin_payment_methods_path) %>
 <% admin_breadcrumb(@payment_method.name) %>
@@ -14,7 +14,7 @@
   <fieldset class="no-border-top">
     <%= render partial: 'form', locals: { f: f } %>
     <div data-hook="buttons" class="filter-actions actions">
-      <%= button Spree.t('actions.update') %>
+      <%= button t('spree.actions.update') %>
     </div>
   </fieldset>
 

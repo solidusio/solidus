@@ -1,6 +1,6 @@
 <% admin_breadcrumb(link_to plural_resource_name(Spree::LegacyUser), spree.admin_users_path) %>
 <% admin_breadcrumb(link_to @user.email, edit_admin_user_url(@user)) %>
-<% admin_breadcrumb(Spree.t('admin.user.items_purchased')) %>
+<% admin_breadcrumb(t('spree.admin.user.items_purchased')) %>
 
 
 <%= render 'spree/admin/users/sidebar' %>
@@ -8,7 +8,7 @@
 <%= render partial: 'spree/admin/users/user_page_actions' %>
 
 <fieldset data-hook="admin_user_items_purchased">
-  <legend><%= Spree.t(:"admin.user.items_purchased") %></legend>
+  <legend><%= t("spree.admin.user.items_purchased") %></legend>
 
   <%= paginate @orders, theme: "solidus_admin" %>
 
@@ -32,7 +32,7 @@
         <th><%= Spree::LineItem.human_attribute_name(:quantity) %></th>
         <th><%= Spree::Order.human_attribute_name(:total) %></th>
         <th><%= sort_link @search, :state, Spree::Order.human_attribute_name(:state), {}, {title: 'orders_state_title'} %></th>
-        <th><%= sort_link @search, :number, Spree.t(:order_num, scope: 'admin.user'), {}, {title: 'orders_number_title'} %></th>
+        <th><%= sort_link @search, :number, t('spree.admin.user.order_num'), {}, {title: 'orders_number_title'} %></th>
       </thead>
 
       <tbody>
@@ -46,7 +46,7 @@
               <td class="item-name">
                 <%= item.product.name %><br><%= "(" + variant_options(item.variant) + ")" unless item.variant.option_values.empty? %>
                 <% if item.variant.sku.present? %>
-                  <strong><%= Spree.t(:sku) %>:</strong> <%= item.variant.sku %>
+                  <strong><%= t('spree.sku') %>:</strong> <%= item.variant.sku %>
                 <% end %>
               </td>
               <td class="item-price"><%= item.single_money.to_html %></td>
@@ -54,7 +54,7 @@
               <td class="item-total"><%= item.money.to_html %></td>
               <td class="order-state">
                 <span class="pill pill-<%= order.state %>">
-                  <%= Spree.t(order.state, scope: :order_state) %>
+                  <%= t(order.state, scope: 'spree.order_state') %>
                 </span>
               </td>
               <td class="order-number">

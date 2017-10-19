@@ -3,13 +3,13 @@
 <% content_for :page_actions do %>
   <% if can? :create, Spree::Promotion %>
     <li>
-      <%= button_link_to Spree.t(:new_promotion), spree.new_admin_promotion_path %>
+      <%= button_link_to t('spree.new_promotion'), spree.new_admin_promotion_path %>
     </li>
   <% end %>
 <% end %>
 
 <% content_for :table_filter_title do %>
-  <%= Spree.t(:search) %>
+  <%= t('spree.search') %>
 <% end %>
 
 <% content_for :table_filter do %>
@@ -40,7 +40,7 @@
         <div class="col-3">
           <div class="field">
             <%= label_tag :q_promotion_category_id_eq, Spree::PromotionCategory.model_name.human %><br>
-            <%= f.collection_select(:promotion_category_id_eq, @promotion_categories, :id, :name, { include_blank: Spree.t('match_choices.all') }, { class: 'custom-select fullwidth' }) %>
+            <%= f.collection_select(:promotion_category_id_eq, @promotion_categories, :id, :name, { include_blank: t('spree.match_choices.all') }, { class: 'custom-select fullwidth' }) %>
           </div>
         </div>
       </div>
@@ -49,7 +49,7 @@
 
       <div class="actions filter-actions">
         <div data-hook="admin_promotions_index_search_buttons">
-          <%= button Spree.t(:filter_results) %>
+          <%= button t('spree.filter_results') %>
         </div>
       </div>
     <% end %>
@@ -78,11 +78,11 @@
         <tr id="<%= spree_dom_id promotion %>">
           <td><%= promotion.name %></td>
           <td>
-            <%= (promotion.codes.size == 1) ? promotion.codes.first.try!(:value) : Spree.t(:number_of_codes, count: promotion.codes.size) %>
+            <%= (promotion.codes.size == 1) ? promotion.codes.first.try!(:value) : t('spree.number_of_codes', count: promotion.codes.size) %>
           </td>
           <td>
             <span class="pill pill-<%= promotion.active? ? 'active' : 'inactive' %>">
-              <%= Spree.t(promotion.active?? :active : :inactive) %>
+              <%= t(promotion.active?? :active : :inactive, scope: 'spree') %>
             </span>
           </td>
           <td>

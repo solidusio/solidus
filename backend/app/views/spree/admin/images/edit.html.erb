@@ -7,7 +7,7 @@
 
 
 <% content_for :page_actions do %>
-  <li><%= button_link_to Spree.t(:back_to_images_list), admin_product_images_url(@product) %></li>
+  <li><%= button_link_to t('spree.back_to_images_list'), admin_product_images_url(@product) %></li>
 <% end %>
 
 <%= form_for [:admin, @product, @image], html: { multipart: true } do |f| %>
@@ -16,7 +16,7 @@
 
     <div class="row">
       <div data-hook="thumbnail" class="field col-2 align-center">
-        <%= f.label Spree.t(:thumbnail) %><br>
+        <%= f.label t('spree.thumbnail') %><br>
         <%= link_to image_tag(@image.attachment.url(:small)), @image.attachment.url(:product) %>
       </div>
       <div class="col-10">
@@ -26,8 +26,8 @@
     </div>
 
     <div class="form-buttons filter-actions actions" data-hook="buttons">
-      <%= button Spree.t('actions.update') %>
-      <%= link_to Spree.t('actions.cancel'), admin_product_images_url(@product), id: 'cancel_link', class: 'button' %>
+      <%= button t('spree.actions.update') %>
+      <%= link_to t('spree.actions.cancel'), admin_product_images_url(@product), id: 'cancel_link', class: 'button' %>
     </div>
   </fieldset>
 <% end %>

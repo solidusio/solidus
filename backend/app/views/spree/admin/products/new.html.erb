@@ -4,7 +4,7 @@
 
   <fieldset data-hook="new_product">
 
-    <legend align="center"><%= Spree.t(:new_product) %></legend>
+    <legend align="center"><%= t('spree.new_product') %></legend>
 
     <%= f.field_container :name do %>
       <%= f.label :name, class: 'required' %><br />
@@ -16,7 +16,7 @@
       <% unless @product.has_variants? %>
         <div data-hook="new_product_sku" class="col-3">
           <%= f.field_container :sku do %>
-            <%= f.label :sku, Spree.t(:sku) %><br />
+            <%= f.label :sku, t('spree.sku') %><br />
             <%= f.text_field :sku, size: 16, class: 'fullwidth' %>
             <%= f.error_message_on :sku %>
           <% end %>
@@ -47,7 +47,7 @@
           <%= f.label :shipping_category_id, Spree::ShippingCategory.
                 model_name.human, class: 'required' %>
           <%= f.field_hint :shipping_category %><br />
-          <%= f.collection_select(:shipping_category_id, @shipping_categories, :id, :name, { include_blank: Spree.t('match_choices.none') }, { class: 'custom-select fullwidth' }) %>
+          <%= f.collection_select(:shipping_category_id, @shipping_categories, :id, :name, { include_blank: t('spree.match_choices.none') }, { class: 'custom-select fullwidth' }) %>
           <%= f.error_message_on :shipping_category_id %>
         <% end %>
       </div>
@@ -56,7 +56,7 @@
         <%= f.field_container :tax_category do %>
           <%= f.label :tax_category_id, Spree::TaxCategory.model_name.human %>
           <%= f.field_hint :tax_category %>
-          <%= f.collection_select(:tax_category_id, @tax_categories, :id, :name, { include_blank: Spree.t('match_choices.none') }, { class: 'custom-select fullwidth' }) %>
+          <%= f.collection_select(:tax_category_id, @tax_categories, :id, :name, { include_blank: t('spree.match_choices.none') }, { class: 'custom-select fullwidth' }) %>
           <%= f.error_message_on :tax_category %>
         <% end %>
       </div>

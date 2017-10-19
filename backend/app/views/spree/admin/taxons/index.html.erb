@@ -1,8 +1,8 @@
 <% admin_breadcrumb(link_to plural_resource_name(Spree::Product), spree.admin_products_path) %>
-<% admin_breadcrumb(Spree.t('admin.taxons.display_order')) %>
+<% admin_breadcrumb(t('spree.admin.taxons.display_order')) %>
 
 <% content_for :table_filter_title do %>
-  <%= Spree.t(:choose_a_taxon_to_sort_products_for) %>
+  <%= t('spree.choose_a_taxon_to_sort_products_for') %>
 <% end %>
 
 <% content_for :table_filter do %>

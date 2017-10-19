@@ -6,11 +6,11 @@
       <legend align="center"><%= plural_resource_name(Spree::PromotionAction) %></legend>
       <% if can?(:update, @promotion) %>
         <div class="field">
-          <%= label_tag :action_type, Spree.t(:add_action_of_type)%>
+          <%= label_tag :action_type, t('spree.add_action_of_type')%>
           <%= select_tag 'action_type', options, class: 'custom-select fullwidth' %>
         </div>
         <div class="filter-actions actions">
-          <%= button Spree.t('actions.add') %>
+          <%= button t('spree.actions.add') %>
         </div>
       <% end %>
     </fieldset>
@@ -22,13 +22,13 @@
         <%= render partial: 'promotion_action',  collection: @promotion.actions %>
       <% else %>
         <div class="no-objects-found">
-          <%= Spree.t(:no_actions_added) %>
+          <%= t('spree.no_actions_added') %>
         </div>
       <% end %>
     </div>
     <% if can?(:update, @promotion) %>
       <div class="filter-actions actions promotion-update">
-        <%= button Spree.t('actions.update') %>
+        <%= button t('spree.actions.update') %>
       </div>
     <% end %>
   <% end %>

@@ -1,6 +1,6 @@
 <%= render partial: 'spree/admin/shared/order_tabs', locals: {current: 'Confirm'} %>
 
-<% admin_breadcrumb(Spree.t(:confirm_order)) %>
+<% admin_breadcrumb(t('spree.confirm_order')) %>
 
 
 <%= render partial: 'spree/admin/orders/confirm/customer_details', locals: {order: @order} %>
@@ -17,7 +17,7 @@
     locals: {
       adjustments: @order.line_item_adjustments,
       order: @order,
-      title: Spree.t(:line_item_adjustments),
+      title: t('spree.line_item_adjustments'),
     }
   ) if @order.line_item_adjustments.eligible.any?
 %>
@@ -28,7 +28,7 @@
     locals: {
       adjustments: @order.shipment_adjustments,
       order: @order,
-      title: Spree.t(:shipment_adjustments),
+      title: t('spree.shipment_adjustments'),
     }
   ) if @order.shipment_adjustments.eligible.any?
 %>
@@ -39,14 +39,14 @@
     locals: {
       adjustments: @order.adjustments,
       order: @order,
-      title: Spree.t(:order_adjustments),
+      title: t('spree.order_adjustments'),
     }
   ) if @order.adjustments.eligible.any?
 %>
 
 <% if @order.line_items.exists? %>
   <fieldset class="no-border-bottom" id="order-total" data-hook="order_details_total">
-    <legend><%= Spree.t(:order_total) %></legend>
+    <legend><%= t('spree.order_total') %></legend>
     <span class="order-total"><%= @order.display_total %></span>
   </fieldset>
 <% end %>
@@ -55,6 +55,6 @@
 
 <div class="form-buttons filter-actions actions" data-hook="complete-order-button">
   <%= button_to [:complete, :admin, @order], { class: 'button', method: 'put' } do %>
-    <%= Spree.t(:complete_order) %>
+    <%= t('spree.complete_order') %>
   <% end %>
 </div>

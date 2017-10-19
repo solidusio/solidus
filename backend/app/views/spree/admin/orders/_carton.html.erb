@@ -3,9 +3,9 @@
     <legend align="center" class="stock-location" data-hook="stock-location">
       <span class="carton-number"><%= carton.number %></span>
       -
-      <span class="carton-state"><%= Spree.t("shipment_states.shipped") %></span>
+      <span class="carton-state"><%= t('spree.shipment_states.shipped') %></span>
       <span class="carton-exchange"><%= Spree::Exchange.model_name.human if carton.any_exchanges? %></span>
-      <%= Spree.t(:package_from) %>
+      <%= t('spree.package_from') %>
       <strong class="stock-location-name" data-hook="stock-location-name">'<%= carton.stock_location.name %>'</strong>
     </legend>
   </fieldset>
@@ -35,7 +35,7 @@
             <strong><%= method.name %></strong>
           </td>
         <% else %>
-          <td colspan='5'><%= Spree.t(:no_shipping_method_selected) %></td>
+          <td colspan='5'><%= t('spree.no_shipping_method_selected') %></td>
         <% end %>
       </tr>
 
@@ -52,27 +52,27 @@
           <% if carton.tracking.present? %>
             <strong><%= Spree::Carton.human_attribute_name(:tracking) %>:</strong> <%= carton.tracking %>
           <% else %>
-            <i><%= Spree.t(:no_tracking_present) %></i>
+            <i><%= t('spree.no_tracking_present') %></i>
           <% end %>
         </td>
       </tr>
 
       <tr class='shipment-numbers'>
         <td colspan="5">
-          <strong><%= Spree.t(:shipment_numbers) %>:&nbsp;</strong><%= carton.shipment_numbers.join(", ") %>
+          <strong><%= t('spree.shipment_numbers') %>:&nbsp;</strong><%= carton.shipment_numbers.join(", ") %>
         </td>
       </tr>
 
       <tr class='ship-date'>
         <td colspan="5">
-          <strong><%= Spree.t(:shipment_date) %>:&nbsp;</strong><%= carton.display_shipped_at %>
+          <strong><%= t('spree.shipment_date') %>:&nbsp;</strong><%= carton.display_shipped_at %>
         </td>
       </tr>
 
       <% if carton.orders.size > 1 %>
         <tr class='order-numbers'>
           <td colspan="5">
-            <strong><%= Spree.t(:carton_orders) %>:&nbsp;</strong>
+            <strong><%= t('spree.carton_orders') %>:&nbsp;</strong>
             <% (carton.orders - [order]).each do |order| %>
               <%= link_to order.number, edit_admin_order_path(order) %>
             <% end %>
@@ -83,7 +83,7 @@
       <% if carton.external_number.present? %>
         <tr class="external-number">
           <td colspan="5">
-            <strong><%= Spree.t(:carton_external_number) %>:&nbsp;</strong><%= carton.external_number %>
+            <strong><%= t('spree.carton_external_number') %>:&nbsp;</strong><%= carton.external_number %>
           </td>
         </tr>
       <% end %>

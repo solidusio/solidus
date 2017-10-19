@@ -25,7 +25,7 @@
 
           <%= f.field_container :category do %>
             <%= f.label :promotion_category_id, Spree::PromotionCategory.model_name.human %><br />
-            <%= f.collection_select(:promotion_category_id, @promotion_categories, :id, :name, { include_blank: Spree.t('match_choices.none') }, { class: 'custom-select fullwidth' }) %>
+            <%= f.collection_select(:promotion_category_id, @promotion_categories, :id, :name, { include_blank: t('spree.match_choices.none') }, { class: 'custom-select fullwidth' }) %>
           <% end %>
         </div>
       </div>
@@ -36,7 +36,7 @@
         <%= f.label :usage_limit %><br />
         <%= f.number_field :usage_limit, min: 0, class: 'fullwidth' %><br>
         <span class="info">
-          <%= Spree.t(:current_promotion_usage, count: @promotion.usage_count) %>
+          <%= t('spree.current_promotion_usage', count: @promotion.usage_count) %>
         </span>
       <% end %>
 

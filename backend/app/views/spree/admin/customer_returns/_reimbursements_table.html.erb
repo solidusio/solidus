@@ -21,9 +21,9 @@
         <td><%= reimbursement.display_total %></td>
         <td>
           <span class="pill pill-<%= reimbursement.reimbursement_status %>">
-            <%= Spree.t(
+            <%= t(
               reimbursement.reimbursement_status,
-              scope: :reimbursement_states
+              scope: 'spree.reimbursement_states'
             ) %>
           </span>
         </td>

@@ -2,7 +2,7 @@
 <% admin_breadcrumb(link_to @user.email, edit_admin_user_url(@user)) %>
 <% admin_breadcrumb(link_to plural_resource_name(Spree::StoreCredit), spree.admin_user_store_credits_path(@user)) %>
 <% admin_breadcrumb(link_to Spree::StoreCredit.model_name.human, admin_user_store_credit_path(@user, @store_credit)) %>
-<% admin_breadcrumb(Spree.t(:edit)) %>
+<% admin_breadcrumb(t('spree.edit')) %>
 
 
 <%= render 'spree/admin/users/sidebar' %>
@@ -12,7 +12,7 @@
 
 <%= form_for [:admin, @user, @store_credit], url: update_amount_admin_user_store_credit_path, method: :put do |f| %>
   <fieldset>
-    <legend align="center"><%= Spree.t("admin.store_credits.edit_amount") %></legend>
+    <legend align="center"><%= t('spree.admin.store_credits.edit_amount') %></legend>
     <div data-hook="admin_store_credit_form_fields" class="row">
       <div class="col-9">
         <%= f.field_container :amount do %>

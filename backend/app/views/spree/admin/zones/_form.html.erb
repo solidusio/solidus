@@ -3,7 +3,7 @@
 
     <div data-hook="admin_zone_form_fields">
       <fieldset class="no-border-bottom">
-        <legend align="center"><%= Spree.t(:general_settings)%></legend>
+        <legend align="center"><%= t('spree.general_settings')%></legend>
 
         <%= zone_form.field_container :name do %>
           <%= zone_form.label :name %><br />
@@ -16,15 +16,15 @@
         <% end %>
 
         <div data-hook="type" class="field">
-          <%= label_tag Spree.t(:type) %>
+          <%= label_tag t('spree.type') %>
           <ul>
             <li>
               <%= zone_form.radio_button('kind', 'country', { id: 'country_based' }) %>
-              <%= label_tag :country_based, Spree.t(:country_based) %>
+              <%= label_tag :country_based, t('spree.country_based') %>
             </li>
             <li>
               <%= zone_form.radio_button('kind', 'state', { id: 'state_based' }) %>
-              <%= label_tag :state_based, Spree.t(:state_based) %>
+              <%= label_tag :state_based, t('spree.state_based') %>
             </li>
           </ul>
         </div>

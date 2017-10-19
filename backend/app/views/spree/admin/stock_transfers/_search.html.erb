@@ -10,15 +10,15 @@
 
       <div class="field-block alpha four columns">
         <div class="date-range-filter field">
-          <%= f.label nil, Spree.t(:date_range) %>
+          <%= f.label nil, t('spree.date_range') %>
           <div class="date-range-fields">
-            <%= f.text_field :created_at_gt, class: 'datepicker datepicker-from', include_blank: true, value: params[:q][:created_at_gt], placeholder: Spree.t(:start) %>
+            <%= f.text_field :created_at_gt, class: 'datepicker datepicker-from', include_blank: true, value: params[:q][:created_at_gt], placeholder: t('spree.start') %>
 
             <span class="range-divider">
               <i class="fa fa-arrow-right"></i>
             </span>
 
-            <%= f.text_field :created_at_lt, class: 'datepicker datepicker-to', include_blank: true, value: params[:q][:created_at_lt], placeholder: Spree.t(:stop) %>
+            <%= f.text_field :created_at_lt, class: 'datepicker datepicker-to', include_blank: true, value: params[:q][:created_at_lt], placeholder: t('spree.stop') %>
           </div>
         </div>
       </div>
@@ -34,7 +34,7 @@
         <div class="field checkbox">
           <label>
             <%= f.check_box :closed_at_null, { checked: @show_only_open }, '1', '0' %>
-            <%= Spree.t(:show_only_open_transfers) %>
+            <%= t('spree.show_only_open_transfers') %>
           </label>
         </div>
       </div>
@@ -43,7 +43,7 @@
 
       <div class="actions filter-actions">
         <div data-hook="admin_stock_transfers_index_search_buttons">
-          <%= button Spree.t(:filter_results) %>
+          <%= button t('spree.filter_results') %>
         </div>
       </div>
     <% end %>

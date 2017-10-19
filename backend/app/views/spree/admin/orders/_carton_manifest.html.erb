@@ -13,7 +13,7 @@
     <td class="item-price"><%= item.line_item.single_money.to_html %></td>
     <td class="item-qty-show">
         <% item.states.each do |state,count| %>
-          <%= count %> x <%= Spree.t(state, scope: 'inventory_states') %>
+          <%= count %> x <%= t(state, scope: 'spree.inventory_states') %>
         <% end %>
     </td>
     <td class="item-total"><%= line_item_shipment_price(item.line_item, item.quantity) %></td>

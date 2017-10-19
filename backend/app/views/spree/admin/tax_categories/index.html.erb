@@ -1,7 +1,7 @@
 <%= render 'spree/admin/shared/taxes_tabs' %>
 
-<% admin_breadcrumb(Spree.t(:settings) ) %>
-<% admin_breadcrumb(Spree.t('admin.tab.taxes')) %>
+<% admin_breadcrumb(t('spree.settings') ) %>
+<% admin_breadcrumb(t('spree.admin.tab.taxes')) %>
 <% admin_breadcrumb(plural_resource_name(Spree::TaxCategory)) %>
 
 
@@ -9,7 +9,7 @@
   <ul class="actions inline-menu">
     <% if can?(:create, Spree::TaxCategory) %>
       <li>
-        <%= button_link_to Spree.t(:new_tax_category), new_object_url, id: 'admin_new_tax_categories_link' %>
+        <%= button_link_to t('spree.new_tax_category'), new_object_url, id: 'admin_new_tax_categories_link' %>
       </li>
     <% end %>
   </ul>
@@ -42,7 +42,7 @@
         <td><%= tax_category.name %></td>
         <td><%= tax_category.tax_code %></td>
         <td><%= tax_category.description %></td>
-        <td><%= tax_category.is_default? ? Spree.t(:say_yes) : Spree.t(:say_no) %></td>
+        <td><%= tax_category.is_default? ? t('spree.say_yes') : t('spree.say_no') %></td>
         <td class="actions">
           <% if can?(:update, tax_category) %>
             <%= link_to_edit tax_category, no_text: true %>

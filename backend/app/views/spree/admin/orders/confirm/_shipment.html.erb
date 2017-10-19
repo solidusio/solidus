@@ -3,7 +3,7 @@
     <legend align="center" class="stock-location" data-hook="stock-location">
       <%= Spree::Shipment.model_name.human %>
       <span class="shipment-number"><%= shipment.number %></span>
-      <%= Spree.t(:from) %>
+      <%= t('spree.from') %>
       <strong class="stock-location-name" data-hook="stock-location-name">"<%= shipment.stock_location.name %>"</strong>
     </legend>
   </fieldset>
@@ -30,7 +30,7 @@
             <span><%= shipment.display_cost %></span>
           </td>
         <% else %>
-          <td colspan='5'><%= Spree.t(:no_shipping_method_selected) %></td>
+          <td colspan='5'><%= t('spree.no_shipping_method_selected') %></td>
         <% end %>
       </tr>
 

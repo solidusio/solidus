@@ -1,6 +1,6 @@
 <%= render 'spree/admin/shared/product_tabs', current: 'Prices' %>
 <% admin_breadcrumb(link_to(plural_resource_name(Spree::Price), spree.admin_product_prices_url(@product))) %>
-<% admin_breadcrumb(Spree.t('actions.new')) %>
+<% admin_breadcrumb(t('spree.actions.new')) %>
 
 <%= form_for [:admin, @product, @product.prices.build] do |f| %>
   <fieldset data-hook="admin_product_price_new_form">

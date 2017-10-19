@@ -2,7 +2,7 @@
 <% admin_breadcrumb(link_to @user.email, edit_admin_user_url(@user)) %>
 <% admin_breadcrumb(link_to plural_resource_name(Spree::StoreCredit), spree.admin_user_store_credits_path(@user)) %>
 <% admin_breadcrumb(link_to Spree::StoreCredit.model_name.human, admin_user_store_credit_path(@user, @store_credit)) %>
-<% admin_breadcrumb(Spree.t(:edit)) %>
+<% admin_breadcrumb(t('spree.edit')) %>
 
 
 <%= render 'spree/admin/users/sidebar' %>
@@ -12,13 +12,13 @@
 
 <%= form_for [:admin, @user, @store_credit], url: invalidate_admin_user_store_credit_path, method: :put do |f| %>
   <fieldset>
-    <legend align="center"><%= Spree.t("admin.store_credits.invalidate_store_credit") %></legend>
+    <legend align="center"><%= t('spree.admin.store_credits.invalidate_store_credit') %></legend>
     <div data-hook="admin_store_credit_form_fields" class="row">
       <%= render partial: 'update_reason_field', locals: { f: f } %>
     </div>
     <div class="form-buttons filter-actions actions" data-hook="buttons">
-      <%= button Spree.t('store_credit.actions.invalidate') %>
-      <%= button_link_to Spree.t('actions.cancel'), admin_user_store_credit_path(@user, @store_credit) %>
+      <%= button t('spree.store_credit.actions.invalidate') %>
+      <%= button_link_to t('spree.actions.cancel'), admin_user_store_credit_path(@user, @store_credit) %>
     </div>
   </fieldset>
 <% end %>

@@ -1,7 +1,7 @@
 <%= render partial: 'spree/admin/shared/order_tabs', locals: { current: 'Adjustments' } %>
 
 <% admin_breadcrumb(link_to plural_resource_name(Spree::Adjustment), spree.admin_order_adjustments_path(@order)) %>
-<% admin_breadcrumb("#{Spree.t('actions.edit')} #{Spree::Adjustment.model_name.human}") %>
+<% admin_breadcrumb("#{t('spree.actions.edit')} #{Spree::Adjustment.model_name.human}") %>
 
 <% content_for :page_actions do %>
 <% end %>
@@ -12,8 +12,8 @@
     <%= render partial: 'form', locals: { f: f } %>
 
     <div class="filter-actions actions" data-hook="buttons">
-      <%= button Spree.t(:continue) %>
-      <%= link_to Spree.t('actions.cancel'), admin_order_adjustments_url(@order), class: 'button' %>
+      <%= button t('spree.continue') %>
+      <%= link_to t('spree.actions.cancel'), admin_order_adjustments_url(@order), class: 'button' %>
     </div>
   </fieldset>
 <% end %>
