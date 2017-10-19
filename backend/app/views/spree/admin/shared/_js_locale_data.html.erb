@@ -5,13 +5,7 @@
   Spree.translations = <%==
     JSON.dump(
       I18n.t("spree").merge({
-        date_picker:    Spree.t(:js_format,
-                                 scope: 'date_picker',
-                                 default: 'yy/mm/dd'),
         abbr_day_names:         I18n.t(:abbr_day_names, scope: :date),
-        first_day:              Spree.t(:first_day,
-                                         scope: 'date_picker',
-                                         default: 0).to_i,
         month_names:            I18n.t(:month_names, scope: :date).reject(&:blank?),
         currency_separator:     I18n.t('number.currency.format.separator'),
         currency_delimiter:     I18n.t('number.currency.format.delimiter'),

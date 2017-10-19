@@ -31,6 +31,14 @@ describe('Spree.t', function() {
     expect(Spree.t('nested.key', {scope: 'deeply'})).to.equal('deeply nested key');
     expect(Spree.t('key', {scope: 'deeply.nested'})).to.equal('deeply nested key');
   });
+
+  it('ignores default when key exists', function() {
+    expect(Spree.t('simple', {default: 'foo'})).to.equal('simple');
+  });
+
+  it('returns a default for a missing key', function() {
+    expect(Spree.t('does_not_exist', {default: 'foo'})).to.equal('foo');
+  });
 });
 
 describe('Spree.human_attribute_name', function() {
