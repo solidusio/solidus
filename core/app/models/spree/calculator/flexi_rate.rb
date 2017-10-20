@@ -8,6 +8,7 @@ module Spree
     preference :currency,        :string,  default: ->{ Spree::Config[:currency] }
 
     def self.available?(_object)
+      Spree::Deprecation.warn('Spree::Calculator::FlexiRate::available is DEPRECATED. Use the instance method instead.')
       true
     end
 
