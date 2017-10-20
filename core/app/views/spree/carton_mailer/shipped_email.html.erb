@@ -2,13 +2,13 @@
   <tr>
     <td>
       <p class="lede">
-        <%= Spree.t('shipment_mailer.shipped_email.dear_customer') %>
+        <%= t('spree.shipment_mailer.shipped_email.dear_customer') %>
       </p>
       <p>
-        <%= Spree.t('shipment_mailer.shipped_email.instructions') %>
+        <%= t('spree.shipment_mailer.shipped_email.instructions') %>
       </p>
       <p>
-        <%= Spree.t('shipment_mailer.shipped_email.shipment_summary') %>
+        <%= t('spree.shipment_mailer.shipped_email.shipment_summary') %>
       </p>
       <table>
         <% @manifest.each do |item| %>
@@ -20,13 +20,13 @@
         <% end %>
       </table>
       <p>
-        <%= Spree.t('shipment_mailer.shipped_email.track_information', tracking: @carton.tracking) if @carton.tracking %>
+        <%= t('spree.shipment_mailer.shipped_email.track_information', tracking: @carton.tracking) if @carton.tracking %>
       </p>
       <p>
-        <%= Spree.t('shipment_mailer.shipped_email.track_link',        :url      => @carton.tracking_url) if @carton.tracking_url %>
+        <%= t('spree.shipment_mailer.shipped_email.track_link', url: @carton.tracking_url) if @carton.tracking_url %>
       </p>
       <p>
-        <%= Spree.t('shipment_mailer.shipped_email.thanks') %>
+        <%= t('spree.shipment_mailer.shipped_email.thanks') %>
       </p>
     </td>
     <td class="expander"></td>

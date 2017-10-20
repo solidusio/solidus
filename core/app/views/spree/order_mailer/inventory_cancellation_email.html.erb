@@ -2,13 +2,13 @@
   <tr>
     <td>
       <p class="lede">
-        <%= Spree.t('order_mailer.inventory_cancellation.dear_customer') %>
+        <%= t('spree.order_mailer.inventory_cancellation.dear_customer') %>
       </p>
       <p>
-        <%= Spree.t('order_mailer.inventory_cancellation.instructions') %>
+        <%= t('spree.order_mailer.inventory_cancellation.instructions') %>
       </p>
       <p>
-        <%= Spree.t('order_mailer.inventory_cancellation.order_summary_canceled') %>
+        <%= t('spree.order_mailer.inventory_cancellation.order_summary_canceled') %>
       </p>
       <table>
         <% @inventory_units.each do |item| %>

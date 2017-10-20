@@ -1,15 +1,15 @@
-<%= Spree.t('reimbursement_mailer.reimbursement_email.dear_customer') %>
+<%= t('.dear_customer') %>
 
-<%= Spree.t('reimbursement_mailer.reimbursement_email.instructions') %>
+<%= t('.instructions') %>
 
 ============================================================
-<%= Spree.t('reimbursement_mailer.reimbursement_email.refund_summary') %>
+<%= t('.refund_summary') %>
 ============================================================
-<%= Spree.t('reimbursement_mailer.reimbursement_email.total_refunded', total: @reimbursement.display_total) %>
+<%= t('.total_refunded', total: @reimbursement.display_total) %>
 
 <% if @reimbursement.return_items.exchange_requested.present? %>
 ============================================================
-<%= Spree.t('reimbursement_mailer.reimbursement_email.exchange_summary') %>
+<%= t('.exchange_summary') %>
 ============================================================
 <% @reimbursement.return_items.exchange_requested.each do |return_item| %>
 <%= return_item.variant.sku %> <%= raw(return_item.variant.name) %> <%= "(#{raw(return_item.variant.options_text)})" if return_item.variant.options_text.present? %> -> <%= return_item.exchange_variant.sku %> <%= raw(return_item.exchange_variant.name) %> <%= "(#{raw(return_item.exchange_variant.options_text)})" if return_item.exchange_variant.options_text.present? %>
