@@ -71,12 +71,10 @@ module Spree
 
       crumbs = [[t('spree.home'), spree.root_path]]
 
+      crumbs << [t('spree.products'), products_path]
       if taxon
-        crumbs << [t('spree.products'), products_path]
         crumbs += taxon.ancestors.collect { |a| [a.name, spree.nested_taxons_path(a.permalink)] } unless taxon.ancestors.empty?
         crumbs << [taxon.name, spree.nested_taxons_path(taxon.permalink)]
-      else
-        crumbs << [t('spree.products'), products_path]
       end
 
       separator = raw(separator)
