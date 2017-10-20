@@ -287,7 +287,7 @@ describe 'Payments', type: :feature do
       fill_in "Expiration", with: "09 / #{Time.current.year + 1}"
       fill_in "Card Code", with: "007"
       click_button "Continue"
-      expect(page).to have_content Spree.t(:insufficient_stock_for_order)
+      expect(page).to have_content I18n.t('spree.insufficient_stock_for_order')
     end
   end
 end

@@ -73,7 +73,7 @@ describe "Orders Listing", type: :feature, js: true do
         main_store, other_store = stores
 
         click_on "Filter Results"
-        select main_store.name, from: Spree.t(:store)
+        select main_store.name, from: I18n.t('spree.store')
         click_on "Filter Results"
 
         within_row(1) do
@@ -100,7 +100,7 @@ describe "Orders Listing", type: :feature, js: true do
 
       it "should be able to filter on variant_id" do
         click_on "Filter Results"
-        select2_search @order1.products.first.sku, from: Spree.t(:variant)
+        select2_search @order1.products.first.sku, from: I18n.t('spree.variant')
         click_on 'Filter Results'
 
         within_row(1) do

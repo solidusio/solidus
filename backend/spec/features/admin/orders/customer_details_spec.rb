@@ -61,7 +61,7 @@ describe "Customer Details", type: :feature, js: true do
 
       it "displays an error" do
         click_button "Update"
-        expect(page).to have_content Spree.t(:insufficient_stock_for_order)
+        expect(page).to have_content I18n.t('spree.insufficient_stock_for_order')
       end
     end
   end

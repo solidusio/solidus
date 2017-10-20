@@ -23,7 +23,7 @@ describe "spree/admin/shared/_navigation_footer", type: :view do
 
     it "has user-logout-link" do
       render
-      expect(rendered).to have_link(Spree.t(:logout), href: "/logout")
+      expect(rendered).to have_link(I18n.t('spree.logout'), href: "/logout")
     end
   end
 
@@ -34,7 +34,7 @@ describe "spree/admin/shared/_navigation_footer", type: :view do
 
     it "has a back to store link" do
       render
-      expect(rendered).to have_link(Spree.t(:back_to_store), href: "/")
+      expect(rendered).to have_link(I18n.t('spree.back_to_store'), href: "/")
     end
   end
 

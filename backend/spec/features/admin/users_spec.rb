@@ -25,7 +25,7 @@ describe 'Users', type: :feature do
       visit current_url # need to refresh after creating the orders for specs that did not require orders
       within("#user-lifetime-stats") do
         [:total_sales, :num_orders, :average_order_value, :member_since].each do |stat_name|
-          expect(page).to have_content Spree.t(stat_name)
+          expect(page).to have_content I18n.t(stat_name, scope: 'spree')
         end
         expect(page).to have_content(order.total + order_2.total)
         expect(page).to have_content orders.count
@@ -39,15 +39,15 @@ describe 'Users', type: :feature do
     end
 
     it 'can navigate to the account page' do
-      expect(page).to have_link Spree.t(:"admin.user.account"), href: spree.edit_admin_user_path(user_a)
+      expect(page).to have_link I18n.t("spree.admin.user.account"), href: spree.edit_admin_user_path(user_a)
     end
 
     it 'can navigate to the order history' do
-      expect(page).to have_link Spree.t(:"admin.user.order_history"), href: spree.orders_admin_user_path(user_a)
+      expect(page).to have_link I18n.t("spree.admin.user.order_history"), href: spree.orders_admin_user_path(user_a)
     end
 
     it 'can navigate to the items purchased' do
-      expect(page).to have_link Spree.t(:"admin.user.items"), href: spree.items_admin_user_path(user_a)
+      expect(page).to have_link I18n.t("spree.admin.user.items"), href: spree.items_admin_user_path(user_a)
     end
   end
 
@@ -103,7 +103,7 @@ describe 'Users', type: :feature do
         let(:text_match_1) { user_a.email }
         let(:text_match_2) { user_b.email }
         let(:table_id) { "listing_users" }
-        let(:sort_link) { Spree.t(:member_since) }
+        let(:sort_link) { I18n.t('spree.member_since') }
       end
 
       it 'displays the correct results for a user search by creation date' do
@@ -283,7 +283,7 @@ describe 'Users', type: :feature do
     before do
       orders
       click_link user_a.email
-      within(".tabs") { click_link Spree.t(:"admin.user.order_history") }
+      within(".tabs") { click_link I18n.t("spree.admin.user.order_history") }
     end
 
     it_behaves_like 'a user page'
@@ -320,7 +320,7 @@ describe 'Users', type: :feature do
     before do
       orders
       click_link user_a.email
-      within(".tabs") { click_link Spree.t(:"admin.user.items") }
+      within(".tabs") { click_link I18n.t("spree.admin.user.items") }
     end
 
     it_behaves_like 'a user page'

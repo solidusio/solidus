@@ -9,7 +9,7 @@ module Spree
       context "with no countries present" do
         it "cannot create a new stock location" do
           get :new
-          expect(flash[:error]).to eq(Spree.t(:stock_locations_need_a_default_country))
+          expect(flash[:error]).to eq(I18n.t('spree.stock_locations_need_a_default_country'))
           expect(response).to redirect_to(spree.admin_stock_locations_path)
         end
       end

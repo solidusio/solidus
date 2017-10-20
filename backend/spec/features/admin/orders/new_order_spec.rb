@@ -146,7 +146,7 @@ describe "New Order", type: :feature do
       click_on "Update"
 
       # Automatically redirected to Shipments page
-      select2_search product.name, from: Spree.t(:name_or_sku)
+      select2_search product.name, from: I18n.t('spree.name_or_sku')
 
       click_icon :plus
 
