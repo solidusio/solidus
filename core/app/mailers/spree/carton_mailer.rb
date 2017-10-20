@@ -19,8 +19,8 @@ module Spree
       @manifest = @carton.manifest_for_order(@order)
       options = { resend: false }.merge(options)
       @store = @order.store
-      subject = (options[:resend] ? "[#{Spree.t(:resend).upcase}] " : '')
-      subject += "#{@store.name} #{Spree.t('shipment_mailer.shipped_email.subject')} ##{@order.number}"
+      subject = (options[:resend] ? "[#{t('spree.resend').upcase}] " : '')
+      subject += "#{@store.name} #{t('spree.shipment_mailer.shipped_email.subject')} ##{@order.number}"
       mail(to: @order.email, from: from_address(@store), subject: subject)
     end
   end
