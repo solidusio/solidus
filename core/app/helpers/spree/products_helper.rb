@@ -23,7 +23,7 @@ module Spree
       difference = variant.price_difference_from_master(current_pricing_options)
       absolute_amount = Spree::Money.new(difference.to_d.abs, currency: difference.currency.iso_code)
       i18n_key = difference.to_d > 0 ? :price_diff_add_html : :price_diff_subtract_html
-      Spree.t(i18n_key, scope: [:helpers, :products], amount_html: absolute_amount.to_html)
+      t(i18n_key, scope: [:spree, :helpers, :products], amount_html: absolute_amount.to_html)
     end
 
     # Returns the formatted full price for the variant, if at least one variant
@@ -58,7 +58,7 @@ module Spree
       if description_text.present?
         truncate(strip_tags(description_text.gsub('&nbsp;', ' ')), length: 100)
       else
-        Spree.t(:product_has_no_description)
+        t('spree.product_has_no_description')
       end
     end
 
