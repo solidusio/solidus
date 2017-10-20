@@ -151,7 +151,6 @@
 - Remove identical inheritied methods in `Spree::StoreCredit` [#2200](https://github.com/solidusio/solidus/pull/2200) ([swcraig](https://github.com/swcraig))
 - Remove custom responders. They are now available in the `solidus_responders` extension. [#1956](https://github.com/solidusio/solidus/pull/1956) ([omnistegan](https://github.com/omnistegan))
 - Remove responders dependency from core [#2090](https://github.com/solidusio/solidus/pull/2090) ([cbrunsdon](https://github.com/cbrunsdon))
-- Remove unused update_params_payment_source method [#2227](https://github.com/solidusio/solidus/pull/2227) ([ccarruitero](https://github.com/ccarruitero))
 
 ### Deprecations
 
@@ -165,6 +164,7 @@
   Please render `spree/admin/shared/preference_fields/#{preference_type}` instead
 - Check if deprecated method_type is overridden [#2093](https://github.com/solidusio/solidus/pull/2093) ([jhawthorn](https://github.com/jhawthorn))
 - Deprecate support for alternate Kaminari page_method_name [#2115](https://github.com/solidusio/solidus/pull/2115) ([cbrunsdon](https://github.com/cbrunsdon))
+- Deprecate update_params_payment_source method [#2227](https://github.com/solidusio/solidus/pull/2227) ([ccarruitero](https://github.com/ccarruitero))
 
 
 
