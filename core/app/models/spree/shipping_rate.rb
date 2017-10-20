@@ -9,6 +9,7 @@ module Spree
     has_many :taxes,
              class_name: "Spree::ShippingRateTax",
              foreign_key: "shipping_rate_id",
+             inverse_of: :shipping_rate,
              dependent: :destroy
 
     delegate :order, :currency, to: :shipment
@@ -26,7 +27,7 @@ module Spree
     def display_price
       price = display_amount.to_s
 
-      return price if taxes.empty? || amount == 0
+      return price if taxes.to_a.empty? || amount == 0
 
       tax_explanations = taxes.map(&:label).join(tax_label_separator)
 
