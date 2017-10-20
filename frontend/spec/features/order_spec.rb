@@ -65,7 +65,7 @@ describe 'orders', type: :feature do
     visit spree.order_path(order)
 
     within '#order_summary' do
-      expect(page).to have_content("#{Spree.t(:order)} #{order.number}")
+      expect(page).to have_content("#{I18n.t('spree.order')} #{order.number}")
     end
   end
 end

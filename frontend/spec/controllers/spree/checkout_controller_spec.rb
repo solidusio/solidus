@@ -244,7 +244,7 @@ describe Spree::CheckoutController, type: :controller do
 
         it "should populate the flash message" do
           post :update, params: { state: "confirm" }
-          expect(flash.notice).to eq(Spree.t(:order_processed_successfully))
+          expect(flash.notice).to eq(I18n.t('spree.order_processed_successfully'))
         end
 
         it "should remove completed order from current_order" do
@@ -299,7 +299,7 @@ describe Spree::CheckoutController, type: :controller do
 
       it "should render the edit template and display exception message" do
         expect(response).to render_template :edit
-        expect(flash.now[:error]).to eq(Spree.t(:spree_gateway_error_flash_for_checkout))
+        expect(flash.now[:error]).to eq(I18n.t('spree.spree_gateway_error_flash_for_checkout'))
         expect(assigns(:order).errors[:base]).to include("Invalid something or other.")
       end
     end
@@ -340,7 +340,7 @@ describe Spree::CheckoutController, type: :controller do
 
         it "due to no available shipping rates for any of the shipments" do
           put :update, params: { state: "address", order: {} }
-          expect(flash[:error]).to eq(Spree.t(:items_cannot_be_shipped))
+          expect(flash[:error]).to eq(I18n.t('spree.items_cannot_be_shipped'))
           expect(response).to redirect_to(spree.checkout_state_path('address'))
         end
       end
@@ -366,9 +366,9 @@ describe Spree::CheckoutController, type: :controller do
       end
 
       it "fails to transition from payment to complete" do
-        allow_any_instance_of(Spree::Payment).to receive(:process!).and_raise(Spree::Core::GatewayError.new(Spree.t(:payment_processing_failed)))
+        allow_any_instance_of(Spree::Payment).to receive(:process!).and_raise(Spree::Core::GatewayError.new(I18n.t('spree.payment_processing_failed')))
         put :update, params: { state: order.state, order: {} }
-        expect(flash[:error]).to eq(Spree.t(:payment_processing_failed))
+        expect(flash[:error]).to eq(I18n.t('spree.payment_processing_failed'))
       end
     end
   end
