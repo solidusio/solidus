@@ -6,9 +6,9 @@ module Spree
       end
       if params[:locale] && I18n.available_locales.map(&:to_s).include?(params[:locale])
         session[:locale] = I18n.locale = params[:locale]
-        flash.notice = Spree.t(:locale_changed)
+        flash.notice = t('spree.locale_changed')
       else
-        flash[:error] = Spree.t(:locale_not_changed)
+        flash[:error] = t('spree.locale_not_changed')
       end
       redirect_back_or_default(spree.root_path)
     end
