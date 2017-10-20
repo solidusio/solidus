@@ -20,7 +20,7 @@ class Spree::UnitCancel < Spree::Base
       source: self,
       amount: amount,
       order: inventory_unit.order,
-      label: "#{Spree.t(:cancellation)} - #{reason}",
+      label: "#{I18n.t('spree.cancellation')} - #{reason}",
       eligible: true,
       finalized: true
     )

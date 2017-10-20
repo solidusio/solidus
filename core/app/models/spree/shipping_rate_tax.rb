@@ -14,8 +14,8 @@ module Spree
     delegate :currency, to: :shipping_rate, allow_nil: true
 
     def label
-      Spree.t translation_key,
-        scope: 'shipping_rate_tax.label',
+      I18n.t translation_key,
+        scope: 'spree.shipping_rate_tax.label',
         amount: display_absolute_amount,
         tax_rate_name: tax_rate.name
     end

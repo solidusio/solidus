@@ -102,9 +102,9 @@ module Spree
     end
 
     def adjustment_label(amount)
-      Spree.t(
+      I18n.t(
         translation_key(amount),
-        scope: "adjustment_labels.tax_rates",
+        scope: "spree.adjustment_labels.tax_rates",
         name: name.presence || tax_categories.map(&:name).join(", "),
         amount: amount_for_adjustment_label
       )

@@ -143,11 +143,11 @@ module Spree
               yield
             else
               invalidate!
-              raise Core::GatewayError.new(Spree.t(:payment_method_not_supported))
+              raise Core::GatewayError.new(I18n.t('spree.payment_method_not_supported'))
             end
           end
         else
-          raise Core::GatewayError.new(Spree.t(:payment_processing_failed))
+          raise Core::GatewayError.new(I18n.t('spree.payment_processing_failed'))
         end
       end
 
@@ -205,11 +205,11 @@ module Spree
         if error.is_a? ActiveMerchant::Billing::Response
           text = error.params['message'] || error.params['response_reason_text'] || error.message
         elsif error.is_a? ActiveMerchant::ConnectionError
-          text = Spree.t(:unable_to_connect_to_gateway)
+          text = I18n.t('spree.unable_to_connect_to_gateway')
         else
           text = error.to_s
         end
-        logger.error(Spree.t(:gateway_error))
+        logger.error(I18n.t('spree.gateway_error'))
         logger.error("  #{error.to_yaml}")
         raise Core::GatewayError.new(text)
       end

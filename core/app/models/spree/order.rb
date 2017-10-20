@@ -461,7 +461,7 @@ module Spree
     # If so add error and restart checkout.
     def ensure_line_item_variants_are_not_deleted
       if line_items.any? { |li| li.variant.paranoia_destroyed? }
-        errors.add(:base, Spree.t(:deleted_variants_present))
+        errors.add(:base, I18n.t('spree.deleted_variants_present'))
         restart_checkout_flow
         false
       else
@@ -520,15 +520,15 @@ module Spree
 
     def ensure_shipping_address
       unless ship_address && ship_address.valid?
-        errors.add(:base, Spree.t(:ship_address_required)) && (return false)
+        errors.add(:base, I18n.t('spree.ship_address_required')) && (return false)
       end
     end
 
     def create_proposed_shipments
       if completed?
-        raise CannotRebuildShipments.new(Spree.t(:cannot_rebuild_shipments_order_completed))
+        raise CannotRebuildShipments.new(I18n.t('spree.cannot_rebuild_shipments_order_completed'))
       elsif shipments.any? { |s| !s.pending? }
-        raise CannotRebuildShipments.new(Spree.t(:cannot_rebuild_shipments_shipments_not_pending))
+        raise CannotRebuildShipments.new(I18n.t('spree.cannot_rebuild_shipments_shipments_not_pending'))
       else
         shipments.destroy_all
         self.shipments = Spree::Config.stock.coordinator_class.new(self).shipments
@@ -660,7 +660,7 @@ module Spree
       payments.reset
 
       if payments.where(state: %w(checkout pending completed)).sum(:amount) != total
-        errors.add(:base, Spree.t("store_credit.errors.unable_to_fund")) && (return false)
+        errors.add(:base, I18n.t('spree.store_credit.errors.unable_to_fund')) && (return false)
       end
     end
 
@@ -765,7 +765,7 @@ module Spree
       return if !payment_required?
 
       if payments.valid.empty?
-        errors.add(:base, Spree.t(:no_payment_found))
+        errors.add(:base, I18n.t('spree.no_payment_found'))
         return false
       end
 
@@ -825,7 +825,7 @@ module Spree
       if adjustment_changed
         restart_checkout_flow
         recalculate
-        errors.add(:base, Spree.t(:promotion_total_changed_before_complete))
+        errors.add(:base, I18n.t('spree.promotion_total_changed_before_complete'))
       end
       errors.empty?
     end
@@ -837,7 +837,7 @@ module Spree
 
     def ensure_line_items_present
       unless line_items.present?
-        errors.add(:base, Spree.t(:there_are_no_items_for_this_order)) && (return false)
+        errors.add(:base, I18n.t('spree.there_are_no_items_for_this_order')) && (return false)
       end
     end
 
@@ -846,7 +846,7 @@ module Spree
         # After this point, order redirects back to 'address' state and asks user to pick a proper address
         # Therefore, shipments are not necessary at this point.
         shipments.destroy_all
-        errors.add(:base, Spree.t(:items_cannot_be_shipped)) && (return false)
+        errors.add(:base, I18n.t('spree.items_cannot_be_shipped')) && (return false)
       end
     end
 

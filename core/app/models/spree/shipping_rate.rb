@@ -31,17 +31,16 @@ module Spree
 
       tax_explanations = taxes.map(&:label).join(tax_label_separator)
 
-      Spree.t :display_price_with_explanations,
-               scope: 'shipping_rate.display_price',
-               price: price,
-               explanations: tax_explanations
+      I18n.t 'spree.shipping_rate.display_price.display_price_with_explanations',
+             price: price,
+             explanations: tax_explanations
     end
     alias_method :display_cost, :display_price
 
     private
 
     def tax_label_separator
-      Spree.t :tax_label_separator, scope: 'shipping_rate.display_price'
+      I18n.t 'spree.shipping_rate.display_price.tax_label_separator'
     end
   end
 end

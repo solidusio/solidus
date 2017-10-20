@@ -6,7 +6,7 @@ module Spree
           if @return_item.return_authorization.present?
             return true
           else
-            add_error(:rma_required, Spree.t('return_item_rma_ineligible'))
+            add_error(:rma_required, I18n.t('spree.return_item_rma_ineligible'))
             return false
           end
         end

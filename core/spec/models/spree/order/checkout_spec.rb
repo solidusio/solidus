@@ -158,7 +158,7 @@ RSpec.describe Spree::Order, type: :model do
 
       it "cannot transition to address without any line items" do
         expect(order.line_items).to be_blank
-        expect { order.next! }.to raise_error(StateMachines::InvalidTransition, /#{Spree.t(:there_are_no_items_for_this_order)}/)
+        expect { order.next! }.to raise_error(StateMachines::InvalidTransition, /#{I18n.t('spree.there_are_no_items_for_this_order')}/)
       end
     end
 
@@ -269,7 +269,7 @@ RSpec.describe Spree::Order, type: :model do
           end
           specify do
             transition = lambda { order.next! }
-            expect(transition).to raise_error(StateMachines::InvalidTransition, /#{Spree.t(:items_cannot_be_shipped)}/)
+            expect(transition).to raise_error(StateMachines::InvalidTransition, /#{I18n.t('spree.items_cannot_be_shipped')}/)
           end
         end
       end

@@ -6,7 +6,7 @@ module Spree
 
     def authorize(amount_in_cents, provided_store_credit, gateway_options = {})
       if provided_store_credit.nil?
-        ActiveMerchant::Billing::Response.new(false, Spree.t('store_credit.unable_to_find'), {}, {})
+        ActiveMerchant::Billing::Response.new(false, I18n.t('spree.store_credit.unable_to_find'), {}, {})
       else
         action = ->(store_credit) {
           store_credit.authorize(
@@ -40,7 +40,7 @@ module Spree
       end
 
       if event.blank?
-        ActiveMerchant::Billing::Response.new(false, Spree.t('store_credit.unable_to_find'), {}, {})
+        ActiveMerchant::Billing::Response.new(false, I18n.t('spree.store_credit.unable_to_find'), {}, {})
       else
         capture(amount_in_cents, event.authorization_code, gateway_options)
       end
@@ -92,7 +92,7 @@ module Spree
         if response = action.call(store_credit)
           # note that we only need to return the auth code on an 'auth', but it's innocuous to always return
           ActiveMerchant::Billing::Response.new(true,
-                                                Spree.t('store_credit.successful_action', action: action_name),
+                                                I18n.t('spree.store_credit.successful_action', action: action_name),
                                                 {}, { authorization: auth_code || response })
         else
           ActiveMerchant::Billing::Response.new(false, store_credit.errors.full_messages.join, {}, {})
@@ -105,7 +105,7 @@ module Spree
       store_credit = Spree::StoreCreditEvent.find_by(authorization_code: auth_code).try(:store_credit)
 
       if store_credit.nil?
-        ActiveMerchant::Billing::Response.new(false, Spree.t('store_credit.unable_to_find_for_action', auth_code: auth_code, action: action_name), {}, {})
+        ActiveMerchant::Billing::Response.new(false, I18n.t('spree.store_credit.unable_to_find_for_action', auth_code: auth_code, action: action_name), {}, {})
       else
         handle_action_call(store_credit, action, action_name, auth_code)
       end

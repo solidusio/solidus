@@ -43,7 +43,7 @@ module Spree
     end
 
     def eligibility_error_message(key, options = {})
-      Spree.t(key, Hash[scope: [:eligibility_errors, :messages]].merge(options))
+      I18n.t(key, { scope: [:spree, :eligibility_errors, :messages] }.merge(options))
     end
   end
 end

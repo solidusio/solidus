@@ -35,7 +35,7 @@ module Spree
 
           it 'should have success message' do
             subject
-            expect(coupon.success).to eq(Spree.t(status))
+            expect(coupon.success).to eq(I18n.t(status, scope: 'spree'))
           end
         end
 
@@ -51,7 +51,7 @@ module Spree
 
           it 'should have error message' do
             subject
-            expect(coupon.error).to eq(Spree.t(status))
+            expect(coupon.error).to eq(I18n.t(status, scope: 'spree'))
           end
         end
       end
@@ -68,7 +68,7 @@ module Spree
 
           it "populates error message" do
             subject.apply
-            expect(subject.error).to eq Spree.t(:coupon_code_not_found)
+            expect(subject.error).to eq I18n.t('spree.coupon_code_not_found')
           end
         end
       end
@@ -106,7 +106,7 @@ module Spree
                 subject.apply
                 expect(subject.success).to be_present
                 subject.apply
-                expect(subject.error).to eq Spree.t(:coupon_code_already_applied)
+                expect(subject.error).to eq I18n.t('spree.coupon_code_already_applied')
               end
             end
 
@@ -198,7 +198,7 @@ module Spree
               subject.apply
               expect(subject.success).to be_present
               subject.apply
-              expect(subject.error).to eq Spree.t(:coupon_code_already_applied)
+              expect(subject.error).to eq I18n.t('spree.coupon_code_already_applied')
             end
           end
         end
@@ -236,7 +236,7 @@ module Spree
 
               it "returns a coupon has already been applied error" do
                 subject.apply
-                expect(subject.error).to eq Spree.t(:coupon_code_already_applied)
+                expect(subject.error).to eq I18n.t('spree.coupon_code_already_applied')
               end
             end
 
@@ -250,7 +250,7 @@ module Spree
 
               it "returns a coupon failed to activate error" do
                 subject.apply
-                expect(subject.error).to eq Spree.t(:coupon_code_unknown_error)
+                expect(subject.error).to eq I18n.t('spree.coupon_code_unknown_error')
               end
             end
 
@@ -269,7 +269,7 @@ module Spree
 
               it "returns a coupon is at max usage error" do
                 subject.apply
-                expect(subject.error).to eq Spree.t(:coupon_code_max_usage)
+                expect(subject.error).to eq I18n.t('spree.coupon_code_max_usage')
               end
             end
           end

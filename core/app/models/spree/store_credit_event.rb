@@ -44,7 +44,7 @@ module Spree
 
     def display_action
       return if NON_EXPOSED_ACTIONS.include?(action)
-      Spree.t("store_credit.display_action.#{action}")
+      I18n.t("spree.store_credit.display_action.#{action}")
     end
 
     def order
