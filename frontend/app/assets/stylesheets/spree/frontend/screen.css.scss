@@ -993,10 +993,10 @@ div[data-hook="inside_cart_form"] {
 }
 
 .cart-subtotal, .cart-total {
-  background: #00ADEE;
+  background: $cart_total_background_color;
 
   td h5 {
-    color: #fff;
+    color: $cart_total_text_color;
   }
 }
 
