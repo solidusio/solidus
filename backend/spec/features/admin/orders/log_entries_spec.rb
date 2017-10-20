@@ -14,7 +14,6 @@ describe "Log entries", type: :feature do
       )
 
       payment.log_entries.create(
-        source: payment.source,
         details: response.to_yaml
       )
     end
