@@ -86,13 +86,13 @@ module Spree
 
       def advance
         if @order.completed?
-          flash[:notice] = Spree.t('order_already_completed')
+          flash[:notice] = t('spree.order_already_completed')
           redirect_to edit_admin_order_url(@order)
         else
           @order.contents.advance
 
           if @order.can_complete?
-            flash[:success] = Spree.t('order_ready_for_confirm')
+            flash[:success] = t('spree.order_ready_for_confirm')
           else
             flash[:error] = @order.errors.full_messages
           end
@@ -112,7 +112,7 @@ module Spree
       # PUT
       def complete
         @order.complete!
-        flash[:success] = Spree.t(:order_completed)
+        flash[:success] = t('spree.order_completed')
         redirect_to edit_admin_order_url(@order)
       rescue StateMachines::InvalidTransition => e
         flash[:error] = e.message
@@ -121,25 +121,25 @@ module Spree
 
       def cancel
         @order.canceled_by(try_spree_current_user)
-        flash[:success] = Spree.t(:order_canceled)
+        flash[:success] = t('spree.order_canceled')
         redirect_to(spree.edit_admin_order_path(@order))
       end
 
       def resume
         @order.resume!
-        flash[:success] = Spree.t(:order_resumed)
+        flash[:success] = t('spree.order_resumed')
         redirect_to(spree.edit_admin_order_path(@order))
       end
 
       def approve
         @order.contents.approve(user: try_spree_current_user)
-        flash[:success] = Spree.t(:order_approved)
+        flash[:success] = t('spree.order_approved')
         redirect_to(spree.edit_admin_order_path(@order))
       end
 
       def resend
         OrderMailer.confirm_email(@order, true).deliver_later
-        flash[:success] = Spree.t(:order_email_resent)
+        flash[:success] = t('spree.order_email_resent')
 
         redirect_to(spree.edit_admin_order_path(@order))
       end
@@ -147,7 +147,7 @@ module Spree
       def unfinalize_adjustments
         adjustments = @order.all_adjustments.finalized
         adjustments.each(&:unfinalize!)
-        flash[:success] = Spree.t(:all_adjustments_unfinalized)
+        flash[:success] = t('spree.all_adjustments_unfinalized')
 
         respond_with(@order) { |format| format.html { redirect_to(spree.admin_order_adjustments_path(@order)) } }
       end
@@ -155,7 +155,7 @@ module Spree
       def finalize_adjustments
         adjustments = @order.all_adjustments.not_finalized
         adjustments.each(&:finalize!)
-        flash[:success] = Spree.t(:all_adjustments_finalized)
+        flash[:success] = t('spree.all_adjustments_finalized')
 
         respond_with(@order) { |format| format.html { redirect_to(spree.admin_order_adjustments_path(@order)) } }
       end
@@ -185,13 +185,13 @@ module Spree
       end
 
       def insufficient_stock_error
-        flash[:error] = Spree.t(:insufficient_stock_for_order)
+        flash[:error] = t('spree.insufficient_stock_for_order')
         redirect_to cart_admin_order_url(@order)
       end
 
       def require_ship_address
         if @order.ship_address.nil?
-          flash[:notice] = Spree.t(:fill_in_customer_info)
+          flash[:notice] = t('spree.fill_in_customer_info')
           redirect_to edit_admin_order_customer_url(@order)
         end
       end

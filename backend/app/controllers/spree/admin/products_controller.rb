@@ -49,7 +49,7 @@ module Spree
         @product = Spree::Product.friendly.find(params[:id])
         @product.destroy
 
-        flash[:success] = Spree.t('notice_messages.product_deleted')
+        flash[:success] = t('spree.notice_messages.product_deleted')
 
         respond_with(@product) do |format|
           format.html { redirect_to collection_url }
@@ -61,9 +61,9 @@ module Spree
         @new = @product.duplicate
 
         if @new.save
-          flash[:success] = Spree.t('notice_messages.product_cloned')
+          flash[:success] = t('spree.notice_messages.product_cloned')
         else
-          flash[:error] = Spree.t('notice_messages.product_not_cloned')
+          flash[:error] = t('spree.notice_messages.product_not_cloned')
         end
 
         redirect_to edit_admin_product_url(@new)

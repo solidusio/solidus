@@ -25,7 +25,7 @@ module Spree
           redirect_to admin_user_store_credits_path(@user)
         else
           load_categories
-          flash[:error] = "#{Spree.t('admin.store_credits.unable_to_create')} #{@store_credit.errors.full_messages}"
+          flash[:error] = "#{t('spree.admin.store_credits.unable_to_create')} #{@store_credit.errors.full_messages}"
           render :new
         end
       end
@@ -40,7 +40,7 @@ module Spree
           end
         else
           respond_to do |format|
-            format.json { render json: { message: "#{Spree.t('admin.store_credits.unable_to_update')} #{@store_credit.errors.full_messages}" }, status: :bad_request }
+            format.json { render json: { message: "#{t('spree.admin.store_credits.unable_to_update')} #{@store_credit.errors.full_messages}" }, status: :bad_request }
           end
         end
       end
@@ -87,7 +87,7 @@ module Spree
       def ensure_update_reason
         @update_reason = Spree::StoreCreditUpdateReason.find_by(id: params[:update_reason_id])
         unless @update_reason
-          @store_credit.errors.add(:base, Spree.t("admin.store_credits.errors.update_reason_required"))
+          @store_credit.errors.add(:base, t('spree.admin.store_credits.errors.update_reason_required'))
           render_edit_page
         end
       end
@@ -102,7 +102,7 @@ module Spree
         end
 
         load_update_reasons
-        flash[:error] = "#{Spree.t("admin.store_credits.unable_to_#{translation_key}")}: #{@store_credit.errors.full_messages.join(', ')}"
+        flash[:error] = "#{t("spree.admin.store_credits.unable_to_#{translation_key}")}: #{@store_credit.errors.full_messages.join(', ')}"
         render(template) && return
       end
 

@@ -44,7 +44,7 @@ module Spree
       def ship
         if @stock_transfer.transfer
           @stock_transfer.ship(shipped_at: DateTime.current)
-          flash[:success] = Spree.t(:stock_transfer_complete)
+          flash[:success] = t('spree.stock_transfer_complete')
           redirect_to admin_stock_transfers_path
         else
           flash[:error] = @stock_transfer.errors.full_messages.join(", ")
@@ -119,7 +119,7 @@ module Spree
 
       def ensure_receivable_stock_transfer
         unless @stock_transfer.receivable?
-          flash[:error] = Spree.t(:stock_transfer_must_be_receivable)
+          flash[:error] = t('spree.stock_transfer_must_be_receivable')
           redirect_to(admin_stock_transfers_path) && return
         end
       end
