@@ -1,1 +1,1 @@
-json.error(Spree.t(:item_not_in_stock_transfer))
+json.error(I18n.t('spree.item_not_in_stock_transfer'))
