@@ -1,5 +1,4 @@
 require 'rails/all'
-require 'active_merchant'
 require 'acts_as_list'
 require 'awesome_nested_set'
 require 'cancan'
@@ -53,6 +52,7 @@ end
 
 require 'spree/core/version'
 
+require 'spree/core/active_merchant_dependencies'
 require 'spree/core/class_constantizer'
 require 'spree/core/environment_extension'
 require 'spree/core/environment/calculators'
