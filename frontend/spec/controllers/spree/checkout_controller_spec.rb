@@ -507,7 +507,7 @@ describe Spree::CheckoutController, type: :controller do
 
         put :update, params: { state: order.state, order: { coupon_code: coupon_code } }
 
-        expect(response).to redirect_to(spree.checkout_state_path('confirm'))
+        expect(response).to render_template :edit
         expect(flash.now[:success]).to eq('Coupon Applied!')
       end
 

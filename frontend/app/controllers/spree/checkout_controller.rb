@@ -173,12 +173,13 @@ module Spree
         handler = PromotionHandler::Coupon.new(@order).apply
 
         if handler.error.present?
-          setup_for_current_state
           flash.now[:error] = handler.error
-          respond_with(@order) { |format| format.html { render :edit } } && return
         elsif handler.success
           flash[:success] = handler.success
         end
+
+        setup_for_current_state
+        respond_with(@order) { |format| format.html { render :edit } } && return
       end
     end
 

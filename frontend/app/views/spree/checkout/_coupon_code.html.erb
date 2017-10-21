@@ -1,0 +1,12 @@
+<div class="coupon-code" data-hook='coupon_code'>
+  <%= form_for order, url: update_checkout_path(order.state) do |form| %>
+    <%= form.label :coupon_code %>
+    <%= form.text_field :coupon_code, placeholder: :coupon_code %>
+
+    <button type="submit" class="button coupon-code-apply-button" id="coupon-code-apply-button">
+      <%= t('spree.apply_code') %>
+    </button>
+  <% end %>
+
+  <div id='coupon_status'></div>
+</div>
