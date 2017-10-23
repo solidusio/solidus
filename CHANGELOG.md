@@ -544,6 +544,10 @@
 
 *   Upgrade to rails 5.0
 
+## Solidus 1.4.1 (2017-06-08)
+
+*   Fix syntax error in `app/views/spree/admin/reimbursements/edit.html.erb` [#1991](https://github.com/solidusio/solidus/pull/1991) ([acreilly](https://github.com/acreilly))
+
 ## Solidus 1.4.0 (2016-09-26)
 
 *   Use in-memory objects in OrderUpdater and related areas.
