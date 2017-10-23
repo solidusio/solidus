@@ -8,13 +8,13 @@ RSpec.feature "Quantity Promotions" do
     )
   end
 
-  given(:promotion) { FactoryGirl.create(:promotion, code: "PROMO") }
-  given(:calculator) { FactoryGirl.create(:calculator, preferred_amount: 5) }
+  given(:promotion) { FactoryBot.create(:promotion, code: "PROMO") }
+  given(:calculator) { FactoryBot.create(:calculator, preferred_amount: 5) }
 
   background do
     create(:store)
-    FactoryGirl.create(:product, name: "DL-44")
-    FactoryGirl.create(:product, name: "E-11")
+    FactoryBot.create(:product, name: "DL-44")
+    FactoryBot.create(:product, name: "E-11")
     promotion.actions << action
 
     visit spree.root_path
@@ -95,7 +95,7 @@ RSpec.feature "Quantity Promotions" do
       )
     end
 
-    background { FactoryGirl.create(:product, name: "DC-15A") }
+    background { FactoryBot.create(:product, name: "DC-15A") }
 
     scenario "odd number of changes to quantities" do
       fill_in "order_line_items_attributes_0_quantity", with: 3

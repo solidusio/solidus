@@ -2,7 +2,7 @@ require 'spree/testing_support/factories/order_factory'
 require 'spree/testing_support/factories/stock_location_factory'
 require 'spree/testing_support/factories/shipping_method_factory'
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :shipment, class: 'Spree::Shipment' do
     tracking 'U10000'
     cost 100.00

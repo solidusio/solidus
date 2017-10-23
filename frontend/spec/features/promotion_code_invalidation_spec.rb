@@ -2,7 +2,7 @@ require 'spec_helper'
 
 RSpec.feature "Promotion Code Invalidation" do
   given!(:promotion) do
-    FactoryGirl.create(
+    FactoryBot.create(
       :promotion_with_item_adjustment,
       code: "PROMO",
       per_code_usage_limit: 1,
@@ -12,8 +12,8 @@ RSpec.feature "Promotion Code Invalidation" do
 
   background do
     create(:store)
-    FactoryGirl.create(:product, name: "DL-44")
-    FactoryGirl.create(:product, name: "E-11")
+    FactoryBot.create(:product, name: "DL-44")
+    FactoryBot.create(:product, name: "E-11")
 
     visit spree.root_path
     click_link "DL-44"

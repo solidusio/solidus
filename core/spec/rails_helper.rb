@@ -45,5 +45,5 @@ RSpec.configure do |config|
   end
 
   config.include ActiveJob::TestHelper
-  config.include FactoryGirl::Syntax::Methods
+  config.include FactoryBot::Syntax::Methods
 end
