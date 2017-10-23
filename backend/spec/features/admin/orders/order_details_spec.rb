@@ -6,7 +6,6 @@ describe "Order Details", type: :feature, js: true do
 
   let!(:stock_location) { create(:stock_location_with_items) }
   let!(:product) { create(:product, name: 'spree t-shirt', price: 20.00) }
-  let!(:tote) { create(:product, name: "Tote", price: 15.00) }
   let(:order) { create(:order, state: 'complete', completed_at: "2011-02-01 12:36:15", number: "R100") }
   let(:state) { create(:state) }
   let(:line_item) { order.line_items.first }
@@ -27,8 +26,14 @@ describe "Order Details", type: :feature, js: true do
     stub_authorization!
 
     context "cart edit page" do
+      let(:track_inventory) { true }
+      let(:backorderable) { true }
+      let(:count_on_hand) { 100 }
+
       before do
-        product.master.stock_items.first.update_column(:count_on_hand, 100)
+        product.master.update_columns(track_inventory: track_inventory)
+        product.master.stock_items.update_all(count_on_hand: count_on_hand, backorderable: backorderable)
+
         visit spree.cart_admin_order_path(order)
       end
 
@@ -130,26 +135,22 @@ describe "Order Details", type: :feature, js: true do
       end
 
       context "variant doesn't track inventory" do
-        before do
-          tote.master.update_column :track_inventory, false
-          # make sure there's no stock level for any item
-          tote.master.stock_items.update_all count_on_hand: 0, backorderable: false
-        end
+        let(:track_inventory) { false }
+        let(:backorderable) { false }
+        let(:count_on_hand) { 0 }
 
         it "adds variant to order just fine" do
-          add_line_item tote.name
+          add_line_item "spree t-shirt"
 
           within(".line-items") do
-            expect(page).to have_content(tote.name)
+            expect(page).to have_content("spree t-shirt")
           end
         end
       end
 
       context "variant out of stock and not backorderable" do
-        before do
-          product.master.stock_items.first.update_column(:backorderable, false)
-          product.master.stock_items.first.update_column(:count_on_hand, 0)
-        end
+        let(:backorderable) { false }
+        let(:count_on_hand) { 0 }
 
         it "doesn't display the out of stock variant in the search results" do
           click_on 'Add Item'
@@ -173,7 +174,6 @@ describe "Order Details", type: :feature, js: true do
       end
 
       context 'splitting to location' do
-        before { visit spree.edit_admin_order_path(order) }
         # can not properly implement until poltergeist supports checking alert text
         # see https://github.com/teampoltergeist/poltergeist/pull/516
         it 'should warn you if you have not selected a location or shipment'
@@ -182,6 +182,8 @@ describe "Order Details", type: :feature, js: true do
           it 'should allow me to make a split' do
             expect(order.shipments.count).to eq(1)
             expect(order.shipments.first.inventory_units_for(product.master).count).to eq(2)
+
+            visit spree.edit_admin_order_path(order)
 
             within('tr', text: line_item.sku) { click_icon 'arrows-h' }
             complete_split_to(stock_location2)
@@ -195,6 +197,8 @@ describe "Order Details", type: :feature, js: true do
           end
 
           it 'should allow me to make a transfer via splitting off all stock' do
+            visit spree.edit_admin_order_path(order)
+
             expect(order.shipments.first.stock_location.id).to eq(stock_location.id)
 
             within('tr', text: line_item.sku) { click_icon 'arrows-h' }
@@ -209,6 +213,8 @@ describe "Order Details", type: :feature, js: true do
           end
 
           it 'should not allow me to split more than I had in the original shipment' do
+            visit spree.edit_admin_order_path(order)
+
             expect(order.shipments.first.stock_location.id).to eq(stock_location.id)
 
             within('tr', text: line_item.sku) { click_icon 'arrows-h' }
@@ -223,6 +229,8 @@ describe "Order Details", type: :feature, js: true do
           end
 
           it 'should not allow less than or equal to zero qty' do
+            visit spree.edit_admin_order_path(order)
+
             expect(order.shipments.first.stock_location.id).to eq(stock_location.id)
 
             within('tr', text: line_item.sku) { click_icon 'arrows-h' }
@@ -267,6 +275,8 @@ describe "Order Details", type: :feature, js: true do
               product.master.stock_items.last.update_column(:backorderable, false)
               product.master.stock_items.last.update_column(:count_on_hand, 0)
 
+              visit spree.edit_admin_order_path(order)
+
               within('tr', text: line_item.sku) { click_icon 'arrows-h' }
               accept_alert "Desired shipment not enough stock in desired stock location" do
                 complete_split_to(stock_location2, quantity: 2)
@@ -282,6 +292,8 @@ describe "Order Details", type: :feature, js: true do
             it 'should allow me to split and backorder the stock' do
               product.master.stock_items.last.update_column(:count_on_hand, 0)
               product.master.stock_items.last.update_column(:backorderable, true)
+
+              visit spree.edit_admin_order_path(order)
 
               within('tr', text: line_item.sku) { click_icon 'arrows-h' }
               complete_split_to(stock_location2, quantity: 2)
@@ -299,6 +311,8 @@ describe "Order Details", type: :feature, js: true do
           it 'should have no problem splitting if multiple items are in the from shipment' do
             order.contents.add(create(:variant), 2)
             order.reload
+
+            visit spree.edit_admin_order_path(order)
 
             expect(order.shipments.count).to eq(1)
             expect(order.shipments.first.manifest.count).to eq(2)
@@ -338,12 +352,10 @@ describe "Order Details", type: :feature, js: true do
       context 'splitting to shipment' do
         let!(:shipment2) { order.shipments.create(stock_location_id: stock_location2.id) }
 
-        before do
-          visit spree.edit_admin_order_path(order)
-        end
-
         it 'should delete the old shipment if enough are split off' do
           expect(order.shipments.count).to eq(2)
+
+          visit spree.edit_admin_order_path(order)
 
           within('tr', text: line_item.sku) { click_icon 'arrows-h' }
           complete_split_to(shipment2, quantity: 2)
@@ -361,6 +373,8 @@ describe "Order Details", type: :feature, js: true do
 
           it 'should not allow a split if the receiving shipment qty plus the incoming is greater than the count_on_hand' do
             expect(order.shipments.count).to eq(2)
+
+            visit spree.edit_admin_order_path(order)
             expect(page).to have_css('.item-name', text: product.name, count: 1)
 
             within('tr', text: line_item.sku) { click_icon 'arrows-h' }
@@ -382,6 +396,7 @@ describe "Order Details", type: :feature, js: true do
           end
 
           it 'should not allow a shipment to split stock to itself' do
+            visit spree.edit_admin_order_path(order)
             within('tr', text: line_item.sku) { click_icon 'arrows-h' }
             click_on 'Choose location'
             within '.select2-results' do
@@ -394,6 +409,8 @@ describe "Order Details", type: :feature, js: true do
             variant2 = create(:variant)
             order.contents.add(variant2, 2, shipment: shipment2)
             order.reload
+
+            visit spree.edit_admin_order_path(order)
 
             within('tr', text: line_item.sku) { click_icon 'arrows-h' }
             complete_split_to(shipment2, quantity: 1)
@@ -414,7 +431,9 @@ describe "Order Details", type: :feature, js: true do
             shipment1.inventory_units.update_all(state: :on_hand)
             product.master.stock_items.last.update_column(:backorderable, true)
             product.master.stock_items.last.update_column(:count_on_hand, 0)
-            expect(shipment2.reload.backordered?).to eq(false)
+            expect(shipment2.reload).not_to be_backordered
+
+            visit spree.edit_admin_order_path(order)
 
             within('tr', text: line_item.sku) { click_icon 'arrows-h' }
             complete_split_to(shipment2, quantity: 1)
