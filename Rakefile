@@ -11,7 +11,9 @@ end
     %w(api backend core frontend sample).each do |gem_name|
       print_title(gem_name)
       Dir.chdir("#{File.dirname(__FILE__)}/#{gem_name}") do
-        sh "rake #{task}"
+        Bundler.with_clean_env do
+          sh "bundle exec rake #{task}"
+        end
       end
     end
   end
