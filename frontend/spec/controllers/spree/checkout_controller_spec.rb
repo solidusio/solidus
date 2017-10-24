@@ -3,10 +3,10 @@ require 'spec_helper'
 describe Spree::CheckoutController, type: :controller do
   let(:token) { 'some_token' }
   let(:user) { create(:user) }
-  let(:order) { FactoryGirl.create(:order_with_totals) }
+  let(:order) { FactoryBot.create(:order_with_totals) }
 
   let(:address_params) do
-    address = FactoryGirl.build(:address)
+    address = FactoryBot.build(:address)
     address.attributes.except("created_at", "updated_at")
   end
 
@@ -85,7 +85,7 @@ describe Spree::CheckoutController, type: :controller do
         # Must have *a* shipping method and a payment method so updating from address works
         allow(order).to receive_messages available_payment_methods: [stub_model(Spree::PaymentMethod)]
         allow(order).to receive_messages ensure_available_shipping_rates: true
-        order.line_items << FactoryGirl.create(:line_item)
+        order.line_items << FactoryBot.create(:line_item)
       end
 
       context "with the order in the cart state" do
@@ -306,7 +306,7 @@ describe Spree::CheckoutController, type: :controller do
 
     context "fails to transition from address" do
       let(:order) do
-        FactoryGirl.create(:order_with_line_items).tap do |order|
+        FactoryBot.create(:order_with_line_items).tap do |order|
           order.next!
           expect(order.state).to eq('address')
         end
@@ -348,13 +348,13 @@ describe Spree::CheckoutController, type: :controller do
 
     context "when GatewayError is raised" do
       let(:order) do
-        FactoryGirl.create(:order_with_line_items).tap do |order|
+        FactoryBot.create(:order_with_line_items).tap do |order|
           until order.state == 'payment'
             order.next!
           end
           # So that the confirmation step is skipped and we get straight to the action.
-          payment_method = FactoryGirl.create(:simple_credit_card_payment_method)
-          payment = FactoryGirl.create(:payment, payment_method: payment_method, amount: order.total)
+          payment_method = FactoryBot.create(:simple_credit_card_payment_method)
+          payment = FactoryBot.create(:payment, payment_method: payment_method, amount: order.total)
           order.payments << payment
           order.next!
         end

@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   sequence(:source_code) { |n| "SRC#{n}" }
   sequence(:destination_code) { |n| "DEST#{n}" }
 

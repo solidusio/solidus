@@ -32,7 +32,7 @@ RSpec.configure do |config|
   # instead of true.
   config.use_transactional_fixtures = false
 
-  config.include FactoryGirl::Syntax::Methods
+  config.include FactoryBot::Syntax::Methods
   config.fail_fast = ENV['FAIL_FAST'] || false
 
   config.example_status_persistence_file_path = "./spec/examples.txt"

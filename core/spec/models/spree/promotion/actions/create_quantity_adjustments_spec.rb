@@ -18,13 +18,13 @@ module Spree::Promotion::Actions
     end
 
     let(:quantity) { 1 }
-    let(:promotion) { FactoryGirl.create :promotion }
+    let(:promotion) { FactoryBot.create :promotion }
 
     describe "#compute_amount" do
       subject { action.compute_amount(line_item) }
 
       context "with a flat rate adjustment" do
-        let(:calculator) { FactoryGirl.create :flat_rate_calculator, preferred_amount: 5 }
+        let(:calculator) { FactoryBot.create :flat_rate_calculator, preferred_amount: 5 }
 
         context "with a quantity group of 2" do
           let(:line_item) { order.line_items.first }
@@ -108,7 +108,7 @@ module Spree::Promotion::Actions
       end
 
       context "with a percentage based adjustment" do
-        let(:calculator) { FactoryGirl.create :percent_on_item_calculator, preferred_percent: 10 }
+        let(:calculator) { FactoryBot.create :percent_on_item_calculator, preferred_percent: 10 }
 
         let(:line_items_attributes) do
           [
@@ -216,7 +216,7 @@ module Spree::Promotion::Actions
 
     # Regression test for https://github.com/solidusio/solidus/pull/1591
     context "with unsaved line_item changes" do
-      let(:calculator) { FactoryGirl.create :flat_rate_calculator }
+      let(:calculator) { FactoryBot.create :flat_rate_calculator }
       let(:line_item) { order.line_items.first }
 
       before do
@@ -231,7 +231,7 @@ module Spree::Promotion::Actions
 
     # Regression test for https://github.com/solidusio/solidus/pull/1591
     context "applied to the order" do
-      let(:calculator) { FactoryGirl.create :flat_rate_calculator }
+      let(:calculator) { FactoryBot.create :flat_rate_calculator }
 
       before do
         action.perform(order: order, promotion: promotion)
@@ -275,7 +275,7 @@ module Spree::Promotion::Actions
     end
 
     describe Spree::Promotion::Actions::CreateQuantityAdjustments::PartialLineItem do
-      let!(:item) { FactoryGirl.create :line_item, order: order, quantity: quantity, price: 10 }
+      let!(:item) { FactoryBot.create :line_item, order: order, quantity: quantity, price: 10 }
       let(:quantity) { 5 }
 
       subject { described_class.new(item) }

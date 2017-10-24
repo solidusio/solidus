@@ -29,7 +29,7 @@ module Spree
 
       context "with a country with the ISO code of 'US' existing" do
         before do
-          FactoryGirl.create(:country, iso: 'US')
+          FactoryBot.create(:country, iso: 'US')
         end
 
         it "can create a new stock location" do

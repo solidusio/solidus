@@ -223,9 +223,9 @@ RSpec.describe Spree::OrderShipping do
     end
 
     context "with stale inventory units (regression test)" do
-      let(:order) { FactoryGirl.create(:order_ready_to_ship, line_items_count: 1) }
+      let(:order) { FactoryBot.create(:order_ready_to_ship, line_items_count: 1) }
       let(:shipment) do
-        FactoryGirl.create(
+        FactoryBot.create(
           :shipment,
           order: order
         )

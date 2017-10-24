@@ -8,7 +8,7 @@ RSpec.describe Spree::Calculator::DistributedAmount, type: :model do
     let(:calculator) { Spree::Calculator::DistributedAmount.new }
 
     let(:order) do
-      FactoryGirl.create(
+      FactoryBot.create(
         :order_with_line_items,
         line_items_attributes: [{ price: 50 }, { price: 50 }, { price: 50 }]
       )

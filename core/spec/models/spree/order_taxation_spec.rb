@@ -1,15 +1,15 @@
 require 'rails_helper'
 
 RSpec.describe Spree::OrderTaxation do
-  let(:shipping_address) { FactoryGirl.create(:address, state: new_york) }
-  let(:order) { FactoryGirl.create(:order, ship_address: shipping_address, state: "delivery") }
+  let(:shipping_address) { FactoryBot.create(:address, state: new_york) }
+  let(:order) { FactoryBot.create(:order, ship_address: shipping_address, state: "delivery") }
 
-  let(:new_york) { FactoryGirl.create(:state, state_code: "NY") }
-  let(:new_york_zone) { FactoryGirl.create(:zone, states: [new_york]) }
+  let(:new_york) { FactoryBot.create(:state, state_code: "NY") }
+  let(:new_york_zone) { FactoryBot.create(:zone, states: [new_york]) }
 
-  let(:books_category) { FactoryGirl.create(:tax_category, name: "Books") }
+  let(:books_category) { FactoryBot.create(:tax_category, name: "Books") }
   let(:book_tax_rate) do
-    FactoryGirl.create(
+    FactoryBot.create(
       :tax_rate,
       name: "New York Sales Tax",
       tax_categories: [books_category],
@@ -20,7 +20,7 @@ RSpec.describe Spree::OrderTaxation do
   end
 
   let(:book) do
-    FactoryGirl.create(
+    FactoryBot.create(
       :product,
       price: 20,
       name: "Book",
