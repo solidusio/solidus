@@ -13,9 +13,9 @@ module Spree
         else
           @users = Spree.user_class.ransack({
             m: 'or',
-            email_start: params[:q],
-            addresses_firstname_start: params[:q],
-            addresses_lastname_start: params[:q]
+            email_start: params[:q][:email_start],
+            addresses_firstname_start: params[:q][:addresses_firstname_start],
+            addresses_lastname_start: params[:q][:addresses_lastname_start]
           }).result.limit(10)
         end
       end
