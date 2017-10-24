@@ -1,6 +1,5 @@
 task :dummy_environment do
   ENV['RAILS_ENV'] = 'test'
-  ENV['VERBOSE'] = 'false'
   require 'spree/testing_support/dummy_app'
 end
 
@@ -17,7 +16,16 @@ namespace :db do
 
   desc "Migrates the test database"
   task migrate: :dummy_environment do
-    ActiveRecord::Tasks::DatabaseTasks.migrate
+    ActiveRecord::Migration.verbose = false
+
+    # We want to simulate how migrations would be run if a user ran
+    # railties:install:migrations and then db:migrate.
+    # Migrations should be run one directory at a time
+    ActiveRecord::Migrator.migrations_paths.each do |path|
+      ActiveRecord::Migrator.migrate(path)
+    end
+
+    ActiveRecord::Base.clear_cache!
   end
 
   desc "Recreates the test database and re-runs all migrations"
