@@ -19,10 +19,10 @@ Style/ClassVars:
   Enabled: false
 
 # We need these names for backwards compatability
-Style/PredicateName:
+Naming/PredicateName:
   Enabled: false
 
-Style/AccessorMethodName:
+Naming/AccessorMethodName:
   Enabled: false
 
 # This has been used for customization
@@ -53,7 +53,7 @@ Performance/Count:
 Style/RaiseArgs:
   Enabled: false
 
-Style/OpMethod:
+Naming/BinaryOperatorParameterName:
   Enabled: false
 
 # We can use good judgement here
@@ -124,7 +124,7 @@ Security/Eval:
     - 'Gemfile'
     - '*/Gemfile'
 
-Style/VariableNumber:
+Naming/VariableNumber:
   Enabled: false
 
 # Write empty methods as you wish.
