@@ -1,5 +1,5 @@
 
-module Dummy
+module DummyApp
   class AutoMigrate
     # Ensure database exists
     def database_exists?
@@ -37,4 +37,4 @@ ActiveRecord::Migrator.migrations_paths = Rails.application.migration_railties.f
   end
 end
 
-Dummy::AutoMigrate.new.migrate
+DummyApp::AutoMigrate.new.migrate

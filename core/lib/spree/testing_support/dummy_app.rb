@@ -30,7 +30,7 @@ end
 module ApplicationHelper
 end
 
-module Dummy
+module DummyApp
   def self.gem_root
     Pathname.new(File.dirname(ENV['BUNDLE_GEMFILE']))
   end
@@ -40,7 +40,7 @@ module Dummy
   end
 
   class Application < ::Rails::Application
-    config.root                                       = Dummy.rails_root
+    config.root                                       = DummyApp.rails_root
     config.eager_load                                 = false
     config.cache_classes                              = true
     config.cache_store                                = :memory_store
@@ -56,6 +56,10 @@ module Dummy
     config.active_support.deprecation                 = :stderr
     config.secret_token                               = 'SECRET_TOKEN'
     config.secret_key_base                            = 'SECRET_TOKEN'
+
+    # Avoid issues if an old spec/dummy still exists
+    config.paths['config/initializers'] = []
+    config.paths['config/environments'] = []
 
     migration_dirs = Rails.application.migration_railties.flat_map do |engine|
       if engine.respond_to?(:paths)
@@ -79,9 +83,9 @@ end
 
 Spree.user_class = 'Spree::LegacyUser'
 
-Dummy::Application.initialize!
+DummyApp::Application.initialize!
 
-Dummy::Application.routes.draw do
+DummyApp::Application.routes.draw do
   mount Spree::Core::Engine, at: '/'
 end
 
