@@ -41,8 +41,8 @@ module Dummy
 
   class Application < ::Rails::Application
     config.root                                       = Dummy.rails_root
-    config.eager_load                                 = Rails.env.production?
-    config.cache_classes                              = !Rails.env.development?
+    config.eager_load                                 = false
+    config.cache_classes                              = true
     config.cache_store                                = :memory_store
     config.serve_static_assets                        = true
     config.public_file_server.headers                 = { 'Cache-Control' => 'public, max-age=3600' }
@@ -54,7 +54,6 @@ module Dummy
     config.action_mailer.delivery_method              = :test
     config.action_controller.allow_forgery_protection = false
     config.active_support.deprecation                 = :stderr
-    config.eager_load                                 = false
     config.secret_token                               = 'SECRET_TOKEN'
     config.secret_key_base                            = 'SECRET_TOKEN'
 
@@ -91,7 +90,5 @@ ActiveSupport.on_load(:action_controller) do
 end
 
 Spree.config do |config|
-  config.use_static_preferences!
-
   config.mails_from = "store@example.com"
 end
