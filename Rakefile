@@ -12,6 +12,7 @@ end
       print_title(gem_name)
       Dir.chdir("#{File.dirname(__FILE__)}/#{gem_name}") do
         Bundler.with_clean_env do
+          sh "bundle check || bundle update"
           sh "bundle exec rake #{task}"
         end
       end
