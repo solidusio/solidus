@@ -68,8 +68,8 @@ module Dummy
 
     config.action_controller.include_all_helpers = false
 
-    config.assets.paths << File.expand_path('../dummy_app/vendor/assets/javascripts', __FILE__)
-    config.assets.paths << File.expand_path('../dummy_app/vendor/assets/stylesheets', __FILE__)
+    config.assets.paths << File.expand_path('../dummy_app/assets/javascripts', __FILE__)
+    config.assets.paths << File.expand_path('../dummy_app/assets/stylesheets', __FILE__)
 
     config.paths["config/database"] = File.expand_path('../dummy_app/database.yml', __FILE__)
 
