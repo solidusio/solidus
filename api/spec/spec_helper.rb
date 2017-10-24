@@ -16,7 +16,7 @@ ENV["RAILS_ENV"] ||= 'test'
 ENV["LIB_NAME"] = 'solidus_api'
 
 require 'spree/testing_support/dummy_app'
-require 'spree/testing_support/dummy_app/auto_migrate'
+DummyApp::Migrations.auto_migrate
 
 require 'rspec/rails'
 require 'ffaker'

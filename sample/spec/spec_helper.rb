@@ -5,7 +5,7 @@ ENV["LIB_NAME"] = 'solidus_sample'
 
 require 'solidus_sample'
 require 'spree/testing_support/dummy_app'
-require 'spree/testing_support/dummy_app/auto_migrate'
+DummyApp::Migrations.auto_migrate
 
 require 'rspec/rails'
 require 'ffaker'

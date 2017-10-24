@@ -18,7 +18,7 @@ ENV["LIB_NAME"] = 'solidus_backend'
 
 require 'solidus_backend'
 require 'spree/testing_support/dummy_app'
-require 'spree/testing_support/dummy_app/auto_migrate'
+DummyApp::Migrations.auto_migrate
 
 require 'rails-controller-testing'
 require 'rspec/rails'

@@ -69,6 +69,7 @@ module DummyApp
       end
     end
     config.paths['db/migrate'] = migration_dirs
+    ActiveRecord::Migrator.migrations_paths = migration_dirs
 
     config.action_controller.include_all_helpers = false
 
@@ -81,7 +82,7 @@ module DummyApp
   end
 end
 
-Spree.user_class = 'Spree::LegacyUser'
+require 'spree/testing_support/dummy_app/migrations'
 
 DummyApp::Application.initialize!
 
@@ -93,6 +94,7 @@ ActiveSupport.on_load(:action_controller) do
   wrap_parameters format: [:json]
 end
 
+Spree.user_class = 'Spree::LegacyUser'
 Spree.config do |config|
   config.mails_from = "store@example.com"
 end
