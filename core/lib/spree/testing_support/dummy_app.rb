@@ -77,6 +77,7 @@ module DummyApp
     config.assets.paths << File.expand_path('../dummy_app/assets/stylesheets', __FILE__)
 
     config.paths["config/database"] = File.expand_path('../dummy_app/database.yml', __FILE__)
+    config.paths['app/views'] = File.expand_path('../dummy_app/views', __FILE__)
 
     ActionMailer::Base.default from: "store@example.com"
   end
