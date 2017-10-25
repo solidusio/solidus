@@ -17,7 +17,7 @@ json.cache! [I18n.locale, variant] do
   json.option_values(variant.option_values) do |option_value|
     json.(option_value, *option_value_attributes)
   end
-  json.images(variant.images) do |image|
+  json.images(variant.gallery.images) do |image|
     json.partial!("spree/api/images/image", image: image)
   end
 end
