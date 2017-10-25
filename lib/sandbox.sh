@@ -39,6 +39,7 @@ echo "gem 'solidus', :path => '..'" >> Gemfile
 echo "gem 'solidus_auth_devise', '>= 2.1.0'" >> Gemfile
 echo "gem 'rails-i18n'" >> Gemfile
 echo "gem 'solidus_i18n'" >> Gemfile
+echo "gem 'solidus_paperclip', :path => '../../solidus_paperclip'" >> Gemfile
 
 cat <<RUBY >> Gemfile
 group :test, :development do
@@ -52,3 +53,4 @@ bundle install --gemfile Gemfile
 bundle exec rake db:drop db:create
 bundle exec rails g spree:install --auto-accept --user_class=Spree::User --enforce_available_locales=true
 bundle exec rails g solidus:auth:install
+bundle exec rails g solidus_paperclip:install
