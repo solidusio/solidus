@@ -19,11 +19,17 @@ module Spree
     # which needs it)
     def apply_coupon_code
       if params[:order] && params[:order][:coupon_code]
+        Spree::Deprecation.warn("Passing params[:order][:coupon_code] is deprecated and will have no effect in a future version.", caller)
         @order.coupon_code = params[:order][:coupon_code]
 
         handler = PromotionHandler::Coupon.new(@order).apply
 
         if handler.error.present?
+          # If there are errors applying the coupon code we need to render the
+          # edit view and stop the request execution. Checkout steps need a
+          # setup before rendering the edit view or they will miss some ivars.
+          send(:setup_for_current_state) if respond_to?(:setup_for_current_state, true)
+
           flash.now[:error] = handler.error
           respond_with(@order) { |format| format.html { render :edit } } && return
         elsif handler.success

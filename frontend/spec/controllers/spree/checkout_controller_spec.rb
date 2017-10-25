@@ -429,4 +429,42 @@ describe Spree::CheckoutController, type: :controller do
       post :update, params: { state: "payment" }
     }.to change { order.line_items.to_a.size }.from(1).to(0)
   end
+
+  context 'trying to apply a coupon code' do
+    let(:order) { create(:order_with_line_items, state: 'payment', guest_token: 'a token') }
+    before { cookies.signed[:guest_token] = order.guest_token }
+
+    context "when coupon code is applied" do
+      let(:coupon_code) { "coupon_code" }
+      before { create(:promotion, :with_order_adjustment, code: coupon_code) }
+
+      it "continues checkout flow normally" do
+        Spree::Deprecation.silence do
+          put :update, params: { state: order.state, order: { coupon_code: coupon_code } }
+        end
+
+        expect(response).to redirect_to(spree.checkout_state_path('confirm'))
+        expect(flash.now[:success]).to eq(Spree.t(:coupon_code_applied))
+      end
+    end
+
+    context 'when coupon code is not applied' do
+      let(:coupon_code) { 'wrong_coupon_code' }
+
+      it "renders edit view and setups current checkout step correctly" do
+        Spree::Deprecation.silence do
+          put :update, params: { state: order.state, order: { coupon_code: coupon_code } }
+        end
+
+        expect(response).to render_template :edit
+        expect(flash.now[:error]).to eq(Spree.t(:coupon_code_not_found))
+        expect(assigns(:wallet_payment_sources)).to eq [] # empty since user wallet has no saved payment source
+      end
+    end
+
+    it 'emits a deprecation warning' do
+      expect(Spree::Deprecation).to receive(:warn)
+      put :update, params: { state: order.state, order: { coupon_code: "coupon_code" } }
+    end
+  end
 end
