@@ -41,6 +41,9 @@ Style/GuardClause:
 Style/Next:
   Enabled: false
 
+Style/NumericPredicate:
+  Enabled: false
+
 Style/WordArray:
   Enabled: false
 
