@@ -380,6 +380,15 @@ module Spree
       end.flatten.compact
     end
 
+    # An Enumerable of media goes along with a product
+    # Stores may not necessarily want to attach images to products (variants)
+    # This provides a more robust interface
+    #
+    # @return [Enumberable] of media for a product (and its variants)
+    def gallery
+      []
+    end
+
     private
 
     def rebuild_vat_prices?

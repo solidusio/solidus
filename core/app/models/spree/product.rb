@@ -304,6 +304,15 @@ module Spree
       end
     end
 
+    # An Enumerable of media goes along with a variant
+    # Stores may not necessarily want to attach images to variants
+    # This provides a more robust interface
+    #
+    # @return [Enumberable] of media for a variant
+    def gallery
+      []
+    end
+
     private
 
     def any_variants_not_track_inventory?
