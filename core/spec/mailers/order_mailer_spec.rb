@@ -1,10 +1,6 @@
 require 'rails_helper'
-require 'email_spec'
 
 RSpec.describe Spree::OrderMailer, type: :mailer do
-  include EmailSpec::Helpers
-  include EmailSpec::Matchers
-
   let(:order) do
     order = create(:order)
     product = stub_model(Spree::Product, name: %{The "BEST" product})
@@ -65,15 +61,15 @@ RSpec.describe Spree::OrderMailer, type: :mailer do
     # Tests mailer view spree/order_mailer/confirm_email.text.erb
     specify do
       confirmation_email = Spree::OrderMailer.confirm_email(order)
-      expect(confirmation_email).to have_body_text("4.99")
-      expect(confirmation_email).to_not have_body_text("5.00")
+      expect(confirmation_email.parts.first.body).to include("4.99")
+      expect(confirmation_email.parts.first.body).to_not include("5.00")
     end
 
     # Tests mailer view spree/order_mailer/cancel_email.text.erb
     specify do
       cancel_email = Spree::OrderMailer.cancel_email(order)
-      expect(cancel_email).to have_body_text("4.99")
-      expect(cancel_email).to_not have_body_text("5.00")
+      expect(cancel_email.parts.first.body).to include("4.99")
+      expect(cancel_email.parts.first.body).to_not include("5.00")
     end
   end
 
@@ -96,14 +92,14 @@ RSpec.describe Spree::OrderMailer, type: :mailer do
       context "confirm_email" do
         specify do
           confirmation_email = Spree::OrderMailer.confirm_email(order)
-          expect(confirmation_email).to have_body_text("Caro Cliente,")
+          expect(confirmation_email.parts.first.body).to include("Caro Cliente,")
         end
       end
 
       context "cancel_email" do
         specify do
           cancel_email = Spree::OrderMailer.cancel_email(order)
-          expect(cancel_email).to have_body_text("Resumo da Pedido [CANCELADA]")
+          expect(cancel_email.parts.first.body).to include("Resumo da Pedido [CANCELADA]")
         end
       end
     end
