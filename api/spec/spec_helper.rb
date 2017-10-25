@@ -67,10 +67,6 @@ RSpec.configure do |config|
   end
 
   config.include ActiveJob::TestHelper
-  config.include VersionCake::TestHelpers, type: :controller
-  config.before(:each, type: :controller) do
-    set_request_version('', 1)
-  end
 
   config.use_transactional_fixtures = true
 
