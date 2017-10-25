@@ -4,13 +4,25 @@ RSpec.describe Spree::PromotionCode do
   context 'callbacks' do
     subject { promotion_code.save }
 
-    describe '#downcase_value' do
-      let(:promotion) { create(:promotion, code: 'NewCoDe') }
+    describe '#normalize_code' do
+      let(:promotion) { create(:promotion, code: code) }
       let(:promotion_code) { promotion.codes.first }
 
-      it 'downcases the value before saving' do
-        subject
-        expect(promotion_code.value).to eq('newcode')
+      before { subject }
+
+      context 'with mixed case' do
+        let(:code) { 'NewCoDe' }
+
+        it 'downcases the value before saving' do
+          expect(promotion_code.value).to eq('newcode')
+        end
+      end
+
+      context 'with extra spacing' do
+        let(:code) { ' new code ' }
+        it 'removes surrounding whitespace' do
+          expect(promotion_code.value).to eq 'new code'
+        end
       end
     end
   end
