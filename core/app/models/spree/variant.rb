@@ -394,6 +394,14 @@ module Spree
       end.flatten.compact
     end
 
+    # The gallery for the variant, which represents all the images
+    # associated with it
+    #
+    # @return [Spree::Gallery] the media for a variant
+    def gallery
+      @gallery ||= Spree::Config.variant_gallery_class.new(self)
+    end
+
     private
 
     def rebuild_vat_prices?

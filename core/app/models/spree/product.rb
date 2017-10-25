@@ -310,6 +310,14 @@ module Spree
       end
     end
 
+    # The gallery for the product, which represents all the images
+    # associated with it, including those on its variants
+    #
+    # @return [Spree::Gallery] the media for a variant
+    def gallery
+      @gallery ||= Spree::Config.product_gallery_class.new(self)
+    end
+
     private
 
     def any_variants_not_track_inventory?
