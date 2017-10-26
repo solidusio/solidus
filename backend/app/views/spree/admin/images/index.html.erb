@@ -37,7 +37,7 @@
   <div id="progress-zone" class="row"></div>
 </fieldset>
 
-<% no_images = @product.images.empty? && @product.variant_images.empty? %>
+<% no_images = @product.gallery.images.empty? %>
 
 <table class="index sortable inline-editable-table <%= 'hidden' if no_images %>" id="images-table" data-hook="images_table" data-sortable-link="<%= update_positions_admin_product_images_url(@product) %>">
   <colgroup>
@@ -63,7 +63,7 @@
   </thead>
 
   <tbody>
-    <%= render partial: 'image_row', collection: @product.variant_images, as: :image %>
+    <%= render partial: 'image_row', collection: @product.gallery.images, as: :image %>
   </tbody>
 </table>
 

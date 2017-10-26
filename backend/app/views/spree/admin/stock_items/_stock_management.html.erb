@@ -28,7 +28,9 @@
         <td class="no-padding" rowspan="<%= row_count %>">
           <div class='variant-container'>
             <div class='variant-image'>
-              <%= render 'spree/admin/shared/image', image: variant.display_image(fallback: false), size: :small %>
+              <%= render 'spree/admin/shared/image',
+                image: variant.gallery.images.first,
+                size: :small %>
             </div>
             <div class='variant-details'>
               <table class='stock-variant-field-table'>
