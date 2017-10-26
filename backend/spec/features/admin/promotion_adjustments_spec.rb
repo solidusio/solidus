@@ -192,8 +192,11 @@ describe "Promotion Adjustments", type: :feature, js: true do
       choose "Multiple promotion codes"
       fill_in "Base code", with: "testing"
       fill_in "Number of codes", with: "10"
-      click_button "Create"
-      expect(page).to have_title("SAVE SAVE SAVE - Promotions")
+
+      perform_enqueued_jobs {
+        click_button "Create"
+        expect(page).to have_title("SAVE SAVE SAVE - Promotions")
+      }
 
       promotion = Spree::Promotion.find_by(name: "SAVE SAVE SAVE")
       expect(promotion.path).to be_nil
