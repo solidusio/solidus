@@ -1,17 +1,17 @@
 <%= render partial: 'spree/admin/shared/order_tabs', locals: { current: 'Customer Returns' } %>
 
-<% admin_breadcrumb("#{Spree.t(:editing_reimbursement)} #{@reimbursement.number}") %>
+<% admin_breadcrumb("#{t('spree.editing_reimbursement')} #{@reimbursement.number}") %>
 
 
 <% content_for :page_actions do %>
-  <li><%= button_link_to Spree.t(:back_to_customer_return), url_for([:edit, :admin, @order, @reimbursement.customer_return]) %></li>
+  <li><%= button_link_to t('spree.back_to_customer_return'), url_for([:edit, :admin, @order, @reimbursement.customer_return]) %></li>
 <% end %>
 
 <%= render partial: 'spree/shared/error_messages', locals: { target: @reimbursement } %>
 
 <%= form_for [:admin, @order, @reimbursement] do |f| %>
   <fieldset class='no-border-bottom'>
-    <legend align='center'><%= Spree.t(:items_to_be_reimbursed) %></legend>
+    <legend align='center'><%= t('spree.items_to_be_reimbursed') %></legend>
     <table class="index reimbursement-return-items">
       <thead>
         <tr>
@@ -64,19 +64,19 @@
 
   <div class="form-buttons filter-actions actions" data-hook="buttons">
     <%= f.button do %>
-      <%= Spree.t(:update) %>
+      <%= t('spree.update') %>
     <% end %>
   </div>
   <br/>
 <% end %>
 
 <fieldset>
-  <legend align='center'><%= Spree.t(:calculated_reimbursements) %></legend>
+  <legend align='center'><%= t('spree.calculated_reimbursements') %></legend>
   <table class="index calculated-reimbursements">
     <thead data-hook="customer_return_header">
       <tr>
         <th><%= Spree::ReimbursementType.model_name.human %></th>
-        <th><%= Spree.t(:description) %></th>
+        <th><%= t('spree.description') %></th>
         <th><%= Spree::Reimbursement.human_attribute_name(:total) %></th>
       </tr>
     </thead>
@@ -92,15 +92,15 @@
   </table>
   <% if @order.has_non_reimbursement_related_refunds? %>
     <span class="red">
-      <%= Spree.t(:note_already_received_a_refund) %>
+      <%= t('spree.note_already_received_a_refund') %>
     </span>
   <% end %>
   <div class="form-buttons filter-actions actions" data-hook="reimburse-buttons">
     <% if !@reimbursement.reimbursed? %>
       <%= button_to [:perform, :admin, @order, @reimbursement], { class: 'button', method: 'post' } do %>
-        <%= Spree.t(:reimburse) %>
+        <%= t('spree.reimburse') %>
       <% end %>
-      <%= button_link_to Spree.t('actions.cancel'), url_for([:admin, @order, @reimbursement.customer_return]) %>
+      <%= button_link_to t('spree.actions.cancel'), url_for([:admin, @order, @reimbursement.customer_return]) %>
     <% end %>
   </div>
 </fieldset>

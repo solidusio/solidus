@@ -38,11 +38,11 @@
 
   <td class="actions">
     <% if can?(:update, image) %>
-      <%= link_to_with_icon 'check', Spree.t('actions.save'), api_variant_image_path(@product, image), no_text: true, data: {action: 'save'} %>
+      <%= link_to_with_icon 'check', t('spree.actions.save'), api_variant_image_path(@product, image), no_text: true, data: {action: 'save'} %>
 
-      <%= link_to_with_icon 'cancel', Spree.t('actions.cancel'), nil, no_text: true, data: {action: 'cancel'} %>
+      <%= link_to_with_icon 'cancel', t('spree.actions.cancel'), nil, no_text: true, data: {action: 'cancel'} %>
 
-      <%= link_to_with_icon 'edit', Spree.t('actions.edit'), edit_admin_product_image_path(@product, image), no_text: true, data: {action: 'edit'} %>
+      <%= link_to_with_icon 'edit', t('spree.actions.edit'), edit_admin_product_image_path(@product, image), no_text: true, data: {action: 'edit'} %>
     <% end %>
 
     <% if can?(:destroy, image) %>

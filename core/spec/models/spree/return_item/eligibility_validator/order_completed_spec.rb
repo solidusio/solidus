@@ -25,7 +25,7 @@ RSpec.describe Spree::ReturnItem::EligibilityValidator::OrderCompleted do
 
       it "sets an error" do
         subject
-        expect(validator.errors[:order_not_completed]).to eq Spree.t('return_item_order_not_completed')
+        expect(validator.errors[:order_not_completed]).to eq I18n.t('spree.return_item_order_not_completed')
       end
     end
   end

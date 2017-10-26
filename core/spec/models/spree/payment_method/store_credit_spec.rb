@@ -21,7 +21,7 @@ RSpec.describe Spree::PaymentMethod::StoreCredit do
 
       it "declines an unknown store credit" do
         expect(subject.success?).to be false
-        expect(subject.message).to include Spree.t('store_credit.unable_to_find')
+        expect(subject.message).to include I18n.t('spree.store_credit.unable_to_find')
       end
     end
 
@@ -30,7 +30,7 @@ RSpec.describe Spree::PaymentMethod::StoreCredit do
 
       it "declines a store credit" do
         expect(subject.success?).to be false
-        expect(subject.message).to include Spree.t('store_credit.insufficient_funds')
+        expect(subject.message).to include I18n.t('spree.store_credit.insufficient_funds')
       end
     end
 
@@ -39,7 +39,7 @@ RSpec.describe Spree::PaymentMethod::StoreCredit do
 
       it "declines the credit" do
         expect(subject.success?).to be false
-        expect(subject.message).to include Spree.t('store_credit.currency_mismatch')
+        expect(subject.message).to include I18n.t('spree.store_credit.currency_mismatch')
       end
     end
 
@@ -80,7 +80,7 @@ RSpec.describe Spree::PaymentMethod::StoreCredit do
 
       it "declines an unknown store credit" do
         expect(subject.success?).to be false
-        expect(subject.message).to include Spree.t('store_credit.unable_to_find')
+        expect(subject.message).to include I18n.t('spree.store_credit.unable_to_find')
       end
     end
 
@@ -93,7 +93,7 @@ RSpec.describe Spree::PaymentMethod::StoreCredit do
 
       it "declines a store credit" do
         expect(subject.success?).to be false
-        expect(subject.message).to include Spree.t('store_credit.insufficient_authorized_amount')
+        expect(subject.message).to include I18n.t('spree.store_credit.insufficient_authorized_amount')
       end
     end
 
@@ -102,13 +102,13 @@ RSpec.describe Spree::PaymentMethod::StoreCredit do
 
       it "declines the credit" do
         expect(subject.success?).to be false
-        expect(subject.message).to include Spree.t('store_credit.currency_mismatch')
+        expect(subject.message).to include I18n.t('spree.store_credit.currency_mismatch')
       end
     end
 
     context 'with a valid request' do
       it "captures the store credit" do
-        expect(subject.message).to include Spree.t('store_credit.successful_action', action: Spree::StoreCredit::CAPTURE_ACTION)
+        expect(subject.message).to include I18n.t('spree.store_credit.successful_action', action: Spree::StoreCredit::CAPTURE_ACTION)
         expect(subject.success?).to be true
       end
 
@@ -139,7 +139,7 @@ RSpec.describe Spree::PaymentMethod::StoreCredit do
 
       it "declines an unknown store credit" do
         expect(subject.success?).to be false
-        expect(subject.message).to include Spree.t('store_credit.unable_to_find')
+        expect(subject.message).to include I18n.t('spree.store_credit.unable_to_find')
       end
     end
 
@@ -153,7 +153,7 @@ RSpec.describe Spree::PaymentMethod::StoreCredit do
 
     it "voids a valid store credit void request" do
       expect(subject.success?).to be true
-      expect(subject.message).to include Spree.t('store_credit.successful_action', action: Spree::StoreCredit::VOID_ACTION)
+      expect(subject.message).to include I18n.t('spree.store_credit.successful_action', action: Spree::StoreCredit::VOID_ACTION)
     end
 
     context 'with an originator' do
@@ -181,7 +181,7 @@ RSpec.describe Spree::PaymentMethod::StoreCredit do
 
       resp = subject.purchase(amount * 100.0, store_credit, gateway_options)
       expect(resp.success?).to be false
-      expect(resp.message).to include Spree.t('store_credit.unable_to_find')
+      expect(resp.message).to include I18n.t('spree.store_credit.unable_to_find')
     end
 
     it "captures a purchase if it can find a pending credit for the correct amount" do
@@ -194,7 +194,7 @@ RSpec.describe Spree::PaymentMethod::StoreCredit do
 
       resp = subject.purchase(amount * 100.0, store_credit, gateway_options)
       expect(resp.success?).to be true
-      expect(resp.message).to include Spree.t('store_credit.successful_action', action: Spree::StoreCredit::CAPTURE_ACTION)
+      expect(resp.message).to include I18n.t('spree.store_credit.successful_action', action: Spree::StoreCredit::CAPTURE_ACTION)
     end
   end
 
@@ -214,7 +214,7 @@ RSpec.describe Spree::PaymentMethod::StoreCredit do
 
       it "declines an unknown store credit" do
         expect(subject.success?).to be false
-        expect(subject.message).to include Spree.t('store_credit.unable_to_find')
+        expect(subject.message).to include I18n.t('spree.store_credit.unable_to_find')
       end
     end
 
@@ -231,7 +231,7 @@ RSpec.describe Spree::PaymentMethod::StoreCredit do
 
       it "credits a valid store credit credit request" do
         expect(subject.success?).to be true
-        expect(subject.message).to include Spree.t('store_credit.successful_action', action: Spree::StoreCredit::CREDIT_ACTION)
+        expect(subject.message).to include I18n.t('spree.store_credit.successful_action', action: Spree::StoreCredit::CREDIT_ACTION)
       end
     end
 

@@ -6,7 +6,7 @@
   <% if can?(:create, Spree::Variant) && !@product.empty_option_values? %>
     <li id="new_var_link" data-hook>
       <%= link_to(
-        Spree.t(:new_variant),
+        t('spree.new_variant'),
         new_admin_product_variant_url(@product),
         class: 'button'
       ) %>
@@ -20,7 +20,7 @@
 <% else %>
   <% if !Spree::OptionType.any? %>
     <p class='first_add_option_types no-objects-found' data-hook="first_add_option_types">
-      <%= Spree.t(:to_add_variants_you_must_first_define) %>
+      <%= t('spree.to_add_variants_you_must_first_define') %>
       <% if can?(:display, Spree::OptionType) %>
         <%= link_to plural_resource_name(Spree::OptionType), admin_option_types_path%>
       <% else %>
@@ -29,14 +29,14 @@
     </p>
   <% elsif @product.empty_option_values? %>
     <div class="col-9 no-objects-found">
-      <%= Spree.t :no_option_values_on_product_html,
-                  link: link_to(Spree.t(:product_details), [:edit, :admin, @product]) %>
+      <%= t 'spree.no_option_values_on_product_html',
+            link: link_to(t('spree.product_details'), [:edit, :admin, @product]) %>
     </div>
   <% else %>
     <div class="col-9 no-objects-found">
-      <%= Spree.t(:no_resource, resource: plural_resource_name(Spree::Variant)) %>
+      <%= t('spree.no_resource', resource: plural_resource_name(Spree::Variant)) %>
       <% if can? :create, Spree::Variant %>
-        <%= link_to Spree.t(:create_one), new_object_url %>
+        <%= link_to t('spree.create_one'), new_object_url %>
       <% end %>
     </div>
   <% end %>

@@ -25,12 +25,12 @@ module Spree
 
       def set_success_code(c)
         @status_code = c
-        @success = Spree.t(c)
+        @success = I18n.t(c, scope: 'spree')
       end
 
       def set_error_code(c)
         @status_code = c
-        @error = Spree.t(c)
+        @error = I18n.t(c, scope: 'spree')
       end
 
       def promotion

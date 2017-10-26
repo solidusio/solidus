@@ -4,7 +4,7 @@
   <% if @order.shipments.any? &:shipped? %>
     <li>
       <% if can? :create, Spree::ReturnAuthorization %>
-        <%= button_link_to Spree.t(:new_return_authorization), new_admin_order_return_authorization_url(@order) %>
+        <%= button_link_to t('spree.new_return_authorization'), new_admin_order_return_authorization_url(@order) %>
       <% end %>
     </li>
   <% end %>
@@ -30,9 +30,9 @@
           <td><%= return_authorization.number %></td>
           <td>
             <span class="pill pill-<%= return_authorization.state %>">
-              <%= Spree.t(
+              <%= t(
                 return_authorization.state,
-                scope: :return_authorization_states
+                scope: 'spree.return_authorization_states'
               ) %>
             </span>
           </td>
@@ -52,6 +52,6 @@
   </table>
 <% else %>
   <div data-hook="rma_cannot_create" class="no-objects-found">
-    <%= Spree.t(:cannot_create_returns) %>
+    <%= t('spree.cannot_create_returns') %>
   </div>
 <% end %>

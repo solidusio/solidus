@@ -165,7 +165,7 @@ describe "Visiting Products", type: :feature, inaccessible: true do
       click_link product.name
       within("#product-price") do
         expect(page).to have_content variant.price
-        expect(page).not_to have_content Spree.t(:out_of_stock)
+        expect(page).not_to have_content I18n.t('spree.out_of_stock')
       end
     end
 
@@ -174,7 +174,7 @@ describe "Visiting Products", type: :feature, inaccessible: true do
 
       click_link product.name
       within("#product-price") do
-        expect(page).not_to have_content Spree.t(:out_of_stock)
+        expect(page).not_to have_content I18n.t('spree.out_of_stock')
       end
     end
   end

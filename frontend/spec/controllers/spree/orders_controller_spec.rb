@@ -65,7 +65,7 @@ describe Spree::OrdersController, type: :controller do
 
           expect(response).to redirect_to(spree.root_path)
           expect(flash[:error]).to eq(
-            Spree.t(:please_enter_reasonable_quantity)
+            I18n.t('spree.please_enter_reasonable_quantity')
           )
         end
 
@@ -150,7 +150,7 @@ describe Spree::OrdersController, type: :controller do
 
       it "cannot update a blank order" do
         put :update, params: { order: { email: "foo" } }
-        expect(flash[:error]).to eq(Spree.t(:order_not_found))
+        expect(flash[:error]).to eq(I18n.t('spree.order_not_found'))
         expect(response).to redirect_to(spree.root_path)
       end
     end

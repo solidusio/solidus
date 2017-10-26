@@ -13,7 +13,7 @@
       <%= variant.options_text %>
       <% if line_item.insufficient_stock? %>
         <span class="out-of-stock">
-          <%= Spree.t(:out_of_stock) %>&nbsp;&nbsp;<br />
+          <%= t('spree.out_of_stock') %>&nbsp;&nbsp;<br />
         </span>
       <% end %>
       <span class="line-item-description" data-hook="line_item_description">

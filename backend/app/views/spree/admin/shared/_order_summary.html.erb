@@ -1,14 +1,14 @@
 <header id="order_tab_summary" data-hook>
   <dl class="additional-info">
-    <dt class="order-state" id="order_status" data-hook><%= Spree.t(:status) %>:</dt>
+    <dt class="order-state" id="order_status" data-hook><%= t('spree.status') %>:</dt>
     <dd class="order-state">
       <span class="pill pill-<%= @order.state %>">
-        <%= Spree.t(@order.state, scope: :order_state) %>
+        <%= t(@order.state, scope: 'spree.order_state') %>
       </span>
     </dd>
 
     <% if @order.user.present? %>
-      <dt data-hook='admin_order_user_link'><%= Spree.t(:user) %>:</dt>
+      <dt data-hook='admin_order_user_link'><%= t('spree.user') %>:</dt>
       <dd id='order_user_link'><%= link_to @order.user.email, spree.edit_admin_user_path(@order.user) %></dd>
     <% end %>
 
@@ -33,7 +33,7 @@
       <dt class="order-shipment_state"><%= Spree::Shipment.model_name.human %>: </dt>
       <dd class="order-shipment_state" id='shipment_status'>
         <span class="pill pill-<%= @order.shipment_state %>">
-          <%= Spree.t(@order.shipment_state, scope: :shipment_states) %>
+          <%= t(@order.shipment_state, scope: 'spree.shipment_states') %>
         </span>
       </dd>
     <% end %>
@@ -42,7 +42,7 @@
       <dt class="order-payment_state"><%= Spree::Payment.model_name.human %>: </dt>
       <dd class="order-payment_state" id='payment_status'>
         <span class="pill pill-<%= @order.payment_state %>">
-          <%= Spree.t(@order.payment_state, scope: :payment_states) %>
+          <%= t(@order.payment_state, scope: 'spree.payment_states') %>
         </span>
       </dd>
     <% end %>

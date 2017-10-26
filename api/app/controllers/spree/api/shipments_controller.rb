@@ -97,7 +97,7 @@ module Spree
         )
 
         if fulfilment_changer.run!
-          render json: { success: true, message: Spree.t(:shipment_transfer_success) }, status: :accepted
+          render json: { success: true, message: t('spree.shipment_transfer_success') }, status: :accepted
         else
           render json: { success: false, message: fulfilment_changer.errors.full_messages.to_sentence }, status: :accepted
         end

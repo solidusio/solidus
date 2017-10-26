@@ -88,7 +88,7 @@ module Spree
 
           it "returns a specific error message" do
             subject
-            expect(JSON.parse(response.body)["error"]).to eq Spree.t(:item_not_in_stock_transfer)
+            expect(JSON.parse(response.body)["error"]).to eq I18n.t('spree.item_not_in_stock_transfer')
           end
         end
       end

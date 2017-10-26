@@ -484,7 +484,7 @@ describe "Checkout", type: :feature, inaccessible: true do
         fill_in "Coupon Code", with: 'invalid'
         click_on "Apply Code"
 
-        expect(page).to have_content(Spree.t(:coupon_code_not_found))
+        expect(page).to have_content(I18n.t('spree.coupon_code_not_found'))
       end
     end
 
@@ -580,12 +580,12 @@ describe "Checkout", type: :feature, inaccessible: true do
     end
 
     it "displays a thank you message" do
-      expect(page).to have_content(Spree.t(:thank_you_for_your_order))
+      expect(page).to have_content(I18n.t('spree.thank_you_for_your_order'))
     end
 
     it "does not display a thank you message on that order future visits" do
       visit spree.order_path(order)
-      expect(page).to_not have_content(Spree.t(:thank_you_for_your_order))
+      expect(page).to_not have_content(I18n.t('spree.thank_you_for_your_order'))
     end
   end
 

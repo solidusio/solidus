@@ -262,14 +262,14 @@ module Spree
       return unless customer_return && inventory_unit
 
       if customer_return.order_id != inventory_unit.order_id
-        errors.add(:base, Spree.t(:return_items_cannot_be_associated_with_multiple_orders))
+        errors.add(:base, I18n.t('spree.return_items_cannot_be_associated_with_multiple_orders'))
       end
     end
 
     def eligible_exchange_variant
       return unless exchange_variant && exchange_variant_id_changed?
       unless eligible_exchange_variants.include?(exchange_variant)
-        errors.add(:base, Spree.t(:invalid_exchange_variant))
+        errors.add(:base, I18n.t('spree.invalid_exchange_variant'))
       end
     end
 

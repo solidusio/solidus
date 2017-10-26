@@ -17,6 +17,8 @@
     var translation = resolveObject(key, Spree.translations);
     if (translation) {
       return translation;
+    } else if(options.default) {
+      return options.default;
     } else {
       console.warn("No translation found for " + key + ".");
       return key;

@@ -30,7 +30,7 @@ module Spree
 
       def datepicker_field_value(date)
         unless date.blank?
-          l(date, format: Spree.t('date_picker.format', default: '%Y/%m/%d'))
+          l(date, format: t('spree.date_picker.format', default: '%Y/%m/%d'))
         end
       end
 
@@ -90,21 +90,21 @@ module Spree
       # @deprecated Please render each preference keys partial instead. Example:
       # <% @object.preferences.keys.each do |key| %>
       #   <%= render "spree/admin/shared/preference_fields/#{@object.preference_type(key)}",
-      #     form: f, attribute: "preferred_#{key}", label: Spree.t(key) %>
+      #     form: f, attribute: "preferred_#{key}", label: t(key, scope: 'spree') %>
       # <% end %>
       def preference_fields(object, form)
         return unless object.respond_to?(:preferences)
         capture do
           object.preferences.keys.each do |key|
             concat render("spree/admin/shared/preference_fields/#{object.preference_type(key)}",
-              form: form, attribute: "preferred_#{key}", label: Spree.t(key))
+              form: form, attribute: "preferred_#{key}", label: t(key, scope: 'spree'))
           end
         end
       end
       deprecate preference_fields: "Please render each preference key's partial instead. Example: \n" \
         "<% @object.preferences.keys.each do |key| %>\n" \
           "<%= render \"spree/admin/shared/preference_fields/\#{@object.preference_type(key)}\", \n" \
-             "form: f, attribute: \"preferred_\#{key}\", label: Spree.t(key) %>\n" \
+             "form: f, attribute: \"preferred_\#{key}\", label: t(key, scope: 'spree') %>\n" \
         "<% end %>", deprecator: Spree::Deprecation
 
       def link_to_add_fields(name, target, options = {})
@@ -119,7 +119,7 @@ module Spree
         options[:class] = '' unless options[:class]
         options[:class] += 'no-text with-tip' if options[:no_text]
         url = f.object.persisted? ? [:admin, f.object] : '#'
-        link_to_with_icon('trash', name, url, class: "spree_remove_fields #{options[:class]}", data: { action: 'remove' }, title: Spree.t('actions.remove')) + f.hidden_field(:_destroy)
+        link_to_with_icon('trash', name, url, class: "spree_remove_fields #{options[:class]}", data: { action: 'remove' }, title: t('spree.actions.remove')) + f.hidden_field(:_destroy)
       end
 
       def spree_dom_id(record)

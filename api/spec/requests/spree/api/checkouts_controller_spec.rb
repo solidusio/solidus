@@ -367,7 +367,7 @@ module Spree
         order.update_column(:email, "spree@example.com")
         put spree.next_api_checkout_path(order), params: { order_token: order.guest_token }
         expect(response.status).to eq(422)
-        expect(json_response["errors"]["base"]).to include(Spree.t(:there_are_no_items_for_this_order))
+        expect(json_response["errors"]["base"]).to include(I18n.t('spree.there_are_no_items_for_this_order'))
       end
 
       it "can transition an order to the next state" do
@@ -413,7 +413,7 @@ module Spree
         it "returns a sensible error when no payment method is specified" do
           # put :complete, id: order.to_param, order_token: order.token, order: {}
           subject
-          expect(json_response["errors"]["base"]).to include(Spree.t(:no_payment_found))
+          expect(json_response["errors"]["base"]).to include(I18n.t('spree.no_payment_found'))
         end
 
         context "with mismatched expected_total" do
@@ -423,7 +423,7 @@ module Spree
             # put :complete, id: order.to_param, order_token: order.token, expected_total: order.total + 1
             subject
             expect(response.status).to eq(400)
-            expect(json_response['errors']['expected_total']).to include(Spree.t(:expected_total_mismatch, scope: 'api.order'))
+            expect(json_response['errors']['expected_total']).to include(I18n.t('spree.api.order.expected_total_mismatch'))
           end
         end
       end

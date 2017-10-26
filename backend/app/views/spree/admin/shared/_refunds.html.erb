@@ -6,7 +6,7 @@
       <th><%= Spree::Refund.human_attribute_name(:amount) %></th>
       <th><%= Spree::PaymentMethod.model_name.human %></th>
       <th><%= Spree::Refund.human_attribute_name(:transaction_id) %></th>
-      <th><%= Spree.t(:reason) %></th>
+      <th><%= t('spree.reason') %></th>
       <% if show_actions %>
         <th class="actions"></th>
       <% end %>
@@ -23,7 +23,7 @@
         <td><%= truncate(refund.reason.name, length: 100) %></td>
         <% if show_actions %>
           <td class="actions">
-            <%= link_to_with_icon 'edit', Spree.t('actions.edit'), edit_admin_order_payment_refund_path(refund.payment.order, refund.payment, refund), no_text: true %>
+            <%= link_to_with_icon 'edit', t('spree.actions.edit'), edit_admin_order_payment_refund_path(refund.payment.order, refund.payment, refund), no_text: true %>
           </td>
         <% end %>
       </tr>

@@ -84,7 +84,7 @@ describe 'Stock Transfers', type: :feature, js: true do
       it 'ships stock transfer' do
         visit spree.tracking_info_admin_stock_transfer_path(stock_transfer)
 
-        accept_confirm Spree.t('ship_stock_transfer.confirm') do
+        accept_confirm I18n.t('spree.ship_stock_transfer.confirm') do
           click_on 'Ship'
         end
 
@@ -103,7 +103,7 @@ describe 'Stock Transfers', type: :feature, js: true do
       it 'does not ship stock transfer' do
         visit spree.tracking_info_admin_stock_transfer_path(stock_transfer)
 
-        accept_confirm Spree.t('ship_stock_transfer.confirm') do
+        accept_confirm I18n.t('spree.ship_stock_transfer.confirm') do
           click_on 'Ship'
         end
 

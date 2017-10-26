@@ -1,7 +1,7 @@
 <%= render 'spree/admin/shared/shipping_tabs' %>
 
-<% admin_breadcrumb(Spree.t(:settings)) %>
-<% admin_breadcrumb(Spree.t('admin.tab.shipping')) %>
+<% admin_breadcrumb(t('spree.settings')) %>
+<% admin_breadcrumb(t('spree.admin.tab.shipping')) %>
 <% admin_breadcrumb(link_to plural_resource_name(Spree::ShippingMethod), spree.admin_shipping_methods_path) %>
 <% admin_breadcrumb(@shipping_method.name) %>
 

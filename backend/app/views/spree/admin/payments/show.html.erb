@@ -4,13 +4,13 @@
 <% admin_breadcrumb do %>
   <%= payment_method_name(@payment) %>
   <span class="pill pill-<%= @payment.state %>">
-    <%= Spree.t(@payment.state, scope: :payment_states ) %>
+    <%= t(@payment.state, scope: 'spree.payment_states') %>
   </span>
 <% end %>
 
 
 <% content_for :page_actions do %>
-  <li><%= button_link_to Spree.t(:logs), spree.admin_order_payment_log_entries_url(@order, @payment) %></li>
+  <li><%= button_link_to t('spree.logs'), spree.admin_order_payment_log_entries_url(@order, @payment) %></li>
 <% end %>
 
 <%= render partial: "spree/admin/payments/source_views/#{@payment.payment_method.partial_name}", locals: { payment: @payment.source.is_a?(Spree::Payment) ? @payment.source : @payment } %>

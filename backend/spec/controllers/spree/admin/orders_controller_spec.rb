@@ -33,7 +33,7 @@ describe Spree::Admin::OrdersController, type: :controller do
       it "approves an order" do
         expect(order.contents).to receive(:approve).with(user: controller.try_spree_current_user)
         put :approve, params: { id: order.number }
-        expect(flash[:success]).to eq Spree.t(:order_approved)
+        expect(flash[:success]).to eq I18n.t('spree.order_approved')
       end
     end
 
@@ -41,7 +41,7 @@ describe Spree::Admin::OrdersController, type: :controller do
       it "cancels an order" do
         expect(order).to receive(:canceled_by).with(controller.try_spree_current_user)
         put :cancel, params: { id: order.number }
-        expect(flash[:success]).to eq Spree.t(:order_canceled)
+        expect(flash[:success]).to eq I18n.t('spree.order_canceled')
       end
     end
 
@@ -49,7 +49,7 @@ describe Spree::Admin::OrdersController, type: :controller do
       it "resumes an order" do
         expect(order).to receive(:resume!)
         put :resume, params: { id: order.number }
-        expect(flash[:success]).to eq Spree.t(:order_resumed)
+        expect(flash[:success]).to eq I18n.t('spree.order_resumed')
       end
     end
 
@@ -60,7 +60,7 @@ describe Spree::Admin::OrdersController, type: :controller do
         expect(Spree::OrderMailer).to receive(:confirm_email).with(order, true).and_return mail_message
         expect(mail_message).to receive :deliver_later
         post :resend, params: { id: order.number }
-        expect(flash[:success]).to eq Spree.t(:order_email_resent)
+        expect(flash[:success]).to eq I18n.t('spree.order_email_resent')
       end
     end
 
@@ -174,7 +174,7 @@ describe Spree::Admin::OrdersController, type: :controller do
 
           it 'messages and redirects' do
             subject
-            expect(flash[:success]).to eq Spree.t('order_ready_for_confirm')
+            expect(flash[:success]).to eq I18n.t('spree.order_ready_for_confirm')
             expect(response).to redirect_to(spree.confirm_admin_order_path(order))
           end
         end
@@ -198,7 +198,7 @@ describe Spree::Admin::OrdersController, type: :controller do
 
         it 'messages and redirects' do
           subject
-          expect(flash[:notice]).to eq Spree.t('order_already_completed')
+          expect(flash[:notice]).to eq I18n.t('spree.order_already_completed')
           expect(response).to redirect_to(spree.edit_admin_order_path(order))
         end
       end
@@ -254,7 +254,7 @@ describe Spree::Admin::OrdersController, type: :controller do
 
         it 'messages and redirects' do
           subject
-          expect(flash[:success]).to eq Spree.t(:order_completed)
+          expect(flash[:success]).to eq I18n.t('spree.order_completed')
           expect(response).to redirect_to(spree.edit_admin_order_path(order))
         end
       end
@@ -277,7 +277,7 @@ describe Spree::Admin::OrdersController, type: :controller do
         it 'messages and redirects' do
           subject
           expect(response).to redirect_to(spree.cart_admin_order_path(order))
-          expect(flash[:error].to_s).to eq Spree.t(:insufficient_stock_for_order)
+          expect(flash[:error].to_s).to eq I18n.t('spree.insufficient_stock_for_order')
         end
       end
     end

@@ -31,7 +31,7 @@ RSpec.describe Spree::CustomerReturn, type: :model do
 
         it "adds an error message" do
           subject
-          expect(customer_return.errors.full_messages).to include(Spree.t(:return_items_cannot_be_associated_with_multiple_orders))
+          expect(customer_return.errors.full_messages).to include(I18n.t('spree.return_items_cannot_be_associated_with_multiple_orders'))
         end
       end
 

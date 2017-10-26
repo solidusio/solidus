@@ -36,7 +36,7 @@
           </td>
           <td class="return-item-state">
             <span class="pill pill-<%= inventory_unit.state %>">
-              <%= Spree.t(inventory_unit.state, scope: :inventory_states) %>
+              <%= t(inventory_unit.state, scope: 'spree.inventory_states') %>
             </span>
           </td>
           <td class="return-item-charged">
@@ -76,12 +76,12 @@
   </table>
 
   <%= f.field_container :amount do %>
-    <%= Spree.t(:total_pre_tax_refund) %>: <span id="total_pre_tax_refund">0.00</span>
+    <%= t('spree.total_pre_tax_refund') %>: <span id="total_pre_tax_refund">0.00</span>
   <% end %>
 
   <%= f.field_container :stock_location do %>
     <%= f.label :stock_location_id, Spree::StockLocation.model_name.human %>
-    <%= f.select :stock_location_id, @stock_locations.to_a.collect{|l|[l.name, l.id]}, {include_blank: true}, {class: 'custom-select fullwidth', "data-placeholder" => Spree.t(:select_a_stock_location)} %>
+    <%= f.select :stock_location_id, @stock_locations.to_a.collect{|l|[l.name, l.id]}, {include_blank: true}, {class: 'custom-select fullwidth', "data-placeholder" => t('spree.select_a_stock_location')} %>
     <%= f.error_message_on :stock_location_id %>
   <% end %>
 

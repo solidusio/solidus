@@ -1,7 +1,7 @@
 <%= render 'spree/admin/shared/settings_checkout_tabs' %>
 
-<% admin_breadcrumb(Spree.t(:settings)) %>
-<% admin_breadcrumb(Spree.t('admin.tab.checkout')) %>
+<% admin_breadcrumb(t('spree.settings')) %>
+<% admin_breadcrumb(t('spree.admin.tab.checkout')) %>
 <% admin_breadcrumb(plural_resource_name(Spree::RefundReason)) %>
 
 
@@ -9,7 +9,7 @@
   <ul class="actions inline-menu">
     <% if can?(:create, Spree::RefundReason) %>
       <li>
-        <%= button_link_to Spree.t(:new_refund_reason), new_object_url, { id: 'admin_new_named_type' } %>
+        <%= button_link_to t('spree.new_refund_reason'), new_object_url, { id: 'admin_new_named_type' } %>
       </li>
     <% end %>
   </ul>
@@ -37,7 +37,7 @@
           </td>
           <td>
             <span class="pill pill-<%= named_type.active? ? 'active' : 'inactive' %>">
-              <%= Spree.t(named_type.active? ? :active : :inactive) %>
+              <%= t(named_type.active? ? :active : :inactive, scope: 'spree') %>
             </span>
           </td>
           <td class="actions">

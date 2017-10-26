@@ -3,7 +3,7 @@
     render "spree/admin/orders/adjustments", {
       adjustments: order.line_item_adjustments,
       order: order,
-      title: Spree.t(:line_item_adjustments)
+      title: t('spree.line_item_adjustments')
     }
   %>
 </div>
@@ -12,7 +12,7 @@
     render "spree/admin/orders/adjustments", {
       adjustments: order.shipment_adjustments,
       order: order,
-      title: Spree.t(:shipment_adjustments)
+      title: t('spree.shipment_adjustments')
     }
   %>
 </div>
@@ -21,12 +21,12 @@
     render "spree/admin/orders/adjustments", {
       adjustments: order.adjustments,
       order: order,
-      title: Spree.t(:order_adjustments)
+      title: t('spree.order_adjustments')
     }
   %>
 </div>
 
 <fieldset class="no-border-bottom <%= "hidden" if order.line_items.none? %>" id="order-total" data-hook="order_details_total">
-  <legend><%= Spree.t(:order_total) %></legend>
+  <legend><%= t('spree.order_total') %></legend>
   <span class="order-total"><%= order.display_total %></span>
 </fieldset>

@@ -5,7 +5,7 @@
       <%= image_tag "credit_cards/icons/#{cc_type}.png" %>
     <% end %>
     <% if source.last_digits %>
-      <%= Spree.t(:ending_in) %> <%= source.last_digits %>
+      <%= t('spree.ending_in') %> <%= source.last_digits %>
     <% end %>
   </span>
   <br />

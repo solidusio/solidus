@@ -19,7 +19,7 @@ module Spree
 
           class_attribute :unauthorized_redirect
           self.unauthorized_redirect = -> do
-            flash[:error] = Spree.t(:authorization_failure)
+            flash[:error] = I18n.t('spree.authorization_failure')
             redirect_to "/unauthorized"
           end
 

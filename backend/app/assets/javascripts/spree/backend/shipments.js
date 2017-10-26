@@ -201,7 +201,7 @@ var ShipmentSplitItemView = Backbone.View.extend({
 
     this.$('[name="item_stock_location"]').select2({
       width: 'resolve',
-      placeholder: Spree.translations.item_stock_placeholder,
+      placeholder: Spree.t('choose_location'),
       minimumResultsForSearch: 8
     });
   }

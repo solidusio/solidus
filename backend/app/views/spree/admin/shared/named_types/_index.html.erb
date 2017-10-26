@@ -24,8 +24,8 @@
     </colgroup>
     <thead>
       <tr data-hook="named_types_header">
-        <th><%= Spree.t(:name) %></th>
-        <th><%= Spree.t(:state) %></th>
+        <th><%= t('spree.name') %></th>
+        <th><%= t('spree.state') %></th>
         <th class="actions"></th>
       </tr>
     </thead>
@@ -37,7 +37,7 @@
           </td>
           <td>
             <span class="pill pill-<%= named_type.active? ? 'active' : 'inactive' %>">
-              <%= Spree.t(named_type.active? ? :active : :inactive) %>
+              <%= t(named_type.active? ? :active : :inactive, scope: 'spree') %>
             </span>
           </td>
           <td class="actions">

@@ -2,13 +2,13 @@
   <tr>
     <td>
       <p class="lede">
-        <%= Spree.t('order_mailer.cancel_email.dear_customer') %>
+        <%= t('.dear_customer') %>
       </p>
       <p>
-        <%= Spree.t('order_mailer.cancel_email.instructions') %>
+        <%= t('.instructions') %>
       </p>
       <p>
-        <%= Spree.t('order_mailer.cancel_email.order_summary_canceled') %>
+        <%= t('.order_summary_canceled') %>
       </p>
       <table>
         <% @order.line_items.each do |item| %>
@@ -23,7 +23,7 @@
         <% end %>
         <tr>
           <td></td>
-          <td><%= Spree.t('order_mailer.cancel_email.subtotal') %></td>
+          <td><%= t('.subtotal') %></td>
           <td><%= @order.display_item_total %></td>
         </tr>
         <% @order.adjustments.eligible.each do |adjustment| %>
@@ -35,7 +35,7 @@
         <% end %>
         <tr>
           <td></td>
-          <td><%= Spree.t('order_mailer.cancel_email.total') %></td>
+          <td><%= t('.total') %></td>
           <td><%= @order.display_total %></td>
         </tr>
       </table>

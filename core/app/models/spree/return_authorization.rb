@@ -64,7 +64,7 @@ module Spree
 
     def must_have_shipped_units
       if order.nil? || order.inventory_units.shipped.none?
-        errors.add(:order, Spree.t(:has_no_shipped_units))
+        errors.add(:order, I18n.t('spree.has_no_shipped_units'))
       end
     end
 
@@ -77,7 +77,7 @@ module Spree
 
     def no_previously_exchanged_inventory_units
       if return_items.map(&:inventory_unit).any?(&:exchange_requested?)
-        errors.add(:base, Spree.t(:return_items_cannot_be_created_for_inventory_units_that_are_already_awaiting_exchange))
+        errors.add(:base, I18n.t('spree.return_items_cannot_be_created_for_inventory_units_that_are_already_awaiting_exchange'))
       end
     end
 

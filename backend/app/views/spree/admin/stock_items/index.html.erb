@@ -1,16 +1,16 @@
 <% if @product %>
   <%= render partial: 'spree/admin/shared/product_tabs', locals: { current: 'Stock Management' } %>
   <%= render partial: 'spree/shared/error_messages', locals: { target: @product } %>
-  <% admin_breadcrumb(Spree.t(:manage_stock)) %>
+  <% admin_breadcrumb(t('spree.manage_stock')) %>
 
 <% else %>
 
-  <% admin_breadcrumb(Spree.t(:stock)) %>
+  <% admin_breadcrumb(t('spree.stock')) %>
 
 <% end %>
 
 <% content_for :table_filter_title do %>
-  <%= Spree.t(:search) %>
+  <%= t('spree.search') %>
 <% end %>
 
 <% content_for :table_filter do %>
@@ -22,6 +22,6 @@
   <%= render partial: 'stock_management', locals: { variants: @variants } %>
 <% else %>
   <div class="fullwidth no-objects-found">
-    <%= Spree.t(:no_variants_found_try_again) %>
+    <%= t('spree.no_variants_found_try_again') %>
   </div>
 <% end %>

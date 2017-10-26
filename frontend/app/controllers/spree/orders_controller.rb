@@ -48,7 +48,7 @@ module Spree
 
       # 2,147,483,647 is crazy. See issue https://github.com/spree/spree/issues/2695.
       if !quantity.between?(1, 2_147_483_647)
-        @order.errors.add(:base, Spree.t(:please_enter_reasonable_quantity))
+        @order.errors.add(:base, t('spree.please_enter_reasonable_quantity'))
       end
 
       begin
@@ -71,7 +71,7 @@ module Spree
     end
 
     def populate_redirect
-      flash[:error] = Spree.t(:populate_get_error)
+      flash[:error] = t('spree.populate_get_error')
       redirect_to('/cart')
     end
 
@@ -85,9 +85,9 @@ module Spree
 
     def accurate_title
       if @order && @order.completed?
-        Spree.t(:order_number, number: @order.number)
+        t('spree.order_number', number: @order.number)
       else
-        Spree.t(:shopping_cart)
+        t('spree.shopping_cart')
       end
     end
 
@@ -115,7 +115,7 @@ module Spree
     def assign_order
       @order = current_order
       unless @order
-        flash[:error] = Spree.t(:order_not_found)
+        flash[:error] = t('spree.order_not_found')
         redirect_to(root_path) && return
       end
     end

@@ -15,7 +15,7 @@ module Spree
 
         if @promotion.save
           @promotion_code_batch.process if @promotion_code_batch
-          flash[:success] = Spree.t(:promotion_successfully_created)
+          flash[:success] = t('spree.promotion_successfully_created')
           redirect_to location_after_save
         else
           flash[:error] = @promotion.errors.full_messages.join(", ")

@@ -65,7 +65,7 @@ module Spree
 
     def return_items_belong_to_same_order
       if return_items.select{ |return_item| return_item.inventory_unit.order_id != order_id }.any?
-        errors.add(:base, Spree.t(:return_items_cannot_be_associated_with_multiple_orders))
+        errors.add(:base, I18n.t('spree.return_items_cannot_be_associated_with_multiple_orders'))
       end
     end
 

@@ -1,4 +1,4 @@
-<%= Spree.t(:no_resource, resource: plural_resource_name(resource)) %>
+<%= t('spree.no_resource', resource: plural_resource_name(resource)) %>
 <% if can? :create, resource %>
-  <%= link_to Spree.t(:create_one), new_resource_url %>
+  <%= link_to t('spree.create_one'), new_resource_url %>
 <% end %>

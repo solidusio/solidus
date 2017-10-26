@@ -13,7 +13,7 @@
         <%= f.fields_for :calculator, calculator do |calculator_form| %>
           <% calculator.preferences.keys.each do |key| %>
             <%= render "spree/admin/shared/preference_fields/#{calculator.preference_type(key)}",
-               form: calculator_form, attribute: "preferred_#{key}", label: Spree.t(key) %>
+               form: calculator_form, attribute: "preferred_#{key}", label: t(key, scope: 'spree') %>
           <% end %>
         <% end %>
       </div>

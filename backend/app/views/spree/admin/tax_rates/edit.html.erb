@@ -1,7 +1,7 @@
 <%= render 'spree/admin/shared/taxes_tabs' %>
 
-<% admin_breadcrumb(Spree.t(:settings)) %>
-<% admin_breadcrumb(Spree.t('admin.tab.taxes')) %>
+<% admin_breadcrumb(t('spree.settings')) %>
+<% admin_breadcrumb(t('spree.admin.tab.taxes')) %>
 <% admin_breadcrumb(link_to plural_resource_name(Spree::TaxRate), spree.admin_tax_rates_path) %>
 <% admin_breadcrumb(@tax_rate.name) %>
 

@@ -8,10 +8,10 @@
 <%= render 'spree/admin/users/tabs', current: :store_credits %>
 <% content_for :page_actions do %>
   <% if @store_credit.editable? && can?(:edit, @store_credit) %>
-    <li><%= link_to_with_icon 'dollar', Spree.t("admin.store_credits.change_amount"), edit_amount_admin_user_store_credit_path(@user, @store_credit), class: 'button' %></li>
+    <li><%= link_to_with_icon 'dollar', t('spree.admin.store_credits.change_amount'), edit_amount_admin_user_store_credit_path(@user, @store_credit), class: 'button' %></li>
   <% end %>
   <% if @store_credit.invalidateable? && can?(:invalidate, @store_credit) %>
-    <li><%= link_to_with_icon 'ban', Spree.t("invalidate"), edit_validity_admin_user_store_credit_path(@user, @store_credit), class: 'button' %></li>
+    <li><%= link_to_with_icon 'ban', t('spree.invalidate'), edit_validity_admin_user_store_credit_path(@user, @store_credit), class: 'button' %></li>
   <% end %>
 <% end %>
 
@@ -37,7 +37,7 @@
   </tr>
   <tr>
     <td>
-      <strong><%= Spree.t("admin.store_credits.credit_type") %>:</strong>
+      <strong><%= t('spree.admin.store_credits.credit_type') %>:</strong>
     </td>
     <td><%= @store_credit.category_name %></td>
     <td class='actions'></td>
@@ -51,7 +51,7 @@
     </td>
     <td class='actions'>
       <% if can?(:update, @store_credit) %>
-        <%= link_to '', '#', class: 'js-edit-memo edit-method fa fa-edit no-text with-tip', data: { action: 'edit' }, title: Spree.t('actions.edit') %>
+        <%= link_to '', '#', class: 'js-edit-memo edit-method fa fa-edit no-text with-tip', data: { action: 'edit' }, title: t('spree.actions.edit') %>
       <% end %>
     </td>
   </tr>
@@ -66,15 +66,15 @@
     </td>
     <td class='actions'>
       <% if can?(:update, @store_credit) %>
-        <%= link_to '', '#', class: 'js-save-memo fa fa-check no-text with-tip', data: { user_id: @user.id, store_credit_id: @store_credit.id, action: 'save' }, title: Spree.t('actions.save') %>
-        <%= link_to '', '#', class: 'js-cancel-memo fa fa-cancel no-text with-tip', data: { action: 'cancel' }, title: Spree.t('actions.cancel') %>
+        <%= link_to '', '#', class: 'js-save-memo fa fa-check no-text with-tip', data: { user_id: @user.id, store_credit_id: @store_credit.id, action: 'save' }, title: t('spree.actions.save') %>
+        <%= link_to '', '#', class: 'js-cancel-memo fa fa-cancel no-text with-tip', data: { action: 'cancel' }, title: t('spree.actions.cancel') %>
       <% end %>
     </td>
   </tr>
 </table>
 
 <fieldset>
-  <legend align='center'><%= Spree.t("admin.store_credits.history") %></legend>
+  <legend align='center'><%= t('spree.admin.store_credits.history') %></legend>
   <table>
     <colgroup>
       <col style="width: 15%;" />
@@ -86,7 +86,7 @@
     </colgroup>
     <thead>
       <tr>
-        <th><%= Spree.t(:date) %></th>
+        <th><%= t('spree.date') %></th>
         <th><%= Spree::StoreCreditEvent.human_attribute_name(:action) %></th>
         <th><%= Spree::StoreCredit.human_attribute_name(:amount) %></th>
         <th><%= Spree::StoreCredit.human_attribute_name(:created_by_id) %></th>

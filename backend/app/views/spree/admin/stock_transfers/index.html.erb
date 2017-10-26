@@ -1,16 +1,16 @@
-<% admin_breadcrumb(link_to Spree.t(:stock), spree.admin_stock_items_path) %>
+<% admin_breadcrumb(link_to t('spree.stock'), spree.admin_stock_items_path) %>
 <% admin_breadcrumb(plural_resource_name(Spree::StockTransfer)) %>
 
 <% content_for :page_actions do %>
   <% if can? :create, Spree::StockTransfer %>
     <li>
-      <%= button_link_to Spree.t(:new_stock_transfer), new_admin_stock_transfer_path %>
+      <%= button_link_to t('spree.new_stock_transfer'), new_admin_stock_transfer_path %>
     </li>
   <% end %>
 <% end %>
 
 <% content_for :table_filter_title do %>
-  <%= Spree.t(:search) %>
+  <%= t('spree.search') %>
 <% end %>
 
 <%= paginate @stock_transfers, theme: "solidus_admin" %>
@@ -19,8 +19,8 @@
   <%= render 'stock_transfer_table' %>
 <% else %>
   <div class="alpha sixteen columns no-objects-found">
-    <%= Spree.t("admin.stock_transfers.no_stock_locations_found") %>
-    <%= link_to Spree.t("admin.stock_transfers.create_additional_stock_location"), new_admin_stock_location_path %>
+    <%= t('spree.admin.stock_transfers.no_stock_locations_found') %>
+    <%= link_to t('spree.admin.stock_transfers.create_additional_stock_location'), new_admin_stock_location_path %>
   </div>
 <% end %>
 

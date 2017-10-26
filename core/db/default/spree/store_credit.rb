@@ -1,4 +1,4 @@
-Spree::StoreCreditCategory.find_or_create_by!(name: Spree.t("store_credit_category.default"))
+Spree::StoreCreditCategory.find_or_create_by!(name: I18n.t('spree.store_credit_category.default'))
 
 Spree::PaymentMethod.create_with(
   name: "Store Credit",

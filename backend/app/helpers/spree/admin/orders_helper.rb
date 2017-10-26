@@ -6,9 +6,9 @@ module Spree
         links = []
         @order_events.sort.each do |event|
           next unless @order.send("can_#{event}?")
-          links << button_link_to(Spree.t(event), [event, :admin, @order],
+          links << button_link_to(t(event, scope: 'spree'), [event, :admin, @order],
                                   method: :put,
-                                  data: { confirm: Spree.t(:order_sure_want_to, event: Spree.t(event)) })
+                                  data: { confirm: t('spree.order_sure_want_to', event: t(event, scope: 'spree')) })
         end
         safe_join(links, '&nbsp;'.html_safe)
       end

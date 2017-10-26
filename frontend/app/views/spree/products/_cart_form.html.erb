@@ -3,7 +3,7 @@
 
     <% if @product.variants_and_option_values_for(current_pricing_options).any? %>
       <div id="product-variants" class="columns five alpha">
-        <h6 class="product-section-title"><%= Spree.t(:variants) %></h6>
+        <h6 class="product-section-title"><%= t('spree.variants') %></h6>
         <ul>
           <% @product.variants_and_option_values_for(current_pricing_options).each_with_index do |variant, index| %>
             <li>
@@ -17,7 +17,7 @@
                 <% end %>
 
                 <% unless variant.can_supply? %>
-                  <span class="out-of-stock"><%= Spree.t(:out_of_stock) %></span>
+                  <span class="out-of-stock"><%= t('spree.out_of_stock') %></span>
                 <% end %>
               <% end %>
             </li>
@@ -32,7 +32,7 @@
       <div data-hook="product_price" class="columns five <%= !@product.has_variants? ? 'alpha' : 'omega' %>">
 
         <div id="product-price">
-          <h6 class="product-section-title"><%= Spree.t(:price) %></h6>
+          <h6 class="product-section-title"><%= t('spree.price') %></h6>
           <div>
             <span class="price selling" itemprop="price" content="<%= @product.price_for(current_pricing_options).to_d %>">
               <%= display_price(@product) %>
@@ -44,21 +44,21 @@
             <link itemprop="availability" href="http://schema.org/InStock" />
           <% elsif @product.variants.empty? %>
             <br />
-            <span class="out-of-stock"><%= Spree.t(:out_of_stock) %></span>
+            <span class="out-of-stock"><%= t('spree.out_of_stock') %></span>
           <% end %>
         </div>
 
         <div class="add-to-cart">
           <%= number_field_tag :quantity, 1, class: 'title', min: 1 %>
           <%= button_tag class: 'large primary', id: 'add-to-cart-button', type: :submit do %>
-            <%= Spree.t(:add_to_cart) %>
+            <%= t('spree.add_to_cart') %>
           <% end %>
         </div>
       </div>
     <% else %>
         <div id="product-price">
           <br>
-          <div><span class="price selling" itemprop="price"><%= Spree.t('product_not_available_in_this_currency') %></span></div>
+          <div><span class="price selling" itemprop="price"><%= t('spree.product_not_available_in_this_currency') %></span></div>
         </div>
     <% end %>
   </div>

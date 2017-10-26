@@ -9,8 +9,8 @@ module Spree
           display_name = variant.name.to_s
           display_name += %{ (#{variant.options_text})} unless variant.options_text.blank?
 
-          line_item.errors[:quantity] << Spree.t(
-            :selected_quantity_not_available,
+          line_item.errors[:quantity] << I18n.t(
+            'spree.selected_quantity_not_available',
             item: display_name.inspect
           )
           false

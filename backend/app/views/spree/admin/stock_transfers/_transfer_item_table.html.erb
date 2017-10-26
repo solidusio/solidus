@@ -8,10 +8,10 @@
     </colgroup>
     <thead>
       <tr>
-        <th><%= Spree.t(:item) %></th>
-        <th><%= Spree.t(:options) %></th>
-        <% if show_expected %><th><%= Spree.t(:expected) %></th><% end %>
-        <% if show_received %><th><%= Spree.t(:received) %></th><% end %>
+        <th><%= t('spree.item') %></th>
+        <th><%= t('spree.options') %></th>
+        <% if show_expected %><th><%= t('spree.expected') %></th><% end %>
+        <% if show_received %><th><%= t('spree.received') %></th><% end %>
         <% if show_actions %><th class='actions'></th><% end %>
       </tr>
     </thead>
@@ -38,7 +38,7 @@
                     <% end %>
                     <% @variant_display_attributes.each do |display_attribute| %>
                       <tr>
-                        <td><%= Spree.t(display_attribute[:translation_key]) %></td>
+                        <td><%= t(display_attribute[:translation_key], scope: 'spree') %></td>
                         <td class="fullwidth">
                           <%= variant.send(display_attribute[:attr_name]) %>
                         </td>
@@ -68,5 +68,5 @@
     </tbody>
   </table>
   <div class="no-objects-found" <%= 'hidden' if @stock_transfer.transfer_items.any? %>>
-    <%= Spree.t(:no_resource, resource: plural_resource_name(Spree::TransferItem)) %>
+    <%= t('spree.no_resource', resource: plural_resource_name(Spree::TransferItem)) %>
   </div>

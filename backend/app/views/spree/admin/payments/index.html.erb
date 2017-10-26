@@ -3,7 +3,7 @@
 <% content_for :page_actions do %>
   <% if @order.outstanding_balance? %>
     <li id="new_payment_section">
-      <%= button_link_to Spree.t(:new_payment), new_admin_order_payment_url(@order) %>
+      <%= button_link_to t('spree.new_payment'), new_admin_order_payment_url(@order) %>
     </li>
   <% end %>
 <% end %>
@@ -11,7 +11,7 @@
 <% admin_breadcrumb(plural_resource_name(Spree::Payment)) %>
 
 <% if @order.outstanding_balance? %>
-  <h5 class="outstanding-balance"><%= @order.outstanding_balance < 0 ? Spree.t(:credit_owed) : Spree.t(:balance_due) %>: <strong><%= @order.display_outstanding_balance %></strong></h5>
+  <h5 class="outstanding-balance"><%= @order.outstanding_balance < 0 ? t('spree.credit_owed') : t('spree.balance_due') %>: <strong><%= @order.display_outstanding_balance %></strong></h5>
 <% end %>
 
 <% if @payments.any? %>
@@ -29,5 +29,5 @@
   <% end %>
 
 <% else %>
-  <div class="col-9 no-objects-found"><%= Spree.t(:order_has_no_payments) %></div>
+  <div class="col-9 no-objects-found"><%= t('spree.order_has_no_payments') %></div>
 <% end %>

@@ -1,19 +1,19 @@
 <fieldset class="no-border-bottom" id="risk_analysis">
-  <legend><%= "#{Spree.t(:risk_analysis)}: #{Spree.t(:not) unless @order.is_risky?} #{Spree.t(:risky)}" %></legend>
+  <legend><%= "#{t('spree.risk_analysis')}: #{t('spree.not') unless @order.is_risky?} #{t('spree.risky')}" %></legend>
   <table>
     <thead>
-      <th><%= Spree.t('risk')%></th>
-      <th><%= Spree.t('status')%></th>
+      <th><%= t('spree.risk')%></th>
+      <th><%= t('spree.status')%></th>
     </thead>
     <tbody id="risk-analysis" data-hook="order_details_adjustments"  class="with-border">
       <tr class="">
         <td><strong>
-          <%= Spree.t(:failed_payment_attempts) %>:
+          <%= t('spree.failed_payment_attempts') %>:
         </strong></td>
         <td>
           <span class="pill pill-<%= @order.payments.failed.count > 0 ? 'warning' : 'complete' %>">
-            <%= Spree.t(
-              :payments_failed_count,
+            <%= t(
+              'spree.payments_failed_count',
               count: @order.payments.failed.count
             ) %>
           </span>
@@ -21,26 +21,26 @@
       </tr>
 
       <tr>
-        <td><strong><%= Spree.t(:avs_response) %>:</strong></td>
+        <td><strong><%= t('spree.avs_response') %>:</strong></td>
         <td>
           <span class="pill pill-<%= latest_payment.is_avs_risky? ? 'warning' : 'complete' %>">
             <% if latest_payment.is_avs_risky? %>
               <%= avs_response_code[latest_payment.avs_response] %>
             <% else %>
-              <%= Spree.t(:success) %>
+              <%= t('spree.success') %>
             <% end %>
           </span>
         </td>
       </tr>
 
       <tr>
-        <td><strong><%= Spree.t(:cvv_response) %>:</strong></td>
+        <td><strong><%= t('spree.cvv_response') %>:</strong></td>
         <td>
           <span class="pill pill-<%= latest_payment.is_cvv_risky? ? 'warning' : 'complete' %>">
             <% if latest_payment.is_cvv_risky? %>
               <%= cvv_response_code[latest_payment.cvv_response_code] %>
             <% else %>
-              <%= Spree.t(:success) %>
+              <%= t('spree.success') %>
             <% end %>
           </span>
         </td>

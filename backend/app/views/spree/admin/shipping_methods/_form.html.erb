@@ -42,7 +42,7 @@
   <div data-hook="admin_shipping_method_form_tracking_url_field" class="col-10">
     <%= f.field_container :tracking_url do %>
       <%= f.label :tracking_url %><br />
-      <%= f.text_field :tracking_url, class: 'fullwidth', placeholder: Spree.t(:tracking_url_placeholder) %>
+      <%= f.text_field :tracking_url, class: 'fullwidth', placeholder: t('spree.tracking_url_placeholder') %>
       <%= error_message_on :shipping_method, :tracking_url %>
     <% end %>
   </div>

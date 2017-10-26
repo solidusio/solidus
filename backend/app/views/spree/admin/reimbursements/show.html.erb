@@ -4,13 +4,13 @@
 
 
 <% content_for :page_actions do %>
-  <li><%= button_link_to Spree.t(:back_to_customer_return), url_for([:edit, :admin, @order, @reimbursement.customer_return]) %></li>
+  <li><%= button_link_to t('spree.back_to_customer_return'), url_for([:edit, :admin, @order, @reimbursement.customer_return]) %></li>
 <% end %>
 
 <%= render partial: 'spree/shared/error_messages', locals: { target: @reimbursement } %>
 
 <fieldset class='no-border-bottom'>
-  <legend align='center'><%= Spree.t(:items_reimbursed) %></legend>
+  <legend align='center'><%= t('spree.items_reimbursed') %></legend>
   <table class="index reimbursement-reimbursement-items">
     <thead>
       <tr>
@@ -73,11 +73,11 @@
 </fieldset>
 
 <fieldset class="no-border-bottom">
-  <legend align='center'><%= Spree.t(:credits) %></legend>
+  <legend align='center'><%= t('spree.credits') %></legend>
   <table class="index reimbursement-credits">
     <thead data-hook="customer_return_header">
       <tr>
-        <th><%= Spree.t(:description) %></th>
+        <th><%= t('spree.description') %></th>
         <th><%= Spree::Reimbursement::Credit.human_attribute_name(:amount) %></th>
       </tr>
     </thead>

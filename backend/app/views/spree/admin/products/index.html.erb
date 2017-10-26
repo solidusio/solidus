@@ -4,12 +4,12 @@
 
 <% content_for :page_actions do %>
   <li id="new_product_link">
-    <%= button_link_to Spree.t(:new_product), new_object_url, { remote: true, id: 'admin_new_product' } %>
+    <%= button_link_to t('spree.new_product'), new_object_url, { remote: true, id: 'admin_new_product' } %>
   </li>
 <% end if can?(:create, Spree::Product) %>
 
 <% content_for :table_filter_title do %>
-  <%= Spree.t(:search) %>
+  <%= t('spree.search') %>
 <% end %>
 
 <% content_for :table_filter do %>
@@ -35,14 +35,14 @@
             <div class="field checkbox">
               <label>
                 <%= f.check_box :with_deleted, { checked: params[:q][:with_deleted] == 'true' }, 'true', 'false' %>
-                <%= Spree.t(:show_deleted) %>
+                <%= t('spree.show_deleted') %>
               </label>
             </div>
           </div>
         </div>
 
         <div class="actions filter-actions" data-hook="admin_products_index_search_buttons">
-          <%= button Spree.t(:search) %>
+          <%= button t('spree.search') %>
         </div>
     <% end %>
   </div>

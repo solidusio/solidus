@@ -1,30 +1,30 @@
-<%= Spree.t('order_mailer.confirm_email.dear_customer') %>
+<%= t('.dear_customer') %>
 
-<%= Spree.t('order_mailer.confirm_email.instructions') %>
+<%= t('.instructions') %>
 
 ============================================================
-<%= Spree.t('order_mailer.confirm_email.order_summary') %>
+<%= t('.order_summary') %>
 ============================================================
 <% @order.line_items.each do |item| %>
   <%= item.variant.sku %> <%= raw(item.variant.product.name) %> <%= raw(item.variant.options_text) -%> (<%=item.quantity%>) @ <%= item.single_money %> = <%= item.display_amount %>
 <% end %>
 ============================================================
-<%= Spree.t('order_mailer.confirm_email.subtotal') %> <%= @order.display_item_total %>
+<%= t('.subtotal') %> <%= @order.display_item_total %>
 <% if @order.line_item_adjustments.exists? %>
   <% if @order.all_adjustments.promotion.eligible.exists? %>
     <% @order.all_adjustments.promotion.eligible.group_by(&:label).each do |label, adjustments| %>
-<%= Spree.t(:promotion) %>: <%= label %> <%= Spree::Money.new(adjustments.sum(&:amount), currency: @order.currency) %>
+<%= t('spree.promotion') %>: <%= label %> <%= Spree::Money.new(adjustments.sum(&:amount), currency: @order.currency) %>
     <% end %>
   <% end %>
 <% end %>
 
 <% @order.shipments.group_by { |s| s.selected_shipping_rate.try(:name) }.each do |name, shipments| %>
-<%= Spree.t(:shipping) %>: <%= name %> <%= Spree::Money.new(shipments.sum(&:total_before_tax), currency: @order.currency) %>
+<%= t('spree.shipping') %>: <%= name %> <%= Spree::Money.new(shipments.sum(&:total_before_tax), currency: @order.currency) %>
 <% end %>
 
 <% if @order.all_adjustments.eligible.tax.exists? %>
   <% @order.all_adjustments.eligible.tax.group_by(&:label).each do |label, adjustments| %>
-<%= Spree.t(:tax) %>: <%= label %> <%= Spree::Money.new(adjustments.sum(&:amount), currency: @order.currency) %>
+<%= t('spree.tax') %>: <%= label %> <%= Spree::Money.new(adjustments.sum(&:amount), currency: @order.currency) %>
   <% end %>
 <% end %>
 
@@ -33,6 +33,6 @@
 <%= adjustment.label %> <%= adjustment.display_amount %>
 <% end %>
 ============================================================
-<%= Spree.t('order_mailer.confirm_email.total') %> <%= @order.display_total %>
+<%= t('.total') %> <%= @order.display_total %>
 
-<%= Spree.t('order_mailer.confirm_email.thanks') %>
+<%= t('.thanks') %>

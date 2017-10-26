@@ -12,7 +12,7 @@
   <thead data-hook="variants_header">
     <tr>
       <th></th>
-      <th><%= Spree.t(:options) %></th>
+      <th><%= t('spree.options') %></th>
       <th><%= Spree::Variant.human_attribute_name(:price) %></th>
       <th><%= Spree::Variant.human_attribute_name(:sku) %></th>
       <th class="actions"></th>
@@ -41,7 +41,7 @@
     </tr>
     <% end %>
     <% if variants.empty? %>
-      <tr><td colspan="4"><%= Spree.t(:none) %></td></tr>
+      <tr><td colspan="4"><%= t('spree.none') %></td></tr>
     <% end %>
   </tbody>
 </table>

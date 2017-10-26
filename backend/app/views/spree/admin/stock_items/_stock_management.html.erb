@@ -11,11 +11,11 @@
   </colgroup>
   <thead>
     <tr>
-      <th><%= Spree.t(:item) %></th>
-      <th><%= Spree.t(:options) %></th>
+      <th><%= t('spree.item') %></th>
+      <th><%= t('spree.options') %></th>
       <th><%= Spree::StockLocation.model_name.human %></th>
-      <th><%= Spree.t(:backorderable_header) %></th>
-      <th><%= Spree.t(:count_on_hand) %></th>
+      <th><%= t('spree.backorderable_header') %></th>
+      <th><%= t('spree.count_on_hand') %></th>
       <th class="actions"></th>
     </tr>
   </thead>
@@ -35,7 +35,7 @@
                 <tbody>
                   <% @variant_display_attributes.each do |display_attribute| %>
                     <tr>
-                      <td><%= Spree.t(display_attribute[:translation_key]) %></td>
+                      <td><%= t(display_attribute[:translation_key], scope: 'spree') %></td>
                       <td class="fullwidth">
                         <%= variant.send(display_attribute[:attr_name]) %>
                       </td>
@@ -69,7 +69,7 @@
       <% if display_add_row %>
         <tr class="js-add-stock-item stock-item-edit-row" data-variant-id="<%= variant.id %>">
           <td class='location-name-cell'>
-            <%= select_tag :stock_location_id, options_from_collection_for_select(locations_without_items, :id, :name), { include_blank: true, class: 'custom-select', "data-placeholder" => Spree.t(:add_to_stock_location), id: "variant-stock-location-#{variant.id}" } %>
+            <%= select_tag :stock_location_id, options_from_collection_for_select(locations_without_items, :id, :name), { include_blank: true, class: 'custom-select', "data-placeholder" => t('spree.add_to_stock_location'), id: "variant-stock-location-#{variant.id}" } %>
           </td>
           <td class="align-center">
             <%= check_box_tag :backorderable, 'backorderable', false, id: "variant-backorderable-#{variant.id}" %>
@@ -78,7 +78,7 @@
             <%= number_field_tag :count_on_hand, "", class: 'fullwidth', id: "variant-count-on-hand-#{variant.id}" %>
           </td>
           <td class="actions">
-            <%= link_to_with_icon 'plus', Spree.t('actions.create'), '#', no_text: true, data: { action: 'add' }, class: "submit" %>
+            <%= link_to_with_icon 'plus', t('spree.actions.create'), '#', no_text: true, data: { action: 'add' }, class: "submit" %>
           </td>
         </tr>
       <% end %>

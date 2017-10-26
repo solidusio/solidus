@@ -16,7 +16,7 @@ module Spree::Admin::StoreCreditEventsHelper
   def store_credit_event_admin_action_name(store_credit_event)
     if Spree::StoreCreditEvent::NON_EXPOSED_ACTIONS.include?(store_credit_event.action) ||
        store_credit_event.action == Spree::StoreCredit::VOID_ACTION
-      Spree.t("store_credit.display_action.admin.#{store_credit_event.action}")
+      t("spree.store_credit.display_action.admin.#{store_credit_event.action}")
     else
       store_credit_event.display_action
     end
@@ -40,28 +40,28 @@ module Spree::Admin::StoreCreditEventsHelper
     case link_options[:href_type]
     when :user
       link_to(
-        Spree.t(link_options[:translation_key], { email: originator.email }),
+        t(link_options[:translation_key], email: originator.email, scope: 'spree'),
         spree.edit_admin_user_path(originator),
         options
       )
     when :line_item
       order = originator.line_item.order
       link_to(
-        Spree.t(link_options[:translation_key], { order_number: order.number }),
+        t(link_options[:translation_key], order_number: order.number, scope: 'spree'),
         spree.edit_admin_order_path(order),
         options
       )
     when :payment
       order = originator.order
       link_to(
-        Spree.t(link_options[:translation_key], { order_number: order.number }),
+        t(link_options[:translation_key], order_number: order.number, scope: 'spree'),
         spree.admin_order_payment_path(order, originator),
         options
       )
     when :payments
       order = originator.payment.order
       link_to(
-        Spree.t(link_options[:translation_key], { order_number: order.number }),
+        t(link_options[:translation_key], order_number: order.number, scope: 'spree'),
         spree.admin_order_payments_path(order),
         options
       )

@@ -167,7 +167,7 @@ RSpec.describe Spree::Order, type: :model do
 
       it 'should have error message' do
         subject
-        expect(order.errors[:base]).to include(Spree.t(:deleted_variants_present))
+        expect(order.errors[:base]).to include(I18n.t('spree.deleted_variants_present'))
       end
 
       it 'should be false' do
@@ -1247,7 +1247,7 @@ RSpec.describe Spree::Order, type: :model do
         context "there are no other payments" do
           it "adds an error to the model" do
             expect(subject).to be false
-            expect(order.errors.full_messages).to include(Spree.t("store_credit.errors.unable_to_fund"))
+            expect(order.errors.full_messages).to include(I18n.t('spree.store_credit.errors.unable_to_fund'))
           end
         end
 

@@ -1,5 +1,5 @@
 <fieldset class="no-border-bottom" data-hook="customer_details_total">
-  <legend><%= Spree.t(:customer) %></legend>
+  <legend><%= t('spree.customer') %></legend>
   <div class="customer"><%= order.user.try(:email) %></div><br/>
 </fieldset>
 
@@ -7,7 +7,7 @@
   <div class="row">
     <div data-hook="bill_address_wrapper" class="col-6">
       <fieldset class="no-border-bottom">
-        <legend align="center"><%= Spree.t(:billing_address) %></legend>
+        <legend align="center"><%= t('spree.billing_address') %></legend>
         <% if order.bill_address %>
           <%= render partial: 'spree/admin/shared/address', locals: {address: order.bill_address} %>
         <% end %>
@@ -16,7 +16,7 @@
 
     <div class="col-6" data-hook="ship_address_wrapper">
       <fieldset class="no-border-bottom">
-        <legend align="center"><%= Spree.t(:shipping_address) %></legend>
+        <legend align="center"><%= t('spree.shipping_address') %></legend>
         <% if order.ship_address %>
           <%= render partial: 'spree/admin/shared/address', locals: {address: order.ship_address} %>
         <% end %>

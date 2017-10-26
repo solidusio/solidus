@@ -1,5 +1,5 @@
 <% calculator.preferences.keys.map do |key| %>
   <%= render "spree/admin/shared/preference_fields/#{calculator.preference_type(key)}",
      name: "#{prefix}[calculator_attributes][preferred_#{key}]",
-     value: calculator.get_preference(key), label: Spree.t(key.to_s) %>
+     value: calculator.get_preference(key), label: t(key.to_s, scope: 'spree') %>
 <% end %>

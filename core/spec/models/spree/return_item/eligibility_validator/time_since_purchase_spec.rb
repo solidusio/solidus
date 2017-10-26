@@ -28,7 +28,7 @@ RSpec.describe Spree::ReturnItem::EligibilityValidator::TimeSincePurchase, type:
 
       it "sets an error" do
         subject
-        expect(validator.errors[:number_of_days]).to eq Spree.t('return_item_time_period_ineligible')
+        expect(validator.errors[:number_of_days]).to eq I18n.t('spree.return_item_time_period_ineligible')
       end
     end
   end

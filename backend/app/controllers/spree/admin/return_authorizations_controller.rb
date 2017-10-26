@@ -9,7 +9,7 @@ module Spree
 
       def fire
         @return_authorization.send("#{params[:e]}!")
-        flash[:success] = Spree.t(:return_authorization_updated)
+        flash[:success] = t('spree.return_authorization_updated')
         redirect_back(fallback_location: admin_order_return_authorization(@order))
       end
 

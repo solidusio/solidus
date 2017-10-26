@@ -1,7 +1,7 @@
 <%= render 'spree/admin/shared/shipping_tabs' %>
 
-<% admin_breadcrumb(Spree.t(:settings)) %>
-<% admin_breadcrumb(Spree.t('admin.tab.shipping')) %>
+<% admin_breadcrumb(t('spree.settings')) %>
+<% admin_breadcrumb(t('spree.admin.tab.shipping')) %>
 <% admin_breadcrumb(plural_resource_name(Spree::StockLocation)) %>
 
 
@@ -9,13 +9,13 @@
   <ul class="actions inline-menu">
     <% if can?(:create, Spree::StockLocation) %>
       <li>
-        <%= button_link_to Spree.t(:new_stock_location), new_object_url, { id: 'admin_new_stock_location' } %>
+        <%= button_link_to t('spree.new_stock_location'), new_object_url, { id: 'admin_new_stock_location' } %>
       </li>
     <% end %>
 
     <% if can?(:create, Spree::StockTransfer) %>
       <li>
-        <%= button_link_to Spree.t(:new_stock_transfer), new_admin_stock_transfer_path %>
+        <%= button_link_to t('spree.new_stock_transfer'), new_admin_stock_transfer_path %>
       </li>
     <% end %>
   </ul>
@@ -53,7 +53,7 @@
           <td><%= admin_stock_location_display_name(stock_location) %></td>
           <td>
             <span class="pill pill-<%= stock_location.active? ? 'active' : 'inactive' %>">
-              <%= Spree.t(stock_location.active? ? :active : :inactive) %>
+              <%= t(stock_location.active? ? :active : :inactive, scope: 'spree') %>
             </span>
           </td>
           <td>

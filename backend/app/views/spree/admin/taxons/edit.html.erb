@@ -1,9 +1,9 @@
-<% admin_breadcrumb(Spree.t(:taxon_edit)) %>
+<% admin_breadcrumb(t('spree.taxon_edit')) %>
 
 
 <% content_for :page_actions do %>
   <li>
-    <%= button_link_to Spree.t(:back_to_taxonomies_list), spree.admin_taxonomies_path %>
+    <%= button_link_to t('spree.back_to_taxonomies_list'), spree.admin_taxonomies_path %>
   </li>
 <% end %>
 
@@ -13,7 +13,7 @@
   <%= render 'form', f: f %>
 
   <div class="form-buttons filter-actions" data-hook="buttons">
-    <%= button Spree.t('actions.update') %>
-    <%= button_link_to Spree.t('actions.cancel'), edit_admin_taxonomy_url(@taxonomy) %>
+    <%= button t('spree.actions.update') %>
+    <%= button_link_to t('spree.actions.cancel'), edit_admin_taxonomy_url(@taxonomy) %>
   </div>
 <% end %>
