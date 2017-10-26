@@ -30,7 +30,7 @@ en:
       spree/adjustment:
         adjustable: Adjustable
         amount: Amount
-        label: Description
+        label: Label
         name: Name
         state: State
         adjustment_reason_id: Reason
