@@ -22,7 +22,6 @@ group :test do
   gem 'capybara', '~> 2.7'
   gem 'capybara-screenshot'
   gem 'database_cleaner', '~> 1.3'
-  gem 'email_spec'
   gem 'factory_bot_rails', '~> 4.8'
   gem 'launchy'
   gem 'rspec-activemodel-mocks', '~>1.0.2'
