@@ -16,7 +16,7 @@
       title: image.alt,
       content: %{
         <div class='align-center'>
-          #{image_tag(image.attachment.url(:large))}
+          #{image_tag(image.url(:large))}
         </div>
       }.html_safe
     ) %>
