@@ -1,3 +1,5 @@
+require 'cancan'
+
 module Spree
   module Core
     module ControllerHelpers
