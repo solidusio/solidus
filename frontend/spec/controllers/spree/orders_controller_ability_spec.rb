@@ -8,6 +8,7 @@ module Spree
     let(:user) { create(:user) }
     let(:guest_user) { create(:user) }
     let(:order) { Spree::Order.create }
+    let(:variant) { create(:variant) }
 
     it 'should understand order routes with token' do
       expect(spree.token_order_path('R123456', 'ABCDEF')).to eq('/orders/R123456/token/ABCDEF')
@@ -25,11 +26,11 @@ module Spree
       context '#populate' do
         it 'should check if user is authorized for :edit' do
           expect(controller).to receive(:authorize!).with(:edit, order, token)
-          post :populate, params: { token: token }
+          post :populate, params: { variant_id: variant.id, token: token }
         end
         it "should check against the specified order" do
           expect(controller).to receive(:authorize!).with(:edit, specified_order, token)
-          post :populate, params: { id: specified_order.number, token: token }
+          post :populate, params: { id: specified_order.number, variant_id: variant.id, token: token }
         end
       end
 
@@ -95,8 +96,9 @@ module Spree
 
         context 'when no token present' do
           it 'should respond with 404' do
-            get :show, params: { id: 'R123' }
-            expect(response.code).to eq('404')
+            expect {
+              get :show, params: { id: 'R123' }
+            }.to raise_error(ActiveRecord::RecordNotFound)
           end
         end
       end

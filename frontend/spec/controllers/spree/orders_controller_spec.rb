@@ -16,7 +16,8 @@ describe Spree::OrdersController, type: :controller do
 
     context "#populate" do
       it "should create a new order when none specified" do
-        post :populate
+        post :populate, params: { variant_id: variant.id }
+        expect(response).to be_redirect
         expect(cookies.signed[:guest_token]).not_to be_blank
 
         order_by_token = Spree::Order.find_by(guest_token: cookies.signed[:guest_token])
