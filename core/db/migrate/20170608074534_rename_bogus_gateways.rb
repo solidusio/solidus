@@ -1,13 +1,15 @@
 class RenameBogusGateways < ActiveRecord::Migration[5.0]
   def up
+    require 'solidus/migrations/rename_gateways'
     say_with_time 'Renaming bogus gateways into payment methods' do
-      Rake::Task['solidus:migrations:rename_gateways:up'].invoke
+      Solidus::Migrations::RenameGateways.new.up
     end
   end
 
   def down
+    require 'solidus/migrations/rename_gateways'
     say_with_time 'Renaming bogus payment methods into gateways' do
-      Rake::Task['solidus:migrations:rename_gateways:down'].invoke
+      Solidus::Migrations::RenameGateways.new.down
     end
   end
 end

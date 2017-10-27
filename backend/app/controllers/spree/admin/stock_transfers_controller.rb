@@ -1,6 +1,8 @@
 module Spree
   module Admin
     class StockTransfersController < ResourceController
+      helper 'spree/admin/stock_locations'
+
       class_attribute :variant_display_attributes
       self.variant_display_attributes = [
         { translation_key: :sku, attr_name: :sku },

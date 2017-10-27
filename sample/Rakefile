@@ -1,13 +1,11 @@
 require 'rake'
 require 'rake/testtask'
 require 'rspec/core/rake_task'
-require 'spree/testing_support/common_rake'
+require 'spree/testing_support/dummy_app/rake_tasks'
 
-desc "Generates a dummy app for testing"
-task :test_app do
-  ENV['LIB_NAME'] = 'spree/sample'
-  Rake::Task['common:test_app'].invoke
-end
+ENV['LIB_NAME'] = 'solidus_sample'
 
 RSpec::Core::RakeTask.new
 task default: :spec
+
+task test_app: 'db:reset'

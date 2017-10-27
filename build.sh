@@ -12,9 +12,8 @@ set_gemfile(){
 export DB=${DB:-postgresql}
 
 # Solidus defaults
-echo "Setup Solidus defaults and creating test application..."
+echo "Setup Solidus defaults"
 bundle check || bundle update --quiet
-bundle exec rake test_app
 
 # Solidus API
 echo "**************************************"

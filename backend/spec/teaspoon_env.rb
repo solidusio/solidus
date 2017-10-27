@@ -1,5 +1,13 @@
 ENV['RAILS_ENV'] = 'test'
-require File.expand_path("../dummy/config/environment", __FILE__)
+ENV["LIB_NAME"] = 'solidus_backend'
+
+require 'spree_backend'
+
+require 'teaspoon'
+require 'teaspoon-mocha'
+
+require 'spree/testing_support/dummy_app'
+DummyApp::Migrations.auto_migrate
 
 Teaspoon.configure do |config|
   config.mount_at = "/teaspoon"

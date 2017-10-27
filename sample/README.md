@@ -13,10 +13,6 @@ bundle exec rake spree_sample:load
 
 ## Testing
 
-Create the test site
-
-    bundle exec rake test_app
-
 Run the tests
 
-    bundle exec rake spec
+    bundle exec rspec

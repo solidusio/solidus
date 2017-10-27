@@ -204,7 +204,7 @@ You can see the build statuses at
 #### Running all tests
 
 To execute all the tests, run this command at the root of the Solidus project
-to generate test applications and run specs for all projects:
+to run specs for all projects:
 
 ```shell
 bash build.sh
@@ -218,19 +218,18 @@ test suites.
 
 #### Running an individual test suite
 
-Each gem contains its own series of tests, and for each directory, you need to
-do a quick one-time creation of a test application and then you can use it to run
-the tests.  For example, to run the tests for the core project.
+Each gem contains its own series of tests.
+
+To run the tests for the core project.
 ```shell
 cd core
-bundle exec rake test_app
-bundle exec rspec spec
+bundle exec rspec
 ```
 
 If you would like to run specs against a particular database you may specify the
-dummy apps database, which defaults to sqlite3.
+desired database, which defaults to sqlite3.
 ```shell
-DB=postgresql bundle exec rake test_app
+DB=postgresql bundle exec rspec
 ```
 
 You can also enable fail fast in order to stop tests at the first failure
@@ -240,7 +239,7 @@ FAIL_FAST=true bundle exec rspec spec/models/state_spec.rb
 
 If you want to run the simplecov code coverage report
 ```shell
-COVERAGE=true bundle exec rspec spec
+COVERAGE=true bundle exec rspec
 ```
 
 ### Extensions

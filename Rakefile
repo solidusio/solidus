@@ -1,37 +1,27 @@
-require 'rake'
-require 'thor/group'
-begin
-  require 'spree/testing_support/common_rake'
-rescue LoadError
-  raise "Could not find spree/testing_support/common_rake. You need to run this command using Bundler."
-end
-
-task default: :test
+task default: :spec
 
 def print_title(gem_name = '')
   title = ["Solidus", gem_name].join(' ')
   puts "\n#{'-' * title.size}\n#{title}\n#{'-' * title.size}"
 end
 
-desc "Runs all tests in all Spree engines"
-task test: :test_app do
-  %w(api backend core frontend sample).each do |gem_name|
-    print_title(gem_name)
-    Dir.chdir("#{File.dirname(__FILE__)}/#{gem_name}") do
-      sh 'rspec'
+%w[spec db:drop db:create db:migrate db:reset].each do |task|
+  desc "Run rake #{task} for each Solidus engine"
+  task task do
+    %w(api backend core frontend sample).each do |gem_name|
+      print_title(gem_name)
+      Dir.chdir("#{File.dirname(__FILE__)}/#{gem_name}") do
+        Bundler.with_clean_env do
+          sh "bundle check || bundle update"
+          sh "bundle exec rake #{task}"
+        end
+      end
     end
   end
 end
 
-desc "Generates a dummy app for testing for every Spree engine"
-task :test_app do
-  %w(api backend core frontend sample).each do |gem_name|
-    print_title(gem_name)
-    Dir.chdir("#{File.dirname(__FILE__)}/#{gem_name}") do
-      sh 'rake test_app'
-    end
-  end
-end
+task test: :spec
+task test_app: 'db:reset'
 
 desc "clean the whole repository by removing all the generated files"
 task :clean do
@@ -98,7 +88,7 @@ namespace :gem do
   end
 end
 
-desc "Creates a sandbox application for simulating the Spree code in a deployed Rails app"
+desc "Creates a sandbox application for simulating the Solidus code in a deployed Rails app"
 task :sandbox do
   Bundler.with_clean_env do
     exec("lib/sandbox.sh")
