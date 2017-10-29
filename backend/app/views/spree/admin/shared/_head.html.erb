@@ -26,13 +26,14 @@
   </style>
 <%- elsif Rails.env.development? %>
   <style>
-    .translation_missing { background: red; }
+    .translation_missing {
+      background: white;
+      color: #C60F13;
+    }
   </style>
 <%- end %>
 
-
 <%= javascript_include_tag 'spree/backend/all', data: {turbolinks_track: 'reload'} %>
-
 <%= render "spree/admin/shared/js_locale_data" %>
 
 <%= javascript_tag do -%>
