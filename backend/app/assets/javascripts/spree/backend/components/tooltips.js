@@ -1,8 +1,7 @@
 Spree.ready(function(){
   $('body').popover({selector: '.hint-tooltip', html: true, trigger: 'hover', placement: 'top'});
 
-  /* Animation has to be off to work around a bug in bootstrap 4.0.0.alpha6 */
-  $('body').tooltip({selector: '.with-tip', animation: false});
+  $('body').tooltip({selector: '.with-tip'});
 
   /*
    * Poll tooltips to hide them if they are no longer being hovered.
