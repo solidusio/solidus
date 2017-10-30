@@ -350,6 +350,15 @@ module Spree
       end.flatten.compact
     end
 
+    # An enumerable of media that goes along with a variant
+    # Stores may not necessarily want to attach images to variants
+    # This provides a more robust interface
+    #
+    # @return [Enumerable] of media for a variant
+    def gallery
+      Variant.reflect_on_association(:images) ? association(:images).reader : []
+    end
+
     private
 
     def rebuild_vat_prices?

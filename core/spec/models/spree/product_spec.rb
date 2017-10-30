@@ -24,7 +24,7 @@ RSpec.describe Spree::Product, type: :model do
         expect(clone.name).to eq('COPY OF ' + product.name)
         expect(clone.master.sku).to eq('COPY OF ' + product.master.sku)
         expect(clone.taxons).to eq(product.taxons)
-        expect(clone.images.size).to eq(product.images.size)
+        expect(clone.gallery.size).to eq(product.gallery.size)
       end
 
       it 'calls #duplicate_extra' do
@@ -441,11 +441,11 @@ RSpec.describe Spree::Product, type: :model do
     end
 
     it "only looks for variant images" do
-      expect(product.images.size).to eq(2)
+      expect(product.gallery.size).to eq(2)
     end
 
     it "should be sorted by position" do
-      expect(product.images.pluck(:alt)).to eq(["position 1", "position 2"])
+      expect(product.gallery.pluck(:alt)).to eq(["position 1", "position 2"])
     end
   end
 
