@@ -20,13 +20,11 @@ Spree.ready(function() {
     var tr = $(this).closest('tr');
     var klass = 'highlight action-' + $(this).data('action')
     tr.addClass(klass)
-    tr.prev().addClass('before-' + klass);
   });
   $('table').on("mouseleave", 'td.actions a, td.actions button', function(){
     var tr = $(this).closest('tr');
     var klass = 'highlight action-' + $(this).data('action')
     tr.removeClass(klass)
-    tr.prev().removeClass('before-' + klass);
   });
 });
 
