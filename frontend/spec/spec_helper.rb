@@ -71,7 +71,7 @@ RSpec.configure do |config|
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, comment the following line or assign false
   # instead of true.
-  config.use_transactional_fixtures = false
+  config.use_transactional_fixtures = true
 
   if ENV['WEBDRIVER'] == 'accessible'
     config.around(:each, inaccessible: true) do |example|
@@ -88,15 +88,7 @@ RSpec.configure do |config|
     reset_spree_preferences
     if RSpec.current_example.metadata[:js]
       page.driver.browser.url_blacklist = ['http://fonts.googleapis.com']
-      DatabaseCleaner.strategy = :truncation
-    else
-      DatabaseCleaner.strategy = :transaction
     end
-    DatabaseCleaner.start
-  end
-
-  config.after(:each) do
-    DatabaseCleaner.clean
   end
 
   config.after(:each, type: :feature) do |example|
