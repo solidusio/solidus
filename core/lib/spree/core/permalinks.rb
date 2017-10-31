@@ -68,4 +68,3 @@ module Spree
 end
 
 ActiveRecord::Base.send :include, Spree::Core::Permalinks
-ActiveRecord::Relation.send :include, Spree::Core::Permalinks
