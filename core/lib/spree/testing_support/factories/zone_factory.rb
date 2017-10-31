@@ -13,7 +13,7 @@ FactoryBot.define do
   end
 
   factory :zone, class: 'Spree::Zone' do
-    name { generate(:random_string) }
+    sequence(:name) { |i| "Zone #{i}" }
 
     trait :with_country do
       countries { [create(:country)] }

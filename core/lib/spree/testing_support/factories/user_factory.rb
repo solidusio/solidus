@@ -8,7 +8,7 @@ FactoryBot.define do
   end
 
   factory :user, class: Spree.user_class do
-    email { generate(:random_email) }
+    email { generate(:email) }
     login { email } if Spree.user_class.attribute_method? :login
     password 'secret'
     password_confirmation { password } if Spree.user_class.attribute_method? :password_confirmation

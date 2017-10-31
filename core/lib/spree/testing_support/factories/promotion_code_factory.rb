@@ -4,6 +4,6 @@ require 'spree/testing_support/factories/promotion_factory'
 FactoryBot.define do
   factory :promotion_code, class: 'Spree::PromotionCode' do
     promotion
-    value { generate(:random_code) }
+    sequence(:value) { |i| "code#{i}" }
   end
 end
