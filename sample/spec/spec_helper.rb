@@ -8,7 +8,6 @@ require 'spree/testing_support/dummy_app'
 DummyApp::Migrations.auto_migrate
 
 require 'rspec/rails'
-require 'ffaker'
 
 RSpec.configure do |config|
   config.color = true
