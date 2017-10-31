@@ -48,19 +48,17 @@ module Spree
       end
 
       def save_permalink(permalink_value = to_param)
-        with_lock do
-          permalink_value ||= generate_permalink
-          permalink_field = self.class.permalink_field
+        permalink_value ||= generate_permalink
+        permalink_field = self.class.permalink_field
 
-          loop do
-            other = self.class.where(permalink_field => permalink_value)
-            break unless other.exists?
+        loop do
+          other = self.class.where(permalink_field => permalink_value)
+          break unless other.exists?
 
-            # Try again with a new value
-            permalink_value = generate_permalink
-          end
-          write_attribute(permalink_field, permalink_value)
+          # Try again with a new value
+          permalink_value = generate_permalink
         end
+        write_attribute(permalink_field, permalink_value)
       end
     end
   end
