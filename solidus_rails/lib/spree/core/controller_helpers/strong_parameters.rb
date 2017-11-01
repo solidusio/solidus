@@ -1,3 +1,5 @@
+require 'spree/permitted_attributes'
+
 module Spree
   module Core
     module ControllerHelpers
