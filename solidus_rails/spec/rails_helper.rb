@@ -2,13 +2,6 @@ require 'spec_helper'
 
 ENV["RAILS_ENV"] ||= 'test'
 
-begin
-  require File.expand_path("../dummy/config/environment", __FILE__)
-rescue LoadError
-  $stderr.puts "Could not load dummy application. Please ensure you have run `bundle exec rake test_app`"
-  exit 1
-end
-
 require 'rspec/rails'
 require 'database_cleaner'
 

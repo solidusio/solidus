@@ -12,6 +12,9 @@ if ENV["COVERAGE"]
   end
 end
 
+require 'spree/testing_support/dummy_app'
+DummyApp::Migrations.auto_migrate
+
 require 'spree/testing_support/preferences'
 require 'spree/config'
 require 'with_model'
