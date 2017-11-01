@@ -17,6 +17,10 @@ GlobalID.app = 'solidus-core-test'
 require 'global_id/identification'
 ActiveRecord::Base.send :include, GlobalID::Identification
 
+if ENV['CIRCLE_TEST_REPORTS']
+  system 'rake db:create db:migrate'
+end
+
 RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
 
