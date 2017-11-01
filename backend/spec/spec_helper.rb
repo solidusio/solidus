@@ -69,8 +69,6 @@ ActionView::Base.raise_on_missing_translations = true
 
 Capybara.default_max_wait_time = ENV['DEFAULT_MAX_WAIT_TIME'].to_f if ENV['DEFAULT_MAX_WAIT_TIME'].present?
 
-ActiveJob::Base.queue_adapter = :test
-
 RSpec.configure do |config|
   config.color = true
   config.infer_spec_type_from_file_location!
@@ -84,7 +82,7 @@ RSpec.configure do |config|
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, comment the following line or assign false
   # instead of true.
-  config.use_transactional_fixtures = true
+  config.use_transactional_fixtures = false
 
   config.before :suite do
     DatabaseCleaner.clean_with :truncation
@@ -99,12 +97,25 @@ RSpec.configure do |config|
     end
   end
 
+  config.prepend_before(:each) do
+    if RSpec.current_example.metadata[:js]
+      DatabaseCleaner.strategy = :truncation
+    else
+      DatabaseCleaner.strategy = :transaction
+    end
+    DatabaseCleaner.start
+  end
+
   config.before do
     Rails.cache.clear
     reset_spree_preferences
     if RSpec.current_example.metadata[:js] && page.driver.browser.respond_to?(:url_blacklist)
       page.driver.browser.url_blacklist = ['http://fonts.googleapis.com']
     end
+  end
+
+  config.append_after(:each) do
+    DatabaseCleaner.clean
   end
 
   config.include BaseFeatureHelper, type: :feature
@@ -118,7 +129,6 @@ RSpec.configure do |config|
   end
 
   config.include FactoryBot::Syntax::Methods
-  config.include ActiveJob::TestHelper
 
   config.include Spree::TestingSupport::Preferences
   config.include Spree::TestingSupport::UrlHelpers

@@ -39,9 +39,7 @@ describe "Shipments", type: :feature do
 
     it "can ship a completed order" do
       expect {
-        perform_enqueued_jobs {
-          ship_shipment
-        }
+        ship_shipment
       }.to change{ ActionMailer::Base.deliveries.count }.by(1)
     end
 
@@ -49,9 +47,7 @@ describe "Shipments", type: :feature do
       uncheck 'Send Mailer'
 
       expect {
-        perform_enqueued_jobs {
-          ship_shipment
-        }
+        ship_shipment
       }.not_to change{ ActionMailer::Base.deliveries.count }
     end
   end
