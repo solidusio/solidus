@@ -21,7 +21,6 @@ require 'spree/testing_support/dummy_app'
 DummyApp::Migrations.auto_migrate
 
 require 'rspec/rails'
-require 'ffaker'
 
 # Requires supporting files with custom matchers and macros, etc,
 # in ./support/ and its subdirectories.

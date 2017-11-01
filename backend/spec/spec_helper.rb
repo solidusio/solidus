@@ -28,7 +28,6 @@ require 'rspec/rails'
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
 
 require 'database_cleaner'
-require 'ffaker'
 require 'with_model'
 
 require 'spree/testing_support/authorization_helpers'

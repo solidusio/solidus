@@ -286,3 +286,6 @@ Metrics/PerceivedComplexity:
 
 Bundler/OrderedGems:
   Enabled: false
+
+Style/NumericLiterals:
+  Enabled: false

@@ -13,8 +13,6 @@ require 'timecop'
 
 Dir["./spec/support/**/*.rb"].sort.each { |f| require f }
 
-require 'ffaker'
-
 if ENV["CHECK_TRANSLATIONS"]
   require "spree/testing_support/i18n"
 end
