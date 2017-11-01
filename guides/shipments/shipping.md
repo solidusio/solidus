@@ -1,129 +1,194 @@
-# Shipping
+# Overview of shipments
 
-This guide explains how Solidus represents shipping options and how it calculates expected costs, and shows how you can configure the system with your own shipping methods. After reading it you should know:
+Solidus uses a flexible system to calculate shipping. It accommodates the full
+range of shipment pricing: from simple [flat
+rate](https://en.wikipedia.org/wiki/Flat_rate) calculations to more
+complex calculations related to product weight or type, the customer's shipping
+address, what shipping method is being used, and so on.
 
-* how shipments and shipping are implemented in Solidus
-* how to specify your shipping structure
-* how split shipments work
-* how to configure products for special shipping treatment
-* how to capture shipping instructions
+If your store has complex shipping needs, you may find one of Solidus's existing
+shipping extensions, like [`solidus_active_shipping`][solidus-active-shipping]
+or [`solidus_shipstation`][solidus-shipstation], useful. Check out [the list of
+supported Solidus Extensions](https://extensions.solidus.io).
 
-Solidus uses a very flexible and effective system to calculate shipping, accommodating the full range of shipment pricing: from simple flat rate to complex product-type- and weight-dependent calculations.
+This article provides a summary of shipping concepts. If you are interested in
+reading about example Solidus shipment setups see
+[Shipment setup examples](shipment-setup-examples.html.markdown).
 
-The Shipment model is used to track how items are delivered to the buyer.
+<!-- TODO:
+  Add section that summarizes what Spree::Objects are created related to
+  shipments and explains what their function is in the larger checkout process.
+-->
 
-Shipments have the following attributes:
+## Shipment attributes
 
-* `number`: The unique identifier for this shipment. It begins with the letter H and ends in an 11-digit number. This number is shown to the users, and can be used to find the order by calling `Spree::Shipment.find_by(number: number)`.
-* `tracking`: The identifier given for the shipping provider (i.e. FedEx, UPS, etc).
-* `shipped_at`: The time when the shipment was shipped.
-* `state`: The current state of the shipment.
-* `stock_location_id`: The ID of the Stock Location where the items for this shipment will be sourced from.
-* Other attributes likely of interest to developers:
-  * `adjustment_total`
-  * `additional_tax_total`
-  * `promo_total`
-  * `included_tax_total`
-  * `cost`
-  * `order_id`
+The `Spree::Shipment` model tracks how items should be delivered to the
+customer.
 
-**Needed:** shipment process flow diagram
+### Basic attributes
 
-An explanation of the different shipment states:
+- `number`: The unique identifier for this shipment. It begins with the letter
+  `H` and ends in an 11-digit number. This number is visible to customers, and
+  it can be used to find the order (by calling `Spree::Shipment.find_by(number:
+  H12345678910)`).
+- `tracking`: The identifier given for the shipping provider (such as FedEx or
+  UPS).
+- `shipped_at`: The time when the shipment is shipped.
+- `state`: The current state of the shipment.
+- `stock_location_id`: The ID of the stock location where the items for this
+  shipment are sourced from.
 
-* `pending`: The shipment has backordered inventory units and/or the order is not paid for.
-* `ready`: The shipment has *no* backordered inventory units and the order is paid for.
-* `shipped`: The shipment is on its way to the buyer.
-* `canceled`: When an order is cancelled, all of its shipments will also be cancelled. When this happens, all items in the shipment will be restocked. If an order is "resumed", then the shipment will also be resumed.
+### Additional attributes
 
-Explaining each piece of the shipment world inside of Solidus separately and how each piece fits together can be a cumbersome task. Fortunately, using a few simple examples makes it much easier to grasp. In that spirit, the examples are shown first in this guide.
+In addition to the basic attributes, developers may be interested in the
+following shipment attributes: 
 
-## Definitions, Design, & Functionality
+- `adjustment_total`: The sum of the promotion and tax adjustments on the
+  shipment. 
+- `additional_tax_total`: The sum of U.S.-style sales taxes on the shipment.
+- `promo_total`: The sum of the promotions on the shipment. 
+- `included_tax_total`: The sum of the VAT-style taxes on the shipment. 
+- `cost`: The order cost for the select shipping method.
+- `order_id`: The ID for the order that a shipment is being created for.
 
-To properly leverage Solidus' shipping system's flexibility you must understand a few key concepts:
+<!-- TODO:
+  Add a shipment process flow diagram.
+-->
 
-* Stock Locations
-* Shipping Methods
-* Zones
-* Shipping Categories
-* Calculators (through Shipping Rates)
+### Shipping states
 
-### Stock Locations
-Stock locations represent physical storage locations from which stock is shipped.
+Each shipment is assigned a `state` attribute. Depending on its state, different
+actions can be performed on shipments. There are four possible states:
 
-### Shipping Methods
+- `pending`: The shipment has backordered inventory units and/or the order is
+  not paid for.
+- `ready`: The shipment has no backordered inventory units and the order is paid
+  for.
+- `shipped`: The shipment is on its way to the buyer.
+- `canceled`: When an order is cancelled, all of its shipments will also be
+  cancelled. When this happens, all items in the shipment will be restocked. If
+  an order is "resumed", then the shipment will also be resumed.
 
-Shipping methods identify the actual services or carriers used to ship the product. For example:
+## Core concepts
 
-* UPS Ground
-* UPS One Day
-* FedEx 2Day
-* FedEx Overnight
-* DHL International
+To leverage Solidus's shipping system, become familiar with its key concepts:
 
-Each shipping method is only applicable to a specific geographic **Zone**. For example, you wouldn't be able to get a package delivered internationally using a domestic-only shipping method. You can't ship from Dallas, USA to Rio de Janeiro, Brazil using UPS Ground (a US-only carrier).
+- Stock locations
+- Shipping methods
+- Zones
+- Shipping categories
+- Shipping calculators (through shipping rates)
 
-If you are using shipping categories, these can be used to qualify or disqualify a given shipping method.
+### Stock locations
 
-**Note**: *Shipping methods can have multiple shipping categories assigned to them. This allows the shipping methods available to an order to be determined by the shipping categories of the items in a shipment.*
+Stock locations represent physical storage locations from which stock is
+shipped.
+
+### Shipping methods
+
+Shipping methods identify the actual delivery services used to ship the
+product. For example:
+
+- UPS Ground
+- UPS One Day
+- FedEx 2Day
+- FedEx Overnight
+- DHL International
+
+Each shipping method is only applicable to a specific geographic
+zone. For example, you wouldn't be able to get a package delivered
+internationally using a domestic-only shipping method. You can't ship from
+Dallas, USA, to Rio de Janeiro, Brazil, using UPS Ground, which is a United
+States-only carrier.
+
+### Shipping categories
+
+You can further restrict when shipping methods are available to customers by
+using shipping categories.
+
+For example, if your store can only ship oversized products via a specific
+carrier, called "USPS Oversized Parcels", then you could create a shipping
+category called "Oversized" for that shipping method, which can then be assigned
+to oversized products.
+
+Shipping categories are created in the admin interface (**Settings -> Shipping
+-> Shipping Categories**) and then assigned to products (**Products -> Edit**).
 
 ### Zones
 
-Zones serve as a mechanism for grouping geographic areas together into a single entity. You can read all about how to configure and use Zones in the [Zones Guide](addresses#zones).
+Zones serve as a mechanism for grouping geographic areas together into a single
+entity.
 
-The Shipping Address entered during checkout will define the zone the customer is in and limit the Shipping Methods available to him.
+The shipping address entered during checkout defines the zone the customer is
+in. This limit the available shipping methods and defines regional taxation
+rules.
 
-### Shipping Categories
+<!-- TODO:
+  For more information about zones, see [the Locations guide](../locations).
+-->
 
-Shipping Categories are useful if you sell products whose shipping pricing vary depending on the type of product (TVs and Mugs, for instance) or the handling of the product (frigile or large). Shipping categories can be assigned when editing a product.
+### Shipping calculators
 
-**Note:** *For simple setups, where shipping for all products is priced the same (ie. T-shirt-only shop), all products would be assigned to the default shipping category for the store.*
+A shipping calculator is the component responsible for calculating the shipping
+rate for each available shipping method.
 
-Some examples of Shipping Categories would be:
+Solidus ships with five default shipping calculators:
 
-* Light (for lightweight items like stickers)
-* Regular
-* Heavy (for items over a certain weight)
+- [Flat percent](https://github.com/solidusio/solidus/blob/master/core/app/models/spree/calculator/shipping/flat_percent_item_total.rb)
+- [Flat rate (per order)](https://github.com/solidusio/solidus/blob/master/core/app/models/spree/calculator/shipping/flat_rate.rb)
+- [Flat rate per package item](https://github.com/solidusio/solidus/blob/master/core/app/models/spree/calculator/shipping/per_item.rb)
+- [Flexible rate per package item](https://github.com/solidusio/solidus/blob/master/core/app/models/spree/calculator/shipping/flexi_rate.rb)
+- [Price sack](https://github.com/solidusio/solidus/blob/master/core/app/models/spree/calculator/shipping/price_sack.rb)
+  (which offers variable shipping cost that depends on order total)
 
-Shipping Categories are created in the admin interface (Settings -> Shipping -> Shipping Categories) and then assigned to products (Products -> Edit).
+Flexible rate is defined as a flat rate for the first product, plus a different
+flat rate for each additional product.
 
-During checkout, the shipping categories of the products in your order will determine which calculator will be used to price its shipping for each Shipping Method.
+If you want to estimate shipping rates using carrier APIs, You can use an
+extension like [`solidus_active_shipping`][solidus-active-shipping]. Or, if you
+have other complex needs, you can create a [custom shipping
+calculators][custom-shipping-calculators] for more information.
 
-### Shipping Calculators
+### Shipping rates
 
-A Calculator is the component responsible for calculating the shipping price for each available Shipping Method.
+For each shipment, a `Spree::ShippingRate` object is created for each of your
+store's shipping methods. These objects calculate how much the shipment would
+cost if it were sent by each of the available shipping methods:
 
-Solidus ships with 5 default Calculators:
+| `Spree::ShippingRate` | 1     | 2     | 3     | Description                                         |
+|-----------------------|-------|-------|-------|-----------------------------------------------------|
+| `shipment_id`         | 1     | 1     | 1     | All of these rates are for one shipment             |
+| `shipping_method_id`  | 1     | 2     | 3     | Each available shipping method                      |
+| `selected`            | false | true  | false | Set to `true` for the selected shipping method only |
+| `cost`                | $0.50 | $1.75 | $1.25 | The shipment's shipping rate                        |
 
-* Flat percent
-* Flat rate (per order)
-* Flat rate per package item
-* Flexible rate per package item
-* Price sack
+Once the shipping method has been chosen, the matching `Spree::ShippingRate`'s
+`selected` key becomes `true`. Only one shipping rate can be `true` for each
+shipment.
 
-Flexible rate is defined as a flat rate for the first product, plus a different flat rate for each additional product.
+[solidus-active-shipping]: solidus-active-shipping-extension.html.markdown
 
-You can define your own calculator if you have more complex needs. In that case, check out the Calculators Guide (*this guide has not yet been ported from Spree as of this edit*).
+[custom-shipping-calculators]: custom-shipping-calculators.html.markdown
 
-## Examples
+## Shipment setup examples
 
-### Simple Setup
+### Simple setup
 
 Consider you sell T-shirts to the US and Europe and ship from a single location, and you work with 2 carriers:
 
-* USPS Ground (to US)
-* FedEx (to EU)
+- USPS Ground (to US)
+- FedEx (to EU)
 
 and their pricing is as follow:
 
-* USPS charges $5 for one T-shirt and $2 for each additional one
-* FedEx charges $10 each, regardless of the quantity
+- USPS charges $5 for one T-shirt and $2 for each additional one
+- FedEx charges $10 each, regardless of the quantity
 
 To achieve this setup you need the following configuration:
 
-* Shipping Categories: All your products are the same, so you only need to define one default shipping category. Each of your products would then need to be assigned to this shipping category.
-* 1 Stock Location: You are shipping all items from the same location, so you can use the default.
-* 2 Shipping Methods (Configuration->Shipping Methods) as follows:
+- Shipping Categories: All your products are the same, so you only need to define one default shipping category. Each of your products would then need to be assigned to this shipping category.
+- 1 Stock Location: You are shipping all items from the same location, so you can use the default.
+- 2 Shipping Methods (Configuration->Shipping Methods) as follows:
 
 |Name|Zone|Calculator|
 |---:|---:|---:|
@@ -132,49 +197,48 @@ To achieve this setup you need the following configuration:
 
 With the above configuration, a customer shipping to the US would see the USPS Ground shipping option presented to them at checkout, while a customer shipping to the EU would see the FedEx option.  Shipping rate would be calculatd at checkout according to the calculator rules.
 
+### Advanced setup
 
-### Advanced Setup
+Consider you sell products to a single zone (U.S.) and you ship from 2 locations (Stock Locations):
 
-Consider you sell products to a single zone (US) and you ship from 2 locations (Stock Locations):
-
-* New York
-* Los Angeles
+- New York
+- Los Angeles
 
 and you work with 3 carriers (Shipping Methods):
 
-* FedEx
-* DHL
-* US postal service
+- FedEx
+- DHL
+- US postal service
 
 and your products can be classified into 3 Shipping Categories:
 
-* Light
-* Regular
-* Heavy
+- Light
+- Regular
+- Heavy
 
 and their pricing is as follow:
 
 FedEx charges:
 
-* $10 for all light items regardless of how many you have
-* $2 per regular item
-* $20 for the first heavy item and $15 for each additional one
+- $10 for all light items regardless of how many you have
+- $2 per regular item
+- $20 for the first heavy item and $15 for each additional one
 
 DHL charges:
 
-* $5 per item if it's light or regular
-* $50 per item if it's heavy
+- $5 per item if it's light or regular
+- $50 per item if it's heavy
 
 USPS charges:
 
-* $8 per item if it's light or regular
-* $20 per item if it's heavy
+- $8 per item if it's light or regular
+- $20 per item if it's heavy
 
 To achieve this setup you need the following configuration:
 
-* 4 Shipping Categories: Default, Light, Regular and Heavy
-* 3 Shipping Methods (Settings -> Shipping -> Shipping Methods): FedEx, DHL, USPS
-* 2 Stock Locations (Settings -> Shipping -> Stock Locations): New York, Los Angeles
+- 4 Shipping Categories: Default, Light, Regular and Heavy
+- 3 Shipping Methods (Settings -> Shipping -> Shipping Methods): FedEx, DHL, USPS
+- 2 Stock Locations (Settings -> Shipping -> Stock Locations): New York, Los Angeles
 
 |S. Category / S. Method|DHL|FedEx|USPS|
 |---:|---:|---:|---:|
@@ -192,11 +256,11 @@ After entering a shipping address, the system displays the available shipping op
 
 The customer must choose a shipping method for each shipment before proceeding to the next stage. At the confirmation step, the shipping cost will be shown and included in the order's total.
 
-**Note:** *You can enable collection of extra _shipping instructions_ by setting the option `Spree::Config.shipping_instructions` to `true`. This is set to `false` by default. See [Shipping Instructions](#shipping-instructions) below.*
+**Note:*- *You can enable collection of extra _shipping instructions_ by setting the option `Spree::Config.shipping_instructions` to `true`. This is set to `false` by default. See [Shipping Instructions](#shipping-instructions) below.*
 
 ### What the Order's Administrator Sees
 
-**Shipment** objects are created during checkout for an order. Initially each records just the shipping method and the order it applies to. The administrator can update the record with the actual shipping cost and a tracking code, and may also (once only) confirm the dispatch. This confirmation causes a shipping date to be set as the time of confirmation.
+**Shipment*- objects are created during checkout for an order. Initially each records just the shipping method and the order it applies to. The administrator can update the record with the actual shipping cost and a tracking code, and may also (once only) confirm the dispatch. This confirmation causes a shipping date to be set as the time of confirmation.
 
 ## Advanced Shipping Methods
 
@@ -284,7 +348,7 @@ class Calculator::Usps::FirstClassMailInternationalParcels < Calculator::Usps::B
 end
 ```
 
-**Note:** *unlike calculators that you write yourself, these calculators do not have to implement a `compute` instance method that returns a shipping amount. The superclasses take care of that requirement.*
+**Note:*- *unlike calculators that you write yourself, these calculators do not have to implement a `compute` instance method that returns a shipping amount. The superclasses take care of that requirement.*
 
 There is one gotcha to bear in mind: the string returned by the `description` method must _exactly_ match the name of the USPS delivery service. To determine the exact spelling of the delivery service, you'll need to examine what gets returned from the API:
 
@@ -380,7 +444,7 @@ class Calculator::Usps::FirstClassMailParcels < Calculator::Usps::Base
   def available?(order)
     multiplier = 1.3
     weight = order.line_items.inject(0) do |weight, line_item|
-      weight + (line_item.variant.weight ? (line_item.quantity * line_item.variant.weight * multiplier) : 0)
+      weight + (line_item.variant.weight ? (line_item.quantity - line_item.variant.weight - multiplier) : 0)
     end
     #if weight in ounces > 13, then First Class Mail is not available for the order
       weight > 13 ? false : true
@@ -430,8 +494,8 @@ Solidus comes with two default splitters which are run in sequence. This means t
 
 Let's take a look at what the default splitters do:
 
-* **Shipping Category Splitter**: Splits an order into packages based on items' shipping categories. This means that each package will only have items that all belong to the same shipping category.
-* **Weight Splitter**: Splits an order into packages based on a weight threshold. This means that each package has a mass weight. If a new item is added to the order and it causes a package to go over the weight threshold, a new package will be created so that all packages weigh less than the threshold. You can set the weight threshold by changing `Spree::Stock::Splitter::Weight.threshold` (defaults to `150`) in an initializer.
+- **Shipping Category Splitter**: Splits an order into packages based on items' shipping categories. This means that each package will only have items that all belong to the same shipping category.
+- **Weight Splitter**: Splits an order into packages based on a weight threshold. This means that each package has a mass weight. If a new item is added to the order and it causes a package to go over the weight threshold, a new package will be created so that all packages weigh less than the threshold. You can set the weight threshold by changing `Spree::Stock::Splitter::Weight.threshold` (defaults to `150`) in an initializer.
 
 #### Custom Splitters
 
@@ -479,8 +543,8 @@ The prioritizer is also a customization point. If you want to customize which pa
 
 The `Adjuster` visits each package in an order and ensures the correct number of items are in each package. To customize this functionality, you need to do two things:
 
-* Subclass the [Spree::Stock::Adjuster](https://github.com/solidusio/solidus/blob/master/core/app/models/spree/stock/adjuster.rb) class and override the the `adjust` method to get the desired functionality.
-* Decorate the `Spree::Stock::Coordinator` and override the `prioritize_packages` method, passing in your custom adjuster class to the `Prioritizer` initializer. For example, if our adjuster was called `Spree::Stock::CustomAdjuster`, we would do the following:
+- Subclass the [Spree::Stock::Adjuster](https://github.com/solidusio/solidus/blob/master/core/app/models/spree/stock/adjuster.rb) class and override the the `adjust` method to get the desired functionality.
+- Decorate the `Spree::Stock::Coordinator` and override the `prioritize_packages` method, passing in your custom adjuster class to the `Prioritizer` initializer. For example, if our adjuster was called `Spree::Stock::CustomAdjuster`, we would do the following:
 
 ```ruby
 Spree::Stock::Coordinator.class_eval do
@@ -495,10 +559,12 @@ end
 
 The `Spree::Stock::Estimator` loops through the packages created by the packer in order to calculate and attach shipping rates to them. This information is then returned to the user so they can select shipments for their order and complete the checkout process.
 
-
-
-## Documentation ToDo and notes
-* This guide was adapted from the original spree guide: https://github.com/spree/spree-guides/blob/master/content/developer/core/shipments.md
-* There were diagrams and screen shots in the original Spree docs that were dated.  It would be nice to add some diagrams and screenshots to this doc.
-* The examples of implementing custom calculators, shipping splitters, etc have been reviewed and seem accurate, but have not yet been validated in Solidus directly.
-
+<!-- TODO:
+  - This guide was adapted from the original spree guide:
+    https://github.com/spree/spree-guides/blob/master/content/developer/core/shipments.md
+  - There were diagrams and screen shots in the original Spree docs that were
+    dated.  It would be nice to add some diagrams and screenshots to this doc.
+  - The examples of implementing custom calculators, shipping splitters, etc.
+    have been reviewed and seem accurate, but have not yet been validated in
+    Solidus directly.
+-->
