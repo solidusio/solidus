@@ -407,6 +407,20 @@ module Spree
     # returns a String
     class_name_attribute :taxon_url_parametizer_class, default: 'ActiveSupport::Inflector'
 
+    # Allows providing your own class for image galleries on Variants
+    #
+    # @!attribute [rw] variant_gallery_class
+    # @return [Class] a class that implements an `images` method and returns an
+    # Enumerable of images adhering to the present_image_class interface
+    class_name_attribute :variant_gallery_class, default: 'Spree::Gallery::VariantGallery'
+
+    # Allows providing your own class for image galleries on Products
+    #
+    # @!attribute [rw] product_gallery_class
+    # @return [Class] a class that implements an `images` method and returns an
+    # Enumerable of images adhering to the present_image_class interface
+    class_name_attribute :product_gallery_class, default: 'Spree::Gallery::ProductGallery'
+
     # Allows providing your own class instance for generating order numbers.
     #
     # @!attribute [rw] order_number_generator
