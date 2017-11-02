@@ -20,12 +20,12 @@ reading about example Solidus shipment setups see
   shipments and explains what their function is in the larger checkout process.
 -->
 
+[solidus-active-shipping]: solidus-active-shipping-extension.html.markdown
+
 ## Shipment attributes
 
 The `Spree::Shipment` model tracks how items should be delivered to the
-customer.
-
-### Basic attributes
+customer. Developers may be interested in the following attributes:
 
 - `number`: The unique identifier for this shipment. It begins with the letter
   `H` and ends in an 11-digit number. This number is visible to customers, and
@@ -34,22 +34,17 @@ customer.
 - `tracking`: The identifier given for the shipping provider (such as FedEx or
   UPS).
 - `shipped_at`: The time when the shipment is shipped.
-- `state`: The current state of the shipment.
+- `state`: The current state of the shipment. See [Shipping
+  states](#shipping-states) for more information.
 - `stock_location_id`: The ID of the stock location where the items for this
   shipment are sourced from.
-
-### Additional attributes
-
-In addition to the basic attributes, developers may be interested in the
-following shipment attributes: 
-
 - `adjustment_total`: The sum of the promotion and tax adjustments on the
-  shipment. 
+  shipment.
 - `additional_tax_total`: The sum of U.S.-style sales taxes on the shipment.
-- `promo_total`: The sum of the promotions on the shipment. 
-- `included_tax_total`: The sum of the VAT-style taxes on the shipment. 
-- `cost`: The order cost for the select shipping method.
-- `order_id`: The ID for the order that a shipment is being created for.
+- `promo_total`: The sum of the promotions on the shipment.
+- `included_tax_total`: The sum of the VAT-style taxes on the shipment.
+- `cost`: The estimated shipping cost (for the selected shipping method).
+- `order_id`: The ID for the order that the shipment belongs to.
 
 <!-- TODO:
   Add a shipment process flow diagram.
@@ -64,7 +59,7 @@ actions can be performed on shipments. There are four possible states:
   not paid for.
 - `ready`: The shipment has no backordered inventory units and the order is paid
   for.
-- `shipped`: The shipment is on its way to the buyer.
+- `shipped`: The shipment has left the stock location.
 - `canceled`: When an order is cancelled, all of its shipments will also be
   cancelled. When this happens, all items in the shipment will be restocked. If
   an order is "resumed", then the shipment will also be resumed.
@@ -77,7 +72,10 @@ To leverage Solidus's shipping system, become familiar with its key concepts:
 - Shipping methods
 - Zones
 - Shipping categories
-- Shipping calculators (through shipping rates)
+- Shipping calculators
+- Shipping rates
+- Inventory units
+- Cartons
 
 ### Stock locations
 
@@ -104,7 +102,9 @@ States-only carrier.
 ### Shipping categories
 
 You can further restrict when shipping methods are available to customers by
-using shipping categories.
+using shipping categories. If you assign two products to two different shipping
+categories, you could ensure that these items are always sent as separate
+shipments.
 
 For example, if your store can only ship oversized products via a specific
 carrier, called "USPS Oversized Parcels", then you could create a shipping
@@ -116,12 +116,11 @@ Shipping categories are created in the admin interface (**Settings -> Shipping
 
 ### Zones
 
-Zones serve as a mechanism for grouping geographic areas together into a single
-entity.
+Zones serve as a mechanism for grouping distinct geographic areas together.
 
-The shipping address entered during checkout defines the zone the customer is
-in. This limit the available shipping methods and defines regional taxation
-rules.
+The shipping address entered during checkout defines the zone (or zones) for the
+order. The zone limits the available shipping methods for the order. It also
+defines regional taxation rules.
 
 <!-- TODO:
   For more information about zones, see [the Locations guide](../locations).
@@ -141,19 +140,18 @@ Solidus ships with five default shipping calculators:
 - [Price sack](https://github.com/solidusio/solidus/blob/master/core/app/models/spree/calculator/shipping/price_sack.rb)
   (which offers variable shipping cost that depends on order total)
 
-Flexible rate is defined as a flat rate for the first product, plus a different
-flat rate for each additional product.
-
 If you want to estimate shipping rates using carrier APIs, You can use an
 extension like [`solidus_active_shipping`][solidus-active-shipping]. Or, if you
 have other complex needs, you can create a [custom shipping
 calculators][custom-shipping-calculators] for more information.
 
+[custom-shipping-calculators]: custom-shipping-calculators.html.markdown
+
 ### Shipping rates
 
 For each shipment, a `Spree::ShippingRate` object is created for each of your
-store's shipping methods. These objects calculate how much the shipment would
-cost if it were sent by each of the available shipping methods:
+store's shipping methods. These objects represent the cost of the shipment as
+calculated by each shipping method's calculator.
 
 | `Spree::ShippingRate` | 1     | 2     | 3     | Description                                         |
 |-----------------------|-------|-------|-------|-----------------------------------------------------|
@@ -163,12 +161,30 @@ cost if it were sent by each of the available shipping methods:
 | `cost`                | $0.50 | $1.75 | $1.25 | The shipment's shipping rate                        |
 
 Once the shipping method has been chosen, the matching `Spree::ShippingRate`'s
-`selected` key becomes `true`. Only one shipping rate can be `true` for each
+`selected` key becomes `true`. Only one shipping rate can be `selected` for each
 shipment.
 
-[solidus-active-shipping]: solidus-active-shipping-extension.html.markdown
+### Inventory units
 
-[custom-shipping-calculators]: custom-shipping-calculators.html.markdown
+A `Spree::InventoryUnit` is created for each item in a shipment. It tracks
+whether the item has shipped, what product variant the item is, and what order
+and shipment the item is associated with.
+
+<!-- TODO:
+  This section is a stub. It may be worth revisiting inventory units in detail,
+  or in its own article.
+-->
+
+### Cartons
+
+The `Spree::Carton` model represents how an order was shipped. For stores that
+use third-party logistics or complicated warehouse workflows, the shipment
+described when the order is confirmed may not be how the _actual_ shipment is
+packaged when it leaves its destination.
+
+<!-- TODO:
+  For more information, see the [Cartons](cartons.md) article.
+-->
 
 ## Shipment setup examples
 
@@ -256,11 +272,11 @@ After entering a shipping address, the system displays the available shipping op
 
 The customer must choose a shipping method for each shipment before proceeding to the next stage. At the confirmation step, the shipping cost will be shown and included in the order's total.
 
-**Note:*- *You can enable collection of extra _shipping instructions_ by setting the option `Spree::Config.shipping_instructions` to `true`. This is set to `false` by default. See [Shipping Instructions](#shipping-instructions) below.*
+**Note:** *You can enable collection of extra _shipping instructions_ by setting the option `Spree::Config.shipping_instructions` to `true`. This is set to `false` by default. See [Shipping Instructions](#shipping-instructions) below.*
 
 ### What the Order's Administrator Sees
 
-**Shipment*- objects are created during checkout for an order. Initially each records just the shipping method and the order it applies to. The administrator can update the record with the actual shipping cost and a tracking code, and may also (once only) confirm the dispatch. This confirmation causes a shipping date to be set as the time of confirmation.
+**Shipment** objects are created during checkout for an order. Initially each records just the shipping method and the order it applies to. The administrator can update the record with the actual shipping cost and a tracking code, and may also (once only) confirm the dispatch. This confirmation causes a shipping date to be set as the time of confirmation.
 
 ## Advanced Shipping Methods
 
@@ -348,7 +364,7 @@ class Calculator::Usps::FirstClassMailInternationalParcels < Calculator::Usps::B
 end
 ```
 
-**Note:*- *unlike calculators that you write yourself, these calculators do not have to implement a `compute` instance method that returns a shipping amount. The superclasses take care of that requirement.*
+**Note:** *unlike calculators that you write yourself, these calculators do not have to implement a `compute` instance method that returns a shipping amount. The superclasses take care of that requirement.*
 
 There is one gotcha to bear in mind: the string returned by the `description` method must _exactly_ match the name of the USPS delivery service. To determine the exact spelling of the delivery service, you'll need to examine what gets returned from the API:
 
@@ -444,7 +460,7 @@ class Calculator::Usps::FirstClassMailParcels < Calculator::Usps::Base
   def available?(order)
     multiplier = 1.3
     weight = order.line_items.inject(0) do |weight, line_item|
-      weight + (line_item.variant.weight ? (line_item.quantity - line_item.variant.weight - multiplier) : 0)
+      weight + (line_item.variant.weight ? (line_item.quantity * line_item.variant.weight * multiplier) : 0)
     end
     #if weight in ounces > 13, then First Class Mail is not available for the order
       weight > 13 ? false : true

@@ -35,6 +35,10 @@ After the proposed shipments have been determined, the customer can continue the
 checkout process and take the order from the `delivery` state to the `payment`
 state.
 
+_Note that before Solidus 2.4, split shipments were not managed using the
+`Spree::Stock::SimpleCoordinator` and instead used `Spree::Stock`'s'
+`Coordinator`, `Adjuster`, `Packer`, and `Prioritizer` classes._
+
 [simple-coordinator]: https://github.com/solidusio/solidus/blob/master/core/app/models/spree/stock/simple_coordinator.rb
 
 ## Splitters
