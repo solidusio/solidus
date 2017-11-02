@@ -80,8 +80,6 @@ module Spree
         pluck(:state).uniq
       end
     end
-    has_many :order_stock_locations, class_name: "Spree::OrderStockLocation"
-    has_many :stock_locations, through: :order_stock_locations
 
     # Adjustments and promotions
     has_many :adjustments, -> { order(:created_at) }, as: :adjustable, inverse_of: :adjustable, dependent: :destroy

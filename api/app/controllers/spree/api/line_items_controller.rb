@@ -12,9 +12,7 @@ module Spree
         @line_item = @order.contents.add(
           variant,
           params[:line_item][:quantity] || 1,
-          {
-            stock_location_quantities: params[:line_item][:stock_location_quantities]
-          }.merge({ options: line_item_params[:options].to_h })
+          options: line_item_params[:options].to_h
         )
 
         if @line_item.errors.empty?

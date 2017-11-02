@@ -278,16 +278,6 @@ class SolidusOneFour < ActiveRecord::Migration[5.0]
       t.index ["order_id"], name: "index_spree_order_mutexes_on_order_id", unique: true
     end
 
-    create_table "spree_order_stock_locations", force: :cascade do |t|
-      t.integer "order_id"
-      t.integer "variant_id"
-      t.integer "quantity"
-      t.integer "stock_location_id"
-      t.boolean "shipment_fulfilled", default: false, null: false
-      t.datetime "created_at"
-      t.datetime "updated_at"
-    end
-
     create_table "spree_orders", force: :cascade do |t|
       t.string "number", limit: 32
       t.decimal "item_total", precision: 10, scale: 2, default: "0.0", null: false
