@@ -248,6 +248,8 @@ features to your store that are not (or not yet) part of the core project.
 
 A list can be found at [extensions.solidus.io](http://extensions.solidus.io/).
 
+If you want to write an extension for Solidus, you can use the [solidus\_cmd](https://www.github.com/solidusio/solidus_cmd.git) gem.
+
 Contributing
 ------------
 
