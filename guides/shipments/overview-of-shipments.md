@@ -121,28 +121,6 @@ The customer must choose a shipping method for each shipment before proceeding t
 
 **Shipment** objects are created during checkout for an order. Initially each records just the shipping method and the order it applies to. The administrator can update the record with the actual shipping cost and a tracking code, and may also (once only) confirm the dispatch. This confirmation causes a shipping date to be set as the time of confirmation.
 
-## Advanced Shipping Methods
-
-Solidus comes with a set of calculators that should fit most of the shipping situations that may arise. If the calculators that come with Solidus are not enough for your needs, you might want to use an extension - if one exists to meet your needs - or create a custom one.
-
-### Extensions
-
-There are a few Solidus extensions which provide additional shipping capabilities. See the [Solidus Extension List](http://extensions.solidus.io/) for the latest information.
-
-### Writing Your Own
-
-For more detailed information, check out the section on [Calculators](calculators).
-
-Your calculator should accept an array of `LineItem` objects and return a cost. It can look at any reachable data, but typically uses the address, the order and the information from variants which are contained in the line_items.
-
-### Product & Variant Configuration
-
-Store administrators can assign products to specific Shipping Categories or include extra information in variants to enable custom calculators to determine results. Weight and dimension information can also be used in the calculator.
-
-## Shipping Instructions
-
-The option `Spree::Config[:shipping_instructions]` controls collection of additional shipping instructions. This is turned off (set to `false`) by default. If an order has any shipping instructions attached, they will be shown in an order's shipment admin page and can also be edited at that stage. Observe that instructions are currently attached to the _order_ and not to actual _shipments_.
-
 ## Filtering Shipping Methods On Criteria Other Than the Zone
 
 Ordinarily, it is the zone of the shipping address that determines which shipping methods are displayed to a customer at checkout. Here is how the availability of a shipping method is determined:
