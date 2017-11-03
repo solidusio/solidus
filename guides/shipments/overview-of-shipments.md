@@ -121,45 +121,6 @@ The customer must choose a shipping method for each shipment before proceeding t
 
 **Shipment** objects are created during checkout for an order. Initially each records just the shipping method and the order it applies to. The administrator can update the record with the actual shipping cost and a tracking code, and may also (once only) confirm the dispatch. This confirmation causes a shipping date to be set as the time of confirmation.
 
-## Filtering Shipping Methods On Criteria Other Than the Zone
-
-Ordinarily, it is the zone of the shipping address that determines which shipping methods are displayed to a customer at checkout. Here is how the availability of a shipping method is determined:
-
-```ruby
-class Spree::Stock::Estimator
-  def shipping_methods(package)
-    shipping_methods = package.shipping_methods
-    shipping_methods.delete_if { |ship_method| !ship_method.calculator.available?(package.contents) }
-    shipping_methods.delete_if { |ship_method| !ship_method.include?(order.ship_address) }
-    shipping_methods.delete_if { |ship_method| !(ship_method.calculator.preferences[:currency].nil? || ship_method.calculator.preferences[:currency] == currency) }
-    shipping_methods
-  end
-end
-```
-
-Unless overridden, the calculator's `available?` method returns `true` by default. It is, therefore, the zone of the destination address that filters out the shipping methods in most cases. However, in some circumstances it may be necessary to filter out additional shipping methods.
-
-Consider the case of the USPS First Class domestic shipping service, which is not offered if the weight of the package is greater than 13oz. Even though the USPS API does not return the option for First Class in this instance, First Class will appear as an option in the checkout view with an unfortunate value of 0, since it has been set as a Shipping Method.
-
-To ensure that First Class shipping is not available for orders that weigh more than 13oz, the calculator's `available?` method must be overridden as follows:
-
-```ruby
-class Calculator::Usps::FirstClassMailParcels < Calculator::Usps::Base
-  def self.description
-    "USPS First-Class Mail Parcel"
-  end
-
-  def available?(order)
-    multiplier = 1.3
-    weight = order.line_items.inject(0) do |weight, line_item|
-      weight + (line_item.variant.weight ? (line_item.quantity * line_item.variant.weight * multiplier) : 0)
-    end
-    #if weight in ounces > 13, then First Class Mail is not available for the order
-      weight > 13 ? false : true
-  end
-end
-```
-
 ## Documentation ToDo and notes
 * This guide was adapted from the original spree guide: https://github.com/spree/spree-guides/blob/master/content/developer/core/shipments.md
 * There were diagrams and screen shots in the original Spree docs that were dated.  It would be nice to add some diagrams and screenshots to this doc.
