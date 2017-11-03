@@ -22,7 +22,7 @@ module Spree
       end
 
       def spree_calculators
-        Rails.application.config.spree.calculators
+        Spree::Config.environment.calculators
       end
     end
 

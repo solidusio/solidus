@@ -74,14 +74,9 @@ module Spree
         before do
           stub_const('CustomShippingAction', custom_klass)
 
-          @old_shipping_actions = Rails.application.config.spree.promotions.shipping_actions
-          Rails.application.config.spree.promotions.shipping_actions = ['CustomShippingAction']
+          Spree::Config.environment.promotions.shipping_actions = ['CustomShippingAction']
 
           order.order_promotions.create!(promotion: promotion, promotion_code: promotion.codes.first)
-        end
-
-        after do
-          Rails.application.config.spree.promotions.shipping_actions = @old_shipping_actions
         end
 
         let(:action) { custom_klass.new }
