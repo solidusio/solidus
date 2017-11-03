@@ -74,11 +74,8 @@ To leverage Solidus's shipping system, become familiar with its key concepts:
 - Shipping categories
 - Shipping calculators
 - Shipping rates
-
-<!-- TODO:
-  - Inventory units
-  - Cartons
--->
+- Inventory units
+- Cartons
 
 ### Stock locations
 
@@ -167,3 +164,22 @@ Once the shipping method has been chosen, the matching `Spree::ShippingRate`'s
 `selected` key becomes `true`. Only one shipping rate can be `selected` for each
 shipment.
 
+### Inventory units
+
+A `Spree::InventoryUnit` is created for each item in a shipment. It tracks
+whether the item has shipped, what product variant the item is, and what order
+and shipment the item is associated with.
+
+<!-- TODO:
+  This section is a stub. It may be worth revisiting inventory units in detail,
+  or in its own article.
+-->
+
+### Cartons
+
+The `Spree::Carton` model represents how an order was shipped. For stores that
+use third-party logistics or complicated warehouse workflows, the shipment
+described when the order is confirmed may not be how the _actual_ shipment is
+packaged when it leaves its destination.
+
+For more information, see the [Cartons](cartons.md) article.
