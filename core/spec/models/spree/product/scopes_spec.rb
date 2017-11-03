@@ -131,7 +131,7 @@ RSpec.describe "Product scopes", type: :model do
       end
 
       context "with soft-deleted master price" do
-        before { product.master.prices.destroy_all }
+        before { product.master.prices.each(&:paranoia_destroy!) }
 
         it "doesn't include the product" do
           expect(Spree::Product.available).to match_array([])

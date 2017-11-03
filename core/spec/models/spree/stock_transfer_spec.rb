@@ -221,7 +221,7 @@ module Spree
     end
 
     describe "destroying" do
-      subject { stock_transfer.destroy }
+      subject { stock_transfer.paranoia_destroy }
 
       context "stock transfer is finalized" do
         before do

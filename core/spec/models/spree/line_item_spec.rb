@@ -6,12 +6,12 @@ RSpec.describe Spree::LineItem, type: :model do
 
   context '#destroy' do
     it "fetches deleted products" do
-      line_item.product.destroy
+      line_item.product.paranoia_destroy
       expect(line_item.reload.product).to be_a Spree::Product
     end
 
     it "fetches deleted variants" do
-      line_item.variant.destroy
+      line_item.variant.paranoia_destroy
       expect(line_item.reload.variant).to be_a Spree::Variant
     end
 

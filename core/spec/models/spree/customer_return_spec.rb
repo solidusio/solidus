@@ -207,7 +207,12 @@ RSpec.describe Spree::CustomerReturn, type: :model do
       end
 
       it "should NOT raise an error when no stock item exists in the stock location" do
-        inventory_unit.find_stock_item.destroy
+        inventory_unit.find_stock_item.really_destroy!
+        create(:customer_return_without_return_items, return_items: [return_item], stock_location_id: new_stock_location.id)
+      end
+
+      it "should NOT raise an error when a soft-deleted stock item exists in the stock location" do
+        inventory_unit.find_stock_item.paranoia_destroy
         create(:customer_return_without_return_items, return_items: [return_item], stock_location_id: new_stock_location.id)
       end
 

@@ -6,7 +6,7 @@ module Spree
       before_action :set_zones, only: [:create, :update]
 
       def destroy
-        @object.destroy
+        @object.paranoia_destroy
 
         flash[:success] = flash_message_for(@object, :successfully_removed)
 

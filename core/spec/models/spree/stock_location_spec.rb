@@ -95,7 +95,7 @@ module Spree
     describe '#stock_item_or_create' do
       before do
         variant = create(:variant)
-        variant.stock_items.destroy_all
+        variant.stock_items.each(&:really_destroy!)
         variant.save
       end
 
@@ -213,7 +213,20 @@ module Spree
 
         it 'zero on_hand and backordered' do
           subject
-          variant.stock_items.destroy_all
+          variant.stock_items.each(&:really_destroy!)
+          on_hand, backordered = subject.fill_status(variant, 1)
+          expect(on_hand).to eq 0
+          expect(backordered).to eq 0
+        end
+      end
+
+      context 'with soft-deleted stock_items' do
+        subject { create(:stock_location) }
+        let(:variant) { create(:base_variant) }
+
+        it 'zero on_hand and backordered' do
+          subject
+          variant.stock_items.each(&:paranoia_destroy!)
           on_hand, backordered = subject.fill_status(variant, 1)
           expect(on_hand).to eq 0
           expect(backordered).to eq 0
@@ -247,7 +260,7 @@ module Spree
       end
 
       context "no stock item exists" do
-        before { subject.stock_items.destroy_all }
+        before { subject.stock_items.each(&:really_destroy!) }
         context "positive movement" do
           let(:quantity) { 1 }
           it "creates a stock item" do

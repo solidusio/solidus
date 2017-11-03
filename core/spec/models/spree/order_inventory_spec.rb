@@ -67,7 +67,7 @@ RSpec.describe Spree::OrderInventory, type: :model do
       before { Spree::Config.track_inventory_levels = false }
 
       it "creates on hand inventory units" do
-        variant.stock_items.destroy_all
+        variant.stock_items.each(&:really_destroy!)
 
         subject.verify(shipment)
 
@@ -82,7 +82,7 @@ RSpec.describe Spree::OrderInventory, type: :model do
       let(:new_quantity) { 1 }
 
       it "creates on hand inventory units" do
-        variant.stock_items.destroy_all
+        variant.stock_items.each(&:really_destroy!)
 
         subject.verify(shipment)
 

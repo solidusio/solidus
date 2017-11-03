@@ -97,7 +97,7 @@ RSpec.describe Spree::TransferItem do
 
         context "variant does not exist in stock location" do
           before do
-            stock_item.destroy
+            stock_item.really_destroy!
           end
           include_examples 'availability check passes'
         end
@@ -131,7 +131,14 @@ RSpec.describe Spree::TransferItem do
 
         context "variant does not exist in stock location" do
           before do
-            stock_item.destroy
+            stock_item.really_destroy!
+          end
+          include_examples 'availability check fails'
+        end
+
+        context "variant stock_item soft-deleted in stock location" do
+          before do
+            stock_item.paranoia_destroy!
           end
           include_examples 'availability check fails'
         end
@@ -202,7 +209,7 @@ RSpec.describe Spree::TransferItem do
   end
 
   describe "destroy finalized stock transfer guard" do
-    subject { transfer_item.destroy }
+    subject { transfer_item.paranoia_destroy }
 
     context "stock transfer is finalized" do
       before do
@@ -265,7 +272,7 @@ RSpec.describe Spree::TransferItem do
   describe "variant association" do
     context "variant has been soft-deleted" do
       before do
-        subject.variant.destroy
+        subject.variant.paranoia_destroy
       end
       it "still returns the variant" do
         expect(subject.variant).not_to be_nil

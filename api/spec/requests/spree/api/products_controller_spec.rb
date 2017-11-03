@@ -178,7 +178,7 @@ module Spree
         specify do
           get spree.api_product_path(product)
           expect(json_response["slug"]).to match(/and-1-ways/)
-          product.destroy
+          product.paranoia_destroy
 
           get spree.api_product_path(other_product)
           expect(json_response["slug"]).to match(/droids/)

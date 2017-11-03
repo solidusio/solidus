@@ -140,7 +140,7 @@ module Spree
           end
         end
 
-        context "#destroy" do
+        context "#paranoia_destroy" do
           let!(:action) { promotion.actions.first }
           let(:other_action) { other_promotion.actions.first }
           let(:promotion) { create(:promotion, :with_line_item_adjustment) }
@@ -153,7 +153,7 @@ module Spree
               order.adjustments.create!(label: 'Check', amount: 0, order: order, source: action)
 
               expect {
-                action.destroy
+                action.paranoia_destroy
               }.to change { Adjustment.count }.by(-1)
             end
           end
@@ -167,7 +167,7 @@ module Spree
 
               expect {
                 expect {
-                  action.destroy
+                  action.paranoia_destroy
                 }.not_to change { adjustment.reload.source_id }
               }.not_to change { Spree::Adjustment.count }
 
@@ -179,7 +179,7 @@ module Spree
               order.adjustments.create!(label: "Check", amount: 0, order: order, source: action)
 
               expect {
-                action.destroy
+                action.paranoia_destroy
               }.not_to change { other_action.adjustments.count }
             end
           end

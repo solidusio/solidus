@@ -51,7 +51,15 @@ module Spree::Stock
         end
 
         context 'with no stock_item' do
-          before { stock_item.destroy! }
+          before { stock_item.really_destroy! }
+
+          it "returns empty hash" do
+            expect(subject).to eq({})
+          end
+        end
+
+        context 'with soft-deleted stock_item' do
+          before { stock_item.paranoia_destroy! }
 
           it "returns empty hash" do
             expect(subject).to eq({})
@@ -116,8 +124,14 @@ module Spree::Stock
           end
         end
 
+        context 'with soft-deleted stock_item' do
+          before { stock_item.paranoia_destroy! }
+
+          it { is_expected.to eq({}) }
+        end
+
         context 'with no stock_item' do
-          before { stock_item.destroy! }
+          before { stock_item.really_destroy! }
 
           it { is_expected.to eq({}) }
         end

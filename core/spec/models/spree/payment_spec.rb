@@ -1259,7 +1259,7 @@ RSpec.describe Spree::Payment, type: :model do
       before do
         gateway.save!
         payment.save!
-        gateway.destroy
+        gateway.paranoia_destroy!
       end
 
       it "works with a soft deleted payment method" do

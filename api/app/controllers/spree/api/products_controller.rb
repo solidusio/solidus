@@ -91,7 +91,7 @@ module Spree
       def destroy
         @product = find_product(params[:id])
         authorize! :destroy, @product
-        @product.destroy
+        @product.paranoia_destroy
         respond_with(@product, status: 204)
       end
 

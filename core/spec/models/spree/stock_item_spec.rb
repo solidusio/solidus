@@ -149,12 +149,12 @@ RSpec.describe Spree::StockItem, type: :model do
     before { Spree::StockMovement.create(stock_item: subject, quantity: 1) }
 
     it "doesnt raise ReadOnlyRecord error" do
-      subject.destroy
+      subject.paranoia_destroy
     end
   end
 
   context "destroyed" do
-    before { subject.destroy }
+    before { subject.paranoia_destroy }
 
     it "recreates stock item just fine" do
       stock_location.stock_items.create!(variant: subject.variant)
@@ -278,7 +278,7 @@ RSpec.describe Spree::StockItem, type: :model do
   # Regression test for https://github.com/spree/spree/issues/4651
   context "variant" do
     it "can be found even if the variant is deleted" do
-      subject.variant.destroy
+      subject.variant.paranoia_destroy
       expect(subject.reload.variant).not_to be_nil
     end
   end
