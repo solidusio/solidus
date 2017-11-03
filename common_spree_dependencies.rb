@@ -19,8 +19,8 @@ gem 'coffee-rails'
 gem 'sass-rails'
 
 group :test do
-  gem 'capybara', '~> 2.7'
-  gem 'capybara-screenshot'
+  gem 'capybara', '~> 2.15'
+  gem 'capybara-screenshot', '>= 1.0.18'
   gem 'database_cleaner', '~> 1.3'
   gem 'factory_bot_rails', '~> 4.8'
   gem 'launchy'

@@ -45,25 +45,15 @@ Capybara.exact = true
 
 require "selenium/webdriver"
 
-Capybara.register_driver :chrome do |app|
-  Capybara::Selenium::Driver.new(app, browser: :chrome)
+Capybara.register_driver :selenium_chrome_headless do |app|
+  browser_options = ::Selenium::WebDriver::Chrome::Options.new
+  browser_options.args << '--headless'
+  browser_options.args << '--disable-gpu'
+  browser_options.args << '--window-size=1440,1080'
+  Capybara::Selenium::Driver.new(app, browser: :chrome, options: browser_options)
 end
 
-Capybara.register_driver :chrome_headless do |app|
-  capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
-    chromeOptions: { args: %w(headless disable-gpu window-size=1440,1080) }
-  )
-
-  Capybara::Selenium::Driver.new app,
-    browser: :chrome,
-    desired_capabilities: capabilities
-end
-
-Capybara::Screenshot.register_driver(:chrome_headless) do |driver, path|
-  driver.browser.save_screenshot(path)
-end
-
-Capybara.javascript_driver = (ENV['CAPYBARA_DRIVER'] || :chrome_headless).to_sym
+Capybara.javascript_driver = (ENV['CAPYBARA_DRIVER'] || :selenium_chrome_headless).to_sym
 
 ActionView::Base.raise_on_missing_translations = true
 
