@@ -200,10 +200,6 @@ module Spree
       end
     end
 
-    def round_money(n)
-      (n * 100).round / 100.0
-    end
-
     def update_item_promotions
       [*line_items, *shipments].each do |item|
         promotion_adjustments = item.adjustments.select(&:promotion?)
