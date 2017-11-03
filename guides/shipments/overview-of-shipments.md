@@ -64,70 +64,106 @@ actions can be performed on shipments. There are four possible states:
   cancelled. When this happens, all items in the shipment will be restocked. If
   an order is "resumed", then the shipment will also be resumed.
 
-## Definitions, Design, & Functionality
+## Core concepts
 
-To properly leverage Solidus' shipping system's flexibility you must understand a few key concepts:
+To leverage Solidus's shipping system, become familiar with its key concepts:
 
-* Stock Locations
-* Shipping Methods
-* Zones
-* Shipping Categories
-* Calculators (through Shipping Rates)
+- Stock locations
+- Shipping methods
+- Zones
+- Shipping categories
+- Shipping calculators
+- Shipping rates
 
-### Stock Locations
-Stock locations represent physical storage locations from which stock is shipped.
+<!-- TODO:
+  - Inventory units
+  - Cartons
+-->
 
-### Shipping Methods
+### Stock locations
 
-Shipping methods identify the actual services or carriers used to ship the product. For example:
+Stock locations represent physical storage locations from which stock is
+shipped.
 
-* UPS Ground
-* UPS One Day
-* FedEx 2Day
-* FedEx Overnight
-* DHL International
+### Shipping methods
 
-Each shipping method is only applicable to a specific geographic **Zone**. For example, you wouldn't be able to get a package delivered internationally using a domestic-only shipping method. You can't ship from Dallas, USA to Rio de Janeiro, Brazil using UPS Ground (a US-only carrier).
+Shipping methods identify the actual delivery services used to ship the
+product. For example:
 
-If you are using shipping categories, these can be used to qualify or disqualify a given shipping method.
+- UPS Ground
+- UPS One Day
+- FedEx 2Day
+- FedEx Overnight
+- DHL International
 
-**Note**: *Shipping methods can have multiple shipping categories assigned to them. This allows the shipping methods available to an order to be determined by the shipping categories of the items in a shipment.*
+Each shipping method is only applicable to a specific geographic
+zone. For example, you wouldn't be able to get a package delivered
+internationally using a domestic-only shipping method. You can't ship from
+Dallas, USA, to Rio de Janeiro, Brazil, using UPS Ground, which is a United
+States-only carrier.
+
+### Shipping categories
+
+You can further restrict when shipping methods are available to customers by
+using shipping categories. If you assign two products to two different shipping
+categories, you could ensure that these items are always sent as separate
+shipments.
+
+For example, if your store can only ship oversized products via a specific
+carrier, called "USPS Oversized Parcels", then you could create a shipping
+category called "Oversized" for that shipping method, which can then be assigned
+to oversized products.
+
+Shipping categories are created in the admin interface (**Settings -> Shipping
+-> Shipping Categories**) and then assigned to products (**Products -> Edit**).
 
 ### Zones
 
-Zones serve as a mechanism for grouping geographic areas together into a single entity. You can read all about how to configure and use Zones in the [Zones Guide](addresses#zones).
+Zones serve as a mechanism for grouping distinct geographic areas together.
 
-The Shipping Address entered during checkout will define the zone the customer is in and limit the Shipping Methods available to him.
+The shipping address entered during checkout defines the zone (or zones) for the
+order. The zone limits the available shipping methods for the order. It also
+defines regional taxation rules.
 
-### Shipping Categories
+<!-- TODO:
+  For more information about zones, see [the Locations guide](../locations).
+-->
 
-Shipping Categories are useful if you sell products whose shipping pricing vary depending on the type of product (TVs and Mugs, for instance) or the handling of the product (frigile or large). Shipping categories can be assigned when editing a product.
+### Shipping calculators
 
-**Note:** *For simple setups, where shipping for all products is priced the same (ie. T-shirt-only shop), all products would be assigned to the default shipping category for the store.*
+A shipping calculator is the component responsible for calculating the shipping
+rate for each available shipping method.
 
-Some examples of Shipping Categories would be:
+Solidus ships with five default shipping calculators:
 
-* Light (for lightweight items like stickers)
-* Regular
-* Heavy (for items over a certain weight)
+- [Flat percent](https://github.com/solidusio/solidus/blob/master/core/app/models/spree/calculator/shipping/flat_percent_item_total.rb)
+- [Flat rate (per order)](https://github.com/solidusio/solidus/blob/master/core/app/models/spree/calculator/shipping/flat_rate.rb)
+- [Flat rate per package item](https://github.com/solidusio/solidus/blob/master/core/app/models/spree/calculator/shipping/per_item.rb)
+- [Flexible rate per package item](https://github.com/solidusio/solidus/blob/master/core/app/models/spree/calculator/shipping/flexi_rate.rb)
+- [Price sack](https://github.com/solidusio/solidus/blob/master/core/app/models/spree/calculator/shipping/price_sack.rb)
+  (which offers variable shipping cost that depends on order total)
 
-Shipping Categories are created in the admin interface (Settings -> Shipping -> Shipping Categories) and then assigned to products (Products -> Edit).
+If you want to estimate shipping rates using carrier APIs, You can use an
+extension like [`solidus_active_shipping`][solidus-active-shipping]. Or, if you
+have other complex needs, you can create a [custom shipping
+calculators][custom-shipping-calculators] for more information.
 
-During checkout, the shipping categories of the products in your order will determine which calculator will be used to price its shipping for each Shipping Method.
+[custom-shipping-calculators]: custom-shipping-calculators.html.markdown
 
-### Shipping Calculators
+### Shipping rates
 
-A Calculator is the component responsible for calculating the shipping price for each available Shipping Method.
+For each shipment, a `Spree::ShippingRate` object is created for each of your
+store's shipping methods. These objects represent the cost of the shipment as
+calculated by each shipping method's calculator.
 
-Solidus ships with 5 default Calculators:
+| `Spree::ShippingRate` | 1     | 2     | 3     | Description                                         |
+|-----------------------|-------|-------|-------|-----------------------------------------------------|
+| `shipment_id`         | 1     | 1     | 1     | All of these rates are for one shipment             |
+| `shipping_method_id`  | 1     | 2     | 3     | Each available shipping method                      |
+| `selected`            | false | true  | false | Set to `true` for the selected shipping method only |
+| `cost`                | $0.50 | $1.75 | $1.25 | The shipment's shipping rate                        |
 
-* Flat percent
-* Flat rate (per order)
-* Flat rate per package item
-* Flexible rate per package item
-* Price sack
-
-Flexible rate is defined as a flat rate for the first product, plus a different flat rate for each additional product.
-
-You can define your own calculator if you have more complex needs. In that case, check out the Calculators Guide (*this guide has not yet been ported from Spree as of this edit*).
+Once the shipping method has been chosen, the matching `Spree::ShippingRate`'s
+`selected` key becomes `true`. Only one shipping rate can be `selected` for each
+shipment.
 
