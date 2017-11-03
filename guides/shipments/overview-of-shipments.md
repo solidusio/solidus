@@ -1,42 +1,68 @@
-# Shipping
+# Overview of shipments
 
-This guide explains how Solidus represents shipping options and how it calculates expected costs, and shows how you can configure the system with your own shipping methods. After reading it you should know:
+Solidus uses a flexible system to calculate shipping. It accommodates the full
+range of shipment pricing: from simple [flat
+rate](https://en.wikipedia.org/wiki/Flat_rate) calculations to more
+complex calculations related to product weight or type, the customer's shipping
+address, what shipping method is being used, and so on.
 
-* how shipments and shipping are implemented in Solidus
-* how to specify your shipping structure
-* how split shipments work
-* how to configure products for special shipping treatment
-* how to capture shipping instructions
+If your store has complex shipping needs, you may find one of Solidus's existing
+shipping extensions, like [`solidus_active_shipping`][solidus-active-shipping]
+or [`solidus_shipstation`][solidus-shipstation], useful. Check out [the list of
+supported Solidus Extensions](https://extensions.solidus.io).
 
-Solidus uses a very flexible and effective system to calculate shipping, accommodating the full range of shipment pricing: from simple flat rate to complex product-type- and weight-dependent calculations.
+This article provides a summary of shipping concepts. If you are interested in
+reading about example Solidus shipment setups see
+[Shipment setup examples](shipment-setup-examples.html.markdown).
 
-The Shipment model is used to track how items are delivered to the buyer.
+<!-- TODO:
+  Add section that summarizes what Spree::Objects are created related to
+  shipments and explains what their function is in the larger checkout process.
+-->
 
-Shipments have the following attributes:
+[solidus-active-shipping]: solidus-active-shipping-extension.html.markdown
 
-* `number`: The unique identifier for this shipment. It begins with the letter H and ends in an 11-digit number. This number is shown to the users, and can be used to find the order by calling `Spree::Shipment.find_by(number: number)`.
-* `tracking`: The identifier given for the shipping provider (i.e. FedEx, UPS, etc).
-* `shipped_at`: The time when the shipment was shipped.
-* `state`: The current state of the shipment.
-* `stock_location_id`: The ID of the Stock Location where the items for this shipment will be sourced from.
-* Other attributes likely of interest to developers:
-  * `adjustment_total`
-  * `additional_tax_total`
-  * `promo_total`
-  * `included_tax_total`
-  * `cost`
-  * `order_id`
+## Shipment attributes
 
-**Needed:** shipment process flow diagram
+The `Spree::Shipment` model tracks how items should be delivered to the
+customer. Developers may be interested in the following attributes:
 
-An explanation of the different shipment states:
+- `number`: The unique identifier for this shipment. It begins with the letter
+  `H` and ends in an 11-digit number. This number is visible to customers, and
+  it can be used to find the order (by calling `Spree::Shipment.find_by(number:
+  H12345678910)`).
+- `tracking`: The identifier given for the shipping provider (such as FedEx or
+  UPS).
+- `shipped_at`: The time when the shipment is shipped.
+- `state`: The current state of the shipment. See [Shipping
+  states](#shipping-states) for more information.
+- `stock_location_id`: The ID of the stock location where the items for this
+  shipment are sourced from.
+- `adjustment_total`: The sum of the promotion and tax adjustments on the
+  shipment.
+- `additional_tax_total`: The sum of U.S.-style sales taxes on the shipment.
+- `promo_total`: The sum of the promotions on the shipment.
+- `included_tax_total`: The sum of the VAT-style taxes on the shipment.
+- `cost`: The estimated shipping cost (for the selected shipping method).
+- `order_id`: The ID for the order that the shipment belongs to.
 
-* `pending`: The shipment has backordered inventory units and/or the order is not paid for.
-* `ready`: The shipment has *no* backordered inventory units and the order is paid for.
-* `shipped`: The shipment is on its way to the buyer.
-* `canceled`: When an order is cancelled, all of its shipments will also be cancelled. When this happens, all items in the shipment will be restocked. If an order is "resumed", then the shipment will also be resumed.
+<!-- TODO:
+  Add a shipment process flow diagram.
+-->
 
-Explaining each piece of the shipment world inside of Solidus separately and how each piece fits together can be a cumbersome task. Fortunately, using a few simple examples makes it much easier to grasp. In that spirit, the examples are shown first in this guide.
+### Shipping states
+
+Each shipment is assigned a `state` attribute. Depending on its state, different
+actions can be performed on shipments. There are four possible states:
+
+- `pending`: The shipment has backordered inventory units and/or the order is
+  not paid for.
+- `ready`: The shipment has no backordered inventory units and the order is paid
+  for.
+- `shipped`: The shipment has left the stock location.
+- `canceled`: When an order is cancelled, all of its shipments will also be
+  cancelled. When this happens, all items in the shipment will be restocked. If
+  an order is "resumed", then the shipment will also be resumed.
 
 ## Definitions, Design, & Functionality
 
