@@ -12,6 +12,8 @@ if ENV["COVERAGE"]
   end
 end
 
+require 'rspec/core'
+
 require 'spree/testing_support/preferences'
 require 'spree/config'
 require 'with_model'
