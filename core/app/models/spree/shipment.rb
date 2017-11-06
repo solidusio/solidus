@@ -240,7 +240,6 @@ module Spree
       ) unless new_rate
       selected_shipping_rate.update!(selected: false) if selected_shipping_rate
       new_rate.update!(selected: true)
-      save!
     end
 
     # Determines the appropriate +state+ according to the following logic:
