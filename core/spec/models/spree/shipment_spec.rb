@@ -835,6 +835,9 @@ RSpec.describe Spree::Shipment, type: :model do
         expect {
           shipment.selected_shipping_rate_id = -1
         }.to raise_error(ArgumentError)
+
+        # Should not change selection
+        expect(shipping_rate.reload).to be_selected
       end
     end
   end
