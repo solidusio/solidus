@@ -232,6 +232,7 @@ module Spree
     end
 
     def selected_shipping_rate_id=(id)
+      return if selected_shipping_rate_id == id
       selected_shipping_rate.update(selected: false) if selected_shipping_rate
       new_rate = shipping_rates.detect { |rate| rate.id == id.to_i }
       fail(
