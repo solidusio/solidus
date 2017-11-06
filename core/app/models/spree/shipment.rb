@@ -238,8 +238,11 @@ module Spree
         ArgumentError,
         "Could not find shipping rate id #{id} for shipment #{number}"
       ) unless new_rate
-      selected_shipping_rate.update!(selected: false) if selected_shipping_rate
-      new_rate.update!(selected: true)
+
+      transaction do
+        selected_shipping_rate.update!(selected: false) if selected_shipping_rate
+        new_rate.update!(selected: true)
+      end
     end
 
     # Determines the appropriate +state+ according to the following logic:
