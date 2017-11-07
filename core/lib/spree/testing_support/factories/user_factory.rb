@@ -3,16 +3,10 @@ require 'spree/testing_support/factories/role_factory'
 require 'spree/testing_support/factories/address_factory'
 
 FactoryBot.define do
-  sequence :user_authentication_token do |n|
-    "xxxx#{Time.current.to_i}#{rand(1000)}#{n}xxxxxxxxxxxxx"
-  end
-
-  factory :user, class: Spree.user_class do
+  factory :user, class: Spree::UserClassHandle.new do
     email { generate(:email) }
-    login { email } if Spree.user_class.attribute_method? :login
     password 'secret'
-    password_confirmation { password } if Spree.user_class.attribute_method? :password_confirmation
-    authentication_token { generate(:user_authentication_token) } if Spree.user_class.attribute_method? :authentication_token
+    password_confirmation { password }
 
     trait :with_api_key do
       after(:create) do |user, _|
