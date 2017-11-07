@@ -34,4 +34,16 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'handlebars_assets', '~> 0.23'
   s.add_dependency 'autoprefixer-rails', '~> 7.1'
+
+  s.add_development_dependency 'capybara', '~> 2.15'
+  s.add_development_dependency 'capybara-screenshot', '>= 1.0.18'
+  s.add_development_dependency 'database_cleaner', '~> 1.3'
+  s.add_development_dependency 'factory_bot', '~> 4.8'
+  s.add_development_dependency 'rails-controller-testing'
+  s.add_development_dependency 'rspec-activemodel-mocks', '~> 1.0.2'
+  s.add_development_dependency 'rspec-rails', '~> 3.6.0'
+  s.add_development_dependency 'rspec_junit_formatter'
+  s.add_development_dependency 'selenium-webdriver'
+  s.add_development_dependency 'simplecov'
+  s.add_development_dependency 'with_model'
 end

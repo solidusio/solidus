@@ -9,6 +9,8 @@ DummyApp::Migrations.auto_migrate
 
 require 'rspec/rails'
 
+require 'database_cleaner'
+
 RSpec.configure do |config|
   config.color = true
   config.infer_spec_type_from_file_location!

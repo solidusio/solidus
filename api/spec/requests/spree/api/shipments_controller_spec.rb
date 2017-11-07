@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'timecop'
 
 describe Spree::Api::ShipmentsController, type: :request do
   let!(:shipment) { create(:shipment, inventory_units: [build(:inventory_unit, shipment: nil)]) }

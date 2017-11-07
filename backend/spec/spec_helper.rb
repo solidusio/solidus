@@ -29,6 +29,7 @@ Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
 
 require 'database_cleaner'
 require 'with_model'
+require 'rspec-activemodel-mocks'
 
 require 'spree/testing_support/authorization_helpers'
 require 'spree/testing_support/factories'

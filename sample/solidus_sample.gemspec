@@ -21,4 +21,9 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = '>= 1.8.23'
 
   s.add_dependency 'solidus_core', s.version
+
+  s.add_development_dependency 'database_cleaner', '~> 1.3'
+  s.add_development_dependency 'rspec-rails', '~> 3.6.0'
+  s.add_development_dependency 'rspec_junit_formatter'
+  s.add_development_dependency 'simplecov'
 end

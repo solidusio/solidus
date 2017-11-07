@@ -24,4 +24,14 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'responders'
   gem.add_dependency 'jbuilder', '~> 2.6'
   gem.add_dependency 'kaminari', '>= 0.17', '< 2.0'
+
+  gem.add_development_dependency 'timecop'
+  gem.add_development_dependency 'database_cleaner', '~> 1.3'
+  gem.add_development_dependency 'factory_bot', '~> 4.8'
+  gem.add_development_dependency 'rails-controller-testing'
+  gem.add_development_dependency 'rspec-activemodel-mocks', '~> 1.0.2'
+  gem.add_development_dependency 'rspec-rails', '~> 3.6.0'
+  gem.add_development_dependency 'rspec_junit_formatter'
+  gem.add_development_dependency 'simplecov'
+  gem.add_development_dependency 'with_model'
 end
