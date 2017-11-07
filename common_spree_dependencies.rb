@@ -44,3 +44,6 @@ group :test, :development do
     gem 'byebug'
   end
 end
+
+custom_gemfile = File.expand_path("../Gemfile-custom", __FILE__)
+eval File.read(custom_gemfile) if File.exist?(custom_gemfile)
