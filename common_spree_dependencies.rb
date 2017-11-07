@@ -16,7 +16,7 @@ platforms :jruby do
 end
 
 group :test, :development do
-  gem 'rubocop'
+  gem 'rubocop', require: false
   gem 'pry'
 
   platforms :mri do
