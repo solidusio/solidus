@@ -20,7 +20,7 @@ FactoryBot.define do
       end
     end
 
-    factory :tax_adjustment, class: Spree::Adjustment do
+    factory :tax_adjustment, class: 'Spree::Adjustment' do
       order { adjustable.order }
       association(:adjustable, factory: :line_item)
       amount 10.0

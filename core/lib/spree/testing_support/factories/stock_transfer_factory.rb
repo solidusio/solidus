@@ -2,7 +2,7 @@ FactoryBot.define do
   sequence(:source_code) { |n| "SRC#{n}" }
   sequence(:destination_code) { |n| "DEST#{n}" }
 
-  factory :stock_transfer, class: Spree::StockTransfer do
+  factory :stock_transfer, class: 'Spree::StockTransfer' do
     source_location { Spree::StockLocation.create!(name: "Source Location", code: generate(:source_code), admin_name: "Source") }
 
     factory :stock_transfer_with_items do

@@ -27,7 +27,7 @@ FactoryBot.define do
   end
 
   # for the case when you want to supply existing return items instead of generating some
-  factory :customer_return_without_return_items, class: Spree::CustomerReturn do
+  factory :customer_return_without_return_items, class: 'Spree::CustomerReturn' do
     association(:stock_location, factory: :stock_location)
   end
 end
