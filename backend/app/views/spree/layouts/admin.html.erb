@@ -10,7 +10,7 @@
     <%= render "spree/admin/shared/flash" %>
     <%= render "spree/admin/shared/spinner" %>
 
-    <div class="content-wrapper <%= @admin_layout.presence %> <%= "has-sidebar" if content_for?(:sidebar) %> <%= "has-tabs" if content_for?(:tabs) %>" id="wrapper" data-hook>
+    <div class="content-wrapper <%= @admin_layout.presence %> <%= 'has-sidebar' if content_for?(:sidebar) %> <%= 'has-tabs' if content_for?(:tabs) %>" id="wrapper" data-hook>
       <div class="content row">
         <div class="content-main col-<%= content_for?(:sidebar) ? '9' : '12' %>">
           <%= yield :tabs %>
