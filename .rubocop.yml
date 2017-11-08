@@ -125,6 +125,7 @@ Lint/AmbiguousBlockAssociation:
 Security/Eval:
   Exclude:
     - 'Gemfile'
+    - 'common_spree_dependencies.rb'
     - '*/Gemfile'
 
 Naming/VariableNumber:
