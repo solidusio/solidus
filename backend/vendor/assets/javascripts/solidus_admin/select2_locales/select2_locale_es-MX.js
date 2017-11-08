@@ -12,7 +12,7 @@
         formatSelectionTooBig: function (limit) { return "Sólo puede seleccionar " + limit + " elemento" + (limit == 1 ? "" : "s"); },
         formatLoadMore: function (pageNumber) { return "Cargando más resultados…"; },
         formatSearching: function () { return "Buscando…"; },
-        formatAjaxError: function() { return "La carga a fallado"; }
+        formatAjaxError: function() { return "La carga ha fallado"; }
     };
 
     $.extend($.fn.select2.defaults, $.fn.select2.locales['es-MX']);
