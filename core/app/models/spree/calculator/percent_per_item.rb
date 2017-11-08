@@ -1,3 +1,5 @@
+require_dependency 'spree/calculator'
+
 module Spree
   # A calculator for promotions that calculates a percent-off discount
   # for all matching products in an order. This should not be used as a

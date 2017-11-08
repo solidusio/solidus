@@ -1,3 +1,5 @@
+require_dependency 'spree/calculator'
+
 require 'rails_helper'
 require 'shared_examples/calculator_shared_examples'
 
