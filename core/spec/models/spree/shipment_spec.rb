@@ -808,6 +808,14 @@ RSpec.describe Spree::Shipment, type: :model do
     let!(:air_shipping_method) { create(:shipping_method, name: "Air") }
     let(:new_rate) { shipment.shipping_rates.create!(shipping_method: air_shipping_method) }
 
+    context 'selecting the same id' do
+      it 'keeps the same shipping rate selected' do
+        expect {
+          shipment.selected_shipping_rate_id = shipping_rate.id
+        }.not_to change { shipping_rate.selected }.from(true)
+      end
+    end
+
     context 'when the id exists' do
       it 'sets the new shipping rate as selected' do
         expect {
@@ -827,6 +835,9 @@ RSpec.describe Spree::Shipment, type: :model do
         expect {
           shipment.selected_shipping_rate_id = -1
         }.to raise_error(ArgumentError)
+
+        # Should not change selection
+        expect(shipping_rate.reload).to be_selected
       end
     end
   end

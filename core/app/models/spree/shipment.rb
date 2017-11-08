@@ -232,14 +232,17 @@ module Spree
     end
 
     def selected_shipping_rate_id=(id)
-      selected_shipping_rate.update(selected: false) if selected_shipping_rate
+      return if selected_shipping_rate_id == id
       new_rate = shipping_rates.detect { |rate| rate.id == id.to_i }
       fail(
         ArgumentError,
         "Could not find shipping rate id #{id} for shipment #{number}"
       ) unless new_rate
-      new_rate.update(selected: true)
-      save!
+
+      transaction do
+        selected_shipping_rate.update!(selected: false) if selected_shipping_rate
+        new_rate.update!(selected: true)
+      end
     end
 
     # Determines the appropriate +state+ according to the following logic:
