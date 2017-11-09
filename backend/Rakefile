@@ -29,6 +29,10 @@ end
 
 namespace :teaspoon do
   task :server  do
+    require 'teaspoon'
+    require 'spree/testing_support/dummy_app'
+    require 'teaspoon/server'
+
     server = Teaspoon::Server.new
     server.start
     puts "#{server.url}/teaspoon"
