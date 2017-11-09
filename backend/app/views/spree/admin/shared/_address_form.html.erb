@@ -48,9 +48,11 @@
   <div class="field <%= "#{type}-row" %>">
     <%= f.label :state_id, Spree::State.model_name.human %>
     <span id="<%= s_or_b %>state">
+      <%= f.hidden_field :state_name, value: nil %>
       <%= f.text_field :state_name,
             style: "display: #{f.object.country.states.empty? ? 'block' : 'none' };",
            disabled: !f.object.country.states.empty?, class: 'fullwidth state_name js-state_name' %>
+      <%= f.hidden_field :state_id, value: nil %>
       <%= f.collection_select :state_id, f.object.country.states.sort, :id, :name, {include_blank: true}, {class: 'custom-select fullwidth js-state_id', style: "display: #{f.object.country.states.empty? ? 'none' : 'block' };", disabled: f.object.country.states.empty?} %>
     </span>
   </div>
