@@ -16,6 +16,7 @@ module Spree
     validates :phone, presence: true, if: :require_phone?
 
     validate :state_validate, :postal_code_validate
+    validate :validate_state_matches_country
 
     alias_attribute :first_name, :firstname
     alias_attribute :last_name, :lastname
@@ -214,6 +215,12 @@ module Spree
 
       postal_code = TwitterCldr::Shared::PostalCodes.for_territory(country.iso)
       errors.add(:zipcode, :invalid) if !postal_code.valid?(zipcode.to_s)
+    end
+
+    def validate_state_matches_country
+      if state && state.country != country
+        errors.add(:state, :does_not_match_country)
+      end
     end
   end
 end

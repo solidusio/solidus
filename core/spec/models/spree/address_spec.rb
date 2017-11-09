@@ -68,11 +68,24 @@ describe Spree::Address, type: :model do
         expect(address.state_name).to be_nil
       end
 
-      it "state is entered but country does not contain that state" do
-        address.state = state
-        address.country = Spree::Country.new(states_required: true)
-        address.valid?
-        expect(address.errors["state"]).to eq(['is invalid'])
+      context 'when the country does not match the state' do
+        context 'when the country requires states' do
+          it 'is invalid' do
+            address.state = state
+            address.country = Spree::Country.new(states_required: true)
+            address.valid?
+            expect(address.errors["state"]).to eq(['is invalid', 'does not match the country'])
+          end
+        end
+
+        context 'when the country does not require states' do
+          it 'is invalid' do
+            address.state = state
+            address.country = Spree::Country.new(states_required: false)
+            address.valid?
+            expect(address.errors["state"]).to eq(['does not match the country'])
+          end
+        end
       end
 
       it "both state and state_name are entered but country does not contain the state" do

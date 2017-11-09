@@ -624,6 +624,10 @@ en:
         other: Zones
     errors:
       models:
+        spree/address:
+          attributes:
+            state:
+              does_not_match_country: does not match the country
         spree/calculator/tiered_flat_rate:
           attributes:
             base:

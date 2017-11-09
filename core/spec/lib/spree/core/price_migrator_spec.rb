@@ -276,7 +276,8 @@ describe Spree::PriceMigrator do
 
     # International delivery, no tax applies whatsoever
     context 'to anywhere else in the world' do
-      let(:shipping_address) { create :address, country: world_zone.countries.first }
+      let(:shipping_address) { create :address, country: country, state: country.states.first }
+      let(:country) { world_zone.countries.first }
 
       context 'an order with a book' do
         let(:variant) { book }
