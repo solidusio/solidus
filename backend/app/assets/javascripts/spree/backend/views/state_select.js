@@ -39,11 +39,11 @@ Spree.Views.StateSelect = Backbone.View.extend({
   },
 
   render: function() {
-    this.$state_select.empty().hide();
-    this.$state_input.hide();
+    this.$state_select.empty().hide().prop('disabled', true);
+    this.$state_input.hide().prop('disabled', true);
 
     if (!this.states.fetched) {
-      this.$state_select.show().prop("disabled", true);
+      this.$state_select.show();
     } else if (this.states.length) {
       var $state_select = this.$state_select;
       this.states.each(function(state) {
@@ -54,7 +54,7 @@ Spree.Views.StateSelect = Backbone.View.extend({
       this.$state_select.val(this.model.get("state_id"))
       this.$state_select.show().prop("disabled", false);
     } else {
-      this.$state_input.prop('disabled', false).show();
+      this.$state_input.show().prop('disabled', false);
     }
   }
 })
