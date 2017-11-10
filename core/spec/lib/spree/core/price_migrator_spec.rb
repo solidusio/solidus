@@ -195,7 +195,7 @@ describe Spree::PriceMigrator do
         end
 
         it 'has a constant amount pre tax' do
-          expect(line_item.discounted_amount - line_item.included_tax_total).to eq(18.69)
+          expect(line_item.final_amount_without_additional_tax - line_item.included_tax_total).to eq(18.69)
         end
       end
 
@@ -215,7 +215,7 @@ describe Spree::PriceMigrator do
         end
 
         it 'has a constant amount pre tax' do
-          expect(line_item.discounted_amount - line_item.included_tax_total).to eq(25.21)
+          expect(line_item.final_amount_without_additional_tax - line_item.included_tax_total).to eq(25.21)
         end
       end
 
@@ -235,7 +235,7 @@ describe Spree::PriceMigrator do
         end
 
         it 'has a constant amount pre tax' do
-          expect(line_item.discounted_amount - line_item.included_tax_total).to eq(8.40)
+          expect(line_item.final_amount_without_additional_tax - line_item.included_tax_total).to eq(8.40)
         end
       end
     end
@@ -269,7 +269,7 @@ describe Spree::PriceMigrator do
         end
 
         it 'has a constant amount pre tax' do
-          expect(line_item.discounted_amount - line_item.included_tax_total).to eq(18.69)
+          expect(line_item.final_amount_without_additional_tax - line_item.included_tax_total).to eq(18.69)
         end
       end
     end
@@ -302,7 +302,7 @@ describe Spree::PriceMigrator do
         end
 
         it 'has a constant amount pre tax' do
-          expect(line_item.discounted_amount - line_item.included_tax_total).to eq(18.69)
+          expect(line_item.final_amount_without_additional_tax - line_item.included_tax_total).to eq(18.69)
         end
       end
 
@@ -326,7 +326,7 @@ describe Spree::PriceMigrator do
         end
 
         it 'has a constant amount pre tax' do
-          expect(line_item.discounted_amount - line_item.included_tax_total).to eq(25.21)
+          expect(line_item.final_amount_without_additional_tax - line_item.included_tax_total).to eq(25.21)
         end
       end
 
@@ -350,7 +350,7 @@ describe Spree::PriceMigrator do
         end
 
         it 'has a constant amount pre tax' do
-          expect(line_item.discounted_amount - line_item.included_tax_total).to eq(8.40)
+          expect(line_item.final_amount_without_additional_tax - line_item.included_tax_total).to eq(8.40)
         end
       end
     end
