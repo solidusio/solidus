@@ -40,16 +40,10 @@ require 'spree/testing_support/caching'
 
 require 'capybara-screenshot/rspec'
 Capybara.save_path = ENV['CIRCLE_ARTIFACTS'] if ENV['CIRCLE_ARTIFACTS']
-
-if ENV['WEBDRIVER'] == 'accessible'
-  require 'capybara/accessible'
-  Capybara.javascript_driver = :accessible
-else
-  require 'capybara/poltergeist'
-  Capybara.javascript_driver = :poltergeist
-end
-
 Capybara.default_max_wait_time = ENV['DEFAULT_MAX_WAIT_TIME'].to_f if ENV['DEFAULT_MAX_WAIT_TIME'].present?
+
+require "selenium/webdriver"
+Capybara.javascript_driver = (ENV['CAPYBARA_DRIVER'] || :selenium_chrome_headless).to_sym
 
 ActiveJob::Base.queue_adapter = :test
 
@@ -83,7 +77,10 @@ RSpec.configure do |config|
   config.before(:each) do
     Rails.cache.clear
     reset_spree_preferences
-    if RSpec.current_example.metadata[:js]
+  end
+
+  config.before(:each, type: :feature) do
+    if page.driver.browser.respond_to?(:url_blacklist)
       page.driver.browser.url_blacklist = ['http://fonts.googleapis.com']
     end
   end
