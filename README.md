@@ -6,12 +6,6 @@
 * [#solidus.io](http://webchat.freenode.net/?channels=solidus.io) on freenode
 * [solidus-security](https://groups.google.com/forum/#!forum/solidus-security) mailing list
 
-Bundler Issues
---------------
-
-Having bundler problems? Try downgrading to bundler 1.13.7 or earlier.
-[Gem resolution is seriously broken in bundler versions since 1.14](https://github.com/bundler/bundler/issues/5633).
-
 Summary
 -------
 
