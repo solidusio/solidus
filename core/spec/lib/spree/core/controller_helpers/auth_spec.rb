@@ -36,9 +36,27 @@ describe Spree::Core::ControllerHelpers::Auth, type: :controller do
         render plain: 'index'
       end
     end
-    it 'sends cookie header' do
-      get :index
-      expect(response.cookies['guest_token']).not_to be_nil
+
+    before do
+      Spree::Config[:set_guest_token] = set_guest_token
+    end
+
+    context "when config set_guest_token is true" do
+      let(:set_guest_token) { true }
+
+      it 'sends cookie header' do
+        get :index
+        expect(response.cookies['guest_token']).not_to be_nil
+      end
+    end
+
+    context "when config set_guest_token is false" do
+      let(:set_guest_token) { false }
+
+      it 'sends cookie header' do
+        get :index
+        expect(response.cookies['guest_token']).to be_nil
+      end
     end
   end
 
