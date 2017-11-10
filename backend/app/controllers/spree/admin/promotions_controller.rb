@@ -5,6 +5,10 @@ module Spree
 
       helper 'spree/promotion_rules'
 
+      def show
+        redirect_to action: :edit
+      end
+
       def create
         @promotion = Spree::Promotion.new(permitted_resource_params)
         @promotion.codes.new(value: params[:single_code]) if params[:single_code].present?
