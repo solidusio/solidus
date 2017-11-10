@@ -1,4 +1,5 @@
 require 'singleton'
+require 'spree/core/class_constantizer'
 
 module Spree
   # A class responsible for associating {Spree::Role} with a list of permission sets.
@@ -16,7 +17,15 @@ module Spree
   class RoleConfiguration
     # An internal structure for the association between a role and a
     # set of permissions.
-    Role = Struct.new(:name, :permission_sets)
+    class Role
+      attr_reader :name, :permission_sets
+
+      def initialize(name, permission_sets)
+        @name = name
+        @permission_sets = Spree::Core::ClassConstantizer::Set.new
+        @permission_sets.concat permission_sets
+      end
+    end
 
     include Singleton
     attr_accessor :roles
@@ -63,7 +72,7 @@ module Spree
     def assign_permissions(role_name, permission_sets)
       name = role_name.to_s
 
-      roles[name].permission_sets |= permission_sets
+      roles[name].permission_sets.concat permission_sets
       roles[name]
     end
   end
