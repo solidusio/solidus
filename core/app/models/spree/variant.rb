@@ -381,6 +381,7 @@ module Spree
     #   not from this variant
     # @return [Spree::Image] the image to display
     def display_image(fallback: true)
+      Spree::Deprecation.warn('Spree::Variant#display_image is DEPRECATED. Choose an image from Spree::Variant#gallery instead')
       images.first || (fallback && product.variant_images.first) || Spree::Image.new
     end
 
