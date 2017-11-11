@@ -31,7 +31,7 @@ RSpec.describe Spree::Ability, type: :model do
     subject { Spree::Ability.new(user) }
 
     it "activates permissions from the role configuration" do
-      expect(Spree::RoleConfiguration.instance).to receive(:activate_permissions!).
+      expect(Spree::Config.roles).to receive(:activate_permissions!).
         once
 
       subject

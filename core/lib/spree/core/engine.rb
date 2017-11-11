@@ -14,14 +14,8 @@ module Spree
         app.config.spree = Spree::Config.environment
       end
 
-      initializer "spree.default_permissions", before: :load_config_initializers do |_app|
-        Spree::RoleConfiguration.configure do |config|
-          config.assign_permissions :default, ['Spree::PermissionSets::DefaultCustomer']
-          config.assign_permissions :admin, ['Spree::PermissionSets::SuperUser']
-        end
-      end
-
       # leave empty initializers for backwards-compatability. Other apps might still rely on these events
+      initializer "spree.default_permissions", before: :load_config_initializers do; end
       initializer "spree.register.calculators", before: :load_config_initializers do; end
       initializer "spree.register.stock_splitters", before: :load_config_initializers do; end
       initializer "spree.register.payment_methods", before: :load_config_initializers do; end

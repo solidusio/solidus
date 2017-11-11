@@ -27,13 +27,20 @@ module Spree
       end
     end
 
-    include Singleton
     attr_accessor :roles
 
-    # Yields the instance of the singleton, used for configuration
-    # @yield_param instance [Spree::RoleConfiguration]
-    def self.configure
-      yield(instance)
+    class << self
+      def instance
+        Spree::Deprecation.warn "Spree::RoleConfiguration.instance is DEPRECATED use Spree::Config.roles instead"
+        Spree::Config.roles
+      end
+
+      # Yields the instance of the singleton, used for configuration
+      # @yield_param instance [Spree::RoleConfiguration]
+      def configure
+        Spree::Deprecation.warn "Spree::RoleConfiguration.configure is deprecated. Call Spree::Config.roles.assign_permissions instead"
+        yield(Spree::Config.roles)
+      end
     end
 
     # Given a CanCan::Ability, and a user, determine what permissions sets can

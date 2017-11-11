@@ -8,16 +8,13 @@ RSpec.describe Spree::RoleConfiguration do
   end
   class OtherDummyPermissionSet < Spree::PermissionSets::Base; end
 
-  let(:instance) { described_class.instance }
-
-  around do |example|
-    @original_roles = instance.roles.dup
-    instance.roles.clear
-    example.run
-    instance.roles = @original_roles
-  end
+  let(:instance) { Spree::RoleConfiguration.new }
 
   describe ".configure" do
+    around(:each) do |example|
+      Spree::Deprecation.silence { example.run }
+    end
+
     it "yields with the instance" do
       expect { |b| described_class.configure(&b) }.to yield_with_args(described_class.instance)
     end
@@ -93,7 +90,7 @@ RSpec.describe Spree::RoleConfiguration do
       end
     end
 
-    subject { described_class.instance.activate_permissions! ability, user }
+    subject { instance.activate_permissions! ability, user }
 
     context "when the configuration has roles" do
       before do
