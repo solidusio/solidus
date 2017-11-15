@@ -15,7 +15,7 @@ module Spree
                             :shipping_categories, :stock_locations,
                             :refund_reasons, :reimbursement_types, :return_authorization_reasons]
     PROMOTION_TABS     ||= [:promotions, :promotion_categories]
-    STOCK_TABS         ||= [:stock_items, :stock_transfers]
+    STOCK_TABS         ||= [:stock_items]
     USER_TABS          ||= [:users, :store_credits]
 
     # An item which should be drawn in the admin menu
