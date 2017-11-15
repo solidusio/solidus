@@ -26,10 +26,6 @@ module Spree
         it "builds the inventory units as pending" do
           expect(subject.units.map(&:pending).uniq).to eq [true]
         end
-
-        it "associates the inventory units to the order" do
-          expect(subject.units.map(&:order).uniq).to eq [order]
-        end
       end
     end
   end
