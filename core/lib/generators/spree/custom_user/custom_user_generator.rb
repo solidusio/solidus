@@ -2,7 +2,6 @@ require 'rails/generators/active_record/migration'
 
 module Spree
   class CustomUserGenerator < Rails::Generators::NamedBase
-    include Rails::Generators::ResourceHelpers
     include ActiveRecord::Generators::Migration
 
     desc "Set up a Solidus installation with a custom User class"
