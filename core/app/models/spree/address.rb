@@ -14,6 +14,7 @@ module Spree
     validates :phone, presence: true, if: :require_phone?
 
     validate :state_validate
+    validate :validate_state_matches_country
 
     alias_attribute :first_name, :firstname
     alias_attribute :last_name, :lastname
@@ -208,6 +209,12 @@ module Spree
 
       # ensure at least one state field is populated
       errors.add :state, :blank if state.blank? && state_name.blank?
+    end
+
+    def validate_state_matches_country
+      if state && state.country != country
+        errors.add(:state, :does_not_match_country)
+      end
     end
   end
 end
