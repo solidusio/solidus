@@ -120,13 +120,6 @@ Spree::Core::Engine.routes.draw do
 
     resources :stock_items, only: [:index, :update, :destroy]
 
-    resources :stock_transfers, only: [] do
-      member do
-        post :receive
-      end
-      resources :transfer_items, only: [:create, :update, :destroy]
-    end
-
     resources :stores
 
     resources :store_credit_events, only: [] do
