@@ -12,10 +12,10 @@ module Spree
     end
 
     def check_for_constant
-        klass
+      klass
     rescue NameError
-        @shell.say "Couldn't find #{class_name}. Are you sure that this class exists within your application and is loaded?", :red
-        exit(1)
+      @shell.say "Couldn't find #{class_name}. Are you sure that this class exists within your application and is loaded?", :red
+      exit(1)
     end
 
     def generate
