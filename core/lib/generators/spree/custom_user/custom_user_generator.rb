@@ -32,6 +32,7 @@ module Spree
       end
     end
 
+    private
 
     def klass
       class_name.constantize
