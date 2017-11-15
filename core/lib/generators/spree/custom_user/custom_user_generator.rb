@@ -6,11 +6,7 @@ module Spree
 
     desc "Set up a Solidus installation with a custom User class"
 
-    def self.source_paths
-      paths = superclass.source_paths
-      paths << File.expand_path('../templates', __FILE__)
-      paths.flatten
-    end
+    source_root File.expand_path('templates', File.dirname(__FILE__))
 
     def check_for_constant
       klass
