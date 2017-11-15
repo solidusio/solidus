@@ -28,15 +28,15 @@ Spree.ready(function($) {
       return false;
     });
     thumbnails.find("li").on("mouseenter", function(event) {
-      return $("#main-image img").attr(
+      $("#main-image img").attr(
         "src",
         $(event.currentTarget)
           .find("a")
           .attr("href")
       );
     });
-    return thumbnails.find("li").on("mouseleave", function(event) {
-      return $("#main-image img").attr(
+    thumbnails.find("li").on("mouseleave", function(event) {
+      $("#main-image img").attr(
         "src",
         $("#main-image").data("selectedThumb")
       );
@@ -57,14 +57,14 @@ Spree.ready(function($) {
       thumb.addClass("selected");
       $("#main-image img").attr("src", newImg);
       $("#main-image").data("selectedThumb", newImg);
-      return $("#main-image").data("selectedThumbId", thumb.attr("id"));
+      $("#main-image").data("selectedThumbId", thumb.attr("id"));
     }
   };
   Spree.updateVariantPrice = function(variant) {
     var variantPrice;
     variantPrice = variant.data("price");
     if (variantPrice) {
-      return $(".price.selling").text(variantPrice);
+      $(".price.selling").text(variantPrice);
     }
   };
   radios = $('#product-variants input[type="radio"]');
@@ -76,8 +76,8 @@ Spree.ready(function($) {
     Spree.updateVariantPrice(selectedRadio);
   }
   Spree.addImageHandlers();
-  return radios.click(function(event) {
+  radios.click(function(event) {
     Spree.showVariantImages(this.value);
-    return Spree.updateVariantPrice($(this));
+    Spree.updateVariantPrice($(this));
   });
 });

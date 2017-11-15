@@ -7,19 +7,19 @@ Spree.ready(function($) {
         $("#use_existing_card_yes").click(function() {
           $("#payment-method-fields").hide();
           $("#payment-methods").hide();
-          return $(".existing-cc-radio").prop("disabled", false);
+          $(".existing-cc-radio").prop("disabled", false);
         });
         $("#use_existing_card_no").click(function() {
           $("#payment-method-fields").show();
           $("#payment-methods").show();
-          return $(".existing-cc-radio").prop("disabled", true);
+          $(".existing-cc-radio").prop("disabled", true);
         });
       }
       $(".cardNumber").payment("formatCardNumber");
       $(".cardExpiry").payment("formatCardExpiry");
       $(".cardCode").payment("formatCardCVC");
       $(".cardNumber").change(function() {
-        return $(this)
+        $(this)
           .parent()
           .siblings(".ccType")
           .val($.payment.cardType(this.value));
@@ -29,7 +29,7 @@ Spree.ready(function($) {
       ).click(function() {
         $("#payment-methods li").hide();
         if (this.checked) {
-          return $("#payment_method_" + this.value).show();
+          $("#payment_method_" + this.value).show();
         }
       });
       $("#cvv_link").on("click", function(event) {
@@ -38,12 +38,12 @@ Spree.ready(function($) {
         windowOptions =
           "left=20,top=20,width=500,height=500,toolbar=0,resizable=0,scrollbars=1";
         window.open($(this).attr("href"), windowName, windowOptions);
-        return event.preventDefault();
+        event.preventDefault();
       });
       // Activate already checked payment method if form is re-rendered
       // i.e. if user enters invalid data
-      return $('input[type="radio"]:checked').click();
+      $('input[type="radio"]:checked').click();
     }
   };
-  return Spree.onPayment();
+  Spree.onPayment();
 });

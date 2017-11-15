@@ -15,16 +15,16 @@ Spree.ready(function($) {
         return false;
       });
   }
-  return $("form#update-cart").submit(function() {
-    return $("form#update-cart #update-button").attr("disabled", true);
+  $("form#update-cart").submit(function() {
+    $("form#update-cart #update-button").attr("disabled", true);
   });
 });
 
 Spree.fetch_cart = function(cartLinkUrl) {
-  return Spree.ajax({
+  Spree.ajax({
     url: cartLinkUrl || Spree.pathFor("cart_link"),
     success: function(data) {
-      return $("#link-to-cart").html(data);
+      $("#link-to-cart").html(data);
     }
   });
 };

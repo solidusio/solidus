@@ -17,7 +17,7 @@ Spree.ready(function($) {
       countryId = getCountryId(region);
       if (countryId != null) {
         if (statesByCountry[countryId] == null) {
-          return $.get(
+          $.get(
             Spree.routes.states_search,
             {
               country_id: countryId
@@ -27,11 +27,11 @@ Spree.ready(function($) {
                 states: data.states,
                 states_required: data.states_required
               };
-              return fillStates(region);
+              fillStates(region);
             }
           );
         } else {
-          return fillStates(region);
+          fillStates(region);
         }
       }
     };
@@ -74,7 +74,7 @@ Spree.ready(function($) {
           if (selected === state.id) {
             opt.prop("selected", true);
           }
-          return stateSelect.append(opt);
+          stateSelect.append(opt);
         });
         stateSelect.prop("disabled", false).show();
         stateInput.hide().prop("disabled", true);
@@ -86,7 +86,7 @@ Spree.ready(function($) {
           stateSelect.removeClass("required");
           stateSpanRequired.hide();
         }
-        return stateInput.removeClass("required");
+        stateInput.removeClass("required");
       } else {
         stateSelect.hide().prop("disabled", true);
         stateInput.show();
@@ -100,24 +100,24 @@ Spree.ready(function($) {
         }
         statePara.toggle(!!statesRequired);
         stateInput.prop("disabled", !statesRequired);
-        return stateSelect.removeClass("required");
+        stateSelect.removeClass("required");
       }
     };
     $("#bcountry select").change(function() {
-      return updateState("b");
+      updateState("b");
     });
     $("#scountry select").change(function() {
-      return updateState("s");
+      updateState("s");
     });
     updateState("b");
     order_use_billing = $("input#order_use_billing");
     order_use_billing.change(function() {
-      return update_shipping_form_state(order_use_billing);
+      update_shipping_form_state(order_use_billing);
     });
     update_shipping_form_state = function(order_use_billing) {
       if (order_use_billing.is(":checked")) {
         $("#shipping .inner").hide();
-        return $("#shipping .inner input, #shipping .inner select").prop(
+        $("#shipping .inner input, #shipping .inner select").prop(
           "disabled",
           true
         );
@@ -127,9 +127,9 @@ Spree.ready(function($) {
           "disabled",
           false
         );
-        return updateState("s");
+        updateState("s");
       }
     };
-    return update_shipping_form_state(order_use_billing);
+    update_shipping_form_state(order_use_billing);
   }
 });

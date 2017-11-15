@@ -28,20 +28,20 @@ Spree.onCouponCodeApply = function(e) {
   req.done(function(data) {
     window.location.reload();
     couponCodeField.val("");
-    return couponStatus
+    couponStatus
       .addClass(successClass)
       .html("Coupon code applied successfully.");
   });
-  return req.fail(function(xhr) {
+  req.fail(function(xhr) {
     var handler;
     // handler = JSON.parse(xhr.responseText)
     handler = xhr.responseJSON;
-    return couponStatus.addClass(errorClass).html(handler["error"]);
+    couponStatus.addClass(errorClass).html(handler["error"]);
   });
 };
 
 Spree.ready(function($) {
-  return $("#coupon-code-apply-button").click(function(e) {
-    return Spree.onCouponCodeApply(e);
+  $("#coupon-code-apply-button").click(function(e) {
+    Spree.onCouponCodeApply(e);
   });
 });
