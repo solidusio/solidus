@@ -1,7 +1,9 @@
+require 'rails/generators/active_record/migration'
+
 module Spree
   class CustomUserGenerator < Rails::Generators::NamedBase
     include Rails::Generators::ResourceHelpers
-    include Rails::Generators::Migration
+    include ActiveRecord::Generators::Migration
 
     desc "Set up a Solidus installation with a custom User class"
 
@@ -31,14 +33,6 @@ module Spree
       end
     end
 
-    def self.next_migration_number(dirname)
-      if ActiveRecord::Base.timestamped_migrations
-        sleep 1 # make sure to get a different migration every time
-        Time.new.utc.strftime("%Y%m%d%H%M%S")
-      else
-        "%.3d" % (current_migration_number(dirname) + 1)
-      end
-    end
 
     def klass
       class_name.constantize
