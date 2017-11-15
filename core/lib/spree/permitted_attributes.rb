@@ -27,7 +27,6 @@ module Spree
       :store_attributes,
       :taxon_attributes,
       :taxonomy_attributes,
-      :transfer_item_attributes,
       :user_attributes,
       :variant_attributes
     ]
@@ -115,8 +114,6 @@ module Spree
       :name, :parent_id, :position, :icon, :description, :permalink, :taxonomy_id,
       :meta_description, :meta_keywords, :meta_title, :child_index
     ]
-
-    @@transfer_item_attributes = [:variant_id, :expected_quantity, :received_quantity]
 
     # intentionally leaving off email here to prevent privilege escalation
     # by changing a user with higher priveleges' email to one a lower-priveleged
