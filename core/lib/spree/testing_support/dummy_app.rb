@@ -73,8 +73,10 @@ module DummyApp
 
     config.action_controller.include_all_helpers = false
 
-    config.assets.paths << File.expand_path('../dummy_app/assets/javascripts', __FILE__)
-    config.assets.paths << File.expand_path('../dummy_app/assets/stylesheets', __FILE__)
+    if config.respond_to?(:assets)
+      config.assets.paths << File.expand_path('../dummy_app/assets/javascripts', __FILE__)
+      config.assets.paths << File.expand_path('../dummy_app/assets/stylesheets', __FILE__)
+    end
 
     config.paths["config/database"] = File.expand_path('../dummy_app/database.yml', __FILE__)
     config.paths['app/views'] = File.expand_path('../dummy_app/views', __FILE__)
