@@ -21,11 +21,10 @@ module Spree
 
       file_action = File.exist?('config/initializers/spree.rb') ? :append_file : :create_file
       send(file_action, 'config/initializers/spree.rb') do
-        %{
-          Rails.application.config.to_prepare do
-            require_dependency 'spree/authentication_helpers'
-          end\n}
+        "Rails.application.config.to_prepare do\n  require_dependency 'spree/authentication_helpers'\nend\n"
       end
+
+      gsub_file 'config/initializers/spree.rb', /Spree\.user_class.?=.?.+$/, %{Spree.user_class = "#{class_name}"}
     end
 
     private
