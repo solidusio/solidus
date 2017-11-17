@@ -749,7 +749,9 @@ de:
     card_type: Kartentyp
     card_type_is: Kartentyp ist
     cart: Warenkorb
-    cart_subtotal: Zwischensumme Warenkorb
+    cart_subtotal:
+      one: Zwischensumme (1 Artikel)
+      other: 'Zwischensumme (%count Artikel)'
     categories: Kategorien
     category: Kategorie
     charged: Berechnet
