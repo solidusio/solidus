@@ -363,6 +363,13 @@ module Spree
     #   Spree::CurrentStoreSelector
     class_name_attribute :current_store_selector_class, default: 'Spree::StoreSelector::ByServerName'
 
+    # Allows providing your own class for creating urls on taxons
+    #
+    # @!attribute [rw] taxon_url_parametizer_class
+    # @return [Class] a class that provides a `#parameterize` method that
+    # returns a String
+    class_name_attribute :taxon_url_parametizer_class, default: 'ActiveSupport::Inflector'
+
     # Allows providing your own class instance for generating order numbers.
     #
     # @!attribute [rw] order_number_generator
