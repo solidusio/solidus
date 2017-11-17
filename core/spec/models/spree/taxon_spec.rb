@@ -18,12 +18,6 @@ RSpec.describe Spree::Taxon, type: :model do
       expect(taxon.permalink).to eql "ruby-on-rails"
     end
 
-    it "should support Chinese characters" do
-      taxon.name = "你好"
-      taxon.set_permalink
-      expect(taxon.permalink).to eql 'ni-hao'
-    end
-
     context "with parent taxon" do
       let(:parent) { FactoryBot.build(:taxon, permalink: "brands") }
       before       { allow(taxon).to receive_messages parent: parent }
@@ -37,12 +31,6 @@ RSpec.describe Spree::Taxon, type: :model do
         taxon.permalink = "b/rubyonrails"
         taxon.set_permalink
         expect(taxon.permalink).to eql "brands/rubyonrails"
-      end
-
-      it "should support Chinese characters" do
-        taxon.name = "我"
-        taxon.set_permalink
-        expect(taxon.permalink).to eql "brands/wo"
       end
 
       # Regression test for https://github.com/spree/spree/issues/3390
@@ -80,7 +68,7 @@ RSpec.describe Spree::Taxon, type: :model do
       end
 
       it "changes child's permalink" do
-        is_expected.to change{ taxon2_child.reload.permalink }.from('t/t2/t2-child').to('t/t1/t2/t2-child')
+        is_expected.to change{ taxon2_child.reload.permalink }.from('t/t2/t2_child').to('t/t1/t2/t2_child')
       end
     end
 
@@ -94,7 +82,7 @@ RSpec.describe Spree::Taxon, type: :model do
       end
 
       it "changes child's permalink" do
-        is_expected.to change{ taxon2_child.reload.permalink }.from('t/t2/t2-child').to('t/foo/t2-child')
+        is_expected.to change{ taxon2_child.reload.permalink }.from('t/t2/t2_child').to('t/foo/t2_child')
       end
     end
 
@@ -108,7 +96,7 @@ RSpec.describe Spree::Taxon, type: :model do
       end
 
       it "changes child's permalink" do
-        is_expected.to change{ taxon2_child.reload.permalink }.from('t/t2/t2-child').to('t/foo/t2-child')
+        is_expected.to change{ taxon2_child.reload.permalink }.from('t/t2/t2_child').to('t/foo/t2_child')
       end
     end
 
@@ -122,7 +110,7 @@ RSpec.describe Spree::Taxon, type: :model do
       end
 
       it "changes child's permalink" do
-        is_expected.to change{ taxon2_child.reload.permalink }.from('t/t2/t2-child').to('t/t1/foo/t2-child')
+        is_expected.to change{ taxon2_child.reload.permalink }.from('t/t2/t2_child').to('t/t1/foo/t2_child')
       end
     end
   end
