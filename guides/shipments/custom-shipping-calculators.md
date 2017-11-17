@@ -1,4 +1,4 @@
-# Custom shipping calculators 
+# Custom shipping calculators
 
 This article provides context about creating custom shipping calculators in the
 case that the provided calculators do not meet your store's needs.
@@ -19,19 +19,30 @@ shipping scenarios:
 
 If the calculators that come with Solidus are not enough for your needs, you
 might want to use an extension like
-[`solidus_active_shipping`][solidus-active-shipping] that provides additional 
+[`solidus_active_shipping`][solidus-active-shipping] that provides additional
 API-based rate calculation functionality for common carriers like UPS, USPS, and
-FedEx. Alternatively, you could develop your own custom calculator. 
+FedEx. Alternatively, you could develop your own custom calculator.
 
 [solidus-active-shipping]: solidus-active-shipping-extension.md
 
 ## Custom calculator requirements
 
-Your calculator should accept an array of `LineItem` objects that are associated
-with an order, and then return a cost.
+A custom calculator should accept a `Spree::Stock::Package` (a `package`) and
+return a cost.
 
-The calculator can look at any reachable data related to the order, but
-it typically requires the following information:
+Use the `package.order` method to access the current order's information, and
+the `package.contents` methods to access the current package's contents. As a
+developer, you should always deal with the `package.contents`. Otherwise, you
+may be quoting an entire order when you only want to quote one of many shipments
+on an order.
+
+<!-- TODO:
+  So far, the shipments documentation doesn't go into packages in any details.
+  These references by themselves are not enough. What is the purpose of a
+  "package" that is distinctive from a "shipment".
+-->
+
+Typically, a calculator uses the following order information:
 
 - The `Spree::Address` used as the order's shipping address.
 - The `Spree::LineItem` objects associated with the order.
@@ -54,7 +65,7 @@ In addition to providing relevant information about shipping addresses and
 product variants, you can use information about the product itself to inform a
 calculator's results. A product's tax category or shipping category could be
 meaningful information for shipping calculations. By default, each package
-contains only items in the same shipping category. 
+contains only items in the same shipping category.
 
 For example, you might want your calculator to handle your product with a
 shipping category of "Oversized" differently than it would a product with the
@@ -63,6 +74,6 @@ shipping category of "Oversized" differently than it would a product with the
 <!-- TODO:
   Add an example code block or a link to some Solidus code that shows a
   calculator taking advantage of shipping categories and/or tax categories to
-  produce a specific result. 
+  produce a specific result.
 -->
 

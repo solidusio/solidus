@@ -60,7 +60,7 @@ class Calculator::Usps::FirstClassMailParcels < Calculator::Usps::Base
     "USPS Bogus First Class International"
   end
 
-  def available?(order)
+  def available?(package)
     multiplier = 1.3
     weight = order.line_items.inject(0) do |weight, line_item|
       weight + (line_item.variant.weight ? (line_item.quantity * line_item.variant.weight * multiplier) : 0)

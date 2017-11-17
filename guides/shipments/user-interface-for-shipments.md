@@ -35,12 +35,10 @@ shipments can be associated with a single order.
 Shipments do not have their own dedicated part of the admin UI. Shipments are
 viewable and editable from within an order.
 
-In the admin dashboard. the administrator can update each shipment's shipping
+In the admin dashboard, the administrator can update each shipment's shipping
 cost and add tracking codes when editing an order. They can also perform other
-tasks, such as splitting a single shipment into multiple shipments.
-
-In the Solidus demo store, edit any order (from the `/admin/orders` URL) and go
-to the "Shipments" tab to see the default interface.
+tasks, such as splitting a single shipment into multiple shipments. They can do
+all of this from the "Shipments" tab of any order.
 
 ### Shipping instructions
 

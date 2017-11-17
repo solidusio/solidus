@@ -13,14 +13,15 @@ supported Solidus Extensions](https://extensions.solidus.io).
 
 This article provides a summary of shipping concepts. If you are interested in
 reading about example Solidus shipment setups see
-[Shipment setup examples](shipment-setup-examples.html.markdown).
+[Shipment setup examples](shipment-setup-examples.md).
 
 <!-- TODO:
   Add section that summarizes what Spree::Objects are created related to
   shipments and explains what their function is in the larger checkout process.
 -->
 
-[solidus-active-shipping]: solidus-active-shipping-extension.html.markdown
+[solidus-active-shipping]: solidus-active-shipping-extension.md
+[solidus-shipstation]: https://github.com/boomerdigital/solidus_shipstation
 
 ## Shipment attributes
 
@@ -145,7 +146,7 @@ extension like [`solidus_active_shipping`][solidus-active-shipping]. Or, if you
 have other complex needs, you can create a [custom shipping
 calculators][custom-shipping-calculators] for more information.
 
-[custom-shipping-calculators]: custom-shipping-calculators.html.markdown
+[custom-shipping-calculators]: custom-shipping-calculators.md
 
 ### Shipping rates
 

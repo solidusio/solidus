@@ -142,67 +142,10 @@ The string returned by the `description` method must match the name of the USPS
 delivery service _exactly_. To determine the exact spelling, you should examine
 what the USPS API returns.
 
-The following code block returns the description and the rate of USPS delivery
-services:
-
-```ruby
-class Calculator::ActiveShipping < Calculator
-  def compute(line_items)
-    #....
-    rates = retrieve_rates(origin, destination, packages(order))
-    # the key of this hash is the name you need to match
-    # raise rates.inspect
-
-    return nil unless rates
-    rate = rates[self.description].to_f +
-(Spree::ActiveShipping::Config[:handling_fee].to_f || 0.0)
-    return nil unless rate
-    # divide by 100 since active_shipping rates are expressed as cents
-
-    return rate/100.0
-  end
-
-  def retrieve_rates(origin, destination, packages)
-    #....
-    # carrier is an instance of ActiveMerchant::Shipping::USPS
-    response = carrier.find_rates(origin, destination, packages)
-    # turn this beastly array into a nice little hash
-    h = Hash[*response.rates.collect { |rate| [rate.service_name, rate.price]
-}.flatten]
-    #....
-  end
-end
-```
-
 <!-- TODO:
-  Give more context to the code block above. Would you/how would you
-  practically use this in your app? -->
-
-This returns an array of services with their corresponding prices, which the
-`retrieve_rates` method converts into a hash. Below is what would get returned
-for an order with an international destination:
-
-```ruby
-{
-  "USPS Bogus First Class International"=>9999,
-  "USPS Priority Mail International Flat Rate Envelope"=>1345,
-  "USPS First-Class Mail International Large Envelope"=>376,
-  "USPS USPS GXG Envelopes"=>4295,
-  "USPS Express Mail International Flat Rate Envelope"=>2895,
-  "USPS First-Class Mail International Package"=>396,
-  "USPS Priority Mail International Medium Flat Rate Box"=>4345,
-  "USPS Priority Mail International"=>2800,
-  "USPS Priority Mail International Large Flat Rate Box"=>5595,
-  "USPS Global Express Guaranteed Non-Document Non-Rectangular"=>4295,
-  "USPS Global Express Guaranteed Non-Document Rectangular"=>4295,
-  "USPS Global Express Guaranteed (GXG)"=>4295,
-  "USPS Express Mail International"=>2895,
-  "USPS Priority Mail International Small Flat Rate Box"=>1345
-}
-```
-
-From all of the viable shipping services in this hash, the `compute` method
-selects the one that matches the description of the calculator.
+  Expand this sub-article to make a practical example of a developer matching
+  the delivery service with its provided name.
+-->
 
 ### Register the new calculator
 

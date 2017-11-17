@@ -10,6 +10,12 @@ business logic for how stock should be packaged. If your store requires a
 specialized flow for handling split shipments, the simple coordinator should
 provide a good starting point for customizations. 
 
+<!-- TODO:
+  This article doesn't acknowledge the `Spree::Stock::Package` model, which is
+  what is being referred to when we talk about splitting shipments by
+  "packages".
+-->
+
 ## Creating proposed shipments
 
 An order's shipments are determined by
@@ -17,15 +23,15 @@ An order's shipments are determined by
 `Spree::Order`'s' state is set to `delivery`. This occurs before the customer
 has completed their order at checkout.
 
-The simple coordinator deletes any existing shipments for an order and then
-creates all of the shipments currently available for this order.
+The `SimpleCoordinator` takes an order and builds as many shipments as are
+necessary to fulfill it.
 
 [simple-coordinator]: https://github.com/solidusio/solidus/blob/master/core/app/models/spree/stock/simple_coordinator.rb
 
 The simple coordinator performs a number of tasks in order to create shipment
 proposals:
 
-1. The coordinator calculates the availability of the ordered items.
+1. The coordinator checks the availability of the ordered items.
 2. Inventory is allocated from available stock to the current order.
 3. It splits the order into logical packages based on stock locations and
    inventory at those locations.
@@ -44,22 +50,23 @@ first splitter in the sequence takes the array of packages from the order,
 splits the order into packages according to its rules, then passes the packages
 on to the next splitter in the sequence.
 
+For each generated shipment, a shipping method can be assigned.
+
 ### Default splitters
 
-Solidus comes with thre built-in splitters:
+Solidus comes with three built-in splitters:
 
 - [Backordered splitter][backordered-splitter]: Splits an order based on the
   amount of inventory on hand at each stock location.
 - [Shipping category splitter][shipping-category-splitter]: Splits an order into
-  packages based on a product's shipping categories. This means that each
+  shipments based on a product's shipping categories. This means that each
   package only has items that belongs to the same shipping category.
-- [Weight splitter][weight-splitter]: Splits an order into packages based on a
-  weight
-  threshold. This means that each package has a maximum weight: if a new item
-  is added to the order and it causes a package to go over the weight threshold,
-  a new package is created. All packages need to weigh less than the threshold.
-  You can set the weight threshold by changing
-  the `Spree::Stock::Splitter::Weight.threshold` value in an initializer. (It
+- [Weight splitter][weight-splitter]: Splits an order into shipments based on a
+  weight threshold. This means that each shipment has a maximum weight: if a new
+  item is added to the order and it causes a package to go over the weight
+  threshold, a new shipment is created. Each shipment needs to weigh less than
+  the threshold. You can set the weight threshold by changing the
+  `Spree::Stock::Splitter::Weight.threshold` value in an initializer. (It
   defaults to `150`.)
 
 [backordered-splitter]: https://github.com/solidusio/solidus/blob/master/core/app/models/spree/stock/splitter/backordered.rb
@@ -80,8 +87,7 @@ that Solidus uses. To do this, add the following to your
 `config/initializers/spree.rb` file:
 
 ```ruby
-Rails.application.config.spree.stock_splitters <<
-Spree::Stock::Splitter::CustomSplitter
+Rails.application.config.spree.stock_splitters << Spree::Stock::Splitter::CustomSplitter
 ```
 
 You can also override the splitters used in Solidus, rearrange them, or
@@ -95,7 +101,7 @@ Rails.application.config.spree.stock_splitters = [
 ```
 
 If you want to add different splitters for each of your `Spree::StockLocation`s,
-you can decorate the `Spree::Stock::Coordinator` class and override the
+you can decorate the `Spree::Stock::SimpleCoordinator` class and override the
 `splitters` method.
 
 #### Turn off split shipments
