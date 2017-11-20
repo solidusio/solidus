@@ -78,7 +78,7 @@ RSpec.describe Spree::Promotion::Actions::CreateAdjustment, type: :model do
     end
   end
 
-  context "#paranoia_destroy" do
+  shared_examples "destroying adjustments from incomplete orders" do
     before(:each) do
       action.calculator = Spree::Calculator::FlatRate.new(preferred_amount: 10)
       promotion.promotion_actions = [action]
@@ -87,7 +87,7 @@ RSpec.describe Spree::Promotion::Actions::CreateAdjustment, type: :model do
     context "when order is not complete" do
       it "should not keep the adjustment" do
         action.perform(payload)
-        action.paranoia_destroy
+        subject
         expect(order.adjustments.count).to eq(0)
       end
     end
@@ -99,7 +99,7 @@ RSpec.describe Spree::Promotion::Actions::CreateAdjustment, type: :model do
 
       before(:each) do
         action.perform(payload)
-        action.paranoia_destroy
+        subject
       end
 
       it "should keep the adjustment" do
@@ -110,5 +110,15 @@ RSpec.describe Spree::Promotion::Actions::CreateAdjustment, type: :model do
         expect(order.adjustments.reload.first.source).to be_nil
       end
     end
+  end
+
+  context "#discard" do
+    subject { action.discard }
+    it_should_behave_like "destroying adjustments from incomplete orders"
+  end
+
+  context "#paranoia_destroy" do
+    subject { Spree::Deprecation.silence { action.paranoia_destroy } }
+    it_should_behave_like "destroying adjustments from incomplete orders"
   end
 end
