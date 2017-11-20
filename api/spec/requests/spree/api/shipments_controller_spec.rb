@@ -134,6 +134,23 @@ describe Spree::Api::ShipmentsController, type: :request do
       end
     end
 
+    context 'for ready shipments' do
+      let(:order) { create :order_ready_to_ship, line_items_attributes: [{ variant: variant, quantity: 1 }] }
+      let(:shipment) { order.shipments.first }
+
+      it 'adds a variant to a shipment' do
+        put spree.add_api_shipment_path(shipment), params: { variant_id: variant.to_param, quantity: 1 }
+        expect(response.status).to eq(200)
+        expect(json_response['manifest'].detect { |h| h['variant']['id'] == variant.id }['quantity']).to eq(2)
+      end
+
+      it 'removes a variant from a shipment' do
+        put spree.remove_api_shipment_path(shipment), params: { variant_id: variant.to_param, quantity: 1 }
+        expect(response.status).to eq(200)
+        expect(json_response['manifest'].detect { |h| h['variant']['id'] == variant.id }).to be nil
+      end
+    end
+
     context "for shipped shipments" do
       let(:order) { create :shipped_order }
       let(:shipment) { order.shipments.first }
