@@ -663,7 +663,7 @@ describe "Checkout", type: :feature, inaccessible: true do
 
   def fill_in_credit_card(number:)
     fill_in "Card Number", with: number
-    fill_in "Expiration", with: "1224"
+    fill_in "Expiration", with: "12 / 24"
     fill_in "Card Code", with: "123"
   end
 
