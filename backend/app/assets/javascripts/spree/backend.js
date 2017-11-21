@@ -53,7 +53,6 @@
 //= require spree/backend/routes
 //= require spree/backend/shipments
 //= require spree/backend/spree-select2
-//= require spree/backend/states
 //= require spree/backend/stock_management/index_add_forms
 //= require spree/backend/stock_management/index_update_forms
 //= require spree/backend/stock_management/stock_item
