@@ -107,7 +107,6 @@ module Spree
           'cubes',
           condition: -> { can?(:admin, Spree::StockItem) },
           label: :stock,
-          partial: 'spree/admin/shared/stock_sub_menu',
           url: :admin_stock_items_path
         ),
         MenuItem.new(
