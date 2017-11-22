@@ -242,5 +242,48 @@ describe "Promotion Adjustments", type: :feature, js: true do
       expect(first_action.calculator.class).to eq(Spree::Calculator::FlatRate)
       expect(first_action.calculator.preferred_amount).to eq(5)
     end
+
+    context 'creating a promotion with promotion action that has a calculator with complex preferences' do
+      before do
+        class ComplexCalculator < Spree::Calculator
+          preference :amount, :decimal
+          preference :currency, :string
+          preference :mapping, :hash
+          preference :list, :array
+
+          def self.description
+            "Complex Calculator"
+          end
+        end
+        @calculators = Rails.application.config.spree.calculators.promotion_actions_create_item_adjustments
+        Rails.application.config.spree.calculators.promotion_actions_create_item_adjustments = [ComplexCalculator]
+      end
+
+      after do
+        Rails.application.config.spree.calculators.promotion_actions_create_item_adjustments = @calculators
+      end
+
+      it "does not show array and hash form fields" do
+        fill_in "Name", with: "SAVE SAVE SAVE"
+        choose "Apply to all orders"
+        click_button "Create"
+        expect(page).to have_title("SAVE SAVE SAVE - Promotions")
+
+        select "Create per-line-item adjustment", from: "Add action of type"
+        within('#action_fields') do
+          click_button "Add"
+          select "Complex Calculator", from: "Base Calculator"
+        end
+        within('#actions_container') { click_button "Update" }
+        expect(page).to have_text 'successfully updated'
+
+        within('#action_fields') do
+          expect(page).to have_field('Amount')
+          expect(page).to have_field('Currency')
+          expect(page).to_not have_field('Mapping')
+          expect(page).to_not have_field('List')
+        end
+      end
+    end
   end
 end
