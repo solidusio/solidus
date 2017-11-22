@@ -184,7 +184,7 @@ module Spree
       # for pricing information for if the inventory unit is
       # ever returned. This means that the inventory unit's line_item
       # will have a different variant than the inventory unit itself
-      super(variant: exchange_variant, line_item: inventory_unit.line_item, order: inventory_unit.order) if exchange_required?
+      super(variant: exchange_variant, line_item: inventory_unit.line_item) if exchange_required?
     end
 
     # @return [Spree::Shipment, nil] the exchange inventory unit's shipment if it exists
