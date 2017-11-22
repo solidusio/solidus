@@ -18,7 +18,7 @@ module Spree
           end
 
           context "with a deleted product" do
-            before { product.destroy! }
+            before { product.paranoia_destroy! }
 
             it "is the product" do
               subject
@@ -32,7 +32,7 @@ module Spree
           let!(:deleted_variant) { create(:variant, product: product) }
 
           context "with deleted variants" do
-            before { deleted_variant.destroy }
+            before { deleted_variant.paranoia_destroy! }
 
             context "when deleted is not requested" do
               it "excludes deleted variants" do

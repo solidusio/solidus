@@ -30,23 +30,23 @@ describe 'products', type: :feature, caching: true do
     expect(cache_writes.count).to eq(2)
   end
 
-  it "busts the cache when all products are deleted" do
-    product.destroy
-    product2.destroy
+  it "busts the cache when all products are soft-deleted" do
+    product.paranoia_destroy!
+    product2.paranoia_destroy!
     visit spree.root_path
     assert_written_to_cache("views/en/USD/spree/products/all--#{Date.today.to_s(:number)}-0")
     expect(cache_writes.count).to eq(1)
   end
 
-  it "busts the cache when the newest product is deleted" do
-    product.destroy
+  it "busts the cache when the newest product is soft-deleted" do
+    product.paranoia_destroy!
     visit spree.root_path
     assert_written_to_cache("views/en/USD/spree/products/all--#{product2.updated_at.utc.to_s(:number)}")
     expect(cache_writes.count).to eq(1)
   end
 
-  it "busts the cache when an older product is deleted" do
-    product2.destroy
+  it "busts the cache when an older product is soft-deleted" do
+    product2.paranoia_destroy!
     visit spree.root_path
     assert_written_to_cache("views/en/USD/spree/products/all--#{product.updated_at.utc.to_s(:number)}")
     expect(cache_writes.count).to eq(1)

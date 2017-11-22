@@ -113,7 +113,7 @@ RSpec.describe Spree::Product, type: :model do
     context "product has no variants" do
       context "#destroy" do
         it "should set deleted_at value" do
-          product.destroy
+          product.paranoia_destroy
           expect(product.deleted_at).not_to be_nil
           expect(product.master.reload.deleted_at).not_to be_nil
         end
@@ -127,9 +127,9 @@ RSpec.describe Spree::Product, type: :model do
 
       context "#destroy" do
         it "should set deleted_at value" do
-          product.destroy
+          product.paranoia_destroy
           expect(product.deleted_at).not_to be_nil
-          expect(product.variants_including_master.all? { |v| !v.deleted_at.nil? }).to be true
+          expect(product.variants_including_master).to all(be_paranoia_destroyed)
         end
       end
     end
@@ -176,8 +176,8 @@ RSpec.describe Spree::Product, type: :model do
         expect(product).not_to be_available
       end
 
-      it "should not be available if destroyed" do
-        product.destroy
+      it "should not be available if soft-destroyed" do
+        product.paranoia_destroy
         expect(product).not_to be_available
       end
     end
@@ -292,7 +292,7 @@ RSpec.describe Spree::Product, type: :model do
 
       it "doesnt raise ReadOnlyRecord error" do
         Spree::StockMovement.create!(stock_item: stock_item, quantity: 1)
-        product.destroy
+        product.paranoia_destroy
       end
     end
 
@@ -314,7 +314,7 @@ RSpec.describe Spree::Product, type: :model do
 
       it "renames slug on destroy" do
         old_slug = product.slug
-        product.destroy
+        product.paranoia_destroy
         expect(old_slug).to_not eq product.slug
       end
 

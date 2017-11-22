@@ -85,7 +85,15 @@ class Spree::Admin::ResourceController < Spree::Admin::BaseController
 
   def destroy
     invoke_callbacks(:destroy, :before)
-    if @object.destroy
+
+    destroy_result =
+      if @object.respond_to?(:paranoia_destroy)
+        @object.paranoia_destroy
+      else
+        @object.destroy
+      end
+
+    if destroy_result
       invoke_callbacks(:destroy, :after)
       flash[:success] = flash_message_for(@object, :successfully_removed)
       respond_with(@object) do |format|

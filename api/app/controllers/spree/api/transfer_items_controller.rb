@@ -25,7 +25,7 @@ module Spree
       def destroy
         authorize! :destroy, TransferItem
         @transfer_item = Spree::TransferItem.accessible_by(current_ability, :destroy).find(params[:id])
-        if @transfer_item.destroy
+        if @transfer_item.paranoia_destroy
           respond_with(@transfer_item, status: 200, default_template: :show)
         else
           invalid_resource!(@transfer_item)

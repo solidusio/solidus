@@ -228,7 +228,7 @@ describe 'Payments', type: :feature do
       end
 
       before do
-        payment_method.destroy
+        payment_method.paranoia_destroy
         visit spree.admin_order_payments_path(order.reload)
       end
 

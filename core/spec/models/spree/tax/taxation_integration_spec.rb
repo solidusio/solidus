@@ -647,15 +647,15 @@ RSpec.describe "Taxation system integration tests" do
         end
 
         it "should delete adjustments for open order when taxrate is deleted" do
-          new_york_books_tax.destroy!
-          federal_books_tax.destroy!
+          new_york_books_tax.paranoia_destroy!
+          federal_books_tax.paranoia_destroy!
           expect(line_item.adjustments.count).to eq(0)
         end
 
         it "should not delete adjustments for complete order when taxrate is deleted" do
           order.update_column :completed_at, Time.now
-          new_york_books_tax.destroy!
-          federal_books_tax.destroy!
+          new_york_books_tax.paranoia_destroy!
+          federal_books_tax.paranoia_destroy!
           expect(line_item.adjustments.count).to eq(2)
         end
 

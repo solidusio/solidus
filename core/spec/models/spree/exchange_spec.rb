@@ -52,7 +52,7 @@ module Spree
 
       context "when it cannot create shipments for all items" do
         before do
-          StockItem.where(variant_id: return_item.exchange_variant_id).destroy_all
+          StockItem.where(variant_id: return_item.exchange_variant_id).each(&:really_destroy!)
         end
 
         it 'raises an UnableToCreateShipments error' do

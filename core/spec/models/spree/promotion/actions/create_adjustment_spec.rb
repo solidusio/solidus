@@ -78,7 +78,7 @@ RSpec.describe Spree::Promotion::Actions::CreateAdjustment, type: :model do
     end
   end
 
-  context "#destroy" do
+  context "#paranoia_destroy" do
     before(:each) do
       action.calculator = Spree::Calculator::FlatRate.new(preferred_amount: 10)
       promotion.promotion_actions = [action]
@@ -87,7 +87,7 @@ RSpec.describe Spree::Promotion::Actions::CreateAdjustment, type: :model do
     context "when order is not complete" do
       it "should not keep the adjustment" do
         action.perform(payload)
-        action.destroy
+        action.paranoia_destroy
         expect(order.adjustments.count).to eq(0)
       end
     end
@@ -99,7 +99,7 @@ RSpec.describe Spree::Promotion::Actions::CreateAdjustment, type: :model do
 
       before(:each) do
         action.perform(payload)
-        action.destroy
+        action.paranoia_destroy
       end
 
       it "should keep the adjustment" do

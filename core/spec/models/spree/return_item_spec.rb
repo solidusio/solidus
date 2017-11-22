@@ -112,7 +112,7 @@ RSpec.describe Spree::ReturnItem, type: :model do
       end
 
       context "when the inventory unit's variant does not yet have a stock item for the stock location it was returned to" do
-        before { inventory_unit.variant.stock_items.destroy_all }
+        before { inventory_unit.variant.stock_items.each(&:really_destroy!) }
 
         it "creates a new stock item for the inventory unit with a count of 1" do
           expect { subject }.to change(Spree::StockItem, :count).by(1)

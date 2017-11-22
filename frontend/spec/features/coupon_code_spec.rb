@@ -177,10 +177,10 @@ describe "Coupon code promotions", type: :feature, js: true do
           action = Spree::Promotion::Actions::CreateAdjustment.new
           action.calculator = calculator
           action.promotion = promotion
-          action.save
+          action.save!
 
           promotion.promotion_actions = [action]
-          promotion.save
+          promotion.save!
 
           create(:product, name: "Spree Mug", price: 10)
         end
