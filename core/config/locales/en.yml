@@ -342,17 +342,6 @@ en:
       spree/stock_movement:
         action: Action
         quantity: Quantity
-      spree/stock_transfer:
-        created_at: Created At
-        created_by_id: Created By
-        description: Description
-        destination_location_id: Destination Location
-        finalized_at: Finalized At
-        finalized_by_id: Finalized By
-        number: Transfer Number
-        shipped_at: Shipped At
-        source_location_id: Source Location
-        tracking_number: Tracking Number
       spree/tax_category:
         description: Description
         name: Name
@@ -598,9 +587,6 @@ en:
       spree/stock_location:
         one: Stock Location
         other: Stock Locations
-      spree/stock_transfer:
-        one: Stock Transfer
-        other: Stock Transfers
       spree/store:
         one: Store
         other: Stores
@@ -625,9 +611,6 @@ en:
       spree/tracker:
         one: Analytics Tracker
         other: Analytics Trackers
-      spree/transfer_item:
-        one: Transfer Item
-        other: Transfer Items
       spree/user:
         one: User
         other: Users
@@ -936,7 +919,6 @@ en:
         shipping: Shipping
         stock: Stock
         stock_items: Store Stock
-        stock_transfers: Stock Transfers
         stores: Stores
         taxes: Taxes
         taxonomies: Taxonomies
@@ -979,10 +961,6 @@ en:
           use_product_tax_category: Use Product Tax Category
           pricing: Pricing
           pricing_hint: These values are populated from the product details page and can be overridden below
-      stock_transfers:
-        create_additional_stock_location: Create additional stock locations.
-        create_new_stock_transfer: Create a new stock transfer.
-        no_stock_locations_found: More than one stock location must be set to transfer stock.
     administration: Administration
     agree_to_privacy_policy: Agree to Privacy Policy
     agree_to_terms_of_service: Agree to Terms of Service
@@ -1009,7 +987,6 @@ en:
     approved_at: Approved at
     are_you_sure: Are you sure?
     are_you_sure_delete: Are you sure you want to delete this record?
-    are_you_sure_ship_stock_transfer: Are you sure you want to ship this stock transfer?
     authorization_failure: Authorization Failure
     authorized: Authorized
     auto_capture: Auto Capture
@@ -1046,7 +1023,6 @@ en:
     back_to_states_list: Back To States List
     back_to_stock_locations_list: Back to Stock Locations List
     back_to_stock_movements_list: Back to Stock Movements List
-    back_to_stock_transfers_list: Back to Stock Transfers List
     back_to_store: View store
     back_to_tax_categories_list: Back To Tax Categories List
     back_to_tax_rates_list: Back To Tax Rates List
@@ -1112,8 +1088,6 @@ en:
     clone: Clone
     close: Close
     closed: Closed
-    close_stock_transfer:
-      confirm: "Are you sure you want to close this stock transfer?\n\nStock levels will be changed for the received items and you will no longer be able to edit the stock transfer."
     code: Code
     company: Company
     complete: complete
@@ -1230,7 +1204,6 @@ en:
     editing_state: Editing State
     editing_stock_location: Editing Stock Location
     editing_stock_movement: Editing Stock Movement
-    editing_stock_transfer: Editing Stock Transfer
     editing_tax_category: Editing Tax Category
     editing_tax_rate: Editing Tax Rate
     editing_tracker: Editing Tracker
@@ -1259,13 +1232,8 @@ en:
     error: error
     errors:
       messages:
-        cannot_modify_transfer_item_closed_stock_transfer: Transfer items that are part of a closed stock transfer cannot be modified.
-        cannot_delete_finalized_stock_transfer: Finalized stock transfers cannot be destroyed.
         cannot_delete_finalized_stock_location: Stock Location cannot be destroyed if you have open stock transfers.
-        cannot_delete_transfer_item_with_finalized_stock_transfer: Transfer items that are part of a finalized stock transfer cannot be destroyed.
-        cannot_update_expected_transfer_item_with_finalized_stock_transfer: The expected quantity cannot be updated on transfer items that are part of a finalized stock transfer.
         could_not_create_taxon: Could not create taxon
-        transfer_item_insufficient_stock: Transfer item's variant does not have enough stock in the stock transfer's source location
         no_payment_methods_available: No payment methods are configured for this environment
         no_shipping_methods_available: No shipping methods available for selected location, please change your address and try again.
     errors_prohibited_this_record_from_being_saved:
@@ -1329,8 +1297,6 @@ en:
     filter_results: Filter Results
     finalize: Finalize
     finalize_all_adjustments: Finalize All Adjustments
-    finalize_stock_transfer:
-      confirm: "Are you sure you want to finalize this stock transfer?\n\nYou will no longer be able to add or edit any transfer items"
     find_a_taxon: Find a Taxon
     finalized: Finalized
     finalized_at: Finalized at
@@ -1421,7 +1387,6 @@ en:
     iso_name: Iso Name
     item: Item
     item_description: Item Description
-    item_not_in_stock_transfer: Item is not part of the stock transfer
     item_total: Item Total
     item_total_rule:
       operators:
@@ -1516,7 +1481,6 @@ en:
     new_state: New State
     new_stock_location: New Stock Location
     new_stock_movement: New Stock Movement
-    new_stock_transfer: New Stock Transfer
     new_store_credit: New Store Credit
     new_store: New Store
     new_tax_category: New Tax Category
@@ -1867,8 +1831,6 @@ en:
     ship: ship
     ship_address: Ship Address
     ship_address_required: Valid shipping address required
-    ship_stock_transfer:
-      confirm: "Are you sure you want to mark this stock transfer as shipping?\n\nYou will no longer be able to make changes to the stock transfer"
     ship_total: Ship Total
     shipped_at: Shipped At
     shipment: Shipment
@@ -1958,11 +1920,6 @@ en:
     stock_not_below_zero: Stock must not be below zero.
     stock_successfully_transferred: Stock was successfully transferred between locations.
     stock: Stock
-    stock_transfer: Stock Transfer
-    stock_transfer_cannot_be_finalized: Stock transfer cannot be finalized
-    stock_transfer_complete: Stock Transfer Complete
-    stock_transfer_must_be_receivable: Stock transfer must be closed and shipped
-    stock_transfers: Stock Transfers
     stop: Stop
     store: Store
     store_credit:
@@ -2061,7 +2018,6 @@ en:
     tracking_url: Tracking URL
     tracking_url_placeholder: e.g. http://quickship.com/package?num=:tracking
     transaction_id: Transaction ID
-    transfer_items: Transfer Items
     transfer_from_location: Transfer From
     transfer_stock: Transfer Stock
     transfer_to_location: Transfer To
@@ -2073,7 +2029,6 @@ en:
     unable_to_find_all_inventory_units: Unable to find all specified inventory units
     unable_to_connect_to_gateway: Unable to connect to gateway.
     unable_to_create_reimbursements: Unable to create reimbursements because there are items pending manual intervention.
-    unable_to_create_stock_transfer: Unable to create the stock transfer
     unfinalize_all_adjustments: Unfinalize All Adjustments
     under_price: Under %{price}
     unlock: Unlock
