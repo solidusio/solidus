@@ -1,13 +1,19 @@
 Spree.onCouponCodeApply = function(e) {
-  var couponCode, couponCodeField, couponStatus, data, errorClass, req, successClass;
-  couponCodeField = $('#order_coupon_code');
+  var couponCode,
+    couponCodeField,
+    couponStatus,
+    data,
+    errorClass,
+    req,
+    successClass;
+  couponCodeField = $("#order_coupon_code");
   couponCode = $.trim(couponCodeField.val());
-  if (couponCode === '') {
+  if (couponCode === "") {
     return;
   }
   couponStatus = $("#coupon_status");
-  successClass = 'success';
-  errorClass = 'alert';
+  successClass = "success";
+  errorClass = "alert";
   couponStatus.removeClass([successClass, errorClass].join(" "));
   data = {
     order_token: Spree.current_order_token,
@@ -21,8 +27,10 @@ Spree.onCouponCodeApply = function(e) {
   });
   req.done(function(data) {
     window.location.reload();
-    couponCodeField.val('');
-    return couponStatus.addClass(successClass).html("Coupon code applied successfully.");
+    couponCodeField.val("");
+    return couponStatus
+      .addClass(successClass)
+      .html("Coupon code applied successfully.");
   });
   return req.fail(function(xhr) {
     var handler;
@@ -33,7 +41,7 @@ Spree.onCouponCodeApply = function(e) {
 };
 
 Spree.ready(function($) {
-  return $('#coupon-code-apply-button').click(function(e) {
+  return $("#coupon-code-apply-button").click(function(e) {
     return Spree.onCouponCodeApply(e);
   });
 });
