@@ -105,6 +105,50 @@ RSpec.describe Spree::Preferences::Preferable, type: :model do
       })
     end
 
+    describe '#admin_form_preference_names' do
+      subject do
+        ComplexPreferableClass.new.admin_form_preference_names
+      end
+
+      before do
+        class ComplexPreferableClass
+          include Spree::Preferences::Preferable
+          preference :name, :string
+          preference :password, :password
+          preference :mapping, :hash
+          preference :recipients, :array
+        end
+      end
+
+      it "returns an array of preference names excluding preferences not presentable as form field" do
+        is_expected.to contain_exactly(:name, :password)
+      end
+
+      context 'with overwritten allowed_admin_form_preference_types class method' do
+        subject do
+          ComplexOverwrittenPreferableClass.new.admin_form_preference_names
+        end
+
+        before do
+          class ComplexOverwrittenPreferableClass
+            include Spree::Preferences::Preferable
+            preference :name, :string
+            preference :password, :password
+            preference :mapping, :hash
+            preference :recipients, :array
+
+            def self.allowed_admin_form_preference_types
+              %i(string password hash array)
+            end
+          end
+        end
+
+        it 'returns these types instead' do
+          is_expected.to contain_exactly(:name, :password, :mapping, :recipients)
+        end
+      end
+    end
+
     context "converts integer preferences to integer values" do
       before do
         A.preference :is_integer, :integer
