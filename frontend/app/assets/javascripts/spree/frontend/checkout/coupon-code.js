@@ -1,25 +1,18 @@
 Spree.onCouponCodeApply = function(e) {
-  var couponCode,
-    couponCodeField,
-    couponStatus,
-    data,
-    errorClass,
-    req,
-    successClass;
-  couponCodeField = $("#order_coupon_code");
-  couponCode = $.trim(couponCodeField.val());
+  var couponCodeField = $("#order_coupon_code");
+  var couponCode = $.trim(couponCodeField.val());
   if (couponCode === "") {
     return;
   }
-  couponStatus = $("#coupon_status");
-  successClass = "success";
-  errorClass = "alert";
+  var couponStatus = $("#coupon_status");
+  var successClass = "success";
+  var errorClass = "alert";
   couponStatus.removeClass([successClass, errorClass].join(" "));
-  data = {
+  var data = {
     order_token: Spree.current_order_token,
     coupon_code: couponCode
   };
-  req = Spree.ajax({
+  var req = Spree.ajax({
     method: "PUT",
     url: Spree.routes.apply_coupon_code(Spree.current_order_id),
     data: JSON.stringify(data),

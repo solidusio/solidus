@@ -1,8 +1,6 @@
 Spree.ready(function($) {
-  var radios, selectedRadio;
   Spree.addImageHandlers = function() {
-    var thumbnails;
-    thumbnails = $("#product-images ul.thumbnails");
+    var thumbnails = $("#product-images ul.thumbnails");
     $("#main-image").data("selectedThumb", $("#main-image img").attr("src"));
     if (!thumbnails.find("li.selected").length) {
       thumbnails
@@ -36,23 +34,20 @@ Spree.ready(function($) {
       );
     });
     thumbnails.find("li").on("mouseleave", function(event) {
-      $("#main-image img").attr(
-        "src",
-        $("#main-image").data("selectedThumb")
-      );
+      $("#main-image img").attr("src", $("#main-image").data("selectedThumb"));
     });
   };
+
   Spree.showVariantImages = function(variantId) {
-    var currentThumb, newImg, thumb;
     $("li.vtmb").hide();
     $("li.tmb-" + variantId).show();
-    currentThumb = $("#" + $("#main-image").data("selectedThumbId"));
+    var currentThumb = $("#" + $("#main-image").data("selectedThumbId"));
     if (!currentThumb.hasClass("vtmb-" + variantId)) {
-      thumb = $($("#product-images ul.thumbnails li:visible.vtmb").eq(0));
+      var thumb = $($("#product-images ul.thumbnails li:visible.vtmb").eq(0));
       if (!(thumb.length > 0)) {
         thumb = $($("#product-images ul.thumbnails li:visible").eq(0));
       }
-      newImg = thumb.find("a").attr("href");
+      var newImg = thumb.find("a").attr("href");
       $("#product-images ul.thumbnails li").removeClass("selected");
       thumb.addClass("selected");
       $("#main-image img").attr("src", newImg);
@@ -60,22 +55,25 @@ Spree.ready(function($) {
       $("#main-image").data("selectedThumbId", thumb.attr("id"));
     }
   };
+
   Spree.updateVariantPrice = function(variant) {
-    var variantPrice;
-    variantPrice = variant.data("price");
+    var variantPrice = variant.data("price");
     if (variantPrice) {
       $(".price.selling").text(variantPrice);
     }
   };
-  radios = $('#product-variants input[type="radio"]');
+
+  var radios = $('#product-variants input[type="radio"]');
   if (radios.length > 0) {
-    selectedRadio = $(
+    var selectedRadio = $(
       '#product-variants input[type="radio"][checked="checked"]'
     );
     Spree.showVariantImages(selectedRadio.attr("value"));
     Spree.updateVariantPrice(selectedRadio);
   }
+
   Spree.addImageHandlers();
+
   radios.click(function(event) {
     Spree.showVariantImages(this.value);
     Spree.updateVariantPrice($(this));

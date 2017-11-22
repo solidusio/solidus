@@ -1,20 +1,16 @@
 Spree.ready(function($) {
-  var fillStates,
-    getCountryId,
-    order_use_billing,
-    statesByCountry,
-    updateState,
-    update_shipping_form_state;
   if ($("#checkout_form_address").is("*")) {
     // Hidden by default to support browsers with javascript disabled
     $(".js-address-fields").show();
-    getCountryId = function(region) {
+
+    var getCountryId = function(region) {
       return $("#" + region + "country select").val();
     };
-    statesByCountry = {};
-    updateState = function(region) {
-      var countryId;
-      countryId = getCountryId(region);
+
+    var statesByCountry = {};
+
+    var updateState = function(region) {
+      var countryId = getCountryId(region);
       if (countryId != null) {
         if (statesByCountry[countryId] == null) {
           $.get(
@@ -35,32 +31,23 @@ Spree.ready(function($) {
         }
       }
     };
-    fillStates = function(region) {
-      var countryId,
-        data,
-        selected,
-        stateInput,
-        statePara,
-        stateSelect,
-        stateSpanRequired,
-        states,
-        statesRequired,
-        statesWithBlank;
-      countryId = getCountryId(region);
-      data = statesByCountry[countryId];
+
+    var fillStates = function(region) {
+      var countryId = getCountryId(region);
+      var data = statesByCountry[countryId];
       if (data == null) {
         return;
       }
-      statesRequired = data.states_required;
-      states = data.states;
-      statePara = $("#" + region + "state");
-      stateSelect = statePara.find("select");
-      stateInput = statePara.find("input");
-      stateSpanRequired = statePara.find('[id$="state-required"]');
+      var statesRequired = data.states_required;
+      var states = data.states;
+      var statePara = $("#" + region + "state");
+      var stateSelect = statePara.find("select");
+      var stateInput = statePara.find("input");
+      var stateSpanRequired = statePara.find('[id$="state-required"]');
       if (states.length > 0) {
-        selected = parseInt(stateSelect.val());
+        var selected = parseInt(stateSelect.val());
         stateSelect.html("");
-        statesWithBlank = [
+        var statesWithBlank = [
           {
             name: "",
             id: ""
@@ -103,18 +90,23 @@ Spree.ready(function($) {
         stateSelect.removeClass("required");
       }
     };
+
     $("#bcountry select").change(function() {
       updateState("b");
     });
+
     $("#scountry select").change(function() {
       updateState("s");
     });
+
     updateState("b");
-    order_use_billing = $("input#order_use_billing");
+
+    var order_use_billing = $("input#order_use_billing");
     order_use_billing.change(function() {
       update_shipping_form_state(order_use_billing);
     });
-    update_shipping_form_state = function(order_use_billing) {
+
+    var update_shipping_form_state = function(order_use_billing) {
       if (order_use_billing.is(":checked")) {
         $("#shipping .inner").hide();
         $("#shipping .inner input, #shipping .inner select").prop(
@@ -130,6 +122,7 @@ Spree.ready(function($) {
         updateState("s");
       }
     };
+
     update_shipping_form_state(order_use_billing);
   }
 });

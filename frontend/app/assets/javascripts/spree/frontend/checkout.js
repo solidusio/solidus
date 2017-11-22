@@ -15,11 +15,9 @@ Spree.disableSaveOnClick = function() {
 };
 
 Spree.ready(function($) {
-  var termsCheckbox;
-  termsCheckbox = $("#accept_terms_and_conditions");
+  var termsCheckbox = $("#accept_terms_and_conditions");
   termsCheckbox.change(function() {
-    var submitBtn;
-    submitBtn = $(this.closest("form")).find(":submit");
+    var submitBtn = $(this.closest("form")).find(":submit");
     submitBtn.prop("disabled", !this.checked);
     submitBtn.toggleClass("disabled", !this.checked);
   });
