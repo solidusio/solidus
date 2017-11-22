@@ -1,21 +1,18 @@
+require 'rails/generators/active_record/migration'
+
 module Spree
   class CustomUserGenerator < Rails::Generators::NamedBase
-    include Rails::Generators::ResourceHelpers
-    include Rails::Generators::Migration
+    include ActiveRecord::Generators::Migration
 
     desc "Set up a Solidus installation with a custom User class"
 
-    def self.source_paths
-      paths = superclass.source_paths
-      paths << File.expand_path('../templates', __FILE__)
-      paths.flatten
-    end
+    source_root File.expand_path('templates', File.dirname(__FILE__))
 
     def check_for_constant
-        klass
+      klass
     rescue NameError
-        @shell.say "Couldn't find #{class_name}. Are you sure that this class exists within your application and is loaded?", :red
-        exit(1)
+      @shell.say "Couldn't find #{class_name}. Are you sure that this class exists within your application and is loaded?", :red
+      exit(1)
     end
 
     def generate
@@ -24,21 +21,13 @@ module Spree
 
       file_action = File.exist?('config/initializers/spree.rb') ? :append_file : :create_file
       send(file_action, 'config/initializers/spree.rb') do
-        %{
-          Rails.application.config.to_prepare do
-            require_dependency 'spree/authentication_helpers'
-          end\n}
+        "Rails.application.config.to_prepare do\n  require_dependency 'spree/authentication_helpers'\nend\n"
       end
+
+      gsub_file 'config/initializers/spree.rb', /Spree\.user_class.?=.?.+$/, %{Spree.user_class = "#{class_name}"}
     end
 
-    def self.next_migration_number(dirname)
-      if ActiveRecord::Base.timestamped_migrations
-        sleep 1 # make sure to get a different migration every time
-        Time.new.utc.strftime("%Y%m%d%H%M%S")
-      else
-        "%.3d" % (current_migration_number(dirname) + 1)
-      end
-    end
+    private
 
     def klass
       class_name.constantize
