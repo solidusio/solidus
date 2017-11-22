@@ -2,6 +2,8 @@
 
 - Add support for using Tubolinks in Solidus admin [#1863](https://github.com/solidusio/solidus/pull/1863) ([tvdeyen](https://github.com/tvdeyen))
 
+- Extract stock transfers to the [solidus_stock_transfers](https://github.com/solidusio-contrib/solidus_stock_transfers) gem. [#2379](https://github.com/solidusio/solidus/pull/2379) ([jhawthorn](https://github.com/jhawthorn))
+
 ## Solidus 2.4.0 (unreleased)
 
 ### Major changes
