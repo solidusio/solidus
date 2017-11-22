@@ -382,6 +382,13 @@ module Spree
       @stock_configuration ||= Spree::Core::StockConfiguration.new
     end
 
+    def roles
+      @roles ||= Spree::RoleConfiguration.new.tap do |roles|
+        roles.assign_permissions :default, ['Spree::PermissionSets::DefaultCustomer']
+        roles.assign_permissions :admin, ['Spree::PermissionSets::SuperUser']
+      end
+    end
+
     def environment
       @environment ||= Spree::Core::Environment.new(self).tap do |env|
         env.calculators.shipping_methods = %w[

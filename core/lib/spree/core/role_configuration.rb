@@ -1,4 +1,5 @@
 require 'singleton'
+require 'spree/core/class_constantizer'
 
 module Spree
   # A class responsible for associating {Spree::Role} with a list of permission sets.
@@ -16,15 +17,30 @@ module Spree
   class RoleConfiguration
     # An internal structure for the association between a role and a
     # set of permissions.
-    Role = Struct.new(:name, :permission_sets)
+    class Role
+      attr_reader :name, :permission_sets
 
-    include Singleton
+      def initialize(name, permission_sets)
+        @name = name
+        @permission_sets = Spree::Core::ClassConstantizer::Set.new
+        @permission_sets.concat permission_sets
+      end
+    end
+
     attr_accessor :roles
 
-    # Yields the instance of the singleton, used for configuration
-    # @yield_param instance [Spree::RoleConfiguration]
-    def self.configure
-      yield(instance)
+    class << self
+      def instance
+        Spree::Deprecation.warn "Spree::RoleConfiguration.instance is DEPRECATED use Spree::Config.roles instead"
+        Spree::Config.roles
+      end
+
+      # Yields the instance of the singleton, used for configuration
+      # @yield_param instance [Spree::RoleConfiguration]
+      def configure
+        Spree::Deprecation.warn "Spree::RoleConfiguration.configure is deprecated. Call Spree::Config.roles.assign_permissions instead"
+        yield(Spree::Config.roles)
+      end
     end
 
     # Given a CanCan::Ability, and a user, determine what permissions sets can
@@ -63,7 +79,7 @@ module Spree
     def assign_permissions(role_name, permission_sets)
       name = role_name.to_s
 
-      roles[name].permission_sets |= permission_sets
+      roles[name].permission_sets.concat permission_sets
       roles[name]
     end
   end
