@@ -128,7 +128,7 @@ describe Spree::Api::ShipmentsController, type: :request do
 
       it 'removes a destroyed variant from a shipment' do
         order.contents.add(variant, 2)
-        variant.paranoia_destroy
+        variant.discard
 
         put spree.remove_api_shipment_path(shipment), params: { variant_id: variant.to_param, quantity: 1 }
         expect(response.status).to eq(200)

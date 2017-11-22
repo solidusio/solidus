@@ -226,7 +226,7 @@ module Spree
 
         it 'zero on_hand and backordered' do
           subject
-          variant.stock_items.each(&:paranoia_destroy!)
+          variant.stock_items.discard_all
           on_hand, backordered = subject.fill_status(variant, 1)
           expect(on_hand).to eq 0
           expect(backordered).to eq 0

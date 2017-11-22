@@ -196,7 +196,7 @@ RSpec.describe Spree::Shipment, type: :model do
     end
 
     context "variant was removed" do
-      before { variant.paranoia_destroy }
+      before { variant.discard }
 
       it "still returns variant expected" do
         expect(shipment.manifest.first.variant).to eq variant

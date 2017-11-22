@@ -1,3 +1,5 @@
+require 'discard'
+
 module Spree
   # == Master Variant
   #
@@ -14,8 +16,20 @@ module Spree
   # option values and may have inventory units. Sum of on_hand each variant's
   # inventory level determine "on_hand" level for the product.
   class Variant < Spree::Base
-    acts_as_paranoid
     acts_as_list scope: :product
+
+    acts_as_paranoid
+    include Spree::ParanoiaDeprecations
+
+    include Discard::Model
+    self.discard_column = :deleted_at
+
+    after_discard do
+      stock_items.discard_all
+      images.destroy_all
+      prices.destroy_all
+      currently_valid_prices.destroy_all
+    end
 
     attr_writer :rebuild_vat_prices
     include Spree::DefaultPrice

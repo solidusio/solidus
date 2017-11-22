@@ -47,7 +47,7 @@ module Spree
 
       def destroy
         @product = Spree::Product.friendly.find(params[:id])
-        @product.paranoia_destroy!
+        @product.discard
 
         flash[:success] = t('spree.notice_messages.product_deleted')
 

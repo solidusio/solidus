@@ -1,3 +1,5 @@
+require 'discard'
+
 module Spree
   # Products represent an entity for sale in a store. Products can have
   # variations, called variants. Product properties include description,
@@ -12,6 +14,18 @@ module Spree
     friendly_id :slug_candidates, use: :history
 
     acts_as_paranoid
+    include Spree::ParanoiaDeprecations
+
+    include Discard::Model
+    self.discard_column = :deleted_at
+
+    after_discard do
+      variants_including_master.discard_all
+      self.product_option_types = []
+      self.product_properties = []
+      self.classifications = []
+      self.product_promotion_rules = []
+    end
 
     has_many :product_option_types, dependent: :destroy, inverse_of: :product
     has_many :option_types, through: :product_option_types
@@ -90,6 +104,7 @@ module Spree
     after_create :build_variants_from_option_values_hash, if: :option_values_hash
 
     after_destroy :punch_slug
+    after_discard :punch_slug
 
     after_initialize :ensure_master
 

@@ -157,7 +157,7 @@ RSpec.describe Spree::Order, type: :model do
     context 'when variant is destroyed' do
       before do
         allow(order).to receive(:restart_checkout_flow)
-        order.line_items.first.variant.paranoia_destroy
+        order.line_items.first.variant.discard
       end
 
       it 'should restart checkout flow' do
