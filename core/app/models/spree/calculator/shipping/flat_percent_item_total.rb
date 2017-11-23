@@ -1,3 +1,4 @@
+require_dependency 'spree/calculator'
 require_dependency 'spree/shipping_calculator'
 
 module Spree
