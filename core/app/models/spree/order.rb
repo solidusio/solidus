@@ -132,7 +132,13 @@ module Spree
     validates :number, presence: true, uniqueness: { allow_blank: true }
     validates :store_id, presence: true
 
-    make_permalink field: :number
+    def self.find_by_param(value)
+      find_by number: value
+    end
+
+    def self.find_by_param!(value)
+      find_by! number: value
+    end
 
     delegate :update_totals, :persist_totals, to: :updater
     delegate :firstname, :lastname, to: :bill_address, prefix: true, allow_nil: true
