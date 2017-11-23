@@ -1,6 +1,12 @@
+require 'discard'
+
 module Spree
   class Price < Spree::Base
     acts_as_paranoid
+    include Spree::ParanoiaDeprecations
+
+    include Discard::Model
+    self.discard_column = :deleted_at
 
     MAXIMUM_AMOUNT = BigDecimal('99_999_999.99')
 

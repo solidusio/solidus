@@ -27,8 +27,8 @@ module Spree
     after_discard do
       stock_items.discard_all
       images.destroy_all
-      prices.destroy_all
-      currently_valid_prices.destroy_all
+      prices.discard_all
+      currently_valid_prices.discard_all
     end
 
     attr_writer :rebuild_vat_prices
