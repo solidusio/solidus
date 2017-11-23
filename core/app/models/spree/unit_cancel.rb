@@ -26,6 +26,9 @@ class Spree::UnitCancel < Spree::Base
       eligible: true,
       finalized: true
     )
+
+    inventory_unit.line_item.order.recalculate
+    adjustment
   end
 
   # This method is used by Adjustment#update to recalculate the cost.

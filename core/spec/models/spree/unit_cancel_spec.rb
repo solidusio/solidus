@@ -57,5 +57,27 @@ RSpec.describe Spree::UnitCancel do
         expect { subject }.to raise_error RuntimeError, "Adjustable does not match line item"
       end
     end
+
+    context "multiple inventory units" do
+      let(:line_item) { create(:line_item, quantity: 4, price: 100.0) }
+
+      let(:inventory_units) do
+        [
+          create(:inventory_unit, line_item: line_item),
+          create(:inventory_unit, line_item: line_item),
+          create(:inventory_unit, line_item: line_item),
+          create(:inventory_unit, line_item: line_item),
+        ]
+      end
+
+      it "properly creates adjustments for line_item" do
+        inventory_units.each do |inventory_unit|
+          Spree::UnitCancel.create!(inventory_unit: inventory_unit, reason: Spree::UnitCancel::SHORT_SHIP).adjust!
+          inventory_unit.cancel!
+          line_item.reload
+        end
+        expect(line_item.total.to_d).to eq(0)
+      end
+    end
   end
 end
