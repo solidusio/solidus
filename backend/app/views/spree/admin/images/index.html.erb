@@ -9,7 +9,9 @@
   <% end %>
 <% end %>
 
-<div id="images" data-hook></div>
+<div id="new_image" class="hidden">
+  <%= render 'new', product: @product, image: Spree::Image.new(viewable: @product) %>
+</div>
 
 <fieldset>
   <legend align="center"><%= t(".upload_images") %></legend>
