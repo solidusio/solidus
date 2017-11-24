@@ -348,7 +348,7 @@ describe "Checkout", type: :feature, inaccessible: true do
       choose "use_existing_card_no"
 
       fill_in "Name on card", with: 'Spree Commerce'
-      fill_in "Card Number", with: '4111111111111111'
+      fill_in "Card Number", with: '4111 1111 1111 1111'
       fill_in "card_expiry", with: '04 / 20'
       fill_in "Card Code", with: '123'
 
@@ -522,7 +522,7 @@ describe "Checkout", type: :feature, inaccessible: true do
 
       choose "Credit Card"
       fill_in "Name on card", with: 'Spree Commerce'
-      fill_in "Card Number", with: '4111111111111111'
+      fill_in "Card Number", with: '4111 1111 1111 1111'
       fill_in "card_expiry", with: '04 / 20'
       fill_in "Card Code", with: '123'
       click_button "Save and Continue"
@@ -655,7 +655,7 @@ describe "Checkout", type: :feature, inaccessible: true do
       click_on "Save and Continue"
       click_on "Save and Continue"
 
-      fill_in_credit_card(number: "4111111111111111")
+      fill_in_credit_card(number: "4111 1111 1111 1111")
       click_on "Save and Continue"
 
       expect(page).to have_current_path("/checkout/confirm")
