@@ -732,6 +732,20 @@ module Spree
           expect(response.status).to eq 201
           expect(json_response["user_id"]).to eq(user.id)
         end
+
+        it "with a item and shipment" do
+          stock_location = create(:stock_location)
+          post spree.api_orders_path, params: {
+            order: {
+              line_items: {
+                "0" => { variant_id: variant.to_param, quantity: 5 }
+              },
+              shipments_attributes: [{ stock_location_id: stock_location.id }]
+            }
+          }
+          expect(response.status).to eq 201
+          expect(Spree::Order.last.shipments.first).to_not eq(nil)
+        end
       end
 
       context "updating" do

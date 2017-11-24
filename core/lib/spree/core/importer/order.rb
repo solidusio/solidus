@@ -18,8 +18,8 @@ module Spree
 
             shipments_attrs = params.delete(:shipments_attributes)
 
-            create_shipments_from_params(shipments_attrs, order)
             create_line_items_from_params(params.delete(:line_items_attributes), order)
+            create_shipments_from_params(shipments_attrs, order)
             create_adjustments_from_params(params.delete(:adjustments_attributes), order)
             create_payments_from_params(params.delete(:payments_attributes), order)
 
@@ -54,42 +54,12 @@ module Spree
           shipments_hash.each do |s|
             shipment = Shipment.new
             shipment.tracking       = s[:tracking]
-            shipment.stock_location = Spree::StockLocation.find_by(admin_name: s[:stock_location]) || Spree::StockLocation.find_by!(name: s[:stock_location])
-
-            inventory_units = s[:inventory_units] || []
-            inventory_units.each do |iu|
-              ensure_variant_id_from_params(iu)
-
-              unless line_item = order.line_items.find_by(variant_id: iu[:variant_id])
-                line_item = order.contents.add(Spree::Variant.find(iu[:variant_id]), 1)
-              end
-
-              # Spree expects a Inventory Unit to always reference a line
-              # item and variant otherwise users might get exceptions when
-              # trying to view these units. Note the Importer might not be
-              # able to find the line item if line_item.variant_id |= iu.variant_id
-              shipment.inventory_units.new(
-                variant_id: iu[:variant_id],
-                line_item: line_item
-              )
-            end
-
-            # Mark shipped if it should be.
-            if s[:shipped_at].present?
-              shipment.shipped_at = s[:shipped_at]
-              shipment.state      = 'shipped'
-              shipment.inventory_units.each do |unit|
-                unit.state = 'shipped'
-              end
-            end
+            shipment.stock_location = Spree::StockLocation.find(s[:stock_location_id])
 
             order.shipments << shipment
             shipment.save!
 
-            shipping_method = Spree::ShippingMethod.find_by(name: s[:shipping_method]) || Spree::ShippingMethod.find_by!(admin_name: s[:shipping_method])
-            rate = shipment.shipping_rates.create!(shipping_method: shipping_method,
-                                                   cost: s[:cost])
-            shipment.selected_shipping_rate_id = rate.id
+            shipment.selected_shipping_rate_id = s[:selected_shipping_rate_id]
             shipment.update_amounts
           end
         end
