@@ -341,6 +341,46 @@ RSpec.describe Spree::Product, type: :model do
       end
     end
 
+    describe "#discard" do
+      let(:product) { create(:product, slug: 'my-awesome-product') }
+
+      it "destroys related associations" do
+        create(:variant, product: product)
+        product.option_types = [create(:option_type)]
+        product.master.images = [create(:image)]
+        product.taxons = [create(:taxon)]
+        product.properties = [create(:property)]
+
+        product.discard
+
+        product.reload
+        expect(product.option_types).to be_empty
+        expect(product.images).to be_empty
+        expect(product.taxons).to be_empty
+        expect(product.properties).to be_empty
+      end
+
+      it "removes from product promotion rules" do
+        promotion = create(:promotion)
+        rule = promotion.rules.create!(type: 'Spree::Promotion::Rules::Product', products: [product])
+
+        product.discard
+
+        rule.reload
+        expect(rule.products).to be_empty
+      end
+
+      it "replaces the slug" do
+        product.discard
+
+        expect(product.slug).to match /\A\d+_my-awesome-product\z/
+
+        # Ensure a new product can be created with the slug
+        new_product = create(:product, slug: 'my-awesome-product')
+        expect(new_product.slug).to eq('my-awesome-product')
+      end
+    end
+
     context "associations" do
       describe "product_option_types" do
         context "with no existing option types" do
