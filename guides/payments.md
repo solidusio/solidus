@@ -189,25 +189,6 @@ debugging why a payment has failed.
 You can get a list of these log entries by calling the `log_entries` on any 
 `Spree::Payment` object. To get the `Active::Merchant::Billing::Response` out of these `Spree::LogEntry` objects, call the `details` method.
 
-## Supported Gateways
-
-Access to a number of payment gateways is handled with the usage of the [solidus_gateway](https://github.com/solidusio/solidus_gateway) extension. This extension currently supports the following gateways:
-
-* Authorize.Net
-* Balanced
-* Beanstram
-* Braintree
-* eWAY
-* LinkPoint
-* Moneris
-* PayPal
-* Sage Pay
-* Samurai
-* Skrill
-* Stripe
-* USA ePay
-* WorldPay
-
 ## Adding your custom gateway
 
 In order to make your custom gateway available on backend list of payment
