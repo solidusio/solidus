@@ -1081,6 +1081,7 @@ en:
     choose_currency: Choose Currency
     choose_dashboard_locale: Choose Dashboard Locale
     choose_location: Choose location
+    choose_promotion_action: Choose action
     choose_promotion_rule: Choose rule
     city: City
     clear_cache: Clear Cache
