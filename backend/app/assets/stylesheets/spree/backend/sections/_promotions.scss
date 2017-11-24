@@ -35,6 +35,11 @@
     margin-bottom: 0;
   }
 
+  // Fix the padding added by the .fa icon rule
+  .fa:before {
+    padding-right: 0;
+  }
+
   .promo-rule-option-value {
     position: relative;
     padding-bottom: 10px;
@@ -42,7 +47,7 @@
     .remove {
       cursor: pointer;
       position: absolute;
-      right: 10px;
+      right: 0;
       top: 10px;
 
       &:hover {
@@ -120,7 +125,7 @@
   a.delete {
     position: absolute;
     top: 1.25rem;
-    right: 0.75rem;
+    right: 1.25rem;
     cursor: pointer;
 
     &:hover {
