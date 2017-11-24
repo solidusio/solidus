@@ -3,7 +3,7 @@
   <%= select_tag "#{param_prefix}[preferred_role_ids]",
     options_from_collection_for_select(
       Spree::Role.all, :id, :name, promotion_rule.preferred_role_ids
-    ), class: 'custom-select fullwidth', multiple: true %>
+    ), class: 'select2 fullwidth', multiple: true %>
 </div>
 <div class="form-group">
   <label>
