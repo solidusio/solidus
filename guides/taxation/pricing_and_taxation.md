@@ -1,30 +1,3 @@
-## Pricing
-
-In VAT-style jurisdictions prices have to be shown including the taxes to customers. That's even true for all index and product display pages as well as when items are added to the cart, not only during the check out.
-
-In order to comply with this requirement, you first need to configure your tax rates, tax categories, and zones, then update your products and variants with the "Rebuild VAT prices" checkbox checked.
-
-Solidus will then proceed to calculate the correct net price and create prices for all countries with `included_in_price` VAT rates. It will also generate a fallback "export" price, where the prices `country_iso` is `nil` (not set). New products will behave as if that checkbox is checked. You can adjust the prices in the "Prices" tab if you need to.
-
-Solidus can handle several prices for the same country, and will always select the most recently updated price.
-
-## Prices in the backend
-
-In the Solidus admin backend, prices will be displyes including any VATs valid for the country represented by the configuration value `Spree::Config.admin_vat_country_iso`.
-
-Admin users in a country with VAT expect backend prices to include their home country's VAT. For example, if your admins reside in Germany, you will want to set `Spree::Config.admin_vat_country_iso` to `"DE"`. The effect of this is that now all prices in the backend can be assumed to include German VAT rates.
-
-## Prices in the frontend
-
-When a customer first browses your store, we do not know which jurisdiction she lives in. We will, therefore, have to make an assumption about her whereabouts. This assumption is the `cart_tax_country_iso` property on the `Spree::Store` model - meaning that you can assume your customers to be from different countries depending on which store she browses. Remember the requirement to display the prices including VAT from above? This is how you comply to this.
-
-You can have more than one store. For example, two different stores for France and Germany (`my-shop.com/fr` and `my-shop.com/de`), where each store shows different prices to account for different VAT rates in either country.
-
-***
-You can customize Solidus' pricing behaviour by creating a custom `Spree::Config.variant_price_selector_class` along with a fitting `Spree::Config.pricing_options_class`.
-See the [specifications](https://github.com/solidusio/solidus/blob/master/core/spec/models/spree/variant/price_selector_spec.rb) for the standard [Price Selector](https://github.com/solidusio/solidus/blob/master/core/app/models/spree/variant/price_selector.rb) as well as the [specifications](https://github.com/solidusio/solidus/blob/master/core/spec/models/spree/variant/pricing_options_spec.rb) for the standard [Pricing Options](https://github.com/solidusio/solidus/blob/master/core/app/models/spree/variant/pricing_options.rb) for inspiration.
-***
-
 ## Examples
 
 ### Sales Tax
