@@ -1,9 +1,3 @@
-### Calculators
-
-Every `Spree::TaxRate` has a `Spree::Calculator` that calculates the correct tax amount for a given shipment or line item. In most cases you should be able to use Solidus's `DefaultTax` calculator. It is suitable for both Sales tax and VAT scenarios.
-
-If you want or need to change the default tax calculation behavior, please  have a look at the [Default Tax Calculator Specs](https://github.com/solidusio/solidus/blob/master/core/spec/models/spree/calculator/default_tax_spec.rb) or its [implementation](https://github.com/solidusio/solidus/blob/master/core/app/models/spree/calculator/default_tax.rb).
-
 ## Pricing
 
 In VAT-style jurisdictions prices have to be shown including the taxes to customers. That's even true for all index and product display pages as well as when items are added to the cart, not only during the check out.
