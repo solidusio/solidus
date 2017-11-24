@@ -11,7 +11,7 @@ Payment methods typically represent a payment processor. Payment methods will
 process credit card payments, and may also include non credit card payment
 methods such as Check or StoreCredit, which are provided in Solidus by default.
 
-The `Payment` model in Solidus tracks payments against [Orders](orders).
+The `Payment` model in Solidus tracks payments against Orders.
 Payments relate to a `source` which indicates how the payment was made, and a
 `PaymentMethod`, indicating the processor used for this payment.
 
