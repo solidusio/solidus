@@ -40,6 +40,7 @@ task console: :dummy_environment do
   rescue LoadError
   end
 
+  require 'rails/command'
   require 'rails/commands/console/console_command'
   Rails::Console.new(Rails.application, sandbox: true, environment: "test").start
 end

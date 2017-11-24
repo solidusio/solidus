@@ -20,6 +20,7 @@ require 'solidus_frontend'
 require 'spree/testing_support/dummy_app'
 DummyApp::Migrations.auto_migrate
 
+require 'rails-controller-testing'
 require 'rspec/rails'
 
 # Requires supporting files with custom matchers and macros, etc,
@@ -27,6 +28,7 @@ require 'rspec/rails'
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
 
 require 'database_cleaner'
+require 'rspec-activemodel-mocks'
 
 require 'spree/testing_support/authorization_helpers'
 require 'spree/testing_support/capybara_ext'

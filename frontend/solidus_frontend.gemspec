@@ -30,5 +30,15 @@ Gem::Specification.new do |s|
   s.add_dependency 'truncate_html', '~> 0.9', '>= 0.9.2'
   s.add_dependency 'kaminari', '>= 0.17', '< 2.0'
 
+  s.add_development_dependency 'capybara', '~> 2.15'
   s.add_development_dependency 'capybara-accessible'
+  s.add_development_dependency 'capybara-screenshot', '>= 1.0.18'
+  s.add_development_dependency 'database_cleaner', '~> 1.3'
+  s.add_development_dependency 'factory_bot', '~> 4.8'
+  s.add_development_dependency 'poltergeist', '~> 1.9'
+  s.add_development_dependency 'rails-controller-testing'
+  s.add_development_dependency 'rspec-activemodel-mocks', '~> 1.0.2'
+  s.add_development_dependency 'rspec-rails', '~> 3.6.0'
+  s.add_development_dependency 'rspec_junit_formatter'
+  s.add_development_dependency 'simplecov'
 end
