@@ -24,7 +24,7 @@
 }
 
 .promotion-block {
-  padding: 0 1.25rem;
+  padding: 0 1.25rem 0.5rem;
   background-color: lighten($color-border, 5);
   border: 1px solid $color-border;
   border-radius: 3px;
@@ -144,5 +144,6 @@
   &.no-text {
     border: none;
     padding-bottom: 0;
+    margin-bottom: 0.25rem;
   }
 }
