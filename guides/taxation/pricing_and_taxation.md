@@ -1,71 +1,8 @@
-# Pricing and Taxation
-
-Taxation and prices are two intertwined topics in Solidus, mainly because a large number of jurisdictions in the world use VAT-style taxation, which influences the price at which an item is sold.
-
-## Taxation
-
-Solidus represents taxes for an order's items by using `Spree::TaxCategory` and `Spree::TaxRate`.
-
-Tax rates are associated with a tax category and a zone. If an order's `tax_address` falls within a zone, that zone's tax rates will apply to all line items and shipments with respectively matching tax categories.
-
-### Sales tax vs. Value-Added Tax
-
-In eCommerce, the type of tax we care about is consumption tax. Consumption taxes can take the form of Sales tax or Value Added Tax (VAT).
-
-The Sales tax policies found in the USA are *additional* taxes. For Sales tax, item prices do not change when adding them to an order. Instead they are added on top of the item price just before calculating the order total.
-
-With Value-Added tax (VAT), as found most other parts of the world, the prices of products and line items need to be shown *including* the consumption tax. When a product is exported, the price of that product has to change: It will be lower, because there is no included tax anymore.
-
-Most taxes can be considered one of these two types. For instance, in Australia customers pay a Goods and Services Tax (GST). This is basically equivalent to VAT in Europe. See the example section at the bottom.
-
-***
-Sales tax within the United States can get exceptionally complex, with different states, counties and even cities having different taxation rates. If you are shipping interstate within the United States, we would strongly advise you to use the an external service so that you get correct tax rates.
-***
-
-### Tax Rates
-
-A tax rate consists of an (percentage) amount, a zone for which it is valid, a tax category for which it is used, and an Boolean indicating whether the tax rate represents a Value-Added Tax (VAT) or not.
-
-Solidus will calculate tax based on all matching tax rates for the order's tax address. It's also possible to have more than one applicable tax rate for a single zone. In order for a tax rate to apply to a particular product, that product must have a tax category that matches the tax category of the tax rate.
-
-To differentiate between VAT and Sales tax in Solidus, use the `included_in_price` boolean on the `Spree::TaxRate` model. If `included_in_price` is set to `true`, Solidus will assume VAT-style taxation for this tax rate, if it is set to `false`, it will assume Sales tax style taxation.
-
-### Tax Categories
-
-Products within Solidus can be linked to Tax Categories, which are then used to find the taxation rate for the products when they are purchased. One Tax Category can be set to being the default for the entire system, which means that if a product doesn't have a tax category set, then the default tax category would be used.
-
-Per default Solidus assumes that all products are without tax. Only if a product has a tax category set, or there is a global default tax category set, will products be taxed. The tax category is specific to taxation, and is normally never seen by the user so you could call it something generic like "Taxable Goods." If you wish to tax certain products at different rates, however, then you will want to choose something more descriptive (ex. "Clothing.").
-
-## Shipping vs. Billing Address
-
-Most tax jurisdictions base the tax on the shipping address of where the order is being shipped to. So in these cases the shipping address is used when determining the tax zone. Solidus does, however, allow you to use the billing address to determine the zone.
-
-To determine tax based on billing address instead of shipping address you will need to set the `Spree::Config[:tax_using_ship_address]` preference to `false`.
-
 ### Calculators
 
 Every `Spree::TaxRate` has a `Spree::Calculator` that calculates the correct tax amount for a given shipment or line item. In most cases you should be able to use Solidus's `DefaultTax` calculator. It is suitable for both Sales tax and VAT scenarios.
 
 If you want or need to change the default tax calculation behavior, please  have a look at the [Default Tax Calculator Specs](https://github.com/solidusio/solidus/blob/master/core/spec/models/spree/calculator/default_tax_spec.rb) or its [implementation](https://github.com/solidusio/solidus/blob/master/core/app/models/spree/calculator/default_tax.rb).
-
-### Order Taxation in Solidus
-
-When Solidus applies tax to an order, the following things happen:
-
-It iterates over all line items, selecting the tax rates matching the tax category of the line item's variant. For each of the tax rates, its percentage is multiplied with the line item's `amount` (`price * quantity - promotions`). That calculated amount will then be stored in a tax adjustment to the line item.  
-
-Depending on whether the tax rates are `included_in_price`, Solidus will store the sum of tax adjustments in the line item's `included_tax_total` or `additional_tax_total` columns.
-
-The same procedure is executed on an orders shipments.  
-
-Finally, the `included_tax_total` and `additional_tax_total` of all line items and shipments are summed up, and stored in the order's `included_tax_total` and `additional_tax_total`. The `included_tax_total` column does not affect the order's total, while the `additional_tax_total` does.
-
-Every time an order is changed (i.e. while proceeding the checkout), the taxation system will check whether any tax adjustments need to be changed and update all the taxation-relevant totals.
-
-***
-To best appreciate how Solidus' taxation system works, have a look at the [taxation integration specs](https://github.com/solidusio/solidus/blob/master/core/spec/models/spree/tax/taxation_integration_spec.rb).
-***
-
 
 ## Pricing
 
