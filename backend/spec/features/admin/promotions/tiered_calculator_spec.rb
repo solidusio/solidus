@@ -13,7 +13,7 @@ feature "Tiered Calculator Promotions" do
     select "Create whole-order adjustment", from: "Add action of type"
     within('#action_fields') { click_button "Add" }
 
-    select "Tiered Percent", from: "Base Calculator"
+    select "Tiered Percent", from: I18n.t('spree.admin.promotions.actions.calculator_label')
     within('#actions_container') { click_button "Update" }
 
     within("#actions_container .settings") do

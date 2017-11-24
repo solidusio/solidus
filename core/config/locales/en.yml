@@ -855,6 +855,8 @@ en:
           auto: All orders will attempt to use this promotion
           single_code_html: "This promotion uses the promotion code: <code>%{code}</code>"
           multiple_codes_html: "This promotion uses %{count} promotion codes"
+        actions:
+          calculator_label: Calculated by
       stock_locations:
         form:
           general: General

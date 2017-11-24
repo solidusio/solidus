@@ -2,7 +2,7 @@
   <div class="col-6">
     <div class="field">
       <% field_name = "#{param_prefix}[calculator_type]" %>
-      <%= label_tag field_name, t('spree.calculator') %>
+      <%= label_tag field_name, t('spree.admin.promotions.actions.calculator_label') %>
       <%= select_tag field_name,
                     options_from_collection_for_select(calculators, :to_s, :description, promotion_action.calculator.type),
                     class: 'type-select js-calculator-type custom-select fullwidth' %>
