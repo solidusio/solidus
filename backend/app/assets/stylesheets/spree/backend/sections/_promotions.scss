@@ -24,7 +24,7 @@
 }
 
 .promotion-block {
-  // padding: 0 5px 5px;
+  padding: 0 1.25rem;
   background-color: lighten($color-border, 5);
   border: 1px solid $color-border;
   border-radius: 3px;
@@ -119,8 +119,8 @@
 
   a.delete {
     position: absolute;
-    top: 3px;
-    right: 5px;
+    top: 1.25rem;
+    right: 0.75rem;
     cursor: pointer;
 
     &:hover {
@@ -131,9 +131,9 @@
 
 .promotion-title {
   text-align: left;
-  font-size: 85%;
+  font-size: 1rem;
   border-bottom: 1px solid $color-border;
-  padding: 0 10px;
+  padding: 0.75rem 0;
 
   &.no-text {
     border: none;
