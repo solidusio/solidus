@@ -41,11 +41,6 @@ textarea {
 }
 
 label {
-  font-weight: $font-weight-bold;
-  font-size: 90%;
-  display: inline;
-  margin-bottom: 5px;
-
   &.required:after {
     content: " *";
   }
