@@ -38,5 +38,4 @@ Gem::Specification.new do |s|
   s.add_dependency 'paranoia', '~> 2.4'
   s.add_dependency 'ransack', '~> 1.8'
   s.add_dependency 'state_machines-activerecord', '~> 0.4'
-  s.add_dependency 'stringex', '~> 1.5.1'
 end

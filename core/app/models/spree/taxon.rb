@@ -59,7 +59,7 @@ module Spree
     # name and its parents permalink (if present.)
     def set_permalink
       permalink_tail = permalink.split('/').last if permalink.present?
-      permalink_tail ||= name.to_url
+      permalink_tail ||= Spree::Config.taxon_url_parametizer_class.parameterize(name)
       self.permalink_part = permalink_tail
     end
 
