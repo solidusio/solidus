@@ -44,6 +44,11 @@ label {
   &.required:after {
     content: " *";
   }
+
+  input[type="radio"],
+  input[type="checkbox"] {
+    margin-right: 0.25rem;
+  }
 }
 
 .label-block label { display: block }
