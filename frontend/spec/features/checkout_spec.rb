@@ -341,7 +341,7 @@ describe "Checkout", type: :feature, inaccessible: true do
       }.not_to change { Spree::CreditCard.count }
 
       click_on "Place Order"
-      expect(page).to have_current_path(spree.order_path(Spree::Order.last))
+      expect(page).to have_content I18n.t(:order_processed_successfully, scope: :spree)
     end
 
     it "allows user to enter a new source" do
@@ -359,7 +359,7 @@ describe "Checkout", type: :feature, inaccessible: true do
       expect(Spree::CreditCard.last.address).to be_present
 
       click_on "Place Order"
-      expect(page).to have_current_path(spree.order_path(Spree::Order.last))
+      expect(page).to have_content I18n.t(:order_processed_successfully, scope: :spree)
     end
   end
 
@@ -389,7 +389,7 @@ describe "Checkout", type: :feature, inaccessible: true do
       click_on "Save and Continue"
       click_on "Place Order"
 
-      expect(page).to have_current_path(spree.order_path(Spree::Order.last))
+      expect(page).to have_content I18n.t(:order_processed_successfully, scope: :spree)
     end
   end
 
@@ -529,6 +529,7 @@ describe "Checkout", type: :feature, inaccessible: true do
 
       expect(current_path).to eq spree.checkout_state_path('confirm')
       click_button "Place Order"
+      expect(page).to have_content I18n.t(:order_processed_successfully, scope: :spree)
     end
   end
 
