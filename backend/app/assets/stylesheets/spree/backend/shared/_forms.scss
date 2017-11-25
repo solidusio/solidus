@@ -46,14 +46,6 @@ label {
   display: inline;
   margin-bottom: 5px;
 
-  &.inline {
-    display: inline-block !important;
-  }
-
-  &.block {
-    display: block !important;
-  }
-
   &.required:after {
     content: " *";
   }
