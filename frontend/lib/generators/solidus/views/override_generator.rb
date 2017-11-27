@@ -1,4 +1,5 @@
 require 'rails'
+require 'rails/generators'
 
 module Solidus
   module Views

@@ -8,6 +8,7 @@ require 'spree/testing_support/dummy_app'
 DummyApp::Migrations.auto_migrate
 
 require 'rspec/rails'
+require 'database_cleaner'
 
 RSpec.configure do |config|
   config.color = true

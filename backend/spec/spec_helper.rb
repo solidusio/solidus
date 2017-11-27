@@ -21,6 +21,7 @@ require 'spree/testing_support/dummy_app'
 DummyApp::Migrations.auto_migrate
 
 require 'rails-controller-testing'
+require 'rspec-activemodel-mocks'
 require 'rspec/rails'
 
 # Requires supporting files with custom matchers and macros, etc,

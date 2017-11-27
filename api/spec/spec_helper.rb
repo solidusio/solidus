@@ -18,7 +18,13 @@ ENV["LIB_NAME"] = 'solidus_api'
 require 'spree/testing_support/dummy_app'
 DummyApp::Migrations.auto_migrate
 
+require 'rails-controller-testing'
 require 'rspec/rails'
+require 'rspec-activemodel-mocks'
+
+require 'database_cleaner'
+require 'with_model'
+require 'timecop'
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
