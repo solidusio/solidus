@@ -1179,9 +1179,11 @@ de:
         total: Gesamtsumme
       confirm_email:
         dear_customer: Sehr geehrte Kundin, geehrter Kunde,
+        instructions: bitte prüfen Sie noch einmal die folgende Bestellung und bewahren die Bestellbestätigung für Ihre Unterlagen auf.
         order_summary: Folgende Artikel wurden von Ihnen bestellt
         subject: Bestellbestätigung
         subtotal: Zwischensumme
+        thanks: Vielen Dank für Ihre Bestellung.
         total: Gesamtsumme
       inventory_cancellation:
         dear_customer: 'Sehr geehrte Kundin, geehrter Kunde,'
