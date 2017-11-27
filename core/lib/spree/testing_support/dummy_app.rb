@@ -1,21 +1,14 @@
 ENV['RAILS_ENV'] = 'test'
 ENV['DISABLE_DATABASE_ENVIRONMENT_CHECK'] = '1'
 
-require 'rubygems'
-require 'bundler'
-
-Bundler.setup
-
-require 'active_record'
-require 'action_controller'
-require 'action_mailer'
 require 'rails'
+require 'active_record/railtie'
+require 'action_controller/railtie'
+require 'action_mailer/railtie'
 
 Rails.env = 'test'
 
 require 'solidus_core'
-
-Bundler.require(:default, :test)
 
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
