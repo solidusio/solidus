@@ -1,5 +1,6 @@
 task :dummy_environment do
   ENV['RAILS_ENV'] = 'test'
+  require ENV['LIB_NAME'] if ENV['LIB_NAME']
   require 'spree/testing_support/dummy_app'
 end
 
