@@ -38,10 +38,6 @@ end
 group :test, :development do
   gem 'rubocop'
   gem 'pry'
-
-  platforms :mri do
-    gem 'byebug'
-  end
 end
 
 custom_gemfile = File.expand_path("../Gemfile-custom", __FILE__)
