@@ -101,3 +101,8 @@ Spree.user_class = 'Spree::LegacyUser'
 Spree.config do |config|
   config.mails_from = "store@example.com"
 end
+
+# Raise on deprecation warnings
+if ENV['SOLIDUS_RAISE_DEPRECATIONS'].present?
+  Spree::Deprecation.behavior = :raise
+end

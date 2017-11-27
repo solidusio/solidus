@@ -119,9 +119,7 @@ module Spree
     context 'on behalf of address book owner' do
       context 'with ability' do
         before do
-          Spree::RoleConfiguration.configure do |config|
-            config.assign_permissions 'Prefect', [Spree::PermissionSets::UserManagement]
-          end
+          Spree::Config.roles.assign_permissions 'Prefect', [Spree::PermissionSets::UserManagement]
           create(:user, spree_api_key: 'galleon', spree_roles: [build(:role, name: 'Prefect')])
         end
 
