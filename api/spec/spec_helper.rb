@@ -15,6 +15,7 @@ end
 ENV["RAILS_ENV"] ||= 'test'
 ENV["LIB_NAME"] = 'solidus_api'
 
+require 'solidus_api'
 require 'spree/testing_support/dummy_app'
 DummyApp::Migrations.auto_migrate
 
