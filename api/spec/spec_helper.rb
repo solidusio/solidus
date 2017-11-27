@@ -13,11 +13,13 @@ end
 
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 ENV["RAILS_ENV"] ||= 'test'
-ENV["LIB_NAME"] = 'solidus_api'
 
 require 'solidus_api'
 require 'spree/testing_support/dummy_app'
-DummyApp::Migrations.auto_migrate
+DummyApp.setup(
+  gem_root: File.expand_path('../../', __FILE__),
+  lib_name: 'solidus_api'
+)
 
 require 'rails-controller-testing'
 require 'rspec/rails'
