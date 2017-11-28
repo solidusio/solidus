@@ -1,7 +1,7 @@
 <% size ||= :mini %>
 
-<% if image && image.attachment? %>
-  <%= image_tag image.attachment(size) %>
+<% if image_url = image.try(:url, size) %>
+  <%= image_tag image_url %>
 <% else %>
   <span class="image-placeholder <%= size %>"></span>
 <% end %>
