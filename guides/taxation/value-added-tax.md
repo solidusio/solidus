@@ -1,8 +1,8 @@
 # Value-added tax (VAT)
 
-Many countries have what is referred to as a value-added tax (VAT). In these
-cases, the tax is typically included in the price of each item. This means that
-no additional tax needs to be applied during checkout. However, many tax
+Many countries have what is referred to as a value-added tax (VAT). When a
+country uses VAT, tax is included in the price of each item. This means that
+no additional tax needs to be applied during checkout. However, most tax
 jurisdictions still require stores to show the amount of VAT that the customer
 paid.
 
@@ -61,7 +61,7 @@ If a customer orders a single clothing item:
 
 ```
   £17.99 – 1 x T-shirt
-   £0.86 – Clothing tax (5%)
+  £0.86 – Clothing tax (5%)
 
   £17.99 – TOTAL
 ```
@@ -77,7 +77,7 @@ If a customer adds a second clothing item to the order:
 ```
   £17.99 – 1 x T-shirt
   £19.99 – 1 x T-shirt
-	 £1.81 – Clothing tax (5%)
+  £1.81 – Clothing tax (5%)
 
   £37.98 – TOTAL
 ```
@@ -100,7 +100,7 @@ UK-based customer arrives at the checkout summary page:
   £17.99 – 1 x T-shirt
   £19.99 – 1 x T-shirt
   £16.99 – 1 x Power adapter
-	 £1.81 – Clothing tax (5%)
+   £1.81 – Clothing tax (5%)
    £1.54 – Consumer electronics tax (10%)
   
   £54.97 – TOTAL

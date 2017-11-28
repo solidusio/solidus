@@ -18,18 +18,13 @@ checkbox selected.
 Solidus can then proceed to calculate the correct consumer prices for each
 country with `included_in_price` VAT rates. It also generates a fallback
 "export" price, where the price's `country_iso` is `nil`. New products will
-behave as if that checkbox were selected.
+behave as if the "Rebuild VAT prices" checkbox were selected.
 
 If you update your tax configuration in the future, you will need to rebuild
 your VAT prices again.
 
 Any product can have several prices for the same country. By default, Solidus
 always uses the most recently updated price.
-
-<!-- TODO:
-  Let's check to see whether there are alternative/automated ways to rebuild VAT
-  prices that are worth documenting.
--->
 
 ## VAT is always included in backend prices
 
@@ -64,15 +59,14 @@ depending on the store that they are browsing. For example, if you have both a
 Using the `cart_tax_country_iso` property can help you comply with tax
 jurisdictions where where it is required to display VAT as part of the price.
 
-### Multiple storefronts
+Administrators can configure these values for a storefront using the "Default
+currency" and "Tax Country for Empty Carts" settings on the **Settings ->
+Store** page in the `solidus_backend` admin.
 
-Administrators can configure each storefront's "Default currency" and "Tax
-Country for Empty Carts" values from the **Settings -> Store** page in the
-`solidus_backend` admin.
-
-You can customize Solidus's pricing behaviour by creating a custom
-`Spree::Config.variant_price_selector_class` along with a fitting
-`Spree::Config.pricing_options_class`. See the [`price_selector`
+Valued-added tax and price are intricately connected. If your store requires
+custom tax and pricing logic, you can change Solidus's pricing behaviour by
+creating a custom `Spree::Config.variant_price_selector_class` along with a
+fitting `Spree::Config.pricing_options_class`. See the [`price_selector`
 specifications][price-selector-spec] for the standard [price
 selector][price-selector], as well as the [`pricing_options`
 specifications][pricing-options-spec] for the standard [pricing

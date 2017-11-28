@@ -34,11 +34,11 @@ for your products:
 
 - **Clothing**: All the clothing items that you sell should have this tax
 	category applied.
-- **All items**: Every product on your store should have this tax category
-	applied.
+- **Other items**: Every non-clothing product on your store should have this tax
+  category applied.
 
-Note that if one of your products does not have  either the "Clothing" or the
-"All items" tax category, any customer that buys that item would be charged no
+Note that if one of your products does not have either the "Clothing" or the
+"Other items" tax category, any customer who buys that item would be charged no
 tax on it.
 
 ### Tax rates
@@ -49,17 +49,21 @@ meaningful tax rates you could create for both New York and Pennsylvania:
 | Zone              | Tax category | Tax rate | 
 |-------------------|--------------|----------|
 | New York (NY)     | Clothing     | 5%       |
-|                   | All items    | 5%       |
+|                   | Other items  | 5%       |
 | Pennsylvania (PA) | Clothing     | 6%       |
-|                   | All items    | 5%       |
+|                   | Other items  | 5%       |
 
 Because there are only two distinct tax rates required (5% and 6%) you only need
 to create two tax rates:
 
-| Tax rate          | Zones  | Tax categories      | Tax rate |
-|-------------------|--------|---------------------|----------|
-| PA Clothing       | PA     | Clothing            | 6%       |
-| NY and PA General | NY, PA | Clothing; All items | 5%       |
+| Tax rate          | Zones  | Tax categories        | Tax rate |
+|-------------------|--------|------------------–----|----------|
+| PA Clothing       | PA     | Clothing              | 6%       |
+| NY and PA General | NY, PA | Clothing; Other items | 5%       |
+
+Provided your products have the correct tax categories added, your store now
+complies with the Pennsylvania and New York tax regulations for the products
+that you sell.
 
 [nexus-definition]: http://www.salestaxinstitute.com/Sales_Tax_FAQs/What_is_nexus
 
