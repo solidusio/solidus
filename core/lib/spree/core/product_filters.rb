@@ -164,6 +164,7 @@ module Spree
       # This scope selects products in any of the active taxons or their children.
       #
       def self.taxons_below(taxon)
+        Spree::Deprecation.warn "taxons_below is deprecated in solidus_core. Please add it to your own application to continue using it."
         return Spree::Core::ProductFilters.all_taxons if taxon.nil?
         {
           name:   'Taxons under ' + taxon.name,
