@@ -5,7 +5,7 @@ module Spree
     before_action :load_product, only: :show
     before_action :load_taxon, only: :index
 
-    helper 'spree/taxons'
+    helper 'spree/taxons', 'spree/taxon_filters'
 
     respond_to :html
 
