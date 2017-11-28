@@ -36,6 +36,8 @@ module Spree
     # @note This method is meant to be overridden on a store by store basis.
     # @return [Array] filters that should be used for a taxon
     def applicable_filters
+      Spree::Deprecation.warn "Spree::Taxon#applicable_filters is deprecated, if you are using this functionality please move it into your own application."
+
       fs = []
       # fs << ProductFilters.taxons_below(self)
       ## unless it's a root taxon? left open for demo purposes
