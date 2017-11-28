@@ -181,6 +181,7 @@ module Spree
       #
       # idea: expand the format to allow nesting of labels?
       def self.all_taxons
+        Spree::Deprecation.warn "all_taxons is deprecated in solidus_core. Please add it to your own application to continue using it."
         taxons = Spree::Taxonomy.all.map { |t| [t.root] + t.root.descendants }.flatten
         {
           name:   'All taxons',
