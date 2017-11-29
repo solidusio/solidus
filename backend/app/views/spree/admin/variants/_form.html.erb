@@ -9,10 +9,10 @@
       </div>
       <div class="col-3">
         <div class="field checkbox" data-hook="track_inventory">
-          <%= f.label :track_inventory do %>
+          <label>
             <%= f.check_box :track_inventory %>
             <%= Spree::Variant.human_attribute_name(:track_inventory) %>
-          <% end %>
+          </label>
         </div>
       </div>
     </div>

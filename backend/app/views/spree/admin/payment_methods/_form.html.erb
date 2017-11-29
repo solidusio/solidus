@@ -34,16 +34,22 @@
           <%= f.select :auto_capture, [["#{t('spree.use_app_default')} (#{Spree::Config[:auto_capture]})", ''], [t('spree.say_yes'), true], [t('spree.say_no'), false]], {}, {class: 'custom-select fullwidth'} %>
         </div>
         <div data-hook="available_to_user" class="field">
-          <%= f.check_box :available_to_users %>
-          <%= f.label :available_to_users %>
+          <label>
+            <%= f.check_box :available_to_users %>
+            <%= Spree::PaymentMethod.human_attribute_name :available_to_users %>
+          </label>
         </div>
         <div data-hook="available_to_user" class="field">
-          <%= f.check_box :available_to_admin %>
-          <%= f.label :available_to_admin %>
+          <label>
+            <%= f.check_box :available_to_admin %>
+            <%= Spree::PaymentMethod.human_attribute_name :available_to_admin %>
+          </label>
         </div>
         <div data-hook="active" class="field">
-          <%= f.check_box :active %>
-          <%= f.label :active %>
+          <label>
+            <%= f.check_box :active %>
+            <%= Spree::PaymentMethod.human_attribute_name :active %>
+          </label>
         </div>
       </div>
 

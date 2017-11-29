@@ -5,8 +5,10 @@
       <%= f.text_field :name, class: 'fullwidth' %>
     <% end %>
     <div class="checkbox">
-      <%= f.check_box :active %>
-      <%= f.label :active %>
+      <label>
+        <%= f.check_box :active %>
+        <%= f.object.class.human_attribute_name :active %>
+      </label>
     </div>
   </div>
 </div>

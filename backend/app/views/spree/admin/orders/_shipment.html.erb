@@ -16,8 +16,10 @@
 
     <% if shipment.ready? && can?(:ship, shipment) %>
       <%= form_tag("#", class: "admin-ship-shipment") do %>
-        <%= check_box_tag :send_mailer, true, true %>
-        <%= label_tag :send_mailer, t('spree.send_mailer') %>
+        <label>
+          <%= check_box_tag :send_mailer, true, true %>
+          <%= t('spree.send_mailer') %>
+        </label>
         <%= submit_tag t('spree.actions.ship'), class: "ship-shipment-button" %>
       <% end %>
     <% end %>

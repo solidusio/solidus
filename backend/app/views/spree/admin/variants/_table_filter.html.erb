@@ -14,10 +14,10 @@
     <% if product.variants.only_deleted.any? %>
       <div class="col-2">
         <div class="field checkbox">
-          <%= label_tag :deleted do %>
+          <label>
             <%= check_box_tag :deleted, "on", params[:deleted] == "on" %>
             <%= t('.show_deleted') %>
-          <% end %>
+          </label>
         </div>
       </div>
     <% end %>

@@ -41,10 +41,12 @@
       <fieldset class="no-border-bottom">
         <legend align="center"><%= t('spree.shipping_address') %></legend>
         <% if Spree::Config[:order_bill_address_used] %>
-          <div class="field" style="position: absolute;margin-top: -15px;left: 0;">
+          <div class="field">
             <span data-hook="use_billing">
-              <%= check_box_tag 'order[use_billing]', '1', (@order.ship_address.new_record? && @order.bill_address == @order.ship_address) %>
-              <%= label_tag 'order[use_billing]', t('spree.use_billing_address') %>
+              <label>
+                <%= check_box_tag 'order[use_billing]', '1', (@order.ship_address.new_record? && @order.bill_address == @order.ship_address) %>
+                <%= t('spree.use_billing_address') %>
+              </label>
             </span>
           </div>
         <% end %>

@@ -48,9 +48,11 @@
   </div>
 </div>
 
-<%= f.field_container :available_to_users do %>
-  <%= f.check_box(:available_to_users) %>
-  <%= f.label :available_to_users %>
+<%= f.field_container :available_to_users, class: %w(checkbox) do %>
+  <label>
+    <%= f.check_box(:available_to_users) %>
+    <%= Spree::ShippingMethod.human_attribute_name :available_to_users %>
+  </label>
   <%= error_message_on :shipping_method, :available_to_users %>
 <% end %>
 
@@ -61,10 +63,10 @@
         <legend align="center"><%= plural_resource_name(Spree::ShippingCategory) %></legend>
         <%= f.field_container :categories do %>
           <% Spree::ShippingCategory.all.each do |category| %>
-            <%= label_tag do %>
+            <label>
               <%= check_box_tag('shipping_method[shipping_categories][]', category.id, @shipping_method.shipping_categories.include?(category)) %>
               <%= category.name %><br>
-            <% end %>
+            </label>
           <% end %>
           <%= error_message_on :shipping_method, :shipping_category_id %>
         <% end %>
@@ -77,10 +79,10 @@
         <%= f.field_container :zones do %>
           <% shipping_method_zones = @shipping_method.zones.to_a %>
           <% Spree::Zone.all.each do |zone| %>
-            <%= label_tag do %>
+            <label>
               <%= check_box_tag('shipping_method[zones][]', zone.id, shipping_method_zones.include?(zone)) %>
               <%= zone.name %>
-            <% end %>
+            </label>
             <br>
           <% end %>
           <%= error_message_on :shipping_method, :zone_id %>
