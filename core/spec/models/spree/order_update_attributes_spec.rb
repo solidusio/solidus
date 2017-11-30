@@ -3,6 +3,7 @@ require 'rails_helper'
 module Spree
   RSpec.describe OrderUpdateAttributes do
     let(:order) { create(:order) }
+    let(:payment_method) { create(:payment_method) }
     let(:request_env) { nil }
     let(:update) { described_class.new(order, attributes, request_env: request_env) }
 
@@ -25,7 +26,10 @@ module Spree
       let(:attributes) do
         {
           payments_attributes: [
-            { source_attributes: attributes_for(:credit_card) }
+            {
+              payment_method_id: payment_method.id,
+              source_attributes: attributes_for(:credit_card)
+            }
           ]
         }
       end
