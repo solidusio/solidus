@@ -40,6 +40,7 @@ module Spree
 
     validates :amount, numericality: true
     validates :source, presence: true, if: :source_required?
+    validates :payment_method, presence: true
 
     default_scope -> { order(:created_at) }
 
