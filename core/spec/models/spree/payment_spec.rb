@@ -653,12 +653,13 @@ describe Spree::Payment, type: :model do
     end
 
     context "completed orders" do
+      let(:payment_method) { create(:check_payment_method) }
       before { allow(order).to receive_messages completed?: true }
 
       it "updates payment_state and shipments" do
         expect(order.updater).to receive(:update_payment_state)
         expect(order.updater).to receive(:update_shipment_state)
-        Spree::Payment.create(amount: 100, order: order)
+        Spree::Payment.create!(amount: 100, order: order, payment_method: payment_method)
       end
     end
 
@@ -742,12 +743,13 @@ describe Spree::Payment, type: :model do
     end
 
     describe "invalidating payments updates in memory objects" do
+      let(:payment_method) { create(:check_payment_method) }
       before do
-        Spree::PaymentCreate.new(order, amount: 1).build.save!
+        Spree::PaymentCreate.new(order, amount: 1, payment_method_id: payment_method.id).build.save!
         expect(order.payments.map(&:state)).to contain_exactly(
           'checkout'
         )
-        Spree::PaymentCreate.new(order, amount: 2).build.save!
+        Spree::PaymentCreate.new(order, amount: 2, payment_method_id: payment_method.id).build.save!
       end
 
       it 'should not have stale payments' do

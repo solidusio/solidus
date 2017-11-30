@@ -1459,4 +1459,56 @@ describe Spree::Order, type: :model do
       end
     end
   end
+
+  describe "#validate_payments_attributes" do
+    let(:attributes) { [ActionController::Parameters.new(payment_method_id: payment_method.id)] }
+    subject do
+      order.validate_payments_attributes(attributes)
+    end
+
+    context "with empty array" do
+      let(:attributes) { [] }
+      it "doesn't error" do
+        subject
+      end
+    end
+
+    context "with no payment method specified" do
+      let(:attributes) { [ActionController::Parameters.new({})] }
+      it "doesn't error" do
+        subject
+      end
+    end
+
+    context "with valid payment method" do
+      let(:payment_method) { create(:check_payment_method) }
+      it "doesn't error" do
+        subject
+      end
+    end
+
+    context "with inactive payment method" do
+      let(:payment_method) { create(:check_payment_method, active: false) }
+
+      it "raises RecordNotFound" do
+        expect { subject }.to raise_error(ActiveRecord::RecordNotFound)
+      end
+    end
+
+    context "with unavailable payment method" do
+      let(:payment_method) { create(:check_payment_method, available_to_users: false) }
+
+      it "raises RecordNotFound" do
+        expect { subject }.to raise_error(ActiveRecord::RecordNotFound)
+      end
+    end
+
+    context "with soft-deleted payment method" do
+      let(:payment_method) { create(:check_payment_method, deleted_at: Time.current) }
+
+      it "raises RecordNotFound" do
+        expect { subject }.to raise_error(ActiveRecord::RecordNotFound)
+      end
+    end
+  end
 end
