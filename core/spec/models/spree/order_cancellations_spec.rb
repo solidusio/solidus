@@ -113,6 +113,24 @@ RSpec.describe Spree::OrderCancellations do
       expect { subject }.to change { order.total }.by(-10.0)
     end
 
+    context "multiple inventory units" do
+      subject { Spree::OrderCancellations.new(order).short_ship(inventory_units) }
+      let!(:order) { create(:order_with_line_items) }
+      let!(:inventory_units) do
+        order.line_items.first.quantity = 4
+        # It already has 1 line_item in it
+        3.times do
+          create(:inventory_unit, line_item: order.line_items.first)
+        end
+        order.recalculate
+        order.line_items.first.inventory_units.to_a
+      end
+
+      it "adjusts the order" do
+        expect { subject }.to change { order.total }.by(-40.0)
+      end
+    end
+
     it "sends a cancellation email" do
       mail_double = double
       expect(Spree::OrderMailer).to receive(:inventory_cancellation_email).with(order, [inventory_unit]).and_return(mail_double)

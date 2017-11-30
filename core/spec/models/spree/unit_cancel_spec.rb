@@ -59,7 +59,14 @@ RSpec.describe Spree::UnitCancel do
     end
 
     context "multiple inventory units" do
-      let(:line_item) { create(:line_item, quantity: 4, price: 100.0) }
+      let(:order) { create(:order_with_line_items) }
+      let(:line_item) do
+        # Change our quantity to 4
+        order.line_items.first.quantity = 4
+        # Make sure that there are no inventory_units before
+        order.line_items.first.inventory_units.clear
+        order.line_items.first
+      end
 
       let(:inventory_units) do
         [
@@ -74,7 +81,6 @@ RSpec.describe Spree::UnitCancel do
         inventory_units.each do |inventory_unit|
           Spree::UnitCancel.create!(inventory_unit: inventory_unit, reason: Spree::UnitCancel::SHORT_SHIP).adjust!
           inventory_unit.cancel!
-          line_item.reload
         end
         expect(line_item.total.to_d).to eq(0)
       end
