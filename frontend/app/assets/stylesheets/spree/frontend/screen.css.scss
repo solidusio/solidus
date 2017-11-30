@@ -151,6 +151,11 @@ label.error {
     margin-bottom: 5px;
   }
 
+  input,
+  select {
+    display: block;
+  }
+
   &-required label:after {
     content: "*";
     display: inline-block;
