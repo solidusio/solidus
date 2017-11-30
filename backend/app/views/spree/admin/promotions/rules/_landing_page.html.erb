@@ -1,7 +1,0 @@
-<div class="col-12">
-  <div class="field">
-    <label for="<%= "#{param_prefix}_preferred_path" %>"><%= Spree::Promotion::Rules::LandingPage.human_attribute_name(:description) %>:</label>
-    <%= text_field_tag "#{param_prefix}[preferred_path]", promotion_rule.preferred_path, class: 'fullwidth' %>  
-    <span class="info"><%= t('spree.landing_page_rule.must_have_visited_path') %></span>
-  </div>
-</div>

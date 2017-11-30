@@ -25,7 +25,7 @@ describe "Promotion Adjustments", type: :feature, js: true do
       select "Create whole-order adjustment", from: "Add action of type"
       within('#action_fields') do
         click_button "Add"
-        select "Flat Rate", from: "Base Calculator"
+        select "Flat Rate", from: I18n.t('spree.admin.promotions.actions.calculator_label')
         fill_in "Amount", with: 5
       end
       within('#actions_container') { click_button "Update" }
@@ -56,7 +56,7 @@ describe "Promotion Adjustments", type: :feature, js: true do
       select "Create whole-order adjustment", from: "Add action of type"
       within('#action_fields') do
         click_button "Add"
-        select "Flat Rate", from: "Base Calculator"
+        select "Flat Rate", from: I18n.t('spree.admin.promotions.actions.calculator_label')
         fill_in "Amount", with: "5"
       end
       within('#actions_container') { click_button "Update" }
@@ -88,7 +88,7 @@ describe "Promotion Adjustments", type: :feature, js: true do
       select "Create whole-order adjustment", from: "Add action of type"
       within('#action_fields') do
         click_button "Add"
-        select "Flat Percent", from: "Base Calculator"
+        select "Flat Percent", from: I18n.t('spree.admin.promotions.actions.calculator_label')
         fill_in "Flat Percent", with: "10"
       end
       within('#actions_container') { click_button "Update" }
@@ -124,7 +124,7 @@ describe "Promotion Adjustments", type: :feature, js: true do
       select "Create per-line-item adjustment", from: "Add action of type"
       within('#action_fields') do
         click_button "Add"
-        select "Percent Per Item", from: "Base Calculator"
+        select "Percent Per Item", from: I18n.t('spree.admin.promotions.actions.calculator_label')
         fill_in "Percent", with: "10"
       end
       within('#actions_container') { click_button "Update" }
@@ -225,7 +225,7 @@ describe "Promotion Adjustments", type: :feature, js: true do
       select "Create whole-order adjustment", from: "Add action of type"
       within('#action_fields') do
         click_button "Add"
-        select "Flat Rate", from: "Base Calculator"
+        select "Flat Rate", from: I18n.t('spree.admin.promotions.actions.calculator_label')
         fill_in "Amount", with: "5"
       end
       within('#actions_container') { click_button "Update" }

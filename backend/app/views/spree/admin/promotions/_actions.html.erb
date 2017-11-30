@@ -3,11 +3,11 @@
   <%= form_tag spree.admin_promotion_promotion_actions_path(@promotion), remote: true, id: 'new_promotion_action_form' do %>
     <% options = options_for_select(  Rails.application.config.spree.promotions.actions.map {|action| [ action.model_name.human, action.name] } ) %>
     <fieldset>
-      <legend align="center"><%= plural_resource_name(Spree::PromotionAction) %></legend>
+      <legend align="center"><%= t('spree.promotion_actions') %></legend>
       <% if can?(:update, @promotion) %>
         <div class="field">
           <%= label_tag :action_type, t('spree.add_action_of_type')%>
-          <%= select_tag 'action_type', options, class: 'custom-select fullwidth' %>
+          <%= select_tag 'action_type', options, include_blank: t(:choose_promotion_action, scope: 'spree'), class: 'custom-select fullwidth' %>
         </div>
         <div class="filter-actions actions">
           <%= button t('spree.actions.add') %>
