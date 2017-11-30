@@ -81,9 +81,9 @@ describe Spree::CheckoutController, type: :controller do
         }
       end
 
+      let!(:payment_method) { create(:payment_method) }
       before do
         # Must have *a* shipping method and a payment method so updating from address works
-        allow(order).to receive_messages available_payment_methods: [stub_model(Spree::PaymentMethod)]
         allow(order).to receive_messages ensure_available_shipping_rates: true
         order.line_items << FactoryGirl.create(:line_item)
       end
