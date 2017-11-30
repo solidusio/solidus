@@ -49,6 +49,7 @@
       <%= form.label :state, t('spree.state') %>
 
       <span class="js-address-fields" style="display: none;">
+        <%= form.hidden_field :state_id, value: nil %>
         <%=
           form.collection_select(
             :state_id, address.country.states, :id, :name,
@@ -60,6 +61,8 @@
               autocomplete: address_type + ' address-level1',
             })
           %>
+
+        <%= form.hidden_field :state_name, value: nil %>
         <%=
           form.text_field(
             :state_name,

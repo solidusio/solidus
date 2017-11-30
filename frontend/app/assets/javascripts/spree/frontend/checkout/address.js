@@ -43,6 +43,7 @@ Spree.ready(function($) {
       var statePara = $("#" + region + "state");
       var stateSelect = statePara.find("select");
       var stateInput = statePara.find("input");
+      var stateSpanRequired = statePara.find('[id$="state-required"]');
       if (states.length > 0) {
         var selected = parseInt(stateSelect.val());
         stateSelect.html("");
