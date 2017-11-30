@@ -28,12 +28,12 @@
       <% end %>
     </p>
   <% elsif @product.empty_option_values? %>
-    <div class="col-9 no-objects-found">
+    <div class="no-objects-found">
       <%= t 'spree.no_option_values_on_product_html',
             link: link_to(t('spree.product_details'), [:edit, :admin, @product]) %>
     </div>
   <% else %>
-    <div class="col-9 no-objects-found">
+    <div class="no-objects-found">
       <%= t('spree.no_resource', resource: plural_resource_name(Spree::Variant)) %>
       <% if can? :create, Spree::Variant %>
         <%= link_to t('spree.create_one'), new_object_url %>
