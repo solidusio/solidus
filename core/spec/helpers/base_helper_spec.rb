@@ -130,6 +130,14 @@ RSpec.describe Spree::BaseHelper, type: :helper do
     it "pretty prints time in long format" do
       is_expected.to eq "November 06, 2012 1:33 PM"
     end
+
+    context 'with format set to short' do
+      subject { pretty_time(date, :short) }
+
+      it "pretty prints time in short format" do
+        is_expected.to eq "Nov 6 '12 1:33pm"
+      end
+    end
   end
 
   context "plural_resource_name" do
