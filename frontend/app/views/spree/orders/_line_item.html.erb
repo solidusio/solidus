@@ -2,7 +2,7 @@
 <%= order_form.fields_for :line_items, line_item do |item_form| -%>
   <tr class="<%= cycle('', 'alt') %> line-item">
     <td class="cart-item-image" data-hook="cart_item_image">
-      <% if variant.images.length == 0 %>
+      <% if variant.images.empty? %>
         <%= link_to(render('spree/shared/image', image: variant.product.display_image, size: :small), variant.product) %>
       <% else %>
         <%= link_to(render('spree/shared/image', image: variant.images.first, size: :small), variant.product) %>
