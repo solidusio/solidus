@@ -699,7 +699,9 @@ en:
           attributes:
             payment_source:
               has_to_be_payment_source_class: "has to be a Spree::PaymentSource"
-
+  time:
+    formats:
+      solidus_long: '%B %d, %Y %l:%M %p'
   devise:
     confirmations:
       confirmed: Your account was successfully confirmed. You are now signed in.

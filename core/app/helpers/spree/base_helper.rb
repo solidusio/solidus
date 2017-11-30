@@ -128,8 +128,7 @@ module Spree
     end
 
     def pretty_time(time)
-      [I18n.l(time.to_date, format: :long),
-       time.strftime("%l:%M %p")].join(" ")
+      I18n.l(time, format: :solidus_long)
     end
 
     def link_to_tracking(shipment, options = {})
