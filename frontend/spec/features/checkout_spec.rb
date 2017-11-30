@@ -77,9 +77,9 @@ describe "Checkout", type: :feature, inaccessible: true do
 
   # Regression test for https://github.com/spree/spree/issues/2694 and https://github.com/spree/spree/issues/4117
   context "doesn't allow bad credit card numbers" do
+    let!(:payment_method) { create(:credit_card_payment_method) }
     before(:each) do
       order = OrderWalkthrough.up_to(:delivery)
-      allow(order).to receive_messages(available_payment_methods: [create(:credit_card_payment_method)])
 
       user = create(:user)
       order.user = user
@@ -180,7 +180,8 @@ describe "Checkout", type: :feature, inaccessible: true do
   end
 
   context "user has payment sources", js: true do
-    let(:bogus) { create(:credit_card_payment_method) }
+    before { Spree::PaymentMethod.all.each(&:really_destroy!) }
+    let!(:bogus) { create(:credit_card_payment_method) }
     let(:user) { create(:user) }
 
     let!(:credit_card) do
@@ -189,7 +190,6 @@ describe "Checkout", type: :feature, inaccessible: true do
 
     before do
       order = OrderWalkthrough.up_to(:delivery)
-      allow(order).to receive_messages(available_payment_methods: [bogus])
 
       allow_any_instance_of(Spree::CheckoutController).to receive_messages(current_order: order)
       allow_any_instance_of(Spree::CheckoutController).to receive_messages(try_spree_current_user: user)
