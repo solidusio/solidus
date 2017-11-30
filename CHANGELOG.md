@@ -1,5 +1,15 @@
 ## Solidus 2.5.0 (master, unreleased)
 
+- Replace frontend jquery validations with html5 [#2264](https://github.com/solidusio/solidus/pull/2264) ([cbrunsdon](https://github.com/cbrunsdon), [jhawthorn](https://github.com/jhawthorn))
+
+  We've removed jquery validations on checkout address form, replacing them with
+  html5 input validations. If your store relies on jquery validation you should
+  re-add that library in your store. Otherwise, if you use the old view version
+  (without `required: true` attributes on input) your address form will not be
+  validated on client side.
+
+- Convert frontend's CoffeeScript to javascript [#2378](https://github.com/solidusio/solidus/pull/2378) ([jhawthorn](https://github.com/jhawthorn))
+
 - Add support for using Tubolinks in Solidus admin [#1863](https://github.com/solidusio/solidus/pull/1863) ([tvdeyen](https://github.com/tvdeyen))
 
 - Extract stock transfers to the [solidus_stock_transfers](https://github.com/solidusio-contrib/solidus_stock_transfers) gem. [#2379](https://github.com/solidusio/solidus/pull/2379) ([jhawthorn](https://github.com/jhawthorn))
