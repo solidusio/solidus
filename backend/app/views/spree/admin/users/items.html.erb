@@ -7,7 +7,7 @@
 <%= render 'spree/admin/users/tabs', current: :items %>
 <%= render partial: 'spree/admin/users/user_page_actions' %>
 
-<fieldset data-hook="admin_user_items_purchased">
+<fieldset data-hook="admin_user_items_purchased" class="no-border-bottom">
   <legend><%= t("spree.admin.user.items_purchased") %></legend>
 
   <%= paginate @orders, theme: "solidus_admin" %>
