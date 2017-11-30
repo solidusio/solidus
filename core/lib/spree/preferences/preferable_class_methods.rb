@@ -1,5 +1,14 @@
 module Spree::Preferences
   module PreferableClassMethods
+    DEFAULT_ADMIN_FORM_PREFERENCE_TYPES = %i(
+      boolean
+      decimal
+      integer
+      password
+      string
+      text
+    )
+
     def defined_preferences
       []
     end
@@ -59,6 +68,19 @@ module Spree::Preferences
 
     def preference_type_getter_method(name)
       "preferred_#{name}_type".to_sym
+    end
+
+    # List of preference types allowed as form fields in the Solidus admin
+    #
+    # Overwrite this method in your class that includes +Spree::Preferable+
+    # if you want to provide more fields. If you do so, you also need to provide
+    # a preference field partial that lives in:
+    #
+    # +app/views/spree/admin/shared/preference_fields/+
+    #
+    # @return [Array]
+    def allowed_admin_form_preference_types
+      DEFAULT_ADMIN_FORM_PREFERENCE_TYPES
     end
   end
 end

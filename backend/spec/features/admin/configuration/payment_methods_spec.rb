@@ -45,8 +45,9 @@ describe "Payment Methods", type: :feature do
   end
 
   context "admin editing a payment method" do
-    before(:each) do
-      create(:check_payment_method)
+    let!(:payment_method) { create(:check_payment_method) }
+
+    before do
       click_link "Payments"
       expect(page).to have_link 'Payment Methods'
       within("table#listing_payment_methods") do
@@ -65,6 +66,22 @@ describe "Payment Methods", type: :feature do
       fill_in "payment_method_name", with: ""
       click_button "Update"
       expect(page).to have_content("Name can't be blank")
+    end
+
+    context 'with payment method having hash and array as preference' do
+      class ComplexPayments < Spree::PaymentMethod
+        preference :name, :string
+        preference :mapping, :hash
+        preference :recipients, :array
+      end
+
+      let!(:payment_method) { ComplexPayments.create!(name: 'Complex Payments') }
+
+      it "does not display preference fields that are hash or array" do
+        expect(page).to have_field("Name")
+        expect(page).to_not have_field("Mapping")
+        expect(page).to_not have_field("Recipients")
+      end
     end
   end
 

@@ -1,43 +1,55 @@
-# Preferable allows defining preference accessor methods.
-#
-# A class including Preferable must implement #preferences which should return
-# an object responding to .fetch(key), []=(key, val), and .delete(key).
-#
-# The generated writer method performs typecasting before assignment into the
-# preferences object.
-#
-# Examples:
-#
-#   # Spree::Base includes Preferable and defines preferences as a serialized
-#   # column.
-#   class Settings < Spree::Base
-#     preference :color,       :string,  default: 'red'
-#     preference :temperature, :integer, default: 21
-#   end
-#
-#   s = Settings.new
-#   s.preferred_color # => 'red'
-#   s.preferred_temperature # => 21
-#
-#   s.preferred_color = 'blue'
-#   s.preferred_color # => 'blue'
-#
-#   # Typecasting is performed on assignment
-#   s.preferred_temperature = '24'
-#   s.preferred_color # => 24
-#
-#   # Modifications have been made to the .preferences hash
-#   s.preferences #=> {color: 'blue', temperature: 24}
-#
-#   # Save the changes. All handled by activerecord
-#   s.save!
-
 require 'spree/preferences/preferable_class_methods'
 require 'active_support/concern'
 require 'active_support/core_ext/hash/keys'
 
 module Spree
   module Preferences
+    # Preferable allows defining preference accessor methods.
+    #
+    # A class including Preferable must implement #preferences which should return
+    # an object responding to .fetch(key), []=(key, val), and .delete(key).
+    #
+    # The generated writer method performs typecasting before assignment into the
+    # preferences object.
+    #
+    # Examples:
+    #
+    #   # Spree::Base includes Preferable and defines preferences as a serialized
+    #   # column.
+    #   class Settings < Spree::Base
+    #     preference :color,       :string,  default: 'red'
+    #     preference :temperature, :integer, default: 21
+    #   end
+    #
+    #   s = Settings.new
+    #   s.preferred_color # => 'red'
+    #   s.preferred_temperature # => 21
+    #
+    #   s.preferred_color = 'blue'
+    #   s.preferred_color # => 'blue'
+    #
+    #   # Typecasting is performed on assignment
+    #   s.preferred_temperature = '24'
+    #   s.preferred_color # => 24
+    #
+    #   # Modifications have been made to the .preferences hash
+    #   s.preferences #=> {color: 'blue', temperature: 24}
+    #
+    #   # Save the changes. All handled by activerecord
+    #   s.save!
+    #
+    # Each preference gets rendered as a form field in Solidus backend.
+    #
+    # As not all supported preference types are representable as a form field, only
+    # some of them get rendered per default. Arrays and Hashes for instance are
+    # supported preference field types, but do not represent well as a form field.
+    #
+    # Overwrite +allowed_admin_form_preference_types+ in your class if you want to
+    # provide more fields. If you do so, you also need to provide a preference field
+    # partial that lives in:
+    #
+    # +app/views/spree/admin/shared/preference_fields/+
+    #
     module Preferable
       extend ActiveSupport::Concern
 
@@ -99,6 +111,30 @@ module Spree
             [preference, preference_default(preference)]
           end
         ]
+      end
+
+      # Preference names representable as form fields in Solidus backend
+      #
+      # Not all preferences are representable as a form field.
+      #
+      # Arrays and Hashes for instance are supported preference field types,
+      # but do not represent well as a form field.
+      #
+      # As these kind of preferences are mostly developer facing
+      # and not admin facing we should not render them.
+      #
+      # Overwrite +allowed_admin_form_preference_types+ in your class that
+      # includes +Spree::Preferable+ if you want to provide more fields.
+      # If you do so, you also need to provide a preference field partial
+      # that lives in:
+      #
+      # +app/views/spree/admin/shared/preference_fields/+
+      #
+      # @return [Array]
+      def admin_form_preference_names
+        defined_preferences.keep_if do |type|
+          preference_type(type).in? self.class.allowed_admin_form_preference_types
+        end
       end
 
       private

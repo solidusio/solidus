@@ -35,6 +35,46 @@ describe "Shipping Methods", type: :feature do
       click_on "Create"
       expect(current_path).to eql(spree.edit_admin_shipping_method_path(Spree::ShippingMethod.last))
     end
+
+    context 'with shipping method having a calculator with array or hash preference type' do
+      before do
+        class ComplexShipments < Spree::ShippingCalculator
+          preference :amount, :decimal
+          preference :currency, :string
+          preference :mapping, :hash
+          preference :list, :array
+
+          def self.description
+            "Complex Shipments"
+          end
+        end
+        @calculators = Rails.application.config.spree.calculators.shipping_methods
+        Rails.application.config.spree.calculators.shipping_methods = [ComplexShipments]
+      end
+
+      after do
+        Rails.application.config.spree.calculators.shipping_methods = @calculators
+      end
+
+      it "does not show array and hash form fields" do
+        click_link "New Shipping Method"
+
+        fill_in "shipping_method_name", with: "bullock cart"
+
+        within("#shipping_method_categories_field") do
+          check first("input[type='checkbox']")["name"]
+        end
+
+        click_on "Create"
+        select 'Complex Shipments', from: 'Base Calculator'
+        click_on "Update"
+
+        expect(page).to have_field('Amount')
+        expect(page).to have_field('Currency')
+        expect(page).to_not have_field('Mapping')
+        expect(page).to_not have_field('List')
+      end
+    end
   end
 
   # Regression test for https://github.com/spree/spree/issues/1331
