@@ -147,10 +147,16 @@ span.required {
   color: $c_red;
   font-weight: bold;
   font-size: 1.2em;
+  margin-left: 3px;
 }
 
 .field {
   padding: 10px 0;
+
+  label {
+    display: inline-block;
+    margin-bottom: 5px;
+  }
 }
 
 fieldset {
