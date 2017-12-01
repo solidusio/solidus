@@ -15,7 +15,7 @@
   <% @store_credits.group_by(&:currency).each do |currency, credits| %>
     <fieldset class="sc-current-balance">
       <legend>
-        <%= currency %> <%= t('spree.admin.store_credits.current_balance') %>
+        <%= t('spree.admin.store_credits.current_balance') %>
         <% total = credits.sum(&:amount_remaining) %>
         <%= Spree::Money.new(total, currency: currency) %>
       </legend>
