@@ -272,7 +272,7 @@ describe "Promotion Adjustments", type: :feature, js: true do
         select "Create per-line-item adjustment", from: "Add action of type"
         within('#action_fields') do
           click_button "Add"
-          select "Complex Calculator", from: "Base Calculator"
+          select "Complex Calculator", from: I18n.t('spree.admin.promotions.actions.calculator_label')
         end
         within('#actions_container') { click_button "Update" }
         expect(page).to have_text 'successfully updated'
