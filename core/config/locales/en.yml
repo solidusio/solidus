@@ -1089,6 +1089,7 @@ en:
     choose_location: Choose location
     choose_promotion_action: Choose action
     choose_promotion_rule: Choose rule
+    choose_reason: Choose reason
     city: City
     clear_cache: Clear Cache
     clear_cache_ok: Cache was flushed
