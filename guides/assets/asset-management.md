@@ -19,7 +19,7 @@ point-form summary of how you can get started with assets:
   `app/assets` tree.
 - Manifests (the `all.css`, `all.js`, and `application.js` files in your
   project's `assets` trees) requires your app's external libraries or custom
-  assets – including any any files or directories you add deeper in the
+  assets – including any files or directories you add deeper in the
   directory tree.
 - You can override assets provided by the `solidus_frontend` and
   `solidus_backend` gems, or any other gems. See the [Override Solidus
@@ -43,19 +43,19 @@ The structure for the `app` and `vendor` trees looks like this:
 
 ```
 app|vendor
-|-- assets
-    |-- images
-    |   |-- spree
-    |       |-- frontend
-    |       |-- backend
-    |-- javascripts
-    |   |-- spree
-    |       |-- frontend
-    |       |-- backend
-    |-- stylesheets
-        |-- spree
-            |-- frontend
-            |-- backend
+└─ assets
+    └─ images
+    |   └─ spree
+    |       └─ frontend
+    |       └─ backend
+    ├─ javascripts
+    |   └─ spree
+    |       └─ frontend
+    |       └─ backend
+    └─ stylesheets
+        └─ spree
+            └─ frontend
+            └─ backend
 ```
 
 This directory structure is designed to keep assets from the `solidus_frontend`
@@ -82,19 +82,19 @@ that they require. For example, see the `all.css` and `all.js` manifests in the
 
 ```
 vendor
-|-- assets
-    |-- javascripts
-    |   |-- spree
-    |       |-- frontend
-    |       |   |-- all.js
-    |       |-- backend
-    |           |-- all.js
-    |-- stylesheets
-        |-- spree
-            |-- frontend
-            |   |-- all.css
-            |-- backend
-                |-- all.css
+└─ assets
+    └─ javascripts
+    |   └─ spree
+    |       ├─ frontend
+    |       |   └─ all.js
+    |       └─ backend
+    |           └─ all.js
+    └─ stylesheets
+        └─ spree
+            ├─ frontend
+            |   └─ all.css
+            └─ backend
+                └─ all.css
 ```
 
 Your project's `vendor/assets/javascripts/spree/backend/all.js` file would show
@@ -140,6 +140,7 @@ app/assets/stylesheets/spree/frontend/home.css
 ```
 
 [asset-organization]: http://guides.rubyonrails.org/asset_pipeline.html#asset-organization
+[foundation]: https://foundation.zurb.com/
 
 ## Managing your Solidus extension's assets
 
