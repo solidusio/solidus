@@ -14,7 +14,9 @@
   <fieldset>
     <legend align="center"><%= t('spree.admin.store_credits.invalidate_store_credit') %></legend>
     <div data-hook="admin_store_credit_form_fields" class="row">
-      <%= render partial: 'update_reason_field', locals: { f: f } %>
+      <div class="col-12">
+        <%= render partial: 'update_reason_field', locals: { f: f } %>
+      </div>
     </div>
     <div class="form-buttons filter-actions actions" data-hook="buttons">
       <%= button t('spree.store_credit.actions.invalidate') %>
