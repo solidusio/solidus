@@ -53,7 +53,7 @@
                 <span><%= l store_credit.created_at.to_date %></span>
               </td>
               <td>
-                <span><%= store_credit.invalidated? %></span>
+                <span><%= t store_credit.invalidated? ? 'spree.say_yes' : 'spree.say_no' %></span>
               </td>
               <td class="actions" data-hook="admin_store_credits_index_row_actions">
                 <% if can?(:show, store_credit) %>
