@@ -34,6 +34,17 @@ describe Spree::Admin::ReturnAuthorizationsController, type: :controller do
           expect(flash[:success]).to eq 'Return merchandise authorization updated'
         end
       end
+
+      context 'when event method does not exist on return authorization' do
+        let(:event) { 'do_something_crazy' }
+
+        it 'redirects back with an error message' do
+          get :fire, params: params
+
+          expect(response).to redirect_to(admin_order_return_authorizations_path(order))
+          expect(flash[:error]).to eq 'Cannot perform this action on return merchandise authorization'
+        end
+      end
     end
   end
 
