@@ -12,6 +12,31 @@ describe Spree::Admin::ReturnAuthorizationsController, type: :controller do
   let(:inventory_unit_2) { order.inventory_units.order('id asc')[1] }
   let(:inventory_unit_3) { order.inventory_units.order('id asc')[2] }
 
+  describe '#fire' do
+    let(:return_authorization) { create(:return_authorization, order: order) }
+
+    context 'with the event parameter set' do
+      let(:params) do
+        {
+          id: return_authorization.to_param,
+          order_id: return_authorization.order.to_param,
+          e: event,
+        }
+      end
+
+      context 'when event method exists on return authorization' do
+        let(:event) { 'cancel' }
+
+        it 'sends method with ! to return authorization and redirect back' do
+          get :fire, params: params
+
+          expect(response).to redirect_to(admin_order_return_authorizations_path(order))
+          expect(flash[:success]).to eq 'Return merchandise authorization updated'
+        end
+      end
+    end
+  end
+
   describe "#load_return_reasons" do
     let!(:inactive_rma_reason) { create(:return_reason, active: false) }
 
