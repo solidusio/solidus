@@ -77,12 +77,12 @@
   <legend align='center'><%= t('spree.admin.store_credits.history') %></legend>
   <table>
     <colgroup>
-      <col style="width: 15%;" />
+      <col style="width: 20%;" />
       <col style="width: 10%;" />
       <col style="width: 10%;" />
       <col style="width: 25%;" />
       <col style="width: 10%;" />
-      <col style="width: 30%;" />
+      <col style="width: 25%;" />
     </colgroup>
     <thead>
       <tr>
@@ -98,7 +98,7 @@
       <% @store_credit_events.each do |event| %>
         <tr>
           <td data-hook="admin_show_store_credit_date_cell">
-            <%= pretty_time(event.created_at) %>
+            <%= pretty_time(event.created_at, :short) %>
           </td>
           <td><%= store_credit_event_admin_action_name(event) %></td>
           <td><%= event.display_amount %></td>
