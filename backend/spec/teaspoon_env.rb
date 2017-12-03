@@ -6,8 +6,14 @@ require 'spree_backend'
 require 'teaspoon'
 require 'teaspoon-mocha'
 
-require 'spree/testing_support/dummy_app'
-DummyApp::Migrations.auto_migrate
+unless defined?(DummyApp)
+  require 'spree/testing_support/dummy_app'
+
+  DummyApp.setup(
+    gem_root: File.expand_path('../../', __FILE__),
+    lib_name: 'solidus_backend'
+  )
+end
 
 Teaspoon.configure do |config|
   config.mount_at = "/teaspoon"

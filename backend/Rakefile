@@ -16,6 +16,8 @@ DummyApp::RakeTasks.new(
 
 desc "Run the javascript specs"
 task :teaspoon do
+  require 'teaspoon'
+  Rake::Task['dummy_environment'].invoke
   require "teaspoon/console"
 
   options = {
@@ -33,7 +35,7 @@ end
 namespace :teaspoon do
   task :server  do
     require 'teaspoon'
-    require 'spree/testing_support/dummy_app'
+    Rake::Task['dummy_environment'].invoke
     require 'teaspoon/server'
 
     server = Teaspoon::Server.new
