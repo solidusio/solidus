@@ -331,16 +331,13 @@ module Spree
 
     # Regression test for https://github.com/spree/spree/issues/3404
     it "can specify additional parameters for a line item" do
-      expect(Order).to receive(:create!).and_return(order = Spree::Order.new)
-      allow(order).to receive(:associate_user!)
-      allow(order).to receive_message_chain(:contents, :add).and_return(line_item = double('LineItem'))
-      expect(line_item).to receive(:update_attributes!).with("special" => true)
+      expect_any_instance_of(Spree::LineItem).to receive(:special=).with("foo")
 
       allow(controller).to receive_messages(permitted_line_item_attributes: [:id, :variant_id, :quantity, :special])
       api_post :create, :order => {
         :line_items => {
           "0" => {
-            :variant_id => variant.to_param, :quantity => 5, :special => true
+            variant_id: variant.to_param, quantity: 5, special: "foo"
           }
         }
       }
