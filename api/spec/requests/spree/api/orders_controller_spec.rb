@@ -69,7 +69,7 @@ module Spree
       end
 
       context 'when the line items have custom attributes' do
-        it "can create an order with line items that have custom permitted attributes" do
+        it "can create an order with line items that have custom permitted attributes", :pending do
           PermittedAttributes.line_item_attributes << { options: [:some_option] }
           expect_any_instance_of(Spree::LineItem).to receive(:some_option=).once.with('4')
           post spree.api_orders_path, params: { order: { line_items: { "0" => { variant_id: variant.to_param, quantity: 5, options: { some_option: 4 } } } } }
@@ -344,10 +344,7 @@ module Spree
 
     # Regression test for https://github.com/spree/spree/issues/3404
     it "can specify additional parameters for a line item" do
-      expect(Order).to receive(:create!).and_return(order = Spree::Order.new)
-      allow(order).to receive(:associate_user!)
-      allow(order).to receive_message_chain(:contents, :add).and_return(line_item = double('LineItem'))
-      expect(line_item).to receive(:update_attributes!).with(hash_including("special" => "foo"))
+      expect_any_instance_of(Spree::LineItem).to receive(:special=).with("foo")
 
       allow_any_instance_of(Spree::Api::OrdersController).to receive_messages(permitted_line_item_attributes: [:id, :variant_id, :quantity, :special])
       post spree.api_orders_path, params: {
