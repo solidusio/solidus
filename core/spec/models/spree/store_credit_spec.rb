@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Spree::StoreCredit do
+  include ActiveSupport::Testing::TimeHelpers
+
   let(:currency) { "TEST" }
   let(:store_credit) { build(:store_credit, store_credit_attrs) }
   let(:store_credit_attrs) { {} }
@@ -839,7 +841,7 @@ RSpec.describe Spree::StoreCredit do
 
     it "sets the invalidated_at field to the current time" do
       invalidated_at = 2.minutes.from_now
-      Timecop.freeze(invalidated_at) do
+      travel_to(invalidated_at) do
         subject
         expect(store_credit.invalidated_at).to be_within(1.second).of invalidated_at
       end

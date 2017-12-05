@@ -2,6 +2,8 @@ require 'rails_helper'
 
 module Spree
   RSpec.describe OrderUpdater, type: :model do
+    include ActiveSupport::Testing::TimeHelpers
+
     let!(:store) { create :store }
     let(:order) { Spree::Order.create }
     let(:updater) { Spree::OrderUpdater.new(order) }
@@ -163,8 +165,8 @@ module Spree
           end
 
           it 'should choose the most recent promotion adjustment when amounts are equal' do
-            # Using Timecop is a regression test
-            Timecop.freeze do
+            # Freezing time is a regression test
+            travel_to(Time.current) do
               create_adjustment('Promotion A', -200)
               create_adjustment('Promotion B', -200)
             end
@@ -177,8 +179,8 @@ module Spree
           end
 
           it 'should choose the most recent promotion adjustment when amounts are equal' do
-            # Using Timecop is a regression test
-            Timecop.freeze do
+            # Freezing time is a regression test
+            travel_to(Time.current) do
               create_adjustment('Promotion A', -200)
               create_adjustment('Promotion B', -200)
             end

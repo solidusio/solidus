@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe Spree::Api::ShipmentsController, type: :request do
+  include ActiveSupport::Testing::TimeHelpers
+
   let!(:shipment) { create(:shipment, inventory_units: [build(:inventory_unit, shipment: nil)]) }
   let!(:attributes) { [:id, :tracking, :tracking_url, :number, :cost, :shipped_at, :stock_location_name, :order_id, :shipping_rates, :shipping_methods] }
 
@@ -247,11 +249,12 @@ describe Spree::Api::ShipmentsController, type: :request do
     context "the user is allowed to ship the shipment" do
       sign_in_as_admin!
       it "ships the shipment" do
-        Timecop.freeze do
+        now = Time.current
+        travel_to(now) do
           subject
           shipment.reload
           expect(shipment.state).to eq 'shipped'
-          expect(shipment.shipped_at.to_i).to eq Time.current.to_i
+          expect(shipment.shipped_at.to_i).to eq now.to_i
         end
       end
 
