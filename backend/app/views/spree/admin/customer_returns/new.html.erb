@@ -18,7 +18,7 @@
           <% if @rma_return_items.any? %>
             <%= render partial: 'return_item_selection', locals: {f: f, return_items: @rma_return_items} %>
           <% else %>
-            <div class="col-9 no-objects-found"><%= t('spree.none') %></div>
+            <div class="no-objects-found"><%= t('spree.none') %></div>
           <% end %>
         </fieldset>
 
@@ -27,7 +27,7 @@
           <% if @new_return_items.any? %>
             <%= render partial: 'return_item_selection', locals: {f: f, return_items: @new_return_items} %>
           <% else %>
-            <div class="col-9 no-objects-found"><%= t('spree.none') %></div>
+            <div class="no-objects-found"><%= t('spree.none') %></div>
           <% end %>
         </fieldset>
 
@@ -48,7 +48,7 @@
 
 <% else %>
 
-  <div class="col-9 no-objects-found">
+  <div class="no-objects-found">
     <%= t('spree.all_items_have_been_returned') %>,
     <%= link_to t('spree.back_to_customer_return_list'), spree.admin_order_customer_returns_path(@order) %>.
   </div>
