@@ -30,12 +30,32 @@ class Project
   #
   # @return [self]
   #   otherwise
-  def install
-    chdir do
-      bundle_check || bundle_install || fail('Cannot finish gem installation')
-    end
-    self
+  def self.install
+    bundle_check || bundle_install || fail('Cannot finish gem installation')
   end
+
+  # Check if current bundle is already usable
+  #
+  # @return [Boolean]
+  def self.bundle_check
+    system(*%W[bundle check --path=#{VENDOR_BUNDLE}])
+  end
+  private_class_method :bundle_check
+
+  # Install the current bundle
+  #
+  # @return [Boolean]
+  #   the success of the installation
+  def self.bundle_install
+    system(*%W[
+      bundle
+      install
+      --path=#{VENDOR_BUNDLE}
+      --jobs=#{BUNDLER_JOBS}
+      --retry=#{BUNDLER_RETRIES}
+    ])
+  end
+  private_class_method :bundle_check
 
   # Test subproject for passing its tests
   #
@@ -46,18 +66,6 @@ class Project
       run_tests
     end
   end
-
-  # Install subprojects
-  #
-  # @return [self]
-  def self.install
-    current_projects.each do |project|
-      log("Installing project: #{project.name}")
-      project.install
-    end
-    self
-  end
-  private_class_method :install
 
   # Execute tests on subprojects
   #
@@ -127,27 +135,6 @@ class Project
 
   private
 
-  # Check if current bundle is already usable
-  #
-  # @return [Boolean]
-  def bundle_check
-    system(%W[bundle check --path=#{VENDOR_BUNDLE}])
-  end
-
-  # Install the current bundle
-  #
-  # @return [Boolean]
-  #   the success of the installation
-  def bundle_install
-    system(%W[
-      bundle
-      install
-      --path=#{VENDOR_BUNDLE}
-      --jobs=#{BUNDLER_JOBS}
-      --retry=#{BUNDLER_RETRIES}
-    ])
-  end
-
   # Run tests for subproject
   #
   # @return [Boolean]
@@ -161,7 +148,7 @@ class Project
     @success
   end
 
-  def run_test_cmd(*args)
+  def run_test_cmd(args)
     puts "Run: #{args.join(' ')}"
     result = system(*args)
     puts(result ? "Success" : "Failed")
@@ -187,16 +174,6 @@ class Project
 
   def report_dir
     ENV['CIRCLE_TEST_REPORTS']
-  end
-
-  # Execute system command via execve
-  #
-  # No shell interpolation gets done this way. No escapes needed.
-  #
-  # @return [Boolean]
-  #   the success of the system command
-  def system(arguments)
-    Kernel.system(*arguments)
   end
 
   # Change to subproject directory and execute block
