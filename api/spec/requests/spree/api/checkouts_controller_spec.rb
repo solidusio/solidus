@@ -154,6 +154,18 @@ module Spree
         expect(response.status).to eq(200)
       end
 
+      context "with disallowed payment method" do
+        it "returns not found" do
+          order.update_column(:state, "payment")
+          allow_any_instance_of(Spree::PaymentMethod::BogusCreditCard).to receive(:source_required?).and_return(false)
+          @payment_method.update!(available_to_users: false)
+          expect {
+            put spree.api_checkout_path(order.to_param), params: { order_token: order.guest_token, order: { payments_attributes: [{ payment_method_id: @payment_method.id }] } }
+          }.not_to change { Spree::Payment.count }
+          expect(response.status).to eq(404)
+        end
+      end
+
       it "returns errors when source is required and missing" do
         order.update_column(:state, "payment")
         put spree.api_checkout_path(order.to_param), params: { order_token: order.guest_token, order: { payments_attributes: [{ payment_method_id: @payment_method.id }] } }
