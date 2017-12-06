@@ -169,6 +169,53 @@ describe Spree::CheckoutController, :type => :controller do
         end
       end
 
+      context "when in the payment state" do
+        let(:order) { create(:order_with_line_items) }
+        let(:payment_method) { create(:credit_card_payment_method) }
+
+        let(:params) do
+          {
+            state: 'payment',
+            order: {
+              payments_attributes: [
+                {
+                  payment_method_id: payment_method.id.to_s,
+                  source_attributes: attributes_for(:credit_card)
+                }
+              ]
+            }
+          }
+        end
+
+        before do
+          order.update_attributes! user: user
+          3.times { order.next! } # should put us in the payment state
+        end
+
+        context 'with a permitted payment method' do
+          it 'sets the payment amount' do
+            post :update, params
+            order.reload
+            expect(order.state).to eq('confirm')
+            expect(order.payments.size).to eq(1)
+            expect(order.payments.first.amount).to eq(order.total)
+          end
+        end
+
+        context 'with an unpermitted payment method' do
+          before { payment_method.update!(display_on: "back_end") }
+
+          it 'sets the payment amount' do
+            expect {
+              post :update, params
+            }.to raise_error(ActiveRecord::RecordNotFound)
+
+            expect(order.state).to eq('payment')
+            expect(order.payments).to be_empty
+          end
+        end
+      end
+
       context "when in the confirm state" do
         before do
           order.update_column(:state, "confirm")
