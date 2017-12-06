@@ -13,7 +13,7 @@ module Spree
       describe '#create' do
         context "with a valid credit card" do
           let(:order) { create(:order_with_line_items, state: "payment") }
-          let(:payment_method) { create(:credit_card_payment_method, available_to_admin: true) }
+          let(:payment_method) { create(:credit_card_payment_method, available_to_admin: true, available_to_users: false) }
           let(:attributes) do
             {
               order_id: order.number,
