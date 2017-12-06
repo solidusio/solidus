@@ -49,29 +49,12 @@ RSpec.describe Spree::Order, type: :model do
       order.finalize!
     end
 
-    it "should send an order confirmation email" do
-      mail_message = double "Mail::Message"
-      expect(Spree::OrderMailer).to receive(:confirm_email).with(order).and_return mail_message
-      expect(mail_message).to receive :deliver_later
-      order.finalize!
-    end
-
-    it "sets confirmation delivered when finalizing" do
-      expect(order.confirmation_delivered?).to be false
-      order.finalize!
-      expect(order.confirmation_delivered?).to be true
-    end
-
-    it "should not send duplicate confirmation emails" do
-      allow(order).to receive_messages(confirmation_delivered?: true)
-      expect(Spree::OrderMailer).not_to receive(:confirm_email)
+    it "sends event notifications" do
+      expect(Spree.event_bus).to receive(:publish).with(instance_of(Spree::Events::OrderConfirmedEvent))
       order.finalize!
     end
 
     it "should freeze all adjustments" do
-      # Stub this method as it's called due to a callback
-      # and it's irrelevant to this test
-      allow(Spree::OrderMailer).to receive_message_chain :confirm_email, :deliver_later
       adjustments = [double]
       expect(order).to receive(:all_adjustments).and_return(adjustments)
       adjustments.each do |adj|

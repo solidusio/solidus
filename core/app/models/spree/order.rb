@@ -438,18 +438,15 @@ module Spree
 
       touch :completed_at
 
-      deliver_order_confirmation_email unless confirmation_delivered?
+      Spree.event_bus.publish(
+        Spree::Events::OrderConfirmedEvent.new(order_id: id)
+      )
     end
 
     def fulfill!
       shipments.each { |shipment| shipment.update_state if shipment.persisted? }
       updater.update_shipment_state
       save!
-    end
-
-    def deliver_order_confirmation_email
-      Spree::OrderMailer.confirm_email(self).deliver_later
-      update_column(:confirmation_delivered, true)
     end
 
     # Helper methods for checkout steps
@@ -884,12 +881,11 @@ module Spree
       payments.completed.each { |payment| payment.cancel! unless payment.fully_refunded? }
       payments.store_credits.pending.each(&:void_transaction!)
 
-      send_cancel_email
       recalculate
-    end
 
-    def send_cancel_email
-      Spree::OrderMailer.cancel_email(self).deliver_later
+      Spree.event_bus.publish(
+        Spree::Events::OrderCancelledEvent.new(order_id: id)
+      )
     end
 
     def after_resume

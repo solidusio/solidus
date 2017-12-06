@@ -83,13 +83,9 @@ RSpec.describe Spree::Order, type: :model do
       expect(order).to be_allow_cancel
     end
 
-    it "should send a cancel email" do
-      perform_enqueued_jobs do
-        order.cancel!
-      end
-
-      mail = ActionMailer::Base.deliveries.last
-      expect(mail.subject).to include "Cancellation"
+    it "sends event notifications" do
+      expect(Spree.event_bus).to receive(:publish).with(instance_of(Spree::Events::OrderCancelledEvent))
+      order.cancel!
     end
 
     context "resets payment state" do
