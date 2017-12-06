@@ -124,7 +124,7 @@ end
       core_gems = ["spree/core", "spree/api", "spree/backend", "spree/frontend"]
 
       if core_gems.include?(lib_name)
-        '../../../../../Gemfile'
+        '../../../../Gemfile'
       else
         '../../../../Gemfile'
       end
