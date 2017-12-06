@@ -131,6 +131,14 @@ RSpec.describe Spree::Reimbursement, type: :model do
     context 'when reimbursement cannot be fully performed' do
       let!(:non_return_refund) { create(:refund, amount: 1, payment: payment) }
 
+      it "sends a notification on the bus" do
+        expect(Spree.event_bus).to receive(:publish).with(instance_of(Spree::Events::ReimbursementFailedEvent))
+        begin
+          subject
+        rescue Spree::Reimbursement::IncompleteReimbursementError
+        end
+      end
+
       it 'raises IncompleteReimbursement error' do
         expect { subject }.to raise_error(Spree::Reimbursement::IncompleteReimbursementError)
       end
@@ -145,8 +153,8 @@ RSpec.describe Spree::Reimbursement, type: :model do
       end
     end
 
-    it "triggers the reimbursement mailer to be sent" do
-      expect(Spree::ReimbursementMailer).to receive(:reimbursement_email).with(reimbursement.id) { double(deliver_later: true) }
+    it "sends a notification on the bus" do
+      expect(Spree.event_bus).to receive(:publish).with(instance_of(Spree::Events::ReimbursementProcessedEvent))
       subject
     end
   end
