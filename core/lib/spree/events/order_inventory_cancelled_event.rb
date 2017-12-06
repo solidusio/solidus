@@ -7,7 +7,7 @@ module Spree
 
       def initialize(order_id:, inventory_unit_ids:)
         @order_id = order_id
-        @inventory_units_ids = inventory_unit_ids
+        @inventory_unit_ids = inventory_unit_ids
       end
     end
   end
