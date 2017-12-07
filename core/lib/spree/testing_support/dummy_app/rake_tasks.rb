@@ -1,6 +1,20 @@
-task :dummy_environment do
-  ENV['RAILS_ENV'] = 'test'
-  require 'spree/testing_support/dummy_app'
+module DummyApp
+  class RakeTasks
+    include Rake::DSL
+
+    def initialize(gem_root:, lib_name:)
+      task :dummy_environment do
+        ENV['RAILS_ENV'] = 'test'
+        require lib_name
+        require 'spree/testing_support/dummy_app'
+        DummyApp.setup(
+          gem_root: gem_root,
+          lib_name: lib_name,
+          auto_migrate: false
+        )
+      end
+    end
+  end
 end
 
 namespace :db do

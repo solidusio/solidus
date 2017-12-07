@@ -25,9 +25,6 @@ jobs:
 
       - run: |
           bundle install --path=vendor/bundle
-          for project in api backend core frontend sample; do
-            (cd $project && bundle install --path=../vendor/bundle)
-          done
 
       - cache-save:
           key: solidus-gems-v1-{{ .Branch }}-{{ checksum "Gemfile.lock" }}

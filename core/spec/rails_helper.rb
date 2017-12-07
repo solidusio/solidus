@@ -1,10 +1,12 @@
 require 'spec_helper'
 
 ENV["RAILS_ENV"] ||= 'test'
-ENV["LIB_NAME"] = 'solidus_core'
 
 require 'spree/testing_support/dummy_app'
-DummyApp::Migrations.auto_migrate
+DummyApp.setup(
+  gem_root: File.expand_path('../../', __FILE__),
+  lib_name: 'solidus_core'
+)
 
 require 'rspec/rails'
 require 'rspec-activemodel-mocks'

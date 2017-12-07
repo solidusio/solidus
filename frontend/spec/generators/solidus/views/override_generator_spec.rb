@@ -1,5 +1,6 @@
 require 'spec_helper'
-require_relative '../../../../lib/generators/solidus/views/override_generator'
+require 'generator_spec'
+require 'generators/solidus/views/override_generator'
 
 RSpec.describe Solidus::Views::OverrideGenerator, type: :generator do
   destination Rails.root.join('app', 'views', 'spree')

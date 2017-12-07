@@ -1,21 +1,14 @@
 ENV['RAILS_ENV'] = 'test'
 ENV['DISABLE_DATABASE_ENVIRONMENT_CHECK'] = '1'
 
-require 'rubygems'
-require 'bundler'
-
-Bundler.setup
-
-require 'active_record'
-require 'action_controller'
-require 'action_mailer'
 require 'rails'
+require 'active_record/railtie'
+require 'action_controller/railtie'
+require 'action_mailer/railtie'
 
 Rails.env = 'test'
 
 require 'solidus_core'
-
-Bundler.require(:default, :test)
 
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
@@ -31,16 +24,22 @@ module ApplicationHelper
 end
 
 module DummyApp
-  def self.gem_root
-    Pathname.new(File.dirname(ENV['BUNDLE_GEMFILE']))
-  end
+  def self.setup(gem_root:, lib_name:, auto_migrate: true)
+    ENV["LIB_NAME"] = lib_name
+    DummyApp::Application.config.root = File.join(gem_root, 'spec', 'dummy')
 
-  def self.rails_root
-    Pathname.new(gem_root).join('spec', 'dummy')
+    DummyApp::Application.initialize!
+
+    DummyApp::Application.routes.draw do
+      mount Spree::Core::Engine, at: '/'
+    end
+
+    if auto_migrate
+      DummyApp::Migrations.auto_migrate
+    end
   end
 
   class Application < ::Rails::Application
-    config.root                                       = DummyApp.rails_root
     config.eager_load                                 = false
     config.cache_classes                              = true
     config.cache_store                                = :memory_store
@@ -86,12 +85,6 @@ module DummyApp
 end
 
 require 'spree/testing_support/dummy_app/migrations'
-
-DummyApp::Application.initialize!
-
-DummyApp::Application.routes.draw do
-  mount Spree::Core::Engine, at: '/'
-end
 
 ActiveSupport.on_load(:action_controller) do
   wrap_parameters format: [:json]
