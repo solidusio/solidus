@@ -57,9 +57,9 @@
 //= require spree/backend/stock_management/stock_item
 //= require spree/backend/store_credits
 //= require spree/backend/style_guide
-//= require spree/backend/taxon_autocomplete
+//= require spree/backend/taxons/autocomplete
 //= require spree/backend/taxonomy
-//= require spree/backend/taxons
+//= require spree/backend/taxons/sort_products
 //= require spree/backend/user_picker
 //= require spree/backend/variant_autocomplete
 //= require spree/backend/zone
