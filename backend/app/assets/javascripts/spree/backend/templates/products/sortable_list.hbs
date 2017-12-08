@@ -1,0 +1,13 @@
+{{#unless products}}
+  <h4>{{noResults}}</h4>
+{{/unless}}
+
+{{#if products}}
+  {{#each products}}
+    <a href="#" id="product_{{ id }}" data-product-id="{{ id }}" class="sort_item list-group-item">
+      <i class="fa fa-sort"></i>
+      <span class="product_name">{{ name }}</span>
+      <span class="right">{{ display_price }}</span>
+    </a>
+  {{/each}}
+{{/if}}
