@@ -431,6 +431,7 @@ module Spree
       @available_payment_methods ||= Spree::PaymentMethod
         .available_to_store(store)
         .available_to_users
+        .active
         .sort_by(&:position)
     end
 
