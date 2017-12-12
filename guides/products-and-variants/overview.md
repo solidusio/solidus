@@ -51,25 +51,3 @@ Variants which are not the master variant are unique based on [option type and o
 * Large, Red
 * Large, Green
 * Large, Blue
-
-## Product Properties
-
-Product properties track individual attributes for a product which don't apply to all products. These are typically additional information about the item. For instance, a T-Shirt may have properties representing information about the kind of material used, as well as the type of fit the shirt is.
-
-A `Property` should not be confused with an [`OptionType`](#option_type), which is used when defining [Variants](#variants) for a product.
-
-You can retrieve the value for a property on a `Product` object by calling the `property` method on it and passing through that property's name:
-
-```ruby
-$ product.property("material")
-=> "100% Cotton"
-```
-
-You can set a property on a product by calling the `set_property` method:
-
-```ruby
-product.set_property("material", "100% cotton")
-```
-
-If this property doesn't already exist, a new `Property` instance with this name will be created.
-
