@@ -127,9 +127,8 @@ module Spree
       product_or_variant.price_for(current_pricing_options).to_html
     end
 
-    def pretty_time(time)
-      [I18n.l(time.to_date, format: :long),
-       time.strftime("%l:%M %p")].join(" ")
+    def pretty_time(time, format = :long)
+      I18n.l(time, format: :"solidus.#{format}")
     end
 
     def link_to_tracking(shipment, options = {})
