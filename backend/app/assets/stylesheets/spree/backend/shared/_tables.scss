@@ -3,7 +3,9 @@ table {
   @extend .table;
   border-spacing: 0;
 
-  &.sortable td {
+  &.sortable td,
+  tr.vertical-middle td,
+  tr.vertical-middle th {
     vertical-align: middle;
   }
 

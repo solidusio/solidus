@@ -1,4 +1,4 @@
-<fieldset>
+<fieldset class="no-border-bottom">
   <legend align="center">{{ t "select_stock" }}</legend>
     <table class="stock-levels" data-hook="stock-levels">
       <colgroup>
@@ -15,7 +15,7 @@
       </thead>
       <tbody>
         {{#each variant.stock_items}}
-          <tr>
+          <tr class="vertical-middle">
             <td>{{this.stock_location_name}}</td>
             {{#unless ../variant.track_inventory}}
               <td>
@@ -40,8 +40,9 @@
                   <button class="add_variant no-text fa fa-plus icon_link with-tip" data-stock-location-id="{{this.stock_location_id}}" title="{{ t "add" }}" data-action="add"></button>
                 </td>
               {{else}}
-              <td>{{ t "out_of_stock" }}</td>
+                <td>{{ t "out_of_stock" }}</td>
                 <td>0</td>
+                <td></td>
               {{/if}}
             {{/unless}}
           </tr>
