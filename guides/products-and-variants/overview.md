@@ -52,29 +52,6 @@ Variants which are not the master variant are unique based on [option type and o
 * Large, Green
 * Large, Blue
 
-## Images
-
-Images link to a product through its master variant. The sub-variants for the product may also have their own unique images to differentiate them in the frontend.
-
-Solidus automatically handles creation and storage of several size versions of each image (via the Paperclip gem, documentation [here](https://github.com/thoughtbot/paperclip)). The default sizes can be changed by placing something like the below config in the paperclip initializer (/config/initializers/paperclip.rb - note that the below example sizes are the default). 
-
-```ruby
-Spree::Image.attachment_definitions[:attachment][:styles] = {
-  mini: '48x48>',
-  small: '100x100>',
-  product: '240x240>',
-  large: '600x600>',
-}
-```
-
-You *must* regenerate the paperclip thumbnails by running this command:
-
-```bash
-$ bundle exec rake paperclip:refresh:thumbnails CLASS=Spree::Image
-```
-
-If you want to change the image that is displayed when a product has no image, simply create new versions of the files within [Solidus' app/assets/images/noimage directory](https://github.com/solidusio/solidus/tree/master/core/app/assets/images/noimage). These image names must match the keys defined in the paperclip config.
-
 ## Product Properties
 
 Product properties track individual attributes for a product which don't apply to all products. These are typically additional information about the item. For instance, a T-Shirt may have properties representing information about the kind of material used, as well as the type of fit the shirt is.
