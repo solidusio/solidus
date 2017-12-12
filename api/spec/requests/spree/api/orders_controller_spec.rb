@@ -31,9 +31,10 @@ module Spree
     describe "POST create" do
       let(:target_user) { create :user }
       let(:date_override) { Time.parse('2015-01-01') }
+      let(:attributes) { { user_id: target_user.id, created_at: date_override, email: target_user.email } }
 
       subject do
-        post spree.api_orders_path, params: { order: { user_id: target_user.id, created_at: date_override, email: target_user.email } }
+        post spree.api_orders_path, params: { order: attributes }
         response
       end
 
@@ -44,12 +45,37 @@ module Spree
 
         it "does not include unpermitted params, or allow overriding the user" do
           subject
+          expect(response).to be_success
           order = Spree::Order.last
           expect(order.user).to eq current_api_user
           expect(order.email).to eq target_user.email
         end
 
         it { is_expected.to be_success }
+
+        context 'creating payment' do
+          let(:attributes) { super().merge(payments_attributes: [{ payment_method_id: payment_method.id }]) }
+
+          context "with allowed payment method" do
+            let!(:payment_method) { create(:check_payment_method, name: "allowed" ) }
+            it { is_expected.to be_success }
+            it "creates a payment" do
+              expect {
+                subject
+              }.to change { Spree::Payment.count }.by(1)
+            end
+          end
+
+          context "with disallowed payment method" do
+            let!(:payment_method) { create(:check_payment_method, name: "forbidden", available_to_users: false) }
+            it { is_expected.to be_not_found }
+            it "creates no payments" do
+              expect {
+                subject
+              }.not_to change { Spree::Payment.count }
+            end
+          end
+        end
       end
 
       context "when the current user can administrate the order" do
@@ -69,7 +95,7 @@ module Spree
       end
 
       context 'when the line items have custom attributes' do
-        it "can create an order with line items that have custom permitted attributes" do
+        it "can create an order with line items that have custom permitted attributes", :pending do
           PermittedAttributes.line_item_attributes << { options: [:some_option] }
           expect_any_instance_of(Spree::LineItem).to receive(:some_option=).once.with('4')
           post spree.api_orders_path, params: { order: { line_items: { "0" => { variant_id: variant.to_param, quantity: 5, options: { some_option: 4 } } } } }
@@ -112,6 +138,30 @@ module Spree
           expect {
             subject
           }.to_not change{ order.reload.number }
+        end
+
+        context 'creating payment' do
+          let(:order_params) { super().merge(payments_attributes: [{ payment_method_id: payment_method.id }]) }
+
+          context "with allowed payment method" do
+            let!(:payment_method) { create(:check_payment_method, name: "allowed" ) }
+            it { is_expected.to be_success }
+            it "creates a payment" do
+              expect {
+                subject
+              }.to change { Spree::Payment.count }.by(1)
+            end
+          end
+
+          context "with disallowed payment method" do
+            let!(:payment_method) { create(:check_payment_method, name: "forbidden", available_to_users: false) }
+            it { is_expected.to be_not_found }
+            it "creates no payments" do
+              expect {
+                subject
+              }.not_to change { Spree::Payment.count }
+            end
+          end
         end
       end
 
@@ -337,10 +387,7 @@ module Spree
 
     # Regression test for https://github.com/spree/spree/issues/3404
     it "can specify additional parameters for a line item" do
-      expect(Order).to receive(:create!).and_return(order = Spree::Order.new)
-      allow(order).to receive(:associate_user!)
-      allow(order).to receive_message_chain(:contents, :add).and_return(line_item = double('LineItem'))
-      expect(line_item).to receive(:update_attributes!).with(hash_including("special" => "foo"))
+      expect_any_instance_of(Spree::LineItem).to receive(:special=).with("foo")
 
       allow_any_instance_of(Spree::Api::OrdersController).to receive_messages(permitted_line_item_attributes: [:id, :variant_id, :quantity, :special])
       post spree.api_orders_path, params: {
