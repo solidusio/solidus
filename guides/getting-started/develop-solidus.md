@@ -50,14 +50,17 @@ rails server
 
 ## Testing
 
-Solidus uses [RSpec](http://rspec.info/) for testing.
+Solidus uses [RSpec](http://rspec.info/) for testing. Refer to its documentation
+for more information about the testing library.
 
 If you intend to submit your work to Solidus as a pull request, it must pass all
-of the Solidus test suites before it is merged. We use CircleCI to run tests on
-all incoming pull requests.
+of the Solidus test suites before it is merged. You must also provide new or
+updated tests for your features or bug fixes.
+
+We use CircleCI to run tests on all incoming pull requests.
 
 To run the test suites for `solidus_frontend` and `solidus_backend`, you need to
-install [PhantomJS](http://phantomjs.org/) on your system first.
+install [ChromeDriver][chomedriver] on your system first.
 
 You can see the build statuses [on our CircleCI status page][circleci].
 
@@ -70,14 +73,14 @@ Solidus project:
 bash build.sh
 ```
 
-This runs using PostgresQL by default, but it can be overridden by specifying
-`DB=sqlite` or `DB=mysql` in the environment. For example:
+This runs using PostgreSQL by default, but it can be overridden by setting the
+`DB` environment variable to `DB=sqlite` or `DB=mysql`. For example: 
 
 ```shell
 DB=mysql bash build.sh
 ```
 
-Note that this will fail if you have not installed PhantomJS on your system.
+Note that this will fail if you have not installed ChromeDriver on your system.
 
 ### Run a single test suite
 
@@ -96,14 +99,6 @@ specify `DB=mysql` or `DB=postgresql` by prepending it to the command:
 DB=postgresql bundle exec rspec
 ```
 
-#### Fail fast
-
-You can enable `FAIL_FAST` to stop any test run after the first failure:
-
-```shell
-FAIL_FAST=true bundle exec rspec spec/models/state_spec.rb
-``` 
-
 ### Generate a code coverage report
 
 You can generate a [SimpleCov](https://github.com/colszowka/simplecov) code
@@ -113,8 +108,6 @@ coverage report by prepending `COVERAGE=true` to the `rspec` command:
 COVERAGE=true bundle exec rspec
 ```
 
-[circleci]: https://circleci.com/gh/solidusio/solidus
-
 ## Develop a Solidus extension
 
 You can add additional features to your store using Solidus extensions. A list
@@ -123,5 +116,7 @@ of supported extensions can be found at [extensions.solidus.io][extensions].
 You can use the [`solidus_cmd`][solidus-cmd] gem if you want to start creating a
 new Solidus extension.
 
+[chromedriver]: https://sites.google.com/a/chromium.org/chromedriver/home
+[circleci]: https://circleci.com/gh/solidusio/solidus
 [extensions]: https://extensions.solidus.io
 [solidus-cmd]: https://github.com/solidusio/solidus_cmd
