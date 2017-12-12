@@ -14,7 +14,7 @@
 
 - Extract stock transfers to the [solidus_stock_transfers](https://github.com/solidusio-contrib/solidus_stock_transfers) gem. [#2379](https://github.com/solidusio/solidus/pull/2379) ([jhawthorn](https://github.com/jhawthorn))
 
-## Solidus 2.4.0 (unreleased)
+## Solidus 2.4.0 (2017-11-07)
 
 ### Major changes
 
