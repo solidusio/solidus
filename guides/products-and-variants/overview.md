@@ -1,20 +1,5 @@
 # Products and Variants
 
-`Product` records track unique products within your store. Products differ from [Variants](#variants), which track the unique variations of a product. For instance, a product that is a T-shirt would have variants denoting its different colors. Together, Products and Variants describe what is for sale.
-
-Products have the following attributes:
-
-* `name`: short name for the product
-* `description`: The most elegant, poetic turn of phrase for describing your product's benefits and features to your site visitors
-* `slug`: An SEO slug based on the product name that is placed into the URL for the product
-* `available_on`: The first date the product becomes available for sale online in your shop. If you don't set the `available_on` attribute, the product will not appear among your store's products for sale.
-* `deleted_at`: The date the product is no longer available for sale in the store
-* `meta_description`: A description targeted at search engines for search engine optimization (SEO)
-* `meta_keywords`: Several words and short phrases separated by commas, also targeted at search engines
-* `meta_title`: Title to put in HTML header's `<title>` tag. If left blank, the product name will be used.
-* `promotionable`: Determines whether or not promotions can apply to the product. Labeled "Promotable" in the admin interface.
-
-To understand how variants come to be, you must first understand option types and option values.
 
 ## Option Types and Option Values
 

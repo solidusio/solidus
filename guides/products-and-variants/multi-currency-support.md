@@ -13,7 +13,7 @@ currency).
 -->
 
 If none of a product's `Spree::Variant`s have a price value for the site's
-configured currency, that product is not be visible in the store frontend.
+configured currency, that product is not visible in the store frontend.
 
 You can see a product's price in the store's configured currency by calling the
 `price` method on that instance:
