@@ -6,15 +6,18 @@ def print_title(gem_name = '')
 end
 
 %w[spec db:drop db:create db:migrate db:reset].each do |task|
-  desc "Run rake #{task} for each Solidus engine"
-  task task do
-    %w(api backend core frontend sample).each do |gem_name|
-      print_title(gem_name)
-      Dir.chdir("#{File.dirname(__FILE__)}/#{gem_name}") do
+  %w(api backend core frontend sample).each do |project|
+    desc "Run specs for #{project}" if task == 'spec'
+    task "#{task}:#{project}" do
+      print_title(project)
+      Dir.chdir("#{File.dirname(__FILE__)}/#{project}") do
         sh "rake #{task}"
       end
     end
   end
+
+  desc "Run rake #{task} for each Solidus engine"
+  task task => %w(api backend core frontend sample).map { |p| "#{task}:#{p}" }
 end
 
 task test: :spec
