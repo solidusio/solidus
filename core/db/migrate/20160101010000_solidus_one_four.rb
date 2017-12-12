@@ -1120,17 +1120,6 @@ class SolidusOneFour < ActiveRecord::Migration[5.0]
       t.index ["track_inventory"], name: "index_spree_variants_on_track_inventory"
     end
 
-    create_table "spree_wallet_payment_sources", force: :cascade do |t|
-      t.integer "user_id", null: false
-      t.string "payment_source_type", null: false
-      t.integer "payment_source_id", null: false
-      t.boolean "default", default: false, null: false
-      t.datetime "created_at", null: false
-      t.datetime "updated_at", null: false
-      t.index ["user_id", "payment_source_id", "payment_source_type"], name: "index_spree_wallet_payment_sources_on_source_and_user", unique: true
-      t.index ["user_id"], name: "index_spree_wallet_payment_sources_on_user_id"
-    end
-
     create_table "spree_zone_members", force: :cascade do |t|
       t.string "zoneable_type"
       t.integer "zoneable_id"
