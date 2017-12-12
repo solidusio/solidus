@@ -31,12 +31,12 @@
 </td>
 <td class="cart-line-item-delete actions" data-hook="cart_line_item_delete">
   {{#if editing}}
-    <a class="save-line-item fa fa-ok no-text with-tip" data-action="save" href="#" title="{{ t "actions.save" }}"></a>
+    <button class="save-line-item fa fa-ok no-text with-tip" data-action="save" title="{{ t "actions.save" }}"></button>
     {{#unless noCancel}}
-      <a class="cancel-line-item fa fa-cancel no-text with-tip" data-action="cancel" href="#" title="{{ t "actions.cancel" }}"></a>
+      <button class="cancel-line-item fa fa-cancel no-text with-tip" data-action="cancel" title="{{ t "actions.cancel" }}"></button>
     {{/unless}}
   {{else}}
-    <a class="edit-line-item fa fa-edit no-text with-tip" data-action="edit" href="#" title="{{ t "actions.edit" }}"></a>
-    <a class="delete-line-item fa fa-trash no-text with-tip" data-action="remove" href="#" title="{{ t "actions.delete" }}"></a>
+    <button class="edit-line-item fa fa-edit no-text with-tip" data-action="edit" title="{{ t "actions.edit" }}"></button>
+    <button class="delete-line-item fa fa-trash no-text with-tip" data-action="remove" title="{{ t "actions.delete" }}"></button>
   {{/if}}
 </td>
