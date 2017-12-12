@@ -188,14 +188,18 @@ data already loaded.
 
 ### Tests
 
+Solidus uses [RSpec](http://rspec.info) for tests. Refer to its documentation for
+more information about the testing library.
+
 #### CircleCI
+
 We use CircleCI to run the tests for Solidus as well as all incoming pull
 requests. All pull requests must pass to be merged.
 
 You can see the build statuses at
-[https://circleci.com/gh/solidusio/solidus](https://circleci.com/gh/solidusio/solidus)
+[https://circleci.com/gh/solidusio/solidus](https://circleci.com/gh/solidusio/solidus).
 
-#### Running all tests
+#### Run all tests
 
 To execute all the tests, run this command at the root of the Solidus project
 to run specs for all projects:
@@ -204,45 +208,51 @@ to run specs for all projects:
 bash build.sh
 ```
 
-This runs using postgresql by default, but can be overridden by specifying
-`DB=sqlite` or `DB=mysql` in the environment.
+This runs using PostgreSQL by default, but can be overridden by setting the `DB`
+environment variable to `DB=sqlite` or `DB=mysql`. For example:
 
-[PhantomJS](http://phantomjs.org/) is required for the frontend and backend
-test suites.
+```
+DB=mysql bash build.sh
+```
 
-#### Running an individual test suite
+[ChromeDriver](https://sites.google.com/a/chromium.org/chromedriver/home) is
+required to run the frontend and backend test suites.
 
-Each gem contains its own series of tests.
+#### Run an individual test suite
 
-To run the tests for the core project.
+Each gem contains its own series of tests. To run the tests for the core project:
+
 ```shell
 cd core
 bundle exec rspec
 ```
 
-If you would like to run specs against a particular database you may specify the
-desired database, which defaults to sqlite3.
+By default, `rspec` runs the tests for SQLite 3. If you would like to run specs
+against another database you may specify the database in the command:
+
 ```shell
 DB=postgresql bundle exec rspec
 ```
 
-You can also enable fail fast in order to stop tests at the first failure
-```shell
-FAIL_FAST=true bundle exec rspec spec/models/state_spec.rb
-```
+#### Code coverage reports
 
-If you want to run the simplecov code coverage report
+If you want to run the [SimpleCov](https://github.com/colszowka/simplecov) code
+coverage report:
+
 ```shell
 COVERAGE=true bundle exec rspec
 ```
 
 ### Extensions
-In addition to core functionality provided in Solidus, there are a number of ways to add
-features to your store that are not (or not yet) part of the core project.
+
+In addition to core functionality provided in Solidus, there are a number of
+ways to add features to your store that are not (or not yet) part of the core
+project.
 
 A list can be found at [extensions.solidus.io](http://extensions.solidus.io/).
 
-If you want to write an extension for Solidus, you can use the [solidus\_cmd](https://www.github.com/solidusio/solidus_cmd.git) gem.
+If you want to write an extension for Solidus, you can use the
+[solidus_cmd](https://www.github.com/solidusio/solidus_cmd.git) gem.
 
 Contributing
 ------------
