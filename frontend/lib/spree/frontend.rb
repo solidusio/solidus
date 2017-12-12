@@ -4,6 +4,7 @@ require 'canonical-rails'
 require 'sass-rails'
 require 'font-awesome-rails'
 require 'responders'
+require 'kaminari'
 
 require 'solidus_core'
 require 'solidus_api'
