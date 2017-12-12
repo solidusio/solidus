@@ -96,26 +96,6 @@ product.set_property("material", "100% cotton")
 
 If this property doesn't already exist, a new `Property` instance with this name will be created.
 
-## Multi-Currency Support
-
-`Price` objects track a price for a particular currency and variant combination. For instance, a [Variant](#variants) may be available for $15 (15 USD) and €7 (7 Euro).
-
-This presence or lack of a price for a variant in a particular currency will determine if that variant is visible in the frontend. If no variants of a product have a particular price value for the site's current currency, that product will not be visible in the frontend.
-
-You may see what price a product would be in the current currency (`Spree::Config[:currency]`) by calling the `price` method on that instance:
-
-```ruby
-$ product.price
-=> "15.99"
-```
-
-To find a list of currencies that this product is available in, call `prices` to get a list of related `Price` objects:
-
-```ruby
-$ product.prices
-=> [#<Spree::Price id: 2 ...]
-```
-
 ## Taxons and Taxonomies
 
 Taxonomies provide a simple, yet robust way of categorizing products by enabling store administrators to define as many separate structures as needed.
