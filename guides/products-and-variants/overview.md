@@ -73,20 +73,3 @@ product.set_property("material", "100% cotton")
 
 If this property doesn't already exist, a new `Property` instance with this name will be created.
 
-## Taxons and Taxonomies
-
-Taxonomies provide a simple, yet robust way of categorizing products by enabling store administrators to define as many separate structures as needed.
-
-When working with Taxonomies there are two key terms to understand:
-
-* `Taxonomy` – a hierarchical list which is made up of individual Taxons. Each taxonomy relates to one `Taxon`, which is its root node.
-* `Taxon` – a single child node which exists at a given point within a `Taxonomy`. Each `Taxon` can contain many (or no) sub / child taxons. Store administrators can define as many Taxonomies as required, and link a product to multiple Taxons from each Taxonomy.
-
-By default, both Taxons and Taxonomies are ordered by their `position` attribute.
-
-Taxons use the [Nested set model](http://en.wikipedia.org/wiki/Nested_set_model) for their hierarchy. The `lft` and `rgt` columns in the `spree_taxons` table represent the locations within the hierarchy of the item. This logic is handled by the [awesome_nested_set](https://github.com/collectiveidea/awesome_nested_set) gem.
-
-Taxons link to products through an intermediary model called `Classification`. This model exists so that when a product is deleted, all of the links from that product to its taxons are deleted automatically. A similar action takes place when a taxon is deleted; all of the links to products are deleted automatically.
-
-Linking to a taxon in a controller or a template should be done using the `spree.nested_taxons_path` helper, which will use the taxon's permalink to
-generate a URL such as `/t/categories/brand`.
