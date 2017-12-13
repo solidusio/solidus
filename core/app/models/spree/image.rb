@@ -24,6 +24,14 @@ module Spree
       attachment.url(:mini, false)
     end
 
+    def url(size)
+      attachment.url(size)
+    end
+
+    def filename
+      attachment_file_name
+    end
+
     def find_dimensions
       temporary = attachment.queued_for_write[:original]
       filename = temporary.path unless temporary.nil?
