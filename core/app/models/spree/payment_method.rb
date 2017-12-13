@@ -259,5 +259,6 @@ module Spree
       end
     end
     deprecate provider_class: :gateway_class, deprecator: Spree::Deprecation
+    instance_method(:provider_class).owner.send(:protected, :provider_class)
   end
 end

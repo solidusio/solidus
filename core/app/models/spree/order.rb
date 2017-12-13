@@ -819,6 +819,7 @@ module Spree
       end
     end
     deprecate update_params_payment_source: :set_payment_parameters_amount, deprecator: Spree::Deprecation
+    instance_method(:update_params_payment_source).owner.send(:private, :update_params_payment_source)
 
     def associate_store
       self.store ||= Spree::Store.default
