@@ -14,7 +14,6 @@ DummyApp::RakeTasks.new(
   lib_name: 'solidus_backend'
 )
 
-desc "Run the javascript specs"
 task :teaspoon do
   require 'teaspoon'
   Rake::Task['dummy_environment'].invoke
@@ -31,6 +30,9 @@ task :teaspoon do
 
   abort("rake teaspoon failed") if Teaspoon::Console.new(options).failures?
 end
+
+desc "Run javascript specs"
+task 'spec:js' => :teaspoon
 
 namespace :teaspoon do
   task :server  do
