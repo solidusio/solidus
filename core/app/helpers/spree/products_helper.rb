@@ -66,9 +66,7 @@ module Spree
 
     # @return [String] a cache invalidation key for products
     def cache_key_for_products
-      count = @products.count
-      max_updated_at = (@products.maximum(:updated_at) || Date.today).to_s(:number)
-      "#{I18n.locale}/#{current_pricing_options.cache_key}/spree/products/all-#{params[:page]}-#{max_updated_at}-#{count}"
+      "#{I18n.locale}/#{current_pricing_options.cache_key}/spree/products/all-#{params[:page]}-#{@products.cache_key}"
     end
   end
 end

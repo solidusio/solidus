@@ -172,28 +172,12 @@ THIS IS THE BEST PRODUCT EVER!
       subject { helper.cache_key_for_products }
       before(:each) do
         @products = double('products collection')
+        allow(@products).to receive(:cache_key).and_return('asdfasdf')
         allow(helper).to receive(:params) { { page: 10 } }
       end
 
-      context 'when there is a maximum updated date' do
-        let(:updated_at) { Date.new(2011, 12, 13) }
-        before :each do
-          allow(@products).to receive(:count) { 5 }
-          allow(@products).to receive(:maximum).with(:updated_at) { updated_at }
-        end
-
-        it { is_expected.to eq('en/USD/spree/products/all-10-20111213-5') }
-      end
-
-      context 'when there is no considered maximum updated date' do
-        let(:today) { Date.new(2013, 12, 11) }
-        before :each do
-          allow(@products).to receive(:count) { 1_234_567 }
-          allow(@products).to receive(:maximum).with(:updated_at) { nil }
-          allow(Date).to receive(:today) { today }
-        end
-
-        it { is_expected.to eq('en/USD/spree/products/all-10-20131211-1234567') }
+      it "uses scope's cache_key" do
+        is_expected.to eq('en/USD/spree/products/all-10-asdfasdf')
       end
     end
   end
