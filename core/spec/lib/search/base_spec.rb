@@ -35,15 +35,13 @@ RSpec.describe Spree::Core::Search::Base do
   it "switches to next page according to the page parameter" do
     @product3 = create(:product, name: "RoR Pants", price: 14.00)
 
-    Spree::Deprecation.silence do
-      params = { per_page: "2" }
-      searcher = Spree::Core::Search::Base.new(params)
-      expect(searcher.retrieve_products.count).to eq(2)
+    params = { per_page: "2" }
+    searcher = Spree::Core::Search::Base.new(params)
+    expect(searcher.retrieve_products.count).to eq(2)
 
-      params[:page] = "2"
-      searcher = Spree::Core::Search::Base.new(params)
-      expect(searcher.retrieve_products.count).to eq(1)
-    end
+    params[:page] = "2"
+    searcher = Spree::Core::Search::Base.new(params)
+    expect(searcher.retrieve_products.count).to eq(1)
   end
 
   it "maps search params to named scopes" do
