@@ -8,6 +8,7 @@ require 'handlebars_assets'
 require 'font-awesome-rails'
 require 'autoprefixer-rails'
 require 'jbuilder'
+require 'kaminari'
 
 require 'spree_core'
 require 'spree_api'

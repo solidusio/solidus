@@ -68,7 +68,7 @@ describe Spree::Admin::OrdersController, type: :controller do
       it "can page through the orders" do
         get :index, params: { page: 2, per_page: 10 }
         expect(assigns[:orders].offset_value).to eq(10)
-        expect(assigns[:orders].limit_value).to eq(10)
+        expect(assigns[:orders].current_per_page).to eq(10)
       end
     end
 

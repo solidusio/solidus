@@ -32,7 +32,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'carmen', '~> 1.1.0'
   s.add_dependency 'cancancan', '~> 1.10'
   s.add_dependency 'friendly_id', '~> 5.0'
-  s.add_dependency 'kaminari', '>= 0.17', '< 2.0'
+  s.add_dependency 'kaminari-activerecord', '~> 1.1'
   s.add_dependency 'monetize', '~> 1.1'
   s.add_dependency 'paperclip', ['>= 4.2', '< 6']
   s.add_dependency 'paranoia', '~> 2.4'
