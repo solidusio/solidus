@@ -4,6 +4,8 @@ ENV['RAILS_ENV'] = 'test'
 # https://github.com/jejacks0n/teaspoon/wiki/Micro-Applications
 
 if defined?(DummyApp)
+  DummyApp::Migrations.auto_migrate
+
   require 'teaspoon-mocha'
 
   Teaspoon.configure do |config|
@@ -29,6 +31,7 @@ else
 
   DummyApp.setup(
     gem_root: File.expand_path('../../', __FILE__),
-    lib_name: 'solidus_backend'
+    lib_name: 'solidus_backend',
+    auto_migrate: false
   )
 end
