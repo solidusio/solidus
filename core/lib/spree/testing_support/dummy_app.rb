@@ -55,6 +55,11 @@ module DummyApp
     config.active_support.deprecation                 = :stderr
     config.secret_key_base                            = 'SECRET_TOKEN'
 
+    if config.active_record.sqlite3
+      # Rails >= 5.2
+      config.active_record.sqlite3.represent_boolean_as_integer = true
+    end
+
     # Avoid issues if an old spec/dummy still exists
     config.paths['config/initializers'] = []
     config.paths['config/environments'] = []
