@@ -10,7 +10,6 @@ module Spree
     has_many :shipping_rates, -> { order(:cost) }, dependent: :destroy, inverse_of: :shipment
     has_many :shipping_methods, through: :shipping_rates
     has_many :state_changes, as: :stateful
-    has_many :cartons, -> { uniq }, through: :inventory_units
 
     before_validation :set_cost_zero_when_nil
 
