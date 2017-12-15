@@ -52,78 +52,77 @@ Adjustments can come from one of two locations within Spree's core:
 An adjustment's `label` attribute can be used as a good indicator of where the
 adjustment is coming from.
 
-## Adjustment Scopes
+## Adjustment scopes
 
-There are some helper methods to return the different types of adjustments:
+You can call [scopes][rails-scopes] on `Spree::Adjustment`s themselves or on any
+class that has an `adjustments` association – like orders, line items, and or
+shipments.
 
-```ruby
-scope :shipping, -> { where(adjustable_type: 'Spree::Shipment') }
-scope :is_included, -> { where(included: true)  }
-scope :additional, -> { where(included: false) }
-```
+For example, you can find all of the adjustments with an `eligible` value of
+`true` for orders, line items, and shipments:
 
-* `open`: All open adjustments.
-* `tax`: All adjustments which have a source that is a `Spree::TaxRate` object
-* `price`: All adjustments which adjust a `Spree::LineItem` object.
-* `shipping`: All adjustments which adjust a `Spree::Shipment` object.
-* `promotion`: All adjustments where the source is a `Spree::PromotionAction`
-  object.
-* `optional`: All adjustments which are not `mandatory`.
-* `return_authorization`: All adjustments where the source is a
-  `Spree::ReturnAuthorization`.
-* `eligible`: Adjustments which have been determined to be `eligible` for their
-  adjustable. Useful for determining which adjustments are applying to the
-adjustable.
-* `charge`: Adjustments which *increase* the price of their adjustable.
-* `credit`: Adjustments which *decrease* the price of their adjustable.
-* `included`: Adjustments which are included in the object's price. Typically
-  tax adjustments.
-* `additional`: Adjustments which modify the object's price. The default for all
+- `Spree::Order.find(1).adjustments.eligible`: Returns all of the eligible
+  adjustments on the order with the ID `1`.
+- `Spree::LineItem.find(1).adjustments.eligible`: Returns all of the eligible
+  adjustments on the line item with the ID `1`.
+- `Spree::Shipment.find(1).adjustments.eligible`: Returns all of the eligible
+  adjustments on the shipment with the ID `1`.
+
+### List of adjustment scopes
+
+- `tax`: Returns adjustments sourced from a `Spree::TaxRate` object.
+- `price`: Returns adjustments that adjust a `Spree::LineItem` object.
+- `shipping`: Returns adjustments that adjust a `Spree::Shipment` object.
+- `promotion`: Returns adjustments sourced from a `Spree::PromotionAction`
+   object.
+- `return_authorization`: Returns adjustments sourced from a
+  `Spree::ReturnAuthorization` object.
+- `eligible`: Returns adjustments that are `eligible` to adjust the adjustable
+  object that they are associated with. For example, if a tax adjustment is
+  eligible, it would be successfully applied to its line item.
+- `charge`: Returns adjustments with a positive value.
+- `credit`: Returns adjustments with a negative value.
+- `is_included`: Returns adjustments that are included in the object's price.
+   Typically, only value-added tax adjustments have this value.
+- `additional`: Adjustments which modify the object's price. The default for all
   adjustments.
 
-These scopes can be called on either the `Spree::Adjustment` class itself, or on
-an `adjustments` association. For example, calling any one of these three is
-valid:
+<!-- TODO:
+  Add link to taxation documentation to `is_included` item in the list.
+-->
 
-```ruby
-Spree::Adjustment.eligible
-order.adjustments.eligible
-line_item.adjustments.eligible
-shipment.adjustments.eligible
-```
+[rails-scopes]: http://guides.rubyonrails.org/active_record_querying.html#scopes
 
-## Adjustment Associations
+## Adjustment associations
 
-As of Spree 2.2, you are able to retrieve the specific adjustments of an Order,
-a Line Item or a Shipment.
+`Spree::Order`s, `Spree::LineItem`s, and `Spree::Shipment`s are all
+[adjustables](#adjustables).
 
-An order itself, much like line items and shipments, can have its own individual
-modifications. For instance, an order with over $100 of line items may have 10%
-off. To retrieve these adjustments on the order, call the `adjustments`
+To retrieve these adjustments on an order, call the `adjustments`
 association:
 
 ```ruby
-order.adjustments
+Spree::Order.find(1).adjustments
 ```
 
-If you want to retrieve all the adjustments for all the line items, shipments
-and the order itself, call the `all_adjustments` method:
+If you want to retrieve the line item adjustments, you can use the
+`line_item_adjustments` method:
 
 ```ruby
-order.all_adjustments
+Spree::Order.line_item_adjustments
 ```
 
-If you want to grab just the line item adjustments, call
-`line_item_adjustments`:
+Or, if you want to retrieve the shipment adjustments, you can use the
+`shipment_adjustments` method:
 
 ```ruby
-order.line_item_adjustments
+Spree::Order.shipment_adjustments
 ```
 
-Simiarly, if you want to grab the adjustments applied to shipments, call
-`shipment_adjustments`:
+Finally, if you want to retrieve all of the adjustments on the order, you can
+use the `all_adjustments` method.
 
 ```ruby
-order.shipment_adjustments
+Spree::Order.all_adjustments
 ```
 
