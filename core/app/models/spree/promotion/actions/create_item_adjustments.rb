@@ -33,7 +33,7 @@ module Spree
           if !promotion_amount.is_a?(BigDecimal)
             Spree::Deprecation.warn "#{calculator.class.name}#compute returned #{promotion_amount.inspect}, it should return a BigDecimal"
           end
-          promotion_amount ||= BigDecimal.new(0)
+          promotion_amount ||= BigDecimal(0)
           promotion_amount = promotion_amount.abs
           [adjustable.amount, promotion_amount].min * -1
         end

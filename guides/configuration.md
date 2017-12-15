@@ -108,7 +108,7 @@ For example, if you want to add a method to the `Spree::Order` model, you would 
 module MyStore
   module OrderDecorator
     def total
-      super + BigDecimal.new(10.0)
+      super + BigDecimal(10.0)
     end
   end
 end

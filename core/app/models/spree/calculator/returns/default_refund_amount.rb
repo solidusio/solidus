@@ -25,7 +25,7 @@ module Spree
       end
 
       def quantity_of_line_item(inventory_unit)
-        BigDecimal.new(inventory_unit.line_item.quantity)
+        BigDecimal(inventory_unit.line_item.quantity)
       end
     end
   end

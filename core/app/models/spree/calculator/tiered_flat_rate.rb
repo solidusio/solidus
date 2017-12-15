@@ -34,7 +34,7 @@ module Spree
     def cast_to_d(value)
       value.to_s.to_d
     rescue ArgumentError
-      BigDecimal.new(0)
+      BigDecimal(0)
     end
 
     def preferred_tiers_content

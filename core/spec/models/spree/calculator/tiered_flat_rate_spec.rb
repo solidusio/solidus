@@ -18,7 +18,7 @@ RSpec.describe Spree::Calculator::TieredFlatRate, type: :model do
         before { calculator.preferred_tiers = { 20 => 20 } }
         it "converts successfully" do
           is_expected.to be true
-          expect(calculator.preferred_tiers).to eq({ BigDecimal.new('20') => BigDecimal.new('20') })
+          expect(calculator.preferred_tiers).to eq({ BigDecimal('20') => BigDecimal('20') })
         end
       end
 
@@ -26,7 +26,7 @@ RSpec.describe Spree::Calculator::TieredFlatRate, type: :model do
         before { calculator.preferred_tiers = { 20.5 => 20.5 } }
         it "converts successfully" do
           is_expected.to be true
-          expect(calculator.preferred_tiers).to eq({ BigDecimal.new('20.5') => BigDecimal.new('20.5') })
+          expect(calculator.preferred_tiers).to eq({ BigDecimal('20.5') => BigDecimal('20.5') })
         end
       end
 
@@ -34,7 +34,7 @@ RSpec.describe Spree::Calculator::TieredFlatRate, type: :model do
         before { calculator.preferred_tiers = { "20" => 20 } }
         it "converts successfully" do
           is_expected.to be true
-          expect(calculator.preferred_tiers).to eq({ BigDecimal.new('20') => BigDecimal.new('20') })
+          expect(calculator.preferred_tiers).to eq({ BigDecimal('20') => BigDecimal('20') })
         end
       end
 
@@ -42,7 +42,7 @@ RSpec.describe Spree::Calculator::TieredFlatRate, type: :model do
         before { calculator.preferred_tiers = { "  20 " => 20 } }
         it "converts successfully" do
           is_expected.to be true
-          expect(calculator.preferred_tiers).to eq({ BigDecimal.new('20') => BigDecimal.new('20') })
+          expect(calculator.preferred_tiers).to eq({ BigDecimal('20') => BigDecimal('20') })
         end
       end
 
@@ -50,7 +50,7 @@ RSpec.describe Spree::Calculator::TieredFlatRate, type: :model do
         before { calculator.preferred_tiers = { "20.5" => "20.5" } }
         it "converts successfully" do
           is_expected.to be true
-          expect(calculator.preferred_tiers).to eq({ BigDecimal.new('20.5') => BigDecimal.new('20.5') })
+          expect(calculator.preferred_tiers).to eq({ BigDecimal('20.5') => BigDecimal('20.5') })
         end
       end
     end
