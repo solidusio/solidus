@@ -43,7 +43,7 @@
 <%= f.field_container :default_currency do %>
   <%= f.label :default_currency %>
   <%= f.select :default_currency,
-    ::Money::Currency.all.map(&:iso_code),
+    Spree::Config.available_currencies.map(&:iso_code),
     { include_blank: true },
     { class: 'select2 fullwidth' } %>
   <%= f.error_message_on :default_currency %>
