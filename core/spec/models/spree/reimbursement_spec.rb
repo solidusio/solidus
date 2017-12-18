@@ -53,7 +53,7 @@ RSpec.describe Spree::Reimbursement, type: :model do
     let(:shipping_method)         { create :shipping_method, zones: [tax_zone] }
     let(:variant)                 { create :variant }
     let(:order)                   { create(:order_with_line_items, state: 'payment', line_items_attributes: [{ variant: variant, price: line_items_price }], shipment_cost: 0, shipping_method: shipping_method) }
-    let(:line_items_price)        { BigDecimal.new(10) }
+    let(:line_items_price)        { BigDecimal(10) }
     let(:line_item)               { order.line_items.first }
     let(:inventory_unit)          { line_item.inventory_units.first }
     let(:payment)                 { build(:payment, amount: payment_amount, order: order, state: 'checkout') }

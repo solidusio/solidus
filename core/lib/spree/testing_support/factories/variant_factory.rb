@@ -4,7 +4,7 @@ require 'spree/testing_support/factories/option_type_factory'
 require 'spree/testing_support/factories/product_factory'
 
 FactoryBot.define do
-  sequence(:random_float) { BigDecimal.new("#{rand(200)}.#{rand(99)}") }
+  sequence(:random_float) { BigDecimal("#{rand(200)}.#{rand(99)}") }
 
   factory :base_variant, class: 'Spree::Variant' do
     price 19.99
