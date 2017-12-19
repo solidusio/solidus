@@ -11,6 +11,6 @@
       <%= ::Money::Currency.find(currency).iso_code %>
     </div>
   <% else %>
-    <%= f.select currency_attr, ::Money::Currency.all.map(&:iso_code), {include_blank: true}, {required: required, class: 'number-with-currency-select'} %>
+    <%= f.select currency_attr, Spree::Config.available_currencies.map(&:iso_code), {selected: Spree::Config.currency}, {required: required, class: 'number-with-currency-select'} %>
   <% end %>
 </div>

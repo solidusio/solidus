@@ -257,6 +257,15 @@ module Spree
     #   @return [Boolean] Indicates if stock management can be restricted by location
     preference :can_restrict_stock_management, :boolean, default: false
 
+    # Allows restricting what currencies will be available.
+    #
+    # @!attribute [r] available_currencies
+    #   @returns [Array] An array of available currencies from Money::Currency.all
+    attr_writer :available_currencies
+    def available_currencies
+      @available_currencies ||= ::Money::Currency.all
+    end
+
     # searcher_class allows spree extension writers to provide their own Search class
     class_name_attribute :searcher_class, default: 'Spree::Core::Search::Base'
 

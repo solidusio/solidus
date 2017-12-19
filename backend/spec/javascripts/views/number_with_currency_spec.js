@@ -24,15 +24,15 @@ describe("Spree.Views.NumberWithCurrency", function() {
       loadView();
     });
 
-    it("has no currency selected", function() {
-      expect($select).to.have.$val('');
-      expect($symbol).to.have.$text('');
+    it("has a default currency selected", function() {
+      expect($select).to.have.$val('USD');
+      expect($symbol).to.have.$text('$');
     });
 
-    it("can select USD", function() {
-      $select.val('USD').trigger('change');
+    it("can select CAD", function() {
+      $select.val('CAD').trigger('change');
 
-      expect($select).to.have.$val('USD');
+      expect($select).to.have.$val('CAD');
       expect($symbol).to.have.$text('$');
     });
 

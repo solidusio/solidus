@@ -15,7 +15,7 @@
 
   Spree.currencyInfo = <%==
     JSON.dump(
-      Money::Currency.all.map { |c|
+      Spree::Config.available_currencies.map { |c|
         format =
           if c.symbol == "" || c.symbol_first
             "%s%v"
