@@ -16,7 +16,7 @@ module Spree
         end
         best_promotion_adjustment.amount
       else
-        BigDecimal.new('0')
+        BigDecimal('0')
       end
     end
 

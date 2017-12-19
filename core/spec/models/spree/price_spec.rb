@@ -141,6 +141,6 @@ RSpec.describe Spree::Price, type: :model do
 
     subject { price.net_amount }
 
-    it { is_expected.to eq(BigDecimal.new(20) / 1.1) }
+    it { is_expected.to eq(BigDecimal(20) / 1.1) }
   end
 end

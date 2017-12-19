@@ -17,7 +17,7 @@ module Spree
         def eligible?(order, _options = {})
           return false unless order.currency == preferred_currency
           item_total = order.item_total
-          unless item_total.send(preferred_operator == 'gte' ? :>= : :>, BigDecimal.new(preferred_amount.to_s))
+          unless item_total.send(preferred_operator == 'gte' ? :>= : :>, BigDecimal(preferred_amount.to_s))
             eligibility_errors.add(:base, ineligible_message)
           end
 

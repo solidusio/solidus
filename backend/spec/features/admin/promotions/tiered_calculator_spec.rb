@@ -38,7 +38,7 @@ feature "Tiered Calculator Promotions" do
     first_action_calculator = first_action.calculator
     expect(first_action_calculator.class).to eq Spree::Calculator::TieredPercent
     expect(first_action_calculator.preferred_base_percent).to eq 5
-    expect(first_action_calculator.preferred_tiers).to eq(BigDecimal.new(100) => BigDecimal.new(10))
+    expect(first_action_calculator.preferred_tiers).to eq(BigDecimal(100) => BigDecimal(10))
   end
 
   context "with an existing tiered flat rate calculator" do
@@ -64,8 +64,8 @@ feature "Tiered Calculator Promotions" do
 
       calculator = promotion.actions.first.calculator
       expect(calculator.preferred_tiers).to eq({
-        BigDecimal.new(100) => 10,
-        BigDecimal.new(300) => 20
+        BigDecimal(100) => 10,
+        BigDecimal(300) => 20
       })
     end
   end

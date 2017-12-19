@@ -79,7 +79,7 @@ RSpec.describe Spree::Money do
       end
 
       context 'with BigDecimal' do
-        let(:amount){ BigDecimal.new('10.00') }
+        let(:amount){ BigDecimal('10.00') }
         it { should == "$10.00 USD" }
       end
     end
