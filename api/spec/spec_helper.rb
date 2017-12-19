@@ -27,7 +27,6 @@ require 'rspec-activemodel-mocks'
 
 require 'database_cleaner'
 require 'with_model'
-require 'timecop'
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.

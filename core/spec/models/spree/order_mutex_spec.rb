@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Spree::OrderMutex do
+  include ActiveSupport::Testing::TimeHelpers
+
   let(:order) { create(:order) }
 
   context "without an existing lock" do
@@ -42,7 +44,7 @@ RSpec.describe Spree::OrderMutex do
     around do |example|
       Spree::OrderMutex.with_lock!(order) do
         future = Spree::Config[:order_mutex_max_age].seconds.from_now + 1.second
-        Timecop.freeze(future) do
+        travel_to(future) do
           example.run
         end
       end
