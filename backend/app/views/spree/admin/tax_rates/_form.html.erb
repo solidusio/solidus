@@ -14,8 +14,10 @@
             <br/><span class="info"><%= t('spree.tax_rate_amount_explanation') %></span>
           </div>
           <div data-hook="included" class="field">
-            <%= f.check_box :included_in_price %>
-            <%= f.label :included_in_price, t('spree.included_in_price') %>
+            <label>
+              <%= f.check_box :included_in_price %>
+              <%= t('spree.included_in_price') %>
+            </label>
           </div>
         </div>
 
@@ -29,8 +31,10 @@
             <%= f.collection_select(:tax_category_ids, @available_categories, :id, :name, {}, {class: 'select2 fullwidth', multiple: "multiple"}) %>
           </div>
           <div data-hook="show_rate" class="field">
-            <%= f.check_box :show_rate_in_label %>
-            <%= f.label :show_rate_in_label, t('spree.show_rate_in_label') %>
+            <label>
+              <%= f.check_box :show_rate_in_label %>
+              <%= t('spree.show_rate_in_label') %>
+            </label>
           </div>
 
           <div class="date-range-filter field">

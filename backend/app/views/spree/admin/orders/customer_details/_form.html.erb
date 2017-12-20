@@ -21,12 +21,16 @@
             <% else %>
               <% guest = @order.user.nil? %>
               <li>
-                <%= radio_button_tag :guest_checkout, true, guest %>
-                <%= label_tag :guest_checkout_true, t('spree.say_yes') %>
+                <label>
+                  <%= radio_button_tag :guest_checkout, true, guest %>
+                  <%= t('spree.say_yes') %>
+                </label>
               </li>
               <li>
-                <%= radio_button_tag :guest_checkout, false, !guest, disabled: @order.cart? %>
-                <%= label_tag :guest_checkout_false, t('spree.say_no') %>
+                <label>
+                  <%= radio_button_tag :guest_checkout, false, !guest, disabled: @order.cart? %>
+                  <%= t('spree.say_no') %>
+                </label>
               </li>
               <%= hidden_field_tag :user_id, @order.user_id %>
             <% end %>
@@ -41,10 +45,12 @@
       <fieldset class="no-border-bottom">
         <legend align="center"><%= t('spree.shipping_address') %></legend>
         <% if Spree::Config[:order_bill_address_used] %>
-          <div class="field" style="position: absolute;margin-top: -15px;left: 0;">
+          <div class="field">
             <span data-hook="use_billing">
-              <%= check_box_tag 'order[use_billing]', '1', (@order.ship_address.new_record? && @order.bill_address == @order.ship_address) %>
-              <%= label_tag 'order[use_billing]', t('spree.use_billing_address') %>
+              <label>
+                <%= check_box_tag 'order[use_billing]', '1', (@order.ship_address.new_record? && @order.bill_address == @order.ship_address) %>
+                <%= t('spree.use_billing_address') %>
+              </label>
             </span>
           </div>
         <% end %>

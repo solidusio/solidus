@@ -71,9 +71,10 @@
 
       <div data-hook="admin_product_form_promotionable">
         <%= f.field_container :promotionable do %>
-          <%= f.label :promotionable do %>
-            <%= f.check_box :promotionable %> <%= Spree::Product.human_attribute_name(:promotionable) %>
-          <% end %>
+          <label>
+            <%= f.check_box :promotionable %>
+            <%= Spree::Product.human_attribute_name(:promotionable) %>
+          </label>
           <%= f.field_hint :promotionable %>
         <% end %>
       </div>

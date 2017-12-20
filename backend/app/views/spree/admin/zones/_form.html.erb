@@ -19,12 +19,16 @@
           <%= label_tag t('spree.type') %>
           <ul>
             <li>
-              <%= zone_form.radio_button('kind', 'country', { id: 'country_based' }) %>
-              <%= label_tag :country_based, t('spree.country_based') %>
+              <label>
+                <%= zone_form.radio_button('kind', 'country', { id: 'country_based' }) %>
+                <%= t('spree.country_based') %>
+              </label>
             </li>
             <li>
-              <%= zone_form.radio_button('kind', 'state', { id: 'state_based' }) %>
-              <%= label_tag :state_based, t('spree.state_based') %>
+              <label>
+                <%= zone_form.radio_button('kind', 'state', { id: 'state_based' }) %>
+                <%= t('spree.state_based') %>
+              </label>
             </li>
           </ul>
         </div>

@@ -12,10 +12,10 @@
           <% end %>
 
           <%= f.field_container :advertise do %>
-            <%= label_tag do %>
+            <label>
               <%= f.check_box :advertise %>
-              <%= Spree::Promotion.human_attribute_name(:advertise) %>
-            <% end %>
+              <%= Spree::Promotion.human_attribute_name :advertise %>
+            </label>
           <% end %>
         </div>
 

@@ -2,12 +2,13 @@
 <% html_options = local_assigns[:html_options] || {} %>
 
 <div class="field">
-  <% if local_assigns[:form] %>
-    <%= form.check_box attribute, html_options %>
-    <%= form.label attribute, label %>
-  <% else %>
-    <%= hidden_field_tag name, 0 %>
-    <%= check_box_tag name, 1, value, html_options %>
-    <%= label_tag name, label %>
-  <% end %>
+  <label>
+    <% if local_assigns[:form] %>
+      <%= form.check_box attribute, html_options %>
+    <% else %>
+      <%= hidden_field_tag name, 0 %>
+      <%= check_box_tag name, 1, value, html_options %>
+    <% end %>
+    <%= label || form.object.class.human_attribute_name(attribute) %>
+  </label>
 </div>

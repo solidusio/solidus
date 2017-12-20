@@ -19,8 +19,11 @@
             <%= hidden_field_tag('user[spree_role_ids][]', nil) %>
             <% @roles.each do |role| %>
               <li>
-                <%= check_box_tag 'user[spree_role_ids][]', role.id, @user_roles.include?(role), id: "user_spree_role_#{role.name}" %>
-                <%= label_tag "user_spree_role_#{role.name}", role.name %>
+                <label>
+                  <%= check_box_tag 'user[spree_role_ids][]', role.id,
+                    @user_roles.include?(role), id: "user_spree_role_#{role.name}" %>
+                  <%= role.name %>
+                </label>
               </li>
             <% end %>
           <% else %>
@@ -39,8 +42,10 @@
           <% if can?(:manage, Spree::UserStockLocation) %>
             <% @stock_locations.each do |stock_location| %>
               <li>
-                <%= check_box_tag 'user[stock_location_ids][]', stock_location.id, @user.stock_locations.include?(stock_location), id: "user_spree_stock_locations_#{stock_location.name}" %>
-                <%= label_tag stock_location.name %>
+                <label>
+                  <%= check_box_tag 'user[stock_location_ids][]', stock_location.id, @user.stock_locations.include?(stock_location), id: "user_spree_stock_locations_#{stock_location.name}" %>
+                  <%= stock_location.name %>
+                </label>
               </li>
             <% end %>
           <% else %>
