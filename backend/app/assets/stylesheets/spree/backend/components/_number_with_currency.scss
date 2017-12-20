@@ -4,11 +4,12 @@
   }
 
   &-amount {
+    min-width: 5rem;
     text-align: right;
   }
 
   &-addon {
-    width: 5.5rem;
+    min-width: 3.5rem;
     text-align: left;
   }
 

@@ -141,7 +141,7 @@ en:
         created_at: Date/Time
         number: Identifier
         response_code: Transaction ID
-        state: Payment State
+        state: State
       spree/payment_method:
         active: Active
         auto_capture: Auto Capture

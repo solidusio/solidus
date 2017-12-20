@@ -1,30 +1,46 @@
 <table class="index" id='payments' data-order-id='<%= @order.number %>'>
+  <colgroup>
+    <col style="width: 15%"/>
+    <col style="width: 15%"/>
+    <col style="width: 15%"/>
+    <col style="width: 10%"/>
+    <col style="width: 10%"/>
+    <col style="width: 20%"/>
+    <col style="width: 15%"/>
+  </colgroup>
   <thead>
     <tr data-hook="payments_header">
       <th><%= Spree::Payment.human_attribute_name(:number) %></th>
       <th><%= Spree::Payment.human_attribute_name(:created_at) %></th>
-      <th><%= Spree::Payment.human_attribute_name(:amount) %></th>
       <th><%= Spree::PaymentMethod.model_name.human %></th>
       <th><%= Spree::Payment.human_attribute_name(:response_code) %></th>
       <th><%= Spree::Payment.human_attribute_name(:state) %></th>
+      <th class="align-right"><%= Spree::Payment.human_attribute_name(:amount) %></th>
       <th class="actions"></th>
     </tr>
   </thead>
   <tbody>
     <% payments.each do |payment| %>
-      <tr id="<%= dom_id(payment) %>" data-hook="payments_row" class="payment" data-payment-id="<%= payment.id %>">
+      <tr id="<%= dom_id(payment) %>" data-hook="payments_row" class="payment vertical-middle" data-payment-id="<%= payment.id %>">
         <td><%= link_to payment.number, spree.admin_order_payment_path(@order, payment) %></td>
-        <td><%= pretty_time(payment.created_at) %></td>
-        <td class="amount">
-          <%= text_field_tag :amount, payment.amount, class: 'js-edit-amount align-right editing-show' %>
-          <span class="js-display-amount editing-hide"><%= payment.display_amount.to_html %></span>
-        </td>
+        <td><%= l(payment.created_at, format: :short) %></td>
         <td><%= payment_method_name(payment) %></td>
         <td><%= payment.transaction_id %></td>
         <td>
           <span class="pill pill-<%= payment.state %>">
             <%= t(payment.state, scope: 'spree.payment_states') %>
           </span>
+        </td>
+        <td class="amount align-right">
+          <div class="editing-show">
+            <div class="input-group">
+              <div class="input-group-addon number-with-currency-symbol">
+                <%= ::Money::Currency.find(@order.currency).symbol %>
+              </div>
+              <%= text_field_tag :amount, payment.amount, class: 'js-edit-amount align-right form-control' %>
+            </div>
+          </div>
+          <span class="js-display-amount editing-hide"><%= payment.display_amount.to_html %></span>
         </td>
         <td class="actions">
           <div class="editing-show">
