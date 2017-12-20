@@ -4,7 +4,7 @@
 require 'pathname'
 
 class Project
-  attr_reader :name
+  attr_reader :name, :title, :weight
 
   NODE_TOTAL = Integer(ENV.fetch('CIRCLE_NODE_TOTAL', 1))
   NODE_INDEX = Integer(ENV.fetch('CIRCLE_NODE_INDEX', 0))
@@ -17,11 +17,21 @@ class Project
 
   DEFAULT_MODE = 'test'.freeze
 
-  def initialize(name)
+  def initialize(name, test_type: :rspec, title: nil, weight:)
     @name = name
+    @title = title || name
+    @test_type = test_type
+    @weight = weight
   end
 
-  ALL = %w[api backend core frontend sample].map(&method(:new)).freeze
+  ALL = [
+    new('api', weight: 50),
+    new('backend', weight: 215),
+    new('backend', test_type: :teaspoon, title: "backend JS", weight: 15),
+    new('core', weight: 220),
+    new('frontend', weight: 95),
+    new('sample', weight: 22)
+  ].freeze
 
   # Install subproject
   #
@@ -98,7 +108,14 @@ class Project
   #
   # @return [Array<Project>]
   def self.current_projects
-    NODE_INDEX.step(ALL.length - 1, NODE_TOTAL).map(&ALL.method(:fetch))
+    unallocated = ALL.sort_by(&:weight).reverse
+    nodes = Array.new(NODE_TOTAL) { [] }
+
+    while project = unallocated.shift
+      nodes.min_by { |projects| projects.sum(&:weight) } << project
+    end
+
+    nodes[NODE_INDEX]
   end
   private_class_method :current_projects
 
@@ -140,19 +157,22 @@ class Project
   # @return [Boolean]
   #   the success of the tests
   def run_tests
-    @success = true
+    send(:"run_#{@test_type}")
+  end
+
+  def run_rspec
     run_test_cmd(%w[bundle exec rspec] + rspec_arguments)
-    if name == "backend"
-      run_test_cmd(%w[bundle exec teaspoon] + teaspoon_arguments)
-    end
-    @success
+  end
+
+  def run_teaspoon
+    run_test_cmd(%w[bundle exec teaspoon] + teaspoon_arguments)
   end
 
   def run_test_cmd(args)
     puts "Run: #{args.join(' ')}"
     result = system(*args)
     puts(result ? "Success" : "Failed")
-    @success &&= result
+    result
   end
 
   def teaspoon_arguments
