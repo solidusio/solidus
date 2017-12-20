@@ -201,18 +201,19 @@ You can see the build statuses at
 
 #### Run all tests
 
-To execute all the tests, run this command at the root of the Solidus project
-to run specs for all projects:
+To execute all the tests for all projects, run `rake` in the top-level
+directory.
 
 ```shell
-bash build.sh
+bundle install
+rake
 ```
 
-This runs using PostgreSQL by default, but can be overridden by setting the `DB`
-environment variable to `DB=sqlite` or `DB=mysql`. For example:
+This runs using Sqlite by default, but can be overridden by setting the `DB`
+environment variable to `DB=postgresql` or `DB=mysql`. For example:
 
 ```
-DB=mysql bash build.sh
+rake DB=postgresql
 ```
 
 [ChromeDriver](https://sites.google.com/a/chromium.org/chromedriver/home) is
