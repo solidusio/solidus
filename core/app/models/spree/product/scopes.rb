@@ -172,7 +172,7 @@ module Spree
     end
 
     scope :with_master_price, -> do
-      joins(:master).where(Spree::Price.where(Spree::Variant.arel_table[:id].eq(Spree::Price.arel_table[:variant_id])).exists)
+      joins(:master).where(Spree::Price.where(Spree::Variant.arel_table[:id].eq(Spree::Price.arel_table[:variant_id])).arel.exists)
     end
 
     # Can't use add_search_scope for this as it needs a default argument
@@ -189,7 +189,7 @@ module Spree
       sku_match = "%#{sku}%"
       variant_table = Spree::Variant.arel_table
       subquery = Spree::Variant.where(variant_table[:sku].matches(sku_match).and(variant_table[:product_id].eq(arel_table[:id])))
-      where(subquery.exists)
+      where(subquery.arel.exists)
     end
 
     def self.distinct_by_product_ids(sort_order = nil)
