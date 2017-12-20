@@ -77,14 +77,16 @@ module Spree
         end
 
         def add_search_scopes(base_scope)
-          @properties[:search].each do |name, scope_attribute|
-            scope_name = name.to_sym
-            if base_scope.respond_to?(:search_scopes) && base_scope.search_scopes.include?(scope_name.to_sym)
-              base_scope = base_scope.send(scope_name, *scope_attribute)
-            else
-              base_scope = base_scope.merge(Spree::Product.ransack({ scope_name => scope_attribute }).result)
+          if @properties[:search]
+            @properties[:search].each do |name, scope_attribute|
+              scope_name = name.to_sym
+              if base_scope.respond_to?(:search_scopes) && base_scope.search_scopes.include?(scope_name.to_sym)
+                base_scope = base_scope.send(scope_name, *scope_attribute)
+              else
+                base_scope = base_scope.merge(Spree::Product.ransack({ scope_name => scope_attribute }).result)
+              end
             end
-          end if @properties[:search]
+          end
           base_scope
         end
 
