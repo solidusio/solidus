@@ -164,6 +164,7 @@ module Spree
       # This scope selects products in any of the active taxons or their children.
       #
       def self.taxons_below(taxon)
+        Spree::Deprecation.warn "taxons_below is deprecated in solidus_core. Please add it to your own application to continue using it."
         return Spree::Core::ProductFilters.all_taxons if taxon.nil?
         {
           name:   'Taxons under ' + taxon.name,
@@ -180,6 +181,7 @@ module Spree
       #
       # idea: expand the format to allow nesting of labels?
       def self.all_taxons
+        Spree::Deprecation.warn "all_taxons is deprecated in solidus_core. Please add it to your own application to continue using it."
         taxons = Spree::Taxonomy.all.map { |t| [t.root] + t.root.descendants }.flatten
         {
           name:   'All taxons',
