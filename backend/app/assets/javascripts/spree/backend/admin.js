@@ -20,11 +20,19 @@ Spree.ready(function() {
     var tr = $(this).closest('tr');
     var klass = 'highlight action-' + $(this).data('action')
     tr.addClass(klass)
-  });
-  $('table').on("mouseleave", 'td.actions a, td.actions button', function(){
-    var tr = $(this).closest('tr');
-    var klass = 'highlight action-' + $(this).data('action')
-    tr.removeClass(klass)
+
+    var observer = new MutationObserver(function(mutations) {
+      tr.removeClass(klass);
+      this.disconnect();
+    });
+    observer.observe(tr.get(0), { childList: true });
+
+    // Using .one() instead of .on() prevents multiple callbacks to be attached
+    // to this event if mouseentered multiple times.
+    $(this).one("mouseleave", function() {
+      tr.removeClass(klass);
+      observer.disconnect();
+    });
   });
 });
 
