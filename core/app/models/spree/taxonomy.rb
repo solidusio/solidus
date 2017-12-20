@@ -9,7 +9,7 @@ module Spree
 
     after_save :set_name
 
-    default_scope -> { order(:position) }
+    default_scope -> { order(position: :asc) }
 
     private
 

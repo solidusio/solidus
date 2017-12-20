@@ -157,7 +157,7 @@ module Spree
     scope :by_store, ->(store) { where(store_id: store.id) }
 
     # shows completed orders first, by their completed_at date, then uncompleted orders by their created_at
-    scope :reverse_chronological, -> { order('spree_orders.completed_at IS NULL', completed_at: :desc, created_at: :desc) }
+    scope :reverse_chronological, -> { order(Arel.sql('spree_orders.completed_at IS NULL'), completed_at: :desc, created_at: :desc) }
 
     def self.by_customer(customer)
       joins(:user).where("#{Spree.user_class.table_name}.email" => customer)
