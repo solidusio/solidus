@@ -14,9 +14,18 @@ DummyApp::RakeTasks.new(
 
 namespace :spec do
   task :isolated do
-    Dir['spec/**/*_spec.rb'].all? do |file|
-      sh('rspec', file)
-    end || raise("Failures")
+    spec_files = Dir['spec/**/*_spec.rb']
+    failed_specs =
+      spec_files.reject do |file|
+        puts "rspec #{file}"
+        system('rspec', file)
+      end
+
+    if !failed_specs.empty?
+      puts "Failed specs:"
+      puts failed_specs
+      exit 1
+    end
   end
 end
 
