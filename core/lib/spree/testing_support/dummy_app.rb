@@ -53,7 +53,6 @@ module DummyApp
     config.action_mailer.delivery_method              = :test
     config.action_controller.allow_forgery_protection = false
     config.active_support.deprecation                 = :stderr
-    config.secret_token                               = 'SECRET_TOKEN'
     config.secret_key_base                            = 'SECRET_TOKEN'
 
     # Avoid issues if an old spec/dummy still exists
