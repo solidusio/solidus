@@ -1,25 +1,60 @@
-# Overview
+# Overview of promotions
 
-Promotions within Spree are used to provide discounts to orders, as well as to
-add potential additional items at no extra cost. Promotions are one of the most
-complex areas within Spree, as there are a large number of moving parts to
-consider. Although this guide will explain Promotions from a developer's
-perspective, if you are new to this area you can learn a lot from the Admin >
-Promotions tab where you can set up new Promotions, edit rules & actions, etc. 
+Solidus's promotions system allows stores to give discounts to customers. 
 
-In some special cases where a promotion has a `code` or a `path` configured for
-it, the promotion will only be activated if the payload's code or path match the
-promotion's. The `code` attribute is used for promotion codes, where a user must
-enter a code to receive the promotion, and the `path` attribute is used to apply
-a promotion once a user has visited a specific path.
+Promotions might be discounts on orders, line items, or shipping charges. The
+promotions system provides a set of handlers, rules, and actions that work
+together to provide flexible discounts in any scenario.
 
-!!!
-Path-based promotions will only work when the `Spree::PromotionHandler::Page`
-class is used, as in `Spree::ContentController` from `spree_frontend`.
-!!!
+To account for all of the ways a discount may be applied, the promotions system
+has many complex moving parts.
 
-A promotion may also have a `usage_limit` attribute set, which restricts how
-many times the promotion can be used.
+We recommend that you start up a Solidus store on your local machine and see the
+built-in promotions functionality yourself, as store administrators have a
+flexible promotions system available by default
+([`http://localhost:3000/admin/promotions`][promotions-admin]). Here,
+administrators can add promotions and create complex strings of promotion rules
+and actions if necessary. 
+
+[promotions-admin]: http://localhost:3000/admin/promotions
+
+## Promotion architecture
+
+The following sections summarize the main parts of Solidus's promotions system.
+
+<!-- TODO:
+  Currently there is no documentation about `Spree::PromotionCode`s activating
+  promotions using a URL.
+-->
+
+### Promotion model
+
+The `Spree::Promotion` model defines essential information about a promotion.
+This includes the promotion's name, description, and whether the promotion
+should be active or not.
+
+Take note of the following promotion attributes:
+
+- `name`: The administrative name for the promotion.
+- `description`: An administrative description for the promotion.
+- `starts_at` and `expires_at`: Optional date values for the start and end of
+  the promotion.
+- `match_policy`: When set to `all`, all promotion rules must be met in order
+  for the promotion to be eligible. When set to `any`, just one of the
+  [promotion rules](#promotion-rules) must be met.
+- `path`: If the promotion is activated when the customer visits a URL, this
+  value is the path for the URL.
+- `per_code_usage_limit`: Specifies how many codes can be used before the
+  promotion becomes inactive.
+- `apply_automatically`: If `true`, the promotion is activated and applied
+  automatically once all of the [eligibility checks](#eligibility) have passed.
+
+Note that you can access promotion information using the `promotion` method its
+associated `Spree::PromotionRule` and `Spree::PromotionAction` objects:
+
+```ruby
+Spree::PromotionAction.find(1).promotion
+```
 
 ## Eligibility
 
