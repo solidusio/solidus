@@ -817,7 +817,10 @@ class SolidusOneFour < ActiveRecord::Migration[5.0]
       t.index ["deleted_at"], name: "index_spree_stock_items_on_deleted_at"
       t.index ["stock_location_id", "variant_id"], name: "stock_item_by_loc_and_var_id"
       t.index ["stock_location_id"], name: "index_spree_stock_items_on_stock_location_id"
-      t.index ["variant_id", "stock_location_id"], name: "index_spree_stock_items_on_variant_id_and_stock_location_id", unique: true, where: "deleted_at is null"
+
+      if connection.supports_partial_index?
+        t.index ["variant_id", "stock_location_id"], name: "index_spree_stock_items_on_variant_id_and_stock_location_id", unique: true, where: "deleted_at is null"
+      end
     end
 
     create_table "spree_stock_locations", force: :cascade do |t|
