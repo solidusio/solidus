@@ -21,3 +21,36 @@ class is used, as in `Spree::ContentController` from `spree_frontend`.
 A promotion may also have a `usage_limit` attribute set, which restricts how
 many times the promotion can be used.
 
+## Eligibility
+
+`Spree::Promotion`'s performs a number of checks to determine whether a
+promotion is eligible to be applied.
+
+First, it checks that the promotion is active, that its usage limit has not been
+reached, that its promotion code usage limit has not be reached, and that all of
+the products are promotable products. Finally, it checks the
+`Spree::PromotionRule`s.
+
+If all of these checks pass, then the promotion is eligible.
+
+See the `eligible?` method defined in the [Spree::Promotion
+model][spree-promotion]:
+
+```ruby
+# models/spree/promotion.rb : line 123
+def eligible?(promotable, promotion_code: nil)
+  return false if inactive?
+  return false if usage_limit_exceeded?
+  return false if promotion_code && promotion_code.usage_limit_exceeded?
+  return false if blacklisted?(promotable)
+  !!eligible_rules(promotable, {})
+end
+```
+
+Note that promotions without rules are eligible by default.
+
+Once the promotion is confirmed eligible, the promotion can be activated through
+the relevant `Spree::PromotionHandler`.
+
+[spree-promotion]: https://github.com/solidusio/solidus/blob/master/core/app/models/spree/promotion.rb
+
