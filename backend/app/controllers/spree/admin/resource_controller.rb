@@ -134,9 +134,10 @@ class Spree::Admin::ResourceController < Spree::Admin::BaseController
     self.class.parent_data[:model_name].gsub('spree/', '')
   end
 
-  alias_method :model_name, :parent_model_name
-  deprecate model_name: :parent_model_name, deprecator: Spree::Deprecation
-  instance_method(:model_name).owner.send(:private, :model_name)
+  def model_name
+    Spree::Deprecation.warn('model_name is deprecated. Please use parent_model_name instead.', caller)
+    parent_model_name
+  end
 
   def object_name
     controller_name.singularize
@@ -171,10 +172,9 @@ class Spree::Admin::ResourceController < Spree::Admin::BaseController
   end
 
   def parent_data
+    Spree::Deprecation.warn('parent_data is deprecated without replacement.', caller)
     self.class.parent_data
   end
-  deprecate :parent_data, deprecator: Spree::Deprecation
-  instance_method(:parent_data).owner.send(:private, :parent_data)
 
   def parent
     if parent?
