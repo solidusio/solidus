@@ -54,3 +54,47 @@ the relevant `Spree::PromotionHandler`.
 
 [spree-promotion]: https://github.com/solidusio/solidus/blob/master/core/app/models/spree/promotion.rb
 
+## Promotion flow
+
+This section provides a high-level view of the promotion system in action. For
+the sake of this example, the store administrator is creating a free shipping
+promotion for orders over $100 USD.
+
+1. The administrator creates a `Spree::Promotion` from the Solidus backend.
+  - They create a name, description, and optional category for the promotion.
+  - They choose not to set a usage limit for the promotion.
+  - They choose not to set a start or end date for the promotion.
+  - They choose the "Apply to all orders" activation method. Alternatively, they
+    could have chosen to apply promotions via a promotion code or a URL.
+2. The administrator creates `Spree::PromotionRule`s for the promotion.
+   - In this case, they use the rule type "Item Total"
+     (`Spree::Promotion::Rules::ItemTotal`) and set the rule so that the
+     promotion must be greater than $100 USD.
+3. The administrator creates `Spree::PromotionAction`s for the promotion. 
+  - They use promotion action type "Free shipping", which uses the
+    `Spree::Promotion::Actions::Shipping` model. In this case, the only
+    available action is "Makes all shipments for the order free".
+  - Because the promotion action requires a shipment, the
+    `Spree::PromotionHandler::Shipping` will be used when it is time to activate
+    the promotion.
+
+Different types of promotions would change the customer's experience of
+promotion activation. For example, the customer might be required to enter a
+promotion code to activate some promotions, while a free shipping promotion
+would be applied automatically.
+
+In this case, because the administrator used the "Apply to all orders"
+activation method, the promotion is applied automatically:
+
+1. The customer adds items to their cart. The `Spree::Order` total is greater
+   than $100 USD.
+2. The customer begins the checkout process.
+3. The customer enters their shipping information.
+4. The `Spree::PromotionHandler::Shipping` handler checks that the
+   `Spree::PromotionRule`s are met. Because the order total is
+   greater than $100 USD, the promotion is eligible. 
+5. The `Spree::PromotionHandler::Shipping` activates the promotion. 
+6. The `Spree::PromotionAction` associated with the promotion is computed and
+   applied as a `Spree::Adjustment` that negates the order's shipping charges..
+   The customer's shipping is now free.
+7. The customer completes the checkout process.
