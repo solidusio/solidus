@@ -1,6 +1,6 @@
 # Overview of promotions
 
-Solidus's promotions system allows stores to give discounts to customers. 
+Solidus's promotions system allows stores to give discounts to customers.
 
 Promotions might be discounts on orders, line items, or shipping charges. The
 promotions system provides a set of handlers, rules, and actions that work
@@ -14,7 +14,7 @@ built-in promotions functionality yourself, as store administrators have a
 flexible promotions system available by default
 ([`http://localhost:3000/admin/promotions`][promotions-admin]). Here,
 administrators can add promotions and create complex strings of promotion rules
-and actions if necessary. 
+and actions if necessary.
 
 [promotions-admin]: http://localhost:3000/admin/promotions
 
@@ -49,12 +49,72 @@ Take note of the following promotion attributes:
 - `apply_automatically`: If `true`, the promotion is activated and applied
   automatically once all of the [eligibility checks](#eligibility) have passed.
 
-Note that you can access promotion information using the `promotion` method its
-associated `Spree::PromotionRule` and `Spree::PromotionAction` objects:
+Note that you can access promotion information using the `promotion` method on
+its associated `Spree::PromotionRule` and `Spree::PromotionAction` objects:
 
 ```ruby
 Spree::PromotionAction.find(1).promotion
 ```
+
+### Promotion handlers
+
+Subclasses of the `Spree::PromotionHandler` model activate a promotion if the
+promotion is [eligible](#eligibility) to be applied. There are `Cart`, `Coupon`,
+`Page`, and `Shipping` subclasses, each one used for a different promotion
+activation method. For more information, see the [Promotion
+handlers][promotion-handlers] article.
+
+Once a promotion handler activates a promotion, and all of the eligibility
+checks pass, the `Spree::PromotionAction` can be applied to the applicable
+shipment, order, or line item.
+
+[promotion-handlers]: promotion-handlers.md
+
+### Promotion rules
+
+The `Spree::PromotionRule` model sets a rule that determines whether a promotion
+is eligible to be applied. Promotions may have no rules or many different rules.
+
+By default, `Spree::Promotion`s have a `match_policy` value of `all`, meaning
+that all of the promotion rules on a promotion must be met before the promotion
+is eligible. However, this can be changed to `any`.
+
+An example of a typical promotion rule would be a minimum order total of $75
+USD or that a specific product is in the cart at checkout.
+
+For a list of available rule types and more information, see the
+[Promotion rules][promotion-rules] article.
+
+[promotion-rules]: promotion-rules.md
+
+### Promotion actions
+
+The `Spree::PromotionAction` model defines an action that should occur if the
+promotion is activated and eligible to be applied. There can be multiple
+promotion actions on a promotion.
+
+Typically, a promotion action could be free shipping or a fixed percentage
+discount.
+
+A promotion action calculates the discount amount and creates a
+`Spree::Adjustment` for the promotion. The adjustment then adjusts the price of
+an order, line item, or shipment.
+
+### Promotion adjustments
+
+Finally, the `Spree::Adjustment` model defines the discount amount that is
+applied. Each adjustment is created by a `Spree::PromotionAction`.
+
+Every time that the promotion adjustment needs to be recalculated, the
+`Spree::PromotionRules` are re-checked to ensure the promotion is still
+eligible.
+
+Note that shipments and taxes can also create adjustments. See the adjustments
+documentation for more information.
+
+<!-- TODO:
+  Once merged, link to documentation about adjustments.
+-->
 
 ## Eligibility
 
@@ -104,8 +164,8 @@ promotion for orders over $100 USD.
 2. The administrator creates `Spree::PromotionRule`s for the promotion.
    - In this case, they use the rule type "Item Total"
      (`Spree::Promotion::Rules::ItemTotal`) and set the rule so that the
-     promotion must be greater than $100 USD.
-3. The administrator creates `Spree::PromotionAction`s for the promotion. 
+     order must be greater than $100 USD.
+3. The administrator creates `Spree::PromotionAction`s for the promotion.
   - They use promotion action type "Free shipping", which uses the
     `Spree::Promotion::Actions::Shipping` model. In this case, the only
     available action is "Makes all shipments for the order free".
@@ -127,8 +187,8 @@ activation method, the promotion is applied automatically:
 3. The customer enters their shipping information.
 4. The `Spree::PromotionHandler::Shipping` handler checks that the
    `Spree::PromotionRule`s are met. Because the order total is
-   greater than $100 USD, the promotion is eligible. 
-5. The `Spree::PromotionHandler::Shipping` activates the promotion. 
+   greater than $100 USD, the promotion is eligible.
+5. The `Spree::PromotionHandler::Shipping` activates the promotion.
 6. The `Spree::PromotionAction` associated with the promotion is computed and
    applied as a `Spree::Adjustment` that negates the order's shipping charges..
    The customer's shipping is now free.
