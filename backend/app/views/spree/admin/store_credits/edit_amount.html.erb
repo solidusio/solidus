@@ -14,15 +14,19 @@
   <fieldset>
     <legend align="center"><%= t('spree.admin.store_credits.edit_amount') %></legend>
     <div data-hook="admin_store_credit_form_fields" class="row">
-      <div class="col-9">
+      <div class="col-6">
         <%= f.field_container :amount do %>
           <%= f.label :amount, class: 'required' %><br />
-          <%= f.number_field :amount, min: 0.00, step: :any %>
+          <%= render "spree/admin/shared/number_with_currency", f: f,
+            amount_attr: :amount, currency: @store_credit.currency, required: true %>
           <%= f.error_message_on :amount %>
         <% end %>
       </div>
-      <%= render partial: 'update_reason_field', locals: { f: f } %>
+      <div class="col-6">
+        <%= render 'update_reason_field', f: f %>
+      </div>
     </div>
-    <%= render partial: 'spree/admin/shared/edit_resource_links', locals: { collection_url: admin_user_store_credits_path(@user, @store_credit) } %>
+    <%= render 'spree/admin/shared/edit_resource_links',
+      collection_url: admin_user_store_credits_path(@user, @store_credit) %>
   </fieldset>
 <% end %>
