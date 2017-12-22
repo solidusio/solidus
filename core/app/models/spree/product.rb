@@ -60,7 +60,6 @@ module Spree
     end
 
     MASTER_ATTRIBUTES = [
-      :rebuild_vat_prices,
       :sku,
       :price,
       :weight,
@@ -80,6 +79,7 @@ module Spree
     delegate :display_amount,
              :display_price,
              :has_default_price?,
+             :rebuild_vat_prices=,
              to: :find_or_build_master
 
     delegate :images, to: :master, prefix: true
