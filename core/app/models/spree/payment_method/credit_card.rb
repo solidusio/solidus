@@ -8,7 +8,7 @@ module Spree
   #
   class PaymentMethod::CreditCard < PaymentMethod
     def payment_source_class
-      CreditCard
+      Spree::CreditCard
     end
 
     def partial_name

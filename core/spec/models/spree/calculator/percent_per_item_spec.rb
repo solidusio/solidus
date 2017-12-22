@@ -1,12 +1,10 @@
-require_dependency 'spree/calculator'
-
 require 'rails_helper'
 require 'shared_examples/calculator_shared_examples'
 
+require_dependency 'spree/calculator'
+
 module Spree
-  class Calculator
-    RSpec.describe PercentPerItem, type: :model do
-      it_behaves_like 'a calculator with a description'
-    end
+  RSpec.describe Calculator::PercentPerItem, type: :model do
+    it_behaves_like 'a calculator with a description'
   end
 end
