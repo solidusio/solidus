@@ -58,3 +58,53 @@ associated with it.
   Again, let's make sure we link to relevant locations documentation here.
 -->
 
+## Required address values
+
+By default, `Spree::Address` objects require many address values, including a
+phone number and zip code value.
+
+You may want to alter Solidus's address requirements for your store. For
+example, if you do not require customer phone numbers in order for them to check
+out.
+
+Right now, you need to [monkey-patch][monkey-patch] the `Spree::Address` model
+in order to change its requirements. For example, you could prepend your custom
+behavior that redefines `Spree::Address`'s `require_phone?` method: 
+
+```ruby
+module PhoneNotRequired
+  def require_phone?
+    false
+  end
+end
+
+Spree::Address.prepend(PhoneNotRequired)
+```
+
+Similarly, if you ship to countries that don't require postal codes, like Hong
+Kong or Macau, you may want to make postal codes optional instead of required.
+
+Right now, you can monkey-patch the `Spree::Address` model in order to remove or
+change the requirements. For example, you could prepend your own custom behavior
+that redefines `Spree::Address`'s `require_zipcode?` method:
+
+```ruby
+module ZipCodeValidation
+  def require_zipcode?
+    # if a country that you ship to does not require postal codes, add its iso
+    # code to the following array so that Spree::Address does not require zip
+    # codes for addresses in those countries.
+    !['HK','MO'].include?(country.iso)
+  end
+end
+
+Spree::Address.prepend(ZipCodeValidation)
+```
+
+<!-- TODO:
+  Ideally, we do not want to recommend monkey-patching the Spree::Address model.
+  It would be great make address requirements more configurable in general.
+  Then, we can revisit this documentation.
+-->
+
+[monkey-patch]: https://en.wikipedia.org/wiki/Monkey_patch
