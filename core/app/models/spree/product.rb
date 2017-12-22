@@ -60,14 +60,28 @@ module Spree
     end
 
     MASTER_ATTRIBUTES = [
-      :rebuild_vat_prices, :sku, :price, :currency, :weight, :height, :width, :depth,
-      :cost_currency, :price_in, :price_for, :amount_in, :cost_price
+      :rebuild_vat_prices,
+      :sku,
+      :price,
+      :currency,
+      :weight,
+      :height,
+      :width,
+      :depth,
+      :cost_currency,
+      :price_in,
+      :price_for,
+      :amount_in,
+      :cost_price,
     ]
     MASTER_ATTRIBUTES.each do |attr|
       delegate :"#{attr}", :"#{attr}=", to: :find_or_build_master
     end
 
-    delegate :display_amount, :display_price, :has_default_price?, to: :find_or_build_master
+    delegate :display_amount,
+             :display_price,
+             :has_default_price?,
+             to: :find_or_build_master
 
     delegate :images, to: :master, prefix: true
     alias_method :images, :master_images
