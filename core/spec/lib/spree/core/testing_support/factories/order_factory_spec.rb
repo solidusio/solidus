@@ -160,8 +160,10 @@ RSpec.describe 'order factory' do
 
     it_behaves_like 'a working factory'
 
-    shared_examples "it has the expected attributes" do
-      it do
+    context "when built" do
+      let(:order) { build(factory, line_items_price: 77) }
+
+      it "has all the expected attributes but total" do
         aggregate_failures do
           expect(order.total).to eq 0
           expect(order.line_items.length).to eq 1
@@ -170,14 +172,16 @@ RSpec.describe 'order factory' do
       end
     end
 
-    context "when built" do
-      let(:order) { build(factory, line_items_price: 77) }
-      it_behaves_like "it has the expected attributes"
-    end
-
     context "when created" do
       let(:order) { create(factory, line_items_price: 77) }
-      it_behaves_like "it has the expected attributes"
+
+      it "has the expected attributes" do
+        aggregate_failures do
+          expect(order.total).to eq order.line_items.sum(&:total)
+          expect(order.line_items.length).to eq 1
+          expect(order.line_items.first.price).to eq 77
+        end
+      end
     end
   end
 

@@ -512,7 +512,7 @@ RSpec.describe Spree::Order, type: :model do
     end
     it "updates the state column to the first checkout_steps value" do
       order = create(:order_with_totals, state: "delivery")
-      expect(order.checkout_steps).to eql ["address", "delivery", "confirm", "complete"]
+      expect(order.checkout_steps).to eql %w(address delivery payment confirm complete)
       expect{ order.restart_checkout_flow }.to change{ order.state }.from("delivery").to("address")
     end
 
