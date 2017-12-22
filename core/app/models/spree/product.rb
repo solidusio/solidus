@@ -63,7 +63,6 @@ module Spree
       :rebuild_vat_prices,
       :sku,
       :price,
-      :currency,
       :weight,
       :height,
       :width,
