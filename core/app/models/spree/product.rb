@@ -67,18 +67,18 @@ module Spree
       :width,
       :depth,
       :cost_currency,
-      :price_in,
-      :price_for,
-      :amount_in,
       :cost_price,
     ]
     MASTER_ATTRIBUTES.each do |attr|
       delegate :"#{attr}", :"#{attr}=", to: :find_or_build_master
     end
 
-    delegate :display_amount,
+    delegate :amount_in,
+             :display_amount,
              :display_price,
              :has_default_price?,
+             :price_for,
+             :price_in,
              :rebuild_vat_prices=,
              to: :find_or_build_master
 
