@@ -566,8 +566,8 @@ es-MX:
     date_completed: Fecha completada
     date_picker:
       first_day:
-      format: Año/mes/día
-      js_format: aa/mm/dd
+      format: "%d/%m/%Y"
+      js_format: dd/mm/yy
     date_range: Rango de Fecha
     default: Por omisión
     default_refund_amount:
