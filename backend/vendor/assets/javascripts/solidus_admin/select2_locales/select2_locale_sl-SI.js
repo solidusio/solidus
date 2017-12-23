@@ -1,5 +1,5 @@
 /**
- * Select2 German translation
+ * Select2 Slovenian translation
  */
 (function ($) {
     "use strict";
