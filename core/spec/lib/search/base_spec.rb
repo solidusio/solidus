@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'spree/core/product_filters'
 
 RSpec.describe Spree::Core::Search::Base do
   before do

@@ -15,20 +15,20 @@
   <% @store_credits.group_by(&:currency).each do |currency, credits| %>
     <fieldset class="sc-current-balance no-border-bottom">
       <legend>
-        <%= currency %> <%= t('spree.admin.store_credits.current_balance') %>
+        <%= t('spree.admin.store_credits.current_balance') %>
         <% total = credits.sum(&:amount_remaining) %>
         <%= Spree::Money.new(total, currency: currency) %>
       </legend>
 
       <table class="sc-table">
         <thead>
-          <th class="wrap-text"><%= Spree::StoreCredit.human_attribute_name(:amount_credited) %></th>
-          <th class="wrap-text"><%= Spree::StoreCredit.human_attribute_name(:amount_used) %></th>
-          <th class="wrap-text"><%= Spree::StoreCredit.human_attribute_name(:amount_authorized) %></th>
-          <th class="wrap-text"><%= Spree::StoreCredit.human_attribute_name(:category_id) %></th>
-          <th class="wrap-text"><%= Spree::StoreCredit.human_attribute_name(:created_by_id) %></th>
-          <th class="wrap-text"><%= Spree::StoreCredit.human_attribute_name(:created_at) %></th>
-          <th class="wrap-text"><%= Spree::StoreCredit.human_attribute_name(:invalidated_at) %></th>
+          <th><%= t('spree.admin.store_credits.amount_credited') %></th>
+          <th><%= t('spree.admin.store_credits.amount_used') %></th>
+          <th><%= t('spree.admin.store_credits.amount_authorized') %></th>
+          <th><%= t('spree.admin.store_credits.credit_type') %></th>
+          <th><%= t('spree.admin.store_credits.created_by') %></th>
+          <th><%= t('spree.admin.store_credits.created_at') %></th>
+          <th><%= t('spree.admin.store_credits.invalidated') %></th>
           <th data-hook="admin_store_credits_index_header_actions" class="actions"></th>
         </thead>
         <tbody>
@@ -53,7 +53,7 @@
                 <span><%= l store_credit.created_at.to_date %></span>
               </td>
               <td>
-                <span><%= store_credit.invalidated? %></span>
+                <span><%= t store_credit.invalidated? ? 'spree.say_yes' : 'spree.say_no' %></span>
               </td>
               <td class="actions" data-hook="admin_store_credits_index_row_actions">
                 <% if can?(:show, store_credit) %>

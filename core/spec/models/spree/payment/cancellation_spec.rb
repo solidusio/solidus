@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 RSpec.describe Spree::Payment::Cancellation do
   describe '#initialize' do

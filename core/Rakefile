@@ -12,4 +12,21 @@ DummyApp::RakeTasks.new(
   lib_name: 'solidus_core'
 )
 
+namespace :spec do
+  task :isolated do
+    spec_files = Dir['spec/**/*_spec.rb']
+    failed_specs =
+      spec_files.reject do |file|
+        puts "rspec #{file}"
+        system('rspec', file)
+      end
+
+    if !failed_specs.empty?
+      puts "Failed specs:"
+      puts failed_specs
+      exit 1
+    end
+  end
+end
+
 task test_app: 'db:reset'
