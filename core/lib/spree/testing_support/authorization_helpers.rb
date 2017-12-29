@@ -39,9 +39,14 @@ module Spree
           end
 
           before do
-            allow(Spree.user_class).to receive(:find_by).
-                                         with(hash_including(:spree_api_key)).
-                                         and_return(Spree.user_class.new)
+            original_find = Spree.user_class.method(:find_by)
+            allow(Spree.user_class).to receive(:find_by) do |hash|
+              if hash[:spree_api_key]
+                Spree.user_class.new
+              else
+                original_find.call(hash)
+              end
+            end
           end
         end
 
