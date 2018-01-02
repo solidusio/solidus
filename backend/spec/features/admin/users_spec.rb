@@ -99,6 +99,10 @@ describe 'Users', type: :feature do
     end
 
     context "member since" do
+      before do
+        user_a.update_column(:created_at, 2.weeks.ago)
+      end
+
       it_behaves_like "a sortable attribute" do
         let(:text_match_1) { user_a.email }
         let(:text_match_2) { user_b.email }
@@ -107,7 +111,6 @@ describe 'Users', type: :feature do
       end
 
       it 'displays the correct results for a user search by creation date' do
-        user_a.update_column(:created_at, 2.weeks.ago)
         fill_in 'q_created_at_lt', with: 1.week.ago
         click_button 'Search'
         within_table('listing_users') do
