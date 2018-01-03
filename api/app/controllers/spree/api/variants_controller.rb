@@ -15,7 +15,7 @@ module Spree
 
       def destroy
         @variant = scope.accessible_by(current_ability, :destroy).find(params[:id])
-        @variant.paranoia_destroy
+        @variant.discard
         respond_with(@variant, status: 204)
       end
 

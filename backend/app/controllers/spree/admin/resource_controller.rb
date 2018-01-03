@@ -87,7 +87,9 @@ class Spree::Admin::ResourceController < Spree::Admin::BaseController
     invoke_callbacks(:destroy, :before)
 
     destroy_result =
-      if @object.respond_to?(:paranoia_destroy)
+      if @object.respond_to?(:discard)
+        @object.discard
+      elsif @object.respond_to?(:paranoia_destroy)
         @object.paranoia_destroy
       else
         @object.destroy

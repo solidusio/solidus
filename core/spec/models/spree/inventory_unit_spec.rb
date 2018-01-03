@@ -114,17 +114,17 @@ RSpec.describe Spree::InventoryUnit, type: :model do
     end
   end
 
-  context "variants deleted" do
+  context "variants discarded" do
     let!(:unit) { create(:inventory_unit) }
 
     it "can still fetch variant" do
-      unit.variant.destroy
+      unit.variant.discard
       expect(unit.reload.variant).to be_a Spree::Variant
     end
 
     it "can still fetch variants by eager loading (remove default_scope)" do
       skip "find a way to remove default scope when eager loading associations"
-      unit.variant.destroy
+      unit.variant.discard
       expect(Spree::InventoryUnit.joins(:variant).includes(:variant).first.variant).to be_a Spree::Variant
     end
   end

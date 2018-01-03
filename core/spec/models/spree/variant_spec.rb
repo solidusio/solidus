@@ -145,7 +145,7 @@ RSpec.describe Spree::Variant, type: :model do
       context "and a variant is soft-deleted" do
         let!(:old_options_text) { variant.options_text }
 
-        before { variant.paranoia_destroy! }
+        before { variant.discard }
 
         it "still keeps the option values for that variant" do
           expect(variant.reload.options_text).to eq(old_options_text)
@@ -654,19 +654,43 @@ RSpec.describe Spree::Variant, type: :model do
     end
   end
 
-  describe "deleted_at scope" do
-    let!(:previous_variant_price) { variant.display_price }
+  describe "#discard" do
+    it "discards related associations" do
+      variant.images = [create(:image)]
 
-    before { variant.paranoia_destroy }
+      expect(variant.stock_items).not_to be_empty
+      expect(variant.prices).not_to be_empty
+      expect(variant.currently_valid_prices).not_to be_empty
 
-    it "should keep its price if deleted" do
-      expect(variant.display_price).to eq(previous_variant_price)
+      variant.discard
+
+      expect(variant.images).to be_empty
+      expect(variant.stock_items).to be_empty
+      expect(variant.prices).to be_empty
+      expect(variant.currently_valid_prices).to be_empty
     end
 
-    context 'when loading with pre-fetching of default_price' do
-      it 'also keeps the previous price' do
-        reloaded_variant = Spree::Variant.with_deleted.includes(:default_price).find_by(id: variant.id)
-        expect(reloaded_variant.display_price).to eq(previous_variant_price)
+    describe 'default_price' do
+      let!(:previous_variant_price) { variant.display_price }
+
+      it "should discard default_price" do
+        variant.discard
+        variant.reload
+        expect(variant.default_price).to be_discarded
+      end
+
+      it "should keep its price if deleted" do
+        variant.discard
+        variant.reload
+        expect(variant.display_price).to eq(previous_variant_price)
+      end
+
+      context 'when loading with pre-fetching of default_price' do
+        it 'also keeps the previous price' do
+          variant.discard
+          reloaded_variant = Spree::Variant.with_deleted.includes(:default_price).find_by(id: variant.id)
+          expect(reloaded_variant.display_price).to eq(previous_variant_price)
+        end
       end
     end
   end

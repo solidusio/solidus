@@ -467,7 +467,7 @@ module Spree
     # Check to see if any line item variants are soft, deleted.
     # If so add error and restart checkout.
     def ensure_line_item_variants_are_not_deleted
-      if line_items.any? { |li| li.variant.paranoia_destroyed? }
+      if line_items.any? { |li| li.variant.discarded? }
         errors.add(:base, I18n.t('spree.deleted_variants_present'))
         restart_checkout_flow
         false

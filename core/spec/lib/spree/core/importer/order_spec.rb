@@ -242,7 +242,7 @@ module Spree
 
       context 'variant was soft-deleted' do
         it 'raise error as variant shouldnt be found' do
-          variant.product.paranoia_destroy
+          variant.product.discard
           hash = { sku: variant.sku }
           expect {
             Importer::Order.ensure_variant_id_from_params(hash)
