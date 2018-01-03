@@ -68,7 +68,7 @@ For example, just create a new JavaScript file,
 include the new method definition:
 
 ```javascript
-var Spree.showVariantImages = function(variant_id) {
+Spree.showVariantImages = function(variant_id) {
  alert('hello world');
 }
 ```
