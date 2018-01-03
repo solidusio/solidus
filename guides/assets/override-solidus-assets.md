@@ -93,6 +93,9 @@ For example, to replace the `solidus_frontend`'s
 replacement to `your_app/app/assets/stylesheets/spree/frontend/_variables.scss`
 with your own definitions inside.
 
+This is more brittle than overriding single definitions, as described above,
+and isn't guaranteed to work in future Solidus versions.
+
 Note that this method *completely* replaces any functionality provided by the
 stylesheet or JavaScript file.
 
