@@ -18,7 +18,7 @@ module Spree
       describe "#index" do
         it "can list stock items for an active stock location" do
           get spree.api_stock_location_stock_items_path(stock_location)
-          expect(response).to be_success
+          expect(response).to be_successful
           expect(json_response['stock_items'].first).to have_attributes(attributes)
           expect(json_response['stock_items'].first['variant']['sku']).to match /\ASKU-\d+\z/
         end

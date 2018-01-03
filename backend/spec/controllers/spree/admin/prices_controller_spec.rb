@@ -11,7 +11,7 @@ describe Spree::Admin::PricesController do
 
       subject { get :index, params: { product_id: product.slug } }
 
-      it { is_expected.to be_success }
+      it { is_expected.to be_successful }
 
       it 'assigns usable instance variables' do
         subject
@@ -28,7 +28,7 @@ describe Spree::Admin::PricesController do
 
       subject { get :index, params: { product_id: product.slug, variant_id: variant.id } }
 
-      it { is_expected.to be_success }
+      it { is_expected.to be_successful }
 
       it 'assigns usable instance variables' do
         subject

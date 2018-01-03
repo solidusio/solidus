@@ -37,7 +37,7 @@ describe Spree::Admin::UsersController, type: :controller do
 
       it 'can visit index' do
         post :index
-        expect(response).to be_success
+        expect(response).to be_successful
       end
 
       it "allows admins to update a user's API key" do
