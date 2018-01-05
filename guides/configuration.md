@@ -35,24 +35,6 @@ This block instantiates the main configuration object for the Solidus engine. He
 
 If your desired change in behaviour can be accomplished with one of the configuration options available here (see the full list in [our YARD docs for the `Spree::AppConfiguration` class](http://docs.solidus.io/Spree/AppConfiguration.html), you should do this. These are tested options that allow you to implement complex behaviour with little effort and well-tested code.
 
-## Overriding templates
-
-If you want to change something about HTML structure of Solidus' frontend (the the customer-facing part) or the admin backend, you have two choices: Either overriding the template in question, or using the Deface Gem.  
-
-"Overriding the template" means copying the views from Solidus' frontend or backend gem and adding them to your host app in the exact same location.
-
-For example, if you want to change the way the product list is rendered, take the raw version of [that template](../frontend/app/views/spree/products/index.html.erb) and copy it to `app/views/spree/products/index.html.erb`. It is very important that the path and name of this file are exactly the same as in the Gem! Template files from your app will always win over template files from an imported engine.
-
-Of course, it the template you wish to modify references other template files, you can override those, too. For example, the product list references a shared partial `app/views/spree/shared/_products.html.erb` - you can find it [here](../frontend/app/views/spree/shared/_products.html.erb) and also override it in your host app.
-
-When you override a view from a Gem, there is the possibility of difficulties when upgrading, because Controller code within the Gem might have changed, such as for example the name of an instance variable. Be careful when upgrading, and always read `CHANGELOG.md`.
-
-If you want to avoid upgrade difficulties, or just need a tiny change to get the feature you need, you can use the `Deface` gem. Find it [here](https://github.com/spree/deface). Deface changes your templates in-place dynamically. When using Deface extensively, it can be tricky to find out where a particular piece of HTML actually comes from.
-
-## Changing assets
-
-If you need to change the look and feel of your app without changing the HTML structure, you can customize the CSS, image and JavaScript assets by amending the files in `vendor/assets/*/*/all.js`. They mirror the structure of the `app/assets` folder. Have a look at the [Asset Overriding Guide](assets.md) for overriding assets.
-
 ## Installing extensions
 
 The Solidus ecosystem is rich in extensions that modify Solidus' behaviour. The extensions are distributed as Gems, so it's often as easy as adding the extension to your Gemfile and running an install generator. Sometimes, however, the extension needs more work, such as adding custom configuration in its own initializer. Please refer to the individual extension's README file.
