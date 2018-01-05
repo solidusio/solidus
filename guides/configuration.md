@@ -98,31 +98,3 @@ Your search will now only return products that contain "rails" in their name.
 
 This pattern is our preferred pattern for generating extension points. If you see yourself overriding a class with a definable interface, and there is no such extension point, we're very happy to accept a Pull Request implementing that changeable class.
 
-## Monkey-Patching Solidus
-
-Solidus is setup so that any file in the `app` directory with the suffix `_decorator.rb` will be auto-loaded like any model or controller files.
-
-For example, if you want to add a method to the `Spree::Order` model, you would have a file called `app/models/mystore/order_decorator.rb` with the following contents:
-
-```ruby
-module MyStore
-  module OrderDecorator
-    def total
-      super + BigDecimal(10.0)
-    end
-  end
-end
-```
-
-In order to override the `total` method on `Spree::Order`, add the following to the file `app/models/spree/order_decorator.rb`:
-
-```ruby
-Spree::Order.prepend MyStore::OrderDecorator
-```
-
-This creates a new module called `MyStore::OrderDecorator` and will insert its methods so early in the method lookup chain for method calls on `Spree::Order` objects that the decorator's methods override the original methods.
-
-From now on, every order, when asked for its total, will return the an inflated total by 10 Dollars (or whatever your currency is).
-
-If you do this kind of thing, be very careful and test your new functionality very well. If you do upgrades, read extra carefully about changes in Solidus' core classes.
-
