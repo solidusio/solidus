@@ -35,8 +35,3 @@ This block instantiates the main configuration object for the Solidus engine. He
 
 If your desired change in behaviour can be accomplished with one of the configuration options available here (see the full list in [our YARD docs for the `Spree::AppConfiguration` class](http://docs.solidus.io/Spree/AppConfiguration.html), you should do this. These are tested options that allow you to implement complex behaviour with little effort and well-tested code.
 
-## Installing extensions
-
-The Solidus ecosystem is rich in extensions that modify Solidus' behaviour. The extensions are distributed as Gems, so it's often as easy as adding the extension to your Gemfile and running an install generator. Sometimes, however, the extension needs more work, such as adding custom configuration in its own initializer. Please refer to the individual extension's README file.
-
-We maintain an [extensions compatibility matrix](http://extensions.solidus.io/). This is a good starting point for finding out which extensions are available and whether they work with your chosen Solidus version.
