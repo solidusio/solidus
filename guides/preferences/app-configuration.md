@@ -40,6 +40,15 @@ if you wanted to change your store's currency:
 Spree::Config.currency = "AUD"
 ```
 
+## Do not extend application-wide preferences
+
+We do not support changing or extending the `Spree::AppConfiguration`
+preferences. However, you may be able to get the functionality you require by
+adding preferences that are specific to a model. For more information see the
+[Add model preferences][add-model-preferences] article.
+
+[add-model-preferences]: add-model-preferences.md
+
 ## Read the current preference settings
 
 You can read all of Solidus's currently set preferences quickly from your Rails
@@ -55,13 +64,7 @@ Or, if you want the value of a specific preference:
 Spree::Config.currency
 ```
 
-<!-- TODO:
-  Spree's documentation has documentation for creating new configuration by
-  inheriting from the `Spree::Preferences::Configuration` class. Should we
-  recommend that developers extend the site-wide configuration at all? If so,
-  let's add a section to this article.
--->
-
 [app-configuration-model]: https://github.com/solidusio/solidus/blob/master/core/lib/spree/app_configuration.rb
 [app-configuration-documentation]: http://docs.solidus.io/Spree/AppConfiguration.html
 [rails-engines]: http://guides.rubyonrails.org/engines.html
+
