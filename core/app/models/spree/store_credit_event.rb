@@ -1,6 +1,12 @@
+require 'discard'
+
 module Spree
   class StoreCreditEvent < Spree::Base
     acts_as_paranoid
+    include Spree::ParanoiaDeprecations
+
+    include Discard::Model
+    self.discard_column = :deleted_at
 
     belongs_to :store_credit
     belongs_to :originator, polymorphic: true
