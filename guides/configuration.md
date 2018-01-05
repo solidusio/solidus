@@ -126,14 +126,3 @@ From now on, every order, when asked for its total, will return the an inflated 
 
 If you do this kind of thing, be very careful and test your new functionality very well. If you do upgrades, read extra carefully about changes in Solidus' core classes.
 
-## Run a private fork
-
-If it turns out that some functionality of Solidus is deeply embedded in core, and you need to make interrelated changes to more than one model in order to achieve your goals, it might be time to create a private fork of the solidus repository and implement your feature in that private fork. This has the advantage that you can run Solidus' test suite along with your new feature and make sure it does not break Solidus' existing functionality.
-
-You can reference a private fork in your Gemfile this way:
-
-```ruby
-gem 'solidus', git: 'https://github.com/my_account/solidus.git', branch: "my-new-feature"
-```
-
-If you think your feature (or fix) if of interest to the wider Solidus community, please do us the favour of improving the Solidus framework by [submitting a Pull Request](../CONTRIBUTING.md).
