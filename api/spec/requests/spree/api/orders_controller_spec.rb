@@ -76,6 +76,20 @@ module Spree
             end
           end
         end
+
+        context "with existing promotion" do
+          let(:discount) { 2 }
+          before do
+            create(:promotion, :with_line_item_adjustment, apply_automatically: true, adjustment_rate: discount )
+          end
+
+          it "activates the promotion" do
+            post spree.api_orders_path, params: { order: { line_items: { "0" => { variant_id: variant.to_param, quantity: 1 } } } }
+            order = Order.last
+            line_item = order.line_items.first
+            expect(order.total).to eq(line_item.price - discount)
+          end
+        end
       end
 
       context "when the current user can administrate the order" do
