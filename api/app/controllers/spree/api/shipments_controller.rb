@@ -2,7 +2,7 @@ module Spree
   module Api
     class ShipmentsController < Spree::Api::BaseController
       before_action :find_order_on_create, only: :create
-      before_action :find_shipment, only: [:update, :ship, :ready, :add, :remove, :estimated_rates]
+      before_action :find_shipment, only: [:update, :ship, :ready, :add, :remove, :estimated_rates, :select_shipping_method]
       before_action :load_transfer_params, only: [:transfer_to_location, :transfer_to_shipment]
       around_action :lock_order, except: [:mine, :estimated_rates]
       before_action :update_shipment, only: [:ship, :ready, :add, :remove]
@@ -26,6 +26,14 @@ module Spree
         authorize! :update, @shipment
         estimator = Spree::Config.stock.estimator_class.new
         @shipping_rates = estimator.shipping_rates(@shipment.to_package, false)
+      end
+
+      def select_shipping_method
+        authorize! :update, @shipment
+        shipping_method = Spree::ShippingMethod.find(params.require(:shipping_method_id))
+        @shipment.select_shipping_method(shipping_method)
+        @order.recalculate
+        respond_with(@shipment, default_template: :show)
       end
 
       def create
