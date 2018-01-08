@@ -14,7 +14,8 @@
   }
 
   > * { // usually a <span> but we'll use an * just in case
-    @include padding(null 1rem);
+    padding-left: 1rem;
+    padding-right: 1rem;
     position: relative;
     background: $background;
     z-index: 1;

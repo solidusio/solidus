@@ -123,7 +123,8 @@ nav.menu {
 
   .admin-subnav {
     background: $color-navbar-submenu-bg;
-    @include padding($padding-y-navbar - $padding-y-navbar-submenu null);
+    padding-top:    $padding-y-navbar - $padding-y-navbar-submenu;
+    padding-bottom: $padding-y-navbar - $padding-y-navbar-submenu;
 
     li {
       background: $color-navbar-submenu-bg;
@@ -131,7 +132,8 @@ nav.menu {
 
     a {
       color: $color-navbar-submenu;
-      @include padding($padding-y-navbar-submenu null);
+      padding-top:    $padding-y-navbar-submenu;
+      padding-bottom: $padding-y-navbar-submenu;
 
       &:hover {
         color: $color-navbar-submenu-active;

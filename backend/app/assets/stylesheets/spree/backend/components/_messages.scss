@@ -26,7 +26,10 @@
 }
 
 .flash-wrapper {
-  @include position(fixed, null 0 0 $width-sidebar);
+  position: fixed;
+  bottom: 0;
+  left: $width-sidebar;
+  right: 0;
   z-index: 1000;
 }
 
