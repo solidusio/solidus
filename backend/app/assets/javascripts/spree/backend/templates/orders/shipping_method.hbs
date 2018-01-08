@@ -3,13 +3,15 @@
 </th>
 {{#if editing}}
 <td colspan="4">
+{{#if shipping_rates}}
   <form>
-    <select class="custom-select fullwidth" name="selected_shipping_rate_id">
+    <select class="custom-select fullwidth" name="selected_shipping_method_id">
       {{#each shipping_rates}}
-      <option value="{{ id }}">{{name}} {{display_cost}}</option>
+      <option value="{{ shipping_method_id }}">{{name}} {{display_cost}}</option>
       {{/each}}
     </select>
   </form>
+{{/if}}
 </td>
 {{else}}
 <td colspan="3">
@@ -22,7 +24,9 @@
 
 <td class="actions">
   {{#if editing}}
+    {{#if shipping_rates}}
     <button class="js-save fa fa-check no-text with-tip" data-action="save" title="{{ t "actions.save" }}"></button>
+    {{/if}}
     <button class="js-cancel fa fa-cancel no-text with-tip" data-action="cancel" title="{{ t "actions.cancel" }}"></button>
   {{else}}
     <button class="js-edit fa fa-edit no-text with-tip" data-action="edit" title=""{{ t "actions.edit" }}"></button>
