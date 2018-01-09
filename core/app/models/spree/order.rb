@@ -175,6 +175,14 @@ module Spree
       where(completed_at: nil)
     end
 
+    def self.canceled
+      where(state: 'canceled')
+    end
+
+    def self.not_canceled
+      where.not(state: 'canceled')
+    end
+
     # Use this method in other gems that wish to register their own custom logic
     # that should be called after Order#update
     def self.register_update_hook(hook)
