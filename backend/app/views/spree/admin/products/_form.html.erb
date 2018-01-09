@@ -14,7 +14,7 @@
       <div data-hook="admin_product_form_slug">
         <%= f.field_container :slug do %>
           <%= f.label :slug, class: ('required' if !f.object.new_record?) %>
-          <%= f.text_field :slug, class: 'fullwidth title', required: !f.object.new_record? %>
+          <%= f.text_field :slug, class: 'fullwidth title', required: !f.object.new_record?, disabled: f.object.new_record? %>
           <%= f.error_message_on :slug %>
         <% end %>
       </div>
