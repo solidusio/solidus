@@ -5,6 +5,11 @@ central place around which to collect information about a customer order. It
 collects line items, adjustments, payments, addresses, return authorizations,
 and shipments. 
 
+Whenever information about the order is updated, the `Spree::OrderUpdater`
+should update the order. If your store creates or changes the functionality
+around the order, you may need to [manually call the order
+updater][update-orders].
+
 Orders have the following attributes:
 
 - `number`: The unique identifier for this order. It begins with the letter `R`
@@ -152,21 +157,4 @@ information, please read the [Payments](payments) guide.
 ## Return Authorizations
 
 $$$ document return authorizations.  $$$
-
-## Updating an Order
-
-If you change any aspect of an `Order` object within code and you wish to update
-the order's totals -- including associated adjustments and shipments -- call the
-`update_with_updater!` method on that object, which calls out to the
-`OrderUpdater` class.
-
-For example, if you create or modify an existing payment for the order which
-would change the order's `payment_state` to a different value, calling
-`update_with_updater!` will cause the `payment_state` to be recalculated for
-that order.
-
-Another example is if a `LineItem` within the order had its price changed.
-Calling `update_with_updater!` will cause the totals for the order to be
-updated, the adjustments for the order to be recalculated, and then a final
-total to be established.
 
