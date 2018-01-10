@@ -119,6 +119,24 @@ describe "Order Details", type: :feature, js: true do
           expect(page).to have_content("UPS Ground")
         end
 
+        it "can use admin-only shipping methods" do
+          create(:shipping_method, name: "Admin Free Shipping", cost: 0, available_to_users: false)
+
+          visit spree.edit_admin_order_path(order)
+
+          screenshot_and_open_image
+
+          within("tr", text: "Shipping Method") do
+            click_icon :edit
+            select "Admin Free Shipping $0.00"
+            click_icon :check
+          end
+
+          expect(page).not_to have_css('#selected_shipping_rate_id')
+          expect(page).to have_no_content("UPS Ground")
+          expect(page).to have_content("Admin Free Shipping")
+        end
+
         it "will show the variant sku" do
           visit spree.edit_admin_order_path(order)
           sku = order.line_items.first.variant.sku
