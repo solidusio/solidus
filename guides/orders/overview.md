@@ -1,61 +1,69 @@
 # Overview
 
-The `Order` model is one of the key models in Spree. It provides a central place
-around which to collect information about a customer order - including line
-items, adjustments, payments, addresses, return authorizations, and shipments.
+The `Spree::Order` model is one of the key models in Solidus. It provides a
+central place around which to collect information about a customer order. It
+collects line items, adjustments, payments, addresses, return authorizations,
+and shipments. 
 
 Orders have the following attributes:
 
-* `number`: The unique identifier for this order. It begins with the letter R
-  and ends in a 9-digit number. This number is shown to the users, and can be
-used to find the order by calling `Spree::Order.find_by(number: number)`.
-* `item_total`: The sum of all the line items for this order.
-* `adjustment_total`: The sum of all adjustments on this order.
-* `total`: The result of the sum of the `item_total` and the `adjustment_total`.
-* `payment_total`: The total value of all finalized payments.
-* `shipment_total`: The total value of all shipments' costs.
-* `additional_tax_total`: The sum of all shipments' and line items'
-  `additional_tax`.
-* `included_tax_total`: The sum of all shipments' and line items'
-  `included_tax`.
-* `promo_total`: The sum of all shipments', line items' and promotions'
-  `promo_total`.
-* `state`: The current state of the order. To read more about the states an
-  order goes through, read [The Order State Machine](#the-order-state-machine)
-section of this guide.
-* `email`: The email address for the user who placed this order. Stored in case
-  this order is for a guest user.
-* `user_id`: The ID for the corresponding user record for this order. Stored
-  only if the order is placed by a signed-in user.
-* `completed_at`: The timestamp of when the order was completed.
-* `bill_address_id`: The ID for the related `Address` object with billing
-  address information.
-* `ship_address_id`: The ID for the related `Address` object with shipping
-  address information.
-* `shipping_method_id`: The ID for the related `ShippingMethod` object.
-* `created_by_id`: The ID of object that created this order.
-* `shipment_state`: The current shipment state of the order. For possible
-  states, please see the [Shipments guide](shipments).
-* `payment_state`: The current payment state of the order. For possible states,
-  please see the [Payments guide](payments).
-* `special_instructions`: Any special instructions for the store to do with this
-  order. Will only appear if `Spree::Config[:shipping_instructions]` is set to
-`true`.
-* `currency`: The currency for this order. Determined by the
+- `number`: The unique identifier for this order. It begins with the letter `R`
+  and ends in a nine-digit number (for example, `R123456789`). This number is
+  shown to the users, and can be used to find the order by calling
+  `Spree::Order.find_by(number: "R123456789")`.
+- `item_total`: The sum of all the line items for this order.
+- `total`: The sum of the `item_total` and the `adjustment_total` attributes.
+- `state`: The current state of the order. See the [Order state
+  machine][order-state-machine] article for more information.
+- `adjustment_total`: The sum of all adjustments on this order.
+- `user_id`: The ID for the order's corresponding user. Stored only if the order
+  is placed by a signed-in user.
+- `completed_at`: The timestamp that logs when the order is completed.
+- `bill_address_id` and `ship_address_id`: The IDs for the related
+  `Spree::Address` objects with billing and shipping address information.
+- `payment_total`: The sum of all the *finalized* payments on the order.
+- `shipment_state`: The current [shipment state][shipment-states] of the order.
+- `payment_state`: The current payment state of the order.
+- `email`: The customer-provided email address for the order. This is stored in
+  case the order is for a guest user.
+- `special_instructions`: Any [special shipping
+  instructions][special-instructions] that shave been specified by the customer
+  during checkout.
+- `currency`: The currency for this order. Determined by the
   `Spree::Config[:currency]` value that was set at the time of order.
-* `last_ip_address`: The last IP address used to update this order in the
+- `last_ip_address`: The last IP address used to update this order in the
   frontend.
-* `channel`: The channel specified when importing orders from other stores. e.g.
-  amazon.
-* `item_count`: The total value of line items' quantity.
-* `approver_id`: The ID of user that approved this order.
-* `confirmation_delivered`: Boolean value indicating that confirmation email was
-  delivered.
-* `guest_token`: The guest token stored corresponding to token stored in
-  cookies.
-* `canceler_id`: The ID of user that canceled this order.
-* `store_id`: The ID of `Store` in which this order was created.
+- `created_by_id`: The ID of object that created this order.
+- `shipment_total`: The sum of all the shipments associated with an order.
+- `additional_tax_total`: The sum of all the `additional_tax_total`s (sales tax)
+  on an order's line items and shipments. 
+- `promo_total`: The sum of all of the `promo_total`s on an order's shipments,
+  line items, and promotions.
+- `channel`: The channel specified when importing orders from other stores. For
+  example, if you operate as an Amazon Seller and import orders from Amazon,
+  some orders may have a channel value of `amazon`. Otherwise, this value is
+  `spree`.
+- `included_tax_total`: The sum of all the `included_tax_total`s (value-added
+  tax) on an order's line items and shipments.
+- `item_count`: The total amount of line items associated with the order.
+- `approver_id`: The ID of user that approved the order.
+- `approver_name`: The name of the user that approved the order.
+- `approved_at`: The timestamp logging when this order is approved by the
+  approver.
+- `confirmation_delivered`: Boolean value that indicates that an order
+  confirmation email has been delivered.
+- `guest_token`: The guest token that links an uncompleted order to a specific
+  guest user (via browser cookies).
+- `canceler_id`: The ID of user that canceled this order.
+- `canceled_at`: If the order is cancelled, this timestamp logs when the order
+  was cancelled.
+- `store_id`: The ID of `Spree::Store` in which the order has been created.
 
+[display-totals-methods]: display-totals-methods.md
+[order-state-machine]: order-state-machine.md
+[shipment-states]: ../shipments/overview-of-shipments.md#shipping-states
+[special-instructions]: ../shipments/user-interface-for-shipments.md#shipping-instructions
+[update-orders]: update-orders.md
 
 Some methods you may find useful:
 
