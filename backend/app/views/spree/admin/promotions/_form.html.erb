@@ -42,6 +42,13 @@
         </span>
       <% end %>
 
+      <% if @promotion.persisted? %>
+        <%= f.field_container :per_code_usage_limit do %>
+          <%= f.label :per_code_usage_limit %><br />
+          <%= f.number_field :per_code_usage_limit, min: 0, class: 'fullwidth' %><br>
+        <% end %>
+      <% end %>
+
       <div id="starts_at_field" class="field">
         <%= f.label :starts_at %>
         <%= f.field_hint :starts_at %>
