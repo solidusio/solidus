@@ -21,7 +21,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'solidus_api', version
   s.add_dependency 'solidus_core', version
 
-  s.add_dependency 'bourbon'
+  s.add_dependency 'bourbon', '>= 4', '< 5'
   s.add_dependency 'sass-rails'
   s.add_dependency 'coffee-rails'
   s.add_dependency 'jquery-rails'
