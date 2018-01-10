@@ -289,6 +289,22 @@ module Spree
         end
       end
 
+      context 'when an item does not track inventory' do
+        before do
+          order.line_items.first.variant.update_attributes!(track_inventory: false)
+        end
+
+        it 'contains stock information on variant' do
+          subject
+          variant = json_response['line_items'][0]['variant']
+          expect(variant).to_not be_nil
+          expect(variant['in_stock']).to eq(true)
+          expect(variant['total_on_hand']).to eq(nil)
+          expect(variant['is_backorderable']).to eq(true)
+          expect(variant['is_destroyed']).to eq(false)
+        end
+      end
+
       context 'when shipment adjustments are present' do
         before do
           order.shipments.first.adjustments << adjustment
