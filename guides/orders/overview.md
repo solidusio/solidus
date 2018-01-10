@@ -64,22 +64,15 @@ Orders have the following attributes:
   was cancelled.
 - `store_id`: The ID of `Spree::Store` in which the order has been created.
 
-[display-totals-methods]: display-totals-methods.md
+Because orders are so integral to Solidus, there are a number of methods
+available that let you easily display order totals and subtotals. For more
+information, see the [Display totals methods][display-total-methods] article.
+
+[display-total-methods]: display-total-methods.md
 [order-state-machine]: order-state-machine.md
 [shipment-states]: ../shipments/overview-of-shipments.md#shipping-states
 [special-instructions]: ../shipments/user-interface-for-shipments.md#shipping-instructions
 [update-orders]: update-orders.md
-
-Some methods you may find useful:
-
-* `outstanding_balance`: The outstanding balance for the order, calculated by
-  taking the `total` and subtracting `payment_total`.
-* `display_item_total`: A "pretty" version of `item_total`. If `item_total` was
-  `10.0`, `display_item_total` would be `$10.00`.
-* `display_adjustment_total`: Same as above, except for `adjustment_total`.
-* `display_total`: Same as above, except for `total`.
-* `display_outstanding_balance`: Same as above, except for
-  `outstanding_balance`.
 
 ## The Order State Machine
 
@@ -113,48 +106,89 @@ to transition it to the next state by calling `next` on that object. If this
 returns `false`, then the order does *not* meet the criteria. To work out why it
 cannot transition, check the result of an `errors` method call.
 
-## Line Items
+## Related models
 
-Line items are used to keep track of items within the context of an order. These
-records provide a link between orders, and [Variants](products#variants).
+The `Spree::Order` model touches many other models. This section highlights
+essential models that orders depend on and links to their existing
+documentation.
 
-When a variant is added to an order, the price of that item is tracked along
-with the line item to preserve that data. If the variant's price were to change,
-then the line item would still have a record of the price at the time of
-ordering.
+### Line items
 
-* Inventory tracking notes
+The `Spree::LineItem` model provides the cost of each item added to an order.
+Line items provide a link between the order and `Spree::Product`s and
+`Spree::Variant`s.
 
-$$$ Update this section after Chris+Brian have done their thing.  $$$
+<!-- For more information about line items, products, and variants, see the
+[Products and variants][products-and-variants] documentation. -->
 
-## Addresses
+<!-- TODO:
+  Add link to products and variants documentaiton once it is merged.
+  Add link to line item-specific documentation once it has been written and
+  merged.
+-->
 
-An order can link to two `Address` objects. The shipping address indicates where
-the order's product(s) should be shipped to. This address is used to determine
-which shipping methods are available for an order.
+### Adjustments
 
-The billing address indicates where the user who's paying for the order is
-located. This can alter the tax rate for the order, which in turn can change how
-much the final order total can be.
+The `Spree::Adjustment` model provides the cost of each adjustment to an order,
+line item, or shipment on an order. Adjustments can decrease the total (via
+promotions) or increase it (via [shipments][shipments] and [taxes][taxes]).
 
-For more information about addresses, please read the [Addresses](addresses)
-guide.
+<!-- For more information, see the [Adjustments][adjustments] documentation -->
 
-## Adjustments
+<!-- TODO:
+  Add link to promotions guide once it is merged.
+  Add link to adjustments guide once it is merged.
+-->
 
-Adjustments are used to affect an order's final cost, either by decreasing it
-([Promotions](promotions)) or by increasing it ([Shipping](shipments),
-[Taxes](taxation)).
+[taxes]: ../taxation/overview-of-taxation.md
 
-For more information about adjustments, please see the
-[Adjustments](adjustments) guide.
+### Shipments
 
-## Payments
+The `Spree::Shipment` model creates shipments according to the items in an
+order. An order may have multiple shipments: this depends on your store's
+configured shipping categories and shipping methods and the item in the order. 
 
-Payment records are used to track payment information about an order. For more
-information, please read the [Payments](payments) guide.
+Shipments use `Spree::InventoryUnit`s. An inventory unit is created for each
+item added to an order for the purpose of tracking what order and shipment an
+item belongs to. Inventory units provide a link between the order and
+`Spree::Shipment`s.
 
-## Return Authorizations
+For more information, see the [Shipments][shipments] documentation.
 
-$$$ document return authorizations.  $$$
+[shipments]: ../shipments/overview-of-shipment.md
+
+### Addresses
+
+The `Spree::Address` model stores customer addresses and shares them with the
+order via the `ship_address_id` and `bill_address_id`. An order may have one or
+two different addresses associated it, depending on the customer's preferred
+shipping and billing address.
+
+<!-- For more information, see the [Addresses][addresses] documentation. -->
+
+<!-- TODO:
+  Add link to addresses guide once it is merged.
+-->
+
+### Payments
+
+The `Spree::Payment` model stores payment information for the order. Once the
+payment object is updated with the amount paid, this updates the corresponding
+order's `payment_total` value.
+
+<!-- For more information, see the [Payments][payments] documentation. -->
+
+<!-- TODO:
+  Add link to payments guide once it is merged.
+-->
+
+### Return Authorizations
+
+The `Spree::ReturnAuthorization` model stores information about customers
+returns that have been authorized by an administrator.
+
+<!-- TODO:
+  This sub-article is a stub! I need to learn more about return authorizations
+  before I can write about this.
+-->
 
