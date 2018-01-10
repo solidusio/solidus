@@ -4,7 +4,7 @@ gemspec require: false
 
 platforms :ruby do
   gem 'mysql2', require: false
-  gem 'pg', require: false
+  gem 'pg', '~> 0.21', require: false
   gem 'sqlite3', require: false
   gem 'fast_sqlite', require: false
 end
