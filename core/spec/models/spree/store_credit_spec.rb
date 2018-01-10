@@ -12,12 +12,16 @@ RSpec.describe Spree::StoreCredit do
 
     context "amount used is greater than zero" do
       let(:store_credit) { create(:store_credit, amount: 100, amount_used: 1) }
-      subject { store_credit.paranoia_destroy }
 
-      it 'can not delete the store credit' do
-        subject
-        expect(store_credit.reload).to eq store_credit
-        expect(store_credit.errors[:amount_used]).to include("is greater than zero. Can not delete store credit")
+      describe "#discard" do
+        subject { store_credit.discard }
+
+        it 'can not delete the store credit' do
+          subject
+          expect(store_credit.reload).to eq store_credit
+          expect(store_credit.errors[:amount_used]).to include("is greater than zero. Can not delete store credit")
+          expect(store_credit).not_to be_discarded
+        end
       end
     end
 

@@ -1,5 +1,11 @@
+require 'discard'
+
 class Spree::StoreCredit < Spree::PaymentSource
   acts_as_paranoid
+  include Spree::ParanoiaDeprecations
+
+  include Discard::Model
+  self.discard_column = :deleted_at
 
   VOID_ACTION       = 'void'
   CREDIT_ACTION     = 'credit'
@@ -33,6 +39,7 @@ class Spree::StoreCredit < Spree::PaymentSource
   before_validation :associate_credit_type
   before_validation :validate_category_unchanged, on: :update
   before_destroy :validate_no_amount_used
+  validate :validate_no_amount_used, if: :discarded?
 
   attr_accessor :action, :action_amount, :action_originator, :action_authorization_code, :update_reason
 
