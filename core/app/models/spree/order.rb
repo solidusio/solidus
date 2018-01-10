@@ -821,12 +821,12 @@ module Spree
     #   }
     #
     def update_params_payment_source
+      Spree::Deprecation.warn('update_params_payment_source is deprecated. Please use set_payment_parameters_amount instead.', caller)
       if @updating_params[:order] && (@updating_params[:order][:payments_attributes] || @updating_params[:order][:existing_card])
         @updating_params[:order][:payments_attributes] ||= [{}]
         @updating_params[:order][:payments_attributes].first[:amount] = total
       end
     end
-    deprecate update_params_payment_source: :set_payment_parameters_amount, deprecator: Spree::Deprecation
 
     def associate_store
       self.store ||= Spree::Store.default

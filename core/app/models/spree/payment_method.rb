@@ -258,6 +258,5 @@ module Spree
         raise ::NotImplementedError, "You must implement gateway_class method for #{self.class}."
       end
     end
-    deprecate provider_class: :gateway_class, deprecator: Spree::Deprecation
   end
 end
