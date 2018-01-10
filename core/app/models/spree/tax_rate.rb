@@ -1,9 +1,16 @@
+require 'discard'
+
 module Spree
   class TaxRate < Spree::Base
     acts_as_paranoid
+    include Spree::ParanoiaDeprecations
+
+    include Discard::Model
+    self.discard_column = :deleted_at
 
     # Need to deal with adjustments before calculator is destroyed.
     before_destroy :remove_adjustments_from_incomplete_orders
+    before_discard :remove_adjustments_from_incomplete_orders
 
     include Spree::CalculatedAdjustments
     include Spree::AdjustmentSource

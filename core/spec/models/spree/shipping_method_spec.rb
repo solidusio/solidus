@@ -63,7 +63,7 @@ RSpec.describe Spree::ShippingMethod, type: :model do
   context "soft deletion" do
     let(:shipping_method) { create(:shipping_method) }
     it "soft-deletes when destroy is called" do
-      shipping_method.paranoia_destroy
+      shipping_method.discard
       expect(shipping_method.deleted_at).not_to be_blank
     end
   end

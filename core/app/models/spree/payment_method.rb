@@ -1,3 +1,4 @@
+require 'discard'
 require 'spree/preferences/statically_configurable'
 
 module Spree
@@ -16,6 +17,11 @@ module Spree
     preference :test_mode, :boolean, default: true
 
     acts_as_paranoid
+    include Spree::ParanoiaDeprecations
+
+    include Discard::Model
+    self.discard_column = :deleted_at
+
     acts_as_list
     DISPLAY = [:both, :front_end, :back_end]
 
