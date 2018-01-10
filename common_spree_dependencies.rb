@@ -5,7 +5,7 @@ source 'https://rubygems.org'
 
 platforms :ruby do
   gem 'mysql2'
-  gem 'pg'
+  gem 'pg', '~> 0.21'
   gem 'sqlite3'
   gem 'fast_sqlite'
 end
