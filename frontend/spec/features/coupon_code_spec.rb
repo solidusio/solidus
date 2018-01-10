@@ -174,13 +174,12 @@ describe "Coupon code promotions", type: :feature, js: true do
           calculator = Spree::Calculator::FlatPercentItemTotal.new
           calculator.preferred_flat_percent = 100
 
-          action = Spree::Promotion::Actions::CreateAdjustment.new
-          action.calculator = calculator
-          action.promotion = promotion
-          action.save!
+          promotion.promotion_actions.first.discard
 
-          promotion.promotion_actions = [action]
-          promotion.save!
+          Spree::Promotion::Actions::CreateAdjustment.create!(
+            calculator: calculator,
+            promotion: promotion
+          )
 
           create(:product, name: "Spree Mug", price: 10)
         end

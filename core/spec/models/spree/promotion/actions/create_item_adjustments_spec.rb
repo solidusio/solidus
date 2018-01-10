@@ -138,7 +138,7 @@ module Spree
       end
     end
 
-    context "#paranoia_destroy" do
+    shared_examples "destroying adjustments from incomplete orders" do
       let!(:action) { promotion.actions.first }
       let(:other_action) { other_promotion.actions.first }
       let(:promotion) { create(:promotion, :with_line_item_adjustment) }
@@ -151,7 +151,7 @@ module Spree
           order.adjustments.create!(label: 'Check', amount: 0, order: order, source: action)
 
           expect {
-            action.paranoia_destroy
+            subject
           }.to change { Adjustment.count }.by(-1)
         end
       end
@@ -165,7 +165,7 @@ module Spree
 
           expect {
             expect {
-              action.paranoia_destroy
+              subject
             }.not_to change { adjustment.reload.source_id }
           }.not_to change { Spree::Adjustment.count }
 
@@ -177,10 +177,20 @@ module Spree
           order.adjustments.create!(label: "Check", amount: 0, order: order, source: action)
 
           expect {
-            action.paranoia_destroy
+            subject
           }.not_to change { other_action.adjustments.count }
         end
       end
+    end
+
+    describe "#discard" do
+      subject { action.discard }
+      it_should_behave_like "destroying adjustments from incomplete orders"
+    end
+
+    describe "#paranoia_destroy" do
+      subject { Spree::Deprecation.silence { action.paranoia_destroy } }
+      it_should_behave_like "destroying adjustments from incomplete orders"
     end
   end
 end
