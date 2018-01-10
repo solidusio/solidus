@@ -74,38 +74,6 @@ information, see the [Display totals methods][display-total-methods] article.
 [special-instructions]: ../shipments/user-interface-for-shipments.md#shipping-instructions
 [update-orders]: update-orders.md
 
-## The Order State Machine
-
-Orders flow through a state machine, beginning at a `cart` state and ending up
-at a `complete` state. The intermediary states can be configured using the
-[Checkout Flow API](checkout).
-
-The default states are as follows:
-
-* `cart`
-* `address`
-* `delivery`
-* `payment`
-* `confirm`
-* `complete`
-
-The `payment` state will only be triggered if `payment_required?` returns
-`true`.
-
-The `confirm` state will only be triggered if `confirmation_required?` returns
-`true`.
-
-The `complete` state can only be reached in one of two ways:
-
-1. No payment is required on the order.
-2. Payment is required on the order, and at least the order total has been
-received as payment.
-
-Assuming that an order meets the criteria for the next state, you will be able
-to transition it to the next state by calling `next` on that object. If this
-returns `false`, then the order does *not* meet the criteria. To work out why it
-cannot transition, check the result of an `errors` method call.
-
 ## Related models
 
 The `Spree::Order` model touches many other models. This section highlights
