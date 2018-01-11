@@ -108,4 +108,24 @@ RSpec.describe Spree::CalculatedAdjustments do
       expect(subject.calculator.preferred_first_item).to eq(123)
     end
   end
+
+  describe '#calculator_type=' do
+    subject { Calculable.new }
+
+    let(:calculator_subclass) { Spree::Calculator::Shipping::FlatRate }
+    let(:calculator_superclass) { Spree::ShippingCalculator }
+
+    before(:each) do
+      subject.calculator_type = calculator_subclass.to_s
+    end
+
+    it 'sets calculator type' do
+      expect(subject.calculator_type).to eq(calculator_subclass.to_s)
+    end
+
+    it 'switches from calculator subclass to calculator superclass' do
+      subject.calculator_type = calculator_superclass.to_s
+      expect(subject.calculator_type).to eq(calculator_superclass.to_s)
+    end
+  end
 end
