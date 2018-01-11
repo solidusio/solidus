@@ -36,7 +36,5 @@ group :test do
 end
 
 group :test, :development do
-  platforms :mri do
-    gem 'pry-byebug', '~> 1.0'
-  end
+  gem 'pry'
 end
