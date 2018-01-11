@@ -35,8 +35,11 @@ should be active or not.
 
 Take note of the following promotion attributes:
 
-- `name`: The administrative name for the promotion.
+- `name`: The name for the promotion. This is displayed to customers as an
+  adjustment label when it is applied.
 - `description`: An administrative description for the promotion.
+- `usage_limit`: How many times the promotion can be used before becoming
+  inactive.
 - `starts_at` and `expires_at`: Optional date values for the start and end of
   the promotion.
 - `match_policy`: When set to `all`, all promotion rules must be met in order
@@ -44,8 +47,8 @@ Take note of the following promotion attributes:
   [promotion rules](#promotion-rules) must be met.
 - `path`: If the promotion is activated when the customer visits a URL, this
   value is the path for the URL.
-- `per_code_usage_limit`: Specifies how many codes can be used before the
-  promotion becomes inactive.
+- `per_code_usage_limit`: Specifies how many times each code can be used before
+  it becomes inactive.
 - `apply_automatically`: If `true`, the promotion is activated and applied
   automatically once all of the [eligibility checks](#eligibility) have passed.
 
@@ -175,8 +178,8 @@ promotion for orders over $100 USD.
 
 Different types of promotions would change the customer's experience of
 promotion activation. For example, the customer might be required to enter a
-promotion code to activate some promotions, while a free shipping promotion
-would be applied automatically.
+promotion code to activate some promotions, while a another promotion could be
+applied automatically.
 
 In this case, because the administrator used the "Apply to all orders"
 activation method, the promotion is applied automatically:

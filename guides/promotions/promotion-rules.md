@@ -18,10 +18,10 @@ model][promotion-rules]:
 - `FirstRepeatPurchaseSince`: Eligible for a customer's first repeat purchase
   since a specified date.
 - `NthOrder`: Eligible for a customer's *n*th order only.
-- `ItemTotal`: Eligible if the order total is less than or greater than a
-  specified amount.
+- `ItemTotal`: Eligible if the order total (before any adjustments) is less than
+  or greater than a specified amount.
 - `OneUsePerUser`: Eligible for use one time for each user.
-- `Product`: Eligible for specified products only. 
+- `Product`: Eligible for specified products only.
 - `OptionValue`: Eligible for specified variants (product option values) only.
 - `Taxon`: Eligible for products with specified taxons.
 - `User`: Eligible for specified users.
@@ -39,8 +39,8 @@ model][promotion-rules]:
 ## Eligibility
 
 Note that whenever an order, line item, or shipment with a promotion adjustment
-on it is updated, the [eligibility][eligibility] of the promotion is re-checked
-and the promotion actions are re-applied.
+on it is updated, the [eligibility][eligibility] of the promotion is re-checked,
+and the adjustment is recalculated if necessary.
 
 [eligibility]: overview.md#eligibility
 
@@ -48,7 +48,7 @@ and the promotion actions are re-applied.
 
 By default, `Spree::Promotion`s have a `match_policy` value of `all`, meaning
 that all of the promotion rules on a promotion must be met before the promotion
-is eligible. However, this can be changed to `any`. 
+is eligible. However, this can be changed to `any`.
 
 Administrators can change the match policy when adding or editing a promotion.
 By default, promotions use the "Match all of these rules" setting, but they can
@@ -68,11 +68,11 @@ module Spree
         def applicable?(promotable)
           promotable.is_a?(Spree::Order)
         end
-      
+
         def eligible?(order, options = {})
           ...
         end
-      
+
         def actionable?(line_item)
           ...
         end

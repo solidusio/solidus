@@ -19,7 +19,7 @@ administrators flexibility for choosing how a promotion amount is calculated.
   Once calculator documentation exists, link to it in the above paragraph so
   there's more context for anyone wondering what a "base calculator" is in
   Solidus.
-  
+
   Similarly, we should link to the adjustments documentation once it's merged.
 -->
 
@@ -28,14 +28,18 @@ administrators flexibility for choosing how a promotion amount is calculated.
 The following classes are [subclasses of the `Spree::Promotion::Actions`
 model][promotion-actions]:
 
-- `CreateAdjustment`: Creates a single adjustment for the current
+- `CreateAdjustment`: Creates a single adjustment associated to the current
   `Spree::Order`.
-- `CreateItemAdjustments`: Creates an adjustment for each `Spree::LineItem` in
-  the current order.
+- `CreateItemAdjustments`: Creates an adjustment for each applicable
+  `Spree::LineItem` in the current order.
 - `CreateQuantityAdjustments`: Creates per-quantity adjustments. For example,
-  you could create an action that gives customers a discount on the first three
-  t-shirts that they order.
-- `FreeShipping`: Creates an adjustment that subtracts all shipping charges.
+  you could create an action that gives customers a discount on each group of
+  three t-shirts that they order at once.
+- `FreeShipping`: Creates an adjustment that negates all shipping charges.
+
+We recommend using `CreateItemAdjustments`s over `CreateAdjustment`. Over-level
+adjustments can make calculating accurate refunds and some regions's taxes more
+difficult for administrators.
 
 [promotion-actions]: https://github.com/solidusio/solidus/tree/master/core/app/models/spree/promotion/actions
 
@@ -60,7 +64,19 @@ module Spree
       class MyPromotionAction < Spree::PromotionAction
         def perform(options={})
           ...
+        end
+
+        def remove_from(order)
+          ...
+        end
 ```
+
+Your promotion action must implement the `perform(options = {})` method. This
+method should return a boolean that declares whether the action was applied
+successfully. It is also recommend to define a `remove_from(order)` method as
+well. See the
+[`Spree::Promotion::Actions::CreateItemAdjustments`][create-item-adjustments]
+class for an example of these method definitions.
 
 You must then register the custom action in an initializer in your
 `config/initializers/` directory:
@@ -68,4 +84,4 @@ You must then register the custom action in an initializer in your
 ```ruby
 Rails.application.config.spree.promotions.actions << MyPromotionAction
 ```
-
+[create-item-adjustments]: https://github.com/solidusio/solidus/blob/master/core/app/models/spree/promotion/actions/create_item_adjustments.rb

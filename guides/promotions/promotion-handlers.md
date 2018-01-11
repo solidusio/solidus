@@ -3,7 +3,7 @@
 The [`Spree::PromotionHandler`][promotion-handler] handles promotion
 activation. If the promotion is [eligible][eligibility], then the promotion can
 be activated, and finally applied by the `Spree::PromotionAction`s associated
-with the promotion. 
+with the promotion.
 
 Promotions can be activated in three different ways using subclasses of the
 `Spree::PromotionHandler` model:
