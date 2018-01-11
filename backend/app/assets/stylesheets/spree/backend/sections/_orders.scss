@@ -70,4 +70,8 @@ table.line-items {
     border-radius: 4px;
     border: 1px solid theme-color("danger");
   }
+
+  .line-item-select-variant .select2-chosen {
+    max-width: 400px;
+  }
 }
