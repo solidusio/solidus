@@ -13,8 +13,8 @@
 
       <div data-hook="admin_product_form_slug">
         <%= f.field_container :slug do %>
-          <%= f.label :slug, class: 'required' %>
-          <%= f.text_field :slug, class: 'fullwidth title', required: true %>
+          <%= f.label :slug, class: ('required' if !f.object.new_record?) %>
+          <%= f.text_field :slug, class: 'fullwidth title', required: !f.object.new_record?, disabled: f.object.new_record? %>
           <%= f.error_message_on :slug %>
         <% end %>
       </div>
@@ -122,9 +122,9 @@
 
       <div data-hook="admin_product_form_shipping_categories">
         <%= f.field_container :shipping_categories do %>
-          <%= f.label :shipping_category_id, Spree::ShippingCategory.model_name.human %>
+          <%= f.label :shipping_category_id, Spree::ShippingCategory.model_name.human, class: 'required' %>
           <%= f.field_hint :shipping_category %>
-          <%= f.collection_select(:shipping_category_id, @shipping_categories, :id, :name, { include_blank: t('spree.match_choices.none') }, { class: 'custom-select' }) %>
+          <%= f.collection_select(:shipping_category_id, @shipping_categories, :id, :name, { include_blank: t('spree.match_choices.none') }, { class: 'custom-select' , required: true}) %>
           <%= f.error_message_on :shipping_category %>
         <% end %>
       </div>

@@ -3,8 +3,8 @@
 <% admin_breadcrumb(plural_resource_name(Spree::Product)) %>
 
 <% content_for :page_actions do %>
-  <li id="new_product_link">
-    <%= button_link_to t('spree.new_product'), new_object_url, { remote: true, id: 'admin_new_product' } %>
+  <li>
+    <%= button_link_to t('spree.new_product'), new_object_url %>
   </li>
 <% end if can?(:create, Spree::Product) %>
 
