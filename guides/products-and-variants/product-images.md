@@ -13,7 +13,7 @@ Take note of these product image properties:
   Solidus resizes product images.
 - `position`: Sets the image's position in a list of images. For example, an
   image with the `position` of `2` would be displayed after the image with the
-  `position of `1`.
+  `position` of `1`.
 - `alt`: The alt text for an image. Administrators can add this from the
   backend.
 

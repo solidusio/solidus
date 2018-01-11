@@ -6,12 +6,16 @@ they are different:
 
 - `Spree::Product`s track the general information about a product. This includes
   the product description and the permalink where a customer would find the
-  product listing on a store.
+  product listing on a store. If you sell a mug and a t-shirt, you would set up
+  a separate product for each of them.
 - `Spree::Variant`s track the specific information about a variant of that
-  product. The variant stores the product price, dimensions, and weight. The
-  variant provides the information required by orders and shipments.
-
-The `Spree::Variant` model provides the price for each line item in an order.
+  product. For example, the variant provides the dimensions and weight. The
+  variant provides the information required by orders and shipments. If you sell
+  a red t-shirt and a green t-shirt, you could make each one a variant of your
+  t-shirt product. Similarly, if all of your t-shirts come in small, medium, and
+  large, then you would make additional variants for each of those: small green
+  t-shirt, small red t-shirt, medium green t-shirt, medium red t-shirt, and
+  so on.
 
 The rest of this article introduces essential information for using products and
 variants in Solidus.
@@ -49,11 +53,16 @@ Here are a few key points to note about variants:
   "Small", "Medium", and "Large".)
 - Every product has a master variant. When additional variants are created, they
   inherit properties from the master variant. The properties can be overridden
-  by the variant's own unique values.
+  by the variant's own unique values. See [Master variants][master-variants] for
+  more information.
 - All product images are linked to a product's variants. Product images are
-  either unique to a specific variant or can be used for all of the variants.
+  either associated with a specific variant or can be used for all of the
+  variants.
 
-For more information about variants, see the [Variants](variants.md) article.
+For more information about variants, see the [Variants][variants] article.
+
+[master-variants]: variants.md#master-variants
+[variants]: variants.md
 
 ## Taxonomies and taxons
 

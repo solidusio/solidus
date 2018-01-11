@@ -1,7 +1,7 @@
 # Products
 
-`Spree::Product`s track unique products within your store. If you sell a mug and
-a t-shirt, you would set up a product for each of them.
+`Spree::Product`s track separate products within your store. If you sell a mug
+and a t-shirt, you would set up a product for each of them.
 
 Products have the following attributes:
 

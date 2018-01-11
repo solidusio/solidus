@@ -15,20 +15,30 @@ currency).
 If none of a product's `Spree::Variant`s have a price value for the site's
 configured currency, that product is not visible in the store frontend.
 
-You can see a product's price in the store's configured currency by calling the
+You can see a variant's price in the store's configured currency by calling the
 `price` method on that instance:
 
-```shell
-product.price
-=> "15.99"
+```ruby
+Spree::Variant.find(1).price
+# => 15.99
 ```
 
-To find a list of all the currencies that this product is available in, calling
-`prices` returns all of the related `Spree::Price` objects:
+You can also call the `price` method on a `Spree::Product`. If you call the
+`price` method on a product, it gets the price of the product's master variant.
+
+For a list of all of the `Spree::Price`s associated with a product or variant,
+you can call the `prices` method on an instance of them:
 
 ```ruby
-$ product.prices
-=> [#<Spree::Price id: 2 ...]
-   [#<Spree::Price id: 3 ...]
+Spree::Product.find(1).prices
+# => [#<Spree::Price id: 2 ...]
+#    [#<Spree::Price id: 3 ...]
+
+Spree::Variant.find(1).prices
+# => [#<Spree::Price id: 4 ...]
+#    [#<Spree::Price id: 5 ...]
 ```
 
+<!-- TODO:
+  Some of this article could be repurposed for a new section about Spree::Price.
+-->
