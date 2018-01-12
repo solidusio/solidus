@@ -35,7 +35,9 @@
     }
 
     i {
-      @include margin(null 4px 0 6px);
+      margin-right: 4px;
+      margin-bottom: 0;
+      margin-left: 6px;
     }
 
     .actions a {

@@ -88,7 +88,9 @@
   }
 
   ul {
-    @include position(absolute, calc(100% - 1px) 0 null null);
+    position: absolute;
+    top: calc(100% - 1px);
+    right: 0;
     z-index: 1;
   }
 }
