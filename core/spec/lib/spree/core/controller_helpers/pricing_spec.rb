@@ -77,5 +77,18 @@ RSpec.describe Spree::Core::ControllerHelpers::Pricing, type: :controller do
         it { is_expected.to be_nil }
       end
     end
+
+    context "from context" do
+      subject { controller.current_pricing_options }
+
+      let(:store) { FactoryBot.create :store, default_currency: 'USD' }
+
+      context "when the whole context is passed" do
+        it "receives the right object " do
+          expect(Spree::Config.pricing_options_class).to receive(:from_context).with(controller)
+          is_expected.to be_nil
+        end
+      end
+    end
   end
 end
