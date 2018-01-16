@@ -1,6 +1,15 @@
 'use strict';
 
 Spree.ready(function(){
+  flatpickr.localize({
+    weekdays: {
+      shorthand: Spree.t('abbr_day_names')
+    },
+    months: {
+      longhand: Spree.t('month_names')
+    }
+  });
+
   $('.datepicker').flatpickr({
     allowInput: true
   });
