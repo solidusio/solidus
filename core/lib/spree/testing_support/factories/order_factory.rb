@@ -27,6 +27,10 @@ FactoryBot.define do
           price: evaluator.line_items_price
         )
       end
+
+      after(:create) do |order|
+        order.recalculate
+      end
     end
 
     factory :order_with_line_items do
