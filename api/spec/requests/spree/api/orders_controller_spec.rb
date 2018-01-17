@@ -45,20 +45,20 @@ module Spree
 
         it "does not include unpermitted params, or allow overriding the user" do
           subject
-          expect(response).to be_success
+          expect(response).to be_successful
           order = Spree::Order.last
           expect(order.user).to eq current_api_user
           expect(order.email).to eq target_user.email
         end
 
-        it { is_expected.to be_success }
+        it { is_expected.to be_successful }
 
         context 'creating payment' do
           let(:attributes) { super().merge(payments_attributes: [{ payment_method_id: payment_method.id }]) }
 
           context "with allowed payment method" do
             let!(:payment_method) { create(:check_payment_method, name: "allowed" ) }
-            it { is_expected.to be_success }
+            it { is_expected.to be_successful }
             it "creates a payment" do
               expect {
                 subject
@@ -91,7 +91,7 @@ module Spree
           expect(order.created_at).to eq date_override
         end
 
-        it { is_expected.to be_success }
+        it { is_expected.to be_successful }
       end
 
       context 'when the line items have custom attributes' do
@@ -126,7 +126,7 @@ module Spree
           }.to change { order.reload.email }.to("foo@foobar.com")
         end
 
-        it { is_expected.to be_success }
+        it { is_expected.to be_successful }
 
         it "does not associate users" do
           expect {
@@ -145,7 +145,7 @@ module Spree
 
           context "with allowed payment method" do
             let!(:payment_method) { create(:check_payment_method, name: "allowed" ) }
-            it { is_expected.to be_success }
+            it { is_expected.to be_successful }
             it "creates a payment" do
               expect {
                 subject

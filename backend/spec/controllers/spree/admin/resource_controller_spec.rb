@@ -50,7 +50,7 @@ describe Spree::Admin::WidgetsController, type: :controller do
 
     it 'succeeds' do
       subject
-      expect(response).to be_success
+      expect(response).to be_successful
     end
   end
 
@@ -63,7 +63,7 @@ describe Spree::Admin::WidgetsController, type: :controller do
 
     it 'succeeds' do
       subject
-      expect(response).to be_success
+      expect(response).to be_successful
     end
   end
 

@@ -51,14 +51,14 @@ module Spree
 
       it "returns no widgets" do
         get :index, params: { token: user.spree_api_key }, as: :json
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(json_response['widgets']).to be_blank
       end
 
       context "it has authorization to read widgets" do
         it "returns widgets" do
           get :index, params: { token: admin_user.spree_api_key }, as: :json
-          expect(response).to be_success
+          expect(response).to be_successful
           expect(json_response['widgets']).to include(hash_including(
             'name' => 'a widget',
             'position' => 1
@@ -70,26 +70,26 @@ module Spree
 
           it "returns both widgets from comma separated string" do
             get :index, params: { ids: [widget.id, widget2.id].join(','), token: admin_user.spree_api_key }, as: :json
-            expect(response).to be_success
+            expect(response).to be_successful
             expect(json_response['widgets'].size).to eq 2
           end
 
           it "returns both widgets from multiple arguments" do
             get :index, params: { ids: [widget.id, widget2.id], token: admin_user.spree_api_key }, as: :json
-            expect(response).to be_success
+            expect(response).to be_successful
             expect(json_response['widgets'].size).to eq 2
           end
 
           it "returns one requested widgets" do
             get :index, params: { ids: widget2.id.to_s, token: admin_user.spree_api_key }, as: :json
-            expect(response).to be_success
+            expect(response).to be_successful
             expect(json_response['widgets'].size).to eq 1
             expect(json_response['widgets'][0]['id']).to eq widget2.id
           end
 
           it "returns no widgets if empty" do
             get :index, params: { ids: '', token: admin_user.spree_api_key }, as: :json
-            expect(response).to be_success
+            expect(response).to be_successful
             expect(json_response['widgets']).to be_empty
           end
         end
@@ -107,7 +107,7 @@ module Spree
       context "it has authorization read widgets" do
         it "returns widget details" do
           get :show, params: { id: widget.to_param, token: admin_user.spree_api_key }, as: :json
-          expect(response).to be_success
+          expect(response).to be_successful
           expect(json_response['name']).to eq 'a widget'
         end
       end
@@ -122,7 +122,7 @@ module Spree
       context "it is allowed to view a new widget" do
         it "can learn how to create a new widget" do
           get :new, params: { token: admin_user.spree_api_key }, as: :json
-          expect(response).to be_success
+          expect(response).to be_successful
           expect(json_response["attributes"]).to eq(['name'])
         end
       end
@@ -159,7 +159,7 @@ module Spree
       context "it is authorized to update widgets" do
         it "can update a widget" do
           put :update, params: { id: widget.to_param, widget: { name: "another widget" }, token: admin_user.spree_api_key }, as: :json
-          expect(response).to be_success
+          expect(response).to be_successful
           expect(json_response['name']).to eq 'another widget'
           expect(widget.reload.name).to eq 'another widget'
         end

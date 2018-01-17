@@ -368,7 +368,7 @@ describe Spree::Api::ShipmentsController, type: :request do
 
         it "returns the correct message" do
           subject
-          expect(response).to be_success
+          expect(response).to be_successful
           expect(parsed_response["success"]).to be true
           expect(parsed_response["message"]).to eq("Variants successfully transferred")
         end

@@ -131,11 +131,11 @@ module Spree
 
         it "handles exclude_data correctly" do
           get spree.api_taxon_products_path, params: { id: taxon.id, simple: true }
-          expect(response).to be_success
+          expect(response).to be_successful
           simple_response = json_response
 
           get spree.api_taxon_products_path, params: { id: taxon.id }
-          expect(response).to be_success
+          expect(response).to be_successful
           full_response = json_response
 
           expect(simple_response["products"][0]["description"]).to be_nil
