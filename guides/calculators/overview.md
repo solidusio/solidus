@@ -84,6 +84,16 @@ Spree::Calculators::Shipping::FlatPercentItemTotal.find(3).preferences
 # => {:flat_percent=>0.2e1}
 ```
 
+### Preferred methods
+
+For each preference on a calculator, you can use a `preferred_<preference>`
+method to get or set the value of the preference (where `<preference>` is the
+name of the preference). For example
+
+```ruby
+Spree::Calculator.find(1).update(preferred_amount: 20)
+```
+
 <!-- TODO:
   Add more detail about preferences. For example: a list of common preference or
   example code in which a custom preference is created.
@@ -100,5 +110,5 @@ of custom calculator you may want to build:
 - [Custom shipping calculators][custom-shipping-calculators]
 - [Custom tax calculators][custom-tax-calculators]
 
-[custom-shipping-calculators]: ../shipments/custom-shipping-calculators.md
-[custom-tax-calculators]: ../taxation/custom-tax-calculators.md
+[custom-shipping-calculators]: ../shipments/custom-shipping-calculators.html
+[custom-tax-calculators]: ../taxation/custom-tax-calculators.html
