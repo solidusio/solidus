@@ -52,29 +52,7 @@ $.fn.radioControlsVisibilityOfElement = function(dependentElementSelector){
   });
 }
 
-var handle_date_picker_fields = function(){
-  $('.datepicker').datepicker({
-    dateFormat: Spree.t('date_picker.js_format', { default: 'yy/mm/dd' }),
-    dayNames: Spree.t('abbr_day_names'),
-    dayNamesMin: Spree.t('abbr_day_names'),
-    firstDay: parseInt(Spree.t('date_picker.first_day', { default: '0' }), 10),
-    monthNames: Spree.t('month_names'),
-    prevText: Spree.t('previous'),
-    nextText: Spree.t('next'),
-    showOn: "focus"
-  });
-
-  // Correctly display range dates
-  $('.date-range-filter .datepicker-from').datepicker('option', 'onSelect', function(selectedDate) {
-    $(".date-range-filter .datepicker-to" ).datepicker( "option", "minDate", selectedDate );
-  });
-  $('.date-range-filter .datepicker-to').datepicker('option', 'onSelect', function(selectedDate) {
-    $(".date-range-filter .datepicker-from" ).datepicker( "option", "maxDate", selectedDate );
-  });
-}
-
 Spree.ready(function(){
-  handle_date_picker_fields();
   var uniqueId = 1;
   $('.spree_add_fields').click(function() {
     var target = $(this).data("target");
