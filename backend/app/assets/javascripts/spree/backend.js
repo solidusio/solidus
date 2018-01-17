@@ -12,6 +12,7 @@
 //= require solidus_admin/backbone-nested-models
 //= require solidus_admin/popover
 //= require solidus_admin/bootstrap
+//= require solidus_admin/flatpickr/flatpickr
 //= require prism
 //= require spree
 //= require spree/backend/namespaces
@@ -33,6 +34,7 @@
 //= require spree/backend/components/tabs
 //= require spree/backend/components/tooltips
 //= require spree/backend/components/editable_table
+//= require spree/backend/datepicker
 //= require spree/backend/flash
 //= require spree/backend/gateway
 //= require spree/backend/handlebars_extensions
