@@ -12,6 +12,7 @@ Spree.EditStockItemView = Backbone.View.extend
   events:
     "click .edit": "onEdit"
     "click .submit": "onSubmit"
+    "submit form": "onSubmit"
     "click .cancel": "onCancel"
 
   template: HandlebarsTemplates['stock_items/stock_location_stock_item']

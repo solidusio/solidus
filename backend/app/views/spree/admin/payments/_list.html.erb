@@ -37,7 +37,9 @@
               <div class="input-group-addon number-with-currency-symbol">
                 <%= ::Money::Currency.find(@order.currency).symbol %>
               </div>
-              <%= text_field_tag :amount, payment.amount, class: 'js-edit-amount align-right form-control' %>
+              <form class="editing-show">
+                <%= text_field_tag :amount, payment.amount, class: 'js-edit-amount align-right form-control' %>
+              </form>
             </div>
           </div>
           <span class="js-display-amount editing-hide"><%= payment.display_amount.to_html %></span>

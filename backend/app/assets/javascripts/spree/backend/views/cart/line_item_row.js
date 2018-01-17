@@ -11,6 +11,7 @@ Spree.Views.Cart.LineItemRow = Backbone.View.extend({
     'click .edit-line-item': 'onEdit',
     'click .cancel-line-item': 'onCancel',
     'click .save-line-item': 'onSave',
+    'submit form': 'onSave',
     'click .delete-line-item': 'onDelete',
     'change .js-select-variant': 'onChangeVariant',
   },

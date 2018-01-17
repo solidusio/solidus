@@ -3,7 +3,8 @@
 var ShipmentAddVariantView = Backbone.View.extend({
   events: {
     "change #add_variant_id": "onSelect",
-    "click .add_variant": "onAdd"
+    "click .add_variant": "onAdd",
+    "submit form": "onAdd"
   },
   onSelect: function(e) {
     var variant_id = this.$("#add_variant_id").val();
@@ -132,6 +133,7 @@ var ShipmentSplitItemView = Backbone.View.extend({
   events: {
     "click .cancel-split": "cancelItemSplit",
     "click .save-split": "completeItemSplit",
+    "submit form": "completeItemSplit",
   },
 
   cancelItemSplit: function(e){

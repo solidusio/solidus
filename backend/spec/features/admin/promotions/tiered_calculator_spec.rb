@@ -20,7 +20,7 @@ feature "Tiered Calculator Promotions" do
       expect(page).to have_content("Base Percent")
       expect(page).to have_content("Tiers")
 
-      click_button "Add"
+      page.find('a.button').click
     end
 
     fill_in "Base Percent", with: 5

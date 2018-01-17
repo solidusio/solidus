@@ -22,7 +22,9 @@
                 It doesn't track inventory
               </td>
               <td>
-                <input class="quantity" id="stock_item_quantity" data-stock-location-id="{{this.stock_location_id}}" type="number" min="1" value="1">
+                <form>
+                  <input class="quantity" id="stock_item_quantity" data-stock-location-id="{{this.stock_location_id}}" type="number" min="1" value="1">
+                </form>
               </td>
               <td class="actions">
                 <button class="add_variant no-text fa fa-plus icon_link with-tip" data-stock-location-id="{{this.stock_location_id}}" title="{{ t "add" }}" data-action="add"></button>
@@ -34,7 +36,9 @@
                   {{#if this.backorderable}} ({{ t "backorders_allowed" }}) {{/if}}
                 </td>
                 <td>
-                  <input class="quantity" id="stock_item_quantity" data-stock-location-id="{{this.stock_location_id}}" type="number" min="1" value="1">
+                  <form>
+                    <input class="quantity" id="stock_item_quantity" data-stock-location-id="{{this.stock_location_id}}" type="number" min="1" value="1">
+                  </form>
                 </td>
                 <td class="actions">
                   <button class="add_variant no-text fa fa-plus icon_link with-tip" data-stock-location-id="{{this.stock_location_id}}" title="{{ t "add" }}" data-action="add"></button>
