@@ -91,13 +91,6 @@
   <% end %>
 <% end %>
 
-<%= javascript_tag do -%>
-  var properties = <%= raw(@properties.to_json) %>;
-  $('#product_properties, #variant_property_values').on('keydown', 'input.autocomplete', function() {
-    already_auto_completed = $(this).is('ac_input');
-    if (!already_auto_completed) {
-      $(this).autocomplete({source: properties});
-      $(this).focus();
-    }
-  });
-<% end -%>
+<datalist id="properties">
+  <%= safe_join @properties.map { |name| tag(:option, value: name) } %>
+</datalist>
