@@ -327,6 +327,11 @@ es-MX:
       not_saved:
         one: '1 error impidió guardar este(a) %{resource}:'
         other: "%{count} errores impidieron guardar este(a) %{resource}:"
+  time:
+    formats:
+      solidus:
+        long: '%B %d, %Y %-l:%M %p'
+        short: "%b %-d '%y %-l:%M%P"
   spree:
     abbreviation: Abreviatura
     accept:
