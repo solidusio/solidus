@@ -1,24 +1,23 @@
+//= require solidus_admin/Sortable
+
 Spree.ready(function() {
   var productTemplate = HandlebarsTemplates['products/sortable'];
   var productListTemplate = function(products) {
     return _.map(products, productTemplate).join('') || "<h4>" + Spree.translations.no_results + "</h4>";
   };
 
-  var saveSort = function(event, ui) {
+  var saveSort = function(e) {
+    var item = e.item;
     Spree.ajax({
       url: Spree.routes.classifications_api,
       method: 'PUT',
       data: {
-        product_id: ui.item.data('product-id'),
+        product_id: item.getAttribute('data-product-id'),
         taxon_id: $('#taxon_id').val(),
-        position: ui.item.index()
+        position: e.newIndex
       }
     });
   };
-
-  var sortable = $('#taxon_products').sortable().on({
-    sortupdate: saveSort
-  });
 
   var formatTaxon = function(taxon) {
     return Select2.util.escapeMarkup(taxon.pretty_name);
@@ -62,7 +61,14 @@ Spree.ready(function() {
         simple: 1
       },
       success: function(data) {
-        sortable.html(productListTemplate(data.products));
+        $('#taxon_products').html(productListTemplate(data.products));
+
+        var el = document.querySelector('#taxon_products')
+
+        new Sortable(el, {
+          draggable: ".sort_item",
+          onEnd: saveSort
+        });
       }
     });
   });
