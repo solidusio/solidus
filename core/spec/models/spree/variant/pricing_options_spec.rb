@@ -75,7 +75,7 @@ RSpec.describe Spree::Variant::PricingOptions do
     subject { described_class.from_context(view_context) }
 
     context "if the store has not defined default_currency" do
-      let(:store) { FactoryBot.create :store, default_currency: nil , cart_tax_country_iso: nil }
+      let(:store) { FactoryBot.create :store, default_currency: nil, cart_tax_country_iso: nil }
 
       it "fallbacks to Spree::Config.currency" do
         expect(Spree::Variant::PricingOptions).to receive(:new).with(currency: Spree::Config.currency, country_iso: nil)
