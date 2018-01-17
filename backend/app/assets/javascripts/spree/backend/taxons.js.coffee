@@ -5,23 +5,6 @@ Spree.ready ->
     products.map(productTemplate).join('') ||
     "<h4>#{Spree.translations.no_results}</h4>"
 
-  raiseDraggable = (draggable) ->
-    draggable.prev().insertAfter(draggable)
-    sortupdate(draggable)
-
-  lowerDraggable = (draggable) ->
-    draggable.next().insertBefore(draggable)
-    sortupdate(draggable)
-
-  focusDraggable = (e) ->
-    $(e.srcElement).focus()
-
-  moveDraggable = (e) ->
-    if e.keyCode == $.ui.keyCode.UP
-      raiseDraggable $(e.currentTarget)
-    else if e.keyCode == $.ui.keyCode.DOWN
-      lowerDraggable $(e.currentTarget)
-
   saveSort = (event, ui) ->
     Spree.ajax
       url: Spree.routes.classifications_api,
@@ -33,17 +16,7 @@ Spree.ready ->
 
   sortable = $('#taxon_products').sortable()
     .on
-      sortstart: focusDraggable
-      sortstop: focusDraggable
       sortupdate: saveSort
-    .on
-      click: focusDraggable
-      keydown: moveDraggable
-    , '.sort_item'
-
-  sortupdate = _.debounce (draggable) ->
-    sortable.trigger('sortupdate', item: draggable)
-  , 250
 
   formatTaxon = (taxon) ->
     Select2.util.escapeMarkup(taxon.pretty_name)
