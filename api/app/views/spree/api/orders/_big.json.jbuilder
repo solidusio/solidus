@@ -27,11 +27,10 @@ json.payments(order.payments) do |payment|
   json.payment_method { json.(payment.payment_method, :id, :name) }
   json.source do
     if payment.source
-      json.(payment.source, *payment_source_attributes)
-
-      if @current_user_roles.include?("admin")
-        json.(payment.source, :gateway_customer_profile_id, :gateway_payment_profile_id)
-      end
+      json.partial!(
+        "spree/api/payments/source_views/#{payment.payment_method.partial_name}",
+        payment_source: payment.source
+      )
     else
       json.nil!
     end

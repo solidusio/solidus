@@ -348,6 +348,21 @@ module Spree
           expect(credit_cards[0]['id']).to eq payment.source.id
           expect(credit_cards[0]['address']['id']).to eq credit_card.address_id
         end
+
+        it 'renders the payment source view for gateway' do
+          subject
+          expect(response).to render_template partial: 'spree/api/payments/source_views/_gateway'
+        end
+      end
+
+      context 'when store credit is present' do
+        let!(:payment) { create(:store_credit_payment, order: order, source: store_credit) }
+        let(:store_credit) { create(:store_credit) }
+
+        it 'renders the payment source view for store credit' do
+          subject
+          expect(response).to render_template partial: 'spree/api/payments/source_views/_storecredit'
+        end
       end
     end
 
