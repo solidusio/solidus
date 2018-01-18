@@ -1730,14 +1730,14 @@ es:
     receiving_match: Recibiendo match
     reception_states:
       awaiting: En espera
-      canceled: Cancelado
+      cancelled: Cancelado
       expired: Expirado
-      given_to_customer: Dado al cliente
+      given_to_customer: Entregado al cliente
       in_transit: En tránsito
       lost_in_transit: Perdido en tránsito
       received: Recibido
       shipped_wrong_item: Artículo incorrecto
-      short_shipped: Envío corto
+      short_shipped: No incluido en el envío
       unexchanged: Sin cambios
     reception_status: Estado Recepción
     reference: Referencia
