@@ -22,7 +22,7 @@ es:
         address1: Dirección
         address2: Dirección (cont.)
         city: Ciudad
-        country: Pais
+        country: País
         firstname: Nombre
         lastname: Apellidos
         phone: Teléfono
@@ -221,7 +221,7 @@ es:
         description: Disponible sólo para usuarios que no han comprado en un tiempo determinado
         form_text: "Aplicar esta promoción a usuarios cuyo último pedido fue hace más de X días: "
       spree/promotion/rules/user_role:
-        description: El pedido incluye el usuario con las siguientes funciones especificas
+        description: El pedido incluye el usuario con las siguientes funciones específicas
       spree/promotion_category:
         name: Nombre
       spree/property:
@@ -742,7 +742,7 @@ es:
     user_registrations:
       destroyed: ¡Adiós! Tu cuenta ha sido cancelada satisfactoriamente. Esperamos volver a verte pronto.
       inactive_signed_up: Te has dado de alta satisfactoriamente. Sin embargo, no pudimos autotizarte debido a que tu cuenta está %{reason}.
-      signed_up: Bienvenido! Te has dado de alta satisfactoriamente.
+      signed_up: ¡Bienvenido! Te has dado de alta satisfactoriamente.
       updated: Has actualizado tu cuenta satisfactoriamente.
     user_sessions:
       signed_in: Autorizado satisfactoriamente.
@@ -825,8 +825,8 @@ es:
         sales_tax_refund_with_rate: 'Reintegro: %{name} %{amount}'
         vat_refund_with_rate: 'Reintegro: %{name} %{amount} (Incluido en el Precio)'
     adjustment_reasons: Razones de Ajuste
-    adjustment_successfully_closed: El ajuste ha sido cerrado satisfactoriamente!
-    adjustment_successfully_opened: El ajuste ha sido abierto satisfactoriamente!
+    adjustment_successfully_closed: ¡El ajuste ha sido cerrado satisfactoriamente!
+    adjustment_successfully_opened: ¡El ajuste ha sido abierto satisfactoriamente!
     adjustment_total: Ajuste Total
     adjustments: Ajustes
     admin:
@@ -978,7 +978,7 @@ es:
     analytics_desc_list_1: Obtén la información de ventas en directo tal y como sucede.
     analytics_desc_list_2: Se necesita solamente una cuenta libre de Spree para activarlo.
     analytics_desc_list_3: Absolutamente ningún código para instalar.
-    analytics_desc_list_4: Es completamente gratuito!
+    analytics_desc_list_4: ¡Es completamente gratuito!
     analytics_trackers: Analytics Trackers
     and: y
     apply_code: Aplicar el código
@@ -1187,7 +1187,7 @@ es:
     destroy: Eliminar
     details: Detalles
     discount_amount: Cantidad Descuento
-    dismiss_banner: No. Gracias! No me interesa, no mostrar este mensaje otra vez
+    dismiss_banner: ¡No. Gracias! No me interesa, no mostrar este mensaje otra vez
     display: Mostrar
     download_promotion_code_list: Descargar Lista de códigos
     edit: Editar
@@ -1399,7 +1399,7 @@ es:
       operators:
         gt: Mayor que
         gte: Mayor o igual que
-    items_cannot_be_shipped: No podemos calcular los costes de envío para los artículos selecciondos.
+    items_cannot_be_shipped: No podemos calcular los costes de envío para los artículos seleccionados.
     items_in_rmas: Artículos en RMA's (Return Merchandise Authorizations)
     items_to_be_reimbursed: Artículos a reembolsar
     items_reimbursed: Artículos reembolsados
@@ -1513,7 +1513,7 @@ es:
     no_results: No hay resultados
     no_rules_added: No se han añadido reglas
     no_resource: 'No se ha encontrado %{resource}.'
-    no_resource_found_html: 'No se ha encontrado %{resource}, %{add_one_link}!'
+    no_resource_found_html: '¡No se ha encontrado %{resource}, %{add_one_link}!'
     no_resource_found_link: Añadir uno
     no_resource_found: ! 'No se ha encontrado %{resource}'
     no_shipping_methods_found: No se han encontrado métodos de envío
@@ -2003,7 +2003,7 @@ es:
     test: Test
     test_mailer:
       test_email:
-        greeting: Enhorabuena!
+        greeting: ¡Enhorabuena!
         message: Si ha recibido este email, sus datos de correo son correctos.
         subject: Mail de prueba
     test_mode: Modo Test
@@ -2071,7 +2071,7 @@ es:
       cannot_be_less_than_shipped_units: no puede ser menor que el número de unidades enviadas.
       cannot_destroy_line_item_as_inventory_units_have_shipped: No puede eliminar este elemento en linea, ya que algunas unidades del inventario ya se han enviado.
       exceeds_available_stock: excede el stock disponible. Por favor, asegúrese que los artículos tienen una cantidad válida.
-      is_too_large: es muy grande -- stock disponible es insuficiente para dicha cantidad!
+      is_too_large: es muy grande -- ¡stock disponible es insuficiente para dicha cantidad!
       must_be_int: Debe ser un número entero
       must_be_non_negative: No puede ser un valor negativo
     validity_period: Período de validez
