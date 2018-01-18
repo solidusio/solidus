@@ -3,6 +3,9 @@ require 'spree/config'
 module Spree
   module Core
     class Engine < ::Rails::Engine
+      CREDIT_CARD_NUMBER_PARAM = /payment.*source.*\.number$/
+      CREDIT_CARD_VERIFICATION_VALUE_PARAM = /payment.*source.*\.verification_value$/
+
       isolate_namespace Spree
       engine_name 'spree'
 
@@ -30,8 +33,8 @@ module Spree
         app.config.filter_parameters += [
           %r{^password$},
           %r{^password_confirmation$},
-          %r{^number$}, # Credit Card number
-          %r{^verification_value$} # Credit Card verification value
+          CREDIT_CARD_NUMBER_PARAM,
+          CREDIT_CARD_VERIFICATION_VALUE_PARAM,
         ]
       end
 
