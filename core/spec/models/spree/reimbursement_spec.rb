@@ -203,23 +203,30 @@ RSpec.describe Spree::Reimbursement, type: :model do
   end
 
   describe '.build_from_customer_return' do
-    let(:customer_return) { create(:customer_return, line_items_count: 5) }
-    before { customer_return.return_items.each(&:receive!) }
-    let!(:pending_return_item) { customer_return.return_items.first.tap { |ri| ri.update!(acceptance_status: 'pending') } }
-    let!(:accepted_return_item) { customer_return.return_items.second.tap(&:accept!) }
-    let!(:rejected_return_item) { customer_return.return_items.third.tap(&:reject!) }
-    let!(:manual_intervention_return_item) { customer_return.return_items.fourth.tap(&:require_manual_intervention!) }
-    let!(:already_reimbursed_return_item) { customer_return.return_items.fifth }
-    let!(:previous_reimbursement) { create(:reimbursement, order: customer_return.order, return_items: [already_reimbursed_return_item]) }
+    subject { described_class.build_from_customer_return(customer_return) }
 
-    subject { Spree::Reimbursement.build_from_customer_return(customer_return) }
+    let(:customer_return) { build_stubbed(:customer_return, line_items_count: 5, return_items: return_items) }
+    let(:return_items) { build_stubbed_list(:return_item, 1, inventory_unit: inventory_unit) }
+    let(:inventory_unit) { build_stubbed :inventory_unit, shipment: shipment }
+    let(:shipment) { build_stubbed(:shipment, order: order) }
+    let(:order) { build_stubbed(:order) }
+
+    it { is_expected.to be_a described_class }
+
+    before do
+      # Stub ActiveRecord methods
+      allow(customer_return).to receive(:return_items).and_return(return_items)
+      allow(return_items).to receive(:accepted).and_return(return_items)
+      allow(return_items).to receive(:not_reimbursed).and_return(return_items)
+      allow(inventory_unit).to receive(:order).and_return(order)
+    end
 
     it 'connects to the accepted return items' do
-      expect(subject.return_items.to_a).to eq [accepted_return_item]
+      expect(subject.return_items).to eq return_items
     end
 
     it 'connects to the order' do
-      expect(subject.order).to eq customer_return.order
+      expect(subject.order).to eq order
     end
 
     it 'connects to the customer_return' do
