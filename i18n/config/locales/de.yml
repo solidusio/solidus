@@ -749,7 +749,9 @@ de:
     card_type: Kartentyp
     card_type_is: Kartentyp ist
     cart: Warenkorb
-    cart_subtotal: Zwischensumme Warenkorb
+    cart_subtotal:
+      one: Zwischensumme (1 Artikel)
+      other: 'Zwischensumme (%count Artikel)'
     categories: Kategorien
     category: Kategorie
     charged: Berechnet
@@ -778,7 +780,7 @@ de:
     confirm_delete: Löschen bestätigen
     confirm_order: Bestellung bestätigen
     confirm_password: Passwort bestätigen
-    continue: fortfahren
+    continue: Fortfahren
     continue_shopping: Weiter Einkaufen
     cost_currency: Kostenwährung
     cost_price: Einkaufspreis
@@ -1177,9 +1179,11 @@ de:
         total: Gesamtsumme
       confirm_email:
         dear_customer: Sehr geehrte Kundin, geehrter Kunde,
+        instructions: bitte prüfen Sie noch einmal die folgende Bestellung und bewahren die Bestellbestätigung für Ihre Unterlagen auf.
         order_summary: Folgende Artikel wurden von Ihnen bestellt
         subject: Bestellbestätigung
         subtotal: Zwischensumme
+        thanks: Vielen Dank für Ihre Bestellung.
         total: Gesamtsumme
       inventory_cancellation:
         dear_customer: 'Sehr geehrte Kundin, geehrter Kunde,'
