@@ -327,6 +327,11 @@ es-MX:
       not_saved:
         one: '1 error impidió guardar este(a) %{resource}:'
         other: "%{count} errores impidieron guardar este(a) %{resource}:"
+  time:
+    formats:
+      solidus:
+        long: '%B %d, %Y %-l:%M %p'
+        short: "%b %-d '%y %-l:%M%P"
   spree:
     abbreviation: Abreviatura
     accept:
@@ -566,8 +571,8 @@ es-MX:
     date_completed: Fecha completada
     date_picker:
       first_day:
-      format: Año/mes/día
-      js_format: aa/mm/dd
+      format: "%d/%m/%Y"
+      js_format: dd/mm/yy
     date_range: Rango de Fecha
     default: Por omisión
     default_refund_amount:
