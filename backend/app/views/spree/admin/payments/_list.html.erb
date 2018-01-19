@@ -33,14 +33,16 @@
         </td>
         <td class="amount align-right">
           <div class="editing-show">
-            <div class="input-group">
-              <div class="input-group-addon number-with-currency-symbol">
-                <%= ::Money::Currency.find(@order.currency).symbol %>
-              </div>
-              <form class="editing-show">
+            <form class="editing-show">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text number-with-currency-symbol">
+                    <%= ::Money::Currency.find(@order.currency).symbol %>
+                  </span>
+                </div>
                 <%= text_field_tag :amount, payment.amount, class: 'js-edit-amount align-right form-control' %>
-              </form>
-            </div>
+              </div>
+            </form>
           </div>
           <span class="js-display-amount editing-hide"><%= payment.display_amount.to_html %></span>
         </td>
