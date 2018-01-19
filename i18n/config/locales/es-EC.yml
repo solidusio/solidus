@@ -283,52 +283,6 @@ es-EC:
       spree/zone:
         one: Zona
         other: Zonas
-  devise:
-    confirmations:
-      confirmed: Tu cuenta fue confirmada satisfactoriamente. Ya estás registrado.
-      send_instructions: Recibirás un email con instrucciones sobre como confirmar tu cuenta en breves minutos.
-    failure:
-      inactive: Tu cuenta no fue activada todavía.
-      invalid: Email o password inválido.
-      invalid_token: Cadena de autenticación no válida.
-      locked: Tu cuenta está bloqueada
-      timeout: Tu sesión expiró, por favor regístrate otra vez para continuar.
-      unauthenticated: Necesitas registrarte o darte de alta antes de continuar
-      unconfirmed: Tienes que confirmar tu cuenta antes de continuar.
-    mailer:
-      confirmation_instructions:
-        subject: Instrucciones de confirmación
-      reset_password_instructions:
-        subject: Instrucciones para reinicializar el password
-      unlock_instructions:
-        subject: Instrucciones de desbloqueo
-    oauth_callbacks:
-      failure: No se te pudo autorizar desde %{kind} debido a %{reason}.
-      success: Autorizada satisfactoriamente desde la cuenta %{kind}.
-    unlocks:
-      send_instructions: Recibirás un email con instrucciones sobre como desbloquear la cuenta en breves minutos.
-      unlocked: Tu cuenta fue desbloqueada satisfactoriamente. Ya estás registrado.
-    user_passwords:
-      user:
-        cannot_be_blank: Tu password no puede estar en blanco
-        send_instructions: Recibiras un email con instrucciones sobre como reinicializar tu password en breves minutos
-        updated: Tu password fue cambiado con éxito. Ya estás registrado.
-    user_registrations:
-      destroyed: "¡Adiós! Tu cuenta fue cancelada satisfactoriamente. Esperamos volver a verte pronto."
-      inactive_signed_up: Te has dado de alta satisfactoriamente. Sin embargo, no pudimos registrarte debido a que tu cuenta está %{reason}.
-      signed_up: Bienvenido! Te has dado de alta satisfactoriamente.
-      updated: Has actualizado tu cuenta satisfactoriamente.
-    user_sessions:
-      signed_in: Registrado satisfactoriamente.
-      signed_out: Abandonado satisfactoriamente.
-  errors:
-    messages:
-      already_confirmed: fue ya confirmada.
-      not_found: no encontrado
-      not_locked: no estaba bloqueada
-      not_saved:
-        one: 1 error evitó que este %{resource} fuese grabado.
-        other: "%{count} errores evitaron que este %{resource} fuese grabado:"
   spree:
     abbreviation: Abreviatura
     accept:

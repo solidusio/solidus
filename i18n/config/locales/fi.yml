@@ -293,52 +293,6 @@ fi:
       spree/zone:
         one: Alue
         other: Alueet
-  devise:
-    confirmations:
-      confirmed: Kiitos tilisi vahvistamisesta! Kirjasimme sinut nyt sisään.
-      send_instructions: Saat ihan kohta sähköpostilla ohjeet tilisi vahvistamiseksi. Älä huoli, se onnistuu helposti!
-    failure:
-      inactive: Et ole aktivoinut vielä tiliäsi.
-      invalid: Sähköpostiosoite tai salasana oli väärin.
-      invalid_token: Virheellinen autentikointiavain.
-      locked: Tilisi on lukittu.
-      timeout: Istuntosi vanhentui. Jatka kirjautumalla uudelleen sisään.
-      unauthenticated: Kirjaudu sisään tai rekisteröidy jatkaaksesi.
-      unconfirmed: Voit jatkaa heti kun olet vahvistanut tilisi.
-    mailer:
-      confirmation_instructions:
-        subject: Ohjeet tilin vahvistamiseen
-      reset_password_instructions:
-        subject: Ohjeet salasanan vaihtamiseksi
-      unlock_instructions:
-        subject: Lukituksen avaaminen
-    oauth_callbacks:
-      failure: "%{kind} ei voinut valtuuttaa sinua, koska %{reason}"
-      success: "%{kind} valtuutti sinut sisään."
-    unlocks:
-      send_instructions: Saat pian sähköpostin jossa on ohjeet tilisi lukituksen poistamiseen.
-      unlocked: Tilisi lukitus on nyt poistettu. Olet kirjautunut sisään.
-    user_passwords:
-      user:
-        cannot_be_blank: Salasana ei saa olla tyhjä.
-        send_instructions: Saat pian sähköpostin jossa on ohjeet salasanan vaihtamiseksi.
-        updated: Salasanasi on nyt vaihdettu. Olet myös kirjautunut sisään.
-    user_registrations:
-      destroyed: Näkemiin! Tilisi on nyt peruttu. Toivottavasti näemme sinut pian uudelleen.
-      inactive_signed_up: Olet rekisteröitynyt onnistuneesti, mutta valitettavasti emme voi kirjata sinua sisään koska tilisi on %{reason}.
-      signed_up: Tervetuloa! Olet nyt kirjautunut sisään.
-      updated: Tilisi on nyt päivitetty.
-    user_sessions:
-      signed_in: Olet nyt kirjautunut sisään.
-      signed_out: Olet nyt kirjautunut ulos.
-  errors:
-    messages:
-      already_confirmed: on jo vahvistettu
-      not_found: ei löytynyt
-      not_locked: ei ollut lukittu
-      not_saved:
-        one: 'Yksi virhe esti kohteen %{resource} tallennuksen:'
-        other: "%{count} virhettä estivät kohteen %{resource} tallennuksen:"
   spree:
     abbreviation: Lyhenne
     accept:

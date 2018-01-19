@@ -290,50 +290,6 @@ zh-CN:
       spree/zone:
         one: "区域"
         other: "区域"
-  devise:
-    confirmations:
-      confirmed: "您已成功确认您的帐户信息。您现在已登录。"
-      send_instructions: "您将在几分钟后收到一封说明如何确认帐号的邮件。"
-    failure:
-      inactive: "您的帐号尚未激活。"
-      invalid: "找不到该电子邮件地址或者密码,请更正并再次尝试。"
-      invalid_token: "无效的授权口令。"
-      locked: "您的帐号已被冻结。"
-      timeout: "您的登录时间过长，请重新登录后继续其他操作。"
-      unauthenticated: "您需要在继续操作之前进行登录或者注册。"
-      unconfirmed: "您需要在继续操作之前确认您的帐号。"
-    mailer:
-      confirmation_instructions:
-        subject: "确认帐号说明"
-      reset_password_instructions:
-        subject: "重置密码说明"
-      unlock_instructions:
-        subject: "帐号解锁说明"
-    oauth_callbacks:
-      failure: "由于%{reason}，您暂时无法从%{kind}获得授权。"
-      success: "成功地从%{kind}帐号获得授权。"
-    unlocks:
-      send_instructions: "您将在几分钟之后收到一封说明如何解锁帐号的邮件。"
-      unlocked: "您的帐号已被成功解锁。您现在已登录。"
-    user_passwords:
-      user:
-        cannot_be_blank: "密码不能为空。"
-        send_instructions: "您将在几分钟之后收到一封说明如何重置密码的邮件。"
-        updated: "您已成功修改您的密码，您现在已登录。"
-    user_registrations:
-      destroyed: "再见！您已成功取消帐号注册。希望您再次光临。"
-      inactive_signed_up: "您已成功注册。但是，由于您的帐号%{reason}，您暂时无法登录。"
-      signed_up: "欢迎！您已成功注册。"
-      updated: "您已成功更新您的帐号信息。"
-    user_sessions:
-      signed_in: "成功登录。"
-      signed_out: "成功注销。"
-  errors:
-    messages:
-      already_confirmed: "已被确认"
-      not_found: "无法找到"
-      not_locked: "未冻结"
-      not_saved: "由于以下%{count}个错误，导致%{resource}无法保存："
   spree:
     abbreviation: "缩写"
     accept:

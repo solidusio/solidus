@@ -317,54 +317,6 @@ es-CL:
             base:
               cannot_destroy_default_store: Cannot destroy the default Store.
 
-  devise:
-    confirmations:
-      confirmed: Tu cuenta fue confirmada satisfactoriamente. Ya estás registrado.
-      send_instructions: Recibirás un email con instrucciones sobre como confirmar tu cuenta en breves minutos.
-    failure:
-      inactive: Tu cuenta aún no ha sido activada.
-      invalid: E-Mail o contraseña inválida.
-      invalid_token: Cadena de autenticación no válida.
-      locked: Tu cuenta está bloqueada.
-      timeout: 'Tu sesión expiró, por favor inicia sesión nuevamente para continuar.'
-      unauthenticated: Necesitas registrarte o activar tu cuenta antes de continuar.
-      unconfirmed: Tienes que confirmar tu cuenta antes de continuar.
-    mailer:
-      confirmation_instructions:
-        subject: Instrucciones de confirmación
-      reset_password_instructions:
-        subject: Instrucciones para cambiar contraseña
-      unlock_instructions:
-        subject: Instrucciones para desbloqueo
-    oauth_callbacks:
-      failure: No se pudo realizar la autorización desde %{kind} debido a %{reason}.
-      success: Autorizada satisfactoriamente desde la cuenta %{kind}.
-    unlocks:
-      send_instructions: Recibirás un email con instrucciones sobre como desbloquear la cuenta en breves minutos.
-      unlocked: Tu cuenta fue desbloqueada satisfactoriamente. Ya estás registrado.
-    user_passwords:
-      user:
-        cannot_be_blank: Tu contraseña no puede estar en blanco.
-        send_instructions: Recibirás un email con instrucciones sobre como cambiar tu contraseña en breves minutos
-        updated: Tu contraseña fue cambiada con éxito. Ya estás registrado.
-    user_registrations:
-      destroyed: "¡Adiós! Tu cuenta fue cancelada satisfactoriamente. Esperamos volver a verte pronto."
-      inactive_signed_up: Te has registrado satisfactoriamente. Sin embargo, no pudimos iniciar sesión debido a que tu cuenta está %{reason}.
-      signed_up: Bienvenido! Te has registrado satisfactoriamente.
-      updated: Has actualizado tu cuenta satisfactoriamente.
-    user_sessions:
-      signed_in: Has iniciado sesión satisfactoriamente.
-      signed_out: Sesión finalizada satisfactoriamente.
-
-  errors:
-    messages:
-      already_confirmed: fue ya confirmada.
-      not_found: no encontrado
-      not_locked: no estaba bloqueada
-      not_saved:
-        one: '1 error evitó que este %{resource} fuese grabado.'
-        other: "%{count} errores evitaron que este %{resource} fuese grabado:"
-
   number:
     percentage:
       format:

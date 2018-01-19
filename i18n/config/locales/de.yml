@@ -499,52 +499,6 @@ de:
       spree/store_credit_category:
         one: Guthabenkategorie
         other: Guthabenkategorien
-  devise:
-    confirmations:
-      confirmed: Ihr Konto wurde erfolgreich bestätigt. Sie sind jetzt angemeldet.
-      send_instructions: Sie erhalten in wenigen Minuten eine E-Mail mit Hinweisen zur Bestätigung Ihres Kontos.
-    failure:
-      inactive: Ihr Konto wurde noch nicht aktiviert.
-      invalid: Ungültige Email Adresse oder Passwort
-      invalid_token: Ungültiges Authentifikationstoken
-      locked: Ihr Konto ist gesperrt.
-      timeout: Ihre Sitzung ist abgelaufen, bitte melden sie sich wieder an um fortzufahren.
-      unauthenticated: Zum Fortfahren müssen Sie sich registrieren oder angemeldet sein.
-      unconfirmed: Sie müssen ihr Konto bestätigen bevor sie fortfahren können.
-    mailer:
-      confirmation_instructions:
-        subject: Bestätigungshinweise
-      reset_password_instructions:
-        subject: Anleitung zum Zurücksetzen Ihres Passworts
-      unlock_instructions:
-        subject: Anleitung zum Entsperren
-    oauth_callbacks:
-      failure: Sie konnten nich über %{kind} autorisiert werden, weil %{reason}.
-      success: Erfolgreich mit %{kind} Konto autorisiert.
-    unlocks:
-      send_instructions: Sie erhalten in wenigen Minuten eine E-Mail mit einer Anleitung zum Entsperren Ihres Kontos.
-      unlocked: Ihr Konto wurde erfolgreich entsperrt. Sie sind jetzt angemeldet.
-    user_passwords:
-      user:
-        cannot_be_blank: Ihr Passwort darf nicht leer sein.
-        send_instructions: Sie erhalten in wenigen Minuten eine E-Mail mit einer Anleitung zum Zurücksetzen Ihres Passworts.
-        updated: Ihr Password wurde erfolgreich geändert. Sie sind jetzt angemeldet.
-    user_registrations:
-      destroyed: Auf Wiedersehen! Ihr Konto wurde erfolgreich gelöscht. Wir hoffen sie bald wieder begrüßen zu dürfen.
-      inactive_signed_up: Sie haben sich erfolgreich registriert. Wir konnten sie aber nicht anmelden, denn %{reason}.
-      signed_up: Willkommen! Sie haben sich erfolgreich registriert.
-      updated: Sie haben ihr Konto erfolgreich aktualisiert.
-    user_sessions:
-      signed_in: Erfolgreich angemeldet.
-      signed_out: Erfolgreich abgemeldet.
-  errors:
-    messages:
-      already_confirmed: wurde bereits bestätigt
-      not_found: nicht gefunden
-      not_locked: war nicht gesperrt
-      not_saved:
-        one: 'Ein Fehler hat das Speichern von %{resource} verhindert:'
-        other: "%{count} Fehler haben das Speichern von %{resource} verhindert:"
   number:
     percentage:
       format:

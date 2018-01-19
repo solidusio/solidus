@@ -283,52 +283,6 @@ nl:
       spree/zone:
         one: Zone
         other: Zones
-  devise:
-    confirmations:
-      confirmed: Je account is succesvol bevestigd. Je bent nu aangemeld.
-      send_instructions: Binnen enkele minuten ontvang je instructies voor het bevestigen van je account.
-    failure:
-      inactive: Je account is nog niet geactiveerd.
-      invalid: Ongeldig email adres of wachtwoord
-      invalid_token: Ongeldige authenticatietoken.
-      locked: Je token is geblokkeerd
-      timeout: Je sessie is verlopen, log opnieuw in om verder te gaan.
-      unauthenticated: Je dient een account aan te maken of in te loggen om verder te gaan.
-      unconfirmed: Je moet je account bevestigen alvorens je verder gaat.
-    mailer:
-      confirmation_instructions:
-        subject: Bevestigingsinstructies
-      reset_password_instructions:
-        subject: Reset wachtwoord instructies
-      unlock_instructions:
-        subject: Ontgrendel instructies
-    oauth_callbacks:
-      failure: Kon je niet authoriseren via %{kind} omdat %{reason}.
-      success: Succesvol geautoriseerd via %{kind} account.
-    unlocks:
-      send_instructions: Je ontvangt binnen enkele minuten instructies over hoe je je account kunt ontgrendelen.
-      unlocked: Je account is succesvol ontgrendeld. Je bent nu aangemeld.
-    user_passwords:
-      user:
-        cannot_be_blank: Je wachtwoord kan niet leeg zijn.
-        send_instructions: Binnen enkele minuten ontvang je instructies voor het wijzigen van je wachtwoord.
-        updated: Je wachtwoord is succesvol gewijzigd. Je bent nu aangemeld.
-    user_registrations:
-      destroyed: Tot ziens! Je account is succesvol geannuleerd. We hopen je binnenkort weert te verwelkomen.
-      inactive_signed_up: Je bent succesvol geregistreerd. We konden je echter niet inloggen omdat je account %{reason} is.
-      signed_up: Welkom! Je bent succesvol aangemeld.
-      updated: Je hebt je account succesvol bijgewerkt.
-    user_sessions:
-      signed_in: Succesvol aangemeld.
-      signed_out: Succesvol afgemeld.
-  errors:
-    messages:
-      already_confirmed: was reeds bevestigd
-      not_found: niet gevonden
-      not_locked: was niet vergendeld
-      not_saved:
-        one: '1 fout voorkwam dat deze %{resource} werd opgeslagen:'
-        other: "%{count} fouten voorkwamen dat deze %{resource} werd opgeslagen:"
   spree:
     abbreviation: Afkorting
     accept:

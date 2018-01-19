@@ -275,52 +275,6 @@ bg:
       spree/zone:
         one: Zone Зона
         other: "Зони"
-  devise:
-    confirmations:
-      confirmed: "Вашият акаунт е потвърден. Вече сте вписан."
-      send_instructions: "До няколко минути ще получите съобщение с обяснение как да потвърдите своя акаунт."
-    failure:
-      inactive: "Вашият акаунт все още не е активен."
-      invalid: "Грешен имейл или парола"
-      invalid_token: Invalid authentication token.
-      locked: "Вашият акаунт е заключен."
-      timeout: "Вашата сесия е изтекла, моля влезте повторно."
-      unauthenticated: "Трябва да се впишете или регистрирате преди да продължите"
-      unconfirmed: "Трябва да потвърдите акаунта си преди да продължите."
-    mailer:
-      confirmation_instructions:
-        subject: "Инструкции за потвърждаване"
-      reset_password_instructions:
-        subject: Reset password instructions Инструкции за смяна на паролата
-      unlock_instructions:
-        subject: "Инструкции за отключване"
-    oauth_callbacks:
-      failure: Could not authorise you from %{kind} because %{reason}.
-      success: Successfully authorised from %{kind} account.
-    unlocks:
-      send_instructions: "До няколко минути ще получите имейл с инструкции как да отключите своя акаунт."
-      unlocked: "Вашият акаунт бе отключен успешно. Вече сте вписани."
-    user_passwords:
-      user:
-        cannot_be_blank: "Вашата парола не може бъде празна"
-        send_instructions: "До няколко минути ще получите имейл с инструкции как да промените паролата си."
-        updated: "Вашата парола бе променена успешко. Вече сте вписани."
-    user_registrations:
-      destroyed: "Вашият акаунт бе отменен успешно. Надяваме се да ви видим скоро."
-      inactive_signed_up: You have signed up successfully. However, we could not sign you in because your account is %{reason}.
-      signed_up: "Вие се регистрирахте успешно."
-      updated: "Успешно обновихте своя акаунт."
-    user_sessions:
-      signed_in: "Успешно влизане"
-      signed_out: "Успешно излизане"
-  errors:
-    messages:
-      already_confirmed: "Вече бе потвърден"
-      not_found: "не намерен"
-      not_locked: "не бе заключен"
-      not_saved:
-        one: "Една грешка предоотврати запазването на %{resource}"
-        other: "%{count} грешки предоотвратиха запазването на %{resource}"
   spree:
     abbreviation: "Абривиатура"
     accept:

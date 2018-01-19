@@ -263,52 +263,6 @@ et:
       spree/zone:
         one: Zone
         other: Zones
-  devise:
-    confirmations:
-      confirmed: Sinu konto on edukalt kinnitatud. Sa oled nüüd sisse logitud.
-      send_instructions: Mõne minuti jooksul saad sa e-kirja juhistega oma konto kinnitamiseks.
-    failure:
-      inactive: Sinu konto polnud veel aktiveeritud.
-      invalid: Vigane e-post või salasõna.
-      invalid_token: Vigane autentimise võti.
-      locked: Sinu konto on lukustatud.
-      timeout: Sinu sessioon on aegunud, jätkamiseks logi palun sisse.
-      unauthenticated: Sa pead sisse logima või registreeruma enne jätkamist.
-      unconfirmed: Sa pead oma konto kinnitama, enne jätkamist.
-    mailer:
-      confirmation_instructions:
-        subject: Kinnitamise juhised
-      reset_password_instructions:
-        subject: Parooli taastamise juhised
-      unlock_instructions:
-        subject: Lukust vabastamise juhised
-    oauth_callbacks:
-      failure: Ei õnnestunud autoriseerida %{kind}-kontot, põhjus %{reason}.
-      success: Edukalt autoriseeritud %{kind}-konto.
-    unlocks:
-      send_instructions: Sa saad mõne minuti jooksul e-kirja juhistega, kuidas oma konto lukust vabastada.
-      unlocked: Sinu konto on edukalt lukust vabastatud. Sa oled nüüd sisse logitud.
-    user_passwords:
-      user:
-        cannot_be_blank: Sinu parool ei tohi olla tühi.
-        send_instructions: Mõne minuti jooksul saad sa kirja juhistega, kuidas oma parooli taastada.
-        updated: Sinu salasõna vahetati edukalt. Oled sisse logitud.
-    user_registrations:
-      destroyed: Nägemist! Sinu konto on edukalt tühistatud. Loodame sind peagi uuesti näha.
-      inactive_signed_up: 'Sa registreerusid edukalt. Siiski ei saa me sind sisse logida, põhjus: %{reason}.'
-      signed_up: Tere tulemast! Sa registreerusid edukalt.
-      updated: Sa uuendasid edukalt oma kontot.
-    user_sessions:
-      signed_in: Edukalt sisse logitud.
-      signed_out: Edukalt välja logitud.
-  errors:
-    messages:
-      already_confirmed: on juba kinnitatud
-      not_found: ei leitud
-      not_locked: ei olnud lukus
-      not_saved:
-        one: '1 viga takistas salvestamast objekti %{resource}:'
-        other: "%{count} viga takistasid salvestamast objekti %{resource}:"
   spree:
     abbreviation: Lühend
     accept:

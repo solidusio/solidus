@@ -356,50 +356,6 @@ sk:
         one: "Zóna"
         few: "Zóny"
         other: "Zón"
-  devise:
-    confirmations:
-      confirmed: "Váš účet bol úspešne potvrdený. Teraz ste prihlásení."
-      send_instructions: "Do niekoľkých minút obdržíte e-mail s pokynmi ako potvrdiť váš účet."
-    failure:
-      inactive: "Váš účet ešte nebol aktivovaný."
-      invalid: "Neplatný e-mail alebo heslo."
-      invalid_token: "Neplatný autentifikačný token."
-      locked: "Váš účet je zamknutý."
-      timeout: "Váše sedenie vypršalo, pre pokračovanie sa prosím znovu prihláste."
-      unauthenticated: "Pred pokračovaním je potrebné sa prihlásiť alebo zaregistrovať."
-      unconfirmed: "Pred pokračovaním musíte potvrdiť váš účet."
-    mailer:
-      confirmation_instructions:
-        subject: "Pokyny pre potvrdenie"
-      reset_password_instructions:
-        subject: "Pokyny pre znovunastavenie hesla"
-      unlock_instructions:
-        subject: "Pokyny pre odomknutie"
-    oauth_callbacks:
-      failure: Nebolo možné vás povoliť z %{kind} kvôli "%{reason}".
-      success: "Úspešne povolené z účtu %{kind}."
-    unlocks:
-      send_instructions:
-      unlocked:
-    user_passwords:
-      user:
-        cannot_be_blank:
-        send_instructions:
-        updated:
-    user_registrations:
-      destroyed:
-      inactive_signed_up:
-      signed_up:
-      updated:
-    user_sessions:
-      signed_in:
-      signed_out:
-  errors:
-    messages:
-      already_confirmed: "už bolo potvrdené"
-      not_found: "nenájdené"
-      not_locked: "nebolo zamknuté"
-      not_saved:
   spree:
     abbreviation: Skratka
     accept: "Prijať"

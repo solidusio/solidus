@@ -493,52 +493,6 @@ it:
       spree/store_credit_category:
         one: Categoria
         other: Categorie
-  devise:
-    confirmations:
-      confirmed: Il tuo account è stato confermato. Hai effettuato il login.
-      send_instructions: Entro pochi minuti riceverai un'email con le istruzioni per confermare il tuo account.
-    failure:
-      inactive: Il tuo account non è ancora stato attivato.
-      invalid: Email o password non valide.
-      invalid_token: Token di autenticazione non valido.
-      locked: Il tuo account è bloccato.
-      timeout: La tua sessione è scaduta. Per favore effettua nuovamente il login.
-      unauthenticated: Devi registrarti o effettuare il login per  continuare.
-      unconfirmed: Devi confermare il tuo account pre continuare.
-    mailer:
-      confirmation_instructions:
-        subject: Istruzioni di Conferma
-      reset_password_instructions:
-        subject: Istruzioni per il reset della password
-      unlock_instructions:
-        subject: Istruzioni per Sbloccare
-    oauth_callbacks:
-      failure: Non è stato possibile autorizzarti da %{kind} perché %{reason}.
-      success: Autorizzato correttamente dall'account %{kind}
-    unlocks:
-      send_instructions: Riceverai un'email con le istruzioni per sbloccare il tuo account entro pochi minuti.
-      unlocked: Il tuo account è stato sbloccato con successo. Hai effettuato il login.
-    user_passwords:
-      user:
-        cannot_be_blank: La password non può essere vuota.
-        send_instructions: Riceverai a breve un email con le istruzioni da seguire per reimpostare la tua password.
-        updated: Hai modificato la tua password con successo. Hai effettuato il login.
-    user_registrations:
-      destroyed: Ciao! Il tuo account è stato eliminato con successo. Speriamo di rivederti presto.
-      inactive_signed_up: Ti sei registrato con successo. Purtroppo non abbiamo potuto effettuare il login perché il tuo account è %{reason}
-      signed_up: Benvenuto! Hai effettuato il login con successo.
-      updated: Hai aggiornato il tuo account con successo.
-    user_sessions:
-      signed_in: Hai effettuato il login con successo.
-      signed_out: Hai effettuato il logout con successo.
-  errors:
-    messages:
-      already_confirmed: è già stato confermato
-      not_found: non trovato
-      not_locked: non era bloccato
-      not_saved:
-        one: 'questo %{resource} non può essere salvato a causa di 1 errore:'
-        other: 'questo %{resource} non può essere salvato a causa di %{count} errori:'
   spree:
     abbreviation: Abbreviazione
     accept: Accetta

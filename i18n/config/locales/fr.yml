@@ -522,52 +522,6 @@ fr:
       spree/zone:
         one: Zone
         other: Zones
-  devise:
-    confirmations:
-      confirmed: Votre compte a été confirmé avec succès. Vous êtes maintenant enregistré.
-      send_instructions: Vous recevrez un courriel avec des instructions pour confirmer la création de votre compte dans quelques minutes.
-    failure:
-      inactive: Votre compte n'est pas encore actif.
-      invalid: Courriel ou mot de passe invalide.
-      invalid_token: Marque d'authentification invalide.
-      locked: Votre compte est bloqué.
-      timeout: Votre session est expirée, s'il vous plaît connectez-vous de nouveaux pour continuer.
-      unauthenticated: Vous devez être connecté avant de pouvoir continuer.
-      unconfirmed: Vous devez confirmer votre compte avant de pouvoir continuer.
-    mailer:
-      confirmation_instructions:
-        subject: Instruction de confirmation de compte
-      reset_password_instructions:
-        subject: Instruction de changement de mot de passe
-      unlock_instructions:
-        subject: Instruction de déblocage de compte
-    oauth_callbacks:
-      failure: "%{kind} ne vous a pas autorisé à cause de %{reason}."
-      success: Le compte %{kind} vous a autorisé avec succès
-    unlocks:
-      send_instructions: Vous allez recevoir un courriel expliquant comment déverrouiller votre compte dans quelques minutes.
-      unlocked: Votre compte a été déverrouillé. Vous êtes maintenant connecté.
-    user_passwords:
-      user:
-        cannot_be_blank: Votre mot de passe ne peut pas être vide.
-        send_instructions: Vous allez recevoir un courriel expliquant comment réinitialiser votre mot de passe dans quelques minutes.
-        updated: Votre mot de passe à été changé avec succès. Vous êtes désormais connecté.
-    user_registrations:
-      destroyed: Au revoir! Votre compte a été supprimé avec succès. Nous espérons vous revoir bientôt
-      inactive_signed_up: Votre compte a été créé avec succès. Cependant, nous n'avons pas pu vous connecter car votre compte est %{reason}
-      signed_up: Vous êtes connecté, bienvenue.
-      updated: Votre compte a bien été mis à jour.
-    user_sessions:
-      signed_in: Vous êtes désormais connecté.
-      signed_out: Vous êtes désormais déconnecté.
-  errors:
-    messages:
-      already_confirmed: est déjà confirmé
-      not_found: Non trouvé(e)
-      not_locked: n'est pas bloqué
-      not_saved:
-        one: "%{resource} n'a pu etre sauvegardé à cause d' 1 erreur:"
-        other: "%{resource} n'a pu etre sauvegardé à cause de %{count} erreurs:"
   spree:
     abbreviation: Abréviation
     accept: Accepter
