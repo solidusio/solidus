@@ -283,52 +283,6 @@ da:
       spree/zone:
         one: Zone
         other: Zoner
-  devise:
-    confirmations:
-      confirmed: Du har bekræftet din konto. Du er nu logget ind.
-      send_instructions: Du vil modtage en e-mail om få minutter. Her vil der være vejledning i at bekræfte din konto.
-    failure:
-      inactive: Din konto er ikke aktiveret endnu.
-      invalid: Forkert e-mail eller kodeord.
-      invalid_token: Ugyldigt token
-      locked: Din konto er låst.
-      timeout: Du er blevet logget ud. Log venligst ind igen for at fortsætte.
-      unauthenticated: Du skal logge ind, eller oprette en konto, for at fortsætte.
-      unconfirmed: Du skal bekræfte din konto for at kunne fortsætte.
-    mailer:
-      confirmation_instructions:
-        subject: Vejledning i at bekræfte din konto
-      reset_password_instructions:
-        subject: Vejledning i at nulstille kodeord
-      unlock_instructions:
-        subject: Vejledning i at låse konto op
-    oauth_callbacks:
-      failure: Kunne ikke godkende dig fra %{kind} fordi %{reason}.
-      success: Godkendelse fra %{kind} konto lykkedes.
-    unlocks:
-      send_instructions: Du modtager en e-mail omlidt, med vejledning i at låse din konto op.
-      unlocked: Din konto er låst op. Du er nu logget ind.
-    user_passwords:
-      user:
-        cannot_be_blank: Din kode kan ikke være blank.
-        send_instructions: Du modtager e-mail omlidt, med vejledning i at nulstille dit kodeord.
-        updated: Din kode er ændret. Du er nu logget ind.
-    user_registrations:
-      destroyed: Farvel! Din konto er nu slettet. Vi håber at se dig igen en anden gang.
-      inactive_signed_up: Du har nu oprettet en konto. Vi kunne dog ikke logge dig ind fordi %{reason}.
-      signed_up: Velkommen! Din konto er nu oprettet.
-      updated: Din kontoinformation er nu opdateret.
-    user_sessions:
-      signed_in: Du er nu logget ind.
-      signed_out: Du er nu logget ud.
-  errors:
-    messages:
-      already_confirmed: er blevet bekræftet
-      not_found: ikke fundet
-      not_locked: var ikke låst
-      not_saved:
-        one: '1 fejl forhindrede %{resource} i at blive gemt:'
-        other: "%{count} fejl forhindrede %{resource} i at blive gemt:"
   spree:
     abbreviation: Forkortelse
     accept:

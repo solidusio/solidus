@@ -237,50 +237,6 @@ tr:
       spree/user: Kullanıcılar
       spree/variant: "Çeşitler"
       spree/zone: Bölgeler
-  devise:
-    confirmations:
-      confirmed: Hesabınız başarıyla etkinleştirildi. Şu anda giriş yaptınız.
-      send_instructions: Hesabınızı nasıl etkinleştirebileceğinize dair bir bilgiler e-posta adresinize gönderilmiştir.
-    failure:
-      inactive: Hesabınız henüz etkileştirilmemiş.
-      invalid: Geçersiz e-posta ya da şifre.
-      invalid_token: Geçersiz kimlik girdisi.
-      locked: Hesabınız kilitlenmiş.
-      timeout: Oturum süreniz dolmuştur, devam etmek için lütfen yeniden giriş yapın.
-      unauthenticated: Devam etmeden önce giriş yapmalı ya da kayıt olmalısınız.
-      unconfirmed: Devam etmeden önce hesabınızı etkinleştirmelisiniz.
-    mailer:
-      confirmation_instructions:
-        subject: Etkinleştirme adımları
-      reset_password_instructions:
-        subject: "Şifre sıfırlama adımları"
-      unlock_instructions:
-        subject: Kilit Çözme Adımları
-    oauth_callbacks:
-      failure: "%{kind} hesabı kullanılarak giriş yapılamıyor.(Sebep:%{reason})"
-      success: "%{kind} hesabınız ile başarıyla giriş yaptınız."
-    unlocks:
-      send_instructions: Hesabınızın kilidini nasıl çözebileceğinize dair açıklamaları içeren e-posta adresinize gönderilmiştir.
-      unlocked: Hesabınızın kilidi kaldırılmıştır. Şu anda giriş yaptınız.
-    user_passwords:
-      user:
-        cannot_be_blank: "Şifre boş bırakılamaz."
-        send_instructions: "Şifrenizi nasıl sıfırlayacağınıza dair açıklamaları içeren e-posta adresinize gönderilmiştir."
-        updated: "Şifreniz başarıyla değiştirilmiştir. Şu anda giriş yaptınız."
-    user_registrations:
-      destroyed: Hoşçakalın! Hesabınız başarıyla iptal edilmiştir. Tekrar görüşmek dileğiyle.
-      inactive_signed_up: Kaydınız başarıyla tamamlanmıştır. Ancak %{reason} sebebiyle hesabınıza giriş yapılamamaktadır.
-      signed_up: Hoşgeldiniz! Başarıyla kaydoldunuz.
-      updated: Hesabınız başarıyla güncellendi.
-    user_sessions:
-      signed_in: Başarıyla giriş yapıldı.
-      signed_out: Oturum Başarıyla kapatıldı.
-  errors:
-    messages:
-      already_confirmed: zaten onaylanmış
-      not_found: bulunamadı
-      not_locked: kilitli değil
-      not_saved: "%{resource} kaydedilirken %{count} hata tespit edildi."
   spree:
     abbreviation: Kısaltma
     accept:

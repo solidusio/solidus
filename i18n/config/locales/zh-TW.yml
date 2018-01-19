@@ -241,50 +241,6 @@ zh-TW:
       spree/user: "使用者"
       spree/variant: "型號"
       spree/zone: "區域"
-  devise:
-    confirmations:
-      confirmed: "您的帳號已驗證成功. 現已登入."
-      send_instructions: "您將在幾分鐘內收到一封說明如何驗證帳號的電子郵件."
-    failure:
-      inactive: "您的帳號尚未啓用."
-      invalid: "錯誤的帳號或者密碼."
-      invalid_token: "不正確的認證辨識碼."
-      locked: "您的帳號已被鎖定."
-      timeout: "您的連線已過期, 請重新登入."
-      unauthenticated: "您必須先登入或者註冊."
-      unconfirmed: "您必須先驗證帳號才能繼續."
-    mailer:
-      confirmation_instructions:
-        subject: "驗證說明"
-      reset_password_instructions:
-        subject: "重置密碼說明"
-      unlock_instructions:
-        subject: "帳號解鎖說明"
-    oauth_callbacks:
-      failure: "由於%{reason}, 您無法從%{kind} 獲得授權."
-      success: "成功從%{kind} 帳號取得授權."
-    unlocks:
-      send_instructions: "您將在數分鐘內收到一封說明如何解鎖帳號的電子郵件."
-      unlocked: "您的帳號已成功解鎖. 現已登入."
-    user_passwords:
-      user:
-        cannot_be_blank: "密碼不能空白."
-        send_instructions: "您將在數分鐘內收到一封說明如何重置密碼的電子郵件."
-        updated: "密碼變更成功, 現已登入."
-    user_registrations:
-      destroyed: "再會! 您的帳號已註銷, 希望您再度造訪."
-      inactive_signed_up: "您已註冊成功. 但由於您的帳號%{reason}, 故無法登入."
-      signed_up: "歡迎! 您已註冊成功."
-      updated: "您的帳號已更新成功."
-    user_sessions:
-      signed_in: "登入成功."
-      signed_out: "登出成功."
-  errors:
-    messages:
-      already_confirmed: "已驗證"
-      not_found: "找不到"
-      not_locked: "未鎖定"
-      not_saved: "在儲存%{resource}時遭遇%{count} 個錯誤"
   spree:
     abbreviation: "縮寫"
     accept:

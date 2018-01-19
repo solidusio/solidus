@@ -285,52 +285,6 @@ pl:
       spree/zone:
         one: Strefa
         other: Strefy
-  devise:
-    confirmations:
-      confirmed: Twoje konto zostało potwierdzone. Zostałeś zalogowany.
-      send_instructions: Za kilka minut otrzymasz wiadomość z instrukcjami, jak potwierdzić Twoje konto.
-    failure:
-      inactive: Twoje konto nie jest jeszcze aktywne.
-      invalid: Błędny e-mail lub hasło.
-      invalid_token: Błędny żeton autentykacyjny.
-      locked: Twoje konto jest zablokowane.
-      timeout: Twoja sesja wygasła, zaloguj się ponownie.
-      unauthenticated: Aby kontynuować, musisz się zalogować.
-      unconfirmed: Przed kontynuacją musisz potwierdzić swoje konto.
-    mailer:
-      confirmation_instructions:
-        subject: Instrukcje potwierdzenia
-      reset_password_instructions:
-        subject: Instrukcje ponownego ustawienia hasła
-      unlock_instructions:
-        subject: Instrukcje odblokowania
-    oauth_callbacks:
-      failure: Nie można było dokonać autoryzacji z %{kind} ponieważ %{reason}.
-      success: Autoryzacja z konta %{kind} zakończyła się sukcesem.
-    unlocks:
-      send_instructions: Za kilka minut otrzymasz wiadomość z instrukcjami, jak odblokować Twoje konto.
-      unlocked: Twoje konto zostało odblokowane. Zostałeś zalogowany.
-    user_passwords:
-      user:
-        cannot_be_blank: Hasło nie może być puste.
-        send_instructions: Za kilka minut otrzymasz wiadomość z instrukcjami, jak ponownie ustawić Twoje hasło.
-        updated: Hasło zostało zmienione. Zostałeś zalogowany.
-    user_registrations:
-      destroyed: Do widzenia! Twoje konto zostało usunięte. Mamy nadzieję, że wrócisz do nas...
-      inactive_signed_up: Założyłeś konto, nie mogliśmy jednak Cię zalogować ponieważ Twoje konto jest %{reason}.
-      signed_up: Witamy! Zostałeś zalogowany.
-      updated: Uaktualniłeś swoje konto.
-    user_sessions:
-      signed_in: Zostałeś zalogowany.
-      signed_out: Zostałeś wylogowany.
-  errors:
-    messages:
-      already_confirmed: już zostało potwierdzone
-      not_found: nie znaleziono
-      not_locked: nie zostało zablokowane
-      not_saved:
-        one: '1 błąd uniemożliwił zachowanie tego %{resource}:'
-        other: "%{count} błędy(-ów) uniemożliwiło zachowanie tego %{resource}:"
   spree:
     abbreviation: Skrót
     accept:

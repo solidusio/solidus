@@ -237,50 +237,6 @@ vi:
       spree/user:
       spree/variant:
       spree/zone:
-  devise:
-    confirmations:
-      confirmed: Tài khoản của bạn đã được xác nhận thành công. Bạn đang đăng nhập vào.
-      send_instructions: Bạn sẽ nhận được thư hướng dẫn xác nhận tài khoản của mình trong một vài phút tới.
-    failure:
-      inactive: Tài khoản của bạn chưa được kích hoạt.
-      invalid: "Địa chỉ hòm thư hoặc mật khẩu không hợp lệ."
-      invalid_token: Token ủy quyền không đúng.
-      locked: Tài khoản của bạn đang bị khoá.
-      timeout: Session hết hạn, xin vui lòng đăng nhập lại.
-      unauthenticated: Bạn cần đăng nhập hoặc đăng kí trước khi tiếp tục.
-      unconfirmed: Bạn phải xác nhận tài khoản của mình trước khi tiếp tục.
-    mailer:
-      confirmation_instructions:
-        subject: Hướng dẫn chứng thực
-      reset_password_instructions:
-        subject: Hướng dẫn thiết lập lại mật khẩu.
-      unlock_instructions:
-        subject: Hướng dẫn mở khoá
-    oauth_callbacks:
-      failure: Không thể ủy quyền bạn từ %{kind} vì %{reason}.
-      success: Thành công ủy quyền từ tài khoản %{kind}.
-    unlocks:
-      send_instructions: Bạn sẽ nhận được email với hướng dẫn cách mở khoá tài khoản trong ít phút nữa.
-      unlocked: Tài khoản đã được mở khoá. Bạn bây giờ đã đăng nhập.
-    user_passwords:
-      user:
-        cannot_be_blank: Mật khẩu của bạn không được bỏ trống.
-        send_instructions: Bạn sẽ nhận được email với hướng dẫn cách cài lại mật khẩu trong ít phút nữa.
-        updated: Mật mã đã thành công thay đổi. Bạn bây giờ đã được đăng nhập.
-    user_registrations:
-      destroyed: Tạm biệt! Tài khoản đã bị huỷ. Hẹn gặp lại.
-      inactive_signed_up: Bạn đã thành công đăng kí. Nhưng bạn chưa thể đăng nhập vì tài khoản bị %{reason}
-      signed_up: Chào mừng! Bạn đã thành công đăng kí.
-      updated: Bạn đã thành công cập nhật tài khoản.
-    user_sessions:
-      signed_in: "Đăng nhập thành công."
-      signed_out: "Đăng xuất thành công."
-  errors:
-    messages:
-      already_confirmed: "đã được chứng nhận"
-      not_found: không tìm thấy
-      not_locked: không bị khoá
-      not_saved: "%{count} lỗi cấm %{resource} này lưu:"
   spree:
     abbreviation: Từ khóa tắt
     accept:

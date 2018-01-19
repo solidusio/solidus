@@ -281,50 +281,6 @@ nb:
       spree/zone:
         one: Sone
         other: Soner
-  devise:
-    confirmations:
-      confirmed:
-      send_instructions:
-    failure:
-      inactive: Inaktiv
-      invalid: Ugyldig
-      invalid_token: Ugyldighetsnøkkel
-      locked: Låst
-      timeout: Tidsavbrudd
-      unauthenticated: Uatorisert
-      unconfirmed: Ubekfreftet
-    mailer:
-      confirmation_instructions:
-        subject: Bekreftelsesinstruksjoner
-      reset_password_instructions:
-        subject: Tilbakestillingsinstruksjoner
-      unlock_instructions:
-        subject: Opplåsningsinstruksjoner
-    oauth_callbacks:
-      failure:
-      success:
-    unlocks:
-      send_instructions: Send opplåsningsinstruksjoner
-      unlocked: Ulåst
-    user_passwords:
-      user:
-        cannot_be_blank: Kan ikke være blank
-        send_instructions: Send passordinstruks
-        updated: Oppdaterd
-    user_registrations:
-      destroyed: slettet
-      inactive_signed_up:
-      signed_up: registreringsdato
-      updated: oppdatert
-    user_sessions:
-      signed_in: Logget inn
-      signed_out: Logget ut
-  errors:
-    messages:
-      already_confirmed: Allerede bekreftet
-      not_found: Ikke funnet
-      not_locked: Ikke låst
-      not_saved:
   spree:
     abbreviation: Fortkortelse
     accept:

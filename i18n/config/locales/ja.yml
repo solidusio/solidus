@@ -209,7 +209,7 @@ ja:
         meta_description: "メタ説明"
         meta_keywords: "メタキーワード"
         meta_title: "メタタイトル"
-        position: "位置" 
+        position: "位置"
         render_layout_as_partial: "部分的なレイアウトとして表示"
         show_in_footer: "フッターに表示"
         show_in_header: "ヘッダーに表示"
@@ -335,52 +335,6 @@ ja:
       spree/page:
         one: "特集ページ"
         other: "特集ページ"
-  devise:
-    confirmations:
-      confirmed: "アカウントが正常に確認されました。ログインしました。"
-      send_instructions: "数分以内に本人確認をする方法を記載したメールが届きます。"
-    failure:
-      inactive: "アカウントはまだ確認されませんでした。"
-      invalid: Eメールアドレスもしくはパスワードが異なります。
-      invalid_token: "無効な認証トークン。"
-      locked: "アカウントはロックされています"
-      timeout: "セッションの有効期限が切れました。続けるには再度ログインしてください。"
-      unauthenticated: "続ける前にサインインかサインアップが必要です。"
-      unconfirmed: "続ける前にアカウントの確認が必要です。"
-    mailer:
-      confirmation_instructions:
-        subject: "確認方法"
-      reset_password_instructions:
-        subject: "パスワードのリセット方法"
-      unlock_instructions:
-        subject: "アンロック方法"
-    oauth_callbacks:
-      failure: "%{kind}から認証できませんでした。理由: %{reason}"
-      success: "%{kind}からの認証に成功しました。"
-    unlocks:
-      send_instructions: "アカウントのアンロック方法を記載したメールを送信しました。"
-      unlocked: "あなたのアカウントがアンロックされました。ログイン済みです。"
-    user_passwords:
-      user:
-        cannot_be_blank: "パスワードを入力してください。"
-        send_instructions: "パスワードのリセット方法を記載したメールを送信しました。"
-        updated: "パスワードの変更に成功しました。サインインし直してください。"
-    user_registrations:
-      destroyed: "さようなら！アカウントが削除されました。再びお会いできる日が来ることを心待ちにしております。"
-      inactive_signed_up: "ログインに成功しました。 しかし%{reason}により、まだ完了はしていません。"
-      signed_up: "ログインに成功しました。"
-      updated: "アカウントの更新に成功しました。"
-    user_sessions:
-      signed_in: "サインインに成功しました。"
-      signed_out: "サインアウトに成功しました。"
-  errors:
-    messages:
-      already_confirmed: "はすでに確認済みです。"
-      not_found: "見つかりませんでした。"
-      not_locked: "ロックされていません。"
-      not_saved:
-        one: ! '%{resource}を保存するのに1つのエラーがありました。'
-        other: ! '%{resource}を保存するのに%{count}つのエラーがありました。'
   spree:
     abbreviation: "省略"
     accept: "受付"
@@ -534,7 +488,7 @@ ja:
     card_type: "ブランド"
     card_type_is: "カード類"
     cart: "カート"
-    cart_subtotal: 
+    cart_subtotal:
       one: '小計 (1つの商品)'
       other: '小計 (%{count}個の商品)'
     categories: "カテゴリー"
@@ -769,10 +723,10 @@ ja:
     icon: "アイコン"
     image: "画像"
     images: "画像"
-    implement_eligible_for_return: 
+    implement_eligible_for_return:
     implement_requires_manual_intervention:
     inactive: "非活性"
-    incl: 
+    incl:
     included_in_price: "価格に含まれる"
     included_price_validation: "はデフォルトのタックスゾーンを設定しない限り選択できません。"
     incomplete: "不完全"
@@ -851,7 +805,7 @@ ja:
       all: "すべて"
       none: "なし"
     max_items: "商品の数の最大限"
-    member_since: 
+    member_since:
     memo: "メモ"
     meta_description: "メタ情報説明"
     meta_keywords: "メタキーワード"
@@ -1173,7 +1127,7 @@ ja:
     return_item_time_period_ineligible: "返品は期限切れです。"
     return_items: "返品"
     return_items_cannot_be_associated_with_multiple_orders: "返品商品は複数の注文の注文と関連づけることはできません。"
-    reimbursement_mailer: 
+    reimbursement_mailer:
       reimbursement_email:
         days_to_send: "交換待ちの商品を送り返すのに%{days}必要です。"
         dear_customer: "お客様"

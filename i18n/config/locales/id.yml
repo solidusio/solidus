@@ -119,7 +119,7 @@ id:
       spree/store:
         mail_from_address:
         meta_description:
-        meta_keywords: 
+        meta_keywords:
         name: Nama
         seo_title: Judul SEO
         url:
@@ -281,50 +281,6 @@ id:
       spree/zone:
         one: Wilayah
         other: Wilayah-wilayah
-  devise:
-    confirmations:
-      confirmed: Akun Anda telah berhasil di konfirmasi. Anda sekarang telah masuk sistem.
-      send_instructions: Anda akan menerima email dengan instruksi tentang bagaimana caranya untuk mengkonfirmasi akun Anda beberapa menit lagi.
-    failure:
-      inactive: Akun Anda belum teraktivasi
-      invalid: Email atau password salah
-      invalid_token: Token otentikasi Anda salah
-      locked: Akun Anda sedang terkunci
-      timeout: Sesi Anda telah berakhir, silahkan login kembali untuk melanjutkan.
-      unauthenticated: Anda perlu login atau mendaftar dulu sebelum melanjutkan.
-      unconfirmed: Anda perlu mengkonfirmasi akun Anda sebelum melanjutkan.
-    mailer:
-      confirmation_instructions:
-        subject: Instruksi konfirmasi.
-      reset_password_instructions:
-        subject: Instruksi reset kata sandi
-      unlock_instructions:
-        subject: Instruksi membuka Akun terkunci
-    oauth_callbacks:
-      failure: Tidak bisa mengizinkan Anda dari %{kind} karena %{reason}
-      success: Berhasil mendapat izin dari akun %{kind}
-    unlocks:
-      send_instructions: Anda akan menerima email dengan instruksi tentang bagaimana caranya untuk mengaktifkan akun yang terkunci beberapa menit lagi.
-      unlocked: Akun Anda telah tidak terkunci lagi. Anda sekarang telah masuk sistem.
-    user_passwords:
-      user:
-        cannot_be_blank: Kata sandi Anda tidak boleh kosong
-        send_instructions: Anda akan menerima email dengan instruksi tentang bagaimana caranya untuk mengganti ulang kata sandi Anda beberapa menit lagi.
-        updated: Kata sandi Anda telah berhasil diganti. Anda sekarang telah masuk sistem.
-    user_registrations:
-      destroyed: Dadah! Akun Anda telah berhasil dibatalkan. Semoga kita berjumpa lagi.
-      inactive_signed_up: Anda telah berhasil didaftarkan. Namun, Anda tidak dapat masuk ke sistem kami karena %{reason}
-      signed_up: Selamat datang! Anda telah berhasil didaftarkan.
-      updated: Anda telah berhasil memperbarui Akun Anda.
-    user_sessions:
-      signed_in: Berhasil masuk ke dalam sistem.
-      signed_out: Berhasil keluar dari sistem.
-  errors:
-    messages:
-      already_confirmed: telah dikonfirmasi.
-      not_found: tidak ditemukan
-      not_locked: tidak terkunci
-      not_saved: "%{count} kesalahan menyebabkan %{resource} tidak bisa disimpan"
   spree:
     abbreviation: Singkatan
     accept:

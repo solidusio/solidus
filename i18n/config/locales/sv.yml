@@ -311,52 +311,6 @@ sv:
       spree/zone:
         one: Zone
         other: Zoner
-  devise:
-    confirmations:
-      confirmed: Ditt konto är bekräftat. Du kan nu logga in.
-      send_instructions: Du får strax ett epost-meddelande med instruktioner hur du bekräftar ditt konto.
-    failure:
-      inactive: Ditt konto är ännu ej aktiverat.
-      invalid: Ogiltlig e-post eller lösenord.
-      invalid_token: Ogiltlig auktorisations-symbol.
-      locked: Ditt konto är låst.
-      timeout: Din session har avslutats, logga in på nytt för att fortsätta.
-      unauthenticated: Du behöver logga in eller registrera dig innan du kan fortsätta.
-      unconfirmed: Du behöver bekräfta ditt konto innan du kan fortsätta.
-    mailer:
-      confirmation_instructions:
-        subject: Instruktioner för att bekräfta konto
-      reset_password_instructions:
-        subject: Instruktioner för att återställa lösenordet
-      unlock_instructions:
-        subject: Instruktioner för upplåsning
-    oauth_callbacks:
-      failure: Kunde inte auktorisera dig från %{kind} på grund av %{reason}.
-      success: Lyckad auktorisation från %{kind} konto.
-    unlocks:
-      send_instructions: Du får strax ett epost-meddelande med instruktioner hur du låser upp ditt konto.
-      unlocked: Ditt konto är upplåst. Du är nu inloggad.
-    user_passwords:
-      user:
-        cannot_be_blank: Ditt lösenord kan inte vara blankt.
-        send_instructions: Du får strax ett epost-meddelande med instruktioner hur du återställer ditt lösenord.
-        updated: Ditt lösenord är ändrat. Du är nu inloggad.
-    user_registrations:
-      destroyed: Ditt konto är avbrutet. Vi hoppas att få se dig åter.
-      inactive_signed_up: Ditt konto är skapat. Dock gick det inte att logga in dig på grund av att ditt konto är %{reason}
-      signed_up: Välkommen! Din anmälan är klar.
-      updated: Uppdatering av ditt konto är klart.
-    user_sessions:
-      signed_in: Inloggningen lyckades.
-      signed_out: Utloggningen lyckades.
-  errors:
-    messages:
-      already_confirmed: var redan bekräftad
-      not_found: hittas inte
-      not_locked: var inte låst
-      not_saved:
-        one: '1 fel hindrade detta %{resource} från att sparas:'
-        other: "%{count} fel hindrade detta %{resource} från att sparas:"
   spree:
     abbreviation: Förkortning
     accept: Accept

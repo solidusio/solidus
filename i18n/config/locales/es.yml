@@ -709,52 +709,6 @@ es:
             payment_source:
               has_to_be_payment_source_class: "Tiene que ser un Spree::PaymentSource"
 
-  devise:
-    confirmations:
-      confirmed: Tu cuenta ha sido confirmada satisfactoriamente. Ahora estás autorizado(a) y con sesión.
-      send_instructions: Recibirás un email con instrucciones sobre como confirmar tu cuenta en breves minutos.
-    failure:
-      inactive: Tu cuenta no ha sido activada todavía.
-      invalid: Email o constraseña no válidos.
-      invalid_token: Cadena de autenticación no válida.
-      locked: Tu cuenta está bloqueada
-      timeout: Su sesión ha caducado, por favor autentiquese de nuevo para continuar.
-      unauthenticated: Necesitas autenticarte o registrarte antes de continuar.
-      unconfirmed: Tienes que confirmar tu cuenta antes de continuar.
-    mailer:
-      confirmation_instructions:
-        subject: Instrucciones de confirmación
-      reset_password_instructions:
-        subject: Instrucciones para reinicializar la contraseña
-      unlock_instructions:
-        subject: Instrucciones de desbloqueo
-    oauth_callbacks:
-      failure: No se te pudo autorizar desde %{kind} debido a %{reason}.
-      success: Autorizada satisfactoriamente desde la cuenta %{kind}.
-    unlocks:
-      send_instructions: Recibirás un email con instrucciones sobre como desbloquear la cuenta en breves minutos.
-      unlocked: Tu cuenta fue desbloqueada satisfactoriamente. Ahora estás autorizado(a) y con sesión.
-    user_passwords:
-      user:
-        cannot_be_blank: Tu contraseña no puede estar en blanco
-        send_instructions: Recibirás un email con instrucciones sobre como reinicializar tu contraseña en breves minutos.
-        updated: Tu contraseña se ha cambiado satisfactoriamente. Ahora estás autorizado(a) y con sesión.
-    user_registrations:
-      destroyed: ¡Adiós! Tu cuenta ha sido cancelada satisfactoriamente. Esperamos volver a verte pronto.
-      inactive_signed_up: Te has dado de alta satisfactoriamente. Sin embargo, no pudimos autotizarte debido a que tu cuenta está %{reason}.
-      signed_up: ¡Bienvenido! Te has dado de alta satisfactoriamente.
-      updated: Has actualizado tu cuenta satisfactoriamente.
-    user_sessions:
-      signed_in: Autorizado satisfactoriamente.
-      signed_out: Desconectado satisfactoriamente.
-  errors:
-    messages:
-      already_confirmed: ya ha sido confirmado
-      not_found: no encontrado
-      not_locked: no estaba bloqueada
-      not_saved:
-        one: '1 error impidió a este %{resource} ser guardado:'
-        other: '%{count} errores impidieron a este %{resource} ser guardado:'
   spree:
     abbreviation: Abreviatura
     accept: Aceptar

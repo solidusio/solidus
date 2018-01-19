@@ -281,52 +281,6 @@ es-MX:
       spree/zone:
         one: Zona
         other: Zonas
-  devise:
-    confirmations:
-      confirmed: Su cuenta fue confirmada correctamente. Ahora está conectado.
-      send_instructions: En breve recibirá un email con instrucciones para confirmar su cuenta.
-    failure:
-      inactive: Su cuenta no ha sido activada aún.
-      invalid: Email o contraseña no válidos
-      invalid_token: Token de autenticación no válido
-      locked: Su cuenta está bloqueada
-      timeout: Su sesión expiró, por favor conéctese nuevamente para continuar
-      unauthenticated: Necesita conectarse o registrarse antes de continuar
-      unconfirmed: Debe confirmar su cuenta antes de continuar
-    mailer:
-      confirmation_instructions:
-        subject: Instrucciones de Confirmación
-      reset_password_instructions:
-        subject: Instrucciones para reestablecer su contraseña
-      unlock_instructions:
-        subject: Instrucciones para desbloqueo
-    oauth_callbacks:
-      failure: No pudo autorizarse desde %{kind} debido a %{reason}.
-      success: Autorizado desde la cuenta de %{kind}
-    unlocks:
-      send_instructions: En breve recibirá  un email con instrucciones acerca de como desbloquear su cuenta.
-      unlocked: Su cuenta fue desbloqueada correctamente. Ahora está conectado
-    user_passwords:
-      user:
-        cannot_be_blank: Su contraseña no puede estar en blanco
-        send_instructions: En breve recibirá  un email con instrucciones acerca de como restablecer su contraseña.
-        updated: Su contraseña fue actualizada correctamente. Ahora está conectado.
-    user_registrations:
-      destroyed: Su cuenta  fue cancelada correctamente. Esperamos volverlo a ver pronto. ¡Adiós!
-      inactive_signed_up: Usted se ha registrado correctamente. Sin embargo, no podemos registrarlo debido a que su cuenta está %{reason}
-      signed_up: "¡Bienvenido! Se ha registrado exitosamente."
-      updated: Ha actualizado su cuenta exitosamente.
-    user_sessions:
-      signed_in: Conectado exitosamente
-      signed_out: Desconectado exitosamente.
-  errors:
-    messages:
-      already_confirmed: Ya ha sido confirmado
-      not_found: no encontrado
-      not_locked: no estaba bloqueado
-      not_saved:
-        one: '1 error impidió guardar este(a) %{resource}:'
-        other: "%{count} errores impidieron guardar este(a) %{resource}:"
   time:
     formats:
       solidus:
