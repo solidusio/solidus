@@ -130,12 +130,6 @@ module Spree
         @admin_layout = layout if layout
         @admin_layout
       end
-
-      private
-
-      def attribute_name_for(field_name)
-        field_name.tr(' ', '_').downcase
-      end
     end
   end
 end
