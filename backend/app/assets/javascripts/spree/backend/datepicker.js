@@ -1,3 +1,5 @@
+//= require solidus_admin/flatpickr/flatpickr
+
 'use strict';
 
 Spree.ready(function(){
