@@ -1,3 +1,5 @@
+//= require 'solidus_admin/Sortable'
+
 Handlebars.registerHelper('isRootTaxon', function() {
   return this.parent_id == null;
 });
@@ -37,18 +39,25 @@ var TaxonTreeView = Backbone.View.extend({
   },
 
   render: function() {
-    var taxons_template;
-    taxons_template = HandlebarsTemplates["taxons/tree"];
+    var taxons_template = HandlebarsTemplates["taxons/tree"];
     this.$el.html(taxons_template({
       taxons: [this.model.get("root")]
-    })).find('ul').sortable({
-      connectWith: '#taxonomy_tree ul',
-      placeholder: 'sortable-placeholder ui-state-highlight',
-      tolerance: 'pointer',
-      cursorAt: {
-        left: 5
-      }
-    });
+    }));
+
+    var sortableOptions = {
+      group: {
+        name: this.cid,
+        pull: true,
+        put: true
+      },
+      forceFallback: true,
+      onEnd: this.handle_move.bind(this)
+    };
+
+    var lists = this.$('ul');
+    for(var i = 0; i < lists.length; i++) {
+      new Sortable(lists[i], sortableOptions);
+    }
   },
 
   redraw_tree: function() {
@@ -57,26 +66,8 @@ var TaxonTreeView = Backbone.View.extend({
     });
   },
 
-  resize_placeholder: function(e, ui) {
-    var handleHeight;
-    handleHeight = ui.helper.find('.taxon').outerHeight();
-    ui.placeholder.height(handleHeight);
-  },
-
-  restore_sort_targets: function() {
-    $('.ui-sortable-over').removeClass('ui-sortable-over');
-  },
-
-  highlight_sort_targets: function(e, ui) {
-    this.restore_sort_targets();
-    ui.placeholder.parents('ul').addClass('ui-sortable-over');
-  },
-
-  handle_move: function(e, ui) {
-    if (ui.sender != null) {
-      return;
-    }
-    var el = ui.item;
+  handle_move: function(e) {
+    var el = $(e.item);
     this.update_taxon(el.data('taxon-id'), {
       parent_id: el.parent().closest('li').data('taxon-id'),
       child_index: el.index()
@@ -105,10 +96,6 @@ var TaxonTreeView = Backbone.View.extend({
   },
 
   events: {
-    'sortstart': 'resize_placeholder',
-    'sortover': 'highlight_sort_targets',
-    'sortstop': 'restore_sort_targets',
-    'sortupdate': 'handle_move',
     'click .js-taxon-delete': 'handle_delete',
     'click .js-taxon-add-child': 'handle_add_child'
   },
