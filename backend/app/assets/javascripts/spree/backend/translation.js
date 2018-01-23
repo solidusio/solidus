@@ -20,6 +20,7 @@
     } else if(options.default) {
       return options.default;
     } else {
+      // eslint-disable-next-line no-console
       console.warn("No translation found for " + key + ".");
       return key;
     }

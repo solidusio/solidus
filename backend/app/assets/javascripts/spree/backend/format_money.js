@@ -1,6 +1,8 @@
 //= require spree/backend/translation
 //= require solidus_admin/accounting
 
+/* global accounting:false */
+
 Spree.formatMoney = function(amount, currency) {
   var currencyInfo = Spree.currencyInfo[currency];
 
