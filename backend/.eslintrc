@@ -1,7 +1,4 @@
 {
-  "parserOptions": {
-    "ecmaVersion": 5
-  },
   "rules": {
     "no-unused-vars": ["error", { "vars": "all", "args": "none" }],
     "linebreak-style": ["error", "unix"]
@@ -20,9 +17,6 @@
     "Select2": true,
     "show_flash": true,
     "update_state": true,
-    "flatpickr": true,
-    "accounting": true,
-    "Turbolinks": true,
   },
   "extends": "eslint:recommended"
 }
