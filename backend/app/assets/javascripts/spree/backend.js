@@ -2,7 +2,6 @@
 //= require handlebars
 //= require jquery
 //= require jquery_ujs
-//= require jquery-ui/sortable
 //= require jquery.sticky-kit.min
 //= require solidus_admin/select2
 //= require solidus_admin/underscore
@@ -32,6 +31,7 @@
 //= require spree/backend/components/tabs
 //= require spree/backend/components/tooltips
 //= require spree/backend/components/editable_table
+//= require spree/backend/components/sortable_table
 //= require spree/backend/datepicker
 //= require spree/backend/flash
 //= require spree/backend/gateway

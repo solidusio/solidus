@@ -117,32 +117,6 @@ table {
         background-color: very-light(theme-color("danger"), 6);
         border-color: very-light(theme-color("danger"), 15);
       }
-
-      &.ui-sortable-placeholder td {
-        border: 1px solid $color-2 !important;
-        visibility: visible !important;
-
-        &.actions {
-          background-color: transparent;
-          border-right: none !important;
-          border-top: none !important;
-          border-bottom: none !important;
-          border-left: 1px solid $color-2 !important;
-        }
-      }
-
-      &.ui-sortable-helper {
-        width: 100%;
-
-        td {
-          background-color: lighten($color-3, 33);
-          border-bottom: 1px solid $color-border;
-
-          &.actions {
-            display: none;
-          }
-        }
-      }
     }
 
     &.no-border-top tr:first-child td {
