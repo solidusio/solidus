@@ -43,6 +43,12 @@
       <%= f.error_message_on :mail_from_address %>
     <% end %>
 
+    <%= f.field_container :bcc_addresses do %>
+      <%= f.label :bcc_addresses, Spree.t(:send_order_mails_in_bcc_to) %><br />
+      <%= f.text_field :bcc_addresses, class: 'fullwidth' %>
+      <%= error_message_on :bcc_addresses %>
+    <% end %>
+
     <%= f.field_container :default_currency do %>
       <%= f.label :default_currency %>
       <%= f.select :default_currency,

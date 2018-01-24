@@ -1843,6 +1843,7 @@ en:
     send_copy_of_all_mails_to: Send Copy of All Mails To
     send_mailer: Send Mailer
     send_mails_as: Send Mails As
+    send_order_mails_in_bcc_to: Send confirmation order emails in BCC to
     server: Server
     server_error: The server returned an error
     settings: Settings

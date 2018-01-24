@@ -7,7 +7,7 @@ module Spree
       @store = @order.store
       subject = build_subject(t('.subject'), resend)
 
-      mail(to: @order.email, from: from_address(@store), subject: subject)
+      mail(to: @order.email, from: from_address(@store), bcc: bcc_addresses(@store), subject: subject)
     end
 
     def cancel_email(order, resend = false)
