@@ -2,7 +2,6 @@
 //= require handlebars
 //= require jquery
 //= require jquery_ujs
-//= require jquery-ui/sortable
 //= require jquery.sticky-kit.min
 //= require solidus_admin/select2
 //= require solidus_admin/underscore
