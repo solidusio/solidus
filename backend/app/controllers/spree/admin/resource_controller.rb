@@ -79,7 +79,7 @@ class Spree::Admin::ResourceController < Spree::Admin::BaseController
     end
 
     respond_to do |format|
-      format.js { render plain: 'Ok' }
+      format.js { head :no_content }
     end
   end
 
