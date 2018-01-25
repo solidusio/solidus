@@ -18,6 +18,8 @@ Spree.routes.test2_proper = Spree.pathFor('api/users');
 
 Spree.routes.test2_bad = Spree.pathFor('api/users')
 
+Spree.routes.test3_bad = Spree.pathFor('api/users')
+
 Spree.routes.line_items_api = function(order_id) {
   return Spree.pathFor('api/orders/' + order_id + '/line_items');
 };
