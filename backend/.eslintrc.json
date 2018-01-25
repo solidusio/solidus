@@ -17,7 +17,7 @@
     "_": true,
     "Select2": true,
     "show_flash": true,
-    "update_state": true,
+    "update_state": true
   },
   "extends": "eslint:recommended"
 }
