@@ -6,3 +6,5 @@ coffeescript:
   config_file: coffeelint.json
 javascript:
   enabled: false
+eslint:
+  enabled: true
