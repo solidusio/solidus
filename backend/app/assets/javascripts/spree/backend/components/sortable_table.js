@@ -1,12 +1,14 @@
 //= require solidus_admin/Sortable
 
+/* global Sortable:false */
+
 Spree.ready(function() {
   var sortable_tables = document.querySelectorAll('table.sortable');
 
   _.each(sortable_tables, function(table) {
     var url = table.getAttribute('data-sortable-link');
     var tbody = table.querySelector('tbody');
-    var sortable = Sortable.create(tbody,{
+    Sortable.create(tbody,{
       handle: ".handle",
       onEnd: function(e) {
         var positions = {};
