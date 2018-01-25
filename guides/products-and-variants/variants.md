@@ -13,8 +13,8 @@ your "Color" option type requires two possible option values ("Red" and
 dimensions, and other properties.
 
 Line items use a `variant_id` to associate a variant with an order. So, every
-product has at least one `Spree::Variant`. The first variant is also the [master
-variant](#master-variants) by default.
+product has at least one `Spree::Variant`, which is also the [master
+variant](#master-variants).
 
 Variants are used to define properties that are specific to the variant:
 
@@ -35,7 +35,7 @@ Variants are used to define properties that are specific to the variant:
 
 <!-- TODO:
   Once there is documentation about inventory, add a link to it from the
-  `track_inventory` attribute for context..
+  `track_inventory` attribute for context.
 -->
 
 ## Option types
@@ -57,36 +57,52 @@ values to each variant.
 ## Master variants
 
 Every product has a master variant. By default, the master variant is the first
-variant created for a product. When additional variants are created, they
-inherit the properties of the master variant until their unique properties are
-set.
+variant created for a product. For example, when an administrator creates a new
+product using the `solidus_backend` interface, they are also creating the
+product's master variant.
+
+When additional variants are created, they inherit the properties of the master
+variant until their own distinct properties are set.
+
+### Usage
 
 The master variant is used by `Spree::LineItem`s in two different ways:
 
-- If a product has no variants configured, then the product's master variant
-  is the variant that provides the price and other properties to the line
-  item.
-- If a product has more than one variant, then the master variant does *not*
-  provide the price and other properties to the line item. Instead, it is used
-  as a template for other variants.
+- If the master variant is the product's only variant or configured, then the
+  master variant is the variant that is associated with the line item. This
+  means that the line item uses the master variant's attributes and
+  `Spree::Price`.
+- If a product has more than one variant configured, then the master variant
+  does *not* provide the price and other properties to the line item. **In this
+  case, the master variant is not sellable**. Instead, it is used as a template
+  for other variants.
 
-The master variant should be an effective template for all of your other
-variants. For example, if you have five variants on your mug product that have
-option types of "Color" and "Size", as well as different prices, it would be
-advantageous to set the master variant to the variant that has the most common
-color, size, and price.
+The master variant should be a generic template for all of your additional
+variants. If your product has "Color" and "Size" options, the master variant
+would not have a color or a size associated with it. If all of your variants are
+sold at the same price, however, you may want to assign a price to your master
+variant. See the table below for an example:
 
-| "Mug" variant | Color | Size    | Price |
-|---------------|-------|---------|-------|
-| 1             | Green | Regular | $12   |
-| 2             | Green | Large   | $14   |
-| 3             | Red   | Regular | $12   |
-| 4             | Red   | Large   | $14   |
-| 5             | White | Regular | $12   |
+| "Mug" variant      | Color | Size    | Price |
+|--------------------|-------|---------|-------|
+| 1 (master variant) | --    | --      | $12   |
+| 2                  | Green | Large   | $12   |
+| 3                  | Red   | Medium  | $12   |
+| 4                  | Red   | Large   | $12   |
+| 5                  | White | Medium  | $12   |
 
-In the table above, the "Mug" variant 1 or 3 would be appropriate master
-variants. This is because the majority of the variants share values with them
-("Green" or "Red", "Regular", and "$12").
+### Master variant methods
+
+Master variants must be explicitly called for using the `master` or
+`variants_including_master` methods. For example:
+
+```ruby
+Spree::Product.find(1).master
+# => <Spree::Variant id: 2, is_master: true, ...>
+```
+
+The master variant does not appear in the list of variants accessed by the
+`variants` method.
 
 ## Product images
 
