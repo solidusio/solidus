@@ -7,4 +7,4 @@ Spree.Models.Shipment = Backbone.Model.extend({
     "selected_shipping_rate": Backbone.Model,
     "shipping_rates": Backbone.Collection,
   }
-})
+});

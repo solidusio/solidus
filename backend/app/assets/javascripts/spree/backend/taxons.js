@@ -63,7 +63,7 @@ Spree.ready(function() {
       success: function(data) {
         $('#taxon_products').html(productListTemplate(data.products));
 
-        var el = document.querySelector('#taxon_products')
+        var el = document.querySelector('#taxon_products');
 
         new Sortable(el, {
           draggable: ".sort_item",

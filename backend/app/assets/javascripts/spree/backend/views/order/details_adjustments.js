@@ -1,7 +1,7 @@
 Spree.Views.Order.DetailsAdjustments = Backbone.View.extend({
   initialize: function() {
     this.listenTo(this.model, "change", this.render);
-    this.render()
+    this.render();
   },
 
   adjustmentTotals: function() {
@@ -23,7 +23,7 @@ Spree.Views.Order.DetailsAdjustments = Backbone.View.extend({
   render: function() {
     var model = this.model;
     var tbody = this.$('tbody');
-    var adjustmentTotals = this.adjustmentTotals()
+    var adjustmentTotals = this.adjustmentTotals();
 
     tbody.empty();
     _.each(adjustmentTotals, function(amount, label) {
@@ -36,4 +36,4 @@ Spree.Views.Order.DetailsAdjustments = Backbone.View.extend({
 
     this.$el.toggleClass("hidden", _.isEmpty(adjustmentTotals));
   }
-})
+});
