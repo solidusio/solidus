@@ -1,5 +1,7 @@
 //= require solidus_admin/Sortable
 
+/* global Sortable:false */
+
 Spree.ready(function() {
   var productTemplate = HandlebarsTemplates['products/sortable'];
   var productListTemplate = function(products) {
