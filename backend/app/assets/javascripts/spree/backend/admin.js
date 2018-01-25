@@ -18,8 +18,8 @@ Spree.ready(function() {
   // Highlight hovered table column
   $('table').on("mouseenter", 'td.actions a, td.actions button', function(){
     var tr = $(this).closest('tr');
-    var klass = 'highlight action-' + $(this).data('action')
-    tr.addClass(klass)
+    var klass = 'highlight action-' + $(this).data('action');
+    tr.addClass(klass);
 
     var observer = new MutationObserver(function(mutations) {
       tr.removeClass(klass);
@@ -46,11 +46,11 @@ $.fn.radioControlsVisibilityOfElement = function(dependentElementSelector){
   var radioGroup = $("input[name='" + this.get(0).name + "']");
   radioGroup.each(function(){
     $(this).click(function(){
-      $(dependentElementSelector).visible(this.checked && this.value == showValue)
+      $(dependentElementSelector).visible(this.checked && this.value == showValue);
     });
     if(this.checked){ this.click() }
   });
-}
+};
 
 Spree.ready(function(){
   var uniqueId = 1;
@@ -62,18 +62,18 @@ Spree.ready(function(){
       var el = $(this);
       el.val("");
       // Replace last occurrence of a number
-      el.prop("id", el.prop("id").replace(/\d+(?=[^\d]*$)/, new_id))
-      el.prop("name", el.prop("name").replace(/\d+(?=[^\d]*$)/, new_id))
-    })
+      el.prop("id", el.prop("id").replace(/\d+(?=[^\d]*$)/, new_id));
+      el.prop("name", el.prop("name").replace(/\d+(?=[^\d]*$)/, new_id));
+    });
     // When cloning a new row, set the href of all icons to be an empty "#"
     // This is so that clicking on them does not perform the actions for the
     // duplicated row
     new_table_row.find("a").each(function () {
       var el = $(this);
       el.prop('href', '#');
-    })
+    });
     $(target).prepend(new_table_row);
-  })
+  });
 
   $('body').on('click', '.delete-resource', function() {
     var el = $(this);
@@ -118,7 +118,7 @@ Spree.ready(function(){
           show_flash('error', response.responseText);
         }
 
-      })
+      });
     }
     return false;
   });
@@ -134,5 +134,5 @@ Spree.ready(function(){
     }).done(function() {
       window.location.reload();
     });
-  }
+  };
 });

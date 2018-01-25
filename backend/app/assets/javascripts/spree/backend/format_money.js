@@ -1,6 +1,8 @@
 //= require spree/backend/translation
 //= require solidus_admin/accounting
 
+/* global accounting:false */
+
 Spree.formatMoney = function(amount, currency) {
   var currencyInfo = Spree.currencyInfo[currency];
 
@@ -8,4 +10,4 @@ Spree.formatMoney = function(amount, currency) {
   var decimal = Spree.t('currency_separator');
 
   return accounting.formatMoney(amount, currencyInfo[0], currencyInfo[1], thousand, decimal, currencyInfo[2]);
-}
+};

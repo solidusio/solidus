@@ -2,7 +2,7 @@ $.fn.optionValueAutocomplete = function (options) {
   'use strict';
 
   // Default options
-  options = options || {}
+  options = options || {};
   var multiple = typeof(options['multiple']) !== 'undefined' ? options['multiple'] : true;
   var productSelect = options['productSelect'];
 

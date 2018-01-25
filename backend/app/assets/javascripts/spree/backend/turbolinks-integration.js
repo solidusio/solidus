@@ -2,10 +2,13 @@
 // It is necessary because extensions may use JS libs that make use of
 // jQuery.ready instead of Spree.ready
 
+/* global Turbolinks:false */
+
 Spree.jQueryReady = $.fn.ready;
 
 // override jQuery.ready to use Spree.ready even if it was not used explicitly
 $.fn.ready = function (callback) {
+  // eslint-disable-next-line no-console
   console.warn("Using jQuery.ready() in Solidus is deprecated. Use Spree.ready() instead. Called from: ", callback);
   Spree.ready(callback);
 };

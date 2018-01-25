@@ -1,5 +1,7 @@
 //= require 'solidus_admin/Sortable'
 
+/* global Sortable:false */
+
 Handlebars.registerHelper('isRootTaxon', function() {
   return this.parent_id == null;
 });

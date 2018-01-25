@@ -5,8 +5,8 @@ Spree.initNumberWithCurrency = function() {
     });
     view.render();
   });
-}
+};
 
 Spree.ready(function() {
-  Spree.initNumberWithCurrency()
-})
+  Spree.initNumberWithCurrency();
+});

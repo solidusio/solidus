@@ -8,4 +8,4 @@ Spree.Models.LineItem = Backbone.Model.extend({
   initialize: function(options) {
     this.order = this.collection.parent;
   }
-})
+});

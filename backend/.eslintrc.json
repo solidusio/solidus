@@ -1,7 +1,8 @@
 {
   "rules": {
     "no-unused-vars": ["error", { "vars": "all", "args": "none" }],
-    "linebreak-style": ["error", "unix"]
+    "linebreak-style": ["error", "unix"],
+    "semi": ["error", "always", { "omitLastInOneLineBlock": true }]
   },
   "env": {
     "es6": false,
@@ -12,10 +13,11 @@
     "Spree": true,
     "Backbone": true,
     "HandlebarsTemplates": true,
+    "Handlebars": true,
     "_": true,
     "Select2": true,
     "show_flash": true,
-    "update_state": true,
+    "update_state": true
   },
   "extends": "eslint:recommended"
 }

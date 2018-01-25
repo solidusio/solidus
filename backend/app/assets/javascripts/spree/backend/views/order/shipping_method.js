@@ -10,7 +10,7 @@ Spree.Views.Order.ShippingMethod = Backbone.View.extend({
   },
 
   initialize: function(options) {
-    this.shippingRateId = this.model.get('selected_shipping_rate').get('id')
+    this.shippingRateId = this.model.get('selected_shipping_rate').get('id');
     this.render();
   },
 
@@ -51,4 +51,4 @@ Spree.Views.Order.ShippingMethod = Backbone.View.extend({
     this.$el.html(html);
     this.$('select').val(this.shippingRateId);
   }
-})
+});
