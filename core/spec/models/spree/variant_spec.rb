@@ -754,6 +754,40 @@ RSpec.describe Spree::Variant, type: :model do
     end
   end
 
+  describe ".suppliable" do
+    subject { Spree::Variant.suppliable }
+    let!(:in_stock_variant) { create(:variant) }
+    let!(:out_of_stock_variant) { create(:variant) }
+    let!(:backordered_variant) { create(:variant) }
+    let!(:stock_location) { create(:stock_location) }
+
+    before do
+      in_stock_variant.stock_items.update_all(count_on_hand: 10)
+      backordered_variant.stock_items.update_all(count_on_hand: 0, backorderable: true)
+      out_of_stock_variant.stock_items.update_all(count_on_hand: 0, backorderable: false)
+    end
+
+    it "includes the in stock variant" do
+      expect( subject ).to include(in_stock_variant)
+    end
+
+    it "includes out of stock variant" do
+      expect( subject ).to include(backordered_variant)
+    end
+
+    it "does not include out of stock variant" do
+      expect( subject ).not_to include(out_of_stock_variant)
+    end
+
+    context "inventory levels globally not tracked" do
+      before { Spree::Config.track_inventory_levels = false }
+
+      it "includes all variants" do
+        expect( subject ).to include(in_stock_variant, backordered_variant, out_of_stock_variant)
+      end
+    end
+  end
+
   describe "#display_image" do
     subject { variant.display_image }
 
