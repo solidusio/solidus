@@ -557,7 +557,7 @@ module Spree
       context "order has shipments" do
         before { order.create_proposed_shipments }
 
-        it "clears out all existing shipments on line item udpate" do
+        it "clears out all existing shipments on line item update" do
           put spree.api_order_path(order), params: { order: {
             line_items: {
               0 => { id: line_item.id, quantity: 10 }
