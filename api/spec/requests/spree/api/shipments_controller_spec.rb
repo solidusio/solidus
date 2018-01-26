@@ -237,6 +237,48 @@ describe Spree::Api::ShipmentsController, type: :request do
     end
   end
 
+  describe "#estimated_rates" do
+    let!(:user_shipping_method) { shipment.shipping_method }
+    let!(:admin_shipping_method) { create(:shipping_method, available_to_users: false, name: "Secret") }
+
+    sign_in_as_admin!
+
+    subject do
+      get spree.estimated_rates_api_shipment_path(shipment)
+    end
+
+    it "returns success" do
+      subject
+      expect(response).to be_success
+    end
+
+    it "returns rates available to user" do
+      subject
+      expect(json_response['shipping_rates']).to include(
+        {
+          "name" => user_shipping_method.name,
+          "cost" => "100.0",
+          "shipping_method_id" => user_shipping_method.id,
+          "shipping_method_code" => user_shipping_method.code,
+          "display_cost" => "$100.00"
+        }
+      )
+    end
+
+    it "returns rates available to admin" do
+      subject
+      expect(json_response['shipping_rates']).to include(
+        {
+          "name" => admin_shipping_method.name,
+          "cost" => "10.0",
+          "shipping_method_id" => admin_shipping_method.id,
+          "shipping_method_code" => admin_shipping_method.code,
+          "display_cost" => "$10.00"
+        }
+      )
+    end
+  end
+
   describe "#ship" do
     let(:shipment) { create(:order_ready_to_ship).shipments.first }
 

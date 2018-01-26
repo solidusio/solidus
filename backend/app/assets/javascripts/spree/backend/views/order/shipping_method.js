@@ -10,32 +10,35 @@ Spree.Views.Order.ShippingMethod = Backbone.View.extend({
   },
 
   initialize: function(options) {
-    this.shippingRateId = this.model.get('selected_shipping_rate').get('id')
+    this.shippingMethodId = this.model.get('selected_shipping_rate').get('shipping_method_id');
+    this.shippingRates = new Backbone.Collection();
     this.render();
   },
 
   onEdit: function(event) {
     this.editing = true;
+    this.shippingRates = this.model.estimatedRates();
+    this.listenTo(this.shippingRates, "sync", this.render);
     this.render();
   },
 
   onSave: function(event) {
     this.editing = false;
-    this.model.save({
-      selected_shipping_rate_id: this.$('select').val()
-    }, {
-      patch: true,
+    this.shippingMethodId = this.$('select').val();
+    this.shippingRates = new Backbone.Collection();
+    this.model.selectShippingMethodId(this.shippingMethodId, {
       success: function() {
-        // FIXME: should update page without reloading
         window.location.reload();
       }
     });
+    this.render();
 
     return false;
   },
 
   onCancel: function(event) {
     this.editing = false;
+    this.shippingRates = new Backbone.Collection();
     this.render();
   },
 
@@ -45,10 +48,10 @@ Spree.Views.Order.ShippingMethod = Backbone.View.extend({
       order: this.model.collection.parent.toJSON(),
       shipment: this.model.toJSON(),
       selected_shipping_rate: this.model.get("selected_shipping_rate").toJSON(),
-      shipping_rates: this.model.get("shipping_rates").toJSON()
+      shipping_rates: this.shippingRates.toJSON()
     });
 
     this.$el.html(html);
-    this.$('select').val(this.shippingRateId);
+    this.$('select').val(this.shippingMethodId);
   }
 })
