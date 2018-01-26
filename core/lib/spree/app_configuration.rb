@@ -25,7 +25,7 @@ module Spree
     # Alphabetized to more easily lookup particular preferences
 
     # @!attribute [rw] address_requires_state
-    #   @return [Boolean] should state/state_name be required
+    #   @return [Boolean] should state/state_name be required (default: +true+)
     preference :address_requires_state, :boolean, default: true
 
     # @!attribute [rw] admin_interface_logo
