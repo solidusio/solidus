@@ -84,6 +84,6 @@ Spree.Views.Cart.LineItemRow = Backbone.View.extend({
       noCancel: this.model.isNew() && this.model.collection.length == 1
     });
     this.$el.html(html);
-    this.$("[name=variant_id]").variantAutocomplete({ in_stock_only: true });
+    this.$("[name=variant_id]").variantAutocomplete({ suppliable_only: true });
   }
 });
