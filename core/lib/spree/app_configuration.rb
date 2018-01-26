@@ -69,11 +69,11 @@ module Spree
     #     and later capture has far superior error handing. VISA and MasterCard
     #     also require that shipments are sent within a certain time of the card
     #     being charged.
-    #   @return [Boolean] Perform a sale/purchase transaction at checkout instead of a authorize and capture.
+    #   @return [Boolean] Automatically capture the credit card (as opposed to just authorize and capture later) (default: +false+)
     preference :auto_capture, :boolean, default: false
 
     # @!attribute [rw] auto_capture_exchanges
-    # @return [Boolean] automatically capture the credit card (as opposed to just authorize and capture later) (default: +false+)
+    #   @return [Boolean] Automatically capture the credit card (as opposed to just authorize and capture later) (default: +false+)
     preference :auto_capture_exchanges, :boolean, default: false
 
     # @!attribute [rw] binary_inventory_cache
