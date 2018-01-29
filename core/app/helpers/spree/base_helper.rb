@@ -119,6 +119,8 @@ module Spree
         [country.code, country.name]
       end.to_h
 
+      country_names.update I18n.t('spree.country_names', default: {}).stringify_keys
+
       countries.collect do |country|
         country.name = country_names.fetch(country.iso, country.name)
         country
