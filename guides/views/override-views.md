@@ -20,6 +20,36 @@ information see the [Override Solidus assets][override-solidus-assets] article.
 [address-form]: https://github.com/solidusio/solidus/blob/master/frontend/app/views/spree/address/_form.html.erb
 [override-solidus-assets]: ../assets/override-solidus-assets.md
 
+## Rails generator for frontend overrides
+
+If you want to override views from the `solidus_frontend` gem, you can use the
+provided Rails generator in your host application:
+
+```shell
+cd your-rails-project
+bundle exec rails generate solidus:views:override
+```
+
+This command creates copies of all of the frontend views, allowing you to
+customize them for your store.
+
+If you only want to copy certain views into your host app, you can provide the
+`--only` argument:
+
+```shell
+bundle exec rails generate solidus:views:override --only products/show
+```
+
+The argument to `--only` can  also be a substring of the name of the view from
+the app/views/spree folder:
+
+```shell
+bundle exec rails generate solidus:views:override --only product
+```
+
+This copies all the views whose directory or filename contains the string
+"product".
+
 ## Overrides and Solidus upgrades
 
 Solidus views may change with each release. If you depend on view overrides,
