@@ -19,7 +19,7 @@ Spree.ready(function() {
         });
         Spree.ajax({
           type: 'POST',
-          dataType: 'script',
+          dataType: 'json',
           url: url,
           data: positions,
         });
