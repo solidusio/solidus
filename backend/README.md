@@ -32,3 +32,7 @@ When running the application there is a styleguide available at:
 Run the tests
 
     bundle exec rspec
+
+Run the javascript tests (must have chromedriver installed)
+
+    bundle exec teaspoon
