@@ -22,7 +22,6 @@
 //= require spree/backend/collections
 //= require spree/backend/views
 //
-//= require spree/backend/address_states
 //= require spree/backend/adjustments
 //= require spree/backend/admin
 //= require spree/backend/calculator
