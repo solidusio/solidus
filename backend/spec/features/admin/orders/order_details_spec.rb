@@ -124,8 +124,6 @@ describe "Order Details", type: :feature, js: true do
 
           visit spree.edit_admin_order_path(order)
 
-          screenshot_and_open_image
-
           within("tr", text: "Shipping Method") do
             click_icon :edit
             select "Admin Free Shipping $0.00"
