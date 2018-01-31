@@ -42,32 +42,24 @@
     <td><%= @store_credit.category_name %></td>
     <td class='actions'></td>
   </tr>
-  <tr id='memo-display-row'>
-    <td>
-      <strong><%= t('spree.admin.store_credits.memo') %></strong>
-    </td>
-    <td class='js-memo-text'>
-      <%= @store_credit.memo %>
-    </td>
-    <td class='actions'>
-      <% if can?(:update, @store_credit) %>
-        <%= link_to '', '#', class: 'js-edit-memo edit-method fa fa-edit no-text with-tip', data: { action: 'edit' }, title: t('spree.actions.edit') %>
-      <% end %>
-    </td>
-  </tr>
-  <tr id='memo-edit-row' class='hidden' data-original-value='<%= @store_credit.memo %>'>
+  <tr class='store-credit-memo-row' data-original-value='<%= @store_credit.memo %>'>
     <td>
       <strong><%= t('spree.admin.store_credits.memo') %></strong>
     </td>
     <td>
-      <%= form_tag admin_user_store_credit_path(@user, @store_credit), method: :put, remote: true, id: 'sc_memo_edit_form' do %>
-        <%= text_area_tag 'store_credit[memo]', @store_credit.memo  %>
+      <div class='store-credit-memo-text'>
+        <%= @store_credit.memo %>
+      </div>
+
+      <%= form_tag admin_user_store_credit_path(@user, @store_credit), method: :put, remote: true, class: 'store-credit-memo-form', id: 'store_credit_memo_form' do %>
+        <%= text_area_tag 'store_credit[memo]', @store_credit.memo, class: 'fullwidth' %>
       <% end %>
     </td>
     <td class='actions'>
       <% if can?(:update, @store_credit) %>
-        <%= link_to '', '#', class: 'js-save-memo fa fa-check no-text with-tip', data: { user_id: @user.id, store_credit_id: @store_credit.id, action: 'save' }, title: t('spree.actions.save') %>
-        <%= link_to '', '#', class: 'js-cancel-memo fa fa-cancel no-text with-tip', data: { action: 'cancel' }, title: t('spree.actions.cancel') %>
+        <%= button_tag '', class: "fa fa-check save-memo no-text with-tip", "data-action": "save", title: t('spree.actions.save'), type: 'submit', form: 'store_credit_memo_form' %>
+        <%= button_tag '', class: "fa fa-cancel cancel-memo no-text with-tip", "data-action": "cancel", title: t('spree.actions.cancel'), type: 'reset', form: 'store_credit_memo_form' %>
+        <%= button_tag '', class: "fa fa-edit edit-memo no-text with-tip", "data-action": "edit", title: t('spree.actions.edit') %>
       <% end %>
     </td>
   </tr>
