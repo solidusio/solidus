@@ -1,4 +1,4 @@
-<div data-hook="admin_stock_locations_form_fields">
+<div data-hook="admin_stock_locations_form_fields" class="js-stock-locations-form">
   <fieldset class="no-border-bottom">
     <legend><%= t('.general') %></legend>
 
@@ -107,25 +107,16 @@
 
     <%= f.field_container :country_id do %>
       <%= f.label :country_id %>
-      <span id="country"><%= f.collection_select :country_id, available_countries, :id, :name, {}, { class: 'select2 fullwidth' } %></span>
+      <span id="country"><%= f.collection_select :country_id, available_countries, :id, :name, { include_blank: true }, { class: 'custom-select js-country_id fullwidth' } %></span>
     <% end %>
 
     <%= f.field_container :state do %>
-      <% if f.object.country %>
-        <%= f.label :state_id %>
-        <span id="state" class="region">
-          <%= f.text_field :state_name, style: "display: #{f.object.country.states.empty? ? 'block' : 'none' };", disabled: !f.object.country.states.empty?, class: 'fullwidth state_name' %>
-          <%= f.collection_select :state_id, f.object.country.states.sort, :id, :name, { include_blank: true }, {class: 'select2 fullwidth', style: "display: #{f.object.country.states.empty? ? 'none' : 'block' };", disabled: f.object.country.states.empty?} %>
-        </span>
-      <% end %>
+      <% country = f.object.country %>
+      <%= f.label :state_id %>
+      <span id="state" class="region">
+        <%= f.text_field :state_name, style: "display: none", class: 'fullwidth state_name js-state_name' %>
+        <%= f.collection_select :state_id, country ? country.states.sort : [], :id, :name, { include_blank: true }, {class: 'custom-select fullwidth js-state_id', style: "display: none" } %>
+      </span>
     <% end %>
   </fieldset>
 </div>
-
-<% content_for :head do %>
-  <%= javascript_tag do -%>
-    Spree.ready(function(){
-      $('span#country select.select2').on('change', function() { update_state(''); });
-    });
-  <% end -%>
-<% end %>

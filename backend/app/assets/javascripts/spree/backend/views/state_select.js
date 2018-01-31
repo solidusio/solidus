@@ -34,15 +34,15 @@ Spree.Views.StateSelect = Backbone.View.extend({
     if (country_id) {
       this.states = Spree.Views.StateSelect.stateCache(country_id);
       this.listenTo(this.states, "sync", this.render);
-      this.render();
     }
+    this.render();
   },
 
   render: function() {
     this.$state_select.empty().hide().prop('disabled', true);
     this.$state_input.hide().prop('disabled', true);
 
-    if (!this.states.fetched) {
+    if (!this.model.get('country_id') || !this.states.fetched) {
       this.$state_select.show();
     } else if (this.states.length) {
       var $state_select = this.$state_select;
