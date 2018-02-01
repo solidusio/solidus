@@ -3,9 +3,11 @@
     <div class="date-range-fields input-group">
       <%= s.text_field :completed_at_gt, class: 'datepicker datepicker-from form-control', value: datepicker_field_value(params[:q][:completed_at_gt]), placeholder: t('spree.start') %>
 
-      <span class="range-divider input-group-addon">
-        <i class="fa fa-arrow-right"></i>
-      </span>
+      <div class="input-group-prepend input-group-append">
+        <span class="input-group-text range-divider">
+          <i class="fa fa-arrow-right"></i>
+        </span>
+      </div>
 
       <%= s.text_field :completed_at_lt, class: 'datepicker datepicker-to form-control', value: datepicker_field_value(params[:q][:completed_at_lt]), placeholder: t('spree.end') %>
     </div>
