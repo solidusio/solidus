@@ -5,47 +5,54 @@ Tabs = (function() {
     _.bindAll(this, 'overflowTabs');
 
     this.el = el;
-    this.overflowTabs = this.overflowTabs.bind(this);
-    this.$tabList = $(this.el);
-    this.$tabs = this.$tabList.find("li:not(.tabs-dropdown)");
-    this.tabs = this.$tabs.toArray();
-    this.$tabList.append("<li class='tabs-dropdown'><a href='#'></a><ul></ul></li>");
-    this.$dropdown = this.$tabList.find(".tabs-dropdown");
+    this.tabs = this.el.querySelectorAll("li:not(.tabs-dropdown)")
 
-    this.tabWidths = this.tabs.map(function(tab) {
+    /* <li class='tabs-dropdown'><a href='#'></a><ul></ul></li> */
+    this.dropdown = document.createElement('li');
+    this.dropdown.classList.add('tabs-dropdown');
+    this.dropdown.appendChild(document.createElement('a'));
+    this.dropdownList = document.createElement('ul');
+    this.dropdown.appendChild(this.dropdownList);
+
+    this.el.appendChild(this.dropdown);
+
+    this.tabWidths = _.map(this.tabs, function(tab) {
       return tab.offsetWidth;
     });
     this.totalTabsWidth = this.tabWidths.reduce(function(previousValue, currentValue) {
       return previousValue + currentValue;
     });
-    this.dropdownWidth = this.$dropdown[0].offsetWidth;
 
-    $(window).on("resize", this.overflowTabs);
+    window.addEventListener("resize", this.overflowTabs);
     this.overflowTabs();
   }
 
   Tabs.prototype.overflowTabs = function() {
-    var containerWidth = this.$tabList[0].offsetWidth;
-    var dropdownActive = this.$dropdown.find("li").length;
+    var containerWidth = this.el.offsetWidth;
+    var dropdownWidth = this.dropdown.offsetWidth;
 
     for (var i = 0; i < this.tabs.length; i++) {
-      $(this.tabs[i]).remove();
+      var tab = this.tabs[i];
+      tab.parentNode.removeChild(tab);
     }
 
     if (this.totalTabsWidth < containerWidth) {
-      this.$tabList.removeClass("tabs-overflowed");
+      this.el.classList.remove("tabs-overflowed");
     } else {
-      this.$tabList.addClass("tabs-overflowed");
-      remainingWidth -= this.dropdownWidth;
+      this.el.classList.add("tabs-overflowed");
+      remainingWidth -= dropdownWidth;
     }
 
     var remainingWidth = containerWidth;
     for (var i = 0; i < this.tabs.length; i++) {
       remainingWidth -= this.tabWidths[i];
+      var tab = this.tabs[i];
       if (remainingWidth >= 0) {
-        $(this.tabs[i]).insertBefore(this.$dropdown).removeClass("in-dropdown");
+        tab.classList.remove("in-dropdown");
+        this.el.insertBefore(tab, this.dropdown);
       } else {
-        $(this.tabs[i]).appendTo(this.$dropdown.find("ul")).addClass("in-dropdown");
+        tab.classList.add("in-dropdown");
+        this.dropdownList.appendChild(tab);
       }
     }
   };
@@ -54,7 +61,7 @@ Tabs = (function() {
 })();
 
 window.addEventListener('load', function() {
-  $(".tabs").each(function() {
-    new Tabs(this);
+  _.each(document.querySelectorAll('.tabs'), function(el) {
+    new Tabs(el);
   });
 });
