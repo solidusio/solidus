@@ -53,8 +53,8 @@ Tabs = (function() {
   return Tabs;
 })();
 
-window.onload = function() {
+window.addEventListener('load', function() {
   $(".tabs").each(function() {
     new Tabs(this);
   });
-};
+});
