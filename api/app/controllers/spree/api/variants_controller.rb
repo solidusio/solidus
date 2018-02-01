@@ -66,8 +66,13 @@ module Spree
         end
 
         in_stock_only = ActiveRecord::Type::Boolean.new.cast(params[:in_stock_only])
+        suppliable_only = ActiveRecord::Type::Boolean.new.cast(params[:suppliable_only])
         variants = variants.accessible_by(current_ability, :read)
-        variants = variants.in_stock if in_stock_only || cannot?(:view_out_of_stock, Spree::Variant)
+        if in_stock_only || cannot?(:view_out_of_stock, Spree::Variant)
+          variants = variants.in_stock
+        elsif suppliable_only
+          variants = variants.suppliable
+        end
         variants
       end
 

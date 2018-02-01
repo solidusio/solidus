@@ -92,6 +92,8 @@ module Spree
     # a parameter, the scope is limited to variants that are in stock in the
     # provided stock locations.
     #
+    # If you want to also include backorderable variants see {[suppliable}}
+    #
     # @param stock_locations [Array<Spree::StockLocation>] the stock locations to check
     # @return [ActiveRecord::Relation]
     def self.in_stock(stock_locations = nil)
@@ -101,6 +103,22 @@ module Spree
         in_stock_variants = in_stock_variants.where(spree_stock_items: { stock_location_id: stock_locations.map(&:id) })
       end
       in_stock_variants
+    end
+
+    # Returns a scope of Variants which are suppliable. This includes:
+    # * in_stock variants
+    # * backorderable variants
+    # * variants which do not track stock
+    #
+    # @return [ActiveRecord::Relation]
+    def self.suppliable
+      return all unless Spree::Config.track_inventory_levels
+      arel_conditions = [
+        arel_table[:track_inventory].eq(false),
+        Spree::StockItem.arel_table[:count_on_hand].gt(0),
+        Spree::StockItem.arel_table[:backorderable].eq(true)
+      ]
+      joins(:stock_items).where(arel_conditions.inject(:or))
     end
 
     self.whitelisted_ransackable_associations = %w[option_values product prices default_price]
