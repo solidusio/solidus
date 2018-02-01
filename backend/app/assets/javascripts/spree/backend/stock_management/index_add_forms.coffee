@@ -24,7 +24,7 @@ Spree.AddStockItemView = Backbone.View.extend
       stockLocationName: stockLocationName
     editView.$el.insertBefore(@$el)
 
-    @model = new Spree.StockItem
+    @model = new Spree.Models.StockItem
       variant_id: @model.get('variant_id')
       stock_location_id: @model.get('stock_location_id')
 
@@ -54,7 +54,7 @@ Spree.AddStockItemView = Backbone.View.extend
 Spree.ready ->
   $('.js-add-stock-item').each ->
     $el = $(this)
-    model = new Spree.StockItem
+    model = new Spree.Models.StockItem
       variant_id: $el.data('variant-id')
     new Spree.AddStockItemView
       el: $el
