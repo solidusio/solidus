@@ -1,47 +1,9 @@
 
-#
-# Tiered Calculator
-#
-TieredCalculatorView = Backbone.View.extend
-  initialize: ->
-    @calculatorName = @$('.js-tiers').data('calculator')
-    @tierFieldsTemplate = HandlebarsTemplates["promotions/calculators/fields/#{@calculatorName}"]
-    @originalTiers = @$('.js-tiers').data('original-tiers')
-    @formPrefix = @$('.js-tiers').data('form-prefix')
-
-    for base, value of @originalTiers
-      @$('.js-tiers').append @tierFieldsTemplate
-        baseField:
-          value: base
-        valueField:
-          name: @tierInputName(base)
-          value: value
-
-  events:
-    'click .js-add-tier': 'onAdd'
-    'click .js-remove-tier': 'onRemove'
-    'change .js-base-input': 'onChange'
-
-  tierInputName: (base) ->
-    "#{@formPrefix}[calculator_attributes][preferred_tiers][#{base}]"
-
-  onAdd: (event) ->
-    event.preventDefault()
-    @$('.js-tiers').append @tierFieldsTemplate(valueField: name: null)
-
-  onRemove: (event) ->
-    event.preventDefault()
-    $(event.target).parents('.tier').remove()
-
-  onChange: (event) ->
-    valueInput = $(event.target).parents('.tier').find('.js-value-input')
-    valueInput.attr 'name', @tierInputName($(event.target).val())
-
 initTieredCalculators = ->
   $('.js-tiered-calculator').each ->
     if !$(this).data('has-view')
       $(this).data('has-view', true)
-      new TieredCalculatorView(el: this)
+      new Spree.Views.Calculators.Tiered(el: this)
 
 window.initPromotionActions = ->
   # Add classes on promotion items for design
