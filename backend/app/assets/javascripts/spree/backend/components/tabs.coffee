@@ -36,9 +36,7 @@ class Tabs
     @lastKnownWidth = containerWidth
 
   dropdownWidth: ->
-    # If the dropdown isn't initiated we need to provide
-    # our best guess of the size it will take up
-    @$dropdown[0].offsetWidth or 50
+    @$dropdown[0].offsetWidth
 
   hideTabsToFit: (widthDifference) ->
     @$tabList.addClass("tabs-overflowed")
