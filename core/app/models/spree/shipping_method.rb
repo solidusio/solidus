@@ -30,6 +30,9 @@ module Spree
     has_many :shipping_method_stock_locations, dependent: :destroy, class_name: "Spree::ShippingMethodStockLocation"
     has_many :stock_locations, through: :shipping_method_stock_locations
 
+    has_many :store_shipping_methods, inverse_of: :shipping_method
+    has_many :stores, through: :store_shipping_methods
+
     validates :name, presence: true
 
     validate :at_least_one_shipping_category
