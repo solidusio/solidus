@@ -57,6 +57,15 @@ RSpec.describe Spree::FulfilmentChanger do
       subject
     end
 
+    it 'updates order totals' do
+      original_total = order.total
+      original_shipment_total = order.shipment_total
+
+      expect { subject }.
+        to change { order.total }.from(original_total).to(original_total + original_shipment_total).
+        and change { order.shipment_total }.by(original_shipment_total)
+    end
+
     context "when transferring to another stock location" do
       let(:desired_stock_location) { create(:stock_location) }
       let!(:stock_item) do

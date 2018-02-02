@@ -96,6 +96,10 @@ module Spree
       # are up-to-date, too.
       desired_shipment.refresh_rates
 
+      # In order to reflect the changes in the order totals
+      desired_shipment.order.reload
+      desired_shipment.order.recalculate
+
       true
     end
 
