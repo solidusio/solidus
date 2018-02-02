@@ -62,6 +62,10 @@
           <%= f.label :description %>
           <%= f.text_area :description, {cols: 60, rows: 6, class: 'fullwidth'} %>
         </div>
+        <div data-hook="stores" class="field">
+          <%= f.label :store_ids, plural_resource_name(Spree::Store) %>
+          <%= f.collection_select :store_ids, Spree::Store.all, :id, :name, {}, multiple: true, class: "select2 fullwidth" %>
+        </div>
       </div>
     </div>
   </div>

@@ -62,6 +62,20 @@ describe "Payment Methods", type: :feature do
       expect(page).to have_field("payment_method_name", with: "Payment 99")
     end
 
+    context "with multiple stores available" do
+      before do
+        create(:store, name: "Default Store", url: "spreestore.example.com")
+        visit current_path
+      end
+
+      it "should be able to change the associated stores" do
+        select "Default Store", from: "Stores"
+        click_button "Update"
+        expect(page).to have_content("successfully updated!")
+        expect(page).to have_select("payment_method_store_ids", selected: "Default Store")
+      end
+    end
+
     it "should display validation errors" do
       fill_in "payment_method_name", with: ""
       click_button "Update"
