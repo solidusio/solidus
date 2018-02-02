@@ -224,6 +224,8 @@ en:
         form_text: "Apply this promotion to users whose last order was more than X days ago: "
       spree/promotion/rules/user_role:
         description: Order includes User with specified Role(s)
+      spree/promotion/rules/store:
+        description: Available only to the specified stores
       spree/promotion_category:
         name: Name
       spree/property:
@@ -1966,6 +1968,8 @@ en:
       user_has_no_store_credits: "User does not have any available store credit"
     store_credit_category:
       default: Default
+    store_rule:
+      choose_stores: Choose Stores
     street_address: Street Address
     street_address_2: Street Address (cont'd)
     subtotal: Subtotal
