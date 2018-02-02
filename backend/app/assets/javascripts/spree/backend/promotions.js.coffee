@@ -7,10 +7,10 @@ initTieredCalculators = ->
 
 window.initPromotionActions = ->
   # Add classes on promotion items for design
-  $(document).on 'mouseover', 'a.delete', (event) ->
+  $('#promotion-filters').on 'mouseover', 'a.delete', (event) ->
     $(this).parent().addClass 'action-remove'
 
-  $(document).on 'mouseout', 'a.delete', (event) ->
+  $('#promotion-filters').on 'mouseout', 'a.delete', (event) ->
     $(this).parent().removeClass 'action-remove'
 
   $('#promotion-filters').find('.variant_autocomplete').variantAutocomplete()
