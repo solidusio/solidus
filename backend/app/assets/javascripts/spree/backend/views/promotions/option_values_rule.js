@@ -1,5 +1,4 @@
 Spree.Views.Promotions.OptionValuesRuleRow = Backbone.View.extend({
-  optionValueSelectNameTemplate: HandlebarsTemplates['promotions/rules/option_values_select'],
   optionValueTemplate: HandlebarsTemplates['promotions/rules/option_values'],
 
   events: {
@@ -31,18 +30,12 @@ Spree.Views.Promotions.OptionValuesRuleRow = Backbone.View.extend({
   },
 
   onSelectProduct: function(e) {
-    var optionValueSelect = $(e.target).parents('.promo-rule-option-value').find('input.js-promo-rule-option-value-option-values-select')
-    var optionValueSelectName = this.optionValueSelectNameTemplate({
-      product_id: $(e.target).val(),
-      param_prefix: this.paramPrefix
-    }).trim();
-
-    optionValueSelect.attr('name', optionValueSelectName);
-    optionValueSelect.prop('disabled', $(e.target).val() == '').select2('val', '');
+    this.productId = this.$('input.js-promo-rule-option-value-product-select').val();
+    this.render();
   },
 
   onRemove: function(e) {
-    $(e.target).parent('.promo-rule-option-value').remove();
+    this.remove();
   },
 });
 
