@@ -1,9 +1,3 @@
-#sc_memo_edit_form {
-  #store_credit_memo {
-    width: 100%;
-  }
-}
-
 #sc-detail-table {
   tr {
     &:hover {
@@ -13,6 +7,23 @@
     }
     td {
       border: none;
+    }
+  }
+}
+
+.store-credit-memo-row {
+  &.editing {
+    .store-credit-memo-text,
+    .edit-memo {
+      display: none;
+    }
+  }
+
+  &:not(.editing) {
+    .store-credit-memo-form,
+    .save-memo,
+    .cancel-memo {
+      display: none;
     }
   }
 }
