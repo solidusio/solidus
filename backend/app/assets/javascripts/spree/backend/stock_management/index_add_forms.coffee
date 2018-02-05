@@ -19,7 +19,7 @@ Spree.AddStockItemView = Backbone.View.extend
     stockLocationName = selectedStockLocationOption.text().trim()
     selectedStockLocationOption.remove()
 
-    editView = new Spree.EditStockItemView
+    editView = new Spree.Views.Stock.EditStockItemRow
       model: @model
       stockLocationName: stockLocationName
     editView.$el.insertBefore(@$el)

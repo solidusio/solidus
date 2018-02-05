@@ -12,6 +12,7 @@
 //= require 'spree/backend/views/order/shipping_method'
 //= require 'spree/backend/views/order/summary'
 //= require 'spree/backend/views/state_select'
+//= require 'spree/backend/views/stock/edit_stock_item_row'
 //= require 'spree/backend/views/zones/form'
 //= require 'spree/backend/views/number_with_currency'
 //= require 'spree/backend/views/payment/new'
