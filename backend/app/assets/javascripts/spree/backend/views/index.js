@@ -20,5 +20,6 @@
 //= require 'spree/backend/views/payment/new'
 //= require 'spree/backend/views/payment/payment_row'
 //= require 'spree/backend/views/payment/edit_credit_card'
+//= require 'spree/backend/views/promotions/option_values_rule'
 //= require 'spree/backend/views/tables/editable_table'
 //= require 'spree/backend/views/tables/editable_table_row'

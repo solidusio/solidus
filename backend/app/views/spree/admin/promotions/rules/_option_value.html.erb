@@ -5,10 +5,9 @@
     <div class="col-6"><%= label_tag nil, plural_resource_name(Spree::OptionValue) %></div>
   </div>
 
-  <div class="js-promo-rule-option-values"></div>
+  <%= content_tag :div, nil, class: "js-promo-rule-option-values",
+    data: { :'original-option-values' => promotion_rule.preferred_eligible_values } %>
 
   <button class="button js-add-promo-rule-option-value"><%= t('spree.actions.add') %></button>
-</div>
 
-<%= content_tag :div, nil, class: "hidden js-original-promo-rule-option-values",
-  data: { :'original-option-values' => promotion_rule.preferred_eligible_values } %>
+</div>
