@@ -52,8 +52,7 @@
 //= require spree/backend/shipments
 //= require spree/backend/spree-select2
 //= require spree/backend/stock_location
-//= require spree/backend/stock_management/index_add_forms
-//= require spree/backend/stock_management/index_update_forms
+//= require spree/backend/stock_management
 //= require spree/backend/store_credits
 //= require spree/backend/style_guide
 //= require spree/backend/taxon_autocomplete
