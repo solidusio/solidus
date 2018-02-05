@@ -64,7 +64,7 @@
   position: relative;
 
   .tabs:not(.tabs-overflowed) & {
-    display: none;
+    visibility: hidden;
   }
 
   > a {
