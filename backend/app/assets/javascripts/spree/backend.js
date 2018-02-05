@@ -22,7 +22,6 @@
 //= require spree/backend/collections
 //= require spree/backend/views
 //
-//= require spree/backend/address_states
 //= require spree/backend/adjustments
 //= require spree/backend/admin
 //= require spree/backend/calculator
@@ -52,6 +51,7 @@
 //= require spree/backend/routes
 //= require spree/backend/shipments
 //= require spree/backend/spree-select2
+//= require spree/backend/stock_location
 //= require spree/backend/stock_management/index_add_forms
 //= require spree/backend/stock_management/index_update_forms
 //= require spree/backend/stock_management/stock_item
