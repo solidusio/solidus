@@ -53,6 +53,7 @@ module Spree
 
       def shipping_methods(package)
         package.shipping_methods
+          .available_to_store(package.shipment.order.store)
           .available_for_address(package.shipment.order.ship_address)
           .includes(:calculator)
           .to_a
