@@ -39,6 +39,14 @@
     <% end %>
   </div>
 
+  <div class="col-5">
+    <%= f.field_container :store_ids do %>
+      <%= f.label :store_ids, plural_resource_name(Spree::Store) %>
+      <%= f.collection_select :store_ids, Spree::Store.all, :id, :name, {}, multiple: true, class: "select2 fullwidth" %>
+      <%= error_message_on :shipping_method, :store_ids %>
+    <% end %>
+  </div>
+
   <div data-hook="admin_shipping_method_form_tracking_url_field" class="col-10">
     <%= f.field_container :tracking_url do %>
       <%= f.label :tracking_url %><br />
