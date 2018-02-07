@@ -44,41 +44,51 @@ Try out Solidus with one-click on Heroku:
 Getting started
 ---------------
 
-Begin by making sure you have [Imagemagick](http://imagemagick.org/script/download.php) installed, which is required for Paperclip. (You can install it using [Homebrew](https://brew.sh) if you're on a Mac.)
+Begin by making sure you have
+[Imagemagick](http://imagemagick.org/script/download.php) installed, which is
+required for Paperclip. (You can install it using [Homebrew](https://brew.sh) if
+you're on a Mac.)
 
-To add solidus, begin with a Rails 5 application and a database configured and created. Add the following to your
-Gemfile.
+To add Solidus, begin with a Rails 5 application and a database configured and
+created. Add the following to your Gemfile:
 
 ```ruby
 gem 'solidus'
 gem 'solidus_auth_devise'
+gem 'deface'
 ```
 
-Run the `bundle` command to install.
+Then, run the `bundle` command to install the Solidus gems and their
+dependencies.
 
-After installing gems, you'll have to run the generators to create necessary
-configuration files and migrations.
+After installing gems, run the generators to create necessary configuration
+files and migrations:
 
-```
-bundle exec rails g spree:install
-bundle exec rails g solidus:auth:install
+```shell
+bundle exec rails generate spree:install
+bundle exec rails generate solidus:auth:install
 bundle exec rake railties:install:migrations
 ```
 
-Run migrations to create the new models in the database.
+Then, run migrations to create the new models in the database:
 
-```
+```shell
 bundle exec rake db:migrate
 ```
 
-Finally start the rails server
+Finally, start the Rails server:
 
-```
-bundle exec rails s
+```shell
+bundle exec rails server
 ```
 
-The [`solidus_frontend`](https://github.com/solidusio/solidus/tree/master/frontend) storefront will be accessible at [http://localhost:3000/](http://localhost:3000/)
-and the admin can be found at [http://localhost:3000/admin/](http://localhost:3000/admin/).
+Once the server is running, the [`solidus_frontend`][solidus-frontend]
+storefront is accessible at [http://localhost:3000/](http://localhost:3000/).
+The [`solidus_backend`][solidus-backend] admin is accessible at
+[http://localhost:3000/admin/](http://localhost:3000/admin/).
+
+[solidus-frontend]: https://github.com/solidusio/solidus/tree/master/frontend
+[solidus-backend]: https://github.com/solidusio/solidus/tree/master/backend
 
 ### Default Username/Password
 
