@@ -30,10 +30,6 @@ module DummyApp
 
     DummyApp::Application.initialize!
 
-    DummyApp::Application.routes.draw do
-      mount Spree::Core::Engine, at: '/'
-    end
-
     if auto_migrate
       DummyApp::Migrations.auto_migrate
     end
@@ -83,6 +79,7 @@ module DummyApp
 
     config.paths["config/database"] = File.expand_path('../dummy_app/database.yml', __FILE__)
     config.paths['app/views'] = File.expand_path('../dummy_app/views', __FILE__)
+    config.paths['config/routes.rb'] = File.expand_path('../dummy_app/routes.rb', __FILE__)
 
     ActionMailer::Base.default from: "store@example.com"
   end
