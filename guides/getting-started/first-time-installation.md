@@ -153,12 +153,18 @@ rails new your_solidus_project_name
 ```
 
 Once the new project has finished being created, we can open the project's newly
-created `Gemfile` in a text editor and add the required Solidus gems as new
-lines:
+created `Gemfile` in a text editor and add the required Solidus gems:
 
 ```ruby 
 gem 'solidus'
 gem 'solidus_auth_devise'
+```
+
+Because you are using `solidus_auth_devise`, the [Deface][deface] gem is also
+required:
+
+```ruby
+gem 'deface'
 ```
 
 By requiring [`solidus`][solidus-repo] in your `Gemfile`, you are actually
