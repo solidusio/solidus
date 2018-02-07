@@ -12,7 +12,13 @@ module DummyApp
     end
 
     def needs_migration?
-      !database_exists? || ActiveRecord::Migrator.needs_migration?
+      return true if !database_exists?
+      if ActiveRecord::Base.connection.respond_to?(:migration_context)
+        # Rails >= 5.2
+        ActiveRecord::Base.connection.migration_context.needs_migration?
+      else
+        ActiveRecord::Migrator.needs_migration?
+      end
     end
 
     def auto_migrate
