@@ -30,15 +30,15 @@ Spree::User.find(1).addresses
 - `company`: A company name.
 - `state_id` and `country_id`: IDs for the `Spree::State` and `Spree::Country`
   objects associated with the customer's entered address. These are used to
-  determine the customer's zone, which determines applicable taxation and
-  shipping methods.
+  determine the customer's [zone][zones], which determines applicable taxation
+  and shipping methods.
 
-<!-- TODO:
-  Once the locations (zones) documentation is merged, we need to link to that
-  documentation from this article.
--->
+For more information about how countries, states, and zones work in Solidus, see
+the [Locations][locations] documentation.
 
+[locations]: ../locations/index.md
 [solidus-auth-devise]: https://github.com/solidusio/solidus_auth_devise
+[zones]: ../locations/zones.md
 
 ## Countries and states 
 
@@ -53,10 +53,6 @@ name.
 If you use the `solidus_frontend` gem to provide your store's frontend, the
 state field is hidden if the customer's country does not have `Spree::State`s
 associated with it.
-
-<!-- TODO:
-  Again, let's make sure we link to relevant locations documentation here.
--->
 
 ## Required address values
 
