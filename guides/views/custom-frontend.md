@@ -11,7 +11,8 @@ your own controllers to create a functional storefront.
 ## `solidus_frontend` and `solidus_backend`
 
 Solidus includes both a storefront ([`solidus_frontend`][solidus-frontend]) and
-admin area ([`solidus_backend`][solidus-backend]). Both are based on
+admin area ([`solidus_backend`][solidus-backend]). The storefront uses
+[Skeleton][skeleton] for its CSS grids and the admin area is based on
 [Bootstrap][bootstrap]. These gems offer the features of a typical store and
 make extensive use of `solidus_core`'s features.
 
@@ -25,6 +26,9 @@ These gems use the following tools to create views:
 - Pure JavaScript for JavaScript assets.
 
 [bootstrap]: https://getbootstrap.com
+[erb]: https://apidock.com/ruby/ERB
+[sass]: https://sass-lang.com
+[skeleton]: http://getskeleton.com
 [solidus-backend]: https://github.com/solidusio/solidus/tree/master/frontend
 [solidus-frontend]: https://github.com/solidusio/solidus/tree/master/backend
 
@@ -95,9 +99,6 @@ initialize your own values for the following `Spree::Config` settings:
   %>` variable. The default value is `logo/solidus_logo.png`
 - `:products_per_page`: Sets the amount of products that should be displayed on
   a single page. The default value is `12`.
-
-[erb]: https://apidock.com/ruby/ERB
-[sass]: https://sass-lang.com
 
 ### Contributing back to Solidus
 
