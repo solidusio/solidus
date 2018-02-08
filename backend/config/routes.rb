@@ -5,6 +5,8 @@ Spree::Core::Engine.routes.draw do
     get '/search/users', to: "search#users", as: :search_users
     get '/search/products', to: "search#products", as: :search_products
 
+    put '/locale/set', to: 'locale#set', defaults: { format: :json }, as: :set_locale
+
     resources :dashboards, only: [] do
       collection do
         get :home
