@@ -20,6 +20,10 @@ RSpec.describe Spree::BaseHelper, type: :helper do
       it "return complete list of countries" do
         expect(available_countries.count).to eq(Spree::Country.count)
       end
+
+      it "uses locales for country names" do
+        expect(available_countries).to include(having_attributes(name: "United States of America"))
+      end
     end
 
     context "with a checkout zone defined" do

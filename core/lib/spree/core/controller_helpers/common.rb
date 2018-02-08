@@ -1,3 +1,5 @@
+require 'carmen'
+
 module Spree
   module Core
     module ControllerHelpers
@@ -49,6 +51,7 @@ module Spree
           locale ||= Rails.application.config.i18n.default_locale
           locale ||= I18n.default_locale
           I18n.locale = locale
+          Carmen.i18n_backend.locale = locale
         end
 
         # Returns which layout to render.

@@ -1,3 +1,5 @@
+require 'carmen'
+
 module Spree
   module BaseHelper
     def link_to_cart(text = nil)
@@ -113,8 +115,14 @@ module Spree
         countries = Country.all
       end
 
+      country_names = Carmen::Country.all.map do |country|
+        [country.code, country.name]
+      end.to_h
+
+      country_names.update I18n.t('spree.country_names', default: {}).stringify_keys
+
       countries.collect do |country|
-        country.name = t(country.iso, scope: 'spree.country_names', default: country.name)
+        country.name = country_names.fetch(country.iso, country.name)
         country
       end.sort_by { |c| c.name.parameterize }
     end
