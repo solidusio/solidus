@@ -48,7 +48,7 @@ Spree.EditInlineLocales = Backbone.View.extend(
     _.extend(renderAttr, @model.attributes)
 
     @$el.html(HandlebarsTemplates['available_locales'](renderAttr))
-    $('.available-locales').select2({placeholder: Spree.translations['please_choose_language']})
+    $('.available-locales').select2({placeholder: Spree.translations['please_choose_language'], width: 'element'})
 
     return @
 )
