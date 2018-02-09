@@ -1,6 +1,6 @@
 module Spree
   def self.solidus_version
-    "2.5.0.alpha"
+    "2.5.0.beta1"
   end
 
   def self.solidus_gem_version
