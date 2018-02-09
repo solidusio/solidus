@@ -23,5 +23,13 @@ RSpec.describe SolidusI18n::LocaleHelper do
         is_expected.to match_array SolidusI18n::Locale.all
       end
     end
+
+    describe 'locale presentation' do
+      subject { all_locales_options.map(&:first) }
+
+      it 'should all be unique' do
+        is_expected.to match_array(subject.uniq)
+      end
+    end
   end
 end
