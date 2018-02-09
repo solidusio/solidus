@@ -7,6 +7,7 @@ RSpec.describe SolidusI18n::Locale do
     it "Contains all available Solidus locales" do
       # Add to this list when adding/removing locales
       expect(subject).to match_array %i[
+        en
         zh-CN
         cs
         zh-TW

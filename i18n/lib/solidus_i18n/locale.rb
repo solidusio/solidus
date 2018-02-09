@@ -1,12 +1,8 @@
 module SolidusI18n
   class Locale
-    class << self
-      def all
-        Dir["#{dir}/*.yml"].map { |f| File.basename(f, '.yml').to_sym }
-      end
-
-      def dir
-        File.join(File.dirname(__FILE__), '/../../config/locales')
+    def self.all
+      I18n.available_locales.select do |locale|
+        I18n.t(:spree, locale: locale, fallback: false, default: nil)
       end
     end
   end
