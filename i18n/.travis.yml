@@ -1,11 +1,13 @@
-# Need to stay on precise until Travis fixes their MySQL problems
-# See: https://github.com/travis-ci/travis-ci/issues/8331
-dist: precise
-sudo: false
+dist: trusty
+sudo: required
+addons:
+  apt:
+    packages:
+      - google-chrome-beta
 cache: bundler
 language: ruby
 rvm:
-  - 2.3.1
+  - 2.5
 env:
   matrix:
     - SOLIDUS_BRANCH=v1.1 DB=postgres
