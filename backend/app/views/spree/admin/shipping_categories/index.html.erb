@@ -30,7 +30,7 @@
     <tr id="<%= spree_dom_id shipping_category %>" data-hook="category_row">
       <td><%= shipping_category.name %></td>
       <td class="actions">
-        <% if can?(:udpate, shipping_category) %>
+        <% if can?(:update, shipping_category) %>
           <%= link_to_edit shipping_category, no_text: true %>
         <% end %>
 
