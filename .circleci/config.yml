@@ -10,7 +10,7 @@ jobs:
       CIRCLE_TEST_REPORTS: /tmp/test-results
       CIRCLE_ARTIFACTS: /tmp/test-artifacts
     docker:
-      - image: circleci/ruby:2.4.1-node-browsers
+      - image: circleci/ruby:2.5-node-browsers
       - image: jhawthorn/circleci-postgres-fast
         environment:
           POSTGRES_USER: root
