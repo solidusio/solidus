@@ -23,7 +23,7 @@ gem 'with_model', require: false
 gem 'rails-controller-testing', require: false
 
 group :backend, :frontend do
-  gem 'capybara', '~> 2.15', require: false
+  gem 'capybara', '~> 2.17.0', require: false
   gem 'capybara-screenshot', '>= 1.0.18', require: false
   gem 'selenium-webdriver', require: false
   gem 'poltergeist', '~> 1.9', require: false
