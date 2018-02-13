@@ -54,16 +54,6 @@ module Spree
           end
         end
       end
-
-      describe "#delete" do
-        let!(:variant) { create(:variant) }
-        let(:product) { variant.product }
-
-        it "can be deleted" do
-          delete :destroy, params: { product_id: product.to_param, id: variant.to_param }
-          expect(variant.reload).to be_discarded
-        end
-      end
     end
   end
 end
