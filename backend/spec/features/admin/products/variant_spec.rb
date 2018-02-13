@@ -68,4 +68,21 @@ describe "Variants", type: :feature do
       end
     end
   end
+
+  context "deleting a variant", js: true do
+    let!(:variant) { create(:variant, product: product) }
+    let!(:option_type) { create(:option_type) }
+    let!(:option_value) { create(:option_value, option_type: option_type) }
+
+    it "can delete a variant" do
+      visit spree.admin_product_variants_path(product)
+      within 'tr', text: 'Size: S' do
+        accept_alert do
+          click_icon :trash
+        end
+      end
+
+      expect(page).to have_no_text('Size: S')
+    end
+  end
 end
