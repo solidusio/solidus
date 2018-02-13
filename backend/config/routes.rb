@@ -43,7 +43,7 @@ Spree::Core::Engine.routes.draw do
       member do
         post :clone
       end
-      resources :variants, only: [:index, :edit, :update, :new, :create, :destroy] do
+      resources :variants do
         collection do
           post :update_positions
         end
