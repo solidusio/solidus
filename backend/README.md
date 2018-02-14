@@ -8,12 +8,9 @@ Backend contains the controllers, views, and assets making up the admin interfac
 
 Can be found in [app/assets/javascripts/spree/backend/](./app/assets/javascripts/spree/backend/)
 
-Our scripts are written in a mix of coffeescript and javascript (ES5). We can't
-easily use a transpiler for ECMAScript >= 6 without adding additional steps for
-applications using solidus\_admin.
-
-Though we have existing CoffeeScript files, any new files should be in
-javascript (ES5).
+Our scripts are written in javascript (ES5). We can't easily use a transpiler
+for ECMAScript >= 6 without adding additional steps for applications using
+solidus\_admin.
 
 ### Stylesheets
 
