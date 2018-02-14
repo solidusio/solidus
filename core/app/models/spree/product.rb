@@ -368,7 +368,7 @@ module Spree
       run_callbacks(:touch)
     end
 
-    # Iterate through this products taxons and taxonomies and touch their timestamps in a batch
+    # Iterate through this product's taxons and taxonomies and touch their timestamps in a batch
     def touch_taxons
       taxons_to_touch = taxons.map(&:self_and_ancestors).flatten.uniq
       unless taxons_to_touch.empty?
