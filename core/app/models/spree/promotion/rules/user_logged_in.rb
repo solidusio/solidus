@@ -1,5 +1,5 @@
 module Spree
-  class Promotion
+  class Promotion < Spree::Base
     module Rules
       class UserLoggedIn < PromotionRule
         def applicable?(promotable)

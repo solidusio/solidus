@@ -1,5 +1,5 @@
 module Spree
-  class Promotion
+  class Promotion < Spree::Base
     module Rules
       class FirstOrder < PromotionRule
         attr_reader :user, :email

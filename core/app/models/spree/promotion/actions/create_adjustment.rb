@@ -1,5 +1,5 @@
 module Spree
-  class Promotion
+  class Promotion < Spree::Base
     module Actions
       class CreateAdjustment < PromotionAction
         include Spree::CalculatedAdjustments

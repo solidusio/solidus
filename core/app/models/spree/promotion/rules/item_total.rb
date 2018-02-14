@@ -1,5 +1,5 @@
 module Spree
-  class Promotion
+  class Promotion < Spree::Base
     module Rules
       # A rule to apply to an order greater than (or greater than or equal to)
       # a specific amount

@@ -1,5 +1,5 @@
 module Spree
-  class Promotion
+  class Promotion < Spree::Base
     module Rules
       class Taxon < PromotionRule
         has_many :promotion_rule_taxons, class_name: 'Spree::PromotionRuleTaxon', foreign_key: :promotion_rule_id,
