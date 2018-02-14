@@ -13,12 +13,12 @@ physical warehouse, there are many essential moving parts:
 - `Spree::StockLocation`: Represents a location where stock items are shipped
   from. Each stock location has `Spree::StockItem`s for each variant in the
   store. 
-- `Spree::StockMovement`: Represents stock being added or removed from your
+- `Spree::StockMovement`: Represents stock being moved from one
+  `Spree::StockLocation` to another, or being  added or removed from your
   store's inventory. For more information, see [Stock
   movements](#stock-movements).
-- `Spree::ReturnAuthorization`: An administrator's authorization that an item or
-  items from an order can be returned by the customer. For more information, see
-  [Return authorizations](#return-authorizations)
+- `Spree::ReturnItem`: Represents an inventory unit that is returned by a customer.
+  For more information, see [Return items](#return-items).
 
 [backorder]: https://www.investopedia.com/terms/b/backorder.asp
 
@@ -104,28 +104,21 @@ adds a user interface for managing transfers in the `solidus_backend`.
 
 [solidus-stock-transfers]: https://github.com/solidusio-contrib/solidus_stock_transfers
 
-### Return authorizations
-
-A `Spree::ReturnAuthorization` allows you to authorize the return of any part of
-a customer's order. Return authorizations are also referred to as "return
-merchandise authorizations" (RMAs) in the `solidus_backend`.
-
-Once a return authorization is created, there are many ways that the
-administrator could provide compensation to a customer:
-
-- `Spree::Reimbursement::Credit`: Credit the customer for the returned item.
-- `Spree::Exchange`: Send a replacement item to the customer.
-- `Spree::OriginalPayment`: Refund the original payment.
-- `Spree::StoreCredit`: Offer the customer store credit.
-
-<!--For more information, see the [Return authorizations][return-authorizations]
-article.-->
-
-[return-authorizations]: return-authorizations.md
+### Return items
 
 <!-- TODO:
-  Add links to the returns/exchanges/store credit/etc. documentation here. RMAs
-  are just the first part in a much more comprehensive system or two.
-
-  Are there any other types of compensation that we are missing here?
+  For now, there is not dedicated article about return items.
 -->
+
+A `Spree::ReturnItem` is created for each inventory unit that a store
+administrator has included in a [return authorization][return-authorizations].
+Once a return item is received back from the customer, it can be re-added to
+your on hand inventory.
+
+Note that not all return items are resellable, as customer returns can be made
+for many reasons.
+
+For more information, see the [Return authorizations][return-authorizations]
+documentation.
+
+[return-authorizations]: ../returns/return-authorizations.md
