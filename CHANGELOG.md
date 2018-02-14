@@ -1,4 +1,6 @@
-## Solidus 2.5.0 (master, unreleased)
+## Solidus 2.6.0 (master, unreleased)
+
+## Solidus 2.5.0 (unreleased)
 
 ## Major Changes
 ### Migrate to discard from paranoia
