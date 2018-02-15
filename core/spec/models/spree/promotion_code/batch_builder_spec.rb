@@ -3,6 +3,7 @@ require "rails_helper"
 RSpec.describe Spree::PromotionCode::BatchBuilder do
   let(:promotion) { create(:promotion) }
   let(:base_code) { "abc" }
+  let(:options) { {} }
   let(:promotion_code_batch) do
     Spree::PromotionCodeBatch.create!(
       promotion_id: promotion.id,
@@ -12,7 +13,7 @@ RSpec.describe Spree::PromotionCode::BatchBuilder do
     )
   end
 
-  subject { described_class.new(promotion_code_batch) }
+  subject { described_class.new(promotion_code_batch, options) }
 
   describe "#build_promotion_codes" do
     context "with a failed build" do
@@ -66,11 +67,7 @@ RSpec.describe Spree::PromotionCode::BatchBuilder do
     end
 
     context "with a custom join separator" do
-      around do |example|
-        Spree::PromotionCode::BatchBuilder.join_characters = "x"
-        example.run
-        Spree::PromotionCode::BatchBuilder.join_characters = "_"
-      end
+      let(:options) { { join_characters: "x" } }
 
       it "builds codes with the same base prefix" do
         subject.build_promotion_codes
