@@ -37,16 +37,13 @@ class ::Spree::PromotionCode::BatchBuilder
         codes_for_current_batch += get_unique_codes(new_codes)
       end
 
-      codes_for_current_batch.map do |value|
-        promotion.codes.build(value: value, promotion_code_batch: promotion_code_batch)
+      codes_for_current_batch.each do |value|
+        Spree::PromotionCode.create!(
+          value: value,
+          promotion: promotion,
+          promotion_code_batch: promotion_code_batch
+        )
       end
-
-      promotion.save!
-
-      # We have to reload the promotion because otherwise all promotion codes
-      # we are creating will remain in memory. Doing a reload will remove all
-      # codes from memory.
-      promotion.reload
     end
   end
 
