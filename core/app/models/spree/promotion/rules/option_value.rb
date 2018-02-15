@@ -1,5 +1,5 @@
 module Spree
-  class Promotion
+  class Promotion < Spree::Base
     module Rules
       class OptionValue < PromotionRule
         MATCH_POLICIES = %w(any)

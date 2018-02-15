@@ -1,5 +1,5 @@
 module Spree
-  class Promotion
+  class Promotion < Spree::Base
     module Rules
       class User < PromotionRule
         has_many :promotion_rule_users, class_name: 'Spree::PromotionRuleUser',

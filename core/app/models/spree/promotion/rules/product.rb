@@ -1,5 +1,5 @@
 module Spree
-  class Promotion
+  class Promotion < Spree::Base
     module Rules
       # A rule to limit a promotion based on products in the order.  Can
       # require all or any of the products to be present.  Valid products

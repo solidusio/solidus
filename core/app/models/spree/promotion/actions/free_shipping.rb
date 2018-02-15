@@ -1,5 +1,5 @@
 module Spree
-  class Promotion
+  class Promotion < Spree::Base
     module Actions
       class FreeShipping < Spree::PromotionAction
         def perform(payload = {})

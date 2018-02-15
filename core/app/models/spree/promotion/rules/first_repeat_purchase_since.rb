@@ -1,5 +1,5 @@
 module Spree
-  class Promotion
+  class Promotion < Spree::Base
     module Rules
       class FirstRepeatPurchaseSince < PromotionRule
         preference :days_ago, :integer, default: 365
