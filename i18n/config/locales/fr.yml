@@ -1466,7 +1466,8 @@ fr:
       choose_taxons: Choisissez taxons
       label: Commande doit contenir %{select} de ces taxons
       match_all: tout
-      match_any: aucun
+      match_any: un ou plusieurs
+      matcn_none: aucun
     taxonomies: Arborescences
     taxonomy: Taxonomy
     taxonomy_edit: Modifier l'aborescence
