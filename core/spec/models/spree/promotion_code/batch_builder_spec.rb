@@ -4,11 +4,12 @@ RSpec.describe Spree::PromotionCode::BatchBuilder do
   let(:promotion) { create(:promotion) }
   let(:base_code) { "abc" }
   let(:options) { {} }
+  let(:number_of_codes) { 10 }
   let(:promotion_code_batch) do
     Spree::PromotionCodeBatch.create!(
       promotion_id: promotion.id,
       base_code: base_code,
-      number_of_codes: 10,
+      number_of_codes: number_of_codes,
       email: "test@email.com"
     )
   end
@@ -52,6 +53,22 @@ RSpec.describe Spree::PromotionCode::BatchBuilder do
 
       it "updates the promotion code batch state to completed" do
         expect(promotion_code_batch.state).to eq("completed")
+      end
+    end
+
+    context "with likely code contention" do
+      let(:number_of_codes) { 50 }
+      let(:options) do
+        {
+          batch_size: 10,
+          sample_characters: (0..9).to_a.map(&:to_s),
+          random_code_length: 2
+        }
+      end
+
+      it "creates the correct number of codes" do
+        subject.build_promotion_codes
+        expect(promotion.codes.size).to eq(number_of_codes)
       end
     end
   end
