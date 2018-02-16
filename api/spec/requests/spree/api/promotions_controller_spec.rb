@@ -38,7 +38,7 @@ module Spree
         end
 
         context 'when finding by code' do
-          let(:id) { promotion.codes.first }
+          let(:id) { promotion.codes.first.value }
 
           it_behaves_like "a JSON response"
         end
