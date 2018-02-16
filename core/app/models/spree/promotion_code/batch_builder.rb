@@ -26,27 +26,22 @@ class ::Spree::PromotionCode::BatchBuilder
   private
 
   def generate_random_codes
-    total_batches = (number_of_codes.to_f / self.class.batch_size).ceil
+    created_codes = 0
 
-    total_batches.times do |i|
-      codes_for_current_batch = Set.new
-      codes_to_generate = [self.class.batch_size, number_of_codes - i * batch_size].min
+    while created_codes < number_of_codes
+      max_codes_to_generate = [self.class.batch_size, number_of_codes - created_codes].min
 
-      while codes_for_current_batch.size < codes_to_generate
-        new_codes = Array.new(codes_to_generate) { generate_random_code }.to_set
-        codes_for_current_batch += get_unique_codes(new_codes)
+      new_codes = Array.new(max_codes_to_generate) { generate_random_code }.uniq
+      codes_for_current_batch = get_unique_codes(new_codes)
+
+      codes_for_current_batch.each do |value|
+        Spree::PromotionCode.create!(
+          value: value,
+          promotion: promotion,
+          promotion_code_batch: promotion_code_batch
+        )
       end
-
-      codes_for_current_batch.map do |value|
-        promotion.codes.build(value: value, promotion_code_batch: promotion_code_batch)
-      end
-
-      promotion.save!
-
-      # We have to reload the promotion because otherwise all promotion codes
-      # we are creating will remain in memory. Doing a reload will remove all
-      # codes from memory.
-      promotion.reload
+      created_codes += codes_for_current_batch.size
     end
   end
 
