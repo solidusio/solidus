@@ -890,6 +890,7 @@ en:
         unable_to_update: "Unable to update store credit"
         unable_to_delete: "Unable to delete store credit"
         unable_to_invalidate: "Unable to invalidate store credit"
+        unable_to_update_expiry: "Unable to set store credit expiry"
         select_reason: "Select a reason for this store credit"
         select_amount_update_reason: "Select a reason for updating the amount"
         total_unused: "Total unused"

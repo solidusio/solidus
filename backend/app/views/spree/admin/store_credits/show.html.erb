@@ -13,6 +13,7 @@
   <% if @store_credit.invalidateable? && can?(:invalidate, @store_credit) %>
     <li><%= link_to_with_icon 'ban', Spree.t("invalidate"), edit_validity_admin_user_store_credit_path(@user, @store_credit), class: 'button' %></li>
   <% end %>
+  <li><%= link_to 'Set expiry', edit_expiry_admin_user_store_credit_path(@user, @store_credit), class: 'button' %></li>
 <% end %>
 
 <table id='sc-detail-table'>
@@ -26,6 +27,13 @@
       <strong><%= Spree::StoreCredit.human_attribute_name(:amount) %>:</strong>
     </td>
     <td><%= @store_credit.display_amount.to_html %></td>
+    <td class='actions'></td>
+  </tr>
+  <tr>
+    <td>
+      <strong><%= Spree::StoreCredit.human_attribute_name(:expires_at) %>:</strong>
+    </td>
+    <td><%= @store_credit.expires_at %></td>
     <td class='actions'></td>
   </tr>
   <tr>

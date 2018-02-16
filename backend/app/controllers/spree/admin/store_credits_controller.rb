@@ -3,8 +3,8 @@ module Spree
     class StoreCreditsController < ResourceController
       belongs_to 'spree/user', model_class: Spree.user_class
       before_action :load_categories, only: [:new]
-      before_action :load_update_reasons, only: [:edit_amount, :edit_validity]
-      before_action :ensure_update_reason, only: [:update_amount, :invalidate]
+      before_action :load_update_reasons, only: [:edit_amount, :edit_validity, :edit_expiry]
+      before_action :ensure_update_reason, only: [:update_amount, :invalidate, :update_expiry]
 
       helper Spree::Admin::StoreCreditEventsHelper
 
@@ -65,10 +65,21 @@ module Spree
         end
       end
 
+      def update_expiry
+        @store_credit = @user.store_credits.find(params[:id])
+        expires_at = params.require(:store_credit).require(:expires_at)
+        if @store_credit.set_expires_at(expires_at, @update_reason, try_spree_current_user)
+          flash[:success] = flash_message_for(@store_credit, :successfully_updated)
+          redirect_to admin_user_store_credit_path(@user, @store_credit)
+        else
+          render_edit_page
+        end
+      end
+
       private
 
       def permitted_resource_params
-        params.require(:store_credit).permit([:amount, :currency, :category_id, :memo]).
+        params.require(:store_credit).permit([:amount, :currency, :expires_at, :category_id, :memo]).
           merge(created_by: try_spree_current_user)
       end
 
@@ -96,6 +107,9 @@ module Spree
         if action == :update_amount
           template = :edit_amount
           translation_key = 'update'
+        elsif action == :update_expiry
+          template = :edit_expiry
+          translation_key = 'update_expiry'
         else
           template = :edit_validity
           translation_key = 'invalidate'
