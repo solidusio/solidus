@@ -22,6 +22,7 @@
 
       <table class="sc-table">
         <thead>
+          <th data-hook="admin_store_credits_index_header_actions" class="actions"></th>
           <th class="wrap-text"><%= Spree::StoreCredit.human_attribute_name(:amount_credited) %></th>
           <th class="wrap-text"><%= Spree::StoreCredit.human_attribute_name(:amount_used) %></th>
           <th class="wrap-text"><%= Spree::StoreCredit.human_attribute_name(:amount_authorized) %></th>
@@ -30,11 +31,15 @@
           <th class="wrap-text"><%= Spree::StoreCredit.human_attribute_name(:created_at) %></th>
           <th class="wrap-text"><%= Spree::StoreCredit.human_attribute_name(:invalidated_at) %></th>
           <th class="wrap-text"><%= Spree::StoreCredit.human_attribute_name(:expires_at) %></th>
-          <th data-hook="admin_store_credits_index_header_actions" class="actions"></th>
         <thead>
         <tbody>
           <% credits.each do |store_credit| %>
             <tr>
+              <td class="actions" data-hook="admin_store_credits_index_row_actions">
+                <% if can?(:show, store_credit) %>
+                  <%= link_to_edit_url admin_user_store_credit_path(@user, store_credit), { no_text: true, class: 'edit' } %>
+                <% end %>
+              </td>
               <td class='align-center'>
                 <span><%= store_credit.display_amount.to_html %></span>
               </td>
@@ -58,11 +63,6 @@
               </td>
               <td class='align-center'>
                 <span><%= store_credit.expires_at %></span>
-              </td>
-              <td class="actions" data-hook="admin_store_credits_index_row_actions">
-                <% if can?(:show, store_credit) %>
-                  <%= link_to_edit_url admin_user_store_credit_path(@user, store_credit), { no_text: true, class: 'edit' } %>
-                <% end %>
               </td>
             </tr>
           <% end %>
