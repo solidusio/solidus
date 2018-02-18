@@ -57,9 +57,9 @@ RSpec.describe Spree::DistributedAmountsHandler, type: :model do
         end
       end
 
-      context "and the line items are not equally priced" do
+      context "and the line items do not have equal subtotal amounts" do
         let(:line_items_attributes) do
-          [{ price: 150 }, { price: 50 }, { price: 100 }]
+          [{ price: 50, quantity: 3 }, { price: 50, quantity: 1 }, { price: 50, quantity: 2 }]
         end
 
         it "distributes the total amount relative to the item's price" do
