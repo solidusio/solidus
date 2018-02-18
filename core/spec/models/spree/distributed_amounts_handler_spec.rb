@@ -50,7 +50,7 @@ RSpec.describe Spree::DistributedAmountsHandler, type: :model do
                 described_class.new(order.line_items[1], total_amount).amount,
                 described_class.new(order.line_items[2], total_amount).amount
               ]
-            ).to eq(
+            ).to match_array(
               [3.33, 3.33, 3.34]
             )
           end

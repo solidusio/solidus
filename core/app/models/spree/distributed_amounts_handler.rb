@@ -19,25 +19,27 @@ module Spree
     # @return [Hash<Integer, BigDecimal>] a hash of line item IDs and their
     #   corresponding weighted adjustments
     def distributed_amounts
-      remaining_amount = @total_amount
+      Hash[line_item_ids.zip(allocated_amounts)]
+    end
 
-      @order.line_items.each_with_index.map do |line_item, i|
-        if i == @order.line_items.length - 1
-          # If this is the last line item on the order we want to use the
-          # remaining preferred amount to ensure our total adjustment is what
-          # has been set as the preferred amount.
-          [line_item.id, remaining_amount]
-        else
-          # Calculate the weighted amount by getting this line item's share of
-          # the order's total and multiplying it with the preferred amount.
-          weighted_amount = ((line_item.amount / @order.item_total) * total_amount).round(2)
+    def line_item_ids
+      @order.line_items.map(&:id)
+    end
 
-          # Subtract this line item's weighted amount from the total.
-          remaining_amount -= weighted_amount
+    def line_item_amounts
+      @order.line_items.map(&:amount)
+    end
 
-          [line_item.id, weighted_amount]
-        end
-      end.to_h
+    def subtotal
+      line_item_amounts.sum
+    end
+
+    def weights
+      line_item_amounts.map { |amount| amount.to_f / subtotal.to_f }
+    end
+
+    def allocated_amounts
+      @total_amount.to_money.allocate(weights)
     end
   end
 end
