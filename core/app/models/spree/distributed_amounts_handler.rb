@@ -9,9 +9,9 @@ module Spree
       @total_amount = total_amount
     end
 
-    # @return [Float] the weighted adjustment for the initialized line item
+    # @return [BigDecimal] the weighted adjustment for the initialized line item
     def amount
-      distributed_amounts[@line_item.id].to_f
+      distributed_amounts[@line_item.id].to_d
     end
 
     private

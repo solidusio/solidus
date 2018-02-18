@@ -69,6 +69,7 @@ RSpec.describe Spree::Calculator::DistributedAmount, type: :model do
     context "when the order currency matches the store's currency" do
       let(:currency) { "USD" }
       it { is_expected.to eq 5 }
+      it { is_expected.to be_a BigDecimal }
     end
 
     context "when the order currency does not match the store's currency" do
