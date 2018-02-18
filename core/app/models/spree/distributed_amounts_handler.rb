@@ -1,10 +1,11 @@
 module Spree
   class DistributedAmountsHandler
-    attr_reader :line_item, :order, :total_amount
+    attr_reader :line_item, :order, :promotion, :total_amount
 
-    def initialize(line_item, total_amount)
+    def initialize(line_item, promotion, total_amount)
       @line_item = line_item
       @order = line_item.order
+      @promotion = promotion
       @total_amount = total_amount
     end
 
@@ -26,20 +27,23 @@ module Spree
       @order.line_items.map(&:id)
     end
 
-    def line_item_amounts
-      @order.line_items.map(&:amount)
+    def elligible_amounts
+      @order.line_items.map do |line_item|
+        elligible = promotion.line_item_actionable?(line_item.order, line_item)
+        elligible ? line_item.amount : 0
+      end
     end
 
     def subtotal
-      line_item_amounts.sum
+      elligible_amounts.sum
     end
 
     def weights
-      line_item_amounts.map { |amount| amount.to_f / subtotal.to_f }
+      elligible_amounts.map { |amount| amount.to_f / subtotal.to_f }
     end
 
     def allocated_amounts
-      @total_amount.to_money.allocate(weights)
+      @total_amount.to_money.allocate(weights).map(&:to_money)
     end
   end
 end

@@ -41,7 +41,6 @@ RSpec.describe Spree::Calculator::DistributedAmount, type: :model do
       end
 
       it 'still distributes the entire discount' do
-        pending('over allocation to elligible line items')
         expect(order.promo_total).to eq(-15)
         expect(order.line_items.map(&:adjustment_total)).to eq([-15, 0, 0])
       end
@@ -52,6 +51,7 @@ RSpec.describe Spree::Calculator::DistributedAmount, type: :model do
     subject { calculator.compute_line_item(order.line_items.first) }
 
     let(:calculator) { Spree::Calculator::DistributedAmount.new }
+    let(:promotion) { create(:promotion) }
 
     let(:order) do
       FactoryBot.create(
@@ -63,6 +63,7 @@ RSpec.describe Spree::Calculator::DistributedAmount, type: :model do
     before do
       calculator.preferred_amount = 15
       calculator.preferred_currency = currency
+      Spree::Promotion::Actions::CreateItemAdjustments.create!(calculator: calculator, promotion: promotion)
     end
 
     context "when the order currency matches the store's currency" do

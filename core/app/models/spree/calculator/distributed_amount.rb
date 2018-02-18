@@ -14,6 +14,7 @@ module Spree
       if line_item && preferred_currency.casecmp(line_item.currency).zero?
         Spree::DistributedAmountsHandler.new(
           line_item,
+          calculable.promotion,
           preferred_amount
         ).amount
       else
