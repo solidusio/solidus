@@ -5,11 +5,12 @@
 <table class="index stock-table" id="listing_product_stock">
   <colgroup>
     <col style="width: 30%">
-    <col style="width: 20%">
     <col style="width: 15%">
+    <col style="width: 14%">
+    <col style="width: 11%">
+    <col style="width: 11%">
     <col style="width: 10%">
-    <col style="width: 20%">
-    <col style="width: 5%">
+    <col style="width: 9%">
   </colgroup>
   <thead>
     <tr>
@@ -18,6 +19,7 @@
       <th><%= Spree::StockLocation.model_name.human %></th>
       <th class="align-center"><%= t('spree.backorderable_header') %></th>
       <th class="align-center"><%= t('spree.count_on_hand') %></th>
+      <th><%= t('spree.modify_stock_count') %></th>
       <th class="actions"></th>
     </tr>
   </thead>
@@ -61,13 +63,14 @@
             <% end %>
           </table>
         </td>
-        <td class="stock-location-items-cell" colspan="4">
+        <td class="stock-location-items-cell" colspan="5">
           <table class="stock-location-items-table">
             <colgroup>
-              <col style="width: 30%" />
+              <col style="width: 25%" />
               <col style="width: 20%" />
-              <col style="width: 40%" />
-              <col style="width: 10%" />
+              <col style="width: 20%" />
+              <col style="width: 20%" />
+              <col style="width: 15%" />
             </colgroup>
             <% variant.stock_items.each do |item| %>
               <% if @stock_item_stock_locations.include?(item.stock_location) %>
