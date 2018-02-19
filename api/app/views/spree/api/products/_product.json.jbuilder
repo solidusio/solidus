@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 @product_attributes ||= product_attributes
 json.cache! [I18n.locale, @current_user_roles.include?('admin'), current_pricing_options, @product_attributes, @exclude_data, product] do
   json.(product, *@product_attributes)

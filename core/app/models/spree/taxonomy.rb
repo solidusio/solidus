@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class Taxonomy < Spree::Base
     acts_as_list

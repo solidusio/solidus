@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   module Tax
     # Add tax adjustments to all line items and shipments in an order

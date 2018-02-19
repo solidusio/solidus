@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 namespace :email do
   desc 'Sends test email to specified address - Example: EMAIL=spree@example.com bundle exec rake email:test'
   task test: :environment do

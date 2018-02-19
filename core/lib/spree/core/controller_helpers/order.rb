@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spree/core/controller_helpers/pricing'
 
 module Spree

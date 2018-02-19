@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class Calculator < Spree::Base
     belongs_to :calculable, polymorphic: true

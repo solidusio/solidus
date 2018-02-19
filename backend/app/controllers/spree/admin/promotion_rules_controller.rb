@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Spree::Admin::PromotionRulesController < Spree::Admin::BaseController
   helper 'spree/promotion_rules'
 

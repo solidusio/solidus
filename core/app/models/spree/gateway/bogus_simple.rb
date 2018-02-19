@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   # @deprecated Use Spree::PaymentMethod::SimpleBogusCreditCard instead
   class Gateway::BogusSimple < Spree::PaymentMethod::SimpleBogusCreditCard

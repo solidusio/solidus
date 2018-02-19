@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   # Variants placed in the Order at a particular price.
   #

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class StoreController < Spree::BaseController
     include Spree::Core::ControllerHelpers::Pricing

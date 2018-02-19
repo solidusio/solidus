@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   module Api
     class OrdersController < Spree::Api::BaseController

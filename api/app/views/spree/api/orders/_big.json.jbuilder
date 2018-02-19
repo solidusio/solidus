@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 json.partial!("spree/api/orders/order", order: order)
 json.payment_methods(order.available_payment_methods) do |payment_method|
   json.(payment_method, :id, :name, :partial_name)

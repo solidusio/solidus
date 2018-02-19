@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class Country < Spree::Base
     has_many :states, -> { order(:name) }, dependent: :destroy

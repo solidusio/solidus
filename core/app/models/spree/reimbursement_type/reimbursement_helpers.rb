@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   module ReimbursementType::ReimbursementHelpers
     # Ordered list of payment methods that are valid for the reimbursement

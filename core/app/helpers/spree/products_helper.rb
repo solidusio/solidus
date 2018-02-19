@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   module ProductsHelper
     # Returns the formatted price for the specified variant as a full price or

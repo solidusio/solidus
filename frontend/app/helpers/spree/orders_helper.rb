@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'truncate_html'
 require 'app/helpers/truncate_html_helper'
 

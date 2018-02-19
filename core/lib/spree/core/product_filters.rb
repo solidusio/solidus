@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   module Core
     # THIS FILE SHOULD BE OVER-RIDDEN IN YOUR SITE EXTENSION!

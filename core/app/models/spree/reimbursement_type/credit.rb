@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class ReimbursementType::Credit < Spree::ReimbursementType
     extend Spree::ReimbursementType::ReimbursementHelpers

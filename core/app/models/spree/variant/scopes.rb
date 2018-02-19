@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class Variant < Spree::Base
     # FIXME: WARNING tested only under sqlite and postgresql

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class AdjustmentReason < Spree::Base
     has_many :adjustments, inverse_of: :adjustment_reason

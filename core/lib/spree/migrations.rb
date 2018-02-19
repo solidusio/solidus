@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class Migrations
     attr_reader :config, :engine_name

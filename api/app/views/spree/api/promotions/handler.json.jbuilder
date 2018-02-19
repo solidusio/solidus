@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 json.success(@handler.success)
 json.error(@handler.error)
 json.successful(@handler.successful?)

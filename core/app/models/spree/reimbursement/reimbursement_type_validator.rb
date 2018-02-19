@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   module Reimbursement::ReimbursementTypeValidator
     def valid_preferred_reimbursement_type?(return_item)

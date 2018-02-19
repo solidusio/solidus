@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Spree::Base < ActiveRecord::Base
   include Spree::Preferences::Preferable
   serialize :preferences, Hash

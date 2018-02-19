@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   # Spree::OrderPromotion represents the relationship between:
   #

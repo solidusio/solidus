@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   # A value object to hold a map of variants to their quantities
   class StockQuantities

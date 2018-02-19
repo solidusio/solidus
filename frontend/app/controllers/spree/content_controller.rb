@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class ContentController < Spree::StoreController
     respond_to :html

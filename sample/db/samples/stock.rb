@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Spree::Sample.load_sample("variants")
 
 country =  Spree::Country.find_by(iso: 'US')

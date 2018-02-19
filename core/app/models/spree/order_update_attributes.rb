@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class OrderUpdateAttributes
     # @param order [Order] existing (persisted) order

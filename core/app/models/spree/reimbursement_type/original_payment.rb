@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Spree::ReimbursementType::OriginalPayment < Spree::ReimbursementType
   extend Spree::ReimbursementType::ReimbursementHelpers
 

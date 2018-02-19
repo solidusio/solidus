@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails/all'
 require 'jquery-rails'
 require 'canonical-rails'

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class VariantPropertyRuleValue < Spree::Base
     include Spree::OrderedPropertyValueList

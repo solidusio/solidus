@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # A service layer that handles generating Carton objects when inventory units
 # are actually shipped.  It also takes care of things like updating order and
 # shipment states and delivering shipment emails as needed.

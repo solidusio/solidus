@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'discard'
 
 class Spree::StoreCredit < Spree::PaymentSource

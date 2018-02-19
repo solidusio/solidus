@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 json.cache! [I18n.locale, shipment] do
   json.(shipment, *shipment_attributes)
   json.order_id(shipment.order.number)

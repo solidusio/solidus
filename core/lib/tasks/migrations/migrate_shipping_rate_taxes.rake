@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 namespace :solidus do
   namespace :migrations do
     namespace :migrate_shipping_rate_taxes do

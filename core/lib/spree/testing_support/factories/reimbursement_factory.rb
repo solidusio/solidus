@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spree/testing_support/factories/customer_return_factory'
 
 FactoryBot.define do

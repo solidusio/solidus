@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class OptionValue < Spree::Base
     belongs_to :option_type, class_name: 'Spree::OptionType', inverse_of: :option_values

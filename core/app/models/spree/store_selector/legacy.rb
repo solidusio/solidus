@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This class provides the old behaviour for finding a matching Spree::Store
 # based on a request.
 #

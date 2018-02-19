@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   module Core::ControllerHelpers::PaymentParameters
     # This method handles the awkwardness of how the html forms are currently

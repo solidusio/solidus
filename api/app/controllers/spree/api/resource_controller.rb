@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Spree::Api::ResourceController < Spree::Api::BaseController
   before_action :load_resource, only: [:show, :update, :destroy]
 

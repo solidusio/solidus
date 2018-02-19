@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   module PromotionRulesHelper
     def options_for_promotion_rule_types(promotion)

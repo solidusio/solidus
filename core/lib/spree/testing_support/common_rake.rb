@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 unless defined?(Spree::InstallGenerator)
   require 'generators/spree/install/install_generator'
 end

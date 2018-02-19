@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.shared_examples_for 'a working factory' do
   it "builds successfully" do
     expect(build(factory)).to be_a(factory_class)

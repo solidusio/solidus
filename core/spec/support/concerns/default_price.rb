@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.shared_examples_for "default_price" do
   let(:model)        { described_class }
   subject(:instance) { FactoryBot.build(model.name.demodulize.downcase.to_sym) }

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class UserAddress < Spree::Base
     belongs_to :user, class_name: UserClassHandle.new, foreign_key: "user_id"

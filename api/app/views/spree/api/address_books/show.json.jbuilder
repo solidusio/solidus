@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 json.array! @user_addresses do |user_address|
   json.partial!("spree/api/addresses/address", address: user_address.address)
 

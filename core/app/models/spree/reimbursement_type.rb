@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class ReimbursementType < Spree::Base
     include Spree::NamedType

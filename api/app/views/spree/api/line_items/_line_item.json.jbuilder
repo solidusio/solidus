@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 json.cache! [I18n.locale, line_item] do
   json.(line_item, *line_item_attributes)
   json.single_display_amount(line_item.single_display_amount.to_s)

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails/all'
 require 'acts_as_list'
 require 'awesome_nested_set'

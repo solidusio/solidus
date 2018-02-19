@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spree/testing_support/factories/payment_factory'
 require 'spree/testing_support/factories/refund_reason_factory'
 

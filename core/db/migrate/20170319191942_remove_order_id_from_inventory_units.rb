@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RemoveOrderIdFromInventoryUnits < ActiveRecord::Migration[5.0]
   class InconsistentInventoryUnitError < StandardError; end
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spree/testing_support/sequences'
 require 'spree/testing_support/factories/country_factory'
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   # This is somewhat contrary to standard REST convention since there is not
   # actually a Checkout object. There's enough distinct logic specific to

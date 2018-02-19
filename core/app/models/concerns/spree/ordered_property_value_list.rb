@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   module OrderedPropertyValueList
     extend ActiveSupport::Concern

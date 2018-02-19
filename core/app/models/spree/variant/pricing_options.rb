@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class Variant < Spree::Base
     # Instances of this class represent the set of circumstances that influence how expensive a

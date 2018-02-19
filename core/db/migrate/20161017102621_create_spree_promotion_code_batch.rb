@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateSpreePromotionCodeBatch < ActiveRecord::Migration[5.0]
   def change
     create_table :spree_promotion_code_batches do |t|

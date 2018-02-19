@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class Variant < Spree::Base
     # This class generates gross prices for all countries that have VAT configured.

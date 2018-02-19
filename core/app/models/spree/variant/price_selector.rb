@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class Variant < Spree::Base
     # This class is responsible for selecting a price for a variant given certain pricing options.

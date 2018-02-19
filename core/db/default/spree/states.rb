@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 ActiveRecord::Base.transaction do
   Spree::Country.all.each do |country|
     carmen_country = Carmen::Country.coded(country.iso)

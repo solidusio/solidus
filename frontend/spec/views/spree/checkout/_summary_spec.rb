@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe "spree/checkout/_summary.html.erb", type: :view do

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   module TaxonsHelper
     # Retrieves the collection of products to display when "previewing" a taxon.  This is abstracted into a helper so

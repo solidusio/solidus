@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   # Service object for creating new payments on an Order
   class PaymentCreate

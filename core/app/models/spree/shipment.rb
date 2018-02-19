@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   # An order's planned shipments including tracking and cost.
   #

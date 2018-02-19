@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   # Relatively simple class used to apply a {Spree::Tax::OrderTax} to a
   # {Spree::Order}.

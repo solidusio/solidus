@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Default class for deciding what the current store is, given an HTTP request
 # This is an extension point used in Spree::Core::ControllerHelpers::Store
 # Custom versions of this class must respond to a store instance method

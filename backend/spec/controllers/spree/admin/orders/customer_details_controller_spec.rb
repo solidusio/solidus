@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "spec_helper"
 require "cancan"
 require "spree/testing_support/bar_ability"

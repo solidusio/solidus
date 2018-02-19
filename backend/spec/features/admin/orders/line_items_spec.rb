@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 # Tests for https://github.com/spree/spree/issues/3958's features

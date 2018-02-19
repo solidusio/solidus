@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   module PermissionSets
     # This is the base class used for crafting permission sets.

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   module TaxCalculator
     # Default implementation for tax calculations. Will go through all line

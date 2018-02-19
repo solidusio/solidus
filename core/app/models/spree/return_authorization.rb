@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   # Models the return of Inventory Units to a Stock Location for an Order.
   #

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class PromotionCodeBatchMailer < Spree::BaseMailer
     def promotion_code_batch_finished(promotion_code_batch)

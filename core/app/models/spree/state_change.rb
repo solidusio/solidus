@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class StateChange < Spree::Base
     belongs_to :user

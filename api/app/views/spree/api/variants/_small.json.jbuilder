@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 json.cache! [I18n.locale, variant] do
   json.(variant, *variant_attributes)
   json.display_price(variant.display_price.to_s)

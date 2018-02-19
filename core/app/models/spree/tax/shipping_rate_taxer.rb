@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   module Tax
     # Used to build shipping rate taxes

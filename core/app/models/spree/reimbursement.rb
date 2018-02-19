@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class Reimbursement < Spree::Base
     class IncompleteReimbursementError < StandardError; end

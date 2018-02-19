@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddAvailableToColumnsAndRemoveDisplayOnFromPaymentMethods < ActiveRecord::Migration[5.0]
   def up
     add_column(:spree_payment_methods, :available_to_users, :boolean, default: true)

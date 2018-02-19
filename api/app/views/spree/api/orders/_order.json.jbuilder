@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 json.cache! [I18n.locale, order] do
   json.(order, *order_attributes)
   json.display_item_total(order.display_item_total.to_s)

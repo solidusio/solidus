@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   # @deprecated Use Spree::PaymentMethod::CreditCard or Spree::PaymentMethod instead
   class Gateway < PaymentMethod::CreditCard

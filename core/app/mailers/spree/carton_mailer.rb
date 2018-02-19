@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class CartonMailer < BaseMailer
     # Send an email to customers to notify that an individual carton has been

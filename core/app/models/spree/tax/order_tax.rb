@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   module Tax
     # Simple object to pass back tax data from a calculator.

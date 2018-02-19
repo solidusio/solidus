@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Spree::Preference < Spree::Base
   serialize :value
 

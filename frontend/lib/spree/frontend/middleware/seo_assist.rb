@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Make redirects for SEO needs
 module Spree
   module Frontend

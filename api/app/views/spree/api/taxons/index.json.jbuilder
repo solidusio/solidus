@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 json.partial! 'spree/api/shared/pagination', pagination: @taxons
 json.taxons(@taxons) do |taxon|
   json.(taxon, *taxon_attributes)

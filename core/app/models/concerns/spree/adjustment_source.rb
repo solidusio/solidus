@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   module AdjustmentSource
     def deals_with_adjustments_for_deleted_source

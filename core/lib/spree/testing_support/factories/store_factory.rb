@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :store, class: 'Spree::Store' do
     sequence(:code) { |i| "spree_#{i}" }

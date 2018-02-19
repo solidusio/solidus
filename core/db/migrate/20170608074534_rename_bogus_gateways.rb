@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RenameBogusGateways < ActiveRecord::Migration[5.0]
   def up
     require 'solidus/migrations/rename_gateways'

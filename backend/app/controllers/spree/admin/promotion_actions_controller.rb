@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Spree::Admin::PromotionActionsController < Spree::Admin::BaseController
   before_action :load_promotion, only: [:create, :destroy]
   before_action :validate_promotion_action_type, only: :create

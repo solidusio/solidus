@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe 'solidus:migrations:migrate_shipping_rate_taxes' do

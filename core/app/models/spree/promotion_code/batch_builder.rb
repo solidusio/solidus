@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ::Spree::PromotionCode::BatchBuilder
   attr_reader :promotion_code_batch, :options
   delegate :promotion, :number_of_codes, :base_code, to: :promotion_code_batch

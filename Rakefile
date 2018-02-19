@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 task default: :spec
 
 def print_title(gem_name = '')

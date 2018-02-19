@@ -290,3 +290,7 @@ Bundler/OrderedGems:
 
 Style/NumericLiterals:
   Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: true
+  EnforcedStyle: always

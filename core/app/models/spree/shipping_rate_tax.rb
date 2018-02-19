@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   # Used to persist shipping rate tax estimations.
   # @attr [Spree::ShippingRate] shipping_rate The shipping rate to be taxed

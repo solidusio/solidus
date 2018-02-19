@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 json.cache! [I18n.locale, credit_card] do
   json.(credit_card, *creditcard_attributes)
   json.address do
