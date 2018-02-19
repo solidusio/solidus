@@ -7,19 +7,20 @@ RSpec.describe Spree::DistributedAmountsHandler, type: :model do
       line_items_attributes: line_items_attributes
     )
   end
-  let(:promotion) { FactoryBot.build(:promotion) }
+
+  let(:handler) {
+    described_class.new(order.line_items, total_amount)
+  }
 
   describe "#amount" do
     let(:total_amount) { 15 }
-
-    subject { described_class.new(line_item, promotion, total_amount).amount }
 
     context "when there is only one line item" do
       let(:line_items_attributes) { [{ price: 100 }] }
       let(:line_item) { order.line_items.first }
 
       it "applies the entire amount to the line item" do
-        expect(subject).to eq(15)
+        expect(handler.amount(line_item)).to eq(15)
       end
     end
 
@@ -32,9 +33,9 @@ RSpec.describe Spree::DistributedAmountsHandler, type: :model do
         it "evenly distributes the total amount" do
           expect(
             [
-              described_class.new(order.line_items[0], promotion, total_amount).amount,
-              described_class.new(order.line_items[1], promotion, total_amount).amount,
-              described_class.new(order.line_items[2], promotion, total_amount).amount
+              handler.amount(order.line_items[0]),
+              handler.amount(order.line_items[1]),
+              handler.amount(order.line_items[2])
             ]
           ).to eq(
             [5, 5, 5]
@@ -47,9 +48,9 @@ RSpec.describe Spree::DistributedAmountsHandler, type: :model do
           it "applies the remainder of the total amount to the last item" do
             expect(
               [
-                described_class.new(order.line_items[0], promotion, total_amount).amount,
-                described_class.new(order.line_items[1], promotion, total_amount).amount,
-                described_class.new(order.line_items[2], promotion, total_amount).amount
+                handler.amount(order.line_items[0]),
+                handler.amount(order.line_items[1]),
+                handler.amount(order.line_items[2])
               ]
             ).to match_array(
               [3.33, 3.33, 3.34]
@@ -66,9 +67,9 @@ RSpec.describe Spree::DistributedAmountsHandler, type: :model do
         it "distributes the total amount relative to the item's price" do
           expect(
             [
-              described_class.new(order.line_items[0], promotion, total_amount).amount,
-              described_class.new(order.line_items[1], promotion, total_amount).amount,
-              described_class.new(order.line_items[2], promotion, total_amount).amount
+              handler.amount(order.line_items[0]),
+              handler.amount(order.line_items[1]),
+              handler.amount(order.line_items[2])
             ]
           ).to eq(
             [7.5, 2.5, 5]

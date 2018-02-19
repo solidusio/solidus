@@ -11,14 +11,20 @@ module Spree
     preference :currency, :string, default: -> { Spree::Config[:currency] }
 
     def compute_line_item(line_item)
-      if line_item && preferred_currency.casecmp(line_item.currency).zero?
-        Spree::DistributedAmountsHandler.new(
-          line_item,
-          calculable.promotion,
-          preferred_amount
-        ).amount
-      else
-        0
+      return 0 unless line_item
+      return 0 unless preferred_currency.casecmp(line_item.currency).zero?
+      return 0 unless calculable.promotion.line_item_actionable?(line_item.order, line_item)
+      Spree::DistributedAmountsHandler.new(
+        actionable_line_items(line_item.order),
+        preferred_amount
+      ).amount(line_item)
+    end
+
+    private
+
+    def actionable_line_items(order)
+      order.line_items.select do |line_item|
+        calculable.promotion.line_item_actionable?(order, line_item)
       end
     end
   end

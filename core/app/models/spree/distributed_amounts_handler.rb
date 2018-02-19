@@ -1,17 +1,16 @@
 module Spree
   class DistributedAmountsHandler
-    attr_reader :line_item, :order, :promotion, :total_amount
+    attr_reader :line_items, :total_amount
 
-    def initialize(line_item, promotion, total_amount)
-      @line_item = line_item
-      @order = line_item.order
-      @promotion = promotion
+    def initialize(line_items, total_amount)
+      @line_items = line_items
       @total_amount = total_amount
     end
 
-    # @return [BigDecimal] the weighted adjustment for the initialized line item
-    def amount
-      distributed_amounts[@line_item.id].to_d
+    # @param [LineItem] one of the line_items distributed over
+    # @return [BigDecimal] the weighted adjustment for this line_item
+    def amount(line_item)
+      distributed_amounts[line_item.id].to_d
     end
 
     private
@@ -24,14 +23,11 @@ module Spree
     end
 
     def line_item_ids
-      @order.line_items.map(&:id)
+      line_items.map(&:id)
     end
 
     def elligible_amounts
-      @order.line_items.map do |line_item|
-        elligible = promotion.line_item_actionable?(line_item.order, line_item)
-        elligible ? line_item.amount : 0
-      end
+      line_items.map(&:amount)
     end
 
     def subtotal
@@ -43,7 +39,7 @@ module Spree
     end
 
     def allocated_amounts
-      @total_amount.to_money.allocate(weights).map(&:to_money)
+      total_amount.to_money.allocate(weights).map(&:to_money)
     end
   end
 end
