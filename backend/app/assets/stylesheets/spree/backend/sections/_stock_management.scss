@@ -4,8 +4,26 @@
     border-top-width: 1px;
   }
 
-  .stock-item-edit-row td {
-    height: 50px; // height of input field in edit mode
+  .stock-item-edit-row {
+    &.changed {
+      .submit, .cancel {
+        display: inline-block;
+      }
+    }
+
+    td {
+      vertical-align: middle;
+
+      &:not(.actions) {
+        padding: 0.5rem 0.75rem;
+      }
+    }
+  }
+
+  .actions {
+    .submit, .cancel {
+      display: none;
+    }
   }
 
   td {

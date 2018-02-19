@@ -1462,6 +1462,7 @@ en:
     meta_title: Meta Title
     metadata: Metadata
     minimal_amount: Minimal Amount
+    modify_stock_count: Modify (+/-)
     month: Month
     more: More
     move_stock_between_locations: Move Stock Between Locations
