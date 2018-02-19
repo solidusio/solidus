@@ -26,6 +26,8 @@ In this version we are beginning to deprecate this using the [`discard`](https:/
 
 ## Misc
 
+- Generate correct number of codes in BatchBuilder [#2578](https://github.com/solidusio/solidus/pull/2578) ([jhawthorn](https://github.com/jhawthorn))
+- Add mutable false to default refund reason record [#2574](https://github.com/solidusio/solidus/pull/2574) ([mdesantis](https://github.com/mdesantis))
 - Use carmen to translate `available_countries` helper [#2537](https://github.com/solidusio/solidus/pull/2537) ([jhawthorn](https://github.com/jhawthorn))
 - Introduce "suppliable" scope to represent any variant which can_supply?(1) [#2536](https://github.com/solidusio/solidus/pull/2536) ([jhawthorn](https://github.com/jhawthorn))
 - Fix calculator class check bug [#2501](https://github.com/solidusio/solidus/pull/2501) ([pelargir](https://github.com/pelargir))
@@ -128,7 +130,8 @@ In this version we are beginning to deprecate this using the [`discard`](https:/
 - Remove versioncake [#2307](https://github.com/solidusio/solidus/pull/2307) ([jhawthorn](https://github.com/jhawthorn))
 - Reference full Spree::StockLocation class name in stock_items_controller.rb [#2543](https://github.com/solidusio/solidus/pull/2543) ([VitaliyAdamkov](https://github.com/VitaliyAdamkov))
 - Deprecate JSTree api routes [#2254](https://github.com/solidusio/solidus/pull/2254) ([kennyadsl](https://github.com/kennyadsl))
--  Avoid JSON serializing Float::INFINITY  [#2495](https://github.com/solidusio/solidus/pull/2495) ([jhawthorn](https://github.com/jhawthorn))
+- Avoid JSON serializing Float::INFINITY  [#2495](https://github.com/solidusio/solidus/pull/2495) ([jhawthorn](https://github.com/jhawthorn))
+- Creating an order should activate promotions [#2565](https://github.com/solidusio/solidus/issues/2565) ([mathportillo](https://github.com/mathportillo))
 
 ## Admin
 - Add store select to payment method admin [#2550](https://github.com/solidusio/solidus/pull/2550) ([adammathys](https://github.com/adammathys))
