@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'active_record'
 
 def prompt_for_agree(prompt)

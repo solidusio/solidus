@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 require 'generator_spec'
 require 'generators/solidus/views/override_generator'

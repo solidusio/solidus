@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class OrderInventory
     attr_accessor :order, :line_item, :variant

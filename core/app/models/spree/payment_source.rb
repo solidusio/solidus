@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class PaymentSource < Spree::Base
     self.abstract_class = true

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Interface for accessing and updating a user's active "wallet". A Wallet
 # is the *active* list of *reusable* payment sources that a user would like to
 # choose from when placing orders.

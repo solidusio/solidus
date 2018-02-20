@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe "checkout with unshippable items", type: :feature, inaccessible: true do

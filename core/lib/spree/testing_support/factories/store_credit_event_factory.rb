@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spree/testing_support/factories/store_credit_factory'
 require 'spree/testing_support/factories/store_credit_update_reason_factory'
 

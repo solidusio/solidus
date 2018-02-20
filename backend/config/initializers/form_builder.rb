@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #
 # Allow some application_helper methods to be used in the scoped form_for manner
 #

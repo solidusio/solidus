@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 if params[:set] == "nested"
   json.partial!("spree/api/taxonomies/nested", taxonomy: taxonomy)
 else

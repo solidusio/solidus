@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   # Records the name and addresses from which stock items are fulfilled in
   # cartons.

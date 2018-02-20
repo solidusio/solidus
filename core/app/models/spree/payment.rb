@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   # Manage and process a payment for an order, from a specific
   # source (e.g. `Spree::CreditCard`) using a specific payment method (e.g

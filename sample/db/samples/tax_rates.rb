@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 north_america = Spree::Zone.find_by!(name: "North America")
 clothing = Spree::TaxCategory.find_by!(name: "Default")
 tax_rate = Spree::TaxRate.create(

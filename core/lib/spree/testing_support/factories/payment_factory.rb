@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spree/testing_support/factories/payment_method_factory'
 require 'spree/testing_support/factories/credit_card_factory'
 require 'spree/testing_support/factories/order_factory'

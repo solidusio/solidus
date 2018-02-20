@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spree/testing_support/factories/order_factory'
 require 'spree/testing_support/factories/promotion_factory'
 

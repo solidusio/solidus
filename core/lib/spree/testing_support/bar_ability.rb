@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Fake ability for testing administration
 class BarAbility
   include CanCan::Ability

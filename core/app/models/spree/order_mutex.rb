@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class OrderMutex < Spree::Base
     class LockFailed < StandardError; end

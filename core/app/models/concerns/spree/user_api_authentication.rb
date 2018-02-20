@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   module UserApiAuthentication
     def generate_spree_api_key!

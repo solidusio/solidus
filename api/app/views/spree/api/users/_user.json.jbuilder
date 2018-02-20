@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 json.(user, *user_attributes)
 json.bill_address do
   if user.bill_address

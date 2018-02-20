@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   module Stock
     # This class manages checking stock availability efficiently for a set of

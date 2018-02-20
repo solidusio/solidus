@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   module MigrationHelpers
     def safe_remove_index(table, column)

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class ShippingMethodCategory < Spree::Base
     belongs_to :shipping_method, class_name: 'Spree::ShippingMethod'

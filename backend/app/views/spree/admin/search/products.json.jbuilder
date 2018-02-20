@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 json.products(@products) do |product|
   json.id product.id
   json.name product.name

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   # Base class for all promotion rules
   class PromotionRule < Spree::Base

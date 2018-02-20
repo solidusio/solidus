@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   def self.solidus_version
     "2.6.0.alpha"

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   module Tax
     # Simple object used to hold tax data for an item.

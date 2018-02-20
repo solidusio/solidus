@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 namespace :order_capturing do
   desc "Looks for orders with inventory that is fully shipped/short-shipped, and captures money for it"
   task capture_payments: :environment do

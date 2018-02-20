@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spree_core'
 module Spree
   module Sample

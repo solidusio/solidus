@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   module Tax
     # A class exclusively used as a drop-in replacement for a default tax address.

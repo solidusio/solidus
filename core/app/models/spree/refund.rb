@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class Refund < Spree::Base
     belongs_to :payment, inverse_of: :refunds

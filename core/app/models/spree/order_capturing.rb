@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Spree::OrderCapturing
   # Allows for prioritizing payment methods in the order to be captured
   class_attribute :sorted_payment_method_classes

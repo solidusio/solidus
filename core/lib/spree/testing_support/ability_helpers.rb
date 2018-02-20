@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.shared_examples_for 'access granted' do
   it 'should allow read' do
     expect(ability).to be_able_to(:read, resource, token) if token

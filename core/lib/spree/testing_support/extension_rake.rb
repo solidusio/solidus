@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spree/testing_support/common_rake'
 
 desc "Generates a dummy app for testing an extension"

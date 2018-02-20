@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class OrdersController < Spree::StoreController
     before_action :check_authorization

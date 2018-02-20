@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree::Preferences
   module PreferableClassMethods
     DEFAULT_ADMIN_FORM_PREFERENCE_TYPES = %i(

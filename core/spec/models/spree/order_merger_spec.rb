@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 # Regression tests for https://github.com/spree/spree/issues/2179

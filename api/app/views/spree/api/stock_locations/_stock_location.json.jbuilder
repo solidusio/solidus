@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 json.(stock_location, *stock_location_attributes)
 json.country do
   if stock_location.country

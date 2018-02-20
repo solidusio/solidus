@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Loads seed data out of default dir
 default_path = File.join(File.dirname(__FILE__), 'default')
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   module TestingSupport
     # A module providing convenience methods to test Solidus controllers

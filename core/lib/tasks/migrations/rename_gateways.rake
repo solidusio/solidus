@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'solidus/migrations/rename_gateways'
 
 namespace 'solidus:migrations:rename_gateways' do

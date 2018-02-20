@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spree/permission_sets/base'
 require 'spree/permission_sets/configuration_display'
 require 'spree/permission_sets/configuration_management'

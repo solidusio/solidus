@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class ReturnItem < Spree::Base
     INTERMEDIATE_RECEPTION_STATUSES = %i(given_to_customer lost_in_transit shipped_wrong_item short_shipped in_transit)

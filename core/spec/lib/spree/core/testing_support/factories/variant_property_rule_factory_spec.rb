@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 require 'spree/testing_support/factories/variant_property_rule_factory'
 

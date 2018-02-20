@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 require 'spree/testing_support/factories/tax_category_factory'
 

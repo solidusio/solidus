@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree::RansackableAttributes
   extend ActiveSupport::Concern
   included do

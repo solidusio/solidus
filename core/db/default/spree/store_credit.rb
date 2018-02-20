@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Spree::StoreCreditCategory.find_or_create_by!(name: I18n.t('spree.store_credit_category.default'))
 
 Spree::PaymentMethod.create_with(

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree::Admin::StoreCreditEventsHelper
   mattr_accessor :originator_links
   self.originator_links = {

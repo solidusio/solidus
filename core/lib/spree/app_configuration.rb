@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This is the primary location for defining spree preferences
 #
 # The expectation is that this is created once and stored in

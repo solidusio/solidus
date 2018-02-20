@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This class is responsible for building a default payment on an order, using a
 # payment source that is already in the user's "wallet" and is marked
 # as being the default payment source.

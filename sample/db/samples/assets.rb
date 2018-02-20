@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Spree::Sample.load_sample("products")
 Spree::Sample.load_sample("variants")
 

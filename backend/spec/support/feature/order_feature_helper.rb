@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module OrderFeatureHelper
   def add_line_item(product_name, quantity: 1)
     find(".js-add-line-item:not([disabled]), .line-item [name=quantity]").click

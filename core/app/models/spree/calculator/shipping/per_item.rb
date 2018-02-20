@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_dependency 'spree/calculator'
 require_dependency 'spree/shipping_calculator'
 

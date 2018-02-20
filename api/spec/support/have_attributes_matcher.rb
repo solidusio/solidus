@@ -1,4 +1,6 @@
 
+# frozen_string_literal: true
+
 RSpec::Matchers.define :have_attributes do |expected_attributes|
   match do |actual|
     # actual is a Hash object representing an object, like this:

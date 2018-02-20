@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Spree::Sample.load_sample("addresses")
 Spree::Sample.load_sample("stores")
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   module PromotionHandler
     # Decides which promotion should be activated given the current order context

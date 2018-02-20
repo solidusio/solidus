@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class LocalizedNumber
     # Given a string, strips all non-price-like characters from it,

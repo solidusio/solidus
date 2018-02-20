@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 unless Spree::Store.where(code: 'sample-store').exists?
   Spree::Store.create!(
     name: "Sample Store",

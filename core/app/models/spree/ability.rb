@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Implementation class for Cancan gem.  Instead of overriding this class, consider adding new permissions
 # using the special +register_ability+ method which allows extensions to add their own abilities.
 #

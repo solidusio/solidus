@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class Property < Spree::Base
     has_many :product_properties, dependent: :delete_all, inverse_of: :property

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Spree's rpsec controller tests get the Spree::ControllerHacks
 # we don't need those for the anonymous controller here, so
 # we call process directly instead of get

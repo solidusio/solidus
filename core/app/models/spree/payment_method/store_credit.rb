@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class PaymentMethod::StoreCredit < PaymentMethod
     def payment_source_class

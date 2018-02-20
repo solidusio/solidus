@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   # Service class to change fulfilment of inventory units of a particular variant
   # to another shipment. The other shipment would typically have a different

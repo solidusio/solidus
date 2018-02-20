@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   # An implementation of a `Spree::PaymentMethod` for credit card payments.
   #

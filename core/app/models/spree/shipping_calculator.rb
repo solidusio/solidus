@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class ShippingCalculator < Calculator
     def compute_shipment(_shipment)

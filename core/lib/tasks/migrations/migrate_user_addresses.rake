@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 namespace 'spree:migrations:migrate_user_addresses' do
   # This creates an entry in the user_addresses table for a user's currently
   # associated shipping and billing addresses.

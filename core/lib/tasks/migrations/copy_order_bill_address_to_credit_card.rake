@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 namespace 'spree:migrations:copy_order_bill_address_to_credit_card' do
   # This copies the billing address from the order associated with a
   # credit card's most recent payment to the credit card.

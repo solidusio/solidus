@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 ENV['RAILS_ENV'] = 'test'
 
 # Teaspoon doesn't allow you to pass client driver options to the Selenium WebDriver. This monkey patch

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class Order < Spree::Base
     module Payments

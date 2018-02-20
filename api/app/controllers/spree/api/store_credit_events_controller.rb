@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Spree::Api::StoreCreditEventsController < Spree::Api::BaseController
   def mine
     if current_api_user

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class State < Spree::Base
     belongs_to :country, class_name: 'Spree::Country'

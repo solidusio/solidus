@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class PromotionCodeBatchJob < ActiveJob::Base
     queue_as :default

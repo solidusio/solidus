@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class PaymentMethod::BogusCreditCard < PaymentMethod::CreditCard
     TEST_VISA = ['4111111111111111', '4012888888881881', '4222222222222']

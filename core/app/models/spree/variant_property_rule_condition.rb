@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class VariantPropertyRuleCondition < Spree::Base
     belongs_to :option_value

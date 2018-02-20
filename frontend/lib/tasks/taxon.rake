@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 namespace :spree do
   desc "Resets all taxon permalinks"
   task reset_taxon_permalinks: :environment do

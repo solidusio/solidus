@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Spree::ShippingManifest
   ManifestItem = Struct.new(:line_item, :variant, :quantity, :states)
 

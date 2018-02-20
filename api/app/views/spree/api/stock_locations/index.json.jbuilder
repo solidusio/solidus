@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 json.stock_locations(@stock_locations) do |stock_location|
   json.partial!("spree/api/stock_locations/stock_location", stock_location: stock_location)
 end

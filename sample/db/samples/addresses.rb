@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 united_states = Spree::Country.find_by!(iso: "US")
 new_york = Spree::State.find_by!(name: "New York")
 

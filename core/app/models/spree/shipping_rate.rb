@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   # Records the costs of different shipping methods for a shipment and which
   # method has been selected to deliver the shipment.

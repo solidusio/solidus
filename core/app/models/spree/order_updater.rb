@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class OrderUpdater
     attr_reader :order

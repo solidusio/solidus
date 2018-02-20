@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 taxonomies = [
   { name: "Categories" },
   { name: "Brand" }

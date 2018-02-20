@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'shared_examples/protect_product_actions'
 require 'spec_helper'
 

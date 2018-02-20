@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 json.cache! address do
   json.(address, *address_attributes)
   json.country do

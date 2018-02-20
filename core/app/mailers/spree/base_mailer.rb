@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class BaseMailer < ActionMailer::Base
     def from_address(store)

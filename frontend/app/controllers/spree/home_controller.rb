@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class HomeController < Spree::StoreController
     helper 'spree/products'

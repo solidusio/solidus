@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 json.count        pagination.count
 json.total_count  pagination.total_count
 json.current_page pagination.current_page

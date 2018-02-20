@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spree/core/class_constantizer'
 
 module Spree

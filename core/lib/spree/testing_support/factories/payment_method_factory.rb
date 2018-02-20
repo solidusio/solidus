@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :payment_method, aliases: [:credit_card_payment_method], class: 'Spree::PaymentMethod::BogusCreditCard' do
     name 'Credit Card'

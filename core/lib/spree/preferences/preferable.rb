@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spree/preferences/preferable_class_methods'
 require 'active_support/concern'
 require 'active_support/core_ext/hash/keys'

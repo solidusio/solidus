@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   # Spree::OrderMerger is responsible for taking two orders and merging them
   # together by adding the line items from additional orders to the order

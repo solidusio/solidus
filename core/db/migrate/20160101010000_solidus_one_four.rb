@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class SolidusOneFour < ActiveRecord::Migration[5.0]
   def up
     # This migration is just a compressed version of all the previous

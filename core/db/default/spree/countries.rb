@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'carmen'
 
 # Insert Countries into the spree_countries table, checking to ensure that no

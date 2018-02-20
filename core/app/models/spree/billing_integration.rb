@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class BillingIntegration < PaymentMethod
     validates :name, presence: true

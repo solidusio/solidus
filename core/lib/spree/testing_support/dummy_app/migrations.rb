@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module DummyApp
   module Migrations
     extend self

@@ -1,4 +1,6 @@
 
+# frozen_string_literal: true
+
 json.widgets(@collection) do |widget|
   json.partial!("spree/api/widgets/widget", widget: widget)
 end

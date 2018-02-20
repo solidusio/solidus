@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class OrderWalkthrough
   def self.up_to(state)
     new.up_to(state)

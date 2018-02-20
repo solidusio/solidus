@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   # Configuration point for User model implementation.
   #

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 # This test exists in this file because in the standard admin/products_controller spec
 # There is the stub_authorization call. This call is not triggered for this test because

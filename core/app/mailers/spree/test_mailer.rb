@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class TestMailer < BaseMailer
     def test_email(email)

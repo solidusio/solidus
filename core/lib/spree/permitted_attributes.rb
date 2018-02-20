@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   # Spree::PermittedAttributes contains the attributes permitted through strong
   # params in various controllers in the frontend. Extensions and stores that

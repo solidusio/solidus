@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class Product < Spree::Base
     cattr_accessor :search_scopes do

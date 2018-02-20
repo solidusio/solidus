@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RakeUtil
   def self.add_marker(msg)
     puts "#" * 30 + " #{msg} " + '#' * 30

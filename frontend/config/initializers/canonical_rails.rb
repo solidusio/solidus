@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 CanonicalRails.setup do |config|
   # http://en.wikipedia.org/wiki/URL_normalization
   # Trailing slash represents semantics of a directory, ie a collection view - implying an :index get route;

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   module PromotionHandler
     # Used for activating promotions with shipping rules
