@@ -106,8 +106,8 @@ module Spree
       end
     end
 
-    def available_countries
-      checkout_zone = Zone.find_by(name: Spree::Config[:checkout_zone])
+    def available_countries(restrict_to_zone: Spree::Config[:checkout_zone])
+      checkout_zone = Zone.find_by(name: restrict_to_zone)
 
       if checkout_zone && checkout_zone.kind == 'country'
         countries = checkout_zone.country_list
