@@ -5,6 +5,8 @@ module Spree
     class OptionTypesController < ResourceController
       before_action :setup_new_option_value, only: :edit
 
+      update.after :touch_variants
+
       def update_values_positions
         params[:positions].each do |id, index|
           Spree::OptionValue.where(id: id).update_all(position: index)
@@ -35,6 +37,11 @@ module Spree
         else
           Spree::OptionType.all
         end
+      end
+
+      def touch_variants
+        option_values = @object.option_values
+        ActiveRecord::Base.transaction { option_values.each(&:touch_all_variants) }
       end
     end
   end
