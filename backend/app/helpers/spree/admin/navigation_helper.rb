@@ -128,7 +128,7 @@ module Spree
         class_names = "button"
         if icon_name
           Spree::Deprecation.warn "Using icon_name arg is deprecated. Icons could not be visible in future versions.", caller
-          class_names.prepend "fa fa-#{icon_name} "
+          class_names = "fa fa-#{icon_name} #{class_names}"
         end
         button_tag(text, options.merge(type: button_type, class: class_names))
       end
