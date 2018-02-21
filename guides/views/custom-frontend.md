@@ -29,8 +29,8 @@ These gems use the following tools to create views:
 [erb]: https://apidock.com/ruby/ERB
 [sass]: https://sass-lang.com
 [skeleton]: http://getskeleton.com
-[solidus-backend]: https://github.com/solidusio/solidus/tree/master/frontend
-[solidus-frontend]: https://github.com/solidusio/solidus/tree/master/backend
+[solidus-backend]: https://github.com/solidusio/solidus/tree/master/backend
+[solidus-frontend]: https://github.com/solidusio/solidus/tree/master/frontend
 
 ## Getting started with Rails frontend development
 
