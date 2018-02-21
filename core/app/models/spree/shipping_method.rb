@@ -32,9 +32,17 @@ module Spree
     has_many :shipping_method_stock_locations, dependent: :destroy, class_name: "Spree::ShippingMethodStockLocation"
     has_many :stock_locations, through: :shipping_method_stock_locations
 
+    has_many :store_shipping_methods, inverse_of: :shipping_method
+    has_many :stores, through: :store_shipping_methods
+
     validates :name, presence: true
 
     validate :at_least_one_shipping_category
+
+    scope :available_to_store, ->(store) do
+      raise ArgumentError, "You must provide a store" if store.nil?
+      store.shipping_methods.empty? ? all : where(id: store.shipping_method_ids)
+    end
 
     # @param shipping_category_ids [Array<Integer>] ids of desired shipping categories
     # @return [ActiveRecord::Relation] shipping methods which are associated
