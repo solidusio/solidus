@@ -36,7 +36,7 @@ fi
 
 cd ./sandbox
 echo "gem 'solidus', :path => '..'" >> Gemfile
-echo "gem 'solidus_auth_devise'" >> Gemfile
+echo "gem 'solidus_auth_devise', '>= 2.1.0'" >> Gemfile
 
 cat <<RUBY >> Gemfile
 group :test, :development do
