@@ -2,7 +2,5 @@ ruby:
   config_file: .rubocop.yml
 scss:
   enabled: false
-coffeescript:
-  config_file: coffeelint.json
 javascript:
   enabled: false
