@@ -141,34 +141,6 @@ module Spree
           end
         end
 
-        context "excludes shipping methods from other stores" do
-          before{ Spree::ShippingMethod.all.each(&:really_destroy!) }
-
-          let!(:other_method) do
-            create(
-              :shipping_method,
-              cost: 0.00,
-              stores: [build(:store, name: "Other")]
-            )
-          end
-
-          let!(:main_method) do
-            create(
-              :shipping_method,
-              cost: 5.00,
-              stores: [order.store]
-            )
-          end
-
-          it "does not return the other rate at all" do
-            expect(subject.shipping_rates(package).map(&:shipping_method_id)).to eq([main_method.id])
-          end
-
-          it "doesn't select the other rate even if it's more affordable" do
-            expect(subject.shipping_rates(package).map(&:selected)).to eq [true]
-          end
-        end
-
         context "includes tax adjustments if applicable" do
           let(:zone) { create(:zone, countries: [order.tax_address.country])}
 
