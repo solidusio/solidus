@@ -14,7 +14,7 @@
   <fieldset class="no-border-top">
     <%= render partial: 'form', locals: { f: f } %>
     <div data-hook="buttons" class="filter-actions actions">
-      <%= button t('spree.actions.update') %>
+      <%= button_tag t('spree.actions.update'), class: 'btn btn-primary' %>
     </div>
   </fieldset>
 

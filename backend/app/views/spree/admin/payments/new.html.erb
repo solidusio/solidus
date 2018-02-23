@@ -15,7 +15,7 @@
       <%= render partial: 'form', locals: { f: f } %>
 
       <div class="filter-actions actions" data-hook="buttons">
-        <%= button @order.cart? ? t('spree.actions.continue') : t('spree.actions.update') %>
+        <%= button_tag @order.cart? ? t('spree.actions.continue') : t('spree.actions.update'), class: 'btn btn-primary' %>
       </div>
     </fieldset>
   <% end %>

@@ -19,7 +19,7 @@
       </div>
     </div>
     <div class="form-buttons filter-actions actions" data-hook="buttons">
-      <%= button t('spree.store_credit.actions.invalidate') %>
+      <%= button_tag t('spree.store_credit.actions.invalidate'), class: 'btn btn-primary' %>
       <%= button_link_to t('spree.actions.cancel'), admin_user_store_credit_path(@user, @store_credit) %>
     </div>
   </fieldset>

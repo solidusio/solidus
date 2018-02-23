@@ -53,7 +53,7 @@
         </div>
       <% end %>
       <div class="form-buttons filter-actions actions">
-        <%= button t('spree.filter_results') %>
+        <%= button_tag t('spree.filter_results'), class: 'btn btn-primary' %>
         <% if @option_value_ids.present? %>
           <%= link_to_add_fields t('spree.add_variant_properties'), 'tbody#variant_property_values', class: 'plus button' %>
         <% end %>

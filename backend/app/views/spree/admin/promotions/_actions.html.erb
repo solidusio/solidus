@@ -10,7 +10,7 @@
           <%= select_tag 'action_type', options, include_blank: t(:choose_promotion_action, scope: 'spree'), class: 'custom-select fullwidth' %>
         </div>
         <div class="filter-actions actions">
-          <%= button t('spree.actions.add') %>
+          <%= button_tag t('spree.actions.add'), class: 'btn btn-primary' %>
         </div>
       <% end %>
     </fieldset>
@@ -28,7 +28,7 @@
     </div>
     <% if can?(:update, @promotion) %>
       <div class="filter-actions actions promotion-update">
-        <%= button t('spree.actions.update') %>
+        <%= button_tag t('spree.actions.update'), class: 'btn btn-primary' %>
       </div>
     <% end %>
   <% end %>

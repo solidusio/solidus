@@ -5,7 +5,7 @@
       <%= render partial: 'form', locals: { f: f } %>
 
       <div class="form-buttons filter-actions actions" data-hook="buttons">
-        <%= button t('spree.actions.update') %>
+        <%= button_tag t('spree.actions.update'), class: 'btn btn-primary' %>
         <%= link_to t('spree.actions.cancel'), admin_product_images_url(@product), id: 'cancel_link', class: 'button' %>
       </div>
   </fieldset>

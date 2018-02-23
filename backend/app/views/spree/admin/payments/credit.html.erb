@@ -12,7 +12,7 @@
       <%= text_field_tag :amount, @payment.amount %>
     </p>
     <p class="form-buttons">
-      <%= button t('spree.make_refund') %>
+      <%= button_tag t('spree.make_refund'), class: 'btn btn-primary' %>
     </p>
   </fieldset>
 <% end %>
