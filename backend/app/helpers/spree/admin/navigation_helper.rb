@@ -127,6 +127,7 @@ module Spree
       deprecate icon: :solidus_icon, deprecator: Spree::Deprecation
 
       def button(text, icon_name = nil, button_type = 'submit', options = {})
+        Spree::Deprecation.warn "button helper is deprecated. Instead use button_tag"
         class_names = "button"
         if icon_name
           Spree::Deprecation.warn "Using icon_name arg is deprecated. Icons could not be visible in future versions.", caller
@@ -141,7 +142,10 @@ module Spree
            html_options[:method].to_s.downcase != 'get' &&
            !html_options[:remote]
           form_tag(url, method: html_options.delete(:method)) do
-            button(text, html_options.delete(:icon), nil, html_options)
+            if html_options.delete(:icon)
+              Spree::Deprecation.warn "Passing :icon to button_link_to is deprecated and has no effect.", caller
+            end
+            button_tag(text, html_options)
           end
         else
           html_options[:class] += ' button'
