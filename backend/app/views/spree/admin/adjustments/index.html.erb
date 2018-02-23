@@ -5,7 +5,7 @@
 <% content_for :page_actions do %>
   <% if can? :create, Spree::Adjustment %>
     <li>
-      <%= button_link_to t('spree.new_adjustment'), new_admin_order_adjustment_url(@order) %>
+      <%= link_to t('spree.new_adjustment'), new_admin_order_adjustment_url(@order), class: 'btn btn-primary' %>
     </li>
   <% end %>
 <% end %>
