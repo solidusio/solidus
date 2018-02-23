@@ -5,12 +5,15 @@ database_prefix = ENV['LIB_NAME'].presence || "solidus"
 when 'mysql' %>
 test:
   adapter: mysql2
-  <% if ENV['TRAVIS'] %>
+  <% if ENV['CI'] %>
   username: root
   password:
   <% end %>
   database: <%= database_prefix %>_test
   encoding: utf8
+  <% unless ENV['DB_HOST'].blank? %>
+  host: <%= ENV['DB_HOST'] %>
+  <% end %>
 <% when 'postgres', 'postgresql' %>
 <% db_host = ENV['DB_HOST'] %>
 test:

@@ -1,8 +1,8 @@
 version: 2
 jobs:
-  build:
-    working_directory: ~/solidus
-    environment:
+  postgres:
+    working_directory: &workdir ~/solidus
+    environment: &environment
       DB: postgresql
       DB_HOST: localhost
       DEFAULT_MAX_WAIT_TIME: 10
@@ -10,12 +10,12 @@ jobs:
       CIRCLE_TEST_REPORTS: /tmp/test-results
       CIRCLE_ARTIFACTS: /tmp/test-artifacts
     docker:
-      - image: circleci/ruby:2.5-node-browsers
+      - image: &image circleci/ruby:2.5-node-browsers
       - image: jhawthorn/circleci-postgres-fast
         environment:
           POSTGRES_USER: root
-    parallelism: 3
-    steps:
+    parallelism: &parallelism 3
+    steps: &steps
       - checkout
 
       - restore_cache:
@@ -45,3 +45,22 @@ jobs:
 
       - store_test_results:
           path: /tmp/test-results
+
+  mysql:
+    working_directory: *workdir
+    environment:
+      <<: *environment
+      DB: mysql
+      DB_HOST: 127.0.0.1
+    docker:
+      - image: *image
+      - image: circleci/mysql:5.7-ram
+    parallelism: *parallelism
+    steps: *steps
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - postgres
+      - mysql
