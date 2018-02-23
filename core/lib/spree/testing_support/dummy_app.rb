@@ -32,10 +32,6 @@ module DummyApp
 
     DummyApp::Application.initialize!
 
-    DummyApp::Application.routes.draw do
-      mount Spree::Core::Engine, at: '/'
-    end
-
     if auto_migrate
       DummyApp::Migrations.auto_migrate
     end
@@ -56,6 +52,11 @@ module DummyApp
     config.action_controller.allow_forgery_protection = false
     config.active_support.deprecation                 = :stderr
     config.secret_key_base                            = 'SECRET_TOKEN'
+
+    if config.active_record.sqlite3
+      # Rails >= 5.2
+      config.active_record.sqlite3.represent_boolean_as_integer = true
+    end
 
     # Avoid issues if an old spec/dummy still exists
     config.paths['config/initializers'] = []
@@ -80,6 +81,7 @@ module DummyApp
 
     config.paths["config/database"] = File.expand_path('../dummy_app/database.yml', __FILE__)
     config.paths['app/views'] = File.expand_path('../dummy_app/views', __FILE__)
+    config.paths['config/routes.rb'] = File.expand_path('../dummy_app/routes.rb', __FILE__)
 
     ActionMailer::Base.default from: "store@example.com"
   end
