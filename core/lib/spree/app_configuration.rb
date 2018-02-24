@@ -446,6 +446,7 @@ module Spree
             Spree::Promotion::Rules::OptionValue
             Spree::Promotion::Rules::FirstRepeatPurchaseSince
             Spree::Promotion::Rules::UserRole
+            Spree::Promotion::Rules::Store
           ]
 
           promos.actions = %w[
