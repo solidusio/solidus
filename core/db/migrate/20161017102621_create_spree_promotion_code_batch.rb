@@ -9,7 +9,7 @@ class CreateSpreePromotionCodeBatch < ActiveRecord::Migration[5.0]
       t.string :email
       t.string :error
       t.string :state, default: "pending"
-      t.timestamps
+      t.timestamps precision: 6
     end
 
     add_foreign_key(

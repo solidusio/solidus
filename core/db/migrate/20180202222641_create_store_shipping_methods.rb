@@ -4,7 +4,7 @@ class CreateStoreShippingMethods < ActiveRecord::Migration[5.1]
       t.references :store, null: false
       t.references :shipping_method, null: false
 
-      t.timestamps
+      t.timestamps precision: 6
     end
   end
 end
