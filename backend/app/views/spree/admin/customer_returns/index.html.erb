@@ -3,7 +3,7 @@
 <% content_for :page_actions do %>
   <% if can? :create, Spree::CustomerReturn %>
     <li>
-      <%= button_link_to t('spree.new_customer_return'), spree.new_admin_order_customer_return_path(@order) %>
+      <%= link_to t('spree.new_customer_return'), spree.new_admin_order_customer_return_path(@order), class: 'btn btn-primary' %>
     </li>
   <% end %>
 <% end %>

@@ -4,7 +4,7 @@
 
 
 <% content_for :page_actions do %>
-  <li><%= button_link_to t('spree.back_to_customer_return'), url_for([:edit, :admin, @order, @reimbursement.customer_return]) %></li>
+  <li><%= link_to t('spree.back_to_customer_return'), url_for([:edit, :admin, @order, @reimbursement.customer_return]), class: 'btn btn-primary' %></li>
 <% end %>
 
 <%= render partial: 'spree/shared/error_messages', locals: { target: @reimbursement } %>

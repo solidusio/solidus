@@ -137,21 +137,19 @@ module Spree
       end
 
       def button_link_to(text, url, html_options = {})
+        Spree::Deprecation.warn "Passing button_link_to is deprecated. Use either link_to or button_to instead.", caller
         html_options = { class: '' }.merge(html_options)
         if html_options[:method] &&
            html_options[:method].to_s.downcase != 'get' &&
            !html_options[:remote]
           form_tag(url, method: html_options.delete(:method)) do
-            if html_options.delete(:icon)
-              Spree::Deprecation.warn "Passing :icon to button_link_to is deprecated and has no effect.", caller
-            end
+            html_options.delete(:icon)
             button_tag(text, html_options)
           end
         else
           html_options[:class] += ' button'
 
           if html_options[:icon]
-            Spree::Deprecation.warn "Using :icon option is deprecated. Icons could not be visible in future versions.", caller
             html_options[:class] += " fa fa-#{html_options[:icon]}"
           end
           link_to(text, url, html_options)

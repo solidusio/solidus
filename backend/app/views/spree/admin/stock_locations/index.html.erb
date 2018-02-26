@@ -9,7 +9,7 @@
   <ul class="actions inline-menu">
     <% if can?(:create, Spree::StockLocation) %>
       <li>
-        <%= button_link_to t('spree.new_stock_location'), new_object_url, { id: 'admin_new_stock_location' } %>
+        <%= link_to t('spree.new_stock_location'), new_object_url, id: 'admin_new_stock_location', class: 'btn btn-primary' %>
       </li>
     <% end %>
   </ul>

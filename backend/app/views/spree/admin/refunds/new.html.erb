@@ -36,7 +36,7 @@
 
     <div class="form-buttons filter-actions actions" data-hook="buttons">
       <%= button_tag Spree::Refund.model_name.human, class: 'btn btn-primary' %>
-      <%= button_link_to t('spree.actions.cancel'), admin_order_payments_url(@refund.payment.order) %>
+      <%= link_to t('spree.actions.cancel'), admin_order_payments_url(@refund.payment.order), class: 'btn btn-primary' %>
     </div>
   </fieldset>
 <% end %>
