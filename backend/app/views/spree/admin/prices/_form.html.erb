@@ -15,7 +15,7 @@
         <%= f.field_container :country do %>
           <%= f.label :country %>
           <%= f.field_hint :country %>
-          <%= f.collection_select :country_iso, available_countries, :iso, :name,
+          <%= f.collection_select :country_iso, available_countries(restrict_to_zone: nil), :iso, :name,
                                   {
                                     include_blank: t(:any_country, scope: [:spree, :admin, :prices])
                                   },

@@ -107,7 +107,7 @@
 
     <%= f.field_container :country_id do %>
       <%= f.label :country_id %>
-      <span id="country"><%= f.collection_select :country_id, available_countries, :id, :name, { include_blank: true }, { class: 'custom-select js-country_id fullwidth' } %></span>
+      <span id="country"><%= f.collection_select :country_id, available_countries(restrict_to_zone: nil), :id, :name, { include_blank: true }, { class: 'custom-select js-country_id fullwidth' } %></span>
     <% end %>
 
     <%= f.field_container :state do %>
