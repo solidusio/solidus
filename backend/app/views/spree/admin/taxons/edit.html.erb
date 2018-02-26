@@ -13,7 +13,7 @@
   <%= render 'form', f: f %>
 
   <div class="form-buttons filter-actions" data-hook="buttons">
-    <%= button t('spree.actions.update') %>
+    <%= button_tag t('spree.actions.update'), class: 'btn btn-primary' %>
     <%= button_link_to t('spree.actions.cancel'), edit_admin_taxonomy_url(@taxonomy) %>
   </div>
 <% end %>
