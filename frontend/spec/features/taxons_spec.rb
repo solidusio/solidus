@@ -132,4 +132,25 @@ describe "viewing products", type: :feature, inaccessible: true do
       expect(tmp.sort!).to eq(["Ruby on Rails Bag", "Ruby on Rails Tote"])
     end
   end
+
+  # Regression test for https://github.com/solidusio/solidus/issues/2602
+  context "root taxon page" do
+    it "shows taxon previews" do
+      visit spree.nested_taxons_path(taxonomy.root)
+
+      expect(page).to have_css('ul.product-listing li', count: 2)
+      expect(page).to have_content("Superman T-Shirt", count: 2)
+    end
+
+    context "with prices in other currency" do
+      before { Spree::Price.update_all(currency: "CAD") }
+
+      it "shows no products" do
+        visit spree.nested_taxons_path(taxonomy.root)
+
+        expect(page).to have_css('ul.product-listing li', count: 0)
+        expect(page).to have_no_content("Superman T-Shirt")
+      end
+    end
+  end
 end
