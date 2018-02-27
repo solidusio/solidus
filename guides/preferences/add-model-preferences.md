@@ -45,8 +45,30 @@ types are:
 An optional default value may be defined. (See the `:dark_chocolate` preference
 in the block above.) This is the value used unless another value has been set. 
 
-Once you have set preferences, you can access their values from the object
-they're set on:
+### Add columns for your preferences
+
+In order for your new preferences to persist, you need to add a column to the
+relevant model using a migration:
+
+```ruby
+class AddPreferencesToSubscriptionRules < ActiveRecord::Migration[5.0]
+  def change
+    add_column :my_store_subscription_rules, :preferences, :text
+  end
+end
+```
+
+Your new `preferences` column should be the type `text`.
+
+Then, you can run the migration:
+
+```shell
+bundle exec rails db:migrate
+```
+
+### Access your preferences
+
+Now you can access their values from the model they are set on:
 
 ```ruby
 MyStore::SubscriptionRules.find(1).preferences

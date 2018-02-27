@@ -1,10 +1,11 @@
-# App configuration 
+# App configuration
 
 Solidus includes many preferences with default settings that are appropriate for
-typical stores.  For a list of Solidus's preferences their default values, see
-the [`Spree::AppConfiguration` documentation][app-configuration-documentation].
-The [`Spree::AppConfiguration` class][app-configuration-class] is where all of
-Solidus's preferences are defined. 
+typical stores. For a list of Solidus's preferences and their default values,
+see the [`Spree::AppConfiguration`
+documentation][app-configuration-documentation].  The [`Spree::AppConfiguration`
+class][app-configuration-class] is where all of Solidus's preferences are
+defined.
 
 The built-in preferences are well-tested options that allow you to implement
 complex ecommerce behaviors.
@@ -18,7 +19,7 @@ initializers. Some default preferences are explicitly set in the initializer at
 `config/initializers/spree.rb`.
 
 In this file's first `Spree.config` block, the `currency` and `mails_from`
-preferences are given default values you may want to modify: 
+preferences are given default values you may want to modify:
 
 ```ruby
 # /config/initializers/spree.rb
@@ -67,4 +68,3 @@ Spree::Config.currency
 [app-configuration-model]: https://github.com/solidusio/solidus/blob/master/core/lib/spree/app_configuration.rb
 [app-configuration-documentation]: http://docs.solidus.io/Spree/AppConfiguration.html
 [rails-engines]: http://guides.rubyonrails.org/engines.html
-
