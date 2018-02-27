@@ -9,6 +9,7 @@ class Spree::StoreCredit < Spree::PaymentSource
   ALLOCATION_ACTION = 'allocation'
   ADJUSTMENT_ACTION = 'adjustment'
   INVALIDATE_ACTION = 'invalidate'
+  EXPIRES_AT_ACTION = 'expiry'
 
   DEFAULT_CREATED_BY_EMAIL = "spree@example.com"
 
@@ -40,8 +41,11 @@ class Spree::StoreCredit < Spree::PaymentSource
   money_methods :amount, :amount_used, :amount_authorized
 
   def amount_remaining
-    return 0.0.to_d if invalidated?
-    amount - amount_used - amount_authorized
+    if legit?
+      amount - amount_used - amount_authorized
+    else
+      0.0.to_d
+    end
   end
 
   def authorize(amount, order_currency, options = {})
@@ -173,8 +177,17 @@ class Spree::StoreCredit < Spree::PaymentSource
     !invalidated? && amount_authorized.zero?
   end
 
+  # "valid?" is taken by Rails :)
+  def legit?
+    !invalidated? && !expired?
+  end
+
   def invalidated?
     !!invalidated_at
+  end
+
+  def expired?
+    expires_at && expires_at <= Time.now
   end
 
   def update_amount(amount, reason, user_performing_update)
@@ -198,6 +211,14 @@ class Spree::StoreCredit < Spree::PaymentSource
       errors.add(:invalidated_at, Spree.t("store_credit.errors.cannot_invalidate_uncaptured_authorization"))
       return false
     end
+  end
+
+  def set_expires_at(time, reason, user_performing_expiration)
+    self.action = EXPIRES_AT_ACTION
+    self.expires_at = time
+    self.update_reason = reason
+    self.action_originator = user_performing_expiration
+    save
   end
 
   class << self

@@ -194,6 +194,8 @@ Spree::Core::Engine.routes.draw do
         member do
           get :edit_amount
           put :update_amount
+          get :edit_expiry
+          put :update_expiry
           get :edit_validity
           put :invalidate
         end

@@ -7,6 +7,12 @@
       <%= f.error_message_on :currency %>
     <% end %>
   </div>
+  <div id="expires_at_field" class="col-12">
+    <%= f.field_container :expires_at do %>
+      <%= f.label :expires_at %><br />
+      <%= f.text_field :expires_at, value: datepicker_field_value(f.object.expires_at), class: 'datepicker datepicker-from fullwidth' %>
+    <% end %>
+  </div>
   <div class="col-12">
     <%= f.field_container :category_id do %>
       <%= f.label :category_id, class: 'required' %><br />
