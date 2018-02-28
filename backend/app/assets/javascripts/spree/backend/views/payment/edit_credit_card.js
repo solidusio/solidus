@@ -5,7 +5,7 @@ Spree.Views.Payment.EditCreditCard = Backbone.View.extend({
     this.$(".cardExpiry").payment('formatCardExpiry');
     this.$(".cardCode").payment('formatCardCVC');
 
-    this.render()
+    this.render();
   },
 
   events: {
@@ -15,9 +15,9 @@ Spree.Views.Payment.EditCreditCard = Backbone.View.extend({
 
   render: function() {
     var isNew = (this.$('[name=card]:checked').val() === 'new') || (this.$('[name=card]').length == 0);
-    this.$('.js-new-credit-card-form').toggleClass('hidden', !isNew)
-    this.$('.js-new-credit-card-form :input').prop('disabled', !isNew)
+    this.$('.js-new-credit-card-form').toggleClass('hidden', !isNew);
+    this.$('.js-new-credit-card-form :input').prop('disabled', !isNew);
 
-    this.$(".ccType").val($.payment.cardType(this.$('.cardNumber').val()))
+    this.$(".ccType").val($.payment.cardType(this.$('.cardNumber').val()));
   }
-})
+});

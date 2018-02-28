@@ -24,4 +24,4 @@ Spree.Models.Shipment = Backbone.Model.extend({
       data: JSON.stringify({ shipping_method_id: shippingMethodId })
     }, options));
   }
-})
+});

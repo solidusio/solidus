@@ -15,7 +15,7 @@ Spree.CalculatorEditView = Backbone.View.extend({
       $(this).toggle(selected);
     });
   }
-})
+});
 
 Spree.ready(function() {
   $('.js-calculator-fields').each(function() {

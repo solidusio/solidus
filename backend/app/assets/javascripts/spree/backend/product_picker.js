@@ -2,8 +2,8 @@ $.fn.productAutocomplete = function (options) {
   'use strict';
 
   // Default options
-  options = options || {}
-  var multiple = typeof(options['multiple']) !== 'undefined' ? options['multiple'] : true
+  options = options || {};
+  var multiple = typeof(options['multiple']) !== 'undefined' ? options['multiple'] : true;
 
   function formatProduct(product) {
     return Select2.util.escapeMarkup(product.name);

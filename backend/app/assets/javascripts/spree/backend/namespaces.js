@@ -12,4 +12,4 @@ _.extend(window.Spree, {
     Stock: {},
     Tables: {}
   }
-})
+});
