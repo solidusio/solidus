@@ -2,17 +2,17 @@
 
 module Spree
   class DistributedAmountsHandler
-    attr_reader :line_item, :order, :total_amount
+    attr_reader :line_items, :total_amount
 
-    def initialize(line_item, total_amount)
-      @line_item = line_item
-      @order = line_item.order
+    def initialize(line_items, total_amount)
+      @line_items = line_items
       @total_amount = total_amount
     end
 
-    # @return [Float] the weighted adjustment for the initialized line item
-    def amount
-      distributed_amounts[@line_item.id].to_f
+    # @param [LineItem] one of the line_items distributed over
+    # @return [BigDecimal] the weighted adjustment for this line_item
+    def amount(line_item)
+      distributed_amounts[line_item.id].to_d
     end
 
     private
@@ -21,25 +21,27 @@ module Spree
     # @return [Hash<Integer, BigDecimal>] a hash of line item IDs and their
     #   corresponding weighted adjustments
     def distributed_amounts
-      remaining_amount = @total_amount
+      Hash[line_item_ids.zip(allocated_amounts)]
+    end
 
-      @order.line_items.each_with_index.map do |line_item, i|
-        if i == @order.line_items.length - 1
-          # If this is the last line item on the order we want to use the
-          # remaining preferred amount to ensure our total adjustment is what
-          # has been set as the preferred amount.
-          [line_item.id, remaining_amount]
-        else
-          # Calculate the weighted amount by getting this line item's share of
-          # the order's total and multiplying it with the preferred amount.
-          weighted_amount = ((line_item.amount / @order.item_total) * total_amount).round(2)
+    def line_item_ids
+      line_items.map(&:id)
+    end
 
-          # Subtract this line item's weighted amount from the total.
-          remaining_amount -= weighted_amount
+    def elligible_amounts
+      line_items.map(&:amount)
+    end
 
-          [line_item.id, weighted_amount]
-        end
-      end.to_h
+    def subtotal
+      elligible_amounts.sum
+    end
+
+    def weights
+      elligible_amounts.map { |amount| amount.to_f / subtotal.to_f }
+    end
+
+    def allocated_amounts
+      total_amount.to_money.allocate(weights).map(&:to_money)
     end
   end
 end
