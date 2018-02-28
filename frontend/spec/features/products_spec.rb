@@ -269,6 +269,14 @@ describe "Visiting Products", type: :feature, inaccessible: true do
     expect(page).not_to have_content "add-to-cart-button"
   end
 
+  it "should be able to list products without a price" do
+    product = FactoryBot.create(:base_product, description: nil, name: 'Sample', price: '19.99')
+    Spree::Config.currency = "CAN"
+    Spree::Config.show_products_without_price = true
+    visit spree.products_path
+    expect(page).to have_content(product.name)
+  end
+
   it "should return the correct title when displaying a single product" do
     product = Spree::Product.find_by(name: "Ruby on Rails Baseball Jersey")
     click_link product.name
