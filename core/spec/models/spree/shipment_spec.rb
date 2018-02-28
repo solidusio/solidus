@@ -37,7 +37,7 @@ RSpec.describe Spree::Shipment, type: :model do
           end
         end.to change { Spree::Shipment.count }.by(1)
 
-        new_shipment = order.shipments.last
+        new_shipment = order.shipments.order(:created_at).last
         expect(new_shipment.number).to_not eq(shipment.number)
         expect(new_shipment.stock_location).to eq(stock_location)
         expect(new_shipment.line_items.count).to eq(1)
