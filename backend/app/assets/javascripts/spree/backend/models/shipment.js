@@ -13,7 +13,7 @@ Spree.Models.Shipment = Backbone.Model.extend({
       parse: function(resp){ return resp.shipping_rates }
     });
     var rates = new ratesCollection();
-    rates.fetch({ url: this.url() + "/estimated_rates" })
+    rates.fetch({ url: this.url() + "/estimated_rates" });
     return rates;
   },
 
