@@ -1,27 +1,21 @@
 <%= render 'spree/admin/shared/configuration_menu' %>
 
-<%= form_tag admin_locale_path, method: :patch do %>
-  <div class="panel panel-default panel-localization">
-    <div class="panel-heading">
-      <h1 class="panel-title">
-        <%= Spree.t(:'i18n.localization_settings') %>
-      </h1>
-    </div>
+<table class="index locales-settings">
+  <thead>
+    <tr>
+      <th><%= Spree::Store.human_attribute_name(:name) %></th>
+      <th><%= Spree::Store.human_attribute_name(:url) %></th>
+      <th><%= Spree.t(:'i18n.locales_displayed_on_frontend_select_box') %></th>
+      <th class="actions"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <%# Rendered by JS %>
+  </tbody>
+</table>
 
-    <div class="panel-body" data-hook="localization_settings_body">
-      <div class="form-group">
-        <label for="available_locales_">
-          <%= Spree.t(:'i18n.available_locales') %>
-        </label>
-        <%= select_available_locales %>
-        <p class="help-block">
-          <%= Spree.t(:'i18n.locales_displayed_on_frontend_select_box') %>
-        </p>
-      </div>
-    </div>
-  </div>
-
-  <div class="form-buttons filter-actions actions" data-hook="buttons">
-    <%= button Spree.t('actions.update') %>
-  </div>
-<% end %>
+<script>
+Spree.ready(function(){
+  new Spree.InlineTableLocales({ el: $("table.locales-settings > tbody") });
+})
+</script>

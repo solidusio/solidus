@@ -8,7 +8,7 @@ Style/Documentation:
   Enabled: false
 
 # Neatly aligned code is too swell.
-Style/SingleSpaceBeforeFirstArg:
+Layout/SpaceBeforeFirstArg:
   Enabled: false
 
 # Don't mess with RSpec DSL.

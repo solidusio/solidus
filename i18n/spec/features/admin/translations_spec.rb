@@ -14,21 +14,43 @@ RSpec.feature 'Translations', :js do
     given(:french) { Spree.t(:this_file_language, scope: 'i18n', locale: 'fr') }
 
     background do
-      SolidusI18n::Config.available_locales = []
+      visit spree.root_path
+      store.update_attributes(preferred_available_locales: [])
+
       visit spree.edit_admin_general_settings_path
-      click_on "Locales"
+      click_on 'Locales'
     end
 
     scenario 'adds german to available locales' do
-      targetted_select2_search(language, from: '#s2id_available_locales_')
-      click_on 'Update'
-      expect(SolidusI18n::Config.available_locales).to include(:de)
+      within("#store-id-#{store.id}") do
+        expect(page).to_not have_content(language)
+        find('a[data-action="edit"]').click
+
+        targetted_select2_search(language, from: '.available-locales')
+
+        find('a[data-action="save"]').click
+
+        wait_for_ajax
+
+        expect(page).to have_content(language)
+        expect(store.reload.preferred_available_locales).to include(:de)
+      end
     end
 
     scenario 'adds french to available locales' do
-      targetted_select2_search(french, from: '#s2id_available_locales_')
-      click_on 'Update'
-      expect(SolidusI18n::Config.available_locales).to include(:fr)
+      within("#store-id-#{store.id}") do
+        expect(page).to_not have_content(french)
+        find('a[data-action="edit"]').click
+
+        targetted_select2_search(french, from: '.available-locales')
+
+        find('a[data-action="save"]').click
+
+        wait_for_ajax
+
+        expect(page).to have_content(french)
+        expect(store.reload.preferred_available_locales).to include(:fr)
+      end
     end
   end
 end
