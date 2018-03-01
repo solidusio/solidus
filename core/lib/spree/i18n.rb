@@ -5,6 +5,14 @@ require 'active_support/core_ext/array/extract_options'
 require 'action_view'
 
 module Spree
+  module I18n
+    def self.available_locales
+      I18n.available_locales.select do |locale|
+        I18n.t(:spree, locale: locale, fallback: false, default: nil)
+      end
+    end
+  end
+
   class TranslationHelperWrapper # :nodoc:
     include ActionView::Helpers::TranslationHelper
   end
