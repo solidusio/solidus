@@ -9,6 +9,8 @@ else
   gem "rails_test_params_backport", group: :test
 end
 
+gem 'chromedriver-helper' if ENV['CI']
+
 gem 'pg', '~> 0.21'
 gem 'sqlite3'
 gem 'mysql2'

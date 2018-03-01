@@ -1,11 +1,6 @@
 require 'capybara/rspec'
 require 'capybara/rails'
 require 'capybara/poltergeist'
+require 'selenium/webdriver'
 
-RSpec.configure do
-  Capybara.javascript_driver = :poltergeist
-
-  Capybara.register_driver(:poltergeist) do |app|
-    Capybara::Poltergeist::Driver.new app, timeout: 90
-  end
-end
+Capybara.javascript_driver = :selenium_chrome_headless
