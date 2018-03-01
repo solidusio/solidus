@@ -9,7 +9,6 @@
 //= require solidus_admin/backbone-nested-models
 //= require solidus_admin/popover
 //= require solidus_admin/bootstrap
-//= require solidus_admin/flatpickr/flatpickr
 //= require prism
 //= require spree
 //= require spree/backend/namespaces

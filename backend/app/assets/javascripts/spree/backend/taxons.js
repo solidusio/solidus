@@ -1,5 +1,7 @@
 //= require solidus_admin/Sortable
 
+/* global Sortable:false */
+
 Spree.ready(function() {
   var productTemplate = HandlebarsTemplates['products/sortable'];
   var productListTemplate = function(products) {
@@ -63,7 +65,7 @@ Spree.ready(function() {
       success: function(data) {
         $('#taxon_products').html(productListTemplate(data.products));
 
-        var el = document.querySelector('#taxon_products')
+        var el = document.querySelector('#taxon_products');
 
         new Sortable(el, {
           draggable: ".sort_item",

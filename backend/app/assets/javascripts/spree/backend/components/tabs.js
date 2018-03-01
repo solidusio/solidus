@@ -5,7 +5,7 @@ Tabs = (function() {
     _.bindAll(this, 'overflowTabs');
 
     this.el = el;
-    this.tabs = this.el.querySelectorAll("li:not(.tabs-dropdown)")
+    this.tabs = this.el.querySelectorAll("li:not(.tabs-dropdown)");
 
     /* <li class='tabs-dropdown'><a href='#'></a><ul></ul></li> */
     this.dropdown = document.createElement('li');

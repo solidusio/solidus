@@ -18,7 +18,7 @@ Spree.Views.Order.Address = Backbone.View.extend({
   },
 
   onChange: function() {
-    this.model.set(this.getValues())
+    this.model.set(this.getValues());
   },
 
   eachField: function(callback){
@@ -42,7 +42,7 @@ Spree.Views.Order.Address = Backbone.View.extend({
   render: function() {
     var model = this.model;
     this.eachField(function(name, el) {
-      el.val(model.get(name))
-    })
+      el.val(model.get(name));
+    });
   }
 });

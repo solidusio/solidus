@@ -3,6 +3,6 @@ Spree.ready(function(){
     var view = new Spree.Views.Zones.Form({
       el: $('.js-zones-form')
     });
-    view.render()
+    view.render();
   }
 });

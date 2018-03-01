@@ -1,6 +1,6 @@
 Spree.Views.StateSelect = Backbone.View.extend({
   initialize: function() {
-    this.states = {} // null object
+    this.states = {}; // null object
 
     this.$state_select = this.$('.js-state_id');
     this.$state_input = this.$('.js-state_name');
@@ -9,10 +9,10 @@ Spree.Views.StateSelect = Backbone.View.extend({
     this.model.set({
       state_name: this.$state_input.val(),
       state_id: this.$state_select.val()
-    })
+    });
 
     this.updateStates();
-    this.listenTo(this.model, 'change:country_id', this.updateStates)
+    this.listenTo(this.model, 'change:country_id', this.updateStates);
     this.render();
   },
 
@@ -25,7 +25,7 @@ Spree.Views.StateSelect = Backbone.View.extend({
     this.model.set({
       state_name: this.$state_input.val(),
       state_id: this.$state_select.val()
-    })
+    });
   },
 
   updateStates: function() {
@@ -50,17 +50,17 @@ Spree.Views.StateSelect = Backbone.View.extend({
         $state_select.append(
           $('<option>').prop('value', state.id).text(state.get("name"))
         );
-      })
-      this.$state_select.val(this.model.get("state_id"))
+      });
+      this.$state_select.val(this.model.get("state_id"));
       this.$state_select.show().prop("disabled", false);
     } else {
       this.$state_input.show().prop('disabled', false);
     }
   }
-})
+});
 
 Spree.Views.StateSelect.stateCache = _.memoize(function(country_id) {
-  var states = new Spree.Collections.States([], {country_id: country_id})
+  var states = new Spree.Collections.States([], {country_id: country_id});
   states.fetched = false;
   states.fetch({
     success: function() {
