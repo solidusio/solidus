@@ -20,9 +20,9 @@
   </colgroup>
   <thead>
     <tr data-hook="admin_stock_movements_index_headers">
-      <th><%= Spree::StockMovement.human_attribute_name(:stock_item) %>
+      <th><%= Spree::StockMovement.human_attribute_name(:variant) %>
       <th><%= Spree::StockMovement.human_attribute_name(:quantity) %></th>
-      <th><%= Spree::StockMovement.human_attribute_name(:action) %></th>
+      <th><%= Spree::StockMovement.human_attribute_name(:originated_by) %></th>
     </tr>
   </thead>
   <tbody>
