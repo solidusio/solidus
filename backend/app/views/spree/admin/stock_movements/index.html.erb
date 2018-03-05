@@ -12,14 +12,6 @@
 <% end %>
 <% admin_breadcrumb(plural_resource_name(Spree::StockMovement)) %>
 
-<% content_for :page_actions do %>
-  <% if can?(:display, Spree::StockLocation) %>
-    <li>
-      <%= link_to_with_icon 'arrow-left', t('spree.back_to_stock_locations_list'), admin_stock_locations_path, class: 'button' %>
-    </li>
-  <% end %>
-<% end %>
-
 <% if @stock_movements.any? %>
 <table class="index" id='listing_stock_movements'>
   <colgroup>
