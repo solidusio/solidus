@@ -42,10 +42,12 @@ json.cache! [I18n.locale, shipment] do
     end
     json.payments(shipment.order.payments) do |payment|
       json.(payment, :id, :amount, :display_amount, :state)
-      json.source do
-        attrs = [:id]
-        (attrs << :cc_type) if payment.source.respond_to?(:cc_type)
-        json.(payment.source, *attrs)
+      if payment.source
+        json.source do
+          attrs = [:id]
+          (attrs << :cc_type) if payment.source.respond_to?(:cc_type)
+          json.(payment.source, *attrs)
+        end
       end
       json.payment_method { json.(payment.payment_method, :id, :name) }
     end

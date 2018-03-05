@@ -214,6 +214,17 @@ describe Spree::Api::ShipmentsController, type: :request do
               expect(json_response['shipments'][0]['order']['payments'][0]['source'].keys).to match_array ["id"]
             end
           end
+
+          context "check payment" do
+            let(:current_api_user) { shipped_order.user }
+            let(:shipped_order)    { create(:shipped_order, payment_type: :check_payment) }
+
+            before { subject }
+
+            it 'does not try to render a nil source' do
+              expect(json_response['shipments'][0]['order']['payments'][0]['source']).to eq(nil)
+            end
+          end
         end
 
         context 'with filtering' do
