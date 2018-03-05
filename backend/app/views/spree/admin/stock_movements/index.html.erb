@@ -1,7 +1,18 @@
 <%= render 'spree/admin/shared/shipping_tabs' %>
 
-<% admin_breadcrumb(t('spree.stock_movements_for_stock_location', stock_location_name: @stock_location.name)) %>
-
+<% admin_breadcrumb(t('spree.settings')) %>
+<% admin_breadcrumb(t('spree.admin.tab.shipping')) %>
+<% if can?(:display, Spree::StockLocation) %>
+  <% admin_breadcrumb(link_to plural_resource_name(Spree::StockLocation), spree.admin_stock_locations_path) %>
+<% else %>
+  <% admin_breadcrumb(plural_resource_name(Spree::StockLocation)) %>
+<% end %>
+<% if can?(:update, @stock_location) %>
+  <% admin_breadcrumb(link_to(admin_stock_location_display_name(@stock_location), spree.edit_admin_stock_location_path(@stock_location.id))) %>
+<% else %>
+  <% admin_breadcrumb(admin_stock_location_display_name(@stock_location)) %>
+<% end %>
+<% admin_breadcrumb(plural_resource_name(Spree::StockMovement)) %>
 
 <% content_for :page_actions do %>
   <% if can?(:display, Spree::StockLocation) %>
