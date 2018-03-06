@@ -288,7 +288,7 @@ RSpec.describe Spree::StockItem, type: :model do
   describe 'validations' do
     before do
       subject.backorderable = backorderable
-      subject.send(:count_on_hand=, count_on_hand)
+      subject.count_on_hand = count_on_hand
     end
 
     describe 'count_on_hand' do
