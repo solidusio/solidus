@@ -6,9 +6,6 @@ require 'spree/preferences/statically_configurable'
 module Spree
   # A base class which is used for implementing payment methods.
   #
-  # See https://github.com/solidusio/solidus_gateway/ for
-  # offically supported payment method implementations.
-  #
   # Uses STI (single table inheritance) to store all implemented payment methods
   # in one table (+spree_payment_methods+).
   #
