@@ -11,6 +11,9 @@ RSpec.describe "i18n" do
     I18n.backend.store_translations(:en,
     {
       spree: {
+        i18n: {
+          this_file_language: "English"
+        },
         foo: "bar",
         bar: {
           foo: "bar within bar scope",
@@ -69,6 +72,16 @@ RSpec.describe "i18n" do
     context 'with spree-prefixed translations in another locale' do
       before do
         I18n.backend.store_translations(:fr, spree: { cheese: "fromage" })
+      end
+
+      it "should return :en and :fr" do
+        expect(Spree.i18n_available_locales).to eq([:en])
+      end
+    end
+
+    context 'with specific desired key' do
+      before do
+        I18n.backend.store_translations(:fr, spree: { i18n: { this_file_language: "Français" } })
       end
 
       it "should return :en and :fr" do
