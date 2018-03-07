@@ -11,8 +11,7 @@ describe 'Payments', type: :feature do
         order:          order,
         amount:         order.outstanding_balance,
         payment_method: create(:credit_card_payment_method),
-        state:          state
-      )
+        state:          state)
     end
 
     let(:order) { create(:completed_order_with_totals, number: 'R100', line_items_price: 50) }
@@ -29,8 +28,7 @@ describe 'Payments', type: :feature do
         create(:payment,
           order:          order,
           amount:         order.outstanding_balance,
-          payment_method: create(:check_payment_method, available_to_admin: true) # Check
-        )
+          payment_method: create(:check_payment_method, available_to_admin: true)) # Check
       end
 
       it 'capturing a check payment from a new order' do
@@ -222,8 +220,7 @@ describe 'Payments', type: :feature do
         create(:payment,
           order:          order,
           amount:         order.outstanding_balance,
-          payment_method: payment_method
-        )
+          payment_method: payment_method)
       end
 
       before do

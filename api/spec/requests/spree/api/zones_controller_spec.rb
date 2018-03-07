@@ -4,7 +4,6 @@ require 'spec_helper'
 
 module Spree
   describe Api::ZonesController, type: :request do
-
     let!(:attributes) { [:id, :name, :zone_members] }
     let!(:zone) { create(:zone, name: 'Europe') }
 

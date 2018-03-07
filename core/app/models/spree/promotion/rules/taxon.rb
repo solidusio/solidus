@@ -97,7 +97,6 @@ module Spree
         def rule_taxon_ids_with_children
           taxons.flat_map { |taxon| taxon.self_and_descendants.ids }.uniq
         end
-
       end
     end
   end

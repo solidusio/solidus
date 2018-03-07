@@ -36,7 +36,6 @@ module Spree
           return
         end
 
-
         if @order.completed?
           finalize_order
         else
@@ -112,7 +111,7 @@ module Spree
     def ensure_valid_state
       unless skip_state_validation?
         if (params[:state] && !@order.has_checkout_step?(params[:state])) ||
-          (!params[:state] && !@order.has_checkout_step?(@order.state))
+           (!params[:state] && !@order.has_checkout_step?(@order.state))
           @order.state = 'cart'
           redirect_to checkout_state_path(@order.checkout_steps.first)
         end
@@ -176,7 +175,7 @@ module Spree
       @order.assign_default_user_addresses
       # If the user has a default address, the previous method call takes care
       # of setting that; but if he doesn't, we need to build an empty one here
-      default = {country_id: Spree::Country.default.id}
+      default = { country_id: Spree::Country.default.id }
       @order.build_bill_address(default) unless @order.bill_address
       @order.build_ship_address(default) if @order.checkout_steps.include?('delivery') && !@order.ship_address
     end

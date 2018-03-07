@@ -4,7 +4,6 @@ require 'spec_helper'
 
 module Spree
   describe Api::ReturnAuthorizationsController, type: :request do
-
     let!(:order) { create(:shipped_order) }
 
     let(:product) { create(:product) }

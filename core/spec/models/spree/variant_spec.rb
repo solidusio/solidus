@@ -792,7 +792,7 @@ RSpec.describe Spree::Variant, type: :model do
     subject { variant.display_image }
 
     context "variant has associated images" do
-      let(:attachment) { File.open(File.expand_path('../../../fixtures/thinking-cat.jpg', __FILE__)) }
+      let(:attachment) { File.open(File.expand_path('../../fixtures/thinking-cat.jpg', __dir__)) }
       let(:image_params) { { viewable_id: variant.id, viewable_type: 'Spree::Variant', attachment: attachment, alt: "position 1", position: 1 } }
       let!(:first_image) { Spree::Image.create(image_params) }
       let!(:second_image) { image_params.merge(alt: "position 2", position: 2) }

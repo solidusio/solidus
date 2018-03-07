@@ -146,8 +146,7 @@ RSpec.describe Spree::TaxRate, type: :model do
         included_in_price: included_in_price,
         show_rate_in_label: show_rate_in_label,
         amount: 0.125,
-        zone: tax_zone
-      )
+        zone: tax_zone)
     end
 
     let(:item) { order.line_items.first }

@@ -4,7 +4,6 @@ require 'spec_helper'
 
 module Spree
   describe Api::TaxonomiesController, type: :request do
-
     let(:taxonomy) { create(:taxonomy) }
     let(:taxon) { create(:taxon, name: "Ruby", taxonomy: taxonomy) }
     let(:taxon2) { create(:taxon, name: "Rails", taxonomy: taxonomy) }

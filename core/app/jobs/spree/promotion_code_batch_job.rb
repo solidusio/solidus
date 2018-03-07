@@ -14,7 +14,7 @@ module Spree
           .promotion_code_batch_finished(promotion_code_batch)
           .deliver_now
       end
-    rescue => e
+    rescue StandardError => e
       if promotion_code_batch.email?
         Spree::PromotionCodeBatchMailer
           .promotion_code_batch_errored(promotion_code_batch)

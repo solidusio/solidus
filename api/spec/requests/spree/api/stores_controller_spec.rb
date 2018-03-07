@@ -4,7 +4,6 @@ require "spec_helper"
 
 module Spree
   describe Api::StoresController, type: :request do
-
     let!(:store) do
       create(:store, name: "My Spree Store", url: "spreestore.example.com")
     end
@@ -20,8 +19,7 @@ module Spree
         create(:store,
           name: "Extra Store",
           url: "spreestore-5.example.com",
-          default: false
-        )
+          default: false)
       end
 
       it "can list the available stores" do

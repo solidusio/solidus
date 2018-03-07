@@ -138,7 +138,7 @@ module Spree
       )
     end
 
-    def translation_key(amount)
+    def translation_key(_amount)
       key = included_in_price? ? "vat" : "sales_tax"
       key += "_with_rate" if show_rate_in_label?
       key.to_sym

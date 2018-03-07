@@ -140,7 +140,7 @@ module Spree
         Spree::Deprecation.warn "Passing button_link_to is deprecated. Use either link_to or button_to instead.", caller
         html_options = { class: '' }.merge(html_options)
         if html_options[:method] &&
-           html_options[:method].to_s.downcase != 'get' &&
+           !html_options[:method].to_s.casecmp('get').zero? &&
            !html_options[:remote]
           form_tag(url, method: html_options.delete(:method)) do
             html_options.delete(:icon)
@@ -185,7 +185,6 @@ module Spree
           link_to(link_text, url)
         end
       end
-
     end
   end
 end

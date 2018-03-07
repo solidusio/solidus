@@ -13,7 +13,7 @@ module Spree
 
     def self.source_paths
       paths = superclass.source_paths
-      paths << File.expand_path('../templates', __FILE__)
+      paths << File.expand_path('templates', __dir__)
       paths.flatten
     end
 
@@ -111,7 +111,6 @@ end
 
     def application_definition
       @application_definition ||= begin
-
         dummy_application_path = File.expand_path("#{dummy_path}/config/application.rb", destination_root)
         unless options[:pretend] || !File.exist?(dummy_application_path)
           contents = File.read(dummy_application_path)

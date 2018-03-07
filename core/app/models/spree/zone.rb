@@ -60,7 +60,7 @@ module Spree
     end
 
     def kind
-      if members.any? && !members.any? { |member| member.try(:zoneable_type).nil? }
+      if members.any? && members.none? { |member| member.try(:zoneable_type).nil? }
         members.last.zoneable_type.demodulize.underscore
       end
     end

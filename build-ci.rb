@@ -48,7 +48,7 @@ class Project
   #
   # @return [Boolean]
   def self.bundle_check
-    system(*%W[bundle check --path=#{VENDOR_BUNDLE}])
+    system("bundle", "check", "--path=#{VENDOR_BUNDLE}")
   end
   private_class_method :bundle_check
 
@@ -57,13 +57,7 @@ class Project
   # @return [Boolean]
   #   the success of the installation
   def self.bundle_install
-    system(*%W[
-      bundle
-      install
-      --path=#{VENDOR_BUNDLE}
-      --jobs=#{BUNDLER_JOBS}
-      --retry=#{BUNDLER_RETRIES}
-    ])
+    system("bundle", "install", "--path=#{VENDOR_BUNDLE}", "--jobs=#{BUNDLER_JOBS}", "--retry=#{BUNDLER_RETRIES}")
   end
   private_class_method :bundle_check
 
@@ -125,7 +119,7 @@ class Project
   #
   # @return [void]
   def self.log(message)
-    $stderr.puts(message)
+    warn(message)
   end
   private_class_method :log
 

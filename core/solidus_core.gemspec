@@ -30,8 +30,9 @@ Gem::Specification.new do |s|
   s.add_dependency 'activemerchant', '~> 1.66'
   s.add_dependency 'acts_as_list', '~> 0.3'
   s.add_dependency 'awesome_nested_set', '~> 3.0', '>= 3.0.1'
-  s.add_dependency 'carmen', '~> 1.1.0'
   s.add_dependency 'cancancan', '~> 1.10'
+  s.add_dependency 'carmen', '~> 1.1.0'
+  s.add_dependency 'discard'
   s.add_dependency 'friendly_id', '~> 5.0'
   s.add_dependency 'kaminari-activerecord', '~> 1.1'
   s.add_dependency 'monetize', '~> 1.1'
@@ -39,5 +40,4 @@ Gem::Specification.new do |s|
   s.add_dependency 'paranoia', '~> 2.4'
   s.add_dependency 'ransack', '~> 1.8'
   s.add_dependency 'state_machines-activerecord', '~> 0.4'
-  s.add_dependency 'discard'
 end

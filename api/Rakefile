@@ -10,7 +10,7 @@ RSpec::Core::RakeTask.new
 task default: :spec
 
 DummyApp::RakeTasks.new(
-  gem_root: File.expand_path('../', __FILE__),
+  gem_root: File.expand_path(__dir__),
   lib_name: 'solidus_api'
 )
 

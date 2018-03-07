@@ -33,8 +33,7 @@ RSpec.describe Spree::CreditCard, type: :model do
       purchase: @success_response,
       capture: @success_response,
       void: @success_response,
-      credit: @success_response
-    )
+      credit: @success_response)
 
     allow(@payment).to receive_messages payment_method: @payment_gateway
   end

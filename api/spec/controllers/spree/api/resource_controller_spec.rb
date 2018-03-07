@@ -62,8 +62,8 @@ module Spree
           get :index, params: { token: admin_user.spree_api_key }, as: :json
           expect(response).to be_successful
           expect(json_response['widgets']).to include(hash_including(
-            'name' => 'a widget',
-            'position' => 1
+                                                        'name' => 'a widget',
+                                                        'position' => 1
           ))
         end
 

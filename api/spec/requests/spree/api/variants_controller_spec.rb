@@ -4,7 +4,6 @@ require 'spec_helper'
 
 module Spree
   describe Api::VariantsController, type: :request do
-
     let!(:product) { create(:product) }
     let!(:variant) do
       variant = product.master
@@ -89,7 +88,6 @@ module Spree
       end
 
       context "stock filtering" do
-
         context "only variants in stock" do
           subject { get spree.api_variants_path, params: { in_stock_only: "true" } }
 

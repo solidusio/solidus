@@ -4,7 +4,6 @@ require 'spec_helper'
 
 module Spree
   describe Api::OptionValuesController, type: :request do
-
     let(:attributes) { [:id, :name, :presentation, :option_type_name, :option_type_name] }
     let!(:option_value) { create(:option_value) }
     let!(:option_type) { option_value.option_type }
@@ -103,7 +102,7 @@ module Spree
         end
 
         it "cannot create an option type with invalid attributes" do
-          post spree.api_option_type_option_values_path(option_type), params: { option_value: {name: ""} }
+          post spree.api_option_type_option_values_path(option_type), params: { option_value: { name: "" } }
           expect(response.status).to eq(422)
         end
 

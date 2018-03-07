@@ -131,7 +131,8 @@ module Spree
 
       it 'can build an order from API with variant sku' do
         params = { line_items_attributes: {
-                     "0" => { sku: sku, quantity: 5 } } }
+                     "0" => { sku: sku, quantity: 5 }
+} }
 
         order = Importer::Order.import(user, params)
 
@@ -282,8 +283,7 @@ module Spree
                 cost: '14.99',
                 shipping_method: shipping_method.name,
                 stock_location: stock_location.name,
-                inventory_units: [{ sku: sku }]
-              }
+                inventory_units: [{ sku: sku }] }
           ] }
         end
 
@@ -330,8 +330,7 @@ module Spree
                   shipped_at: 1.day.ago,
                   shipping_method: shipping_method.name,
                   stock_location: stock_location.name,
-                  inventory_units: [{ sku: sku }]
-                }
+                  inventory_units: [{ sku: sku }] }
               ]
             }
           end
@@ -358,7 +357,8 @@ module Spree
       it 'adds adjustments' do
         params = { adjustments_attributes: [
             { label: 'Shipping Discount', amount: -4.99 },
-            { label: 'Promotion Discount', amount: -3.00 }] }
+            { label: 'Promotion Discount', amount: -3.00 }
+] }
 
         order = Importer::Order.import(user, params)
         expect(order.adjustments.all?(&:finalized?)).to be true

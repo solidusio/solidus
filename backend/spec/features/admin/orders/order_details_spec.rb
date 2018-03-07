@@ -480,7 +480,7 @@ describe "Order Details", type: :feature, js: true do
 
           @first_line_item  = order.contents.add(product2.master)
           @first_line_item.update_columns(created_at: 1.day.ago)
-          @last_line_item  = order.contents.add(product3.master)
+          @last_line_item = order.contents.add(product3.master)
           @last_line_item.update_columns(created_at: 1.day.from_now)
         end
 

@@ -26,7 +26,7 @@ class Spree::OrderCancellations
   # @param [String] whodunnit the system or person that is short shipping the inventory units
   #
   # @return [Array<UnitCancel>] the units that have been canceled due to short shipping
-  def short_ship(inventory_units, whodunnit:nil)
+  def short_ship(inventory_units, whodunnit: nil)
     if inventory_units.map(&:order_id).uniq != [@order.id]
       raise ArgumentError, "Not all inventory units belong to this order"
     end
@@ -62,7 +62,7 @@ class Spree::OrderCancellations
   # @param [String] whodunnit the system or person that is canceling the inventory unit
   #
   # @return [UnitCancel] the unit that has been canceled
-  def cancel_unit(inventory_unit, reason: Spree::UnitCancel::DEFAULT_REASON, whodunnit:nil)
+  def cancel_unit(inventory_unit, reason: Spree::UnitCancel::DEFAULT_REASON, whodunnit: nil)
     unit_cancel = nil
 
     Spree::OrderMutex.with_lock!(@order) do
@@ -97,7 +97,7 @@ class Spree::OrderCancellations
 
   private
 
-  def short_ship_unit(inventory_unit, whodunnit:nil)
+  def short_ship_unit(inventory_unit, whodunnit: nil)
     unit_cancel = Spree::UnitCancel.create!(
       inventory_unit: inventory_unit,
       reason: Spree::UnitCancel::SHORT_SHIP,
