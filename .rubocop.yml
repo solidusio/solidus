@@ -297,3 +297,7 @@ Style/NumericLiterals:
 Style/FrozenStringLiteralComment:
   Enabled: true
   EnforcedStyle: always
+
+# json.() is idiomatic in jbuilder files
+Style/LambdaCall:
+  Enabled: false
