@@ -233,7 +233,7 @@ RSpec.describe Spree::TaxRate, type: :model do
 
     context "when starts_at is set" do
       context "now" do
-        let(:validity) { { starts_at: DateTime.now } }
+        let(:validity) { { starts_at: Time.current } }
 
         it { is_expected.to eq(true) }
       end
@@ -253,7 +253,7 @@ RSpec.describe Spree::TaxRate, type: :model do
 
     context "when expires_at is set" do
       context "now" do
-        let(:validity) { { expires_at: DateTime.now } }
+        let(:validity) { { expires_at: Time.current } }
 
         it { is_expected.to eq(false) }
       end
