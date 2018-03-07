@@ -307,3 +307,16 @@ Naming/UncommunicativeMethodParamName:
     - id
     - to
     - _
+
+# Rubocop doesn't understand side-effects
+Style/IdenticalConditionalBranches:
+  Enabled: false
+
+Naming/MemoizedInstanceVariableName:
+  Enabled: false
+
+Lint/UselessComparison:
+  Enabled: false
+
+Lint/HandleExceptions:
+  Enabled: false
