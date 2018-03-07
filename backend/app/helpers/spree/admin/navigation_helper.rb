@@ -20,9 +20,10 @@ module Spree
         end
 
         content_tag :ol, class: 'breadcrumb' do
-          safe_join admin_breadcrumbs.map { |level|
+          segments = admin_breadcrumbs.map do |level|
             content_tag(:li, level, class: "breadcrumb-item #{level == admin_breadcrumbs.last ? 'active' : ''}")
-          }
+          end
+          safe_join(segments)
         end
       end
 
