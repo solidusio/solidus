@@ -196,6 +196,6 @@ class Project
   def chdir(&block)
     Dir.chdir(ROOT.join(name), &block)
   end
-end # Project
+end
 
 exit Project.run_cli(ARGV)

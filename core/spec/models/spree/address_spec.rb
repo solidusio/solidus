@@ -93,7 +93,7 @@ RSpec.describe Spree::Address, type: :model do
       it "both state and state_name are entered but country does not contain the state" do
         address.state = state
         address.state_name = 'maryland'
-        address.country = create :country, states_required: :true
+        address.country = create :country, states_required: true
         expect(address).to be_valid
         expect(address.state_id).to be_nil
       end
