@@ -40,7 +40,7 @@ group :backend do
   gem 'teaspoon-mocha', require: false
 end
 
-gem 'rubocop', require: false
+gem 'rubocop', '~> 0.53.0', require: false
 
 group :utils do
   gem 'pry'
