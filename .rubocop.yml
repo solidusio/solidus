@@ -301,3 +301,9 @@ Style/FrozenStringLiteralComment:
 # json.() is idiomatic in jbuilder files
 Style/LambdaCall:
   Enabled: false
+
+Naming/UncommunicativeMethodParamName:
+  AllowedNames:
+    - id
+    - to
+    - _
