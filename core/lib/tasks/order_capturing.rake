@@ -11,7 +11,7 @@ namespace :order_capturing do
         if Spree::OrderCapturing.failure_handler
           begin
             Spree::OrderCapturing.new(order).capture_payments
-          rescue Exception => e
+          rescue StandardError => e
             failures << { message: "Order #{order.number} unable to capture. #{e.class}: #{e.message}" }
           end
         else
