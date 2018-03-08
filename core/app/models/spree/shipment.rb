@@ -244,10 +244,12 @@ module Spree
     def selected_shipping_rate_id=(id)
       return if selected_shipping_rate_id == id
       new_rate = shipping_rates.detect { |rate| rate.id == id.to_i }
-      fail(
-        ArgumentError,
-        "Could not find shipping rate id #{id} for shipment #{number}"
-      ) unless new_rate
+      unless new_rate
+        fail(
+          ArgumentError,
+          "Could not find shipping rate id #{id} for shipment #{number}"
+        )
+      end
 
       transaction do
         selected_shipping_rate.update!(selected: false) if selected_shipping_rate

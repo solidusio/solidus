@@ -39,5 +39,4 @@ describe "spree/admin/shared/_navigation_footer", type: :view do
       expect(rendered).to have_link(I18n.t('spree.back_to_store'), href: "/")
     end
   end
-
 end

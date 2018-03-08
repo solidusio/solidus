@@ -20,8 +20,8 @@ module Spree
     end
 
     # human readable list of variant options
-    def variant_options(v, _options = {})
-      v.options_text
+    def variant_options(variant, _options = {})
+      variant.options_text
     end
 
     def meta_data
@@ -37,10 +37,12 @@ module Spree
         meta[:description] = truncate(strip_tags(object.description), length: 160, separator: ' ')
       end
 
-      meta.reverse_merge!({
-        keywords: current_store.meta_keywords,
-        description: current_store.meta_description
-      }) if meta[:keywords].blank? || meta[:description].blank?
+      if meta[:keywords].blank? || meta[:description].blank?
+        meta.reverse_merge!({
+          keywords: current_store.meta_keywords,
+          description: current_store.meta_description
+        })
+      end
       meta
     end
 

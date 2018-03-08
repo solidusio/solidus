@@ -12,7 +12,7 @@ RSpec::Core::RakeTask.new
 task default: [:spec, 'spec:js']
 
 DummyApp::RakeTasks.new(
-  gem_root: File.expand_path('../', __FILE__),
+  gem_root: File.expand_path(__dir__),
   lib_name: 'solidus_backend'
 )
 
@@ -28,7 +28,7 @@ task :teaspoon do
     driver_options: ENV["driver_options"],
   }
 
-  options.delete_if { |k, v| v.nil? }
+  options.delete_if { |_k, v| v.nil? }
 
   abort("rake teaspoon failed") if Teaspoon::Console.new(options).failures?
 end
@@ -37,7 +37,7 @@ desc "Run javascript specs"
 task 'spec:js' => :teaspoon
 
 namespace :teaspoon do
-  task :server  do
+  task :server do
     require 'teaspoon'
     Rake::Task['dummy_environment'].invoke
     require 'teaspoon/server'

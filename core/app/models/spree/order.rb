@@ -522,7 +522,7 @@ module Spree
     def coupon_code=(code)
       @coupon_code = begin
                        code.strip.downcase
-                     rescue
+                     rescue StandardError
                        nil
                      end
     end
@@ -578,7 +578,7 @@ module Spree
         state: 'cart',
         updated_at: Time.current
       )
-      next! if line_items.size > 0
+      next! if !line_items.empty?
     end
 
     def refresh_shipment_rates

@@ -100,13 +100,13 @@ module Spree
       if !other.respond_to?(:money)
         raise TypeError, "Can't compare #{other.class} to Spree::Money"
       end
-      if self.currency != other.currency
+      if currency != other.currency
         # By default, ::Money will try to run a conversion on `other.money` and
         # try a comparison on that. We do not want any currency conversion to
         # take place so we'll catch this here and raise an error.
         raise(
           DifferentCurrencyError,
-          "Can't compare #{self.currency} with #{other.currency}"
+          "Can't compare #{currency} with #{other.currency}"
         )
       end
       @money <=> other.money

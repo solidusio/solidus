@@ -170,7 +170,7 @@ module Spree
         end
 
         context "includes tax adjustments if applicable" do
-          let(:zone) { create(:zone, countries: [order.tax_address.country])}
+          let(:zone) { create(:zone, countries: [order.tax_address.country]) }
 
           let!(:tax_rate) { create(:tax_rate, zone: zone) }
 

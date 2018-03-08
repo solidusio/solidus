@@ -679,8 +679,8 @@ RSpec.describe Spree::Shipment, type: :model do
 
       shipment.destroy
 
-      expect{shipping_rate.reload}.to raise_error(ActiveRecord::RecordNotFound)
-      expect{shipping_rate_tax.reload}.to raise_error(ActiveRecord::RecordNotFound)
+      expect{ shipping_rate.reload }.to raise_error(ActiveRecord::RecordNotFound)
+      expect{ shipping_rate_tax.reload }.to raise_error(ActiveRecord::RecordNotFound)
     end
   end
 

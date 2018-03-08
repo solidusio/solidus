@@ -21,8 +21,8 @@ module Spree
           user_ids.join(',')
         end
 
-        def user_ids_string=(s)
-          self.user_ids = s.to_s.split(',').map(&:strip)
+        def user_ids_string=(user_ids)
+          self.user_ids = user_ids.to_s.split(',').map(&:strip)
         end
       end
     end

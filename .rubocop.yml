@@ -67,7 +67,7 @@ Style/RegexpLiteral:
 Style/AsciiComments:
   Enabled: false
 
-Lint/EndAlignment:
+Layout/EndAlignment:
   Enabled: false
 
 Layout/ElseAlignment:
@@ -97,7 +97,10 @@ Layout/AlignHash:
 Style/TrailingCommaInArguments:
   Enabled: false
 
-Style/TrailingCommaInLiteral:
+Style/TrailingCommaInArrayLiteral:
+  Enabled: false
+
+Style/TrailingCommaInHashLiteral:
   Enabled: false
 
 # Symbol Arrays are ok and the %i syntax widely unknown
@@ -294,3 +297,26 @@ Style/NumericLiterals:
 Style/FrozenStringLiteralComment:
   Enabled: true
   EnforcedStyle: always
+
+# json.() is idiomatic in jbuilder files
+Style/LambdaCall:
+  Enabled: false
+
+Naming/UncommunicativeMethodParamName:
+  AllowedNames:
+    - id
+    - to
+    - _
+
+# Rubocop doesn't understand side-effects
+Style/IdenticalConditionalBranches:
+  Enabled: false
+
+Naming/MemoizedInstanceVariableName:
+  Enabled: false
+
+Lint/UselessComparison:
+  Enabled: false
+
+Lint/HandleExceptions:
+  Enabled: false

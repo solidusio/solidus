@@ -46,6 +46,10 @@ module Spree
           end
         end
 
+        def respond_to_missing?(name)
+          @properties.key?(name) || super(name)
+        end
+
         protected
 
         def get_base_scope

@@ -5,7 +5,6 @@ require 'spec_helper'
 module Spree
   describe Api::CreditCardsController, type: :request do
     describe '#index' do
-
       let!(:admin_user) do
         create(:admin_user)
       end

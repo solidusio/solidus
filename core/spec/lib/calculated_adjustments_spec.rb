@@ -60,7 +60,7 @@ RSpec.describe Spree::CalculatedAdjustments do
     end
 
     context 'with calculator_type and calculator_attributes' do
-      subject { Calculable.new(calculator_type: calculator_class.to_s, calculator_attributes: {preferred_amount: 123}) }
+      subject { Calculable.new(calculator_type: calculator_class.to_s, calculator_attributes: { preferred_amount: 123 }) }
 
       it 'can be initialized' do
         expect(subject.calculator).to be_a(calculator_class)

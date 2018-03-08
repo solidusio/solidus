@@ -3,7 +3,6 @@
 require 'spec_helper'
 module Spree
   describe Spree::Api::PropertiesController, type: :request do
-
     let!(:property_1) { Property.create!(name: "foo", presentation: "Foo") }
     let!(:property_2) { Property.create!(name: "bar", presentation: "Bar") }
 

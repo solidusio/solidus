@@ -12,7 +12,7 @@ ENV["RAILS_ENV"] ||= 'test'
 require 'solidus_frontend'
 require 'spree/testing_support/dummy_app'
 DummyApp.setup(
-  gem_root: File.expand_path('../../', __FILE__),
+  gem_root: File.expand_path('..', __dir__),
   lib_name: 'solidus_frontend'
 )
 
@@ -55,7 +55,7 @@ RSpec.configure do |config|
     c.syntax = :expect
   end
 
-  config.fixture_path = File.join(File.expand_path(File.dirname(__FILE__)), "fixtures")
+  config.fixture_path = File.join(__dir__, "fixtures")
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, comment the following line or assign false

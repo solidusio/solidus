@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateStoreShippingMethods < ActiveRecord::Migration[5.1]
   def change
     create_table :spree_store_shipping_methods do |t|

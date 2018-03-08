@@ -9,7 +9,6 @@ RSpec.describe Spree::OrderInventory, type: :model do
   let(:variant) { subject.variant }
   let(:stock_item) { shipment.stock_location.stock_item(variant) }
 
-
   subject { described_class.new(order, line_item) }
 
   context "insufficient inventory units" do

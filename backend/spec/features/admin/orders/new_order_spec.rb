@@ -209,6 +209,6 @@ describe "New Order", type: :feature do
     fill_in "City",                      with: "Bethesda"
     fill_in "Zip Code",                  with: "20170"
     select state.name, from: "State"
-    fill_in "Phone",                     with: "123-456-7890"
+    fill_in "Phone", with: "123-456-7890"
   end
 end

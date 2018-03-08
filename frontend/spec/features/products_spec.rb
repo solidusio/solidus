@@ -154,7 +154,7 @@ describe "Visiting Products", type: :feature, inaccessible: true do
 
     before do
       # Need to have two images to trigger the error
-      image = File.open(File.expand_path('../../fixtures/thinking-cat.jpg', __FILE__))
+      image = File.open(File.expand_path('../fixtures/thinking-cat.jpg', __dir__))
       product.images.create!(attachment: image)
       product.images.create!(attachment: image)
 
@@ -184,7 +184,7 @@ describe "Visiting Products", type: :feature, inaccessible: true do
     let(:product) { Spree::Product.find_by(name: "Ruby on Rails Baseball Jersey") }
 
     before do
-      image = File.open(File.expand_path('../../fixtures/thinking-cat.jpg', __FILE__))
+      image = File.open(File.expand_path('../fixtures/thinking-cat.jpg', __dir__))
       v1 = product.variants.create!(price: 9.99)
       v2 = product.variants.create!(price: 10.99)
       v1.images.create!(attachment: image)

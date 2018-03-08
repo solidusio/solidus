@@ -1,18 +1,36 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Spree::PaymentMethod, type: :model do
-  let!(:payment_method_nil_display)  { create(:payment_method, active: true,
-                                              available_to_users: true,
-                                              available_to_admin: true) }
-  let!(:payment_method_both_display) { create(:payment_method, active: true,
-                                              available_to_users: true,
-                                              available_to_admin: true) }
-  let!(:payment_method_front_display){ create(:payment_method, active: true,
-                                              available_to_users: true,
-                                              available_to_admin: false) }
-  let!(:payment_method_back_display) { create(:payment_method, active: true,
-                                              available_to_users: false,
-                                              available_to_admin: true) }
+  let!(:payment_method_nil_display) do
+    create(:payment_method, {
+      active: true,
+      available_to_users: true,
+      available_to_admin: true
+    })
+  end
+  let!(:payment_method_both_display) do
+    create(:payment_method, {
+      active: true,
+      available_to_users: true,
+      available_to_admin: true
+    })
+  end
+  let!(:payment_method_front_display) do
+    create(:payment_method, {
+      active: true,
+      available_to_users: true,
+      available_to_admin: false
+    })
+  end
+  let!(:payment_method_back_display) do
+    create(:payment_method, {
+      active: true,
+      available_to_users: false,
+      available_to_admin: true
+    })
+  end
 
   describe "available_to_[<users>, <admin>, <store>]" do
     context "when searching for payment methods available to users and admins" do
@@ -21,14 +39,20 @@ RSpec.describe Spree::PaymentMethod, type: :model do
       it { is_expected.to contain_exactly(payment_method_both_display, payment_method_nil_display) }
 
       context "with a store" do
-        let!(:extra_payment_method_both_display) { create(:payment_method, active: true,
-                                                    available_to_users: true,
-                                                    available_to_admin: true) }
+        let!(:extra_payment_method_both_display) do
+          create(:payment_method, {
+            active: true,
+            available_to_users: true,
+            available_to_admin: true
+          })
+        end
         let!(:store_1) do
-          create(:store, payment_methods:[payment_method_nil_display,
-                                          payment_method_both_display,
-                                          payment_method_front_display,
-                                          payment_method_back_display])
+          create(:store, payment_methods: [
+            payment_method_nil_display,
+            payment_method_both_display,
+            payment_method_front_display,
+            payment_method_back_display
+          ])
         end
 
         subject { Spree::PaymentMethod.available_to_store( store_1 ).available_to_users.available_to_admin }
@@ -38,7 +62,7 @@ RSpec.describe Spree::PaymentMethod, type: :model do
         context "when the store has no payment methods" do
           subject { Spree::PaymentMethod.available_to_store(store_without_payment_methods) }
           let!(:store_without_payment_methods) do
-            create(:store, payment_methods:[])
+            create(:store, payment_methods: [])
           end
 
           it "returns all payment methods" do
@@ -65,7 +89,7 @@ RSpec.describe Spree::PaymentMethod, type: :model do
     context "when searching for payment methods available to admin" do
       subject { Spree::PaymentMethod.available_to_admin }
 
-      it { is_expected.to contain_exactly(payment_method_back_display, payment_method_both_display, payment_method_nil_display)}
+      it { is_expected.to contain_exactly(payment_method_back_display, payment_method_both_display, payment_method_nil_display) }
     end
 
     context "when searching for payment methods available to a store" do
@@ -122,8 +146,7 @@ RSpec.describe Spree::PaymentMethod, type: :model do
             payment_method_both_display,
             payment_method_front_display,
             payment_method_back_display
-          ]
-        )
+          ])
       end
 
       let!(:store_2) do

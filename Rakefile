@@ -31,7 +31,7 @@ desc "Run backend JS specs"
 subproject_task("backend", "spec:js", title: "backend JS", task_name: "spec:backend:js")
 
 # Add backend JS specs to `rake spec` dependencies
-task :spec => 'spec:backend:js'
+task spec: 'spec:backend:js'
 
 task test: :spec
 task test_app: 'db:reset'
@@ -67,7 +67,7 @@ namespace :gem do
 
   desc "Build all solidus gems"
   task :build do
-    pkgdir = File.expand_path("../pkg", __FILE__)
+    pkgdir = File.expand_path('pkg', __dir__)
     FileUtils.mkdir_p pkgdir
 
     %w(core api backend frontend sample).each do |gem_name|

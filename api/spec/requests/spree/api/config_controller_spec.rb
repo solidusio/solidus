@@ -4,7 +4,7 @@ require 'spec_helper'
 
 module Spree
   describe Api::ConfigController, type: :request do
-    let!(:default_country) { create :country, iso: "US"}
+    let!(:default_country) { create :country, iso: "US" }
 
     before do
       stub_authentication!

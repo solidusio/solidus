@@ -9,12 +9,12 @@ module Spree
 
       subject { Coupon.new(order) }
 
-      def expect_order_connection(order:, promotion:, promotion_code:nil)
+      def expect_order_connection(order:, promotion:, promotion_code: nil)
         expect(order.promotions.to_a).to include(promotion)
         expect(order.order_promotions.flat_map(&:promotion_code)).to include(promotion_code)
       end
 
-      def expect_adjustment_creation(adjustable:, promotion:, promotion_code:nil)
+      def expect_adjustment_creation(adjustable:, promotion:, promotion_code: nil)
         expect(adjustable.adjustments.map(&:source).map(&:promotion)).to include(promotion)
         expect(adjustable.adjustments.map(&:promotion_code)).to include(promotion_code)
       end

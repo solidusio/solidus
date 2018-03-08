@@ -4,7 +4,6 @@ require 'spec_helper'
 
 module Spree
   describe Spree::Api::PromotionsController, type: :request do
-
     shared_examples "a JSON response" do
       it 'should be ok' do
         subject

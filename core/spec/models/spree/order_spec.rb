@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Spree::Order, type: :model do
@@ -604,10 +606,14 @@ RSpec.describe Spree::Order, type: :model do
     context "with more than one payment method" do
       subject { order.available_payment_methods }
 
-      let!(:first_method) { FactoryBot.create(:payment_method, available_to_users: true,
-                                               available_to_admin: true) }
-      let!(:second_method) { FactoryBot.create(:payment_method, available_to_users: true,
-                                               available_to_admin: true) }
+      let!(:first_method) {
+        FactoryBot.create(:payment_method, available_to_users: true,
+                                               available_to_admin: true)
+      }
+      let!(:second_method) {
+        FactoryBot.create(:payment_method, available_to_users: true,
+                                               available_to_admin: true)
+      }
 
       before do
         second_method.move_to_top
@@ -623,8 +629,7 @@ RSpec.describe Spree::Order, type: :model do
 
       let!(:store_with_payment_methods) do
         create(:store,
-          payment_methods: [payment_method_with_store]
-        )
+          payment_methods: [payment_method_with_store])
       end
       let!(:payment_method_with_store) { create(:payment_method) }
       let!(:store_without_payment_methods) { create(:store) }
@@ -640,7 +645,8 @@ RSpec.describe Spree::Order, type: :model do
         end
 
         context 'and the store has an extra payment method unavailable to users' do
-          let!(:admin_only_payment_method) do create(:payment_method,
+          let!(:admin_only_payment_method) do
+            create(:payment_method,
                                                      available_to_users: false,
                                                      available_to_admin: true)
           end

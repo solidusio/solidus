@@ -192,7 +192,7 @@ class Spree::StoreCredit < Spree::PaymentSource
       save
     else
       errors.add(:invalidated_at, I18n.t('spree.store_credit.errors.cannot_invalidate_uncaptured_authorization'))
-      return false
+      false
     end
   end
 

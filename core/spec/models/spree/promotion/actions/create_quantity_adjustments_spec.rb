@@ -227,7 +227,7 @@ module Spree::Promotion::Actions
       end
 
       it "doesn't reload the line_items association" do
-        expect(order.line_items.first.promo_total).to eq -11
+        expect(order.line_items.first.promo_total).to eq(-11)
       end
     end
 
