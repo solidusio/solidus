@@ -1,9 +1,7 @@
 dist: trusty
 sudo: required
 addons:
-  apt:
-    packages:
-      - google-chrome-beta
+  chrome: stable
 cache: bundler
 language: ruby
 rvm:
