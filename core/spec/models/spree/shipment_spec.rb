@@ -81,6 +81,7 @@ RSpec.describe Spree::Shipment, type: :model do
 
     it 'returns pending if backordered' do
       allow(shipment).to receive_messages inventory_units: [mock_model(Spree::InventoryUnit, allow_ship?: false, canceled?: false)]
+      allow(shipment.inventory_units).to receive_messages(on_hand: shipment.inventory_units)
       expect(shipment.determine_state(order)).to eq 'pending'
     end
 
@@ -301,6 +302,7 @@ RSpec.describe Spree::Shipment, type: :model do
         shipment.update_attributes!(state: 'ready')
 
         allow(shipment).to receive_messages(inventory_units: [mock_model(Spree::InventoryUnit, allow_ship?: false, canceled?: false)])
+        allow(shipment.inventory_units).to receive_messages(on_hand: shipment.inventory_units)
         expect(shipment).to receive(:update_columns).with(state: 'pending', updated_at: kind_of(Time))
         shipment.update_state
       end
