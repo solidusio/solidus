@@ -208,6 +208,10 @@ RSpec.describe Spree::OrderShipping do
         expect { subject }.to change { unshipped_inventory.map(&:reload).map(&:state) }.from(['on_hand']).to(['shipped'])
       end
 
+      it "shipment should be ready" do
+        expect(shipment.reload.state).to eq("ready")
+      end
+
       it "creates a carton with the shipment's inventory units" do
         expect { subject }.to change { order.cartons.count }.by(1)
         expect(subject.inventory_units).to match_array(unshipped_inventory)
