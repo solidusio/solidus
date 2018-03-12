@@ -35,6 +35,10 @@ class Spree::Admin::PromotionRulesController < Spree::Admin::BaseController
     @promotion = Spree::Promotion.find(params[:promotion_id])
   end
 
+  def model_class
+    Spree::PromotionRule
+  end
+
   def validate_promotion_rule_type
     requested_type = params[:promotion_rule].delete(:type)
     promotion_rule_types = Rails.application.config.spree.promotions.rules
