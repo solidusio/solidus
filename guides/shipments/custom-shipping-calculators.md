@@ -157,7 +157,7 @@ For more information about availability and filtering shipping methods, see the
 [Shipping method filters][shipping-method-filters] article.
 
 [calculator-class]: https://github.com/solidusio/solidus/blob/master/core/app/models/spree/calculator.rb
-[shipping-method-filters]: shipping-method-filters.html
+[shipping-method-filters]: shipping-method-filters.md
 
 ## Use additional product information
 
