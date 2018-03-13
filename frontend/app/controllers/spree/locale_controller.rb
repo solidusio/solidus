@@ -13,7 +13,8 @@ module Spree
       else
         flash[:error] = t('spree.locale_not_changed')
       end
-      redirect_back_or_default(spree.root_path)
+
+      redirect_to spree.root_path
     end
   end
 end
