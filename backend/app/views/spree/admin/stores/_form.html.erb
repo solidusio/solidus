@@ -58,3 +58,14 @@
     { class: "custom-select fullwidth" } %>
   <%= f.error_message_on :cart_tax_country_iso %>
 <% end %>
+
+<%= f.field_container :available_locales do %>
+  <%= f.label :available_locales %>
+  <%= f.select :available_locales,
+    Spree.i18n_available_locales.map { |locale|
+      [I18n.t('spree.i18n.this_file_language', locale: locale, default: locale.to_s, fallback: false), locale]
+    }.sort,
+    { },
+    { class: 'custom-select fullwidth', multiple: true } %>
+  <%= f.error_message_on :default_currency %>
+<% end %>
