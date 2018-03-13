@@ -96,4 +96,61 @@ RSpec.describe Spree::Store, type: :model do
       end
     end
   end
+
+  describe '#available_locales' do
+    let(:store) { described_class.new(available_locales: locales) }
+    subject { store.available_locales }
+
+    context 'with available_locales: []' do
+      let(:locales) { [] }
+
+      it "returns all available locales" do
+        expect(subject).to eq([:en])
+      end
+
+      it "serializes as nil" do
+        expect(store[:available_locales]).to be nil
+      end
+    end
+
+    context 'with available_locales: [:en]' do
+      let(:locales) { [:en] }
+
+      it "returns [:en]" do
+        expect(subject).to eq([:en])
+      end
+
+      it "serializes correctly" do
+        expect(store[:available_locales]).to eq("en")
+      end
+    end
+
+    context 'with available_locales: [:en, :fr]' do
+      let(:locales) { [:en, :fr] }
+
+      it "returns [:fr]" do
+        expect(subject).to eq([:en, :fr])
+      end
+
+      it "serializes correctly" do
+        expect(store[:available_locales]).to eq("en,fr")
+      end
+    end
+
+    context 'with available_locales: [:fr]' do
+      let(:locales) { [:fr] }
+
+      it "returns [:fr]" do
+        expect(subject).to eq([:fr])
+      end
+    end
+
+    context 'with available_locales: ["fr"]' do
+      let(:locales) { ["fr"] }
+
+      it "returns symbols [:fr]" do
+        expect(subject).to eq([:fr])
+      end
+    end
+  end
 end
