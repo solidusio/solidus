@@ -9,24 +9,25 @@ features. This model can have any name, and Solidus can integrate with your
 existing Rails application's existing `User` model.
 
 By default, Solidus provides a [`Spree::LegacyUser` model][legacy-user] that
-offers the bare minimum functionality of a user. The model is intended to be
-modified by extensions.
+offers the bare minimum functionality of a user. The model is only suitable for
+testing and should not be used in a production environment.
 
 The rest of this article outlines the steps required should you decide to create
 a `User` model from scratch, use an authentication solution like
 [Devise][devise], or integrate your application's existing `User` model.
 
 Note that while your user model can have whatever name you like, this article
-uses the model `MyStore::User` for its examples. 
+uses the model `MyStore::User` for its examples.
 
+[devise]: https://github.com/plataformatec/devise
 [legacy-user]: https://github.com/solidusio/solidus/blob/master/core/app/models/spree/legacy_user.rb
 [solidus-auth-devise]: https://github.com/solidusio/solidus_auth_devise
 
-## Set the `Spree.user_class`
+## Set the Spree.user_class
 
 No matter what gem or extension you use for your store's `User` model, your
 application's `Spree.user_class` value needs to be set. By default, Solidus sets
-the `Spree.user_class` to `Spree::LegacyUser`. 
+the `Spree.user_class` to `Spree::LegacyUser`.
 
 You can configure a custom `Spree.user_class` in your application's
 `/config/initializers/spree.rb` file:
@@ -65,11 +66,11 @@ If you use the `spree:custom_user` generator:
 
 - The `Spree.user_class` is updated to your specified class.
 - Authentication helpers are set up for the `solidus_frontend` and
-  `solidus_backend` views and are sent to the `Rails::ApplicationController`,
-  making it available throughout your application.
-- The `spree_current_user` method is defined and is sent to the
-  `Rails::ApplicationController` and the `Spree::Api::BaseController`, making it
+  `solidus_backend` views and are sent to the application controller, making it
   available throughout your application.
+- The `spree_current_user` method is defined and is sent to the application
+  controller and the `Spree::Api::BaseController`, making it available
+  throughout your application.
 
 ### Minimum requirements
 
@@ -77,7 +78,7 @@ Solidus requires that your `User` model's database table includes at least the
 following columns:
 
 - `spree_api_key`: A string with a user's API key. This should be limited to 48
-  characters (`:limit => 48`). 
+  characters.
 - `bill_address_id`: An integer that provides the ID of the `Spree::Address`
   that should be used as the current user's billing address.
 - `ship_address_id`: An integer that provides the ID of the `Spree::Address`
@@ -89,51 +90,67 @@ generator](#custom-user-generator).
 It also requires that you have a [`spree_current_user`](#spree-current-user)
 helper method.
 
-#### User passwords 
+#### User passwords
 
 Note that if you use the stock `solidus_frontend` or `solidus_backend` gems,
 your user should also have a `password` column. You can set up a password column
 however you see fit.
 
-### `spree_current_user` <span id="spree-current-user"></span>
+### spree_current_user
 
 If you use the stock `solidus_frontend` or `solidus_backend` gems, you need to
-provide a `spree_current_user` helper method.
+provide a `spree_current_user` helper method. Because you likely need to
+reference the current user throughout your application, we recommend adding it
+to your `application_controller.rb`.
 
 If you use an authentication gem that defines a `current_user` (like Devise),
 you may want to just wrap `current_user` in a `spree_current_user` method:
 
 ```ruby
-helper_method :spree_current_user
+# /app/controllers/application_controller.rb
+class ApplicationController < ActionController::Base
 
-def spree_current_user
-  current_user
+  ...
+
+  helper_method :spree_current_user
+
+  def spree_current_user
+    current_user
+  end
 end
 ```
 
 This helper can be generated for you by the [`spree:custom_user`
-generator](#custom-user-generator). 
+generator](#custom-user-generator).
 
 ### Add authentication helpers
 
 If you use the stock `solidus_frontend` or `solidus_backend` gems, you need to
-provide authentication helpers so that users can sign up, log in, and log out:
+provide authentication helpers so that users can sign up, log in, and log out.
+Because you likely need to reference the current user throughout your
+application, we recommend adding it to you `application_controller.rb`:
 
 ```ruby
-helper_method :spree_login_path
-helper_method :spree_signup_path
-helper_method :spree_logout_path
+# /app/controllers/application_controller.rb
+class ApplicationController < ActionController::Base
 
-def spree_login_path
-  login_path
-end
+  ...
 
-def spree_signup_path
-  signup_path
-end
+  helper_method :spree_login_path
+  helper_method :spree_signup_path
+  helper_method :spree_logout_path
 
-def spree_logout_path
-  logout_path
+  def spree_login_path
+    login_path
+  end
+
+  def spree_signup_path
+    signup_path
+  end
+
+  def spree_logout_path
+    logout_path
+  end
 end
 ```
 
@@ -153,7 +170,7 @@ module MyStore
   class User
     include Spree::UserMethods
   ...
-``` 
+```
 
 [solidus-user-methods]: https://github.com/solidusio/solidus/blob/master/core/app/models/concerns/spree/user_methods.rb
 
@@ -165,7 +182,7 @@ user with the `Spree::Role` of `admin`. You can give any existing user the
 
 ```ruby
 user = MyStore::User.find_by(email: 'admin@example.com')
-user.spree_roles << Spree::Role.find_or_create_by(name: 'admin') 
+user.spree_roles << Spree::Role.find_or_create_by(name: 'admin')
 ```
 
 Now, your user with the `admin@example.com` email address should be able to
