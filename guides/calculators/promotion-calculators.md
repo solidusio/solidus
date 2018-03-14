@@ -1,7 +1,7 @@
 # Promotion calculators
 
 Promotion calculators are similar to [shipping
-calculators][shipping-calculators]: the calculate against your preferred
+calculators][shipping-calculators]: they calculate against your preferred
 amounts, percentages, and currencies. The main difference is that promotions
 adjust prices as discounts rather than charges.
 
@@ -39,35 +39,43 @@ discounts a percentage of it.
 ### Flexi rate
 
 The [`Spree::Calculator::FlexiRate` calculator][flexi-rate] provides a flexible
-rate depending on the items on an order. (Or, a subset of specific line items on
-an order.) It has the following preferences:
+rate depending on the number of items on an order.
 
-- `first_item`: The discounted price of the first item(s).
-- `additional_item`: The discounted price of subsequent items.
+For example, you could sell one t-shirt for $20. But, if the customer buys five
+t-shirts, the four additional t-shirt only costs $15.
+
+It has the following preferences:
+
+- `first_item`: The discount rate of the first item(s).
+- `additional_item`: The discount rate of subsequent items.
 - `max_items`: The maximum number of items this discount applies to.
 - `currency`: The currency. The default value is your store's default currency
   setting.
+
+To replicate the example above, you could set the `first_item` to `0.0`, the
+`additional_item` to `5.0`, and the `max_items` to `5`.
 
 ### Tiered percent
 
 The [`Spree::Calculator::TieredPercent` calculator][tiered-percent] provides a
 tiered percent discount. This allows you to charge a percentage-based discount
-that depends on the order total (or applicable line items). For example, you
-could set a base discount of 10%, then give a greater discount on orders over
-$100, $200, and $500:
+that depends on the order total (or applicable line items).
+
+For example, you could set a base discount of 10%, then give a greater discount
+on orders over $100 and $200:
 
 |   | Tier             | Discount (%) |
 |---|------------------|--------------|
 | 0 | Base             | 10%          |
 | 1 | Orders over $100 | 15%          |
 | 2 | Orders over $200 | 20%          |
-| 3 | Orders over $500 | 25%          |
 
 This calculator has the following preferences:
 
 - `base_percent`: The base discount for any order where the promotion applies.
 - `tiers`: A hash where the key is the minimum order total for the tier and the
-  value is the tier discount: `{ tier=>discount_percentage }`.
+  value is the tier discount. Using the example from the table above, the hash
+  could read: `{ $100=>15%, $200=>20% }`.
 - `currency`: The currency. The default value is your store's default currency
   setting.
 
@@ -143,7 +151,7 @@ This calculator has the following preferences:
 ### Percent on line item
 
 The [`Spree::Calculator::PercentOnLineItem` calculator][percent-on-line-item]
-provide a percentage-based discount for each applicable line item in an order.
+provides a percentage-based discount for each applicable line item in an order.
 In the `solidus_backend` interface, this calculator is labeled "Percent Per
 Item". It has the following preference:
 
