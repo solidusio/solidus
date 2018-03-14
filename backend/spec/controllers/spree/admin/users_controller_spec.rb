@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-require 'spree/testing_support/bar_ability'
 
 describe Spree::Admin::UsersController, type: :controller do
   let(:user) { create(:user) }

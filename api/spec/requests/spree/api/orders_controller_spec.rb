@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-require 'spree/testing_support/bar_ability'
 
 module Spree
   describe Api::OrdersController, type: :request do
@@ -373,18 +372,6 @@ module Spree
     it "can view an order if the token is passed in header" do
       get spree.api_order_path(order), headers: { "X-Spree-Order-Token" => order.guest_token }
       expect(response.status).to eq(200)
-    end
-
-    context "with BarAbility registered" do
-      before { Spree::Ability.register_ability(::BarAbility) }
-      after { Spree::Ability.remove_ability(::BarAbility) }
-
-      it "can view an order" do
-        user = build(:user, spree_roles: [Spree::Role.new(name: 'bar')])
-        allow(Spree.user_class).to receive_messages find_by: user
-        get spree.api_order_path(order)
-        expect(response.status).to eq(200)
-      end
     end
 
     it "cannot cancel an order that doesn't belong to them" do

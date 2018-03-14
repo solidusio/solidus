@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
+Spree::Deprecation.warn "BarAbility is deprecated. Use stub_authorization! instead"
+
 # Fake ability for testing administration
+# @private
 class BarAbility
   include CanCan::Ability
 
