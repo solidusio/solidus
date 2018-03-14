@@ -1,9 +1,6 @@
 # frozen_string_literal: true
 
 module CapybaraExt
-  def page!
-  end
-
   def click_icon(type)
     find(".fa-#{type}").click
   end
