@@ -219,6 +219,16 @@ RSpec.describe Spree::Product, type: :model do
           expect(product.variants_and_option_values_for(pricing_options)).to contain_exactly(low)
         end
       end
+
+      context 'when a variant has a fallback price' do
+        before do
+          low.prices.create(country_iso: nil)
+        end
+
+        it "returns that variant once" do
+          expect(product.variants_and_option_values_for.length).to eq(2)
+        end
+      end
     end
 
     describe "#variant_option_values_by_option_type" do
