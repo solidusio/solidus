@@ -89,7 +89,7 @@ module Spree
       if update_params = massaged_params[:order]
         update_params.permit(permitted_checkout_attributes)
       else
-        # We current allow update requests without any parameters in them.
+        # We currently allow update requests without any parameters in them.
         {}
       end
     end
