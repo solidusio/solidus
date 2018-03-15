@@ -32,7 +32,7 @@ library][ruby-money], you can further change what information is displayed using
 its [`format`][ruby-money-format] method:
 
 ```ruby
-@order.display_total.format(:with_currency => true)
+@order.display_total.format(with_currency: true)
 # => "$10.99 USD"
 ```
 
