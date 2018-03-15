@@ -14,6 +14,9 @@ DummyApp::RakeTasks.new(
   lib_name: 'solidus_core'
 )
 
+require 'yard'
+YARD::Rake::YardocTask.new
+
 namespace :spec do
   task :isolated do
     spec_files = Dir['spec/**/*_spec.rb']
