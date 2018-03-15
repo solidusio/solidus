@@ -42,7 +42,10 @@ module Spree
 
         def set_guest_token
           unless cookies.signed[:guest_token].present?
-            cookies.permanent.signed[:guest_token] = SecureRandom.urlsafe_base64(nil, false)
+            cookies.permanent.signed[:guest_token] = {
+              value: SecureRandom.urlsafe_base64(nil, false),
+              httponly: true
+            }
           end
         end
 
