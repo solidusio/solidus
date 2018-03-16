@@ -49,5 +49,8 @@ end
 
 gem 'rspec_junit_formatter', require: false, group: :ci
 
+# Documentation
+gem 'yard'
+
 custom_gemfile = File.expand_path('Gemfile-custom', __dir__)
 eval File.read(custom_gemfile) if File.exist?(custom_gemfile)
