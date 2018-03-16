@@ -38,7 +38,7 @@ module Spree
       end
 
       # Yields the instance of the singleton, used for configuration
-      # @yield_param instance [Spree::RoleConfiguration]
+      # @yieldparam instance [Spree::RoleConfiguration]
       def configure
         Spree::Deprecation.warn "Spree::RoleConfiguration.configure is deprecated. Call Spree::Config.roles.assign_permissions instead"
         yield(Spree::Config.roles)

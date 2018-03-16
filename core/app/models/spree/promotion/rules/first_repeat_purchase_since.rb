@@ -16,7 +16,6 @@ module Spree
         #
         # This is eligible if the user's most recently completed order is more than the preferred days ago
         # @param order [Spree::Order]
-        # @option options
         def eligible?(order, _options = {})
           return false unless order.user
 

@@ -18,7 +18,6 @@ module Spree
         #
         # Use the first order rule if you want a promotion to be applied to the first order for a user.
         # @param order [Spree::Order]
-        # @option options
         def eligible?(order, _options = {})
           return false unless order.user
 

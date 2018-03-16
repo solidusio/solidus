@@ -94,7 +94,7 @@ module Spree
     # a parameter, the scope is limited to variants that are in stock in the
     # provided stock locations.
     #
-    # If you want to also include backorderable variants see {[suppliable}}
+    # If you want to also include backorderable variants see {Spree::Variant.suppliable}
     #
     # @param stock_locations [Array<Spree::StockLocation>] the stock locations to check
     # @return [ActiveRecord::Relation]
@@ -282,8 +282,6 @@ module Spree
     # Chooses an appropriate price for the given pricing options
     #
     # @see Spree::Variant::PriceSelector#price_for
-    # @param [Spree::Config.pricing_options_class] An instance of pricing options
-    # @return [Spree::Money] The chosen price as a Money object
     delegate :price_for, to: :price_selector
 
     # Returns the difference in price from the master variant

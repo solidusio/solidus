@@ -20,8 +20,7 @@ module Spree
 
       # Create a new tax calculator.
       #
-      # @param [Spree::ShippingRate] shipping_rate the shipping rate to
-      #   calculate taxes on
+      # @param [Spree::Order] order the order to calculate taxes on
       # @return [Spree::TaxCalculator::ShippingRate]
       def initialize(order)
         if order.is_a?(::Spree::ShippingRate)
@@ -37,6 +36,8 @@ module Spree
 
       # Calculate taxes for a shipping rate.
       #
+      # @param [Spree::ShippingRate] shipping_rate the shipping rate to
+      #   calculate taxes on
       # @return [Array<Spree::Tax::ItemTax>] the calculated taxes for the
       #   shipping rate
       def calculate(shipping_rate)
