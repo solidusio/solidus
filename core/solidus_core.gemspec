@@ -32,7 +32,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'awesome_nested_set', '~> 3.0', '>= 3.0.1'
   s.add_dependency 'cancancan', '~> 1.10'
   s.add_dependency 'carmen', '~> 1.1.0'
-  s.add_dependency 'discard'
+  s.add_dependency 'discard', '~> 1.0'
   s.add_dependency 'friendly_id', '~> 5.0'
   s.add_dependency 'kaminari-activerecord', '~> 1.1'
   s.add_dependency 'monetize', '~> 1.1'
