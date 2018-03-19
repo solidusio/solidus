@@ -80,7 +80,7 @@ RSpec.describe Spree::Shipment, type: :model do
     end
 
     it 'returns pending if backordered' do
-      allow(shipment).to receive_messages inventory_units: [mock_model(Spree::InventoryUnit, allow_ship?: false, canceled?: false)]
+      allow(shipment).to receive_messages inventory_units: [mock_model(Spree::InventoryUnit, allow_ship?: false, canceled?: false, shipped?: false)]
       expect(shipment.determine_state(order)).to eq 'pending'
     end
 
@@ -300,7 +300,7 @@ RSpec.describe Spree::Shipment, type: :model do
         # Set as ready so we can test for change
         shipment.update_attributes!(state: 'ready')
 
-        allow(shipment).to receive_messages(inventory_units: [mock_model(Spree::InventoryUnit, allow_ship?: false, canceled?: false)])
+        allow(shipment).to receive_messages(inventory_units: [mock_model(Spree::InventoryUnit, allow_ship?: false, canceled?: false, shipped?: false)])
         expect(shipment).to receive(:update_columns).with(state: 'pending', updated_at: kind_of(Time))
         shipment.update_state
       end
@@ -862,6 +862,36 @@ RSpec.describe Spree::Shipment, type: :model do
     context "when a shipping rate is selected" do
       it "is expected to be the shipping rate's shipping method" do
         expect(shipment.shipping_method).to eq(shipment.selected_shipping_rate.shipping_method)
+      end
+    end
+  end
+
+  describe '#can_transition_from_pending_to_ready?' do
+    let(:shipment) { create(:shipment, order: order) }
+
+    subject { shipment.can_transition_from_pending_to_ready? }
+
+    context "with backordered inventory" do
+      before { shipment.inventory_units.update_all(state: "backordered") }
+
+      it "returns false" do
+        expect(subject).to be false
+      end
+    end
+
+    context "with on_hand inventory" do
+      before { shipment.inventory_units.update_all(state: "on_hand") }
+
+      it "returns true" do
+        expect(subject).to be true
+      end
+    end
+
+    context "with shipped inventory" do
+      before { shipment.inventory_units.update_all(state: "shipped") }
+
+      it "returns true" do
+        expect(subject).to be true
       end
     end
   end
