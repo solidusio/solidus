@@ -1,4 +1,4 @@
-## Versioning guidelines
+# Versioning guidelines
 
 As we develop Solidus, we aim to follow [Semantic
 Versioning](http://semver.org/) as closely as we can.
