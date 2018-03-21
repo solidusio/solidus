@@ -24,7 +24,7 @@ We maintain a number of Solidus extensions with good test coverage. Our [Solidus
 extensions list][extensions] also includes a compatibility chart for each major
 and minor version of Solidus.
 
-[extensions]: http://eextensions.solidus.io
+[extensions]: http://extensions.solidus.io
 
 ## You can migrate from Spree to Solidus
 

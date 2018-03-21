@@ -26,7 +26,7 @@ patch version.
 
 The internal call structure should be maintained so that any overrides to
 methods can still be called in the same way. Exceptions may be made for security
-fixes if necessary. 
+fixes if necessary.
 
 ### Minor versions
 
@@ -55,7 +55,7 @@ notes.
 ## End of life policy
 
 We want to offer critical security patches for older versions of Solidus.
-However, we cannot offer support for every minor version back to 1.0. 
+However, we cannot offer support for every minor version back to 1.0.
 
 To allow us to patch security issues promptly, and to make sure developers know
 how long their Solidus version will receive security updates, we use the
