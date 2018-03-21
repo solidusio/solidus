@@ -64,7 +64,7 @@ RSpec.describe Spree::Order, type: :model do
       end
     end
 
-    (Spree::Shipment.state_machine.states.keys - states).each do |shipment_state|
+    ['shipped', 'canceled'].each do |shipment_state|
       it "should be false if shipment_state is #{shipment_state}" do
         expect(order).to be_completed
         order.shipment_state = shipment_state
