@@ -408,13 +408,28 @@ RSpec.describe Spree::Shipment, type: :model do
     end
   end
 
-  context "#cancel" do
-    it 'cancels the shipment' do
-      allow(shipment.order).to receive(:update!)
+  describe '#cancel!' do
+    subject { shipment.cancel! }
+    before { shipment.state = 'pending' }
 
-      shipment.state = 'pending'
-      expect(shipment).to receive(:after_cancel)
-      shipment.cancel!
+    it { is_expected.to be true }
+
+    context 'when not able to cancel' do
+      before { shipment.state = 'shipped' }
+      it 'raises an exception' do
+        expect { subject }.to raise_error(Spree::Shipment::InvalidStateChange)
+      end
+    end
+  end
+
+  describe '#cancel' do
+    subject { shipment.cancel }
+    before { shipment.state = 'pending' }
+
+    it { is_expected.to be true }
+
+    it 'cancels the shipment' do
+      subject
       expect(shipment.state).to eq 'canceled'
     end
 
@@ -422,7 +437,7 @@ RSpec.describe Spree::Shipment, type: :model do
       variant = shipment.inventory_units.first.variant
       shipment.stock_location = mock_model(Spree::StockLocation)
       expect(shipment.stock_location).to receive(:restock).with(variant, 1, shipment)
-      shipment.after_cancel
+      subject
     end
 
     context "with backordered inventory units" do
@@ -448,8 +463,58 @@ RSpec.describe Spree::Shipment, type: :model do
         expect(other_shipment.inventory_units.first).to be_backordered
 
         expect {
-          shipment.cancel!
+          shipment.cancel
         }.not_to change { other_shipment.inventory_units.first.state }
+      end
+    end
+
+    context 'when shipment cannot be canceled' do
+      before { shipment.state = 'shipped' }
+      it { is_expected.to be false }
+    end
+  end
+
+  describe '#can_cancel?' do
+    subject { shipment.can_cancel? }
+
+    context 'when shipment is ready' do
+      before { shipment.state = 'ready' }
+      it { is_expected.to be true }
+    end
+
+    context 'when shipment is pending' do
+      before { shipment.state = 'pending' }
+      it { is_expected.to be true }
+    end
+
+    context 'when shipment is neither ready nor pending' do
+      before { shipment.state = 'shipped' }
+      it { is_expected.to be false }
+    end
+  end
+
+  describe '#canceled?' do
+    subject { shipment.canceled? }
+    before { shipment.state = 'canceled' }
+
+    it { is_expected.to be true }
+
+    context 'when shipment has not been canceled' do
+      before { shipment.state = 'shipped' }
+      it { is_expected.to be false }
+    end
+  end
+
+  describe '#resume!' do
+    subject { shipment.resume! }
+    before { shipment.state = 'canceled' }
+
+    it { is_expected.to be true }
+
+    context 'when not able to ship' do
+      before { shipment.state = 'shipped' }
+      it 'raises an exception' do
+        expect { subject }.to raise_error(Spree::Shipment::InvalidStateChange)
       end
     end
   end
@@ -457,12 +522,15 @@ RSpec.describe Spree::Shipment, type: :model do
   context "#resume" do
     let(:inventory_unit) { create(:inventory_unit) }
 
+    subject { shipment.resume }
     before { shipment.state = 'canceled' }
+
+    it { is_expected.to be true }
 
     context "when order cannot ship" do
       before { allow(order).to receive_messages(can_ship?: false) }
       it "should result in a 'pending' state" do
-        shipment.resume!
+        subject
         expect(shipment.state).to eq 'pending'
       end
     end
@@ -470,7 +538,7 @@ RSpec.describe Spree::Shipment, type: :model do
     context "when order is not paid" do
       before { allow(order).to receive_messages(paid?: false) }
       it "should result in a 'ready' state" do
-        shipment.resume!
+        subject
         expect(shipment.state).to eq 'pending'
       end
     end
@@ -478,7 +546,7 @@ RSpec.describe Spree::Shipment, type: :model do
     context "when any inventory is backordered" do
       before { allow_any_instance_of(Spree::InventoryUnit).to receive(:allow_ship?).and_return(false) }
       it "should result in a 'ready' state" do
-        shipment.resume!
+        subject
         expect(shipment.state).to eq 'pending'
       end
     end
@@ -491,25 +559,73 @@ RSpec.describe Spree::Shipment, type: :model do
       end
 
       it "should result in a 'ready' state" do
-        shipment.resume!
+        subject
         expect(shipment.state).to eq 'ready'
       end
     end
 
-    it 'unstocks them items' do
+    it 'unstocks the items' do
       variant = shipment.inventory_units.first.variant
       shipment.stock_location = mock_model(Spree::StockLocation)
       expect(shipment.stock_location).to receive(:unstock).with(variant, 1, shipment)
-      shipment.after_resume
+      subject
+    end
+
+    context 'when shipment cannot resume' do
+      before { shipment.state = 'shipped' }
+      it { is_expected.to be false }
     end
   end
 
-  context "#ship" do
+  describe '#can_resume?' do
+    subject { shipment.can_resume? }
+    before { shipment.state = 'canceled' }
+
+    it { is_expected.to be true }
+
+    context 'when shipment cannot resume' do
+      before { shipment.state = 'shipped' }
+      it { is_expected.to be false }
+    end
+  end
+
+  describe '#ship!' do
+    subject { shipment.ship! }
+    before { shipment.state = 'ready' }
+
+    it { is_expected.to be true }
+
+    context 'when not able to ship' do
+      before { shipment.state = 'shipped' }
+      it 'raises an exception' do
+        expect { subject }.to raise_error(Spree::Shipment::InvalidStateChange)
+      end
+    end
+  end
+
+  describe '#ship' do
+    subject { shipment.ship }
+    before { shipment.state = 'ready' }
+
+    it { is_expected.to be true }
+
+    it 'changes the state to shipped' do
+      subject
+      expect(shipment.state).to eq 'shipped'
+    end
+
+    it 'ships the items' do
+      expect(order.shipping).to receive(:ship_shipment).with(shipment, suppress_mailer: shipment.suppress_mailer)
+      subject
+    end
+
     context "when the shipment is canceled" do
       let(:address){ create(:address) }
       let(:order){ create(:order_with_line_items, ship_address: address) }
       let(:shipment_with_inventory_units) { create(:shipment, order: order, state: 'canceled') }
-      let(:subject) { shipment_with_inventory_units.ship! }
+
+      subject { shipment_with_inventory_units.ship }
+
       before do
         allow(order).to receive(:update!)
         allow(shipment_with_inventory_units).to receive_messages(require_inventory: false, update_order: true)
@@ -532,17 +648,205 @@ RSpec.describe Spree::Shipment, type: :model do
           shipment.adjustments.each do |adjustment|
             expect(adjustment).to receive(:finalize!)
           end
-          shipment.ship!
+          subject
         end
+      end
+    end
+
+    context 'when the shipment cannot ship' do
+      before { shipment.state = 'shipped' }
+      it { is_expected.to be false }
+    end
+  end
+
+  describe '#can_ship?' do
+    subject { shipment.can_ship? }
+
+    context 'when state is ready' do
+      before { shipment.state = 'ready' }
+      it { is_expected.to be true }
+    end
+
+    context 'when state is canceled' do
+      before { shipment.state = 'canceled' }
+      it { is_expected.to be true }
+    end
+
+    context 'when state is neither ready nor canceled' do
+      before { shipment.state = 'pending' }
+      it { is_expected.to be false }
+    end
+  end
+
+  describe '#shipped?' do
+    subject { shipment.shipped? }
+    before { shipment.state = 'shipped' }
+
+    it { is_expected.to be true }
+
+    context 'when not shipped' do
+      before { shipment.state = 'pending' }
+      it { is_expected.to be false }
+    end
+  end
+
+  describe '#ready!' do
+    subject { shipment.ready! }
+    before { shipment.state = 'pending' }
+
+    it { is_expected.to be true }
+
+    context 'when not able to ready' do
+      before { shipment.state = 'shipped' }
+      it 'raises an exception' do
+        expect { subject }.to raise_error(Spree::Shipment::InvalidStateChange)
       end
     end
   end
 
-  context "#ready" do
+  describe '#ready' do
+    subject { shipment.ready }
+
+    context 'when state is pending' do
+      context 'when a shipment is required' do
+        before { allow(shipment.stock_location).to receive(:fulfillable?) { true } }
+
+        it { is_expected.to be true }
+
+        it 'changes state to ready' do
+          subject
+          expect(shipment.state).to eq 'ready'
+        end
+      end
+
+      context 'when a shipment is not required' do
+        before { allow(shipment.stock_location).to receive(:fulfillable?) { false } }
+
+        it { is_expected.to be true }
+
+        it 'changes state to shipped' do
+          subject
+          expect(shipment.state).to eq 'shipped'
+        end
+
+        it 'ships the items' do
+          expect(order.shipping).to receive(:ship_shipment).with(shipment, suppress_mailer: shipment.suppress_mailer)
+          subject
+        end
+      end
+
+      context "when shipment is required but can't ship inventory" do
+        before { allow(shipment.stock_location).to receive(:fulfillable?) { true } }
+        before { allow(order).to receive(:can_ship?) { false } }
+        it { is_expected.to be false }
+      end
+    end
+
+    context 'when state is not pending' do
+      before { shipment.state = 'shipped' }
+      it { is_expected.to be false }
+    end
+  end
+
+  describe '#ready?' do
+    subject { shipment.ready? }
+    before { shipment.state = 'ready' }
+
+    it { is_expected.to be true }
+
+    context 'when not ready' do
+      before { shipment.state = 'pending' }
+      it { is_expected.to be false }
+    end
+  end
+
+  describe '#can_ready?' do
+    subject { shipment.can_ready? }
+
+    context 'when state is pending' do
+      before { shipment.state = 'pending' }
+
+      context 'when shipment is not required' do
+        before { allow(shipment.stock_location).to receive(:fulfillable?) { false } }
+        it { is_expected.to be true }
+      end
+
+      context "when shipment is required but can't ship inventory" do
+        before { allow(shipment.stock_location).to receive(:fulfillable?) { true } }
+        before { allow(order).to receive(:can_ship?) { false } }
+        it { is_expected.to be false }
+      end
+
+      context 'when shipment is required and inventory can ship' do
+        before { allow(shipment.stock_location).to receive(:fulfillable?) { true } }
+        before { allow(order).to receive(:can_ship?) { true } }
+        it { is_expected.to be true }
+      end
+    end
+
+    context 'when state is not pending' do
+      before { shipment.state = 'shipped' }
+      it { is_expected.to be false }
+    end
+
     # Regression test for https://github.com/spree/spree/issues/2040
-    it "cannot ready a shipment for an order if the order is unpaid" do
-      expect(order).to receive_messages(paid?: false)
-      expect(shipment).not_to be_can_ready
+    context 'when order is unpaid' do
+      before { allow(order).to receive(:paid?) { false } }
+      it { is_expected.to be false }
+    end
+  end
+
+  describe '#pend!' do
+    subject { shipment.pend! }
+    before { shipment.state = 'ready' }
+
+    it { is_expected.to be true }
+
+    context 'when not able to pend' do
+      before { shipment.state = 'shipped' }
+      it 'raises an exception' do
+        expect { subject }.to raise_error(Spree::Shipment::InvalidStateChange)
+      end
+    end
+  end
+
+  describe '#pend' do
+    subject { shipment.pend }
+    before { shipment.state = 'ready' }
+
+    it { is_expected.to be true }
+
+    it 'changes state to pending' do
+      subject
+      expect(shipment.state).to eq 'pending'
+    end
+
+    context 'when not able to pend' do
+      before { shipment.state = 'shipped' }
+      it { is_expected.to be false }
+    end
+  end
+
+  describe '#pending?' do
+    subject { shipment.pending? }
+
+    it { is_expected.to be true }
+
+    context 'when not pending' do
+      before { shipment.state = 'ready' }
+      it { is_expected.to be false }
+    end
+  end
+
+  describe '#can_pend?' do
+    subject { shipment.can_pend? }
+    before { shipment.state = 'ready' }
+
+    it { is_expected.to be true }
+
+    context 'when not able to pend' do
+      before { shipment.state = 'shipped' }
+      it { is_expected.to be false }
     end
   end
 

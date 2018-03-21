@@ -4,6 +4,14 @@ module Spree
   # An order's planned shipments including tracking and cost.
   #
   class Shipment < Spree::Base
+    class InvalidStateChange < StandardError; end
+
+    READY = 'ready'
+    PENDING = 'pending'
+    SHIPPED = 'shipped'
+    CANCELED = 'canceled'
+    DEFAULT_STATES = [READY, PENDING, SHIPPED, CANCELED]
+
     belongs_to :order, class_name: 'Spree::Order', touch: true, inverse_of: :shipments
     belongs_to :stock_location, class_name: 'Spree::StockLocation'
 
@@ -13,6 +21,8 @@ module Spree
     has_many :shipping_methods, through: :shipping_rates
     has_many :state_changes, as: :stateful
     has_many :cartons, -> { distinct }, through: :inventory_units
+
+    validate :is_valid_state?
 
     before_validation :set_cost_zero_when_nil
 
@@ -26,49 +36,111 @@ module Spree
 
     make_permalink field: :number, length: 11, prefix: 'H'
 
-    scope :pending, -> { with_state('pending') }
-    scope :ready,   -> { with_state('ready') }
-    scope :shipped, -> { with_state('shipped') }
+    scope :pending, -> { with_state(PENDING) }
+    scope :ready,   -> { with_state(READY) }
+    scope :shipped, -> { with_state(SHIPPED) }
     scope :trackable, -> { where("tracking IS NOT NULL AND tracking != ''") }
     scope :with_state, ->(*s) { where(state: s) }
     # sort by most recent shipped_at, falling back to created_at. add "id desc" to make specs that involve this scope more deterministic.
     scope :reverse_chronological, -> { order('coalesce(spree_shipments.shipped_at, spree_shipments.created_at) desc', id: :desc) }
     scope :by_store, ->(store) { joins(:order).merge(Spree::Order.by_store(store)) }
 
-    # shipment state machine (see http://github.com/pluginaweek/state_machine/tree/master for details)
-    state_machine initial: :pending, use_transactions: false do
-      event :ready do
-        transition from: :pending, to: :shipped, if: :can_transition_from_pending_to_shipped?
-        transition from: :pending, to: :ready, if: :can_transition_from_pending_to_ready?
-      end
+    def cancel!
+      cancel || raise(InvalidStateChange)
+    end
 
-      event :pend do
-        transition from: :ready, to: :pending
-      end
+    def cancel
+      return false unless can_cancel?
+      change_state!(CANCELED)
+      after_cancel
+      true
+    end
 
-      event :ship do
-        transition from: [:ready, :canceled], to: :shipped
-      end
-      after_transition to: :shipped, do: :after_ship
+    def can_cancel?
+      ready_or_pending?
+    end
 
-      event :cancel do
-        transition to: :canceled, from: [:pending, :ready]
-      end
-      after_transition to: :canceled, do: :after_cancel
+    def canceled?
+      state == CANCELED
+    end
 
-      event :resume do
-        transition from: :canceled, to: :ready, if: :can_transition_from_canceled_to_ready?
-        transition from: :canceled, to: :pending
-      end
-      after_transition from: :canceled, to: [:pending, :ready, :shipped], do: :after_resume
+    def resume!
+      resume || raise(InvalidStateChange)
+    end
 
-      after_transition do |shipment, transition|
-        shipment.state_changes.create!(
-          previous_state: transition.from,
-          next_state:     transition.to,
-          name:           'shipment'
-        )
+    def resume
+      return false unless can_resume?
+      can_transition_from_canceled_to_ready? ? change_state!(READY) : change_state!(PENDING)
+      after_resume
+      true
+    end
+
+    def can_resume?
+      canceled?
+    end
+
+    def ship!
+      ship || raise(InvalidStateChange)
+    end
+
+    def ship
+      return false unless can_ship?
+      previous_state = state
+      change_state!(SHIPPED)
+      after_ship
+      after_resume if previous_state == CANCELED
+      true
+    end
+
+    def can_ship?
+      ready? || canceled?
+    end
+
+    def shipped?
+      state == SHIPPED
+    end
+
+    def ready!
+      ready || raise(InvalidStateChange)
+    end
+
+    def ready
+      return false unless state == PENDING
+      if can_transition_from_pending_to_shipped?
+        change_state!(SHIPPED)
+        after_ship
+      elsif can_transition_from_pending_to_ready?
+        change_state!(READY)
+      else
+        return false
       end
+      true
+    end
+
+    def ready?
+      state == READY
+    end
+
+    def can_ready?
+      pending? && (can_transition_from_pending_to_shipped? || can_transition_from_pending_to_ready?)
+    end
+
+    def pend!
+      pend || raise(InvalidStateChange)
+    end
+
+    def pend
+      return false unless can_pend?
+      change_state!(PENDING)
+      true
+    end
+
+    def pending?
+      state == PENDING
+    end
+
+    def can_pend?
+      ready?
     end
 
     self.whitelisted_ransackable_associations = ['order']
@@ -264,13 +336,13 @@ module Spree
     # shipped    if already shipped (ie. does not change the state)
     # ready      all other cases
     def determine_state(order)
-      return 'canceled' if order.canceled?
-      return 'shipped' if shipped?
-      return 'pending' unless order.can_ship?
+      return CANCELED if order.canceled?
+      return SHIPPED if shipped?
+      return PENDING unless order.can_ship?
       if can_transition_from_pending_to_ready?
-        'ready'
+        READY
       else
-        'pending'
+        PENDING
       end
     end
 
@@ -355,7 +427,7 @@ module Spree
           state: new_state,
           updated_at: Time.current
         )
-        after_ship if new_state == 'shipped'
+        after_ship if new_state == SHIPPED
       end
     end
 
@@ -428,6 +500,27 @@ module Spree
       if shipped? || canceled?
         errors.add(:state, :cannot_destroy, state: state)
         throw :abort
+      end
+    end
+
+    def store_state_change(previous_state, new_state)
+      state_changes.create!(
+        previous_state: previous_state,
+        next_state:     new_state,
+        name:           'shipment'
+      )
+    end
+
+    def change_state!(new_state)
+      previous_state = state
+      return if new_state == previous_state
+      update!(state: new_state)
+      store_state_change(previous_state, new_state)
+    end
+
+    def is_valid_state?
+      unless DEFAULT_STATES.include?(state)
+        errors.add(:state, "Invalid state")
       end
     end
   end
