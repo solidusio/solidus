@@ -6,9 +6,16 @@
 <% if try_spree_current_user %>
   <ul id="login-nav" class="admin-login-nav">
     <li data-hook="user-account-link">
-      <%= link_to spree.polymorphic_path([:edit, :admin, try_spree_current_user]) do %>
-        <i class='fa fa-user'></i>
-        <%= try_spree_current_user.email %>
+      <% if can?(:admin, try_spree_current_user) %>
+        <%= link_to spree.edit_admin_user_path(try_spree_current_user) do %>
+          <i class='fa fa-user'></i>
+          <%= try_spree_current_user.email %>
+        <% end %>
+      <% else %>
+        <a>
+          <i class='fa fa-user'></i>
+          <%= try_spree_current_user.email %>
+        </a>
       <% end %>
     </li>
 
