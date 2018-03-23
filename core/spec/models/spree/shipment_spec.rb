@@ -1213,4 +1213,34 @@ RSpec.describe Spree::Shipment, type: :model do
 
     it { is_expected.to include carton }
   end
+
+  describe '#inventory_can_ship?' do
+    let(:shipment) { create(:shipment, order: order) }
+
+    subject { shipment.inventory_can_ship? }
+
+    context "with backordered inventory" do
+      before { shipment.inventory_units.update_all(state: "backordered") }
+
+      it "returns false" do
+        expect(subject).to be false
+      end
+    end
+
+    context "with on_hand inventory" do
+      before { shipment.inventory_units.update_all(state: "on_hand") }
+
+      it "returns true" do
+        expect(subject).to be true
+      end
+    end
+
+    context "with shipped inventory" do
+      before { shipment.inventory_units.update_all(state: "shipped") }
+
+      it "returns true" do
+        expect(subject).to be true
+      end
+    end
+  end
 end
