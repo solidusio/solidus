@@ -70,7 +70,7 @@ module Spree
 
     def resume
       return false unless can_resume?
-      can_transition_from_canceled_to_ready? ? change_state!(READY) : change_state!(PENDING)
+      inventory_can_ship? ? change_state!(READY) : change_state!(PENDING)
       after_resume
       true
     end
@@ -106,10 +106,10 @@ module Spree
 
     def ready
       return false unless state == PENDING
-      if can_transition_from_pending_to_shipped?
+      if !requires_shipment?
         change_state!(SHIPPED)
         after_ship
-      elsif can_transition_from_pending_to_ready?
+      elsif inventory_can_ship?
         change_state!(READY)
       else
         return false
@@ -122,7 +122,7 @@ module Spree
     end
 
     def can_ready?
-      pending? && (can_transition_from_pending_to_shipped? || can_transition_from_pending_to_ready?)
+      pending? && (!requires_shipment? || inventory_can_ship?)
     end
 
     def pend!
@@ -148,14 +148,18 @@ module Spree
 
     delegate :tax_category, :tax_category_id, to: :selected_shipping_rate, allow_nil: true
 
+    def inventory_can_ship?
+      order.can_ship? &&
+        inventory_units.all? { |iu| iu.shipped? || iu.allow_ship? || iu.canceled? } &&
+        (order.paid? || !Spree::Config[:require_payment_to_ship])
+    end
+
     def can_transition_from_pending_to_shipped?
       !requires_shipment?
     end
 
     def can_transition_from_pending_to_ready?
-      order.can_ship? &&
-        inventory_units.all? { |iu| iu.shipped? || iu.allow_ship? || iu.canceled? } &&
-        (order.paid? || !Spree::Config[:require_payment_to_ship])
+      inventory_can_ship?
     end
 
     def can_transition_from_canceled_to_ready?
@@ -339,7 +343,7 @@ module Spree
       return CANCELED if order.canceled?
       return SHIPPED if shipped?
       return PENDING unless order.can_ship?
-      if can_transition_from_pending_to_ready?
+      if inventory_can_ship?
         READY
       else
         PENDING
