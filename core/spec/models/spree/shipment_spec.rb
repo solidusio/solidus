@@ -1170,36 +1170,6 @@ RSpec.describe Spree::Shipment, type: :model do
     end
   end
 
-  describe '#can_transition_from_pending_to_ready?' do
-    let(:shipment) { create(:shipment, order: order) }
-
-    subject { shipment.can_transition_from_pending_to_ready? }
-
-    context "with backordered inventory" do
-      before { shipment.inventory_units.update_all(state: "backordered") }
-
-      it "returns false" do
-        expect(subject).to be false
-      end
-    end
-
-    context "with on_hand inventory" do
-      before { shipment.inventory_units.update_all(state: "on_hand") }
-
-      it "returns true" do
-        expect(subject).to be true
-      end
-    end
-
-    context "with shipped inventory" do
-      before { shipment.inventory_units.update_all(state: "shipped") }
-
-      it "returns true" do
-        expect(subject).to be true
-      end
-    end
-  end
-
   describe '#cartons' do
     let(:carton)   { create(:carton) }
     let(:shipment) { carton.shipments.first }
