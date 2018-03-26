@@ -145,7 +145,7 @@ module Spree
       raise ::NotImplementedError, "You must implement payment_source_class method for #{self.class}."
     end
 
-    # @deprecated Use {#available_to_users=} and {#available_to_admin=} instead
+    # @deprecated Use {Spree::PaymentMethod#available_to_users=} and {Spree::PaymentMethod#available_to_admin=} instead
     def display_on=(value)
       Spree::Deprecation.warn "Spree::PaymentMethod#display_on= is deprecated."\
         "Please use #available_to_users= and #available_to_admin= instead."
@@ -153,7 +153,7 @@ module Spree
       self.available_to_admin = value.blank? || value == 'back_end'
     end
 
-    # @deprecated Use {#available_to_users} and {#available_to_admin} instead
+    # @deprecated Use {Spree::PaymentMethod#available_to_users} and {Spree::PaymentMethod#available_to_admin} instead
     def display_on
       Spree::Deprecation.warn "Spree::PaymentMethod#display_on is deprecated."\
         "Please use #available_to_users and #available_to_admin instead."
@@ -210,8 +210,8 @@ module Spree
       true
     end
 
-    # Custom gateways should redefine this method. See Gateway implementation
-    # as an example
+    # Custom gateways can redefine this method to return reusable sources for an order.
+    # See {Spree::PaymentMethod::CreditCard#reusable_sources} as an example
     def reusable_sources(_order)
       []
     end
