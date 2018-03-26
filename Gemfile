@@ -5,7 +5,7 @@ source 'https://rubygems.org'
 gemspec require: false
 
 platforms :ruby do
-  gem 'mysql2', require: false
+  gem 'mysql2', '~> 0.4.10', require: false
   gem 'pg', '~> 0.21', require: false
   gem 'sqlite3', require: false
   gem 'fast_sqlite', require: false
