@@ -5,6 +5,7 @@ require 'bundler'
 require 'bundler/cli'
 
 module Spree
+  # @private
   class InstallGenerator < Rails::Generators::Base
     CORE_MOUNT_ROUTE = "mount Spree::Core::Engine"
 
