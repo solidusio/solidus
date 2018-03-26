@@ -215,7 +215,7 @@ describe "Checkout", type: :feature, inaccessible: true do
   context "doesn't allow bad credit card numbers" do
     let!(:payment_method) { create(:credit_card_payment_method) }
     before(:each) do
-      order = OrderWalkthrough.up_to(:delivery)
+      order = Spree::TestingSupport::OrderWalkthrough.up_to(:delivery)
 
       user = create(:user)
       order.user = user
@@ -243,7 +243,7 @@ describe "Checkout", type: :feature, inaccessible: true do
     let!(:user) { create(:user) }
 
     let!(:order) do
-      order = OrderWalkthrough.up_to(:delivery)
+      order = Spree::TestingSupport::OrderWalkthrough.up_to(:delivery)
 
       order.reload
       order.user = user
@@ -291,7 +291,7 @@ describe "Checkout", type: :feature, inaccessible: true do
 
     before do
       Capybara.ignore_hidden_elements = false
-      order = OrderWalkthrough.up_to(:delivery)
+      order = Spree::TestingSupport::OrderWalkthrough.up_to(:delivery)
       allow(order).to receive_messages(available_payment_methods: [check_payment, credit_cart_payment])
       order.user = create(:user)
       order.recalculate
@@ -326,7 +326,7 @@ describe "Checkout", type: :feature, inaccessible: true do
 
     before do
       user.wallet.add(credit_card)
-      order = OrderWalkthrough.up_to(:delivery)
+      order = Spree::TestingSupport::OrderWalkthrough.up_to(:delivery)
 
       allow_any_instance_of(Spree::CheckoutController).to receive_messages(current_order: order)
       allow_any_instance_of(Spree::CheckoutController).to receive_messages(try_spree_current_user: user)
@@ -568,7 +568,7 @@ describe "Checkout", type: :feature, inaccessible: true do
 
   context "when order is completed" do
     let!(:user) { create(:user) }
-    let!(:order) { OrderWalkthrough.up_to(:delivery) }
+    let!(:order) { Spree::TestingSupport::OrderWalkthrough.up_to(:delivery) }
 
     before(:each) do
       allow_any_instance_of(Spree::CheckoutController).to receive_messages(current_order: order)

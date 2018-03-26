@@ -4,7 +4,7 @@ require 'spec_helper'
 
 describe "checkout with unshippable items", type: :feature, inaccessible: true do
   let!(:stock_location) { create(:stock_location) }
-  let(:order) { OrderWalkthrough.up_to(:address) }
+  let(:order) { Spree::TestingSupport::OrderWalkthrough.up_to(:address) }
 
   before do
     create(:line_item, order: order)

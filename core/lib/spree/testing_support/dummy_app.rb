@@ -12,19 +12,24 @@ Rails.env = 'test'
 
 require 'solidus_core'
 
+# @private
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 end
 
+# @private
 class ApplicationRecord < ActiveRecord::Base
 end
 
+# @private
 class ApplicationMailer < ActionMailer::Base
 end
 
+# @private
 module ApplicationHelper
 end
 
+# @private
 module DummyApp
   def self.setup(gem_root:, lib_name:, auto_migrate: true)
     ENV["LIB_NAME"] = lib_name
