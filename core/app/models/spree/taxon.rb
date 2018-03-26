@@ -26,7 +26,7 @@ module Spree
     after_touch :touch_ancestors_and_taxonomy
 
     has_attached_file :icon,
-      styles: { mini: '32x32>', normal: '128x128>' },
+      styles: { mini: '32x32>', normal: '128x128>', medium: '400x400>', large: '600x600>' },
       default_style: :mini,
       url: '/spree/taxons/:id/:style/:basename.:extension',
       path: ':rails_root/public/spree/taxons/:id/:style/:basename.:extension',
