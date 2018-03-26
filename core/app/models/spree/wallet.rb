@@ -55,7 +55,7 @@ class Spree::Wallet
   end
 
   # Change the default WalletPaymentSource for this wallet.
-  # @param source [WalletPaymentSource] The payment source to set as the default.
+  # @param wallet_payment_source [WalletPaymentSource] The payment source to set as the default.
   #   It must be in the wallet already. Pass nil to clear the default.
   # @return [void]
   def default_wallet_payment_source=(wallet_payment_source)

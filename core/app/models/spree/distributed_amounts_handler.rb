@@ -9,7 +9,7 @@ module Spree
       @total_amount = total_amount
     end
 
-    # @param [LineItem] one of the line_items distributed over
+    # @param line_item [LineItem] one of the line_items distributed over
     # @return [BigDecimal] the weighted adjustment for this line_item
     def amount(line_item)
       distributed_amounts[line_item.id].to_d

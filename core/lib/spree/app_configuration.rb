@@ -104,7 +104,7 @@ module Spree
     preference :inventory_cache_threshold, :integer
 
     # @!attribute [rw] checkout_zone
-    #   @return [String] Name of a {Zone}, which limits available countries to those included in that zone. (default: +nil+)
+    #   @return [String] Name of a {Spree::Zone}, which limits available countries to those included in that zone. (default: +nil+)
     preference :checkout_zone, :string, default: nil
 
     # @!attribute [rw] company
@@ -118,7 +118,7 @@ module Spree
 
     # @!attribute [rw] default_country_id
     #   @deprecated Use the default country ISO preference instead
-    #   @return [Integer,nil] id of {Country} to be selected by default in dropdowns (default: nil)
+    #   @return [Integer,nil] id of {Spree::Country} to be selected by default in dropdowns (default: nil)
     preference :default_country_id, :integer
 
     # @!attribute [rw] default_country_iso
@@ -159,7 +159,7 @@ module Spree
     preference :max_level_in_taxons_menu, :integer, default: 1
 
     # @!attribute [rw] order_mutex_max_age
-    #   @return [Integer] Max age of {OrderMutex} in seconds (default: 2 minutes)
+    #   @return [Integer] Max age of {Spree::OrderMutex} in seconds (default: 2 minutes)
     preference :order_mutex_max_age, :integer, default: 120
 
     # @!attribute [rw] orders_per_page
@@ -244,7 +244,7 @@ module Spree
     # Store credits configurations
 
     # @!attribute [rw] credit_to_new_allocation
-    #   @return [Boolean] Creates a new allocation anytime {StoreCredit#credit} is called
+    #   @return [Boolean] Creates a new allocation anytime {Spree::StoreCredit#credit} is called
     preference :credit_to_new_allocation, :boolean, default: false
 
     # @!attribute [rw] automatic_default_address
@@ -262,7 +262,7 @@ module Spree
     # Allows restricting what currencies will be available.
     #
     # @!attribute [r] available_currencies
-    #   @returns [Array] An array of available currencies from Money::Currency.all
+    #   @return [Array] An array of available currencies from Money::Currency.all
     attr_writer :available_currencies
     def available_currencies
       @available_currencies ||= ::Money::Currency.all

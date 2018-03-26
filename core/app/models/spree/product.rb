@@ -302,7 +302,7 @@ module Spree
 
     # Finds the variant property rule that matches the provided option value ids.
     #
-    # @param [Array<Integer>] list of option value ids
+    # @param option_value_ids [Array<Integer>] list of option value ids
     # @return [Spree::VariantPropertyRule] the matching variant property rule
     def find_variant_property_rule(option_value_ids)
       variant_property_rules.find do |rule|

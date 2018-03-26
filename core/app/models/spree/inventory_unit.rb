@@ -47,10 +47,11 @@ module Spree
         .backordered.order(Spree::Order.arel_table[:completed_at].asc)
     end
 
+    # @method backordered_for_stock_item(stock_item)
     # @param stock_item [Spree::StockItem] the stock item of the desired
     #   inventory units
     # @return [ActiveRecord::Relation<Spree::InventoryUnit>] backordered
-    # inventory units for the given stock item
+    #   inventory units for the given stock item
     scope :backordered_for_stock_item, ->(stock_item) do
       backordered_per_variant(stock_item)
         .where(spree_shipments: { stock_location_id: stock_item.stock_location_id })

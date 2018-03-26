@@ -38,7 +38,7 @@ module Spree
     end
 
     def add_files
-      template 'config/initializers/spree.rb', 'config/initializers/spree.rb'
+      template 'config/initializers/spree.rb.tt', 'config/initializers/spree.rb'
     end
 
     def additional_tweaks

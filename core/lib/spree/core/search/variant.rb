@@ -49,7 +49,7 @@ module Spree
         # Subclasses may override this to allow conditional filtering, etc.
         #
         # @api public
-        # @param word [String] One of the search words provided by the user.
+        # @param _word [String] One of the search words provided by the user.
         #   e.g. a SKU
         # @return [Array<Symbol>] the list of search terms to use for this word
         def search_terms(_word)

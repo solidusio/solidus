@@ -359,7 +359,7 @@ module Spree
     # "Are these line items equal" decision.
     #
     # When adding to cart, an extension would send something like:
-    # params[:product_customizations]={...}
+    # params[:product_customizations]=...
     #
     # and would provide:
     #
