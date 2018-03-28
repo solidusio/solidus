@@ -86,7 +86,15 @@ RSpec.describe Spree::PromotionCode::BatchBuilder do
     end
 
     context "with a custom join separator" do
-      let(:options) { { join_characters: "x" } }
+      let(:promotion_code_batch) do
+        Spree::PromotionCodeBatch.create!(
+          promotion_id: promotion.id,
+          base_code: base_code,
+          number_of_codes: number_of_codes,
+          email: "test@email.com",
+          join_characters: "x"
+        )
+      end
 
       it "builds codes with the same base prefix" do
         subject.build_promotion_codes

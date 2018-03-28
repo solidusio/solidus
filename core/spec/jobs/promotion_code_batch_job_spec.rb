@@ -11,12 +11,41 @@ RSpec.describe Spree::PromotionCodeBatchJob, type: :job do
       email: email
     )
   end
-
   context "with a successful build" do
     before do
       allow(Spree::PromotionCodeBatchMailer)
         .to receive(:promotion_code_batch_finished)
         .and_call_original
+    end
+
+    def codes
+      Spree::PromotionCode.pluck(:value)
+    end
+
+    context 'with the default join character' do
+      it 'uses the default join characters', :aggregate_failures do
+        subject.perform(promotion_code_batch)
+        codes.each do |code|
+          expect(code).to match(/^test_/)
+        end
+      end
+    end
+    context 'with a custom join character' do
+      let(:promotion_code_batch) do
+        Spree::PromotionCodeBatch.create!(
+          promotion_id: create(:promotion).id,
+          base_code: "test",
+          number_of_codes: 10,
+          email: email,
+          join_characters: '-'
+        )
+      end
+      it 'uses the custom join characters', :aggregate_failures do
+        subject.perform(promotion_code_batch)
+        codes.each do |code|
+          expect(code).to match(/^test-/)
+        end
+      end
     end
     context "with an email address" do
       it "sends an email" do
