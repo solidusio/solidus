@@ -1,6 +1,6 @@
-<div class="admin-locale-selection">
-  <% available_locales = Spree.i18n_available_locales %>
-  <% if available_locales.size > 1 %>
+<% available_locales = Spree.i18n_available_locales %>
+<% if available_locales.size > 1 %>
+  <div class="admin-locale-selection">
     <select class="js-locale-selection custom-select fullwidth">
       <%=
         options_for_select(
@@ -11,5 +11,5 @@
         )
       %>
     </select>
-  <% end %>
-</div>
+  </div>
+<% end %>
