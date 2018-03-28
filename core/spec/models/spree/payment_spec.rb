@@ -668,12 +668,9 @@ RSpec.describe Spree::Payment, type: :model do
     end
 
     context 'when the payment was completed but now void' do
-      let(:payment) do
-        Spree::Payment.create(
-          amount: 100,
-          order: order,
-          state: 'completed'
-        )
+      before do
+        payment.state = 'completed'
+        payment.amount = 100
       end
 
       it 'updates order payment total' do
