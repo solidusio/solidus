@@ -7,9 +7,11 @@ Spree.ready(function() {
       type: "PUT",
       dataType: "json",
       url: Spree.pathFor("admin/locale/set"),
-      data: { locale: localeSelect.value },
+      data: {
+        switch_to_locale: localeSelect.value
+      },
       success: function(data) {
-        window.location.reload();
+        document.location.href = data.location;
       }
     });
   });
