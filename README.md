@@ -3,7 +3,6 @@
 
 * [solidus.io](http://solidus.io/)
 * [Join our Slack](http://slack.solidus.io/) ([solidusio.slack.com](http://solidusio.slack.com))
-* [#solidus.io](http://webchat.freenode.net/?channels=solidus.io) on freenode
 * [solidus-security](https://groups.google.com/forum/#!forum/solidus-security) mailing list
 
 Summary
