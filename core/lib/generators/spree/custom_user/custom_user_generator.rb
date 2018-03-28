@@ -3,6 +3,7 @@
 require 'rails/generators/active_record/migration'
 
 module Spree
+  # @private
   class CustomUserGenerator < Rails::Generators::NamedBase
     include ActiveRecord::Generators::Migration
 

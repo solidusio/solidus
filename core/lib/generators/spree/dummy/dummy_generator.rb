@@ -5,6 +5,7 @@ require 'active_support/core_ext/hash'
 require 'spree/core/version'
 
 module Spree
+  # @private
   class DummyGenerator < Rails::Generators::Base
     desc "Creates blank Rails application, installs Solidus and all sample data"
 
@@ -138,9 +139,10 @@ end
       end
     end
   end
-end
 
-module Spree::DummyGeneratorHelper
-  mattr_accessor :inject_extension_requirements
-  self.inject_extension_requirements = false
+  # @private
+  module DummyGeneratorHelper
+    mattr_accessor :inject_extension_requirements
+    self.inject_extension_requirements = false
+  end
 end
