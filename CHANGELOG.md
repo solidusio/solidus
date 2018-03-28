@@ -1,6 +1,6 @@
 ## Solidus 2.6.0 (master, unreleased)
 
-## Solidus 2.5.0 (unreleased)
+## Solidus 2.5.0 (2018-03-27)
 
 ## Major Changes
 ### Migrate to discard from paranoia
@@ -77,6 +77,9 @@ In this version we are beginning to deprecate this using the [`discard`](https:/
 - Fix RMA amount calculator [#1590](https://github.com/solidusio/solidus/pull/1590) ([DanielePalombo](https://github.com/DanielePalombo))
 - Allow cancelling orders that have been fully refunded [#1355](https://github.com/solidusio/solidus/pull/1355) ([Sinetheta](https://github.com/Sinetheta))
 - Simplify Coupon PromotionHandler [#521](https://github.com/solidusio/solidus/pull/521) ([jhawthorn](https://github.com/jhawthorn))
+- Splitting shipment should update order totals and payment status [#2555](https://github.com/solidusio/solidus/pull/2555) ([VzqzAc](https://github.com/VzqzAc)
+- Add mutable false to default refund reason record [#2574](https://github.com/solidusio/solidus/pull/2574) ([mdesantis](https://github.com/mdesantis))
+- Generate correct number of codes in BatchBuilder [#2578](https://github.com/solidusio/solidus/pull/2578) ([jhawthorn](https://github.com/jhawthorn))
 
 ## Deprecations and removals
 - Remove `Spree::OrderUpdater#round_money` [#2344](https://github.com/solidusio/solidus/pull/2344) ([swcraig](https://github.com/swcraig))
@@ -107,6 +110,8 @@ In this version we are beginning to deprecate this using the [`discard`](https:/
 - Fixed caching of taxon menu. [#2317](https://github.com/solidusio/solidus/pull/2317) ([bofrede](https://github.com/bofrede))
 - Use empty? instead of length == 0 [#2282](https://github.com/solidusio/solidus/pull/2282) ([brchristian](https://github.com/brchristian))
 - Use `line_item_adjustments` in `spree/shared/_order_details` [#2257](https://github.com/solidusio/solidus/pull/2257) ([cbrunsdon](https://github.com/cbrunsdon))
+- Filter unpriced products in taxon_preview [#2604](https://github.com/solidusio/solidus/pull/2604) ([jhawthorn](https://github.com/jhawthorn))
+- Fix error when listing products without price [#2605](https://github.com/solidusio/solidus/pull/2605) ([jhawthorn](https://github.com/jhawthorn))
 
 ## Documentation
 - Change instances of "udpate" to "update" [#2533](https://github.com/solidusio/solidus/pull/2533) ([dsojevic](https://github.com/dsojevic))
