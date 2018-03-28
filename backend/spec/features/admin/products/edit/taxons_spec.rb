@@ -32,7 +32,7 @@ describe "Product Display Order", type: :feature do
       assert_selected_taxons([taxon_1, taxon_2])
     end
 
-    context "with an XSS attempt" do
+    context "with an XSS attempt", skip: true do
       let(:taxon_name) { %(<script>throw("XSS")</script>) }
       let!(:taxon) { create(:taxon, name: taxon_name) }
       it "displays the escaped HTML without executing it" do
