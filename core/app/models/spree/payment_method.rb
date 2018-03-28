@@ -25,7 +25,15 @@ module Spree
     self.discard_column = :deleted_at
 
     acts_as_list
-    DISPLAY = [:both, :front_end, :back_end]
+
+    # @private
+    def self.const_missing(name)
+      if name == :DISPLAY
+        const_set(:DISPLAY, [:both, :front_end, :back_end])
+      else
+        super
+      end
+    end
 
     validates :name, :type, presence: true
 
@@ -63,12 +71,14 @@ module Spree
     end
 
     class << self
+      # @deprecated Use Spree::Config.environment.payment_methods instead
       def providers
         Spree::Deprecation.warn 'Spree::PaymentMethod.providers is deprecated and will be deleted in Solidus 3.0. ' \
           'Please use Rails.application.config.spree.payment_methods instead'
         Spree::Config.environment.payment_methods
       end
 
+      # @deprecated Use {.active}, {.available_to_users}, and {.available_to_admin} scopes instead.
       def available(display_on = nil, store: nil)
         Spree::Deprecation.warn "Spree::PaymentMethod.available is deprecated."\
           "Please use .active, .available_to_users, and .available_to_admin scopes instead."\
@@ -95,11 +105,15 @@ module Spree
         ModelName.new(self, Spree)
       end
 
+      # @deprecated Use .active.any? instead
       def active?
+        Spree::Deprecation.warn "#{self}.active? is deprecated. Use #{self}.active.any? instead"
         where(type: to_s, active: true).count > 0
       end
 
+      # @deprecated Use .with_deleted.find instead
       def find_with_destroyed(*args)
+        Spree::Deprecation.warn "#{self}.find_with_destroyed is deprecated. Use #{self}.with_deleted.find instead"
         unscoped { find(*args) }
       end
     end
@@ -145,7 +159,7 @@ module Spree
       raise ::NotImplementedError, "You must implement payment_source_class method for #{self.class}."
     end
 
-    # @deprecated Use {#available_to_users=} and {#available_to_admin=} instead
+    # @deprecated Use {Spree::PaymentMethod#available_to_users=} and {Spree::PaymentMethod#available_to_admin=} instead
     def display_on=(value)
       Spree::Deprecation.warn "Spree::PaymentMethod#display_on= is deprecated."\
         "Please use #available_to_users= and #available_to_admin= instead."
@@ -153,7 +167,7 @@ module Spree
       self.available_to_admin = value.blank? || value == 'back_end'
     end
 
-    # @deprecated Use {#available_to_users} and {#available_to_admin} instead
+    # @deprecated Use {Spree::PaymentMethod#available_to_users} and {Spree::PaymentMethod#available_to_admin} instead
     def display_on
       Spree::Deprecation.warn "Spree::PaymentMethod#display_on is deprecated."\
         "Please use #available_to_users and #available_to_admin instead."
@@ -210,8 +224,8 @@ module Spree
       true
     end
 
-    # Custom gateways should redefine this method. See Gateway implementation
-    # as an example
+    # Custom gateways can redefine this method to return reusable sources for an order.
+    # See {Spree::PaymentMethod::CreditCard#reusable_sources} as an example
     def reusable_sources(_order)
       []
     end
