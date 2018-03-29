@@ -13,6 +13,7 @@ describe "setting locale", type: :feature do
         month_names: []
       },
       spree: {
+        i18n: { this_file_language: "Français" },
         admin: {
           tab: { orders: "Ordres" }
         },
