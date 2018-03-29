@@ -3,6 +3,9 @@
 require 'rails_helper'
 
 RSpec.describe Spree::Reimbursement, type: :model do
+  let(:order) { Spree::Order.create }
+  let(:reimbursement) { Spree::Reimbursement.create(order: order) }
+
   describe ".create" do
     let(:customer_return) { create(:customer_return) }
     let(:order) { customer_return.order }
@@ -272,6 +275,133 @@ RSpec.describe Spree::Reimbursement, type: :model do
 
     it "performs a reimbursment" do
       expect { subject }.to change { reimbursement.refunds.count }.by(1)
+    end
+  end
+
+  describe '#errored!' do
+    subject { reimbursement.errored! }
+
+    it { is_expected.to be true }
+
+    context 'when not able to change status to errored' do
+      before { reimbursement.reimbursement_status = 'reimbursed' }
+      it 'raises an error' do
+        expect { subject }.to raise_error(Spree::Reimbursement::InvalidStateChange)
+      end
+    end
+  end
+
+  describe '#errored' do
+    subject { reimbursement.errored }
+
+    it { is_expected.to be true }
+
+    it 'changes the status to errored' do
+      subject
+      expect(reimbursement.reimbursement_status).to eq 'errored'
+    end
+
+    context 'when not able to change status to errored' do
+      before { reimbursement.reimbursement_status = 'reimbursed' }
+      it { is_expected.to be false }
+    end
+  end
+
+  describe '#errored?' do
+    subject { reimbursement.errored? }
+
+    before { reimbursement.reimbursement_status = 'errored' }
+
+    it { is_expected.to be true }
+
+    context 'when status is not errored' do
+      before { reimbursement.reimbursement_status = 'pending' }
+      it { is_expected.to be false }
+    end
+  end
+
+  describe '#can_errored?' do
+    subject { reimbursement.can_errored? }
+
+    ['pending', 'errored'].each do |status|
+      context "when status is #{status}" do
+        before { reimbursement.reimbursement_status = status }
+        it { is_expected.to be true }
+      end
+    end
+
+    context 'when status is reimbursed' do
+      before { reimbursement.reimbursement_status = 'reimbursed' }
+      it { is_expected.to be false }
+    end
+  end
+
+  describe '#reimbursed!' do
+    subject { reimbursement.reimbursed! }
+
+    it { is_expected.to be true }
+
+    context 'when not able to change status to reimbursed' do
+      before { reimbursement.reimbursement_status = 'reimbursed' }
+      it 'raises an error' do
+        expect { subject }.to raise_error(Spree::Reimbursement::InvalidStateChange)
+      end
+    end
+  end
+
+  describe '#reimbursed' do
+    subject { reimbursement.reimbursed }
+
+    it { is_expected.to be true }
+
+    it 'changes the status to reimbursed' do
+      subject
+      expect(reimbursement.reimbursement_status).to eq 'reimbursed'
+    end
+
+    context 'when not able to change status to reimbursed' do
+      before { reimbursement.reimbursement_status = 'reimbursed' }
+      it { is_expected.to be false }
+    end
+  end
+
+  describe '#reimbursed?' do
+    subject { reimbursement.reimbursed? }
+
+    before { reimbursement.reimbursement_status = 'reimbursed' }
+
+    it { is_expected.to be true }
+
+    context 'when status is not reimbursed' do
+      before { reimbursement.reimbursement_status = 'pending' }
+      it { is_expected.to be false }
+    end
+  end
+
+  describe '#can_reimbursed?' do
+    subject { reimbursement.can_reimbursed? }
+
+    ['pending', 'errored'].each do |status|
+      context "when status is #{status}" do
+        before { reimbursement.reimbursement_status = status }
+        it { is_expected.to be true }
+      end
+    end
+
+    context 'when status is reimbursed' do
+      before { reimbursement.reimbursement_status = 'reimbursed' }
+      it { is_expected.to be false }
+    end
+  end
+
+  describe '#pending?' do
+    subject { reimbursement.pending? }
+
+    it { is_expected.to be true }
+
+    context 'when status is not pending' do
+      before { reimbursement.reimbursement_status = 'errored' }
+      it { is_expected.to be false }
     end
   end
 end

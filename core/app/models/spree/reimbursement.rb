@@ -3,6 +3,12 @@
 module Spree
   class Reimbursement < Spree::Base
     class IncompleteReimbursementError < StandardError; end
+    class InvalidStateChange < StandardError; end
+
+    PENDING = 'pending'
+    ERRORED = 'errored'
+    REIMBURSED = 'reimbursed'
+    DEFAULT_REIMBURSEMENT_STATUSES = [PENDING, ERRORED, REIMBURSED]
 
     belongs_to :order, inverse_of: :reimbursements
     belongs_to :customer_return, inverse_of: :reimbursements, touch: true
@@ -14,13 +20,14 @@ module Spree
 
     validates :order, presence: true
     validate :validate_return_items_belong_to_same_order
+    validate :is_valid_reimbursement_status?
 
     accepts_nested_attributes_for :return_items, allow_destroy: true
 
     before_create :generate_number
     before_create :calculate_total
 
-    scope :reimbursed, -> { where(reimbursement_status: 'reimbursed') }
+    scope :reimbursed, -> { where(reimbursement_status: REIMBURSED) }
 
     # The reimbursement_tax_calculator property should be set to an object that responds to "call"
     # and accepts a reimbursement object. Invoking "call" should update the tax fields on the
@@ -59,14 +66,44 @@ module Spree
     class_attribute :reimbursement_failure_hooks
     self.reimbursement_failure_hooks = []
 
-    state_machine :reimbursement_status, initial: :pending do
-      event :errored do
-        transition to: :errored, from: [:pending, :errored]
-      end
+    def errored!
+      errored || raise(InvalidStateChange)
+    end
 
-      event :reimbursed do
-        transition to: :reimbursed, from: [:pending, :errored]
-      end
+    def errored
+      return false unless can_errored?
+      change_status!(ERRORED)
+      true
+    end
+
+    def errored?
+      reimbursement_status == ERRORED
+    end
+
+    def can_errored?
+      pending? || errored?
+    end
+
+    def reimbursed!
+      reimbursed || raise(InvalidStateChange)
+    end
+
+    def reimbursed
+      return false unless can_reimbursed?
+      change_status!(REIMBURSED)
+      true
+    end
+
+    def reimbursed?
+      reimbursement_status == REIMBURSED
+    end
+
+    def can_reimbursed?
+      pending? || errored?
+    end
+
+    def pending?
+      reimbursement_status == PENDING
     end
 
     class << self
@@ -176,6 +213,12 @@ module Spree
       end
     end
 
+    def is_valid_reimbursement_status?
+      unless DEFAULT_REIMBURSEMENT_STATUSES.include?(reimbursement_status)
+        errors.add(:reimbursement_status, "Invalid reimbursement_status")
+      end
+    end
+
     def send_reimbursement_email
       Spree::Config.reimbursement_mailer_class.reimbursement_email(id).deliver_later
     end
@@ -196,6 +239,11 @@ module Spree
                    0
                  end
       unpaid_amount.abs.between?(0, leniency)
+    end
+
+    def change_status!(new_status)
+      return if new_status == reimbursement_status
+      update!(reimbursement_status: new_status)
     end
   end
 end
