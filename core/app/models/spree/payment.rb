@@ -8,8 +8,19 @@ module Spree
   class Payment < Spree::Base
     include Spree::Payment::Processing
 
+    class InvalidStateChange < StandardError; end
+
     alias_attribute :identifier, :number
     deprecate :identifier, :identifier=, deprecator: Spree::Deprecation
+
+    PENDING = 'pending'
+    PROCESSING = 'processing'
+    CHECKOUT = 'checkout'
+    COMPLETED = 'completed'
+    INVALID = 'invalid'
+    VOID = 'void'
+    FAILED = 'failed'
+    DEFAULT_STATES = [PENDING, PROCESSING, CHECKOUT, COMPLETED, INVALID, VOID, FAILED]
 
     IDENTIFIER_CHARS    = (('A'..'Z').to_a + ('0'..'9').to_a - %w(0 1 I O)).freeze
     NON_RISKY_AVS_CODES = ['B', 'D', 'H', 'J', 'M', 'Q', 'T', 'V', 'X', 'Y'].freeze
@@ -43,6 +54,7 @@ module Spree
     validates :amount, numericality: true
     validates :source, presence: true, if: :source_required?
     validates :payment_method, presence: true
+    validate :is_valid_state?
 
     default_scope -> { order(:created_at) }
 
@@ -51,55 +63,128 @@ module Spree
     # "offset" is reserved by activerecord
     scope :offset_payment, -> { where("source_type = 'Spree::Payment' AND amount < 0 AND state = 'completed'") }
 
-    scope :checkout, -> { with_state('checkout') }
-    scope :completed, -> { with_state('completed') }
-    scope :pending, -> { with_state('pending') }
-    scope :processing, -> { with_state('processing') }
-    scope :failed, -> { with_state('failed') }
+    scope :checkout, -> { with_state(CHECKOUT) }
+    scope :completed, -> { with_state(COMPLETED) }
+    scope :pending, -> { with_state(PENDING) }
+    scope :processing, -> { with_state(PROCESSING) }
+    scope :failed, -> { with_state(FAILED) }
 
     scope :risky, -> { where("avs_response IN (?) OR (cvv_response_code IS NOT NULL and cvv_response_code != 'M') OR state = 'failed'", RISKY_AVS_CODES) }
-    scope :valid, -> { where.not(state: %w(failed invalid)) }
+    scope :valid, -> { where.not(state: [FAILED, INVALID]) }
 
     scope :store_credits, -> { where(source_type: Spree::StoreCredit.to_s) }
     scope :not_store_credits, -> { where(arel_table[:source_type].not_eq(Spree::StoreCredit.to_s).or(arel_table[:source_type].eq(nil))) }
 
-    # order state machine (see http://github.com/pluginaweek/state_machine/tree/master for details)
-    state_machine initial: :checkout do
-      # With card payments, happens before purchase or authorization happens
-      #
-      # Setting it after creating a profile and authorizing a full amount will
-      # prevent the payment from being authorized again once Order transitions
-      # to complete
-      event :started_processing do
-        transition from: [:checkout, :pending, :completed, :processing], to: :processing
-      end
-      # When processing during checkout fails
-      event :failure do
-        transition from: [:pending, :processing], to: :failed
-      end
-      # With card payments this represents authorizing the payment
-      event :pend do
-        transition from: [:checkout, :processing], to: :pending
-      end
-      # With card payments this represents completing a purchase or capture transaction
-      event :complete do
-        transition from: [:processing, :pending, :checkout], to: :completed
-      end
-      event :void do
-        transition from: [:pending, :processing, :completed, :checkout], to: :void
-      end
-      # when the card brand isnt supported
-      event :invalidate do
-        transition from: [:checkout], to: :invalid
-      end
+    def started_processing!
+      started_processing || raise(InvalidStateChange)
+    end
 
-      after_transition do |payment, transition|
-        payment.state_changes.create!(
-          previous_state: transition.from,
-          next_state:     transition.to,
-          name:           'payment'
-        )
-      end
+    def started_processing
+      return false unless can_started_processing?
+      change_state!(PROCESSING)
+      true
+    end
+
+    def processing?
+      state == PROCESSING
+    end
+
+    def can_started_processing?
+      checkout? || pending? || completed? || processing?
+    end
+
+    def failure!
+      failure || raise(InvalidStateChange)
+    end
+
+    def failure
+      return false unless can_failure?
+      change_state!(FAILED)
+      true
+    end
+
+    def failed?
+      state == FAILED
+    end
+
+    def can_failure?
+      pending? || processing?
+    end
+
+    def pend!
+      pend || raise(InvalidStateChange)
+    end
+
+    def pend
+      return false unless can_pend?
+      change_state!(PENDING)
+      true
+    end
+
+    def pending?
+      state == PENDING
+    end
+
+    def can_pend?
+      checkout? || processing?
+    end
+
+    def complete!
+      complete || raise(InvalidStateChange)
+    end
+
+    def complete
+      return false unless can_complete?
+      change_state!(COMPLETED)
+      true
+    end
+
+    def completed?
+      state == COMPLETED
+    end
+
+    def can_complete?
+      processing? || pending? || checkout?
+    end
+
+    def void!
+      void || raise(InvalidStateChange)
+    end
+
+    def void
+      return false unless can_void?
+      change_state!(VOID)
+      true
+    end
+
+    def void?
+      state == VOID
+    end
+
+    def can_void?
+      pending? || processing? || completed? || checkout?
+    end
+
+    def invalidate!
+      invalidate || raise(InvalidStateChange)
+    end
+
+    def invalidate
+      return false unless can_invalidate?
+      change_state!(INVALID)
+      true
+    end
+
+    def invalid?
+      state == INVALID
+    end
+
+    def can_invalidate?
+      checkout?
+    end
+
+    def checkout?
+      state == CHECKOUT
     end
 
     # @return [String] this payment's response code
@@ -225,7 +310,7 @@ module Spree
 
     def create_payment_profile
       # Don't attempt to create on bad payments.
-      return if %w(invalid failed).include?(state)
+      return if [INVALID, FAILED].include?(state)
       # Payment profile cannot be created without source
       return unless source
       # Imported payments shouldn't create a payment profile.
@@ -237,9 +322,9 @@ module Spree
     end
 
     def invalidate_old_payments
-      if !store_credit? && !['invalid', 'failed'].include?(state)
+      if !store_credit? && ![INVALID, FAILED].include?(state)
         order.payments.select { |payment|
-          payment.state == 'checkout' && !payment.store_credit? && payment.id != id
+          payment.state == CHECKOUT && !payment.store_credit? && payment.id != id
         }.each(&:invalidate!)
       end
     end
@@ -278,6 +363,27 @@ module Spree
           action_amount: amount,
           action_authorization_code: response_code
         })
+      end
+    end
+
+    def store_state_change(previous_state, new_state)
+      state_changes.create!(
+        previous_state: previous_state,
+        next_state:     new_state,
+        name:           'payment'
+      )
+    end
+
+    def change_state!(new_state)
+      previous_state = state
+      return if new_state == previous_state
+      update!(state: new_state)
+      store_state_change(previous_state, new_state)
+    end
+
+    def is_valid_state?
+      unless DEFAULT_STATES.include?(state)
+        errors.add(:state, "Invalid state")
       end
     end
   end
