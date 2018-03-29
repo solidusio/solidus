@@ -94,39 +94,400 @@ RSpec.describe Spree::Payment, type: :model do
     end
   end
 
-  # Regression test for https://github.com/spree/spree/pull/2224
-  context 'failure' do
-    it 'should transition to failed from pending state' do
-      payment.state = 'pending'
-      payment.failure
-      expect(payment.state).to eql('failed')
-    end
+  describe '#started_processing!' do
+    subject { payment.started_processing! }
 
-    it 'should transition to failed from processing state' do
-      payment.state = 'processing'
-      payment.failure
-      expect(payment.state).to eql('failed')
+    it { is_expected.to be true }
+
+    context 'when not able to start proceesing' do
+      before { payment.state = 'invalid' }
+      it 'raises an exception' do
+        expect { subject }.to raise_error(Spree::Payment::InvalidStateChange)
+      end
     end
   end
 
-  context 'invalidate' do
-    it 'should transition from checkout to invalid' do
-      payment.state = 'checkout'
-      payment.invalidate
-      expect(payment.state).to eq('invalid')
+  describe '#started_processing' do
+    subject { payment.started_processing }
+
+    it { is_expected.to be true }
+
+    it 'changes the state' do
+      subject
+      expect(payment.state).to eq 'processing'
     end
 
-    context "the payment's source is invalid" do
+    context 'when not able to start processing' do
+      before { payment.state = 'invalid' }
+      it { is_expected.to be false }
+    end
+  end
+
+  describe '#processing?' do
+    subject { payment.processing? }
+
+    before { payment.state = 'processing' }
+
+    it { is_expected.to be true }
+
+    context 'when payment is not processing' do
+      before { payment.state = 'pending' }
+      it { is_expected.to be false }
+    end
+  end
+
+  describe '#can_started_processing?' do
+    subject { payment.can_started_processing? }
+
+    ['checkout', 'pending', 'completed', 'processing'].each do |state|
+      context "when state is #{state}" do
+        before { payment.state = state }
+        it { is_expected.to be true }
+      end
+    end
+
+    ['void', 'invalid', 'failed'].each do |state|
+      context "when state is #{state}" do
+        before { payment.state = state }
+        it { is_expected.to be false }
+      end
+    end
+  end
+
+  describe '#failure!' do
+    subject { payment.failure! }
+
+    before { payment.state = 'pending' }
+
+    it { is_expected.to be true }
+
+    context 'when not able to go to failed state' do
+      before { payment.state = 'invalid' }
+      it 'raises an exception' do
+        expect { subject }.to raise_error(Spree::Payment::InvalidStateChange)
+      end
+    end
+  end
+
+  describe '#failure' do
+    subject { payment.failure }
+
+    before { payment.state = 'pending' }
+
+    it { is_expected.to be true }
+
+    it 'changes the state to failed' do
+      subject
+      expect(payment.state).to eq 'failed'
+    end
+  end
+
+  describe '#failed?' do
+    subject { payment.failed? }
+
+    before { payment.state = 'failed' }
+
+    it { is_expected.to be true }
+
+    context 'when not in a failed state' do
+      before { payment.state = 'pending' }
+      it { is_expected.to be false }
+    end
+  end
+
+  describe '#can_failure?' do
+    subject { payment.can_failure? }
+
+    ['pending', 'processing'].each do |state|
+      context "when state is #{state}" do
+        before { payment.state = state }
+        it { is_expected.to be true }
+      end
+    end
+
+    ['void', 'invalid', 'failed', 'completed', 'checkout'].each do |state|
+      context "when state is #{state}" do
+        before { payment.state = state }
+        it { is_expected.to be false }
+      end
+    end
+  end
+
+  describe '#pend!' do
+    subject { payment.pend! }
+
+    before { payment.state = 'checkout' }
+
+    it { is_expected.to be true }
+
+    context 'when not able to pend' do
+      before { payment.state = 'invalid' }
+      it 'raises an exception' do
+        expect { subject }.to raise_error(Spree::Payment::InvalidStateChange)
+      end
+    end
+  end
+
+  describe '#pend' do
+    subject { payment.pend }
+
+    before { payment.state = 'checkout' }
+
+    it { is_expected.to be true }
+
+    it 'changes the state to pending' do
+      subject
+      expect(payment.state).to eq 'pending'
+    end
+
+    context 'when not able to pend' do
+      before { payment.state = 'void' }
+      it { is_expected.to be false }
+    end
+  end
+
+  describe '#pending?' do
+    subject { payment.pending? }
+
+    before { payment.state = 'pending' }
+
+    it { is_expected.to be true }
+
+    context 'when state is not pending' do
+      before { payment.state = 'void' }
+      it { is_expected.to be false }
+    end
+  end
+
+  describe '#can_pend?' do
+    subject { payment.can_pend? }
+
+    ['checkout', 'processing'].each do |state|
+      context "when state is #{state}" do
+        before { payment.state = state }
+        it { is_expected.to be true }
+      end
+    end
+
+    ['void', 'invalid', 'failed', 'completed', 'pending'].each do |state|
+      context "when state is #{state}" do
+        before { payment.state = state }
+        it { is_expected.to be false }
+      end
+    end
+  end
+
+  describe '#complete!' do
+    subject { payment.complete! }
+
+    before { payment.state = 'checkout' }
+
+    it { is_expected.to be true }
+
+    context 'when not able to pend' do
+      before { payment.state = 'invalid' }
+      it 'raises an exception' do
+        expect { subject }.to raise_error(Spree::Payment::InvalidStateChange)
+      end
+    end
+  end
+
+  describe '#complete' do
+    subject { payment.complete }
+
+    before { payment.state = 'checkout' }
+
+    it { is_expected.to be true }
+
+    it 'changes the state to completed' do
+      subject
+      expect(payment.state).to eq 'completed'
+    end
+
+    context 'when not able to complete' do
+      before { payment.state = 'void' }
+      it { is_expected.to be false }
+    end
+  end
+
+  describe '#completed?' do
+    subject { payment.completed? }
+
+    before { payment.state = 'completed' }
+
+    it { is_expected.to be true }
+
+    context 'when state is not completed' do
+      before { payment.state = 'void' }
+      it { is_expected.to be false }
+    end
+  end
+
+  describe '#can_complete?' do
+    subject { payment.can_complete? }
+
+    ['checkout', 'processing', 'pending'].each do |state|
+      context "when state is #{state}" do
+        before { payment.state = state }
+        it { is_expected.to be true }
+      end
+    end
+
+    ['void', 'invalid', 'failed', 'completed'].each do |state|
+      context "when state is #{state}" do
+        before { payment.state = state }
+        it { is_expected.to be false }
+      end
+    end
+  end
+
+  describe '#void!' do
+    subject { payment.void! }
+
+    before { payment.state = 'checkout' }
+
+    it { is_expected.to be true }
+
+    context 'when not able to pend' do
+      before { payment.state = 'invalid' }
+      it 'raises an exception' do
+        expect { subject }.to raise_error(Spree::Payment::InvalidStateChange)
+      end
+    end
+  end
+
+  describe '#void' do
+    subject { payment.void }
+
+    before { payment.state = 'checkout' }
+
+    it { is_expected.to be true }
+
+    it 'changes the state to void' do
+      subject
+      expect(payment.state).to eq 'void'
+    end
+
+    context 'when not able to void' do
+      before { payment.state = 'invalid' }
+      it { is_expected.to be false }
+    end
+  end
+
+  describe '#void?' do
+    subject { payment.void? }
+
+    before { payment.state = 'void' }
+
+    it { is_expected.to be true }
+
+    context 'when state is not void' do
+      before { payment.state = 'invalid' }
+      it { is_expected.to be false }
+    end
+  end
+
+  describe '#can_void?' do
+    subject { payment.can_void? }
+
+    ['checkout', 'processing', 'pending', 'completed'].each do |state|
+      context "when state is #{state}" do
+        before { payment.state = state }
+        it { is_expected.to be true }
+      end
+    end
+
+    ['void', 'invalid', 'failed'].each do |state|
+      context "when state is #{state}" do
+        before { payment.state = state }
+        it { is_expected.to be false }
+      end
+    end
+  end
+
+  describe '#invalidate!' do
+    subject { payment.invalidate! }
+
+    before { payment.state = 'checkout' }
+
+    it { is_expected.to be true }
+
+    context 'when not able to invalidate' do
+      before { payment.state = 'completed' }
+      it 'raises an exception' do
+        expect { subject }.to raise_error(Spree::Payment::InvalidStateChange)
+      end
+    end
+  end
+
+  describe 'invalidate' do
+    subject { payment.invalidate }
+    before { payment.state = 'checkout' }
+
+    it { is_expected.to be true }
+
+    it 'changes the state to invalid' do
+      subject
+      expect(payment.state).to eq 'invalid'
+    end
+
+    context 'when not able to invalidate' do
+      before { payment.state = 'void' }
+      it { is_expected.to be false }
+    end
+
+    context "when the payment's source is invalid" do
       before(:each) do
         card.year = 2014
         payment.source = card
       end
 
-      it "transitions to invalid" do
-        payment.state = 'checkout'
-        payment.invalidate
+      it 'changes the state to invalid' do
+        subject
         expect(payment.state).to eq 'invalid'
       end
+    end
+  end
+
+  describe '#invalid?' do
+    subject { payment.invalid? }
+
+    before { payment.state = 'invalid' }
+
+    it { is_expected.to be true }
+
+    context 'when state is not invalid' do
+      before { payment.state = 'void' }
+      it { is_expected.to be false }
+    end
+  end
+
+  describe '#can_invalidate?' do
+    subject { payment.can_invalidate? }
+
+    context "when state is checkout" do
+      before { payment.state = 'checkout' }
+      it { is_expected.to be true }
+    end
+
+    ['void', 'invalid', 'failed', 'processing', 'pending', 'completed'].each do |state|
+      context "when state is #{state}" do
+        before { payment.state = state }
+        it { is_expected.to be false }
+      end
+    end
+  end
+
+  describe '#checkout?' do
+    subject { payment.checkout? }
+
+    before { payment.state = 'checkout' }
+
+    it { is_expected.to be true }
+
+    context 'when state is not checkout' do
+      before { payment.state = 'void' }
+      it { is_expected.to be false }
     end
   end
 
@@ -182,7 +543,7 @@ RSpec.describe Spree::Payment, type: :model do
           it "raises an exception" do
             expect {
               payment.process!
-            }.to raise_error(StateMachines::InvalidTransition, /Cannot transition/)
+            }.to raise_error(Spree::Payment::InvalidStateChange)
           end
         end
 
