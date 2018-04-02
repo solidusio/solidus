@@ -26,10 +26,17 @@ json.payments(order.payments) do |payment|
   json.(payment, *payment_attributes)
   json.payment_method { json.(payment.payment_method, :id, :name) }
   json.source do
-    if payment.source
+    ##
+    # payment.source could be a Spree::Payment. If it is then we need to call
+    # source twice.
+    # @see https://github.com/solidusio/solidus/blob/v2.4/backend/app/views/spree/admin/payments/show.html.erb#L16
+    #
+    payment_source = payment.source.is_a?(Spree::Payment) ? payment.source.source : payment.source
+
+    if payment_source
       json.partial!(
         "spree/api/payments/source_views/#{payment.payment_method.partial_name}",
-        payment_source: payment.source
+        payment_source: payment_source
       )
     else
       json.nil!
