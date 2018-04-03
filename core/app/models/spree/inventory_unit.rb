@@ -4,9 +4,18 @@ module Spree
   # Tracks the state of line items' fulfillment.
   #
   class InventoryUnit < Spree::Base
-    PRE_SHIPMENT_STATES = %w(backordered on_hand)
-    POST_SHIPMENT_STATES = %w(returned)
-    CANCELABLE_STATES = ['on_hand', 'backordered', 'shipped']
+    class InvalidStateChange < StandardError; end
+
+    ON_HAND = 'on_hand'
+    BACKORDERED = 'backordered'
+    RETURNED = 'returned'
+    SHIPPED = 'shipped'
+    CANCELED = 'canceled'
+    DEFAULT_STATES = [ON_HAND, BACKORDERED, RETURNED, SHIPPED, CANCELED]
+
+    PRE_SHIPMENT_STATES = [BACKORDERED, ON_HAND]
+    POST_SHIPMENT_STATES = [RETURNED]
+    CANCELABLE_STATES = [ON_HAND, BACKORDERED, SHIPPED]
 
     belongs_to :variant, -> { with_deleted }, class_name: "Spree::Variant", inverse_of: :inventory_units
     belongs_to :shipment, class_name: "Spree::Shipment", touch: true, inverse_of: :inventory_units
@@ -26,18 +35,19 @@ module Spree
     end
 
     validates_presence_of :shipment, :line_item, :variant
+    validate :is_valid_state?
 
     before_destroy :ensure_can_destroy
 
     scope :pending, -> { where pending: true }
-    scope :backordered, -> { where state: 'backordered' }
-    scope :on_hand, -> { where state: 'on_hand' }
+    scope :backordered, -> { where state: BACKORDERED }
+    scope :on_hand, -> { where state: ON_HAND }
     scope :pre_shipment, -> { where(state: PRE_SHIPMENT_STATES) }
-    scope :shipped, -> { where state: 'shipped' }
+    scope :shipped, -> { where state: SHIPPED }
     scope :post_shipment, -> { where(state: POST_SHIPMENT_STATES) }
-    scope :returned, -> { where state: 'returned' }
-    scope :canceled, -> { where(state: 'canceled') }
-    scope :not_canceled, -> { where.not(state: 'canceled') }
+    scope :returned, -> { where state: RETURNED }
+    scope :canceled, -> { where(state: CANCELED) }
+    scope :not_canceled, -> { where.not(state: CANCELED) }
     scope :cancelable, -> { where(state: Spree::InventoryUnit::CANCELABLE_STATES, pending: false) }
     scope :backordered_per_variant, ->(stock_item) do
       includes(:shipment, :order)
@@ -59,24 +69,81 @@ module Spree
 
     scope :shippable, -> { on_hand }
 
-    # state machine (see http://github.com/pluginaweek/state_machine/tree/master for details)
-    state_machine initial: :on_hand do
-      event :fill_backorder do
-        transition to: :on_hand, from: :backordered
-      end
-      after_transition on: :fill_backorder, do: :fulfill_order
+    def fill_backorder!
+      fill_backorder || raise(InvalidStateChange)
+    end
 
-      event :ship do
-        transition to: :shipped, if: :allow_ship?
-      end
+    def fill_backorder
+      return false unless can_fill_backorder?
+      change_state!(ON_HAND)
+      fulfill_order
+      true
+    end
 
-      event :return do
-        transition to: :returned, from: :shipped
-      end
+    def can_fill_backorder?
+      backordered?
+    end
 
-      event :cancel do
-        transition to: :canceled, from: CANCELABLE_STATES.map(&:to_sym)
-      end
+    def on_hand?
+      state == ON_HAND
+    end
+
+    def backordered?
+      state == BACKORDERED
+    end
+
+    def ship!
+      ship || raise(InvalidStateChange)
+    end
+
+    def ship
+      return false unless can_ship?
+      change_state!(SHIPPED)
+      true
+    end
+
+    def can_ship?
+      allow_ship?
+    end
+
+    def shipped?
+      state == SHIPPED
+    end
+
+    def return!
+      self.return || raise(InvalidStateChange)
+    end
+
+    def return
+      return false unless can_return?
+      change_state!(RETURNED)
+      true
+    end
+
+    def can_return?
+      shipped?
+    end
+
+    def returned?
+      state == RETURNED
+    end
+
+    def cancel!
+      cancel || raise(InvalidStateChange)
+    end
+
+    def cancel
+      return false unless can_cancel?
+      change_state!(CANCELED)
+      true
+    end
+
+    def can_cancel?
+      CANCELABLE_STATES.include?(state)
+    end
+
+    def canceled?
+      state == CANCELED
     end
 
     # Updates the given inventory units to not be pending.
@@ -153,6 +220,18 @@ module Spree
       if shipment.shipped? || shipment.canceled?
         errors.add(:base, :cannot_destroy_shipment_state, state: shipment.state)
         throw :abort
+      end
+    end
+
+    def change_state!(new_state)
+      previous_state = state
+      return if new_state == previous_state
+      update!(state: new_state)
+    end
+
+    def is_valid_state?
+      unless DEFAULT_STATES.include?(state)
+        errors.add(:state, "Invalid state")
       end
     end
   end

@@ -6,6 +6,7 @@ RSpec.describe Spree::InventoryUnit, type: :model do
   let(:stock_location) { create(:stock_location_with_items) }
   let(:stock_item) { stock_location.stock_items.order(:id).first }
   let(:line_item) { create(:line_item, variant: stock_item.variant) }
+  let(:inventory_unit) { create(:inventory_unit) }
 
   describe ".cancelable" do
     let!(:pending_unit) { create(:inventory_unit, pending: true) }
@@ -307,6 +308,260 @@ RSpec.describe Spree::InventoryUnit, type: :model do
       expect(inventory_unit.destroy).to eq false
       expect(inventory_unit.errors.full_messages.join).to match /Cannot destroy/
       expect { inventory_unit.reload }.not_to raise_error
+    end
+  end
+
+  describe '#fill_backorder!' do
+    subject { inventory_unit.fill_backorder! }
+
+    before { inventory_unit.state = 'backordered' }
+
+    it { is_expected.to be true }
+
+    context 'when not able to fill backorder' do
+      before { inventory_unit.state = 'shipped' }
+      it 'raises an exception' do
+        expect { subject }.to raise_error(Spree::InventoryUnit::InvalidStateChange)
+      end
+    end
+  end
+
+  describe '#fill_backorder' do
+    subject { inventory_unit.fill_backorder }
+
+    before { inventory_unit.state = 'backordered' }
+
+    it { is_expected.to be true }
+
+    it 'changes the state' do
+      subject
+      expect(inventory_unit.state).to eq 'on_hand'
+    end
+
+    context 'when not able to fill backorder' do
+      before { inventory_unit.state = 'shipped' }
+      it { is_expected.to be false }
+    end
+  end
+
+  describe '#can_fill_backorder?' do
+    subject { inventory_unit.can_fill_backorder? }
+
+    context 'when state is backordered' do
+      before { inventory_unit.state = 'backordered' }
+      it { is_expected.to be true }
+    end
+
+    ['shipped', 'canceled', 'returned', 'on_hand'].each do |state|
+      context "when state is #{state}" do
+        before { inventory_unit.state = state }
+        it { is_expected.to be false }
+      end
+    end
+  end
+
+  describe '#on_hand?' do
+    subject { inventory_unit.on_hand? }
+
+    it { is_expected.to be true }
+
+    context 'when not on hand' do
+      before { inventory_unit.state = 'backordered' }
+      it { is_expected.to be false }
+    end
+  end
+
+  describe '#backordered?' do
+    subject { inventory_unit.backordered? }
+
+    before { inventory_unit.state = 'backordered' }
+
+    it { is_expected.to be true }
+
+    context 'when not backordered' do
+      before { inventory_unit.state = 'on_hand' }
+      it { is_expected.to be false }
+    end
+  end
+
+  describe '#ship!' do
+    subject { inventory_unit.ship! }
+
+    it { is_expected.to be true }
+
+    context 'when not able to ship' do
+      before { inventory_unit.state = 'shipped' }
+      it 'raises an exception' do
+        expect { subject }.to raise_error(Spree::InventoryUnit::InvalidStateChange)
+      end
+    end
+  end
+
+  describe '#ship' do
+    subject { inventory_unit.ship }
+
+    it { is_expected.to be true }
+
+    it 'changes the state' do
+      subject
+      expect(inventory_unit.state).to eq 'shipped'
+    end
+
+    context 'when not able to ship' do
+      before { inventory_unit.state = 'shipped' }
+      it { is_expected.to be false }
+    end
+  end
+
+  describe '#can_ship?' do
+    subject { inventory_unit.can_ship? }
+
+    it { is_expected.to be true }
+
+    ['shipped', 'canceled', 'returned', 'backordered'].each do |state|
+      context "when state is #{state}" do
+        before { inventory_unit.state = state }
+        it { is_expected.to be false }
+      end
+    end
+  end
+
+  describe '#shipped?' do
+    subject { inventory_unit.shipped? }
+
+    before { inventory_unit.state = 'shipped' }
+
+    it { is_expected.to be true }
+
+    context 'when not shipped' do
+      before { inventory_unit.state = 'on_hand' }
+      it { is_expected.to be false }
+    end
+  end
+
+  describe '#return!' do
+    subject { inventory_unit.return! }
+
+    before { inventory_unit.state = 'shipped' }
+
+    it { is_expected.to be true }
+
+    context 'when not able to return' do
+      before { inventory_unit.state = 'on_hand' }
+      it 'raises an exception' do
+        expect { subject }.to raise_error(Spree::InventoryUnit::InvalidStateChange)
+      end
+    end
+  end
+
+  describe '#return' do
+    subject { inventory_unit.return }
+
+    before { inventory_unit.state = 'shipped' }
+
+    it { is_expected.to be true }
+
+    it 'changes the state' do
+      subject
+      expect(inventory_unit.state).to eq 'returned'
+    end
+
+    context 'when not able to return' do
+      before { inventory_unit.state = 'on_hand' }
+      it { is_expected.to be false }
+    end
+  end
+
+  describe '#can_return?' do
+    subject { inventory_unit.can_return? }
+
+    context 'when state is shipped' do
+      before { inventory_unit.state = 'shipped' }
+      it { is_expected.to be true }
+    end
+
+    ['on_hand', 'canceled', 'returned', 'backordered'].each do |state|
+      context "when state is #{state}" do
+        before { inventory_unit.state = state }
+        it { is_expected.to be false }
+      end
+    end
+  end
+
+  describe '#returned?' do
+    subject { inventory_unit.returned? }
+
+    before { inventory_unit.state = 'returned' }
+
+    it { is_expected.to be true }
+
+    context 'when not returned' do
+      before { inventory_unit.state = 'on_hand' }
+      it { is_expected.to be false }
+    end
+  end
+
+  describe '#cancel!' do
+    subject { inventory_unit.cancel! }
+
+    before { inventory_unit.state = 'on_hand' }
+
+    it { is_expected.to be true }
+
+    context 'when not able to cancel' do
+      before { inventory_unit.state = 'returned' }
+      it 'raises an exception' do
+        expect { subject }.to raise_error(Spree::InventoryUnit::InvalidStateChange)
+      end
+    end
+  end
+
+  describe '#cancel' do
+    subject { inventory_unit.cancel }
+
+    before { inventory_unit.state = 'on_hand' }
+
+    it { is_expected.to be true }
+
+    it 'changes the state' do
+      subject
+      expect(inventory_unit.state).to eq 'canceled'
+    end
+
+    context 'when not able to cancel' do
+      before { inventory_unit.state = 'returned' }
+      it { is_expected.to be false }
+    end
+  end
+
+  describe '#can_cancel?' do
+    subject { inventory_unit.can_cancel? }
+
+    ['on_hand', 'shipped', 'backordered'].each do |state|
+      context "when state is #{state}" do
+        before { inventory_unit.state = state }
+        it { is_expected.to be true }
+      end
+    end
+
+    ['canceled', 'returned'].each do |state|
+      context "when state is #{state}" do
+        before { inventory_unit.state = state }
+        it { is_expected.to be false }
+      end
+    end
+  end
+
+  describe '#canceled?' do
+    subject { inventory_unit.canceled? }
+
+    before { inventory_unit.state = 'canceled' }
+
+    it { is_expected.to be true }
+
+    context 'when not canceled' do
+      before { inventory_unit.state = 'on_hand' }
+      it { is_expected.to be false }
     end
   end
 end
