@@ -342,8 +342,9 @@ en:
         state_id: State
         zipcode: Zip
       spree/stock_movement:
-        action: Action
+        originated_by: Originated By
         quantity: Quantity
+        variant: Variant
       spree/tax_category:
         description: Description
         name: Name
