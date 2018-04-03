@@ -138,11 +138,23 @@ module Spree
     end
 
     # Returns variants that have a price for the given pricing options
+    # If you have modified the pricing options class, you might want to modify this scope too.
     #
     # @param pricing_options A Pricing Options object as defined on the price selector class
     # @return [ActiveRecord::Relation]
     def self.with_prices(pricing_options = Spree::Config.default_pricing_options)
-      joins(:prices).merge(Spree::Price.currently_valid.where(pricing_options.search_arguments))
+      where(
+        Spree::Price.
+          where(Spree::Variant.arel_table[:id].eq(Spree::Price.arel_table[:variant_id])).
+          # This next clause should just be `where(pricing_options.search_arguments)`, but ActiveRecord
+          # generates invalid SQL, so the SQL here is written manually.
+          where(
+            "spree_prices.currency = ? AND (spree_prices.country_iso IS NULL OR spree_prices.country_iso = ?)",
+            pricing_options.search_arguments[:currency],
+            pricing_options.search_arguments[:country_iso].compact
+          ).
+          arel.exists
+      )
     end
 
     # @return [Spree::TaxCategory] the variant's tax category

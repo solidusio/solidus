@@ -28,6 +28,20 @@ RSpec.describe "Variant scopes", type: :model do
         end
       end
     end
+
+    context 'when searching for a variant that has two eligible prices (one fallback)' do
+      let(:france) { create(:country, iso: "FR") }
+      let(:pricing_options) { Spree::Variant::PricingOptions.new(country_iso: "FR", currency: "EUR") }
+
+      subject { Spree::Variant.with_prices(pricing_options) }
+
+      before do
+        variant_1.prices.create!(currency: "EUR", country: france, amount: 10)
+        variant_1.prices.create!(currency: "EUR", country: nil, amount: 10)
+      end
+
+      it { is_expected.to eq([variant_1]) }
+    end
   end
 
   it ".descend_by_popularity" do
