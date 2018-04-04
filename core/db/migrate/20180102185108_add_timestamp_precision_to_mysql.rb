@@ -1,0 +1,90 @@
+class AddTimestampPrecisionToMysql < ActiveRecord::Migration[5.1]
+  TABLES = %W[
+    spree_addresses
+    spree_adjustment_reasons
+    spree_adjustments
+    spree_assets
+    spree_calculators
+    spree_cartons
+    spree_countries
+    spree_credit_cards
+    spree_customer_returns
+    spree_inventory_units
+    spree_line_item_actions
+    spree_line_items
+    spree_log_entries
+    spree_option_types
+    spree_option_values
+    spree_option_values_variants
+    spree_orders
+    spree_orders_promotions
+    spree_payment_capture_events
+    spree_payment_methods
+    spree_preferences
+    spree_prices
+    spree_product_option_types
+    spree_product_promotion_rules
+    spree_product_properties
+    spree_products
+    spree_products_taxons
+    spree_promotion_actions
+    spree_promotion_categories
+    spree_promotion_codes
+    spree_promotion_rule_taxons
+    spree_promotion_rules
+    spree_promotion_rules_users
+    spree_promotions
+    spree_properties
+    spree_refund_reasons
+    spree_refunds
+    spree_reimbursement_credits
+    spree_reimbursement_types
+    spree_reimbursements
+    spree_return_authorizations
+    spree_return_items
+    spree_return_reasons
+    spree_roles
+    spree_roles_users
+    spree_shipments
+    spree_shipping_categories
+    spree_shipping_method_categories
+    spree_shipping_method_stock_locations
+    spree_shipping_method_zones
+    spree_shipping_methods
+    spree_shipping_rates
+    spree_state_changes
+    spree_states
+    spree_stock_items
+    spree_stock_locations
+    spree_stock_movements
+    spree_store_credit_categories
+    spree_store_credit_events
+    spree_store_credit_types
+    spree_store_credit_update_reasons
+    spree_store_credits
+    spree_store_payment_methods
+    spree_stores
+    spree_tax_categories
+    spree_tax_rates
+    spree_taxonomies
+    spree_taxons
+    spree_unit_cancels
+    spree_user_addresses
+    spree_user_stock_locations
+    spree_users
+    spree_variant_property_rule_conditions
+    spree_variant_property_rule_values
+    spree_variant_property_rules
+    spree_variants
+    spree_zone_members
+    spree_zones
+  ]
+
+  def up
+    return unless Spree::Order.connection.adapter_name == "Mysql2"
+    TABLES.each do |table|
+      change_column(table, :updated_at, :datetime, precision: 6)
+      change_column(table, :created_at, :datetime, precision: 6)
+    end
+  end
+end
