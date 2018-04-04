@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'spree/core/validators/email'
 require 'spree/order/checkout'
 require 'spree/order/number_generator'
 
