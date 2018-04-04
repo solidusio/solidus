@@ -194,7 +194,7 @@ module Spree
     end
 
     def update_inventory
-      if (saved_changes? || target_shipment.present?) && order.has_checkout_step?("delivery")
+      if saved_changes? || target_shipment.present?
         Spree::OrderInventory.new(order, self).verify(target_shipment)
       end
     end
