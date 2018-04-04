@@ -17,6 +17,7 @@
 # a.get :color
 # a.preferred_color
 #
+require 'spree/core/shipments/predicates/build'
 require "spree/core/search/base"
 require "spree/core/search/variant"
 require 'spree/preferences/configuration'
@@ -267,6 +268,16 @@ module Spree
     def available_currencies
       @available_currencies ||= ::Money::Currency.all
     end
+
+    # Allows implementing custom shipment building criterion based on an order
+    # instance. Warning: change this setting is not recommended.
+    # @!attribute [rw] build_shipment_predicate_class
+    #   @note Setting this to false is not recommended. This setting is provided
+    #     to help users who have made heavy modifications to disable shipments
+    #     in their store.
+    #   @return [Class] The predicate class that responds to #call(order) to
+    #     determine if shipments should be built.
+    class_name_attribute :build_shipment_predicate_class, default: 'Spree::Core::Shipments::Predicates::Build'
 
     # searcher_class allows spree extension writers to provide their own Search class
     class_name_attribute :searcher_class, default: 'Spree::Core::Search::Base'
