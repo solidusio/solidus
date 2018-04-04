@@ -6,6 +6,7 @@ Spree::Core::Engine.routes.draw do
   resources :products, only: [:index, :show]
 
   get '/locale/set', to: 'locale#set'
+  post '/locale/set', to: 'locale#set', as: :select_locale
 
   # non-restful checkout stuff
   patch '/checkout/update/:state', to: 'checkout#update', as: :update_checkout
