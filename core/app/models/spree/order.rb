@@ -844,7 +844,7 @@ module Spree
     end
 
     def ensure_inventory_units
-      if has_checkout_step?("delivery")
+      if Spree::Config.build_shipment_predicate_class.call(self)
         inventory_validator = Spree::Stock::InventoryValidator.new
 
         errors = line_items.map { |line_item| inventory_validator.validate(line_item) }.compact
