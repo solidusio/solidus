@@ -10,6 +10,11 @@
     <%= f.text_field :base_code, class: "fullwidth" %>
   <% end %>
 
+  <%= f.field_container :join_characters do %>
+    <%= f.label :join_characters %>
+    <%= f.text_field :join_characters, class: "fullwidth" %>
+  <% end %>
+
   <%= f.field_container :number_of_codes do %>
     <%= f.label :number_of_codes %>
     <%= f.text_field :number_of_codes, class: "fullwidth" %>

@@ -7,11 +7,10 @@ class ::Spree::PromotionCode::BatchBuilder
   DEFAULT_OPTIONS = {
     random_code_length: 6,
     batch_size: 1000,
-    sample_characters: ('a'..'z').to_a + (2..9).to_a.map(&:to_s),
-    join_characters: "_"
+    sample_characters: ('a'..'z').to_a + (2..9).to_a.map(&:to_s)
   }
 
-  [:random_code_length, :batch_size, :sample_characters, :join_characters].each do |attr|
+  [:random_code_length, :batch_size, :sample_characters].each do |attr|
     define_singleton_method(attr) do
       Spree::Deprecation.warn "#{name}.#{attr} is deprecated. Use #{name}::DEFAULT_OPTIONS[:#{attr}] instead"
       DEFAULT_OPTIONS[attr]
@@ -70,7 +69,7 @@ class ::Spree::PromotionCode::BatchBuilder
       @options[:sample_characters].sample
     end.join
 
-    "#{base_code}#{@options[:join_characters]}#{suffix}"
+    "#{base_code}#{@promotion_code_batch.join_characters}#{suffix}"
   end
 
   def get_unique_codes(code_set)
