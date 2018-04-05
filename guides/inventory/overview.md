@@ -9,16 +9,16 @@ physical warehouse, there are many essential moving parts:
   information, see [Inventory units](#inventory-units).
 - `Spree::StockItem`: Counts the inventory for a specific `Spree::Variant` at a
   specific `Spree::StockLocation`. For more information, see [Stock
-  items](#stock-items). 
+  items](#stock-items).
 - `Spree::StockLocation`: Represents a location where stock items are shipped
   from. Each stock location has `Spree::StockItem`s for each variant in the
-  store. 
+  store.
 - `Spree::StockMovement`: Represents stock being moved from one
   `Spree::StockLocation` to another, or being  added or removed from your
   store's inventory. For more information, see [Stock
   movements](#stock-movements).
-- `Spree::ReturnItem`: Represents an inventory unit that is returned by a customer.
-  For more information, see [Return items](#return-items).
+- `Spree::ReturnItem`: Represents an inventory unit that is returned by a
+  customer.  For more information, see [Return items](#return-items).
 
 [backorder]: https://www.investopedia.com/terms/b/backorder.asp
 
@@ -93,7 +93,7 @@ from. Each stock location has many `Spree::StockItem`s and
 
 Once a new stock location has been created, a new set of
 [`Spree::StockItem`s](#stock-items) are created for it. The new set represents
-every `Spree::Variant` in your store. 
+every `Spree::Variant` in your store.
 
 #### Stock transfers
 
@@ -118,7 +118,7 @@ your on hand inventory.
 Note that not all return items are resellable, as customer returns can be made
 for many reasons.
 
-For more information, see the [Return authorizations][return-authorizations]
+For more information, see the [Returns][returns]
 documentation.
 
-[return-authorizations]: ../returns/return-authorizations.md
+[returns]: ../returns/overview.md
