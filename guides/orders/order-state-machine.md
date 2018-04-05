@@ -16,11 +16,8 @@ There are six order states by default:
 If you go through the checkout provided in the `solidus_frontend` gem, you can
 see that there is a clearly defined step for each of these states during checkout.
 
-In some circumstances, the `payment` and `confirm` states are optional:
-
-- The `payment` state is only triggered if `payment_required?` returns `true`.
-- The `confirm` state is only triggered if `confirmation_required?` returns
-  `true`.
+The `payment` state is optional and it's only triggered if `payment_required?` 
+returns `true`.
 
 The `complete` state is triggered in one of two ways:
 
