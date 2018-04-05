@@ -1,18 +1,18 @@
 # Return authorizations (RMAs)
 
 A `Spree::ReturnAuthorization` allows you to authorize the return of any part of
-a customer's order.
+a customer's order. A return authorization can only be created for shipments
+that have already been shipped. For each item in a return authorization, a
+[`Spree::ReturnItem`][return-items] is created.
 
 Return authorizations are also referred to as "return
 merchandise authorizations" (RMAs) in the `solidus_backend`.
 
-
 After an order is shipped, administrators can approve the return of any part
 of an order in the `solidus_backend` (from the **Orders -> Order -> RMA** page).
 
-Return authorizations are just the first part of the larger returns system built
-into Solidus. When a store administrator creates a new RMA, they fill out a form
-that defines the scope of the anticipated return.
+Once an RMA has been created, store administrators can add any item listed in
+the RMA to a new [`Spree::CustomerReturn`][customer-returns].
 
 A `Spree::ReturnAuthorization` object has the following attributes:
 
@@ -28,24 +28,11 @@ A `Spree::ReturnAuthorization` object has the following attributes:
 - `return_reason_id`: The ID for the `Spree::ReturnReason` associated with this
   return authorization.
 
-## Reimbursement types
+RMAs begin the larger customer return process. Note that there are many ways
+that the administrator could provide compensation to a customer.
 
-Once a return authorization is created, there are many ways that the
-administrator could provide compensation to a customer:
-
-- `Spree::Reimbursement::Credit`: Credit the customer for the returned item.
-- `Spree::Exchange`: Send a replacement item to the customer.
-- `Spree::OriginalPayment`: Refund the original payment.
-- `Spree::StoreCredit`: Offer the customer store credit.
-
-## Return items
-
-Return authorizations allow the creation of `Spree::ReturnItem`s. Return items
-are associated with `Spree::InventoryUnit`s and can be re-added to your store's
-inventory once they are received. For more information, see the
-[Inventory][return-items] documentation.
-
-[return-items]: ../inventory/overview.md#return-items
+[customer-returns]: customer-returns.md
+[return-items]: return-items.md
 
 ## Return authorization flow
 
