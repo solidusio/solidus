@@ -10,6 +10,12 @@ module Spree
 
       private
 
+      # Overrides ControllerHelpers::Common
+      # We want the admin's locale selection to be different than that on the frontend
+      def set_user_language_locale_key
+        :admin_locale
+      end
+
       def action
         params[:action].to_sym
       end

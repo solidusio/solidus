@@ -47,11 +47,15 @@ module Spree
 
         private
 
+        def set_user_language_locale_key
+          :locale
+        end
+
         def set_user_language
           available_locales = Spree.i18n_available_locales
           locale = [
             params[:locale],
-            session[:locale],
+            session[set_user_language_locale_key],
             (config_locale if respond_to?(:config_locale, true)),
             I18n.default_locale
           ].detect do |candidate|
