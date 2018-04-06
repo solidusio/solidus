@@ -11,10 +11,19 @@
 <td>
   {{#if editing}}
     <form>
-      <input class="fullwidth" name="count_on_hand" type="number" value="{{count_on_hand}}">
+      <input
+      {{#if negative}}
+        class="fullwidth negative"
+      {{else}}
+        class="fullwidth"
+      {{/if}}
+      name="count_on_hand"
+      type="number"
+      value="{{count_on_hand}}"
+    >
     </form>
   {{else}}
-    <span>{{count_on_hand}}</span>
+    <span {{#if negative}}class="negative"{{/if}}>{{count_on_hand}}</span>
   {{/if}}
 </td>
 <td class="actions">

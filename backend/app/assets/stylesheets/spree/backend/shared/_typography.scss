@@ -98,6 +98,9 @@ dl {
 .red    { color: $color-5 }
 .yellow { color: $color-6 }
 
+.negative { color: $red }
+input[type="number"].negative { color: $red } // needed to override blue style that is more specific than '.negative'
+
 .no-objects-found {
   text-align: center;
   font-size: 120%;
