@@ -20,7 +20,7 @@ module Spree
       [reimbursement_list, unpaid_amount]
     end
 
-    def create_credits(reimbursement, unpaid_amount, simulate, creator, reimbursement_list = [])
+    def create_credits(reimbursement, unpaid_amount, simulate, reimbursement_list = [], creator: nil)
       credits = [create_credit(reimbursement, unpaid_amount, simulate, creator)]
       unpaid_amount -= credits.sum(&:amount)
       reimbursement_list += credits
