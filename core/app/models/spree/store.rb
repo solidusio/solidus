@@ -31,6 +31,24 @@ module Spree
       deprecate :by_url, "Spree::Store.by_url is DEPRECATED", deprecator: Spree::Deprecation
     end
 
+    def available_locales
+      locales = super()
+      if locales
+        super().split(",").map(&:to_sym)
+      else
+        Spree.i18n_available_locales
+      end
+    end
+
+    def available_locales=(locales)
+      locales = locales.reject(&:blank?)
+      if locales.empty?
+        super(nil)
+      else
+        super(locales.map(&:to_s).join(","))
+      end
+    end
+
     def self.current(store_key)
       Spree::Deprecation.warn "Spree::Store.current is DEPRECATED"
       current_store = Store.find_by(code: store_key) || Store.by_url(store_key).first if store_key
