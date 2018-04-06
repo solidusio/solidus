@@ -61,7 +61,7 @@
 
     <% if @order.canceled? && @order.canceler && @order.canceled_at %>
       <dt><%= Spree::Order.human_attribute_name(:canceler) %></dt>
-      <dd><%= @order.canceler.email %></td>
+      <dd><%= @order.canceler.email %></dd>
       <dt><%= Spree::Order.human_attribute_name(:canceled_at) %></dt>
       <dd><%= pretty_time(@order.canceled_at) %></dd>
     <% end %>
