@@ -92,6 +92,17 @@ module Spree
             expect { subject }.to change { Spree::StoreCredit.count }.by(1)
             expect(Spree::StoreCredit.last.currency).to eq reimbursement.order.currency
           end
+
+          context 'without a user with email address "spree@example.com" in the database' do
+            before do
+              Spree::LegacyUser.find_by(email: "spree@example.com").destroy
+            end
+
+            it "creates a store credit with the same currency as the reimbursement's order" do
+              expect { subject }.to change { Spree::StoreCredit.count }.by(1)
+              expect(Spree::StoreCredit.last.currency).to eq reimbursement.order.currency
+            end
+          end
         end
       end
     end
