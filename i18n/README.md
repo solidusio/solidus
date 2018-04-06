@@ -20,42 +20,36 @@ translation file into your application by following the
 Add the following to your `Gemfile`:
 
 ```ruby
-gem 'solidus_i18n', github: 'solidusio-contrib/solidus_i18n', branch: 'master'
+gem 'solidus_i18n', '~> 2.0'
 ```
 
-Run `bundle install`
+## Locale in URL
 
-You can use the generator to install migrations and append solidus_i18n assets to
-your app solidus manifest file.
+Older versions of solidus_i18n included the routing-filter gem and configured routes to include the locale in the URL.
+This is still supported (maybe even recommended) but requires some additional configuration.
 
-    bin/rails g solidus_i18n:install
+1. Add gem to your `Gemfile`, then run `bundle install`
 
-This will insert these lines into your Spree assets manifests:
-
-In `vendor/assets/javascripts/spree/frontend/all.js`
-
-```
-//= require spree/frontend/solidus_i18n
+``` ruby
+gem 'routing-filter', '~> 0.6.0'
 ```
 
-In `vendor/assets/javascripts/spree/backend/all.js`
+2. Add `filter :locale` to your `config/routes.rb`
 
+``` ruby
+Rails.application.routes.draw do
+  filter :locale
+
+  mount Spree::Core::Engine, at: '/'
+end
 ```
-//= require spree/backend/solidus_i18n
+
+3. Configure locale-fitler in `config/initializers/locale_filter.rb` (optional)
+
+``` ruby
+# Do not include the default locale in the URL
+RoutingFilter::Locale.include_default_locale = false
 ```
-
-## Set default locale
-
-In `config/initializers/spree.rb` you will find the default locale settings
-for both frontend and backend. Just replace `'en'` with your default locale
-code.
-
-## Add more languages to the frontend locale toggle
-
-Go to Admin -> General Settings -> Localization Setting and add the locales
-you want your users to be able to select from the locale toggle on the frontend.
-
----
 
 ## Updating Translations
 
@@ -69,8 +63,6 @@ Substitute <LOCALE> with your locale code (e.g: `it`).
 This will do a cleanup and prepare `<LOCALE>.yml` with all the missing keys.
 You can then write the translations and open a pull request.
 
----
-
 ## Model Translations
 
 We **removed** support for translating models into [a separate Gem](https://github.com/solidusio-contrib/solidus_globalize).
@@ -81,8 +73,6 @@ Please update your `Gemfile` if you still need the model translations.
 # Gemfile
 gem 'solidus_globalize', github: 'solidusio-contrib/solidus_globalize', branch: 'master'
 ```
-
----
 
 ## Upgrading
 
