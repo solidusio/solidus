@@ -82,9 +82,6 @@ module Spree
     has_many :inventory_units, through: :shipments
     has_many :cartons, -> { distinct }, through: :inventory_units
 
-    has_many :order_stock_locations, class_name: "Spree::OrderStockLocation"
-    has_many :stock_locations, through: :order_stock_locations
-
     # Adjustments and promotions
     has_many :adjustments, -> { order(:created_at) }, as: :adjustable, inverse_of: :adjustable, dependent: :destroy
     has_many :line_item_adjustments, through: :line_items, source: :adjustments
