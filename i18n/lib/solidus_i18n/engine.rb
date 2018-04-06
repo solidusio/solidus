@@ -1,4 +1,3 @@
-require 'routing_filter'
 require 'kaminari-i18n/engine'
 
 module SolidusI18n

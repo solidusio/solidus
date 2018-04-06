@@ -23,13 +23,10 @@ Gem::Specification.new do |s|
 
   s.has_rdoc = false
 
-  s.add_runtime_dependency 'i18n_data', '~> 0.7.0'
   s.add_runtime_dependency 'rails-i18n', ['>= 4.0.1', '< 6']
   s.add_runtime_dependency 'kaminari-i18n', '~> 0.5.0'
-  s.add_runtime_dependency 'routing-filter', '~> 0.6.0'
   s.add_runtime_dependency 'solidus_core', ['>= 1.1', '< 3']
   s.add_runtime_dependency 'solidus_support'
-  s.add_runtime_dependency 'deface', '~> 1.0'
 
   s.add_development_dependency 'byebug'
   s.add_development_dependency 'capybara', '~> 2.17'
