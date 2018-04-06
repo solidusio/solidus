@@ -98,12 +98,16 @@ module Spree
       total - paid_amount
     end
 
-    def perform!
+    def perform!(creator = nil)
+      unless creator
+        creator = Spree.user_class.where(email: 'spree@example.com').first
+        Spree::Deprecation.warn("Calling #perform on #{self} without creator is deprecated")
+      end
       reimbursement_tax_calculator.call(self)
       reload
       update!(total: calculated_total)
 
-      reimbursement_performer.perform(self)
+      reimbursement_performer.perform(self, creator)
 
       if unpaid_amount_within_tolerance?
         reimbursed!
@@ -116,12 +120,16 @@ module Spree
       end
     end
 
-    def simulate
+    def simulate(creator = nil)
+      unless creator
+        creator = Spree.user_class.where(email: 'spree@example.com').first
+        Spree::Deprecation.warn("Calling #simulate on #{self} without creator is deprecated")
+      end
       reimbursement_simulator_tax_calculator.call(self)
       reload
       update!(total: calculated_total)
 
-      reimbursement_performer.simulate(self)
+      reimbursement_performer.simulate(self, creator)
     end
 
     def return_items_requiring_exchange
@@ -140,10 +148,14 @@ module Spree
     #
     # @api public
     # @return [void]
-    def return_all
+    def return_all(creator = nil)
+      unless creator
+        creator = Spree.user_class.where(email: 'spree@example.com').first
+        Spree::Deprecation.warn("Calling #return_all on #{self} without creator is deprecated")
+      end
       return_items.each(&:accept!)
       save!
-      perform!
+      perform!(creator)
     end
 
     private
