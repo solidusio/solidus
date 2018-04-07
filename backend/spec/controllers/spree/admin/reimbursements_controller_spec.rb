@@ -9,6 +9,13 @@ describe Spree::Admin::ReimbursementsController, type: :controller do
     Spree::RefundReason.find_or_create_by!(name: Spree::RefundReason::RETURN_PROCESSING_REASON, mutable: false)
   end
 
+  let(:user) { stub_model(Spree::LegacyUser, has_spree_role?: true, id: 1) }
+
+  before do
+    allow_any_instance_of(described_class).to receive(:try_spree_current_user).
+      and_return(user)
+  end
+
   describe '#edit' do
     let(:reimbursement) { create(:reimbursement) }
     let(:order) { reimbursement.order }
