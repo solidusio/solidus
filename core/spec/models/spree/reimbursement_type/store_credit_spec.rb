@@ -12,10 +12,10 @@ module Spree
     let!(:default_refund_reason)  { Spree::RefundReason.find_or_create_by!(name: Spree::RefundReason::RETURN_PROCESSING_REASON, mutable: false) }
 
     let!(:primary_credit_type)    { create(:primary_credit_type) }
-    let!(:created_by_user)        { create(:user, email: Spree::StoreCredit::DEFAULT_CREATED_BY_EMAIL) }
+    let!(:created_by_user)        { create(:user, email: 'user@email.com') }
     let!(:default_reimbursement_category) { create(:store_credit_category) }
 
-    subject { Spree::ReimbursementType::StoreCredit.reimburse(reimbursement, [return_item, return_item2], simulate) }
+    subject { Spree::ReimbursementType::StoreCredit.reimburse(reimbursement, [return_item, return_item2], simulate, creator: created_by_user) }
 
     before do
       reimbursement.update!(total: reimbursement.calculated_total)
@@ -95,7 +95,8 @@ module Spree
 
           context 'without a user with email address "spree@example.com" in the database' do
             before do
-              Spree::LegacyUser.find_by(email: "spree@example.com").destroy
+              default_user = Spree::LegacyUser.find_by(email: "spree@example.com")
+              default_user.destroy if default_user
             end
 
             it "creates a store credit with the same currency as the reimbursement's order" do
