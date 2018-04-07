@@ -12,7 +12,7 @@ module Spree
     let!(:default_refund_reason)  { Spree::RefundReason.find_or_create_by!(name: Spree::RefundReason::RETURN_PROCESSING_REASON, mutable: false) }
 
     let!(:primary_credit_type)    { create(:primary_credit_type) }
-    let!(:created_by_user)        { create(:user, email: 'user@email.com') }
+    let(:created_by_user) { create(:user, email: 'user@email.com') }
     let!(:default_reimbursement_category) { create(:store_credit_category) }
 
     subject { Spree::ReimbursementType::StoreCredit.reimburse(reimbursement, [return_item, return_item2], simulate, creator: created_by_user) }
