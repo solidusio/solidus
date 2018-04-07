@@ -47,10 +47,11 @@ RSpec.describe Spree::OrderCancellations do
   end
 
   describe "#reimburse_units" do
-    subject { Spree::OrderCancellations.new(order).reimburse_units(inventory_units) }
+    subject { Spree::OrderCancellations.new(order).reimburse_units(inventory_units, creator: created_by_user) }
     let(:order) { create(:shipped_order, line_items_count: 2) }
     let(:inventory_units) { order.inventory_units }
     let!(:default_refund_reason) { Spree::RefundReason.find_or_create_by!(name: Spree::RefundReason::RETURN_PROCESSING_REASON, mutable: false) }
+    let(:created_by_user) { create(:user, email: 'user@email.com') }
 
     it "creates and performs a reimbursement" do
       expect { subject }.to change { Spree::Reimbursement.count }.by(1)
