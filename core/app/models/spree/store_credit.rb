@@ -18,8 +18,6 @@ class Spree::StoreCredit < Spree::PaymentSource
   ADJUSTMENT_ACTION = 'adjustment'
   INVALIDATE_ACTION = 'invalidate'
 
-  DEFAULT_CREATED_BY_EMAIL = "spree@example.com"
-
   belongs_to :user, class_name: Spree::UserClassHandle.new
   belongs_to :created_by, class_name: Spree::UserClassHandle.new
   belongs_to :category, class_name: "Spree::StoreCreditCategory"
@@ -193,12 +191,6 @@ class Spree::StoreCredit < Spree::PaymentSource
     else
       errors.add(:invalidated_at, I18n.t('spree.store_credit.errors.cannot_invalidate_uncaptured_authorization'))
       false
-    end
-  end
-
-  class << self
-    def default_created_by
-      Spree.user_class.find_by(email: DEFAULT_CREATED_BY_EMAIL)
     end
   end
 
