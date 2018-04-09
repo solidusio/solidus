@@ -10,6 +10,7 @@ shared_context 'fr locale' do
   end
 
   after do
+    I18n.locale = :en # reset locale after each spec.
     I18n.reload!
   end
 end
