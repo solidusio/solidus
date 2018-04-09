@@ -305,6 +305,7 @@ en:
         name: Site Name
         mail_from_address: Mail From Address
         cart_tax_country_iso: Tax Country for Empty Carts
+        available_locales: Locales available in the storefront
       spree/store_credit:
         amount: Amount
         amount_authorized: Amount Authorized
@@ -1297,6 +1298,7 @@ en:
         check_stock_on_transfer: "When checked, inventory levels will be checked when performing stock transfers.<br/> Default: Checked"
       spree/store:
         cart_tax_country_iso: "This determines which country is used for taxes on carts (orders which don't yet have an address).<br/> Default: None."
+        available_locales: "This determines which locales are available for your customers to choose from in the storefront."
       spree/variant:
         tax_category: "This determines what kind of taxation is applied to this variant.<br/> Default: Use tax category of the product associated with this variant"
         deleted: "Deleted Variant"
