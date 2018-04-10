@@ -7,16 +7,6 @@ module Spree
         @cache_write_events
       end
 
-      def assert_written_to_cache(key)
-        unless @cache_write_events.detect { |event| event[:key].starts_with?(key) }
-          fail %{Expected to find #{key} in the cache, but didn't.
-
-  Cache writes:
-  #{@cache_write_events.join("\n")}
-          }
-        end
-      end
-
       def clear_cache_events
         @cache_write_events = []
       end
