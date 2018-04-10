@@ -179,7 +179,7 @@ class Project
 
   def rspec_arguments
     args = []
-    args += %w[--format documentation --profile 10]
+    args += %w[--format documentation --profile 10 --no-color]
     if report_dir
       args += %W[-r rspec_junit_formatter --format RspecJunitFormatter -o #{report_dir}/rspec/#{name}.xml]
     end
