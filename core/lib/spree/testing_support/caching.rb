@@ -18,7 +18,6 @@ module Spree
       end
 
       def clear_cache_events
-        @cache_read_events = []
         @cache_write_events = []
       end
     end
@@ -30,11 +29,6 @@ RSpec.configure do |config|
 
   config.before(:each, caching: true) do
     ActionController::Base.perform_caching = true
-
-    ActiveSupport::Notifications.subscribe("read_fragment.action_controller") do |_event, _start_time, _finish_time, _, details|
-      @cache_read_events ||= []
-      @cache_read_events << details
-    end
 
     ActiveSupport::Notifications.subscribe("write_fragment.action_controller") do |_event, _start_time, _finish_time, _, details|
       @cache_write_events ||= []
