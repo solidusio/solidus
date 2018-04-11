@@ -318,7 +318,8 @@ en:
         memo: Memo
       spree/store_credit_event:
         action: Action
-        user_total_amount: Total Unused
+        amount_remaining: Total Unused
+        user_total_amount: Total Amount
       spree/store_credit_update_reason:
         name: Reason For Updating
       spree/stock_item:

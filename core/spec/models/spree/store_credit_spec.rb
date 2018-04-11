@@ -745,7 +745,7 @@ RSpec.describe Spree::StoreCredit do
       end
     end
 
-    describe "#store_events" do
+    describe "#store_event" do
       context "create" do
         context "user has one store credit" do
           let(:store_credit_amount) { 100.0 }
@@ -763,19 +763,34 @@ RSpec.describe Spree::StoreCredit do
           it "saves the user's total store credit in the event" do
             expect(subject.store_credit_events.first.user_total_amount).to eq store_credit_amount
           end
+
+          it "saves the user's unused store credit in the event" do
+            expect(subject.store_credit_events.first.amount_remaining).to eq store_credit_amount
+          end
         end
 
         context "user has multiple store credits" do
           let(:store_credit_amount)            { 100.0 }
           let(:additional_store_credit_amount) { 200.0 }
-
           let(:user)                           { create(:user) }
-          let!(:store_credit)                  { create(:store_credit, user: user, amount: store_credit_amount) }
 
-          subject { create(:store_credit, user: user, amount: additional_store_credit_amount) }
+          let!(:store_credits) do
+            [
+              create(:store_credit, user: user, amount: store_credit_amount),
+              create(:store_credit, user: user, amount: additional_store_credit_amount)
+            ]
+          end
+
+          subject { store_credits.flat_map(&:store_credit_events) }
 
           it "saves the user's total store credit in the event" do
-            expect(subject.store_credit_events.first.user_total_amount).to eq(store_credit_amount + additional_store_credit_amount)
+            expect(subject.first.user_total_amount).to eq store_credit_amount
+            expect(subject.last.user_total_amount).to eq(store_credit_amount + additional_store_credit_amount)
+          end
+
+          it "saves the user's unused store credit in the event" do
+            expect(subject.first.amount_remaining).to eq store_credit_amount
+            expect(subject.last.amount_remaining).to eq additional_store_credit_amount
           end
         end
 

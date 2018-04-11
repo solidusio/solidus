@@ -46,6 +46,10 @@ module Spree
       Spree::Money.new(user_total_amount, { currency: currency })
     end
 
+    def display_remaining_amount
+      Spree::Money.new(amount_remaining, { currency: currency })
+    end
+
     def display_event_date
       I18n.l(created_at.to_date, format: :long)
     end
