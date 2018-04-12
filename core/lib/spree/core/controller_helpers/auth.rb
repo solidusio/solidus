@@ -22,7 +22,7 @@ module Spree
           class_attribute :unauthorized_redirect
           self.unauthorized_redirect = -> do
             flash[:error] = I18n.t('spree.authorization_failure')
-            redirect_to "/unauthorized"
+            redirect_to "#{spree.root_path}unauthorized"
           end
 
           rescue_from CanCan::AccessDenied do
