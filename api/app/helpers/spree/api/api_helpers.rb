@@ -133,7 +133,7 @@ module Spree
 
       @@adjustment_attributes = [
         :id, :source_type, :source_id, :adjustable_type, :adjustable_id,
-        :amount, :label, :promotion_code,
+        :amount, :label, :promotion_code_id,
         :finalized, :eligible, :created_at, :updated_at
       ]
 
