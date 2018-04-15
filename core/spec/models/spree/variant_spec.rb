@@ -807,8 +807,8 @@ RSpec.describe Spree::Variant, type: :model do
     subject { variant.variant_properties }
 
     context "variant has properties" do
-      let!(:rule_1) { create(:variant_property_rule, product: variant.product, option_value: option_value_1) }
-      let!(:rule_2) { create(:variant_property_rule, product: variant.product, option_value: option_value_2) }
+      let!(:rule_1) { create(:variant_property_rule, product: variant.product, option_value: option_value_1, apply_to_all: false) }
+      let!(:rule_2) { create(:variant_property_rule, product: variant.product, option_value: option_value_2, apply_to_all: false) }
 
       it "returns the variant property rule's values" do
         expect(subject).to match_array rule_1.values + rule_2.values

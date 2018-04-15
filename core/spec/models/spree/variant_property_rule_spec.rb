@@ -64,10 +64,17 @@ RSpec.describe Spree::VariantPropertyRule, type: :model do
 
     subject { rule.applies_to_variant?(variant) }
 
-    context "variant matches some of the rule's conditions" do
+    context "variant matches some of the rule's conditions when apply_to_all is false" do
+      let(:rule) { create(:variant_property_rule, option_value: rule_option_value, apply_to_all: false) }
       let(:option_values) { [variant_option_value_1, variant_option_value_2] }
 
       it { is_expected.to eq true }
+    end
+
+    context "variant cannot match only some of the rule's conditions when apply_to_all is true" do
+      let(:option_values) { [variant_option_value_1, variant_option_value_2] }
+
+      it { is_expected.to eq false }
     end
 
     context "variant matches none of the rule's conditions" do
