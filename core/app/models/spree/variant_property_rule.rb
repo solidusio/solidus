@@ -38,7 +38,11 @@ module Spree
     # @param variant [Spree::Variant] variant to check
     # @return [Boolean]
     def applies_to_variant?(variant)
-      (option_value_ids & variant.option_value_ids).present?
+      if apply_to_all
+        matches_option_value_ids?(variant.option_value_ids)
+      else
+        (option_value_ids & variant.option_value_ids).present?
+      end
     end
   end
 end
