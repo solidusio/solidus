@@ -146,8 +146,8 @@ module MyStore
   class Calculator::Shipping::CustomShippingCalculator < Spree::ShippingCalculator
     ...
 
-    def available?(object)
-      object.currency == "USD"
+    def available?(order)
+      order.currency == "USD"
     end
   end
 end
