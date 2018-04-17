@@ -26,9 +26,13 @@ module DummyApp
     def auto_migrate
       if needs_migration?
         puts "Configuration changed. Re-running migrations"
+
+        # Disconnect to avoid "database is being accessed by other users" on postgres
+        ActiveRecord::Base.remove_connection
+
         sh 'rake db:reset VERBOSE=false'
 
-        # We might have a brand new database, so we must re-establish our connection
+        # We have a brand new database, so we must re-establish our connection
         ActiveRecord::Base.establish_connection
       end
     end
