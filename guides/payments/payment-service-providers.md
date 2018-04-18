@@ -20,7 +20,7 @@ service providers:
 - [`solidus_culqi`][solidus-culqi]
 - [`solidus_payu_latam`][solidus-payu-latam]
 
-[solidus-affirm]: (https://github.com/StemboltHQ/solidus_affirm
+[solidus-affirm]: https://github.com/StemboltHQ/solidus_affirm
 [solidus-adyen]: https://github.com/StemboltHQ/solidus-adyen
 [solidus-braintree]: https://github.com/solidusio/solidus_braintree
 [solidus-culqi]: https://github.com/ccarruitero/solidus_culqi
