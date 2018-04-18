@@ -5,6 +5,16 @@ module Spree
     module Processors
       class MailProcessor
         class << self
+          # This subscribes the MailProcessor to the relevant events in Solidus.
+          # It is called in an initializer BEFORE events start happening.
+          def register!
+            Spree.event_bus.subscribe(Spree::Events::OrderConfirmedEvent,           ->(event) { send_confirm_email(event) })
+            Spree.event_bus.subscribe(Spree::Events::OrderCancelledEvent,           ->(event) { send_cancel_email(event) })
+            Spree.event_bus.subscribe(Spree::Events::CartonShippedEvent,            ->(event) { send_carton_shipped_emails(event) })
+            Spree.event_bus.subscribe(Spree::Events::ReimbursementProcessedEvent,   ->(event) { send_reimbursement_email(event) })
+            Spree.event_bus.subscribe(Spree::Events::OrderInventoryCancelledEvent,  ->(event) { send_inventory_cancellation_email(event) })
+          end
+
           def send_confirm_email(event)
             order = Spree::Order.find(event.order_id)
             Spree::OrderMailer.confirm_email(order).deliver_later unless order.confirmation_delivered?

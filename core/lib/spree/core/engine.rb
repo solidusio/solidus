@@ -44,6 +44,10 @@ module Spree
         Migrations.new(config, engine_name).check
       end
 
+      initializer 'spree.core.register_event_processors' do |_app|
+        Spree::Events::Processors::MailProcessor.register!
+      end
+
       # Load in mailer previews for apps to use in development.
       # We need to make sure we call `Preview.all` before requiring our
       # previews, otherwise any previews the app attempts to add need to be
