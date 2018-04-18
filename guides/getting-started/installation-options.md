@@ -84,7 +84,7 @@ gem 'turbolinks', '~> 5.0.0'
 Then, enable Turbolinks in the backend by appending these lines to the
 JavaScript manifest at `vendor/assets/spree/backend/all/js`:
 
-```ruby
+```js
 //= require turbolinks
 //= require backend/app/assets/javascripts/spree/backend/turbolinks-integration.js
 ```
