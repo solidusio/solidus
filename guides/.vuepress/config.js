@@ -6,6 +6,7 @@ module.exports = {
     repo: 'solidusio/solidus',
     editLinks: true,
     docsDir: 'guides',
+    home: true,
     nav: [
       { text: 'Home', link: '/' }
     ],
