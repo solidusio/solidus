@@ -19,11 +19,15 @@ A `Spree::Order` can have one of the following `payment_state`s:
 The following is a list of the available payment states:
 
 - `balance_due`: This state indicates that a payment on the order is required.
-- `failed`: This state indicates that at least one payment for the order failed.
+  The order's `payment_total` value is less than its `total` value.
+- `failed`: This state indicates that the most recent payment for the order
+  failed.
 - `credit_owed`: This state indicates that the order has been paid for in excess
-  of its total.
-- `paid`: This state indicates that the order has been paid for in full. All of
-  the `Spree::Payment`s on the order have been satisfied.
+  The order's `payment_total` value is greater than its `total` value.
+- `paid`: This state indicates that the order has been paid for in full and no
+  credited is owed.
+- `void`: This state indicates that the order has been canceled. No credit is
+  owed, no balance is due, and the order has not been paid for.
 
 For more information about `Spree::Payment`s and the Solidus payments system,
 see the [Payments][payments] documentation.
@@ -33,24 +37,35 @@ see the [Payments][payments] documentation.
 
 ## Completed payments
 
-The `Spree::Order`'s `payment_state` can only be `paid` if each `Spree::Payment`
-has a state of `completed`.
+The `Spree::Order`'s `payment_state` can only be `paid` if the order has been
+paid for in full and no credit is owed. This means that the order's
+`payment_total` and `total` values are equal.
 
-The following table outlines a `Spree::Order` with multiple payments that stile
-has a `payment_state` value of `balance_due`:
+The following table outlines a `Spree::Order` with a `total` of $40.  It has
+multiple payments and has a `payment_state` value of `balance_due`:
 
 | Payment source type  | Amount | State         |
 |----------------------|--------|---------------|
 | `Spree::StoreCredit` | $20    | `completed`   |
 | `Spree::CreditCard`  | $20    | `balance`     |
 
-And the next table outlines a `Spree::Order` with multiple payments that has a
-`payment_state` value of `completed`:
+And the next table outlines a `Spree::Order` that has a `payment_state` value of
+`paid`:
 
 | Payment source type  | Amount | State         |
 |----------------------|--------|---------------|
 | `Spree::StoreCredit` | $20    | `completed`   |
 | `Spree::CreditCard`  | $20    | `completed`   |
+
+Finally, this table also outlines a `Spree::Order` with a `payment_state` of
+`paid` even though it has failed payments:
+
+| Payment source type  | Amount | State         |
+|----------------------|--------|---------------|
+| `Spree::StoreCredit` | $20    | `completed`   |
+| `Spree::CreditCard`  | $20    | `invalid`     |
+| `Spree::CreditCard`  | $20    | `failed`      |
+| `Spree::CreditCard`  | $20    | `paid`        |
 
 ## Credit owed
 
