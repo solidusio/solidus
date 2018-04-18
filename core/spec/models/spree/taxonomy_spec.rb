@@ -4,16 +4,12 @@ require 'rails_helper'
 
 RSpec.describe Spree::Taxonomy, type: :model do
   context "#destroy" do
-    before do
-       @taxonomy = create(:taxonomy)
-       @root_taxon = @taxonomy.root
-       @child_taxon = create(:taxon, taxonomy_id: @taxonomy.id, parent: @root_taxon)
+    subject(:association_options) do
+      described_class.reflect_on_association(:root).options
     end
 
     it "should destroy all associated taxons" do
-      @taxonomy.destroy
-      expect{ Spree::Taxon.find(@root_taxon.id) }.to raise_error(ActiveRecord::RecordNotFound)
-      expect{ Spree::Taxon.find(@child_taxon.id) }.to raise_error(ActiveRecord::RecordNotFound)
+      expect(association_options[:dependent]).to eq :destroy
     end
   end
 end
