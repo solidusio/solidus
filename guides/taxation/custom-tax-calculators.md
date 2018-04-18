@@ -1,4 +1,4 @@
-# Custom tax calculator
+# Custom tax calculators
 
 *Note that Solidus supports value-added tax (VAT) and sales tax out of the
 box. You would only need to create a custom tax calculator in extraordinary
@@ -8,12 +8,9 @@ By default, Solidus uses a simple tax rate calculator. It multiples against an
 item price and adjusts for any promotions to determine tax. However, this tax
 calculator can be changed if you need to develop a more specialized tax
 calculator for your application.
-
-Every `Spree::TaxRate` you create will be connected to a `Spree::Calculator`
-instance that calculates the correct tax amount for a given shipment or line
-item. In most cases, you should be able to use the
-`Spree::Calculator::DefaultTax` calculator. It is suitable for both sales tax
-and VAT scenarios.
+ 
+But in most cases, you should be able to use the `Spree::Calculator::DefaultTax`
+calculator. It is suitable for both sales tax and VAT scenarios.
 
 If you need to change the default tax calculation behavior, see the [default tax
 calculator specs][default-tax-calculator-spec] or [its
