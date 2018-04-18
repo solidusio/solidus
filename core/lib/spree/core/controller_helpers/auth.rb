@@ -70,10 +70,10 @@ module Spree
         def try_spree_current_user
           # This one will be defined by apps looking to hook into Spree
           # As per authentication_helpers.rb
-          if respond_to?(:spree_current_user)
+          if respond_to?(:spree_current_user, true)
             spree_current_user
           # This one will be defined by Devise
-          elsif respond_to?(:current_spree_user)
+          elsif respond_to?(:current_spree_user, true)
             current_spree_user
           end
         end
