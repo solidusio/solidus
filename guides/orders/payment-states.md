@@ -6,6 +6,8 @@
 -->
 
 Typically, a `Spree::Order` has one or multiple payments associated with it.
+Because of this, the order object has a `payment_state` attribute that tracks
+against all of the payments associated with the order.
 
 For example, if your customer has $20 on store credit but their order comes to
 $40, they need to use two payment methods in order to pay for the order: the
@@ -27,8 +29,9 @@ For more information about `Spree::Payment`s and the Solidus payments system,
 see the [Payments][payments] documentation.
 
 [payments]: ../payments/overview.md
+[payment-sources]: ../payments/payment-sources.md
 
-## Completed payments 
+## Completed payments
 
 The `Spree::Order`'s `payment_state` can only be `paid` if each `Spree::Payment`
 has a state of `completed`.
@@ -49,6 +52,20 @@ And the next table outlines a `Spree::Order` with multiple payments that has a
 | `Spree::StoreCredit` | $20    | `completed`   |
 | `Spree::CreditCard`  | $20    | `completed`   |
 
+## Credit owed
+
+If an order has multiple payments and the customer over-pays for an order, the
+order's `payment_state` changes to `credit_owed`
+
+In order to get the order to a `paid` status, the customer should be refunded so
+that the order is zeroed out.
+
+You can generate a `Spree::Refund` for any payment on the order. The refund can
+equal either the full payment amount or just a part of the full payment.
+
+For more information, see the [Refunds][refunds] documentation.
+
+[refunds]: ../payments/refunds.md
 
 ## Checking payment states
 
