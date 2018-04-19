@@ -76,7 +76,10 @@ class Spree::OrderShipping
     @order.recalculate
 
     Spree.event_bus.publish(
-      Spree::Events::CartonShippedEvent.new(carton_id: carton.id)
+      Spree::Events::CartonShippedEvent.new(
+        carton_id: carton.id,
+        suppress_customer_notification: suppress_mailer
+      )
     )
 
     carton

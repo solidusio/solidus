@@ -38,8 +38,8 @@ module Spree
           end
 
           def send_carton_shipped_emails(event)
+            return if event.suppress_customer_notification
             carton = Spree::Carton.find(event.carton_id)
-            return if carton.inventory_units.any? { |unit| unit.shipment.suppress_mailer }
             carton.orders.each do |order|
               # .fulfillable? in the case of an item that isn't actually
               # shipped, such as a digital gift card
