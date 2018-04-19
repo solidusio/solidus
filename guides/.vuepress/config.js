@@ -2,6 +2,10 @@ module.exports = {
   title: 'Guidelines',
   description: 'Developer Guides for Solidus',
   base: '/solidus/',
+  head: [
+    ['link', { rel: 'shortcut icon', href: '/favicon.ico' }],
+    ['link', { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' }]
+  ],
   themeConfig: {
     repo: 'solidusio/solidus',
     editLinks: true,
