@@ -1,11 +1,12 @@
 module.exports = {
-  title: 'Solidus Guides',
-  description: 'Developer Guidelines for Solidus',
+  title: 'Guidelines',
+  description: 'Developer Guides for Solidus',
   base: '/solidus/',
   themeConfig: {
     repo: 'solidusio/solidus',
     editLinks: true,
     docsDir: 'guides',
+    logo: '/logo.svg',
     home: true,
     nav: [
       { text: 'Home', link: '/' }
