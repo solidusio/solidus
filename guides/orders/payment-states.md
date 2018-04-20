@@ -70,7 +70,7 @@ Finally, this table also outlines a `Spree::Order` with a `payment_state` of
 ## Credit owed
 
 If an order has multiple payments and the customer over-pays for an order, the
-order's `payment_state` changes to `credit_owed`
+order's `payment_state` changes to `credit_owed`.
 
 In order to get the order to a `paid` status, the customer should be refunded so
 that the order is zeroed out.
@@ -94,7 +94,7 @@ Spree::Order.find(1).payment_state
 
 The `payment_state` method can be very useful if you have built out your own
 integrations with a payment service provider. For example, a sudden increase in
-orders with with `payment_state` of `failed` may indicate a problem with your
+orders with `payment_state` of `failed` may indicate a problem with your
 integration. It may also affect your store's customer satisfaction rate.
 
 <!-- TODO:

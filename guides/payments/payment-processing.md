@@ -26,12 +26,11 @@ service provider. While you can create an integration in any way that you want,
 you may want to note the following conventions set up by Solidus's
 `Spree::PaymentMethod` and `Spree::Payment::Processing` classes:
 
-- `Spree::PaymentMethod` has a similar interface to API provided by
-  [active_merchant][active-merchant].
-- The `Spree::PaymentMethod#gateway` method uses the
-  `Spree::Payment::Processing#gateway_options` method to get information about
-  the current payment and the order associated with it. See [Gateway
-options](#gateway-options) for more information about this.
+- `Spree::PaymentMethod` has a similar interface to API provided by the
+  [active_merchant][active-merchant] gem.
+- The `Spree::PaymentMethod` class uses its `gateway` method to read a hash of
+  options that are provided by the payment service provider. See [Gateway
+  options](#gateway-options) for more information about this.
 - Then, in your own payment method, can call the `gateway` method and send this
   information to the payment service provider.
 
@@ -78,7 +77,7 @@ ways:
   `purchase!` is called, meaning the payment is authorized and captured. This
 occurs even if the payment's state is already `completed`.
 - If the `Spree::PaymentMethod`'s `auto_capture` attribute is set to `false`,
-  then the payment is authorized but not captured. This occurs even if if the
+  then the payment is authorized but not captured. This occurs even if the
   payment's state is already `completed`.
 
 Note that `completed` payments can also transition to `processing`. Calling
