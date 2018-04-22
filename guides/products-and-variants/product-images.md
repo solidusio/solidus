@@ -49,7 +49,7 @@ By default, it creates creates several version of each image at specific sizes.
 You can check the default settings by calling the `attachment_definitions`
 method on `Spree::Image` in your Rails console:
 
-```shell
+```bash
 Spree::Image.attachment_definitions[:attachment][:styles]
 => {
   mini=>"48x48>",
@@ -76,7 +76,7 @@ Spree::Image.attachment_definitions[:attachment][:styles] = {
 If you change the default image sizes, you must regenerate the Paperclip
 thumbnails by running a Rake task:
 
-```shell
+```bash
 bundle exec rake paperclip:refresh:thumbnails CLASS=Spree::Image
 ```
 

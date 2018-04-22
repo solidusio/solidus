@@ -74,7 +74,7 @@ credit card payment methods, and some other basic payment methods.
 
 For more information, see the [Payment methods][payment-methods] article.
 
-[payment-methods]: payment_method.md
+[payment-methods]: payment-methods.md
 
 ## Payments
 

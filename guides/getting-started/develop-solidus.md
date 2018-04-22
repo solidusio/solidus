@@ -6,13 +6,13 @@ pull request, please [read the contributing guidelines][contributing] first.
 Getting your Solidus development environment set up is easy. First, clone the
 Solidus GitHub repo:
 
-```shell
+```bash
 git clone git://github.com/solidusio/solidus.git
 ```
 
 Then enter the directory you just downloaded and install Solidus's dependencies:
 
-```shell
+```bash
 cd solidus
 bundle install
 ```
@@ -26,14 +26,14 @@ typical Solidus store you can use for testing.
 By default, the sandbox includes [`solidus_auth_devise`][solidus-auth-devise],
 and the generator seeds the database and loads sample data.
 
-```shell
+```bash
 bundle exec rake sandbox
 ```
 
 You can prepend `DB=mysql` or `DB=postgresql` to the command in order use those
 databases instead of the default SQLite 3 database. For example:
 
-```shell
+```bash
 DB=postgresql bundle exec rake sandbox
 ``` 
 
@@ -69,14 +69,14 @@ You can see the build statuses [on our CircleCI status page][circleci].
 To execute all of the test specs, run the `build.sh` script at the root of the
 Solidus project:
 
-```shell
+```bash
 bash build.sh
 ```
 
 This runs using PostgreSQL by default, but it can be overridden by setting the
 `DB` environment variable to `DB=sqlite` or `DB=mysql`. For example: 
 
-```shell
+```bash
 DB=mysql bash build.sh
 ```
 
@@ -87,7 +87,7 @@ Note that this will fail if you have not installed ChromeDriver on your system.
 Each gem contains its own test suite. For example, you can run only the
 `solidus_core` gem tests within the `/core` directory:
 
-```shell
+```bash
 cd core
 bundle exec rspec
 ```
@@ -95,7 +95,7 @@ bundle exec rspec
 By default, the tests run against the default SQLite 3 database. You can instead
 specify `DB=mysql` or `DB=postgresql` by prepending it to the command:
 
-```shell
+```bash
 DB=postgresql bundle exec rspec
 ```
 
@@ -104,7 +104,7 @@ DB=postgresql bundle exec rspec
 You can generate a [SimpleCov](https://github.com/colszowka/simplecov) code
 coverage report by prepending `COVERAGE=true` to the `rspec` command:
 
-```shell
+```bash
 COVERAGE=true bundle exec rspec
 ```
 

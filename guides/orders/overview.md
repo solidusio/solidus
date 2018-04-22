@@ -124,7 +124,7 @@ item belongs to. Inventory units provide a link between the order and
 
 For more information, see the [Shipments][shipments] documentation.
 
-[shipments]: ../shipments/overview-of-shipment.md
+[shipments]: ../shipments/overview-of-shipments.md
 
 ### Addresses
 
