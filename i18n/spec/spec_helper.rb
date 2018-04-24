@@ -11,7 +11,6 @@ rescue LoadError
 end
 
 require 'pry'
-require 'ffaker'
 require 'rspec/rails'
 
 RSpec.configure do |config|
