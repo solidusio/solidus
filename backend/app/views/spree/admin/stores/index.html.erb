@@ -15,8 +15,8 @@
 <table class="index">
   <thead>
     <tr>
-      <th>Name</th>
-      <th>Url</th>
+      <th><%= Spree::Store.human_attribute_name(:name) %></th>
+      <th><%= Spree::Store.human_attribute_name(:url) %></th>
       <th class="actions"></th>
     </tr>
   </thead>
@@ -26,7 +26,7 @@
         <td>
           <%= store.name %>
           <% if store.default? %>
-            <span class="label label-default">default</span>
+            <span class="label label-default"><%= Spree::Store.human_attribute_name(:default) %></span>
           <% end %>
         </td>
         <td><%= store.url %></td>
