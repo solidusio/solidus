@@ -56,7 +56,7 @@ bundle exec rake db:seed                           # seeds your database
 
 ## Development environment performance gains
 
-You may noticed that your Solidus store runs slowly in development mode. You can
+You may notice that your Solidus store runs slowly in development mode. You can
 change some configuration to get performance gains.
 
 ### Turn off asset debugging

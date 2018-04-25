@@ -33,7 +33,7 @@ Rails](http://rubyonrails.org). To get the most out of Solidus, we recommend
 that you familiarize yourself with Ruby on Rails, as well as [the Ruby
 programming language](https://www.ruby-lang.org/) beforehand.
 
-Because Solidus is an Rails engine, much of what the [Rails Guide on
+Because Solidus is a Rails engine, much of what the [Rails Guide on
 Engines](http://guides.rubyonrails.org/engines.html) explains applies directly
 to Solidus, too.
 

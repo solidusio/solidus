@@ -35,7 +35,7 @@ databases instead of the default SQLite 3 database. For example:
 
 ```bash
 DB=postgresql bundle exec rake sandbox
-``` 
+```
 
 After the sandbox has been generated, you can change into its directory and
 start the server:
@@ -73,8 +73,9 @@ Solidus project:
 bash build.sh
 ```
 
-This runs using PostgreSQL by default, but it can be overridden by setting the
-`DB` environment variable to `DB=sqlite` or `DB=mysql`. For example: 
+The `build.sh` script runs using PostgreSQL by default, but it can be overridden
+by setting the `DB` environment variable to `DB=sqlite` or `DB=mysql`. For
+example:
 
 ```bash
 DB=mysql bash build.sh
