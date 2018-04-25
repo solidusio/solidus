@@ -11,8 +11,8 @@ A promotion action calculates the discount amount and creates a
 `Spree::Adjustment` for the promotion. The adjustment then adjusts the price of
 an order, line item, or shipment.
 
-With the exception of `Spree::Promotion::Actions::FreeShipping`, promotion
-actions have a configurable base calculator. This gives you and store
+Promotion actions have a configurable base calculator (except for
+`Spree::Promotion::Actions::FreeShipping`). This gives you and store
 administrators flexibility for choosing how a promotion amount is calculated.
 
 <!-- TODO:
@@ -73,8 +73,8 @@ module Spree
 
 Your promotion action must implement the `perform(options = {})` method. This
 method should return a boolean that declares whether the action was applied
-successfully. It is also recommend to define a `remove_from(order)` method as
-well. See the
+successfully. We also recommend that you define a `remove_from(order)` method.
+See the
 [`Spree::Promotion::Actions::CreateItemAdjustments`][create-item-adjustments]
 class for an example of these method definitions.
 
