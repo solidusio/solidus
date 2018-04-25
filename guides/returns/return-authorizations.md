@@ -1,4 +1,4 @@
-# Return authorizations (RMAs)
+# Return authorizations
 
 A `Spree::ReturnAuthorization` allows you to authorize the return of any part of
 a customer's order. A return authorization can only be created for shipments

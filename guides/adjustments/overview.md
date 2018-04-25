@@ -1,4 +1,4 @@
-# Overview of adjustments
+# Overview
 
 The `Spree::Adjustment` model is used to track price adjustments. For example,
 taxes and promotions generate price adjustments. Adjustments can be either a
