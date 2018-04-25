@@ -39,7 +39,7 @@ maintain. We use our best judgment about what methods are being used, but there
 may still be incompatible changes. Methods we have documented should only have
 backwards-compatible changes.
 
-Any `class_eval` overrides or Deface overrides may not be called any more or be
+Any `class_eval` overrides or Deface overrides may not be called anymore or be
 called in a different way. We use our best judgment to add extension points when
 we suspect there would be a store with an override.
 

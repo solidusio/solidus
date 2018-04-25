@@ -1,4 +1,4 @@
-# Upgrades
+# Overview
 
 Easy upgrades are a core goal of Solidus. It should be easy for your production
 store to get onto the newest, most performant version of Solidus.
