@@ -1,4 +1,4 @@
-# Overview of products and variants
+# Overview
 
 Products and variants are integral to Solidus. While the `Spree::Product` and
 `Spree::Variant` models depend on each other, it is important to understand how

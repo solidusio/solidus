@@ -21,8 +21,8 @@ Products have the following attributes:
    also targeted at search engines.
 - `meta_title`: Title to put in HTML `<title>` tag. If left blank, the product
    name is used instead.
-- `promotionable`: Determines whether or not promotions can apply to the
-   product. (Labeled "Promotable" in the admin interface.)
+- `promotionable`: Determines whether promotions can apply to the product.
+  (Labeled "Promotable" in the admin interface.)
 
 ## Variants
 
