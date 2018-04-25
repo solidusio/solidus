@@ -21,7 +21,7 @@ If your [payment processing][payment-processing] integration uses the
 not store all of the payment details. Solidus only collects enough data to allow
 customers to verify which credit card is being used.
 
-All the credit card data that you collection should be immediately sent through
+All the credit card data that you collect should be immediately sent through
 a form to the payment service provider. Your databases should not store a
 customer's complete credit card data for any amount of time.
 

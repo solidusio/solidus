@@ -66,7 +66,7 @@ of tax that should be applied to line items, shipments, or orders.
 ## Preferences
 
 Each `Spree::Calculator` has [static model preferences][model-preferences]. Each
-instances of a calculator has a `preferences` attribute that stores a hash of
+instance of a calculator has a `preferences` attribute that stores a hash of
 preferences.
 
 For example, you may have two flat shipping rates configured in your store.

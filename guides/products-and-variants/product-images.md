@@ -44,7 +44,7 @@ current product.
 ## Paperclip settings
 
 [Paperclip][paperclip-gem] handles the creation and storage of product images.
-By default, it creates creates several version of each image at specific sizes.
+By default, it creates several versions of each image at specific sizes.
 
 You can check the default settings by calling the `attachment_definitions`
 method on `Spree::Image` in your Rails console:
