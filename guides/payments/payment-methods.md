@@ -67,7 +67,7 @@ defaults to the value of your store's `Spree::Config[:auto_capture]` preference.
 
 ## Set a payment source class
 
-The `Spree::PaymentMethod` base class has a has a method called
+The `Spree::PaymentMethod` base class has a method called
 `payment_source_class`. It sets the payment source that should be associated
 with your payment method. When you are creating your own payment method, you
 need to define a `payment_source_class` (even if it is `nil`).
