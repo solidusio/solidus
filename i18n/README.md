@@ -8,12 +8,14 @@ This is the Internationalization project for [Solidus](https://solidus.io)
 
 ---
 
-## Supported languages
+## Changes in Version 2.0
 
-We currently support the [following locales](https://github.com/solidusio-contrib/solidus_i18n/tree/master/config/locales)
-by default. If you need a locale that is not in the list you can add a custom
-translation file into your application by following the
-[Rails translations guide](http://guides.rubyonrails.org/i18n.html#how-to-store-your-custom-translations).
+solidus_i18n Version 2.0+ only contains translation files.
+
+Previous versions of solidus_i18n included extra functionality like locale
+selectors and which is now built in to Solidus 2.6+. Configuration for
+`routing-fitler` has also been removed and must be configured manually
+(See [Locale in URL](#locale-in-url)).
 
 ## Installation
 
@@ -21,6 +23,8 @@ Add the following to your `Gemfile`:
 
 ```ruby
 gem 'solidus_i18n', '~> 2.0'
+gem 'rails-i18n', '~> 5.1'
+gem 'kaminari-i18n', '~> 0.5.0'
 ```
 
 ## Locale in URL
@@ -28,7 +32,7 @@ gem 'solidus_i18n', '~> 2.0'
 Older versions of solidus_i18n included the routing-filter gem and configured routes to include the locale in the URL.
 This is still supported (maybe even recommended) but requires some additional configuration.
 
-1. Add gem to your `Gemfile`, then run `bundle install`
+1. Add this gem to your `Gemfile`, then run `bundle install`
 
 ``` ruby
 gem 'routing-filter', '~> 0.6.0'
@@ -44,12 +48,19 @@ Rails.application.routes.draw do
 end
 ```
 
-3. Configure locale-fitler in `config/initializers/locale_filter.rb` (optional)
+3. Configure routing-fitler in `config/initializers/locale_filter.rb` (optional)
 
 ``` ruby
 # Do not include the default locale in the URL
 RoutingFilter::Locale.include_default_locale = false
 ```
+
+## Supported languages
+
+We currently support the [following locales](https://github.com/solidusio-contrib/solidus_i18n/tree/master/config/locales)
+by default. If you need a locale that is not in the list you can add a custom
+translation file into your application by following the
+[Rails translations guide](http://guides.rubyonrails.org/i18n.html#how-to-store-your-custom-translations).
 
 ## Updating Translations
 
