@@ -2,7 +2,7 @@
 
 The `Spree::Carton` model represents how an order was shipped. For stores that
 use third-party logistics or complicated warehouse workflows, the shipment
-described when the order is confirmed may not be how the _actual_ shipment is
+described when the order is confirmed may not be how the *actual* shipment is
 packaged when it leaves its destination.
 
 ## Example of usage
