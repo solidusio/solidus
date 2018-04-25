@@ -1,4 +1,4 @@
-# Overview of shipments
+# Overview
 
 Solidus uses a flexible system to calculate shipping. It accommodates the full
 range of shipment pricing: from simple [flat
@@ -123,9 +123,9 @@ The shipping address entered during checkout defines the zone (or zones) for the
 order. The zone limits the available shipping methods for the order. It also
 defines regional taxation rules.
 
-<!-- TODO:
-  For more information about zones, see [the Locations guide](../locations).
--->
+For more information about zones see the [Locations][locations] documentation.
+
+[locations]: ../locations/overview.md
 
 ### Shipping calculators
 

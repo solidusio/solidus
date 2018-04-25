@@ -1,4 +1,4 @@
-# Locations
+# Overview
 
 In order to sell products, your store requires that you have locations set up.
 In Solidus, locations are split up into states, countries, and zones.
