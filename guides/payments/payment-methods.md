@@ -9,7 +9,7 @@ when you build your own integration for a payment service provider. <!-- For
 more information about Solidus and payment service providers, see the [Payment
 service providers][payment-service-providers] article. -->
 
-`Spree::PaymentMethod` objects have have the following attributes:
+`Spree::PaymentMethod` objects have the following attributes:
 
 - `type`: The subclass of `Spree::PaymentMethod` that this payment method
   represents.

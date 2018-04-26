@@ -57,7 +57,7 @@ depending on the store that they are browsing. For example, if you have both a
 `us.store.com`, your customer is more likely to be in the United States.
 
 Using the `cart_tax_country_iso` property can help you comply with tax
-jurisdictions where where it is required to display VAT as part of the price.
+jurisdictions where it is required to display VAT as part of the price.
 
 Administrators can configure these values for a storefront using the "Default
 currency" and "Tax Country for Empty Carts" settings on the **Settings ->

@@ -10,7 +10,7 @@ can adjust orders, line items, or shipping charges, note that some of the
 built-in calculators can only be used on a subset of promotions.
 
 The rest of this article summarizes the available promotion calculators, grouped
-by the types of promotions they can calculator (either order, line item, or
+by the types of promotions they can calculate (either order, line item, or
 shipment promotions).
 
 [shipping-calculators]: shipping-calculators.md

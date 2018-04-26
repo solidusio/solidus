@@ -127,7 +127,7 @@ class has a `payment_type` method that could have a value of `ApplePay`,
 
 ## Payment processing
 
-The `Spree::Payment::Processing` class's `process!` method can can operate on
+The `Spree::Payment::Processing` class's `process!` method can operate on
 completed orders. It attempts to capture orders, invoking the customer's
 selected `Spree::PaymentMethod` and sending payment details to the payment
 service provider.
