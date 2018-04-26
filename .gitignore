@@ -28,3 +28,5 @@ tags
 .sass-cache
 .localeapp
 .yardoc
+node_modules
+.tmp
