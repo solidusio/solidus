@@ -895,4 +895,13 @@ RSpec.describe Spree::Shipment, type: :model do
       end
     end
   end
+
+  describe '#cartons' do
+    let(:carton)   { create(:carton) }
+    let(:shipment) { carton.shipments.first }
+
+    subject { shipment.cartons }
+
+    it { is_expected.to include carton }
+  end
 end
