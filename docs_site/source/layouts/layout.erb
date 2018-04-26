@@ -1,0 +1,105 @@
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link rel="apple-touch-icon" href='/assets/images/favicon/apple-touch-icon.png'>
+  <link rel="shortcut icon" type="image/x-icon" href='/assets/images/favicon/favicon.ico'>
+
+  <title><%= current_page.data.title || "Middleman" %></title>
+
+  <%= javascript_include_tag "modernizr" %>
+  <%= stylesheet_link_tag "site" %>
+</head>
+
+<body>
+<%= partial "partials/header" %>
+
+<div class="site-body container">
+  <main class="site-content">
+    <%= yield %>
+  </main>
+
+  <div class="site-navbar">
+    <div class="backdrop"></div>
+    <div class="navbar-header">
+      <div class="site-logo float-left">
+        <%= inline_svg("logo.svg", class: "isvg") %>
+      </div>
+
+      <a class="site-menu-toggler" href="#">
+        <%= inline_svg("close.svg", class: "isvg isvg-close") %>
+      </a>
+    </div>
+
+    <div class="navbar-content">
+      <h6 class="title">Developer Documentation</h6>
+      <nav id="site-navbar">
+        <ul>
+          <li><a href="/topic">Assets</a></li>
+          <li><a href="/topic">Getting Started</a></li>
+        </ul>
+        <hr>
+        <ul>
+          <li><a href="/topic">Inventory</a></li>
+          <li><a href="/topic">Locations</a></li>
+          <li><a href="/topic">Payments</a></li>
+          <li class="active current">
+            <a data-toggle="collapse" data-target="#submenuProducts" href="#">Products and Variants</a>
+
+            <ul id="submenuProducts" class="collapse show"  data-parent="#site-navbar">
+              <li><a href="#">Multi-currency support</a></li>
+              <li><a href="/topic">Overview of products and variants</a></li>
+              <li class="current"><a href="/topic">Product images</a></li>
+              <li><a href="/topic">Product properties</a></li>
+              <li><a href="/topic">Products</a></li>
+              <li><a href="/topic">Taxonomies and taxons</a></li>
+              <li><a href="/topic">Variants</a></li>
+            </ul>
+          </li>
+          <li>
+            <a data-toggle="collapse" data-target="#submenuPromotions" href="#">Promotions</a>
+            <ul id="submenuPromotions" class="collapse" data-parent="#site-navbar">
+              <li><a href="/topic">Multi-currency support</a></li>
+              <li><a href="/topic">Overview of products and variants</a></li>
+              <li><a href="/topic">Product images</a></li>
+              <li><a href="/topic">Product properties</a></li>
+              <li><a href="/topic">Products</a></li>
+              <li><a href="/topic">Taxonomies and taxons</a></li>
+              <li><a href="/topic">Variants</a></li>
+            </ul>
+          </li>
+          <li><a href="/topic">Returns</a></li>
+          <li><a href="/topic">Shipments</a></li>
+          <li><a href="/topic">Taxation</a></li>
+          <li><a href="/topic">Users</a></li>
+          <li><a href="/topic">Views</a></li>
+        </ul>
+
+        <hr>
+
+        <ul class="mb-4">
+          <li><a href="/topic">Acknowledgements</a></li>
+          <li><a href="/topic">Contributing</a></li>
+        </ul>
+
+        <a class="btn btn-outline-secondary btn-w-icon btn-block" href="http://slack.solidus.io/" target="_blank"><%= inline_svg("icons/slack.svg", class: "isvg") %> <span class="text">Get Help on Slack</span></a>
+      </nav>
+    </div>
+  </div>
+</div>
+
+<% if content_for?(:footer) %>
+  <%= yield_content :footer %>
+<% else %>
+  <%= partial "partials/footer" %>
+<% end %>
+
+<%= javascript_include_tag "vendor" %>
+<%= javascript_include_tag "common" %>
+<%= yield_content :scripts %>
+</body>
+</html>

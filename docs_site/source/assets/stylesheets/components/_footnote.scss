@@ -1,0 +1,27 @@
+.site-body {
+  counter-reset: footnotecounter;
+}
+
+span.footnote:before {
+  display: block;
+  counter-increment: footnotecounter;
+  content: counter(footnotecounter);
+  position: relative;
+  background: $blue;
+  color: #ffffff;
+  border-radius: 50%;
+  line-height: 12px;
+  height: 12px;
+  text-align: center;
+  font-size: 9px;
+  font-weight: $font-weight-bolder;
+  width: 12px;
+}
+
+span.footnote {
+  display: inline-block;
+  vertical-align: middle;
+  margin-top: -7px;
+  margin-left: -5px;
+  padding: 10px;
+}

@@ -1,0 +1,111 @@
+---
+title: Home
+---
+
+
+<div class="content-block card">
+  <h1 class="title">Overview of products and variants</h1>
+
+  <p class="mb-1">Products and variants are integral to Solidus. While the <code>Spree::Product</code> and <code>Spree::Variant</code> models depend on each other, it is important to understand how they are different:</p>
+
+  <ul>
+    <li><code>Spree::Product</code> s track the general information about a product. This includes the product description and the permalink where a customer would find the product listing on
+      a store. If you sell a mug and a t-shirt, you would set up a separate product for each of them.
+    </li>
+    <li><code>Spree::Variant</code> s track the specific information about a variant of that product. For example, the variant provides the dimensions and weight. The variant provides the
+      information required by orders and shipments. If you sell a red t-shirt and a green t-shirt, you could make each one a variant of your t-shirt product. Similarly, if all of
+      your t-shirts come in small, medium, and large, then you would make additional variants for each of those: small green t-shirt, small red t-shirt, medium green t-shirt,
+      medium red t-shirt, and so on.
+    </li>
+  </ul>
+
+  <p>The rest of this article introduces essential information for using products and variants in Solidus.</p>
+
+
+  <h2>Products</h2>
+
+  <p><code>Spree::Product</code> s track unique products within your store. If you sell a mug and a t-shirt, you would set up a product for each of them.</p>
+  <p>If you have a number of items that are similar (like t-shirts that come in small, medium, and large sizes), you can create <a href="#">variants</a> for a single product instead of creating three separate products.</p>
+  <p>You can categorize products using <a href="#">taxonomies and taxons</a>. And, if you want to offer more extensive information about a single product, you can add custom product properties for any product.</p>
+
+
+  <h2>Taxonomies and taxons</h2>
+
+  <p>Where taxons act as subcategories to taxonomies:</p>
+
+  <div class="code-block">
+    <div class="code-block-header">
+      <div class="language">Ruby</div>
+      <div class="path">app/models/spree/promotion/rules/my_promotion_rule.rb</div>
+    </div>
+    <pre><code class="language-ruby">
+      module Spree
+        class Promotion
+          module Rules
+            class MyPromotionRule < Spree::PromotionRule
+              def applicable?(promotable)
+                promotable.is_a?(Spree::Order)
+              end
+
+              def eligible?(order, options = {})
+                ...
+              end
+
+              def actionable?(line_item)
+                ...
+              end
+            ...
+    </code></pre>
+  </div>
+
+
+  <h2>Example zone configuation</h2>
+
+  <p><em>Note that the following example should not be followed for a store in production. Always speak with a tax professional before determining your tax rates and shipping fees.</em></p>
+  <p>In the table below, you can see how your store could use zones in conjunction with the required tax rates and any shipping methods you wish to use:</p>
+
+  <table class="table table-responsive-collapse">
+    <thead>
+    <tr>
+      <th>Zone</th>
+      <th>Description</th>
+      <th class="text-md-right">Tax&nbsp;rate</th>
+      <th>Available shipping methods</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td data-label="Zone"><div class="td-inner">In-state</div></td>
+      <td data-label="Description"><div class="td-inner">Purchases shipped within Arizona (taxable)</div></td>
+      <td data-label="Tax&nbsp;rate" class="text-md-right"><div class="td-inner">9.9%</div></td>
+      <td data-label="Available shipping methods"><div class="td-inner">FedEx Express, UPS Ground, USPS First-Class</div></td>
+    </tr>
+    <tr>
+      <td data-label="Zone"><div class="td-inner">Non-contiguous States</div></td>
+      <td data-label="Description"><div class="td-inner">Purchases shipped to Alaska or Hawaii</div></td>
+      <td data-label="Tax&nbsp;rate" class="text-md-right"><div class="td-inner">0</div></td>
+      <td data-label="Available shipping methods"><div class="td-inner">FedEx Express</div></td>
+    </tr>
+    <tr>
+      <td data-label="Zone"><div class="td-inner">Contiguous States</div></td>
+      <td data-label="Description"><div class="td-inner">Purchases shipped to all other states</div></td>
+      <td data-label="Tax&nbsp;rate" class="text-md-right"><div class="td-inner">0</div></td>
+      <td data-label="Available shipping methods"><div class="td-inner">FedEx Express, UPS Ground</div></td>
+    </tr>
+    <tr>
+      <td data-label="Zone"><div class="td-inner">Canada</div></td>
+      <td data-label="Description"><div class="td-inner">Purchases shipped internationally to Canada</div></td>
+      <td data-label="Tax&nbsp;rate" class="text-md-right"><div class="td-inner">0</div></td>
+      <td data-label="Available shipping methods"><div class="td-inner">FedEx Express</div></td>
+    </tr>
+    </tbody>
+  </table>
+
+  <!--footnot doesn't need number inside it, they are autonumbered-->
+  <p>The simple bogus credit card method does not support payment profiles. <span class="footnote" data-toggle="popover" data-content="A payment profile is a record that pairs a specific customer with a specific credit card. Some payment gateway providers or billing systems use payment profiles while others do not."></span></p>
+  <p>The simple bogus credit card method does not support payment profiles. <span class="footnote" data-toggle="popover"></span></p>
+</div>
+
+<div class="content-block card">
+  <%= partial "partials/feedback" %>
+</div>
