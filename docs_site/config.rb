@@ -1,7 +1,7 @@
 page "/*.xml", layout: false
 page "/*.json", layout: false
 page "/*.txt", layout: false
-page "/guides/*", layout: 'guide'
+page "/developers/*", layout: 'article'
 page "/404.html", directory_index: false
 
 set :css_dir, "assets/stylesheets"
