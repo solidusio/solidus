@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  postgres:
+  postgres: &postgres
     working_directory: &workdir ~/solidus
     environment: &environment
       DB: postgresql
@@ -46,9 +46,9 @@ jobs:
       - store_test_results:
           path: /tmp/test-results
 
-  mysql:
+  mysql: &mysql
     working_directory: *workdir
-    environment:
+    environment: &mysql_environment
       <<: *environment
       DB: mysql
       DB_HOST: 127.0.0.1
@@ -58,9 +58,23 @@ jobs:
     parallelism: *parallelism
     steps: *steps
 
+  postgres_rails51:
+    <<: *postgres
+    environment:
+      <<: *environment
+      RAILS_VERSION: '~> 5.1.0'
+
+  mysql_rails51:
+    <<: *mysql
+    environment:
+      <<: *mysql_environment
+      RAILS_VERSION: '~> 5.1.0'
+
 workflows:
   version: 2
   build:
     jobs:
       - postgres
       - mysql
+      - postgres_rails51
+      - mysql_rails51
