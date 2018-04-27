@@ -1,6 +1,6 @@
 # Contributing
 
-We hope that you will consider contributing to the Solidus documentation. 
+We hope that you will consider contributing to the Solidus documentation.
 
 We want to provide the Solidus community with consistent, easy-to-read, and
 easy-to-maintain articles. If you decide to submit a pull request, please try to
@@ -14,7 +14,7 @@ follow the guidelines listed here.
 - Prefer short, simple sentences that are under 12 words long.
 - Avoid using English-language idioms. [Many idioms are challenging for
   non-native English speakers][idioms]. ("The configuration is simple," not "The
-  configuration is a piece of cake.") 
+  configuration is a piece of cake.")
 - Avoid using jargon English like "e.g." and "i.e." Write out a phrase like "for
   example" instead.
 - Avoid words that have multiple meanings (or [homographs][homographs]),
@@ -54,7 +54,10 @@ follow the guidelines listed here.
 
 - Do not abbreviate terminal commands. (`bundle exec rails server`, not `bundle
   exec rails s`.)
-- If your code is longer than one line or 20 characters, use a code block rather
-  than inline code.
-- Describe what each code block does in the text above it.
+- Put filenames, paths, and single-word references to code in `inline` code
+  elements. ("Use the `payments` method to get a list of payments.")
+- Use [fenced code blocks][fenced-code-blocks] for any amount of example code.
+- Describe what the code in each fenced code block does in the text above it.
+
+[fenced-code-blocks]: https://github.github.com/gfm/#fenced-code-blocks
 
