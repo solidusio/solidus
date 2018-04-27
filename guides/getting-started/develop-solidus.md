@@ -119,5 +119,5 @@ new Solidus extension.
 
 [chromedriver]: https://sites.google.com/a/chromium.org/chromedriver/home
 [circleci]: https://circleci.com/gh/solidusio/solidus
-[extensions]: https://extensions.solidus.io
+[extensions]: http://extensions.solidus.io
 [solidus-cmd]: https://github.com/solidusio/solidus_cmd

@@ -37,5 +37,5 @@ its [`format`][ruby-money-format] method:
 ```
 
 [ruby-money]: https://github.com/RubyMoney/money
-[ruby-money-format]: http://www.rubydoc.info/gems/money/Money/Formatting
+[ruby-money-format]: https://www.rubydoc.info/gems/money/Money:format
 

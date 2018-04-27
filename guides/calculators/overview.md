@@ -124,5 +124,5 @@ of custom calculator you may want to build:
 - [Custom shipping calculators][custom-shipping-calculators]
 - [Custom tax calculators][custom-tax-calculators]
 
-[custom-shipping-calculators]: ../shipments/custom-shipping-calculators.html
-[custom-tax-calculators]: ../taxation/custom-tax-calculators.html
+[custom-shipping-calculators]: ../shipments/custom-shipping-calculators.md
+[custom-tax-calculators]: ../taxation/custom-tax-calculators.md

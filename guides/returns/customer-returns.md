@@ -22,7 +22,7 @@ Spree::CustomerReturn.find(1).return_items
 # => <Spree::ReturnItem id: 1 ...>, <Spree::ReturnItem id: 2 ...>
 ```
 
-[return-authorizations]: return-authorization.md
+[return-authorizations]: return-authorizations.md
 [stock-locations]: ../inventory/overview.md#stock-locations
 
 ## User interface

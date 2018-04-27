@@ -75,9 +75,9 @@ can be adjustables:
 
 ## Charges vs. credits
 
-Adjustments can be positive or negative amounts. For convenience, you can use the
-[adjustment scopes](adjustment-scopes.html.markdown) `charge` or `credit` to
-retrieve only positive or negative amounts.
+Adjustments can be positive or negative amounts. For convenience, you can use
+the [adjustment scopes](#adjustment-scopes) `charge` or `credit` to retrieve
+only positive or negative amounts.
 
 ## Adjustment scopes
 

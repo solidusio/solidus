@@ -135,4 +135,4 @@ service provider.
 For more information about processing payments, see the [Payment
 processing][payment-processing] article.
 
-[payment-processing]: payment_processing.md
+[payment-processing]: payment-processing.md

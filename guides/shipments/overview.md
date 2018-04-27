@@ -9,17 +9,19 @@ address, what shipping method is being used, and so on.
 If your store has complex shipping needs, you may find one of Solidus's existing
 shipping extensions, like [`solidus_active_shipping`][solidus-active-shipping]
 or [`solidus_shipstation`][solidus-shipstation], useful. Check out [the list of
-supported Solidus Extensions](https://extensions.solidus.io).
+supported Solidus Extensions][extensions].
 
 This article provides a summary of shipping concepts. If you are interested in
 reading about example Solidus shipment setups see
-[Shipment setup examples](shipment-setup-examples.md).
+[Shipment setup examples][shipment-setup-examples].
 
 <!-- TODO:
   Add section that summarizes what Spree::Objects are created related to
   shipments and explains what their function is in the larger checkout process.
 -->
 
+[extensions]: http://extensions.solidus.io
+[shipment-setup-examples]: shipment-setup-examples.md
 [solidus-active-shipping]: solidus-active-shipping-extension.md
 [solidus-shipstation]: https://github.com/boomerdigital/solidus_shipstation
 

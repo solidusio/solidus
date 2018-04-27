@@ -14,7 +14,7 @@ includes the [`Spree::Payment::Processing` class][spree-payment-processing].
   merged.
 -->
 
-[payment-methods]: payment_method.md
+[payment-methods]: payment-methods.md
 [payment-service-providers]: payment-service-providers.md
 [psp]: https://en.wikipedia.org/wiki/Payment_service_provider
 [spree-payment-processing]: https://github.com/solidusio/solidus/blob/master/core/app/models/spree/payment/processing.rb

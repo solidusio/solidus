@@ -58,7 +58,7 @@ payment service provider for [processing][payment-processing]. If the
 administrator must manually capture payments. However, you can set any payment
 method to auto-capture payments.
 
-[payment-processing]: payment_processing.md
+[payment-processing]: payment-processing.md
 
 ### Application-wide auto-capture default
 

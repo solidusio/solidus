@@ -31,7 +31,7 @@ Variants are used to define properties that are specific to the variant:
 - `tax_category_id`: Overrides the product's tax category for this variant.
   See the [Taxation][tax-categories] documentation for more information.
 
-[tax-categories]: ../taxation/overview-of-taxation.md#tax-categories
+[tax-categories]: ../taxation/overview.md#tax-categories
 
 <!-- TODO:
   Once there is documentation about inventory, add a link to it from the

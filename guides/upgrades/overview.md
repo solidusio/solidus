@@ -1,4 +1,4 @@
-# Overview
+# Upgrades
 
 Easy upgrades are a core goal of Solidus. It should be easy for your production
 store to get onto the newest, most performant version of Solidus.
@@ -38,5 +38,5 @@ customizations to Spree, the migration may require some additional preparation.
 If you want to talk about your upcoming migration with somebody, [join our Slack
 team][slack] and start a conversation about it in the *#support* channel.
 
-[migrate-from-spree]: migrate-from-spree.html
+[migrate-from-spree]: migrate-from-spree.md
 [slack]: http://slack.solidus.io/
