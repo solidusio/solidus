@@ -24,7 +24,6 @@ Gem::Specification.new do |s|
   s.has_rdoc = false
 
   s.add_runtime_dependency 'solidus_core', ['>= 1.1', '< 3']
-  s.add_runtime_dependency 'solidus_support'
 
   s.add_development_dependency 'pry-rails', '>= 0.3.0'
   s.add_development_dependency 'rubocop', '>= 0.24.1'
