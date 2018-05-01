@@ -1,0 +1,159 @@
+$accentColor = #3c76f1;
+$textColor = rgba(36, 40, 47, 0.8);
+
+@import url("https://p.typekit.net/p.css?s=1&k=dzr2grg&ht=tk&f=24543.24545.24547.24549&a=2875268&app=typekit&e=css");
+
+@font-face {
+  font-family:"sofia-pro";
+  src:url("https://use.typekit.net/af/43e50f/0000000000000000000157ad/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n3&v=3") format("woff2"),url("https://use.typekit.net/af/43e50f/0000000000000000000157ad/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n3&v=3") format("woff"),url("https://use.typekit.net/af/43e50f/0000000000000000000157ad/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n3&v=3") format("opentype");
+  font-style:normal;
+  font-weight:300;
+}
+
+@font-face {
+  font-family:"sofia-pro";
+  src:url("https://use.typekit.net/af/67b45a/0000000000000000000157af/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n5&v=3") format("woff2"),url("https://use.typekit.net/af/67b45a/0000000000000000000157af/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n5&v=3") format("woff"),url("https://use.typekit.net/af/67b45a/0000000000000000000157af/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n5&v=3") format("opentype");
+  font-style:normal;
+  font-weight:500;
+}
+
+@font-face {
+  font-family:"sofia-pro";
+  src:url("https://use.typekit.net/af/d45bf2/0000000000000000000157b1/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3") format("woff2"),url("https://use.typekit.net/af/d45bf2/0000000000000000000157b1/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3") format("woff"),url("https://use.typekit.net/af/d45bf2/0000000000000000000157b1/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3") format("opentype");
+  font-style:normal;
+  font-weight:400;
+}
+
+@font-face {
+  font-family:"sofia-pro";
+  src:url("https://use.typekit.net/af/fdecde/0000000000000000000157b3/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n6&v=3") format("woff2"),url("https://use.typekit.net/af/fdecde/0000000000000000000157b3/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n6&v=3") format("woff"),url("https://use.typekit.net/af/fdecde/0000000000000000000157b3/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n6&v=3") format("opentype");
+  font-style:normal;
+  font-weight:600;
+}
+
+#app {
+  .theme-container {
+    font-family: sofia-pro, -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-weight: 300;
+    font-size: 16px;
+
+    h1, h2, h3, h4, h5, h6, strong {
+      font-weight: 500;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      line-height: 1.33;
+      margin-bottom: 1em;
+    }
+
+    h1 {
+      font-size: 2.625rem;
+      line-height: 1.14;
+    }
+
+    h2 {
+      font-size: 2.125rem;
+      border-bottom: 0 none;
+    }
+
+    h3 {
+      font-size: 1.5rem;
+    }
+
+    a, p a code {
+      font-weight: 300;
+    }
+
+    p {
+      line-height: 1.5;
+      margin-top: 0;
+      margin-bottom: 1.5em;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    a {
+      transition: all ease 0.3s;
+
+      &:hover:not(.action-button) {
+        color: #264b99;
+        text-decoration: none;
+      }
+
+      &.action-button:hover {
+        box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.4);
+      }
+    }
+
+    .home .hero img {
+      max-height: 150px;
+    }
+
+    .navbar {
+      height: 4rem;
+
+      .logo {
+        height: 24px;
+        min-width: 100px;
+        vertical-align: text-bottom;
+      }
+
+      .site-name {
+        font-size: 1.125rem;
+        font-weight: 300;
+        top: 4px;
+        color: rgba(36, 40, 47, 0.48);
+        transition: all ease 0.3s;
+
+        &:hover {
+          color: #24282f;
+        }
+      }
+
+      .links {
+        top: 0;
+        font-size: 1.125rem;
+
+        .nav-link, .github-link {
+          line-height: 3.45;
+        }
+
+        a {
+          color: rgba(36, 40, 47, 0.48);
+
+          &.router-link-active, &:hover {
+            color: #24282f;
+          }
+
+          &:hover:not(.router-link-active) {
+            border-bottom: 0 none;
+          }
+        }
+      }
+    }
+
+    .sidebar {
+      top: 4rem;
+    }
+
+    .sidebar-group.collapsable {
+      p.open {
+        margin-bottom: 1em;
+      }
+
+      .arrow {
+        display: none;
+      }
+    }
+
+    .search-box input {
+      width: 5rem;
+
+      &:focus {
+        width: 10rem;
+      }
+    }
+  }
+}
