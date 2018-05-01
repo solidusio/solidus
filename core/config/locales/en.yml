@@ -299,6 +299,7 @@ en:
         name: Name
       spree/store:
         url: Site URL
+        default: Default
         meta_description: Meta Description
         meta_keywords: Meta Keywords
         seo_title: Seo Title
