@@ -64,6 +64,7 @@
       <div data-hook="admin_product_form_available_on">
         <%= f.field_container :available_on do %>
           <%= f.label :available_on %>
+          <%= f.field_hint :available_on %>
 
           <%= render "spree/admin/shared/datepicker", f: f, date_attr: :available_on %>
 
