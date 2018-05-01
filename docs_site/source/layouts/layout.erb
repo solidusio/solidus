@@ -61,6 +61,8 @@
 
 <%= javascript_include_tag "vendor" %>
 <%= javascript_include_tag "common" %>
+<%= javascript_include_tag "search_index" %>
+<%= javascript_include_tag "search" if (current_page.data.index_options == "search") %>
 <%= yield_content :scripts %>
 </body>
 </html>

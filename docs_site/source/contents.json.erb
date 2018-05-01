@@ -1,0 +1,17 @@
+<%
+pages = sitemap.resources.find_all { |p| p.source_file.match(/\.markdown/) }
+entries = []
+
+pages.each_with_index do |page, index|
+  object = {}
+    # ... some specifics ommitted
+    entry = {
+      :id    => index,
+      :title => discover_title(page),
+      :url   => page.url,
+      :content => page.render({:layout => false })
+    }
+  entries << entry
+end
+%>
+<%= entries.to_json %>

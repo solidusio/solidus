@@ -9,8 +9,10 @@ module.exports = {
   //Entry points(js, scss files)
   entry: {
     "common": './source/assets/javascripts/common.js',
+    "search": './source/assets/javascripts/search.js',
+    "search_index": './source/assets/javascripts/search_index.js',
     "site": './source/assets/stylesheets/site.scss',
-    "vendor": ["jquery", "bootstrap"],
+    "vendor": ["jquery", "bootstrap", "lunr"],
   },
   output: {
     path: __dirname + '/.tmp/assets/javascripts',
