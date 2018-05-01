@@ -1,11 +1,11 @@
 # Product properties
 
 Product properties belong to the `Spree::ProductProperty` model. They track
-individual attributes for a product that would not apply to all of your
-products. Typically, product properties would be used for additional product
-information.
+individual attributes for a product, especially if the attributes only apply to
+one specific product. Typically, product properties are used for technical
+specifications or additional product information.
 
-As an example, you might see a list of product properties for a limited edition
+For example, you might see a list of product properties for a limited edition
 t-shirt as a table on its product page:
 
 | Property name | Property value   |
