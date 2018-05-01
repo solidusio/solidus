@@ -21,6 +21,11 @@ helpers do
   def menu_item_matches_page?(href)
     current_page.url.chomp('/').eql?(href)
   end
+
+  def discover_title(page = current_page)
+    markup = String(page.render( {layout: false} ))
+    markup[/>(.*?)<\/h1>/, 1]
+  end
 end
 
 activate :directory_indexes
