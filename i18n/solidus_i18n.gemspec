@@ -23,21 +23,8 @@ Gem::Specification.new do |s|
 
   s.has_rdoc = false
 
-  s.add_runtime_dependency 'i18n_data', '~> 0.7.0'
-  s.add_runtime_dependency 'rails-i18n', ['>= 4.0.1', '< 6']
-  s.add_runtime_dependency 'kaminari-i18n', '~> 0.5.0'
-  s.add_runtime_dependency 'routing-filter', '~> 0.6.0'
   s.add_runtime_dependency 'solidus_core', ['>= 1.1', '< 3']
-  s.add_runtime_dependency 'solidus_support'
-  s.add_runtime_dependency 'deface', '~> 1.0'
 
-  s.add_development_dependency 'byebug'
-  s.add_development_dependency 'capybara', '~> 2.17'
-  s.add_development_dependency 'selenium-webdriver', '~> 3.9'
-  s.add_development_dependency 'database_cleaner', '~> 1.3'
-  s.add_development_dependency 'factory_bot', '~> 4.5'
-  s.add_development_dependency 'ffaker', '>= 1.25.0'
-  s.add_development_dependency 'poltergeist', '~> 1.17'
   s.add_development_dependency 'pry-rails', '>= 0.3.0'
   s.add_development_dependency 'rubocop', '>= 0.24.1'
   s.add_development_dependency 'rspec-rails', '~> 3.1'

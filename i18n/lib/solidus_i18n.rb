@@ -1,8 +1,3 @@
-require 'rails-i18n'
 require 'solidus_core'
-require 'solidus_support'
 require 'solidus_i18n/engine'
-require 'solidus_i18n/locale'
 require 'solidus_i18n/version'
-require 'coffee_script'
-require 'deface'

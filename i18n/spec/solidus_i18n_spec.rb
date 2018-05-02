@@ -1,10 +1,14 @@
 require 'spec_helper'
 
-RSpec.describe SolidusI18n::Locale do
-  describe '.all' do
-    subject { SolidusI18n::Locale.all }
+RSpec.describe "solidus_i18n" do
+  describe 'defined locales' do
+    subject do
+      I18n.available_locales.select do |locale|
+        I18n.t('spree.i18n.this_file_language', locale: locale, fallback: false, default: nil)
+      end
+    end
 
-    it "Contains all available Solidus locales" do
+    it "contains the added locales" do
       # Add to this list when adding/removing locales
       expect(subject).to match_array %i[
         en
@@ -48,6 +52,14 @@ RSpec.describe SolidusI18n::Locale do
         lv
         sl-SI
       ]
+    end
+
+    it "has a unique description for each locale" do
+      descriptions = subject.map do |locale|
+        I18n.t('spree.i18n.this_file_language', locale: locale)
+      end
+
+      expect(descriptions.uniq).to eq(descriptions)
     end
   end
 end
