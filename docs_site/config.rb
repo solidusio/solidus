@@ -28,6 +28,23 @@ helpers do
   end
 end
 
+class CodeBlockRender < Redcarpet::Render::HTML
+  def block_code(code, language)
+    path = code[/^#\s(\S*)\n/, 1]
+    code = code.lines[1..-1].join if path
+    template = File.read('source/partials/_code_block.erb')
+    ERB.new(template).result(binding)
+  end
+end
+
+set :markdown_engine, :redcarpet
+set(
+  :markdown,
+  :fenced_code_blocks           => true,
+  :tables                       => true,
+  :renderer                     => CodeBlockRender
+)
+
 activate :directory_indexes
 #
 activate :external_pipeline,

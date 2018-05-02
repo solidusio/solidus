@@ -1,0 +1,15 @@
+<div class="code-block">
+  <div class="code-block-header">
+    <% if language %>
+      <div class="language"><%= language.capitalize %></div>
+    <% end %>
+    <% if path %>
+      <div class="path"><%= path %></div>
+    <% end %>
+  </div>
+  <pre>
+    <code <% if language %>class="language-<%= language %>"<% end %>>
+      <%= code %>
+    </code>
+  </pre>
+</div>
