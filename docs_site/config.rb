@@ -9,6 +9,20 @@ set :images_dir, "assets/images"
 set :js_dir, "assets/javascripts"
 set :base_url, build? ? "https://solidus.io" : "http://localhost:4567"
 
+helpers do
+  def kabob_case(title)
+    title.gsub(' ', '-').downcase
+  end
+
+  def category_matches_page?(href)
+    current_page.url.include?(href.sub(/\/[^\/]*$/, ''))
+  end
+
+  def menu_item_matches_page?(href)
+    current_page.url.chomp('/').eql?(href)
+  end
+end
+
 activate :directory_indexes
 #
 activate :external_pipeline,

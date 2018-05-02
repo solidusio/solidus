@@ -24,7 +24,7 @@ body{
     &.menu-open{ overflow: hidden; }
   }
 
-  @include media-breakpoint-up(lg){ padding-top: 100px; }
+  @include media-breakpoint-up(lg){ padding-top: $header-desktop-height; }
 
   @media print { padding-top: 0 !important; }
 }
@@ -41,7 +41,7 @@ body{
     .menu-open &{ background-color: $gray-900; }
   }
 
-  @include media-breakpoint-up(lg){ height: 100px; }
+  @include media-breakpoint-up(lg){ height: $header-desktop-height; }
 
   @media print {
     display: none !important;
@@ -107,6 +107,7 @@ body{
   padding: 24px 0;
   text-align: center;
   width: 100%;
+  z-index: 1;
 
   .social-links{  margin-top: 1rem; }
 

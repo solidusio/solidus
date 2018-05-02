@@ -29,6 +29,7 @@ $(function () {
 
   //Sticky header initialization
   let header = document.querySelector(".site-header");
+  let navbar = document.querySelector(".navbar-content")
   let headroom  = new Headroom(header, {
     offset: header.offsetHeight,
     classes: {
@@ -39,7 +40,9 @@ $(function () {
       bottom: "site-header--bottom",
       notTop: "site-header--not-top",
       notBottom: "site-header--scrolled"
-    }
+    },
+    onPin : function() { navbar.classList.toggle('pinned'); },
+    onUnpin : function() { navbar.classList.toggle('pinned'); }
   });
   // initialise
   headroom.init();

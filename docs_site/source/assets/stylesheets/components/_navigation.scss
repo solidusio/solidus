@@ -138,14 +138,26 @@
 
   .navbar-content{
     padding: 0 25px;
+    position: sticky;
+    overflow-y: auto;
+    height: calc(100vh - #{$header-desktop-height} - 32px);
+    transition: transform .3s ease-in-out;
+
+    &.pinned {
+      transform: translateY(-$header-desktop-height);
+      height: calc(100vh - 32px);
+    }
 
     @include media-breakpoint-down(md){
       height: calc(100% - 87px);
-      overflow-y: scroll;
       padding-bottom: 25px;
     }
 
-    @include media-breakpoint-up(lg){ padding: 0; }
+    @include media-breakpoint-up(lg){
+      padding: 0 25px 25px 0;
+      top: 132px;
+      bottom: 25px;
+    }
   }
 
   .title{
