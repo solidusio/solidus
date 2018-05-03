@@ -1285,6 +1285,7 @@ en:
         master_variant: "Changing master variant prices will not change variant prices below, but will be used to populate all new variants"
         options: "These options are used to create variants in the variants table. They can be changed in the variants tab"
       spree/product:
+        available_on: "This sets the availability date for the product. If this value is not set, or it is set to a date in the future, then the product is not available on the storefront."
         promotionable: "This determines whether or not promotions can apply to this product.<br/>Default: Checked"
         shipping_category: "This determines what kind of shipping this product requires.<br/> Default: Default"
         tax_category: "This determines what kind of taxation is applied to this product.<br/> Default: None"
