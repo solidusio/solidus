@@ -10,31 +10,39 @@
   <% end %>
 <% end %>
 
-<table>
-  <colgroup>
-    <col style="width: 40%">
-    <col style="width: 40%">
-    <col style="width: 20%">
-  </colgroup>
-  <thead>
-    <th><%= Spree::PromotionCategory.human_attribute_name :name %></th>
-    <th><%= Spree::PromotionCategory.human_attribute_name :code %></th>
-    <th class='actions'></th>
-  </thead>
-  <tbody>
-    <% @promotion_categories.each do |promotion_category| %>
-      <tr>
-        <td><%= promotion_category.name %></td>
-        <td><%= promotion_category.code%></td>
-        <td class="actions">
-          <% if can?(:update, promotion_category) %>
-            <%= link_to_edit promotion_category, no_text: true %>
-          <% end %>
-          <% if can?(:destroy, promotion_category) %>
-            <%= link_to_delete promotion_category, no_text: true %>
-          <% end %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<% if @promotion_categories.any? %>
+  <table class="index">
+    <colgroup>
+      <col style="width: 40%">
+      <col style="width: 40%">
+      <col style="width: 20%">
+    </colgroup>
+    <thead>
+      <th><%= Spree::PromotionCategory.human_attribute_name :name %></th>
+      <th><%= Spree::PromotionCategory.human_attribute_name :code %></th>
+      <th class='actions'></th>
+    </thead>
+    <tbody>
+      <% @promotion_categories.each do |promotion_category| %>
+        <tr>
+          <td><%= promotion_category.name %></td>
+          <td><%= promotion_category.code %></td>
+          <td class="actions">
+            <% if can?(:update, promotion_category) %>
+              <%= link_to_edit promotion_category, no_text: true %>
+            <% end %>
+            <% if can?(:destroy, promotion_category) %>
+              <%= link_to_delete promotion_category, no_text: true %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+    <div class="no-objects-found">
+    <%= render 'spree/admin/shared/no_objects_found',
+                 resource: Spree::PromotionCategory,
+                 new_resource_url: new_object_url %>
+  </div>
+<% end %>
