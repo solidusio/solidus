@@ -15,7 +15,7 @@
       </div>
 
       <div id="existing_cards">
-        <p class="field" data-hook="existing_cards">
+        <div class="field" data-hook="existing_cards">
           <table class="existing-credit-card-list">
             <tbody>
               <% @wallet_payment_sources.each do |wallet_payment_source| %>
@@ -31,7 +31,7 @@
               <% end %>
             </tbody>
           </table>
-        </p>
+        </div>
       </div>
     <% end %>
 
@@ -57,7 +57,7 @@
     </ul>
     <br style="clear:both;" />
     <p class='field' data-hook='coupon_code'>
-      <%= form.label :coupon_code %><br />
+      <%= form.label :coupon_code %>
       <%= form.text_field :coupon_code %>
       <button type="button" class="button" id="coupon-code-apply-button">
         <%= t('spree.apply_code') %>

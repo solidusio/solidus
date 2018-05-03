@@ -43,7 +43,6 @@ Spree.ready(function($) {
       var statePara = $("#" + region + "state");
       var stateSelect = statePara.find("select");
       var stateInput = statePara.find("input");
-      var stateSpanRequired = statePara.find('[id$="state-required"]');
       if (states.length > 0) {
         var selected = parseInt(stateSelect.val());
         stateSelect.html("");
@@ -68,21 +67,21 @@ Spree.ready(function($) {
         statePara.show();
         if (statesRequired) {
           stateSelect.addClass("required");
-          stateSpanRequired.show();
+          statePara.addClass("field-required");
         } else {
           stateSelect.removeClass("required");
-          stateSpanRequired.hide();
+          statePara.removeClass("field-required");
         }
         stateInput.removeClass("required");
       } else {
         stateSelect.hide().prop("disabled", true);
         stateInput.show();
         if (statesRequired) {
-          stateSpanRequired.show();
+          statePara.addClass("field-required");
           stateInput.addClass("required");
         } else {
           stateInput.val("");
-          stateSpanRequired.hide();
+          statePara.removeClass("field-required");
           stateInput.removeClass("required");
         }
         statePara.toggle(!!statesRequired);

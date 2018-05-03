@@ -143,10 +143,27 @@ label.error {
   margin-top: 3px;
 }
 
-span.required {
-  color: $c_red;
-  font-weight: bold;
-  font-size: 1.2em;
+.field {
+  padding: 10px 0;
+
+  label {
+    display: inline-block;
+    margin-bottom: 5px;
+  }
+
+  input,
+  select {
+    display: block;
+  }
+
+  &-required label:after {
+    content: "*";
+    display: inline-block;
+    color: $c_red;
+    font-weight: bold;
+    font-size: 1.2em;
+    margin-left: 3px;
+  }
 }
 
 fieldset {
@@ -645,6 +662,10 @@ ul#products {
 /*--------------------------------------*/
 /* Checkout
 /*--------------------------------------*/
+.checkout_form_wrapper {
+  text-align: left;
+}
+
 .out-of-stock {
   background: #df0000;
   color: white;
@@ -881,7 +902,7 @@ ul#products {
   .shipping-methods {
     list-style: none;
     margin: 0;
-    padding: none;
+    padding: 10px 0;
 
     .shipping-method {
       display: inline-block;
