@@ -171,6 +171,10 @@ For example, you might want your calculator to handle your product with a
 shipping category of "Oversized" differently than it would a product with the
 "Default" shipping category.
 
+For example, you might want your calculator to handle products with different
+shipping categories in specific ways: an product with the "Oversized" category
+should not be treated like a product with the "Default" category.
+
 <!-- TODO:
   Add an example code block or a link to some Solidus code that shows a
   calculator taking advantage of shipping categories and/or tax categories to

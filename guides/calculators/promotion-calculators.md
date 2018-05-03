@@ -158,8 +158,8 @@ Item". It has the following preference:
 - `percent`: The percentage discount that should be given to each applicable
   line item.
 
-[distributed-amount]: https://github.com/solidusio/solidus/blob/master/core/app/models/spree/calculator/distributed_amount.rb)
-[percent-on-line-item]: https://github.com/solidusio/solidus/blob/master/core/app/models/spree/calculator/percent_on_line_item.rb)
+[distributed-amount]: https://github.com/solidusio/solidus/blob/master/core/app/models/spree/calculator/distributed_amount.rb
+[percent-on-line-item]: https://github.com/solidusio/solidus/blob/master/core/app/models/spree/calculator/percent_on_line_item.rb
 
 ## Free shipping promotions
 

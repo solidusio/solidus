@@ -71,7 +71,7 @@ information, see the [Display totals methods][display-total-methods] article.
 
 [display-total-methods]: display-total-methods.md
 [order-state-machine]: order-state-machine.md
-[shipment-states]: ../shipments/overview-of-shipments.md#shipping-states
+[shipment-states]: ../shipments/overview.md#shipping-states
 [special-instructions]: ../shipments/user-interface-for-shipments.md#shipping-instructions
 [update-orders]: update-orders.md
 
@@ -109,7 +109,7 @@ promotions) or increase it (via [shipments][shipments] and [taxes][taxes]).
   Add link to adjustments guide once it is merged.
 -->
 
-[taxes]: ../taxation/overview-of-taxation.md
+[taxes]: ../taxation/overview.md
 
 ### Shipments
 
@@ -124,7 +124,7 @@ item belongs to. Inventory units provide a link between the order and
 
 For more information, see the [Shipments][shipments] documentation.
 
-[shipments]: ../shipments/overview-of-shipments.md
+[shipments]: ../shipments/overview.md
 
 ### Addresses
 

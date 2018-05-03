@@ -7,7 +7,7 @@ The logic for processing payments is decoupled from Solidus's orders system.
 This allows you to easily define your own payment methods with custom
 processing logic.
 
-The payments system has many moving parts. The following lists summarizes the
+The payments system has many moving parts. The following lists summarize the
 essential parts of the payments system:
 
 1. **Payment service providers**. Before your store can have a functional
@@ -135,4 +135,4 @@ service provider.
 For more information about processing payments, see the [Payment
 processing][payment-processing] article.
 
-[payment-processing]: payment_processing.md
+[payment-processing]: payment-processing.md

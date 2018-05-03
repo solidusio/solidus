@@ -75,7 +75,7 @@ end
 Now, when search is built it uses your extended `MyStore::ProductSearch`
 functionality instead of the default functionality.
 
-[search-base]: https://github.com/solidusio/solidus/blob/master/core/lib/spree/base.rb
+[search-base]: https://github.com/solidusio/solidus/blob/v2.4/core/lib/spree/core/search/base.rb
 
 ## Generating extension points
 

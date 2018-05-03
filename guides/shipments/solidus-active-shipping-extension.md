@@ -16,7 +16,7 @@ carriers supported by this extension would follow a similar pattern.
 ## Install `solidus_active_shipping`
 
 Follow the installation instructions provided by the `solidus_active_shipping`
-extension.You can get more detailed information on installation from [the
+extension. You can get more detailed information on installation from [the
 extension's documentation][readme].
 
 [readme]: https://github.com/solidusio-contrib/solidus_active_shipping/blob/master/README.md
@@ -48,7 +48,7 @@ admin again.
 
 <!-- TODO:
   There currently isn't a reference list for how to configure the supported
-  carriers with a initializer. I think we could either provide a complete list
+  carriers with an initializer. I think we could either provide a complete list
   in the `solidus_active_shipping` README or more verbosely explain how to see a
   list of the possible preferences via a rails console.
 -->

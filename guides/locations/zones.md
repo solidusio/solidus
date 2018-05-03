@@ -107,9 +107,9 @@ with the required tax rates and any shipping methods you wish to use:
 | Contiguous States     | Purchases shipped to all other states       | 0        | FedEx Express, UPS Ground                   |
 | Canada                | Purchases shipped internationally to Canada | 0        | FedEx Express                               |
 
-All of the zones in this table would be state-based with the exception of the
-"Canada" zone, which you could configure as a country-based zone with a single
-country in it.
+All of the zones in this table would be state-based except for the "Canada"
+zone, which you could configure as a country-based zone with a single country in
+it.
 
 While you might choose to use zones differently in your own store, this example
 shows how you might want to group different states according to your own

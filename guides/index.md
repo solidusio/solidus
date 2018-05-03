@@ -7,6 +7,12 @@
  - [Asset Management](assets/asset-management.md)
  - [Override Solidus Assets](assets/override-solidus-assets.md)
 
+## Calculators
+ - [Overview](calculators/overview.md)
+ - [Promotion Calculators](calculators/promotion-calculators.md)
+ - [Shipping Calculators](calculators/shipping-calculators.md)
+ - [Tax Calculator](calculators/tax-calculator.md)
+
 ## Extensions
  - [Decorators](extensions/decorators.md)
  - [Installing Extensions](extensions/installing-extensions.md)
@@ -26,6 +32,7 @@
 
 ## Locations
  - [Countries And States](locations/countries-and-states.md)
+ - [Overview](locations/overview.md)
  - [Zones](locations/zones.md)
 
 ## Orders
@@ -35,10 +42,11 @@
  - [Update Orders](orders/update-orders.md)
 
 ## Payments
- - [Custom Gateway](payments/custom_gateway.md)
  - [Overview](payments/overview.md)
- - [Payment Method](payments/payment_method.md)
- - [Payment Processing](payments/payment_processing.md)
+ - [Payment Methods](payments/payment-methods.md)
+ - [Payment Service Providers](payments/payment-service-providers.md)
+ - [Payment Sources](payments/payment-sources.md)
+ - [Payments](payments/payments.md)
 
 ## Preferences
  - [Add Model Preferences](preferences/add-model-preferences.md)
@@ -61,12 +69,17 @@
  - [Promotion Rules](promotions/promotion-rules.md)
 
 ## Returns
+ - [Customer Returns](returns/customer-returns.md)
+ - [Overview](returns/overview.md)
+ - [Reimbursement Types](returns/reimbursement-types.md)
+ - [Reimbursements](returns/reimbursements.md)
  - [Return Authorizations](returns/return-authorizations.md)
+ - [Return Items](returns/return-items.md)
 
 ## Shipments
  - [Cartons](shipments/cartons.md)
  - [Custom Shipping Calculators](shipments/custom-shipping-calculators.md)
- - [Overview Of Shipments](shipments/overview-of-shipments.md)
+ - [Overview](shipments/overview.md)
  - [Shipment Setup Examples](shipments/shipment-setup-examples.md)
  - [Shipping Method Filters](shipments/shipping-method-filters.md)
  - [Solidus Active Shipping Extension](shipments/solidus-active-shipping-extension.md)
@@ -74,14 +87,20 @@
  - [User Interface For Shipments](shipments/user-interface-for-shipments.md)
 
 ## Taxation
- - [Custom Tax Calculator](taxation/custom-tax-calculator.md)
+ - [Custom Tax Calculators](taxation/custom-tax-calculators.md)
  - [Displaying Prices](taxation/displaying-prices.md)
  - [Example Tax Setups](taxation/example-tax-setups.md)
- - [Overview Of Taxation](taxation/overview-of-taxation.md)
+ - [Overview](taxation/overview.md)
  - [Value Added Tax](taxation/value-added-tax.md)
+
+## Upgrades
+ - [Migrate From Spree](upgrades/migrate-from-spree.md)
+ - [Overview](upgrades/overview.md)
+ - [Versioning Guidelines](upgrades/versioning-guidelines.md)
 
 ## Users
  - [Addresses](users/addresses.md)
+ - [Custom Authentication](users/custom-authentication.md)
 
 ## Views
  - [Custom Frontend](views/custom-frontend.md)

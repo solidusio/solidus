@@ -169,7 +169,7 @@ minor version of Solidus gracefully.
 
 Solidus is a fork of Spree 2.4. After Spree 2.4, the Spree and Solidus code
 bases start to diverge. For example, Spree 3.0 introduces a Bootstrap-based
-frontend and backend which is significantly different than Solidus's frontend
+frontend and backend which is significantly different from Solidus's frontend
 and backend.
 
 If you run Spree 3.0 and want to migrate, we suggest that you upgrade to some

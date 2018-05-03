@@ -15,7 +15,7 @@ the order is changed or updated, the available shipping methods would also be
 updated.)
 
 For more information on how shipping methods are filtered, see [Shipping method
-filters](shipping-method-filters.html.markdown).
+filters][shipping-method-filters].
 
 The customer must choose a shipping method for each shipment before proceeding
 to the next stage of the checkout process.
@@ -26,6 +26,8 @@ and included in the order total.
 <!-- TODO:
   Add checkout images from a demo Solidus store.
 -->
+
+[shipping-method-filters]: shipping-method-filters.md
 
 ## Administrator-facing UI
 

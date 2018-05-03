@@ -1,4 +1,4 @@
-# Overview of promotions
+# Overview
 
 Solidus's promotions system allows stores to give discounts to customers.
 
@@ -122,12 +122,13 @@ documentation for more information.
 ## Eligibility
 
 `Spree::Promotion`'s performs a number of checks to determine whether a
-promotion is eligible to be applied.
+promotion is eligible to be applied:
 
-First, it checks that the promotion is active, that its usage limit has not been
-reached, that its promotion code usage limit has not be reached, and that all of
-the products are promotable products. Finally, it checks the
-`Spree::PromotionRule`s.
+1. It checks that the promotion is active.
+2. It checks that the promotion usage limit has not been reached.
+3. It checks that the  promotion code usage limit has not been reached.
+4. It checks that all of the products are promotable products.
+5. Finally, it checks the `Spree::PromotionRule`s.
 
 If all of these checks pass, then the promotion is eligible.
 
@@ -178,7 +179,7 @@ promotion for orders over $100 USD.
 
 Different types of promotions would change the customer's experience of
 promotion activation. For example, the customer might be required to enter a
-promotion code to activate some promotions, while a another promotion could be
+promotion code to activate some promotions, while another promotion could be
 applied automatically.
 
 In this case, because the administrator used the "Apply to all orders"
@@ -193,6 +194,6 @@ activation method, the promotion is applied automatically:
    greater than $100 USD, the promotion is eligible.
 5. The `Spree::PromotionHandler::Shipping` activates the promotion.
 6. The `Spree::PromotionAction` associated with the promotion is computed and
-   applied as a `Spree::Adjustment` that negates the order's shipping charges..
+   applied as a `Spree::Adjustment` that negates the order's shipping charges.
    The customer's shipping is now free.
 7. The customer completes the checkout process.

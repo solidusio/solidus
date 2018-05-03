@@ -62,7 +62,7 @@ with one or many `Spree::ReturnItem`s from a single order.
 
 A `Spree::Reimbursement` represents your store's compensation to the customer
 who is returning items. Since each `Spree::ReturnItem` can be returned for a
-different reason, you may have multiple reimbursements for a for a single
+different reason, you may have multiple reimbursements for a single
 `Spree::CustomerReturn`.
 
 See the [Reimbursements][reimbursements] article for more information.

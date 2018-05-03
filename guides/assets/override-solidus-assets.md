@@ -7,18 +7,21 @@ assets and views.
 The custom assets you create for a Solidus extension or the frontend and backend
 of a store would not be automatically included and served to clients. For more
 information about adding your own custom assets to Solidus, see the
-[Asset management](asset-management.md#managing-application-assets) article.
+[Asset management][asset-management] article.
 
 This article provides an overview of how Solidus manages assets. Note that it
 assumes that you are using the `solidus_frontend` and `solidus_backend` gems
 that are included as part of a typical Solidus installation.
 
+[asset-management]: asset-management.md#managing-application-assets
+
 ## Overrides and upgrading Solidus
 
-We recommend overriding assets as little as possible. This makes maintaining
-your application simpler in the long term. The `solidus_frontend` and
-`solidus_backend` gems change with each version, and overrides for one version
-might not be effective for the next.
+We recommend overriding assets as little as possible. Overriding assets makes
+maintaining your application more complicated in the long term.
+
+The `solidus_frontend` and `solidus_backend` gems change with each version, and
+overrides for one version might not be effective for the next.
 
 ## Override individual CSS or JavaScript definitions
 
@@ -57,7 +60,7 @@ footer#footer {
 ### JavaScript
 
 Just like you can override a single CSS definition being provided by a gem, you
-can rewrite an existing JavaScipt function..
+can rewrite an existing JavaScript function.
 
 For example, if you wanted to override the `Spree.showVariantImages` method from
 `solidus_frontend`'s [`product.js`][product-js], you can do so from any

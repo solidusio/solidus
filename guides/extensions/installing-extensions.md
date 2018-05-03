@@ -31,7 +31,7 @@ of supported extensions can be found at [extensions.solidus.io][extensions].
 You can use the [`solidus_cmd`][solidus-cmd] gem if you want to start creating a
 new Solidus extension.
 
-[extensions]: http://extensions.solidusio.io
+[extensions]: http://extensions.solidus.io
 [solidus-cmd]: https://github.com/solidusio/solidus_cmd
 
 ## Soliton
