@@ -356,9 +356,14 @@ nav#taxonomies {
   }
 
   .taxons-list {
+    ul {
+      margin-left: 1em;
+    }
     li {
-      a {
-        font-size: $main_navigation_font_size
+      font-size: $main_navigation_font_size;
+      font-weight: normal;
+      &.current {
+        font-weight: bold;
       }
     }
   }
