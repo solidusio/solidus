@@ -1,7 +1,7 @@
 # Solidus Internationalization
 
-[![Build Status](https://travis-ci.org/solidusio-contrib/solidus_i18n.svg?branch=master)](https://travis-ci.org/solidusio-contrib/solidus_i18n)
-[![Code Climate](https://codeclimate.com/github/solidusio-contrib/solidus_i18n/badges/gpa.svg)](https://codeclimate.com/github/solidusio-contrib/solidus_i18n)
+[![Build Status](https://travis-ci.org/solidusio/solidus_i18n.svg?branch=master)](https://travis-ci.org/solidusio/solidus_i18n)
+[![Code Climate](https://codeclimate.com/github/solidusio/solidus_i18n/badges/gpa.svg)](https://codeclimate.com/github/solidusio/solidus_i18n)
 [![Gem Version](https://badge.fury.io/rb/solidus_i18n.svg)](https://badge.fury.io/rb/solidus_i18n)
 
 This is the Internationalization project for [Solidus](https://solidus.io)
@@ -57,7 +57,7 @@ RoutingFilter::Locale.include_default_locale = false
 
 ## Supported languages
 
-We currently support the [following locales](https://github.com/solidusio-contrib/solidus_i18n/tree/master/config/locales)
+We currently support the [following locales](https://github.com/solidusio/solidus_i18n/tree/master/config/locales)
 by default. If you need a locale that is not in the list you can add a custom
 translation file into your application by following the
 [Rails translations guide](http://guides.rubyonrails.org/i18n.html#how-to-store-your-custom-translations).
