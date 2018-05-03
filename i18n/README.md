@@ -85,22 +85,6 @@ Please update your `Gemfile` if you still need the model translations.
 gem 'solidus_globalize', github: 'solidusio-contrib/solidus_globalize', branch: 'master'
 ```
 
-## Upgrading
-
-**WARNING**: If you want to keep your model translations, be sure to add the `solidus_globalize` gem to your `Gemfile` **before** migrating the database. Otherwise **you will loose your translations**!
-
-### 1. Migrate your database
-
-    bin/rake solidus_i18n:upgrade
-    bin/rake db:migrate
-
-*Note:* The migration automatically skips the removal of the translations tables. So it's safe to run the migration without data loss. But be sure to have the `solidus_globalize` gem in your `Gemfile`, if you want to keep them.
-
-### 2. Remove Configuration
-
-Remove all occurrences of `SolidusI18n::Config.supported_locales` from your code.
-
-
 Contributing
 ------------
 
