@@ -4,6 +4,7 @@ Spree.Views.Stock.EditStockItemRow = Backbone.View.extend({
   initialize: function(options) {
     this.stockLocationName = options.stockLocationName;
     this.editing = false;
+    this.negative = this.model.attributes.count_on_hand < 0;
     this.render();
   },
 
@@ -19,7 +20,8 @@ Spree.Views.Stock.EditStockItemRow = Backbone.View.extend({
   render: function() {
     var renderAttr = {
       stockLocationName: this.stockLocationName,
-      editing: this.editing
+      editing: this.editing,
+      negative: this.negative
     };
     _.extend(renderAttr, this.model.attributes);
     this.$el.attr("data-variant-id", this.model.get('variant_id'));

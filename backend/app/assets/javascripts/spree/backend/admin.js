@@ -7,6 +7,7 @@
 //= require spree/backend/product_picker
 //= require spree/backend/option_value_picker
 //= require spree/backend/taxons
+//= require spree/backend/highlight_negative_numbers
 
 /**
 This is a collection of javascript functions and whatnot
