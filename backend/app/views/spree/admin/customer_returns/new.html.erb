@@ -14,7 +14,7 @@
     <fieldset class="no-border-top">
       <div data-hook="admin_customer_return_form_fields">
         <fieldset class='no-border-bottom'>
-          <legend align='center'><%= t('spree.items_in_rmas') %></legend>
+          <legend><%= t('spree.items_in_rmas') %></legend>
           <% if @rma_return_items.any? %>
             <%= render partial: 'return_item_selection', locals: {f: f, return_items: @rma_return_items} %>
           <% else %>
@@ -23,7 +23,7 @@
         </fieldset>
 
         <fieldset class='no-border-bottom'>
-          <legend align='center'><%= t('spree.other_items_in_other') %></legend>
+          <legend><%= t('spree.other_items_in_other') %></legend>
           <% if @new_return_items.any? %>
             <%= render partial: 'return_item_selection', locals: {f: f, return_items: @new_return_items} %>
           <% else %>

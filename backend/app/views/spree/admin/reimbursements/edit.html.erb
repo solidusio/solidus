@@ -11,7 +11,7 @@
 
 <%= form_for [:admin, @order, @reimbursement] do |f| %>
   <fieldset class='no-border-bottom'>
-    <legend align='center'><%= t('spree.items_to_be_reimbursed') %></legend>
+    <legend><%= t('spree.items_to_be_reimbursed') %></legend>
     <table class="index reimbursement-return-items">
       <thead>
         <tr>
@@ -71,7 +71,7 @@
 <% end %>
 
 <fieldset>
-  <legend align='center'><%= t('spree.calculated_reimbursements') %></legend>
+  <legend><%= t('spree.calculated_reimbursements') %></legend>
   <table class="index calculated-reimbursements">
     <thead data-hook="customer_return_header">
       <tr>

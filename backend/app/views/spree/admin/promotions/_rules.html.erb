@@ -2,7 +2,7 @@
 
   <%= form_tag spree.admin_promotion_promotion_rules_path(@promotion), remote: true, id: 'new_product_rule_form' do %>
     <fieldset>
-      <legend align="center"><%= t('spree.rules') %></legend>
+      <legend><%= t('spree.rules') %></legend>
 
       <% if can?(:update, @promotion) %>
         <div class="field">
