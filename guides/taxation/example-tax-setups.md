@@ -57,7 +57,7 @@ Because there are only two distinct tax rates required (5% and 6%) you only need
 to create two tax rates:
 
 | Tax rate          | Zones  | Tax categories        | Tax rate |
-|-------------------|--------|------------------–----|----------|
+|-------------------|--------|-----------------------|----------|
 | PA Clothing       | PA     | Clothing              | 6%       |
 | NY and PA General | NY, PA | Clothing; Other items | 5%       |
 
