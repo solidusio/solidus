@@ -41,3 +41,15 @@ option types to show how variants are distinct from each other: "The t-shirt can
 be purchased in one of two colors: red or green."
 
 [option-types]: variants.html#option-types
+
+## Variant properties
+
+If you have product properties that only apply to a variant (or a subset of
+variants), you can set variant properties as well as product properties.
+
+You can access applied variant properties from the `Spree::Variant` rather than
+the product:
+
+```ruby
+Spree::Variant.find(1).variant_properties
+```
