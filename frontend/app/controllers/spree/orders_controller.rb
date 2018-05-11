@@ -122,8 +122,8 @@ module Spree
     end
 
     def apply_coupon_code
-      if params[:order] && params[:order][:coupon_code].present?
-        @order.coupon_code = params[:order][:coupon_code]
+      if order_params[:coupon_code].present?
+        @order.coupon_code = order_params[:coupon_code]
 
         handler = PromotionHandler::Coupon.new(@order).apply
 
