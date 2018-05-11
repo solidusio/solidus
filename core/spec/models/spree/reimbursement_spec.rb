@@ -3,6 +3,28 @@
 require 'rails_helper'
 
 RSpec.describe Spree::Reimbursement, type: :model do
+  describe ".create" do
+    let(:customer_return) { create(:customer_return) }
+    let(:order) { customer_return.order }
+    let(:reimbursement) { build(:reimbursement, order: order) }
+
+    subject { reimbursement.save }
+
+    context "when total is not present" do
+      before do
+        allow(reimbursement).to receive(:calculated_total) { 100 }
+      end
+
+      it { expect { subject }.to change(reimbursement, :total).from(nil).to(100.0) }
+    end
+
+    context "when total is present" do
+      let(:reimbursement) { build(:reimbursement, order: order, total: 10) }
+
+      it { expect { subject }.not_to change(reimbursement, :total).from(10) }
+    end
+  end
+
   describe ".before_create" do
     describe "#generate_number" do
       context "number is assigned" do

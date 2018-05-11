@@ -18,6 +18,7 @@ module Spree
     accepts_nested_attributes_for :return_items, allow_destroy: true
 
     before_create :generate_number
+    before_create :calculate_total
 
     scope :reimbursed, -> { where(reimbursement_status: 'reimbursed') }
 
@@ -147,6 +148,10 @@ module Spree
     end
 
     private
+
+    def calculate_total
+      self.total ||= calculated_total
+    end
 
     def generate_number
       self.number ||= loop do
