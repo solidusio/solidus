@@ -1,7 +1,7 @@
 # Overview
 
 Solidus's promotions system allows you to give discounts to customers. Discounts
-can be applied to different amounts that make up the order:
+can be applied to different amounts that make up the order: 
 
 - Discounts can apply to the entire order's cost.
 - Discounts can apply to a line item (or a set of line items) on the order.
@@ -25,22 +25,22 @@ in just a few steps:
    method is set to **Single promotion code** and requires a single **Promotion
    Code** value.
 6. Select the **Create** button to save the new promotion.
-
+   
 ## Promotion details
 
 When you create a promotion, you can fill in the following information about it:
 
 - **Name**: The name for the promotion. Customers can see this name during
   checkout and on invoices.
-- **Description**: An optional description of the promotion.
+- **Description**: An optional description of the promotion. 
 - **Advertise**: <!-- TODO: -->
 - **Promotion Category**: The [promotion category](#promotion-categories) for the
-  promotion.
+  promotion. 
 - **Usage Limit**: This sets how many times that a promotion can be used. By
   default, promotions have no usage limit.
 - **Start** and **End**: This sets the dates that the promotion should start and
   end by. By default, promotions are active as soon as they are created, and
-  they have no end date.
+  they have no end date. 
 
 ## Activation methods
 
@@ -51,11 +51,13 @@ methods:
   of the promotion rules, then the promotion is activated.
 - **Single promotion code**: The promotion is activated if the customer enters
   the associated promotion code *and* they meet all of the configured [promotion
-  rules][promotion-rules].
+  rules][promotion-rules]. 
 - **Multiple promotion codes**: The promotion is actived if the customer enters
   one of the many associated promotion codes *and* they meet all of the
   configured promotion rules. See [Multiple promotion
-  codes](#multiple-promotion-codes) below for more information.
+  codes](#multiple-promotion-codes) below for more information. 
+
+[promotion-rules]: promotion-rules.md
 
 ### Multiple promotions codes
 
@@ -90,7 +92,7 @@ codes that were generated for it:
 
 If you have generated multiple batches of codes, you can use the **Promotion
 Code Batches** button to view a list of batches, then use the **Download Code
-List** link next to the batch you want the codes for.
+List** link next to the batch you want the codes for. 
 
 <!-- TODO:
   Add screenshot of the batch codes list interface.
