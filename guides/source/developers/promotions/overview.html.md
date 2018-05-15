@@ -1,9 +1,13 @@
 # Overview
 
-Solidus's promotions system allows stores to give discounts to customers.
+Solidus's promotions system allows you to give discounts to customers. Discounts
+can be applied to different amounts that make up the order: 
 
-Promotions might be discounts on orders, line items, or shipping charges. The
-promotions system provides a set of handlers, rules, and actions that work
+- Discounts can apply to the entire order's cost.
+- Discounts can apply to a line item (or a set of line items) on the order.
+- Discounts can apply to the shipping charges on the order.
+
+The promotions system provides a set of handlers, rules, and actions that work
 together to provide flexible discounts in any scenario.
 
 To account for all of the ways a discount may be applied, the promotions system
