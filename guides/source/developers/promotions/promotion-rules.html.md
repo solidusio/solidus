@@ -9,7 +9,7 @@ USD or that a specific product is in the cart at checkout.
 Many conventional types of promotion rules are included by default. Multiple
 promotion rules can exist on each promotion, although no rules are required.
 
-# Available promotion rule types
+## Available promotion rule types
 
 The following classes are [subclasses of the `Spree::Promotion::Rules`
 model][promotion-rules]:
