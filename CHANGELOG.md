@@ -1,4 +1,20 @@
-## Solidus 2.6.0 (master, unreleased)
+## Solidus 2.7.0 (master, unreleased)
+
+## Solidus 2.6.0 (2018-05-16)
+
+### Major changes
+
+**Rails 5.2**
+
+This is the first version of Solidus to support [Rails 5.2](http://guides.rubyonrails.org/5_2_release_notes.html). Solidus 2.6.0 supports either Rails 5.1 or 5.2. We're hoping this makes both upgrades as easy as possible since they can be done separately.
+
+**Merged solidus_i18n functionality**
+
+Much of solidus_i18n's functionality has been merged into Solidus itself. Solidus now allows configuring one or more locales per-store in the admin. Both users and admins can select their preferred locales on the frontend or admin respectively. More information on how to upgrade can be found in the [solidus_i18n README](https://github.com/solidusio/solidus_i18n).
+
+**Guides**
+
+A lot of work has gone into guides, which are now much more comprehensive. A website to host them is in the works but for now they can be seen [on github](https://github.com/solidusio/solidus/blob/v2.6/guides/index.md)
 
 ### Core
 - Upgrade cancancan to 2.x [#2731](https://github.com/solidusio/solidus/pull/2731) ([jhawthorn](https://github.com/jhawthorn))
