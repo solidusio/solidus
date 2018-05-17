@@ -46,7 +46,10 @@ module Spree
       end
 
       def select2_search_without_selection(value, options)
-        find("#{options[:from]}:not(.select2-container-disabled):not(.select2-offscreen)").click
+        selector = "#{options[:from]}:not(.select2-container-disabled):not(.select2-offscreen)"
+        selector = "#{selector}:not(.select2-container-multi), #{selector}.select2-container-multi .select2-input"
+
+        find(selector).click
 
         within_entire_page do
           find("input.select2-input.select2-focused").set(value)
@@ -90,11 +93,13 @@ module Spree
         select_select2_result(value)
       end
 
-      def select_select2_result(value)
+      def select_select2_result(value, chosen_text: value)
         # results are in a div appended to the end of the document
         within_entire_page do
           page.find("div.select2-result-label", text: /#{Regexp.escape(value)}/i, match: :prefer_exact).click
         end
+
+        expect(page).to have_css(".select2-search-choice,.select2-chosen", text: /#{Regexp.escape(chosen_text)}/i, match: :prefer_exact)
       end
 
       def find_label_by_text(text)

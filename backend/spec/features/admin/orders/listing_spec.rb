@@ -102,7 +102,7 @@ describe "Orders Listing", type: :feature, js: true do
 
       it "should be able to filter on variant_id" do
         click_on "Filter Results"
-        select2_search @order1.products.first.sku, from: I18n.t('spree.variant')
+        select2_search @order1.products.first.name, from: I18n.t('spree.variant')
         click_on 'Filter Results'
 
         within_row(1) do
