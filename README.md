@@ -51,6 +51,10 @@ Gemfile.
 ```ruby
 gem 'solidus'
 gem 'solidus_auth_devise'
+
+gem 'solidus_i18n', '~> 2.0'
+gem 'rails-i18n'
+gem 'kaminari-i18n'
 ```
 
 Run the `bundle` command to install.
