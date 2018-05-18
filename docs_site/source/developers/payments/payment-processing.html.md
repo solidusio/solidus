@@ -14,8 +14,8 @@ includes the [`Spree::Payment::Processing` class][spree-payment-processing].
   merged.
 -->
 
-[payment-methods]: payment-methods.md
-[payment-service-providers]: payment-service-providers.md
+[payment-methods]: payment-methods.html
+[payment-service-providers]: payment-service-providers.html
 [psp]: https://en.wikipedia.org/wiki/Payment_service_provider
 [spree-payment-processing]: https://github.com/solidusio/solidus/blob/master/core/app/models/spree/payment/processing.rb
 
@@ -105,7 +105,7 @@ cases:
   Add links to payment sources article in this section once it is merged.
 -->
 
-[payment-sources]: payment-sources.md
+[payment-sources]: payment-sources.html
 
 ## Processing walkthrough
 
@@ -139,7 +139,7 @@ This section goes into more detail of the steps taken to process a payment.
    information about the `payment_state` on an order, see the [Payment
    states][payment-states] article.
 
-[payment-states]: ../orders/payment-states.md
+[payment-states]: ../orders/payment-states.html
 
 ## The authorize! and  purchase! methods
 

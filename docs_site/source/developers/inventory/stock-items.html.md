@@ -45,7 +45,7 @@ administrator changes the value to `20`, they are creating a
 
 See the [Stock movements][stock-movements] article for more information.
 
-[stock-movements]: stock-movements.md
+[stock-movements]: stock-movements.html
 
 ## Backorderable stock items
 
@@ -63,4 +63,4 @@ until the stock has been replenished. Once the item is in stock again, each
 backordered inventory unit's `state` value is changed from `backordered` to
 `on_hand` and the shipment becomes shippable.
 
-[inventory-units]: inventory-units.md
+[inventory-units]: inventory-units.html

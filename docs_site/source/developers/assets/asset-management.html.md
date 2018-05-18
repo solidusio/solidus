@@ -23,7 +23,7 @@ point-form summary of how you can get started with assets:
   directory tree.
 - You can override assets provided by the `solidus_frontend` and
   `solidus_backend` gems, or any other gems. See the [Override Solidus
-  assets](override-solidus-assets.md) article for more information.
+  assets](override-solidus-assets.html) article for more information.
 
 ## Solidus's asset pipeline
 

@@ -13,7 +13,7 @@ with the returns system. Create multiple return authorizations (RMAs), customer
 returns, and experiment with various reimbursement types, return reasons, and so
 on.
 
-[solidus-sandbox]: ../getting-started/develop-solidus.md#create-a-sandbox-application
+[solidus-sandbox]: ../getting-started/develop-solidus.html#create-a-sandbox-application
 
 ## Returns models
 
@@ -33,7 +33,7 @@ that should be refunded or applied to the customer's store credit.
 For more information about return items, see the [Return items][return-items]
 article.
 
-[return-items]: return-items.md
+[return-items]: return-items.html
 
 ### Return authorizations
 
@@ -48,7 +48,7 @@ customer return.
 See the [Return authorizations][return-authorizations] article for more
 information.
 
-[return-authorizations]: return-authorizations.md
+[return-authorizations]: return-authorizations.html
 
 ### Customer returns
 
@@ -67,7 +67,7 @@ different reason, you may have multiple reimbursements for a single
 
 See the [Reimbursements][reimbursements] article for more information.
 
-[reimbursements]: reimbursements.md
+[reimbursements]: reimbursements.html
 
 ### Reimbursement types
 
@@ -75,4 +75,4 @@ Each `Spree::ReturnItem` is associated with a `Spree::ReimbursementType`. This
 allows you to offer many kinds of reimbursements, like store credit, refunds,
 and exchanges.
 
-[reimbursement-types]: reimbursement-types.md
+[reimbursement-types]: reimbursement-types.html

@@ -37,7 +37,7 @@ single product instead of creating three separate products.
 You can categorize products using [taxonomies and
 taxons](#taxonomies-and-taxons). And, if you want to offer more extensive
 information about a single product, you can add custom [product
-properties](product-properties.md) for any product.
+properties](product-properties.html) for any product.
 
 ## Variants
 
@@ -61,8 +61,8 @@ Here are a few key points to note about variants:
 
 For more information about variants, see the [Variants][variants] article.
 
-[master-variants]: variants.md#master-variants
-[variants]: variants.md
+[master-variants]: variants.html#master-variants
+[variants]: variants.html
 
 ## Taxonomies and taxons
 
@@ -90,5 +90,5 @@ Brands
 Taxons become associated with products via the `Spree::Classification` model.
 
 For more detailed information about taxonomies and taxons, see the [Taxonomies
-and taxons](taxonomies-and-taxons.md) article.
+and taxons](taxonomies-and-taxons.html) article.
 

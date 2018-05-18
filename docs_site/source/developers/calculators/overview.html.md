@@ -96,7 +96,7 @@ Spree::Calculators::Shipping::FlatPercentItemTotal.find(3).preferences
 # => {:flat_percent=>0.2e1}
 ```
 
-[model-preferences]: ../preferences/add-model-preferences.md
+[model-preferences]: ../preferences/add-model-preferences.html
 
 ### Preferred methods
 
@@ -124,5 +124,5 @@ of custom calculator you may want to build:
 - [Custom shipping calculators][custom-shipping-calculators]
 - [Custom tax calculators][custom-tax-calculators]
 
-[custom-shipping-calculators]: ../shipments/custom-shipping-calculators.md
-[custom-tax-calculators]: ../taxation/custom-tax-calculators.md
+[custom-shipping-calculators]: ../shipments/custom-shipping-calculators.html
+[custom-tax-calculators]: ../taxation/custom-tax-calculators.html

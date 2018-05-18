@@ -13,7 +13,7 @@ This article provides an overview of how Solidus manages assets. Note that it
 assumes that you are using the `solidus_frontend` and `solidus_backend` gems
 that are included as part of a typical Solidus installation.
 
-[asset-management]: asset-management.md#managing-application-assets
+[asset-management]: asset-management.html#managing-application-assets
 
 ## Overrides and upgrading Solidus
 

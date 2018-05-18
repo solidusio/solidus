@@ -32,8 +32,8 @@ The following is a list of the available payment states:
 For more information about `Spree::Payment`s and the Solidus payments system,
 see the [Payments][payments] documentation.
 
-[payments]: ../payments/overview.md
-[payment-sources]: ../payments/payment-sources.md
+[payments]: ../payments/overview.html
+[payment-sources]: ../payments/payment-sources.html
 
 ## Completed payments
 
@@ -80,7 +80,7 @@ equal either the full payment amount or just a part of the full payment.
 
 For more information, see the [Refunds][refunds] documentation.
 
-[refunds]: ../payments/refunds.md
+[refunds]: ../payments/refunds.html
 
 ## Checking payment states
 

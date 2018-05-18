@@ -40,8 +40,8 @@ A `Spree::ReturnItem` has the following attributes:
 - `return_reason_id`: The ID for the `Spree::ReturnReason` that is given for the
   item.
 
-[vat]: ../taxation/value-added-tax.md
-[inventory-units]: ../inventory/inventory-units.md
+[vat]: ../taxation/value-added-tax.html
+[inventory-units]: ../inventory/inventory-units.html
 
 ## Reception states
 
@@ -109,4 +109,4 @@ for a list of the default eligibility validators.
 -->
 
 [eligibility-validator-default]: https://github.com/solidusio/solidus/blob/master/core/app/models/spree/return_item/eligibility_validator/default.rb
-[return-authorizations]: return-authorizations.md
+[return-authorizations]: return-authorizations.html

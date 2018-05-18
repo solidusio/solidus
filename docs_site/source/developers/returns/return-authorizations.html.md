@@ -31,8 +31,8 @@ A `Spree::ReturnAuthorization` object has the following attributes:
 RMAs begin the larger customer return process. Note that there are many ways
 that the administrator could provide compensation to a customer.
 
-[customer-returns]: customer-returns.md
-[return-items]: return-items.md
+[customer-returns]: customer-returns.html
+[return-items]: return-items.html
 
 ## Return authorization flow
 

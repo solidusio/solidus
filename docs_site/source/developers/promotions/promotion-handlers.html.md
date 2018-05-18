@@ -16,11 +16,11 @@ Promotions can be activated in three different ways using subclasses of the
 - `Page`: Activates the promotion when a customer visits a specific store URL.
 
 [promotion-handler]: https://github.com/solidusio/solidus/blob/master/core/app/models/spree/promotion_handler/shipping.rb
-[eligibility]: overview.md#eligibility
+[eligibility]: overview.html#eligibility
 
 <!-- TODO:
   This article is a stub. If there's no reason to expand it, let's put it back
-  into the overview.md article.
+  into the overview.html article.
 
   I can see the coupon and page handlers becoming their own standalone articles.
 -->

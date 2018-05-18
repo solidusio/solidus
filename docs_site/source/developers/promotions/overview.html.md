@@ -71,7 +71,7 @@ Once a promotion handler activates a promotion, and all of the eligibility
 checks pass, the `Spree::PromotionAction` can be applied to the applicable
 shipment, order, or line item.
 
-[promotion-handlers]: promotion-handlers.md
+[promotion-handlers]: promotion-handlers.html
 
 ### Promotion rules
 
@@ -88,7 +88,7 @@ USD or that a specific product is in the cart at checkout.
 For a list of available rule types and more information, see the
 [Promotion rules][promotion-rules] article.
 
-[promotion-rules]: promotion-rules.md
+[promotion-rules]: promotion-rules.html
 
 ### Promotion actions
 

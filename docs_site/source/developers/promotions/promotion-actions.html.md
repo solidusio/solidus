@@ -49,7 +49,7 @@ Note that whenever an order, line item, or shipment with a promotion adjustment
 on it is updated, the [eligibility][eligibility] of the promotion is re-checked
 and the promotion actions are re-applied.
 
-[eligibility]: overview.md#eligibility
+[eligibility]: overview.html#eligibility
 
 ## Register a custom promotion action
 

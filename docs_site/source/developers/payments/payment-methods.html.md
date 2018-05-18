@@ -36,7 +36,7 @@ service providers][payment-service-providers] article. -->
 -->
 
 [payment-method-base]: https://github.com/solidusio/solidus/blob/master/core/app/models/spree/payment_method.rb
-[payment-service-providers]: payment-service-providers.md
+[payment-service-providers]: payment-service-providers.html
 
 ## Preferences
 
@@ -58,7 +58,7 @@ payment service provider for [processing][payment-processing]. If the
 administrator must manually capture payments. However, you can set any payment
 method to auto-capture payments.
 
-[payment-processing]: payment-processing.md
+[payment-processing]: payment-processing.html
 
 ### Application-wide auto-capture default
 

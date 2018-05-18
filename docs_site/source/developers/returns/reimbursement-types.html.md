@@ -18,7 +18,7 @@ Solidus provides some other [built-in reimbursement types][reimbursement-types]
 that you can register and use in your store.
 
 [reimbursement-types]: https://github.com/solidusio/solidus/tree/master/core/app/models/spree/reimbursement_type
-[return-items]: return-items.md
+[return-items]: return-items.html
 
 ## Preferred and override reimbursement types
 

@@ -22,8 +22,8 @@ Spree::CustomerReturn.find(1).return_items
 # => <Spree::ReturnItem id: 1 ...>, <Spree::ReturnItem id: 2 ...>
 ```
 
-[return-authorizations]: return-authorizations.md
-[stock-locations]: ../inventory/overview.md#stock-locations
+[return-authorizations]: return-authorizations.html
+[stock-locations]: ../inventory/overview.html#stock-locations
 
 ## User interface
 
@@ -42,6 +42,6 @@ All of this information is stored in a `Spree::ReturnItem` object's attributes.
 Once an item is marked as "Received", you can create a `Spree::Reimbursement`
 for it.
 
-[reimbursement-types]: reimbursement-types.md
-[return-items]: return-items.md
+[reimbursement-types]: reimbursement-types.html
+[return-items]: return-items.html
 

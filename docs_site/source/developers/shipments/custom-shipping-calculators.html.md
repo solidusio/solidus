@@ -23,7 +23,7 @@ might want to use an extension like
 API-based rate calculation functionality for common carriers like UPS, USPS, and
 FedEx. Alternatively, you could develop your own custom calculator.
 
-[solidus-active-shipping]: solidus-active-shipping-extension.md
+[solidus-active-shipping]: solidus-active-shipping-extension.html
 
 ## Custom calculator requirements
 
@@ -157,7 +157,7 @@ For more information about availability and filtering shipping methods, see the
 [Shipping method filters][shipping-method-filters] article.
 
 [calculator-class]: https://github.com/solidusio/solidus/blob/master/core/app/models/spree/calculator.rb
-[shipping-method-filters]: shipping-method-filters.md
+[shipping-method-filters]: shipping-method-filters.html
 
 ## Use additional product information
 

@@ -18,7 +18,7 @@ Note that you can override CSS and JavaScript assets in a similar way. For more
 information see the [Override Solidus assets][override-solidus-assets] article.
 
 [address-form]: https://github.com/solidusio/solidus/blob/master/frontend/app/views/spree/address/_form.html.erb
-[override-solidus-assets]: ../assets/override-solidus-assets.md
+[override-solidus-assets]: ../assets/override-solidus-assets.html
 
 ## Rails generator for frontend overrides
 

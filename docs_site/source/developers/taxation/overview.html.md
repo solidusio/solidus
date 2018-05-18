@@ -106,7 +106,7 @@ shipment:
 	For more information about VAT, see [Value-added tax (VAT)][vat].
 
 [consumption-tax]: https://en.wikipedia.org/wiki/Consumption_tax
-[vat]: value-added-tax.md
+[vat]: value-added-tax.html
 
 ### Tax in the United States
 

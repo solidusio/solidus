@@ -11,7 +11,7 @@ unnecessary breaking changes. See the [Versioning guidelines][versioning]
 article for more information.
 
 [semver]: https://semver.org/ 
-[versioning]: versioning-guidelines.md
+[versioning]: versioning-guidelines.html
 
 ## Extensions should just work
 
@@ -38,5 +38,5 @@ customizations to Spree, the migration may require some additional preparation.
 If you want to talk about your upcoming migration with somebody, [join our Slack
 team][slack] and start a conversation about it in the *#support* channel.
 
-[migrate-from-spree]: migrate-from-spree.md
+[migrate-from-spree]: migrate-from-spree.html
 [slack]: http://slack.solidus.io/

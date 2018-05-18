@@ -69,11 +69,11 @@ Because orders are so integral to Solidus, there are a number of methods
 available that let you easily display order totals and subtotals. For more
 information, see the [Display totals methods][display-total-methods] article.
 
-[display-total-methods]: display-total-methods.md
-[order-state-machine]: order-state-machine.md
-[shipment-states]: ../shipments/overview.md#shipping-states
-[special-instructions]: ../shipments/user-interface-for-shipments.md#shipping-instructions
-[update-orders]: update-orders.md
+[display-total-methods]: display-total-methods.html
+[order-state-machine]: order-state-machine.html
+[shipment-states]: ../shipments/overview.html#shipping-states
+[special-instructions]: ../shipments/user-interface-for-shipments.html#shipping-instructions
+[update-orders]: update-orders.html
 
 ## Related models
 
@@ -109,7 +109,7 @@ promotions) or increase it (via [shipments][shipments] and [taxes][taxes]).
   Add link to adjustments guide once it is merged.
 -->
 
-[taxes]: ../taxation/overview.md
+[taxes]: ../taxation/overview.html
 
 ### Shipments
 
@@ -124,7 +124,7 @@ item belongs to. Inventory units provide a link between the order and
 
 For more information, see the [Shipments][shipments] documentation.
 
-[shipments]: ../shipments/overview.md
+[shipments]: ../shipments/overview.html
 
 ### Addresses
 

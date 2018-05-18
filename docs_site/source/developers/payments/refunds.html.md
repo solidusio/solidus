@@ -24,7 +24,7 @@ associated with a `Spree::Reimbursement`.
   refund. For more information, see the [Reimbursements][reimbursements]
   article.
 
-[reimbursements]: ../returns/reimbursements.md
+[reimbursements]: ../returns/reimbursements.html
 
 ## Refund reasons
 

@@ -21,8 +21,8 @@ reading about example Solidus shipment setups see
 -->
 
 [extensions]: http://extensions.solidus.io
-[shipment-setup-examples]: shipment-setup-examples.md
-[solidus-active-shipping]: solidus-active-shipping-extension.md
+[shipment-setup-examples]: shipment-setup-examples.html
+[solidus-active-shipping]: solidus-active-shipping-extension.html
 [solidus-shipstation]: https://github.com/boomerdigital/solidus_shipstation
 
 ## Shipment attributes
@@ -127,7 +127,7 @@ defines regional taxation rules.
 
 For more information about zones see the [Locations][locations] documentation.
 
-[locations]: ../locations/overview.md
+[locations]: ../locations/overview.html
 
 ### Shipping calculators
 
@@ -148,7 +148,7 @@ extension like [`solidus_active_shipping`][solidus-active-shipping]. Or, if you
 have other complex needs, you can create a [custom shipping
 calculators][custom-shipping-calculators] for more information.
 
-[custom-shipping-calculators]: custom-shipping-calculators.md
+[custom-shipping-calculators]: custom-shipping-calculators.html
 
 ### Shipping rates
 
@@ -185,4 +185,4 @@ use third-party logistics or complicated warehouse workflows, the shipment
 described when the order is confirmed may not be how the _actual_ shipment is
 packaged when it leaves its destination.
 
-For more information, see the [Cartons](cartons.md) article.
+For more information, see the [Cartons](cartons.html) article.

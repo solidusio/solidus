@@ -31,7 +31,7 @@ Variants are used to define properties that are specific to the variant:
 - `tax_category_id`: Overrides the product's tax category for this variant.
   See the [Taxation][tax-categories] documentation for more information.
 
-[tax-categories]: ../taxation/overview.md#tax-categories
+[tax-categories]: ../taxation/overview.html#tax-categories
 
 <!-- TODO:
   Once there is documentation about inventory, add a link to it from the
@@ -107,4 +107,4 @@ The master variant does not appear in the list of variants accessed by the
 ## Product images
 
 Product images link to variants via the `Spree::Image` model. For more
-information about images, see the [product images](product-images.md) article.
+information about images, see the [product images](product-images.html) article.

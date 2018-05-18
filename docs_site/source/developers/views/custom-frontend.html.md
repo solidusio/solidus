@@ -65,7 +65,7 @@ frontend development, pay special attention to the Rails Guides linked to above.
   their views by creating files with the same filenames and paths in your own app.
   For more information, see the [Override views][override-views] article.
 
-  [override-views]: override-views.md
+  [override-views]: override-views.html
 -->
 
 ## Create your own Solidus frontend

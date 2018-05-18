@@ -20,8 +20,8 @@ If your store's tax requirements are more complicated, you may want to create a
 [custom tax calculator][custom-tax-calculator] or use an extension like
 [`solidus_tax_cloud`][solidus-tax-cloud].
 
-[custom-tax-calculator]: ../taxation/custom-tax-calculators.md
+[custom-tax-calculator]: ../taxation/custom-tax-calculators.html
 [default-tax-calculator]: https://github.com/solidusio/solidus/blob/master/core/app/models/spree/calculator/default_tax.rb
 [solidus-tax-cloud]: https://github.com/solidusio-contrib/solidus_tax_cloud
-[taxation]: ../taxation/overview.md
+[taxation]: ../taxation/overview.html
 

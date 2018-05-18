@@ -31,7 +31,7 @@ Payments relate to a specific `Spree::Order`, as well as one of your available
   payment service provider. See [Response codes](#response-codes) for more
   information.
 
-[payment-sources]: payment-sources.md
+[payment-sources]: payment-sources.html
 
 ## Payment identifiers
 

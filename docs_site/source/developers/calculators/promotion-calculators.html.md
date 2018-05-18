@@ -13,7 +13,7 @@ The rest of this article summarizes the available promotion calculators, grouped
 by the types of promotions they can calculate (either order, line item, or
 shipment promotions).
 
-[shipping-calculators]: shipping-calculators.md
+[shipping-calculators]: shipping-calculators.html
 
 ## Order or line item promotions
 

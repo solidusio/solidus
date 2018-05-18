@@ -35,5 +35,5 @@ multiple zones, or none at all.
 
 Whenever you create a tax rate or a new shipping method, it must be tied to at
 least one zone. For a deeper discussion of zones [see the Zones
-article](zones.md).
+article](zones.html).
 

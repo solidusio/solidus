@@ -48,7 +48,7 @@ preferences. However, you may be able to get the functionality you require by
 adding preferences that are specific to a model. For more information see the
 [Add model preferences][add-model-preferences] article.
 
-[add-model-preferences]: add-model-preferences.md
+[add-model-preferences]: add-model-preferences.html
 
 ## Read the current preference settings
 

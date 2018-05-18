@@ -53,7 +53,7 @@ integration.
   For more information about payment service providers in Solidus, see the
   [Payment service providers][payment-service-providers] article.
 
-  [payment-service-providers]: payment-service-providers.md
+  [payment-service-providers]: payment-service-providers.html
 -->
 
 [psp]: https://en.wikipedia.org/wiki/Payment_service_provider
@@ -74,7 +74,7 @@ credit card payment methods, and some other basic payment methods.
 
 For more information, see the [Payment methods][payment-methods] article.
 
-[payment-methods]: payment-methods.md
+[payment-methods]: payment-methods.html
 
 ## Payments
 
@@ -97,7 +97,7 @@ provider, the state could become `complete`, `failed`, `void`, and so on.
   For more information about payments, see the [Payments][payments] article.
 -->
 
-[payments]: payments.md
+[payments]: payments.html
 
 ## Payment sources
 
@@ -122,7 +122,7 @@ class has a `payment_type` method that could have a value of `ApplePay`,
   methods][payment-sources] article.
 -->
 
-[payment-sources]: payment-sources.md
+[payment-sources]: payment-sources.html
 [solidus-paypal-braintree]: https://github.com/solidusio/solidus_paypal_braintree
 
 ## Payment processing
@@ -135,4 +135,4 @@ service provider.
 For more information about processing payments, see the [Payment
 processing][payment-processing] article.
 
-[payment-processing]: payment-processing.md
+[payment-processing]: payment-processing.html

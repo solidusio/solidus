@@ -27,7 +27,7 @@ and included in the order total.
   Add checkout images from a demo Solidus store.
 -->
 
-[shipping-method-filters]: shipping-method-filters.md
+[shipping-method-filters]: shipping-method-filters.html
 
 ## Administrator-facing UI
 

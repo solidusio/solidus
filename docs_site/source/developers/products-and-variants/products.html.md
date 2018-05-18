@@ -34,16 +34,16 @@ Even if your store only sells a single product that only comes in one size and
 color, that product would have a single variant that handles the additional
 properties.
 
-For more information about variants, see the [variants](variants.md) article.
+For more information about variants, see the [variants](variants.html) article.
 
 ## Product properties
 
 You can also configure products to have [product
-properties](product-properties.md). Product properties allow you to add custom
+properties](product-properties.html). Product properties allow you to add custom
 product information for a single product.
 
 A "Size" attribute would be used for many products and would be more useful as
-an [option type](variants.md#option-types) for variants. However, if you decide
+an [option type](variants.html#option-types) for variants. However, if you decide
 to sell a limited edition t-shirt you might want to add unique product
 properties for marketing purposes - like "Fit", "Material", and "Manufacturer".
 

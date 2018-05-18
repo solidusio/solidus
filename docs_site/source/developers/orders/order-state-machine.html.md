@@ -65,5 +65,5 @@ the values of the [`payment_state`][payment-states] and
   Documentation about the checkout flow could be extended.
 -->
 
-[payment-states]: ../payments/overview.md#payment-states
-[shipment-states]: ../shipments/overview.md#shipment-states
+[payment-states]: ../payments/overview.html#payment-states
+[shipment-states]: ../shipments/overview.html#shipment-states

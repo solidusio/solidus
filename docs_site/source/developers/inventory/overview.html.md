@@ -49,7 +49,7 @@ shipment.
 
 <!--For more information, see the [Inventory units][inventory-units] article.-->
 
-[inventory-units]: inventory-units.md
+[inventory-units]: inventory-units.html
 
 ## Stock management
 
@@ -70,7 +70,7 @@ specific stock location.
 
 <!--For more information, see the [Stock items][stock-items] article.-->
 
-[stock-items]: stock-items.md
+[stock-items]: stock-items.html
 
 ### Stock movements
 
@@ -83,7 +83,7 @@ the item's `count_on_hand` increases or decreases.
 
 <!--For more information, see the [Stock movements][stock-movements] article.-->
 
-[stock-movements]: stock-movements.md
+[stock-movements]: stock-movements.html
 
 ### Stock locations
 
@@ -121,4 +121,4 @@ for many reasons.
 For more information, see the [Returns][returns]
 documentation.
 
-[returns]: ../returns/overview.md
+[returns]: ../returns/overview.html

@@ -42,7 +42,7 @@ Note that whenever an order, line item, or shipment with a promotion adjustment
 on it is updated, the [eligibility][eligibility] of the promotion is re-checked,
 and the adjustment is recalculated if necessary.
 
-[eligibility]: overview.md#eligibility
+[eligibility]: overview.html#eligibility
 
 ## Rules match policy
 

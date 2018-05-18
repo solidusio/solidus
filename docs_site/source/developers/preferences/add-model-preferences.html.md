@@ -82,5 +82,5 @@ MyStore::SubscriptionRules.find(1).preferences.fetch(:dark_chocolate)
 # => true
 ```
 
-[app-configuration]: app-configuration.md
+[app-configuration]: app-configuration.html
 [spree-base]: https://github.com/solidusio/solidus/blob/master/core/app/models/spree/base.rb

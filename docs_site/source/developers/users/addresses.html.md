@@ -36,9 +36,9 @@ Spree::User.find(1).addresses
 For more information about how countries, states, and zones work in Solidus, see
 the [Locations][locations] documentation.
 
-[locations]: ../locations/overview.md
+[locations]: ../locations/overview.html
 [solidus-auth-devise]: https://github.com/solidusio/solidus_auth_devise
-[zones]: ../locations/zones.md
+[zones]: ../locations/zones.html
 
 ## Countries and states 
 

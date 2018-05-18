@@ -25,8 +25,8 @@ to update any preference. For example:
 Spree::Calculator.find(1).update(preferred_currency: "EUR")
 ```
 
-[custom-shipping-calculators]: ../shipments/custom-shipping-calculators.md
-[preferred-methods]: overview.md#preferred-methods
+[custom-shipping-calculators]: ../shipments/custom-shipping-calculators.html
+[preferred-methods]: overview.html#preferred-methods
 
 ## Flat percent
 
