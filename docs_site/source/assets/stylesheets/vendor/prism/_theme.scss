@@ -1,0 +1,50 @@
+code[class*="language-"],
+pre[class*="language-"] {
+  border: none;
+  font-family: $font-family-monospace;
+  font-size: $font-size-xs;
+  line-height: 2em;
+
+  code, pre{
+    padding: 0;
+  }
+}
+
+/* Code blocks */
+pre[class*="language-"],
+.code-block-header {
+  padding: 6px 15px;
+
+  @media screen and (min-width: 600px) {
+    padding: 6px 30px;
+  }
+}
+
+pre[class*="language-"] {
+  margin: 0 0 $paragraph-margin-bottom;
+  border-radius: 0;
+}
+
+.code-block-header {
+  display: flex;
+  background: #65686d;
+  font-family: $font-family-monospace;
+  font-size: $font-size-xs;
+  color: #f5f8fe;
+
+  .language {
+    padding: 0 5px;
+    background: grey;
+    margin-right: 0;
+    margin-left: auto;
+    height: fit-content;
+  }
+
+  .path {
+    flex-grow: 1;
+    word-break: break-all;
+    overflow-x: auto;
+    white-space: nowrap;
+    margin-right: .5rem;
+  }
+}

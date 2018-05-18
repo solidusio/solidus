@@ -1,0 +1,11 @@
+// Inline code
+code {
+  display: inline-block;
+  border-radius: $border-radius-sm;
+  background: $code-background;
+  padding: 1px 2px;
+  border: 1px solid $code-border;
+  font-size: .8rem;
+
+  @include media-breakpoint-down(sm) { font-size: 0.9rem; }
+}

@@ -1,0 +1,156 @@
+.content-block{
+  border: none;
+  display: block;
+  padding: 30px 24px;
+  margin-left: -24px;
+  margin-right: -24px;
+  margin-bottom: 2rem;
+
+  &:last-child{ margin-bottom: 0; }
+
+  @include media-breakpoint-down(md){ box-shadow: none; }
+
+  @include media-breakpoint-up(lg){
+    padding: 30px;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  a {
+    opacity: 0.8;
+    display: inline-block;
+  }
+
+  ul li, ol li { margin: .25rem 0; }
+
+  .content-block{ padding: 24px; }
+}
+
+.content-block-gray-100{
+  background: $gray-100;
+}
+
+
+.content-block-gray-900{
+  background: $gray-900;
+  color: $white-08;
+
+  h1, h2, h3, h4, h5, h6, .title{
+    color: #ffffff;
+  }
+}
+
+//Price calculation block
+.calculator-block{
+  .block-content{
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+
+    .title{
+      font-size: $h2-font-size;
+    }
+
+    @include media-breakpoint-up(md){ max-width: none; }
+  }
+}
+
+
+//Contact form wrapper
+.contact-block{
+  max-width: 485px;
+  margin: 0 auto;
+}
+
+//Features hero banner
+.features-hero{
+  padding-bottom: 40px;
+}
+
+//Features main block
+.features-main-block{
+  .feature{
+    max-width: 300px;
+    margin: 0 auto 2rem;
+
+    .picture{
+      margin-bottom: 1rem;
+      @include media-breakpoint-up(md){ height: 42px; }
+    }
+    .isvg{ margin-top: 0; }
+    .title{ font-weight: $font-weight-base; }
+  }
+}
+
+//Features details block
+.features-details-block{
+  .container{
+    @include media-breakpoint-up(lg){
+      max-width: 960px + $grid-gutter-width;
+    }
+  }
+
+  .features-group{
+    @include media-breakpoint-up(lg){
+      > .title{
+        a{
+          cursor: default;
+          color: $body-color;
+          pointer-events: none;
+        }
+
+        .isvg-arrow{ display: none; }
+      }
+
+      .collapse{
+        display: block !important;
+      }
+    }
+  }
+
+  .feature{
+    margin: 0 auto 2rem;
+
+    @include media-breakpoint-up(md){
+      max-width: 300px;
+      margin-left: 0;
+      margin-right: 0;
+    }
+
+    @include media-breakpoint-up(lg){
+      margin-bottom: 3em;
+    }
+
+    .title{
+      font-weight: $font-weight-base;
+    }
+  }
+}
+
+//developers hero block
+.developers-hero{
+  .title{
+    .isvg{
+      @include media-breakpoint-down(md){
+        width: 33px;
+      }
+    }
+  }
+
+  .btns-wrapper{
+    @include media-breakpoint-down(sm){
+      display: inline-block;
+      .btn{ width: 100%; }
+    }
+  }
+}
+
+.developers-springboard-block{
+  background-image: linear-gradient(#3c76f0, #716ff9);
+
+  .card-body{ width: 100%; }
+}
+
+.bg-danger h2, .bg-info h2 {
+  border-bottom: none;
+}

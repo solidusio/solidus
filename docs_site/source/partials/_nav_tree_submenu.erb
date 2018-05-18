@@ -1,0 +1,16 @@
+ <ul>
+  <% menu_items.each do |menu_item| %>
+    <li class="<%= 'active' if category_matches_page?(menu_item.dropdown.first.href) %>">
+      <a data-toggle="collapse" data-target="#submenu-<%= kabob_case(menu_item.title) %>" href="#">
+        <%= menu_item.title %>
+      </a>
+      <ul id="submenu-<%= kabob_case(menu_item.title) %>" class="collapse <%= 'show' if category_matches_page?(menu_item.dropdown.first.href) %>" data-parent="#site-navbar">
+        <% menu_item.dropdown.each do |sub_item| %>
+          <li class="<%= 'active' if menu_item_matches_page?(sub_item.href) %>">
+            <a href="<%= sub_item.href %>"><%= sub_item.title %></a>
+          </li>
+        <% end %>
+      </ul>
+    </li>
+  <% end %>
+</ul>

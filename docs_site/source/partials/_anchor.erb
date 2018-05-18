@@ -1,0 +1,10 @@
+<% if link.start_with?('http') %>
+  <a target="_blank" href="<%= link %>">
+    <%= content %>
+    <%= inline_svg("icons/external-link.svg", class: "isvg") %>
+  </a>
+<% else %>
+  <a href="<%= link %>">
+    <%= content %>
+  </a>
+<% end %>
