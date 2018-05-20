@@ -574,7 +574,8 @@ ro:
         no_shipping_methods_available: Nu există nicio modalitate de expediție pentru locația aleasă, te rugăm să schimbi adresa și să mai încerci odată.
     errors_prohibited_this_record_from_being_saved:
       one: 1 eroare nu permite ca această înregistrare să fie salvată
-      other: "%{count} erori nu permit ca această înregistrare să fie salvată"
+      few: "%{count} erori nu permit ca această înregistrare să fie salvată"
+      other: "%{count} de erori nu permit ca această înregistrare să fie salvată"      
     event: Cazuri
     events:
       spree:
