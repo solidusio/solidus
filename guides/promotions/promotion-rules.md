@@ -100,7 +100,7 @@ You must then register the custom rule in an initializer in your
 `config/initializers/` directory:
 
 ```ruby
-Rails.application.config.spree.promotions.rules << MyPromotionRule
+Rails.application.config.spree.promotions.rules << Spree::Promotion::Rules::MyPromotionRule
 ```
 
 <!-- TODO:
