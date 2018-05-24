@@ -33,12 +33,36 @@ they can be used in, and how they work.
 [7]: #tiered-percent
 [8]: #percent-per-item
 
+## Distributed amount
+
+The **Distributed Amount** calculator provides an amount-based discount on all
+of the applicable line items in an order. The discount amount is distributed
+across all of the line items.
+
+For example, if your promotion offers a $5 discount and a customer orders a $20
+item as well as a $10 item, then the discount is distributed across both items:
+$3.33 (on the $20 item) and $1.67 (on the $10 item).
+
+Set the **Preferred amount** that should be distributed across all of the line
+items as a discount.
+
+## Free shipping
+
+The free shipping calculator only requires that you use the promotion action
+type **Free shipping** when you create the promotion action. Then, all shipping
+charges from an order are deducted when the promotion is activated. 
+
+## Flat percent
+
+The **Flat Percent** calculator provides a flat, percentage-based discount on an
+order.
+
 ## Flat rate
 
 The **Flat Rate** calculator takes the total of an applicable order or line item
 and discounts a fixed amount from it.
 
-### Flexible rate
+## Flexible rate
 
 The **Flexible Rate** calculator provides a flexible rate depending on the
 number of items on an order.
@@ -57,42 +81,28 @@ It has the following preferences:
 To replicate the example above, you could set the **First Item** amount to
 `0.0`, the **Additional Item** to `5.0`, and the **Max Item** to `5`.
 
-### Tiered percent
+## Tiered flat rate
 
-The **Tiered Percent** calculator provides a tiered percent discount. This
-allows you to charge a percentage-based discount that depends on the order total
-(or applicable line items).
+The **Tiered Flat Rate** calculator provides a tiered flat rate discount. This
+allows you to charge a rate-based discount that depends on the order total. 
 
-For example, you could set a base discount of 10%, then give a greater discount
-on orders over $100 and $200:
+This calculator has the following settings:
 
-|   | Tier             | Discount (%) |
-|---|------------------|--------------|
-| 0 | Base             | 10%          |
-| 1 | Orders over $100 | 15%          |
-| 2 | Orders over $200 | 20%          |
-
-This calculator has the following preferences:
-
-- **Base Percent**: The base discount for any order where the promotion applies.
+- **Base Amount**: The base discount for any order where the promotion applies.
 - **Currency**: The currency. The default value is your store's default currency
   setting.
-- **Tiers**: You can add tiers using the **Add** button. Each tier takes an
-  **Amount ($)** of money that triggers the next tier, as well as a **Percentage
-  (%)** that sets how much of a discount the next tier should be. 
+- **Tiers**: Each tier adds a new discount level. New tiers can be added using
+  the **Add** button.
 
+### How tiers work
 
+You can add additional tiers using the **Add** button. Each tier takes an **Tier
+Amount ($)** of money that triggers the next tier. For each trigger that you
+create, you also set a new **Discount Amount ($)**  that should be used as new
+discount level for that tier.
 
-
-
-
-
-### Tiered flat rate
-
-The [`Spree::Calculator::TieredFlatRate` calculator][tiered-flat-rate] provides
-a tiered flat rate discount. This allows you to charge a rate-based discount
-that depends on the order total. For example, you could set a base discount of
-$10, then give a greater discount on orders over $100, $200, and $500:
+For example, you could set a base discount of $10, then give a greater discount
+on orders over $100, $200, and $500:
 
 |   | Tier             | Discount ($) |
 |---|------------------|--------------|
@@ -101,69 +111,48 @@ $10, then give a greater discount on orders over $100, $200, and $500:
 | 2 | Orders over $200 | $20          |
 | 3 | Orders over $500 | $25          |
 
-This calculator has the following preferences:
+<!-- TODO:
+  Add screenshot that shows the admin UI filled in with the above
+  example information.
+-->
 
-- `base_amount`: The base discount for any order where the promotion applies.
-- `tiers`: A hash where the key is the minimum order total for the tier and the
-  value is the tier discount: `{ tier=>discount_amount }`.
-- `currency`: The currency. The default value is your store's default currency
+### Tiered percent
+
+The **Tiered Percent** calculator provides a tiered percent discount. This
+allows you to charge a percentage-based discount that depends on the order total
+(or applicable line items).
+
+This calculator has the following settings:
+
+- **Base Percent**: The base discount for any order where the promotion applies.
+- **Currency**: The currency. The default value is your store's default currency
   setting.
+- **Tiers**: Each tier adds a new discount level. New tiers can be added using
+  the **Add** button.
 
-### Flat percent (item total)
+### How tiers work
 
-The [`Spree::Calculator::FlatPercentItemTotal`][flat-percent-item-total]
-calculator provides a flat, percentage-based discount on an order. In the
-`solidus_backend` interface administrators can use this calculator by choosing
-the whole-order calculator labeled "Flat Percent". It has the following
-preference:
+You can add additional tiers using the **Add** button. Each tier takes an **Tier
+Amount ($)** of money that triggers the next tier. For each trigger that you
+create, you also set a new **Discount Percentage (%)**  that should be used as
+new discount level for that tier.
 
-- `flat_percent`: The percentage that the order should be discounted.
+In the following example, there are tiers set up for the $100 and $100 purchase
+mark:
 
-## Line item promotions only
+|   | Tier             | Discount (%) |
+|---|------------------|--------------|
+| 0 | Base             | 10%          |
+| 1 | Orders over $100 | 15%          |
+| 2 | Orders over $200 | 20%          |
 
-The following calculators are available to use with line item promotions only:
+<!-- TODO:
+  Add screenshot that shows the admin UI filled in with the above
+  example information.
+-->
 
-- [Distributed amount](#distributed-amount)
-- [Percent on line item](#percent-on-line-item)
+## Percent per item 
 
-### Distributed amount
+The **Percent Per Item** calculator provides a percentage-based discount for
+each applicable line item in an order. 
 
-The [`Spree::Calculator::DistributedAmount` calculator][distributed-amount]
-provides an amount-based discount on all of the applicable line items in an
-order. The discount amount is distributed across all of the line items.
-
-For example, if your promotion offers a $5 discount and a customer orders a $20
-item as well as a $10 item, then the discount is distributed across both items:
-$3.33 (on the $20 item) and $1.67 (on the $10 item).
-
-This calculator has the following preferences:
-
-- `amount`: The discount amount given if the line items should be discounted.
-- `currency`: The currency. The default value is your store's default currency
-  setting.
-
-### Percent on line item
-
-The [`Spree::Calculator::PercentOnLineItem` calculator][percent-on-line-item]
-provides a percentage-based discount for each applicable line item in an order.
-In the `solidus_backend` interface, this calculator is labeled "Percent Per
-Item". It has the following preference:
-
-- `percent`: The percentage discount that should be given to each applicable
-  line item.
-
-[distributed-amount]:
-https://github.com/solidusio/solidus/blob/master/core/app/models/spree/calculator/distributed_amount.rb
-[percent-on-line-item]:
-https://github.com/solidusio/solidus/blob/master/core/app/models/spree/calculator/percent_on_line_item.rb
-
-## Free shipping promotions
-
-You can create promotions that negate all shipping charges on an order. This
-type of promotion does not require a specific calculator. Instead, it uses the
-[`Spree::Promotion::Action::FreeShipping` promotion
-action][free-shipping-promotion-action] directly.
-
-[free-shipping-promotion-action]:
-https://github.com/solidusio/solidus/blob/master/core/app/models/spree/promotion/actions/free_shipping.rb
-` } }`
