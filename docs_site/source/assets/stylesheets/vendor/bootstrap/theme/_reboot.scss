@@ -1,0 +1,14 @@
+p {
+  &:last-child{ margin-bottom: 0; }
+}
+
+
+ol,
+ul,
+dl {
+  margin-bottom: $paragraph-margin-bottom;
+
+  &:last-child{ margin-bottom: 0; }
+}
+
+

@@ -1,0 +1,26 @@
+// Contextual colors
+a.text-white {
+  @include hover-focus {
+    color: $gray-300 !important;
+  }
+}
+
+
+@include text-emphasis-variant(".text-white-048", $white-05);
+@include text-emphasis-variant(".text-white-072", $white-072);
+
+
+@include text-emphasis-variant(".text-gray-048", $gray-048);
+@include text-emphasis-variant(".text-gray-400", $gray-400, $gray-800);
+@include text-emphasis-variant(".text-gray-600", $gray-600);
+@include text-emphasis-variant(".text-gray-700", $gray-700);
+@include text-emphasis-variant(".text-gray", $gray-900, $blue);
+
+@include text-emphasis-variant(".text-teal", #41bfba);
+
+
+// Weight and italics
+
+.font-weight-bolder   { font-weight: $font-weight-bolder !important; }
+.font-weight-boldest   { font-weight: 700 !important; }
+

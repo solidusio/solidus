@@ -1,0 +1,11 @@
+.popover {
+  box-shadow: $popover-box-shadow;
+
+  @include media-breakpoint-down(sm){
+    max-width: 320px;
+  }
+
+  @include media-breakpoint-down(xs){
+    max-width: 270px;
+  }
+}

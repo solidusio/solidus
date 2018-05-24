@@ -1,0 +1,15 @@
+<table class="table table-responsive-collapse">
+  <thead><%= header %></thead>
+  <tbody>
+    <% table_rows.each do |tds| %>
+      <tr>
+        <% tds.each_with_index do |td_content, index| %>
+          <td>
+            <div class="mobile-table-header"><%= header_labels[index] %></div>
+            <div class="td-inner"><%= td_content %></div>
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

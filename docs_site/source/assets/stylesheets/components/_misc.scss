@@ -1,0 +1,50 @@
+//Social links
+.social-links{
+  @extend .list-inline;
+  margin-bottom: 0;
+  white-space: nowrap;
+
+  a{
+    display: inline-block;
+    height: 2rem;
+    width: 2rem;
+    line-height: 1.8rem;
+    text-align: center;
+
+    .isvg .inherit-fill { fill: #ffffff !important; }
+  }
+}
+
+.social-links-light{
+  a{
+    &:hover{ opacity: 0.9; }
+  }
+
+  .isvg .inherit-fill { fill: #ffffff; }
+}
+
+
+.social-links-dark{
+  a{
+    opacity: 0.24;
+    &:hover{ opacity: 0.72; }
+  }
+
+  .isvg .inherit-fill { fill: $gray-900; }
+}
+
+
+.social-plugins-block{
+  .social-btn{
+    display: inline-block;
+    vertical-align: top;
+  }
+
+  .fb-share-button{
+    > span{ vertical-align: top !important; }
+  }
+}
+
+.code-block{
+  page-break-inside: avoid;
+}

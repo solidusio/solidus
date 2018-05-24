@@ -1,0 +1,26 @@
+//
+// Pills
+//
+
+.nav-pills {
+  margin-bottom: 2rem;
+
+  .nav-item{
+    margin-right: 1rem;
+    &:last-child{ margin-right: 0; }
+  }
+
+  .nav-link{
+    color: $gray-500;
+    padding: 0 0 2px;
+    text-transform: uppercase;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-bold;
+    letter-spacing: 0.4px;
+    border-bottom: 1px solid transparent;
+  }
+
+  .nav-link.active{
+    border-bottom-color: $blue;
+  }
+}

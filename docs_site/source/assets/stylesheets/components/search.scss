@@ -1,0 +1,49 @@
+.search-results-block{
+  .search-results-title{
+    margin-bottom: 1rem;
+  }
+
+
+  .results-list{
+    margin-bottom: 1.625rem;
+  }
+
+  .search-result-item{
+    border-bottom: 2px solid #dfe3e8;
+    padding: 1rem 0;
+
+    &:first-child{ padding-top: 0 !important; }
+
+    .title{
+      margin-bottom: 0;
+      line-height: 1.45;
+    }
+
+    .category{
+      color: #65686d;
+      margin-bottom: 10px;
+      line-height: 1.71;
+      font-size: $font-size-sm;
+    }
+
+    @include media-breakpoint-up(lg){ padding: 1.5rem 0; }
+  }
+}
+
+.search-highlight{
+  display: inline-block;
+  background-color: rgba(224, 158, 255, 0.2);
+  border-radius: $border-radius;
+}
+
+.search-pagination{
+  .btn{
+    &:first-child{ padding-left: 0; }
+    &:last-child{ padding-right: 0; }
+
+    .isvg{
+      height: 12px;
+      width: 12px;
+    }
+  }
+}

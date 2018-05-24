@@ -1,0 +1,9 @@
+<% wrap_layout :layout do %>
+  <div class="content-block card">
+    <%= yield %>
+  </div>
+  <div class="content-block card">
+    <%= partial "partials/security_updates" %>
+    <%= partial "partials/feedback" %>
+  </div>
+<% end %>
