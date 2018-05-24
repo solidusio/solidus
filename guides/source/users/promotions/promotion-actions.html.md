@@ -19,7 +19,7 @@ following steps:
    promotion.
 2. Choose a [promotion action type](#available-promotion-action-types) from the
    **Add action of type** drop-down menu.
-3. Choose from the available [promotion calculators](#promotion-calcuators) in
+3. Choose from the available [promotion calculators][promotion-calculators] in
    the **Calculated By** drop-down menu.
 4. Set the discount amount for the current promotion action. This could be one
    of many types of discount depending on the promotion calculator being used.
@@ -29,17 +29,7 @@ Note that if you choose the promotion action type **Free Shipping** that steps
 3. and 4. are not applicable.
 
 [create-a-new-promotion]: overview.md#create-a-new-promotion
-
-## Promotion calculators
-
-When you create a promotion action, one step is to select the promotion
-calculator that it should use. You can do this by selecting a value in the
-**Calculated By** drop-down menu.
-
-<!-- TODO:
-  This section is a good candidate for being split out into its own article.
--->
-
+[promotion-calculators]: promotion-calculators.md
 
 ## Available promotion action types
 
