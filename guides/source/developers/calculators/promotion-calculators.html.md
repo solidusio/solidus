@@ -34,7 +34,7 @@ preferences:
   setting.
 
 This calculator takes the total of an applicable order or line item and
-discounts a percentage of it.
+discounts a fixed amount from it.
 
 ### Flexi rate
 
