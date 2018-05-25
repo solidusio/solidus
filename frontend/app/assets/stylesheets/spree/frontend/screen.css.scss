@@ -948,9 +948,35 @@ p[data-hook="use_billing"] {
   padding: 5px;
 }
 
+.coupon-code {
+  margin-top: 20px;
+  padding: 10px;
+
+  form {
+    display: flex;
+    flex-flow: row wrap;
+  }
+
+  label {
+    flex: 1 100%;
+    text-align: left;
+  }
+
+  input[type="text"] {
+    flex: 3 0;
+    width: 100%;
+    margin-right: 5px;
+  }
+
+  &-apply-button {
+    white-space: nowrap;
+  }
+}
+
 #coupon_status {
+  margin-top: 10px;
   font-weight: bold;
-  font-size: 125%;
+  font-size: 100%;
   &.success {
     color: $c_green;
   }

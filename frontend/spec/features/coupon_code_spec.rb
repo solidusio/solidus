@@ -11,7 +11,7 @@ describe "Coupon code promotions", type: :feature, js: true do
   let!(:payment_method) { create(:check_payment_method) }
   let!(:product) { create(:product, name: "RoR Mug", price: 20) }
 
-  context "visitor makes checkout as guest without registration" do
+  context "visitor makes checkout" do
     def create_basic_coupon_promotion(code)
       promotion = create(
         :promotion,
@@ -34,49 +34,89 @@ describe "Coupon code promotions", type: :feature, js: true do
 
     let!(:promotion) { create_basic_coupon_promotion("onetwo") }
 
-    # OrdersController
     context "on the payment page" do
-      before do
-        visit spree.root_path
-        click_link "RoR Mug"
-        click_button "add-to-cart-button"
-        click_button "Checkout"
-        fill_in "order_email", with: "spree@example.com"
-        fill_in "First Name", with: "John"
-        fill_in "Last Name", with: "Smith"
-        fill_in "Street Address", with: "1 John Street"
-        fill_in "City", with: "City of John"
-        fill_in "Zip", with: "01337"
-        select country.name, from: "Country"
-        select state.name, from: "order[bill_address_attributes][state_id]"
-        fill_in "Phone", with: "555-555-5555"
+      context "as guest without registration" do
+        before do
+          visit spree.root_path
+          click_link "RoR Mug"
+          click_button "add-to-cart-button"
+          click_button "Checkout"
+          fill_in "order_email", with: "spree@example.com"
+          fill_in "First Name", with: "John"
+          fill_in "Last Name", with: "Smith"
+          fill_in "Street Address", with: "1 John Street"
+          fill_in "City", with: "City of John"
+          fill_in "Zip", with: "01337"
+          select country.name, from: "Country"
+          select state.name, from: "order[bill_address_attributes][state_id]"
+          fill_in "Phone", with: "555-555-5555"
 
-        # To shipping method screen
-        click_button "Save and Continue"
-        # To payment screen
-        click_button "Save and Continue"
-      end
-
-      it "informs about an invalid coupon code" do
-        fill_in "order_coupon_code", with: "coupon_codes_rule_man"
-        click_button "Save and Continue"
-        expect(page).to have_content(I18n.t('spree.coupon_code_not_found'))
-      end
-
-      it "can enter an invalid coupon code, then a real one" do
-        fill_in "order_coupon_code", with: "coupon_codes_rule_man"
-        click_button "Save and Continue"
-        expect(page).to have_content(I18n.t('spree.coupon_code_not_found'))
-        fill_in "order_coupon_code", with: "onetwo"
-        click_button "Save and Continue"
-        expect(page).to have_content("Promotion (Onetwo)   -$10.00")
-      end
-
-      context "with a promotion" do
-        it "applies a promotion to an order" do
-          fill_in "order_coupon_code", with: "onetwo"
+          # To shipping method screen
           click_button "Save and Continue"
+          # To payment screen
+          click_button "Save and Continue"
+        end
+
+        it "informs about an invalid coupon code" do
+          fill_in "order_coupon_code", with: "coupon_codes_rule_man"
+          click_button "Apply Code"
+          expect(page).to have_content(I18n.t('spree.coupon_code_not_found'))
+        end
+
+        it "can enter an invalid coupon code, then a real one" do
+          fill_in "order_coupon_code", with: "coupon_codes_rule_man"
+          click_button "Apply Code"
+          expect(page).to have_content(I18n.t('spree.coupon_code_not_found'))
+          fill_in "order_coupon_code", with: "onetwo"
+          click_button "Apply Code"
           expect(page).to have_content("Promotion (Onetwo)   -$10.00")
+        end
+
+        context "with a promotion" do
+          it "applies a promotion to an order" do
+            fill_in "order_coupon_code", with: "onetwo"
+            click_button "Apply Code"
+            expect(page).to have_content("Promotion (Onetwo)   -$10.00")
+          end
+        end
+      end
+
+      context 'as logged user' do
+        let!(:user) { create(:user, bill_address: create(:address), ship_address: create(:address)) }
+
+        before do
+          allow_any_instance_of(Spree::CheckoutController).to receive_messages(try_spree_current_user: user)
+          allow_any_instance_of(Spree::OrdersController).to receive_messages(try_spree_current_user: user)
+        end
+
+        context 'with saved credit card' do
+          let(:bogus) { create(:credit_card_payment_method) }
+          let!(:credit_card) do
+            create(:credit_card, user_id: user.id, payment_method: bogus, gateway_customer_profile_id: "BGS-WEFWF")
+          end
+
+          before do
+            user.wallet.add(credit_card)
+
+            visit spree.root_path
+            click_link "RoR Mug"
+            click_button "add-to-cart-button"
+            # To Cart
+            click_button "Checkout"
+            # To shipping method screen, address is auto-populated
+            # with user's saved addresses
+            click_button "Save and Continue"
+            # To payment screen
+            click_button "Save and Continue"
+          end
+
+          it "shows wallet payments on coupon code errors" do
+            fill_in "order_coupon_code", with: "coupon_codes_rule_man"
+            click_button "Apply Code"
+
+            expect(page).to have_content("The coupon code you entered doesn't exist. Please try again.")
+            expect(page).to have_content("Use an existing card")
+          end
         end
       end
     end

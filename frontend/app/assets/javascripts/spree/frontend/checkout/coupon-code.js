@@ -1,4 +1,5 @@
 Spree.onCouponCodeApply = function(e) {
+  e.preventDefault();
   var couponCodeField = $("#order_coupon_code");
   var couponCode = $.trim(couponCodeField.val());
   if (couponCode === "") {
