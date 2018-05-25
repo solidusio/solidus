@@ -10,7 +10,7 @@ module Spree
     include CanCan::Ability
 
     class_attribute :abilities
-    self.abilities = Set.new
+    self.abilities = Spree::Core::ClassConstantizer::Set.new
 
     attr_reader :user
 
