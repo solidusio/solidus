@@ -10,9 +10,10 @@ module Spree
           @collection = ::Set.new
         end
 
-        def <<(klass)
+        def add(klass)
           @collection << klass.to_s
         end
+        alias << add
 
         def concat(klasses)
           klasses.each do |klass|
@@ -20,7 +21,7 @@ module Spree
           end
         end
 
-        delegate :clear, :empty?, to: :@collection
+        delegate :clear, :delete, :empty?, to: :@collection
 
         def each
           @collection.each do |klass|

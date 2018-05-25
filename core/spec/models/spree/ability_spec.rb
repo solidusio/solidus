@@ -29,7 +29,7 @@ RSpec.describe Spree::Ability, type: :model do
   let(:token) { nil }
 
   after(:each) {
-    Spree::Ability.abilities = Set.new
+    Spree::Ability.abilities = Spree::Core::ClassConstantizer::Set.new
   }
 
   describe "#initialize" do
@@ -45,12 +45,12 @@ RSpec.describe Spree::Ability, type: :model do
 
   context 'register_ability' do
     it 'should add the ability to the list of abilties' do
-      Spree::Ability.register_ability(FooAbility)
+      Spree::Ability.register_ability('FooAbility')
       expect(Spree::Ability.new(user).abilities).not_to be_empty
     end
 
     it 'should apply the registered abilities permissions' do
-      Spree::Ability.register_ability(FooAbility)
+      Spree::Ability.register_ability('FooAbility')
       expect(Spree::Ability.new(user).can?(:update, mock_model(Spree::Order, user: nil, id: 1))).to be true
     end
   end
