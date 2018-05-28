@@ -1,6 +1,6 @@
 <%= form_for [:admin, product, image], html: { multipart: true } do |f| %>
   <fieldset data-hook="new_image">
-    <legend align="center"><%= t('spree.new_image') %></legend>
+    <legend><%= t('spree.new_image') %></legend>
 
       <%= render partial: 'form', locals: { f: f } %>
 

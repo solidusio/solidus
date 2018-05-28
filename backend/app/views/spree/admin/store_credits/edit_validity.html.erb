@@ -12,7 +12,7 @@
 
 <%= form_for [:admin, @user, @store_credit], url: invalidate_admin_user_store_credit_path, method: :put do |f| %>
   <fieldset>
-    <legend align="center"><%= t('spree.admin.store_credits.invalidate_store_credit') %></legend>
+    <legend><%= t('spree.admin.store_credits.invalidate_store_credit') %></legend>
     <div data-hook="admin_store_credit_form_fields" class="row">
       <div class="col-12">
         <%= render partial: 'update_reason_field', locals: { f: f } %>

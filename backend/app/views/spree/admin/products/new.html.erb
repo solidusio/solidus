@@ -5,7 +5,7 @@
 
 <%= form_for [:admin, @product], method: :post, url: admin_products_path, html: { multipart: true } do |f| %>
   <fieldset data-hook="new_product">
-    <legend align="center"><%= t('spree.new_product') %></legend>
+    <legend><%= t('spree.new_product') %></legend>
 
     <%= render partial: 'form', locals: { f: f } %>
 

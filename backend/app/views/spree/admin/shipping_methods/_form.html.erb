@@ -68,7 +68,7 @@
   <div class="col-5">
     <div data-hook="admin_shipping_method_form_availability_fields">
       <fieldset class="categories no-border-bottom">
-        <legend align="center"><%= plural_resource_name(Spree::ShippingCategory) %></legend>
+        <legend><%= plural_resource_name(Spree::ShippingCategory) %></legend>
         <%= f.field_container :categories do %>
           <% Spree::ShippingCategory.all.each do |category| %>
             <label>
@@ -83,7 +83,7 @@
 
     <div>
       <fieldset class="no-border-bottom">
-        <legend align="center"><%= plural_resource_name(Spree::Zone) %></legend>
+        <legend><%= plural_resource_name(Spree::Zone) %></legend>
         <%= f.field_container :zones do %>
           <% shipping_method_zones = @shipping_method.zones.to_a %>
           <% Spree::Zone.all.each do |zone| %>
@@ -104,7 +104,7 @@
     </div>
     <div>
       <fieldset class="tax_categories no-border-bottom">
-        <legend align="center"><%= Spree::TaxCategory.model_name.human %></legend>
+        <legend><%= Spree::TaxCategory.model_name.human %></legend>
           <%= f.field_container :tax_categories do %>
             <%= f.select :tax_category_id, @tax_categories.map { |tc| [tc.name, tc.id] }, {include_blank: true}, class: "custom-select fullwidth" %>
             <%= error_message_on :shipping_method, :tax_category_id %>

@@ -15,7 +15,7 @@
 
 <%= form_for @product, url: admin_product_url(@product), method: :put do |f| %>
   <fieldset>
-    <legend align="center"><%= plural_resource_name(Spree::ProductProperty) %></legend>
+    <legend><%= plural_resource_name(Spree::ProductProperty) %></legend>
     <div class="add_product_properties" data-hook="add_product_properties"></div>
 
     <table class="index sortable" data-hook data-sortable-link="<%= update_positions_admin_product_product_properties_url %>">
@@ -44,7 +44,7 @@
 
 <%= form_tag admin_product_product_properties_path, method: :get, id: 'variant_option_value_selections' do %>
   <fieldset class='no-border-bottom'>
-    <legend align="center"><%= t('spree.variant_properties') %></legend>
+    <legend><%= t('spree.variant_properties') %></legend>
     <fieldset class='no-border-top'>
       <% @option_types.each do |option_type, option_values| %>
         <div class="field">

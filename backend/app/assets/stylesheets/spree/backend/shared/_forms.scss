@@ -153,8 +153,9 @@ span.info {
 fieldset {
   border: 1px solid $color-border;
   position: relative;
+  margin-top: 2.5rem;
   margin-bottom: 35px;
-  padding: 10px 0 15px 0;
+  padding: 2rem 0 1.25rem 0;
   border-left: none;
   border-right: none;
 
@@ -172,12 +173,17 @@ fieldset {
   }
 
   legend {
+    position: absolute;
+    left: 50%;
+    top: -1.75rem;
+    transform: translateX(-50%);
     color: $color-2;
     font-size: 16px;
     font-weight: $font-weight-bold;
     text-align: center;
     padding: 8px 15px;
     width: auto;
+    background-color: $body-bg;
 
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;

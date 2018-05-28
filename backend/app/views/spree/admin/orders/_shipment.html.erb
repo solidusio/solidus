@@ -6,7 +6,7 @@
 
 <div id="<%= "shipment_#{shipment.id}" %>" class="js-shipment-edit" data-hook="admin_shipment_form">
   <fieldset class="no-border-bottom">
-    <legend align="center" class="stock-location" data-hook="stock-location">
+    <legend class="stock-location" data-hook="stock-location">
       <span class="shipment-number"><%= shipment.number %></span>
       -
       <span class="shipment-state"><%= t(shipment.state, scope: "spree.shipment_states") %></span>

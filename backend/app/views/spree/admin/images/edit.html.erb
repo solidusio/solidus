@@ -12,7 +12,7 @@
 
 <%= form_for [:admin, @product, @image], html: { multipart: true } do |f| %>
   <fieldset data-hook="edit_image">
-    <legend align="center"><%= @image.attachment_file_name%></legend>
+    <legend><%= @image.attachment_file_name%></legend>
 
     <div class="row">
       <div data-hook="thumbnail" class="field col-2 align-center">
