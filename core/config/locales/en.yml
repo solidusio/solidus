@@ -177,7 +177,6 @@ en:
       spree/product_property:
         value: Value
       spree/promotion:
-        advertise: Advertise
         apply_automatically: Apply Automatically
         code: Code
         description: Description
@@ -185,7 +184,7 @@ en:
         expires_at: End
         name: Name
         path: Path
-        per_code_usage_limit: Per Code Usage Limit
+        per_code_usage_limit: Per code usage limit
         promotion_uses: Promotion Uses
         starts_at: Start
         status: Status
@@ -859,7 +858,6 @@ en:
         activations_new:
           auto: Apply to all orders
           multiple_codes: Multiple promotion codes
-          path: URL Path
           single_code: Single promotion code
         activations_edit:
           auto: All orders will attempt to use this promotion

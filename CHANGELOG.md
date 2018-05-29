@@ -1,5 +1,9 @@
 ## Solidus 2.7.0 (master, unreleased)
 
+### Admin
+
+- The promotions "Advertise" checkbox and the "URL Path" promotion activation method have been removed from the admin UI because the features are not implemented in solidus_frontend [#2737](https://github.com/solidusio/solidus/pull/2737) ([benjaminwil](https://github.com/benjaminwil)
+
 ## Solidus 2.6.0 (2018-05-16)
 
 ### Major changes
