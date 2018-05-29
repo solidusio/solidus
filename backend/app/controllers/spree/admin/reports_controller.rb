@@ -14,7 +14,11 @@ module Spree
           if report_description_key.nil?
             report_description_key = "#{report_key}_description"
           end
-          @@available_reports[report_key] = { name: I18n.t(report_key, scope: 'spree'), description: I18n.t(report_description_key, scope: 'spree') }
+
+          @@available_reports[report_key] = {
+            name: report_key,
+            description: report_description_key,
+          }
         end
       end
 
