@@ -47,7 +47,6 @@ When you create a promotion, you can fill in the following information about it:
 - **Name**: The name for the promotion. Customers can see this name during
   checkout and on invoices.
 - **Description**: An optional description of the promotion.
-- **Advertise**: <!-- TODO: -->
 - **Promotion Category**: The [promotion category](#promotion-categories) for the
   promotion.
 - **Usage Limit**: This sets how many times that a promotion can be used. By
@@ -71,7 +70,7 @@ methods:
   configured promotion rules. See [Multiple promotion
   codes](#multiple-promotion-codes) below for more information.
 
-[promotion-rules]: promotion-rules.md
+[promotion-rules]: promotion-rules.html
 
 ### Multiple promotions codes
 
