@@ -1,13 +1,11 @@
 # Overview
 
-Solidus includes a straightforward user management system. Users are your stores
-customers, as well as your store administrators who need access to the Solidus
-admin interface.
+You can manage customer accounts and administrator accounts from the **Users**
+page of the Solidus admin interface.
 
 You can search and sort users using a few types of information:
 
-- **Email**: Users access your store and make orders using an identifying email
-  address.
+- **Email**: Users sign into your store using an identifying email address.
 - **Roles**: Users may have different roles (or permissions) depending on how
   much access you want them to have to your store. By default, users can have
   the role `admin` or no role. See [Roles](#roles) for more information.
@@ -17,7 +15,7 @@ You can search and sort users using a few types of information:
   spent on all of their orders.
 - **Member Since**: The date that the user's account was created.
 
-## User information 
+## User information
 
 Solidus stores additional information about users. This information relates the
 users to other aspects of your store like payments and orders.
@@ -25,7 +23,9 @@ users to other aspects of your store like payments and orders.
 The following information is tracked against your users:
 
 - **Addresses**: Customers have at least one address on file. This address can
-  be used as the billing and/or shipping address for orders.
+  be used as the billing and/or shipping address for orders. The addresses
+  displayed in the Solidus admin interface are the customer's last used shipping
+  and billing addresses.
 - **Order History**: A list of orders associated with the current customer. You
   can select each order in the list to view more detailed order information.
 - **Items**: A list of items that the customer has purchased, including the
@@ -46,7 +46,9 @@ users without a role try to access the Solidus admin, they are greeted with an
 access denied page.
 
 Talk to your developers about adding additional roles and the requirements that
-you have for those roles.
+you have for those roles. Role permissions cannot be managed from the Solidus
+admin interface. Developers can programmatically give or revoke access to
+different pages based on a user's role.
 
 ## API access
 
@@ -66,13 +68,12 @@ the **Regenerate key** button.
 -->
 
 Similarly, if you want to revoke access to the API for a user, you can use the
-**Clear key** button to remove their key. 
+**Clear key** button to remove their key.
 
 [api]: https://en.wikipedia.org/wiki/Application_programming_interface
 
 ## Passwords
 
 Users require passwords. By default, users needs passwords that are at least six
-characters long.
-
-Talk to your developers if you want to change Solidus's password requirements.
+characters long. Talk to your developers if you want to change Solidus's
+password requirements.
