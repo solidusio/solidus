@@ -38,7 +38,9 @@ have more complicated tax requirements, your tax rates can perform more complex
 functions:
 
 - You can create tax rates that calculate using sales tax (U.S.-style taxes) or
-  value-added taxes ([VAT][vat], or E.U.-style taxes).
+  value-added taxes ([VAT][vat], or E.U.-style taxes). Sales tax is applied on
+  top of the price of each item, where as VAT is included in the price of each
+  item.
 - You can show or hide tax rates in customer invoices.
 - You can create tax rates that are valid from a specific date.
 - You can change the **Base Calculator** to [a custom tax
