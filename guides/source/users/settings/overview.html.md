@@ -14,7 +14,7 @@ and/or tax. A country or state could exist in multiple zones or none at all.
 
 For more information on how to use zones, see the [Zones][zones] article.
 
-[zones]: zones.md
+[zones]: zones.html
 
 ## Taxes
 
