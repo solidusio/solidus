@@ -18,7 +18,7 @@ within the state should be taxed. But any candy that you sell is tax exempt. You
 may want to create a "Candy" tax category to handle your candy products that are
 exempt from tax.
 
-[products]: ../products/overview.md
+[products]: ../products/overview.html
 
 ### Tax category fields
 
@@ -45,7 +45,7 @@ functions:
     calculator](#tax-calculators).
 
 [vat]: https://en.wikipedia.org/wiki/Value-added_tax
-[zones]: zones.md 
+[zones]: zones.html
 
 ### Create a tax rate
 
