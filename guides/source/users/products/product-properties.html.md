@@ -22,4 +22,4 @@ Use product properties to describe a product: "The t-shirt is 100% cotton." Use
 option types to show how variants are distinct from each other: "The t-shirt can
 be purchased in one of two colors: red or green."
 
-[option-types]: option-types.md
+[option-types]: option-types.html

@@ -65,5 +65,5 @@ sub-pages:
   adding/editing products.
 -->
 
-[product-details]: product-details.md
-[product-properties]: product-properties.md
+[product-details]: product-details.html
+[product-properties]: product-properties.html
