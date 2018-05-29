@@ -64,7 +64,7 @@ The Solidus API endpoints comply with the following rules:
 - Successful `GET` requests always return a status of `200`.
 - Successful `CREATE` and `UPDATE` requests result a status of `201` and
   `200`.
-- Successful `DELETE` requests return a status of `200` and no content.
+- Successful `DELETE` requests return a status of `204` and no content.
 - Unauthorized requests return a status of `401` and no content.
 - When a resource cannot be found, the API returns a status of `404`.
 - Failed `CREATE` and `UPDATE` requests return a status of `422` with a hash
