@@ -7,8 +7,8 @@ free shipping or a fixed percentage-based discount.
 Promotion actions create [adjustments][adjustments] on orders, line items, or
 shipping charges.
 
-[adjustments]: ../adjustments/overview.md
-[promotions]: overview.md
+[adjustments]: ../adjustments/overview.html
+[promotions]: overview.html
 
 ## Create a promotion action
 
@@ -28,8 +28,8 @@ following steps:
 Note that if you choose the promotion action type **Free Shipping** that steps
 3. and 4. are not applicable.
 
-[create-a-new-promotion]: overview.md#create-a-new-promotion
-[promotion-calculators]: promotion-calculators.md
+[create-a-new-promotion]: overview.html#create-a-new-promotion
+[promotion-calculators]: promotion-calculators.html
 
 ## Available promotion action types
 
@@ -47,4 +47,3 @@ types:
 
 You can have multiple promotion actions with different promotion action types on
 a single promotion.
-
