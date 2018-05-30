@@ -4,19 +4,8 @@ module Spree
   module Api
     class TaxonsController < Spree::Api::BaseController
       def index
-        if taxonomy
-          @taxons = taxonomy.root.children
-        elsif params[:ids]
-          @taxons = Spree::Taxon.accessible_by(current_ability, :read).where(id: params[:ids].split(','))
-        else
-          @taxons = Spree::Taxon.accessible_by(current_ability, :read).order(:taxonomy_id, :lft).ransack(params[:q]).result
-        end
-
-        @taxons = paginate(@taxons)
+        @taxons = paginate(all_taxons)
         respond_with(@taxons)
-      end
-
-      def new
       end
 
       def show
@@ -97,6 +86,16 @@ module Spree
 
       def taxon
         @taxon ||= taxonomy.taxons.accessible_by(current_ability, :read).find(params[:id])
+      end
+
+      def all_taxons
+        @all_taxons ||= if taxonomy
+          taxonomy.root.children
+        elsif params[:ids]
+          Spree::Taxon.accessible_by(current_ability, :read).where(id: params[:ids].split(','))
+        else
+          Spree::Taxon.accessible_by(current_ability, :read).order(:taxonomy_id, :lft).ransack(params[:q]).result
+        end
       end
 
       def taxon_params
