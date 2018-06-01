@@ -120,5 +120,3 @@ caching_policy "application/xml", max_age: 0, must_revalidate: true
 configure :build do
   activate :asset_hash
 end
-
-set(:port, 4568)
