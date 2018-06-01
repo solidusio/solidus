@@ -4,8 +4,8 @@ Product properties track individual attributes for a product, especially if the
 attributes only apply to one specific product. Typically, product properties
 would be used for technical specifications or additional production information. 
 
-For example, you can list of product properties for a limited edition t-shirt as
-a table on its product page:
+For example, you can see a list of product properties for a limited edition
+t-shirt as a table on its product page:
 
 | Property name | Property value   |
 |---------------|------------------|
