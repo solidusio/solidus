@@ -12,8 +12,8 @@ module Spree
       def fire
         action_from_params = "#{params[:e]}!"
 
-        if @return_authorization.respond_to?(action_from_params)
-          @return_authorization.send(action_from_params)
+        if @return_authorization.state_events.include?(params[:e].to_sym) &&
+           @return_authorization.send(action_from_params)
 
           flash_message = { success: t('spree.return_authorization_updated') }
         else

@@ -45,6 +45,19 @@ describe Spree::Admin::ReturnAuthorizationsController, type: :controller do
           expect(flash[:error]).to eq 'Cannot perform this action on return merchandise authorization'
         end
       end
+
+      context 'when event method exists but it is not a state machine event' do
+        let(:event) { 'destroy' }
+
+        it 'redirects back with an error message' do
+          expect(return_authorization).not_to receive :destroy!
+
+          get :fire, params: params
+
+          expect(response).to redirect_to(admin_order_return_authorizations_path(order))
+          expect(flash[:error]).to eq 'Cannot perform this action on return merchandise authorization'
+        end
+      end
     end
   end
 
