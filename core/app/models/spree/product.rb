@@ -99,13 +99,6 @@ module Spree
              :rebuild_vat_prices=,
              to: :find_or_build_master
 
-<<<<<<< 2269b1c5414317501cb1ea8082ff6b46d9c6ec8c
-    alias_method :master_images, :images
-
-    has_many :variant_images, -> { order(:position) }, source: :images, through: :variants_including_master
-
-=======
->>>>>>> Remove images from Spree::Product
     after_create :build_variants_from_option_values_hash, if: :option_values_hash
 
     after_destroy :punch_slug
