@@ -31,10 +31,14 @@ This will copy all views whose directory or filename contains the string "produc
 
 ### Handle upgrades
 
-After upgrading solidus to a new version run the generator again and follow on screen instructions.
+After upgrading Solidus to a new version run the generator again and follow on screen instructions.
 
 ## Testing
 
 Run the tests
 
     bundle exec rspec
+
+## Included CSS
+
+Solidus frontend does not support a CSS framework out-of-the-box. Custom styles can be found in `app/assets/stylesheets/spree/frontend/screen.css.scss`. We have also included the grid system from Bootstrap 4.1.1 in `app/assets/stylesheets/spree/frontend/bootstrap-grid.css`.
