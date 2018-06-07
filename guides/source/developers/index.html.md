@@ -13,8 +13,7 @@ layout: index
 Solidus is an open source ecommerce solution built with Ruby on Rails and
 maintained by a community of passionate developers. Before you can launch a
 store with Solidus, you should already have experience with [the Ruby
-programming language][ruby] and [Ruby on
-Rails][rails].
+programming language][ruby] and [Ruby on Rails][rails].
 
 If Ruby on Rails is new to you, start by reading the [Rails
 Guides][rails-guides] and Michael Hartl's [Ruby on Rails
@@ -40,3 +39,4 @@ the specific error messages you are receiving during installation.
 [solidus-github-issue]: https://github.com/solidusio/solidus/issues/new
 [slack-invitation]: http://slack.solidus.io
 [slack-support]: https://solidusio.slack.com/messages/supports/details/
+

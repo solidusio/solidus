@@ -20,6 +20,9 @@ page "/developers/*", :directory_index => false
 page "/contributing*", :directory_index => false
 page "/acknowledgements*", :directory_index => false
 
+# Temporary redirect until additional guides are added.
+redirect "index.html", to: "/developers/index.html"
+
 helpers do
   def kabob_case(title)
     title.gsub(' ', '-').downcase
