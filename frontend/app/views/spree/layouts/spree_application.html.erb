@@ -7,7 +7,7 @@
   <head data-hook="inside_head">
     <%= render partial: 'spree/shared/head' %>
   </head>
-  <body class="<%= body_class %>" id="<%= @body_id || 'default' %>" data-hook="body">
+  <body id="<%= @body_id || 'default' %>" data-hook="body">
 
     <div class="container">
 
@@ -15,11 +15,13 @@
 
       <div id="wrapper" class="row" data-hook>
 
-        <%= taxon_breadcrumbs(@taxon) %>
+        <div class="col-12">
+          <%= taxon_breadcrumbs(@taxon) %>
+        </div>
 
         <%= render partial: 'spree/shared/sidebar' if content_for? :sidebar %>
 
-        <div id="content" class="columns <%= !content_for?(:sidebar) ? "sixteen" : "twelve omega" %>" data-hook>
+        <div id="content" class="<%= content_for?(:sidebar) ? "col-md-9" : "col-md-12" %>" data-hook>
           <%= flash_messages %>
           <%= yield %>
         </div>

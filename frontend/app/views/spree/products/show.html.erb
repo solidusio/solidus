@@ -1,9 +1,9 @@
 <% cache [I18n.locale, current_pricing_options, @product] do %>
-  <div data-hook="product_show" itemscope itemtype="http://schema.org/Product">
+  <div class="row" data-hook="product_show" itemscope itemtype="http://schema.org/Product">
     <% @body_id = 'product-details' %>
 
-    <div class="columns six alpha" data-hook="product_left_part">
-      <div class="row" data-hook="product_left_part_wrap">
+    <div class="col-md-5 col-lg-4" data-hook="product_left_part">
+      <div data-hook="product_left_part_wrap">
 
         <div id="product-images" data-hook="product_images">
           <div id="main-image" data-hook>
@@ -25,8 +25,8 @@
       </div>
     </div>
 
-    <div class="columns ten omega" data-hook="product_right_part">
-      <div class="row" data-hook="product_right_part_wrap">
+    <div class="col-md-6 col-lg-8" data-hook="product_right_part">
+      <div data-hook="product_right_part_wrap">
 
         <div id="product-description" data-hook="product_description">
 

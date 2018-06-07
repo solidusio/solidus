@@ -19,7 +19,7 @@
             <%= render 'form', order_form: order_form %>
           </div>
 
-          <div class="links columns sixteen alpha omega" data-hook="cart_buttons">
+          <div class="links" data-hook="cart_buttons">
             <%= order_form.text_field :coupon_code, size: 10, placeholder: t('spree.coupon_code') %>
             <%= button_tag class: 'primary', id: 'update-button' do %>
               <%= t('spree.update') %>

@@ -22,10 +22,10 @@
 </div>
 
 <% if products.any? %>
-  <ul id="products" class="inline product-listing" data-hook>
+  <ul id="products" class="inline product-listing row" data-hook>
     <% products.each do |product| %>
       <% url = spree.product_path(product, taxon_id: @taxon.try(:id)) %>
-      <li id="product_<%= product.id %>" class="columns three <%= cycle("alpha", "secondary", "", "omega secondary", name: "classes") %>" data-hook="products_list_item" itemscope itemtype="http://schema.org/Product">
+      <li id="product_<%= product.id %>" class="col-6 col-sm-6 col-md-4 col-lg-3" data-hook="products_list_item" itemscope itemtype="http://schema.org/Product">
         <% cache(@taxon.present? ? [I18n.locale, current_pricing_options, @taxon, product] : [I18n.locale, current_pricing_options, product]) do %>
           <div class="product-image">
             <%= link_to(render('spree/shared/image', image: product.display_image, size: :small, itemprop: "image"), url, itemprop: 'url') %>
@@ -42,7 +42,6 @@
         <% end %>
       </li>
     <% end %>
-    <% reset_cycle("classes") %>
   </ul>
 <% end %>
 

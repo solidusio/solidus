@@ -1,8 +1,8 @@
 <%= form_for :order, url: populate_orders_path do |f| %>
-  <div id="inside-product-cart-form" data-hook="inside_product_cart_form" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+  <div id="inside-product-cart-form" class="row" data-hook="inside_product_cart_form" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
 
     <% if @product.variants_and_option_values_for(current_pricing_options).any? %>
-      <div id="product-variants" class="columns five alpha">
+      <div id="product-variants" class="col-sm-6">
         <h6 class="product-section-title"><%= t('spree.variants') %></h6>
         <ul>
           <% @product.variants_and_option_values_for(current_pricing_options).each_with_index do |variant, index| %>
@@ -29,7 +29,7 @@
     <% end %>
 
     <% if @product.price_for(current_pricing_options) and !@product.price.nil? %>
-      <div data-hook="product_price" class="columns five <%= !@product.has_variants? ? 'alpha' : 'omega' %>">
+      <div data-hook="product_price" class="col-sm-6">
 
         <div id="product-price">
           <h6 class="product-section-title"><%= t('spree.price') %></h6>
