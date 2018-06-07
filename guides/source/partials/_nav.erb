@@ -1,0 +1,37 @@
+<div class="site-navbar">
+  <div class="navbar-header">
+    <div class="site-logo float-left">
+      <%= inline_svg("logo.svg", class: "isvg") %>
+    </div>
+
+    <a class="site-menu-toggler" href="#">
+      <%= inline_svg("close.svg", class: "isvg isvg-close") %>
+    </a>
+  </div>
+
+  <div class="navbar-content">
+    <h1 class="title">Developers Guide</h1>
+    <nav id="site-navbar">
+
+      <%# There are three sub-navigation menus defined in /data/nav_tree.yml %>
+      <% callout = data.nav_tree.callout %> 
+      <% main = data.nav_tree.main %>
+      <% meta = data.nav_tree.meta %>
+
+      <% [callout, main].each do |menu| %>
+        <%= partial("partials/nav_tree_submenu", :locals => { :menu_items => menu }) %>
+        <hr/>
+      <% end %>
+      <div id="meta-menu" class="mb-4">
+        <%= partial("partials/nav_tree_single", :locals => { :menu_items => meta }) %>
+      </div>
+
+      <a class="btn btn-outline-secondary btn-w-icon btn-block slack"
+         href="http://slack.solidus.io/"
+         target="_blank">
+        <%= inline_svg("social-icons/slack.svg", class: "isvg") %>
+        <span class="text">Get Help on Slack</span>
+      </a>
+    </nav>
+  </div>
+</div>

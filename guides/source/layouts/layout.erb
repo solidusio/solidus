@@ -23,33 +23,7 @@
     <%= yield %>
   </main>
 
-  <div class="site-navbar">
-    <div class="navbar-header">
-      <div class="site-logo float-left">
-        <%= inline_svg("logo.svg", class: "isvg") %>
-      </div>
-
-      <a class="site-menu-toggler" href="#">
-        <%= inline_svg("close.svg", class: "isvg isvg-close") %>
-      </a>
-    </div>
-
-    <div class="navbar-content">
-      <h1 class="title">Developers Guide</h1>
-      <nav id="site-navbar">
-
-        <%= partial("partials/nav_tree_submenu", :locals => { :menu_items => data.nav_tree.top }) %>
-        <hr>
-        <%= partial("partials/nav_tree_submenu", :locals => { :menu_items => data.nav_tree.main }) %>
-        <hr>
-        <div class="mb-4">
-          <%= partial("partials/nav_tree_single", :locals => { :menu_items => data.nav_tree.bottom }) %>
-        </div>
-
-        <a class="btn btn-outline-secondary btn-w-icon btn-block slack" href="http://slack.solidus.io/" target="_blank"><%= inline_svg("social-icons/slack.svg", class: "isvg") %> <span class="text">Get Help on Slack</span></a>
-      </nav>
-    </div>
-  </div>
+  <%= partial "partials/nav" %>
 </div>
 
 <div class="backdrop"></div>
