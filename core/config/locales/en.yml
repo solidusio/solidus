@@ -276,6 +276,12 @@ en:
         state: State
       spree/role:
         name: Name
+      spree/settlement:
+        amount: Amount Before Sales Tax
+        acceptance_status: Acceptance status
+        acceptance_status_errors: Acceptance errors
+        reimbursement_type_id: Reimbursement Type
+        total: Total
       spree/shipping_category:
         name: Name
       spree/shipment:
@@ -686,6 +692,10 @@ en:
               cannot_be_associated_unless_accepted: cannot be associated to a return item that is not accepted.
             inventory_unit:
               other_completed_return_item_exists: "%{inventory_unit_id} has already been taken by return item %{return_item_id}"
+        spree/settlement:
+          attributes:
+            shipment:
+              must_belong_to_reimbursement_order: must belong to the same customer order as the reimbursement
         spree/shipment:
           attributes:
             state:
@@ -1366,6 +1376,7 @@ en:
     image: Image
     images: Images
     implement_eligible_for_return: "Must implement #eligible_for_return? for your EligibilityValidator."
+    implement_eligible_for_settlement: "Must implement #eligible_for_settlement? for your EligibilityValidator."
     implement_requires_manual_intervention: "Must implement #requires_manual_intervention? for your EligibilityValidator."
     inactive: Inactive
     incl: incl.
@@ -1838,6 +1849,8 @@ en:
     select: Select
     select_a_reason: Select a reason
     select_a_stock_location: Select a stock location
+    settlements: Settlements
+    shipments_to_be_reimbursed: Shipments to be reimbursed
     select_stock: Select stock
     selected_quantity_not_available: ! 'selected of %{item} is not available.'
     send_copy_of_all_mails_to: Send Copy of All Mails To
@@ -1846,6 +1859,11 @@ en:
     server: Server
     server_error: The server returned an error
     settings: Settings
+    settlement_can_only_be_created_if_shipment_has_returned_items: Settlement can only be created for shipments that have returned items
+    settlement_order_not_completed: Settlement's order must be completed
+    settlement_return_items_ineligible: Settlement's shipment must contain a return item from the reimbursement
+    settlement_shipment_ineligible: Settlement's shipment must be shipped
+    settlement_time_period_ineligible: Settlement is outside the eligible time period
     ship: ship
     ship_address: Ship Address
     ship_address_required: Valid shipping address required

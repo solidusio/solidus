@@ -24,6 +24,37 @@ describe Spree::Admin::ReimbursementsController, type: :controller do
       expect(assigns(:stock_locations)).to include(active_stock_location)
       expect(assigns(:stock_locations)).not_to include(inactive_stock_location)
     end
+
+    describe "#load_return_items" do
+      let!(:second_shipment) { create(:shipment, order: order) }
+      let!(:second_return_item) {
+        create(
+          :return_item,
+          inventory_unit: second_shipment.inventory_units.first,
+          reimbursement: reimbursement,
+          acceptance_status: 'accepted'
+        )
+      }
+
+      context "without existing settlements" do
+        it "has 2 new @form_settlement" do
+          subject
+          expect(assigns(:form_settlements).size).to eq 2
+          expect(assigns(:form_settlements).select(&:new_record?).size).to eq 2
+        end
+      end
+
+      context "with existing settlement" do
+        let!(:settlement) { create(:settlement, reimbursement: reimbursement, shipment: second_shipment) }
+
+        it "has 1 existing settlement and 1 new settlement" do
+          subject
+          expect(assigns(:form_settlements).size).to eq 2
+          expect(assigns(:form_settlements).select(&:persisted?)).to eq [settlement]
+          expect(assigns(:form_settlements).select(&:new_record?).size).to eq 1
+        end
+      end
+    end
   end
 
   describe '#create' do

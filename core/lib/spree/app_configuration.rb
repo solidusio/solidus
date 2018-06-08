@@ -194,6 +194,10 @@ module Spree
     #   @return [Integer] default: 365
     preference :return_eligibility_number_of_days, :integer, default: 365
 
+    # @!attribute [rw] settlement_eligibility_number_of_days
+    #   @return [Integer] default: 365
+    preference :settlement_eligibility_number_of_days, :integer, default: 365
+
     # @!attribute [rw] roles_for_auto_api_key
     #   @return [Array] An array of roles where generating an api key for a user
     #   at role_user creation is desired when user has one of these roles.

@@ -9,6 +9,7 @@ module Spree
 
       before_action :load_stock_locations, only: :edit
       before_action :load_simulated_refunds, only: :edit
+      before_action :load_settlements, only: :edit
 
       rescue_from Spree::Core::GatewayError, with: :spree_core_gateway_error
 
@@ -56,6 +57,19 @@ module Spree
         @stock_locations = Spree::StockLocation.active
       end
 
+      # To satisfy how nested attributes works we want to create placeholder Settlements for
+      # any Shipments associated with a returned InventoryUnit.
+      def load_settlements
+        returned_items_shipments = @reimbursement.return_items.map(&:shipment).uniq
+        associated_shipments = @reimbursement.settlements.map(&:shipment)
+        unassociated_shipments = returned_items_shipments - associated_shipments
+
+        new_settlements = unassociated_shipments.map do |shipment|
+          Spree::Settlement.new(shipment: shipment, amount: shipment.amount)
+        end
+        @form_settlements = (@reimbursement.settlements + new_settlements).sort_by(&:shipment_id)
+      end
+
       def load_simulated_refunds
         @reimbursement_objects = @reimbursement.simulate
       end
@@ -63,6 +77,11 @@ module Spree
       def spree_core_gateway_error(error)
         flash[:error] = error.message
         redirect_to edit_admin_order_reimbursement_path(parent, @reimbursement)
+      end
+
+      def render_after_update_error
+        redirect_back(fallback_location: location_after_save,
+                      flash: { error: @object.errors.full_messages.join(', ') })
       end
     end
   end

@@ -7,6 +7,7 @@ module Spree
     ORIGINAL = 'original'
 
     has_many :return_items
+    has_many :settlements
 
     # This method will reimburse the return items based on however it child implements it
     # By default it takes a reimbursement, the return items it needs to reimburse, and if

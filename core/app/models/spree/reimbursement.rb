@@ -11,6 +11,9 @@ module Spree
     has_many :credits, inverse_of: :reimbursement, class_name: 'Spree::Reimbursement::Credit'
 
     has_many :return_items, inverse_of: :reimbursement
+    has_many :settlements, inverse_of: :reimbursement
+
+    accepts_nested_attributes_for :settlements, allow_destroy: true
 
     validates :order, presence: true
     validate :validate_return_items_belong_to_same_order

@@ -62,6 +62,55 @@
     </table>
   </fieldset>
 
+  <div data-hook="admin_reimbursement_settlements_form_fields">
+    <fieldset class='no-border-bottom'>
+      <legend align='center'><%= t('spree.shipments_to_be_reimbursed') %></legend>
+      <table class="index reimbursement-settlements">
+        <thead>
+        <th class="settlement-checkbox shipment-checkbox">
+          <%= check_box_tag 'select-all' %>
+        </th>
+        <th><%= Spree::Shipment.model_name.human %></th>
+        <th class="wrap-text"><%= Spree::ShippingMethod.human_attribute_name(:name) %></th>
+        <th class="wrap-text"><%= Spree::Settlement.human_attribute_name(:reimbursement_type_id) %></th>
+        <th class="wrap-text"><%= Spree::Settlement.human_attribute_name(:amount) %></th>
+        <th class="wrap-text"><%= Spree::Settlement.human_attribute_name(:total) %></th>
+        </thead>
+        <tbody>
+        <%= f.fields_for :settlements, @form_settlements do |settlement_fields| %>
+          <% settlement = settlement_fields.object %>
+          <% shipment = settlement.shipment %>
+          <tr>
+            <td class="settlement-checkbox">
+              <%= settlement_fields.hidden_field :shipment_id %>
+              <%= settlement_fields.check_box :_destroy, {checked: settlement.persisted?, class: 'add-item'}, '0', '1' %>
+            </td>
+            <td>
+              <%= shipment.number %>
+            </td>
+            <td>
+              <%= shipment.shipping_method.name %>
+            </td>
+            <td>
+              <%=settlement_fields.select(:reimbursement_type_id,
+                reimbursement_types.collect { |r| [r.name.humanize, r.id] },
+                {include_blank: true},
+                {class: 'custom-select fullwidth'}
+               ) %>
+            </td>
+            <td>
+              <%= settlement_fields.text_field :amount, { class: 'refund-amount-input' } %>
+            </td>
+            <td>
+              <%= settlement.display_total %>
+            </td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </fieldset>
+  </div>
+
   <div class="form-buttons filter-actions actions" data-hook="buttons">
     <%= f.button do %>
       <%= t('spree.update') %>

@@ -52,6 +52,43 @@
   </table>
 </fieldset>
 
+<fieldset class='no-border-bottom'>
+  <legend align='center'><%= t('spree.settlements') %></legend>
+  <table class="index reimbursement-settlements-items">
+    <thead>
+    <tr>
+      <th><%= Spree::Shipment.model_name.human %></th>
+      <th class="wrap-text"><%= Spree::ShippingMethod.human_attribute_name(:name) %></th>
+      <th class="wrap-text"><%= Spree::Settlement.human_attribute_name(:reimbursement_type) %></th>
+      <th class="wrap-text"><%= Spree::Settlement.human_attribute_name(:amount) %></th>
+      <th class="wrap-text"><%= Spree::Settlement.human_attribute_name(:total) %></th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @reimbursement.settlements.each do |settlement| %>
+
+      <tr>
+        <td>
+          <%= settlement.shipment.number %>
+        </td>
+        <td>
+          <%= settlement.shipment.shipping_method.name %>
+        </td>
+        <td>
+          <%= settlement.reimbursement_type %>
+        </td>
+        <td>
+          <%= settlement.display_amount %>
+        </td>
+        <td>
+          <%= settlement.display_total %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</fieldset>
+
 <fieldset class="no-border-bottom">
   <legend align='center'><%= Spree::Refund.model_name.human %></legend>
   <table class="index reimbursement-refunds">
