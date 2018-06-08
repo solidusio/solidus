@@ -1,4 +1,6 @@
-top:
+title: "Developers Guide"
+href: "/developers/index.html"
+callout:
   - title: "Getting started"
     dropdown:
       - title: "First-time installation"
@@ -182,6 +184,6 @@ main:
         href: "/developers/views/custom-frontend.html"
       - title: "Override views"
         href: "/developers/views/override-views.html"
-bottom:
+meta:
   - title: "Contributing"
     href: "/contributing.html"

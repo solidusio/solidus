@@ -20,9 +20,17 @@ page "/developers/*", :directory_index => false
 page "/contributing*", :directory_index => false
 page "/acknowledgements*", :directory_index => false
 
+# Temporary redirect until additional guides are added.
+redirect "index.html", to: "/developers/index.html"
+
 helpers do
   def kabob_case(title)
     title.gsub(' ', '-').downcase
+  end
+
+  def current_toc
+    current_subdirectory = current_page.path.sub(/\/.*$/, '')
+    data.nav.public_send(current_subdirectory.to_sym)
   end
 
   def category_matches_page?(href)

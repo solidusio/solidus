@@ -136,6 +136,8 @@
   .navbar-content {
     padding: 0 25px;
 
+    h1 a { color: $gray-072; }
+
     @include media-breakpoint-down(md) {
       height: calc(100% - 87px);
       overflow-y: scroll;
