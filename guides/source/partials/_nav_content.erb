@@ -1,19 +1,25 @@
 <% if current_toc %>
-  <div class="navbar-content">
+  <div class="navbar-content mb-4">
     <h1 class="title">
       <a href="<%= current_toc.href %>"><%= current_toc.title %></a>
     </h1>
     
     <nav id="site-navbar">
-      <%= partial "partials/nav_tree_submenu", locals: { menu_items: current_toc.callout } %>
-      <hr/>
-      <%= partial "partials/nav_tree_submenu", locals: { menu_items: current_toc.main } %>
-      <hr/>
+      <% [current_toc.callout, current_toc.main, current_toc.meta].each_with_index do |menu, index| %>
+        <% if menu %>
+          <% unless menu == current_toc.meta %>
+            <% nav_tree = "partials/nav_tree_submenu" %>
+          <% else %>
+            <% nav_tree = "partials/nav_tree_single" %>
+          <% end %>
 
-      <div id="meta-menu" class="mb-4">
-        <%= partial "partials/nav_tree_single", locals: { menu_items: current_toc.meta } %>
-      </div>
+          <% unless index == 0 %>
+            <hr/>
+          <% end %>
+
+          <%= partial nav_tree, locals: { menu_items: menu } %>
+        <% end %>
+      <% end %>
     </nav>
-
   </div>
 <% end %>
