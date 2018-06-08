@@ -25,6 +25,11 @@ helpers do
     title.gsub(' ', '-').downcase
   end
 
+  def current_toc
+    current_subdirectory = current_page.path.sub(/\/.*$/, '')
+    data.nav.public_send(current_subdirectory.to_sym)
+  end
+
   def category_matches_page?(href)
     current_page.url.include?(href.sub(/\/[^\/]*$/, ''))
   end

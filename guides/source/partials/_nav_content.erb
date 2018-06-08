@@ -1,0 +1,19 @@
+<% if current_toc %>
+  <div class="navbar-content">
+    <h1 class="title">
+      <a href="<%= current_toc.href %>"><%= current_toc.title %></a>
+    </h1>
+    
+    <nav id="site-navbar">
+      <%= partial "partials/nav_tree_submenu", locals: { menu_items: current_toc.callout } %>
+      <hr/>
+      <%= partial "partials/nav_tree_submenu", locals: { menu_items: current_toc.main } %>
+      <hr/>
+
+      <div id="meta-menu" class="mb-4">
+        <%= partial "partials/nav_tree_single", locals: { menu_items: current_toc.meta } %>
+      </div>
+    </nav>
+
+  </div>
+<% end %>
