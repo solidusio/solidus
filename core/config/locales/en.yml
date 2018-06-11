@@ -1859,6 +1859,7 @@ en:
     server: Server
     server_error: The server returned an error
     settings: Settings
+    settlement_already_exists_for_shipment: A settlement already exists for this shipment
     settlement_can_only_be_created_if_shipment_has_returned_items: Settlement can only be created for shipments that have returned items
     settlement_order_not_completed: Settlement's order must be completed
     settlement_return_items_ineligible: Settlement's shipment must contain a return item from the reimbursement
