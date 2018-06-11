@@ -1,0 +1,14 @@
+<div class="navbar-content">
+  <h1 class="title">Developers Guide</h1>
+  <nav id="site-navbar">
+
+    <%= partial("partials/nav_tree_submenu", :locals => { :menu_items => data.nav_tree.top }) %>
+    <hr>
+    <%= partial("partials/nav_tree_submenu", :locals => { :menu_items => data.nav_tree.main }) %>
+    <hr>
+    <div class="mb-4">
+      <%= partial("partials/nav_tree_single", :locals => { :menu_items => data.nav_tree.bottom }) %>
+    </div>
+
+  </nav>
+</div>
