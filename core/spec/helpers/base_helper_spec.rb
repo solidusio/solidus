@@ -184,5 +184,5 @@ RSpec.describe Spree::BaseHelper, type: :helper do
         expect(subject).to eq(order.display_total.to_html)
       end
     end
-  end 
+  end
 end

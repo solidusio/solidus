@@ -158,10 +158,10 @@ module Spree
     end
 
     def protect_from_negative(current_order)
-      if current_order.total.negative? 
+      if current_order.total.negative?
         Spree::Money.new(0, currency: current_order.currency).to_html
       else
-        current_order.display_total.to_html 
+        current_order.display_total.to_html
       end
     end
   end
