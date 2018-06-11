@@ -15,6 +15,7 @@ page "/404.html", directory_index: false
 # Temporarily redirect /index.html to /developers/index.html
 redirect 'index.html', to: '/developers/index.html'
 
+set :site_name, "Solidus Guides"
 set :css_dir, "assets/stylesheets"
 set :images_dir, "assets/images"
 set :js_dir, "assets/javascripts"
