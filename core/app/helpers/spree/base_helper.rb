@@ -12,7 +12,7 @@ module Spree
         text = "#{text}: (#{t('spree.empty')})"
         css_class = 'empty'
       else
-        text = "#{text}: (#{current_order.item_count})  <span class='amount'>#{current_order.display_total.to_html}</span>"
+        text = "#{text}: (#{current_order.item_count})  <span class='amount'>#{protect_from_negative(current_order)}</span>"
         css_class = 'full'
       end
 
@@ -155,6 +155,14 @@ module Spree
 
     def plural_resource_name(resource_class)
       resource_class.model_name.human(count: Spree::I18N_GENERIC_PLURAL)
+    end
+
+    def protect_from_negative(current_order)
+      if current_order.total.negative? 
+        Spree::Money.new(0, currency: current_order.currency).to_html
+      else
+        current_order.display_total.to_html 
+      end
     end
   end
 end
