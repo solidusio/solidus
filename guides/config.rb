@@ -10,6 +10,9 @@ page "/contributing*", layout: 'article'
 page "/acknowledgements*", layout: 'article'
 page "/404.html", directory_index: false
 
+# Temporarily redirect /index.html to /developers/index.html
+redirect 'index.html', to: '/developers/index.html'
+
 set :css_dir, "assets/stylesheets"
 set :images_dir, "assets/images"
 set :js_dir, "assets/javascripts"
