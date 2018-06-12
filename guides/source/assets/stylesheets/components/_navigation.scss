@@ -145,16 +145,13 @@
     @include media-breakpoint-up(lg) { padding: 0; }
   }
 
-  .title{
-    color: $gray-072;
-    font-size: 22px;
-    line-height: 1.05em;
-    font-weight: 600;
-    margin-bottom: 0.625rem;
-    letter-spacing: inherit;
+  h1 {
+    a {
+      color: $gray-072;
+      font-size: 0.7em;
+    }
 
-
-    @include media-breakpoint-up(lg){ margin-bottom: 1.5rem; }
+    @include media-breakpoint-up(md) { padding: 0.85em 0 0.4em; }
   }
 
   nav{
@@ -205,16 +202,16 @@
   width: 100px;
 }
 
-.offset::before { 
-	display: block; 
- 	content: " "; 
-  visibility: hidden; 
-  height: 150px;      
-  margin-top: -150px; 
-  
+.offset::before {
+  display: block;
+  content: " ";
+  visibility: hidden;
+  height: 150px;
+  margin-top: -150px;
+
   @include media-breakpoint-up(lg) {
-    height: 110px;      
-    margin-top: -110px; 
+    height: 110px;
+    margin-top: -110px;
   }
 }
 
@@ -237,7 +234,7 @@
   background-color: $blue;
   border-color: $blue;
   color: white;
-  
+
   svg .inherit-fill { fill: white; }
 }
 .site-navbar ul li {
