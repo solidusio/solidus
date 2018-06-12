@@ -1,52 +1,54 @@
 
 ![](https://raw.githubusercontent.com/solidusio/solidus/master/solidus.png)
 
-* [solidus.io](http://solidus.io/)
-* [Join our Slack](http://slack.solidus.io/) ([solidusio.slack.com](http://solidusio.slack.com))
-* [solidus-security](https://groups.google.com/forum/#!forum/solidus-security) mailing list
+- [solidus.io](http://solidus.io/)
+- [Documentation](https://guides.solidus.io)
+- [Join our Slack](http://slack.solidus.io/) ([solidusio.slack.com](http://solidusio.slack.com))
+- [solidus-security](https://groups.google.com/forum/#!forum/solidus-security) mailing list
 
-Summary
--------
+## Summary
 
-Solidus is a complete open source e-commerce solution built with Ruby on Rails. It
-is a fork of Spree.
+Solidus is a complete open source ecommerce solution built with Ruby on Rails.
+It is a fork of [Spree](https://spreecommerce.org).
 
-Solidus actually consists of several different gems, each of which are maintained
-in a single repository and documented in a single set of
-[online documentation](http://docs.solidus.io/). By requiring the
-[`solidus`](https://github.com/solidusio/solidus) gem you automatically require all
-of the necessary gem dependencies which are:
+See the [Solidus class documentation](http://docs.solidus.io) and the [Solidus
+Guides](https://guides.solidus.io) for information about the functionality that
+Solidus provides.
 
-* [`solidus_api`](https://github.com/solidusio/solidus/tree/master/api) (RESTful API)
-* [`solidus_frontend`](https://github.com/solidusio/solidus/tree/master/frontend) (Cart and storefront)
-* [`solidus_backend`](https://github.com/solidusio/solidus/tree/master/backend) (Admin area)
-* [`solidus_core`](https://github.com/solidusio/solidus/tree/master/core) (Essential models, mailers, and classes)
-* [`solidus_sample`](https://github.com/solidusio/solidus/tree/master/sample) (Sample data)
+Solidus consists of several gems. When you require the `solidus` gem in your
+`Gemfile`, Bundler will install all of the gems maintained in this repository:
+
+- [`solidus_api`](https://github.com/solidusio/solidus/tree/master/api) (RESTful API)
+- [`solidus_frontend`](https://github.com/solidusio/solidus/tree/master/frontend) (Cart and storefront)
+- [`solidus_backend`](https://github.com/solidusio/solidus/tree/master/backend) (Admin area)
+- [`solidus_core`](https://github.com/solidusio/solidus/tree/master/core) (Essential models, mailers, and classes)
+- [`solidus_sample`](https://github.com/solidusio/solidus/tree/master/sample) (Sample data)
 
 All of the gems are designed to work together to provide a fully functional
-e-commerce platform. It is also possible, however, to use only the pieces you
-are interested in. For example, you could use just the barebones
-[`solidus_core`](https://github.com/solidusio/solidus/tree/master/core) gem and perhaps combine it with your own
-custom frontend instead of using [`solidus_frontend`](https://github.com/solidusio/solidus/tree/master/frontend).
+ecommerce platform. However, you may only want to use the
+[`solidus_core`](https://github.com/solidusio/solidus/tree/master/core) gem
+combine it with your own custom frontend, admin interface, and API.
 
 [![Circle CI](https://circleci.com/gh/solidusio/solidus/tree/master.svg?style=shield)](https://circleci.com/gh/solidusio/solidus/tree/master)
 [![Gem](https://img.shields.io/gem/v/solidus.svg)](https://rubygems.org/gems/solidus)
 [![License](http://img.shields.io/badge/license-BSD-yellowgreen.svg)](LICENSE.md)
 [![Slack](http://slack.solidus.io/badge.svg)](http://slack.solidus.io)
 
-Demo
-----
+## Demo
+
 Try out Solidus with one-click on Heroku:
 
 [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy?template=https://github.com/solidusio/solidus)
 
-Getting started
----------------
+## Getting started
 
-Begin by making sure you have [Imagemagick](http://imagemagick.org/script/download.php) installed, which is required for Paperclip. (You can install it using [Homebrew](https://brew.sh) if you're on a Mac.)
+Begin by making sure you have
+[Imagemagick](http://imagemagick.org/script/download.php) installed, which is
+required for Paperclip. (You can install it using [Homebrew](https://brew.sh) if
+you're on a Mac.)
 
-To add solidus, begin with a Rails 5 application and a database configured and created. Add the following to your
-Gemfile.
+To add solidus, begin with a Rails 5 application and a database configured and
+created. Add the following to your Gemfile.
 
 ```ruby
 gem 'solidus'
