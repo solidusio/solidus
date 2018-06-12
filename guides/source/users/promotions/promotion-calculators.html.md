@@ -4,22 +4,33 @@ When you create a promotion action, one step is to select the promotion
 calculator that it should use. You can do this by selecting a value in the
 **Calculated By** drop-down menu.
 
-Depending on the [type of promotion action][promotion-action-types] that you are
-creating, only a subset of the promotion calculators may be available to use.
+Calculators can calculate for one of four different *calculables*:
 
-This table outlines the outlines the available promotions calculators and which
-promotion action types they can be applied to:
+- Orders
+- Line items
+- Line items (with quantity)
+- Free shipping
 
-| Calculator              | Orders           | Line items           | Line items (with quantity)       | Free shipping |
-| ----------------------- | ---------------- | -------------------- | -------------------------------- | ------------- |
-| [Distributed Amount][1] |                  | Available            |                                  |               |
-| [Free Shipping     ][2] |                  |                      |                                  | Available     |
-| [Flat Percent      ][3] | Available        |                      |                                  |               |
-| [Flat Rate         ][4] | Available        | Available            | Available                        |               |
-| [Flexible Rate     ][5] | Available        | Available            | Available                        |               |
-| [Tiered Flat Rate  ][6] | Available        |                      |                                  |               |
-| [Tiered Percent    ][7] | Available        | Available            |                                  |               |
-| [Percent Per Item  ][8] |                  | Available            |                                  |               |
+The term calculables sounds very technical. All that it means is "an object that
+can be calculated". In this case, we can calculate the price of an order, an
+item (or items) on an order, or an order's shipping charges.
+
+When you are creating a new promotion, the calculable is set by the [type of
+promotion action][promotion-action-types] that you choose.
+
+This table outlines the promotions calculators and which calculables they are
+available to calculate:
+
+| Calculator              | Orders     | Line items  | Line items (with quantity)  | Free shipping |
+| ----------------------- | ---------- | ----------- | --------------------------- | ------------- |
+| [Distributed Amount][1] |            | Available   |                             |               |
+| [Free Shipping][2]      |            |             |                             | Available     |
+| [Flat Percent][3]       | Available  |             |                             |               |
+| [Flat Rat][4]           | Available  | Available   | Available                   |               |
+| [Flexible Rate][5]      | Available  | Available   | Available                   |               |
+| [Tiered Flat Rate][6]   | Available  |             |                             |               |
+| [Tiered Percent][7]     | Available  | Available   |                             |               |
+| [Percent Per Item][8]   |            | Available   |                             |               |
 
 The following sections outline all of the promotion calculators, the contexts
 they can be used in, and how they work. 
@@ -32,6 +43,8 @@ they can be used in, and how they work.
 [6]: #tiered-flat-rate
 [7]: #tiered-percent
 [8]: #percent-per-item
+
+[promotion-action-types]: overview.html#available-promotion-action-types
 
 ## Distributed amount
 
