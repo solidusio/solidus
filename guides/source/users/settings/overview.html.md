@@ -19,4 +19,4 @@ For more information on how to use zones, see the [Zones][zones] article.
 ## Taxes
 
 With Solidus, you can create tax rates and tax categories that correspond with
-each item in your store and each state or country that you ship to. 
+each item in your store and each location that you ship to. 
