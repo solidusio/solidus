@@ -10,9 +10,18 @@ module Spree
       update.fails  :load_form_data
 
       def fire
-        @return_authorization.send("#{params[:e]}!")
+        action_from_params = "#{params[:e]}!"
+
+        if @return_authorization.state_events.include?(params[:e].to_sym) &&
+           @return_authorization.send(action_from_params)
+
+          flash_message = { success: t('spree.return_authorization_updated') }
+        else
+          flash_message = { error: t('spree.return_authorization_fire_error') }
+        end
+
         redirect_back(fallback_location: admin_order_return_authorizations_path(@order),
-                    flash: { success: t('spree.return_authorization_updated') })
+                      flash: flash_message)
       end
 
       private
