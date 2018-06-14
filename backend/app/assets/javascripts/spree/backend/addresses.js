@@ -3,7 +3,7 @@
 Spree.ready(function() {
   "use strict";
 
-  _.each(document.querySelectorAll('.js-stock-locations-form'), function(el) {
+  _.each(document.querySelectorAll('.js-addresses-form'), function(el) {
     var countrySelect = el.querySelector('.js-country_id');
     var model = new Backbone.Model({
       country_id: countrySelect.value
