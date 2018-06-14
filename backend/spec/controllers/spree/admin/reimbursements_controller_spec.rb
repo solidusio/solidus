@@ -25,12 +25,12 @@ describe Spree::Admin::ReimbursementsController, type: :controller do
       expect(assigns(:stock_locations)).not_to include(inactive_stock_location)
     end
 
-    describe "#load_return_items" do
-      let!(:second_shipment) { create(:shipment, order: order) }
-      let!(:second_return_item) {
+    describe "#load_settlements" do
+      let!(:shipment_without_settlement) { create(:shipment, order: order) }
+      let!(:return_item) {
         create(
           :return_item,
-          inventory_unit: second_shipment.inventory_units.first,
+          inventory_unit: shipment_without_settlement.inventory_units.first,
           reimbursement: reimbursement,
           acceptance_status: 'accepted'
         )
@@ -42,16 +42,27 @@ describe Spree::Admin::ReimbursementsController, type: :controller do
           expect(assigns(:form_settlements).size).to eq 2
           expect(assigns(:form_settlements).select(&:new_record?).size).to eq 2
         end
+
+        it "does not have @existing_settlements" do
+          subject
+          expect(assigns(:existing_settlements).size).to eq 0
+        end
       end
 
-      context "with existing settlement" do
-        let!(:settlement) { create(:settlement, reimbursement: reimbursement, shipment: second_shipment) }
+      context "with an existing settlement" do
+        let!(:settlement) { create(:settlement, reimbursement: reimbursement, shipment: shipment_without_settlement) }
 
-        it "has 1 existing settlement and 1 new settlement" do
+        it "has 1 new @form_settlement" do
           subject
-          expect(assigns(:form_settlements).size).to eq 2
-          expect(assigns(:form_settlements).select(&:persisted?)).to eq [settlement]
+          expect(assigns(:form_settlements).size).to eq 1
           expect(assigns(:form_settlements).select(&:new_record?).size).to eq 1
+        end
+
+        it "has 1 @existing_settlements" do
+          subject
+          expect(assigns(:existing_settlements).size).to eq 1
+          expect(assigns(:existing_settlements).select(&:persisted?).size).to eq 1
+          expect(assigns(:existing_settlements).select(&:persisted?)).to eq [settlement]
         end
       end
     end

@@ -2,22 +2,24 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::Settlement::EligibilityValidator::NoSettlement do
+RSpec.describe Spree::Settlement::EligibilityValidator::SettlementExists do
   let(:settlement) { create(:settlement) }
-  let(:validator) { Spree::Settlement::EligibilityValidator::NoSettlement.new(settlement) }
+  let(:validator) { Spree::Settlement::EligibilityValidator::SettlementExists.new(settlement) }
 
   describe "#eligible_for_settlement?" do
     subject { validator.eligible_for_settlement? }
 
-    context "shipment has no existing settlement" do
-
+    context "shipment has no existing accepted settlement" do
       it "returns true" do
         expect(subject).to be true
       end
     end
 
-    context "shipment has an existing settlement" do
-      let!(:another_settlement) { settlement.dup.save }
+    context "shipment has an existing accepted settlement" do
+      let!(:existing_settlement) { settlement.dup }
+      before do
+        existing_settlement.save!
+      end
 
       it "returns false" do
         expect(subject).to be false

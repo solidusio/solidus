@@ -2,17 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.shared_examples "an invalid state transition" do |status, expected_status|
-  let(:status) { status }
-
-  it "cannot transition to #{expected_status}" do
-    expect { subject }.to raise_error(StateMachines::InvalidTransition)
-  end
-end
-
 RSpec.describe Spree::Settlement, type: :model do
-  all_acceptance_statuses = Spree::Settlement.state_machines[:acceptance_status].states.map(&:name).map(&:to_s)
-
   describe "display money methods" do
     let(:amount) { 21.22 }
     let(:included_tax_total) { 1.22 }
@@ -50,7 +40,6 @@ RSpec.describe Spree::Settlement, type: :model do
     let(:included_tax_total) { 1.22 }
 
     context "amount is not specified" do
-
       context "settlement has a shipment" do
         subject { create(:settlement) }
 
@@ -72,7 +61,7 @@ RSpec.describe Spree::Settlement, type: :model do
   end
 
   describe "acceptance_status state_machine" do
-    subject(:settlement) { build_stubbed(:settlement) }
+    subject(:settlement) { build(:settlement) }
 
     it "starts off in the pending state" do
       expect(settlement).to be_pending
@@ -80,7 +69,7 @@ RSpec.describe Spree::Settlement, type: :model do
   end
 
   describe "#attempt_accept" do
-    let(:settlement) { create(:settlement, acceptance_status: status) }
+    let(:settlement) { build(:settlement) }
     let(:validator_errors) { {} }
     let(:validator_double) { double(errors: validator_errors) }
 
@@ -107,17 +96,11 @@ RSpec.describe Spree::Settlement, type: :model do
       end
     end
 
-    (all_acceptance_statuses - ['accepted', 'pending']).each do |invalid_transition_status|
-      context "settlement has an acceptance status of #{invalid_transition_status}" do
-        it_behaves_like "an invalid state transition", invalid_transition_status, 'accepted'
-      end
-    end
-
     context "not eligible for settlement" do
-      let(:status) { 'pending' }
       let(:validator_errors) { { number_of_days: "Settlement is outside the eligible time period" } }
 
       before do
+        settlement.acceptance_status = 'pending'
         allow(settlement).to receive(:eligible_for_settlement?).and_return(false)
       end
 
@@ -154,12 +137,12 @@ RSpec.describe Spree::Settlement, type: :model do
   end
 
   describe "#reject" do
-    let(:settlement) { create(:settlement, acceptance_status: status) }
+    let(:settlement) { build(:settlement, acceptance_status: status) }
 
     subject { settlement.reject! }
 
-    context "pending status" do
-      let(:status) { 'pending' }
+    context "manual_intervention_required status" do
+      let(:status) { 'manual_intervention_required' }
 
       before { subject }
 
@@ -171,21 +154,15 @@ RSpec.describe Spree::Settlement, type: :model do
         expect(settlement.acceptance_status_errors).to be_empty
       end
     end
-
-    (all_acceptance_statuses - ['accepted', 'pending', 'manual_intervention_required']).each do |invalid_transition_status|
-      context "settlement has an acceptance status of #{invalid_transition_status}" do
-        it_behaves_like "an invalid state transition", invalid_transition_status, 'rejected'
-      end
-    end
   end
 
   describe "#accept" do
-    let(:settlement) { create(:settlement, acceptance_status: status) }
+    let(:settlement) { build(:settlement, acceptance_status: status) }
 
     subject { settlement.accept! }
 
-    context "pending status" do
-      let(:status) { 'pending' }
+    context "manual_intervention_required status" do
+      let(:status) { 'manual_intervention_required' }
 
       before { subject }
 
@@ -195,38 +172,6 @@ RSpec.describe Spree::Settlement, type: :model do
 
       it "has no acceptance status errors" do
         expect(settlement.acceptance_status_errors).to be_empty
-      end
-    end
-
-    (all_acceptance_statuses - ['accepted', 'pending', 'manual_intervention_required']).each do |invalid_transition_status|
-      context "settlement has an acceptance status of #{invalid_transition_status}" do
-        it_behaves_like "an invalid state transition", invalid_transition_status, 'accepted'
-      end
-    end
-  end
-
-  describe "#require_manual_intervention" do
-    let(:settlement) { create(:settlement, acceptance_status: status) }
-
-    subject { settlement.require_manual_intervention! }
-
-    context "pending status" do
-      let(:status) { 'pending' }
-
-      before { subject }
-
-      it "transitions successfully" do
-        expect(settlement).to be_manual_intervention_required
-      end
-
-      it "has no acceptance status errors" do
-        expect(settlement.acceptance_status_errors).to be_empty
-      end
-    end
-
-    (all_acceptance_statuses - ['accepted', 'pending', 'manual_intervention_required']).each do |invalid_transition_status|
-      context "settlement has an acceptance status of #{invalid_transition_status}" do
-        it_behaves_like "an invalid state transition", invalid_transition_status, 'manual_intervention_required'
       end
     end
   end

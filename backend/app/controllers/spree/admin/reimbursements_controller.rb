@@ -61,13 +61,14 @@ module Spree
       # any Shipments associated with a returned InventoryUnit.
       def load_settlements
         returned_items_shipments = @reimbursement.return_items.map(&:shipment).uniq
-        associated_shipments = @reimbursement.settlements.map(&:shipment)
-        unassociated_shipments = returned_items_shipments - associated_shipments
+        unavailable_shipments = @reimbursement.settlements.unavailable_for_new_settlement.map(&:shipment)
+        available_shipments = returned_items_shipments - unavailable_shipments
 
-        new_settlements = unassociated_shipments.map do |shipment|
+        @form_settlements = available_shipments.map do |shipment|
           Spree::Settlement.new(shipment: shipment, amount: shipment.amount)
         end
-        @form_settlements = (@reimbursement.settlements + new_settlements).sort_by(&:shipment_id)
+
+        @existing_settlements = @reimbursement.settlements.for_shipment.not_pending
       end
 
       def load_simulated_refunds

@@ -1859,11 +1859,18 @@ en:
     server: Server
     server_error: The server returned an error
     settings: Settings
-    settlement_already_exists_for_shipment: A settlement already exists for this shipment
+    settlement_already_exists_for_shipment: An accepted settlement already exists for this shipment
+    settlement_amount_greater_than_shipment_cost: The settlement's amount can't be greater than the shipment's cost
     settlement_can_only_be_created_if_shipment_has_returned_items: Settlement can only be created for shipments that have returned items
+    settlement_manually_rejected: The settlement was manually rejected
     settlement_order_not_completed: Settlement's order must be completed
     settlement_return_items_ineligible: Settlement's shipment must contain a return item from the reimbursement
     settlement_shipment_ineligible: Settlement's shipment must be shipped
+    settlement_states:
+      pending: Pending
+      manual_intervention_required: Manual
+      accepted: Accepted
+      rejected: Rejected
     settlement_time_period_ineligible: Settlement is outside the eligible time period
     ship: ship
     ship_address: Ship Address

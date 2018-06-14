@@ -70,13 +70,53 @@
         <th class="settlement-checkbox shipment-checkbox">
           <%= check_box_tag 'select-all' %>
         </th>
-        <th><%= Spree::Shipment.model_name.human %></th>
-        <th class="wrap-text"><%= Spree::ShippingMethod.human_attribute_name(:name) %></th>
+        <th class="wrap-text"><%= Spree::Shipment.model_name.human %></th>
         <th class="wrap-text"><%= Spree::Settlement.human_attribute_name(:reimbursement_type_id) %></th>
         <th class="wrap-text"><%= Spree::Settlement.human_attribute_name(:amount) %></th>
-        <th class="wrap-text"><%= Spree::Settlement.human_attribute_name(:total) %></th>
+        <th><%= Spree::Settlement.human_attribute_name(:total) %></th>
+        <th class="wrap-text"><%= Spree::Settlement.human_attribute_name(:acceptance_status) %></th>
+        <th class="wrap-text"><%= Spree::Settlement.human_attribute_name(:acceptance_status_errors) %></th>
+        <th class="actions"></th>
         </thead>
         <tbody>
+        <% @existing_settlements.each do |settlement| %>
+          <tr>
+            <td></td>
+            <td>
+              <%= settlement.shipment.number %>
+              <%= settlement.shipment.shipping_method.name %>
+            </td>
+            <td>
+              <%= settlement.reimbursement_type.name.humanize %>
+            </td>
+            <td>
+              <%= settlement.display_amount %>
+            </td>
+            <td>
+              <%= settlement.display_total %>
+            </td>
+            <td>
+              <span class="pill pill-<%= settlement.acceptance_status %>">
+                <%= t(
+                      settlement.acceptance_status,
+                      scope: 'spree.settlement_states'
+                    ) %>
+              </span>
+            </td>
+            <td class="wrap-text">
+              <%= settlement.acceptance_status_errors %>
+            </td>
+            <td class="actions">
+              <% if settlement.acceptance_status == 'manual_intervention_required' %>
+                <%= link_to_with_icon('thumbs-up', t('spree.accept'), [:accept, :admin, settlement], { class: 'no-text with-tip icon_link', no_text: true, method: 'put' }) %>
+                /
+              <% end %>
+              <% if ['accepted', 'manual_intervention_required'].include?(settlement.acceptance_status) %>
+                <%= link_to_with_icon('thumbs-down', t('spree.reject'), [:reject, :admin, settlement], { class: 'no-text with-tip icon_link', no_text: true, method: 'put' }) %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
         <%= f.fields_for :settlements, @form_settlements do |settlement_fields| %>
           <% settlement = settlement_fields.object %>
           <% shipment = settlement.shipment %>
@@ -87,8 +127,6 @@
             </td>
             <td>
               <%= shipment.number %>
-            </td>
-            <td>
               <%= shipment.shipping_method.name %>
             </td>
             <td>
@@ -104,6 +142,18 @@
             <td>
               <%= settlement.display_total %>
             </td>
+            <td>
+              <span class="pill pill-<%= settlement.acceptance_status %>">
+                <%= t(
+                      settlement.acceptance_status,
+                      scope: 'spree.settlement_states'
+                    ) %>
+              </span>
+            </td>
+            <td>
+              <%= settlement.acceptance_status_errors %>
+            </td>
+            <td></td>
           </tr>
         <% end %>
         </tbody>

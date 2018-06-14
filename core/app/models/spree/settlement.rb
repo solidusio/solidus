@@ -15,19 +15,32 @@ module Spree
     belongs_to :shipment, inverse_of: :settlements
 
     validate :shipment_belongs_to_same_order
+    validates :reimbursement_type, presence: true
 
     serialize :acceptance_status_errors
 
     delegate :eligible_for_settlement?, :requires_manual_intervention?, to: :validator
 
     before_create :set_default_amount, unless: :amount_changed?
+    after_create :attempt_accept
+
+    scope :pending, -> { where(acceptance_status: 'pending') }
+    scope :not_pending, -> { where.not(acceptance_status: 'pending').order(:updated_at) }
+    scope :accepted, -> { where(acceptance_status: 'accepted') }
+    scope :rejected, -> { where(acceptance_status: 'rejected') }
+    scope :manual_intervention_required, -> { where(acceptance_status: 'manual_intervention_required') }
+    scope :unavailable_for_new_settlement, -> { where(acceptance_status: ['accepted', 'manual_intervention_required']) }
+
+    scope :for_shipment, -> { where.not(shipment_id: nil) }
+    scope :not_for_shipment, -> { where(shipment_id: nil) }
+    scope :reimbursed, -> { where.not(reimbursement_id: nil) }
+    scope :not_reimbursed, -> { where(reimbursement_id: nil) }
 
     extend DisplayMoney
     money_methods :amount, :total, :total_excluding_vat
 
     state_machine :acceptance_status, initial: :pending do
       event :attempt_accept do
-        transition to: :accepted, from: :accepted
         transition to: :accepted, from: :pending, if: ->(settlement) { settlement.eligible_for_settlement? }
         transition to: :manual_intervention_required, from: :pending, if: ->(settlement) { settlement.requires_manual_intervention? }
         transition to: :rejected, from: :pending
@@ -35,17 +48,12 @@ module Spree
 
       # bypasses eligibility checks
       event :accept do
-        transition to: :accepted, from: [:accepted, :pending, :manual_intervention_required]
+        transition to: :accepted, from: [:pending, :manual_intervention_required]
       end
 
       # bypasses eligibility checks
       event :reject do
-        transition to: :rejected, from: [:accepted, :pending, :manual_intervention_required]
-      end
-
-      # bypasses eligibility checks
-      event :require_manual_intervention do
-        transition to: :manual_intervention_required, from: [:accepted, :pending, :manual_intervention_required]
+        transition to: :rejected, from: [:pending, :accepted, :manual_intervention_required]
       end
 
       after_transition any => any, do: :persist_acceptance_status_errors

@@ -6,11 +6,12 @@ FactoryBot.define do
   factory :settlement, class: 'Spree::Settlement' do
     acceptance_status 'pending'
     reimbursement
+    reimbursement_type
     transient do
       has_shipment? true
     end
-    before(:create) do |settlement, _evaluator|
-      if _evaluator.has_shipment?
+    before(:create) do |settlement, evaluator|
+      if evaluator.has_shipment?
         settlement.shipment ||= settlement.reimbursement.return_items.first.shipment
       end
     end

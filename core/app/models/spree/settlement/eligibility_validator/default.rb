@@ -9,7 +9,9 @@ module Spree
           Settlement::EligibilityValidator::OrderCompleted,
           Settlement::EligibilityValidator::TimeSincePurchase,
           Settlement::EligibilityValidator::ShipmentShipped,
-          Settlement::EligibilityValidator::ItemReturned
+          Settlement::EligibilityValidator::ItemReturned,
+          Settlement::EligibilityValidator::SettlementExists,
+          Settlement::EligibilityValidator::SettlementAmount
         ]
 
         def eligible_for_settlement?
