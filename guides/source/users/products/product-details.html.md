@@ -32,7 +32,7 @@ would have the slug `summer-t-shirt`.
 ### Available On
 
 Note that the **Available On** field should be filled if you want the product to
-be displayed on the storefront. 
+be displayed on the storefront.
 
 If the **Available On** value is a date in the future, then the product is only
 available after the date that has been set.
@@ -51,8 +51,8 @@ systems:
   products.
 - **Weight**: The product's weight.
 - **Height**: The product's height.
-- **Width**: The product's width. 
-- **Depth**: The product's depth. 
+- **Width**: The product's width.
+- **Depth**: The product's depth.
 - **Shipping Categories**: This sets the product's shipping category.
 - **Tax Category**: This sets the products' tax category.
 
@@ -69,12 +69,16 @@ order's shipment costs.
 
 ## SEO information
 
-- **Meta Title**: 
-- **Meta Keywords**: Add a list of keywords that should be added to this
+- **Meta Title**: Adds content to the product page's HTML `<title>` tag, which
+    is used by search engines.
+- **Meta Keywords**: A list of keywords that should be added to this
   product's metadata. These meta keywords are used by search
   engines.[^meta-keywords]
 - **Meta Description**: The summary text that accompanies your page in search
   engine results.[^meta-descriptions]
+
+If the product's SEO fields are not filled in, then the product inherits [the
+store's global SEO information settings][stores].
 
 [^meta-keywords]: Meta keywords are used for SEO purposes. For more information
   about meta keywords see the article [Meta Keywords: What They Are and How They
@@ -87,3 +91,4 @@ order's shipment costs.
 
 [meta-keywords]: https://www.wordstream.com/meta-keyword
 [meta-description]: https://moz.com/learn/seo/meta-description
+[stores]: ../settings/stores.html

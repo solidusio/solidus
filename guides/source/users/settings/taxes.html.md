@@ -24,7 +24,7 @@ exempt from tax.
 
 When you create or edit a tax category, it uses the following settings:
 
-- **Name**: The name for your tax category. 
+- **Name**: The name for your tax category.
 - **Tax Code**: An optional tax code that describes your tax category.
 - **Default**: A checkbox that sets whether the current tax category should be
   used as the default tax category for new products.
