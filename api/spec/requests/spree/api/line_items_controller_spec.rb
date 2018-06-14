@@ -154,6 +154,17 @@ module Spree
             post spree.api_order_line_items_path(order), params: { line_item: { variant_id: product.master.to_param, quantity: 1 } }
             expect(order.reload.shipments).not_to be_empty
           end
+
+          it "cannot update a line item on order" do
+            line_item = order.line_items.first
+            put spree.api_order_line_item_path(order, line_item), params: { line_item: { quantity: 101 } }
+            assert_unauthorized!
+          end
+
+          it "cannot add a line item on order" do
+            post spree.api_order_line_items_path(order), params: { line_item: { variant_id: product.master.to_param, quantity: 1 } }
+            assert_unauthorized!
+          end
         end
       end
     end
