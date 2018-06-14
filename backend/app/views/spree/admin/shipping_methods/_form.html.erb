@@ -1,7 +1,7 @@
 <div data-hook="admin_shipping_method_form_fields" class="row">
   <div data-hook="admin_shipping_method_form_name_field" class="col-5">
     <%= f.field_container :name do %>
-      <%= f.label :name %><br />
+      <%= f.label :name, class: 'required' %>
       <%= f.text_field :name, class: 'fullwidth' %>
       <%= error_message_on :shipping_method, :name %>
     <% end %>
@@ -9,32 +9,32 @@
 
   <div data-hook="admin_shipping_method_form_internal_name_field" class="col-5">
     <%= f.field_container :admin_name do %>
-      <%= f.label :admin_name %><br />
-      <%= f.text_field :admin_name, class: 'fullwidth', label: false  %>
+      <%= f.label :admin_name %>
+      <%= f.text_field :admin_name, class: 'fullwidth', label: false %>
       <%= error_message_on :shipping_method, :admin_name %>
     <% end %>
   </div>
 
   <div data-hook="admin_shipping_method_form_code" class="col-5">
     <%= f.field_container :code do %>
-      <%= f.label :code %><br />
-      <%= f.text_field :code, class: 'fullwidth', label: false  %>
+      <%= f.label :code %>
+      <%= f.text_field :code, class: 'fullwidth', label: false %>
       <%= error_message_on :shipping_method, :code %>
     <% end %>
   </div>
 
   <div class="col-5">
     <%= f.field_container :carrier do %>
-      <%= f.label :carrier %><br />
-      <%= f.text_field :carrier, class: 'fullwidth', label: false  %>
+      <%= f.label :carrier %>
+      <%= f.text_field :carrier, class: 'fullwidth', label: false %>
       <%= error_message_on :shipping_method, :carrier %>
     <% end %>
   </div>
 
   <div class="col-5">
     <%= f.field_container :service_level do %>
-      <%= f.label :service_level %><br />
-      <%= f.text_field :service_level, class: 'fullwidth', label: false  %>
+      <%= f.label :service_level %>
+      <%= f.text_field :service_level, class: 'fullwidth', label: false %>
       <%= error_message_on :shipping_method, :service_level %>
     <% end %>
   </div>
@@ -49,7 +49,7 @@
 
   <div data-hook="admin_shipping_method_form_tracking_url_field" class="col-10">
     <%= f.field_container :tracking_url do %>
-      <%= f.label :tracking_url %><br />
+      <%= f.label :tracking_url %>
       <%= f.text_field :tracking_url, class: 'fullwidth', placeholder: t('spree.tracking_url_placeholder') %>
       <%= error_message_on :shipping_method, :tracking_url %>
     <% end %>

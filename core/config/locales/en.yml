@@ -297,15 +297,17 @@ en:
         abbr: Abbreviation
         name: Name
       spree/store:
-        url: Site URL
+        available_locales: Locales Available in the Storefront
+        cart_tax_country_iso: Tax Country for Empty Carts
+        code: Slug
         default: Default
+        default_currency: Default Currency
+        mail_from_address: Mail From Address
         meta_description: Meta Description
         meta_keywords: Meta Keywords
-        seo_title: Seo Title
         name: Site Name
-        mail_from_address: Mail From Address
-        cart_tax_country_iso: Tax Country for Empty Carts
-        available_locales: Locales available in the storefront
+        seo_title: SEO Title
+        url: Site URL
       spree/store_credit:
         amount: Amount
         amount_authorized: Amount Authorized
@@ -325,7 +327,7 @@ en:
       spree/stock_item:
         count_on_hand: Count On Hand
       spree/stock_location:
-        admin_name: Internal Name
+        admin_name: Internal name
         active: Active
         address1: Street Address
         address2: Street Address (cont'd)
@@ -336,11 +338,10 @@ en:
         country_id: Country
         default: Default
         fulfillable: Fulfillable
-        internal_name: Internal Name
         name: Name
         phone: Phone
         propagate_all_variants: Propagate all variants
-        restock_inventory: Restock Inventory
+        restock_inventory: Restock inventory
         state_id: State
         zipcode: Zip
       spree/stock_movement:
@@ -1297,8 +1298,9 @@ en:
         fulfillable: "When unchecked, this indicates that items in this location don't require actual fulfilment. Stock will not be checked when shipping and emails will not be sent.<br/> Default: Checked"
         check_stock_on_transfer: "When checked, inventory levels will be checked when performing stock transfers.<br/> Default: Checked"
       spree/store:
-        cart_tax_country_iso: "This determines which country is used for taxes on carts (orders which don't yet have an address).<br/> Default: None."
         available_locales: "This determines which locales are available for your customers to choose from in the storefront."
+        cart_tax_country_iso: "This determines which country is used for taxes on carts (orders which don't yet have an address).<br/> Default: None."
+        code: "An identifier for your store. Developers may need this value if you operate multiple storefronts."
       spree/variant:
         tax_category: "This determines what kind of taxation is applied to this variant.<br/> Default: Use tax category of the product associated with this variant"
         deleted: "Deleted Variant"
@@ -1381,7 +1383,6 @@ en:
     insufficient_stock_lines_present: Some line items in this order have insufficient quantity.
     intercept_email_address: Intercept Email Address
     intercept_email_instructions: Override email recipient and replace with this address.
-    internal_name: Internal Name
     invalid_exchange_variant: Invalid exchange variant.
     invalid_payment_method_type: Invalid payment method type.
     invalid_promotion_action: Invalid promotion action.
