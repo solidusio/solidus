@@ -22,7 +22,6 @@ module Spree
     delegate :eligible_for_settlement?, :requires_manual_intervention?, to: :validator
 
     before_create :set_default_amount, unless: :amount_changed?
-    after_create :attempt_accept
 
     scope :pending, -> { where(acceptance_status: 'pending') }
     scope :not_pending, -> { where.not(acceptance_status: 'pending').order(:updated_at) }

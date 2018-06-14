@@ -5,7 +5,6 @@ module Spree
     module EligibilityValidator
       class TimeSincePurchase < Spree::Settlement::EligibilityValidator::BaseValidator
         def eligible_for_settlement?
-          return unless @settlement.reimbursement
           if (@settlement.reimbursement.order.completed_at + Spree::Config[:settlement_eligibility_number_of_days].days) > Time.current
             true
           else

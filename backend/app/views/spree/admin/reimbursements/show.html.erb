@@ -65,7 +65,7 @@
     </tr>
     </thead>
     <tbody>
-    <% @reimbursement.settlements.each do |settlement| %>
+    <% @reimbursement.settlements.for_shipment.accepted.each do |settlement| %>
 
       <tr>
         <td>
@@ -75,7 +75,7 @@
           <%= settlement.shipment.shipping_method.name %>
         </td>
         <td>
-          <%= settlement.reimbursement_type %>
+          <%= settlement.reimbursement_type.name.humanize %>
         </td>
         <td>
           <%= settlement.display_amount %>

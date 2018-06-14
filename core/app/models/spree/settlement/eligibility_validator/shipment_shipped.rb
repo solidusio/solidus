@@ -5,7 +5,7 @@ module Spree
     module EligibilityValidator
       class ShipmentShipped < Spree::Settlement::EligibilityValidator::BaseValidator
         def eligible_for_settlement?
-          return unless @settlement.shipment
+          return true unless @settlement.shipment
           if @settlement.shipment.shipped?
             true
           else

@@ -5,7 +5,6 @@ module Spree
     module EligibilityValidator
       class OrderCompleted < Spree::Settlement::EligibilityValidator::BaseValidator
         def eligible_for_settlement?
-          return unless @settlement.reimbursement
           if @settlement.reimbursement.order.completed?
             true
           else

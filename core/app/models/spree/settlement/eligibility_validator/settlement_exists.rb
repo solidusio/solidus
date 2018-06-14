@@ -5,7 +5,7 @@ module Spree
     module EligibilityValidator
       class SettlementExists < Spree::Settlement::EligibilityValidator::BaseValidator
         def eligible_for_settlement?
-          return unless @settlement.shipment
+          return true unless @settlement.shipment
           if Spree::Settlement
             .where(shipment: @settlement.shipment, acceptance_status: 'accepted')
             .where.not(id: @settlement.id).empty?

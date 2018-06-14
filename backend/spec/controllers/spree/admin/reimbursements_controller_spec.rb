@@ -50,7 +50,14 @@ describe Spree::Admin::ReimbursementsController, type: :controller do
       end
 
       context "with an existing settlement" do
-        let!(:settlement) { create(:settlement, reimbursement: reimbursement, shipment: shipment_without_settlement) }
+        let!(:settlement) {
+          create(
+            :settlement,
+            reimbursement: reimbursement,
+            shipment: shipment_without_settlement,
+            acceptance_status: 'accepted'
+          )
+        }
 
         it "has 1 new @form_settlement" do
           subject

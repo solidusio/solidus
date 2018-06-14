@@ -5,7 +5,7 @@ module Spree
     module EligibilityValidator
       class ItemReturned < Spree::Settlement::EligibilityValidator::BaseValidator
         def eligible_for_settlement?
-          return unless @settlement.reimbursement && @settlement.shipment
+          return true unless @settlement.shipment
           shipment_returned_items = Spree::ReturnItem
             .joins(inventory_unit: :shipment)
             .where("spree_shipments.id = ?", @settlement.shipment.id)

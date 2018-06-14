@@ -10,6 +10,7 @@ module Spree
       before_action :load_stock_locations, only: :edit
       before_action :load_simulated_refunds, only: :edit
       before_action :load_settlements, only: :edit
+      after_action :attempt_accept_new_settlements, only: :update
 
       rescue_from Spree::Core::GatewayError, with: :spree_core_gateway_error
 
@@ -69,6 +70,12 @@ module Spree
         end
 
         @existing_settlements = @reimbursement.settlements.for_shipment.not_pending
+      end
+
+      def attempt_accept_new_settlements
+        @reimbursement.settlements.pending.each do |settlement|
+          settlement.attempt_accept!
+        end
       end
 
       def load_simulated_refunds

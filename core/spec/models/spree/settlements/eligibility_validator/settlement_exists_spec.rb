@@ -18,7 +18,7 @@ RSpec.describe Spree::Settlement::EligibilityValidator::SettlementExists do
     context "shipment has an existing accepted settlement" do
       let!(:existing_settlement) { settlement.dup }
       before do
-        existing_settlement.save!
+        existing_settlement.accept!
       end
 
       it "returns false" do
