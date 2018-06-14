@@ -8,6 +8,7 @@
 
     <%= f.field_container :code do %>
       <%= f.label :code, class: 'required' %>
+      <%= f.field_hint :code %>
       <%= f.text_field :code, required: true, class: 'fullwidth' %>
       <%= f.error_message_on :code %>
     <% end %>
