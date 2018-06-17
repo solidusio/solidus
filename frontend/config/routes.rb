@@ -6,7 +6,7 @@ Spree::Core::Engine.routes.draw do
   get '/locale/set', to: 'locale#set'
 
   # non-restful checkout stuff
-  patch '/checkout/update/:state', to: 'checkout#update', as: :update_checkout
+  patch '/checkout/update', to: 'checkout#update', as: :update_checkout
   get '/checkout/:state', to: 'checkout#edit', as: :checkout_state
   get '/checkout', to: 'checkout#edit', as: :checkout
 
