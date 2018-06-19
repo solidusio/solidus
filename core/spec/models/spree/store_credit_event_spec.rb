@@ -235,7 +235,7 @@ RSpec.describe Spree::StoreCreditEvent do
   end
 
   describe "#display_event_date" do
-    let(:date) { Time.parse("2014-06-01") }
+    let(:date) { Time.zone.parse("2014-06-01") }
 
     subject { create(:store_credit_auth_event, created_at: date) }
 
