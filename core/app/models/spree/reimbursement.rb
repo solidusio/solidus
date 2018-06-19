@@ -31,7 +31,7 @@ module Spree
     class_attribute :reimbursement_tax_calculator
     self.reimbursement_tax_calculator = ReimbursementTaxCalculator
     # A separate attribute here allows you to use a more performant calculator for estimates
-    # and a different one (e.g. one that hits a 3rd party API) for the final caluclations.
+    # and a different one (e.g. one that hits a 3rd party API) for the final calculations.
     class_attribute :reimbursement_simulator_tax_calculator
     self.reimbursement_simulator_tax_calculator = ReimbursementTaxCalculator
 
@@ -88,7 +88,8 @@ module Spree
     def calculated_total
       # rounding down to handle edge cases for consecutive partial returns where rounding
       # might cause us to try to reimburse more than was originally billed
-      return_items.to_a.sum(&:total).to_d.round(2, :down)
+      return_items.to_a.sum(&:total).to_d.round(2, :down) +
+        settlements.accepted.to_a.sum(&:total).to_d.round(2, :down)
     end
 
     def paid_amount

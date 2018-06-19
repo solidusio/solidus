@@ -188,18 +188,21 @@ RSpec.describe Spree::Reimbursement, type: :model do
   end
 
   describe "#calculated_total" do
-    context 'with return item amounts that would round up' do
-      let(:reimbursement) { Spree::Reimbursement.new }
+    context 'with return item and settlement amounts that would round up' do
+      let(:shipment) { inventory_unit.shipment }
+      let(:order) { create(:shipped_order) }
+      let(:inventory_unit) { order.line_items.first.inventory_units.first }
+      let(:return_item_amount) { BigDecimal('10.003') }
+      let(:settlement_amount) { BigDecimal('5.003') }
+      let(:return_item) { create(:return_item, inventory_unit: inventory_unit, acceptance_status: 'accepted', amount: return_item_amount) }
+      let(:customer_return) { build(:customer_return, return_items: [return_item], shipped_order: order) }
+      let(:reimbursement) { create(:reimbursement, customer_return: customer_return, order: order, return_items: [return_item]) }
+      let!(:settlement) { create(:settlement, reimbursement: reimbursement, shipment: shipment, acceptance_status: 'accepted', amount: settlement_amount) }
 
       subject { reimbursement.calculated_total }
 
-      before do
-        reimbursement.return_items << Spree::ReturnItem.new(amount: 10.003)
-        reimbursement.return_items << Spree::ReturnItem.new(amount: 10.003)
-      end
-
       it 'rounds down' do
-        expect(subject).to eq 20
+        expect(subject).to eq 15
       end
     end
   end

@@ -16,15 +16,20 @@ module Spree
     class_attribute :exchange_reimbursement_type
     self.exchange_reimbursement_type = Spree::ReimbursementType::Exchange
 
-    def initialize(return_items)
-      @return_items = return_items
+    def initialize(reimbursement)
+      @return_items = reimbursement.return_items
+      @settlements = reimbursement.settlements
       @reimbursement_type_hash = Hash.new { |h, k| h[k] = [] }
     end
 
     def calculate_reimbursement_types
       @return_items.each do |return_item|
-        reimbursement_type = calculate_reimbursement_type(return_item)
+        reimbursement_type = calculate_return_item_reimbursement_type(return_item)
         add_reimbursement_type(return_item, reimbursement_type)
+      end
+      @settlements.accepted.each do |settlement|
+        reimbursement_type = calculate_settlement_reimbursement_type(settlement)
+        add_reimbursement_type(settlement, reimbursement_type)
       end
 
       @reimbursement_type_hash
@@ -32,7 +37,7 @@ module Spree
 
     private
 
-    def calculate_reimbursement_type(return_item)
+    def calculate_return_item_reimbursement_type(return_item)
       if return_item.exchange_required?
         exchange_reimbursement_type
       elsif return_item.override_reimbursement_type.present?
@@ -48,9 +53,19 @@ module Spree
       end
     end
 
-    def add_reimbursement_type(return_item, reimbursement_type)
+    def calculate_settlement_reimbursement_type(settlement)
+      if settlement.reimbursement_type.present?
+        if valid_settlement_reimbursement_type?(settlement)
+          settlement.reimbursement_type.class
+        end
+      else
+        default_reimbursement_type
+      end
+    end
+
+    def add_reimbursement_type(reimbursement_item, reimbursement_type)
       return unless reimbursement_type
-      @reimbursement_type_hash[reimbursement_type] << return_item
+      @reimbursement_type_hash[reimbursement_type] << reimbursement_item
     end
   end
 end

@@ -7,7 +7,6 @@ FactoryBot.define do
   factory :settlement, class: 'Spree::Settlement' do
     acceptance_status 'pending'
     reimbursement
-    reimbursement_type
     transient do
       has_shipment? true
     end

@@ -3,10 +3,11 @@
 require 'rails_helper'
 
 RSpec.describe Spree::ReimbursementPerformer, type: :model do
+  let(:settlement)              { create(:settlement, reimbursement: reimbursement) }
   let(:reimbursement)           { create(:reimbursement, return_items_count: 1) }
   let(:return_item)             { reimbursement.return_items.first }
   let(:reimbursement_type)      { double("ReimbursementType") }
-  let(:reimbursement_type_hash) { { reimbursement_type => [return_item] } }
+  let(:reimbursement_type_hash) { { reimbursement_type => [return_item, settlement] } }
 
   before do
     expect(Spree::ReimbursementPerformer).to receive(:calculate_reimbursement_types).and_return(reimbursement_type_hash)
@@ -15,8 +16,8 @@ RSpec.describe Spree::ReimbursementPerformer, type: :model do
   describe ".simulate" do
     subject { Spree::ReimbursementPerformer.simulate(reimbursement) }
 
-    it "reimburses each calculated reimbursement types with the correct return items as a simulation" do
-      expect(reimbursement_type).to receive(:reimburse).with(reimbursement, [return_item], true)
+    it "reimburses each calculated reimbursement types with the correct return items and settlements as a simulation" do
+      expect(reimbursement_type).to receive(:reimburse).with(reimbursement, [return_item, settlement], true)
       subject
     end
   end
@@ -24,8 +25,8 @@ RSpec.describe Spree::ReimbursementPerformer, type: :model do
   describe '.perform' do
     subject { Spree::ReimbursementPerformer.perform(reimbursement) }
 
-    it "reimburses each calculated reimbursement types with the correct return items as a simulation" do
-      expect(reimbursement_type).to receive(:reimburse).with(reimbursement, [return_item], false)
+    it "reimburses each calculated reimbursement types with the correct return items and settlements" do
+      expect(reimbursement_type).to receive(:reimburse).with(reimbursement, [return_item, settlement], false)
       subject
     end
   end

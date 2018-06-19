@@ -40,7 +40,7 @@ module Spree
       end
 
       # We don't currently have a real Reimbursement "new" page. And the only
-      # built-in way to create reimburesments via Solidus admin is from the
+      # built-in way to create reimbursements via Solidus admin is from the
       # customer returns admin page via a button that supplies the
       # "build_from_customer_return" parameter. The "edit" page is not
       # suitable for use here for that reason as well.

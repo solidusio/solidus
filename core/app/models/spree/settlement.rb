@@ -15,7 +15,6 @@ module Spree
     belongs_to :shipment, inverse_of: :settlements
 
     validate :shipment_belongs_to_same_order
-    validates :reimbursement_type, presence: true
 
     serialize :acceptance_status_errors
 
