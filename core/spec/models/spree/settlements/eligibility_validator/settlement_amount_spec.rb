@@ -3,13 +3,15 @@
 require 'rails_helper'
 
 RSpec.describe Spree::Settlement::EligibilityValidator::SettlementAmount do
-  let(:settlement) { create(:settlement) }
+  let(:shipment) { create(:shipment) }
   let(:validator) { Spree::Settlement::EligibilityValidator::SettlementAmount.new(settlement) }
 
   describe "#eligible_for_settlement?" do
     subject { validator.eligible_for_settlement? }
 
     context "settlement is associated with a shipment" do
+      let(:settlement) { create(:settlement, shipment: shipment) }
+
       context "settlement's amount is smaller or equal to shipment's cost" do
         before do
           settlement.shipment.cost = 15
@@ -39,8 +41,9 @@ RSpec.describe Spree::Settlement::EligibilityValidator::SettlementAmount do
     end
 
     context "settlement is not associated with a shipment" do
+      let(:settlement) { create(:settlement, shipment: shipment) }
+
       before do
-        settlement.shipment = nil
         settlement.amount = 20
       end
 

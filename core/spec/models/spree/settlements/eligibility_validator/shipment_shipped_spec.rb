@@ -3,20 +3,23 @@
 require 'rails_helper'
 
 RSpec.describe Spree::Settlement::EligibilityValidator::ShipmentShipped do
-  let(:settlement) { create(:settlement) }
+  let(:shipment) { create(:shipment) }
+  let(:settlement) { create(:settlement, shipment: shipment) }
   let(:validator) { Spree::Settlement::EligibilityValidator::ShipmentShipped.new(settlement) }
 
   describe "#eligible_for_settlement?" do
     subject { validator.eligible_for_settlement? }
 
     context "the shipment has been shipped" do
+      before { allow(shipment).to receive(:state).and_return('shipped') }
+
       it "returns true" do
         expect(subject).to be true
       end
     end
 
     context "the shipment has not been shipped yet" do
-      before { allow(settlement.shipment).to receive(:state).and_return(:pending) }
+      before { allow(shipment).to receive(:state).and_return('pending') }
 
       it "returns false" do
         expect(subject).to be false

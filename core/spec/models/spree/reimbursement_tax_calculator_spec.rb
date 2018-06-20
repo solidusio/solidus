@@ -5,12 +5,12 @@ require 'rails_helper'
 RSpec.describe Spree::ReimbursementTaxCalculator, type: :model do
   let!(:tax_rate) { nil }
 
-  let(:reimbursement) { create(:reimbursement, return_items_count: 1) }
   let(:return_item) { reimbursement.return_items.first }
+  let(:settlement) { reimbursement.settlements.first }
   let(:line_item) { return_item.inventory_unit.line_item }
   let(:order) { reimbursement.order }
   let(:shipment) { reimbursement.order.shipments.first }
-  let!(:settlement) { create(:settlement, reimbursement: reimbursement, shipment: shipment, amount: shipment.cost) }
+  let(:reimbursement) { create(:reimbursement, return_items_count: 1, settlements_count: 1) }
 
   subject do
     Spree::ReimbursementTaxCalculator.call(reimbursement)

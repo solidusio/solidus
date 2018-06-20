@@ -41,13 +41,15 @@ RSpec.describe Spree::Settlement, type: :model do
 
     context "amount is not specified" do
       context "settlement has a shipment" do
-        subject { create(:settlement) }
+        let(:shipment) { create(:shipment) }
+
+        subject { create(:settlement, shipment: shipment) }
 
         it { expect(subject.amount).to eq subject.shipment.amount }
       end
 
       context "settlement does not have a shipment" do
-        subject { create(:settlement, has_shipment?: false) }
+        subject { create(:settlement) }
 
         it { expect(subject.amount).to eq 0 }
       end

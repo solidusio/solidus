@@ -3,7 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe Spree::Settlement::EligibilityValidator::SettlementExists do
-  let(:settlement) { create(:settlement) }
+  let(:shipment) { create(:shipment) }
+  let(:settlement) { create(:settlement, shipment: shipment) }
   let(:validator) { Spree::Settlement::EligibilityValidator::SettlementExists.new(settlement) }
 
   describe "#eligible_for_settlement?" do
@@ -16,7 +17,8 @@ RSpec.describe Spree::Settlement::EligibilityValidator::SettlementExists do
     end
 
     context "shipment has an existing accepted settlement" do
-      let!(:existing_settlement) { settlement.dup }
+      let(:existing_settlement) { settlement.dup }
+
       before do
         existing_settlement.accept!
       end

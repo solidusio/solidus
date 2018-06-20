@@ -195,9 +195,9 @@ RSpec.describe Spree::Reimbursement, type: :model do
       let(:return_item_amount) { BigDecimal('10.003') }
       let(:settlement_amount) { BigDecimal('5.003') }
       let(:return_item) { create(:return_item, inventory_unit: inventory_unit, acceptance_status: 'accepted', amount: return_item_amount) }
+      let(:settlement) { create(:settlement, shipment: shipment, acceptance_status: 'accepted', amount: settlement_amount) }
       let(:customer_return) { build(:customer_return, return_items: [return_item], shipped_order: order) }
-      let(:reimbursement) { create(:reimbursement, customer_return: customer_return, order: order, return_items: [return_item]) }
-      let!(:settlement) { create(:settlement, reimbursement: reimbursement, shipment: shipment, acceptance_status: 'accepted', amount: settlement_amount) }
+      let(:reimbursement) { create(:reimbursement, customer_return: customer_return, order: order, return_items: [return_item], settlements: [settlement]) }
 
       subject { reimbursement.calculated_total }
 
