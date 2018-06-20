@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CreateSpreeSettlements < ActiveRecord::Migration[5.2]
+class CreateSpreeSettlements < ActiveRecord::Migration[5.1]
   def change
     create_table :spree_settlements do |t|
       t.decimal :amount, precision: 12, scale: 4, default: "0.0", null: false
