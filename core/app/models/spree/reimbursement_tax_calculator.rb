@@ -35,6 +35,7 @@ module Spree
       end
 
       def set_settlement_tax!(settlement)
+        return unless settlement.shipment
         settlement.update_attributes!({
           additional_tax_total: settlement.shipment.additional_tax_total,
           included_tax_total:   settlement.shipment.included_tax_total
