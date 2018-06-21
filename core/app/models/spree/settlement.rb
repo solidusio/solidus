@@ -71,6 +71,10 @@ module Spree
       self.amount = shipment.try(:amount) || 0
     end
 
+    def unavailable_for_new_settlements?
+      manual_intervention_required? || accepted?
+    end
+
     private
 
     def persist_acceptance_status_errors

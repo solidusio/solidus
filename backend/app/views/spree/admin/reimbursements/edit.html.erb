@@ -107,11 +107,11 @@
               <%= settlement.acceptance_status_errors %>
             </td>
             <td class="actions">
-              <% if settlement.acceptance_status == 'manual_intervention_required' %>
+              <% if settlement.manual_intervention_required? %>
                 <%= link_to_with_icon('thumbs-up', t('spree.accept'), [:accept, :admin, settlement], { class: 'no-text with-tip icon_link', no_text: true, method: 'put' }) %>
                 /
               <% end %>
-              <% if ['accepted', 'manual_intervention_required'].include?(settlement.acceptance_status) %>
+              <% if settlement.unavailable_for_new_settlements? %>
                 <%= link_to_with_icon('thumbs-down', t('spree.reject'), [:reject, :admin, settlement], { class: 'no-text with-tip icon_link', no_text: true, method: 'put' }) %>
               <% end %>
             </td>
