@@ -4,6 +4,10 @@
 
 - The promotions "Advertise" checkbox and the "URL Path" promotion activation method have been removed from the admin UI because the features are not implemented in solidus_frontend [#2737](https://github.com/solidusio/solidus/pull/2737) ([benjaminwil](https://github.com/benjaminwil)
 
+### Frontend
+
+- The `TaxonsController#show` action loads now the `@taxon` in a `before_action` callback. This means that if you overrode the `show` method you may be loading the `@taxon` variable twice. You can now change the behaviour of how the `@taxon` is loaded overriding the `load_taxon` method instead. [#2782](https://github.com/solidusio/solidus/pull/2782) ([coorasse](https://github.com/coorasse))
+
 ## Solidus 2.6.0 (2018-05-16)
 
 ### Major changes
