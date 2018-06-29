@@ -1,12 +1,17 @@
 # Zones
 
 In Solidus, any regions that you ship to are grouped using zones. Zones are
-groups of states or groups of countries. Zones might only have one member
-area (such as a zone that only consists of the United States).
+groups of states or countries. Zones might only have one member (such as a zone
+that only consists of the United States) or many members (a zone that consists
+of all of the non-contiguous United States: Hawaii and Alaska).
 
-Zones allow store administrators to set shipping rules and tax rates for a
-specific geographical area. Zones are especially useful for helping you comply
-with the tax variations in different regions.
+Zones allow store administrators to set shipping rules and tax rates for
+specific places. They also allow you to group states or countries in a
+non-geographic way: for example, if you ship to all of the United States but use
+different carriers when shipping to Alaska and Hawaii.
+
+Zones are especially useful for helping you comply with the tax variations in
+different regions.
 
 Administrators can create zones that are either country- or state-based.
 
@@ -31,12 +36,11 @@ You could also automate your U.S. tax rates by using a web service that provides
 U.S. tax rates. For example, you could use [Tax Cloud][tax-cloud] and the
 [`solidus_tax_cloud`][solidus-tax-cloud] extension.
 
-<!-- TODO:
-   For more information about taxation, [see the Taxation guide](/taxation).
--->
+For more information about taxation, see the [Taxation][taxation] documentation.
 
-[tax-cloud]: https://taxcloud.net
 [solidus-tax-cloud]: https://github.com/solidusio-contrib/solidus_tax_cloud
+[taxation]: ../taxation/overview.md
+[tax-cloud]: https://taxcloud.net
 
 ## Zones and shipments
 
@@ -60,17 +64,18 @@ method requires at least one zone before it can be used.
 ### Shipping methods can include multiple zones
 
 If you use carriers that ship to multiple regions (for example, throughout North
-America, Europe, and Africa), you could configure it with multiple zones
-enabled.
+America, Europe, and Africa), you could configure your shipping methods to
+include multiple zones.
 
 This feature is useful in cases when you use multiple carriers that ship to
 different regions. For example, if you use USPS to ship to the United States and
 Canada, but you use FedEx to ship to the United States and Canada as well as to
 Europe and Africa.
 
-<!-- TODO:
-  For more information about shipments, [see the Shipments guide](/shipments).
--->
+For more information about shipments, see the [Shipments][shipments]
+documentation.
+
+[shipments]: ../shipments/overview.md
 
 ## Example zone configuration
 
