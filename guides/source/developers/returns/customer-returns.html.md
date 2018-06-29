@@ -43,5 +43,6 @@ Once an item is marked as "Received", you can create a `Spree::Reimbursement`
 for it.
 
 [reimbursement-types]: reimbursement-types.html
+[reimbursements]: reimbursements.html
 [return-items]: return-items.html
 

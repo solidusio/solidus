@@ -47,7 +47,7 @@ multiple payments and has a `payment_state` value of `balance_due`:
 | Payment source type  | Amount | State         |
 |----------------------|--------|---------------|
 | `Spree::StoreCredit` | $20    | `completed`   |
-| `Spree::CreditCard`  | $20    | `balance`     |
+| `Spree::CreditCard`  | $20    | `balance_due` |
 
 And the next table outlines a `Spree::Order` that has a `payment_state` value of
 `paid`:
