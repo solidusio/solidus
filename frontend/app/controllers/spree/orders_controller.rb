@@ -2,11 +2,11 @@
 
 module Spree
   class OrdersController < Spree::StoreController
-    before_action :check_authorization
     helper 'spree/products', 'spree/orders'
 
     respond_to :html
 
+    before_action :store_guest_token
     before_action :assign_order, only: :update
     # note: do not lock the #edit action because that's where we redirect when we fail to acquire a lock
     around_action :lock_order, only: :update
@@ -15,9 +15,11 @@ module Spree
 
     def show
       @order = Spree::Order.find_by!(number: params[:id])
+      authorize! :read, @order, cookies.signed[:guest_token]
     end
 
     def update
+      authorize! :update, @order, cookies.signed[:guest_token]
       if @order.contents.update_cart(order_params)
         @order.next if params.key?(:checkout) && @order.cart?
 
@@ -38,12 +40,15 @@ module Spree
     # Shows the current incomplete order from the session
     def edit
       @order = current_order || Spree::Order.incomplete.find_or_initialize_by(guest_token: cookies.signed[:guest_token])
+      authorize! :read, @order, cookies.signed[:guest_token]
       associate_user
     end
 
     # Adds a new item to the order (creating a new order if none already exists)
     def populate
-      @order   = current_order(create_order_if_necessary: true)
+      @order = current_order(create_order_if_necessary: true)
+      authorize! :update, @order, cookies.signed[:guest_token]
+
       variant  = Spree::Variant.find(params[:variant_id])
       quantity = params[:quantity].present? ? params[:quantity].to_i : 1
 
@@ -78,6 +83,7 @@ module Spree
 
     def empty
       if @order = current_order
+        authorize! :update, @order, cookies.signed[:guest_token]
         @order.empty!
       end
 
@@ -92,18 +98,11 @@ module Spree
       end
     end
 
-    def check_authorization
-      cookies.permanent.signed[:guest_token] = params[:token] if params[:token]
-      order = Spree::Order.find_by(number: params[:id]) || current_order
-
-      if order
-        authorize! :edit, order, cookies.signed[:guest_token]
-      else
-        authorize! :create, Spree::Order
-      end
-    end
-
     private
+
+    def store_guest_token
+      cookies.permanent.signed[:guest_token] = params[:token] if params[:token]
+    end
 
     def order_params
       if params[:order]
