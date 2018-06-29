@@ -25,8 +25,8 @@ items you have in stock.
 
 ## Count on hand
 
-When administrators create a new product using the `solidus_backend`, they can
-set an initial inventory "Count On Hand" value for the new product.
+Administrators can manage the "Count On Hand" value for every product they sell
+on their store.
 
 The `count_on_hand` value changes whenever a [stock movement][stock-movements]
 occurs.  For example, if one unit of a product is sold the `count_on_hand` would
