@@ -67,10 +67,11 @@ module Spree
       end
 
       def validate_payment_method_type
-        requested_type = params[:payment_method].delete(:type)
+        requested_type = params[:payment_method][:type]
         @payment_method_type = @payment_method_types.detect do |klass|
           klass.name == requested_type
         end
+
         if !@payment_method_type
           flash[:error] = t('spree.invalid_payment_method_type')
           redirect_to new_admin_payment_method_path
