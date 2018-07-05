@@ -10,9 +10,9 @@ module Spree
   describe Admin::PaymentMethodsController, type: :controller do
     stub_authorization!
 
-    context "GatewayWithPassword" do
-      let(:payment_method) { GatewayWithPassword.create!(name: "Bogus", preferred_password: "haxme") }
+    let(:payment_method) { GatewayWithPassword.create!(name: "Bogus", preferred_password: "haxme") }
 
+    context "GatewayWithPassword" do
       before do
         allow(Rails.application.config.spree).to receive(:payment_methods).and_return([GatewayWithPassword])
       end
@@ -52,7 +52,7 @@ module Spree
       expect(response).to redirect_to spree.new_admin_payment_method_path
     end
 
-    describe "GET index" do
+    describe "#index" do
       subject { get :index }
 
       let!(:first_method) { GatewayWithPassword.create! name: "First", preferred_password: "1235" }
@@ -68,6 +68,27 @@ module Spree
       it "respects the order of payment methods by position" do
         subject
         expect(assigns(:payment_methods).to_a).to eql([second_method, first_method])
+      end
+    end
+
+    describe "#update" do
+      # Regression test for https://github.com/solidusio/solidus/issues/2789
+      let(:params) do
+        {
+          id: payment_method.id,
+          payment_method: {
+            name: 'Check',
+            type: 'Spree::PaymentMethod::Check'
+          }
+        }
+      end
+
+      it 'updates the resource' do
+        put :update, params: params
+
+        expect(response).to redirect_to(spree.edit_admin_payment_method_path(payment_method))
+        response_payment_method = Spree::PaymentMethod.find(payment_method.id)
+        expect(response_payment_method.name).to eql('Check')
       end
     end
   end
