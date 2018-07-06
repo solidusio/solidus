@@ -307,6 +307,15 @@ module Spree
     # @api experimental
     class_name_attribute :shipping_rate_tax_calculator_class, default: 'Spree::TaxCalculator::ShippingRate'
 
+    # Allows providing your own Mailer for promotion code batch mailer.
+    #
+    # @!attribute [rw] promotion_code_batch_mailer_class
+    # @return [ActionMailer::Base] an object that responds to "promotion_code_batch_finished",
+    #   and "promotion_code_batch_errored"
+    #   (e.g. an ActionMailer with a "promotion_code_batch_finished" method) with the same
+    #   signature as Spree::PromotionCodeBatchMailer.promotion_code_batch_finished.
+    class_name_attribute :promotion_code_batch_mailer_class, default: 'Spree::PromotionCodeBatchMailer'
+
     # Allows providing your own Mailer for shipped cartons.
     #
     # @!attribute [rw] carton_shipped_email_class

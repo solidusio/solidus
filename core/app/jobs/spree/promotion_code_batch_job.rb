@@ -10,13 +10,13 @@ module Spree
       ).build_promotion_codes
 
       if promotion_code_batch.email?
-        Spree::PromotionCodeBatchMailer
+        Spree::Config.promotion_code_batch_mailer_class
           .promotion_code_batch_finished(promotion_code_batch)
           .deliver_now
       end
     rescue StandardError => e
       if promotion_code_batch.email?
-        Spree::PromotionCodeBatchMailer
+        Spree::Config.promotion_code_batch_mailer_class
           .promotion_code_batch_errored(promotion_code_batch)
           .deliver_now
       end
