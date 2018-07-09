@@ -18,7 +18,6 @@ module Spree
 
     context 'when an order exists in the cookies.signed' do
       let(:token) { 'some_token' }
-      let(:specified_order) { create(:order) }
 
       before do
         allow(controller).to receive_messages current_order: order
@@ -26,54 +25,39 @@ module Spree
       end
 
       context '#populate' do
-        it 'should check if user is authorized for :edit' do
-          expect(controller).to receive(:authorize!).with(:edit, order, token)
+        it 'should check if user is authorized for :update' do
+          expect(controller).to receive(:authorize!).with(:update, order, token)
           post :populate, params: { variant_id: variant.id, token: token }
-        end
-        it "should check against the specified order" do
-          expect(controller).to receive(:authorize!).with(:edit, specified_order, token)
-          post :populate, params: { id: specified_order.number, variant_id: variant.id, token: token }
         end
       end
 
       context '#edit' do
-        it 'should check if user is authorized for :edit' do
-          expect(controller).to receive(:authorize!).with(:edit, order, token)
+        it 'should check if user is authorized for :read' do
+          expect(controller).to receive(:authorize!).with(:read, order, token)
           get :edit, params: { token: token }
-        end
-        it "should check against the specified order" do
-          expect(controller).to receive(:authorize!).with(:edit, specified_order, token)
-          get :edit, params: { id: specified_order.number, token: token }
         end
       end
 
       context '#update' do
-        it 'should check if user is authorized for :edit' do
+        it 'should check if user is authorized for :update' do
           allow(order).to receive :update_attributes
-          expect(controller).to receive(:authorize!).with(:edit, order, token)
+          expect(controller).to receive(:authorize!).with(:update, order, token)
           post :update, params: { order: { email: "foo@bar.com" }, token: token }
-        end
-        it "should check against the specified order" do
-          allow(order).to receive :update_attributes
-          expect(controller).to receive(:authorize!).with(:edit, specified_order, token)
-          post :update, params: { order: { email: "foo@bar.com" }, id: specified_order.number, token: token }
         end
       end
 
       context '#empty' do
-        it 'should check if user is authorized for :edit' do
-          expect(controller).to receive(:authorize!).with(:edit, order, token)
+        it 'should check if user is authorized for :update' do
+          expect(controller).to receive(:authorize!).with(:update, order, token)
           post :empty, params: { token: token }
-        end
-        it "should check against the specified order" do
-          expect(controller).to receive(:authorize!).with(:edit, specified_order, token)
-          post :empty, params: { id: specified_order.number, token: token }
         end
       end
 
       context "#show" do
+        let(:specified_order) { create(:order) }
+
         it "should check against the specified order" do
-          expect(controller).to receive(:authorize!).with(:edit, specified_order, token)
+          expect(controller).to receive(:authorize!).with(:read, specified_order, token)
           get :show, params: { id: specified_order.number, token: token }
         end
       end

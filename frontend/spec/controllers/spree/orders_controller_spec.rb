@@ -105,7 +105,7 @@ describe Spree::OrdersController, type: :controller do
     context "#update" do
       context "with authorization" do
         before do
-          allow(controller).to receive :check_authorization
+          allow(controller).to receive :authorize!
           allow(controller).to receive_messages current_order: order
         end
 
@@ -180,7 +180,7 @@ describe Spree::OrdersController, type: :controller do
 
     context "#empty" do
       before do
-        allow(controller).to receive :check_authorization
+        allow(controller).to receive :authorize!
       end
 
       it "should destroy line items in the current order" do
@@ -212,7 +212,7 @@ describe Spree::OrdersController, type: :controller do
     let!(:line_item) { order.contents.add(variant, 1) }
 
     before do
-      allow(controller).to receive(:check_authorization)
+      allow(controller).to receive :authorize!
       allow(controller).to receive_messages(current_order: order)
     end
 

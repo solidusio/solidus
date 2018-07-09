@@ -329,8 +329,7 @@ module Spree
       it "returns the order if the order is already complete" do
         order.update_columns(completed_at: Time.current, state: 'complete')
         put spree.api_checkout_path(order.to_param), params: { order_token: order.guest_token }
-        expect(json_response['number']).to eq(order.number)
-        expect(response.status).to eq(200)
+        assert_unauthorized!
       end
 
       # Regression test for https://github.com/spree/spree/issues/3784
