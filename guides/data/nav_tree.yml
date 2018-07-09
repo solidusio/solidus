@@ -9,6 +9,8 @@ top:
         href: "/developers/getting-started/develop-solidus.html"
       - title: "Forking Solidus"
         href: "/developers/getting-started/forking-solidus.html"
+      - title: "Customer flow"
+        href: "/developers/getting-started/customer-flow.html"
 main:
   - title: "Adjustments"
     dropdown:
