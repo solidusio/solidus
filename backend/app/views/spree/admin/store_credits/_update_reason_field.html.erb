@@ -1,7 +1,0 @@
-<%= f.field_container :reason do %>
-  <%= f.label :reason, t('spree.reason'), class: 'required' %>
-  <%= select_tag :update_reason_id, options_from_collection_for_select(@update_reasons, :id, :name),
-    include_blank: t('spree.choose_reason'), class: 'custom-select fullwidth',
-    placeholder: t('spree.admin.store_credits.select_amount_update_reason') %>
-  <%= f.error_message_on :reason %>
-<% end %>

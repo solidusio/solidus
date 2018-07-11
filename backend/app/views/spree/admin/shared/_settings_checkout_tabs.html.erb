@@ -16,6 +16,10 @@
       <% if can?(:display, Spree::AdjustmentReason) %>
         <%= settings_tab_item plural_resource_name(Spree::AdjustmentReason), spree.admin_adjustment_reasons_path %>
       <% end %>
+
+      <% if can?(:display, Spree::StoreCreditReason) %>
+        <%= settings_tab_item plural_resource_name(Spree::StoreCreditReason), spree.admin_store_credit_reasons_path %>
+      <% end %>
     </ul>
   </nav>
 <% end %>
