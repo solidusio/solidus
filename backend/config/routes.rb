@@ -145,6 +145,7 @@ Spree::Core::Engine.routes.draw do
     resources :adjustment_reasons, except: [:show, :destroy]
     resources :refund_reasons, except: [:show, :destroy]
     resources :return_reasons, except: [:show, :destroy]
+    resources :store_credit_reasons, except: [:show]
 
     resources :shipping_methods
     resources :shipping_categories
