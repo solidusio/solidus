@@ -41,7 +41,7 @@ class Spree::StoreCredit < Spree::PaymentSource
   before_destroy :validate_no_amount_used
   validate :validate_no_amount_used, if: :discarded?
 
-  attr_accessor :action, :action_amount, :action_originator, :action_authorization_code, :update_reason
+  attr_accessor :action, :action_amount, :action_originator, :action_authorization_code, :store_credit_reason
 
   extend Spree::DisplayMoney
   money_methods :amount, :amount_used, :amount_authorized

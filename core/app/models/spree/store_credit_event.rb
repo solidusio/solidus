@@ -12,9 +12,9 @@ module Spree
 
     belongs_to :store_credit
     belongs_to :originator, polymorphic: true
-    belongs_to :update_reason, class_name: "Spree::StoreCreditUpdateReason"
+    belongs_to :store_credit_reason, class_name: 'Spree::StoreCreditReason', inverse_of: :store_credit_events
 
-    validates_presence_of :update_reason, if: :action_requires_reason?
+    validates_presence_of :store_credit_reason, if: :action_requires_reason?
 
     NON_EXPOSED_ACTIONS = [Spree::StoreCredit::ELIGIBLE_ACTION, Spree::StoreCredit::AUTHORIZE_ACTION]
 
