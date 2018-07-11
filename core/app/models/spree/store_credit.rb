@@ -176,7 +176,7 @@ class Spree::StoreCredit < Spree::PaymentSource
     self.amount = amount
     self.action_amount = self.amount - previous_amount
     self.action = ADJUSTMENT_ACTION
-    self.update_reason = reason
+    self.store_credit_reason = reason
     self.action_originator = user_performing_update
     save
   end
@@ -184,7 +184,7 @@ class Spree::StoreCredit < Spree::PaymentSource
   def invalidate(reason, user_performing_invalidation)
     if invalidateable?
       self.action = INVALIDATE_ACTION
-      self.update_reason = reason
+      self.store_credit_reason = reason
       self.action_originator = user_performing_invalidation
       self.invalidated_at = Time.current
       save
@@ -241,7 +241,7 @@ class Spree::StoreCredit < Spree::PaymentSource
       amount_remaining: amount_remaining,
       user_total_amount: user.available_store_credit_total(currency: currency),
       originator: action_originator,
-      update_reason: update_reason
+      store_credit_reason: store_credit_reason
     })
   end
 
