@@ -58,7 +58,7 @@ describe "Store credits admin" do
 
   describe "updating store credit" do
     let(:updated_amount) { "99.0" }
-    let!(:update_reason) { create(:store_credit_update_reason) }
+    let!(:store_credit_reason) { create(:store_credit_reason) }
 
     before do
       visit spree.admin_path
@@ -74,7 +74,7 @@ describe "Store credits admin" do
       click_link "Change amount"
       expect(page).to have_content 'Editing store credit amount'
       page.fill_in 'store_credit_amount', with: updated_amount
-      page.select update_reason.name, from: 'update_reason_id'
+      page.select store_credit_reason.name, from: 'store_credit_reason_id'
       click_button "Update"
       expect(page.find('#sc-detail-table')).to have_content "$99.00"
       expect(store_credit.reload.amount.to_f).to eq updated_amount.to_f

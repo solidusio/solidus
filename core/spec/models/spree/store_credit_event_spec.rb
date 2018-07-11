@@ -34,11 +34,11 @@ RSpec.describe Spree::StoreCreditEvent do
     end
   end
 
-  describe "update reason validation" do
+  describe "update store credit reason validation" do
     subject { event.valid? }
 
     context "adjustment event" do
-      context "has an update reason" do
+      context "has a store credit reason" do
         let(:event) { build(:store_credit_adjustment_event) }
 
         it "returns true" do
@@ -46,22 +46,22 @@ RSpec.describe Spree::StoreCreditEvent do
         end
       end
 
-      context "doesn't have an update reason" do
-        let(:event) { build(:store_credit_adjustment_event, update_reason: nil) }
+      context "doesn't have a store credit reason" do
+        let(:event) { build(:store_credit_adjustment_event, store_credit_reason: nil) }
 
         it "returns false" do
           expect(subject).to eq false
         end
 
-        it "adds an error message indicating the update reason is missing" do
+        it "adds an error message indicating the store credit reason is missing" do
           subject
-          expect(event.errors.full_messages).to match ["Update reason can't be blank"]
+          expect(event.errors.full_messages).to match ["Store credit reason can't be blank"]
         end
       end
     end
 
     context "invalidate event" do
-      context "has an update reason" do
+      context "has a store credit reason" do
         let(:event) { build(:store_credit_invalidate_event) }
 
         it "returns true" do
@@ -69,21 +69,21 @@ RSpec.describe Spree::StoreCreditEvent do
         end
       end
 
-      context "doesn't have an update reason" do
-        let(:event) { build(:store_credit_invalidate_event, update_reason: nil) }
+      context "doesn't have a store credit reason" do
+        let(:event) { build(:store_credit_invalidate_event, store_credit_reason: nil) }
 
         it "returns false" do
           expect(subject).to eq false
         end
 
-        it "adds an error message indicating the update reason is missing" do
+        it "adds an error message indicating the store credit reason is missing" do
           subject
-          expect(event.errors.full_messages).to match ["Update reason can't be blank"]
+          expect(event.errors.full_messages).to match ["Store credit reason can't be blank"]
         end
       end
     end
 
-    context "event doesn't require an update reason" do
+    context "event doesn't require a store credit reason" do
       let(:event) { build(:store_credit_auth_event) }
 
       it "returns true" do

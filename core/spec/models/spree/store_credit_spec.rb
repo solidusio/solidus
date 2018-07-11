@@ -809,7 +809,7 @@ RSpec.describe Spree::StoreCredit do
 
   describe "#update_amount" do
     let(:invalidation_user) { create(:user) }
-    let(:invalidation_reason) { create(:store_credit_update_reason) }
+    let(:invalidation_reason) { create(:store_credit_reason) }
 
     subject { store_credit.update_amount(amount, invalidation_reason, invalidation_user) }
 
@@ -852,7 +852,7 @@ RSpec.describe Spree::StoreCredit do
 
   describe "#invalidate" do
     let(:invalidation_user) { create(:user) }
-    let(:invalidation_reason) { create(:store_credit_update_reason) }
+    let(:invalidation_reason) { create(:store_credit_reason) }
 
     before do
       store_credit.save!

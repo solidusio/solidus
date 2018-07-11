@@ -3,8 +3,8 @@
 require 'spec_helper'
 
 shared_examples "update reason loader" do
-  it "sets the update_reasons variable to a list of categories sorted by category name " do
-    expect(assigns(:update_reasons)).to eq [update_reason]
+  it "sets the store_credit_reasons variable to a list of categories sorted by category name " do
+    expect(assigns(:store_credit_reasons)).to eq [store_credit_reason]
   end
 end
 
@@ -16,11 +16,11 @@ describe Spree::Admin::StoreCreditsController do
 
   let!(:b_credit_category) { create(:store_credit_category, name: "B category") }
   let!(:a_credit_category) { create(:store_credit_category, name: "A category") }
-  let!(:update_reason)     { create(:store_credit_update_reason) }
+  let!(:store_credit_reason) { create(:store_credit_reason) }
 
   describe "#show" do
     let!(:store_credit) { create(:store_credit, user: user, category: a_credit_category) }
-    let!(:event)        { create(:store_credit_auth_event, store_credit: store_credit, created_at: 5.days.ago) }
+    let!(:event) { create(:store_credit_auth_event, store_credit: store_credit, created_at: 5.days.ago) }
 
     before { get :show, params: { user_id: user.id, id: store_credit.id  } }
 
@@ -173,12 +173,12 @@ describe Spree::Admin::StoreCreditsController do
   describe "#update_amount" do
     let(:original_amount) { 100.0 }
     let!(:store_credit)   { create(:store_credit, user: user, amount: original_amount) }
-    let!(:update_reason)  { create(:store_credit_update_reason) }
+    let!(:store_credit_reason) { create(:store_credit_reason) }
     let(:parameters) do
       {
         user_id: user.id,
         id: store_credit.id,
-        update_reason_id: update_reason.id,
+        store_credit_reason_id: store_credit_reason.id,
         store_credit: {
           amount: updated_amount
         }
@@ -271,7 +271,7 @@ describe Spree::Admin::StoreCreditsController do
       {
         user_id: user.id,
         id: store_credit.id,
-        update_reason_id: update_reason.id
+        store_credit_reason_id: store_credit_reason.id
       }
     end
 
