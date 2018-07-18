@@ -22,7 +22,7 @@ describe 'Payments', type: :feature do
     end
 
     # Regression tests for https://github.com/spree/spree/issues/1453
-    context 'with a check payment' do
+    context 'with a check payment', js: true do
       let(:order) { create(:completed_order_with_totals, number: 'R100') }
       let!(:payment) do
         create(:payment,
@@ -205,7 +205,7 @@ describe 'Payments', type: :feature do
         visit spree.admin_order_payments_path(order.reload)
       end
 
-      it "can successfully be created and captured" do
+      it "can successfully be created and captured", js: true do
         click_on 'Update'
         expect(page).to have_content("Payment has been successfully created!")
         click_icon(:capture)
