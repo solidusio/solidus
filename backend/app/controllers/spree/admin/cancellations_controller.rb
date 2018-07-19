@@ -20,7 +20,7 @@ module Spree
           flash[:error] = t('spree.no_inventory_selected')
           redirect_to admin_order_cancellations_path(@order)
         else
-          @order.cancellations.short_ship(inventory_units, whodunnit: whodunnit)
+          @order.cancellations.short_ship(inventory_units, created_by: created_by)
 
           flash[:success] = t('spree.inventory_canceled')
           redirect_to edit_admin_order_url(@order)
@@ -29,7 +29,7 @@ module Spree
 
       private
 
-      def whodunnit
+      def created_by
         try_spree_current_user.try(:email)
       end
 
