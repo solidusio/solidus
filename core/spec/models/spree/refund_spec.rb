@@ -181,7 +181,7 @@ RSpec.describe Spree::Refund, type: :model do
     subject { Spree::Refund.total_amount_reimbursed_for(reimbursement) }
 
     context 'with reimbursements performed' do
-      before { reimbursement.perform!(creator: created_by_user) }
+      before { reimbursement.perform!(created_by: created_by_user) }
 
       it 'returns the total amount' do
         amount = Spree::Refund.total_amount_reimbursed_for(reimbursement)

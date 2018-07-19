@@ -283,7 +283,7 @@ RSpec.describe Spree::CustomerReturn, type: :model do
 
           context 'when all reimbursements are reimbursed' do
             let(:created_by_user) { create(:user, email: 'user@email.com') }
-            before { reimbursement.perform!(creator: created_by_user) }
+            before { reimbursement.perform!(created_by: created_by_user) }
 
             it { is_expected.to be true }
           end

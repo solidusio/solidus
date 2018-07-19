@@ -68,7 +68,7 @@ RSpec.describe Spree::Reimbursement, type: :model do
     let(:reimbursement) { create(:reimbursement, customer_return: customer_return, order: order, return_items: [return_item]) }
     let(:created_by_user) { create(:user, email: 'user@email.com') }
 
-    subject { reimbursement.perform!(creator: created_by_user) }
+    subject { reimbursement.perform!(created_by: created_by_user) }
 
     before do
       order.shipments.each do |shipment|
@@ -231,7 +231,7 @@ RSpec.describe Spree::Reimbursement, type: :model do
   end
 
   describe "#return_all" do
-    subject { reimbursement.return_all(creator: created_by_user) }
+    subject { reimbursement.return_all(created_by: created_by_user) }
 
     let!(:default_refund_reason) { Spree::RefundReason.find_or_create_by!(name: Spree::RefundReason::RETURN_PROCESSING_REASON, mutable: false) }
     let(:order)                  { create(:shipped_order, line_items_count: 1) }

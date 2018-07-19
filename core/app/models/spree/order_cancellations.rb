@@ -82,19 +82,19 @@ class Spree::OrderCancellations
   #
   # @api public
   # @param [Array<InventoryUnit>] inventory_units the inventory units to be reimbursed
-  # @param [Spree.user_class] creator the user that is performing this action
+  # @param [Spree.user_class] created_by the user that is performing this action
   # @return [Reimbursement] the reimbursement for inventory being canceled
-  def reimburse_units(inventory_units, creator: nil)
-    unless creator
-      creator = Spree.user_class.find_by(email: 'spree@example.com')
-      Spree::Deprecation.warn("Calling #reimburse_units on #{self} without creator is deprecated")
+  def reimburse_units(inventory_units, created_by: nil)
+    unless created_by
+      created_by = Spree.user_class.find_by(email: 'spree@example.com')
+      Spree::Deprecation.warn("Calling #reimburse_units on #{self} without created_by is deprecated")
     end
     reimbursement = nil
 
     Spree::OrderMutex.with_lock!(@order) do
       return_items = inventory_units.map(&:current_or_new_return_item)
       reimbursement = Spree::Reimbursement.new(order: @order, return_items: return_items)
-      reimbursement.return_all(creator: creator)
+      reimbursement.return_all(created_by: created_by)
     end
 
     reimbursement
