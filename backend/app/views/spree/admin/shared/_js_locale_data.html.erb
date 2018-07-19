@@ -33,7 +33,7 @@
 <script data-hook='admin-custom-translations'>
 </script>
 
-<% if I18n.locale != :en %>
+<% if I18n.locale.to_s.split('-').first != 'en' %>
   <%= javascript_include_tag "solidus_admin/select2_locales/select2_locale_#{I18n.locale}",
     data: {turbolinks_track: 'reload'} %>
 <% end %>
