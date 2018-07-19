@@ -325,6 +325,14 @@ module Spree
     #   signature as Spree::PromotionCodeBatchMailer.promotion_code_batch_finished.
     class_name_attribute :promotion_code_batch_mailer_class, default: 'Spree::PromotionCodeBatchMailer'
 
+    # Allows providing your own Mailer for reimbursement mailer.
+    #
+    # @!attribute [rw] reimbursement_mailer_class
+    # @return [ActionMailer::Base] an object that responds to "reimbursement_email"
+    #   (e.g. an ActionMailer with a "reimbursement_email" method) with the same
+    #   signature as Spree::ReimbursementMailer.reimbursement_email.
+    class_name_attribute :reimbursement_mailer_class, default: 'Spree::ReimbursementMailer'
+
     # Allows providing your own Mailer for shipped cartons.
     #
     # @!attribute [rw] carton_shipped_email_class

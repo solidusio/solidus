@@ -162,7 +162,7 @@ module Spree
     end
 
     def send_reimbursement_email
-      Spree::ReimbursementMailer.reimbursement_email(id).deliver_later
+      Spree::Config.reimbursement_mailer_class.reimbursement_email(id).deliver_later
     end
 
     # If there are multiple different reimbursement types for a single
