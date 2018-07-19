@@ -34,12 +34,27 @@ RSpec.describe Spree::OrderCancellations do
     context "when a whodunnit is specified" do
       subject { order.cancellations.cancel_unit(inventory_unit, whodunnit: "some automated system") }
 
-      it "sets the user on the UnitCancel" do
+      it "sets the user on the UnitCancel and print a deprecation" do
+        expect(Spree::Deprecation).to receive(:warn)
         expect(subject.created_by).to eq("some automated system")
       end
     end
 
     context "when a whodunnit is not specified" do
+      it "does not set created_by on the UnitCancel" do
+        expect(subject.created_by).to be_nil
+      end
+    end
+
+    context "when a created_by is specified" do
+      subject { order.cancellations.cancel_unit(inventory_unit, created_by: "some automated system") }
+
+      it "sets the user on the UnitCancel" do
+        expect(subject.created_by).to eq("some automated system")
+      end
+    end
+
+    context "when a created_by is not specified" do
       it "does not set created_by on the UnitCancel" do
         expect(subject.created_by).to be_nil
       end
@@ -121,12 +136,25 @@ RSpec.describe Spree::OrderCancellations do
       end
     end
 
-    context "with a who" do
-      subject { order.cancellations.short_ship([inventory_unit], whodunnit: 'some automated system') }
+    context "when a created_by is specified" do
+      subject { order.cancellations.short_ship([inventory_unit], created_by: 'some automated system') }
 
       let(:user) { order.user }
 
       it "sets the user on the UnitCancel" do
+        expect { subject }.to change { Spree::UnitCancel.count }.by(1)
+        expect(Spree::UnitCancel.last.created_by).to eq("some automated system")
+      end
+    end
+
+    context "when a whodunnit is specified" do
+      subject { order.cancellations.short_ship([inventory_unit], whodunnit: 'some automated system') }
+
+      let(:user) { order.user }
+
+      it "sets the user on the UnitCancel and raises a deprecation # WARNING: " do
+        expect(Spree::Deprecation).to receive(:warn)
+
         expect { subject }.to change { Spree::UnitCancel.count }.by(1)
         expect(Spree::UnitCancel.last.created_by).to eq("some automated system")
       end
