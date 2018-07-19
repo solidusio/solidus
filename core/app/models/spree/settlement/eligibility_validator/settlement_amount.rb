@@ -6,7 +6,7 @@ module Spree
       class SettlementAmount < Spree::Settlement::EligibilityValidator::BaseValidator
         def eligible_for_settlement?
           return true unless @settlement.shipment
-          if @settlement.amount > @settlement.shipment.cost
+          if @settlement.amount > @settlement.shipment.total_before_tax
             add_error(:settlement_amount, I18n.t('spree.settlement_amount_greater_than_shipment_cost'))
             false
           else

@@ -38,6 +38,23 @@ RSpec.describe Spree::Settlement::EligibilityValidator::SettlementAmount do
           expect(validator.errors[:settlement_amount]).to eq I18n.t('spree.settlement_amount_greater_than_shipment_cost')
         end
       end
+
+      context "settlement's amount is smaller than shipment's cost and shipment has an adjustment" do
+        before do
+          settlement.shipment.cost = 15
+          settlement.amount = 15
+          allow(shipment).to receive(:total_before_tax).and_return(10)
+        end
+
+        it "returns false" do
+          expect(subject).to be false
+        end
+
+        it "sets an error" do
+          subject
+          expect(validator.errors[:settlement_amount]).to eq I18n.t('spree.settlement_amount_greater_than_shipment_cost')
+        end
+      end
     end
 
     context "settlement is not associated with a shipment" do

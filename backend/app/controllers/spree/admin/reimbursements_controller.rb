@@ -66,7 +66,7 @@ module Spree
         available_shipments = returned_items_shipments - unavailable_shipments
 
         @form_settlements = available_shipments.map do |shipment|
-          Spree::Settlement.new(shipment: shipment, amount: shipment.amount)
+          Spree::Settlement.new(shipment: shipment, amount: shipment.total_before_tax)
         end
 
         @existing_settlements = @reimbursement.settlements.for_shipment.not_pending
