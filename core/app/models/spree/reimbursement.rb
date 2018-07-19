@@ -98,16 +98,16 @@ module Spree
       total - paid_amount
     end
 
-    def perform!(creator: nil)
-      unless creator
-        creator = Spree.user_class.find_by(email: 'spree@example.com')
-        Spree::Deprecation.warn("Calling #perform on #{self} without creator is deprecated")
+    def perform!(created_by: nil)
+      unless created_by
+        created_by = Spree.user_class.find_by(email: 'spree@example.com')
+        Spree::Deprecation.warn("Calling #perform on #{self} without created_by is deprecated")
       end
       reimbursement_tax_calculator.call(self)
       reload
       update!(total: calculated_total)
 
-      reimbursement_performer.perform(self, creator: creator)
+      reimbursement_performer.perform(self, created_by: created_by)
 
       if unpaid_amount_within_tolerance?
         reimbursed!
@@ -120,16 +120,16 @@ module Spree
       end
     end
 
-    def simulate(creator: nil)
-      unless creator
-        creator = Spree.user_class.find_by(email: 'spree@example.com')
-        Spree::Deprecation.warn("Calling #simulate on #{self} without creator is deprecated")
+    def simulate(created_by: nil)
+      unless created_by
+        created_by = Spree.user_class.find_by(email: 'spree@example.com')
+        Spree::Deprecation.warn("Calling #simulate on #{self} without created_by is deprecated")
       end
       reimbursement_simulator_tax_calculator.call(self)
       reload
       update!(total: calculated_total)
 
-      reimbursement_performer.simulate(self, creator: creator)
+      reimbursement_performer.simulate(self, created_by: created_by)
     end
 
     def return_items_requiring_exchange
@@ -147,16 +147,16 @@ module Spree
     # Accepts all return items, saves the reimbursement, and performs the reimbursement
     #
     # @api public
-    # @param [Spree.user_class] creator the user that is performing this action
+    # @param [Spree.user_class] created_by the user that is performing this action
     # @return [void]
-    def return_all(creator: nil)
-      unless creator
-        creator = Spree.user_class.find_by(email: 'spree@example.com')
-        Spree::Deprecation.warn("Calling #return_all on #{self} without creator is deprecated")
+    def return_all(created_by: nil)
+      unless created_by
+        created_by = Spree.user_class.find_by(email: 'spree@example.com')
+        Spree::Deprecation.warn("Calling #return_all on #{self} without created_by is deprecated")
       end
       return_items.each(&:accept!)
       save!
-      perform!(creator: creator)
+      perform!(created_by: created_by)
     end
 
     private

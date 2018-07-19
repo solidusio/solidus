@@ -14,19 +14,19 @@ RSpec.describe Spree::ReimbursementPerformer, type: :model do
   end
 
   describe ".simulate" do
-    subject { Spree::ReimbursementPerformer.simulate(reimbursement, creator: created_by_user) }
+    subject { Spree::ReimbursementPerformer.simulate(reimbursement, created_by: created_by_user) }
 
     it "reimburses each calculated reimbursement types with the correct return items as a simulation" do
-      expect(reimbursement_type).to receive(:reimburse).with(reimbursement, [return_item], true, creator: created_by_user)
+      expect(reimbursement_type).to receive(:reimburse).with(reimbursement, [return_item], true, created_by: created_by_user)
       subject
     end
   end
 
   describe '.perform' do
-    subject { Spree::ReimbursementPerformer.perform(reimbursement, creator: created_by_user) }
+    subject { Spree::ReimbursementPerformer.perform(reimbursement, created_by: created_by_user) }
 
     it "reimburses each calculated reimbursement types with the correct return items as a simulation" do
-      expect(reimbursement_type).to receive(:reimburse).with(reimbursement, [return_item], false, creator: created_by_user)
+      expect(reimbursement_type).to receive(:reimburse).with(reimbursement, [return_item], false, created_by: created_by_user)
       subject
     end
   end

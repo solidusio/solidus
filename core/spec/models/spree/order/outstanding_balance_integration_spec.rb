@@ -90,7 +90,7 @@ RSpec.describe "Outstanding balance integration tests" do
         Spree::RefundReason.create!(name: Spree::RefundReason::RETURN_PROCESSING_REASON, mutable: false)
 
         cancelations.cancel_unit(cancelled_item.inventory_units.first)
-        cancelations.reimburse_units(cancelled_item.inventory_units, creator: created_by_user)
+        cancelations.reimburse_units(cancelled_item.inventory_units, created_by: created_by_user)
 
         order.reload
       end
