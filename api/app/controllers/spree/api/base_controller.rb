@@ -42,7 +42,11 @@ module Spree
       end
 
       def load_user
-        @current_api_user ||= Spree.user_class.find_by(spree_api_key: api_key.to_s)
+        @current_api_user ||= if json_web_token.present?
+          Spree.user_class.find_by(id: json_web_token['id'])
+        else
+          Spree.user_class.find_by(spree_api_key: api_key.to_s)
+        end
       end
 
       def authenticate_user
@@ -102,6 +106,14 @@ module Spree
         request.headers["X-Spree-Token"] || params[:token]
       end
       helper_method :api_key
+
+      def json_web_token
+        @json_web_token ||= JWT.decode(api_key, Spree::Config.jwt_secret,
+                              true, algorithm: Spree::Config.jwt_algorithm).first
+      rescue JWT::DecodeError => e
+        Rails.logger.warn e
+        nil
+      end
 
       def order_token
         request.headers["X-Spree-Order-Token"] || params[:order_token]

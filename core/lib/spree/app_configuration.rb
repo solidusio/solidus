@@ -137,6 +137,26 @@ module Spree
     #   at role_user creation for all roles. (default: +false+)
     preference :generate_api_key_for_all_roles, :boolean, default: false
 
+    # @see https://github.com/jwt/ruby-jwt#algorithms-and-usage
+    # @!attribute [rw] jwt_algorithm
+    #   @return [String] The hashing algorithm to use. (default 'HS256')
+    preference :jwt_algorithm, :string, default: 'HS256'
+
+    # @!attribute [rw] jwt_expiration
+    #   @return [String] How long until the token expires in seconds.
+    #   (default: +3600+)
+    preference :jwt_expiration, :integer, default: 3600
+
+    # @see https://github.com/jwt/ruby-jwt#algorithms-and-usage
+    # @!attribute [rw] jwt_options
+    #   @return [String] The options to pass into `Spree::User#as_json` when
+    #   when creating the jwt payload. (default: `{ only: %i[email first_name id last_name] }`)
+    preference :jwt_options, :hash, default: { only: %i[email first_name id last_name] }
+
+    # @!attribute [rw] jwt_secret
+    #   @return [String] The jwt secret to encrypt with. (default +secret_key_base+)
+    preference :jwt_secret, :string, default: -> { Rails.application.secret_key_base }
+
     # @!attribute [rw] layout
     #   @return [String] template to use for layout on the frontend (default: +"spree/layouts/spree_application"+)
     preference :layout, :string, default: 'spree/layouts/spree_application'
