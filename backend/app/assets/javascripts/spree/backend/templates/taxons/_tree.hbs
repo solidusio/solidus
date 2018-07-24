@@ -13,8 +13,10 @@
         <a href="#" class="js-taxon-delete fa fa-trash icon_link no-text"></a>
       </div>
     </div>
+    {{#if taxons }}
     <ul>
       {{> taxons/_tree }}
     </ul>
+    {{/if}}
   </li>
 {{/each}}
