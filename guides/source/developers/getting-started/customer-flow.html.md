@@ -97,14 +97,14 @@ order.
       address, the `ship_address_id` and the `bill_address_id` would be
       the same ID.
   - The order state changes from `address` to `delivery`.
-  - _Note that even if the customer has ordered with the store previously and
+  - Note that even if the customer has ordered with the store previously and
     saved their address, the order's `bill_address_id` and `ship_address_id`
-    values would have still been `nil` up until this point._
+    values would have still been `nil` up until this point.
 - A [`Spree::Shipment`][spree-shipment] object is created.
   - The shipment is given an 11-digit `number`: `H12341234123`.
   - Multiple `Spree::Shipment`s may be created. This depends on product
     availability, and a number of other (configurable) factors. For more
-    information see the [Shipments][spree-shipments] documentation.
+    information see the [Shipments][spree-shipment] documentation.
 
 [spree-address]: ../users/addresses.html
 [spree-adjustment]: ../adjustments/overview.html
@@ -207,20 +207,19 @@ Customer enters their preferred payment details and submits them.
 Customer reviews the confirmation screen and places order.
 
 - The `Spree::Payment`'s `state` changes from `checkout` to `pending`.
-
-Administrator can opt to manually approve the shipment. (Optional.)
-
-- The `Spree::Order`'s `approver_id` and `approved_at` values are no
-  longer `nil`.
 - The [`Spree::StockItem`'s][spree-stock-item] `count_on_hand` value decrease by
   the quantity of variants that have been ordered.
   - The stock location associated with the item is updated in the admin
     panel.
-- The `Spree::Shipment`'s `state` changes from `pending` to `ready`.
+
+Administrator can opt to manually approve the shipment. (Optional.)[^1]
+
+- The `Spree::Order`'s `approver_id` and `approved_at` values are no
+  longer `nil`.
 
 [spree-stock-item]: ../inventory/stock-items.html
 
-Administrator captures the payment.
+Administrator captures the payment.[^1]
 
 - The `Spree::Shipment` objects associated with the order are updated with a
   `state` of `ready`.
@@ -230,7 +229,7 @@ Administrator captures the payment.
   - If the payment does not go through, the `state` changes from
     `pending` to `processing` to `failure`.
 
-Administrator ships the order and marks the order as shipped.
+Administrator ships the order and marks the order as shipped.[^1]
 
 - A [`Spree::Carton`][spree-carton] object is created for each shipment
   associated with the order.
@@ -240,10 +239,12 @@ Administrator ships the order and marks the order as shipped.
 
 [spree-carton]: ../shipments/cartons.html
 
-Administrator adds a tracking number.
+Administrator adds a tracking number.[^1]
 
 - The `Spree::Shipment`'s `tracking` value is no longer `nil`.
 
 Customer waits patiently for a package in the mail.
 
 Customer receives their product.
+
+[^1]: Note that a store's administrator workflow can be automated.
