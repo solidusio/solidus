@@ -4,12 +4,35 @@ This article outlines a typical customer flow in Solidus on a technical level.
 The [`Spree::Order`][spree-order] model ties much of this flow together.
 However, every order placed touches many Solidus models.
 
+At a high level, this article outlines these steps of a customer flow:
+
+1. [Shopping](#shopping): The customer's pre-checkout activities. For example:
+   the customer browses the store and adds items to the cart.
+2. [Account](#account): The customer logs in to an account or checks out as a
+   guest.
+3. [Address](#address): The customer confirms billing and shipping addresses.
+4. [Shipments](#shipments): Shipping and taxation is calculated. The
+   customer can choose from available shipping methods.
+5. [Promotions](#promotions)\*: The customer can apply code-based promotions to
+   their order. Alternatively, Solidus may automatically apply a promotion based
+   on other factors.
+6. [Payments](#payments): The customer submits their payment information.
+7. [Confirmation](#confirmation): The customer confirms and places their order.
+8. [Capture and fulfillment](#capture-and-fulfillment): The payment is captured
+   by the store (or manually by a store administrator), and the order shipments
+   are shipped to the customer.
+
 Note that this article does not detail _every_ single interaction that a Rails
 server logs. Nor does it detail every single attribute on every single relevant
 model. For example, it does not mention the `special_instructions` that a
 customer might add to an order, or any of the order cancellation process.
 
+\* Promotions can be applied at any point in the pre-checkout or checkout
+process.
+
 ## Standard flow
+
+### Shopping
 
 Customer arrives at the store's URL.
 
@@ -49,6 +72,8 @@ Customer adds the product to their cart.
 [spree-variant]: ../products-and-variants/variants.html
 [tax-categories]: ../taxation/overview.html#tax-categories
 
+### Account 
+
 If the customer is not logged in, the user is asked to log into their
 account or continue the checkout process as a guest.
 
@@ -70,6 +95,8 @@ account or continue the checkout process as a guest.
         continue, which will be used in as the `Spree::Order`'s `email`
         value.
     - The order's `state` changes from `cart` to `address`.
+
+### Address
 
 Customer submits shipping and/or billing address information for the
 order.
@@ -110,6 +137,8 @@ order.
 [spree-adjustment]: ../adjustments/overview.html
 [spree-shipment]: ../shipments/overview.html
 
+### Shipments 
+
 Customer chooses their [shipping method][shipping-methods] (if more than one is
 available).
 
@@ -149,6 +178,8 @@ available).
   What happens if shipping costs are taxable?
 -->
 
+### Promotions
+
 Customer adds a promo code to their order.
 
 - Solidus determines whether the [promotion][spree-promotion] is valid.
@@ -174,6 +205,8 @@ Customer adds a promo code to their order.
 
 [promotion-rules]: ../promotions/promotion-rules.html
 [spree-promotion]: ../promotions/overview.html
+
+### Payments
 
 Customer is prompted to enter payment information.
 
@@ -204,6 +237,9 @@ Customer is prompted to enter payment information.
 
 Customer enters their preferred payment details and submits them.
 
+
+### Confirmation
+
 Customer reviews the confirmation screen and places order.
 
 - The `Spree::Payment`'s `state` changes from `checkout` to `pending`.
@@ -211,6 +247,8 @@ Customer reviews the confirmation screen and places order.
   the quantity of variants that have been ordered.
   - The stock location associated with the item is updated in the admin
     panel.
+
+### Capture and fulfillment 
 
 Administrator can opt to manually approve the shipment. (Optional.)[^1]
 
