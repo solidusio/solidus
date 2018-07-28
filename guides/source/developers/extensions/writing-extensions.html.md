@@ -17,8 +17,11 @@ There is also a series of curated extensions available under the
 ## Developing a Solidus extension locally
 
 ### Install the solidus_cmd gem
-To develop your own Solidus extension, you'll need to install the
-[`solidus_cmd`](https://github.com/solidusio-contrib/solidus_cmd) gem.
+A Solidus extension is just a Rails engine, you can build the extension in
+exactly the same way you'd build any other Rails engine.
+
+However, it is recommended that you use the [`solidus_cmd`](https://github.com/solidusio-contrib/solidus_cmd)
+gem.
 
 ```bash
 gem install solidus_cmd
