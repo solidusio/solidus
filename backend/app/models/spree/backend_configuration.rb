@@ -10,7 +10,6 @@ module Spree
     PRODUCT_TABS       ||= [:products, :option_types, :properties,
                             :variants, :product_properties, :taxonomies,
                             :taxons]
-    REPORT_TABS        ||= [:reports]
     CONFIGURATION_TABS ||= [:stores, :tax_categories,
                             :tax_rates, :zones,
                             :payment_methods, :shipping_methods,
@@ -84,11 +83,6 @@ module Spree
           'th-large',
           condition: -> { can?(:admin, Spree::Product) },
           partial: 'spree/admin/shared/product_sub_menu'
-        ),
-        MenuItem.new(
-          REPORT_TABS,
-          'file',
-          condition: -> { can?(:admin, :reports) },
         ),
         MenuItem.new(
           CONFIGURATION_TABS,
