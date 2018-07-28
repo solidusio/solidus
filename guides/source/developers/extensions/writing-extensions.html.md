@@ -1,15 +1,18 @@
 # Writing a New Solidus Extension
 
 Sometimes building a site powered by Solidus will require customization.
-Solidus extensions are Rails engines that allow you to extend or change the
-functionality of the Solidus platform.
+Solidus extensions are [Rails engines](https://guides.rubyonrails.org/engines.html)
+that allow you to extend or change the functionality of the Solidus platform.
 
 ## Find existing extensions
 
 Before you write a new Solidus extension you should look for an existing
 extension that meets your needs. Solidus maintains an official list of
-[supported extension](http://extensions.solidus.io), but you can also use
+[supported extensions](http://extensions.solidus.io), but you can also use
 [soliton](http://soliton.nebulab.it) to search for extensions.
+
+There is also a series of curated extensions available under the
+[solidus-contrib](https://github.com/solidusio-contrib) organization.
 
 ## Developing a Solidus extension locally
 
@@ -36,7 +39,7 @@ solidus extension extension_name
 ### Configure your extension
 After `solidus_cmd` has generated your extension template, you will need to
 configure your `gemspec` file. This step of the process is similar to [building
-any Ruby gem](https://guides.rubygems.org/make-your-own-gem/).
+any Ruby gem](https://bundler.io/v1.16/guides/creating_gem.html).
 
 This is the right time to set the version of Solidus you are targeting with
 your extension. You can set that dependency and any other dependencies you
@@ -47,21 +50,23 @@ To work on your Solidus extension locally you will need a Solidus application
 to host the extension. Setting up a Solidus application specifically for
 testing is recommended.
 
-Loading your Solidus extension is as simple as building the gem and adding it
-to your `Gemfile`.
+Loading your Solidus extension is as simple as adding it to your `Gemfile`.
 
-Once you're ready to load the extension into your test Solidus application.
-You'll need to build your gem with the following command:
-
-```bash
-gem build solidus_extension_name.gemspec
-```
-
-Then you can add the gem to your Solidus application's `Gemfile` using the
-`path` option:
+Once you're ready to load the extension into your test Solidus application, you
+can add the gem to your Solidus application's `Gemfile` using the `path`
+option:
 
 ```ruby
 gem "solidus_extension_name", path: "path/to/extension"
 ```
 
 You can now use the `bundle` command to install your extension.
+
+# Registering your extension
+
+Solidus extensions benefit from being shared with the community. Sharing your
+extension will allow other Solidus developers to extend the functionality of
+your code.
+
+You can add your extension to the official list of supported extensions by
+submitting a PR to [solidusio/extensions.solidus.io](https://github.com/solidusio/extensions.solidus.io).
