@@ -165,4 +165,24 @@ RSpec.describe Spree::BaseHelper, type: :helper do
       subject
     end
   end
+
+  context "display_order_total" do
+    context "if the total is less than zero" do
+      let(:order) { create(:order, total: -1.00) }
+      subject { display_order_total(order) }
+
+      it "should return a Spree::Money object with a value of zero as html" do
+        expect(subject).to eq(Spree::Money.new(0, order: order.currency).to_html)
+      end
+    end
+
+    context "if the total is greater than or equal to zero" do
+      let(:order) { create :order_with_totals }
+      subject { display_order_total(order) }
+
+      it "should return a the order total" do
+        expect(subject).to eq(order.display_total.to_html)
+      end
+    end
+  end
 end

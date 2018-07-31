@@ -23,7 +23,7 @@
   <% end %>
   <tr class="cart-total">
     <td colspan="4" align='right'><h5><%= t('spree.total') %></h5></td>
-    <td colspan><h5><%= order.display_total %></h5></td>
+    <td colspan><h5><%= display_order_total(current_order) %></h5></td>
     <td></td>
   </tr>
 </table>
