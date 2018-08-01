@@ -5,7 +5,7 @@ module Spree
     belongs_to :source, polymorphic: true
 
     def parsed_details
-      @details ||= YAML.safe_load(details)
+      @details ||= YAML.load(details)
     end
   end
 end
