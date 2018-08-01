@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   module Core
     module ErrorHandler
@@ -20,7 +22,7 @@ module Spree
           # @param error [StandardError] The error you want to handle.
           # @param serverity [Symbol, String] The severity (i.e. debug, info, warn, error, fatal)
           #
-          def handle(error, severity: :error)
+          def handle(_error, _severity: :error)
             raise NoMethodError
           end
         end
