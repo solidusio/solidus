@@ -30,6 +30,19 @@ RSpec.describe Spree::AppConfiguration, type: :model do
     expect(prefs.pricing_options_class).to eq Spree::Variant::PriceSelector.pricing_options_class
   end
 
+  describe '#jwt_secret' do
+    subject { prefs.jwt_secret }
+    it { is_expected.to be_a String }
+  end
+
+  describe '#jwt_secret=' do
+    let(:target) { 'secret' }
+    it 'should allow you to write to it' do
+      prefs.jwt_secret = target
+      expect(prefs.jwt_secret).to eql target
+    end
+  end
+
   describe '#stock' do
     subject { prefs.stock }
     it { is_expected.to be_a Spree::Core::StockConfiguration }

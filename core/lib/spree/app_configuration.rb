@@ -153,10 +153,6 @@ module Spree
     #   when creating the jwt payload. (default: `{ only: %i[email first_name id last_name] }`)
     preference :jwt_options, :hash, default: { only: %i[email first_name id last_name] }
 
-    # @!attribute [rw] jwt_secret
-    #   @return [String] The jwt secret to encrypt with. (default +secret_key_base+)
-    preference :jwt_secret, :string, default: -> { Rails.application.secret_key_base }
-
     # @!attribute [rw] layout
     #   @return [String] template to use for layout on the frontend (default: +"spree/layouts/spree_application"+)
     preference :layout, :string, default: 'spree/layouts/spree_application'
@@ -409,6 +405,21 @@ module Spree
     # @return [Class] a class that provides a `#parameterize` method that
     # returns a String
     class_name_attribute :taxon_url_parametizer_class, default: 'ActiveSupport::Inflector'
+
+    ##
+    # Provide your own secret when creating json web tokens
+    # @attr_writer jwt_secret [String] The secret to encrypt web tokens with.
+    #
+    attr_writer :jwt_secret
+
+    ##
+    # Get the secret token to encrypt json web tokens with.
+    # @return [String] The secret used to encrypt json web tokens
+    #
+    def jwt_secret
+      # Account for different rails versions
+      @jwt_secret ||= ENV['SECRET_KEY_BASE'] || Rails.application.secret_key_base
+    end
 
     # Allows providing your own class instance for generating order numbers.
     #

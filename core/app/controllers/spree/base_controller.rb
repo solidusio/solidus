@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'cancan'
-require 'jwt'
 require_dependency 'spree/core/controller_helpers/strong_parameters'
 
 class Spree::BaseController < ApplicationController
