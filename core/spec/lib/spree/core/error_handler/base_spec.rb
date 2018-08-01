@@ -7,7 +7,7 @@ RSpec.describe Spree::Core::ErrorHandler::Base do
   let(:severity) { :error }
 
   describe '.handle' do
-    subject { described_class.handle(error, severity: severity) }
+    subject { described_class.handle(error, severity) }
 
     it { expect { subject }.to raise_error NoMethodError }
   end

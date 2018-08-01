@@ -10,7 +10,7 @@ module Spree
           # @param error [StandardError] The error you want to handle.
           # @param serverity [Symbol, String] The severity (i.e. debug, info, warn, error, fatal)
           #
-          def handle(error, severity: :error)
+          def handle(error, severity = :error)
             Spree::Config.logger.send(severity, error)
           end
         end

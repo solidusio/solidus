@@ -46,6 +46,7 @@ module Spree
   end
 
   module Core
+    class Error < StandardError; end
     class GatewayError < RuntimeError; end
 
     include ActiveSupport::Deprecation::DeprecatedConstantAccessor

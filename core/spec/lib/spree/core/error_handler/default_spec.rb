@@ -7,7 +7,7 @@ RSpec.describe Spree::Core::ErrorHandler::Default do
   let(:severity) { :error }
 
   describe '.handle' do
-    subject { described_class.handle(error, severity: severity) }
+    subject { described_class.handle(error, severity) }
 
     it 'should log with the Spree::Config.logger' do
       expect(Spree::Config.logger).to receive(:send).with(severity, error)
