@@ -5,6 +5,8 @@ require 'rails_helper'
 RSpec.describe Spree::AppConfiguration, type: :model do
   let(:prefs) { Spree::Config }
 
+  it { is_expected.to respond_to 'logger=' }
+
   it "should be available from the environment" do
     prefs.layout = "my/layout"
     expect(prefs.layout).to eq "my/layout"
@@ -28,6 +30,11 @@ RSpec.describe Spree::AppConfiguration, type: :model do
 
   it "has a getter for the pricing options class provided by the variant price selector class" do
     expect(prefs.pricing_options_class).to eq Spree::Variant::PriceSelector.pricing_options_class
+  end
+
+  describe '#logger' do
+    subject { prefs.logger }
+    it { is_expected.to be_a Logger }
   end
 
   describe '#stock' do

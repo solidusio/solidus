@@ -23,8 +23,15 @@ require 'spree/preferences/configuration'
 require 'spree/core/environment'
 
 module Spree
+  ##
+  # Base configuration for Spree.
+  # @attr_writer :logger
+  # @attr_writer :order_number_generator
+  #
   class AppConfiguration < Preferences::Configuration
     # Alphabetized to more easily lookup particular preferences
+    attr_writer :logger
+    attr_writer :order_number_generator
 
     # @!attribute [rw] address_requires_state
     #   @return [Boolean] should state/state_name be required (default: +true+)
@@ -268,6 +275,13 @@ module Spree
       @available_currencies ||= ::Money::Currency.all
     end
 
+    ##
+    # Allows stores to implement their own error handling.
+    # @see Spree::Core::ErrorHandler::Base
+    # @return [Class]
+    #
+    class_name_attribute :error_handler_class, default: 'Spree::Cored::ErrorHandler::Default'
+
     # searcher_class allows spree extension writers to provide their own Search class
     class_name_attribute :searcher_class, default: 'Spree::Core::Search::Base'
 
@@ -390,13 +404,20 @@ module Spree
     # returns a String
     class_name_attribute :taxon_url_parametizer_class, default: 'ActiveSupport::Inflector'
 
+    ##
+    # Logger for solidus
+    # @return [Logger] The logger which by default outputs to STDOUT.
+    #
+    def logger
+      @logger ||= Logger.new(STDOUT)
+    end
+
     # Allows providing your own class instance for generating order numbers.
     #
     # @!attribute [rw] order_number_generator
     # @return [Class] a class instance with the same public interfaces as
     #   Spree::Order::NumberGenerator
     # @api experimental
-    attr_writer :order_number_generator
     def order_number_generator
       @order_number_generator ||= Spree::Order::NumberGenerator.new
     end
