@@ -8,7 +8,7 @@
 
 ## Summary
 
-Solidus is a complete open source ecommerce solution built with Ruby on Rails.
+Solidus is a complete open source E-commerce solution built with Ruby on Rails.
 It is a fork of [Spree](https://spreecommerce.org).
 
 See the [Solidus class documentation](http://docs.solidus.io) and the [Solidus
