@@ -26,6 +26,7 @@ gem 'rspec-rails', '~> 3.7', require: false
 gem 'simplecov', require: false
 gem 'with_model', require: false
 gem 'rails-controller-testing', require: false
+gem 'pkg-config', '~> 1.1', require: false
 
 group :backend, :frontend do
   gem 'capybara', '~> 2.15', require: false
