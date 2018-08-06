@@ -3,7 +3,7 @@
 require 'active_record'
 
 def prompt_for_agree(prompt)
-  print prompt
+  puts prompt
   ["y", "yes"].include? STDIN.gets.strip.downcase
 end
 
