@@ -42,6 +42,7 @@ combine it with your own custom frontend, admin interface, and API.
 [![Gem](https://img.shields.io/gem/v/solidus.svg)](https://rubygems.org/gems/solidus)
 [![License](http://img.shields.io/badge/license-BSD-yellowgreen.svg)](LICENSE.md)
 [![Slack](http://slack.solidus.io/badge.svg)](http://slack.solidus.io)
+[![Reviewed by Hound](https://img.shields.io/badge/Reviewed_by-Hound-8E64B0.svg)](https://houndci.com)
 
 ## Demo
 
