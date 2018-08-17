@@ -9,7 +9,7 @@ module Spree
       # @example Create a custom error handler
       #   class CustomErrorReporter < Spree::Core::ErrorReporter::Base
       #     # Output to as debug by default
-      #     def handle(error, severity: :debug)
+      #     def report(error, :debug)
       #       Rollbar.send(severity, error)
       #       Rails.logger.send(severity, error)
       #     end
@@ -21,8 +21,9 @@ module Spree
           # Generic error handling
           # @param error [StandardError] The error you want to handle.
           # @param serverity [Symbol, String] The severity (i.e. debug, info, warn, error, fatal)
+          # @param metadata [Hash] Any metadata we want to pass in
           #
-          def report(_error, _severity = :error)
+          def report(_error, _severity = :error, _metadata = {})
             raise NoMethodError
           end
         end
