@@ -9,11 +9,12 @@ module Spree
       # @example Create a custom error handler
       #   class CustomErrorReporter < Spree::Core::ErrorReporter::Base
       #     # Output to as debug by default
-      #     def report(error, :debug)
-      #       Rollbar.send(severity, error)
-      #       Rails.logger.send(severity, error)
+      #     def report(error, severity, metadata)
+      #       Rollbar.send(severity, error, metadata)
       #     end
       #   end
+      #
+      #   Spree::Core::ErrorReporter.add_reporter(CustomErrorReporter)
       #
       class Base
         class << self
