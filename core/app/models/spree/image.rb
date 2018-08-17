@@ -5,7 +5,7 @@ module Spree
     validate :no_attachment_errors
 
     has_attached_file :attachment,
-                      styles: { mini: '48x48>', small: '100x100>', product: '240x240>', large: '600x600>' },
+                      styles: lambda { |a| a.instance.attachment_styles },
                       default_style: :product,
                       default_url: 'noimage/:style.png',
                       url: '/spree/products/:id/:style/:basename.:extension',
@@ -17,7 +17,7 @@ module Spree
 
     # save the w,h of the original image (from which others can be calculated)
     # we need to look at the write-queue for images which have not been saved yet
-    after_post_process :find_dimensions, if: :valid?
+    after_post_process :find_dimensions, if: :attachment_accepted?
 
     # used by admin products autocomplete
     def mini_url
@@ -41,6 +41,21 @@ module Spree
         errors.add :attachment, "Paperclip returned errors for file '#{attachment_file_name}' - check ImageMagick installation or image source file."
         false
       end
+    end
+
+    def attachment_styles
+      {
+        mini: '48x48>',
+        small: '100x100>',
+        product: '240x240>',
+        large: '600x600>'
+      }
+    end
+
+    private
+
+    def attachment_accepted?
+      valid?
     end
   end
 end
