@@ -24,7 +24,11 @@ module Spree
         @order.next!
         respond_with(@order, default_template: 'spree/api/orders/show', status: 200)
       rescue StateMachines::InvalidTransition => e
-        logger.error("invalid_transition #{e.event} from #{e.from} for #{e.object.class.name}. Error: #{e.inspect}")
+        custom_message = "invalid_transition #{e.event} from #{e.from} for " \
+                         "#{e.object.class.name}. Error: #{e.inspect}"
+        Spree::Core::ErrorReporter.report(e)
+        Spree::Core::ErrorReporter.report(custom_message, :info)
+
         respond_with(@order, default_template: 'spree/api/orders/could_not_transition', status: 422)
       end
 
@@ -43,7 +47,10 @@ module Spree
           respond_with(@order, default_template: 'spree/api/orders/show', status: 200)
         end
       rescue StateMachines::InvalidTransition => e
-        logger.error("invalid_transition #{e.event} from #{e.from} for #{e.object.class.name}. Error: #{e.inspect}")
+        custom_message = "invalid_transition #{e.event} from #{e.from} for " \
+                         "#{e.object.class.name}. Error: #{e.inspect}"
+        Spree::Core::ErrorReporter.report(custom_message)
+
         respond_with(@order, default_template: 'spree/api/orders/could_not_transition', status: 422)
       end
 

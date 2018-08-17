@@ -93,7 +93,10 @@ module Spree
       end
 
       def invalid_resource!(resource)
-        Rails.logger.error "invalid_resouce_errors=#{resource.errors.full_messages}"
+        Spree::Core::ErrorReporter.report(
+          "invalid_resouce_errors=#{resource.errors.full_messages}"
+        )
+
         @resource = resource
         render "spree/api/errors/invalid_resource", status: 422
       end
@@ -151,7 +154,10 @@ module Spree
       end
 
       def insufficient_stock_error(exception)
-        logger.error "insufficient_stock_error #{exception.inspect}"
+        custom_message = "insufficient_stock_error #{exception.inspect}"
+        Spree::Core::ErrorReporter.report(exception)
+        Spree::Core::ErrorReporter.report(custom_message, :info)
+
         render(
           json: {
             errors: [I18n.t(:quantity_is_not_available, scope: "spree.api.order")],

@@ -69,7 +69,7 @@ module Spree
 
       response
     rescue ActiveMerchant::ConnectionError => e
-      logger.error(I18n.t('spree.gateway_error') + "  #{e.inspect}")
+      Spree::Core::ErrorReporter.report(e)
       raise Core::GatewayError.new(I18n.t('spree.unable_to_connect_to_gateway'))
     end
 

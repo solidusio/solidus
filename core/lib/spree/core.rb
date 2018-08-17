@@ -83,8 +83,11 @@ require 'spree/core/controller_helpers/pricing'
 require 'spree/core/controller_helpers/search'
 require 'spree/core/controller_helpers/store'
 require 'spree/core/controller_helpers/strong_parameters'
+
 require 'spree/core/error_reporter/base'
-require 'spree/core/error_reporter/default'
+require 'spree/core/error_reporter/spree_logger'
+require 'spree/core/error_reporter'
+
 require 'spree/core/role_configuration'
 require 'spree/core/stock_configuration'
 require 'spree/core/validators/email'

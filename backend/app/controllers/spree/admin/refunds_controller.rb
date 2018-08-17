@@ -32,6 +32,7 @@ module Spree
       end
 
       def spree_core_gateway_error(error)
+        Spree::Core::ErrorReporter.report(error)
         flash[:error] = error.message
         render :new
       end

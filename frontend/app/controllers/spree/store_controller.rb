@@ -22,7 +22,8 @@ module Spree
 
     def lock_order
       Spree::OrderMutex.with_lock!(@order) { yield }
-    rescue Spree::OrderMutex::LockFailed
+    rescue Spree::OrderMutex::LockFailed => e
+      Spree::Core::ErrorReporter.report(e, :info)
       flash[:error] = t('spree.order_mutex_error')
       redirect_to spree.cart_path
     end

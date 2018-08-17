@@ -22,7 +22,7 @@ module Spree
           order_mutex = create!(order: order)
         rescue ActiveRecord::RecordNotUnique
           error = LockFailed.new("Could not obtain lock on order #{order.id}")
-          logger.error error.inspect
+          Spree::Core::ErrorReporter.report(error)
           raise error
         end
 

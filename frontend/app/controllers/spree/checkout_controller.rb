@@ -224,6 +224,7 @@ module Spree
     end
 
     def rescue_from_spree_gateway_error(exception)
+      Spree::Core::ErrorReporter.report(exception, :info)
       flash.now[:error] = t('spree.spree_gateway_error_flash_for_checkout')
       @order.errors.add(:base, exception.message)
       render :edit

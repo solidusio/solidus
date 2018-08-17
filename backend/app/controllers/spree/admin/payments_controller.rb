@@ -47,6 +47,7 @@ module Spree
             render :new
           end
         rescue Spree::Core::GatewayError => e
+          Spree::Core::ErrorReporter.report(e)
           flash[:error] = e.message.to_s
           redirect_to new_admin_order_payment_path(@order)
         end
@@ -63,6 +64,7 @@ module Spree
           flash[:error] = t('spree.cannot_perform_operation')
         end
       rescue Spree::Core::GatewayError => ge
+        Spree::Core::ErrorReporter.report(ge)
         flash[:error] = ge.message.to_s
       ensure
         redirect_to admin_order_payments_path(@order)
@@ -114,7 +116,8 @@ module Spree
         end
       end
 
-      def insufficient_stock_error
+      def insufficient_stock_error(error)
+        Spree::Core::ErrorReporter.report(error, :info)
         flash[:error] = t('spree.insufficient_stock_for_order')
         redirect_to new_admin_order_payment_url(@order)
       end

@@ -64,7 +64,8 @@ module Spree
           params[:guest_checkout] == "false" && params[:user_id] && params[:user_id].to_i != @order.user_id
         end
 
-        def insufficient_stock_error
+        def insufficient_stock_error(error)
+          Spree::Core::ErrorReporter.report(error, :info)
           flash[:error] = t('spree.insufficient_stock_for_order')
           redirect_to edit_admin_order_customer_url(@order)
         end

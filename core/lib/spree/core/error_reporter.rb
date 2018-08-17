@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   module Core
     module ErrorReporter
@@ -5,7 +7,7 @@ module Spree
 
       def report(error, severity = :error, metadata = {})
         reporters.each do |reporter|
-          reporter.new.report(error, severity, metadata)
+          reporter.report(error, severity, metadata)
         end
 
         true
@@ -25,11 +27,11 @@ module Spree
       # @return [Array<ErrorReporter::Base>]
       #
       def add_reporter(reporter_class)
-        unless reporter_class.is_a?(Spree::Core::ErrorReporter::Base)
+        unless reporter_class < Spree::Core::ErrorReporter::Base
           raise ArgumentError, 'Reporter is not type Spree::Core::ErrorReporter::Base'
         end
 
-        reporters << reporter
+        reporters << reporter_class
       end
 
       ##
