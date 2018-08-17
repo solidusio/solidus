@@ -5,7 +5,7 @@ module Spree
     validate :no_attachment_errors
 
     has_attached_file :attachment,
-                      :styles => lambda { |a| a.instance.attachment_styles },
+                      styles: lambda { |a| a.instance.attachment_styles },
                       default_style: :product,
                       default_url: 'noimage/:style.png',
                       url: '/spree/products/:id/:style/:basename.:extension',

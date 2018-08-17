@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 
 gemspec require: false
 
-rails_version = ENV['RAILS_VERSION'] || '~> 5.2.0'
+rails_version = ENV['RAILS_VERSION'] || '< 5.2.1'
 gem 'rails', rails_version, require: false
 
 platforms :ruby do
