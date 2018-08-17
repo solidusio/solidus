@@ -2,12 +2,12 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::Core::ErrorHandler::Default do
+RSpec.describe Spree::Core::ErrorReporter::Default do
   let(:error) { StandardError.new }
   let(:severity) { :error }
 
-  describe '.handle' do
-    subject { described_class.handle(error, severity) }
+  describe '.report' do
+    subject { described_class.report(error, severity) }
 
     it 'should log with the Spree::Config.logger' do
       expect(Spree::Config.logger).to receive(:send).with(severity, error)

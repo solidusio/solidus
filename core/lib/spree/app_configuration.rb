@@ -152,6 +152,10 @@ module Spree
     #   @return [String] URL of logo used on frontend (default: +'logo/solidus_logo.png'+)
     preference :logo, :string, default: 'logo/solidus_logo.png'
 
+    # @!attribute [rw] on_error_report
+    #   @return [Proc] A proc object which will be executed when the error reporter is executed
+    preference :on_error_report, :proc, default: proc {}
+
     # @!attribute [rw] order_bill_address_used
     #   @return [Boolean] Use the order's bill address, as opposed to storing
     #   bill addresses on payment sources. (default: +true+)
@@ -277,10 +281,10 @@ module Spree
 
     ##
     # Allows stores to implement their own error handling.
-    # @see Spree::Core::ErrorHandler::Base
+    # @see Spree::Core::ErrorReporter::Base
     # @return [Class]
     #
-    class_name_attribute :error_handler_class, default: 'Spree::Cored::ErrorHandler::Default'
+    class_name_attribute :error_reporter_class, default: 'Spree::Cored::ErrorReporter::Default'
 
     # searcher_class allows spree extension writers to provide their own Search class
     class_name_attribute :searcher_class, default: 'Spree::Core::Search::Base'

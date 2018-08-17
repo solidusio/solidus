@@ -2,12 +2,12 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::Core::ErrorHandler::Base do
+RSpec.describe Spree::Core::ErrorReporter::Base do
   let(:error) { StandardError.new }
   let(:severity) { :error }
 
-  describe '.handle' do
-    subject { described_class.handle(error, severity) }
+  describe '.report' do
+    subject { described_class.report(error, severity) }
 
     it { expect { subject }.to raise_error NoMethodError }
   end

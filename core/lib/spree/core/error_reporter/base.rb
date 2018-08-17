@@ -2,12 +2,12 @@
 
 module Spree
   module Core
-    module ErrorHandler
+    module ErrorReporter
       ##
       # Abstract class only meant to be inherited from
       #
       # @example Create a custom error handler
-      #   class CustomErrorHandler < Spree::Core::ErrorHandler::Base
+      #   class CustomErrorReporter < Spree::Core::ErrorReporter::Base
       #     # Output to as debug by default
       #     def handle(error, severity: :debug)
       #       Rollbar.send(severity, error)
@@ -22,7 +22,7 @@ module Spree
           # @param error [StandardError] The error you want to handle.
           # @param serverity [Symbol, String] The severity (i.e. debug, info, warn, error, fatal)
           #
-          def handle(_error, _severity = :error)
+          def report(_error, _severity = :error)
             raise NoMethodError
           end
         end
