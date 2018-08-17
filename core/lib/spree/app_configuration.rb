@@ -413,7 +413,7 @@ module Spree
     # @return [Logger] The logger which by default outputs to STDOUT.
     #
     def logger
-      @logger ||= Logger.new(STDOUT)
+      @logger ||= Rails.logger
     end
 
     # Allows providing your own class instance for generating order numbers.
