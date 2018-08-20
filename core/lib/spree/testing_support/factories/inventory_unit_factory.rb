@@ -6,7 +6,7 @@ require 'spree/testing_support/factories/shipment_factory'
 FactoryBot.define do
   factory :inventory_unit, class: 'Spree::InventoryUnit' do
     transient do
-      order nil
+      order { nil }
     end
 
     variant
@@ -17,7 +17,7 @@ FactoryBot.define do
         build(:line_item, variant: variant)
       end
     end
-    state 'on_hand'
+    state { 'on_hand' }
     shipment { build(:shipment, state: 'pending', order: line_item.order) }
     # return_authorization
   end
