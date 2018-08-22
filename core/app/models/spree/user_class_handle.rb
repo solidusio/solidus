@@ -4,7 +4,7 @@ module Spree
   # Configuration point for User model implementation.
   #
   # `Spree::UserClassHandle` allows you to configure your own implementation of a
-  # User class or use an extnesion like `solidus_auth_devise`.
+  # User class or use an extension like `solidus_auth_devise`.
   #
   # @note Placeholder for name of Spree.user_class to ensure later evaluation at
   #  runtime.
