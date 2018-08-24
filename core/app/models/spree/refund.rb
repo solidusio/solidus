@@ -62,7 +62,7 @@ module Spree
       end
 
       if !response.success?
-        logger.error(I18n.t('spree.gateway_error') + "  #{response.to_yaml}")
+        Spree::Core::ErrorReporter.report(I18n.t('spree.gateway_error') + "  #{response.to_yaml}")
         text = response.params['message'] || response.params['response_reason_text'] || response.message
         raise Core::GatewayError.new(text)
       end

@@ -60,7 +60,7 @@ module Spree
           if @shipment.can_ready?
             @shipment.ready!
           else
-            logger.error("cannot_ready_shipment shipment_state=#{@shipment.state}")
+            Spree::Core::ErrorReporter.report("cannot_ready_shipment shipment_state=#{@shipment.state}")
             render('spree/api/shipments/cannot_ready_shipment', status: 422) && return
           end
         end

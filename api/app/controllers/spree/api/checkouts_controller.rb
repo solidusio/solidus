@@ -68,7 +68,7 @@ module Spree
             state_callback(:after)
             respond_with(@order, default_template: 'spree/api/orders/show')
           else
-            logger.error("failed_to_transition_errors=#{@order.errors.full_messages}")
+            Spree::Core::ErrorReporter.report("failed_to_transition_errors=#{@order.errors.full_messages}")
             respond_with(@order, default_template: 'spree/api/orders/could_not_transition', status: 422)
           end
         else
