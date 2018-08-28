@@ -314,6 +314,15 @@ module Spree
     # @api experimental
     class_name_attribute :shipping_rate_tax_calculator_class, default: 'Spree::TaxCalculator::ShippingRate'
 
+    # Allows providing your own Mailer for order mailer.
+    #
+    # @!attribute [rw] order_mailer_class
+    # @return [ActionMailer::Base] an object that responds to "confirm_email",
+    #   "cancel_email" and "inventory_cancellation_email"
+    #   (e.g. an ActionMailer with a "confirm_email" method) with the same
+    #   signature as Spree::OrderMailer.confirm_email.
+    class_name_attribute :order_mailer_class, default: 'Spree::OrderMailer'
+
     # Allows providing your own Mailer for promotion code batch mailer.
     #
     # @!attribute [rw] promotion_code_batch_mailer_class
@@ -322,6 +331,14 @@ module Spree
     #   (e.g. an ActionMailer with a "promotion_code_batch_finished" method) with the same
     #   signature as Spree::PromotionCodeBatchMailer.promotion_code_batch_finished.
     class_name_attribute :promotion_code_batch_mailer_class, default: 'Spree::PromotionCodeBatchMailer'
+
+    # Allows providing your own Mailer for reimbursement mailer.
+    #
+    # @!attribute [rw] reimbursement_mailer_class
+    # @return [ActionMailer::Base] an object that responds to "reimbursement_email"
+    #   (e.g. an ActionMailer with a "reimbursement_email" method) with the same
+    #   signature as Spree::ReimbursementMailer.reimbursement_email.
+    class_name_attribute :reimbursement_mailer_class, default: 'Spree::ReimbursementMailer'
 
     # Allows providing your own Mailer for shipped cartons.
     #
