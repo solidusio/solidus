@@ -705,7 +705,7 @@ de:
     cart: Warenkorb
     cart_subtotal:
       one: Zwischensumme (1 Artikel)
-      other: 'Zwischensumme (%count Artikel)'
+      other: 'Zwischensumme (%{count} Artikel)'
     categories: Kategorien
     category: Kategorie
     charged: Berechnet
