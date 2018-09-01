@@ -360,6 +360,31 @@ module Spree
             expect(order.shipment_total.to_f).to eq 4.99
           end
         end
+
+        context "when line items and shipments are present" do
+          let(:params) do
+            {
+              completed_at: 2.days.ago,
+              line_items_attributes: line_items,
+              shipments_attributes: [
+                {
+                  tracking: '123456789',
+                  cost: '4.99',
+                  shipped_at: 1.day.ago,
+                  shipping_method: shipping_method.name,
+                  stock_location: stock_location.name,
+                  inventory_units: [{ sku: sku }]
+                }
+              ]
+            }
+          end
+
+          it 'builds quantities properly' do
+            order = Importer::Order.import(user, params)
+            line_item = order.line_items.first
+            expect(line_item.quantity).to eq(5)
+          end
+        end
       end
 
       it 'adds adjustments' do
