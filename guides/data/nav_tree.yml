@@ -36,6 +36,8 @@ main:
         href: "/developers/extensions/decorators.html"
       - title: "Installing extensions"
         href: "/developers/extensions/installing-extensions.html"
+      - title: "Writing extensions"
+        href: "/developers/extensions/writing-extensions.html"
       - title: "Testing extensions"
         href: "/developers/extensions/testing-extensions.html"
   - title: "Inventory"
