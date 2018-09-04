@@ -12,14 +12,12 @@
   }
 
   .taxon {
-    border-radius: $border-radius;
-  }
-
-  .taxon {
     background-color: very-light($color-3);
     border: 1px solid $color-border;
+    border-radius: $border-radius;
     color: $body-color;
     font-weight: $font-weight-bold;
+    margin: 5px 0;
     padding: 0.5em;
 
     &.sortable {
