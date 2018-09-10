@@ -52,18 +52,21 @@ describe Spree::Admin::ProductsController, type: :controller do
 
   # regression test for https://github.com/spree/spree/issues/2791
   context "adding taxons to a product" do
-    let!(:product) { create(:product) }
-    let!(:first_taxon) { create(:taxon) }
-    let!(:second_taxon) { create(:taxon) }
+    let(:product) { create(:product) }
+    let(:first_taxon) { create(:taxon) }
 
     it "adds a single taxon to a product" do
       put :update, params: { id: product.to_param, product: { taxon_ids: first_taxon.id.to_s } }
       expect(flash[:success]).to eq("Product #{product.name.inspect} has been successfully updated!")
     end
 
-    it "adds multiple taxons to a product" do
-      put :update, params: { id: product.to_param, product: { taxon_ids: "#{first_taxon.id}, #{second_taxon.id}" } }
-      expect(flash[:success]).to eq("Product #{product.name.inspect} has been successfully updated!")
+    context "when there are mulitple taxons" do
+      let(:second_taxon) { create(:taxon) }
+
+      it "adds multiple taxons to a product" do
+        put :update, params: { id: product.to_param, product: { taxon_ids: "#{first_taxon.id}, #{second_taxon.id}" } }
+        expect(flash[:success]).to eq("Product #{product.name.inspect} has been successfully updated!")
+      end
     end
   end
 
