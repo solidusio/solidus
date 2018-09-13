@@ -172,6 +172,8 @@ main:
         href: "/developers/upgrades/migrate-from-spree.html"
       - title: "Versioning guidelines"
         href: "/developers/upgrades/versioning-guidelines.html"
+      - title: "How to release new versions"
+        href: "/developers/upgrades/how-to-release-new-versions.html"
   - title: "Users"
     dropdown:
       - title: "Addresses"
