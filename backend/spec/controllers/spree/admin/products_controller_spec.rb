@@ -50,7 +50,7 @@ describe Spree::Admin::ProductsController, type: :controller do
     end
   end
 
-  # regression test for https://github.com/spree/spree/issues/2791
+  # regression test for https://github.com/solidusio/solidus/issues/2791
   context "creating a product" do
     before(:all) do
       create(:shipping_category)
