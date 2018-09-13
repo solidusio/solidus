@@ -1,7 +1,7 @@
 # First-time installation
 
 This article will help you install and run Solidus on your local machine for the
-first time. This guide is aimed specifically at developers running macOS. 
+first time. This guide is aimed specifically at developers running macOS.
 
 If you run Linux or Windows, or you don't use [Homebrew][brew] on your Mac, you
 can still follow this guide. However, you may want to consult other
@@ -20,7 +20,7 @@ If you are still not able to get Solidus running, [open an issue on
 GitHub][solidus-github-issue] with any information you think would help to
 reproduce the issues you're having. That would include your operating system and
 its version, the versions of Ruby, Rails, and SQLite 3 that you are running, and
-the specific error messages you are receiving during installation. 
+the specific error messages you are receiving during installation.
 
 [solidus-github-issue]: https://github.com/solidusio/solidus/issues/new
 [slack-invitation]: http://slack.solidus.io
@@ -46,7 +46,7 @@ We also recommend configuring your development environment so that you can
 
 The following software is required to get Solidus running:
 
-- [Ruby](https://www.ruby-lang.org) 2.2.2 or newer
+- [Ruby](https://www.ruby-lang.org) 2.3 or newer
 - [SQLite 3](https://sqlite.org)
 - [Rails](http://guides.rubyonrails.org/getting_started.html) 5.0.0 or newer
 - [ImageMagick](http://imagemagick.org/script/download.php)
@@ -63,17 +63,17 @@ Homebrew][ruby-homebrew] if you need to upgrade from your system's Ruby.
 Using Homebrew, you can install all of the requirements using the following
 commands:
 
-```bash 
+```bash
 brew install ruby sqlite3 imagemagick
 gem install rails
 ```
 
 See more detailed installation information below.
 
-### Upgrade Ruby on macOS 
+### Upgrade Ruby on macOS
 
 If you run macOS Sierra or an older OS, you system's version of Ruby will need
-to be upgraded from 2.0.x to 2.2.2 or newer. You can check what version of Ruby
+to be upgraded from 2.0.x to 2.3 or newer. You can check what version of Ruby
 you have installed with the following command:
 
 ```bash
@@ -81,7 +81,7 @@ ruby --version
 ```
 
 The Ruby documentation recommends installing another, newer instance of Ruby
-installing another, newer instance of Ruby using Homebrew: 
+installing another, newer instance of Ruby using Homebrew:
 
 ```bash
 brew install ruby
@@ -130,7 +130,7 @@ This installs Rails as well as its dependencies.
 ImageMagick helps you create, edit, and save to hundreds of image file formats.
 It is required to use [Paperclip](https://github.com/thoughtbot/paperclip),
 which is how Solidus currently handles file attachments. To install ImageMagick
-via Homebrew, use the command: 
+via Homebrew, use the command:
 
 ```bash
 brew install imagemagick
@@ -156,7 +156,7 @@ Once the new project has finished being created, we can open the project's newly
 created `Gemfile` in a text editor and add the required Solidus gems as new
 lines:
 
-```ruby 
+```ruby
 gem 'solidus'
 gem 'solidus_auth_devise'
 ```
