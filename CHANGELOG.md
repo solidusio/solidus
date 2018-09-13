@@ -1,12 +1,81 @@
 ## Solidus 2.7.0 (master, unreleased)
 
+### Major Changes
+
+**Rails 5.2.1**
+
+Added support for Rails 5.2.1. Solidus 2.7.0 supports either Rails 5.2.x or 5.1.
+
+**Guides**
+
+Added the [new guides website](https://guides.solidus.io/) code directly into
+the main repository. This way it should be simpler to keep guides up to date.
+
+### Guides
+
+- Update guides ffi gem
+[#2838](https://github.com/solidusio/solidus/pull/2838) ([kennyadsl](https://github.com/kennyadsl))
+- add documentation for making new Solidus extensions [#2813](https://github.com/solidusio/solidus/pull/2813) ([jacobherrington](https://github.com/jacobherrington))
+- Fix guides typos and clean up example code blocks  [#2785](https://github.com/solidusio/solidus/pull/2785) ([benjaminwil](https://github.com/benjaminwil))
+- Update promotion-rules.md [#2764](https://github.com/solidusio/solidus/pull/2764) ([bazfer](https://github.com/bazfer))
+- Add links to guides.solidus.io in Solidus's README.md and clean up README formatting [#2763](https://github.com/solidusio/solidus/pull/2763) ([benjaminwil](https://github.com/benjaminwil))
+- Tweak documentation site Middleman configuration [#2762](https://github.com/solidusio/solidus/pull/2762) ([benjaminwil](https://github.com/benjaminwil))
+- Add documentation about variants for end users [#2761](https://github.com/solidusio/solidus/pull/2761) ([benjaminwil](https://github.com/benjaminwil))
+- Add documentation about product properties for end users [#2759](https://github.com/solidusio/solidus/pull/2759) ([benjaminwil](https://github.com/benjaminwil))
+- Add initial stock documentation for end users [#2757](https://github.com/solidusio/solidus/pull/2757) ([benjaminwil](https://github.com/benjaminwil))
+- Add promotion actions and promotion calculators documentation for end users [#2755](https://github.com/solidusio/solidus/pull/2755) ([benjaminwil](https://github.com/benjaminwil))
+- Add Gemfile.lock to docs site project [#2752](https://github.com/solidusio/solidus/pull/2752) ([jgayfer](https://github.com/jgayfer))
+- Add initial zones documentation for end users [#2750](https://github.com/solidusio/solidus/pull/2750) ([benjaminwil](https://github.com/benjaminwil))
+- Add initial taxation documentation for end users [#2749](https://github.com/solidusio/solidus/pull/2749) ([benjaminwil](https://github.com/benjaminwil))
+- Fix security vulnerabilities in docs site [#2747](https://github.com/solidusio/solidus/pull/2747) ([jgayfer](https://github.com/jgayfer))
+- Add initial user management documentation for end users [#2745](https://github.com/solidusio/solidus/pull/2745) ([benjaminwil](https://github.com/benjaminwil))
+- Update promotion-rules.md [#2742](https://github.com/solidusio/solidus/pull/2742) ([bazfer](https://github.com/bazfer))
+- Move guides to new docs site [#2740](https://github.com/solidusio/solidus/pull/2740) ([jgayfer](https://github.com/jgayfer))
+- Add docs site shell [#2739](https://github.com/solidusio/solidus/pull/2739) ([jgayfer](https://github.com/jgayfer))
+- Add initial promotions documentation for end users [#2735](https://github.com/solidusio/solidus/pull/2735) ([benjaminwil](https://github.com/benjaminwil))
+- Add initial product documentation for end users  [#2723](https://github.com/solidusio/solidus/pull/2723) ([benjaminwil](https://github.com/benjaminwil))
+- Overview documentation for the Solidus API [#2714](https://github.com/solidusio/solidus/pull/2714) ([benjaminwil](https://github.com/benjaminwil))
+
+### Core
+
+- Set correct quantity on order import
+[#2837](https://github.com/solidusio/solidus/pull/2837) ([fastjames](https://github.com/fastjames))
+- Money#allocate calculates weights already
+[#2836](https://github.com/solidusio/solidus/pull/2836) ([huoxito](https://github.com/huoxito))
+- Update user_class_handle.rb
+[#2832](https://github.com/solidusio/solidus/pull/2832) ([bazfer](https://github.com/bazfer))
+- Allow customizing the promotion code batch mailer class [#2796](https://github.com/solidusio/solidus/pull/2796) ([jtapia](https://github.com/jtapia))
+- Allow customizing the reimbursement mailer class [#2795](https://github.com/solidusio/solidus/pull/2795) ([jtapia](https://github.com/jtapia))
+- Allow customizing the order mailer class [#2792](https://github.com/solidusio/solidus/pull/2792) ([jtapia](https://github.com/jtapia))
+- Compatibility with Rails 5.2.1 & Ransack [#2826](https://github.com/solidusio/solidus/pull/2826) ([kennyadsl](https://github.com/kennyadsl))
+- Move factory_bot static attrs to dynamic
+[#2831](https://github.com/solidusio/solidus/pull/2831) ([fastjames](https://github.com/fastjames))
+- Use Spree.user_class.table_name instead of spree_users [#2815](https://github.com/solidusio/solidus/pull/2815) ([masatooba](https://github.com/masatooba))
+- Fix a store credit spec that is time zone dependent [#2778](https://github.com/solidusio/solidus/pull/2778) ([kennyadsl](https://github.com/kennyadsl))
+- Making sure order by columns do not collide with other tables [#2774](https://github.com/solidusio/solidus/pull/2774) ([softr8](https://github.com/softr8))
+- Fix permissions for users to change their own orders  [#2787](https://github.com/solidusio/solidus/pull/2787) ([kennyadsl](https://github.com/kennyadsl))
+
 ### Admin
 
+- Fix space between taxons on admin taxonomies [#2812](https://github.com/solidusio/solidus/pull/2812) ([jtapia](https://github.com/jtapia))
+- Fix issue not updating payment method type on admin [#2788](https://github.com/solidusio/solidus/pull/2788) ([jtapia](https://github.com/jtapia))
+- Tracking Number link to Tracking URL page
+[#2829](https://github.com/solidusio/solidus/pull/2829) ([JuanCrg90](https://github.com/JuanCrg90))
+- make customer email field required when an admin is making a new order [#2771](https://github.com/solidusio/solidus/pull/2771) ([jacobherrington](https://github.com/jacobherrington))
+- Fix bug with user address forms [#2766](https://github.com/solidusio/solidus/pull/2766) ([jacobeubanks](https://github.com/jacobeubanks))
+- Dynamically render ReportsController translations [#2751](https://github.com/solidusio/solidus/pull/2751) ([stewart](https://github.com/stewart))
+- Add missing data-hook on customer_returns tab [#2738](https://github.com/solidusio/solidus/pull/2738) ([fkoessler](https://github.com/fkoessler))
+- Remove promotions admin UI that misleadingly doesn't do anything on the solidus_frontend [#2737](https://github.com/solidusio/solidus/pull/2737) ([benjaminwil](https://github.com/benjaminwil))
+- Require sass >= 3.5.2 [#2734](https://github.com/solidusio/solidus/pull/2734) ([gmacdougall](https://github.com/gmacdougall))
 - The promotions "Advertise" checkbox and the "URL Path" promotion activation method have been removed from the admin UI because the features are not implemented in solidus_frontend [#2737](https://github.com/solidusio/solidus/pull/2737) ([benjaminwil](https://github.com/benjaminwil)
+- Use a different session key for admin locale [#2685](https://github.com/solidusio/solidus/pull/2685) ([jhawthorn](https://github.com/jhawthorn))
+- Disable backend footer profile edit link if role cannot edit users [#2646](https://github.com/solidusio/solidus/pull/2646) ([gianlucarizzo](https://github.com/gianlucarizzo))
+- Improve admin return authorization controller [#2420](https://github.com/solidusio/solidus/pull/2420) ([kennyadsl](https://github.com/kennyadsl))
 
 ### Frontend
 
 - The `TaxonsController#show` action loads now the `@taxon` in a `before_action` callback. This means that if you overrode the `show` method you may be loading the `@taxon` variable twice. You can now change the behaviour of how the `@taxon` is loaded overriding the `load_taxon` method instead. [#2782](https://github.com/solidusio/solidus/pull/2782) ([coorasse](https://github.com/coorasse))
+- Move checkout coupon code section into summary. Now passing [:order][:coupon_code] into any controller of the frontend will not perform any action, while it was trying to add a new coupon code before. It now only works in checkout and orders controller. [#2327](https://github.com/solidusio/solidus/pull/2327) ([kennyadsl](https://github.com/kennyadsl))
 
 ## Solidus 2.6.0 (2018-05-16)
 
