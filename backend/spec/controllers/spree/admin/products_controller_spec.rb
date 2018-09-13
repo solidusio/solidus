@@ -51,6 +51,58 @@ describe Spree::Admin::ProductsController, type: :controller do
   end
 
   # regression test for https://github.com/spree/spree/issues/2791
+  context "creating a product" do
+    before(:all) do
+      create(:shipping_category)
+    end
+
+    it "creates a product" do
+      post :create, params: {
+             product: {
+               name: "Product #1 - 9632",
+               description: "As seen on TV!",
+               price: 19.99,
+               shipping_category_id: Spree::ShippingCategory.first.id,
+             }
+           }
+      expect(flash[:success]).to eq("Product \"Product #1 - 9632\" has been successfully created!")
+    end
+
+    context "when there is a taxon" do
+      let(:first_taxon) { create(:taxon) }
+
+      it "creates a product with a taxon" do
+        post :create, params: {
+               product: {
+                 name: "Product #1 - 9632",
+                 description: "As seen on TV!",
+                 price: 19.99,
+                 shipping_category_id: Spree::ShippingCategory.first.id,
+                 taxon_ids: first_taxon.id.to_s
+               }
+             }
+        expect(flash[:success]).to eq("Product \"Product #1 - 9632\" has been successfully created!")
+      end
+
+      context "when their are multiple taxons" do
+        let(:second_taxon) { create(:taxon) }
+
+        it "creates a product with multiple taxons" do
+          post :create, params: {
+                 product: {
+                   name: "Product #1 - 9632",
+                   description: "As seen on TV!",
+                   price: 19.99,
+                   shipping_category_id: Spree::ShippingCategory.first.id,
+                   taxon_ids: "#{first_taxon.id}, #{second_taxon.id}"
+                 }
+               }
+          expect(flash[:success]).to eq("Product \"Product #1 - 9632\" has been successfully created!")
+        end
+      end
+    end
+  end
+
   context "adding taxons to a product" do
     let(:product) { create(:product) }
     let(:first_taxon) { create(:taxon) }
