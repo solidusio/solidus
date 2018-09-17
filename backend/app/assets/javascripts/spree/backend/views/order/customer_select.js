@@ -9,7 +9,7 @@ Spree.Views.Order.CustomerSelect = Backbone.View.extend({
 
   onSelect: function(e) {
     var customer = e.choice;
-    this.trigger("select", customer)
+    this.trigger("select", customer);
   },
 
   render: function() {
@@ -20,8 +20,8 @@ Spree.Views.Order.CustomerSelect = Backbone.View.extend({
         customer: customer,
         bill_address: customer.bill_address,
         ship_address: customer.ship_address
-      })
-    }
+      });
+    };
 
     this.$el.select2({
       placeholder: Spree.translations.choose_a_customer,
@@ -37,19 +37,19 @@ Spree.Views.Order.CustomerSelect = Backbone.View.extend({
               addresses_firstname_start: term,
               addresses_lastname_start: term
             }
-          }
+          };
         },
         results: function(data, page) {
           return {
             results: data.users,
             more: data.current_page < data.pages
-          }
+          };
         }
       },
       formatResult: formatCustomerResult,
       formatSelection: function (customer) {
         return Select2.util.escapeMarkup(customer.email);
       }
-    })
+    });
   }
 });

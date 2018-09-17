@@ -7,7 +7,7 @@
       .reduce(function(prev, curr) {
         return prev && prev[curr];
       }, obj || self);
-  }
+  };
 
   Spree.t = function(key, options) {
     options = (options || {});
@@ -23,11 +23,11 @@
       console.warn("No translation found for " + key + ".");
       return key;
     }
-  }
+  };
 
   Spree.human_attribute_name = function(model, attr) {
     return Spree.t("activerecord.attributes." + model + '.' + attr);
-  }
+  };
 
   Spree.human_model_name = function(model) {
     var model_name = Spree.t("activerecord.models." + model);
@@ -36,5 +36,5 @@
     } else {
       return model_name.one;
     }
-  }
+  };
 })();

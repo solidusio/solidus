@@ -15,7 +15,7 @@ Spree.Models.ImageUpload = Backbone.Model.extend({
       serverError: false,
       filename: '',
       size: ''
-    }
+    };
   },
 
   acceptedTypes: {
@@ -61,14 +61,14 @@ Spree.Models.ImageUpload = Backbone.Model.extend({
           xhr.upload.onprogress = function (event) {
             if (event.lengthComputable) {
               var complete = (event.loaded / event.total * 100 | 0);
-              that.set({progress: complete})
+              that.set({progress: complete});
             }
           };
         }
         return xhr;
       }
     }).done(function() {
-      that.set({progress: 100})
+      that.set({progress: 100});
     }).error(function(jqXHR, textStatus, errorThrown) {
       that.set({serverError: true});
     });

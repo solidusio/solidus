@@ -31,19 +31,19 @@ Spree.ready(function(){
           instance.setDate(otherDate);
           otherInstance.setDate(date);
         }
-      }
-    }
+      };
+    };
 
     var $left = $('.date-range-filter .datepicker-from');
     var $right = $('.date-range-filter .datepicker-to');
     var leftInstance = $left[0]._flatpickr;
     var rightInstance = $right[0]._flatpickr;
     var leftSwapDates = swapDates($right, rightInstance, function(date, otherDate) {
-      return date > otherDate
-    })
+      return date > otherDate;
+    });
     var rightSwapDates = swapDates($left, leftInstance, function(date, otherDate) {
-      return date < otherDate
-    })
+      return date < otherDate;
+    });
 
     leftInstance.config.onChange.push(leftSwapDates);
     rightInstance.config.onChange.push(rightSwapDates);

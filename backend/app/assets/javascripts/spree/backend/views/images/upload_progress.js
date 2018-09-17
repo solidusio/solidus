@@ -19,7 +19,7 @@ Spree.Views.Images.UploadProgress = Backbone.View.extend({
   attributes: function() {
     return {
       "data-upload-id": this.model.cid
-    }
+    };
   },
 
   render: function() {

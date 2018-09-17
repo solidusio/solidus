@@ -1,8 +1,8 @@
-Spree.Order || (Spree.Order = {})
+Spree.Order || (Spree.Order = {});
 
 Spree.Order.initCartPage = function(order_number) {
-  var order = new Spree.Models.Order.fetch(order_number)
-  var collection = order.get("line_items")
+  var order = new Spree.Models.Order.fetch(order_number);
+  var collection = order.get("line_items");
 
   new Spree.Views.Order.Summary({
     el: $('#order_tab_summary'),
@@ -45,8 +45,8 @@ Spree.Order.initCartPage = function(order_number) {
     if(!collection.length) {
       collection.push({});
     }
-  })
-}
+  });
+};
 
 Spree.ready(function() {
   if ($(".js-order-cart-page").length) {

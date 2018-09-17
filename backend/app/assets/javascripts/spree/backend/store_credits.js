@@ -1,8 +1,8 @@
 Spree.ready(function() {
   $('.store-credit-memo-row').each(function() {
     var row = this;
-    var field = row.querySelector('[name="store_credit[memo]"]')
-    var textDisplay = row.querySelector('.store-credit-memo-text')
+    var field = row.querySelector('[name="store_credit[memo]"]');
+    var textDisplay = row.querySelector('.store-credit-memo-text');
 
     $(row).on('ajax:success', function(event, data) {
       row.classList.remove('editing');

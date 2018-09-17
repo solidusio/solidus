@@ -1,6 +1,6 @@
 Spree.Views.Payment.New = Backbone.View.extend({
   initialize: function() {
-    this.onSelectMethod()
+    this.onSelectMethod();
   },
 
   events: {
@@ -9,7 +9,7 @@ Spree.Views.Payment.New = Backbone.View.extend({
   },
 
   onSelectMethod: function(e) {
-    this.selectedId = parseInt(this.$('input[name="payment[payment_method_id]"]:checked').val())
+    this.selectedId = parseInt(this.$('input[name="payment[payment_method_id]"]:checked').val());
     this.render();
   },
 

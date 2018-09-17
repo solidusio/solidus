@@ -6,4 +6,4 @@ Spree.ready(function() {
     dropdownAutoWidth: true,
     minimumResultsForSearch: 8
   });
-})
+});

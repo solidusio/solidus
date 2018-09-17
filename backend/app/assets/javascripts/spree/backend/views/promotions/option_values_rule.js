@@ -25,7 +25,7 @@ Spree.Views.Promotions.OptionValuesRuleRow = Backbone.View.extend({
 
     // Note: This doesn't work. This always selects the first product select on the page.
     // optionValueAutocomplete also doesn't work, so this cancels out.
-    this.$('.js-promo-rule-option-value-option-values-select').optionValueAutocomplete({productSelect: '.js-promo-rule-option-value-product-select'})
+    this.$('.js-promo-rule-option-value-option-values-select').optionValueAutocomplete({productSelect: '.js-promo-rule-option-value-product-select'});
 
     if(this.productId == null) {
       this.$('.js-promo-rule-option-value-option-values-select').prop('disabled', true);
@@ -44,11 +44,11 @@ Spree.Views.Promotions.OptionValuesRuleRow = Backbone.View.extend({
 
 Spree.Views.Promotions.OptionValuesRule = Backbone.View.extend({
   initialize: function() {
-    _.bindAll(this, 'addOptionValue')
+    _.bindAll(this, 'addOptionValue');
     this.$optionValues = this.$('.js-promo-rule-option-values');
     this.paramPrefix = this.$('.param-prefix').data('param-prefix');
 
-    var originalOptionValues = this.$optionValues.data('original-option-values')
+    var originalOptionValues = this.$optionValues.data('original-option-values');
     if ($.isEmptyObject(originalOptionValues)) {
       this.addOptionValue(null, null);
     } else {

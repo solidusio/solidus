@@ -8,4 +8,4 @@ Spree.formatMoney = function(amount, currency) {
   var decimal = Spree.t('currency_separator');
 
   return accounting.formatMoney(amount, currencyInfo[0], currencyInfo[1], thousand, decimal, currencyInfo[2]);
-}
+};
