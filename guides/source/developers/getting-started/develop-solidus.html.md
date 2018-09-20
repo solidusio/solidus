@@ -40,7 +40,7 @@ DB=postgresql bundle exec rake sandbox
 After the sandbox has been generated, you can change into its directory and
 start the server:
 
-```
+```bash
 cd sandbox
 rails server
 ```
