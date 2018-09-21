@@ -83,6 +83,8 @@ module Spree
               after_transition to: :complete, do: :add_payment_sources_to_wallet
               before_transition to: :payment, do: :add_default_payment_from_wallet
 
+              before_transition to: :payment, do: :ensure_positive_total
+
               before_transition to: :confirm, do: :add_store_credit_payments
 
               # see also process_payments_before_complete below which needs to

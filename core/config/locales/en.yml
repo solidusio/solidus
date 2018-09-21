@@ -1085,7 +1085,8 @@ en:
       one: Subtotal (1 item)
       other: Subtotal (%{count} items)
     carton_external_number: External Number
-    carton_orders: Other orders with Carton
+    carton_orders: 'Other orders with Carton'
+    cart_balance_negative: "Cart balance cannot be negative"
     categories: Categories
     category: Category
     character_limit: Limit of 255 characters

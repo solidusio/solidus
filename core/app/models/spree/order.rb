@@ -862,6 +862,12 @@ module Spree
       end
     end
 
+    def ensure_positive_total
+      if outstanding_balance < 0
+        errors.add(:base, I18n.t('spree.cart_balance_negative')) && (return false)
+      end
+    end
+
     def ensure_available_shipping_rates
       if shipments.empty? || shipments.any? { |shipment| shipment.shipping_rates.blank? }
         # After this point, order redirects back to 'address' state and asks user to pick a proper address
