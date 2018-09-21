@@ -297,10 +297,34 @@ RSpec.describe Spree::Order, type: :model do
           allow(order).to receive_messages payment_required?: true
         end
 
-        it "transitions to payment" do
-          order.next!
-          assert_state_changed(order, 'delivery', 'payment')
-          expect(order.state).to eq('payment')
+        context "with a zero total" do
+          it "transitions to payment" do
+            order.next!
+            assert_state_changed(order, 'delivery', 'payment')
+            expect(order.state).to eq('payment')
+          end
+        end
+
+        context "with a positive total" do
+          before do
+            order.total = 1
+          end
+
+          it "transitions to payment" do
+            order.next!
+            assert_state_changed(order, 'delivery', 'payment')
+            expect(order.state).to eq('payment')
+          end
+        end
+
+        context "with a negative total" do
+          before do
+            order.total = -1
+          end
+
+          it "raises an exception" do
+            expect { order.next! }.to raise_error(StateMachines::InvalidTransition)
+          end
         end
       end
 
