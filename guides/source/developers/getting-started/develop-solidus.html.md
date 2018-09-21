@@ -50,7 +50,7 @@ rails server
 
 ## Testing
 
-Solidus uses [RSpec](http://rspec.info/) for testing. Refer to its documentation
+Solidus uses [RSpec][rspec] for testing. Refer to its documentation
 for more information about the testing library.
 
 If you intend to submit your work to Solidus as a pull request, it must pass all
@@ -63,6 +63,8 @@ To run the test suites for `solidus_frontend` and `solidus_backend`, you need to
 install [ChromeDriver][chromedriver] on your system first.
 
 You can see the build statuses [on our CircleCI status page][circleci].
+
+[rspec]: http://rspec.info/
 
 ### Run all Solidus test suites
 
@@ -102,12 +104,14 @@ DB=postgresql bundle exec rspec
 
 ### Generate a code coverage report
 
-You can generate a [SimpleCov](https://github.com/colszowka/simplecov) code
+You can generate a [SimpleCov][simplecov] code
 coverage report by prepending `COVERAGE=true` to the `rspec` command:
 
 ```bash
 COVERAGE=true bundle exec rspec
 ```
+
+[simplecov]: https://github.com/colszowka/simplecov
 
 ## Develop a Solidus extension
 
@@ -115,9 +119,10 @@ You can add additional features to your store using Solidus extensions. A list
 of supported extensions can be found at [extensions.solidus.io][extensions].
 
 You can use the [`solidus_cmd`][solidus-cmd] gem if you want to start creating a
-new Solidus extension.
+new Solidus extension. Check out the doc on [writing extensions][writing-extensions] to learn more.
 
 [chromedriver]: https://sites.google.com/a/chromium.org/chromedriver/home
 [circleci]: https://circleci.com/gh/solidusio/solidus
 [extensions]: http://extensions.solidus.io
+[writing-extensions]: https://guides.solidus.io/developers/extensions/writing-extensions.html
 [solidus-cmd]: https://github.com/solidusio/solidus_cmd
