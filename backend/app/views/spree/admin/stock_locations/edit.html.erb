@@ -19,6 +19,8 @@
 <%= render partial: 'spree/shared/error_messages', locals: { target: @stock_location } %>
 
 <%= form_for [:admin, @stock_location] do |f| %>
-  <%= render :partial => 'form', :locals => { :f => f } %>
-  <%= render :partial => 'spree/admin/shared/edit_resource_links' %>
+  <fieldset class="no-border-top">
+    <%= render 'form', f: f %>
+    <%= render 'spree/admin/shared/edit_resource_links' %>
+  </fieldset>
 <% end %>
