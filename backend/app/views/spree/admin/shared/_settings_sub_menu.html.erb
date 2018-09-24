@@ -12,8 +12,8 @@
   <% end %>
 
   <% if can?(:display, Spree::RefundReason) || can?(:display, Spree::ReimbursementType) ||
-     can?(:display, Spree::ReturnReason) || can?(:display, Spree::AdjustmentReason) %>
-    <%= tab :checkout, url: spree.admin_refund_reasons_path %>
+    can?(:display, Spree::ReturnReason) || can?(:display, Spree::AdjustmentReason) %>
+    <%= tab :checkout, url: spree.admin_refund_reasons_path, match_path: %r(refund_reasons|reimbursement_types|return_reasons|adjustment_reasons) %>
   <% end %>
 
   <% if can?(:display, Spree::ShippingMethod) || can?(:display, Spree::ShippingCategory) || can?(:display, Spree::StockLocation) %>
