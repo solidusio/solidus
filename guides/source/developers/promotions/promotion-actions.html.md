@@ -38,7 +38,7 @@ model][promotion-actions]:
 - `FreeShipping`: Creates an adjustment that negates all shipping charges.
 
 We recommend using `CreateItemAdjustments`s over `CreateAdjustment`. Over-level
-adjustments can make calculating accurate refunds and some regions's taxes more
+adjustments can make calculating accurate refunds and some regions' taxes more
 difficult for administrators.
 
 [promotion-actions]: https://github.com/solidusio/solidus/tree/master/core/app/models/spree/promotion/actions

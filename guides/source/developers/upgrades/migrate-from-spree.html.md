@@ -79,7 +79,7 @@ gem 'rails', '~> 4.2.0'
 
 Note that upgrading Rails affects many other gem versions in your application.
 
-If you use Rails's default asset pipeline, for example, we recommend that you
+If you use Rails' default asset pipeline, for example, we recommend that you
 explicitly update the versions of the `sass-rails` gem in your `Gemfile`, as
 well as explicitly setting the versions for the dependencies `sprockets` and
 `bourbon`:
