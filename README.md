@@ -60,7 +60,7 @@ Run the `bundle` command to install.
 After installing gems, you'll have to run the generators to create necessary
 configuration files and migrations.
 
-```
+```shell
 bundle exec rails g spree:install
 bundle exec rails g solidus:auth:install
 bundle exec rake railties:install:migrations
@@ -68,13 +68,13 @@ bundle exec rake railties:install:migrations
 
 Run migrations to create the new models in the database.
 
-```
+```shell
 bundle exec rake db:migrate
 ```
 
 Finally start the rails server
 
-```
+```shell
 bundle exec rails s
 ```
 
@@ -202,23 +202,20 @@ You can see the build statuses at
 
 #### Run all tests
 
-To execute all the tests for all projects, run `rake` in the top-level
-directory.
-
-```shell
-bundle install
-rake
-```
-
-This runs using Sqlite by default, but can be overridden by setting the `DB`
-environment variable to `DB=postgresql` or `DB=mysql`. For example:
-
-```
-rake DB=postgresql
-```
-
 [ChromeDriver](https://sites.google.com/a/chromium.org/chromedriver/home) is
 required to run the frontend and backend test suites.
+
+To execute all of the test specs, run the `build.sh` script at the root of the Solidus project:
+
+```shell
+bash build.sh
+```
+
+The `build.sh` script runs using PostgreSQL by default, but it can be overridden by setting the DB environment variable to `DB=sqlite` or `DB=mysql`. For example:
+
+```shell
+DB=mysql bash build.sh
+```
 
 #### Run an individual test suite
 
