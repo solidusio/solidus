@@ -2,7 +2,7 @@
 
   <div class="row">
 
-    <div class="left col-9" data-hook="admin_product_form_left">
+    <div class="col-12 col-md-8 col-lg-9" data-hook="admin_product_form_left">
       <div data-hook="admin_product_form_name">
         <%= f.field_container :name do %>
           <%= f.label :name, class: 'required' %>
@@ -28,7 +28,7 @@
       </div>
     </div>
 
-    <div class="right col-3" data-hook="admin_product_form_right">
+    <div class="col-12 col-md-4 col-lg-3" data-hook="admin_product_form_right">
       <div data-hook="admin_product_form_price">
         <%= f.field_container :price do %>
           <%= f.label :price, class: Spree::Config.require_master_price ? 'required' : '' %>
@@ -146,7 +146,7 @@
 
   <div class="row">
 
-    <div class="col-9">
+    <div class="col-12 col-md-9">
       <div data-hook="admin_product_form_taxons">
         <%= f.field_container :taxons do %>
           <%= f.label :taxon_ids, plural_resource_name(Spree::Taxon) %><br />
