@@ -803,7 +803,7 @@ en:
     add_stock_management: Add Stock Management
     add_taxon: Add taxon
     add_to_cart: Add To Cart
-    add_to_stock_location: Add to location
+    add_to_stock_location: Select location to propagate stock
     add_variant: Add Variant
     adding_match: Adding match
     additional_item: Additional Item

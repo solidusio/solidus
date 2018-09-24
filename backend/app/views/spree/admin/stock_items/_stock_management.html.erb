@@ -24,8 +24,6 @@
     </tr>
   </thead>
   <% variants.each do |variant| %>
-    <%- locations_without_items = @stock_item_stock_locations - variant.stock_items.flat_map(&:stock_location) %>
-    <%- display_add_row = locations_without_items.any? && can?(:create, Spree::StockItem) %>
     <tbody class="variant-stock-items">
       <tr id="<%= spree_dom_id variant %>">
         <td>
@@ -77,25 +75,29 @@
                 </tr>
               <% end %>
             <% end %>
+            <% locations_without_items = @stock_item_stock_locations - variant.stock_items.flat_map(&:stock_location) %>
+            <% if locations_without_items.any? && can?(:create, Spree::StockItem) %>
+              <tr class="js-add-stock-item stock-item-edit-row" data-variant-id="<%= variant.id %>">
+                <form>
+                  <td class='location-name-cell'>
+                    <%= select_tag :stock_location_id, options_from_collection_for_select(locations_without_items, :id, :name), class: 'custom-select', prompt: t('spree.add_to_stock_location'), id: "variant-stock-location-#{variant.id}" %>
+                  </td>
+                  <td class="align-center">
+                    <%= check_box_tag :backorderable, 'backorderable', false, id: "variant-backorderable-#{variant.id}" %>
+                  </td>
+                  <td>
+                    <%= number_field_tag :count_on_hand, "", class: 'fullwidth', id: "variant-count-on-hand-#{variant.id}" %>
+                  </td>
+                  <td></td>
+                  <td class="actions">
+                    <%= link_to_with_icon 'plus', t('spree.actions.create'), '#', no_text: true, data: { action: 'add' }, class: "submit" %>
+                  </td>
+                </form>
+              </tr>
+            <% end %>
           </table>
         </td>
       </tr>
-      <% if display_add_row %>
-        <tr class="js-add-stock-item stock-item-edit-row" data-variant-id="<%= variant.id %>">
-          <td class='location-name-cell'>
-            <%= select_tag :stock_location_id, options_from_collection_for_select(locations_without_items, :id, :name), { include_blank: true, class: 'custom-select', "data-placeholder" => t('spree.add_to_stock_location'), id: "variant-stock-location-#{variant.id}" } %>
-          </td>
-          <td class="align-center">
-            <%= check_box_tag :backorderable, 'backorderable', false, id: "variant-backorderable-#{variant.id}" %>
-          </td>
-          <td class="align-center">
-            <%= number_field_tag :count_on_hand, "", class: 'fullwidth', id: "variant-count-on-hand-#{variant.id}" %>
-          </td>
-          <td class="actions">
-            <%= link_to_with_icon 'plus', t('spree.actions.create'), '#', no_text: true, data: { action: 'add' }, class: "submit" %>
-          </td>
-        </tr>
-      <% end %>
     </tbody>
   <% end %>
 </table>

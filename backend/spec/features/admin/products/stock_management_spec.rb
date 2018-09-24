@@ -65,7 +65,7 @@ describe "Product Stock", type: :feature do
       expect(page).to have_content('Updated successfully')
     end
 
-    context "with multiple stock locations" do
+    context "with stock locations that don't have stock items for variant yet" do
       before do
         create(:stock_location, name: 'Other location', propagate_all_variants: false)
       end
