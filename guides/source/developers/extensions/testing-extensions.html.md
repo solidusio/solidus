@@ -13,7 +13,11 @@ We usually test our extensions on TravisCI and make use of their [build matrix
 feature][build-matrix] to test across multiple Solidus versions. We also test
 against multiple databases: MySQL and PostgreSQL.
 
-Here's an example `.travis.yml` testing versions 1.4 through 2.1 and the
+Solidus extensions should be tested across all versions of Solidus that have not
+reached [End of Life](https://solidus.io/blog/2018/01/04/maintenance-eol-policy.html)
+including the `master` branch.
+
+Here's an example `.travis.yml` testing versions 2.2 through 2.7 and the
 `master` branch:
 
 ```yaml
@@ -22,13 +26,19 @@ rvm:
   - 2.3.1
 env:
   matrix:
-    - SOLIDUS_BRANCH=v1.4 DB=postgres
-    - SOLIDUS_BRANCH=v2.0 DB=postgres
-    - SOLIDUS_BRANCH=v2.1 DB=postgres
+    - SOLIDUS_BRANCH=v2.2 DB=postgres
+    - SOLIDUS_BRANCH=v2.3 DB=postgres
+    - SOLIDUS_BRANCH=v2.4 DB=postgres
+    - SOLIDUS_BRANCH=v2.5 DB=postgres
+    - SOLIDUS_BRANCH=v2.6 DB=postgres
+    - SOLIDUS_BRANCH=v2.7 DB=postgres
     - SOLIDUS_BRANCH=master DB=postgres
-    - SOLIDUS_BRANCH=v1.4 DB=mysql
-    - SOLIDUS_BRANCH=v2.0 DB=mysql
-    - SOLIDUS_BRANCH=v2.1 DB=mysql
+    - SOLIDUS_BRANCH=v2.2 DB=mysql
+    - SOLIDUS_BRANCH=v2.3 DB=mysql
+    - SOLIDUS_BRANCH=v2.4 DB=mysql
+    - SOLIDUS_BRANCH=v2.5 DB=mysql
+    - SOLIDUS_BRANCH=v2.6 DB=mysql
+    - SOLIDUS_BRANCH=v2.7 DB=mysql
     - SOLIDUS_BRANCH=master DB=mysql
 ```
 
