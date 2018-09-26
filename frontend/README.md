@@ -31,7 +31,7 @@ This will copy all views whose directory or filename contains the string "produc
 
 ### Handle upgrades
 
-After upgrading solidus to a new version run the generator again and follow on screen instructions.
+After upgrading Solidus to a new version run the generator again and follow on screen instructions.
 
 ## Testing
 
