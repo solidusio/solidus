@@ -113,7 +113,7 @@ Finally, the `Spree::Adjustment` model defines the discount amount that is
 applied. Each adjustment is created by a `Spree::PromotionAction`.
 
 Every time that the promotion adjustment needs to be recalculated, the
-`Spree::PromotionRules` are re-checked to ensure the promotion is still
+`Spree::PromotionRule`s are re-checked to ensure the promotion is still
 eligible.
 
 Note that shipments and taxes can also create adjustments. See the adjustments

@@ -81,7 +81,7 @@ attribute should have the following value:
 Return items are accepted or rejected using the
 `Spree::ReturnItem::EligibilityValidator` classes. You can change the
 eligibility validators that your store uses by overriding the `::Default`
-subclass's list in an initializer.
+subclass' list in an initializer.
 
 For example, by default Solidus rejects return items that are not included in a
 return authorization using the

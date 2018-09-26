@@ -104,7 +104,7 @@ provider, the state could become `complete`, `failed`, `void`, and so on.
 Each `Spree::Payment` tracks a payment source. The payment source depends on the
 types of payments you accept for each payment method.
 
-For example, if you use Solidus's built-in `Spree::PaymentMethod::CreditCart`
+For example, if you use Solidus's built-in `Spree::PaymentMethod::CreditCard`
 payment method, the payment source class should always be set to
 `Spree::CreditCard`.
 

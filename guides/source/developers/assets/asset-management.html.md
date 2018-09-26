@@ -116,7 +116,7 @@ in this `spree/backend` directory:
 
 ## Managing application assets
 
-We recommend using the [Rails's suggested approach to asset
+We recommend using the [Rails' suggested approach to asset
 organization][asset-organization], then scoping your custom files to the
 `spree/frontend` or `spree/backend` subdirectories to avoid conflicts or
 accidental file overrides.

@@ -26,7 +26,7 @@ a form to the payment service provider. Your databases should not store a
 customer's complete credit card data for any amount of time.
 
 Whenever you store sensitive customer data, you risk a PCI compliance violation.
-We recommend using the `Spree::Creditcard` class as an example of responsibly
+We recommend using the `Spree::CreditCard` class as an example of responsibly
 storing customer data. See the [PCI Security Standards][pci] website for more
 information.
 

@@ -64,7 +64,7 @@ currency" and "Tax Country for Empty Carts" settings on the **Settings ->
 Store** page in the `solidus_backend` admin.
 
 Valued-added tax and price are intricately connected. If your store requires
-custom tax and pricing logic, you can change Solidus's pricing behaviour by
+custom tax and pricing logic, you can change Solidus's pricing behavior by
 creating a custom `Spree::Config.variant_price_selector_class` along with a
 fitting `Spree::Config.pricing_options_class`. See the [`price_selector`
 specifications][price-selector-spec] for the standard [price
