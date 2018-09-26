@@ -19,8 +19,14 @@ describe Spree::Admin::PromotionCodesController do
   end
 
   it "can create a new code" do
-    post :create, params: { value: "new_code" }
-    expect(response).to be_successful
+    post :create, params: { promotion_id: promotion.id, promotion_code: { value: "new_code" } }
+    expect(response).to redirect_to(spree.admin_promotion_promotion_codes_path(promotion))
     expect(Spree::PromotionCode.where(promotion: promotion).count).to eql(4)
+  end
+
+  it "cannot create an existing code" do
+    post :create, params: { promotion_id: promotion.id, promotion_code: { value: code1.value } }
+    expect(flash[:error]).not_to be_nil
+    expect(Spree::PromotionCode.where(promotion: promotion).count).to eql(3)
   end
 end
