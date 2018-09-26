@@ -11,7 +11,7 @@ describe Spree::Admin::PromotionCodesController do
   let!(:code2) { create(:promotion_code, promotion: promotion) }
   let!(:code3) { create(:promotion_code, promotion: promotion) }
 
-  it "can create a promotion rule of a valid type" do
+  it "can create a CSV file with all promotion codes" do
     get :index, params: { promotion_id: promotion.id, format: 'csv' }
     expect(response).to be_successful
     parsed = CSV.parse(response.body, headers: true)
