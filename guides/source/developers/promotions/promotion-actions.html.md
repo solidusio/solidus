@@ -82,7 +82,7 @@ You must then register the custom action in an initializer in your
 `config/initializers/` directory:
 
 ```ruby
-Rails.application.config.spree.promotions.actions << MyPromotionAction
+Rails.application.config.spree.promotions.actions << MyNamespace::MyPromotionAction
 ```
 
 [create-item-adjustments]: https://github.com/solidusio/solidus/blob/master/core/app/models/spree/promotion/actions/create_item_adjustments.rb
