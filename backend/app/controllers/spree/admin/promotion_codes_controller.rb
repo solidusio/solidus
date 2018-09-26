@@ -7,7 +7,7 @@ module Spree
     class PromotionCodesController < Spree::Admin::ResourceController
       def index
         @promotion = Spree::Promotion.accessible_by(current_ability, :read).find(params[:promotion_id])
-        @promotion_codes = @promotion.promotion_codes
+        @promotion_codes = @promotion.promotion_codes.order(:value)
 
         respond_to do |format|
           format.html do
