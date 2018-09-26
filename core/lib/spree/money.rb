@@ -86,7 +86,7 @@ module Spree
       if options[:html_wrap]
         # 1) prevent blank, breaking spaces
         # 2) prevent escaping of HTML character entities
-        output = output.sub(" ", "&nbsp;").html_safe
+        output = output.html_safe
       end
       output
     end
