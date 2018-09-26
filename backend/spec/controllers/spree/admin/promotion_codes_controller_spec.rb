@@ -17,4 +17,10 @@ describe Spree::Admin::PromotionCodesController do
     parsed = CSV.parse(response.body, headers: true)
     expect(parsed.entries.map(&:to_h)).to eq([{ "Code" => code1.value }, { "Code" => code2.value }, { "Code" => code3.value }])
   end
+
+  it "can create a new code" do
+    post :create, params: { value: "new_code" }
+    expect(response).to be_successful
+    expect(Spree::PromotionCode.where(promotion: promotion).count).to eql(4)
+  end
 end

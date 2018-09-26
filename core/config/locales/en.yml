@@ -1146,6 +1146,7 @@ en:
     customer_returns: Customer Returns
     create: Create
     create_a_new_account: Create a new account
+    create_promotion_code: Create Promotion Code
     create_reimbursement: Create reimbursement
     create_one: Create One.
     created_at: Created At
