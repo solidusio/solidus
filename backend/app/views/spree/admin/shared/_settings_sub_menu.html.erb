@@ -8,7 +8,7 @@
   <% end %>
 
   <% if can?(:display, Spree::TaxCategory) || can?(:display, Spree::TaxRate) %>
-    <%= tab :taxes, url: spree.admin_tax_categories_path %>
+    <%= tab :taxes, url: spree.admin_tax_categories_path, match_path: %r(tax_categories|tax_rates) %>
   <% end %>
 
   <% if can?(:display, Spree::RefundReason) || can?(:display, Spree::ReimbursementType) ||
