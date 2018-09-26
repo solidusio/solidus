@@ -20,7 +20,7 @@ Spree.Models.Order = Backbone.Model.extend({
       type: 'PUT',
     };
     _.extend(options, opts);
-    return this.fetch(options)
+    return this.fetch(options);
   }
 });
 
@@ -35,4 +35,4 @@ Spree.Models.Order.fetch = function(number, opts) {
   });
   model.fetch(options);
   return model;
-}
+};

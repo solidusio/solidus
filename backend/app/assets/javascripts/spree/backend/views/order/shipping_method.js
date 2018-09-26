@@ -54,4 +54,4 @@ Spree.Views.Order.ShippingMethod = Backbone.View.extend({
     this.$el.html(html);
     this.$('select').val(this.shippingMethodId);
   }
-})
+});

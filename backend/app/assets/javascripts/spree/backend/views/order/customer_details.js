@@ -21,8 +21,8 @@ Spree.Views.Order.CustomerDetails = Backbone.View.extend({
     this.onGuestCheckoutChanged();
     this.onChange();
 
-    this.listenTo(this.model, "change", this.render)
-    this.render()
+    this.listenTo(this.model, "change", this.render);
+    this.render();
   },
 
   events: {
@@ -33,7 +33,7 @@ Spree.Views.Order.CustomerDetails = Backbone.View.extend({
 
   onGuestCheckoutChanged: function() {
     if(this.$('#guest_checkout_true').is(':checked')) {
-      this.model.set({user_id: null})
+      this.model.set({user_id: null});
     }
   },
 
@@ -41,7 +41,7 @@ Spree.Views.Order.CustomerDetails = Backbone.View.extend({
     this.model.set({
       use_billing: this.$('#order_use_billing').is(':checked'),
       email: this.$("#order_email").val()
-    })
+    });
   },
 
   onSelectCustomer: function(customer) {
@@ -49,11 +49,11 @@ Spree.Views.Order.CustomerDetails = Backbone.View.extend({
       email: customer.email,
       user_id: customer.id,
       bill_address: customer.bill_address
-    })
+    });
   },
 
   render: function() {
-    var user_id = this.model.get("user_id") || $("#user_id").val()
+    var user_id = this.model.get("user_id") || $("#user_id").val();
     this.$("#user_id").val(user_id);
     this.$('#guest_checkout_true')
       .prop("checked", !user_id);
@@ -62,6 +62,6 @@ Spree.Views.Order.CustomerDetails = Backbone.View.extend({
       .prop("disabled", !user_id);
 
     this.$('#shipping').toggleClass("hidden", !!this.model.get("use_billing"));
-    this.$('#order_email').val(this.model.get("email"))
+    this.$('#order_email').val(this.model.get("email"));
   }
-})
+});

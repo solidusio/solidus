@@ -14,7 +14,7 @@ Handlebars.registerHelper("human_model_name", function(model) {
 });
 
 Handlebars.registerHelper("admin_url", function() {
-  return Spree.pathFor("admin")
+  return Spree.pathFor("admin");
 });
 
 Handlebars.registerHelper("concat", function() {

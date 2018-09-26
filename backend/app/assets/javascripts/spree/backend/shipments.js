@@ -13,7 +13,7 @@ var ShipmentAddVariantView = Backbone.View.extend({
     Spree.ajax({
       url: Spree.routes.variants_api + "/" + variant_id,
       success: function(variant){
-        $stock_details.html(template({variant: variant})).show()
+        $stock_details.html(template({variant: variant})).show();
       }
     });
   },
@@ -26,7 +26,7 @@ var ShipmentAddVariantView = Backbone.View.extend({
     var stock_location_id = $(e.target).data('stock-location-id');
     var quantity = this.$("input.quantity[data-stock-location-id='" + stock_location_id + "']").val();
 
-    addVariantFromStockLocation(stock_location_id, variant_id, quantity)
+    addVariantFromStockLocation(stock_location_id, variant_id, quantity);
   }
 });
 
@@ -51,7 +51,7 @@ var ShipShipmentView = Backbone.View.extend({
         send_mailer: this.$("[name='send_mailer']").is(":checked")
       },
       success: function(){
-        window.location.reload()
+        window.location.reload();
       }
     });
     return false;
@@ -127,7 +127,7 @@ var ShipmentSplitItemView = Backbone.View.extend({
     this.shipment_number = options.shipment_number;
     this.max_quantity = options.max_quantity;
     this.shipmentItemView = options.shipmentItemView;
-    this.render()
+    this.render();
   },
 
   events: {
@@ -192,7 +192,7 @@ var ShipmentSplitItemView = Backbone.View.extend({
 
   render: function() {
     /* Only display other shipments */
-    var shipments = _.reject(this.shipments, _.matcher({'number': this.shipment_number}))
+    var shipments = _.reject(this.shipments, _.matcher({'number': this.shipment_number}));
 
     var renderAttr = {
       variant: this.variant,
@@ -211,10 +211,10 @@ var ShipmentSplitItemView = Backbone.View.extend({
 
 var ShipmentItemView = Backbone.View.extend({
   initialize: function(options) {
-    this.shipment_number = options.shipment_number
-    this.order_number = options.order_number
-    this.quantity = this.$el.data('item-quantity')
-    this.variant_id = this.$el.data('variant-id')
+    this.shipment_number = options.shipment_number;
+    this.order_number = options.order_number;
+    this.quantity = this.$el.data('item-quantity');
+    this.variant_id = this.$el.data('variant-id');
   },
 
   events: {
@@ -259,8 +259,8 @@ var ShipmentItemView = Backbone.View.extend({
 
 var ShipmentEditView = Backbone.View.extend({
   initialize: function(){
-    this.shipment_number = this.model.get('number')
-    this.order_number = this.model.collection.parent.get('number')
+    this.shipment_number = this.model.get('number');
+    this.order_number = this.model.collection.parent.get('number');
 
     var shipment = this.model;
 
@@ -302,8 +302,8 @@ Spree.ready(function(){
       success: function(order){
         $('.js-shipment-edit').show();
         $(".js-shipment-edit").each(function(){
-          var shipmentNumber = $('[data-shipment-number]', this).data('shipmentNumber')
-          var shipment = order.get("shipments").find({number: shipmentNumber})
+          var shipmentNumber = $('[data-shipment-number]', this).data('shipmentNumber');
+          var shipment = order.get("shipments").find({number: shipmentNumber});
           new ShipmentEditView({ el: this, model: shipment });
         });
       }

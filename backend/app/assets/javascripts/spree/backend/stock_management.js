@@ -10,7 +10,7 @@ Spree.ready(function() {
   });
 
   $('.js-add-stock-item').each(function() {
-    var $el = $(this)
+    var $el = $(this);
     var model = new Spree.Models.StockItem({
       variant_id: $el.data('variant-id')
     });
