@@ -81,9 +81,9 @@ module Spree
     # @param options [Hash] additional formatting options
     # @return [String] the value of this money object formatted according to
     #   its options and any additional options, by default as html.
-    def to_html(options = { html: true })
+    def to_html(options = { html_wrap: true })
       output = format(options)
-      if options[:html]
+      if options[:html_wrap]
         # 1) prevent blank, breaking spaces
         # 2) prevent escaping of HTML character entities
         output = output.sub(" ", "&nbsp;").html_safe
