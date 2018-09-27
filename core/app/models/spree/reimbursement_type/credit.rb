@@ -5,9 +5,13 @@ module Spree
     extend Spree::ReimbursementType::ReimbursementHelpers
 
     class << self
-      def reimburse(reimbursement, return_items, simulate)
+      def reimburse(reimbursement, return_items, simulate, creator = nil)
+        unless creator
+          creator = Spree.user_class.where(email: 'spree@example.com').first
+          Spree::Deprecation.warn("Calling #reimburse on #{self} without creator is deprecated")
+        end
         unpaid_amount = return_items.sum(&:total).round(2, :down)
-        reimbursement_list, _unpaid_amount = create_credits(reimbursement, unpaid_amount, simulate)
+        reimbursement_list, _unpaid_amount = create_credits(reimbursement, unpaid_amount, simulate, creator)
         reimbursement_list
       end
     end
