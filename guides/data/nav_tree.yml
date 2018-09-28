@@ -150,6 +150,8 @@ main:
         href: "/developers/shipments/cartons.html"
       - title: "Custom shipping calculators"
         href: "/developers/shipments/custom-shipping-calculators.html"
+      - title: "Stock location sorters"
+        href: "/developers/shipments/stock-location-sorters.html"
       - title: "Shipment setup examples"
         href: "/developers/shipments/shipment-setup-examples.html"
       - title: "Shipping method filters"
