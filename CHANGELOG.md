@@ -1,5 +1,9 @@
 ## Solidus 2.8.0 (master, unreleased)
 
+### Core
+
+- Implement stock location sorters [#2783](https://github.com/solidusio/solidus/pull/2783) ([aldesantis](https://github.com/aldesantis))
+
 ## Solidus 2.7.0 (2018-09-14)
 
 ### Major Changes
