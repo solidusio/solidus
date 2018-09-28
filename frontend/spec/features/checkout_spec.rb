@@ -498,17 +498,20 @@ describe "Checkout", type: :feature, inaccessible: true do
     end
   end
 
-  context "order has only payment step" do
+  context "order has only payment step and does not build shipments" do
     before do
-      create(:credit_card_payment_method)
-      @old_checkout_flow = Spree::Order.checkout_flow
-      Spree::Order.class_eval do
-        checkout_flow do
-          go_to_state :payment
-          go_to_state :confirm
+      Spree::Config.build_shipment_predicate_class = Class.new do
+        def self.call(_order)
+          false
         end
       end
 
+      Spree::Order.checkout_flow do
+        go_to_state :payment
+        go_to_state :confirm
+      end
+
+      create(:credit_card_payment_method)
       allow_any_instance_of(Spree::Order).to receive_messages email: "spree@commerce.com"
 
       add_mug_to_cart
@@ -516,7 +519,15 @@ describe "Checkout", type: :feature, inaccessible: true do
     end
 
     after do
-      Spree::Order.checkout_flow(&@old_checkout_flow)
+      Spree::Config.build_shipment_predicate_class =
+        Spree::Core::Shipments::Predicates::Build
+
+      Spree::Order.checkout_flow do
+        go_to_state :address
+        go_to_state :delivery
+        go_to_state :payment, if: ->(order) { order.payment_required? }
+        go_to_state :confirm
+      end
     end
 
     it "goes right payment step and place order just fine" do

@@ -633,27 +633,28 @@ RSpec.describe Spree::Order, type: :model do
   end
 
   # Regression test for https://github.com/spree/spree/issues/3665
-  context "with only a complete step" do
+  context "with build_shipments config set to false" do
     let!(:line_item){ create :line_item, order: order }
 
-    before do
-      @old_checkout_flow = Spree::Order.checkout_flow
-      Spree::Order.class_eval do
-        checkout_flow do
-          go_to_state :complete
-        end
+    class DisallowShipments
+      def self.call(_order)
+        false
       end
     end
 
+    before do
+      @original_predicate_class = Spree::Config.build_shipment_predicate_class
+      Spree::Config.build_shipment_predicate_class = DisallowShipments
+    end
+
     after do
-      Spree::Order.checkout_flow(&@old_checkout_flow)
+      Spree::Config.build_shipment_predicate_class = @original_predicate_class
     end
 
     it "does not attempt to check shipping rates" do
       order.email = 'user@example.com'
       expect(order).not_to receive(:ensure_available_shipping_rates)
       order.next!
-      assert_state_changed(order, 'cart', 'complete')
     end
 
     it "does not attempt to process payments" do
@@ -665,7 +666,6 @@ RSpec.describe Spree::Order, type: :model do
       expect(order).not_to receive(:payment_required?)
       expect(order).not_to receive(:process_payments!)
       order.next!
-      assert_state_changed(order, 'cart', 'complete')
     end
   end
 

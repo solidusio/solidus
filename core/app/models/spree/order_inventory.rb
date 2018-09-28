@@ -18,6 +18,7 @@ module Spree
     # restock items if the order is completed. That is so because stock items
     # are always unstocked when the order is completed through +shipment.finalize+
     def verify(shipment = nil)
+      return unless Spree::Config.build_shipment_predicate_class.call(order)
       if order.completed? || shipment.present?
 
         existing_quantity = inventory_units.count
