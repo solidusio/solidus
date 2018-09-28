@@ -23,7 +23,7 @@ module Spree
         @order = order
         @inventory_units = inventory_units || InventoryUnitBuilder.new(order).units
         @splitters = Spree::Config.environment.stock_splitters
-        @stock_locations = Spree::StockLocation.active
+        @stock_locations = Spree::Config.stock.location_sorter_class.new(Spree::StockLocation.active).sort
 
         @inventory_units_by_variant = @inventory_units.group_by(&:variant)
         @desired = Spree::StockQuantities.new(@inventory_units_by_variant.transform_values(&:count))
@@ -85,7 +85,9 @@ module Spree
       end
 
       def allocate_inventory(availability_by_location)
-        availability_by_location.transform_values do |available|
+        sorted_availability = sort_availability(availability_by_location)
+
+        sorted_availability.transform_values do |available|
           # Find the desired inventory which is available at this location
           packaged = available & @desired
 
@@ -94,6 +96,16 @@ module Spree
 
           packaged
         end
+      end
+
+      def sort_availability(availability)
+        sorted_availability = availability.sort_by do |stock_location_id, _|
+          @stock_locations.find_index do |stock_location|
+            stock_location.id == stock_location_id
+          end
+        end
+
+        Hash[sorted_availability]
       end
 
       def get_units(quantities)

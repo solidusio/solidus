@@ -15,6 +15,11 @@ module Spree
           subject.shipments
         end
 
+        it 'uses the configured stock location sorter' do
+          expect(Spree::Config.stock).to receive(:location_sorter_class).and_call_original
+          subject.shipments
+        end
+
         it 'builds shipments' do
           expect(subject.shipments.size).to eq(1)
         end
