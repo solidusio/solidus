@@ -46,7 +46,7 @@ bundle exec rake spree_sample:load                 # loads sample data
 ```
 
 If you use `solidus_auth_devise` for user authentication, you can also install
-and run its migrations, then seed the database, separately:
+and run its migrations, then seed the database separately:
 
 ```bash
 bundle exec rake solidus_auth:install:migrations   # installs solidus_auth_devise migrations
@@ -57,7 +57,7 @@ bundle exec rake db:seed                           # seeds your database
 ## Development environment performance gains
 
 You may notice that your Solidus store runs slowly in development mode. You can
-change some configuration to get performance gains.
+change some of its configuration options to speed it up.
 
 ### Turn off asset debugging
 

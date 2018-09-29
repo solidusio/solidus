@@ -1,6 +1,6 @@
 # Develop Solidus
 
-If you would like to develop for Solidus and you intend to submit your work as a
+If you would like to improve Solidus and you intend to submit your work as a
 pull request, please [read the contributing guidelines][contributing] first.
 
 Getting your Solidus development environment set up is easy. First, clone the
@@ -10,7 +10,7 @@ Solidus GitHub repo:
 git clone git://github.com/solidusio/solidus.git
 ```
 
-Then enter the directory you just downloaded and install Solidus's dependencies:
+Then enter the directory you just downloaded and install Solidus' dependencies:
 
 ```bash
 cd solidus
@@ -88,7 +88,7 @@ Note that this will fail if you have not installed ChromeDriver on your system.
 ### Run a single test suite
 
 Each gem contains its own test suite. For example, you can run only the
-`solidus_core` gem tests within the `/core` directory:
+`solidus_core` gem tests within the `core` directory:
 
 ```bash
 cd core
@@ -118,8 +118,9 @@ COVERAGE=true bundle exec rspec
 You can add additional features to your store using Solidus extensions. A list
 of supported extensions can be found at [extensions.solidus.io][extensions].
 
-You can use the [`solidus_cmd`][solidus-cmd] gem if you want to start creating a
-new Solidus extension. Check out the doc on [writing extensions][writing-extensions] to learn more.
+You can use the [`solidus_cmd`][solidus-cmd] gem as an example if you want to
+start creating a new Solidus extension. Check out the doc on
+[writing extensions][writing-extensions] to learn more.
 
 [chromedriver]: https://sites.google.com/a/chromium.org/chromedriver/home
 [circleci]: https://circleci.com/gh/solidusio/solidus
