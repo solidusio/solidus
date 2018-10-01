@@ -126,7 +126,7 @@ Performance
 -----------
 
 You may notice that your Solidus store runs slowly in development mode. This
-can be because in development each css and javascript is loaded as a separate
+can be because in development each CSS and JavaScript is loaded as a separate
 include. This can be disabled by adding the following to
 `config/environments/development.rb`.
 
