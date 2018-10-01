@@ -83,7 +83,7 @@ file or any other initializer.
 You can check all of the default settings of `Spree::Config` by sending this
 command to your Rails console:
 
-```bash
+```ruby
 Spree::Config.inspect
 ```
 

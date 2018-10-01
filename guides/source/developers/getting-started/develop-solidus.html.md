@@ -6,13 +6,13 @@ pull request, please [read the contributing guidelines][contributing] first.
 Getting your Solidus development environment set up is easy. First, clone the
 Solidus GitHub repo:
 
-```bash
+```shell
 git clone git://github.com/solidusio/solidus.git
 ```
 
 Then enter the directory you just downloaded and install Solidus' dependencies:
 
-```bash
+```shell
 cd solidus
 bundle install
 ```
@@ -26,21 +26,21 @@ typical Solidus store you can use for testing.
 By default, the sandbox includes [`solidus_auth_devise`][solidus-auth-devise],
 and the generator seeds the database and loads sample data.
 
-```bash
+```shell
 bundle exec rake sandbox
 ```
 
 You can prepend `DB=mysql` or `DB=postgresql` to the command in order use those
 databases instead of the default SQLite 3 database. For example:
 
-```bash
+```shell
 DB=postgresql bundle exec rake sandbox
 ```
 
 After the sandbox has been generated, you can change into its directory and
 start the server:
 
-```bash
+```shell
 cd sandbox
 rails server
 ```
@@ -71,7 +71,7 @@ You can see the build statuses [on our CircleCI status page][circleci].
 To execute all of the test specs, run the `build.sh` script at the root of the
 Solidus project:
 
-```bash
+```shell
 bash build.sh
 ```
 
@@ -79,7 +79,7 @@ The `build.sh` script runs using PostgreSQL by default, but it can be overridden
 by setting the `DB` environment variable to `DB=sqlite` or `DB=mysql`. For
 example:
 
-```bash
+```shell
 DB=mysql bash build.sh
 ```
 
@@ -90,7 +90,7 @@ Note that this will fail if you have not installed ChromeDriver on your system.
 Each gem contains its own test suite. For example, you can run only the
 `solidus_core` gem tests within the `core` directory:
 
-```bash
+```shell
 cd core
 bundle exec rspec
 ```
@@ -98,7 +98,7 @@ bundle exec rspec
 By default, the tests run against the default SQLite 3 database. You can instead
 specify `DB=mysql` or `DB=postgresql` by prepending it to the command:
 
-```bash
+```shell
 DB=postgresql bundle exec rspec
 ```
 
@@ -107,7 +107,7 @@ DB=postgresql bundle exec rspec
 You can generate a [SimpleCov][simplecov] code
 coverage report by prepending `COVERAGE=true` to the `rspec` command:
 
-```bash
+```shell
 COVERAGE=true bundle exec rspec
 ```
 

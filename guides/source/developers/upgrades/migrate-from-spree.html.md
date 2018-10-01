@@ -95,7 +95,7 @@ gem 'sass-rails', '~> 4.0.0'
 After you have replaced the Spree gems in your `Gemfile` and prepared to upgrade
 Rails to 4.2.x, you can update your application with Bundler:
 
-```bash
+```shell
 bundle update
 ```
 
@@ -107,7 +107,7 @@ At this point, the update should run successfully. If it does not, check your
 Now that you have successfully installed the Solidus gems, you need to copy all
 of the Solidus-specific migrations into your application:
 
-```bash
+```shell
 bundle exec rake railties:install:migrations
 ```
 ### Start the Solidus installation process

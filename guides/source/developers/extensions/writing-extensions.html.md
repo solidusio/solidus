@@ -23,7 +23,7 @@ exactly the same way you'd build any other Rails engine.
 However, it is recommended that you use the [`solidus_cmd`](https://github.com/solidusio-contrib/solidus_cmd)
 gem.
 
-```bash
+```shell
 gem install solidus_cmd
 ```
 
@@ -35,7 +35,7 @@ Once you've installed `solidus_cmd`, you will have access to the `solidus`
 command. Using `solidus extension` will generate a new Solidus extension
 template in your current directory.
 
-```bash
+```shell
 solidus extension extension_name
 ```
 

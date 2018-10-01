@@ -51,14 +51,14 @@ After you have created your custom `User` model and its corresponding database
 table, you can use the `spree:custom_user` generator to generate Solidus's
 required `User` table columns and some authentication helpers:
 
-```bash
+```shell
 bundle exec rails generate spree:custom_user MyStore::User
 ```
 
 Then, you can migrate your database to add the Solidus-specific `User` table
 columns:
 
-```bash
+```shell
 bundle exec rails db:migrate
 ```
 

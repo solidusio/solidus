@@ -62,7 +62,7 @@ Your new `preferences` column should be the type `text`.
 
 Then, you can run the migration:
 
-```bash
+```shell
 bundle exec rails db:migrate
 ```
 

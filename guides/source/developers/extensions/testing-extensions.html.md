@@ -107,7 +107,7 @@ end
 You can replace all of the `ActiveRecord::Migration` occurrences automatically
 with `sed`:
 
-```bash
+```shell
 sed -i 's/ActiveRecord::Migration/SolidusSupport::Migration[4.2]/' db/migrate/*.rb
 ```
 
