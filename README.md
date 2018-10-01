@@ -40,7 +40,7 @@ Try out Solidus with one-click on Heroku:
 
 [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy?template=https://github.com/solidusio/solidus)
 
-## Getting started
+## Getting Started
 
 Begin by making sure you have
 [Imagemagick](http://imagemagick.org/script/download.php) installed, which is
@@ -89,7 +89,7 @@ As part of running the above installation steps, you will be asked to set an adm
 
 The best way to ask questions is via the [#support channel on the Solidus Slack](https://solidusio.slack.com/messages/support/details/).
 
-Installation options
+Installation Options
 --------------------
 
 Instead of a stable build, if you want to use the bleeding edge version of
