@@ -63,7 +63,7 @@ Homebrew][ruby-homebrew] if you need to upgrade from your system's Ruby.
 Using Homebrew, you can install all of the requirements using the following
 commands:
 
-```bash 
+```shell 
 brew install ruby sqlite3 imagemagick
 gem install rails
 ```
@@ -76,14 +76,14 @@ If you run macOS Sierra or an older OS, you system's version of Ruby will need
 to be upgraded from 2.0.x to 2.2.2 or newer. You can check what version of Ruby
 you have installed with the following command:
 
-```bash
+```shell
 ruby --version
 ```
 
 The Ruby documentation recommends installing another, newer instance of Ruby
 installing another, newer instance of Ruby using Homebrew: 
 
-```bash
+```shell
 brew install ruby
 ```
 
@@ -96,7 +96,7 @@ Rails and Solidus use SQLite 3 as the default relational database. SQLite is a
 widely-supported, lightweight way to send and receive data. Using Homebrew,
 you can install the latest version of SQLite 3 using the following command:
 
-```bash
+```shell
 brew install sqlite3
 ```
 
@@ -106,7 +106,7 @@ website](https://www.sqlite.org/download.html).
 After the installation, check that it has been installed by checking the version
 number:
 
-```bash
+```shell
 sqlite3 --version
 ```
 
@@ -119,7 +119,7 @@ Rails includes everything you need to build and extend a web application. Once
 you have Ruby and SQLite 3 installed on your system, you can install Rails via
 the [RubyGems](https://rubygems.org) `gem` command that comes as a part of Ruby:
 
-```bash
+```shell
 gem install rails
 ```
 
@@ -132,7 +132,7 @@ It is required to use [Paperclip](https://github.com/thoughtbot/paperclip),
 which is how Solidus currently handles file attachments. To install ImageMagick
 via Homebrew, use the command: 
 
-```bash
+```shell
 brew install imagemagick
 ```
 
@@ -148,7 +148,7 @@ Solidus.
 
 First, we need a new Rails project:
 
-```bash
+```shell
 rails new your_solidus_project_name
 ```
 
@@ -181,7 +181,7 @@ the gems and create a more custom store.
 Once you have saved the `Gemfile`, ensure you are in your Rails project
 directory, and then install the project's dependencies using Bundler.
 
-```bash
+```shell
 cd /path/to/your-solidus-project-name
 bundle install
 ```
@@ -202,7 +202,7 @@ provided by Solidus and Railties.
 
 First, run the `spree:install` generator:
 
-```bash
+```shell
 bundle exec rails generate spree:install
 ```
 
@@ -223,7 +223,7 @@ The default values are as follows:
 Next, you need run the `solidus:auth:install` generator and install your
 database migrations using the following commands:
 
-```bash
+```shell
 bundle exec rails generate solidus:auth:install
 bundle exec rake railties:install:migrations
 ```
@@ -231,7 +231,7 @@ bundle exec rake railties:install:migrations
 Finally, you need to run the migrations that Railties created. This creates the
 e-commerce–friendly models that Solidus uses for its database:
 
-```bash
+```shell
 bundle exec rake db:migrate
 ```
 
@@ -242,7 +242,7 @@ successfully start the Rails server and see the sample store in your browser.
 
 First, start the server:
 
-```bash
+```shell
 bundle exec rails server
 ```
 
