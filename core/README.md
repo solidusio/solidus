@@ -1,6 +1,6 @@
 Summary
 ------
-Solidus Core provides the essential e-commerce data models upon which the
+Solidus Core provides the essential ecommerce data models upon which the
 Solidus system depends.
 
 Core Models
@@ -24,14 +24,14 @@ this form are welcome and encouraged!
 ## The Order Sub-System
 * `Spree::Store` - Records store specific configuration such as store name and URL.
 * `Spree::Order` - The customers cart until completed, then acts as
-permenent record of the transaction.
+permanent record of the transaction.
 * `Spree::LineItem` - Variants placed in the order at a particular price.
 
 ## The User Sub-System
 * `Spree::LegacyUser` - Default implementation of User.
 * `Spree::UserClassHandle` - Configuration point for User model implementation.
 * [solidus_auth_devise](https://github.com/solidusio/solidus_auth_devise) -
-An offical, more robust implementation of a User class with Devise
+An official, more robust implementation of a User class with Devise
 integration.
 
 ## The Payment Sub-System
@@ -62,6 +62,8 @@ Developer Notes
 ---------------
 ## Testing
 
-Run the tests
+Run the tests:
 
-    bundle exec rspec
+```bash
+bundle exec rspec
+```
