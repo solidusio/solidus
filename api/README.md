@@ -1,9 +1,11 @@
 # solidus\_api
 
-API contains controllers and rabl views implementing the REST API of solidus.
+API contains the controllers and rabl views implementing the REST API of Solidus.
 
 ## Testing
 
-Run the tests
+Run the API tests:
 
-    bundle exec rspec
+```bash
+bundle exec rspec
+```
