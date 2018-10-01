@@ -2,7 +2,7 @@
 
 Frontend contains controllers and views implementing a storefront and cart for Solidus.
 
-## Override Views
+## Override views
 
 In order to customize a view you should copy the file into your host app. Using Deface is not
 recommended as it provides lots of headaches while debugging and degrades your shops performance.
@@ -29,7 +29,7 @@ $ bundle exec rails g solidus:views:override --only product
 
 This will copy all views whose directory or filename contains the string "product".
 
-### Handle Upgrades
+### Handle upgrades
 
 After upgrading Solidus to a new version run the generator again and follow on screen instructions.
 

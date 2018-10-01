@@ -46,7 +46,7 @@ At this point you're waiting on us. We like to at least comment on, if not
 accept, pull requests within three business days (and, typically, one business
 day). We may suggest some changes or improvements or alternatives.
 
-### Pull Request Guidelines
+### Pull Request guidelines
 
 * The specs must pass for each individual commit.
 * Each individual commit should make sense by itself as far as possible.
@@ -67,7 +67,7 @@ taken straight from the Ruby on Rails guide:
 * Update the documentation, the surrounding one, examples elsewhere, guides,
   whatever is affected by your contribution
 
-### Follow the Coding Conventions
+### Follow the coding conventions
 
 This is a Rails-based framework.  See the [Rails coding conventions](http://guides.rubyonrails.org/contributing_to_ruby_on_rails.html#follow-the-coding-conventions).
 
