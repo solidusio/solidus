@@ -13,6 +13,7 @@
     "babel-minify-webpack-plugin": "^0.3.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.1",
+    "bootstrap": "^4.1.2",
     "browser-sync": "2.24.4",
     "clean-webpack-plugin": "^0.1.18",
     "copy-webpack-plugin": "^4.4.1",
@@ -27,7 +28,6 @@
     "webpack-merge": "^4.1.2"
   },
   "dependencies": {
-    "bootstrap": "4.1.0",
     "headroom.js": "0.9.4",
     "jquery": "^3.2.1",
     "numeral": "^2.0.6",
