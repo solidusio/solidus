@@ -17,7 +17,7 @@ If you're following this guide and still having trouble installing Solidus,
 in the [#support channel][slack-support].
 
 If you are still not able to get Solidus running, [open an issue on
-GitHub][solidus-github-issue] with any information you think would help to
+GitHub][solidus-github-issue] with any information you think would help us
 reproduce the issues you're having. That would include your operating system and
 its version, the versions of Ruby, Rails, and SQLite 3 that you are running, and
 the specific error messages you are receiving during installation. 
@@ -81,14 +81,14 @@ ruby --version
 ```
 
 The Ruby documentation recommends installing another, newer instance of Ruby
-installing another, newer instance of Ruby using Homebrew: 
+using Homebrew:
 
 ```bash
 brew install ruby
 ```
 
-Homebrew prioritizes the Homebrew installation of Ruby (at
-`/usr/local/bin/ruby`) above the system installation (`/usr/bin/ruby`).
+Homebrew prioritizes the Homebrew installation of Ruby
+(`/usr/local/bin/ruby`) above the system installation (`/usr/bin/ruby`).
 
 ### Install SQLite 3
 
@@ -103,8 +103,7 @@ brew install sqlite3
 Alternatively, you can [download the pre-compiled binary from the SQLite
 website](https://www.sqlite.org/download.html).
 
-After the installation, check that it has been installed by checking the version
-number:
+After installation, check the version number:
 
 ```bash
 sqlite3 --version
@@ -123,13 +122,13 @@ the [RubyGems](https://rubygems.org) `gem` command that comes as a part of Ruby:
 gem install rails
 ```
 
-This installs Rails as well as its dependencies.
+This will install Rails as well as its dependencies.
 
 ### Install ImageMagick
 
 ImageMagick helps you create, edit, and save to hundreds of image file formats.
-It is required to use [Paperclip](https://github.com/thoughtbot/paperclip),
-which is how Solidus currently handles file attachments. To install ImageMagick
+It is required by [Paperclip](https://github.com/thoughtbot/paperclip),
+which Solidus currently uses to handle file attachments. To install ImageMagick
 via Homebrew, use the command: 
 
 ```bash
@@ -218,9 +217,12 @@ The default values are as follows:
 - Username: `admin@example.com`
 - Password: `test123`
 
+The password must contain a minimum of 6 characters, or the account creation
+will fail without asking the user to try again.
+
 ### Prepare Solidus database migrations
 
-Next, you need run the `solidus:auth:install` generator and install your
+Next, you need to run the `solidus:auth:install` generator and install your
 database migrations using the following commands:
 
 ```bash
@@ -248,9 +250,9 @@ bundle exec rails server
 
 Once the server has started, you can access your store from the following URLs:
 
-- [http://localhost:3000/](http://localhost:3000/) accesses the
+- [http://localhost:3000/](http://localhost:3000/) opens the
   [`solidus_frontend`][solidus-frontend] storefront.
-- [http://localhost:3000/admin/](http://localhost:3000/admin/) accesses the
+- [http://localhost:3000/admin/](http://localhost:3000/admin/) opens the
   [`solidus_backend`][solidus-backend] admin area.
 
 You can browse the sample store's pages and mock products, and so on.

@@ -4,9 +4,9 @@ The `Spree::Adjustment` model is used to track price adjustments. For example,
 taxes and promotions generate price adjustments. Adjustments can be either a
 positive or a negative amount.
 
-Adjustments values come from [adjustment sources](#adjustment-sources) (a tax
-rate or promotion action), and then affect the total price of an
-[adjustable](#adjustables) (an order, line item, or shipment).
+Adjustments values come from [adjustment sources](#adjustment-sources) (for
+example, a tax rate or a promotion action), and they affect the total price
+of an [adjustable](#adjustables) (an order, line item, or shipment).
 
 <!-- TODO:
   Add links to documentation about orders, line items, and shipments.
@@ -66,34 +66,33 @@ adjustments in some circumstances:
 
 ## Adjustables
 
-Adjustables are the objects whose prices can be adjusted. The following objects
-can be adjustables:
+Adjustables are objects whose prices can be adjusted, and include:
 
 - `Spree::Order`: The adjustment for an entire order.
-- `Spree::LineItem`: The adjustment for a single line item on an order.
+- `Spree::LineItem`: The adjustment for a single line item of an order.
 - `Spree::Shipment`: The adjustment for the price of shipping.
 
 ## Charges vs. credits
 
 Adjustments can be positive or negative amounts. For convenience, you can use
 the [adjustment scopes](#adjustment-scopes) `charge` or `credit` to retrieve
-only positive or negative amounts.
+only positive or only negative amounts.
 
 ## Adjustment scopes
 
 You can call [scopes][rails-scopes] on `Spree::Adjustment`s themselves or on any
-class that has an `adjustments` association – like orders, line items, and or
+class that has an `adjustments` association – like orders, line items, and/or
 shipments.
 
 For example, you can find all of the adjustments with an `eligible` value of
 `true` for orders, line items, and shipments:
 
 - `Spree::Order.find(1).adjustments.eligible`: Returns all of the eligible
-  adjustments on the order with the ID `1`.
+  adjustments on the order with ID `1`.
 - `Spree::LineItem.find(1).adjustments.eligible`: Returns all of the eligible
-  adjustments on the line item with the ID `1`.
+  adjustments on the line item with ID `1`.
 - `Spree::Shipment.find(1).adjustments.eligible`: Returns all of the eligible
-  adjustments on the shipment with the ID `1`.
+  adjustments on the shipment with ID `1`.
 
 ### List of adjustment scopes
 

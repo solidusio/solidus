@@ -1,14 +1,14 @@
 # Forking Solidus
 
-If your store requires deep customizations to Solidus's core functionality, you
+If your store requires deep customizations to Solidus' core functionality, you
 may want to fork Solidus for your store where you can more freely implement your
 features.
 
-Note that this can complicate your Solidus upgrade process or can break other
+Note that this can complicate your Solidus upgrade process or it can break other
 Solidus extensions you may wish to use.
 
 The benefit of using a fork of Solidus is that you can test your new features
-with Solidus's test suite and ensure your development has not broken Solidus's
+with Solidus' test suite and ensure that your development did not break any
 existing functionality.
 
 You can reference a fork of Solidus in your `Gemfile` this way:
@@ -17,7 +17,7 @@ You can reference a fork of Solidus in your `Gemfile` this way:
 gem 'solidus', git: 'https://github.com/my_account/solidus.git', branch: "my-new-feature"
 ```
 
-If you think your feature (or fix) is of interest to the wider Solidus
+If you think your feature or fix is of interest to the wider Solidus
 community, [consider making a pull request][contributing].
 
 [contributing]: https://github.com/solidusio/solidus/blob/master/CONTRIBUTING.md
