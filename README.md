@@ -1,5 +1,5 @@
 
-<img src="./guides/source/assets/images/logo.svg" width=400>
+<img src="./logo.svg" width=350>
 
 - [solidus.io](http://solidus.io/)
 - [Documentation](https://guides.solidus.io)
