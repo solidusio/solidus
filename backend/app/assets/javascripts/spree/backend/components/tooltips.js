@@ -14,7 +14,7 @@ Spree.ready(function(){
   var removeDesyncedTooltip = function(tooltip) {
     var interval = setInterval(function(){
       if(!$(tooltip.element).is(":hover")) {
-        tooltip.hide();
+        tooltip.dispose();
         clearInterval(interval);
       }
     }, 200);
