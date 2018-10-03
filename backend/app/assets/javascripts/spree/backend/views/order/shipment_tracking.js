@@ -19,6 +19,7 @@ Spree.Views.Order.ShipmentTracking = Backbone.View.extend({
   },
 
   onSave: function(event) {
+    $(event.target).tooltip('dispose')
     this.editing = false;
     this.model.save({
       tracking: this.$('input[type="text"]').val()
@@ -31,6 +32,7 @@ Spree.Views.Order.ShipmentTracking = Backbone.View.extend({
   },
 
   onCancel: function(event) {
+    $(event.target).tooltip('dispose')
     this.editing = false;
     this.render();
   },

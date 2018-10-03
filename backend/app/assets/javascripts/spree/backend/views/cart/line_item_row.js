@@ -18,12 +18,14 @@ Spree.Views.Cart.LineItemRow = Backbone.View.extend({
 
   onEdit: function(e) {
     e.preventDefault()
+    $(e.target).tooltip('dispose')
     this.editing = true
     this.render()
   },
 
   onCancel: function(e) {
     e.preventDefault();
+    $(e.target).tooltip('dispose')
     if (this.model.isNew()) {
       this.remove();
       this.model.destroy();
@@ -42,6 +44,7 @@ Spree.Views.Cart.LineItemRow = Backbone.View.extend({
 
   onSave: function(e) {
     e.preventDefault()
+    $(e.target).tooltip('dispose')
     if(!this.validate()) {
       return;
     }
@@ -64,6 +67,7 @@ Spree.Views.Cart.LineItemRow = Backbone.View.extend({
 
   onDelete: function(e) {
     e.preventDefault()
+    $(e.target).tooltip('dispose')
     if(!confirm(Spree.translations.are_you_sure_delete)) {
       return;
     }

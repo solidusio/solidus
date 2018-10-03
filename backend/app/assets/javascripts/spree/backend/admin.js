@@ -87,6 +87,7 @@ Spree.ready(function(){
         },
         dataType: 'script',
         success: function(response) {
+          el.tooltip('dispose')
           el.parents("tr").fadeOut('hide', function() {
             $(this).remove();
           });
@@ -101,6 +102,7 @@ Spree.ready(function(){
 
   $('body').on('click', 'a.spree_remove_fields', function() {
     var el = $(this);
+    el.tooltip('dispose')
     el.prev("input[type=hidden]").val("1");
     el.closest(".fields").hide();
     if (el.prop("href").substr(-1) == '#') {
