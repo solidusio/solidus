@@ -76,7 +76,7 @@ Spree::Image.attachment_definitions[:attachment][:styles] = {
 If you change the default image sizes, you must regenerate the Paperclip
 thumbnails by running a Rake task:
 
-```shell
+```bash
 bundle exec rake paperclip:refresh:thumbnails CLASS=Spree::Image
 ```
 

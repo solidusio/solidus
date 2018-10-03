@@ -31,12 +31,12 @@ When running the application there is a styleguide available at:
 
 Run the tests
 
-```shell
+```bash
 bundle exec rspec
 ```
 
 Run the JavaScript tests (must have [ChromeDriver](https://sites.google.com/a/chromium.org/chromedriver/) installed)
 
-```shell
+```bash
 bundle exec teaspoon
 ```

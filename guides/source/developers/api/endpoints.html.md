@@ -13,13 +13,13 @@ If you want to quickly check for an API endpoint, you can do so locally.
 
 First, ensure you are in your project directory:
 
-```shell
+```bash
 cd my_solidus_application
 ```
 
 Then, you can filter a `rails routes` command using grep:
 
-```shell
+```bash
 bundle exec rails routes | grep '/api'
 ```
 
@@ -29,6 +29,6 @@ each route accepts.
 
 You can filter the list of routes being returned with more specific grep input:
 
-```shell
+```bash
 bundle exec rails routes | grep '/api/products'
 ```
