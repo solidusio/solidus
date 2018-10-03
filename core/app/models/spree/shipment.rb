@@ -13,6 +13,7 @@ module Spree
     has_many :shipping_methods, through: :shipping_rates
     has_many :state_changes, as: :stateful
     has_many :cartons, -> { distinct }, through: :inventory_units
+    has_many :line_items, -> { distinct }, through: :inventory_units
 
     before_validation :set_cost_zero_when_nil
 
@@ -186,10 +187,6 @@ module Spree
 
     def item_cost
       line_items.map(&:total).sum
-    end
-
-    def line_items
-      inventory_units.includes(:line_item).map(&:line_item).uniq
     end
 
     def ready_or_pending?
