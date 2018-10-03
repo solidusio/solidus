@@ -8,6 +8,7 @@ module Spree
       before_action :load_data, except: [:index]
       update.before :update_before
       helper_method :clone_object_url
+      before_action :split_params, only: [:create, :update]
 
       def show
         redirect_to action: :edit
@@ -19,12 +20,6 @@ module Spree
       end
 
       def update
-        if params[:product][:taxon_ids].present?
-          params[:product][:taxon_ids] = params[:product][:taxon_ids].split(',')
-        end
-        if params[:product][:option_type_ids].present?
-          params[:product][:option_type_ids] = params[:product][:option_type_ids].split(',')
-        end
         if updating_variant_property_rules?
           params[:product][:variant_property_rules_attributes].each do |_index, param_attrs|
             param_attrs[:option_value_ids] = param_attrs[:option_value_ids].split(',')
@@ -72,6 +67,15 @@ module Spree
       end
 
       private
+
+      def split_params
+        if params[:product][:taxon_ids].present?
+          params[:product][:taxon_ids] = params[:product][:taxon_ids].split(',')
+        end
+        if params[:product][:option_type_ids].present?
+          params[:product][:option_type_ids] = params[:product][:option_type_ids].split(',')
+        end
+      end
 
       def find_resource
         Spree::Product.with_deleted.friendly.find(params[:id])
