@@ -8,11 +8,13 @@ Spree.Views.Payment.PaymentRow = Backbone.View.extend({
 
   onEdit: function(e) {
     e.preventDefault();
+    $(e.target).tooltip('dispose')
     this.$el.addClass("editing");
   },
 
   onCancel: function(e) {
     e.preventDefault();
+    $(e.target).tooltip('dispose')
     this.$el.removeClass("editing");
   },
 
@@ -29,6 +31,7 @@ Spree.Views.Payment.PaymentRow = Backbone.View.extend({
       }
     };
     e.preventDefault();
+    $(e.target).tooltip('dispose')
     this.model.save({
       amount: amount
     }, options);

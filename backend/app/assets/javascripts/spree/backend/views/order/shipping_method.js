@@ -23,6 +23,7 @@ Spree.Views.Order.ShippingMethod = Backbone.View.extend({
   },
 
   onSave: function(event) {
+    $(event.target).tooltip('dispose')
     this.editing = false;
     this.shippingMethodId = this.$('select').val();
     this.shippingRates = new Backbone.Collection();
@@ -37,6 +38,7 @@ Spree.Views.Order.ShippingMethod = Backbone.View.extend({
   },
 
   onCancel: function(event) {
+    $(event.target).tooltip('dispose')
     this.editing = false;
     this.shippingRates = new Backbone.Collection();
     this.render();

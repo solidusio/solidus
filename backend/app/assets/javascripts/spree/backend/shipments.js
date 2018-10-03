@@ -138,6 +138,7 @@ var ShipmentSplitItemView = Backbone.View.extend({
 
   cancelItemSplit: function(e){
     e.preventDefault();
+    $(e.target).tooltip('dispose')
 
     this.shipmentItemView.removeSplit();
     this.remove();
