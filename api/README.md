@@ -6,6 +6,6 @@ API contains the controllers and rabl views implementing the REST API of Solidus
 
 Run the API tests:
 
-```shell
+```bash
 bundle exec rspec
 ```

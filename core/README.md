@@ -64,6 +64,6 @@ Developer notes
 
 Run the tests:
 
-```shell
+```bash
 bundle exec rspec
 ```

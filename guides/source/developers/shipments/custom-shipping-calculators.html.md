@@ -66,7 +66,7 @@ Your custom shipping calculator should inherit from the existing
 `Spree::ShippingCalculator` class. We recommend following the same directory
 structure that Spree models do, so your new calculator would be created at:
 
-```shell
+```bash
 /app/models/my_store/calculator/shipping/custom_shipping_calculator.rb
 ```
 

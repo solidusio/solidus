@@ -17,13 +17,13 @@ Usage
 
 3. Start the Middleman server. Note that this will also invoke Webpack via the external pipeline.
 
-```shell
+```bash
 $ bundle exec middleman server
 ```
 
 4. To build HTML and assets for production, run:
 
-```shell
+```bash
 $ bundle exec middleman build
 ```
 5. Set proper `base_url` in config.rb

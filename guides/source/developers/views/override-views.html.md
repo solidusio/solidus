@@ -25,7 +25,7 @@ information see the [Override Solidus assets][override-solidus-assets] article.
 If you want to override views from the `solidus_frontend` gem, you can use the
 provided Rails generator in your host application:
 
-```shell
+```bash
 cd your-rails-project
 bundle exec rails generate solidus:views:override
 ```
@@ -36,14 +36,14 @@ customize them for your store.
 If you only want to copy certain views into your host app, you can provide the
 `--only` argument:
 
-```shell
+```bash
 bundle exec rails generate solidus:views:override --only products/show
 ```
 
 The argument to `--only` can  also be a substring of the name of the view from
 the app/views/spree folder:
 
-```shell
+```bash
 bundle exec rails generate solidus:views:override --only product
 ```
 

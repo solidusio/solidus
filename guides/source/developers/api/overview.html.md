@@ -24,14 +24,14 @@ role of `admin`.
 To make a request to the API, pass a `X-Spree-Token` header and a Spree API key
 along with the request:
 
-```shell
+```bash
 curl --header "X-Spree-Token: <key>" http://yourstore.com/api/products/1
 ```
 
 Alternatively, you can pass through the token as a URL parameter if you are
 unable to pass it through a header:
 
-```shell
+```bash
 curl http://example.com/api/products/1?token=<key>
 ```
 

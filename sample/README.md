@@ -6,7 +6,7 @@ used to test stores.
 Applications including the `solidus_sample` gem are provided a rake task to
 load the sample data:
 
-```shell
+```bash
 bundle exec rake spree_sample:load
 ```
 
@@ -15,6 +15,6 @@ bundle exec rake spree_sample:load
 
 Run the tests:
 
-```shell
+```bash
 bundle exec rspec
 ```
