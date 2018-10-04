@@ -58,6 +58,34 @@ describe "Shipments", type: :feature do
     end
   end
 
+  context "destroying a shipment", js: true do
+    before do
+      visit spree.admin_path
+      click_link "Orders"
+      within_row(1) do
+        click_link "R100"
+      end
+    end
+
+    context "when the line item cannot be found" do
+      it "shows the proper error message" do
+        expect(page).to have_selector '.delete-item'
+        order.shipments.first.line_items.each(&:destroy)
+        accept_alert { first('.delete-item').click }
+        expect(page).to have_content 'The resource you were looking for could not be found.'
+      end
+    end
+
+    context "when the shipment has already been shipped" do
+      it "shows the proper error message" do
+        expect(page).to have_selector '.delete-item'
+        order.shipments.first.ship!
+        accept_alert { first('.delete-item').click }
+        expect(page).to have_content 'Cannot remove items from a shipped shipment'
+      end
+    end
+  end
+
   context "moving variants between shipments", js: true do
     let!(:order) { create(:completed_order_with_pending_payment, number: "R100", state: "complete", line_items_count: 5) }
     let!(:la) { create(:stock_location, name: "LA") }
