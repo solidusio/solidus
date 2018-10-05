@@ -48,9 +48,15 @@ Spree.Views.Stock.EditStockItemRow = Backbone.View.extend({
     if (isNaN(diff)) diff = 0;
     newCount = this.previousAttributes.count_on_hand + diff;
     ev.preventDefault();
-    this.model.set("count_on_hand", newCount);
+    // Do not allow negative stock values
+    if (newCount < 0) {
+      ev.currentTarget.value = -1 * this.previousAttributes.count_on_hand;
+      this.$count_on_hand_display.text(0);
+    } else {
+      this.model.set("count_on_hand", newCount);
+      this.$count_on_hand_display.text(newCount);
+    }
     this.$el.toggleClass('changed', diff !== 0);
-    this.$count_on_hand_display.text(newCount);
   },
 
   onSuccess: function() {
