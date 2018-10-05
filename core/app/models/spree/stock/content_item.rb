@@ -31,7 +31,7 @@ module Spree
       end
 
       def price
-        variant.price
+        line_item.price
       end
 
       def amount

@@ -6,16 +6,23 @@ require 'shared_examples/calculator_shared_examples'
 module Spree
   module Calculator::Shipping
     RSpec.describe FlatPercentItemTotal, type: :model do
-      let(:variant1) { build(:variant, price: 10.11) }
-      let(:variant2) { build(:variant, price: 20.2222) }
-
       it_behaves_like 'a calculator with a description'
 
-      let(:line_item1) { build(:line_item, variant: variant1) }
-      let(:line_item2) { build(:line_item, variant: variant2) }
+      let(:line_item1) { build(:line_item, price: 10.11) }
+      let(:line_item2) { build(:line_item, price: 20.2222) }
+
+      let(:inventory_unit1) { build(:inventory_unit, line_item: line_item1) }
+      let(:inventory_unit2) { build(:inventory_unit, line_item: line_item2) }
 
       let(:package) do
-        build(:stock_package, variants_contents: { variant1 => 2, variant2 => 1 })
+        build(
+          :stock_package,
+          contents: [
+            Spree::Stock::ContentItem.new(inventory_unit1),
+            Spree::Stock::ContentItem.new(inventory_unit1),
+            Spree::Stock::ContentItem.new(inventory_unit2),
+          ]
+        )
       end
 
       subject { FlatPercentItemTotal.new(preferred_flat_percent: 10) }

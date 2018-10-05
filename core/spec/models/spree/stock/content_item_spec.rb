@@ -53,12 +53,12 @@ module Spree
 
       describe '#price' do
         subject { instance.price }
-        it { is_expected.to eq(19.99.to_d) }
+        it { is_expected.to eq(10.to_d) }
       end
 
       describe '#amount' do
         subject { instance.amount }
-        it { is_expected.to eq(19.99.to_d) }
+        it { is_expected.to eq(10.to_d) }
       end
 
       describe '#quantity' do
