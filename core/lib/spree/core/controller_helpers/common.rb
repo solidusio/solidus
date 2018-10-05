@@ -62,7 +62,7 @@ module Spree
             candidate &&
               available_locales.include?(candidate.to_sym)
           end
-          session[:locale] = locale
+          session[set_user_language_locale_key] = locale
           I18n.locale = locale
           Carmen.i18n_backend.locale = locale
         end
