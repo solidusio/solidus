@@ -1,0 +1,7 @@
+[Settings]
+  ID = "Solidus_Guides"
+
+[build]
+  base    = "guides/"
+  publish = "guides/build/"
+  command = "middleman build"
