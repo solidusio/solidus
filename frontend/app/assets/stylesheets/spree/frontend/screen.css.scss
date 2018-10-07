@@ -1092,6 +1092,9 @@ div[data-hook="inside_cart_form"] {
 /*--------------------------------------*/
 #order_summary {
   margin-top: 0;
+  h1 {
+    padding-left: 10px;
+  }
 }
 #order {
   p[data-hook="links"] {
