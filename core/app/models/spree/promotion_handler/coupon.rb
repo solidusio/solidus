@@ -19,6 +19,7 @@ module Spree
             set_error_code :coupon_code_expired
           else
             set_error_code :coupon_code_not_found
+            Rails.logger.warn(Spree.t(:invalid_coupon_due_to_no_promotion_action, coupon_code: coupon_code))
           end
         end
 

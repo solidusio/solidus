@@ -1385,6 +1385,7 @@ en:
     intercept_email_address: Intercept Email Address
     intercept_email_instructions: Override email recipient and replace with this address.
     internal_name: Internal Name
+    invalid_coupon_due_to_no_promotion_action: "Coupon code: '%{coupon_code}' failed. Please add an action to this promotion."
     invalid_exchange_variant: Invalid exchange variant.
     invalid_payment_method_type: Invalid payment method type.
     invalid_promotion_action: Invalid promotion action.
