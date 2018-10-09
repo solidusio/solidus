@@ -6,14 +6,23 @@ Spree.Views.Stock.AddStockItem = Backbone.View.extend({
   },
 
   events: {
-    "click .submit": "onSubmit"
+    "click .submit": "onSubmit",
+    "submit form": "onSubmit",
+    'input [name="count_on_hand"]': "onChange",
+    'change [name="stock_location_id"]': "onChange",
+    'click [name="backorderable"]': "onChange"
   },
 
   validate: function() {
-    var locationSelectContainer = this.$locationSelect.siblings('.select2-container');
-    locationSelectContainer.toggleClass('error', !this.$locationSelect.val());
+    this.$locationSelect.toggleClass('error', !this.$locationSelect.val());
     this.$countInput.toggleClass('error', !this.$countInput.val());
-    return locationSelectContainer.hasClass('error') || this.$countInput.hasClass('error');
+    return this.$locationSelect.hasClass('error') || this.$countInput.hasClass('error');
+  },
+
+  onChange: function (event) {
+    var $target = $(event.target)
+    if ($target.val() !== '') $target.removeClass('error');
+    this.$el.addClass('changed');
   },
 
   onSuccess: function() {
@@ -25,6 +34,7 @@ Spree.Views.Stock.AddStockItem = Backbone.View.extend({
       stockLocationName: stockLocationName
     });
     editView.$el.insertBefore(this.$el);
+    editView.$el.addClass('stock-item-edit-row');
     this.model = new Spree.Models.StockItem({
       variant_id: this.model.get('variant_id'),
       stock_location_id: this.model.get('stock_location_id')
@@ -58,6 +68,7 @@ Spree.Views.Stock.AddStockItem = Backbone.View.extend({
       success: this.onSuccess.bind(this),
       error: this.onError.bind(this)
     };
+    this.$el.removeClass('changed');
     this.model.save(null, options);
   }
 });

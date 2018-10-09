@@ -3,16 +3,17 @@ Spree.Views.Stock.EditStockItemRow = Backbone.View.extend({
 
   initialize: function(options) {
     this.stockLocationName = options.stockLocationName;
-    this.editing = false;
     this.negative = this.model.attributes.count_on_hand < 0;
+    this.previousAttributes = _.clone(this.model.attributes);
+    this.listenTo(this.model, 'sync', this.onSuccess);
     this.render();
   },
 
   events: {
-    "click .edit": "onEdit",
     "click .submit": "onSubmit",
     "submit form": "onSubmit",
-    "click .cancel": "onCancel"
+    "click .cancel": "onCancel",
+    'input [name="count_on_hand"]': "countOnHandChanged"
   },
 
   template: HandlebarsTemplates['stock_items/stock_location_stock_item'],
@@ -26,26 +27,43 @@ Spree.Views.Stock.EditStockItemRow = Backbone.View.extend({
     _.extend(renderAttr, this.model.attributes);
     this.$el.attr("data-variant-id", this.model.get('variant_id'));
     this.$el.html(this.template(renderAttr));
+    this.$count_on_hand_display = this.$('.count-on-hand-display');
     return this;
   },
 
   onEdit: function(ev) {
     ev.preventDefault();
-    this.editing = true;
     this.render();
   },
 
   onCancel: function(ev) {
     ev.preventDefault();
-    this.model.set(this.model.previousAttributes());
-    this.editing = false;
+    this.model.set(this.previousAttributes);
+    this.$el.removeClass('changed');
     this.render();
   },
 
+  countOnHandChanged: function(ev) {
+    var diff = parseInt(ev.currentTarget.value), newCount;
+    if (isNaN(diff)) diff = 0;
+    newCount = this.previousAttributes.count_on_hand + diff;
+    ev.preventDefault();
+    // Do not allow negative stock values
+    if (newCount < 0) {
+      ev.currentTarget.value = -1 * this.previousAttributes.count_on_hand;
+      this.$count_on_hand_display.text(0);
+    } else {
+      this.model.set("count_on_hand", newCount);
+      this.$count_on_hand_display.text(newCount);
+    }
+    this.$el.toggleClass('changed', diff !== 0);
+  },
+
   onSuccess: function() {
-    this.editing = false;
+    this.$el.removeClass('changed');
+    this.previousAttributes = _.clone(this.model.attributes);
     this.render();
-    show_flash("success", Spree.translations.updated_successfully);
+    this.$('[name="count_on_hand"]').focus();
   },
 
   onError: function(model, response, options) {
@@ -62,9 +80,11 @@ Spree.Views.Stock.EditStockItemRow = Backbone.View.extend({
       backorderable: backorderable
     });
     var options = {
-      success: this.onSuccess.bind(this),
+      success: function() {
+        show_flash("success", Spree.translations.updated_successfully);
+      },
       error: this.onError.bind(this)
     };
-    this.model.save({ force: true }, options);
+    this.model.save({}, options);
   }
 });
