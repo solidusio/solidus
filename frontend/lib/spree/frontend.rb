@@ -3,7 +3,7 @@
 require 'rails/all'
 require 'jquery-rails'
 require 'canonical-rails'
-require 'sass-rails'
+require 'sassc-rails'
 require 'font-awesome-rails'
 require 'responders'
 require 'kaminari'

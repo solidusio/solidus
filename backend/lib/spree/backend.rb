@@ -3,7 +3,7 @@
 require 'rails/all'
 require 'jquery-rails'
 require 'coffee-rails'
-require 'sass-rails'
+require 'sassc-rails'
 require 'handlebars_assets'
 require 'font-awesome-rails'
 require 'autoprefixer-rails'
