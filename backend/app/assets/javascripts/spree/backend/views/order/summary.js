@@ -20,10 +20,10 @@ Spree.Views.Order.Summary = Backbone.View.extend({
     this.$('dd.order-additional_tax_total').text(this.model.get("display_additional_tax_total"))
 
     this.$('.order-shipment_state').toggleClass("hidden", !this.model.get("completed_at"))
-    this.$('dd.order-shipment_state').html(this.renderState('shipment_state', this.model.get("shipment_state")))
+    this.$('dd.order-shipment_state').html(this.renderState('shipment_states', this.model.get("shipment_state")))
 
     this.$('.order-payment_state').toggleClass("hidden", !this.model.get("completed_at"))
-    this.$('dd.order-payment_state').html(this.renderState('payment_state', this.model.get("payment_state")))
+    this.$('dd.order-payment_state').html(this.renderState('payment_states', this.model.get("payment_state")))
   },
 
   renderState: function(translation_key, value) {
