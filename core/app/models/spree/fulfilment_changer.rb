@@ -46,7 +46,7 @@ module Spree
       desired_shipment.save! if desired_shipment.new_record?
 
       # Retrieve how many on hand items we can take from desired stock location
-      available_quantity = [desired_shipment.stock_location.count_on_hand(variant), 0].max
+      available_quantity = [desired_shipment.stock_location.count_on_hand(variant), default_on_hand_quantity].max
 
       new_on_hand_quantity = [available_quantity, quantity].min
       unstock_quantity = desired_shipment.stock_location.backorderable?(variant) ? quantity : new_on_hand_quantity
@@ -112,6 +112,14 @@ module Spree
     # unstocking and restocking will not be necessary.
     def handle_stock_counts?
       current_shipment.order.completed? && current_stock_location != desired_stock_location
+    end
+
+    def default_on_hand_quantity
+      if current_stock_location != desired_stock_location
+        0
+      else
+        current_shipment.inventory_units.where(variant: variant).on_hand.count
+      end
     end
 
     def current_shipment_not_already_shipped
