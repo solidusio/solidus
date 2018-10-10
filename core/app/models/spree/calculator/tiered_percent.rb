@@ -31,7 +31,8 @@ module Spree
       end
 
       if preferred_currency.casecmp(order.currency).zero?
-        (object.amount * (percent || preferred_base_percent) / 100).round(2)
+        currency_exponent = ::Money::Currency.find(preferred_currency).exponent
+        (object.amount * (percent || preferred_base_percent) / 100).round(currency_exponent)
       else
         0
       end

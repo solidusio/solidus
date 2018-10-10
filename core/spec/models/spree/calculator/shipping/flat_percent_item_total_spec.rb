@@ -31,6 +31,11 @@ module Spree
         expect(subject.compute(package)).to eq(4.04)
       end
 
+      it "should round result based on order currency" do
+        package.order.currency = 'JPY'
+        expect(subject.compute(package)).to eq(4)
+      end
+
       it "should return a bigdecimal" do
         expect(subject.compute(package)).to be_a(BigDecimal)
       end
