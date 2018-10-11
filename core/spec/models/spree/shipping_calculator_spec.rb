@@ -4,11 +4,21 @@ require 'rails_helper'
 
 module Spree
   RSpec.describe ShippingCalculator, type: :model do
-    let(:variant1) { build(:variant, price: 10) }
-    let(:variant2) { build(:variant, price: 20) }
+    let(:line_item1) { build(:line_item, price: 10) }
+    let(:line_item2) { build(:line_item, price: 20) }
+
+    let(:inventory_unit1) { build(:inventory_unit, line_item: line_item1) }
+    let(:inventory_unit2) { build(:inventory_unit, line_item: line_item2) }
 
     let(:package) do
-      build(:stock_package, variants_contents: { variant1 => 2, variant2 => 1 })
+      build(
+        :stock_package,
+        contents: [
+          Spree::Stock::ContentItem.new(inventory_unit1),
+          Spree::Stock::ContentItem.new(inventory_unit1),
+          Spree::Stock::ContentItem.new(inventory_unit2)
+        ]
+      )
     end
 
     subject { ShippingCalculator.new }
