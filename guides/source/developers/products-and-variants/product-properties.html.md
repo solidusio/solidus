@@ -17,7 +17,7 @@ t-shirt as a table on its product page:
 You can retrieve the value for a property on a `Spree::Product` object by
 calling the `property` method on it and passing through that property's name:
 
-```bash
+```ruby
 Spree::Product.find(1).property("fit")
 => "Tapered"
 ```

@@ -1,9 +1,9 @@
 Summary
 ------
-Solidus Core provides the essential e-commerce data models upon which the
+Solidus Core provides the essential ecommerce data models upon which the
 Solidus system depends.
 
-Core Models
+Core models
 -----------
 Solidus implements over 200 [models](https://github.com/solidusio/solidus/tree/master/core/app/models/spree),
 and thus a deep inspection of each in this README would be overkill. Instead,
@@ -15,26 +15,26 @@ Currently, these models remain in the Spree namespace as part of the legacy of
 The documentation of Solidus Core is still in progress. Contributions following
 this form are welcome and encouraged!
 
-* [The Order Sub-System](#the-order-sub-system)
-* [The User Sub-System](#the-user-sub-system)
-* [The Payment Sub-System](#the-payment-sub-system)
-* [The Inventory Sub-System](#the-inventory-sub-system)
-* [The Shipments Sub-System](#the-shipments-sub-system)
+* [Order sub-system](#order-sub-system)
+* [User sub-system](#user-sub-system)
+* [Payment sub-system](#payment-sub-system)
+* [Inventory sub-system](#inventory-sub-system)
+* [Shipments sub-system](#shipments-sub-system)
 
-## The Order Sub-System
+## Order sub-system
 * `Spree::Store` - Records store specific configuration such as store name and URL.
 * `Spree::Order` - The customers cart until completed, then acts as
-permenent record of the transaction.
+permanent record of the transaction.
 * `Spree::LineItem` - Variants placed in the order at a particular price.
 
-## The User Sub-System
+## User sub-system
 * `Spree::LegacyUser` - Default implementation of User.
 * `Spree::UserClassHandle` - Configuration point for User model implementation.
 * [solidus_auth_devise](https://github.com/solidusio/solidus_auth_devise) -
-An offical, more robust implementation of a User class with Devise
+An official, more robust implementation of a User class with Devise
 integration.
 
-## The Payment Sub-System
+## Payment sub-system
 * `Spree::Payment` - Manage and process a payment for an order, from a specific
 source (e.g. `Spree::CreditCard`) using a specific payment method (e.g
 `Solidus::Gateway::Braintree`).
@@ -43,7 +43,7 @@ source (e.g. `Spree::CreditCard`) using a specific payment method (e.g
 See https://github.com/solidusio/solidus_gateway/ for officially supported payment method implementations.
 * `Spree::CreditCard` - The `source` of a `Spree::Payment` using `Spree::PaymentMethod::CreditCard` as payment method.
 
-## The Inventory Sub-System
+## Inventory sub-system
 * `Spree::ReturnAuthorization` - Models the return of Inventory Units to
 a Stock Location for an Order.
 * `Spree::StockLocation` - Records the name and addresses from which stock items
@@ -54,14 +54,16 @@ shipment and which method has been selected to deliver the shipment.
 * `Spree::ShippingMethod` - Represents a means of having a shipment delivered,
 such as FedEx or UPS.
 
-## The Shipments Sub-System
+## Shipments sub-system
 * `Spree::Shipment` - An order's planned shipments including
 tracking and cost. Shipments are fulfilled from Stock Locations.
 
-Developer Notes
+Developer notes
 ---------------
 ## Testing
 
-Run the tests
+Run the tests:
 
-    bundle exec rspec
+```bash
+bundle exec rspec
+```

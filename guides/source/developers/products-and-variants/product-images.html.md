@@ -49,7 +49,7 @@ By default, it creates several versions of each image at specific sizes.
 You can check the default settings by calling the `attachment_definitions`
 method on `Spree::Image` in your Rails console:
 
-```bash
+```ruby
 Spree::Image.attachment_definitions[:attachment][:styles]
 => {
   mini=>"48x48>",

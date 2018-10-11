@@ -60,7 +60,7 @@ Run the `bundle` command to install.
 After installing gems, you'll have to run the generators to create necessary
 configuration files and migrations.
 
-```shell
+```bash
 bundle exec rails g spree:install
 bundle exec rails g solidus:auth:install
 bundle exec rake railties:install:migrations
@@ -68,13 +68,13 @@ bundle exec rake railties:install:migrations
 
 Run migrations to create the new models in the database.
 
-```shell
+```bash
 bundle exec rake db:migrate
 ```
 
 Finally start the rails server
 
-```shell
+```bash
 bundle exec rails s
 ```
 
@@ -106,13 +106,13 @@ about.**
 By default, the installation generator (`rails g spree:install`) will run
 migrations as well as adding seed and sample data. This can be disabled using
 
-```shell
+```bash
 rails g spree:install --migrate=false --sample=false --seed=false
 ```
 
 You can always perform any of these steps later by using these commands.
 
-```shell
+```bash
 bundle exec rake railties:install:migrations
 bundle exec rake db:migrate
 bundle exec rake db:seed
@@ -126,7 +126,7 @@ Performance
 -----------
 
 You may notice that your Solidus store runs slowly in development mode. This
-can be because in development each css and javascript is loaded as a separate
+can be because in development each CSS and JavaScript is loaded as a separate
 include. This can be disabled by adding the following to
 `config/environments/development.rb`.
 
@@ -153,14 +153,14 @@ Developing Solidus
 
 * Clone the Git repo
 
-    ```shell
+    ```bash
     git clone git://github.com/solidusio/solidus.git
     cd solidus
     ```
 
 * Install the gem dependencies
 
-    ```shell
+    ```bash
     bundle install
     ```
 
@@ -176,13 +176,13 @@ data already loaded.
 * Create the sandbox application (`DB=mysql` or `DB=postgresql` can be specified
   to override the default sqlite)
 
-  ```shell
+  ```bash
   bundle exec rake sandbox
   ```
 
 * Start the server
 
-    ```shell
+    ```bash
     cd sandbox
     rails server
     ```
@@ -207,13 +207,13 @@ required to run the frontend and backend test suites.
 
 To execute all of the test specs, run the `build.sh` script at the root of the Solidus project:
 
-```shell
+```bash
 bash build.sh
 ```
 
 The `build.sh` script runs using PostgreSQL by default, but it can be overridden by setting the DB environment variable to `DB=sqlite` or `DB=mysql`. For example:
 
-```shell
+```bash
 DB=mysql bash build.sh
 ```
 
@@ -221,7 +221,7 @@ DB=mysql bash build.sh
 
 Each gem contains its own series of tests. To run the tests for the core project:
 
-```shell
+```bash
 cd core
 bundle exec rspec
 ```
@@ -229,7 +229,7 @@ bundle exec rspec
 By default, `rspec` runs the tests for SQLite 3. If you would like to run specs
 against another database you may specify the database in the command:
 
-```shell
+```bash
 DB=postgresql bundle exec rspec
 ```
 
@@ -238,7 +238,7 @@ DB=postgresql bundle exec rspec
 If you want to run the [SimpleCov](https://github.com/colszowka/simplecov) code
 coverage report:
 
-```shell
+```bash
 COVERAGE=true bundle exec rspec
 ```
 
