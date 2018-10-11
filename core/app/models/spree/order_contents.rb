@@ -79,12 +79,8 @@ module Spree
       line_item
     end
 
-    def order_updater
-      @updater ||= Spree::OrderUpdater.new(order)
-    end
-
     def reload_totals
-      order_updater.update
+      @order.recalculate
     end
 
     def add_to_line_item(variant, quantity, options = {})
