@@ -85,7 +85,12 @@ adjustShipmentItems = function(shipment_number, variant_id, quantity){
         window.location.reload();
       },
       error: function(response) {
-        window.show_flash('error', response.responseJSON.message);
+        json = response.responseJSON;
+        message = json.error;
+        for (error in json.errors) {
+          message += '<br />' + json.errors[error].join();
+        }
+        window.show_flash('error', message);
       }
     });
   }
