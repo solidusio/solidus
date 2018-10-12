@@ -2,7 +2,7 @@
   "name": "Solidus Sandbox",
   "description": "A demonstration store using Solidus with some test data.",
   "repository": "https://github.com/solidusio/solidus",
-  "logo": "http://solidus.io/favicon.ico",
+  "logo": "https://solidus.io/assets/images/favicon/favicon.ico",
   "keywords": [
     "solidus",
     "demo"
