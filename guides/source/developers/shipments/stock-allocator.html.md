@@ -11,7 +11,7 @@ The allocator is called by `Spree::Stock::SimpleCoordinator` when allocating inv
 
 ## Pre-configured allocator
 
-Currently, we only have one allocator, which you should use unless you need custom logic:
+Currently, we only have two allocator, which you should use unless you need custom logic:
 
 - [On-hand First](https://github.com/solidusio/solidus/blob/master/core/app/models/spree/stock/allocator/on_hand_first.rb),
   which allocates inventory using Solidus' pre-existing logic.
@@ -25,6 +25,19 @@ Currently, we only have one allocator, which you should use unless you need cust
       - Otherwise, if the order exceeds the availability, the order stocks the inventory
         and create two shipments, one `on_hand` up to the number of available stock items and one
         backordered for the rest.
+
+- [Backordered First](https://github.com/solidusio/solidus/blob/master/core/app/models/spree/stock/allocator/backordered_first.rb),
+  which allocates inventory storing the all the inventory units to the backorderable stock location if the default stock location
+  can't stock all the requested quantity
+
+  Examples:
+    - Someone orders a product which doesn't have stock items on hand, but is backorderable:
+      - The order stocks the inventory and create one backordered shipment.
+    - Someone orders a product which has on hand stock items and it's backorderable:
+      - If the ordered quantity doesn't exceed the availability, the order stocks the inventory
+        and creates one `on_hand` shipment.
+      - Otherwise, if the order exceeds the availability, the order stocks the inventory
+        and creates one `backordered` shipment.
 
 ## Custom allocator API
 
