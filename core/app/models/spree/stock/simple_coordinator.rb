@@ -11,6 +11,9 @@ module Spree
     #   * Repeat but for backordered inventory
     #   * Combine allocated and on hand inventory into a single shipment per-location
     #
+    # Allocation logic can be changed using a custom class (as
+    # configured in Spree::Config::stock_allocator_class )
+    #
     # After allocation, splitters are run on each Package (as configured in
     # Spree::Config.environment.stock_splitters)
     #
@@ -31,6 +34,8 @@ module Spree
           variants: @desired.variants,
           stock_locations: @stock_locations
         )
+
+        @allocator = Spree::Config.stock.allocator_class.new(@availability)
       end
 
       def shipments
@@ -40,13 +45,10 @@ module Spree
       private
 
       def build_shipments
-        # Allocate any available on hand inventory
-        on_hand_packages = allocate_inventory(@availability.on_hand_by_stock_location_id)
+        # Allocate any available on hand inventory and remaining desired inventory from backorders
+        on_hand_packages, backordered_packages, leftover = @allocator.allocate_inventory(@desired)
 
-        # allocate any remaining desired inventory from backorders
-        backordered_packages = allocate_inventory(@availability.backorderable_by_stock_location_id)
-
-        unless @desired.empty?
+        unless leftover.empty?
           raise Spree::Order::InsufficientStock
         end
 
@@ -88,13 +90,13 @@ module Spree
         availability_by_location.transform_values do |available|
           # Find the desired inventory which is available at this location
           packaged = available & @desired
-
           # Remove found inventory from desired
           @desired -= packaged
-
           packaged
         end
       end
+      deprecate allocate_inventory: 'allocate_inventory is deprecated. Please write your own allocator defining' \
+        'a Spree::Stock::Allocator::Base subclass', deprecator: Spree::Deprecation
 
       def get_units(quantities)
         # Change our raw quantities back into inventory units
