@@ -14,7 +14,7 @@ json.cache! [I18n.locale, shipment] do
     json.variant do
       json.partial!("spree/api/variants/small", variant: inventory_unit.variant)
       json.(inventory_unit.variant, :product_id)
-      json.images(inventory_unit.variant.images) do |image|
+      json.images(inventory_unit.variant.gallery.images) do |image|
         json.partial!("spree/api/images/image", image: image)
       end
     end

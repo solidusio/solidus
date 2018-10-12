@@ -27,7 +27,9 @@
               <% ship_form.object.manifest.each do |item| %>
                 <tr class="stock-item">
                   <td class="item-image">
-                    <%= render 'spree/shared/image', image: item.variant.display_image, size: :mini %>
+                    <%= render 'spree/shared/image',
+                      image: (item.variant.gallery.images.first || item.variant.product.gallery.images.first),
+                      size: :mini %>
                   </td>
                   <td class="item-name"><%= item.variant.name %></td>
                   <td class="item-qty"><%= item.quantity %></td>
@@ -75,7 +77,9 @@
               <% @differentiator.missing.each do |variant, quantity| %>
                 <tr class="stock-item">
                   <td class="item-image">
-                    <%= render 'spree/shared/image', image: variant.display_image, size: :mini %>
+                    <%= render 'spree/shared/image',
+                      image: (variant.gallery.images.first || variant.product.gallery.images.first),
+                      size: :mini %>
                   </td>
                   <td class="item-name"><%= variant.name %></td>
                   <td class="item-qty"><%= quantity %></td>

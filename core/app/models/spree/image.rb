@@ -19,9 +19,19 @@ module Spree
     # we need to look at the write-queue for images which have not been saved yet
     after_post_process :find_dimensions, if: :valid?
 
-    # used by admin products autocomplete
     def mini_url
+      Spree::Deprecation.warn(
+        'Spree::Image#mini_url is DEPRECATED. Use Spree::Image#url(:mini) instead.'
+      )
       attachment.url(:mini, false)
+    end
+
+    def url(size)
+      attachment.url(size)
+    end
+
+    def filename
+      attachment_file_name
     end
 
     def find_dimensions
