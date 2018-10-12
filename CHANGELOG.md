@@ -4,6 +4,9 @@
 
 - Implement stock location sorters [#2783](https://github.com/solidusio/solidus/pull/2783) ([aldesantis](https://github.com/aldesantis))
 
+- Fix multiple Money deprecation warnings. Now using html_wrap option which causes each piece of the price to be wrapped in span tags with specific classes for easier styling, but this may break existing stores custom styles.
+[#2912](https://github.com/solidusio/solidus/pull/2912) ([JDutil](https://github.com/JDutil))
+
 ## Solidus 2.7.0 (2018-09-14)
 
 ### Major Changes

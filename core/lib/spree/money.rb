@@ -1,9 +1,5 @@
 # frozen_string_literal: true
 
-require 'money'
-require 'monetize'
-require 'active_support/core_ext/string/output_safety'
-
 module Spree
   # Spree::Money is a relatively thin wrapper around Monetize which handles
   # formatting via Spree::Config.
@@ -77,16 +73,22 @@ module Spree
       @money.format(@options.merge(options))
     end
 
-    # @note If you pass in options, ensure you pass in the html: true as well.
+    # @note If you pass in options, ensure you pass in the { html_wrap: true } as well.
     # @param options [Hash] additional formatting options
     # @return [String] the value of this money object formatted according to
-    #   its options and any additional options, by default as html.
-    def to_html(options = { html: true })
+    #   its options and any additional options, by default with html_wrap.
+    def to_html(options = { html_wrap: true })
       output = format(options)
-      if options[:html]
-        # 1) prevent blank, breaking spaces
-        # 2) prevent escaping of HTML character entities
-        output = output.sub(" ", "&nbsp;").html_safe
+      # Maintain compatibility by checking html option renamed to html_wrap.
+      if options[:html] || options[:html] == false
+        Spree::Deprecation.warn <<-WARN.squish, caller
+          Spree::Money#to_html called with Spree::Money#to_html(html: #{options[:html]}),
+          which will not be supported in the future.
+          Instead use :html_wrap e.g. Spree::Money#to_html(html_wrap: #{options[:html]})
+        WARN
+      end
+      if options[:html_wrap] || options[:html]
+        output = output.html_safe
       end
       output
     end
