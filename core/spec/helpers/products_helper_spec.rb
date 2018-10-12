@@ -31,7 +31,7 @@ module Spree
         context "when variant is more than master" do
           let(:variant_price) { 15 }
 
-          it { is_expected.to eq("(Add: $5.00)") }
+          it { is_expected.to eq("(Add: <span class=\"money-currency-symbol\">$</span><span class=\"money-whole\">5</span><span class=\"money-decimal-mark\">.</span><span class=\"money-decimal\">00</span>)") }
           # Regression test for https://github.com/spree/spree/issues/2737
           it { is_expected.to be_html_safe }
         end
@@ -39,7 +39,7 @@ module Spree
         context "when variant is less than master" do
           let(:product_price) { 15 }
 
-          it { is_expected.to eq("(Subtract: $5.00)") }
+          it { is_expected.to eq("(Subtract: <span class=\"money-currency-symbol\">$</span><span class=\"money-whole\">5</span><span class=\"money-decimal-mark\">.</span><span class=\"money-decimal\">00</span>)") }
         end
       end
 
@@ -56,13 +56,13 @@ module Spree
         context "when variant is more than master" do
           let(:variant_price) { 150 }
 
-          it { is_expected.to eq("(Add: &#x00A5;50)") }
+          it { is_expected.to eq("(Add: <span class=\"money-currency-symbol\">&#x00A5;</span><span class=\"money-whole\">50</span>)") }
         end
 
         context "when variant is less than master" do
           let(:product_price) { 150 }
 
-          it { is_expected.to eq("(Subtract: &#x00A5;50)") }
+          it { is_expected.to eq("(Subtract: <span class=\"money-currency-symbol\">&#x00A5;</span><span class=\"money-whole\">50</span>)") }
         end
       end
     end
@@ -79,8 +79,8 @@ module Spree
 
       context "when currency is default" do
         it "should return the variant price if the price is different than master" do
-          expect(helper.variant_price(variant)).to eq("$15.00")
-          expect(helper.variant_price(variant_2)).to eq("$20.00")
+          expect(helper.variant_price(variant)).to eq("<span class=\"money-currency-symbol\">$</span><span class=\"money-whole\">15</span><span class=\"money-decimal-mark\">.</span><span class=\"money-decimal\">00</span>")
+          expect(helper.variant_price(variant_2)).to eq("<span class=\"money-currency-symbol\">$</span><span class=\"money-whole\">20</span><span class=\"money-decimal-mark\">.</span><span class=\"money-decimal\">00</span>")
         end
       end
 
@@ -95,7 +95,7 @@ module Spree
         end
 
         it "should return the variant price if the price is different than master" do
-          expect(helper.variant_price(variant)).to eq("&#x00A5;150")
+          expect(helper.variant_price(variant)).to eq("<span class=\"money-currency-symbol\">&#x00A5;</span><span class=\"money-whole\">150</span>")
         end
       end
 
