@@ -262,7 +262,7 @@ describe Spree::Api::ShipmentsController, type: :request do
 
     it "returns success" do
       subject
-      expect(response).to be_success
+      expect(response).to be_successful
     end
 
     it "returns rates available to user" do
