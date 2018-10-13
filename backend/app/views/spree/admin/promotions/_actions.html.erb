@@ -6,7 +6,7 @@
       <legend align="center"><%= t('spree.promotion_actions') %></legend>
       <% if can?(:update, @promotion) %>
         <div class="field">
-          <%= label_tag :action_type, t('spree.add_action_of_type')%>
+          <%= label_tag :action_type, t('spree.adjustment_type')%>
           <%= select_tag 'action_type', options, include_blank: t(:choose_promotion_action, scope: 'spree'), class: 'custom-select fullwidth' %>
         </div>
         <div class="filter-actions actions">
