@@ -1,7 +1,5 @@
 <%= render partial: 'spree/shared/error_messages', locals: { target: @promotion } %>
-<fieldset class="form-group no-border-bottom">
-  <legend><%= t '.general' %></legend>
-
+<fieldset class="form-group no-border-bottom no-border-top">
   <div class="row">
     <div id="general_fields" class="col-9">
       <div class="row">
@@ -14,6 +12,9 @@
           <%= f.field_container :description do %>
             <%= f.label :description %><br />
             <%= f.text_area :description, rows: 7, class: 'fullwidth' %>
+            <span class="info">
+              <%= t('spree.character_limit') %>
+            </span>
           <% end %>
 
           <%= f.field_container :category do %>
