@@ -925,7 +925,6 @@ en:
         promotions: Promotions
         promotion_categories: Promotion Categories
         properties: Property Types
-        reports: Reports
         rma: RMA
         settings: Settings
         shipping: Shipping
@@ -1777,7 +1776,6 @@ en:
     remember_me: Remember me
     remove: Remove
     rename: Rename
-    reports: Reports
     resend: Resend
     reset_password: Reset my password
     response_code: Response Code
