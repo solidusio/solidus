@@ -7,6 +7,7 @@ module Spree
     class BaseController < ActionController::Base
       self.responder = Spree::Api::Responders::AppResponder
       respond_to :json
+      protect_from_forgery unless: -> { request.format.json? }
 
       include CanCan::ControllerAdditions
       include Spree::Core::ControllerHelpers::Store
