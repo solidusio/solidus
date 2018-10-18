@@ -4,7 +4,7 @@
     <%= form_tag spree.select_locale_path, class: 'navbar-form' do %>
       <div class="form-group">
         <label for="switch_to_locale" class="sr-only">
-          <%= Spree.t(:'i18n.language') %>
+          <%= I18n.t('spree.i18n.language') %>
         </label>
         <%=
           select_tag(
