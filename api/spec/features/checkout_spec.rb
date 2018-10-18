@@ -61,6 +61,8 @@ module Spree
     end
 
     def add_promotion(_promotion)
+      expect(Spree::Deprecation).to receive(:warn)
+
       expect {
         put "/api/orders/#{@order.number}/apply_coupon_code",
           params: { coupon_code: promotion_code.value }

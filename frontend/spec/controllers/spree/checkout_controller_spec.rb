@@ -501,6 +501,8 @@ describe Spree::CheckoutController, type: :controller do
       let(:promotion_handler) { instance_double('Spree::PromotionHandler::Coupon', error: nil, success: 'Coupon Applied!') }
 
       it "continues checkout flow normally" do
+        expect(Spree::Deprecation).to receive(:warn)
+
         expect(Spree::PromotionHandler::Coupon)
           .to receive_message_chain(:new, :apply)
           .and_return(promotion_handler)
@@ -515,6 +517,8 @@ describe Spree::CheckoutController, type: :controller do
         let(:promotion_handler) { instance_double('Spree::PromotionHandler::Coupon', error: 'Some error', success: false) }
 
         it "setups the current step correctly before rendering" do
+          expect(Spree::Deprecation).to receive(:warn)
+
           expect(Spree::PromotionHandler::Coupon)
             .to receive_message_chain(:new, :apply)
             .and_return(promotion_handler)
@@ -524,6 +528,8 @@ describe Spree::CheckoutController, type: :controller do
         end
 
         it "render cart with coupon error" do
+          expect(Spree::Deprecation).to receive(:warn)
+
           expect(Spree::PromotionHandler::Coupon)
             .to receive_message_chain(:new, :apply)
             .and_return(promotion_handler)
