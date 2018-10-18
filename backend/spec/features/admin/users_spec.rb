@@ -16,6 +16,7 @@ describe 'Users', type: :feature do
     create(:completed_order_with_totals, user: user_a, number: "R456").tap do |o|
       li = o.line_items.last
       li.update_column(:price, li.price + 10)
+      o.recalculate
     end
   end
 
@@ -302,14 +303,24 @@ describe 'Users', type: :feature do
       end
     end
 
-    [:number, :total].each do |attr|
-      context attr do
-        it_behaves_like "a sortable attribute" do
-          let(:text_match_1) { order.send(attr).to_s }
-          let(:text_match_2) { order_2.send(attr).to_s }
-          let(:table_id) { "listing_orders" }
-          let(:sort_link) { "orders_#{attr}_title" }
-        end
+    context :number do
+      it_behaves_like "a sortable attribute" do
+        let(:text_match_1) { order.number }
+        let(:text_match_2) { order_2.number }
+        let(:table_id) { "listing_orders" }
+        let(:sort_link) { "orders_number_title" }
+      end
+    end
+
+    context :total do
+      it_behaves_like "a sortable attribute" do
+        # Since Spree::Money renders each piece of the total in it's own span,
+        # we are just checking the dollar total matches. Mainly due to how
+        # RSpec matcher appear_before works since it can't index the broken up total.
+        let(:text_match_1) { order.total.to_i.to_s }
+        let(:text_match_2) { order_2.total.to_i.to_s }
+        let(:table_id) { "listing_orders" }
+        let(:sort_link) { "orders_total_title" }
       end
     end
 
@@ -359,9 +370,9 @@ describe 'Users', type: :feature do
       within_table('listing_items') do
         items.each do |item|
           expect(page).to have_selector(".item-name", text: item.product.name)
-          expect(page).to have_selector(".item-price", text: item.single_money.to_html)
+          expect(page).to have_selector(".item-price", text: item.single_money.to_html(html_wrap: false))
           expect(page).to have_selector(".item-quantity", text: item.quantity)
-          expect(page).to have_selector(".item-total", text: item.money.to_html)
+          expect(page).to have_selector(".item-total", text: item.money.to_html(html_wrap: false))
         end
       end
     end
