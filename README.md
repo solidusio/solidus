@@ -1,5 +1,5 @@
 
-![](https://raw.githubusercontent.com/solidusio/solidus/master/solidus.png)
+<img src="./logo.svg" width=350>
 
 - [solidus.io](http://solidus.io/)
 - [Documentation](https://guides.solidus.io)
