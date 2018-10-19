@@ -14,17 +14,16 @@ and based on [https://github.com/joshukraine/middleman-gulp](https://github.com/
 Requirements
 ------------
 
-* [Middleman 4.x][middleman-docs]
-* [Ruby 2.x][rbenv]
-* [Node 8.x][nvm]
-* [Gulp CLI][gulp-cli]
+* Middleman 4.x
+* Ruby 2.x
+* Yarn
 
 Usage
 -----
 
 1. Install ruby gems `bundle install`
 
-2. Install npm packages `yarn install`
+2. Install JavaScript packages `yarn install`
 
 3. Start the Middleman server. Note that this will also invoke Webpack via the external pipeline.
 
