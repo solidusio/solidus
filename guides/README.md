@@ -24,7 +24,7 @@ Usage
 
 1. Install ruby gems `bundle install`
 
-2. Install npm packages `npm install`
+2. Install npm packages `yarn install`
 
 3. Start the Middleman server. Note that this will also invoke Webpack via the external pipeline.
 
