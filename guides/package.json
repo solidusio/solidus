@@ -22,6 +22,7 @@
     "extract-text-webpack-plugin": "^3.0.2",
     "node-sass": "sass/node-sass#v5",
     "postcss-loader": "~2.1.1",
+    "randomatic": ">=3.0.0",
     "run-sequence": "^2.2.0",
     "sass-loader": "^6.0.6",
     "webpack": "^3.11.0",
