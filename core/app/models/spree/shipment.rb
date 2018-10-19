@@ -33,7 +33,7 @@ module Spree
     scope :trackable, -> { where("tracking IS NOT NULL AND tracking != ''") }
     scope :with_state, ->(*s) { where(state: s) }
     # sort by most recent shipped_at, falling back to created_at. add "id desc" to make specs that involve this scope more deterministic.
-    scope :reverse_chronological, -> { order('coalesce(spree_shipments.shipped_at, spree_shipments.created_at) desc', id: :desc) }
+    scope :reverse_chronological, -> { order(Arel::Nodes::NamedFunction.new('COALESCE', [arel_table[:shipped_at], arel_table[:created_at]]).desc, id: :desc) }
     scope :by_store, ->(store) { joins(:order).merge(Spree::Order.by_store(store)) }
 
     # shipment state machine (see http://github.com/pluginaweek/state_machine/tree/master for details)
