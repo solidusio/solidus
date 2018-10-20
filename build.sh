@@ -16,11 +16,11 @@ echo "***********************"
 cd api
 bundle exec rspec spec
 
-# Solidus Backend
+# Solidus Admin
 echo "***************************"
-echo "* Testing Solidus Backend *"
+echo "* Testing Solidus Admin *"
 echo "***************************"
-cd ../backend
+cd ../admin
 bundle exec rspec spec
 bundle exec teaspoon
 
