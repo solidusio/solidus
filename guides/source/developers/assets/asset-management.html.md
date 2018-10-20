@@ -6,7 +6,7 @@ that you familiarize yourself with the Rails asset pipeline before you begin
 modifying or overwriting Solidus's stock assets.
 
 This article provides an overview of how Solidus manages assets. Note that it
-assumes that you are using the `solidus_frontend` and `solidus_backend` gems
+assumes that you are using the `solidus_frontend` and `solidus_admin` gems
 that are included as part of a typical Solidus installation.
 
 ## Quick start
@@ -22,7 +22,7 @@ point-form summary of how you can get started with assets:
   assets – including any files or directories you add deeper in the
   directory tree.
 - You can override assets provided by the `solidus_frontend` and
-  `solidus_backend` gems, or any other gems. See the [Override Solidus
+  `solidus_admin` gems, or any other gems. See the [Override Solidus
   assets](override-solidus-assets.html) article for more information.
 
 ## Solidus's asset pipeline
@@ -59,14 +59,14 @@ app|vendor
 ```
 
 This directory structure is designed to keep assets from the `solidus_frontend`
-and `solidus_backend` from conflicting with each other.
+and `solidus_admin` from conflicting with each other.
 
 Solidus also generates top-level [manifests][rails-manifests] that require all
 of the Solidus-provided stylesheets and JavaScript files as well as your own
 site-specific files.
 
 To see the stock Solidus assets, you can check the contents of the
-`solidus_frontend` and `solidus_backend` gems installed on your system or
+`solidus_frontend` and `solidus_admin` gems installed on your system or
 [the `app/assets` contents in the Solidus GitHub repo][solidus-assets-contents].
 
 [rails-assets-pipeline]: http://guides.rubyonrails.org/asset_pipeline.html
@@ -75,7 +75,7 @@ To see the stock Solidus assets, you can check the contents of the
 
 ## Solidus manifests
 
-The `solidus_frontend` and `solidus_backend` gems provide [asset
+The `solidus_frontend` and `solidus_admin` gems provide [asset
 manifests][rails-manifests] that bundle up all the JavaScript files and stylesheets
 that they require. For example, see the `all.css` and `all.js` manifests in the
 `vendor` tree:
@@ -146,7 +146,7 @@ app/assets/stylesheets/spree/frontend/home.css
 
 We recommend that all third-party extensions should adopt the same approach
 as Solidus: provide manifest files with the same names and in the same
-directory structure used by the `solidus_frontend` and `solidus_backend` gems.
+directory structure used by the `solidus_frontend` and `solidus_admin` gems.
 
 The manifest files for third-party extensions are not included automatically in
 your manifest files. You can either document how developers should add include

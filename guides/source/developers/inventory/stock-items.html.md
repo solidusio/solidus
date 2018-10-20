@@ -36,7 +36,7 @@ decrease by one.
 
 While a `Spree::StockMovement` object logs the increase or decrease of the
 `count_on_hand` value, administrators can also edit the count on hand from the
-`solidus_backend`.
+`solidus_admin`.
 
 Whenever an administrator updates the count on hand, they are discarding the old
 value completely. So, if a stock item's `count_on_hand` is `5`, when the

@@ -38,7 +38,7 @@ A `Spree::RefundReason` has the following attributes:
 
 ## Admin interface
 
-From the `solidus_backend` interface, store administrators can generate refunds
+From the `solidus_admin` interface, store administrators can generate refunds
 for a payment from the **Payments** page on an order. Then, they can use the
 **Refund** button to start creating a refund.
 

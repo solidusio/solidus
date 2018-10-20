@@ -29,10 +29,10 @@ Spree::CustomerReturn.find(1).return_items
 
 Solidus does not include a customer-facing customer returns interface. Only
 store administrators can authorize and administrate returns from the
-`solidus_backend` interface.
+`solidus_admin` interface.
 
 Once a store administrator has created a customer return in the
-`solidus_backend` interface, each [return item][return-items] can be managed and
+`solidus_admin` interface, each [return item][return-items] can be managed and
 [reimbursements][reimbursements] can be made.
 
 For example, you can specify whether return items are resellable, whether your

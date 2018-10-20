@@ -5,7 +5,7 @@ up-to-date.  Note that the total changes every time that line items and
 adjustments are added or modified. The `recalculate` method calls out to the
 [`Spree::OrderUpdater` class][order-updater].
 
-For example, the `solidus_backend` gem's
+For example, the `solidus_admin` gem's
 [`Spree::Admin::AdjustmentsController`][adjustments-controller] uses the
 `recalculate` method to update totals throughout the lifetime of an order:
 

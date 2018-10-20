@@ -116,7 +116,7 @@ This calculator has the following preferences:
 
 The [`Spree::Calculator::FlatPercentItemTotal`][flat-percent-item-total]
 calculator provides a flat, percentage-based discount on an order. In the
-`solidus_backend` interface administrators can use this calculator by choosing
+`solidus_admin` interface administrators can use this calculator by choosing
 the whole-order calculator labeled "Flat Percent". It has the following
 preference:
 
@@ -152,7 +152,7 @@ This calculator has the following preferences:
 
 The [`Spree::Calculator::PercentOnLineItem` calculator][percent-on-line-item]
 provides a percentage-based discount for each applicable line item in an order.
-In the `solidus_backend` interface, this calculator is labeled "Percent Per
+In the `solidus_admin` interface, this calculator is labeled "Percent Per
 Item". It has the following preference:
 
 - `percent`: The percentage discount that should be given to each applicable

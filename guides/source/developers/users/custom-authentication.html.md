@@ -66,7 +66,7 @@ If you use the `spree:custom_user` generator:
 
 - The `Spree.user_class` is updated to your specified class.
 - Authentication helpers are set up for the `solidus_frontend` and
-  `solidus_backend` views and are sent to the application controller, making it
+  `solidus_admin` views and are sent to the application controller, making it
   available throughout your application.
 - The `spree_current_user` method is defined and is sent to the application
   controller and the `Spree::Api::BaseController`, making it available
@@ -92,13 +92,13 @@ helper method.
 
 #### User passwords
 
-Note that if you use the stock `solidus_frontend` or `solidus_backend` gems,
+Note that if you use the stock `solidus_frontend` or `solidus_admin` gems,
 your user should also have a `password` column. You can set up a password column
 however you see fit.
 
 ### spree_current_user
 
-If you use the stock `solidus_frontend` or `solidus_backend` gems, you need to
+If you use the stock `solidus_frontend` or `solidus_admin` gems, you need to
 provide a `spree_current_user` helper method. Because you likely need to
 reference the current user throughout your application, we recommend adding it
 to your `application_controller.rb`.
@@ -125,7 +125,7 @@ generator](#custom-user-generator).
 
 ### Add authentication helpers
 
-If you use the stock `solidus_frontend` or `solidus_backend` gems, you need to
+If you use the stock `solidus_frontend` or `solidus_admin` gems, you need to
 provide authentication helpers so that users can sign up, log in, and log out.
 Because you likely need to reference the current user throughout your
 application, we recommend adding it to you `application_controller.rb`:
@@ -176,7 +176,7 @@ module MyStore
 
 ### Give your store administrator the admin role
 
-In order for store administrators to use the `solidus_backend` admin, you need a
+In order for store administrators to use the `solidus_admin` admin, you need a
 user with the `Spree::Role` of `admin`. You can give any existing user the
 `admin` role like this:
 
@@ -186,4 +186,4 @@ user.spree_roles << Spree::Role.find_or_create_by(name: 'admin')
 ```
 
 Now, your user with the `admin@example.com` email address should be able to
-access the `solidus_backend` interface at `mystore.com/admin`.
+access the `solidus_admin` interface at `mystore.com/admin`.

@@ -166,7 +166,7 @@ requiring all five of the core Solidus gems:
 - [`solidus_core`][solidus-core]
 - [`solidus_api`][solidus-api]
 - [`solidus_frontend`][solidus-frontend]
-- [`solidus_backend`][solidus-backend]
+- [`solidus_admin`][solidus-backend]
 - [`solidus_sample`][solidus-sample]
 
 All five of these gems are maintained in the [Solidus GitHub
@@ -253,6 +253,6 @@ Once the server has started, you can access your store from the following URLs:
 - [http://localhost:3000/](http://localhost:3000/) opens the
   [`solidus_frontend`][solidus-frontend] storefront.
 - [http://localhost:3000/admin/](http://localhost:3000/admin/) opens the
-  [`solidus_backend`][solidus-backend] admin area.
+  [`solidus_admin`][solidus-backend] admin area.
 
 You can browse the sample store's pages and mock products, and so on.

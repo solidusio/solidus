@@ -8,10 +8,10 @@ This article focuses how you can build out views for your application. However,
 keep in mind that you would also need to utilize Solidus's models and  create
 your own controllers to create a functional storefront.
 
-## `solidus_frontend` and `solidus_backend`
+## `solidus_frontend` and `solidus_admin`
 
 Solidus includes both a storefront ([`solidus_frontend`][solidus-frontend]) and
-admin area ([`solidus_backend`][solidus-backend]). The storefront uses
+admin area ([`solidus_admin`][solidus-backend]). The storefront uses
 [Skeleton][skeleton] for its CSS grids and the admin area is based on
 [Bootstrap][bootstrap]. These gems offer the features of a typical store and
 make extensive use of `solidus_core`'s features.
@@ -61,7 +61,7 @@ frontend development, pay special attention to the Rails Guides linked to above.
 
   ## Override existing views
 
-  If you use the `solidus_frontend` or `solidus_backend` gems, you can override
+  If you use the `solidus_frontend` or `solidus_admin` gems, you can override
   their views by creating files with the same filenames and paths in your own app.
   For more information, see the [Override views][override-views] article.
 
@@ -103,7 +103,7 @@ initialize your own values for the following `Spree::Config` settings:
 ### Contributing back to Solidus
 
 If you intend to submit pull requests to Solidus, note that Solidus uses pure
-JavaScript for all of its `solidus_frontend` and `solidus_backend` code. Files
+JavaScript for all of its `solidus_frontend` and `solidus_admin` code. Files
 written in CoffeeScript would not be accepted. For more information about
 contributing to Solidus, see the [Contributing][contributing] guide.
 

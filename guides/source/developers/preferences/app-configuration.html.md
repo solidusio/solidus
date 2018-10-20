@@ -11,7 +11,7 @@ The built-in preferences are well-tested options that allow you to implement
 complex ecommerce behaviors.
 
 A limited set of these preferences can be configured by store administrators
-from the `solidus_backend` admin area.
+from the `solidus_admin` admin area.
 
 Since Solidus is a [Rails engine][rails-engines], much of its behavior can be
 customized through initializers. You can modify or initialize preferences using

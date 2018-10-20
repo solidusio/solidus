@@ -1,6 +1,6 @@
 # Override views
 
-The `solidus_frontend` and `solidus_backend` gems offer a full-featured
+The `solidus_frontend` and `solidus_admin` gems offer a full-featured
 customer-facing store and admin area for Solidus. They are not required to run
 Solidus, but they offer comprehensive defaults.
 

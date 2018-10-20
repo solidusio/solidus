@@ -10,7 +10,7 @@ information about adding your own custom assets to Solidus, see the
 [Asset management][asset-management] article.
 
 This article provides an overview of how Solidus manages assets. Note that it
-assumes that you are using the `solidus_frontend` and `solidus_backend` gems
+assumes that you are using the `solidus_frontend` and `solidus_admin` gems
 that are included as part of a typical Solidus installation.
 
 [asset-management]: asset-management.html#managing-application-assets
@@ -20,7 +20,7 @@ that are included as part of a typical Solidus installation.
 We recommend overriding assets as little as possible. Overriding assets makes
 maintaining your application more complicated in the long term.
 
-The `solidus_frontend` and `solidus_backend` gems change with each version, and
+The `solidus_frontend` and `solidus_admin` gems change with each version, and
 overrides for one version might not be effective for the next.
 
 ## Override individual CSS or JavaScript definitions
@@ -86,7 +86,7 @@ request.
 ## Override an image, stylesheet, or JavaScript file
 
 To replace an entire file that is provided by a gem (like `solidus_frontend` or
-`solidus_backend`), you can create a new file in your project's `app/assets`
+`solidus_admin`), you can create a new file in your project's `app/assets`
 directory that has a corresponding filename and location. You can do this with
 any image, stylesheet, or JavaScript file provided by a gem.
 

@@ -35,7 +35,7 @@ you have defined. The default keys are `mini`, `small`, `product`, and `large`.
 ## Images for all variants
 
 Administrators can upload images when adding or editing a product in the
-[`solidus_backend`][solidus-backend]. The images can be set to be displayed
+[`solidus_admin`][solidus-backend]. The images can be set to be displayed
 for a specific variant or for **All** variants.
 
 If set to **All**, the `viewable_id` is set to the master variant for the

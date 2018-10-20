@@ -1,7 +1,7 @@
 # Overview
 
 Solidus includes a comprehensive returns system. This system includes logic for
-customer returns, refunds, and exchanges. The `solidus_backend` gem includes an
+customer returns, refunds, and exchanges. The `solidus_admin` gem includes an
 admin interface for managing returns and exchanges.
 
 The returns system is built with an automated returns process in mind, and it

@@ -58,7 +58,7 @@ values to each variant.
 
 Every product has a master variant. By default, the master variant is the first
 variant created for a product. For example, when an administrator creates a new
-product using the `solidus_backend` interface, they are also creating the
+product using the `solidus_admin` interface, they are also creating the
 product's master variant.
 
 When additional variants are created, they inherit the properties of the master

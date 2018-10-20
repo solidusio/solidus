@@ -31,7 +31,7 @@ always uses the most recently updated price.
 In countries that use VAT, administrators expect backend prices to include their
 country's VAT.
 
-If you use the `solidus_backend` gem for store administration, all your prices
+If you use the `solidus_admin` gem for store administration, all your prices
 are displayed including any valued-added tax (VAT) valid for the current
 country.
 
@@ -61,7 +61,7 @@ jurisdictions where it is required to display VAT as part of the price.
 
 Administrators can configure these values for a storefront using the "Default
 currency" and "Tax Country for Empty Carts" settings on the **Settings ->
-Store** page in the `solidus_backend` admin.
+Store** page in the `solidus_admin` admin.
 
 Valued-added tax and price are intricately connected. If your store requires
 custom tax and pricing logic, you can change Solidus's pricing behavior by

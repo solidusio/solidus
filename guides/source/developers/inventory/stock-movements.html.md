@@ -38,7 +38,7 @@ your store:
 ## Administrating inventory
 
 Administrators can generate stock movements by changing the "Count On Hand"
-value for a stock item in the `solidus_backend` (on the **Stock** page).
+value for a stock item in the `solidus_admin` (on the **Stock** page).
 However, they cannot create a stock movement directly.
 
 Because of this, Solidus has no concept of *adding to* existing inventory. For

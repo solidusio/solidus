@@ -52,7 +52,7 @@ key in your Rails console with a command like this:
 Spree::User.find(1).spree_api_key
 ```
 
-Store administrators can view or regenerate API keys from the `solidus_backend`
+Store administrators can view or regenerate API keys from the `solidus_admin`
 interface from the **Users** page by editing a user with the admin role.
 
 [solidus-auth-devise]: https://github.com/solidusio/solidus_auth_devise

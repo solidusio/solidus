@@ -59,7 +59,7 @@ updated tests for your features or bug fixes.
 
 We use CircleCI to run tests on all incoming pull requests.
 
-To run the test suites for `solidus_frontend` and `solidus_backend`, you need to
+To run the test suites for `solidus_frontend` and `solidus_admin`, you need to
 install [ChromeDriver][chromedriver] on your system first.
 
 You can see the build statuses [on our CircleCI status page][circleci].

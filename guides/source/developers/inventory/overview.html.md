@@ -100,7 +100,7 @@ every `Spree::Variant` in your store.
 If you manage multiple stock locations and inventory frequently moves between
 them, you may benefit from the
 [`solidus_stock_transfers`][solidus-stock-transfers] extension. This extension
-adds a user interface for managing transfers in the `solidus_backend`.
+adds a user interface for managing transfers in the `solidus_admin`.
 
 [solidus-stock-transfers]: https://github.com/solidusio-contrib/solidus_stock_transfers
 

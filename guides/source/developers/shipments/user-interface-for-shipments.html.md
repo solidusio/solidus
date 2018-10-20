@@ -3,7 +3,7 @@
 This article explores important elements of the user interface for shipments.
 While Solidus's user interface is entirely customizable, this article is
 modelled after a typical Solidus installation, which would use the standard UI
-elements present in the `solidus_frontend` and `solidus_backend` gems.
+elements present in the `solidus_frontend` and `solidus_admin` gems.
 
 ## Customer-facing UI
 

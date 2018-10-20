@@ -6,10 +6,10 @@ that have already been shipped. For each item in a return authorization, a
 [`Spree::ReturnItem`][return-items] is created.
 
 Return authorizations are also referred to as "return
-merchandise authorizations" (RMAs) in the `solidus_backend`.
+merchandise authorizations" (RMAs) in the `solidus_admin`.
 
 After an order is shipped, administrators can approve the return of any part
-of an order in the `solidus_backend` (from the **Orders -> Order -> RMA** page).
+of an order in the `solidus_admin` (from the **Orders -> Order -> RMA** page).
 
 Once an RMA has been created, store administrators can add any item listed in
 the RMA to a new [`Spree::CustomerReturn`][customer-returns].

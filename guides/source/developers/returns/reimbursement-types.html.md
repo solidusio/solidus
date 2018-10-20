@@ -8,7 +8,7 @@
 Each [return item][return-items] should be associated with one of your store's
 `Spree::ReimbursementType`s.
 
-By default, the `solidus_backend` interface offers one reimbursement type to
+By default, the `solidus_admin` interface offers one reimbursement type to
 store administrators: `Spree::ReimbursementType::StoreCredit`. When a
 `Spree::Reimbursement` is created with this type, a
 `Spree::Reimbursement::Credit` is created for the full amount each return item
