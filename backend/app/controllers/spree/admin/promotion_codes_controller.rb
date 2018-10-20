@@ -34,7 +34,7 @@ module Spree
           flash[:success] = flash_message_for(@promotion_code, :successfully_created)
           redirect_to admin_promotion_promotion_codes_url(@promotion)
         else
-          flash.now[:error] = @promotion_code.errors.full_messages.join(', ')
+          flash.now[:error] = @promotion_code.errors.full_messages.to_sentence
           render_after_create_error
         end
       end
