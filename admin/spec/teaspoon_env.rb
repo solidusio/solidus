@@ -52,7 +52,7 @@ if defined?(DummyApp)
     end
   end
 else
-  require 'solidus_backend'
+  require 'solidus_admin'
 
   require 'teaspoon'
 
@@ -60,7 +60,7 @@ else
 
   DummyApp.setup(
     gem_root: File.expand_path('..', __dir__),
-    lib_name: 'solidus_backend',
+    lib_name: 'solidus_admin',
     auto_migrate: false
   )
 end

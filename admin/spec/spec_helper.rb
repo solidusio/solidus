@@ -9,11 +9,11 @@ end
 # from the project root directory.
 ENV["RAILS_ENV"] ||= 'test'
 
-require 'solidus_backend'
+require 'solidus_admin'
 require 'spree/testing_support/dummy_app'
 DummyApp.setup(
   gem_root: File.expand_path('..', __dir__),
-  lib_name: 'solidus_backend'
+  lib_name: 'solidus_admin'
 )
 
 require 'rails-controller-testing'
