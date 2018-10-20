@@ -26,9 +26,9 @@ class Project
 
   ALL = [
     new('api', weight: 50),
-    new('backend', weight: 215),
-    new('backend', test_type: :teaspoon, title: "backend JS", weight: 15),
-    new('core', weight: 220),
+    new('admin', weight: 215),
+    new('admin', test_type: :teaspoon, title: "backend JS", weight: 15),
+    #new('core', weight: 220),
     new('frontend', weight: 95),
     new('sample', weight: 22)
   ].freeze
