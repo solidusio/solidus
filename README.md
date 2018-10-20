@@ -20,7 +20,7 @@ Solidus consists of several gems. When you require the `solidus` gem in your
 
 - [`solidus_api`](https://github.com/solidusio/solidus/tree/master/api) (RESTful API)
 - [`solidus_frontend`](https://github.com/solidusio/solidus/tree/master/frontend) (Cart and storefront)
-- [`solidus_backend`](https://github.com/solidusio/solidus/tree/master/backend) (Admin area)
+- [`solidus_admin`](https://github.com/solidusio/solidus/tree/master/admin) (Admin area)
 - [`solidus_core`](https://github.com/solidusio/solidus/tree/master/core) (Essential models, mailers, and classes)
 - [`solidus_sample`](https://github.com/solidusio/solidus/tree/master/sample) (Sample data)
 

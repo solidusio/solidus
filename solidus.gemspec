@@ -22,7 +22,7 @@ Gem::Specification.new do |s|
   s.license      = 'BSD-3-Clause'
 
   s.add_dependency 'solidus_api', s.version
-  s.add_dependency 'solidus_backend', s.version
+  s.add_dependency 'solidus_admin', s.version
   s.add_dependency 'solidus_core', s.version
   s.add_dependency 'solidus_frontend', s.version
   s.add_dependency 'solidus_sample', s.version
