@@ -54,7 +54,7 @@ Spree.ajax = function(url, options) {
 Spree.routes = {
   states_search: Spree.pathFor('api/states'),
   apply_coupon_code: function(order_id) {
-    return Spree.pathFor("api/orders/" + order_id + "/apply_coupon_code");
+    return Spree.pathFor("api/orders/" + order_id + "/coupon_codes");
   }
 };
 
