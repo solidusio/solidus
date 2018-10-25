@@ -20,6 +20,7 @@ module Spree::Api
 
       it "can apply a coupon code to the order" do
         expect(order.total).to eq(110.00)
+        expect(Spree::Deprecation).to receive(:warn)
         put spree.apply_coupon_code_api_order_path(order), params: { coupon_code: "10off", order_token: order.guest_token }
         expect(response.status).to eq(200)
         expect(order.reload.total).to eq(109.00)
@@ -37,6 +38,7 @@ module Spree::Api
         end
 
         it "fails to apply" do
+          expect(Spree::Deprecation).to receive(:warn)
           put spree.apply_coupon_code_api_order_path(order), params: { coupon_code: "10off", order_token: order.guest_token }
           expect(response.status).to eq(422)
           expect(json_response["success"]).to be_blank

@@ -27,6 +27,7 @@ RSpec.feature "Quantity Promotions" do
   scenario "adding and removing items from the cart" do
     # Attempt to use the code with too few items.
     fill_in "Coupon code", with: "PROMO"
+    expect(Spree::Deprecation).to receive(:warn)
     click_button "Update"
     expect(page).to have_content("This coupon code could not be applied to the cart at this time")
 
@@ -37,6 +38,7 @@ RSpec.feature "Quantity Promotions" do
 
     # Using the code should now succeed.
     fill_in "Coupon code", with: "PROMO"
+    expect(Spree::Deprecation).to receive(:warn)
     click_button "Update"
     expect(page).to have_content("The coupon code was successfully applied to your order")
     within("#cart_adjustments") do
@@ -71,6 +73,7 @@ RSpec.feature "Quantity Promotions" do
 
     # Apply the promo code and see a $10 discount (for 2 of the 3 items)
     fill_in "Coupon code", with: "PROMO"
+    expect(Spree::Deprecation).to receive(:warn)
     click_button "Update"
     expect(page).to have_content("The coupon code was successfully applied to your order")
     within("#cart_adjustments") do
@@ -105,6 +108,7 @@ RSpec.feature "Quantity Promotions" do
 
       # Apply the promo code and see a $15 discount
       fill_in "Coupon code", with: "PROMO"
+      expect(Spree::Deprecation).to receive(:warn)
       click_button "Update"
       expect(page).to have_content("The coupon code was successfully applied to your order")
       within("#cart_adjustments") do

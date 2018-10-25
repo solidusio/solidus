@@ -131,12 +131,14 @@ describe "Coupon code promotions", type: :feature, js: true do
 
       it "can enter a coupon code and receives success notification" do
         fill_in "order_coupon_code", with: "onetwo"
+        expect(Spree::Deprecation).to receive(:warn)
         click_button "Update"
         expect(page).to have_content(I18n.t('spree.coupon_code_applied'))
       end
 
       it "can enter a promotion code with both upper and lower case letters" do
         fill_in "order_coupon_code", with: "ONETwO"
+        expect(Spree::Deprecation).to receive(:warn)
         click_button "Update"
         expect(page).to have_content(I18n.t('spree.coupon_code_applied'))
       end
@@ -145,6 +147,7 @@ describe "Coupon code promotions", type: :feature, js: true do
         expect_any_instance_of(Spree::Promotion).to receive(:usage_limit_exceeded?).and_return(true)
 
         fill_in "order_coupon_code", with: "onetwo"
+        expect(Spree::Deprecation).to receive(:warn)
         click_button "Update"
         expect(page).to have_content(I18n.t('spree.coupon_code_max_usage'))
       end
@@ -161,6 +164,7 @@ describe "Coupon code promotions", type: :feature, js: true do
           visit spree.cart_path
 
           fill_in "order_coupon_code", with: "onetwo"
+          expect(Spree::Deprecation).to receive(:warn)
           click_button "Update"
           expect(page).to have_content(I18n.t(:item_total_less_than_or_equal, scope: [:spree, :eligibility_errors, :messages], amount: "$100.00"))
         end
@@ -171,6 +175,7 @@ describe "Coupon code promotions", type: :feature, js: true do
         promotion.starts_at = Date.today.beginning_of_week.advance(day: 3)
         promotion.save!
         fill_in "order_coupon_code", with: "onetwo"
+        expect(Spree::Deprecation).to receive(:warn)
         click_button "Update"
         expect(page).to have_content(I18n.t('spree.coupon_code_expired'))
       end
@@ -192,6 +197,7 @@ describe "Coupon code promotions", type: :feature, js: true do
 
           visit spree.cart_path
           fill_in "order_coupon_code", with: "onetwo"
+          expect(Spree::Deprecation).to receive(:warn)
           click_button "Update"
 
           fill_in "order_line_items_attributes_0_quantity", with: 2
@@ -238,6 +244,7 @@ describe "Coupon code promotions", type: :feature, js: true do
           end
 
           fill_in "order_coupon_code", with: "onetwo"
+          expect(Spree::Deprecation).to receive(:warn)
           click_button "Update"
 
           within '#cart_adjustments' do

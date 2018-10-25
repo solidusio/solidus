@@ -28,6 +28,7 @@ RSpec.feature "Promotion Code Invalidation" do
 
   scenario "adding the promotion to a cart with two applicable items" do
     fill_in "Coupon code", with: "PROMO"
+    expect(Spree::Deprecation).to receive(:warn)
     click_button "Update"
 
     expect(page).to have_content("The coupon code was successfully applied to your order")
