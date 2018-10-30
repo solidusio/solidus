@@ -35,9 +35,7 @@ Spree::Core::Engine.routes.draw do
 
       resources :return_authorizations do
         member do
-          put :add
           put :cancel
-          put :receive
         end
       end
     end
