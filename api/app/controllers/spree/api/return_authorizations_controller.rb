@@ -4,7 +4,7 @@ module Spree
   module Api
     class ReturnAuthorizationsController < Spree::Api::BaseController
       before_action :load_order
-      around_action :lock_order, only: [:create, :update, :destroy, :add, :receive, :cancel]
+      around_action :lock_order, only: [:create, :update, :destroy, :cancel]
 
       rescue_from Spree::Order::InsufficientStock, with: :insufficient_stock_error
 
