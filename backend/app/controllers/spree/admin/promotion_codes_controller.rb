@@ -23,12 +23,12 @@ module Spree
 
       def new
         @promotion = Spree::Promotion.accessible_by(current_ability, :read).find(params[:promotion_id])
-        @promotion_code = @promotion.promotion_codes.new
+        @promotion_code = @promotion.promotion_codes.build
       end
 
       def create
         @promotion = Spree::Promotion.accessible_by(current_ability, :read).find(params[:promotion_id])
-        @promotion_code = @promotion.promotion_codes.new(value: params[:promotion_code][:value])
+        @promotion_code = @promotion.promotion_codes.build(value: params[:promotion_code][:value])
 
         if @promotion_code.save
           flash[:success] = flash_message_for(@promotion_code, :successfully_created)
