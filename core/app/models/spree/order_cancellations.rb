@@ -98,7 +98,6 @@ class Spree::OrderCancellations
   # @return [Reimbursement] the reimbursement for inventory being canceled
   def reimburse_units(inventory_units, created_by: nil)
     unless created_by
-      created_by = Spree.user_class.find_by(email: 'spree@example.com')
       Spree::Deprecation.warn("Calling #reimburse_units on #{self} without created_by is deprecated")
     end
     reimbursement = nil
