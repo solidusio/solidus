@@ -100,7 +100,6 @@ module Spree
 
     def perform!(created_by: nil)
       unless created_by
-        created_by = Spree.user_class.find_by(email: 'spree@example.com')
         Spree::Deprecation.warn("Calling #perform on #{self} without created_by is deprecated")
       end
       reimbursement_tax_calculator.call(self)
@@ -122,7 +121,6 @@ module Spree
 
     def simulate(created_by: nil)
       unless created_by
-        created_by = Spree.user_class.find_by(email: 'spree@example.com')
         Spree::Deprecation.warn("Calling #simulate on #{self} without created_by is deprecated")
       end
       reimbursement_simulator_tax_calculator.call(self)
@@ -151,7 +149,6 @@ module Spree
     # @return [void]
     def return_all(created_by: nil)
       unless created_by
-        created_by = Spree.user_class.find_by(email: 'spree@example.com')
         Spree::Deprecation.warn("Calling #return_all on #{self} without created_by is deprecated")
       end
       return_items.each(&:accept!)

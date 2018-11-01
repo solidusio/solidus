@@ -13,7 +13,6 @@ module Spree
       # so they can be displayed in the Admin UI appropriately.
       def simulate(reimbursement, created_by: nil)
         unless created_by
-          created_by = Spree.user_class.find_by(email: 'spree@example.com')
           Spree::Deprecation.warn("Calling #simulate on #{self} without created_by is deprecated")
         end
         execute(reimbursement, true, created_by: created_by)
@@ -22,7 +21,6 @@ module Spree
       # Actually perform the reimbursement
       def perform(reimbursement, created_by: nil)
         unless created_by
-          created_by = Spree.user_class.find_by(email: 'spree@example.com')
           Spree::Deprecation.warn("Calling #perform on #{self} without created_by is deprecated")
         end
         execute(reimbursement, false, created_by: created_by)
