@@ -30,6 +30,8 @@ ecommerce platform. However, you may only want to use the
 combine it with your own custom frontend, admin interface, and API.
 
 [![Circle CI](https://circleci.com/gh/solidusio/solidus/tree/master.svg?style=shield)](https://circleci.com/gh/solidusio/solidus/tree/master)
+[![Backers on Open Collective](https://opencollective.com/solidus/backers/badge.svg)](#backers) 
+[![Sponsors on Open Collective](https://opencollective.com/solidus/sponsors/badge.svg)](#sponsors) 
 [![Gem](https://img.shields.io/gem/v/solidus.svg)](https://rubygems.org/gems/solidus)
 [![License](http://img.shields.io/badge/license-BSD-yellowgreen.svg)](LICENSE.md)
 [![Slack](http://slack.solidus.io/badge.svg)](http://slack.solidus.io)
@@ -258,3 +260,33 @@ Contributing
 
 Solidus is an open source project and we encourage contributions. Please read
 [CONTRIBUTING.md](CONTRIBUTING.md) before contributing.
+
+## Contributors
+
+This project exists thanks to all the people who contribute. [[Contribute](CONTRIBUTING.md)].
+<a href="https://github.com/solidusio/solidus/contributors"><img src="https://opencollective.com/solidus/contributors.svg?width=890&button=false" /></a>
+
+
+## Backers
+
+Thank you to all our backers! 🙏 [[Become a backer](https://opencollective.com/solidus#backer)]
+
+<a href="https://opencollective.com/solidus#backers" target="_blank"><img src="https://opencollective.com/solidus/backers.svg?width=890"></a>
+
+
+## Sponsors
+
+Support this project by becoming a sponsor. Your logo will show up here with a link to your website. [[Become a sponsor](https://opencollective.com/solidus#sponsor)]
+
+<a href="https://opencollective.com/solidus/sponsor/0/website" target="_blank"><img src="https://opencollective.com/solidus/sponsor/0/avatar.svg"></a>
+<a href="https://opencollective.com/solidus/sponsor/1/website" target="_blank"><img src="https://opencollective.com/solidus/sponsor/1/avatar.svg"></a>
+<a href="https://opencollective.com/solidus/sponsor/2/website" target="_blank"><img src="https://opencollective.com/solidus/sponsor/2/avatar.svg"></a>
+<a href="https://opencollective.com/solidus/sponsor/3/website" target="_blank"><img src="https://opencollective.com/solidus/sponsor/3/avatar.svg"></a>
+<a href="https://opencollective.com/solidus/sponsor/4/website" target="_blank"><img src="https://opencollective.com/solidus/sponsor/4/avatar.svg"></a>
+<a href="https://opencollective.com/solidus/sponsor/5/website" target="_blank"><img src="https://opencollective.com/solidus/sponsor/5/avatar.svg"></a>
+<a href="https://opencollective.com/solidus/sponsor/6/website" target="_blank"><img src="https://opencollective.com/solidus/sponsor/6/avatar.svg"></a>
+<a href="https://opencollective.com/solidus/sponsor/7/website" target="_blank"><img src="https://opencollective.com/solidus/sponsor/7/avatar.svg"></a>
+<a href="https://opencollective.com/solidus/sponsor/8/website" target="_blank"><img src="https://opencollective.com/solidus/sponsor/8/avatar.svg"></a>
+<a href="https://opencollective.com/solidus/sponsor/9/website" target="_blank"><img src="https://opencollective.com/solidus/sponsor/9/avatar.svg"></a>
+
+
