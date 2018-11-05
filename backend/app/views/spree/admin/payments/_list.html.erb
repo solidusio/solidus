@@ -56,12 +56,15 @@
               <%= link_to_with_icon 'edit', t('spree.actions.edit'), nil, no_text: true, class: "js-edit", data: {action: 'edit'} %>
             <% end %>
             <% allowed_actions = payment.actions.select { |a| can?(a.to_sym, payment) } %>
+            <%= allowed_actions %>
             <% allowed_actions.each do |action| %>
               <% if action == 'credit' %>
+                <% next if payment.invalid? || payment.failed? %>
                 <%= link_to_with_icon 'reply', t('spree.refund'), new_admin_order_payment_refund_path(@order, payment), no_text: true %>
-              <% elsif action == 'capture' && !@order.completed? %>
-                <%# no capture prior to completion. payments get captured when the order completes. %>
               <% else %>
+                <% next if action == 'capture' && !@order.completed? %>
+                <% next if action == 'void' && (payment.invalid? || payment.failed?) %>
+
                 <%= link_to_with_icon action, t(action, scope: 'spree'), fire_admin_order_payment_path(@order, payment, e: action), method: :put, no_text: true, data: {action: action} %>
               <% end %>
             <% end %>
