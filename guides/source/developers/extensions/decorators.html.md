@@ -13,15 +13,13 @@ For example, if you want to add a method to the `Spree::Order` model, you could
 create `/app/models/mystore/order_decorator.rb` with the following contents:
 
 ```ruby
-module MyStore
-  module OrderDecorator
-    def total
-      super + BigDecimal(10.0)
-    end
+module MyStore::OrderDecorator
+  def total
+    super + BigDecimal(10.0)
   end
-end
 
-Spree::Order.prepend MyStore::OrderDecorator
+  Spree::Order.prepend self
+end
 ```
 
 This creates a new module called `MyStore::OrderDecorator` that prepends its
