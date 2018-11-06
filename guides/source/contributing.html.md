@@ -2,6 +2,9 @@
 
 We hope that you will consider contributing to the Solidus documentation.
 
+The Solidus documentation sources are hosted in the main repository
+[inside the `guides/` folder](https://github.com/solidusio/solidus/tree/master/guides#readme).
+
 We want to provide the Solidus community with consistent, easy-to-read, and
 easy-to-maintain articles. If you decide to submit a pull request, please try to
 follow the guidelines listed here.
