@@ -16,19 +16,16 @@
         <div data-hook="inside_cart_form">
 
           <div data-hook="cart_items">
-            <%= render 'form', order_form: order_form %>
+            <%= render 'spree/orders/form', order_form: order_form %>
           </div>
 
           <div class="links columns sixteen alpha omega" data-hook="cart_buttons">
-            <%= order_form.text_field :coupon_code, size: 10, placeholder: t('spree.coupon_code') %>
-            <%= button_tag class: 'primary', id: 'update-button' do %>
-              <%= t('spree.update') %>
-            <% end %>
+            <%= button_tag t("spree.update"), class: "primary", id: "update-button" %>
+
             <%= button_tag class: 'button checkout primary', id: 'checkout-link', name: 'checkout' do %>
               <%= t('spree.checkout') %>
             <% end %>
           </div>
-
         </div>
       <% end %>
     </div>
@@ -41,6 +38,8 @@
         <%= link_to t('spree.continue_shopping'), products_path, class: 'continue button gray' %>
         </p>
       <% end %>
+
+      <%= render template: 'spree/coupon_codes/new' %>
     </div>
 
   <% end %>

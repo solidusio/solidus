@@ -61,10 +61,8 @@ module Spree
     end
 
     def add_promotion(_promotion)
-      expect(Spree::Deprecation).to receive(:warn)
-
       expect {
-        put "/api/orders/#{@order.number}/apply_coupon_code",
+        post "/api/orders/#{@order.number}/coupon_codes",
           params: { coupon_code: promotion_code.value }
       }.to change { @order.promotions.count }.by 1
       expect(response).to have_http_status(:ok)
