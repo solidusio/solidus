@@ -74,7 +74,6 @@ the main repository. This way it should be simpler to keep guides up to date.
 - Fix bug with user address forms [#2766](https://github.com/solidusio/solidus/pull/2766) ([jacobeubanks](https://github.com/jacobeubanks))
 - Dynamically render ReportsController translations [#2751](https://github.com/solidusio/solidus/pull/2751) ([stewart](https://github.com/stewart))
 - Add missing data-hook on customer_returns tab [#2738](https://github.com/solidusio/solidus/pull/2738) ([fkoessler](https://github.com/fkoessler))
-- Remove promotions admin UI that misleadingly doesn't do anything on the solidus_frontend [#2737](https://github.com/solidusio/solidus/pull/2737) ([benjaminwil](https://github.com/benjaminwil))
 - Require sass >= 3.5.2 [#2734](https://github.com/solidusio/solidus/pull/2734) ([gmacdougall](https://github.com/gmacdougall))
 - The promotions "Advertise" checkbox and the "URL Path" promotion activation method have been removed from the admin UI because the features are not implemented in solidus_frontend [#2737](https://github.com/solidusio/solidus/pull/2737) ([benjaminwil](https://github.com/benjaminwil)
 - Use a different session key for admin locale [#2685](https://github.com/solidusio/solidus/pull/2685) ([jhawthorn](https://github.com/jhawthorn))
