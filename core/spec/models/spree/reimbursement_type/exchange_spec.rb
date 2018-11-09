@@ -9,8 +9,9 @@ module Spree
       let(:return_items)  { reimbursement.return_items }
       let(:new_exchange)  { double("Exchange") }
       let(:simulate)      { true }
+      let(:created_by_user) { create(:user, email: 'user@email.com') }
 
-      subject { Spree::ReimbursementType::Exchange.reimburse(reimbursement, return_items, simulate) }
+      subject { Spree::ReimbursementType::Exchange.reimburse(reimbursement, return_items, simulate, created_by: created_by_user) }
 
       context 'return items are supplied' do
         before do

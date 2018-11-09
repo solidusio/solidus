@@ -83,13 +83,14 @@ RSpec.describe "Outstanding balance integration tests" do
     context 'with a cancelled item' do
       let(:cancelations) { Spree::OrderCancellations.new(order) }
       let(:cancelled_item) { item_1 }
+      let(:created_by_user) { create(:user, email: 'user@email.com') }
 
       before do
         # Required to refund
         Spree::RefundReason.create!(name: Spree::RefundReason::RETURN_PROCESSING_REASON, mutable: false)
 
         cancelations.cancel_unit(cancelled_item.inventory_units.first)
-        cancelations.reimburse_units(cancelled_item.inventory_units)
+        cancelations.reimburse_units(cancelled_item.inventory_units, created_by: created_by_user)
 
         order.reload
       end

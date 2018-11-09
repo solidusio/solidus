@@ -176,11 +176,12 @@ RSpec.describe Spree::Refund, type: :model do
     let(:customer_return) { reimbursement.customer_return }
     let(:reimbursement) { create(:reimbursement) }
     let!(:default_refund_reason) { Spree::RefundReason.find_or_create_by!(name: Spree::RefundReason::RETURN_PROCESSING_REASON, mutable: false) }
+    let(:created_by_user) { create(:user, email: 'user@email.com') }
 
     subject { Spree::Refund.total_amount_reimbursed_for(reimbursement) }
 
     context 'with reimbursements performed' do
-      before { reimbursement.perform! }
+      before { reimbursement.perform!(created_by: created_by_user) }
 
       it 'returns the total amount' do
         amount = Spree::Refund.total_amount_reimbursed_for(reimbursement)

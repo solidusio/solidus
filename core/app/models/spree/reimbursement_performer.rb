@@ -11,22 +11,28 @@ module Spree
       # - #description
       # - #display_amount
       # so they can be displayed in the Admin UI appropriately.
-      def simulate(reimbursement)
-        execute(reimbursement, true)
+      def simulate(reimbursement, created_by: nil)
+        unless created_by
+          Spree::Deprecation.warn("Calling #simulate on #{self} without created_by is deprecated")
+        end
+        execute(reimbursement, true, created_by: created_by)
       end
 
       # Actually perform the reimbursement
-      def perform(reimbursement)
-        execute(reimbursement, false)
+      def perform(reimbursement, created_by: nil)
+        unless created_by
+          Spree::Deprecation.warn("Calling #perform on #{self} without created_by is deprecated")
+        end
+        execute(reimbursement, false, created_by: created_by)
       end
 
       private
 
-      def execute(reimbursement, simulate)
+      def execute(reimbursement, simulate, created_by:)
         reimbursement_type_hash = calculate_reimbursement_types(reimbursement)
 
         reimbursement_type_hash.flat_map do |reimbursement_type, return_items|
-          reimbursement_type.reimburse(reimbursement, return_items, simulate)
+          reimbursement_type.reimburse(reimbursement, return_items, simulate, created_by: created_by)
         end
       end
 

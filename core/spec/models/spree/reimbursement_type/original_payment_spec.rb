@@ -9,8 +9,9 @@ module Spree
     let(:payment)                 { reimbursement.order.payments.first }
     let(:simulate)                { false }
     let!(:default_refund_reason)  { Spree::RefundReason.find_or_create_by!(name: Spree::RefundReason::RETURN_PROCESSING_REASON, mutable: false) }
+    let(:created_by_user) { create(:user, email: 'user@email.com') }
 
-    subject { Spree::ReimbursementType::OriginalPayment.reimburse(reimbursement, [return_item], simulate) }
+    subject { Spree::ReimbursementType::OriginalPayment.reimburse(reimbursement, [return_item], simulate, created_by: created_by_user) }
 
     before { reimbursement.update!(total: reimbursement.calculated_total) }
 
