@@ -1146,6 +1146,7 @@ en:
     customer_returns: Customer Returns
     create: Create
     create_a_new_account: Create a new account
+    create_promotion_code: Create promotion code
     create_reimbursement: Create reimbursement
     create_one: Create One.
     created_at: Created At
@@ -1200,7 +1201,7 @@ en:
     discount_rules: Discount rules
     dismiss_banner: No. Thanks! I'm not interested, do not display this message again
     display: Display
-    download_promotion_code_list: Download Code List
+    download_promotion_codes_list: Download codes list
     edit: Edit
     editing_country: Editing Country
     editing_adjustment_reason: Editing Adjustment Reason
@@ -2094,6 +2095,7 @@ en:
     variant_to_be_received: Variant to be received
     variants: Variants
     version: Version
+    view_promotion_codes_list: View codes list
     void: Void
     weight: Weight
     what_is_a_cvv: What is a (CVV) Credit Card Code?

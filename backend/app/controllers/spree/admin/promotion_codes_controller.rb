@@ -7,7 +7,7 @@ module Spree
     class PromotionCodesController < Spree::Admin::ResourceController
       def index
         @promotion = Spree::Promotion.accessible_by(current_ability, :read).find(params[:promotion_id])
-        @promotion_codes = @promotion.promotion_codes
+        @promotion_codes = @promotion.promotion_codes.order(:value)
 
         respond_to do |format|
           format.html do
@@ -18,6 +18,24 @@ module Spree
             headers["Content-Type"] = "text/csv"
             headers["Content-disposition"] = "attachment; filename=\"#{filename}\""
           end
+        end
+      end
+
+      def new
+        @promotion = Spree::Promotion.accessible_by(current_ability, :read).find(params[:promotion_id])
+        @promotion_code = @promotion.promotion_codes.build
+      end
+
+      def create
+        @promotion = Spree::Promotion.accessible_by(current_ability, :read).find(params[:promotion_id])
+        @promotion_code = @promotion.promotion_codes.build(value: params[:promotion_code][:value])
+
+        if @promotion_code.save
+          flash[:success] = flash_message_for(@promotion_code, :successfully_created)
+          redirect_to admin_promotion_promotion_codes_url(@promotion)
+        else
+          flash.now[:error] = @promotion_code.errors.full_messages.to_sentence
+          render_after_create_error
         end
       end
     end
