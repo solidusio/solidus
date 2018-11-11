@@ -22,7 +22,9 @@ module Spree
 
     # An item which should be drawn in the admin menu
     class MenuItem
-      attr_reader :icon, :label, :partial, :condition, :sections, :url, :position
+      attr_reader :icon, :label, :partial, :condition, :sections, :url
+
+      attr_accessor :position
 
       # @param sections [Array<Symbol>] The sections which are contained within
       #   this admin menu section.
