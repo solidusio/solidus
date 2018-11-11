@@ -85,13 +85,38 @@ module Spree
         MenuItem.new(
           ORDER_TABS,
           'shopping-cart',
-          condition: -> { can?(:admin, Spree::Order) }
+          condition: -> { can?(:admin, Spree::Order) },
+          position: 0
         ),
         MenuItem.new(
           PRODUCT_TABS,
           'th-large',
           condition: -> { can?(:admin, Spree::Product) },
-          partial: 'spree/admin/shared/product_sub_menu'
+          partial: 'spree/admin/shared/product_sub_menu',
+          position: 1
+        ),
+        MenuItem.new(
+          PROMOTION_TABS,
+          'bullhorn',
+          partial: 'spree/admin/shared/promotion_sub_menu',
+          condition: -> { can?(:admin, Spree::Promotion) },
+          url: :admin_promotions_path,
+          position: 2
+        ),
+        MenuItem.new(
+          STOCK_TABS,
+          'cubes',
+          condition: -> { can?(:admin, Spree::StockItem) },
+          label: :stock,
+          url: :admin_stock_items_path,
+          position: 3
+        ),
+        MenuItem.new(
+          USER_TABS,
+          'user',
+          condition: -> { Spree.user_class && can?(:admin, Spree.user_class) },
+          url: :admin_users_path,
+          position: 4
         ),
         MenuItem.new(
           CONFIGURATION_TABS,
@@ -99,27 +124,8 @@ module Spree
           condition: -> { can?(:admin, Spree::Store) },
           label: :settings,
           partial: 'spree/admin/shared/settings_sub_menu',
-          url: :admin_stores_path
-        ),
-        MenuItem.new(
-          PROMOTION_TABS,
-          'bullhorn',
-          partial: 'spree/admin/shared/promotion_sub_menu',
-          condition: -> { can?(:admin, Spree::Promotion) },
-          url: :admin_promotions_path
-        ),
-        MenuItem.new(
-          STOCK_TABS,
-          'cubes',
-          condition: -> { can?(:admin, Spree::StockItem) },
-          label: :stock,
-          url: :admin_stock_items_path
-        ),
-        MenuItem.new(
-          USER_TABS,
-          'user',
-          condition: -> { Spree.user_class && can?(:admin, Spree.user_class) },
-          url: :admin_users_path
+          url: :admin_stores_path,
+          position: 5
         )
       ]
     end
