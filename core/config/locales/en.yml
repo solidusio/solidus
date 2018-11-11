@@ -299,6 +299,7 @@ en:
       spree/store:
         url: Site URL
         default: Default
+        default_currency: Default Currency
         meta_description: Meta Description
         meta_keywords: Meta Keywords
         seo_title: Seo Title
