@@ -22,7 +22,7 @@ module Spree
 
     # An item which should be drawn in the admin menu
     class MenuItem
-      attr_reader :icon, :label, :partial, :condition, :sections, :url
+      attr_reader :icon, :label, :partial, :condition, :sections, :url, :position
 
       # @param sections [Array<Symbol>] The sections which are contained within
       #   this admin menu section.
@@ -35,13 +35,16 @@ module Spree
       # @param partial [String] A partial to draw within this menu item for use
       #   in declaring a submenu
       # @param url [String] A url where this link should send the user to
+      # @param position [Integer] The position in which the menu item should render
+      #   nil will cause the item to render last
       def initialize(
         sections,
         icon,
         condition: nil,
         label: nil,
         partial: nil,
-        url: nil
+        url: nil,
+        position: nil
       )
 
         @condition = condition || -> { true }
@@ -50,6 +53,7 @@ module Spree
         @label = label || sections.first
         @partial = partial
         @url = url
+        @position = position
       end
     end
 
@@ -65,6 +69,11 @@ module Spree
     #
     # @!attribute menu_items
     #   @return [Array<Spree::BackendConfiguration::MenuItem>]
+    #
+    # Positioning can be determined by setting the position attribute to
+    # an Integer or nil. Menu Items will be rendered with smaller lower values
+    # first and higher values last. A position value of nil will cause the menu
+    # item to be rendered at the end of the list.
     attr_writer :menu_items
 
     # Return the menu items which should be drawn in the menu
@@ -76,7 +85,7 @@ module Spree
         MenuItem.new(
           ORDER_TABS,
           'shopping-cart',
-          condition: -> { can?(:admin, Spree::Order) },
+          condition: -> { can?(:admin, Spree::Order) }
         ),
         MenuItem.new(
           PRODUCT_TABS,
