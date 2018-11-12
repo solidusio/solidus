@@ -6,6 +6,14 @@
 - [Join our Slack](http://slack.solidus.io/) ([solidusio.slack.com](http://solidusio.slack.com))
 - [solidus-security](https://groups.google.com/forum/#!forum/solidus-security) mailing list
 
+## Table of Contents
+1. [Summary](#summary)
+2. [Demo](#demo)
+3. [Getting Started](#getting-started)
+4. [Installation Options](#installation-options)
+5. [Developing Solidus](#developing-solidus)
+6. [Contributing](#contributing)
+
 ## Summary
 
 Solidus is a complete open source ecommerce solution built with Ruby on Rails.
