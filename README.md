@@ -11,8 +11,9 @@
 2. [Demo](#demo)
 3. [Getting Started](#getting-started)
 4. [Installation Options](#installation-options)
-5. [Developing Solidus](#developing-solidus)
-6. [Contributing](#contributing)
+5. [Performance](#performance)
+6. [Developing Solidus](#developing-solidus)
+7. [Contributing](#contributing)
 
 ## Summary
 
@@ -258,8 +259,7 @@ A list can be found at [extensions.solidus.io](http://extensions.solidus.io/).
 If you want to write an extension for Solidus, you can use the
 [solidus_cmd](https://www.github.com/solidusio/solidus_cmd.git) gem.
 
-Contributing
-------------
+## Contributing
 
 Solidus is an open source project and we encourage contributions. Please read
 [CONTRIBUTING.md](CONTRIBUTING.md) before contributing.
