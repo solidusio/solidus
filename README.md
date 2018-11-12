@@ -97,8 +97,7 @@ As part of running the above installation steps, you will be asked to set an adm
 
 The best way to ask questions is via the [#support channel on the Solidus Slack](https://solidusio.slack.com/messages/support/details/).
 
-Installation options
---------------------
+## Installation options
 
 Instead of a stable build, if you want to use the bleeding edge version of
 Solidus, use this line:
@@ -130,8 +129,7 @@ bundle exec rake spree_sample:load
 There are also options and rake tasks provided by
 [solidus\_auth\_devise](https://github.com/solidusio/solidus_auth_devise).
 
-Performance
------------
+## Performance
 
 You may notice that your Solidus store runs slowly in development mode. This
 can be because in development each CSS and JavaScript is loaded as a separate
@@ -156,8 +154,7 @@ Add `gem 'turbolinks', '~> 5.0.0'` into your `Gemfile` (if not already present) 
 **CAUTION** Please be aware that Turbolinks can break extensions and/or customizations to the Solidus admin.
 Use at own risk.
 
-Developing Solidus
-------------------
+## Developing Solidus
 
 * Clone the Git repo
 
