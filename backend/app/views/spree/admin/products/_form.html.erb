@@ -82,6 +82,13 @@
         <% end %>
       </div>
 
+      <div data-hook="admin_product_form_sku">
+        <%= f.field_container :sku do %>
+          <%= f.label :sku, t('spree.master_sku') %>
+          <%= f.text_field :sku, size: 16 %>
+        <% end %>
+      </div>
+
       <% if @product.has_variants? %>
         <div data-hook="admin_product_form_multiple_variants">
           <%= f.label :skus, t('spree.skus') %>
@@ -101,13 +108,6 @@
               <%= link_to_with_icon 'th-large', t('spree.manage_variants'), admin_product_variants_url(@product) %>
             <% end %>
           </div>
-        </div>
-      <% else %>
-        <div data-hook="admin_product_form_sku">
-          <%= f.field_container :sku do %>
-            <%= f.label :sku, Spree::Variant.human_attribute_name(:sku) %>
-            <%= f.text_field :sku, size: 16 %>
-          <% end %>
         </div>
 
         <div id="shipping_specs" class="row">
