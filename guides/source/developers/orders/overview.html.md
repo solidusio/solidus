@@ -98,7 +98,7 @@ The `Spree::Adjustment` model provides the cost of each adjustment to an order,
 line item, or shipment on an order. Adjustments can decrease the total (via
 [promotions][promotions]) or increase it (via [shipments][shipments] and [taxes][taxes]).
 
-For more information, see the [Adjustments][adjustments] documentation.
+For more information, see the [adjustments][adjustments] documentation.
 
 [promotions]: ../promotions/overview.html
 [taxes]: ../taxation/overview.html
@@ -128,7 +128,7 @@ shipping and billing address.
 
 For more information, see the [Addresses][addresses] documentation.
 
-[Addresses]: ../users/addresses.html
+[addresses]: ../users/addresses.html
 
 ### Payments
 
