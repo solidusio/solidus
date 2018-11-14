@@ -39,7 +39,7 @@ module Spree
         end
       end
 
-      # Make an admin tab that coveres one or more resources supplied by symbols
+      # Make an admin tab that covers one or more resources supplied by symbols
       # Option hash may follow. Valid options are
       #   * :label to override link text, otherwise based on the first resource name (translated)
       #   * :route to override automatically determining the default route
