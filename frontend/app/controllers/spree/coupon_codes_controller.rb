@@ -10,12 +10,16 @@ module Spree
         @order.coupon_code = params[:coupon_code]
         handler = PromotionHandler::Coupon.new(@order).apply
 
-        if handler.successful?
-          flash[:success] = handler.success
-          respond_with(@order) { |format| format.html { redirect_to cart_path } }
-        else
-          flash.now[:error] = handler.error
-          respond_with(@order) { |format| format.html { render 'spree/coupon_codes/new' } }
+        respond_with(@order) do |format|
+          format.html do
+            if handler.successful?
+              flash[:success] = handler.success
+              redirect_to cart_path
+            else
+              flash.now[:error] = handler.error
+              render 'spree/coupon_codes/new'
+            end
+          end
         end
       end
     end
