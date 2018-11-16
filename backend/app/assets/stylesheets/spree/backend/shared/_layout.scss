@@ -12,6 +12,13 @@ body {
   background-color: $admin-body-bg;
 }
 
+#admin-nav-toggle {
+  position: absolute;
+  top: 25px;
+  margin-left: 5px;
+  cursor: pointer;
+}
+
 .admin-nav {
   position: absolute;
   top: 0;
@@ -20,6 +27,8 @@ body {
   width: $width-sidebar;
   @media print { display: none }
 }
+
+.admin-nav-extended { padding-left: 0; }
 
 .content-wrapper {
   background-color: $content-wrapper-bg;
