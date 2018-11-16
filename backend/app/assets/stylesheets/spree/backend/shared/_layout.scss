@@ -17,13 +17,12 @@ body {
   position: absolute;
   top: 15px;
   margin-left: 199px;
-  cursor: pointer;
+  padding-right: 5px;
+  z-index: 1;
   background-color: $color-1;
   border: 1px solid $color-border;
   border-left: none;
-
-  z-index: 1;
-  padding-right: 5px;
+  cursor: pointer;
 
   i {
     margin-left: 5px;
