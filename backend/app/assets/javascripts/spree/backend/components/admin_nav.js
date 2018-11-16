@@ -12,12 +12,14 @@ Spree.ready(function() {
     adminNav.style.display = "none";
   }
 
-  adminNavToggle.addEventListener("click", function() {
-    if (document.body.classList.contains("admin-nav-extended")) {
-      showNav();
-    } else {
-      hideNav();
-    }
-    document.body.classList.toggle("admin-nav-extended");
-  });
+  if (adminNavToggle) {
+    adminNavToggle.addEventListener("click", function() {
+      if (document.body.classList.contains("admin-nav-extended")) {
+        showNav();
+      } else {
+        hideNav();
+      }
+      document.body.classList.toggle("admin-nav-extended");
+    });
+  }
 });
