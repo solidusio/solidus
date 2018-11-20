@@ -6,6 +6,15 @@
 - [Join our Slack](http://slack.solidus.io/) ([solidusio.slack.com](http://solidusio.slack.com))
 - [solidus-security](https://groups.google.com/forum/#!forum/solidus-security) mailing list
 
+## Table of Contents
+1. [Summary](#summary)
+2. [Demo](#demo)
+3. [Getting Started](#getting-started)
+4. [Installation Options](#installation-options)
+5. [Performance](#performance)
+6. [Developing Solidus](#developing-solidus)
+7. [Contributing](#contributing)
+
 ## Summary
 
 Solidus is a complete open source ecommerce solution built with Ruby on Rails.
@@ -89,8 +98,7 @@ As part of running the above installation steps, you will be asked to set an adm
 
 The best way to ask questions is via the [#support channel on the Solidus Slack](https://solidusio.slack.com/messages/support/details/).
 
-Installation options
---------------------
+## Installation options
 
 Instead of a stable build, if you want to use the bleeding edge version of
 Solidus, use this line:
@@ -122,8 +130,7 @@ bundle exec rake spree_sample:load
 There are also options and rake tasks provided by
 [solidus\_auth\_devise](https://github.com/solidusio/solidus_auth_devise).
 
-Performance
------------
+## Performance
 
 You may notice that your Solidus store runs slowly in development mode. This
 can be because in development each CSS and JavaScript is loaded as a separate
@@ -148,8 +155,7 @@ Add `gem 'turbolinks', '~> 5.0.0'` into your `Gemfile` (if not already present) 
 **CAUTION** Please be aware that Turbolinks can break extensions and/or customizations to the Solidus admin.
 Use at own risk.
 
-Developing Solidus
-------------------
+## Developing Solidus
 
 * Clone the Git repo
 
@@ -253,8 +259,7 @@ A list can be found at [extensions.solidus.io](http://extensions.solidus.io/).
 If you want to write an extension for Solidus, you can use the
 [solidus_cmd](https://www.github.com/solidusio/solidus_cmd.git) gem.
 
-Contributing
-------------
+## Contributing
 
 Solidus is an open source project and we encourage contributions. Please read
 [CONTRIBUTING.md](CONTRIBUTING.md) before contributing.
