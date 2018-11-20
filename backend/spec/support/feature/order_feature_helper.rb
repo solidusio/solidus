@@ -16,7 +16,7 @@ module OrderFeatureHelper
       destination = destination.name
     end
 
-    select2_no_label(destination, from: 'Choose location')
+    select2_no_label(destination, from: 'Choose Location')
 
     if quantity
       fill_in 'item_quantity', with: quantity

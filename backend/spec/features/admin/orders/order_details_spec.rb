@@ -415,7 +415,7 @@ describe "Order Details", type: :feature, js: true do
           it 'should not allow a shipment to split stock to itself' do
             visit spree.edit_admin_order_path(order)
             within('tr', text: line_item.sku) { click_icon 'arrows-h' }
-            click_on 'Choose location'
+            click_on 'Choose Location'
             within '.select2-results' do
               expect(page).to have_content(shipment2.number)
               expect(page).not_to have_content(shipment1.number)

@@ -16,7 +16,7 @@ feature 'Promotion with user rule', js: true do
     let!(:other_user) { create(:user, email: 'bar@example.com') }
 
     scenario "searching a user" do
-      select "User", from: "Discount rules"
+      select "User", from: "Discount Rules"
       within("#rules_container") { click_button "Add" }
 
       select2_search "foo", from: "Choose users", select: false
@@ -31,7 +31,7 @@ feature 'Promotion with user rule', js: true do
     given!(:user) { create(:user, email: xss_string) }
 
     scenario "adding an option value rule" do
-      select "User", from: "Discount rules"
+      select "User", from: "Discount Rules"
       within("#rules_container") { click_button "Add" }
 
       select2_search "<script>", from: "Choose users"
