@@ -2,10 +2,8 @@
 
 module Spree
   class Promotion < Spree::Base
-
     module Rules
       class NoOtherPromotion < PromotionRule
-
         def applicable?(promotable)
           promotable.is_a?(Spree::Order)
         end
@@ -17,9 +15,7 @@ module Spree
 
           eligibility_errors.empty?
         end
-
       end
     end
-
   end
 end
