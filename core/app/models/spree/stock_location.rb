@@ -7,6 +7,8 @@ module Spree
   class StockLocation < Spree::Base
     class InvalidMovementError < StandardError; end
 
+    acts_as_list
+
     has_many :shipments
     has_many :stock_items, dependent: :delete_all, inverse_of: :stock_location
     has_many :cartons, inverse_of: :stock_location
