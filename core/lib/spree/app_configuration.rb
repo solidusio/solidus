@@ -487,6 +487,7 @@ module Spree
             Spree::Promotion::Rules::FirstRepeatPurchaseSince
             Spree::Promotion::Rules::UserRole
             Spree::Promotion::Rules::Store
+            Spree::Promotion::Rules::NoOtherPromotion
           ]
 
           promos.actions = %w[

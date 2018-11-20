@@ -13,6 +13,10 @@ module Spree
 
       def apply
         if coupon_code.present?
+          if promotion_stacking_disabled?
+            set_error_code :promotion_stacking_disabled
+            return self
+          end
           if promotion.present? && promotion.actions.exists?
             handle_present_promotion(promotion)
           elsif promotion_code && promotion_code.promotion.inactive?
@@ -86,6 +90,16 @@ module Spree
 
       def promotion_exists_on_order?(order, promotion)
         order.promotions.include? promotion
+      end
+
+      def promotion_stacking_disabled?
+        if order.promotions.present?
+          order.promotions.each do |promotion|
+            return true if promotion.rules.any? { |r| r[:type] == "Spree::Promotion::Rules::NoOtherPromotion" }
+          end
+        end
+
+        false
       end
     end
   end
