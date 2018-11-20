@@ -4,6 +4,12 @@ require 'spec_helper'
 
 module Spree
   describe Api::CouponCodesController, type: :request do
+    let(:current_api_user) do
+      user = Spree.user_class.new(email: "spree@example.com")
+      user.generate_spree_api_key!
+      user
+    end
+
     before do
       stub_authentication!
     end
@@ -11,6 +17,10 @@ module Spree
     describe '#create' do
       let(:promo) { create(:promotion_with_item_adjustment, code: 'night_melody') }
       let(:promo_code) { promo.codes.first }
+
+      before do
+        allow_any_instance_of(Order).to receive_messages user: current_api_user
+      end
 
       context 'when successful' do
         let(:order) { create(:order_with_line_items) }

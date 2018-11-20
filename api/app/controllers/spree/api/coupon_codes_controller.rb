@@ -7,6 +7,8 @@ module Spree
       around_action :lock_order, only: :create
 
       def create
+        authorize! :update, @order, order_token
+
         @order.coupon_code = params[:coupon_code]
         @handler = PromotionHandler::Coupon.new(@order).apply
 

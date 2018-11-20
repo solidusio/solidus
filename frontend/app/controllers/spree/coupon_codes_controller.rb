@@ -6,6 +6,8 @@ module Spree
     around_action :lock_order, only: :create
 
     def create
+      authorize! :update, @order, cookies.signed[:guest_token]
+
       if params[:coupon_code].present?
         @order.coupon_code = params[:coupon_code]
         handler = PromotionHandler::Coupon.new(@order).apply
