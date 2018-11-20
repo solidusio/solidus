@@ -87,29 +87,22 @@ The `Spree::LineItem` model provides the cost of each item added to an order.
 Line items provide a link between the order and `Spree::Product`s and
 `Spree::Variant`s.
 
-<!-- For more information about line items, products, and variants, see the
-[Products and variants][products-and-variants] documentation. -->
+For more information about line items, products, and variants, see the
+[Products and variants][products-and-variants] documentation.
 
-<!-- TODO:
-  Add link to products and variants documentation once it is merged.
-  Add link to line item-specific documentation once it has been written and
-  merged.
--->
+[products-and-variants]: ../products-and-variants/overview.html
 
 ### Adjustments
 
 The `Spree::Adjustment` model provides the cost of each adjustment to an order,
 line item, or shipment on an order. Adjustments can decrease the total (via
-promotions) or increase it (via [shipments][shipments] and [taxes][taxes]).
+[promotions][promotions]) or increase it (via [shipments][shipments] and [taxes][taxes]).
 
-<!-- For more information, see the [Adjustments][adjustments] documentation -->
+For more information, see the [Adjustments][adjustments] documentation.
 
-<!-- TODO:
-  Add link to promotions guide once it is merged.
-  Add link to adjustments guide once it is merged.
--->
-
+[promotions]: ../promotions/overview.html
 [taxes]: ../taxation/overview.html
+[adjustments]: ../adjustments/overview.html
 
 ### Shipments
 
@@ -133,11 +126,9 @@ order via the `ship_address_id` and `bill_address_id`. An order may have one or
 two different addresses associated it, depending on the customer's preferred
 shipping and billing address.
 
-<!-- For more information, see the [Addresses][addresses] documentation. -->
+For more information, see the [Addresses][addresses] documentation.
 
-<!-- TODO:
-  Add link to addresses guide once it is merged.
--->
+[addresses]: ../users/addresses.html
 
 ### Payments
 
@@ -145,11 +136,9 @@ The `Spree::Payment` model stores payment information for the order. Once the
 payment object is updated with the amount paid, this updates the corresponding
 order's `payment_total` value.
 
-<!-- For more information, see the [Payments][payments] documentation. -->
+For more information, see the [Payments][payments] documentation.
 
-<!-- TODO:
-  Add link to payments guide once it is merged.
--->
+[payments]: ../payments/overview.html
 
 ### Return Authorizations
 
