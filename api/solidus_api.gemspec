@@ -21,7 +21,7 @@ Gem::Specification.new do |gem|
   gem.required_ruby_version = '>= 2.2.2'
   gem.required_rubygems_version = '>= 1.8.23'
 
-  gem.add_dependency 'jbuilder', '~> 2.6'
+  gem.add_dependency 'jbuilder', '~> 2.8'
   gem.add_dependency 'kaminari-activerecord', '~> 1.1'
   gem.add_dependency 'responders'
   gem.add_dependency 'solidus_core', gem.version
