@@ -18,7 +18,7 @@ describe "Promotion Adjustments", type: :feature, js: true do
       click_button "Create"
       expect(page).to have_title("SAVE SAVE SAVE - Promotions")
 
-      select "Item total", from: "Discount rules"
+      select "Item Total", from: "Discount Rules"
       within('#rule_fields') { click_button "Add" }
 
       find('[id$=_preferred_amount]').set(30)
@@ -81,7 +81,7 @@ describe "Promotion Adjustments", type: :feature, js: true do
       click_button "Create"
       expect(page).to have_title("SAVE SAVE SAVE - Promotions")
 
-      select "Item total", from: "Discount rules"
+      select "Item Total", from: "Discount Rules"
       within('#rule_fields') { click_button "Add" }
 
       find('[id$=_preferred_amount]').set(30)
@@ -118,7 +118,7 @@ describe "Promotion Adjustments", type: :feature, js: true do
       click_button "Create"
       expect(page).to have_title("SAVE SAVE SAVE - Promotions")
 
-      select "Product(s)", from: "Discount rules"
+      select "Product(s)", from: "Discount Rules"
       within("#rule_fields") { click_button "Add" }
       select2_search "RoR Mug", from: "Choose products"
       within('#rule_fields') { click_button "Update" }
@@ -152,12 +152,12 @@ describe "Promotion Adjustments", type: :feature, js: true do
       click_button "Create"
       expect(page).to have_title("SAVE SAVE SAVE - Promotions")
 
-      select "Item total", from: "Discount rules"
+      select "Item Total", from: "Discount Rules"
       within('#rule_fields') { click_button "Add" }
       find('[id$=_preferred_amount]').set(30)
       within('#rule_fields') { click_button "Update" }
 
-      select "Free shipping", from: "Adjustment type"
+      select "Free Shipping", from: "Adjustment type"
       within('#action_fields') { click_button "Add" }
       expect(page).to have_content('Makes all shipments for the order free')
 
@@ -205,7 +205,7 @@ describe "Promotion Adjustments", type: :feature, js: true do
       click_button "Create"
       expect(page).to have_title("SAVE SAVE SAVE - Promotions")
 
-      select "Item total", from: "Discount rules"
+      select "Item Total", from: "Discount Rules"
       within('#rule_fields') { click_button "Add" }
       find('[id$=_preferred_amount]').set(50)
       within('#rule_fields') { click_button "Update" }

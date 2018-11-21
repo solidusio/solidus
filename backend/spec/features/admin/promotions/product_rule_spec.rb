@@ -12,7 +12,7 @@ feature 'Promotion with product rule', js: true do
   given(:promotion) { create :promotion }
 
   def add_promotion_rule_of_type(type)
-    select type, from: "Discount rules"
+    select type, from: "Discount Rules"
     within("#rules_container") { click_button "Add" }
   end
 

@@ -47,7 +47,7 @@ describe "Orders Listing", type: :feature, js: true do
       within_row(1) { expect(page).to have_content("R100") }
       within_row(2) { expect(page).to have_content("R200") }
 
-      click_link "Completed At", exact: false
+      click_link "Completed at", exact: false
 
       # Completed at desc
       within_row(1) { expect(page).to have_content("R200") }

@@ -16,7 +16,7 @@ feature 'Promotion with option value rule' do
   end
 
   scenario "adding an option value rule", js: true do
-    select "Option Value(s)", from: "Discount rules"
+    select "Option Value(s)", from: "Discount Rules"
     within("#rules_container") { click_button "Add" }
 
     within("#rules_container .promotion-block") do
@@ -46,7 +46,7 @@ feature 'Promotion with option value rule' do
       option_value.update!(name: xss_string)
     end
     scenario "adding an option value rule", js: true do
-      select "Option Value(s)", from: "Discount rules"
+      select "Option Value(s)", from: "Discount Rules"
       within("#rules_container") { click_button "Add" }
 
       within("#rules_container .promotion-block") do

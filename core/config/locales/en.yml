@@ -105,7 +105,7 @@ en:
         canceled_at: Canceled at
         canceler_id: Canceler
         checkout_complete: Checkout Complete
-        completed_at: Completed At
+        completed_at: Completed at
         coupon_code: Coupon Code
         created_at: Order Date
         email: Customer E-Mail
@@ -204,7 +204,7 @@ en:
       spree/promotion/rules/landing_page:
           description: Customer must have visited the specified page
       spree/promotion/rules/one_use_per_user:
-        description: Only One Use Per User
+        description: Only one use per user
       spree/promotion/rules/option_value:
         description: Order includes specified product(s) with matching option value(s)
       spree/promotion/rules/product:
@@ -254,11 +254,11 @@ en:
         pre_tax_total: Pre-Tax Total
         total_excluding_vat: Pre-Tax Total
       spree/return_item:
-        acceptance_status: Acceptance status
-        acceptance_status_errors: Acceptance errors
+        acceptance_status: Acceptance Status
+        acceptance_status_errors: Acceptance Errors
         amount: Amount Before Sales Tax
         charged: Charged
-        exchange_variant: Exchange for
+        exchange_variant: Exchange For
         inventory_unit_state: State
         item_received?: "Item Received?"
         override_reimbursement_type_id: Reimbursement Type Override
@@ -306,7 +306,7 @@ en:
         name: Site Name
         mail_from_address: Mail From Address
         cart_tax_country_iso: Tax Country for Empty Carts
-        available_locales: Locales available in the storefront
+        available_locales: Locales Available in the Storefront
       spree/store_credit:
         amount: Amount
         amount_authorized: Amount Authorized
@@ -330,8 +330,8 @@ en:
         active: Active
         address1: Street Address
         address2: Street Address (cont'd)
-        backorderable_default: Backorderable default
-        check_stock_on_transfer: Check stock on transfer
+        backorderable_default: Backorderable Default
+        check_stock_on_transfer: Check Stock on Transfer
         city: City
         code: Code
         country_id: Country
@@ -340,7 +340,7 @@ en:
         internal_name: Internal Name
         name: Name
         phone: Phone
-        propagate_all_variants: Propagate all variants
+        propagate_all_variants: Propagate All Variants
         restock_inventory: Restock Inventory
         state_id: State
         zipcode: Zip
@@ -355,11 +355,11 @@ en:
         tax_code: Tax Code
       spree/tax_rate:
         amount: Rate
-        included_in_price: Included In Price
+        included_in_price: Included in Price
         name: Name
-        show_rate_in_label: Show Rate In Label
-        starts_at: Start date
-        expires_at: Expiration date
+        show_rate_in_label: Show Rate in Label
+        starts_at: Start Date
+        expires_at: Expiration Date
       spree/taxon:
         description: Description
         icon: Icon
@@ -387,7 +387,7 @@ en:
         height: Height
         price: Price
         sku: SKU
-        tax_category: Variant tax category
+        tax_category: Variant Tax Category
         weight: Weight
         width: Width
       spree/zone:
@@ -450,17 +450,17 @@ en:
         one: Flat Percent
         other: Flat Percent
       spree/calculator/shipping/flat_rate:
-        one: Flat rate
-        other: Flat rate
+        one: Flat Rate
+        other: Flat Rate
       spree/calculator/shipping/flexi_rate:
-        one: Flexible Rate per package item
-        other: Flexible Rate per package item
+        one: Flexible Rate per Package Item
+        other: Flexible Rate per Package Item
       spree/calculator/shipping/per_item:
-        one: Flat rate per package item
-        other: Flat rate per package item
+        one: Flat Rate per Package Item
+        other: Flat Rate per Package Item
       spree/calculator/shipping/price_sack:
-        one: Price sack
-        other: Price sack
+        one: Price Sack
+        other: Price Sack
       spree/country:
         one: Country
         other: Countries
@@ -525,9 +525,9 @@ en:
       spree/promotion/actions/create_adjustment: Create whole-order adjustment
       spree/promotion/actions/create_item_adjustments: Create per-line-item adjustment
       spree/promotion/actions/create_quantity_adjustments: Create per-quantity adjustment
-      spree/promotion/actions/free_shipping: Free shipping
-      spree/promotion/rules/first_order: First order
-      spree/promotion/rules/item_total: Item total
+      spree/promotion/actions/free_shipping: Free Shipping
+      spree/promotion/rules/first_order: First Order
+      spree/promotion/rules/item_total: Item Total
       spree/promotion/rules/landing_page: Landing Page
       spree/promotion/rules/one_use_per_user: One Use Per User
       spree/promotion/rules/option_value: Option Value(s)
@@ -724,9 +724,9 @@ en:
       unconfirmed: You have to confirm your account before continuing.
     mailer:
       confirmation_instructions:
-        subject: Confirmation instructions
+        subject: Confirmation Instructions
       reset_password_instructions:
-        subject: Reset password instructions
+        subject: Reset Password Instructions
       unlock_instructions:
         subject: Unlock Instructions
     oauth_callbacks:
@@ -964,9 +964,9 @@ en:
           regenerate_key: "Regenerate key"
       variants:
         table_filter:
-          show_deleted: Show deleted variants
+          show_deleted: Show Deleted Variants
         new:
-          new_variant: New variant
+          new_variant: New Variant
         edit:
           edit_variant: Edit Variant
         form:
@@ -1059,7 +1059,7 @@ en:
     calculator_settings_warning: If you are changing the calculator type or preference source, you must save first before you can edit the calculator settings
     cancel: Cancel
     cancel_inventory: 'Cancel Items'
-    canceled: canceled
+    canceled: Canceled
     canceled_at: Canceled at
     canceler: Canceler
     cancellation: Cancellation
@@ -1090,14 +1090,14 @@ en:
     check: Check
     check_stock_on_transfer: Check stock on transfer
     checkout: Checkout
-    choose_a_customer: Choose a customer
+    choose_a_customer: Choose a Customer
     choose_a_taxon_to_sort_products_for: "Choose a taxon to sort products for"
     choose_currency: Choose Currency
     choose_dashboard_locale: Choose Dashboard Locale
-    choose_location: Choose location
-    choose_promotion_action: Choose action
-    choose_promotion_rule: Choose rule
-    choose_reason: Choose reason
+    choose_location: Choose Location
+    choose_promotion_action: Choose Action
+    choose_promotion_rule: Choose Rule
+    choose_reason: Choose Reason
     city: City
     clear_cache: Clear Cache
     clear_cache_ok: Cache was flushed
@@ -1199,7 +1199,7 @@ en:
     destroy: Destroy
     details: Details
     discount_amount: Discount Amount
-    discount_rules: Discount rules
+    discount_rules: Discount Rules
     dismiss_banner: No. Thanks! I'm not interested, do not display this message again
     display: Display
     download_promotion_codes_list: Download codes list
@@ -1274,7 +1274,7 @@ en:
           signup: User signup
     exceptions:
       count_on_hand_setter: Cannot set count_on_hand manually, as it is set automatically by the recalculate_count_on_hand callback. Please use `update_column(:count_on_hand, value)` instead.
-    exchange_for: Exchange for
+    exchange_for: Exchange For
     excl: excl.
     expected: Expected
     expected_items: Expected Items
@@ -1743,7 +1743,7 @@ en:
     received_items: Received Items
     received_successfully: Received Successfully
     receiving: Receiving
-    receiving_match: Receiving match
+    receiving_match: Receiving Match
     reception_states:
       awaiting: Awaiting
       cancelled: Canceled
@@ -1888,9 +1888,9 @@ en:
     shipping_address: Shipping Address
     shipping_categories: Shipping Categories
     shipping_category: Shipping Category
-    shipping_flat_rate_per_item: Flat rate per package item
-    shipping_flat_rate_per_order: Flat rate
-    shipping_flexible_rate: Flexible Rate per package item
+    shipping_flat_rate_per_item: Flat Rate per Package Item
+    shipping_flat_rate_per_order: Flat Rate
+    shipping_flexible_rate: Flexible Rate per Package Item
     shipping_instructions: Shipping Instructions
     shipping_method: Shipping Method
     shipping_methods: Shipping Methods
@@ -2033,9 +2033,9 @@ en:
     to_add_variants_you_must_first_define: To add variants, you must first define
     total: Total
     total_excluding_vat: Pre-Tax Total
-    total_per_item: Total per item
+    total_per_item: Total per Item
     total_pre_tax_refund: Total Pre-Tax Refund
-    total_price: Total price
+    total_price: Total Price
     total_sales: Total Sales
     track_inventory: Track Inventory
     tracking: Tracking
@@ -2058,10 +2058,10 @@ en:
     unfinalize_all_adjustments: Unfinalize All Adjustments
     under_price: Under %{price}
     unlock: Unlock
-    unrecognized_card_type: Unrecognized card type
+    unrecognized_card_type: Unrecognized Card Type
     unshippable_items: Unshippable Items
     update: Update
-    updated_successfully: Updated successfully
+    updated_successfully: Updated Successfully
     updating: Updating
     usage_limit: Usage Limit
     use_app_default: Use App Default
@@ -2071,7 +2071,7 @@ en:
     use_new_cc_or_payment_method: Use a new card / payment method
     user: User
     user_rule:
-      choose_users: Choose users
+      choose_users: Choose Users
     user_role_rule:
       choose_roles: Choose Roles
       label: User must contain %{select} of these roles
@@ -2089,7 +2089,7 @@ en:
     validity_period: Validity Period
     value: Value
     variant: Variant
-    variant_placeholder: Choose a variant
+    variant_placeholder: Choose a Variant
     variant_pricing: Variant Pricing
     variant_properties: Variant Properties
     variant_search: Variant Search

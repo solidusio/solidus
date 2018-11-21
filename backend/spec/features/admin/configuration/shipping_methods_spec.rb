@@ -18,7 +18,7 @@ describe "Shipping Methods", type: :feature do
       within_row(1) do
         expect(column_text(1)).to eq(shipping_method.name)
         expect(column_text(2)).to eq(zone.name)
-        expect(column_text(3)).to eq("Flat rate")
+        expect(column_text(3)).to eq("Flat Rate")
         expect(column_text(4)).to eq("Yes")
       end
     end
@@ -99,7 +99,7 @@ describe "Shipping Methods", type: :feature do
         click_icon :edit
       end
 
-      select 'Flexible Rate per package item', from: 'Base Calculator'
+      select 'Flexible Rate per Package Item', from: 'Base Calculator'
 
       fill_in 'First Item', with: 10
       fill_in 'Additional Item', with: 20
