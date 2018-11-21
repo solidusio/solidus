@@ -6,7 +6,7 @@ body {
   position: relative;
   min-height: 100%;
   padding-left: $width-sidebar;
-  transition: padding 350ms linear;
+  transition: padding $sidebar-transition;
 }
 
 .admin {
@@ -56,6 +56,7 @@ body {
   #admin-nav-toggle i {
     transform: rotate(180deg);
   }
+  transition: padding $sidebar-transition;
 }
 
 .content-wrapper {
