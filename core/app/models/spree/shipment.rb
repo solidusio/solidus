@@ -168,12 +168,7 @@ module Spree
     # Any previous non-pending inventory units are skipped as their stock had
     # already been allocated.
     def finalize!
-      transaction do
-        pending_units = inventory_units.select(&:pending?)
-        pending_manifest = Spree::ShippingManifest.new(inventory_units: pending_units)
-        pending_manifest.items.each { |item| manifest_unstock(item) }
-        Spree::InventoryUnit.finalize_units!(pending_units)
-      end
+      finalize_pending_inventory_units
     end
 
     def include?(variant)
@@ -397,6 +392,11 @@ module Spree
     end
 
     private
+
+    def finalize_pending_inventory_units
+      pending_units = inventory_units.select(&:pending?)
+      Spree::Stock::InventoryUnitsFinalizer.new(pending_units).run!
+    end
 
     def after_ship
       order.shipping.ship_shipment(self, suppress_mailer: suppress_mailer)

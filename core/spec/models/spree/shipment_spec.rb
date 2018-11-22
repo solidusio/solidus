@@ -760,8 +760,12 @@ RSpec.describe Spree::Shipment, type: :model do
   describe "#finalize!" do
     let(:inventory_unit) { shipment.inventory_units.first }
     let(:stock_item) { inventory_unit.variant.stock_items.find_by(stock_location: stock_location) }
+    let(:inventory_unit_finalizer) { double(:inventory_unit_finalizer, run!: [true]) }
 
     before do
+      allow(Spree::Stock::InventoryUnitsFinalizer)
+        .to receive(:new).and_return(inventory_unit_finalizer)
+
       stock_item.set_count_on_hand(10)
       stock_item.update_attributes!(backorderable: false)
       inventory_unit.update_attributes!(pending: true)
@@ -769,18 +773,20 @@ RSpec.describe Spree::Shipment, type: :model do
 
     subject { shipment.finalize! }
 
-    it "updates the associated inventory units" do
-      inventory_unit.update_columns(updated_at: 1.hour.ago)
-      expect { subject }.to change { inventory_unit.reload.updated_at }
-    end
+    it "call run! on Spree::Stock::InventoryUnitsFinalizer" do
+      expect(inventory_unit_finalizer).to receive(:run!)
 
-    it "unstocks the variant" do
-      expect { subject }.to change { stock_item.reload.count_on_hand }.from(10).to(9)
+      subject
     end
 
     context "inventory unit already finalized" do
-      before do
-        inventory_unit.update_attributes!(pending: false)
+      let(:inventory_unit) { build(:inventory_unit, pending: false) }
+
+      it "doesn't pass the inventory unit" do
+        expect(Spree::Stock::InventoryUnitsFinalizer)
+          .to receive(:new).with([])
+
+        subject
       end
 
       it "doesn't update the associated inventory units" do
