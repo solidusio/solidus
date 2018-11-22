@@ -77,6 +77,11 @@ module Spree
         if options[:css_class]
           css_classes << options[:css_class]
         end
+
+        if params[:product_slug].present? && link.include?('Stock')
+          css_classes.delete('selected')
+        end
+
         content_tag('li', link + (yield if block_given?), class: css_classes.join(' ') )
       end
 
