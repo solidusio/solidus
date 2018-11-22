@@ -115,6 +115,7 @@ module Spree
           condition: -> { can?(:admin, Spree::StockItem) },
           label: :stock,
           url: :admin_stock_items_path,
+          match_path: '/stock_items',
           position: 3
         ),
         MenuItem.new(
