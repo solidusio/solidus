@@ -272,6 +272,24 @@ describe Spree::CheckoutController, type: :controller do
             expect(order.payments).to be_empty
           end
         end
+
+        context 'with user checked the save payment source option' do
+          let(:params_save_payment_source) { params.merge({ save_user_payment_source: '1' }) }
+
+          it "will set temporary_payment_source to false" do
+            expect {
+              post :update, params: params_save_payment_source
+            }.to change{ order.temporary_payment_source }.to(false)
+          end
+        end
+
+        context 'with user not checked the save payment source option' do
+          it "will set temporary_payment_source to true" do
+            expect {
+              post :update, params: params
+            }.to change{ order.temporary_payment_source }.to(true)
+          end
+        end
       end
 
       context "when in the confirm state" do

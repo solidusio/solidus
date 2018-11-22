@@ -30,6 +30,7 @@ module Spree
       if update_order
 
         assign_temp_address
+        assign_temp_payment_source
 
         unless transition_forward
           redirect_on_failure
@@ -55,6 +56,10 @@ module Spree
 
     def assign_temp_address
       @order.temporary_address = !params[:save_user_address]
+    end
+
+    def assign_temp_payment_source
+      @order.temporary_payment_source = !params[:save_user_payment_source]
     end
 
     def redirect_on_failure

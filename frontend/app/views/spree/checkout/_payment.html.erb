@@ -63,5 +63,12 @@
 
 <div class="form-buttons" data-hook="buttons">
   <%= submit_tag t('spree.save_and_continue'), class: 'continue button primary' %>
+  <% if try_spree_current_user %>
+    <span data-hook="save_user_payment_source">
+      &nbsp; &nbsp;
+      <%= check_box_tag 'save_user_payment_source', '1', true %>
+      <%= label_tag :save_user_payment_source, t('spree.save_my_payment_source') %>
+    </span>
+  <% end %>
   <script>Spree.disableSaveOnClick();</script>
 </div>
