@@ -145,6 +145,8 @@ en:
       spree/payment_method:
         active: Active
         auto_capture: Auto Capture
+        available_to_users: Available to Users
+        available_to_admin: Available to Admin
         description: Description
         display_on: Display
         name: Name

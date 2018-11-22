@@ -21,8 +21,8 @@ describe "Payment Methods", type: :feature do
       within("table#listing_payment_methods") do
         expect(all("th")[1].text).to eq("Name")
         expect(all("th")[2].text).to eq("Type")
-        expect(all("th")[3].text).to eq("Available to users")
-        expect(all("th")[4].text).to eq("Available to admin")
+        expect(all("th")[3].text).to eq("Available to Users")
+        expect(all("th")[4].text).to eq("Available to Admin")
         expect(all("th")[5].text).to eq("State")
       end
 
