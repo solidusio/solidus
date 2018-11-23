@@ -34,7 +34,7 @@ jobs:
 
       - run:
           name: Run Tests
-          command: ./build-ci.rb test
+          command: ./bin/build-ci test
 
       - store_artifacts:
           path: /tmp/test-artifacts
