@@ -214,6 +214,7 @@ required to run the frontend and backend test suites.
 To execute all of the test specs, run the `bin/build` script at the root of the Solidus project:
 
 ```bash
+createuser --superuser --echo postgres # only the first time
 bin/build
 ```
 
