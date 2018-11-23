@@ -16,6 +16,7 @@ jobs:
           POSTGRES_USER: root
     parallelism: &parallelism 3
     steps: &steps
+      - run: .circleci/bin/halt-for-doc-only-changes.sh && circleci step halt || true # skip Circle for guides
       - checkout
 
       - restore_cache:
