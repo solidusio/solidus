@@ -135,9 +135,15 @@ RSpec.describe Spree::Calculator::TieredPercent, type: :model do
       end
 
       context "when the order's currency does not match the calculator" do
-        let(:preferred_currency) { "CAD" }
+        let(:preferred_currency) { "JPY" }
         let(:line_item_count) { 1 }
+        let(:price) { 15 }
         it { is_expected.to eq 0 }
+
+        it "rounds based on currency" do
+          allow(order).to receive_messages currency: "JPY"
+          expect(subject).to eq(2)
+        end
       end
     end
 

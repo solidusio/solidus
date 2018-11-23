@@ -9,12 +9,14 @@ module Spree
       preference :flat_percent, :decimal, default: 0
 
       def compute_package(package)
-        compute_from_price(total(package.contents))
+        value = compute_from_price(total(package.contents))
+        preferred_currency = package.order.currency
+        currency_exponent = ::Money::Currency.find(preferred_currency).exponent
+        value.round(currency_exponent)
       end
 
       def compute_from_price(price)
-        value = price * BigDecimal(preferred_flat_percent.to_s) / 100.0
-        value.round(2)
+        price * BigDecimal(preferred_flat_percent.to_s) / 100.0
       end
     end
   end
