@@ -224,6 +224,13 @@ The `bin/build` script runs using PostgreSQL by default, but it can be overridde
 env DB=mysql bin/build
 ```
 
+If the command fails with MySQL related errors you can try creating a user with this command:
+
+```bash
+# Creates a user with the same name as the current user and no restrictions.
+mysql --user="root" --execute="CREATE USER '$USER'@'localhost'; GRANT ALL PRIVILEGES ON * . * TO '$USER'@'localhost';"
+```
+
 #### Run an individual test suite
 
 Each gem contains its own series of tests. To run the tests for the core project:
