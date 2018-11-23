@@ -159,16 +159,16 @@ Use at own risk.
 
 * Clone the Git repo
 
-    ```bash
-    git clone git://github.com/solidusio/solidus.git
-    cd solidus
-    ```
+  ```bash
+  git clone git://github.com/solidusio/solidus.git
+  cd solidus
+  ```
 
 * Install the gem dependencies
 
-    ```bash
-    bundle install
-    ```
+  ```bash
+  bundle install
+  ```
 
 ### Sandbox
 
@@ -188,10 +188,10 @@ data already loaded.
 
 * Start the server
 
-    ```bash
-    cd sandbox
-    rails server
-    ```
+  ```bash
+  cd sandbox
+  rails server
+  ```
 
 ### Tests
 
