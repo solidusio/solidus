@@ -211,16 +211,16 @@ You can see the build statuses at
 [ChromeDriver](https://sites.google.com/a/chromium.org/chromedriver/home) is
 required to run the frontend and backend test suites.
 
-To execute all of the test specs, run the `build.sh` script at the root of the Solidus project:
+To execute all of the test specs, run the `bin/build` script at the root of the Solidus project:
 
 ```bash
-bash build.sh
+bin/build
 ```
 
-The `build.sh` script runs using PostgreSQL by default, but it can be overridden by setting the DB environment variable to `DB=sqlite` or `DB=mysql`. For example:
+The `bin/build` script runs using PostgreSQL by default, but it can be overridden by setting the DB environment variable to `DB=sqlite` or `DB=mysql`. For example:
 
 ```bash
-DB=mysql bash build.sh
+env DB=mysql bin/build
 ```
 
 #### Run an individual test suite
@@ -236,7 +236,7 @@ By default, `rspec` runs the tests for SQLite 3. If you would like to run specs
 against another database you may specify the database in the command:
 
 ```bash
-DB=postgresql bundle exec rspec
+env DB=postgresql bundle exec rspec
 ```
 
 #### Code coverage reports
