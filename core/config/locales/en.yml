@@ -95,6 +95,8 @@ en:
         price: Price
         quantity: Quantity
         total: Total price
+      spree/log_entry:
+        details: Message
       spree/option_type:
         name: Name
         presentation: Presentation
