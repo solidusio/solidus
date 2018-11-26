@@ -9,10 +9,11 @@
 
     <tbody>
       <% order.line_items.each do |item| %>
-
         <tr class="line-item" id="line-item-<%= item.id %>">
           <td class="line-item-image">
-            <%= mini_image(item.variant) %>
+            <%= render 'spree/admin/shared/image',
+              image: (item.variant.gallery.images.first || item.variant.product.gallery.images.first),
+              size: :mini %>
           </td>
           <td class="line-item-name">
             <%= item.variant.product.name %><br><%= "(" + variant_options(item.variant) + ")" unless item.variant.option_values.empty? %>
