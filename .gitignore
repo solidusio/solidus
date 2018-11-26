@@ -7,7 +7,6 @@
 .loadpath
 .project
 .ruby-version
-bin/*
 doc
 Gemfile.lock
 Gemfile-custom

@@ -29,7 +29,7 @@ Here's a quick guide:
 2. Run the tests. We only take pull requests with passing tests, and it's great
 to know that you have a clean slate:
 
-        $ bash build.sh
+        $ bin/build
 
 3. Create new branch then make changes and add tests for your changes. Only
 refactoring and documentation changes require no new tests. If you are adding

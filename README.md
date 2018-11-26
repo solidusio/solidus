@@ -159,16 +159,16 @@ Use at own risk.
 
 * Clone the Git repo
 
-    ```bash
-    git clone git://github.com/solidusio/solidus.git
-    cd solidus
-    ```
+  ```bash
+  git clone git://github.com/solidusio/solidus.git
+  cd solidus
+  ```
 
 * Install the gem dependencies
 
-    ```bash
-    bundle install
-    ```
+  ```bash
+  bundle install
+  ```
 
 ### Sandbox
 
@@ -188,10 +188,10 @@ data already loaded.
 
 * Start the server
 
-    ```bash
-    cd sandbox
-    rails server
-    ```
+  ```bash
+  cd sandbox
+  rails server
+  ```
 
 ### Tests
 
@@ -211,16 +211,24 @@ You can see the build statuses at
 [ChromeDriver](https://sites.google.com/a/chromium.org/chromedriver/home) is
 required to run the frontend and backend test suites.
 
-To execute all of the test specs, run the `build.sh` script at the root of the Solidus project:
+To execute all of the test specs, run the `bin/build` script at the root of the Solidus project:
 
 ```bash
-bash build.sh
+createuser --superuser --echo postgres # only the first time
+bin/build
 ```
 
-The `build.sh` script runs using PostgreSQL by default, but it can be overridden by setting the DB environment variable to `DB=sqlite` or `DB=mysql`. For example:
+The `bin/build` script runs using PostgreSQL by default, but it can be overridden by setting the DB environment variable to `DB=sqlite` or `DB=mysql`. For example:
 
 ```bash
-DB=mysql bash build.sh
+env DB=mysql bin/build
+```
+
+If the command fails with MySQL related errors you can try creating a user with this command:
+
+```bash
+# Creates a user with the same name as the current user and no restrictions.
+mysql --user="root" --execute="CREATE USER '$USER'@'localhost'; GRANT ALL PRIVILEGES ON * . * TO '$USER'@'localhost';"
 ```
 
 #### Run an individual test suite
@@ -236,7 +244,7 @@ By default, `rspec` runs the tests for SQLite 3. If you would like to run specs
 against another database you may specify the database in the command:
 
 ```bash
-DB=postgresql bundle exec rspec
+env DB=postgresql bundle exec rspec
 ```
 
 #### Code coverage reports

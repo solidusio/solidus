@@ -1,8 +1,8 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 set -e
 
-# Target postgresql. Override with: `DB=sqlite bash build.sh`
+# Target postgresql. Override with: `env DB=sqlite bin/build`
 export DB=${DB:-postgresql}
 
 # Solidus defaults
