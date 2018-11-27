@@ -100,12 +100,35 @@ You must then register the custom rule in an initializer in your
 `config/initializers/` directory:
 
 ```ruby
+# config/initializers/spree.rb
 Rails.application.config.spree.promotions.rules << Spree::Promotion::Rules::MyPromotionRule
 ```
 
-<!-- TODO:
-  The Spree documentation has a section about getting your custom promotion
-  rule to show up in the backend for administrators. It might be worth it to
-  append a similar section here or in another more how-to oriented article.
--->
+The next step is displaying your custom rule in the Solidus admin promotions interface.
+
+Create a partial for your new rule in `app/views/spree/admin/promotions/rules/_my_promotion_rule.html.erb`
+
+This partial can be complex or simple. If you've created a simple rule, you can even leave it blank. This is where you can enable the user to set values for your new rule. Check out some of the rule partials provided with Solidus if you need inspiration.
+
+Finally, your new rule must have a name and description defined for any locales you will be using. You can also define custom error messages. For English, edit `config/locales/en.yml` and add the following:
+
+```yaml
+en:
+  activerecord:
+    attributes:
+      spree/promotion/rules/my_promotion_rule:
+        # The description for the promotion rule
+        description: My promotion rule's description
+    models:
+      # The presentation name of the promotion rule
+      spree/promotion/rules/my_promotion_rule: My Promotion Rule
+      
+  # If you used a custom error message
+  spree:
+    eligibility_errors:
+      messages:
+        my_error_message: "This promotion cannot be applied."
+```
+
+After a server restart, the new rule will be available from the Solidus admin promotion interface.
 
