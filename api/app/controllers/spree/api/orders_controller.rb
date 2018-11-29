@@ -92,6 +92,8 @@ module Spree
       end
 
       def apply_coupon_code
+        Spree::Deprecation.warn('This method is deprecated. Please use `Spree::Api::CouponCodesController#create` endpoint instead.')
+
         authorize! :update, @order, order_token
         @order.coupon_code = params[:coupon_code]
         @handler = PromotionHandler::Coupon.new(@order).apply

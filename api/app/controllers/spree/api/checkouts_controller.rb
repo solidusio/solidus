@@ -114,6 +114,7 @@ module Spree
 
       def after_update_attributes
         if params[:order] && params[:order][:coupon_code].present?
+          Spree::Deprecation.warn('This method is deprecated. Please use `Spree::Api::CouponCodesController#create` endpoint instead.')
           handler = PromotionHandler::Coupon.new(@order)
           handler.apply
 

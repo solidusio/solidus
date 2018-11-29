@@ -854,6 +854,8 @@ module Spree
         let(:order) { create(:order_with_line_items) }
 
         it 'applies the coupon' do
+          expect(Spree::Deprecation).to receive(:warn)
+
           put spree.apply_coupon_code_api_order_path(order), params: { coupon_code: promo_code.value }
 
           expect(response.status).to eq 200
@@ -871,6 +873,8 @@ module Spree
         let(:order) { create(:order) } # no line items to apply the code to
 
         it 'returns an error' do
+          expect(Spree::Deprecation).to receive(:warn)
+
           put spree.apply_coupon_code_api_order_path(order), params: { coupon_code: promo_code.value }
 
           expect(response.status).to eq 422

@@ -122,6 +122,7 @@ module Spree
 
     def apply_coupon_code
       if order_params[:coupon_code].present?
+        Spree::Deprecation.warn('This endpoint is deprecated. Please use `Spree::CouponCodesController#create` endpoint instead.')
         @order.coupon_code = order_params[:coupon_code]
 
         handler = PromotionHandler::Coupon.new(@order).apply

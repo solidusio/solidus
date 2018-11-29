@@ -130,22 +130,22 @@ describe "Coupon code promotions", type: :feature, js: true do
       end
 
       it "can enter a coupon code and receives success notification" do
-        fill_in "order_coupon_code", with: "onetwo"
-        click_button "Update"
+        fill_in "coupon_code", with: "onetwo"
+        click_button "Apply Code"
         expect(page).to have_content(I18n.t('spree.coupon_code_applied'))
       end
 
       it "can enter a promotion code with both upper and lower case letters" do
-        fill_in "order_coupon_code", with: "ONETwO"
-        click_button "Update"
+        fill_in "coupon_code", with: "ONETwO"
+        click_button "Apply Code"
         expect(page).to have_content(I18n.t('spree.coupon_code_applied'))
       end
 
       it "informs the user about a coupon code which has exceeded its usage" do
         expect_any_instance_of(Spree::Promotion).to receive(:usage_limit_exceeded?).and_return(true)
 
-        fill_in "order_coupon_code", with: "onetwo"
-        click_button "Update"
+        fill_in "coupon_code", with: "onetwo"
+        click_button "Apply Code"
         expect(page).to have_content(I18n.t('spree.coupon_code_max_usage'))
       end
 
@@ -160,8 +160,8 @@ describe "Coupon code promotions", type: :feature, js: true do
         specify do
           visit spree.cart_path
 
-          fill_in "order_coupon_code", with: "onetwo"
-          click_button "Update"
+          fill_in "coupon_code", with: "onetwo"
+          click_button "Apply Code"
           expect(page).to have_content(I18n.t(:item_total_less_than_or_equal, scope: [:spree, :eligibility_errors, :messages], amount: "$100.00"))
         end
       end
@@ -170,8 +170,8 @@ describe "Coupon code promotions", type: :feature, js: true do
         promotion.expires_at = Date.today.beginning_of_week
         promotion.starts_at = Date.today.beginning_of_week.advance(day: 3)
         promotion.save!
-        fill_in "order_coupon_code", with: "onetwo"
-        click_button "Update"
+        fill_in "coupon_code", with: "onetwo"
+        click_button "Apply Code"
         expect(page).to have_content(I18n.t('spree.coupon_code_expired'))
       end
 
@@ -191,8 +191,8 @@ describe "Coupon code promotions", type: :feature, js: true do
           click_button "add-to-cart-button"
 
           visit spree.cart_path
-          fill_in "order_coupon_code", with: "onetwo"
-          click_button "Update"
+          fill_in "coupon_code", with: "onetwo"
+          click_button "Apply Code"
 
           fill_in "order_line_items_attributes_0_quantity", with: 2
           fill_in "order_line_items_attributes_1_quantity", with: 2
@@ -237,8 +237,8 @@ describe "Coupon code promotions", type: :feature, js: true do
             expect(page).to have_content("$30.00")
           end
 
-          fill_in "order_coupon_code", with: "onetwo"
-          click_button "Update"
+          fill_in "coupon_code", with: "onetwo"
+          click_button "Apply Code"
 
           within '#cart_adjustments' do
             expect(page).to have_content("Promotion (Onetwo) -$30.00")

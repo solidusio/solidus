@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.feature "Quantity Promotions" do
+RSpec.feature "Quantity Promotions", js: true do
   given(:action) do
     Spree::Promotion::Actions::CreateQuantityAdjustments.create(
       calculator: calculator,
@@ -26,8 +26,8 @@ RSpec.feature "Quantity Promotions" do
 
   scenario "adding and removing items from the cart" do
     # Attempt to use the code with too few items.
-    fill_in "Coupon code", with: "PROMO"
-    click_button "Update"
+    fill_in "coupon_code", with: "PROMO"
+    click_button "Apply Code"
     expect(page).to have_content("This coupon code could not be applied to the cart at this time")
 
     # Add another item to our cart.
@@ -36,8 +36,8 @@ RSpec.feature "Quantity Promotions" do
     click_button "Add To Cart"
 
     # Using the code should now succeed.
-    fill_in "Coupon code", with: "PROMO"
-    click_button "Update"
+    fill_in "coupon_code", with: "PROMO"
+    click_button "Apply Code"
     expect(page).to have_content("The coupon code was successfully applied to your order")
     within("#cart_adjustments") do
       expect(page).to have_content("-$10.00")
@@ -70,8 +70,8 @@ RSpec.feature "Quantity Promotions" do
     click_button "Update"
 
     # Apply the promo code and see a $10 discount (for 2 of the 3 items)
-    fill_in "Coupon code", with: "PROMO"
-    click_button "Update"
+    fill_in "coupon_code", with: "PROMO"
+    click_button "Apply Code"
     expect(page).to have_content("The coupon code was successfully applied to your order")
     within("#cart_adjustments") do
       expect(page).to have_content("-$10.00")
@@ -104,8 +104,8 @@ RSpec.feature "Quantity Promotions" do
       click_button "Update"
 
       # Apply the promo code and see a $15 discount
-      fill_in "Coupon code", with: "PROMO"
-      click_button "Update"
+      fill_in "coupon_code", with: "PROMO"
+      click_button "Apply Code"
       expect(page).to have_content("The coupon code was successfully applied to your order")
       within("#cart_adjustments") do
         expect(page).to have_content("-$15.00")
