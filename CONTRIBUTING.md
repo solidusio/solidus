@@ -46,6 +46,14 @@ At this point you're waiting on us. We like to at least comment on, if not
 accept, pull requests within three business days (and, typically, one business
 day). We may suggest some changes or improvements or alternatives.
 
+Typically, Pull Requests can be merged when they have met the following criteria:
+
+- Open for at least 24 hours
+- Passing CI
+- 2 or more Core Team approvals
+
+Though in some cases the Core Team may choose not to merge a PR that meets these requirements.
+
 ### Pull Request guidelines
 
 * The specs must pass for each individual commit.
