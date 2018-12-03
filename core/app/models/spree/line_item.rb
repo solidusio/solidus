@@ -4,7 +4,7 @@ module Spree
   # Variants placed in the Order at a particular price.
   #
   # `Spree::LineItem` is an ActiveRecord model which records which `Spree::Variant`
-  # a customer has chosen to place in their order. It also acts as the permenent
+  # a customer has chosen to place in their order. It also acts as the permanent
   # record of the customer's order by recording relevant price, taxation, and inventory
   # concerns. Line items can also have adjustments placed on them as part of the
   # promotion system.
