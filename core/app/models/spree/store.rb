@@ -28,7 +28,7 @@ module Spree
     scope :by_url, lambda { |url| where("url like ?", "%#{url}%") }
 
     class << self
-      deprecate :by_url, "Spree::Store.by_url is DEPRECATED", deprecator: Spree::Deprecation
+      deprecate by_url: "Spree::Store.by_url is DEPRECATED", deprecator: Spree::Deprecation
     end
 
     def available_locales
