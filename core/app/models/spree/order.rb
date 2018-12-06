@@ -552,6 +552,7 @@ module Spree
       Spree::PromotionHandler::Shipping.new(self).activate
       recalculate
     end
+    alias_method :apply_free_shipping_promotions, :apply_shipping_promotions
     deprecate apply_free_shipping_promotions: :apply_shipping_promotions, deprecator: Spree::Deprecation
 
     # Clean shipments and make order back to address state
