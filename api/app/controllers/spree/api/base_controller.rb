@@ -100,9 +100,15 @@ module Spree
       end
 
       def api_key
-        request.headers["X-Spree-Token"] || params[:token]
+        bearer_token || params[:token]
       end
       helper_method :api_key
+
+      def bearer_token
+        pattern = /^Bearer /
+        header  = request.headers["Authorization"]
+        header.gsub(pattern, '') if header&.match(pattern)
+      end
 
       def order_token
         request.headers["X-Spree-Order-Token"] || params[:order_token]

@@ -26,7 +26,7 @@
         quietMillis: 500,
         params: {
           "headers": {
-            "X-Spree-Token": Spree.api_key
+            'Authorization': 'Bearer ' + Spree.api_key
           }
         },
         data: function(term, page) {

@@ -22,7 +22,7 @@ $.fn.userAutocomplete = function () {
     ajax: {
       url: Spree.routes.users_api,
       datatype: 'json',
-      params: { "headers": { "X-Spree-Token": Spree.api_key } },
+      params: { "headers": {  'Authorization': 'Bearer ' + Spree.api_key } },
       data: function (term) {
         return {
           q: {

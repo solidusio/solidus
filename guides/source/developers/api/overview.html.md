@@ -21,11 +21,10 @@ role of `admin`.
 
 ### Requests
 
-To make a request to the API, pass a `X-Spree-Token` header and a Spree API key
-along with the request:
+To make a request to the API, set a Bearer Authentication header with the Spree API key:
 
 ```bash
-curl --header "X-Spree-Token: <key>" http://yourstore.com/api/products/1
+curl --header "Authorization: Bearer <key>" http://yourstore.com/api/products/1
 ```
 
 Alternatively, you can pass through the token as a URL parameter if you are
