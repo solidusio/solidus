@@ -96,7 +96,7 @@ initialize your own values for the following `Spree::Config` settings:
   `solidus_frontend` gem.
 - `:logo`: Specifies a file in your `/app/assets/images` to be used as the logo
   on the storefront.  You can access the logo from any view using the `<%= logo
-  %>` variable. The default value is `logo/solidus_logo.png`
+  %>` variable. The default value is `logo/solidus.svg`
 - `:products_per_page`: Sets the amount of products that should be displayed on
   a single page. The default value is `12`.
 
