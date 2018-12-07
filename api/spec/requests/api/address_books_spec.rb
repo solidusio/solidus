@@ -41,7 +41,7 @@ module Spree
           user.save_in_address_book(ron_address_attributes, false)
 
           get "/api/users/#{user.id}/address_book",
-            headers: { 'X-SPREE-TOKEN' => 'galleon' }
+            headers: { Authorization: 'Bearer galleon' }
 
           json_response = JSON.parse(response.body)
           expect(response.status).to eq(200)
@@ -60,7 +60,7 @@ module Spree
           expect {
             put "/api/users/#{user.id}/address_book",
               params:  { address_book: harry_address_attributes.merge('id' => address.id) },
-              headers: { 'X-SPREE-TOKEN' => 'galleon' }
+              headers: { Authorization: 'Bearer galleon' }
           }.to change { UserAddress.count }.from(1).to(2)
 
           expect(response.status).to eq(200)
@@ -74,7 +74,7 @@ module Spree
             expect {
               put "/api/users/#{user.id}/address_book",
                 params:  { address_book: harry_address_attributes },
-                headers: { 'X-SPREE-TOKEN' => 'galleon' }
+                headers: { Authorization: 'Bearer galleon' }
             }.to change { UserAddress.count }.by(1)
 
             user_address = UserAddress.last
@@ -93,7 +93,7 @@ module Spree
             expect {
               put "/api/users/#{user.id}/address_book",
                 params:  { address_book: harry_address_attributes },
-                headers: { 'X-SPREE-TOKEN' => 'galleon' }
+                headers: { Authorization: 'Bearer galleon' }
             }.to_not change { UserAddress.count }
 
             expect(response.status).to eq(200)
@@ -110,7 +110,7 @@ module Spree
           expect {
             delete "/api/users/#{user.id}/address_book",
               params:  { address_id: address.id },
-              headers: { 'X-SPREE-TOKEN' => 'galleon' }
+              headers: { Authorization: 'Bearer galleon' }
           }.to change { user.reload.user_addresses.count }.from(1).to(0)
 
           expect(response.status).to eq(200)
@@ -131,7 +131,7 @@ module Spree
           other_user.save_in_address_book(ron_address_attributes, false)
 
           get "/api/users/#{other_user.id}/address_book",
-            headers: { 'X-SPREE-TOKEN' => 'galleon' }
+            headers: { Authorization: 'Bearer galleon' }
 
           json_response = JSON.parse(response.body)
           expect(response.status).to eq(200)
@@ -150,7 +150,7 @@ module Spree
           expect {
             put "/api/users/#{other_user.id}/address_book",
             params:  { address_book: updated_harry_address.merge('id' => address.id) },
-            headers: { 'X-SPREE-TOKEN' => 'galleon' }
+            headers: { Authorization: 'Bearer galleon' }
           }.to change { UserAddress.count }.from(1).to(2)
 
           expect(response.status).to eq(200)
@@ -165,7 +165,7 @@ module Spree
           expect {
             delete "/api/users/#{other_user.id}/address_book",
               params:  { address_id: address.id },
-              headers: { 'X-SPREE-TOKEN' => 'galleon' }
+              headers: { Authorization: 'Bearer galleon' }
           }.to change { other_user.reload.user_addresses.count }.from(1).to(0)
 
           expect(response.status).to eq(200)
@@ -179,7 +179,7 @@ module Spree
           other_user.save_in_address_book(harry_address_attributes, true)
 
           get "/api/users/#{other_user.id}/address_book",
-            headers: { 'X-SPREE-TOKEN' => 'galleon' }
+            headers: { Authorization: 'Bearer galleon' }
 
           expect(response.status).to eq(401)
         end
@@ -193,7 +193,7 @@ module Spree
           expect {
             put "/api/users/#{other_user.id}/address_book",
             params:  { address_book: other_user_address.attributes.merge('address1' => 'Hogwarts') },
-            headers: { 'X-SPREE-TOKEN' => 'galleon' }
+            headers: { Authorization: 'Bearer galleon' }
           }.not_to change { UserAddress.count }
 
           expect(response.status).to eq(401)
@@ -208,7 +208,7 @@ module Spree
           expect {
             delete "/api/users/#{other_user.id}/address_book",
               params:  { address_id: address.id },
-              headers: { 'X-SPREE-TOKEN' => 'galleon' }
+              headers: { Authorization: 'Bearer galleon' }
           }.not_to change { other_user.user_addresses.count }
 
           expect(response.status).to eq(401)

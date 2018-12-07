@@ -45,7 +45,7 @@ Spree.ajax = function(url, options) {
   options = options || {};
   options = $.extend(options, {
     headers: {
-      "X-Spree-Token": Spree.api_key
+      'Authorization': 'Bearer ' + Spree.api_key
     }
   });
   return $.ajax(url, options);
