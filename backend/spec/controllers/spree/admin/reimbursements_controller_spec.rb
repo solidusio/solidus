@@ -49,6 +49,10 @@ describe Spree::Admin::ReimbursementsController, type: :controller do
       expect(assigns(:reimbursement).return_items.to_a).to eq customer_return.return_items.to_a
     end
 
+    it 'order is recalculated' do
+      expect { subject }.to change { order.reload.payment_state }.from('paid').to('credit_owed')
+    end
+
     it 'redirects to the edit page' do
       subject
       expect(response).to redirect_to(spree.edit_admin_order_reimbursement_path(order, assigns(:reimbursement)))

@@ -9,6 +9,7 @@ module Spree
 
       before_action :load_stock_locations, only: :edit
       before_action :load_simulated_refunds, only: :edit
+      create.after :recalculate_order
 
       rescue_from Spree::Core::GatewayError, with: :spree_core_gateway_error
 
@@ -18,6 +19,10 @@ module Spree
       end
 
       private
+
+      def recalculate_order
+        @reimbursement.order.recalculate
+      end
 
       def build_resource
         if params[:build_from_customer_return_id].present?
