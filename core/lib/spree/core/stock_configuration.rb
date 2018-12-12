@@ -6,6 +6,7 @@ module Spree
       attr_writer :coordinator_class
       attr_writer :estimator_class
       attr_writer :location_sorter_class
+      attr_writer :allocator_class
 
       def coordinator_class
         @coordinator_class ||= '::Spree::Stock::SimpleCoordinator'
@@ -20,6 +21,11 @@ module Spree
       def location_sorter_class
         @location_sorter_class ||= '::Spree::Stock::LocationSorter::Unsorted'
         @location_sorter_class.constantize
+      end
+
+      def allocator_class
+        @allocator_class ||= '::Spree::Stock::Allocator::OnHandFirst'
+        @allocator_class.constantize
       end
     end
   end
