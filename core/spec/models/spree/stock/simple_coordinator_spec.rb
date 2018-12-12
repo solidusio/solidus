@@ -20,6 +20,11 @@ module Spree
           subject.shipments
         end
 
+        it 'uses the pluggable allocator class' do
+          expect(Spree::Config.stock).to receive(:allocator_class).and_call_original
+          subject.shipments
+        end
+
         it 'builds shipments' do
           expect(subject.shipments.size).to eq(1)
         end
@@ -43,6 +48,13 @@ module Spree
           }.not_to change {
             order.shipments.count
           }
+        end
+      end
+
+      describe "#allocate_inventory" do
+        it 'is deprecated' do
+          expect(Spree::Deprecation).to receive(:warn)
+          subject.send :allocate_inventory, subject.instance_variable_get(:@availability).on_hand_by_stock_location_id
         end
       end
 
