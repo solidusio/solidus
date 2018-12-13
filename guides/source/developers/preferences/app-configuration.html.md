@@ -1,11 +1,10 @@
 # App configuration
 
 Solidus includes many preferences with default settings that are appropriate for
-typical stores. For a list of Solidus's preferences and their default values,
+typical stores. For a list of Solidus' preferences and their default values,
 see the [`Spree::AppConfiguration`
-documentation][app-configuration-documentation].  The [`Spree::AppConfiguration`
-class][app-configuration-class] is where all of Solidus's preferences are
-defined.
+documentation][app-configuration-documentation]. The `Spree::AppConfiguration`
+class is where all of Solidus' preferences are defined.
 
 The built-in preferences are well-tested options that allow you to implement
 complex ecommerce behaviors.
@@ -30,7 +29,7 @@ end
 ```
 
 This block instantiates the main configuration object for `solidus_core`.
-Here, you can start to change Solidus's behavior to accommodate many common use
+Here, you can start to change Solidus' behavior to accommodate many common use
 cases.
 
 Once your application has been initialized, you can set any preferences using
@@ -48,11 +47,19 @@ preferences. However, you may be able to get the functionality you require by
 adding preferences that are specific to a model. For more information see the
 [Add model preferences][add-model-preferences] article.
 
+If you're developing a Solidus plugin you may consider adding your configuration
+by inheriting from the class `Spree::Preferences::Configuration` just like
+Solidus does.
+
+Another way to add configuration is by customizing `Rails.configuration`,  see the
+[Rails guides](https://guides.rubyonrails.org/configuring.html#custom-configuration)
+for details and examples.
+
 [add-model-preferences]: add-model-preferences.html
 
 ## Read the current preference settings
 
-You can read all of Solidus's currently set preferences quickly from your Rails
+You can read all of Solidus' currently set preferences quickly from your Rails
 console:
 
 ```ruby
