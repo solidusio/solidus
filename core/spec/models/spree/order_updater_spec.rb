@@ -521,7 +521,7 @@ module Spree
         allow(shipments).to receive_messages shipped: []
 
         allow(updater).to receive(:update_totals) # Otherwise this gets called and causes a scene
-        expect(updater).not_to receive(:update_shipments).with(order)
+        expect(updater).not_to receive(:update_shipments)
         updater.update
       end
     end
