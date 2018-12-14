@@ -1,5 +1,7 @@
 ruby:
   config_file: .rubocop.yml
+erb_lint:
+  enabled: true
 scss:
   enabled: false
 javascript:
