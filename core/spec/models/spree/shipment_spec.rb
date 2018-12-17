@@ -267,8 +267,8 @@ RSpec.describe Spree::Shipment, type: :model do
 
         before do
           allow(line_item).to receive(:order) { order }
-          allow(shipment).to receive(:inventory_units) { inventory_units }
-          allow(inventory_units).to receive_message_chain(:includes, :joins).and_return inventory_units
+          shipment.inventory_units = inventory_units
+          allow(shipment.inventory_units).to receive_message_chain(:includes, :joins).and_return inventory_units
         end
 
         it 'should use symbols for states when adding contents to package' do
