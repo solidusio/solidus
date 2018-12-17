@@ -324,7 +324,7 @@ RSpec.describe Spree::Order, type: :model do
     end
   end
 
-  context "add_update_hook" do
+  context "add_update_hook", partial_double_verification: false do
     before do
       Spree::Order.class_eval do
         register_update_hook :add_awesome_sauce
@@ -712,7 +712,7 @@ RSpec.describe Spree::Order, type: :model do
       expect(order.find_line_item_by_variant(mock_model(Spree::Variant))).to be_nil
     end
 
-    context "match line item with options" do
+    context "match line item with options", partial_double_verification: false do
       before do
         Spree::Order.register_line_item_comparison_hook(:foos_match)
       end
