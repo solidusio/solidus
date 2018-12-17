@@ -512,7 +512,6 @@ RSpec.describe Spree::Shipment, type: :model do
       let(:subject) { shipment_with_inventory_units.ship! }
       before do
         allow(order).to receive(:update!)
-        allow(shipment_with_inventory_units).to receive_messages(require_inventory: false, update_order: true)
       end
 
       it 'unstocks them items' do
@@ -525,7 +524,7 @@ RSpec.describe Spree::Shipment, type: :model do
       context "from #{state}" do
         before do
           allow(order).to receive(:update!)
-          allow(shipment).to receive_messages(require_inventory: false, update_order: true, state: state)
+          allow(shipment).to receive_messages(state: state)
         end
 
         it "finalizes adjustments" do
