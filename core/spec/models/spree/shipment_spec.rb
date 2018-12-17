@@ -413,7 +413,9 @@ RSpec.describe Spree::Shipment, type: :model do
       allow(shipment.order).to receive(:update!)
 
       shipment.state = 'pending'
-      expect(shipment).to receive(:after_cancel)
+      without_partial_double_verification do
+        expect(shipment).to receive(:after_cancel)
+      end
       shipment.cancel!
       expect(shipment.state).to eq 'canceled'
     end
