@@ -8,7 +8,9 @@ RSpec.describe Spree::TaxonsHelper, type: :helper do
     Spree::Config.pricing_options_class.new(currency: currency)
   end
   before do
-    allow(helper).to receive(:current_pricing_options) { pricing_options }
+    without_partial_double_verification do
+      allow(helper).to receive(:current_pricing_options) { pricing_options }
+    end
   end
 
   describe "#taxon_preview" do
