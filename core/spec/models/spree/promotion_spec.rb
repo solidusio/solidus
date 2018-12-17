@@ -632,8 +632,11 @@ RSpec.describe Spree::Promotion, type: :model do
     end
 
     context "with 'any' match policy" do
-      let(:promotion) { Spree::Promotion.create(name: "Promo", match_policy: 'any') }
       let(:promotable) { double('Promotable') }
+
+      before do
+        promotion.match_policy = 'any'
+      end
 
       it "should have eligible rules if any of the rules are eligible" do
         allow_any_instance_of(Spree::PromotionRule).to receive_messages(applicable?: true)
