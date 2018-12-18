@@ -1,7 +1,5 @@
 dist: trusty
 sudo: required
-addons:
-  chrome: stable
 cache: bundler
 language: ruby
 before_install:
