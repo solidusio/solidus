@@ -46,7 +46,7 @@ module Spree
     @@address_book_attributes = address_attributes + [:default]
 
     @@checkout_attributes = [
-      :coupon_code, :email, :special_instructions, :use_billing
+      :coupon_code, :email, :special_instructions, :use_billing, :state
     ]
 
     @@credit_card_update_attributes = [

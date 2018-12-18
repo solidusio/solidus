@@ -7,13 +7,13 @@ module Spree
     before(:each) do
       stub_authentication!
       Spree::Config[:track_inventory_levels] = false
-      country_zone = create(:zone, name: 'CountryZone')
+      @country_zone = create(:zone, name: 'CountryZone')
       @state = create(:state)
       @country = @state.country
-      country_zone.members.create(zoneable: @country)
+      @country_zone.members.create(zoneable: @country)
       create(:stock_location)
 
-      @shipping_method = create(:shipping_method, zones: [country_zone])
+      @shipping_method = create(:shipping_method, zones: [@country_zone])
       @payment_method = create(:credit_card_payment_method)
     end
 
@@ -371,6 +371,48 @@ module Spree
         put spree.api_checkout_path(order.to_param), params: { order_token: order.guest_token, order: { coupon_code: "foobar" } }
         expect(response.status).to eq(422)
         expect(json_response).to eq({ "error" => "The coupon code you entered doesn't exist. Please try again." })
+      end
+
+      context "state" do
+        let(:canada_state) { create(:state, country_iso: 'CA', state_code: 'BC') }
+        let(:address) do
+          {
+            firstname:  'Jane',
+            lastname:   'Doe',
+            address1:   '800 Benvenuto Ave',
+            city:       'Brentwood Bay',
+            phone:      '12506524422',
+            zipcode:    'V8M 1J8',
+            state_id:   canada_state.id,
+            country_id: canada_state.country_id
+          }
+        end
+
+        before do
+          @country_zone.members.create(zoneable: canada_state.country)
+        end
+
+        it "can transition from confirm back to address and steps forward to delivery" do
+          order.update_column(:state, "confirm")
+          put spree.api_checkout_path(order),
+            params: { order_token: order.guest_token, order: {
+              state: 'address',
+              ship_address_attributes: address
+            } }
+          expect(json_response['state']).to eq('delivery')
+          expect(json_response['bill_address']['firstname']).to eq('John')
+          expect(json_response['ship_address']['firstname']).to eq('Jane')
+          expect(response.status).to eq(200)
+        end
+
+        it "does not support bad states" do
+          put spree.api_checkout_path(order),
+            params: { order_token: order.guest_token, order: {
+              state: 'fake'
+            } }
+          expect(response.status).to eq(422)
+          expect(json_response['errors']['state'][0]).to eq('is invalid')
+        end
       end
     end
 
