@@ -359,6 +359,7 @@ RSpec.describe Spree::Order, type: :model do
 
       before do
         user = create(:user, email: 'spree@example.org', bill_address: user_bill_address)
+        default_credit_card.update(user: user)
         wallet_payment_source = user.wallet.add(default_credit_card)
         user.wallet.default_wallet_payment_source = wallet_payment_source
         order.user = user
@@ -497,12 +498,7 @@ RSpec.describe Spree::Order, type: :model do
 
     context "with a payment in the pending state" do
       let(:order) { create :order_ready_to_complete }
-      let(:payment) { create :payment, state: "pending", amount: order.total }
-
-      before do
-        order.payments = [payment]
-        order.save!
-      end
+      let(:payment) { create :payment, order: order, state: "pending", amount: order.total }
 
       it "allows the order to complete" do
         expect { order.complete! }.
@@ -542,7 +538,7 @@ RSpec.describe Spree::Order, type: :model do
         order.user = FactoryBot.create(:user)
         order.store = FactoryBot.create(:store)
         order.email = 'spree@example.org'
-        order.payments << FactoryBot.create(:payment)
+        order.payments << FactoryBot.create(:payment, order: order)
 
         # make sure we will actually capture a payment
         allow(order).to receive_messages(payment_required?: true)
