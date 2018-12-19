@@ -513,15 +513,10 @@ module Spree
 
       it "doesnt update each shipment" do
         shipment = stub_model(Spree::Shipment)
-        shipments = [shipment]
-        allow(order).to receive_messages shipments: shipments
-        allow(shipments).to receive_messages states: []
-        allow(shipments).to receive_messages ready: []
-        allow(shipments).to receive_messages pending: []
-        allow(shipments).to receive_messages shipped: []
-
+        order.shipments = [shipment]
+        allow(order.shipments).to receive_messages(states: [], ready: [], pending: [], shipped: [])
         allow(updater).to receive(:update_totals) # Otherwise this gets called and causes a scene
-        expect(updater).not_to receive(:update_shipments).with(order)
+        expect(updater).not_to receive(:update_shipments)
         updater.update
       end
     end

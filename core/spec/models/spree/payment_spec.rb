@@ -9,7 +9,7 @@ RSpec.describe Spree::Payment, type: :model do
 
   let(:gateway) do
     gateway = Spree::PaymentMethod::BogusCreditCard.new(active: true, name: 'Bogus gateway')
-    allow(gateway).to receive_messages source_required: true
+    allow(gateway).to receive_messages(source_required?: true)
     gateway
   end
 
@@ -206,22 +206,6 @@ RSpec.describe Spree::Payment, type: :model do
         expect(payment.payment_method).to receive(:supports?).with(payment.source).and_return(false)
         expect { payment.process! }.to raise_error(Spree::Core::GatewayError)
         expect(payment.state).to eq('invalid')
-      end
-
-      # Regression test for https://github.com/spree/spree/issues/4598
-      it "should allow payments with a gateway_customer_profile_id" do
-        payment.source.update!(gateway_customer_profile_id: "customer_1", brand: 'visa')
-        expect(payment.payment_method.gateway_class).to receive(:supports?).with('visa').and_return(false)
-        expect(payment).to receive(:started_processing!)
-        payment.process!
-      end
-
-      # Another regression test for https://github.com/spree/spree/issues/4598
-      it "should allow payments with a gateway_payment_profile_id" do
-        payment.source.update!(gateway_payment_profile_id: "customer_1", brand: 'visa')
-        expect(payment.payment_method.gateway_class).to receive(:supports?).with('visa').and_return(false)
-        expect(payment).to receive(:started_processing!)
-        payment.process!
       end
     end
 

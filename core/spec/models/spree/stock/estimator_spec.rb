@@ -205,11 +205,14 @@ module Spree
         end
 
         it 'uses the configured shipping rate sorter' do
-          class Spree::Stock::TestSorter; end;
+          class Spree::Stock::TestSorter
+            def initialize(_rates)
+            end
+          end
           Spree::Config.shipping_rate_sorter_class = Spree::Stock::TestSorter
 
           sorter = double(:sorter, sort: nil)
-          allow(Spree::Stock::TestSorter).to receive(:new).and_return(sorter)
+          allow(Spree::Stock::TestSorter).to receive(:new) { sorter }
 
           subject.shipping_rates(package)
 

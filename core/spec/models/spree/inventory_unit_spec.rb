@@ -97,8 +97,6 @@ RSpec.describe Spree::InventoryUnit, type: :model do
         shipment.stock_location = stock_location
         shipment.shipping_methods << create(:shipping_method)
         shipment.order = other_order
-        # We don't care about this in this test
-        allow(shipment).to receive(:ensure_correct_adjustment)
         shipment.tap(&:save!)
       end
 
@@ -149,8 +147,6 @@ RSpec.describe Spree::InventoryUnit, type: :model do
   end
 
   describe "#current_or_new_return_item" do
-    before { allow(inventory_unit).to receive_messages(total_excluding_vat: 100.0) }
-
     subject { inventory_unit.current_or_new_return_item }
 
     context "associated with a return item" do

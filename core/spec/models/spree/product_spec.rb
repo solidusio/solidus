@@ -27,7 +27,7 @@ RSpec.describe Spree::Product, type: :model do
         expect(clone.images.size).to eq(product.images.size)
       end
 
-      it 'calls #duplicate_extra' do
+      it 'calls #duplicate_extra', partial_double_verification: false do
         expect_any_instance_of(Spree::Product).to receive(:duplicate_extra) do |product, old_product|
           product.name = old_product.name.reverse
         end

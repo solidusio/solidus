@@ -632,15 +632,16 @@ RSpec.describe Spree::Promotion, type: :model do
     end
 
     context "with 'any' match policy" do
-      let(:promotion) { Spree::Promotion.create(name: "Promo", match_policy: 'any') }
       let(:promotable) { double('Promotable') }
 
+      before do
+        promotion.match_policy = 'any'
+      end
+
       it "should have eligible rules if any of the rules are eligible" do
-        allow_any_instance_of(Spree::PromotionRule).to receive_messages(applicable?: true)
-        true_rule = Spree::PromotionRule.create(promotion: promotion)
-        allow(true_rule).to receive_messages(eligible?: true)
-        allow(promotion).to receive_messages(rules: [true_rule])
-        allow(promotion).to receive_message_chain(:rules, :for).and_return([true_rule])
+        true_rule = mock_model(Spree::PromotionRule, eligible?: true, applicable?: true)
+        promotion.promotion_rules = [true_rule]
+        allow(promotion.rules).to receive(:for) { promotion.rules }
         expect(promotion.eligible_rules(promotable)).to eq [true_rule]
       end
 
@@ -668,13 +669,13 @@ RSpec.describe Spree::Promotion, type: :model do
   describe '#line_item_actionable?' do
     let(:order) { double Spree::Order }
     let(:line_item) { double Spree::LineItem }
-    let(:true_rule) { double Spree::PromotionRule, eligible?: true, applicable?: true, actionable?: true }
-    let(:false_rule) { double Spree::PromotionRule, eligible?: true, applicable?: true, actionable?: false }
+    let(:true_rule) { mock_model Spree::PromotionRule, eligible?: true, applicable?: true, actionable?: true }
+    let(:false_rule) { mock_model Spree::PromotionRule, eligible?: true, applicable?: true, actionable?: false }
     let(:rules) { [] }
 
     before do
-      allow(promotion).to receive(:rules) { rules }
-      allow(rules).to receive(:for) { rules }
+      promotion.promotion_rules = rules
+      allow(promotion.rules).to receive(:for) { rules }
     end
 
     subject { promotion.line_item_actionable? order, line_item }

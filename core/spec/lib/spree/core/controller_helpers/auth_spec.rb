@@ -55,11 +55,15 @@ RSpec.describe Spree::Core::ControllerHelpers::Auth, type: :controller do
 
   describe '#try_spree_current_user' do
     it 'calls spree_current_user when define spree_current_user method' do
-      expect(controller).to receive(:spree_current_user)
+      without_partial_double_verification do
+        expect(controller).to receive(:spree_current_user)
+      end
       controller.try_spree_current_user
     end
     it 'calls current_spree_user when define current_spree_user method' do
-      expect(controller).to receive(:current_spree_user)
+      without_partial_double_verification do
+        expect(controller).to receive(:current_spree_user)
+      end
       controller.try_spree_current_user
     end
     it 'returns nil' do

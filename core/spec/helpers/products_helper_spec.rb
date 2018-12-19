@@ -15,7 +15,9 @@ module Spree
     end
 
     before do
-      allow(helper).to receive(:current_pricing_options) { pricing_options }
+      without_partial_double_verification do
+        allow(helper).to receive(:current_pricing_options) { pricing_options }
+      end
     end
 
     context "#variant_price_diff" do

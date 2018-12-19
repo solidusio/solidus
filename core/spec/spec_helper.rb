@@ -19,6 +19,7 @@ RSpec.configure do |config|
   end
   config.mock_with :rspec do |c|
     c.syntax = :expect
+    c.verify_partial_doubles = true
   end
 
   config.before :each do

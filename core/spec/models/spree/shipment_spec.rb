@@ -267,8 +267,8 @@ RSpec.describe Spree::Shipment, type: :model do
 
         before do
           allow(line_item).to receive(:order) { order }
-          allow(shipment).to receive(:inventory_units) { inventory_units }
-          allow(inventory_units).to receive_message_chain(:includes, :joins).and_return inventory_units
+          shipment.inventory_units = inventory_units
+          allow(shipment.inventory_units).to receive_message_chain(:includes, :joins).and_return inventory_units
         end
 
         it 'should use symbols for states when adding contents to package' do
@@ -413,7 +413,9 @@ RSpec.describe Spree::Shipment, type: :model do
       allow(shipment.order).to receive(:update!)
 
       shipment.state = 'pending'
-      expect(shipment).to receive(:after_cancel)
+      without_partial_double_verification do
+        expect(shipment).to receive(:after_cancel)
+      end
       shipment.cancel!
       expect(shipment.state).to eq 'canceled'
     end
@@ -512,7 +514,6 @@ RSpec.describe Spree::Shipment, type: :model do
       let(:subject) { shipment_with_inventory_units.ship! }
       before do
         allow(order).to receive(:update!)
-        allow(shipment_with_inventory_units).to receive_messages(require_inventory: false, update_order: true)
       end
 
       it 'unstocks them items' do
@@ -525,7 +526,7 @@ RSpec.describe Spree::Shipment, type: :model do
       context "from #{state}" do
         before do
           allow(order).to receive(:update!)
-          allow(shipment).to receive_messages(require_inventory: false, update_order: true, state: state)
+          allow(shipment).to receive_messages(state: state)
         end
 
         it "finalizes adjustments" do

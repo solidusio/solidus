@@ -294,7 +294,7 @@ RSpec.describe Spree::ReturnItem, type: :model do
         end
 
         it 'does not decrease inventory' do
-          expect(return_item).to_not receive(:process_inventory_unit)
+          expect(return_item).to_not receive(:process_inventory_unit!)
           subject
         end
 
