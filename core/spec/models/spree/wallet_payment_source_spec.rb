@@ -32,7 +32,7 @@ RSpec.describe Spree::WalletPaymentSource, type: :model do
     end
 
     it "is invalid if `payment_source` is already in the user's wallet" do
-      credit_card = create(:credit_card)
+      credit_card = create(:credit_card, user: user)
       Spree::WalletPaymentSource.create(
         payment_source: credit_card,
         user: user
@@ -47,9 +47,20 @@ RSpec.describe Spree::WalletPaymentSource, type: :model do
       )
     end
 
+    it "is invalid when `payment_source` is not owned by the user" do
+      wallet_payment_source = subject.new(
+        payment_source: create(:credit_card),
+        user: user
+      )
+      expect(wallet_payment_source).not_to be_valid
+      expect(wallet_payment_source.errors.messages).to eq(
+        { payment_source: ["does not belong to user"] }
+      )
+    end
+
     it "is valid with a `credit_card` as `payment_source`" do
       valid_attrs = {
-        payment_source: create(:credit_card),
+        payment_source: create(:credit_card, user: user),
         user: user
       }
       expect(subject.new(valid_attrs)).to be_valid
@@ -57,7 +68,7 @@ RSpec.describe Spree::WalletPaymentSource, type: :model do
 
     it "is valid with `store_credit` as `payment_source`" do
       valid_attrs = {
-        payment_source: create(:store_credit),
+        payment_source: create(:store_credit, user: user),
         user: user
       }
       expect(subject.new(valid_attrs)).to be_valid

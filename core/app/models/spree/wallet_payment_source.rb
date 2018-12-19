@@ -13,12 +13,22 @@ module Spree
     }
 
     validate :check_for_payment_source_class
+    validate :validate_payment_source_ownership
 
     private
 
     def check_for_payment_source_class
       if !payment_source.is_a?(Spree::PaymentSource)
         errors.add(:payment_source, :has_to_be_payment_source_class)
+      end
+    end
+
+    def validate_payment_source_ownership
+      return unless payment_source.present?
+
+      if payment_source.respond_to?(:user_id) &&
+         payment_source.user_id != user_id
+        errors.add(:payment_source, :not_owned_by_user)
       end
     end
   end
