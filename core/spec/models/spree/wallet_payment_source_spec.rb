@@ -6,6 +6,8 @@ RSpec.describe Spree::WalletPaymentSource, type: :model do
   subject { Spree::WalletPaymentSource }
 
   describe "validation" do
+    let(:user) { create(:user) }
+
     context 'with a non-PaymentSource model' do
       with_model 'NonPaymentSource', scope: :all do
         model do
@@ -19,7 +21,7 @@ RSpec.describe Spree::WalletPaymentSource, type: :model do
       it "errors when `payment_source` is not a `Spree::PaymentSource`" do
         wallet_payment_source = Spree::WalletPaymentSource.new(
           payment_source: payment_source,
-          user: create(:user)
+          user: user
         )
 
         expect(wallet_payment_source).not_to be_valid
@@ -29,10 +31,26 @@ RSpec.describe Spree::WalletPaymentSource, type: :model do
       end
     end
 
+    it "is invalid if `payment_source` is already in the user's wallet" do
+      credit_card = create(:credit_card)
+      Spree::WalletPaymentSource.create(
+        payment_source: credit_card,
+        user: user
+      )
+      wallet_payment_source = subject.new(
+        payment_source: credit_card,
+        user: user
+      )
+      expect(wallet_payment_source).not_to be_valid
+      expect(wallet_payment_source.errors.messages).to eq(
+        { user_id: ["already has the Spree::PaymentSource in their wallet"] }
+      )
+    end
+
     it "is valid with a `credit_card` as `payment_source`" do
       valid_attrs = {
         payment_source: create(:credit_card),
-        user: create(:user)
+        user: user
       }
       expect(subject.new(valid_attrs)).to be_valid
     end
@@ -40,7 +58,7 @@ RSpec.describe Spree::WalletPaymentSource, type: :model do
     it "is valid with `store_credit` as `payment_source`" do
       valid_attrs = {
         payment_source: create(:store_credit),
-        user: create(:user)
+        user: user
       }
       expect(subject.new(valid_attrs)).to be_valid
     end

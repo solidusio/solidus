@@ -7,6 +7,10 @@ module Spree
 
     validates_presence_of :user
     validates_presence_of :payment_source
+    validates :user_id, uniqueness: {
+      scope: [:payment_source_type, :payment_source_id],
+      message: :payment_source_already_exists
+    }
 
     validate :check_for_payment_source_class
 
