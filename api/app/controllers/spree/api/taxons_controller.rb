@@ -13,6 +13,7 @@ module Spree
         end
 
         @taxons = paginate(@taxons)
+        preload_taxon_parents(@taxons)
         respond_with(@taxons)
       end
 
@@ -105,6 +106,16 @@ module Spree
         else
           {}
         end
+      end
+
+      def preload_taxon_parents(taxons)
+        parents = Spree::Taxon.none
+
+        taxons.map do |taxon|
+          parents = parents.or(taxon.ancestors)
+        end
+
+        Spree::Taxon.associate_parents(taxons + parents)
       end
     end
   end

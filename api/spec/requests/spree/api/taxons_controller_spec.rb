@@ -85,6 +85,25 @@ module Spree
         end
       end
 
+      context 'filtering by taxon ids' do
+        let!(:v2_4) { create(:taxon, name: "2.4", parent: taxon, taxonomy: taxonomy) }
+        let!(:v2_4_1) { create(:taxon, name: "2.4.1", parent: v2_4, taxonomy: taxonomy) }
+
+        it 'returns only requested ids' do
+          get spree.api_taxons_path, params: { ids: [v2_4_1.id] }
+
+          expect(json_response['taxons'].size).to eq 1
+        end
+
+        it 'avoids N+1 queries retrieving several taxons' do
+          expect {
+            get spree.api_taxons_path, params: { ids: [v2_4.id, v2_4_1.id] }
+
+            expect(json_response['taxons'].size).to eq 2
+          }.to query_limit_eq(7)
+        end
+      end
+
       it "gets a single taxon" do
         get spree.api_taxonomy_taxon_path(taxonomy, taxon.id)
 
