@@ -31,8 +31,8 @@ module Spree
     preference :address_requires_state, :boolean, default: true
 
     # @!attribute [rw] admin_interface_logo
-    #   @return [String] URL of logo used in admin (default: +'logo/solidus_logo.png'+)
-    preference :admin_interface_logo, :string, default: 'logo/solidus_logo.png'
+    #   @return [String] URL of logo used in admin (default: +'logo/solidus.svg'+)
+    preference :admin_interface_logo, :string, default: 'logo/solidus.svg'
 
     # @!attribute [rw] admin_products_per_page
     #   @return [Integer] Number of products to display in admin (default: +10+)
@@ -142,8 +142,8 @@ module Spree
     preference :layout, :string, default: 'spree/layouts/spree_application'
 
     # @!attribute [rw] logo
-    #   @return [String] URL of logo used on frontend (default: +'logo/solidus_logo.png'+)
-    preference :logo, :string, default: 'logo/solidus_logo.png'
+    #   @return [String] URL of logo used on frontend (default: +'logo/solidus.svg'+)
+    preference :logo, :string, default: 'logo/solidus.svg'
 
     # @!attribute [rw] order_bill_address_used
     #   @return [Boolean] Use the order's bill address, as opposed to storing
