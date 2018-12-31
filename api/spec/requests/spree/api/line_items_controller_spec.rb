@@ -81,7 +81,9 @@ module Spree
       end
 
       it "can add a new line item to an existing order with options" do
-        expect_any_instance_of(LineItem).to receive(:some_option=).with("foobar")
+        without_partial_double_verification do
+          expect_any_instance_of(LineItem).to receive(:some_option=).with("foobar")
+        end
         post spree.api_order_line_items_path(order),
                  params: {
                                     line_item: {
@@ -121,7 +123,9 @@ module Spree
       end
 
       it "can update a line item's options on the order" do
-        expect_any_instance_of(LineItem).to receive(:some_option=).with("foobar")
+        without_partial_double_verification do
+          expect_any_instance_of(LineItem).to receive(:some_option=).with("foobar")
+        end
         line_item = order.line_items.first
         put spree.api_order_line_item_path(order, line_item),
                 params: {
