@@ -83,8 +83,10 @@ describe Spree::Admin::NavigationHelper, type: :helper do
     # object_url is provided by the ResourceController abstract controller.
     # as we cannot set a custom controller for helper tests, we need to fake it
     before do
-      allow(helper).to receive(:object_url) do |o|
-        "/stock_items/#{o.to_param}"
+      without_partial_double_verification do
+        allow(helper).to receive(:object_url) do |o|
+          "/stock_items/#{o.to_param}"
+        end
       end
     end
 
