@@ -14,7 +14,6 @@ describe Spree::CheckoutController, type: :controller do
 
   before do
     allow(controller).to receive_messages try_spree_current_user: user
-    allow(controller).to receive_messages spree_current_user: user
     allow(controller).to receive_messages current_order: order
   end
 
