@@ -89,7 +89,7 @@ describe Spree::CheckoutController, type: :controller do
         order.line_items << FactoryBot.create(:line_item)
       end
 
-      context "with the order in the cart state" do
+      context "with the order in the cart state", partial_double_verification: false do
         before do
           order.update_attributes! user: user
           order.update_column(:state, "cart")
@@ -138,7 +138,7 @@ describe Spree::CheckoutController, type: :controller do
         end
       end
 
-      context "with the order in the address state" do
+      context "with the order in the address state", partial_double_verification: false do
         before do
           order.update_attributes! user: user
           order.update_columns(ship_address_id: create(:address).id, state: "address")
@@ -151,7 +151,7 @@ describe Spree::CheckoutController, type: :controller do
           end
         end
 
-        context "with a billing and shipping address" do
+        context "with a billing and shipping address", partial_double_verification: false do
           subject do
             post :update, params: {
               state: "address",
@@ -183,7 +183,7 @@ describe Spree::CheckoutController, type: :controller do
       # the same thing here.
       # Perhaps we can just remove 'set_payment_parameters_amount' entirely at
       # some point?
-      context "when there is a checkout step between payment and confirm" do
+      context "when there is a checkout step between payment and confirm", partial_double_verification: false do
         before do
           @old_checkout_flow = Spree::Order.checkout_flow
           Spree::Order.class_eval do
@@ -226,7 +226,7 @@ describe Spree::CheckoutController, type: :controller do
         end
       end
 
-      context "when in the payment state" do
+      context "when in the payment state", partial_double_verification: false do
         let(:order) { create(:order_with_line_items) }
         let(:payment_method) { create(:credit_card_payment_method) }
 
