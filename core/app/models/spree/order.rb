@@ -73,6 +73,11 @@ module Spree
     has_many :variants, through: :line_items
     has_many :products, through: :variants
 
+    if Spree.solidus_gem_version > Gem::Version.new('2.5.0')
+      has_many :order_stock_locations, class_name: 'Spree::OrderStockLocation'
+      has_many :stock_locations, through: :order_stock_locations
+    end
+
     # Shipping
     has_many :shipments, dependent: :destroy, inverse_of: :order do
       def states
