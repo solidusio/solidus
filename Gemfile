@@ -2,36 +2,37 @@
 
 source 'https://rubygems.org'
 
-gemspec require: false
+group :backend, :frontend, :core, :api do
+  gemspec require: false
 
-rails_version = ENV['RAILS_VERSION'] || '~> 5.2.0'
-gem 'rails', rails_version, require: false
+  rails_version = ENV['RAILS_VERSION'] || '~> 5.2.0'
+  gem 'rails', rails_version, require: false
 
-platforms :ruby do
-  case ENV['DB']
-  when /mysql/
-    gem 'mysql2', '~> 0.5.0', require: false
-  when /postgres/
-    gem 'pg', '~> 1.0', require: false
-  else
-    gem 'sqlite3', require: false
-    gem 'fast_sqlite', require: false
+  platforms :ruby do
+    case ENV['DB']
+    when /mysql/
+      gem 'mysql2', '~> 0.5.0', require: false
+    when /postgres/
+      gem 'pg', '~> 1.0', require: false
+    else
+      gem 'sqlite3', require: false
+      gem 'fast_sqlite', require: false
+    end
   end
-end
 
-platforms :jruby do
-  gem 'jruby-openssl', require: false
-  gem 'activerecord-jdbcsqlite3-adapter', require: false
-end
+  platforms :jruby do
+    gem 'jruby-openssl', require: false
+    gem 'activerecord-jdbcsqlite3-adapter', require: false
+  end
 
-gem 'database_cleaner', '~> 1.3', require: false
-gem 'factory_bot_rails', '~> 4.8', require: false
-gem 'i18n-tasks', '~> 0.9', require: false
-gem 'rspec-activemodel-mocks', '~>1.1', require: false
-gem 'rspec-rails', '~> 3.7', require: false
-gem 'simplecov', require: false
-gem 'with_model', require: false
-gem 'rails-controller-testing', require: false
+  gem 'database_cleaner', '~> 1.3', require: false
+  gem 'factory_bot_rails', '~> 4.8', require: false
+  gem 'rspec-activemodel-mocks', '~>1.1', require: false
+  gem 'rspec-rails', '~> 3.7', require: false
+  gem 'simplecov', require: false
+  gem 'with_model', require: false
+  gem 'rails-controller-testing', require: false
+end
 
 group :backend, :frontend do
   gem 'capybara', '~> 2.15', require: false
@@ -49,17 +50,17 @@ group :backend do
   gem 'teaspoon-mocha', require: false
 end
 
-gem 'rubocop', '~> 0.53.0', require: false
-
 group :utils do
   gem 'pry'
   gem 'launchy', require: false
+  gem 'i18n-tasks', '~> 0.9', require: false
+  gem 'rubocop', '~> 0.53.0', require: false
 end
 
 gem 'rspec_junit_formatter', require: false, group: :ci
 
 # Documentation
-gem 'yard', require: false
+gem 'yard', require: false, group: :docs
 
 custom_gemfile = File.expand_path('Gemfile-custom', __dir__)
 eval File.read(custom_gemfile) if File.exist?(custom_gemfile)
