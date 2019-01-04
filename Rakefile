@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'bundler'
+
 task default: :spec
 
 def print_title(gem_name = '')
