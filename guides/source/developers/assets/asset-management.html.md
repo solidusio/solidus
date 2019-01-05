@@ -103,7 +103,7 @@ in this `spree/backend` directory:
 
 ```javascript
 //= require jquery
-//= require jquery_ujs
+//= require rails-ujs
 //= require spree/backend
 //= require_tree .
 ```
@@ -159,4 +159,3 @@ migrations see the [`install_generator` for
 
 [rails-generators]: http://guides.rubyonrails.org/generators.html
 [solidus-static-content-install-generator]: https://github.com/solidusio-contrib/solidus_static_content/blob/master/lib/generators/solidus_static_content/install/install_generator.rb
-

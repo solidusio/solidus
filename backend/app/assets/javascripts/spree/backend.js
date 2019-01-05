@@ -1,7 +1,7 @@
 //= require solidus_admin/bind-polyfill
 //= require handlebars
 //= require jquery
-//= require jquery_ujs
+//= require rails-ujs
 //= require jquery.sticky-kit.min
 //= require solidus_admin/select2
 //= require solidus_admin/underscore
