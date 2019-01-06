@@ -143,10 +143,6 @@ module Spree
             0 => { variant_id: variant_1.id, quantity: 2 },
             1 => { variant_id: variant_2.id, quantity: 2 }
           },
-          # Would like to do this, but the save process from the orders controller
-          # does not actually call what it needs to to apply this coupon code :(
-          # coupon_code: promotion.code,
-
           # Would like to do this, but it puts the payment in a complete state,
           # which the order does not like when transitioning from confirm to complete
           # since it looks to process pending payments.
@@ -175,10 +171,6 @@ module Spree
             0 => { variant_id: variant_1.id, quantity: 2 },
             1 => { variant_id: variant_2.id, quantity: 2 }
           },
-          # Would like to do this, but the save process from the orders controller
-          # does not actually call what it needs to to apply this coupon code :(
-          # coupon_code: promotion.code,
-
           # Would like to do this, but it puts the payment in a complete state,
           # which the order does not like when transitioning from confirm to complete
           # since it looks to process pending payments.
