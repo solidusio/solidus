@@ -36,7 +36,7 @@ module Spree
 
     before_save :normalize_blank_values
 
-    scope :coupons, -> { where.not(code: nil) }
+    scope :coupons, -> { joins(:codes).distinct }
     scope :advertised, -> { where(advertise: true) }
     scope :active, -> do
       table = arel_table
