@@ -9,9 +9,25 @@ Spree.ready(function() {
       field.defaultValue = field.value;
       textDisplay.textContent = field.value;
 
-      show_flash('success', data.message);
+      if (typeof data !== "undefined") {
+        // we are using jquery_ujs
+        message = data.message
+      } else {
+        // we are using rails-ujs
+        message = event.detail[0].message
+      }
+
+      show_flash('success', message);
     }).on('ajax:error', function(event, xhr, status, error) {
-      show_flash('error', xhr.responseJSON.message);
+      if (typeof xhr !== "undefined") {
+        // we are using jquery_ujs
+        message = xhr.responseJSON.message
+      } else {
+        // we are using rails-ujs
+        message = event.detail[0].message
+      }
+
+      show_flash('error', message);
     });
 
     row.querySelector('.edit-memo').addEventListener('click', function() {
