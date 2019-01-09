@@ -111,13 +111,7 @@ module Spree
     end
 
     def available_countries(restrict_to_zone: Spree::Config[:checkout_zone])
-      checkout_zone = Zone.find_by(name: restrict_to_zone)
-
-      if checkout_zone && checkout_zone.kind == 'country'
-        countries = checkout_zone.country_list
-      else
-        countries = Country.all
-      end
+      countries = Spree::Country.available(restrict_to_zone: restrict_to_zone)
 
       country_names = Carmen::Country.all.map do |country|
         [country.code, country.name]

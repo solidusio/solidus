@@ -60,6 +60,82 @@ RSpec.describe Spree::Country, type: :model do
     end
   end
 
+  describe '.available' do
+    let!(:united_states) { create(:country, iso: 'US') }
+    let!(:canada) { create(:country, iso: 'CA') }
+    let!(:italy) { create(:country, iso: 'IT') }
+    let!(:custom_zone) { create(:zone, name: 'Custom Zone', countries: [united_states, italy]) }
+
+    context 'with a checkout zone defined' do
+      context 'when checkout zone is of type country' do
+        let!(:checkout_zone) { create(:zone, name: 'Checkout Zone', countries: [united_states, canada]) }
+
+        before do
+          Spree::Config.checkout_zone = checkout_zone.name
+        end
+
+        context 'with no arguments' do
+          it 'returns "Checkout Zone" countries' do
+            expect(described_class.available).to contain_exactly(united_states, canada)
+          end
+        end
+
+        context 'setting nil as restricting zone' do
+          it 'returns all countries' do
+            expect(described_class.available(restrict_to_zone: nil)).to contain_exactly(united_states, canada, italy)
+          end
+        end
+
+        context 'setting "Custom Zone" as restricting zone' do
+          it 'returns "Custom Zone" countries' do
+            expect(described_class.available(restrict_to_zone: 'Custom Zone')).to contain_exactly(united_states, italy)
+          end
+        end
+
+        context 'setting "Checkout Zone" as restricting zone' do
+          it 'returns "Checkout Zone" countries' do
+            expect(described_class.available(restrict_to_zone: 'Checkout Zone')).to contain_exactly(united_states, canada)
+          end
+        end
+      end
+
+      context 'when checkout zone is of type state' do
+        let!(:state) { create(:state, country: united_states) }
+        let!(:checkout_zone) { create(:zone, name: 'Checkout Zone', states: [state]) }
+
+        before do
+          Spree::Config[:checkout_zone] = checkout_zone.name
+        end
+
+        context 'with no arguments' do
+          it 'returns all countries' do
+            expect(described_class.available(restrict_to_zone: nil)).to contain_exactly(united_states, canada, italy)
+          end
+        end
+      end
+    end
+
+    context 'with no checkout zone defined' do
+      context 'with no arguments' do
+        it 'returns all countries' do
+          expect(described_class.available).to contain_exactly(united_states, canada, italy)
+        end
+      end
+
+      context 'setting nil as restricting zone' do
+        it 'returns all countries' do
+          expect(described_class.available(restrict_to_zone: nil)).to contain_exactly(united_states, canada, italy)
+        end
+      end
+
+      context 'setting "Custom Zone" as restricting zone' do
+        it 'returns "Custom Zone" countries' do
+          expect(described_class.available(restrict_to_zone: 'Custom Zone')).to contain_exactly(united_states, italy)
+        end
+      end
+    end
+  end
+
   describe '#prices' do
     let(:country) { create(:country) }
     subject { country.prices }
