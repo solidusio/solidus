@@ -11,7 +11,10 @@ module Spree
       #
       # @return [Enumerable<Spree::Image>] all images in the gallery
       def images
-        @images ||= @variant.images
+        @images ||=
+          @variant.images.presence ||
+          (!@variant.is_master? && @variant.product.master.images).presence ||
+          Spree::Image.none
       end
     end
   end
