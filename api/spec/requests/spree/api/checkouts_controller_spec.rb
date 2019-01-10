@@ -4,17 +4,16 @@ require 'spec_helper'
 
 module Spree
   describe Api::CheckoutsController, type: :request do
+    let(:state) { create(:state) }
+    let(:country) { state.country }
+    let(:country_zone) { create(:zone, name: 'CountryZone') }
+    let(:shipping_method) { create(:shipping_method, zones: [country_zone]) }
+    let(:payment_method) { create(:credit_card_payment_method) }
+
     before(:each) do
       stub_authentication!
       Spree::Config[:track_inventory_levels] = false
-      @country_zone = create(:zone, name: 'CountryZone')
-      @state = create(:state)
-      @country = @state.country
-      @country_zone.members.create(zoneable: @country)
-      create(:stock_location)
-
-      @shipping_method = create(:shipping_method, zones: [@country_zone])
-      @payment_method = create(:credit_card_payment_method)
+      country_zone.members.create(zoneable: country)
     end
 
     after do
@@ -85,8 +84,8 @@ module Spree
             city:       'Bethesda',
             phone:      '3014445002',
             zipcode:    '20814',
-            state_id:   @state.id,
-            country_id: @country.id
+            state_id:   state.id,
+            country_id: country.id
           }
         end
 
@@ -148,9 +147,9 @@ module Spree
       it "can update payment method and transition from payment to confirm" do
         order.update_column(:state, "payment")
         allow_any_instance_of(Spree::PaymentMethod::BogusCreditCard).to receive(:source_required?).and_return(false)
-        put spree.api_checkout_path(order.to_param), params: { order_token: order.guest_token, order: { payments_attributes: [{ payment_method_id: @payment_method.id }] } }
+        put spree.api_checkout_path(order.to_param), params: { order_token: order.guest_token, order: { payments_attributes: [{ payment_method_id: payment_method.id }] } }
         expect(json_response['state']).to eq('confirm')
-        expect(json_response['payments'][0]['payment_method']['name']).to eq(@payment_method.name)
+        expect(json_response['payments'][0]['payment_method']['name']).to eq(payment_method.name)
         expect(json_response['payments'][0]['amount']).to eq(order.total.to_s)
         expect(response.status).to eq(200)
       end
@@ -159,9 +158,9 @@ module Spree
         it "returns not found" do
           order.update_column(:state, "payment")
           allow_any_instance_of(Spree::PaymentMethod::BogusCreditCard).to receive(:source_required?).and_return(false)
-          @payment_method.update!(available_to_users: false)
+          payment_method.update!(available_to_users: false)
           expect {
-            put spree.api_checkout_path(order.to_param), params: { order_token: order.guest_token, order: { payments_attributes: [{ payment_method_id: @payment_method.id }] } }
+            put spree.api_checkout_path(order.to_param), params: { order_token: order.guest_token, order: { payments_attributes: [{ payment_method_id: payment_method.id }] } }
           }.not_to change { Spree::Payment.count }
           expect(response.status).to eq(404)
         end
@@ -169,7 +168,7 @@ module Spree
 
       it "returns errors when source is required and missing" do
         order.update_column(:state, "payment")
-        put spree.api_checkout_path(order.to_param), params: { order_token: order.guest_token, order: { payments_attributes: [{ payment_method_id: @payment_method.id }] } }
+        put spree.api_checkout_path(order.to_param), params: { order_token: order.guest_token, order: { payments_attributes: [{ payment_method_id: payment_method.id }] } }
         expect(response.status).to eq(422)
         source_errors = json_response['errors']['payments.source']
         expect(source_errors).to include("can't be blank")
@@ -182,7 +181,7 @@ module Spree
             order: {
               payments_attributes: [
                 {
-                  payment_method_id: @payment_method.id.to_s,
+                  payment_method_id: payment_method.id.to_s,
                   source_attributes: attributes_for(:credit_card)
                 }
               ]
@@ -208,7 +207,7 @@ module Spree
             order: {
               payments_attributes: [
                 {
-                  payment_method_id: @payment_method.id.to_s,
+                  payment_method_id: payment_method.id.to_s,
                   source_attributes: attributes_for(:credit_card)
                 }
               ]
@@ -219,7 +218,7 @@ module Spree
         it 'succeeds' do
           put spree.api_checkout_path(order), params: params
           expect(response.status).to eq(200)
-          expect(json_response['payments'][0]['payment_method']['name']).to eq(@payment_method.name)
+          expect(json_response['payments'][0]['payment_method']['name']).to eq(payment_method.name)
           expect(json_response['payments'][0]['amount']).to eq(order.total.to_s)
         end
       end
@@ -235,7 +234,7 @@ module Spree
             order: {
               payments_attributes: [
                 {
-                  payment_method_id: @payment_method.id.to_s,
+                  payment_method_id: payment_method.id.to_s,
                   source_attributes: { name: "Spree" }
                 }
               ]
@@ -281,7 +280,7 @@ module Spree
         end
 
         let(:credit_card) do
-          create(:credit_card, user_id: order.user_id, payment_method_id: @payment_method.id)
+          create(:credit_card, user_id: order.user_id, payment_method_id: payment_method.id)
         end
 
         it 'succeeds' do
@@ -389,7 +388,7 @@ module Spree
         end
 
         before do
-          @country_zone.members.create(zoneable: canada_state.country)
+          country_zone.members.create(zoneable: canada_state.country)
         end
 
         it "can transition from confirm back to address and steps forward to delivery" do
