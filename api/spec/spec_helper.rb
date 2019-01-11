@@ -26,6 +26,7 @@ require 'with_model'
 # in spec/support/ and its subdirectories.
 Dir[File.dirname(__FILE__) + "/support/**/*.rb"].each { |f| require f }
 
+require 'spree/testing_support/partial_double_verification'
 require 'spree/testing_support/factories'
 require 'spree/testing_support/preferences'
 require 'spree/testing_support/authorization_helpers'

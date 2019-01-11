@@ -26,6 +26,7 @@ Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
 
 require 'database_cleaner'
 
+require 'spree/testing_support/partial_double_verification'
 require 'spree/testing_support/authorization_helpers'
 require 'spree/testing_support/capybara_ext'
 require 'spree/testing_support/factories'
