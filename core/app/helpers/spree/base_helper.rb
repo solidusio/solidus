@@ -119,6 +119,10 @@ module Spree
         countries = Country.all
       end
 
+      Spree::CountryListPresenter.new(countries)
+    end
+
+    def countries_for_select(countries)
       country_names = Carmen::Country.all.map do |country|
         [country.code, country.name]
       end.to_h

@@ -15,6 +15,8 @@ module Spree
         g.test_framework :rspec
       end
 
+      config.eager_load_paths << "#{config.root}/app/presenters"
+
       initializer "spree.environment", before: :load_config_initializers do |app|
         app.config.spree = Spree::Config.environment
       end

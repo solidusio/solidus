@@ -86,6 +86,7 @@ require 'spree/core/role_configuration'
 require 'spree/core/stock_configuration'
 require 'spree/core/validators/email'
 require 'spree/permission_sets'
+require 'spree/presenter'
 
 require 'spree/preferences/store'
 require 'spree/preferences/static_model_preferences'
