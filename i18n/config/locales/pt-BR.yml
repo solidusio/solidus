@@ -2194,3 +2194,8 @@ pt-BR:
     zipcode: Código zip
     zone: Zona
     zones: Zonas
+  time:
+    formats:
+      solidus:
+        long: "%d/%m/%Y %H:%M"
+        short: "%d/%m/%y %H:%M"
