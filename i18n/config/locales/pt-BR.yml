@@ -5,7 +5,7 @@ pt-BR:
       spree/order_cancellations:
         cancel: Cancelar
         quantity: Quantidate
-        shipment: Enviro
+        shipment: Envio
         state: Estado
   activerecord:
     attributes:
@@ -74,7 +74,7 @@ pt-BR:
       spree/inventory_unit:
         state: Estado
       spree/legacy_user:
-        email: Email
+        email: E-mail
         password: Senha
         password_confirmation: Confirmação de Senha
       spree/line_item:
@@ -100,7 +100,7 @@ pt-BR:
         considered_risky: Considerado de risco
         coupon_code: Código do cupom
         created_at: Criado em
-        email: Email do cliente
+        email: E-mail do cliente
         included_tax_total:
         ip_address: Endereço IP
         item_total: Total de itens
@@ -153,9 +153,9 @@ pt-BR:
         description: Descrição
         height: Altura
         master_price: Preço Total
-        meta_description: Descrição Meta
-        meta_keywords: Keywords Meta
-        meta_title: Título Meta
+        meta_description: Meta Descrição
+        meta_keywords: Meta Palavras-Chave
+        meta_title: Meta Título
         name: Nome
         on_hand: Pronta Entrega
         price: Preço
@@ -367,9 +367,9 @@ pt-BR:
       spree/taxon:
         description: Descrição
         icon: Ícone
-        meta_description: Descrição Meta
-        meta_keywords: Palavras-Chave Meta
-        meta_title: Título Meta
+        meta_description: Meta Descrição
+        meta_keywords: Meta Palavras-Chave
+        meta_title: Meta Título
         name: Nome
         permalink: Permalink
         position: Posição
@@ -379,7 +379,7 @@ pt-BR:
         active: Ativo
         analytics_id: ID do Analytics
       spree/user:
-        email: Email
+        email: E-mail
         password: Senha
         password_confirmation: Confirmação de Senha
       spree/variant:
@@ -1039,7 +1039,7 @@ pt-BR:
     cannot_rebuild_shipments_shipments_not_pending: Não é possível refazer envios para um pedido com envios não pendentes
     cannot_set_shipping_method_without_address: Insira os detalhes do cliente para
       escolher o método de envio
-    cannot_update_email: Você não tem permissão para atualizer o email desse usuário. <br>Por favor contate um administrador se você precisa realizar esta ação
+    cannot_update_email: Você não tem permissão para atualizer o e-mail desse usuário. <br>Por favor contate um administrador se você precisa realizar esta ação
     capture: Capturar
     capture_events: Capturar eventos
     card_code: Código do Cartão
@@ -1222,13 +1222,13 @@ pt-BR:
         missing_taxon: Você deve adicionar um produto de todas as categorias necessárias antes de utilizar este cupom
         no_applicable_products: Você deve adicionar um produto válido antes de utilizar este cupom
         no_matching_taxons: Você deve adicionar um produto de uma categoria válida antes de utilizar este cupom
-        no_user_or_email_specified: Você deve realizar o login ou providenciar seu email antes de utilizar este cupom
+        no_user_or_email_specified: Você deve realizar o login ou providenciar seu e-mail antes de utilizar este cupom
         no_user_specified: Você deve realizar o login antes de utilizar este cupom
         not_first_order: Este cupom só pode ser utilizado em sua primeira compra
-    email: Email
+    email: E-mail
     empty: Vazio
     empty_cart: Esvaziar o Carrinho
-    enable_mail_delivery: Habilitar envio de email
+    enable_mail_delivery: Habilitar envio de e-mail
     end: Fim
     ending_in: Finalizando
     environment: Ambiente
@@ -1369,12 +1369,12 @@ pt-BR:
       other: "e %{count} outros"
       info_product_has_multiple_skus: "Este produto tem %{count} variantes:"
     instructions_to_reset_password: 'Preencha o formulário abaixo e enviaremos instruções
-      de como resetar sua senha por email:'
+      de como resetar sua senha por e-mail:'
     insufficient_stock: Estoque insuficiente, apenas %{on_hand} em estoque
     insufficient_stock_for_order: Estoque insuficiente para o pedido
     insufficient_stock_lines_present: Algum item do pedido não tem estoque suficiente
-    intercept_email_address: Interceptar endereço de email
-    intercept_email_instructions: Interceptar Instruções de Email
+    intercept_email_address: Interceptar endereço de e-mail
+    intercept_email_instructions: Interceptar Instruções de E-mail
     internal_name: Nome interno
     invalid_credit_card: Cartão de Crédito Inválido
     invalid_exchange_variant:
@@ -1574,7 +1574,7 @@ pt-BR:
     order_canceled: Pedido cancelado
     order_completed:
     order_details: Detalhes do Pedido
-    order_email_resent: Email de confirmação reenviado
+    order_email_resent: E-mail de confirmação reenviado
     order_information: Informações do pedido
     order_mailer:
       cancel_email:
@@ -1885,9 +1885,9 @@ pt-BR:
     select_from_prototype: Selecionar a partir de protótipo
     select_stock: Selecione estoque
     selected_quantity_not_available: ! 'selecionada de %{item} não está disponível'
-    send_copy_of_all_mails_to: Enviar cópias de todos emails para
-    send_mailer: Enviar Email
-    send_mails_as: Enviar email como
+    send_copy_of_all_mails_to: Enviar cópias de todos e-mails para
+    send_mailer: Enviar E-mail
+    send_mails_as: Enviar e-mail como
     server: Servidor
     server_error: O servidor retornou um erro
     settings: Configurações
@@ -2085,12 +2085,12 @@ pt-BR:
     test: Teste
     test_mailer:
       greeting: Parabéns
-      message: Se você recebeu esse email, suas configurações estão corretas!
-      subject: Email de teste!
+      message: Se você recebeu esse e-mail, suas configurações estão corretas!
+      subject: E-mail de teste!
       test_email:
         greeting: Parabéns
-        message: Se você recebeu esse email, suas configurações estão corretas!
-        subject: Email de teste!
+        message: Se você recebeu esse e-mail, suas configurações estão corretas!
+        subject: E-mail de teste!
     test_mode: Modo de teste
     thank_you_for_your_order: Obrigado por sua compra. Por favor, imprima uma cópia
       desta página de confirmação para seu controle.
@@ -2190,7 +2190,7 @@ pt-BR:
     your_cart_is_empty: O carrinho está vazio
     your_order_is_empty_add_product: Seu pedido está vazio, por favor procure e adicione
       um produto
-    zip: Codigo postal
-    zipcode: Código zip
+    zip: CEP
+    zipcode: Código postal
     zone: Zona
     zones: Zonas
