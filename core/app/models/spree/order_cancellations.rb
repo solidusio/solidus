@@ -23,8 +23,8 @@ class Spree::OrderCancellations
   # @api public
   #
   # @param [Array<InventoryUnit>] inventory_units the inventory units to be short shipped
-  # @param (deprecated) [String] whodunnit the system or person that is short shipping the inventory unit
-  # @param [String] created_by the system or person that is short shipping the inventory unit
+  # @param [Spree.user_class] whodunnit (deprecated) the system or person that is short shipping the inventory unit
+  # @param [Spree.user_class] created_by the system or person that is short shipping the inventory unit
   #
   # @return [Array<UnitCancel>] the units that have been canceled due to short shipping
   def short_ship(inventory_units, whodunnit: nil, created_by: nil)
@@ -65,8 +65,8 @@ class Spree::OrderCancellations
   #
   # @param [InventoryUnit] inventory_unit the inventory unit to be canceled
   # @param [String] reason the reason that you are canceling the inventory unit
-  # @param (deprecated) [String] whodunnit the system or person that is canceling the inventory unit
-  # @param [String] created_by the system or person that is canceling the inventory unit
+  # @param [Spree.user_class] whodunnit (deprecated) the system or person that is canceling the inventory unit
+  # @param [Spree.user_class] created_by the system or person that is canceling the inventory unit
   #
   # @return [UnitCancel] the unit that has been canceled
   def cancel_unit(inventory_unit, reason: Spree::UnitCancel::DEFAULT_REASON, whodunnit: nil, created_by: nil)
