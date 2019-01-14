@@ -4,16 +4,14 @@ require 'spec_helper'
 
 module Spree
   describe Api::TaxonsController, type: :request do
-    let(:taxonomy) { create(:taxonomy) }
-    let(:taxon) { create(:taxon, name: "Ruby", taxonomy: taxonomy) }
-    let(:taxon2) { create(:taxon, name: "Rails", taxonomy: taxonomy) }
+    let!(:taxonomy) { create(:taxonomy) }
+    let!(:taxon) { create(:taxon, name: "Ruby", parent: taxonomy.root, taxonomy: taxonomy) }
+    let!(:taxon2) { create(:taxon, name: "Rails", parent: taxon, taxonomy: taxonomy) }
+    let!(:rails_v3_2_2) { create(:taxon, name: "3.2.2", parent: taxon2, taxonomy: taxonomy) }
     let(:attributes) { ["id", "name", "pretty_name", "permalink", "parent_id", "taxonomy_id"] }
 
     before do
       stub_authentication!
-      taxon2.children << create(:taxon, name: "3.2.2", taxonomy: taxonomy)
-      taxon.children << taxon2
-      taxonomy.root.children << taxon
     end
 
     context "as a normal user" do
@@ -86,21 +84,22 @@ module Spree
       end
 
       context 'filtering by taxon ids' do
-        let!(:v2_4) { create(:taxon, name: "2.4", parent: taxon, taxonomy: taxonomy) }
-        let!(:v2_4_1) { create(:taxon, name: "2.4.1", parent: v2_4, taxonomy: taxonomy) }
-
         it 'returns only requested ids' do
-          get spree.api_taxons_path, params: { ids: [v2_4_1.id] }
+          get spree.api_taxons_path, params: { ids: [rails_v3_2_2.id] }
 
           expect(json_response['taxons'].size).to eq 1
         end
 
         it 'avoids N+1 queries retrieving several taxons' do
+          # We need a completly new branch to avoid having parent that can be preloaded from the rails ancestors
+          python   = create(:taxon, name: "Python", parent: taxonomy.root, taxonomy: taxonomy)
+          python_3 = create(:taxon, name: "3.0", parent: python, taxonomy: taxonomy)
+
           expect {
-            get spree.api_taxons_path, params: { ids: [v2_4.id, v2_4_1.id] }
+            get spree.api_taxons_path, params: { ids: [rails_v3_2_2.id, python_3.id] }
 
             expect(json_response['taxons'].size).to eq 2
-          }.to query_limit_eq(7)
+          }.to query_limit_eq(5)
         end
       end
 
