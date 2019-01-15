@@ -412,6 +412,17 @@ module Spree
           expect(response.status).to eq(422)
           expect(json_response['errors']['state'][0]).to eq('is invalid')
         end
+
+        it "cannot move to complete" do
+          expect(order.state).to eq('cart')
+          put spree.api_checkout_path(order),
+            params: { order_token: order.guest_token, order: {
+              state: 'complete'
+            } }
+
+          expect(response.status).to eq(422)
+          expect(json_response['errors']['state'][0]).to eq('cannot transition via "next"')
+        end
       end
     end
 
