@@ -421,7 +421,9 @@ module Spree
 
     # Regression test for https://github.com/spree/spree/issues/3404
     it "can specify additional parameters for a line item" do
-      expect_any_instance_of(Spree::LineItem).to receive(:special=).with("foo")
+      without_partial_double_verification do
+        expect_any_instance_of(Spree::LineItem).to receive(:special=).with("foo")
+      end
 
       allow_any_instance_of(Spree::Api::OrdersController).to receive_messages(permitted_line_item_attributes: [:id, :variant_id, :quantity, :special])
       post spree.api_orders_path, params: {

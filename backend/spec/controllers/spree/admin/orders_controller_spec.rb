@@ -77,7 +77,7 @@ describe Spree::Admin::OrdersController, type: :controller do
     context "#new" do
       let(:user) { create(:user) }
       before do
-        allow(controller).to receive_messages spree_current_user: user
+        allow(controller).to receive_messages try_spree_current_user: user
       end
 
       it "imports a new order and sets the current user as a creator" do
@@ -288,7 +288,7 @@ describe Spree::Admin::OrdersController, type: :controller do
       let(:user) { create(:user) }
 
       before do
-        allow(controller).to receive_messages spree_current_user: user
+        allow(controller).to receive_messages try_spree_current_user: user
         user.spree_roles << Spree::Role.find_or_create_by(name: 'admin')
 
         create_list(:completed_order_with_totals, 2)
@@ -361,7 +361,7 @@ describe Spree::Admin::OrdersController, type: :controller do
     let!(:order) { create(:completed_order_with_totals, number: 'R987654321') }
 
     before do
-      allow(controller).to receive_messages spree_current_user: user
+      allow(controller).to receive_messages try_spree_current_user: user
     end
 
     it 'should grant access to users with an admin role' do
