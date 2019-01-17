@@ -7,13 +7,24 @@
 - [solidus-security](https://groups.google.com/forum/#!forum/solidus-security) mailing list
 
 ## Table of Contents
-1. [Summary](#summary)
-2. [Demo](#demo)
-3. [Getting Started](#getting-started)
-4. [Installation Options](#installation-options)
-5. [Performance](#performance)
-6. [Developing Solidus](#developing-solidus)
-7. [Contributing](#contributing)
+1. [Key Stakeholders](#key-stakeholders)
+2. [Summary](#summary)
+3. [Demo](#demo)
+4. [Getting Started](#getting-started)
+5. [Installation Options](#installation-options)
+6. [Performance](#performance)
+7. [Developing Solidus](#developing-solidus)
+8. [Contributing](#contributing)
+
+## Key Stakeholders
+
+Thank you to all our donors! 🙏 [Become a donor](https://opencollective.com/solidus#backer)
+
+Support this project by becoming a Key Stakeholder. Your logo will show up here with a link to your website. [Become a Key Stakeholder](https://opencollective.com/solidus#key-stakeholder)
+
+<a href="https://nebulab.it/"><img src="https://images.opencollective.com/proxy/images?src=https%3A%2F%2Fopencollective-production.s3-us-west-1.amazonaws.com%2F3cc3c170-20cc-11e9-9582-214168b65c9a.png&height=100"></a>
+<a href="https://www.enginecommerce.com/"><img src="https://images.opencollective.com/proxy/images?src=https%3A%2F%2Flogo.clearbit.com%2Fenginecommerce.com&height=100"></a>
+<a href="https://supergood.software/"><img src="https://images.opencollective.com/proxy/images?src=https%3A%2F%2Flogo.clearbit.com%2Fsupergood.software&height=100"></a>
 
 ## Summary
 
@@ -42,6 +53,8 @@ combine it with your own custom frontend, admin interface, and API.
 [![Gem](https://img.shields.io/gem/v/solidus.svg)](https://rubygems.org/gems/solidus)
 [![License](http://img.shields.io/badge/license-BSD-yellowgreen.svg)](LICENSE.md)
 [![Slack](http://slack.solidus.io/badge.svg)](http://slack.solidus.io)
+[![Backers on Open Collective](https://opencollective.com/solidus/backers/badge.svg)](#backers)
+[![Sponsors on Open Collective](https://opencollective.com/solidus/sponsors/badge.svg)](#sponsors)
 
 ### Supported by
 
