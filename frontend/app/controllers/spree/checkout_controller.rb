@@ -24,6 +24,7 @@ module Spree
     helper 'spree/orders'
 
     rescue_from Spree::Core::GatewayError, with: :rescue_from_spree_gateway_error
+    rescue_from Spree::Order::InsufficientStock, with: :insufficient_stock_error
 
     # Updates the order and advances to the next state (when possible.)
     def update
@@ -232,6 +233,23 @@ module Spree
 
     def check_authorization
       authorize!(:edit, current_order, cookies.signed[:guest_token])
+    end
+
+    def insufficient_stock_error
+      packages = @order.shipments.map(&:to_package)
+      if packages.empty?
+        flash[:error] = I18n.t('spree.insufficient_stock_for_order')
+        redirect_to cart_path
+      else
+        availability_validator = Spree::Stock::AvailabilityValidator.new
+        unavailable_items = @order.line_items.reject { |line_item| availability_validator.validate(line_item) }
+        if unavailable_items.any?
+          item_names = unavailable_items.map(&:name).to_sentence
+          flash[:error] = t('spree.inventory_error_flash_for_insufficient_shipment_quantity', unavailable_items: item_names)
+          @order.restart_checkout_flow
+          redirect_to spree.checkout_state_path(@order.state)
+        end
+      end
     end
   end
 end
