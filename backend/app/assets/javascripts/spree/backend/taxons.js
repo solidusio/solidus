@@ -30,7 +30,7 @@ Spree.ready(function() {
       url: Spree.routes.taxons_search,
       params: {
         "headers": {
-          "X-Spree-Token": Spree.api_key
+          'Authorization': 'Bearer ' + Spree.api_key
         }
       },
       data: function(term, page) {

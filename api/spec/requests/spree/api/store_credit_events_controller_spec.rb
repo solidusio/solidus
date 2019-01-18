@@ -7,7 +7,7 @@ describe Spree::Api::StoreCreditEventsController, type: :request do
 
   describe "GET mine" do
     subject do
-      get spree.mine_api_store_credit_events_path(format: :json), headers: { 'X-Spree-Token' => api_key }
+      get spree.mine_api_store_credit_events_path(format: :json), headers: { Authorization: "Bearer #{api_key}" }
     end
 
     context "no current api user" do
