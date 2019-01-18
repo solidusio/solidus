@@ -19,4 +19,4 @@ Spree::ReimbursementType.create_with(name: "Store Credit").find_or_create_by!(ty
 
 Spree::StoreCreditCategory.find_or_create_by!(name: 'Gift Card')
 
-Spree::StoreCreditUpdateReason.find_or_create_by!(name: 'Credit Given In Error')
+Spree::StoreCreditReason.find_or_create_by!(name: 'Credit Given In Error')

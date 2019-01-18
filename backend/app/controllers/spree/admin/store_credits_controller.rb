@@ -5,8 +5,8 @@ module Spree
     class StoreCreditsController < ResourceController
       belongs_to 'spree/user', model_class: Spree.user_class
       before_action :load_categories, only: [:new]
-      before_action :load_update_reasons, only: [:edit_amount, :edit_validity]
-      before_action :ensure_update_reason, only: [:update_amount, :invalidate]
+      before_action :load_reasons, only: [:edit_amount, :edit_validity]
+      before_action :ensure_store_credit_reason, only: [:update_amount, :invalidate]
 
       helper Spree::Admin::StoreCreditEventsHelper
 
@@ -50,7 +50,7 @@ module Spree
       def update_amount
         @store_credit = @user.store_credits.find(params[:id])
         amount = params.require(:store_credit).require(:amount)
-        if @store_credit.update_amount(amount, @update_reason, try_spree_current_user)
+        if @store_credit.update_amount(amount, @store_credit_reason, try_spree_current_user)
           flash[:success] = flash_message_for(@store_credit, :successfully_updated)
           redirect_to admin_user_store_credit_path(@user, @store_credit)
         else
@@ -60,7 +60,7 @@ module Spree
 
       def invalidate
         @store_credit = @user.store_credits.find(params[:id])
-        if @store_credit.invalidate(@update_reason, try_spree_current_user)
+        if @store_credit.invalidate(@store_credit_reason, try_spree_current_user)
           redirect_to admin_user_store_credit_path(@user, @store_credit)
         else
           render_edit_page
@@ -78,18 +78,18 @@ module Spree
         @collection = super.reverse_order
       end
 
-      def load_update_reasons
-        @update_reasons = Spree::StoreCreditUpdateReason.all.order(:name)
+      def load_reasons
+        @store_credit_reasons = Spree::StoreCreditReason.active.order(:name)
       end
 
       def load_categories
         @credit_categories = Spree::StoreCreditCategory.all.order(:name)
       end
 
-      def ensure_update_reason
-        @update_reason = Spree::StoreCreditUpdateReason.find_by(id: params[:update_reason_id])
-        unless @update_reason
-          @store_credit.errors.add(:base, t('spree.admin.store_credits.errors.update_reason_required'))
+      def ensure_store_credit_reason
+        @store_credit_reason = Spree::StoreCreditReason.find_by(id: params[:store_credit_reason_id])
+        unless @store_credit_reason
+          @store_credit.errors.add(:base, t('spree.admin.store_credits.errors.store_credit_reason_required'))
           render_edit_page
         end
       end
@@ -103,7 +103,7 @@ module Spree
           translation_key = 'invalidate'
         end
 
-        load_update_reasons
+        load_reasons
         flash[:error] = "#{t("spree.admin.store_credits.unable_to_#{translation_key}")}: #{@store_credit.errors.full_messages.join(', ')}"
         render(template) && return
       end

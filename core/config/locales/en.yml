@@ -355,7 +355,7 @@ en:
         amount_remaining: Total Unused
         user_total_amount: Total Amount
       spree/store_credit_update_reason:
-        name: Reason For Updating
+        name: Name
       spree/tax_category:
         description: Description
         is_default: Default
@@ -693,6 +693,9 @@ en:
       spree/store_credit_category:
         one: Category
         other: Categories
+      spree/store_credit_reason:
+        one: Store Credit Reason
+        other: Store Credit Reasons
       spree/tax_category:
         one: Tax Category
         other: Tax Categories
@@ -908,6 +911,7 @@ en:
           cannot_change_used_store_credit: Store credit that has been claimed cannot
             be changed
           update_reason_required: A reason for the change must be selected
+          store_credit_reason_required: A reason for the change must be selected
         history: Store credit history
         invalidate_store_credit: Invalidating store credit
         invalidated: Invalidated
@@ -919,6 +923,7 @@ en:
         reason_for_updating: Reason for updating
         refund_originator: 'Refund - Order #%{order_number}'
         resource_name: store credits
+        select_amount_store_credit_reason: Select a reason for updating the amount
         select_amount_update_reason: Select a reason for updating the amount
         select_reason: Select a reason for this store credit
         total_unused: Total unused
@@ -1586,6 +1591,7 @@ en:
     new_stock_movement: New Stock Movement
     new_store: New Store
     new_store_credit: New Store Credit
+    new_store_credit_reason: New Store Credit Reason
     new_tax_category: New Tax Category
     new_tax_rate: New Tax Rate
     new_taxon: New Taxon
