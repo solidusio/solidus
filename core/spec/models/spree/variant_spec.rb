@@ -3,6 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe Spree::Variant, type: :model do
+  it { is_expected.to be_invalid }
+
   let!(:variant) { create(:variant) }
 
   it_behaves_like 'default_price'
@@ -21,6 +23,8 @@ RSpec.describe Spree::Variant, type: :model do
     it "should require a product" do
       expect(variant).to be_valid
       variant.product = nil
+      expect(variant).to be_invalid
+      variant.price = nil
       expect(variant).to be_invalid
     end
   end
