@@ -32,6 +32,34 @@ total by $10 (or whatever your currency is).
 
 [monkey-patch]: https://en.wikipedia.org/wiki/Monkey_patch
 
+## Using ActiveRecord methods in decorators
+
+In order to access ActiveRecord methods, you'll need to define a special
+method.
+
+```ruby
+module MyStore::ProductDecorator
+
+  # This is the place to define custom associations, delegations, scopes and
+  # other ActiveRecord stuff
+  def self.prepended(base)
+    base.has_many :comments, dependent: :destroy
+    base.scope    :sellable, -> { base.where(...).order(...) }
+    base.delegate :something, to: :something
+
+    base.singleton_class.prepend ClassMethods
+  end
+
+  ...
+
+  Spree::Product.prepend self
+end
+```
+
+In this example, a decorator has been used to extend the functionality of
+`Spree::Product`. The decorator includes an ActiveRecord association, scope,
+and delegation.
+
 ## Decorators and Solidus upgrades
 
 Decorators can complicate your Solidus upgrades. If you depend on decorators,
