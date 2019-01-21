@@ -56,6 +56,36 @@ PR description for more info.
 
 - Replace jquery_ujs with rails-ujs in frontend and backend [#3027](https://github.com/solidusio/solidus/pull/3027) ([kennyadsl](https://github.com/kennyadsl))
 
+**Removed code from Spree::Promotion**
+
+Previously Solidus used `code` column on `spree_promotions` to add a code
+to promotions that could be used as coupon code by users. This is no more a
+thing since we support multiple coupon codes associated to a single promotion.
+
+This change is important because it's quite common for old stores to have some
+promotion with `code` field still present in the database, even if it's not used.
+When performing the migration present in this PR it will raise an exception if
+there are records in the `spree_promotions` table with that field present.
+It's up to each store to understand how to handle this scenario before running
+this migration. We also provide other two ways to handle this, and users can
+just change the migration after it has been copied into their store.
+It's just matter of changing the content of the
+`RemoveCodeFromSpreePromotions.promotions_with_code_handler` method and make it
+return one of the following:
+
+- `Solidus::Migrations::PromotionWithCodeHandlers::MoveToSpreePromotionCode`:
+  it will convert Spree::Promotion#code to a `Spree::PromotionCode` before
+  removing the `code` column.
+- `Solidus::Migrations::PromotionWithCodeHandlers::DoNothing`: it will print
+  a message to track what we are deleting.
+
+Alternatively users can create their own class to handle data and return that
+class. The new class could inherit from `PromotionsWithCodeHandler` and
+should respond to `call`.
+
+- Remove `code` column from `spree_promotions` table.
+[#3028](https://github.com/solidusio/solidus/pull/3028) ([kennyadsl](https://github.com/kennyadsl))
+
 ### Core
 
 - Fix Spree::Variant inconsistency due to lack of product association [#3043](https://github.com/solidusio/solidus/pull/3043) ([rubenochiavone](https://github.com/rubenochiavone))
