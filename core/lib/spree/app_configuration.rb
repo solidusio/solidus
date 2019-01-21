@@ -425,6 +425,13 @@ module Spree
 
     # Allows switching attachment library for Image
     #
+    # `Spree::Image::PaperclipAttachment`
+    # is the default and provides the classic Paperclip implementation.
+    #
+    # `Spree::Image::ActiveStorageAttachment`
+    # Is the new ActiveStorage implementation, requires `bin/rails active_storage:install` in
+    # order to work.
+    #
     # @!attribute [rw] image_attachment_module
     # @return [Module] a module that can be included into Spree::Image to allow attachments
     # Enumerable of images adhering to the present_image_class interface

@@ -59,6 +59,12 @@ jobs:
     parallelism: *parallelism
     steps: *steps
 
+  postgres_activestorage:
+    <<: *postgres
+    environment:
+      <<: *environment
+      ACTIVE_STORAGE: 'true'
+
   postgres_rails51:
     <<: *postgres
     environment:
@@ -79,3 +85,4 @@ workflows:
       - mysql
       - postgres_rails51
       - mysql_rails51
+      - postgres_activestorage

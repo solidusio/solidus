@@ -23,6 +23,11 @@ module Spree
       before_action :authorize_for_order, if: proc { order_token.present? }
       before_action :authenticate_user
       before_action :load_user_roles
+      if defined? ActiveStorage
+        before_action do
+          ActiveStorage::Current.host = request.base_url
+        end
+      end
 
       rescue_from ActionController::ParameterMissing, with: :parameter_missing_error
       rescue_from ActiveRecord::RecordNotFound, with: :not_found

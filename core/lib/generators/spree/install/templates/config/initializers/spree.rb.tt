@@ -18,6 +18,15 @@ Spree.config do |config|
   # any inventory changes.
   # config.inventory_cache_threshold = 3
 
+  <% if defined? ::ActiveStorage %>
+  # Enable ActiveStorage attachments on images, requires:
+  #
+  #   bin/rails active_storage:install
+  #
+  # (To use the legacy Paperclip implementation just comment the following line)
+  config.image_attachment_module = 'Spree::Image::ActiveStorageAttachment'
+
+  <% end %>
 
   # Frontend:
 

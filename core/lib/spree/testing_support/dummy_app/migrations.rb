@@ -32,6 +32,10 @@ module DummyApp
 
         sh 'rake db:reset VERBOSE=false'
 
+        if ENV['ACTIVE_STORAGE']
+          sh 'rake active_storage:install db:migrate VERBOSE=false'
+        end
+
         # We have a brand new database, so we must re-establish our connection
         ActiveRecord::Base.establish_connection
       end

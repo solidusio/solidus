@@ -11,5 +11,11 @@ class Spree::BaseController < ApplicationController
   include Spree::Core::ControllerHelpers::Store
   include Spree::Core::ControllerHelpers::StrongParameters
 
+  if defined? ActiveStorage
+    before_action do
+      ActiveStorage::Current.host = request.base_url
+    end
+  end
+
   respond_to :html
 end

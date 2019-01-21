@@ -18,6 +18,14 @@ module Spree
           Rails.application.config.spree = Spree::Config.environment
         end
 
+        ::Spree.config do |config|
+          config.image_attachment_module = if ENV['ACTIVE_STORAGE']
+            'Spree::Image::ActiveStorageAttachment'
+          else
+            'Spree::Image::PaperclipAttachment'
+          end
+        end
+
         configure_spree_preferences(&config_block) if block_given?
       end
 

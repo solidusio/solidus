@@ -9,7 +9,12 @@ module Spree
         Please configure Spree::Config.image_attachment_module in your store
         initializer.
 
-        To use the Paperclip adapter
+        To use the ActiveStorage adapter (recommended):
+          Spree.config do |config|
+            config.image_attachment_module = 'Spree::Image::ActiveStorageAttachment'
+          end
+
+        To use the Paperclip adapter (legacy, deprecated):
           Spree.config do |config|
             config.image_attachment_module = 'Spree::Image::PaperclipAttachment'
           end

@@ -3,10 +3,7 @@
 ENV['RAILS_ENV'] = 'test'
 ENV['DISABLE_DATABASE_ENVIRONMENT_CHECK'] = '1'
 
-require 'rails'
-require 'active_record/railtie'
-require 'action_controller/railtie'
-require 'action_mailer/railtie'
+require 'rails/all'
 
 Rails.env = 'test'
 
@@ -65,6 +62,14 @@ module DummyApp
     if RAILS_52_OR_ABOVE
       config.action_controller.default_protect_from_forgery = true
       config.active_record.sqlite3.represent_boolean_as_integer = true
+
+      initializer 'solidus.active_storage' do
+        require 'active_storage'
+        require 'active_storage/service/disk_service'
+        ::ActiveStorage::Blob.service = ::ActiveStorage::Service::DiskService.new(
+          root: Dir.mktmpdir('activestorage-test')
+        )
+      end
     end
 
     # Avoid issues if an old spec/dummy still exists
@@ -105,6 +110,12 @@ end
 Spree.user_class = 'Spree::LegacyUser'
 Spree.config do |config|
   config.mails_from = "store@example.com"
+
+  config.image_attachment_module = if ENV['ACTIVE_STORAGE']
+    'Spree::Image::ActiveStorageAttachment'
+  else
+    'Spree::Image::PaperclipAttachment'
+  end
 end
 
 # Raise on deprecation warnings
