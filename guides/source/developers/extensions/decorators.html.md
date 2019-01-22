@@ -34,7 +34,7 @@ total by $10 (or whatever your currency is).
 
 ## Using ActiveRecord methods in decorators
 
-In order to access ActiveRecord methods, you'll need to define a special
+In order to access some class-level methods, you'll need to define a special
 method.
 
 ```ruby
@@ -46,8 +46,6 @@ module MyStore::ProductDecorator
     base.has_many :comments, dependent: :destroy
     base.scope    :sellable, -> { base.where(...).order(...) }
     base.delegate :something, to: :something
-
-    base.singleton_class.prepend ClassMethods
   end
 
   ...
