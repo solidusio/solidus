@@ -32,7 +32,7 @@ total by $10 (or whatever your currency is).
 
 [monkey-patch]: https://en.wikipedia.org/wiki/Monkey_patch
 
-## Using ActiveRecord methods in decorators
+## Using class-level methods in decorators
 
 In order to access some class-level methods, you'll need to define a special
 method.
