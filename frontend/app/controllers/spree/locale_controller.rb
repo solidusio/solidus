@@ -7,7 +7,7 @@ module Spree
       requested_locale = params[:switch_to_locale] || params[:locale]
 
       if requested_locale && available_locales.map(&:to_s).include?(requested_locale)
-        session[:locale] = requested_locale
+        session[set_user_language_locale_key] = requested_locale
         I18n.locale = requested_locale
         flash.notice = t('spree.locale_changed')
       else
