@@ -2,6 +2,6 @@
 
 FactoryBot.define do
   factory :store_credit_reason, class: 'Spree::StoreCreditReason' do
-    name "Input error"
+    name { "Input error" }
   end
 end
