@@ -811,12 +811,45 @@ RSpec.describe Spree::Variant, type: :model do
     end
   end
 
-  describe '#gallery' do
-    let(:product) { Spree::Variant.new }
-    subject { product.gallery }
+  describe "#gallery" do
+    let(:variant) { build_stubbed(:variant) }
+    subject { variant.gallery }
 
-    it 'responds to #images' do
+    it "responds to #images" do
       expect(subject).to respond_to(:images)
+    end
+
+    context "when variant.images is empty" do
+      let(:product) { create(:product) }
+      let(:variant) { create(:variant, product: product) }
+
+      it "fallbacks to variant.product.master.images" do
+        product.master.images = [create(:image)]
+
+        expect(product.master).not_to eq variant
+
+        expect(variant.gallery.images).to eq product.master.images
+      end
+
+      context "and variant.product.master.images is also empty" do
+        it "returns Spree::Image.none" do
+          expect(product.master).not_to eq variant
+          expect(product.master.images.presence).to be nil
+
+          expect(variant.gallery.images).to eq Spree::Image.none
+        end
+      end
+
+      context "and is master" do
+        it "returns Spree::Image.none" do
+          variant = product.master
+
+          expect(variant.is_master?).to be true
+          expect(variant.images.presence).to be nil
+
+          expect(variant.gallery.images).to eq Spree::Image.none
+        end
+      end
     end
   end
 end
