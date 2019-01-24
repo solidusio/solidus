@@ -49,6 +49,14 @@
   margin-bottom: 18px;
 }
 
+[data-hook="complete-order-button"] {
+  margin-bottom: 15px;
+}
+
+label[for="order_bill_address_attributes_firstname"] {
+  margin-top: 45px;
+}
+
 #risk_analysis legend {
   background-color: #c00;
   color: #FFF;
