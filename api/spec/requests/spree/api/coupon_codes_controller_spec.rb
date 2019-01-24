@@ -56,5 +56,50 @@ module Spree
         end
       end
     end
+
+    describe '#destroy' do
+      let(:promo) {
+        create(:promotion_with_item_adjustment,
+               code: 'tenoff',
+               per_code_usage_limit: 5,
+               adjustment_rate: 10)
+      }
+
+      let(:promo_code) { promo.codes.first }
+      let(:order) { create(:order_with_line_items, user: current_api_user) }
+
+      before do
+        post spree.api_order_coupon_codes_path(order), params: { coupon_code: promo_code.value }
+        delete spree.api_order_coupon_code_path(order, promo_code.value)
+      end
+
+      context 'when successful' do
+        it 'removes the coupon' do
+          expect(response.status).to eq(200)
+          expect(order.reload.promotions).to eq([])
+          expect(json_response).to eq({
+            "success" => I18n.t('spree.coupon_code_removed'),
+            "error" => nil,
+            "successful" => true,
+            "status_code" => "coupon_code_removed"
+          })
+        end
+      end
+
+      context 'when unsuccessful' do
+        it 'returns an error' do
+          delete spree.api_order_coupon_code_path(order, promo_code.value)
+
+          expect(response.status).to eq(422)
+          expect(order.reload.promotions).to eq([])
+          expect(json_response).to eq({
+            "success" => nil,
+            "error" => I18n.t('spree.coupon_code_not_present'),
+            "successful" => false,
+            "status_code" => "coupon_code_not_present"
+          })
+        end
+      end
+    end
   end
 end
