@@ -4,16 +4,14 @@ require 'spec_helper'
 
 module Spree
   describe Api::TaxonsController, type: :request do
-    let(:taxonomy) { create(:taxonomy) }
-    let(:taxon) { create(:taxon, name: "Ruby", taxonomy: taxonomy) }
-    let(:taxon2) { create(:taxon, name: "Rails", taxonomy: taxonomy) }
+    let!(:taxonomy) { create(:taxonomy) }
+    let!(:taxon) { create(:taxon, name: "Ruby", parent: taxonomy.root, taxonomy: taxonomy) }
+    let!(:taxon2) { create(:taxon, name: "Rails", parent: taxon, taxonomy: taxonomy) }
+    let!(:rails_v3_2_2) { create(:taxon, name: "3.2.2", parent: taxon2, taxonomy: taxonomy) }
     let(:attributes) { ["id", "name", "pretty_name", "permalink", "parent_id", "taxonomy_id"] }
 
     before do
       stub_authentication!
-      taxon2.children << create(:taxon, name: "3.2.2", taxonomy: taxonomy)
-      taxon.children << taxon2
-      taxonomy.root.children << taxon
     end
 
     context "as a normal user" do
@@ -82,6 +80,24 @@ module Spree
             expect(children.first['name']).to eq taxon.name
             expect(children.first['taxons'].count).to eq 1
           end
+        end
+      end
+
+      context 'filtering by taxon ids' do
+        it 'returns only requested id' do
+          get spree.api_taxons_path, params: { ids: [rails_v3_2_2.id] }
+
+          expect(json_response['taxons'].size).to eq 1
+        end
+
+        it 'returns only requested ids' do
+          # We need a completly new branch to avoid having parent that can be preloaded from the rails ancestors
+          python   = create(:taxon, name: "Python", parent: taxonomy.root, taxonomy: taxonomy)
+          python_3 = create(:taxon, name: "3.0", parent: python, taxonomy: taxonomy)
+
+          get spree.api_taxons_path, params: { ids: [rails_v3_2_2.id, python_3.id] }
+
+          expect(json_response['taxons'].size).to eq 2
         end
       end
 

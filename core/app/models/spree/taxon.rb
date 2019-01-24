@@ -104,9 +104,14 @@ module Spree
     # @return [String] this taxon's ancestors names followed by its own name,
     #   separated by arrows
     def pretty_name
-      ancestor_chain = ancestors.map(&:name)
-      ancestor_chain << name
-      ancestor_chain.join(" -> ")
+      if parent.present?
+        [
+          parent.pretty_name,
+          name
+        ].compact.join(" -> ")
+      else
+        name
+      end
     end
 
     # @see https://github.com/spree/spree/issues/3390
