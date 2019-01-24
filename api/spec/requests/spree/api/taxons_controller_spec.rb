@@ -84,22 +84,20 @@ module Spree
       end
 
       context 'filtering by taxon ids' do
-        it 'returns only requested ids' do
+        it 'returns only requested id' do
           get spree.api_taxons_path, params: { ids: [rails_v3_2_2.id] }
 
           expect(json_response['taxons'].size).to eq 1
         end
 
-        it 'avoids N+1 queries retrieving several taxons' do
+        it 'returns only requested ids' do
           # We need a completly new branch to avoid having parent that can be preloaded from the rails ancestors
           python   = create(:taxon, name: "Python", parent: taxonomy.root, taxonomy: taxonomy)
           python_3 = create(:taxon, name: "3.0", parent: python, taxonomy: taxonomy)
 
-          expect {
-            get spree.api_taxons_path, params: { ids: [rails_v3_2_2.id, python_3.id] }
+          get spree.api_taxons_path, params: { ids: [rails_v3_2_2.id, python_3.id] }
 
-            expect(json_response['taxons'].size).to eq 2
-          }.to query_limit_eq(5)
+          expect(json_response['taxons'].size).to eq 2
         end
       end
 
