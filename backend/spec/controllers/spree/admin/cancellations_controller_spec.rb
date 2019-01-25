@@ -72,7 +72,7 @@ describe Spree::Admin::CancellationsController do
 
       it "cancels the inventory" do
         subject
-        expect(order.inventory_units.map(&:state).uniq).to match_array(['canceled'])
+        expect(order.reload.inventory_units.map(&:state).uniq).to match_array(['canceled'])
       end
     end
   end

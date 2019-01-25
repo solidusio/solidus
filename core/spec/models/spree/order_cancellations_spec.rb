@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Spree::OrderCancellations do
   describe "#cancel_unit" do
-    subject { Spree::OrderCancellations.new(order).cancel_unit(inventory_unit) }
+    subject { described_class.new(order).cancel_unit(inventory_unit) }
     let(:order) { create(:shipped_order, line_items_count: 1) }
     let(:inventory_unit) { order.inventory_units.first }
 
@@ -62,7 +62,7 @@ RSpec.describe Spree::OrderCancellations do
   end
 
   describe "#reimburse_units" do
-    subject { Spree::OrderCancellations.new(order).reimburse_units(inventory_units, created_by: created_by_user) }
+    subject { described_class.new(order).reimburse_units(inventory_units, created_by: created_by_user) }
     let(:order) { create(:shipped_order, line_items_count: 2) }
     let(:inventory_units) { order.inventory_units }
     let!(:default_refund_reason) { Spree::RefundReason.find_or_create_by!(name: Spree::RefundReason::RETURN_PROCESSING_REASON, mutable: false) }
@@ -83,7 +83,7 @@ RSpec.describe Spree::OrderCancellations do
   end
 
   describe "#short_ship" do
-    subject { Spree::OrderCancellations.new(order).short_ship([inventory_unit]) }
+    subject { described_class.new(order).short_ship([inventory_unit]) }
 
     let(:order) { create(:order_ready_to_ship, line_items_count: 1) }
     let(:inventory_unit) { order.inventory_units.first }
@@ -110,24 +110,18 @@ RSpec.describe Spree::OrderCancellations do
     end
 
     it "adjusts the order" do
-      expect { subject }.to change { order.total }.by(-10.0)
+      expect { subject }.to change { order.reload.total }.by(-10.0)
     end
 
     context "multiple inventory units" do
-      subject { Spree::OrderCancellations.new(order).short_ship(inventory_units) }
-      let!(:order) { create(:order_with_line_items) }
-      let!(:inventory_units) do
-        order.line_items.first.quantity = 4
-        # It already has 1 line_item in it
-        3.times do
-          create(:inventory_unit, line_item: order.line_items.first)
-        end
-        order.recalculate
-        order.line_items.first.inventory_units.to_a
-      end
+      subject { described_class.new(order).short_ship(inventory_units) }
+
+      let(:quantity) { 4 }
+      let(:order) { create(:order_with_line_items, line_items_attributes: [{ quantity: quantity }]) }
+      let(:inventory_units) { order.line_items.first.inventory_units }
 
       it "adjusts the order" do
-        expect { subject }.to change { order.total }.by(-40.0)
+        expect { subject }.to change { order.reload.total }.by(-40.0)
       end
     end
 
@@ -139,14 +133,14 @@ RSpec.describe Spree::OrderCancellations do
     end
 
     context "when send_cancellation_mailer is false" do
-      subject { Spree::OrderCancellations.new(order).short_ship([inventory_unit]) }
+      subject { described_class.new(order).short_ship([inventory_unit]) }
 
       before do
-        @original_send_boolean = Spree::OrderCancellations.send_cancellation_mailer
-        Spree::OrderCancellations.send_cancellation_mailer = false
+        @original_send_boolean = described_class.send_cancellation_mailer
+        described_class.send_cancellation_mailer = false
       end
 
-      after { Spree::OrderCancellations.send_cancellation_mailer = @original_send_boolean }
+      after { described_class.send_cancellation_mailer = @original_send_boolean }
 
       it "does not send a cancellation email" do
         expect(Spree::OrderMailer).not_to receive(:inventory_cancellation_email)
@@ -219,11 +213,11 @@ RSpec.describe Spree::OrderCancellations do
         let(:short_ship_tax_notifier) { double }
 
         before do
-          @old_notifier = Spree::OrderCancellations.short_ship_tax_notifier
-          Spree::OrderCancellations.short_ship_tax_notifier = short_ship_tax_notifier
+          @old_notifier = described_class.short_ship_tax_notifier
+          described_class.short_ship_tax_notifier = short_ship_tax_notifier
         end
         after do
-          Spree::OrderCancellations.short_ship_tax_notifier = @old_notifier
+          described_class.short_ship_tax_notifier = @old_notifier
         end
 
         it 'calls the short_ship_tax_notifier' do

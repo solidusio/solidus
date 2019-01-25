@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Spree::UnitCancel do
-  let(:unit_cancel) { Spree::UnitCancel.create!(inventory_unit: inventory_unit, reason: Spree::UnitCancel::SHORT_SHIP) }
+  let(:unit_cancel) { described_class.create!(inventory_unit: inventory_unit, reason: described_class::SHORT_SHIP) }
   let(:inventory_unit) { create(:inventory_unit) }
 
   describe '#adjust!' do
@@ -59,30 +59,21 @@ RSpec.describe Spree::UnitCancel do
     end
 
     context "multiple inventory units" do
-      let(:order) { create(:order_with_line_items) }
-      let(:line_item) do
-        # Change our quantity to 4
-        order.line_items.first.quantity = 4
-        # Make sure that there are no inventory_units before
-        order.line_items.first.inventory_units.clear
-        order.line_items.first
-      end
+      let(:quantity) { 4 }
+      let(:order) { create(:order_with_line_items, line_items_attributes: [{ quantity: quantity }]) }
+      let(:line_item) { order.line_items.first }
+      let(:inventory_units) { line_item.inventory_units }
 
-      let(:inventory_units) do
-        [
-          create(:inventory_unit, line_item: line_item),
-          create(:inventory_unit, line_item: line_item),
-          create(:inventory_unit, line_item: line_item),
-          create(:inventory_unit, line_item: line_item),
-        ]
+      it "has the right amount of inventory units" do
+        expect(inventory_units.size).to eq quantity
       end
 
       it "properly creates adjustments for line_item" do
         inventory_units.each do |inventory_unit|
-          Spree::UnitCancel.create!(inventory_unit: inventory_unit, reason: Spree::UnitCancel::SHORT_SHIP).adjust!
+          described_class.create!(inventory_unit: inventory_unit, reason: described_class::SHORT_SHIP).adjust!
           inventory_unit.cancel!
         end
-        expect(line_item.total.to_d).to eq(0)
+        expect(line_item.reload.total.to_d).to eq(0)
       end
     end
   end

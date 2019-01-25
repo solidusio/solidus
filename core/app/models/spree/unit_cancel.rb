@@ -27,7 +27,9 @@ class Spree::UnitCancel < Spree::Base
       finalized: true
     )
 
-    inventory_unit.line_item.order.recalculate
+    inventory_unit.line_item.adjustment_total += amount
+    inventory_unit.order.recalculate
+
     adjustment
   end
 

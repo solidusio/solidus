@@ -10,8 +10,8 @@ module Spree
       end
 
       def short_ship
-        inventory_unit_ids = params[:inventory_unit_ids] || []
-        inventory_units = Spree::InventoryUnit.where(id: inventory_unit_ids)
+        inventory_unit_ids = (params[:inventory_unit_ids] || []).map(&:to_i)
+        inventory_units = @order.inventory_units.select { |iu| inventory_unit_ids.include? iu.id }
 
         if inventory_units.size != inventory_unit_ids.size
           flash[:error] = t('spree.unable_to_find_all_inventory_units')
