@@ -106,7 +106,7 @@ GEM
     mini_portile2 (2.3.0)
     minitest (5.11.3)
     multi_json (1.13.1)
-    nokogiri (1.8.2)
+    nokogiri (1.8.5)
       mini_portile2 (~> 2.3.0)
     oga (2.15)
       ast
@@ -148,7 +148,7 @@ PLATFORMS
 DEPENDENCIES
   middleman (~> 4.2)
   middleman-s3_sync
-  nokogiri (~> 1.8.1)
+  nokogiri (~> 1.8.5)
   oga (~> 2.14)
   rack (>= 2.0.6)
   redcarpet
