@@ -1,9 +1,10 @@
 **Description**
 <!--
   Please include a summary of the change and which issue is fixed. Please also include relevant motivation and context.
--->
 
-Ref #ISSUE
+  If needed you can reference another PR or issue here, e.g.:
+  Ref #ISSUE
+-->
 
 **Checklist:**
 - [ ] I have followed [Pull Request guidelines](https://github.com/solidusio/solidus/blob/master/CONTRIBUTING.md#pull-request-guidelines)
