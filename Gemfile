@@ -55,6 +55,7 @@ group :utils do
   gem 'launchy', require: false
   gem 'i18n-tasks', '~> 0.9', require: false
   gem 'rubocop', '~> 0.53.0', require: false
+  gem 'gem-release', require: false
 end
 
 gem 'rspec_junit_formatter', require: false, group: :ci
