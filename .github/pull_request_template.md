@@ -1,12 +1,11 @@
-# Description
+**Description**
 <!--
   Please include a summary of the change and which issue is fixed. Please also include relevant motivation and context.
 -->
 
-Ref # (issue)
+Ref #ISSUE
 
-# Checklist:
-
+**Checklist:**
 - [ ] I have followed [Pull Request guidelines](https://github.com/solidusio/solidus/blob/master/CONTRIBUTING.md#pull-request-guidelines)
 - [ ] I have added a detailed description into each commit message
 - [ ] I have updated Guides and README accordingly to this change (if needed)
