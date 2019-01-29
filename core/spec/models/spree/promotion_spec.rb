@@ -49,6 +49,19 @@ RSpec.describe Spree::Promotion, type: :model do
     end
   end
 
+  describe ".coupons" do
+    let(:promotion_code) { create(:promotion_code) }
+    let!(:promotion_with_code) { promotion_code.promotion }
+    let!(:another_promotion_code) { create(:promotion_code, promotion: promotion_with_code) }
+    let!(:promotion_without_code) { create(:promotion) }
+
+    subject { described_class.coupons }
+
+    it "returns only distinct promotions with a code associated" do
+      expect(subject).to eq [promotion_with_code]
+    end
+  end
+
   describe "#apply_automatically" do
     subject { build(:promotion) }
 

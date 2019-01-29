@@ -36,7 +36,7 @@ module Spree
 
     before_save :normalize_blank_values
 
-    scope :coupons, -> { where.not(code: nil) }
+    scope :coupons, -> { joins(:codes).distinct }
     scope :advertised, -> { where(advertise: true) }
     scope :active, -> do
       table = arel_table
@@ -48,11 +48,6 @@ module Spree
 
     self.whitelisted_ransackable_associations = ['codes']
     self.whitelisted_ransackable_attributes = ['path', 'promotion_category_id']
-
-    # temporary code. remove after the column is dropped from the db.
-    def columns
-      super.reject { |column| column.name == "code" }
-    end
 
     def self.order_activatable?(order)
       order && !UNACTIVATABLE_ORDER_STATES.include?(order.state)
