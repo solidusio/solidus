@@ -14,7 +14,7 @@ solidus_i18n Version 2.0+ only contains translation files.
 
 Previous versions of solidus_i18n included extra functionality like locale
 selectors and which is now built in to Solidus 2.6+. Configuration for
-`routing-fitler` has also been removed and must be configured manually
+`routing-filter` has also been removed and must be configured manually
 (See [Locale in URL](#locale-in-url)).
 
 ## Installation
