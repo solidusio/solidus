@@ -59,6 +59,7 @@ describe 'Users', type: :feature do
 
     it "can sort asc" do
       within_table(table_id) do
+        expect(page).to have_selector '.sort_link.asc'
         expect(page).to have_text text_match_1
         expect(page).to have_text text_match_2
         expect(text_match_1).to appear_before text_match_2
@@ -70,6 +71,7 @@ describe 'Users', type: :feature do
         # Ransack adds a ▲ to the sort link. With exact match Capybara is not able to find that link
         click_link sort_link, exact: false
 
+        expect(page).to have_selector '.sort_link.desc'
         expect(page).to have_text text_match_1
         expect(page).to have_text text_match_2
         expect(text_match_2).to appear_before text_match_1
