@@ -524,7 +524,7 @@ es-MX:
     date: Fecha
     date_completed: Fecha completada
     date_picker:
-      first_day:
+      first_day: 1
       format: "%d/%m/%Y"
       js_format: dd/mm/yy
     date_range: Rango de Fecha
@@ -636,7 +636,7 @@ es-MX:
       available_locales: Traduciones Disponibles
       language: Idioma
       localization_settings: Ajustes de traducciones
-      this_file_language: Castellano (MX)
+      this_file_language: Español (México)
     icon: Icono
     identifier:
     image: Imagen
