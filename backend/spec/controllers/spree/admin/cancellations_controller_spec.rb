@@ -22,7 +22,7 @@ describe Spree::Admin::CancellationsController do
   describe "#cancel" do
     subject { post :short_ship, params: { order_id: order.number, inventory_unit_ids: inventory_units.map(&:id) } }
 
-    let(:order) { create(:order_ready_to_ship, number: "R100", state: "complete", line_items_count: 1) }
+    let(:order) { create(:order_with_line_items, line_items_attributes: [{ quantity: 4 }]) }
     let(:referer) { "order_admin_page" }
 
     context "no inventory unit ids are provided" do
@@ -67,12 +67,16 @@ describe Spree::Admin::CancellationsController do
       end
 
       it "creates a unit cancel" do
-        expect { subject }.to change { Spree::UnitCancel.count }.by(1)
+        expect { subject }.to change { Spree::UnitCancel.count }.by(4)
       end
 
       it "cancels the inventory" do
         subject
-        expect(order.inventory_units.map(&:state).uniq).to match_array(['canceled'])
+        expect(order.reload.inventory_units.map(&:state).uniq).to match_array(['canceled'])
+      end
+
+      it "adjusts the order" do
+        expect { subject }.to change { order.reload.total }.by(-40.0)
       end
     end
   end

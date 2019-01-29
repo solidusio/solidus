@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Spree::UnitCancel do
-  let(:unit_cancel) { Spree::UnitCancel.create!(inventory_unit: inventory_unit, reason: Spree::UnitCancel::SHORT_SHIP) }
+  let(:unit_cancel) { described_class.create!(inventory_unit: inventory_unit, reason: described_class::SHORT_SHIP) }
   let(:inventory_unit) { create(:inventory_unit) }
 
   describe '#adjust!' do
@@ -55,6 +55,25 @@ RSpec.describe Spree::UnitCancel do
 
       it "raises an error" do
         expect { subject }.to raise_error RuntimeError, "Adjustable does not match line item"
+      end
+    end
+
+    context "multiple inventory units" do
+      let(:quantity) { 4 }
+      let(:order) { create(:order_with_line_items, line_items_attributes: [{ quantity: quantity }]) }
+      let(:line_item) { order.line_items.first }
+      let(:inventory_units) { line_item.inventory_units }
+
+      it "has the right amount of inventory units" do
+        expect(inventory_units.size).to eq quantity
+      end
+
+      it "properly creates adjustments for line_item" do
+        inventory_units.each do |inventory_unit|
+          described_class.create!(inventory_unit: inventory_unit, reason: described_class::SHORT_SHIP).adjust!
+          inventory_unit.cancel!
+        end
+        expect(line_item.reload.total.to_d).to eq(0)
       end
     end
   end
