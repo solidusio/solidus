@@ -1,4 +1,23 @@
-## Solidus 2.8.0 (master, unreleased)
+## Solidus 2.9.0 (master, unreleased)
+
+### Major Changes
+
+### Core
+
+### Backend
+
+### API
+
+### Frontend
+
+### Deprecations
+
+### Misc
+
+### Docs & Guides
+
+
+## Solidus 2.8.0 (2019-01-29)
 
 ### Major Changes
 
