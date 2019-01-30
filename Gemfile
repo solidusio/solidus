@@ -32,6 +32,7 @@ group :backend, :frontend, :core, :api do
   gem 'simplecov', require: false
   gem 'with_model', require: false
   gem 'rails-controller-testing', require: false
+  gem 'puma', require: false
 end
 
 group :backend, :frontend do
