@@ -38,7 +38,6 @@ group :backend, :frontend do
   gem 'capybara', '~> 2.15', require: false
   gem 'capybara-screenshot', '>= 1.0.18', require: false
   gem 'selenium-webdriver', require: false
-  gem 'poltergeist', '~> 1.9', require: false
 end
 
 group :frontend do
