@@ -206,6 +206,21 @@ module Spree
         end
       end
 
+      context "channel" do
+        let(:params) { { channel: "custom" } }
+
+        it "sets the order channel" do
+          order = Importer::Order.import(user, {})
+          expect(order.channel).to eq "spree"
+        end
+
+        it "with a different channel" do
+          params[:channel] = "custom"
+          order = Importer::Order.import(user, params)
+          expect(order.channel).to eq "custom"
+        end
+      end
+
       context "state passed is not associated with country" do
         let(:params) do
           {
