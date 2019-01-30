@@ -37,6 +37,8 @@ require 'spree/testing_support/url_helpers'
 require 'spree/testing_support/order_walkthrough'
 require 'spree/testing_support/capybara_ext'
 
+Capybara.server = :webrick
+
 require 'capybara-screenshot/rspec'
 Capybara.save_path = ENV['CIRCLE_ARTIFACTS'] if ENV['CIRCLE_ARTIFACTS']
 Capybara.exact = true

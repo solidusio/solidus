@@ -35,7 +35,7 @@ group :backend, :frontend, :core, :api do
 end
 
 group :backend, :frontend do
-  gem 'capybara', '~> 2.15', require: false
+  gem 'capybara', '~> 3.13', require: false
   gem 'capybara-screenshot', '>= 1.0.18', require: false
   gem 'selenium-webdriver', require: false
 end
