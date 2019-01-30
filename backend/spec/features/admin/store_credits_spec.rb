@@ -84,7 +84,7 @@ describe "Store credits admin" do
         click_button 'Edit'
         fill_in 'store_credit_memo', with: 'Lottery Won'
         click_button 'Save'
-        expect(page).to have_content "Memo Lottery Won"
+        expect(page).to have_content "Memo Lottery Won", normalize_ws: true
       end
       expect(page).to have_content "Store Credit has been successfully updated!"
 
@@ -98,8 +98,8 @@ describe "Store credits admin" do
         find(:css, ".edit-memo").click
         fill_in 'store_credit_memo', with: 'Lottery Won Twice'
         find(:css, ".save-memo").click
-        expect(page).to have_content "Memo Lottery Won"
-        expect(page).not_to have_content "Memo Lottery Won Twice"
+        expect(page).to have_content "Memo Lottery Won", normalize_ws: true
+        expect(page).not_to have_content "Lottery Won Twice"
       end
       expect(page).to have_content "Unable to update store credit [\"Memo is not valid\"]"
     end

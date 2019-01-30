@@ -582,7 +582,7 @@ describe "Checkout", type: :feature, inaccessible: true do
     end
 
     it "displays a thank you message" do
-      expect(page).to have_content(I18n.t('spree.thank_you_for_your_order'))
+      expect(page).to have_content(I18n.t('spree.thank_you_for_your_order'), normalize_ws: true)
     end
 
     it "does not display a thank you message on that order future visits" do
