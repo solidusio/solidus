@@ -2133,7 +2133,7 @@ en:
         message: If you have received this email, then your email settings are correct.
         subject: Test Mail
     test_mode: Test Mode
-    thank_you_for_your_order: Thank you for your business.  Please print out a copy
+    thank_you_for_your_order: Thank you for your business. Please print out a copy
       of this confirmation page for your records.
     there_are_no_items_for_this_order: There are no items for this order. Please add
       an item to the order to continue.

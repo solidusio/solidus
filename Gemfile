@@ -27,18 +27,18 @@ group :backend, :frontend, :core, :api do
 
   gem 'database_cleaner', '~> 1.3', require: false
   gem 'factory_bot_rails', '~> 4.8', require: false
-  gem 'rspec-activemodel-mocks', '~>1.1', require: false
+  gem 'rspec-activemodel-mocks', '~> 1.1', require: false
   gem 'rspec-rails', '~> 3.7', require: false
   gem 'simplecov', require: false
   gem 'with_model', require: false
   gem 'rails-controller-testing', require: false
+  gem 'puma', require: false
 end
 
 group :backend, :frontend do
-  gem 'capybara', '~> 2.15', require: false
+  gem 'capybara', '~> 3.13', require: false
   gem 'capybara-screenshot', '>= 1.0.18', require: false
   gem 'selenium-webdriver', require: false
-  gem 'poltergeist', '~> 1.9', require: false
 end
 
 group :frontend do
