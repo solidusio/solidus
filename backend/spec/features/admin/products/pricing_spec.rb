@@ -72,11 +72,31 @@ describe 'Pricing' do
         product.master.update(price: 49.99)
       end
 
-      it 'has a working edit page' do
+      it "has a working edit page" do
         within "#spree_price_#{product.master.prices.first.id}" do
           click_icon :edit
         end
         expect(page).to have_content("Edit Price")
+      end
+
+      context "updating default price currency" do
+        it "has a variant working edit page" do
+          within "#spree_price_#{variant.prices.first.id}" do
+            click_icon :edit
+          end
+          expect(page).to have_content("Edit Price")
+          select "EUR", from: "price_currency"
+          click_button "Update"
+
+          within ".tabs" do
+            click_link "Variants"
+          end
+          within "#spree_variant_#{variant.id}" do
+            click_icon :edit
+          end
+
+          expect(page).to have_content("Edit Variant")
+        end
       end
     end
 
