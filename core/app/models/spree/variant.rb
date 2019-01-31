@@ -121,7 +121,7 @@ module Spree
         Spree::StockItem.arel_table[:count_on_hand].gt(0),
         Spree::StockItem.arel_table[:backorderable].eq(true)
       ]
-      joins(:stock_items).where(arel_conditions.inject(:or))
+      joins(:stock_items).where(arel_conditions.inject(:or)).distinct
     end
 
     self.whitelisted_ransackable_associations = %w[option_values product prices default_price]

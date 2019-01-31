@@ -783,6 +783,10 @@ RSpec.describe Spree::Variant, type: :model do
       expect( subject ).not_to include(out_of_stock_variant)
     end
 
+    it "includes variants only once" do
+      expect(subject.to_a.count(in_stock_variant)).to be 1
+    end
+
     context "inventory levels globally not tracked" do
       before { Spree::Config.track_inventory_levels = false }
 
