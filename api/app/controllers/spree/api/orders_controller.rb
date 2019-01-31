@@ -9,6 +9,9 @@ module Spree
       class_attribute :admin_order_attributes
       self.admin_order_attributes = [:import, :number, :completed_at, :locked_at, :channel, :user_id, :created_at]
 
+      class_attribute :admin_payment_attributes
+      self.admin_payment_attributes = [:payment_method, :amount, :state, source: {}]
+
       skip_before_action :authenticate_user, only: :apply_coupon_code
 
       before_action :find_order, except: [:create, :mine, :current, :index]
@@ -151,6 +154,14 @@ module Spree
       def permitted_shipment_attributes
         if can?(:admin, Spree::Shipment)
           super + admin_shipment_attributes
+        else
+          super
+        end
+      end
+
+      def permitted_payment_attributes
+        if can?(:admin, Spree::Payment)
+          super + admin_payment_attributes
         else
           super
         end
