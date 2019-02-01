@@ -12,14 +12,11 @@ Rails.env = 'test'
 
 require 'solidus_core'
 
-# @private
-def forgery_protected_by_default?
-  Gem::Version.new(Rails.version) >= Gem::Version.new('5.2')
-end
+RAILS_52_OR_ABOVE = Gem::Version.new(Rails.version) >= Gem::Version.new('5.2')
 
 # @private
 class ApplicationController < ActionController::Base
-  if !forgery_protected_by_default?
+  unless RAILS_52_OR_ABOVE
     protect_from_forgery with: :exception
   end
 end
@@ -65,12 +62,8 @@ module DummyApp
     config.active_support.deprecation                 = :stderr
     config.secret_key_base                            = 'SECRET_TOKEN'
 
-    if forgery_protected_by_default?
+    if RAILS_52_OR_ABOVE
       config.action_controller.default_protect_from_forgery = true
-    end
-
-    if config.active_record.sqlite3
-      # Rails >= 5.2
       config.active_record.sqlite3.represent_boolean_as_integer = true
     end
 
