@@ -133,7 +133,7 @@ module Spree
     end
 
     def item_cost
-      line_items.sum(&:total)
+      manifest.sum(&:item_cost)
     end
 
     def ready_or_pending?
