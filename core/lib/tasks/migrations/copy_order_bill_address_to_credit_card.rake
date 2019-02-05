@@ -13,6 +13,8 @@ namespace 'spree:migrations:copy_order_bill_address_to_credit_card' do
   # This task should be safe to run multiple times.
 
   task up: :environment do
+    Spree::Deprecation.warn("rake spree:migrations:copy_order_bill_address_to_credit_card:up has been deprecated and will be removed with Solidus 3.0.")
+
     if Spree::CreditCard.connection.adapter_name =~ /postgres/i
       postgres_copy
     else
@@ -21,6 +23,8 @@ namespace 'spree:migrations:copy_order_bill_address_to_credit_card' do
   end
 
   task down: :environment do
+    Spree::Deprecation.warn("rake spree:migrations:copy_order_bill_address_to_credit_card:down has been deprecated and will be removed with Solidus 3.0.")
+
     Spree::CreditCard.update_all(address_id: nil)
   end
 
