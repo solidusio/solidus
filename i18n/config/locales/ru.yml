@@ -1,1356 +1,2025 @@
+---
 ru:
+  activemodel:
+    attributes:
+      spree/order_cancellations:
+        cancel: Отменить
+        quantity: Количество
+        shipment: Доставка
+        state: Статус
   activerecord:
     attributes:
       spree/address:
-        address1: "Адрес"
-        address2: "адрес (продолж.)"
-        city: "Населённый пункт"
-        country: "Страна"
-        firstname: "Имя"
-        lastname: "Фамилия"
-        phone: "Телефон"
-        state: "Область/Регион"
-        zipcode: "Почтовый индекс"
+        address1: Адрес
+        address2: Квартира/Офис
+        city: Населённый пункт
+        company: Компания
+        country: Страна
+        firstname: Имя
+        lastname: Фамилия
+        phone: Телефон
+        state: Область/Регион
+        zipcode: Почтовый индекс
+      spree/adjustment:
+        adjustable: Корректировка
+        adjustment_reason_id: Причина
+        amount: Сумма
+        label: Метка
+        name: Название
+        state: Статус
+      spree/adjustment_reason:
+        active: Активен
+        code: Код
+        name: Название
+        state: Статус
+      spree/calculator/flat_rate:
+        preferred_amount: Сумма
       spree/calculator/tiered_flat_rate:
-        preferred_base_amount:
-        preferred_tiers:
+        preferred_base_amount: Базовая сумма
+        preferred_currency: Валюта
+        preferred_tiers: Уровни
       spree/calculator/tiered_percent:
-        preferred_base_percent:
-        preferred_tiers:
+        preferred_base_percent: Базовый процент
+        preferred_currency: Валюта
+        preferred_tiers: Уровни
+      spree/carton:
+        tracking: Отслеживание
       spree/country:
         iso: ISO
         iso3: ISO3
         iso_name: ISO-имя
-        name: "Название"
+        name: Название
         numcode: ISO-код
       spree/credit_card:
-        base:
-        cc_type: "Тип кредитной карты"
-        month: "Месяц"
-        name:
-        number: "Номер"
-        verification_value: "Значение проверки"
-        year: "Год"
+        base: ''
+        card_code: Код
+        cc_type: Тип кредитной карты
+        expiration: Истекает
+        month: Месяц
+        name: Название
+        number: Номер
+        verification_value: Значение проверки
+        year: Год
+      spree/customer_return:
+        created_at: Дата создания
+        name: Название
+        number: Номер
+        pre_tax_total: Предварительный налог
+        reimbursement_status: Статус возмещения
+        total: Итого
+        total_excluding_vat: Итого без НДС
+      spree/image:
+        alt: Текстовое название
+        attachment: Имя файла
       spree/inventory_unit:
-        state: "Состояние"
+        state: Статус
+      spree/legacy_user:
+        email: Электронная почта
+        password: Пароль
+        password_confirmation: Подтверждение пароля
+        spree_roles: Роль
       spree/line_item:
-        price: "Цена"
-        quantity: "Кол-во"
+        description: Описание
+        name: Название
+        price: Цена
+        quantity: Кол-во
+        total: Итого
+      spree/log_entry:
+        details: Детали
       spree/option_type:
-        name: "Название"
-        presentation: "Представление"
+        name: Название
+        presentation: Представление
+      spree/option_value:
+        name: Название
+        presentation: Представление
       spree/order:
-        checkout_complete: "Оформление заказа завершено"
-        completed_at: "Завершено"
-        considered_risky: "Статус риска"
-        coupon_code: "Код купона"
-        created_at: "Дата заказа"
-        email: E-mail покупателя
+        additional_tax_total: Итого по налогам
+        approved_at: Дата подтверждения
+        approver: Подтвердил
+        canceled_at: Дата отмены
+        canceler: Отменил
+        checkout_complete: Оформление заказа завершено
+        completed_at: Завершено
+        considered_risky: Статус риска
+        coupon_code: Код купона
+        created_at: Дата заказа
+        email: Электронная почта покупателя
+        included_tax_total: Налоги (вкл.)
         ip_address: IP-адрес
-        item_total: "Итого по товарам"
-        number: "Номер"
-        payment_state: "Состояние оплаты"
-        shipment_state: "Состояние доставки"
-        special_instructions: "Специальные инструкции"
-        state: "Состояние"
-        total: "Итого по заказу"
+        item_total: Итого по товарам
+        number: Номер
+        payment_state: Статус оплаты
+        shipment_state: Статус доставки
+        shipment_total: Итого по доставке
+        special_instructions: Специальные инструкции
+        state: Статус
+        total: Итого по заказу
       spree/order/bill_address:
-        address1: "Улица"
-        city: "Город"
-        firstname: "Имя"
-        lastname: "Фамилия"
-        phone: "Телефон"
-        state: "Область/Регион"
-        zipcode: "Почтовый индекс"
+        address1: Улица
+        city: Город
+        firstname: Имя
+        lastname: Фамилия
+        phone: Телефон
+        state: Область/Регион
+        zipcode: Почтовый индекс
       spree/order/ship_address:
-        address1: "Улица"
-        city: "Город"
-        firstname: "Имя"
-        lastname: "Фамилия"
-        phone: "Телефон"
-        state: "Область/Регион"
-        zipcode: "Почтовый индекс"
+        address1: Улица
+        city: Город
+        firstname: Имя
+        lastname: Фамилия
+        phone: Телефон
+        state: Область/Регион
+        zipcode: Почтовый индекс
       spree/payment:
-        amount: "Количество"
+        amount: Сумма
+        created_at: Дата создания
+        number: Номер
+        response_code: Код ответа
+        state: Статус
       spree/payment_method:
-        name: "Название"
+        active: Активен
+        auto_capture: Автоматическая проводка
+        available_to_users: Доступен пользователям
+        available_to_admin: Доступен администратору
+        description: Описание
+        name: Название
+        preference_source: Источник настроек
+        state: Статус
+        type: Тип
+      spree/price:
+        amount: Сумма
+        country: Страна
+        currency: Валюта
+        price: Цена
+        is_default: По умолчанию
+        variant: Вариант
       spree/product:
-        available_on: "Доступен с"
-        cost_currency: "Валюта"
-        cost_price: "Себестоимость"
-        description: "Описание"
-        master_price: "Цена"
-        name: "Название"
-        on_hand: "На складе"
-        shipping_category: "Категория доставки"
-        tax_category: "Категория налогов"
+        available_on: Доступен с
+        cost_currency: Валюта
+        cost_price: Себестоимость
+        depth: Глубина
+        description: Описание
+        height: Высота
+        master_price: Цена
+        meta_description: Мета-тег описание
+        meta_keywords: Мета-тег ключевые слова
+        meta_title: Мета-тег заголовок
+        name: Название
+        on_hand: На складе
+        price: Цена
+        promotionable: Акционный
+        shipping_category: Категория доставки
+        slug: Ссылка
+        tax_category: Категория налогов
+        weight: Вес
+        width: Ширина
+      spree/product_property:
+        value: Значение
       spree/promotion:
-        advertise: "Рекламировать"
-        code: "Код"
-        description: "Описание"
-        event_name: "Название события"
-        expires_at: "Истекает в"
-        name: "Название"
-        path: "Путь"
-        starts_at: "Начинается"
-        usage_limit: "Лимит использования"
+        advertise: Рекламировать
+        apply_automatically: Применять автоматически
+        code: Код
+        description: Описание
+        event_name: Название события
+        expires_at: Истекает в
+        name: Название
+        path: Путь
+        per_code_usage_limit: Лимит использования каждого кода
+        starts_at: Начинается
+        status: Статус
+        usage_limit: Лимит использования
+        base_code: Базовый код
+        number_of_codes: Количество кодов
+        join_characters: Символы для соединения
+
+      spree/promotion/actions/create_adjustment:
+        description: Добавляет корректировку со скидкой к заказу
+      spree/promotion/actions/create_item_adjustments:
+        description: Добавляет корректировку со скидкой к позиции в заказе
+      spree/promotion/actions/create_quantity_adjustments:
+        description: Добавляет корректировку к позиции в заказе в зависимости от количества товаров
+      spree/promotion/actions/free_shipping:
+        description: Делает все доставки заказа бесплатными
+      spree/promotion/rules/first_order:
+        description: Первый заказ пользователя
+      spree/promotion/rules/first_repeat_purchase_since:
+        description: Доступно только для пользователя, который не совершал покупки какое-то время
+        form_text: 'Это промо сработает только для пользователей, последний заказ которых был сделан N дней назад: '
+      spree/promotion/rules/item_total:
+        description: Сумма заказа соответствует критерию
+      spree/promotion/rules/landing_page:
+        description: Пользователь должен посетить определенную страницу
+      spree/promotion/rules/nth_order:
+        description: Применяется когда пользователь совершает каждый N-ный заказ
+        form_text: 'Применить эту акцию на каждый N-ный заказ: '
+      spree/promotion/rules/one_use_per_user:
+        description: Только одно использование на пользователя
+      spree/promotion/rules/option_value:
+        description: Заказ включает определенный(ые) продукт(ы), опция(ии) которых соответствуют значению
+      spree/promotion/rules/product:
+        description: Заказ включает определенный(ые) продукт(ы)
+      spree/promotion/rules/store:
+        description: Только для выбранного магазина
+      spree/promotion/rules/taxon:
+        description: Заказ включает продукты с выбранным таксоном
+      spree/promotion/rules/user:
+        description: Доступно только для выбранных пользователей
+      spree/promotion/rules/user_logged_in:
+        description: Доступно только для залогиненных пользователей
+      spree/promotion/rules/user_role:
+        description: Только для пользователей с определенной ролью
       spree/promotion_category:
-        name: "Название"
-        code: "Код"
+        code: Код
+        name: Название
+      spree/promotion_code_batch:
+        base_code: Базовый код
+        number_of_codes: Количество кодов
+        join_characters: Символы для соединения
       spree/property:
-        name: "Название"
-        presentation: "Представление"
+        name: Название
+        presentation: Представление
       spree/prototype:
-        name: "Название"
+        name: Название
+      spree/refund:
+        amount: Сумма
+        description: Описание
+        refund_reason_id: ID причины возмещения
+        payment: Платеж
+      spree/refund_reason:
+        active: Активен
+        code: Код
+        name: Название
+        state: Статус
+      spree/reimbursement:
+        created_at: Дата создания
+        number: Номер
+        reimbursement_status: Статус
+        total: Итого
+      spree/reimbursement/credit:
+        amount: Сумма
+      spree/reimbursement_type:
+        created_at: Дата создания
+        name: Название
+        type: Тип
       spree/return_authorization:
-        amount: "Сумма"
+        amount: Сумма
+        pre_tax_total: Предварительная сумма
+        total_excluding_vat: Итого без НДС
+      spree/return_item:
+        acceptance_status: Статус приёмки
+        acceptance_status_errors: Ошибки приёмки
+        amount: Сумма до налога с продаж
+        charged: Списано
+        exchange_variant: Обменять на
+        inventory_unit_state: Состояние
+        item_received?: Товар получен?
+        override_reimbursement_type_id: Переопределить тип возмещения
+        preferred_reimbursement_type_id: Предпочтительный тип возмещения
+        reception_status: Статус регистрации
+        resellable: Можно продать?
+        return_reason: Причина возврата
+        total: Итого
+      spree/return_reason:
+        active: Активен
+        created_at: Дата создания
+        memo: Заметка
+        name: Название
+        number: Номер
+        state: Статус
       spree/role:
-        name: "Название"
+        name: Название
+      spree/shipment:
+        tracking: Номер отслеживания
+      spree/shipping_category:
+        name: Название
+      spree/shipping_method:
+        admin_name: Внутреннее название
+        carrier: Перевозчик
+        code: Код
+        display_on: Отображать на
+        name: Название
+        service_level: Уровень обслуживания
+        tracking_url: URL отслеживания
+        available_to_users: Доступен пользователям
+      spree/shipping_rate:
+        amount: Сумма
+        label: Метка
+        shipping_rate: Ставка
+        tax_rate: Налоговая ставка
       spree/state:
-        abbr: "Аббревиатура"
-        name: "Название"
-      spree/state_change:
-        state_changes:
-        state_from:
-        state_to:
-        timestamp:
-        type:
-        updated:
-        user:
+        abbr: Аббревиатура
+        name: Название
+      spree/stock_item:
+        count_on_hand: Количество на руках
+      spree/stock_location:
+        active: Активен
+        address1: Адрес
+        address2: Квартира/Офис
+        admin_name: Внутреннее название
+        backorderable_default: Возможны предзаказы
+        check_stock_on_transfer: Проверка при перемещении
+        city: Город
+        code: Код
+        country_id: Страна
+        default: По умолчанию
+        internal_name: Внутреннее название
+        name: Название
+        phone: Телефон
+        state_id: Область
+        zipcode: Индекс
+      spree/stock_movement:
+        originated_by: Создан
+        quantity: Количество
+        variant: Вариант
       spree/store:
-        mail_from_address: "Отсылать почту как"
-        meta_description: Meta-описание
-        meta_keywords: Meta ключевые слова
-        name: "Название сайта"
+        available_locales: Языки
+        cart_tax_country_iso: Страна налогообложения для корзины
+        code: Код
+        default: По умолчанию
+        default_currency: Валюта по умолчанию
+        mail_from_address: Отсылать почту как
+        meta_description: Мета-тег описание
+        meta_keywords: Мета-тег ключевые слова
+        name: Название
         seo_title: SEO-заголовок
         url: URL-адрес сайта
+      spree/store_credit:
+        amount: Сумма
+        amount_authorized: Разрешено
+        amount_credited: Выдано
+        amount_used: Использовано
+        category_id: Категория
+        created_at: Дата создания
+        created_by_id: Создан
+        invalidated_at: Дата аннулирования
+        memo: Заметка
+      spree/store_credit_event:
+        action: Действие
+        amount_remaining: Остаток
+        user_total_amount: Остаток пользователя
+      spree/store_credit_update_reason:
+        name: Название
       spree/tax_category:
-        description: "Описание"
-        name: "Название"
+        description: Описание
+        is_default: По умолчанию
+        name: Название
+        tax_code: Код
       spree/tax_rate:
-        amount: "Ставка"
-        included_in_price: "Включено в цену"
-        show_rate_in_label: "Показывать ставку в метке"
+        amount: Ставка
+        expires_at: Дата окончания
+        included_in_price: Включено в цену
+        name: Название
+        show_rate_in_label: Показывать ставку в метке
+        starts_at: Дата начала
       spree/taxon:
-        name: "Название"
-        permalink: "Постоянная ссылка"
-        position: "Позиция"
+        description: Описание
+        icon: Иконка
+        meta_description: Мета-тег описание
+        meta_keywords: Мета-тег ключевые слова
+        meta_title: Мета-тег название
+        name: Название
+        permalink: Постоянная ссылка
+        position: Позиция
       spree/taxonomy:
-        name: "Название"
+        name: Название
+      spree/tracker:
+        active: Активен
+        analytics_id: Идентификатор Analytics
       spree/user:
-        email: Email
-        password: "Пароль"
-        password_confirmation: "Подтверждение пароля"
+        email: Электронная почта
+        lifetime_value: Прибыль (LTV)
+        password: Пароль
+        password_confirmation: Подтверждение пароля
+        current_password: Текущий пароль
+        spree_roles: Роль
       spree/variant:
-        cost_currency: "Валюта"
-        cost_price: "Себестоимость"
-        depth: "Толщина"
-        height: "Высота"
-        price: "Цена"
-        sku: "Артикул"
-        weight: "Вес"
-        width: "Ширина"
+        cost_currency: Валюта
+        cost_price: Себестоимость
+        depth: Толщина
+        height: Высота
+        price: Цена
+        sku: Артикул
+        tax_category: Категория налогов
+        weight: Вес
+        width: Ширина
       spree/zone:
-        description: "Описание"
-        name: "Название"
+        description: Описание
+        name: Название
     errors:
       models:
-        spree/calculator/tiered_flat_rate:
+        spree/address:
           attributes:
-            base:
-              keys_should_be_positive_number:
-            preferred_tiers:
-              should_be_hash:
-        spree/calculator/tiered_percent:
-          attributes:
-            base:
-              keys_should_be_positive_number:
-              values_should_be_percent:
-            preferred_tiers:
-              should_be_hash:
-        spree/classification:
-          attributes:
-            taxon_id:
-              already_linked:
+            state:
+              does_not_match_country: не соответствует стране
         spree/credit_card:
           attributes:
             base:
-              card_expired: "Срок действия карты истек"
-              expiry_invalid:
-        spree/line_item:
+              card_expired: Срок действия карты истек
+        spree/price:
           attributes:
             currency:
-              must_match_order_currency:
+              invalid_code: это не действительный код валюты
         spree/refund:
           attributes:
             amount:
-              greater_than_allowed:
-        spree/reimbursement:
-          attributes:
-            base:
-              return_items_order_id_does_not_match:
-        spree/return_item:
-          attributes:
-            inventory_unit:
-              other_completed_return_item_exists:
-            reimbursement:
-              cannot_be_associated_unless_accepted:
+              greater_than_allowed: больше чем разрешено
+            payment:
+              must_be_completed: должен быть завершен
         spree/store:
           attributes:
             base:
-              cannot_destroy_default_store:
+              cannot_destroy_default_store: Нельзя удалить магазин по умолчанию
     models:
       spree/address:
-        many: "Адресов"
-        one: "Адрес"
-        other: "Адреса"
+        many: Адресов
+        one: Адрес
+        other: Адреса
+      spree/adjustment:
+        many: Корректировок
+        one: Корректировка
+        other: Корректировки
+      spree/adjustment_reason:
+        many: Причин корректировки
+        one: Причина корректировки
+        other: Причины корректировки
+      spree/calculator:
+        many: Калькуляторов
+        one: Калькулятор
+        other: Калькуляторы
+      spree/calculator/default_tax:
+        many: Налоговых калькуляторов
+        one: Налоговый калькулятор
+        other: Налоговые калькуляторы
+      spree/calculator/distributed_amount:
+        many: Распределенных сумм
+        one: Распределенная сумма
+        other: Распределенные суммы
+      spree/calculator/flat_percent_item_total:
+        many: Фиксированных процентов
+        one: Фиксированный процент
+        other: Фиксированные проценты
+      spree/calculator/flat_rate:
+        many: Фиксированных ставок
+        one: Фиксированная ставка
+        other: Фиксированные ставки
+      spree/calculator/flexi_rate:
+        many: Гибких ставок
+        one: Гибкая ставка
+        other: Гибкие ставки
+      spree/calculator/free_shipping:
+        many: Бесплатных доставок
+        one: Бесплатная доставка
+        other: Бесплатные доставки
+      spree/calculator/percent_on_line_item:
+        many: Процентов на позиции
+        one: Процент на позицию
+        other: Проценты на позицию
+      spree/calculator/percent_per_item:
+        many: Процентов на товары
+        one: Процент на товар
+        other: Проценты на товар
+      spree/calculator/price_sack:
+        many: Цен мешка
+        one: Цена мешка
+        other: Цены мешка
+      spree/calculator/returns/default_refund_amount:
+        many: Сумм возмещения по умолчанию
+        one: Сумма возмещения по умолчанию
+        other: Суммы возмещения по умолчанию
+      spree/calculator/shipping/flat_percent_item_total:
+        many: Фиксированных процентов
+        one: Фиксированный процент
+        other: Фиксированные проценты
+      spree/calculator/shipping/flat_rate:
+        many: Фиксированных ставок
+        one: Фиксированная ставка
+        other: Фиксированные ставки
+      spree/calculator/shipping/flexi_rate:
+        many: Гибких ставок
+        one: Гибкая ставка
+        other: Гибкие ставки
+      spree/calculator/shipping/per_item:
+        many: Фиксированных ставок за единицу
+        one: Фиксированная ставка за единицу
+        other: Фиксированные ставки за единицу
+      spree/calculator/shipping/price_sack:
+        many: Цен мешка
+        one: Цена мешка
+        other: Цены мешка
+      spree/calculator/tiered_flat_rate:
+        many: Многоуровневых ставок
+        one: Многоуровневая ставка
+        other: Многоуровневые ставки
+      spree/calculator/tiered_percent:
+        many: Многоуровневых процентов
+        one: Многоуровневай процент
+        other: Многоуровневые проценты
       spree/country:
-        many: "Стран"
-        one: "Страна"
-        other: "Страны"
+        many: Стран
+        one: Страна
+        other: Страны
       spree/credit_card:
-        many: "Кредитных карт"
-        one: "Кредитная карта"
-        other: "Кредитные карты"
+        many: Кредитных карт
+        one: Кредитная карта
+        other: Кредитные карты
       spree/customer_return:
-        many: "Возвратов покупателю"
-        one: "Возврат покупателю"
-        other: "Возвраты покупателю"
+        many: Возвратов
+        one: Возврат
+        other: Возвраты
+      spree/exchange:
+        many: Обменов
+        one: Обмен
+        other: Обмены
+      spree/image:
+        many: Изображений
+        one: Изображение
+        other: Изображения
       spree/inventory_unit:
-        many: "Единиц"
-        one: "Единица"
-        other: "Единицы"
+        many: Единиц
+        one: Единица
+        other: Единицы
+      spree/legacy_user:
+        many: Пользователей
+        one: Пользователь
+        other: Пользователи
       spree/line_item:
-        many: "Позиций"
-        one: "Позиция"
-        other: "Позиции"
+        many: Позиций
+        one: Позиция
+        other: Позиции
+      spree/log_entry:
+        many: Записей журнала
+        one: Запись журнала
+        other: Записи журнала
       spree/option_type:
-        many: "Товарных опций"
-        one: "Товарная опция"
-        other: "Товарные опции"
+        many: Товарных опций
+        one: Товарная опция
+        other: Товарные опции
       spree/option_value:
+        many: Значений товарной опции
+        one: Значение товарной опции
+        other: Значения товарной опции
       spree/order:
-        many: "Заказов"
-        one: "Заказ"
-        other: "Заказы"
+        many: Заказов
+        one: Заказ
+        other: Заказы
       spree/payment:
-        many: "Платежей"
-        one: "Платёж"
-        other: "Платежи"
+        many: Платежей
+        one: Платёж
+        other: Платежи
+      spree/payment_capture_event:
+        many: Событий захватов
+        one: Событие захват
+        other: События захвата
       spree/payment_method:
-        many: "Способов оплаты"
-        one: "Способ оплаты"
-        other: "Способы оплаты"
+        many: Способов оплаты
+        one: Способ оплаты
+        other: Способы оплаты
+      spree/payment_method/bogus_credit_card: Фиктивный карточный шлюз
+      spree/payment_method/check: Наличный платеж
+      spree/payment_method/simple_bogus_credit_card: Фиктивный карточный шлюз без токенизации
+      spree/payment_method/store_credit: Внутримагазинный кредит
+      spree/price:
+        many: Цен
+        one: Цена
+        other: Цены
       spree/product:
-        many: "Товаров"
-        one: "Товар"
-        other: "Товары"
+        many: Товаров
+        one: Товар
+        other: Товары
+      spree/product_property:
+        many: Свойств товара
+        one: Свойство товара
+        other: Свойства товара
       spree/promotion:
-        many: "Акций"
-        one: "Акция"
-        other: "Акции"
+        many: Акций
+        one: Акция
+        other: Акции
+      spree/promotion/actions/create_adjustment: Создать корректировку на весь заказ
+      spree/promotion/actions/create_item_adjustments: Создать корректировку на позицию
+      spree/promotion/actions/create_quantity_adjustments: Создать корректировку по количеству
+      spree/promotion/actions/free_shipping: Бесплатная доставка
+      spree/promotion/rules/first_order: Первый заказ
+      spree/promotion/rules/first_repeat_purchase_since: Повторный заказ спустя период времени
+      spree/promotion/rules/item_total: Итого
+      spree/promotion/rules/landing_page: Лэндинг
+      spree/promotion/rules/nth_order: N-ный заказ
+      spree/promotion/rules/one_use_per_user: Только одно использование на пользователя
+      spree/promotion/rules/option_value: Значение(ия) опции
+      spree/promotion/rules/product: Продукт(ы)
+      spree/promotion/rules/store: Магазин(ы)
+      spree/promotion/rules/taxon: Таксон(ы)
+      spree/promotion/rules/user: Пользователь
+      spree/promotion/rules/user_logged_in: Пользователь залогинен
+      spree/promotion/rules/user_role: Роль(и) пользователя
       spree/promotion_category:
-        many: "Категорий акций"
-        one: "Категория акций"
-        other: "Категории акций"
+        many: Категорий акций
+        one: Категория акций
+        other: Категории акций
+      spree/promotion_code:
+        many: Промокодов
+        one: Промокод
+        other: Промокоды
+      spree/promotion_code_batch:
+        many: Партий промокодов
+        one: Партия промокодов
+        other: Партии промокодов
       spree/property:
-        many: "Свойств"
-        one: "Свойство"
-        other: "Свойства"
+        many: Свойств
+        one: Свойство
+        other: Свойства
       spree/prototype:
-        many: "Прототипов"
-        one: "Прототип"
-        other: "Прототипы"
+        many: Прототипов
+        one: Прототип
+        other: Прототипы
+      spree/refund:
+        many: Возмещений
+        one: Возмещение
+        other: Возмещения
       spree/refund_reason:
-        many: "Причин возврата"
-        one: "Причина возврата"
-        other: "Причины возврата"
+        many: Причин возмещения
+        one: Причина возмещения
+        other: Причины возмещения
       spree/reimbursement:
+        many: Возмещений
+        one: Возмещение
+        other: Возмещения
       spree/reimbursement_type:
-        many: "Типов возврата"
-        one: "Тип возврата"
-        other: "Типы возврата"
+        many: Типов возмещения
+        one: Тип возмещения
+        other: Типы возмещения
       spree/return_authorization:
-        many: "Разрешений на возврат"
-        one: "Разрешение на возврат"
-        other: "Разрешения на возврат"
+        many: Запросов на возврат
+        one: Запрос на возврат
+        other: Запроса на возврат
       spree/return_authorization_reason:
-        many: "Причин разрешения на возврат"
-        one: "Причина разрешения на возврат"
-        other: "Причины разрешения на возврат"
+        many: Причин запроса на возврат
+        one: Причина запроса на возврат
+        other: Причины запроса на возврат
+      spree/return_reason:
+        many: Причин возврата
+        one: Причина возврата
+        other: Причины возврата
       spree/role:
-        many: "Ролей"
-        one: "Роль"
-        other: "Роли"
+        many: Ролей
+        one: Роль
+        other: Роли
       spree/shipment:
-        many: "Доставок"
-        one: "Доставка"
-        other: "Доставки"
+        many: Доставок
+        one: Доставка
+        other: Доставки
       spree/shipping_category:
-        many: "Категорий доставки"
-        one: "Категория доставки"
-        other: "Категории доставки"
+        many: Категорий доставки
+        one: Категория доставки
+        other: Категории доставки
       spree/shipping_method:
         many: Cпособов доставки
         one: Cпособ доставки
         other: Cпособы доставки
       spree/state:
-        many: "Областей/Регионов"
-        one: "Область/Регион"
-        other: "Области/Регионы"
-      spree/state_change:
+        many: Областей/Регионов
+        one: Область/Регион
+        other: Области/Регионы
       spree/stock_location:
-        many: "Расположений складов"
-        one: "Расположение склада"
-        other: "Расположения складов"
+        many: Расположений складов
+        one: Расположение склада
+        other: Расположения складов
       spree/stock_movement:
-      spree/stock_transfer:
-        many: "Перемещений по складам"
-        one: "Перемещение по складам"
-        other: "Перемещения по складам"
+        many: Перемещений по складам
+        one: Перемещение по складам
+        other: Перемещения по складам
+      spree/store:
+        many: Магазинов
+        one: Магазин
+        other: Магазины
+      spree/store_credit:
+        many: Внутримагазинных кредитов
+        one: Внутримагазинный кредит
+        other: Внутримагазинные кредиты
+      spree/store_credit_category:
+        many: Категоий внутримагазинных кредитов
+        one: Категория внутримагазинных кредитов
+        other: Категории внутримагазинных кредитов
       spree/tax_category:
-        many: "Категорий налогов"
-        one: "Категория налогов"
-        other: "Категории налогов"
+        many: Категорий налогов
+        one: Категория налогов
+        other: Категории налогов
       spree/tax_rate:
-        many: "Ставок налога"
-        one: "Ставка налога"
-        other: "Ставки налога"
+        many: Ставок налога
+        one: Ставка налога
+        other: Ставки налога
       spree/taxon:
-        many: "Таксонов"
-        one: "Таксон"
-        other: "Таксона"
+        many: Таксонов
+        one: Таксон
+        other: Таксона
       spree/taxonomy:
-        many: "Таксономий"
-        one: "Таксономия"
-        other: "Таксономии"
+        many: Таксономий
+        one: Таксономия
+        other: Таксономии
       spree/tracker:
-        many: "Трекеров"
-        one: "Трекер"
-        other: "Трекеры"
+        many: Трекеров
+        one: Трекер
+        other: Трекеры
       spree/user:
-        many: "Пользователей"
-        one: "Пользователь"
-        other: "Пользователя"
+        many: Пользователей
+        one: Пользователь
+        other: Пользователя
       spree/variant:
-        many: "Вариантов"
-        one: "Вариант"
-        other: "Варианта"
+        many: Вариантов
+        one: Вариант
+        other: Варианты
       spree/zone:
-        many: "Зон"
-        one: "Зона"
-        other: "Зоны"
-  spree:
-    abbreviation: "Аббревиатура"
-    accept:
-    acceptance_errors:
-    acceptance_status:
-    accepted:
-    account: "Учетная запись"
-    account_updated: "Учетная запись обновлена!"
-    action: "Действие"
-    actions:
-      cancel: "Отменить"
-      continue: "Продолжить"
-      create: "Создать"
-      destroy: "Удалить"
-      edit: "Редактировать"
-      list: "Показать"
-      listing: "Список"
-      new: "Новый"
-      refund:
-      save: "Сохранить"
-      update: "Изменить"
-    activate: "Активировать"
-    active: "Активен"
-    add: "Добавить"
-    add_action_of_type: "Добавить действие типа"
-    add_country: "Добавить страну"
-    add_coupon_code: "Добавить код купона"
-    add_new_header: "Добавить новый заголовок"
-    add_new_style: "Добавить новый стиль"
-    add_one: "Добавить"
-    add_option_value: "Добавить значение опции"
-    add_product: "Добавить товар"
-    add_product_properties: "Добавить свойства товара"
-    add_rule_of_type: "Добавить правило типа"
-    add_state: "Добавить регион/область"
-    add_stock: "Добавить склад"
-    add_stock_management: "Добавить управление запасами"
-    add_to_cart: "Добавить в корзину"
-    add_variant: "Добавить вариант"
-    additional_item: "Ставка для дополнительных наименований"
-    address1: "Адрес"
-    address2: "адрес (продолж.)"
-    adjustable: "Корректируемое"
-    adjustment: "Корректировка"
-    adjustment_amount: "Количество"
-    adjustment_successfully_closed: "Корректировка была успешно закрыта!"
-    adjustment_successfully_opened: "Корректировка была успешно открыта!"
-    adjustment_total: "Итого (коррект.)"
-    adjustments: "Корректировки"
-    admin:
-      tab:
-        configuration: "Настройки"
-        option_types: "Товарные опции"
-        orders: "Заказы"
-        overview: "Обзор"
-        products: "Товары"
-        promotions: "Акции"
-        promotion_categories: "Категории акций"
-        properties: "Свойства"
-        prototypes: "Прототипы"
-        reports: "Отчёты"
-        taxonomies: "Таксономии"
-        taxons: "Таксоны"
-        users: "Пользователи"
+        many: Зон
+        one: Зона
+        other: Зоны
       user:
-        account: "Учетная запись"
-        addresses: "Адреса"
-        items: "Товары"
-        items_purchased: "Купленные товары"
-        order_history: "История заказов"
-        order_num:
-        orders: "Заказы"
-        user_information: "Информация"
-    administration: "Администрирование"
-    advertise:
-    agree_to_privacy_policy: "Согласиться с Политикой Конфиденциальности"
-    agree_to_terms_of_service: "Согласиться с Уловиями обслуживания"
-    all: "все"
-    all_adjustments_closed: "Все корректировки успешно закрыты!"
-    all_adjustments_opened: "Все корректировки успешно открыты!"
-    all_departments: "Все разделы"
-    all_items_have_been_returned:
-    allow_ssl_in_development_and_test: "Разрешить SSL для development и test режимов"
-    allow_ssl_in_production: "Разрешить SSL для production режима"
-    allow_ssl_in_staging: "Разрешить SSL для staging режима"
-    already_signed_up_for_analytics: "Вы уже зарегистировались в Spree Analytics"
-    alt_text: "Альтернативный текст"
-    alternative_phone: "Дополнительный телефон"
-    amount: "Сумма"
-    analytics_desc_header_1: "Аналитика Spree"
-    analytics_desc_header_2: "Аналитика в прямом эфире добавлена на Spree dashboard"
-    analytics_desc_list_1: "Получать информацию о продажах в реальном времени"
-    analytics_desc_list_2: "Бесплатный аккаунт Spree требуется для активации"
-    analytics_desc_list_3: "Отсутствует код для установки"
-    analytics_desc_list_4: "Полностью бесплатный!"
-    analytics_trackers: "Трекеры веб-аналитики"
-    and: "и"
-    approve: "Подтвердить"
-    approved_at: "Подтверждено"
-    approver: "Подтвердил(а)"
-    are_you_sure: "Вы уверены"
-    are_you_sure_delete: "Вы уверены, что хотите удалить эту запись?"
-    associated_adjustment_closed: "Связанная корректировка закрыта, и не будет пересчитана. Хотите ли вы открыть её?"
-    at_symbol: '@'
-    authorization_failure: "Ошибка авторизации"
-    authorized:
-    auto_capture: "Автозахват"
-    available_on: "Доступно с"
-    average_order_value: "Средняя сумма заказа"
-    avs_response:
-    back: "Назад"
-    back_end: "в администраторском интерфейсе"
-    back_to_payment:
-    back_to_resource_list: "Назад к списку"
-    back_to_rma_reason_list: "Назад к списку причин разрешения на возврат"
-    back_to_store: "Вернуться в магазин"
-    back_to_users_list: "Назад к списку пользователей"
-    backorderable: "Возможен предзаказ"
-    backorderable_default: "Предзаказ по умолчанию"
-    backordered: "Предзаказано"
-    backorders_allowed: "Предзаказы разрешены"
-    balance_due: "Дебетовое сальдо"
-    base_amount:
-    base_percent:
-    bill_address: "Платёжный адрес"
-    billing: "Биллинг"
-    billing_address: "Платёжный адрес"
-    both: "везде"
-    calculated_reimbursements:
-    calculator: "Калькулятор"
-    calculator_settings_warning: "При изменении типа калькулятора, вы должны сохранить это изменение, прежде, чем вы сможете изменить настройки калькулятора."
-    cancel: "Отмена"
-    canceled_at:
-    canceler:
-    cannot_create_customer_returns:
-    cannot_create_payment_without_payment_methods: "Нельзя создать платеж для заказа, если не настроен ни один из способов оплаты."
-    cannot_create_returns: "Невозможно оформить возврат, т.к. этот заказ ещё не отправлен."
-    cannot_perform_operation: "Невозможно выполнить требуемую операцию"
-    cannot_set_shipping_method_without_address: "Невозможно выбрать способ доставки, пока данные пользователя не указаны."
-    capture: "Провести платёж"
-    capture_events: "Платежи"
-    card_code: "Код карты"
-    card_number: "Номер карты"
-    card_type:
-    card_type_is: "Тип карты"
-    cart: "Корзина"
-    cart_subtotal:
-    categories: "Категории"
-    category: "Категория"
-    charged:
-    check_for_spree_alerts: "Проверить оповещения Spree"
-    checkout: "Оформление заказа"
-    choose_a_customer: "Выберите клиента"
-    choose_a_taxon_to_sort_products_for: "Выберите таксон для сортировки товаров"
-    choose_currency: "Выбрать валюту"
-    choose_dashboard_locale: "Выбрать язык отображения панели управления"
-    choose_location:
-    city: "Город"
-    clear_cache: "Очистить кэш"
-    clear_cache_ok:
-    clear_cache_warning: "Внимание, данное действие приведёт к очистке кэша"
-    click_and_drag_on_the_products_to_sort_them: "Перетаскивайте товары мышкой для сортировки"
-    clone: "Копировать"
-    close: "Закрыть"
-    close_all_adjustments: "Закрыть все корректировки"
-    code: "Кодовое слово"
-    company: "Компания"
-    complete: "Завершено"
-    configuration: "Конфигурация"
-    configurations: "Конфигурация"
-    confirm: "Подтвердить"
-    confirm_delete: "Подтверждение удаления"
-    confirm_password: "Подтверждение пароля"
-    continue: "Продолжить"
-    continue_shopping: "Продолжить покупки"
-    cost_currency: "Валюта"
-    cost_price: "Себестоимость"
-    could_not_connect_to_jirafe: "Невозможно синхоринизороваться с Jirafe. Попытка будет повторена позже."
-    could_not_create_customer_return:
-    could_not_create_stock_movement: "Возникла проблема при сохранении перемещения запасов. Пожалуйста, попытайтесь снова."
-    count_on_hand: "Наличие"
-    countries: "Страны"
-    country: "Страна"
-    country_based: "Страна"
-    country_name: "Имя"
+        many: Пользователей
+        one: Пользователь
+        other: Пользователи
+  spree:
+    abbreviation: Аббревиатура
+    accept: Принять
+    acceptance_errors: Ошибки приёмки
+    acceptance_status: Статус приёмки
+    accepted: Принято
+    account: Учетная запись
+    account_updated: Учетная запись обновлена!
+    action: Действие
+    actions:
+      add: Добавить
+      cancel: Отменить
+      continue: Продолжить
+      create: Создать
+      delete: Удалить
+      destroy: Удалить
+      edit: Редактировать
+      list: Показать
+      listing: Список
+      new: Новый
+      receive: Получить
+      refund: Возместить
+      remove: Удалить
+      save: Сохранить
+      ship: Доставить
+      split: Разделить
+      update: Изменить
+    activate: Активировать
+    active: Активен
+    add: Добавить
+    add_action_of_type: Добавить действие типа
+    add_country: Добавить страну
+    add_coupon_code: Добавить код купона
+    add_line_item: Добавить позицию
+    add_new_header: Добавить новый заголовок
+    add_new_style: Добавить новый стиль
+    add_one: Добавить
+    add_option_value: Добавить значение опции
+    add_product: Добавить товар
+    add_product_properties: Добавить свойство товара
+    add_rule_of_type: Добавить условие типа
+    add_state: Добавить регион/область
+    add_stock: Добавить склад
+    add_stock_management: Добавить управление запасами
+    add_taxon: Добавить таксон
+    add_to_cart: Добавить в корзину
+    add_to_stock_location: Добавить на склад
+    add_variant: Добавить вариант
+    add_variant_properties: Добавить свойства варианта
+    added: Добавлено
+    additional_item: Ставка для дополнительных наименований
+    address1: Адрес
+    address2: Квартира/Офис
+    adjustable: Корректируемое
+    adjustment: Корректировка
+    adjustment_amount: Количество
+    adjustment_labels:
+      line_item: "%{promotion} (%{promotion_name})"
+      order: "%{promotion} (%{promotion_name})"
+      tax_rates:
+        sales_tax: "%{name}"
+        sales_tax_with_rate: "%{name} (%{amount})"
+        vat: "%{name} (включено в цену)"
+        vat_with_rate: "%{name} %{amount} (включено в цену)"
+    adjustment_successfully_closed: Корректировка была успешно закрыта!
+    adjustment_successfully_opened: Корректировка была успешно открыта!
+    adjustment_total: Итого (коррект.)
+    adjustments: Корректировки
+    admin:
+      images:
+        index:
+          choose_files: Выберите файлы
+          drag_and_drop: или перенесите их сюда
+          image_process_failed: Не удалось обработать изображения
+          upload_images: Загрузить изображения
+      payments:
+        source_forms:
+          storecredit:
+            not_supported: Создание внутримагазинных платежей сейчас не доступно
+      prices:
+        any_country: Любая страна
+        edit:
+          edit_price: Редактировать цену
+        index:
+          amount_greater_than: Сумма больше чем
+          amount_less_than: Сумма меньше чем
+          new_price: Новая цена
+        new:
+          new_price: Новая цена
+      promotions:
+        actions:
+          calculator_label: Рассчитывается
+        activations_edit:
+          auto: Все заказы будут пытаться применять данную акцию
+          multiple_codes_html: Эта акция использует %{count} промокодов
+          single_code_html: 'Эта акция использует один промокод: <code>%{code}</code>'
+        activations_new:
+          auto: Применять для всех заказов
+          multiple_codes: Многочисленные промокоды
+          single_code: Единственный промокод
+        form:
+          activation: Активация
+          expires_at_placeholder: Никогда
+          general: Общее
+          starts_at_placeholder: Немедленно
+      stock_locations:
+        form:
+          address: Адрес
+          general: Общее
+          settings: Настройки
+      store_credits:
+        add: Добавить
+        amount_authorized: Разрешено
+        amount_credited: Выдано
+        amount_used: Использовано
+        back_to_edit: Назад к редактированию
+        back_to_store_credit_list: Список внутримагазинных кредитов
+        back_to_user_list: Список пользователей
+        change_amount: Изменить сумму
+        created_at: Дата создания
+        created_by: Создан
+        credit_type: Тип
+        current_balance: Текущий баланс
+        edit: Редактировать
+        edit_amount: Редактировать сумму
+        errors:
+          amount_authorized_exceeds_total_credit: " превышает доступный кредит"
+          amount_used_cannot_be_greater: не может быть больше чем выданная сумма
+          amount_used_not_zero: больше чем ноль. Нельзя удалить внутримагазинный кредит
+          cannot_be_modified: не может быть изменен
+          cannot_change_used_store_credit: Использованный внутримагазинный кредит не может быть изменен
+          update_reason_required: Требуется указать причину изменения
+        history: История внтуримагазинных кредитов
+        invalidate_store_credit: Аннулировать внутримагазинный кредит
+        invalidated: Аннулирован
+        issued_on: Дата выдачи
+        memo: Заметка
+        new: Новый
+        no_store_credit_selected: Не выбрано внутримагазинного кредита
+        payment_originator: 'Платеж - Заказ #%{order_number}'
+        reason_for_updating: Причина для обновления
+        refund_originator: 'Возмещение - Заказ #%{order_number}'
+        resource_name: внутримагазинный кредит
+        select_amount_update_reason: Выберите причину для изменения суммы
+        select_reason: Выберите причину для выдачи внутримагазинного кредита
+        total_unused: Итого не использовано
+        type_html_header: Тип внутримагазинного кредита
+        unable_to_create: Невозможно создать внутримагазинный кредит
+        unable_to_delete: Невозможно удалить внутримагазинный кредит
+        unable_to_invalidate: Невозможно аннулировать внутримагазинный кредит
+        unable_to_update: Невозможно обновить внутримагазинный кредит
+        user_originator: Пользователем %{email}
+        view: Просмотр внутримагазинного кредита
+      stores:
+        form:
+          no_cart_tax_country: Без налогообложения товаров в корзине без адреса
+      tab:
+        checkout: Оформление
+        configuration: Настройки
+        display_order: Позиционирование
+        option_types: Товарные опции
+        orders: Заказы
+        overview: Обзор
+        payments: Платежи
+        products: Товары
+        promotion_categories: Категории акций
+        promotions: Акции
+        properties: Свойства
+        prototypes: Прототипы
+        reports: Отчёты
+        rma: Запросы на возврат
+        settings: Настройки
+        shipping: Доставка
+        stock: Склад
+        stock_items: Складские товары
+        stores: Магазины
+        taxes: Налогообложение
+        taxonomies: Таксономии
+        taxons: Таксоны
+        users: Пользователи
+        zones: Зоны
+      taxons:
+        display_order: Позиционирование
+      user:
+        account: Учетная запись
+        addresses: Адреса
+        items: Товары
+        items_purchased: Купленные товары
+        order_history: История заказов
+        order_num: Номер заказа
+        orders: Заказы
+        store_credit: Внутримагазинный кредит
+        user_information: Информация
+      users:
+        edit:
+          api_access: Доступ к API
+          clear_key: Удалить ключ
+          confirm_clear_key: Вы уверены что хотите удалить ключ этого пользователя? Текущий ключ будет аннулирован.
+          confirm_regenerate_key: Вы уверены что хотите пересоздать новый ключ этого пользователя? Текущий ключ будет аннулирован.
+          generate_key: Создать ключ
+          key: Ключ
+          no_key: Нет ключа
+          regenerate_key: Пересоздать ключ
+        user_page_actions:
+          create_order: Создать заказ у этого пользователя
+      variants:
+        edit:
+          edit_variant: Редактировать вариант
+        form:
+          dimensions: Размеры
+          pricing: Цена
+          pricing_hint: Эти значения взяты из продукта и могут быть перезаписаны ниже
+          use_product_tax_category: Использовать категорию налогов продукта
+        new:
+          new_variant: Новый вариант
+        table_filter:
+          show_deleted: Показывать удаленные варианты
+    administration: Администрирование
+    admin_login: Вход для администратора
+    agree_to_privacy_policy: Согласиться с Политикой Конфиденциальности
+    agree_to_terms_of_service: Согласиться с Уловиями обслуживания
+    all: все
+    all_adjustments_finalized: Все корректировки успешно заморожены!
+    all_adjustments_unfinalized: Все корректировки успешно разморожены!
+    all_departments: Все разделы
+    all_items_have_been_returned: Все товары были возвращены
+    allow_ssl_in_development_and_test: Разрешить SSL для development и test режимов
+    allow_ssl_in_production: Разрешить SSL для production режима
+    allow_ssl_in_staging: Разрешить SSL для staging режима
+    already_signed_up_for_analytics: Вы уже зарегистировались в Spree Analytics
+    alt_text: Альтернативный текст
+    alternative_phone: Дополнительный телефон
+    amount: Сумма
+    analytics_desc_header_1: Аналитика Spree
+    analytics_desc_header_2: Аналитика в прямом эфире добавлена на Spree dashboard
+    analytics_desc_list_1: Получать информацию о продажах в реальном времени
+    analytics_desc_list_2: Бесплатный аккаунт Spree требуется для активации
+    analytics_desc_list_3: Отсутствует код для установки
+    analytics_desc_list_4: Полностью бесплатный!
+    analytics_trackers: Трекеры веб-аналитики
+    and: и
+    apply_code: Применить код
+    approve: Подтвердить
+    approved_at: Подтверждено
+    approver: Подтвердил(а)
+    are_you_sure: Вы уверены
+    are_you_sure_delete: Вы уверены, что хотите удалить эту запись?
+    authorization_failure: Ошибка авторизации
+    authorized: Уполномочен
+    auto_capture: Автозахват
+    auto_receive: Автополучение
+    available_on: Доступно с
+    average_order_value: Средняя сумма заказа
+    avs_response: AVS ответ
+    back: Назад
+    back_end: в администраторском интерфейсе
+    back_to_customer_return: Назад к возврату
+    back_to_customer_return_list: Назад к возвратам
+    back_to_images_list: Назад к изображениям
+    back_to_orders_list: Назад к заказам
+    back_to_payment: Назад к платежам
+    back_to_store: Вернуться в магазин
+    back_to_taxonomies_list: Назад к списку таксономий
+    backorderable: Возможен предзаказ
+    backorderable_default: Предзаказ по умолчанию
+    backorderable_header: Возможен предзаказ
+    backordered: Предзаказано
+    backorders_allowed: Предзаказы разрешены
+    balance_due: Задолженность
+    base_amount: Базовая сумма
+    base_percent: Базовый процент
+    bill_address: Платёжный адрес
+    billing: Биллинг
+    billing_address: Платёжный адрес
+    both: везде
+    calculated_reimbursements: Расчитанные возмещения
+    calculator: Калькулятор
+    calculator_settings_warning: При изменении типа калькулятора, вы должны сохранить
+      это изменение, прежде, чем вы сможете изменить настройки калькулятора.
+    cancel: Отменить
+    cancel_inventory: Отменить позицию
+    canceled: Отменен
+    canceled_at: Дата отмены
+    canceler: Отменил
+    cancellation: Отмена
+    cannot_create_payment_link: Пожалуйста настройте сперва способы оплаты.
+    cannot_create_payment_without_payment_methods_html: Нельзя создать платеж для заказа, если не настроен ни один из способов оплаты. %{link}
+    cannot_create_returns: Невозможно оформить возврат, т.к. этот заказ ещё не отправлен.
+    cannot_perform_operation: Невозможно выполнить требуемую операцию
+    cannot_rebuild_shipments_order_completed: Нельзя пересобрать доставки для завершенного заказа
+    cannot_rebuild_shipments_shipments_not_pending: Нельзя пересобрать доставки для заказа с не ожидающими доставками
+    cannot_set_shipping_method_without_address: Невозможно выбрать способ доставки,
+      пока данные пользователя не указаны.
+    cannot_update_email: У вас нет доступа для изменения электронной почты этого пользователя. Для этого действия обратитесь к администратору.
+    capture: Провести платёж
+    capture_events: Платежи
+    card_code: Код карты
+    card_number: Номер карты
+    card_type: Тип карты
+    card_type_is: Тип карты
+    cart: Корзина
+    cart_subtotal: Подытог
+    categories: Категории
+    category: Категория
+    charged: Списано
+    check: Наличные
+    check_for_spree_alerts: Проверить оповещения Spree
+    check_stock_on_transfer: Проверить наличие на складе
+    checkout: Оформление заказа
+    choose_a_customer: Выберите клиента
+    choose_a_taxon_to_sort_products_for: Выберите таксон для сортировки товаров
+    choose_currency: Выбрать валюту
+    choose_dashboard_locale: Выбрать язык отображения панели управления
+    choose_location: Выбрать местоположение
+    choose_promotion_action: Выбрать действие
+    choose_promotion_rule: Выбрать условие
+    choose_reason: Выбрать причину
+    city: Город
+    clear_cache: Очистить кэш
+    clear_cache_warning: Внимание, данное действие приведёт к очистке кэша
+    click_and_drag_on_the_products_to_sort_them: Перетаскивайте товары мышкой для
+      сортировки
+    clone: Копировать
+    close: Закрыть
+    close_all_adjustments: Закрыть все корректировки
+    closed: Закрыто
+    code: Кодовое слово
+    company: Компания
+    complete: Завершено
+    complete_order: Завершить заказ
+    configuration: Конфигурация
+    configurations: Конфигурация
+    confirm: Подтвердить
+    confirm_delete: Подтверждение удаления
+    confirm_order: Подтвердить заказ
+    confirm_password: Подтверждение пароля
+    continue: Продолжить
+    continue_shopping: Продолжить покупки
+    cost_currency: Валюта
+    cost_price: Себестоимость
+    could_not_connect_to_jirafe: Невозможно синхоринизороваться с Jirafe. Попытка
+      будет повторена позже.
+    could_not_create_stock_movement: Возникла проблема при сохранении перемещения товаров. Пожалуйста, попытайтесь снова.
+    count_on_hand: Наличие
+    countries: Страны
+    country: Страна
+    country_based: Страна
+    country_name: Имя
     country_names:
-      CA:
-      FRA:
-      ITA:
-      US:
-    coupon: "Купон"
-    coupon_code: "Код купона"
-    coupon_code_already_applied: "Скидочный купон уже был применен к этому заказу"
-    coupon_code_applied: "Купон успешно применен к Вашему заказу."
-    coupon_code_better_exists: "Предыдущий купон выгоднее"
-    coupon_code_expired: "Код купона истек"
-    coupon_code_max_usage: "Лимит использования кода купона превышен"
-    coupon_code_not_eligible: "Это скидочный купон не отвечает требованиям для этого заказа"
-    coupon_code_not_found: "Скидочный купон не существует. Пожалуйста, попробуйте еще раз."
-    coupon_code_unknown_error:
-    create: "Создать"
-    create_a_new_account: "Создать новую учетную запись"
-    create_new_order: "Создать новый заказ"
-    create_reimbursement:
-    created_at: "Создано в"
-    credit: "Кредит"
-    credit_card: "Кредитная карта"
-    credit_cards: "Кредитные карты"
-    credit_owed: "Кредитная задолженность"
-    credits:
-    currency: "Валюта"
-    currency_decimal_mark: "Десятичный знак валюты"
-    currency_settings: "Настройки валюты"
-    currency_symbol_position: "Положение символа валюты относительно суммы"
-    currency_thousands_separator: "Разделитель тысяч валюты"
-    current: "Текущий"
-    current_promotion_usage: "Использовано: %{count}"
-    customer: "Клиент"
-    customer_details: "Реквизиты клиента"
-    customer_details_updated: "Данные клиента были обновлены."
-    customer_return:
-    customer_returns: "Возвраты покупателю"
-    customer_search: "Поиск клиента"
-    cut:
-    cvv_response:
+      CA: Канада
+      FR: Франция
+      IT: Италия
+      US: Соединенные Штаты Америки
+    coupon: Купон
+    coupon_code: Код купона
+    coupon_code_already_applied: Скидочный купон уже был применен к этому заказу
+    coupon_code_applied: Купон успешно применен к Вашему заказу.
+    coupon_code_better_exists: Предыдущий купон выгоднее
+    coupon_code_expired: Код купона истек
+    coupon_code_max_usage: Лимит использования кода купона превышен
+    coupon_code_not_eligible: Это скидочный купон не отвечает требованиям для этого
+      заказа
+    coupon_code_not_found: Скидочный купон не существует. Пожалуйста, попробуйте еще
+      раз.
+    coupon_code_unknown_error: В данный момент этот код не может быть применен для заказа
+    create: Создать
+    create_a_new_account: Создать новую учетную запись
+    create_reimbursement: Создать возмещение
+    create_new_order: Создать новый заказ
+    create_one: Добавить.
+    created_at: Создано в
+    created_by: Создано
+    created_successfully: Успешно создано
+    credit: Кредит
+    credit_allowed: Кредит разрешен
+    credit_card: Кредитная карта
+    credit_cards: Кредитные карты
+    credit_owed: Переплата
+    credits: Кредиты
+    currency: Валюта
+    currency_decimal_mark: Десятичный знак валюты
+    currency_settings: Настройки валюты
+    currency_symbol_position: Положение символа валюты относительно суммы
+    currency_thousands_separator: Разделитель тысяч валюты
+    current: Текущий
+    current_promotion_usage: 'Использовано: %{count}'
+    customer: Клиент
+    customer_details: Реквизиты клиента
+    customer_details_updated: Данные клиента были обновлены.
+    customer_returns: Возврат
+    customer_search: Поиск клиента
+    cut: Вырезать
+    cvv_response: CVV ответ
     dash:
       jirafe:
         app_id: ID приложения
         app_token: Token приложения
-        currently_unavailable: Jirafe недоступен. Spree автоматически подключится к Jirafe снова, когда он будет доступен.
-        explanation: "Эти поля могут быть заполнены, если вы зарегистрируетесь в Jirafe из панели администрирования."
-        header: "Настройки Аналитики Jirafe"
+        currently_unavailable: Jirafe недоступен. Spree автоматически подключится
+          к Jirafe снова, когда он будет доступен.
+        explanation: Эти поля могут быть заполнены, если вы зарегистрируетесь в Jirafe
+          из панели администрирования.
+        header: Настройки Аналитики Jirafe
         site_id: ID сайта
-        token: "Токен"
-      jirafe_settings_updated: "Настройки Jirafe обновлены."
-    date: "Дата"
-    date_completed: "Дата завершения"
+        token: Токен
+      jirafe_settings_updated: Настройки Jirafe обновлены.
+    date: Дата
+    date_completed: Дата завершения
     date_picker:
       first_day: 1
       format: "%d.%m.%Y"
       js_format: dd.mm.yy
-    date_range: "Период времени"
-    default: "По умолчанию"
-    default_refund_amount:
-    default_tax: "Стандартный налог"
-    default_tax_zone: "Стандартный налоговый регион"
-    delete: "Удалить"
-    deleted_variants_present:
-    delivery: "Доставка"
-    depth: "Глубина"
-    description: "Описание"
-    destination: "Назначение"
-    destroy: "Удалить"
-    details: "Описание товара"
-    discount_amount: "Сумма скидки"
-    dismiss_banner: "Нет, спасибо! Я не заинтересован. Не показывайте мне больше это сообщение."
-    display: "Показать"
-    display_currency: "Показывать валюту"
-    doesnt_track_inventory:
-    edit: "Редактировать"
-    editing_resource:
-    editing_rma_reason:
-    editing_user: "Редактирование пользователя"
-    eligibility_errors:
-      messages:
-        has_excluded_product:
-        item_total_less_than:
-        item_total_less_than_or_equal:
-        item_total_more_than:
-        item_total_more_than_or_equal:
-        limit_once_per_user:
-        missing_product:
-        missing_taxon:
-        no_applicable_products:
-        no_matching_taxons:
-        no_user_or_email_specified:
-        no_user_specified:
-        not_first_order:
-    email: "Электронная почта"
-    empty: "пусто"
-    empty_cart: "Очистить корзину"
-    enable_mail_delivery: "Включить доставку почты"
-    end: "Конец"
-    ending_in: "Оканчивается"
-    environment: "Среда окружения"
-    error: "ошибка"
+    date_range: Период времени
+    default: По умолчанию
+    default_tax: Стандартный налог
+    default_tax_zone: Стандартный налоговый регион
+    delete: Удалить
+    delivery: Доставка
+    depth: Глубина
+    description: Описание
+    destination: Назначение
+    destroy: Удалить
+    details: Описание товара
+    discount_amount: Сумма скидки
+    dismiss_banner: Нет, спасибо! Я не заинтересован. Не показывайте мне больше это
+      сообщение.
+    display: Показать
+    display_currency: Показывать валюту
+    download_promotion_code_list: Скачать список промокодов
+    edit: Редактировать
+    editing_reimbursement: Редактирование возмещения
+    editing_user: Редактирование пользователя
+    email: Электронная почта
+    empty: пусто
+    empty_cart: Очистить корзину
+    enable_mail_delivery: Включить доставку почты
+    end: Конец
+    ending_in: Оканчивается
+    environment: Среда окружения
+    error: ошибка
     errors:
       messages:
-        could_not_create_taxon: "Невозможно создать таксон"
-        no_payment_methods_available: "Для этого окружения не настроено ни одного способа оплаты"
-        no_shipping_methods_available: "Для указанного местоположения отсутствуют способы доставки, пожалуйста, смените адрес и попробуйте снова."
+        could_not_create_taxon: Невозможно создать таксон
+        no_payment_methods_available: Для этого окружения не настроено ни одного способа
+          оплаты
+        no_shipping_methods_available: Для указанного местоположения отсутствуют способы
+          доставки, пожалуйста, смените адрес и попробуйте снова.
     errors_prohibited_this_record_from_being_saved:
       few: "%{count} ошибки не позволяют сохранить запись в базе"
       many: "%{count} ошибок не позволяют сохранить запись в базе"
-      one: "Одна ошибка не позволяет сохранить запись в базе"
+      one: Одна ошибка не позволяет сохранить запись в базе
       other: "%{count} ошибки не позволяют сохранить запись в базе"
-    event: "Событие"
+    event: Событие
     events:
       spree:
         cart:
-          add: "Добавление в корзину"
+          add: Добавление в корзину
         checkout:
-          coupon_code_added: "Добавлен купон"
+          coupon_code_added: Добавлен купон
         content:
-          visited: "Посещение статической страницы"
+          visited: Посещение статической страницы
         order:
-          contents_changed: "Содержимое заказа изменилось"
-        page_view: "Просмотр статической страницы"
+          contents_changed: Содержимое заказа изменилось
+        page_view: Просмотр статической страницы
         user:
-          signup: "Новый пользователь"
+          signup: Новый пользователь
     exceptions:
-      count_on_hand_setter: "Невозможно установить значение count_on_hand вручную, т.к. оно устанавливается автоматически с помощью recalculate_count_on_hand callback'а. Вместо этого, используйте `update_column(:count_on_hand, value)`"
-    exchange_for:
-    excl: "искл."
-    existing_shipments:
-    expedited_exchanges_warning:
-    expiration: "Окончание действия"
-    extension: "Расширение"
-    failed_payment_attempts:
-    filename: "Имя файла"
-    fill_in_customer_info: "Заполните информацию о клиенте"
-    filter: "Фильтр"
-    filter_results: "Результаты фильтрации"
-    finalize: "Завершить"
-    finalized:
-    find_a_taxon: "Найти таксон"
-    first_item: "Начальная ставка"
-    first_name: "Имя"
-    first_name_begins_with: "Имя начинается с"
-    flat_percent: "Фиксированный процент"
-    flat_rate_per_order: "Фиксированная ставка (за заказ)"
-    flexible_rate: "Гибкая ставка"
-    forgot_password: "Забыли пароль?"
-    free_shipping: "Бесплатная доставка"
-    free_shipping_amount:
-    front_end: "в публичном интерфейсе"
-    gateway: "Платежный шлюз"
-    gateway_config_unavailable: "Шлюз не доступен для данного окружения"
-    gateway_error: "Ошибка платежного шлюза"
-    general: "Основные"
-    general_settings: "Общие настройки"
+      count_on_hand_setter: Невозможно установить значение count_on_hand вручную,
+        т.к. оно устанавливается автоматически с помощью recalculate_count_on_hand
+        callback'а. Вместо этого, используйте `update_column(:count_on_hand, value)`
+    excl: искл.
+    expected: Ожидалось
+    expected_items: Ожидаемые товары
+    expiration: Окончание действия
+    extension: Расширение
+    failed_payment_attempts: Проваленные попытки оплаты
+    failure: Ошибка
+    filename: Имя файла
+    fill_in_customer_info: Заполните информацию о клиенте
+    filter: Фильтр
+    filter_results: Результаты фильтрации
+    finalize: Завершить
+    finalize_all_adjustments: Заморозить все корректировки
+    finalized: Заморожено
+    finalized_at: Дата заморозки
+    finalized_by: Заморозил
+    find_a_taxon: Найти таксон
+    first_item: Начальная ставка
+    first_name: Имя
+    first_name_begins_with: Имя начинается с
+    flat_percent: Фиксированный процент
+    flat_rate_per_order: Фиксированная ставка (за заказ)
+    flexible_rate: Гибкая ставка
+    forgot_password: Забыли пароль?
+    free_shipping: Бесплатная доставка
+    free_shipping_amount: "-"
+    from: От
+    front_end: в публичном интерфейсе
+    gateway: Платежный шлюз
+    gateway_config_unavailable: Шлюз не доступен для данного окружения
+    gateway_error: Ошибка платежного шлюза
+    general: Основные
+    general_settings: Общие настройки
     google_analytics: Google Analytics
     google_analytics_id: Google Analytics ID
-    guest_checkout: "Гостевой заказ"
-    guest_user_account: "Оформить покупку как гость"
-    has_no_shipped_units: "не имеет отправленных единиц учёта"
-    height: "Высота"
-    hide_cents: "Скрыть центы"
-    home: "Домой"
+    group_size: Размер группы
+    guest_checkout: Гостевой заказ
+    guest_user_account: Оформить покупку как гость
+    has_no_shipped_units: не имеет отправленных единиц учёта
+    height: Высота
+    helpers:
+      products:
+        price_diff_add_html: "(больше на %{amount_html})"
+        price_diff_subtract_html: "(меньше на %{amount_html})"
+    hidden: скрыто
+    hide_out_of_stock: Скрыть товары не в наличии
+    hints:
+      spree/price:
+        country: Указывает для какой страны доступна эта цена
+        master_variant: Изменение цены основного варианта не изменит цен уже созданных вариантов, но будет использовано при создании новых
+        options: Эти опции используются для создания вариантов. Их можно изменить во вкладке варианты
+      spree/product:
+        available_on: После этой даты продукт станет доступным. Если ничего не установлено продукт не будет отображаться в магазине.
+        promotionable: Указывает может ли этот продукт использоваться в промо. По умолчанию активно.
+        shipping_category: Указывает набор способов для доставки продукта
+        tax_category: Указывает налогообложение применяемое для данного продукта
+      spree/promotion:
+        expires_at: Дата после которой акция становится недействительной. Если ничего не указано, то акция всегда будет активна.
+        starts_at: Дата после которой акция становится активной. Если ничего не указано, то акция сразу станет активной.
+      spree/stock_location:
+        active: 'Указывает может ли этот склад использоваться для сборки посылок. По умолчанию - может'
+        backorderable_default: 'Если выбрано, то товары из этого склада доступны для предзаказа. По умолчанию - не доступны'
+        check_stock_on_transfer: 'Если выбрано, то будут проверяться пороги для товаров при перемещениях. По умолчанию - выбрано'
+      spree/store:
+        available_locales: Список языков доступных пользователям для выбора
+        cart_tax_country_iso: Если указано, то для заказов без адреса будут использованы настройки этой страны для расчета величины налога
+      spree/tax_rate:
+        validity_period: Указывает период в течение которого эта ставка налога актуальна и будет применяться при расчете. Если ничего не указано, то ограничений нет.
+      spree/variant:
+        deleted: Удаленный вариант
+        deleted_explanation: Этот вариант был удален %{date}.
+        deleted_explanation_with_replacement: Этот вариант был удален %{date}. После он был заменен на другой, но с тем же артикулом.
+        tax_category: Указывает налогообложение применяемое для данного варианта продукта
+    home: Домой
     i18n:
-      available_locales: "Доступные переводы"
-      language: "Язык"
-      localization_settings: "Настройки локализации"
-      this_file_language: Russian
-      translations: "Перевод"
-    icon: "Иконка"
-    identifier:
-    image: "Изображение"
-    images: "Изображения"
-    implement_eligible_for_return:
-    implement_requires_manual_intervention:
-    inactive:
-    incl: "вкл."
-    included_in_price: "Включено в цену"
-    included_price_validation: "не может быть выбрано, если только вы настроили зону налогообложения по умолчанию"
-    incomplete:
+      available_locales: Доступные языки
+      fields: Поля
+      language: Язык
+      localization_settings: Настройки локализации
+      only_complete: Только завершенные
+      only_incomplete: Только незавершенные
+      select_locale: Выбрать язык
+      show_only: Отображать только
+      supported_locales: Поддерживаемые языки
+      this_file_language: Русский (RU)
+      translations: Перевод
+    icon: Иконка
+    id: ID
+    identifier: Идентификатор
+    image: Изображение
+    images: Изображения
+    inactive: Неактивен
+    incl: вкл.
+    included_in_price: Включено в цену
+    included_price_validation: не может быть выбрано, если только вы настроили зону налогообложения по умолчанию
+    incomplete: Не завершено
     info_number_of_skus_not_shown:
+      many: и %{count} других
+      one: и еще один
+      other: и %{count} других
     info_product_has_multiple_skus:
-    instructions_to_reset_password: "Чтобы сбросить пароль, заполните форму ниже. Новый пароль будет отправлен вам по указанному email"
-    insufficient_stock: "Недостаточно единиц товара, только %{on_hand} есть в наличии"
-    insufficient_stock_lines_present:
-    intercept_email_address: "Перехват писем"
-    intercept_email_instructions: "Заменить email получателя на этот адрес."
-    internal_name: "Внутреннее имя"
-    invalid_credit_card:
-    invalid_exchange_variant:
-    invalid_payment_provider: "Неверно указан способ оплаты"
-    invalid_promotion_action: "Неверная промо-акция"
-    invalid_promotion_rule: "Неверно указан принцип рекламной кампании"
-    inventory: "Товарная номенклатура"
-    inventory_adjustment: "Корректировки"
-    inventory_error_flash_for_insufficient_quantity: "Один из товаров вашей корзины стал недоступен."
-    inventory_state:
-    is_not_available_to_shipment_address: "не может быть применён к указанному адресу доставки"
-    iso_name: "Имя согласно ISO"
-    item: "Наименование"
-    item_description: "Описание товара"
-    item_total: "Итого (товары)"
+      many: 'Этот товар имеет %{count} вариантов:'
+      one: 'Этот товар имеет еще %{count} вариант:'
+      few: 'Этот товар имеет %{count} варианта:'
+      other: 'Этот товар имеет %{count} варианта:'
+    instructions_to_reset_password: Чтобы сбросить пароль, заполните форму ниже. Новый
+      пароль будет отправлен вам по указанному email
+    insufficient_stock: Недостаточно единиц товара, только %{on_hand} есть в наличии
+    intercept_email_address: Перехват писем
+    intercept_email_instructions: Заменить email получателя на этот адрес.
+    internal_name: Внутреннее имя
+    invalid_credit_card: Неверная кредитная карта
+    invalid_exchange_variant: Неверный вариант для обмена
+    invalid_payment_method_type: Неверный способ оплаты
+    invalid_promotion_action: Неверная действие акции
+    invalid_promotion_rule: Неверное условие акции
+    invalidate: Аннулировать
+    inventory: Товарная номенклатура
+    inventory_adjustment: Корректировки
+    inventory_error_flash_for_insufficient_quantity: Один из товаров вашей корзины
+      стал недоступен.
+    inventory_states:
+      backordered: Предзаказан
+      canceled: Отменен
+      on_hand: В наличии
+      returned: Возвращен
+      shipped: Доставлен
+    is_not_available_to_shipment_address: не может быть применён к указанному адресу
+      доставки
+    iso_name: Имя согласно ISO
+    item: Наименование
+    item_description: Описание товара
+    item_total: Итого (товары)
     item_total_rule:
       operators:
-        gt: "больше"
-        gte: "больше или равно"
-        lt:
-        lte:
-    items_cannot_be_shipped: "К сожалению мы не можем доставить ваш товар на указанный адрес. Пожалуйста введите другой адрес."
-    items_in_rmas:
-    items_reimbursed:
-    items_to_be_reimbursed:
+        gt: больше
+        gte: больше или равно
+    items_cannot_be_shipped: К сожалению мы не можем доставить ваш товар на указанный адрес. Пожалуйста введите другой адрес.
+    items_in_rmas: Товары в запросах на возврат
+    items_reimbursed: Возмещенные товары
+    items_to_be_reimbursed: Товары подлежащие возмещению
     jirafe: Jirafe
     landing_page_rule:
-      path: "Путь"
-    last_name: "Фамилия"
-    last_name_begins_with: "Фамилия начинается с"
-    learn_more: "Узнать больше"
-    lifetime_stats: "Статистика"
-    line_item_adjustments: "Корректировки позиций"
-    list: "Список"
-    loading: "Загружается"
-    locale_changed: "Язык изменён"
-    location: "Местоположение"
-    lock: Lock
-    log_entries:
-    logged_in_as: "Пользователь"
-    logged_in_succesfully: "Вы вошли в систему"
-    logged_out: "Вы вышли из системы."
-    login: "Логин"
-    login_as_existing: "Войти как покупатель"
-    login_failed: "Вход не выполнен."
-    login_name: "Логин"
-    logout: "Выйти"
-    logs: "Журналы событий"
-    look_for_similar_items: "Посмотрите похожие товары"
-    make_refund: "Сделать возврат"
-    make_sure_the_above_reimbursement_amount_is_correct:
-    manage_promotion_categories:
-    manage_variants:
-    manual_intervention_required:
-    master_price: "Основная цена"
+      path: Путь
+    last_name: Фамилия
+    last_name_begins_with: Фамилия начинается с
+    learn_more: Узнать больше
+    lifetime_stats: Статистика
+    line_item_adjustments: Корректировки позиций
+    list: Список
+    loading: Загружается
+    locale_changed: Язык изменён
+    location: Местоположение
+    lock: Замок
+    log_entries: Записи в журнале
+    logged_in_as: Пользователь
+    logged_in_succesfully: Вы вошли в систему
+    logged_out: Вы вышли из системы.
+    login: Логин
+    login_as_existing: Войти как покупатель
+    login_failed: Вход не выполнен.
+    login_name: Логин
+    logout: Выйти
+    logs: Журналы событий
+    look_for_similar_items: Посмотрите похожие товары
+    make_refund: Сделать возврат
+    manage_promotion_categories: Управление категориями промо
+    manage_stock: Управление складом
+    manage_variants: Управление вариантами
+    master_price: Основная цена
+    master_variant: Основной вариант
     match_choices:
-      all: "Всем"
-      none: "Ни одному"
-    max_items: "Максимальное число наименований по начальной ставке"
-    member_since: "Зарегистр. с"
-    memo:
-    meta_description: "Описание"
-    meta_keywords: "Ключевые слова"
-    meta_title:
-    metadata: "Метаданные"
-    minimal_amount: "Минимальная сумма"
-    month: "Месяц"
-    more: "Больше"
-    move_stock_between_locations: "Перемещение товаров между складами"
-    my_account: "Моя учетная запись"
-    my_orders: "Мои заказы"
-    name: "Наименование"
-    name_on_card:
-    name_or_sku: "Наименование или артикул"
-    new: "Новый"
-    new_adjustment: "Новая корректировка"
-    new_country: "Новая страна"
-    new_customer: "Для новых пользователей"
-    new_customer_return: "Новый возврат покупателю"
-    new_image: "Новое изображение"
-    new_option_type: "Новая опция"
-    new_order: "Новый заказ"
-    new_order_completed: "Оформление заказа завершено"
-    new_payment: "Новый платёж"
-    new_payment_method: "Новый способ оплаты"
-    new_product: "Новый товар"
-    new_promotion: "Новая акция"
-    new_promotion_category: "Новая категория акций"
-    new_property: "Новое свойство"
-    new_prototype: "Новый прототип"
-    new_refund:
-    new_refund_reason: "Новая причина возврата"
-    new_return_authorization: "Новое разрешение на возврат"
-    new_rma_reason: "Новая причина разрешения на возврат"
-    new_shipment_at_location:
-    new_shipping_category: "Новая категория доставки"
-    new_shipping_method: "Новый способ доставки"
-    new_state: "Новый регион/область"
-    new_stock_location: "Добавить новый склад"
-    new_stock_movement: "Новое движение товара"
-    new_stock_transfer: "Новое перемещение по складу"
-    new_tax_category: "Новая категория налогов"
-    new_tax_rate: "Новая ставка налога"
-    new_taxon: "Новый таксон"
-    new_taxonomy: "Новая таксономия"
-    new_tracker: "Новый трекер"
-    new_user: "Новый пользователь"
-    new_variant: "Новый вариант"
-    new_zone: "Новая зона"
-    next: "след."
-    no_actions_added: "Нет действий"
-    no_payment_found:
-    no_pending_payments: "Нет незавершённых платежей"
-    no_products_found: "Не найдено ни одного товара"
-    no_resource_found: "%{resource} не найдены"
-    no_results: "Ничего не найдено"
-    no_returns_found:
-    no_rules_added: "Ни одного правила не задано"
-    no_shipping_method_selected:
-    no_state_changes:
-    no_tracking_present: "Отсутствуют детали отслеживания"
-    none: "Ни одного"
-    none_selected:
-    normal_amount: "Обычная сумма"
-    not: "не"
-    not_available: "Не доступен"
-    not_enough_stock: "Недостаточно позиций в исходном местоположении для завершения движения"
+      all: Все
+      none: Нет
+    max_items: Максимальное число наименований по начальной ставке
+    member_since: Зарегистр. с
+    memo: Заметка
+    meta_description: Мета-тег описание
+    meta_keywords: Мета-тег ключевые слова
+    meta_title: Мета-тег заголовок
+    metadata: Метаданные
+    minimal_amount: Минимальная сумма
+    month: Месяц
+    more: Больше
+    move_stock_between_locations: Перемещение товаров между складами
+    my_account: Моя учетная запись
+    my_orders: Мои заказы
+    name: Наименование
+    name_on_card: Имя на карте
+    name_or_sku: Наименование или артикул
+    new: Новый
+    new_adjustment: Новая корректировка
+    new_adjustment_reason: Новая причина корректировки
+    new_country: Новая страна
+    new_customer: Для новых пользователей
+    new_customer_return: Новый возврат
+    new_image: Новое изображение
+    new_option_type: Новая опция
+    new_order: Новый заказ
+    new_order_completed: Оформление заказа завершено
+    new_payment: Новый платёж
+    new_payment_method: Новый способ оплаты
+    new_product: Новый товар
+    new_promotion: Новая акция
+    new_promotion_category: Новая категория акций
+    new_property: Новое свойство
+    new_prototype: Новый прототип
+    new_refund: Новое возмещение
+    new_refund_reason: Новая причина возмещения
+    new_return_authorization: Новый запрос на возврат
+    new_rma_reason: Новая причина разрешения на возврат
+    new_shipping_category: Новая категория доставки
+    new_shipping_method: Новый способ доставки
+    new_state: Новый регион/область
+    new_stock_location: Добавить новый склад
+    new_stock_movement: Новое перемещение товара
+    new_store: Новый магазин
+    new_store_credit: Новый внутримагазинный кредит
+    new_tax_category: Новая категория налогов
+    new_tax_rate: Новая ставка налога
+    new_taxon: Новый таксон
+    new_taxonomy: Новая таксономия
+    new_tracker: Новый трекер
+    new_user: Новый пользователь
+    new_variant: Новый вариант
+    new_zone: Новая зона
+    next: след.
+    no_actions_added: Нет действий
+    no_images_found: Изображения не найдены
+    no_inventory_selected: Инвентарь не выбран
+    no_option_values_on_product_html: У этого продукта нет свойств. Добавьте несколько во вкладке свойства здесь %{link}.
+    no_orders_found: Не найдено заказов
+    no_payment_found: Не найдено платежей
+    no_payment_methods_found: Не найдено платежных методов
+    no_pending_payments: Нет незавершённых платежей
+    no_products_found: Не найдено ни одного товара
+    no_promotions_found: Акции не найдены
+    no_resource: "%{resource} не найдены."
+    no_resource_found: "%{resource} не найдены" # todo remove?
+    no_resource_found_html: "%{resource} не найдены, %{add_one_link}!"
+    no_resource_found_link: Добавить
+    no_results: Ничего не найдено
+    no_rules_added: Ни одного условия не задано
+    no_shipping_method_selected: Не выбрано способов доставки
+    no_shipping_methods_found: Не найдены способы доставки
+    no_stock_locations_found: Не найдены местоположения складов
+    no_trackers_found: Трекеров не найдено
+    no_tracking_present: Отсутствуют детали отслеживания
+    no_variants_found: Вариантов не найдено
+    no_variants_found_try_again: Не найдено вариантов, попробуйте еще
+    none: Ни одного
+    none_selected: Ничего не выбрано
+    normal_amount: Обычная сумма
+    not: не
+    not_available: Не доступен
+    not_enough_stock: Недостаточно позиций в исходном местоположении для завершения
+      движения
     not_found: "%{resource} не найден"
-    note:
+    note: Заметка
+    note_already_received_a_refund: 'Внимание: Этот заказ уже получил возмещение, убедитесь что сумма возмещения ниже корректна.'
     notice_messages:
-      product_cloned: "Копия товара создана"
-      product_deleted: "Товар успешно удалён"
-      product_not_cloned: "Товар не может быть клонирован"
-      product_not_deleted: "Товар не может быть удалён"
-      variant_deleted: "Вариант успешно удалён"
-      variant_not_deleted: "Вариант не может быть удален"
-    num_orders: "Кол-во заказов"
-    on_hand: "В наличии"
-    open: "Открыть"
-    open_all_adjustments: "Открыть все корректировки"
-    option_type: "Товарная опция"
-    option_type_placeholder: "Выберите тип опции"
-    option_types: "Товарные опции"
-    option_value: "Возможное значение опции"
-    option_values: "Возможные значения опции"
-    optional: "Не обязательно"
-    options: "Опции"
-    or: "или"
-    or_over_price: "более чем %{price}"
-    order: "Заказ"
-    order_adjustments: "Корректировки заказа"
-    order_already_updated:
-    order_approved: "Заказ подтвержден"
-    order_canceled:
-    order_details: "Реквизиты заказа"
-    order_email_resent: "Письмо с описанием заказа выслано повторно"
-    order_information: "Информация"
+      product_cloned: Копия товара создана
+      product_deleted: Товар успешно удалён
+      product_not_cloned: Товар не может быть клонирован
+      product_not_deleted: Товар не может быть удалён
+      variant_deleted: Вариант успешно удалён
+      variant_not_deleted: Вариант не может быть удален
+    num_orders: Кол-во заказов
+    number: Номер
+    number_of_codes: "%{count} кодов"
+    on_hand: В наличии
+    open: Открыть
+    open_all_adjustments: Открыть все корректировки
+    option_type: Товарная опция
+    option_type_placeholder: Выберите тип опции
+    option_types: Товарные опции
+    option_value: Возможное значение опции
+    option_values: Возможные значения опции
+    optional: Не обязательно
+    options: Опции
+    or: или
+    or_over_price: более чем %{price}
+    order: Заказ
+    order_adjustments: Корректировки заказа
+    order_already_completed: Заказ уже завершен
+    order_already_updated: Заказ уже обновлен
+    order_approved: Заказ подтвержден
+    order_canceled: Заказ отменен
+    order_completed: Заказ завершен
+    order_details: Реквизиты заказа
+    order_email_resent: Письмо с описанием заказа выслано повторно
+    order_information: Информация
     order_mailer:
       cancel_email:
-        dear_customer: "Дорогой покупатель,\n"
-        instructions: "Ваш заказ был отменен. Сохраните эту информацию для истории."
-        order_summary_canceled: "Детали заказа [ОТМЕНЕНО]"
-        subject: "Аннулирование заказа"
-        subtotal:
-        total:
+        dear_customer: Дорогой покупатель,
+        instructions: Ваш заказ был отменен. Сохраните эту информацию для истории.
+        order_summary_canceled: Детали заказа [ОТМЕНЕНО]
+        subject: Аннулирование заказа
+        subtotal: Подытог
+        total: Итого
       confirm_email:
-        dear_customer: "Дорогой покупатель,\n"
-        instructions: "Пожалуйста, проверьте детали заказа."
-        order_summary: "Детали заказа"
-        subject: "Подтверждение заказа"
-        subtotal:
-        thanks: "Спасибо, что выбрали нас."
-        total:
-    order_not_found: "Мы не смогли найти Ваш заказ. Попробуйте еще раз."
-    order_number: "Заказ %{number}"
-    order_processed_successfully: "Ваш заказ был успешно обработан"
-    order_resumed:
+        dear_customer: Дорогой покупатель,
+        instructions: Пожалуйста, проверьте детали заказа.
+        order_summary: Детали заказа
+        subject: Подтверждение заказа
+        subtotal: Подытог
+        thanks: Спасибо, что выбрали нас.
+        total: Итого
+      inventory_cancellation:
+        dear_customer: Дорогой покупатель,
+        instructions: Некоторые товары в вашем заказе были отменены. Пожалуйста сохраните эту информацию для своего учёта.
+        order_summary_canceled: Отмененные товары
+        subject: Отмена товароы
+    order_mutex_admin_error: Заказ был изменен кем-то другим, попробуйте ещё.
+    order_mutex_error: Что-то пошло не так, попробуйте ещё.
+    order_not_found: Мы не смогли найти Ваш заказ. Попробуйте еще раз.
+    order_number: Заказ %{number}
+    order_please_refresh: Заказ не может быть завершен, пожалуйста обновите "итого".
+    order_processed_successfully: Ваш заказ был успешно обработан
+    order_ready_for_confirm: Заказ готов для подтверждения
+    order_refresh_totals: Обновить "итого"
+    order_resumed: Заказ возобновлен
     order_state:
-      address: "Адрес"
-      awaiting_return: "Ожидает возврата"
-      canceled: "Отменён"
-      cart: "Корзина"
-      complete: "Завершение"
-      confirm: "Подтверждение"
-      considered_risky:
-      delivery: "Доставка"
-      payment: "Оплата"
-      resumed: "Возобновлён"
-      returned: "Возвращён"
-    order_summary: "Сводка по заказу"
-    order_sure_want_to: "Вы уверены, что хотите %{event} этот заказ?"
-    order_total: "Итого заказ"
-    order_updated: "Заказ обновлен"
-    orders: "Заказы"
-    other_items_in_other:
-    out_of_stock: "Нет в наличии"
-    overview: "Обзор"
-    package_from: "Фасовку в"
+      address: Адрес
+      awaiting_return: Ожидает возврата
+      canceled: Отменён
+      cart: Корзина
+      complete: Завершение
+      confirm: Подтверждение
+      considered_risky: Риск
+      delivery: Доставка
+      payment: Оплата
+      resumed: Возобновлён
+      returned: Возвращён
+    order_summary: Сводка по заказу
+    order_sure_want_to: Вы уверены, что хотите %{event} этот заказ?
+    order_total: Итого заказ
+    order_updated: Заказ обновлен
+    orders: Заказы
+    other_items_in_other: Другие товары в заказе
+    out_of_stock: Нет в наличии
+    overview: Обзор
+    package_from: доставка из
     pagination:
-      next_page: "следующая страница »"
+      next_page: следующая страница »
       previous_page: "« предыдущая страница"
       truncate: "…"
-    password: "Пароль"
+    password: Пароль
     paste: Paste
-    path: "Путь"
-    pay: "оплатить"
-    payment: "Платеж"
-    payment_could_not_be_created:
-    payment_identifier:
-    payment_information: "Информация о платеже"
-    payment_method: "Способ оплаты"
-    payment_method_not_supported: "Этот способ оплаты не поддерживается"
-    payment_methods: "Способы оплаты"
-    payment_processing_failed: "Невозможно произвести платёж, пожалуйста, проверьте введённую информацию"
-    payment_processor_choose_banner_text: "Если Вам нужна помощь в выборе способа оплаты, пожалуйста, зайдите на"
-    payment_processor_choose_link: "наша страница оплаты"
-    payment_state: "Статус платежа"
+    path: Путь
+    pay: оплатить
+    payment: Платеж
+    payment_amount: Сумма платежа
+    payment_could_not_be_created: Не получается создать платеж
+    payment_identifier: Идентификатор платежа
+    payment_information: Информация о платеже
+    payment_method: Способ оплаты
+    payment_method_not_supported: Этот способ оплаты не поддерживается
+    payment_methods: Способы оплаты
+    payment_processing_failed: Невозможно произвести платёж, пожалуйста, проверьте
+      введённую информацию
+    payment_processor_choose_banner_text: Если Вам нужна помощь в выборе способа оплаты,
+      пожалуйста, зайдите на
+    payment_processor_choose_link: наша страница оплаты
+    payment_state: Статус платежа
     payment_states:
-      balance_due: "частично"
-      checkout: "оформляется"
-      completed: "завершен"
-      credit_owed: "в кредит"
-      failed: "ошибка"
-      paid: "оплачен"
-      pending: "в ожидании"
-      processing: "в обработке"
-      void: "аннулирован"
-    payment_updated: "Платёж обновлён"
-    payments: "Платежи"
-    pending:
-    percent: "Процент"
-    percent_per_item: "Процент с каждой единицы товара"
-    permalink: "Постоянная ссылка"
-    phone: "Телефон"
-    place_order: "Разместить заказ"
-    please_define_payment_methods: "Сначала определите способ оплаты."
-    populate_get_error: "Что-то пошло не так. Попробуйте добавить товар еще раз."
-    powered_by: "Работает на"
-    pre_tax_amount:
-    pre_tax_refund_amount:
-    pre_tax_total:
-    preferred_reimbursement_type:
-    presentation: "Отображать как"
-    previous: "пред."
-    previous_state_missing:
-    price: "Цена"
-    price_range: "Ценовой диапазон"
+      balance_due: задолженность
+      credit_owed: переплата
+      failed: ошибка
+      paid: оплачено
+      void: отменён
+      invalid: недействителен
+    payment_updated: Платёж обновлён
+    payments: Платежи
+    payments_failed_count:
+      many: "%{count} платежей"
+      few: "%{count} платежа"
+      one: "%{count} платеж"
+      other: "%{count} платежей"
+    pending: Ожидание
+    percent: Процент
+    percent_per_item: Процент с каждой единицы товара
+    permalink: Постоянная ссылка
+    phone: Телефон
+    place_order: Разместить заказ
+    please_define_payment_methods: Сначала определите способ оплаты.
+    populate_get_error: Что-то пошло не так. Попробуйте добавить товар еще раз.
+    powered_by: Работает на
+    pre_tax_amount: Сумма до уплаты налогов
+    pre_tax_refund_amount: Предварительная сумма возврата налога
+    pre_tax_total: Предварительная сумма
+    preference_source_none: Без настроек
+    preference_source_using: Используются статические настройки "%{name}"
+    preferred_reimbursement_type: Предпочтительный тип возмещения
+    presentation: Отображать как
+    previous: пред.
+    price: Цена
+    price_range: Ценовой диапазон
     price_sack: Price Sack
-    process: "Обработать"
-    product: "Товар"
-    product_details: "Описание товара"
-    product_has_no_description: "У данного товара нет описания."
-    product_not_available_in_this_currency: "Этот товар недоступен в выбранной валюте."
-    product_properties: "Свойства товара"
+    process: Обработать
+    product: Товар
+    product_details: Описание товара
+    product_has_no_description: У данного товара нет описания.
+    product_not_available_in_this_currency: Этот товар недоступен в выбранной валюте.
+    product_properties: Свойства товара
     product_rule:
-      choose_products: "Выбранные товары"
-      label:
-      match_all: "все"
-      match_any: "хотя бы один"
-      match_none:
+      choose_products: Выбрать товары
+      label: 'Заказ должен содержать следующие продукты: %{select}'
+      match_all: все
+      match_any: хотя бы один
+      match_none: ни одного
       product_source:
-        group: "Из группы товаров"
-        manual: "Выбрать вручную"
-    products: "Товары"
-    promotion: "Промо-акция"
-    promotion_action: "Промо-акция"
-    promotion_action_types:
-      create_adjustment:
-        description: "Создаёт промо-корректировки для заказа"
-        name: "Создать корректировку"
-      create_item_adjustments:
-        description:
-        name:
-      create_line_items:
-        description: "Заполняет корзину указанным количеством вариантов"
-        name: "Создать элемент заказа"
-      free_shipping:
-        description:
-        name:
-    promotion_actions: "Акции"
+        group: Из группы товаров
+        manual: Выбрать вручную
+    products: Товары
+    promotion: Промо-акция
+    promotion_action: Промо-акция
+    promotion_actions: Действия
+    promotion_code_batch_mailer:
+      promotion_code_batch_errored:
+        message: 'Возникла ошибка при выпуске рекламных кодов (%{error}) для акции: '
+        subject: Ошибка при выпуске рекламных кодов
+      promotion_code_batch_finished:
+        message: 'Все %{number_of_codes} рекламные коды были созданы для акции: '
+        subject: Выпуск рекламных кодов завершен
+    promotion_code_batches:
+      errored: 'Ошибка: %{error}'
+      finished: Все %{number_of_codes} рекламные коды были созданы.
+      processing: 'Обработка: %{number_of_codes_processed} / %{number_of_codes}'
     promotion_form:
       match_policies:
-        all: "Соответствует всем этим правилам"
-        any: "Соответствует хотя бы одному правилу"
-    promotion_rule: "Правило"
-    promotion_rule_types:
-      first_order:
-        description: "Должен быть первым заказом покупателя"
-        name: "Первый заказ"
-      item_total:
-        description: "Сумма заказа соответствует следующим критериям"
-        name: "Сумма заказа"
-      landing_page:
-        description: "Покупатель должен был попасть на указанную страницу"
-        name: "Страница"
-      one_use_per_user:
-        description:
-        name:
-      option_value:
-        description:
-        name:
-      product:
-        description: "Заказ включает указанные товары"
-        name: "Товары"
-      taxon:
-        description:
-        name:
-      user:
-        description: "Доступно только для указанных пользователей"
-        name: "Пользователи"
-      user_logged_in:
-        description: "Доступно только зарегистрированным пользователям"
-        name: "Пользователь авторизовался"
-    promotion_uses:
-    promotionable:
-    promotions: "Промо-акции"
-    propagate_all_variants: "Применить ко всем вариантам"
-    properties: "Свойства"
-    property: "Свойство"
-    prototype: "Прототип"
-    prototypes: "Прототипы"
-    provider: "Провайдер"
-    provider_settings_warning: "Если вы меняете провайдера, вы должны сохранить это изменение, прежде чем вы сможете изменить настройки провайдера."
-    qty: "Кол-во"
-    quantity: "Количество"
-    quantity_returned: "Количество возврата"
-    quantity_shipped: "Отправленное количество"
-    quick_search: "Поиск . . ."
-    rate: "Ставка"
-    reason: "Причина"
-    receive: "Получить"
-    receive_stock: "Получить товар"
-    received: "Получен"
-    reception_status:
-    reference: "Ссылка"
-    refund: "Возврат"
-    refund_amount_must_be_greater_than_zero:
-    refund_reasons: "Причины возврата денег"
-    return_reasons: "Причины возврата товара"
-    refunded_amount:
-    refunds:
-    register: "Зарегистрироваться как новый пользователь"
-    registration: "Регистрация"
-    reimburse:
-    reimbursed:
-    reimbursement:
-    reimbursement_mailer:
-      reimbursement_email:
-        days_to_send:
-        dear_customer:
-        exchange_summary:
-        for:
-        instructions:
-        refund_summary:
-        subject:
-        total_refunded:
-    reimbursement_perform_failed:
-    reimbursement_status:
-    reimbursement_type:
-    reimbursement_type_override:
-    reimbursement_types: "Типы возврата"
-    reimbursements:
-    reject:
-    rejected:
-    remember_me: "Запомнить меня"
-    remove: "Убрать"
-    rename: "Переименовать"
-    report:
-    reports: "Отчеты"
-    resend: "Отправить повторно"
-    reset_password: "Сбросить мой пароль"
-    response_code: "Код ответа"
-    resume: "возобновить"
-    resumed: "Возобновлен"
-    return: "возвратить"
-    return_authorization: "Разрешение на возврат"
-    return_authorization_reasons: "Причины разрешения на возврат"
-    return_authorization_updated: "Разрешение на возврат обновлено"
-    return_authorizations: "Разрешения на возврат"
-    return_item_inventory_unit_ineligible:
-    return_item_inventory_unit_reimbursed:
-    return_item_rma_ineligible:
-    return_item_time_period_ineligible:
-    return_items:
-    return_items_cannot_be_associated_with_multiple_orders:
-    return_number: "Номер возврата"
-    return_quantity: "возвращенное количество"
-    returned: "Возвращенные"
-    returns: "Разрешения на возврат"
-    review: "Проверить"
-    risk:
-    risk_analysis:
-    risky:
+        all: Соответствует всем этим уловиям
+        any: Соответствует хотя бы одному условию
+    promotion_rule: Условие
+    promotion_successfully_created: Акция была успешно создана
+    promotion_uses: Акция использует
+    promotionable: Акционный
+    promotions: Промо-акции
+    propagate_all_variants: Применить ко всем вариантам
+    properties: Свойства
+    property: Свойство
+    prototype: Прототип
+    prototypes: Прототипы
+    provider: Провайдер
+    provider_settings_warning: Если вы меняете провайдера, вы должны сохранить это
+      изменение, прежде чем вы сможете изменить настройки провайдера.
+    payment_method_settings_warning: Настройки метода оплаты будут доступны только после сохранения нового способа оплаты
+    qty: Кол-во
+    quantity: Количество
+    quantity_returned: Количество возврата
+    quantity_shipped: Отправленное количество
+    quick_search: Поиск . . .
+    rate: Ставка
+    ready_to_ship: Готово к доставке
+    reason: Причина
+    receive: Получить
+    receive_stock: Получить товар
+    received: Получен
+    received_items: Полученные товары
+    reception_states:
+      awaiting: Ожидание
+      cancelled: Отменен
+      expired: Истёк срок действия
+      given_to_customer: Отдан клиенту
+      in_transit: В пути
+      lost_in_transit: Утерян в пути
+      received: Получен
+      shipped_wrong_item: Доставлен неверный товар
+      short_shipped: Снят с доставки
+      unexchanged: Не заменён
+    reception_status: Статус регистрации
+    reference: Ссылка
+    refund: Возврат
+    refund_amount_must_be_greater_than_zero: Сумма возмещения должна быть больше нуля
+    refund_reasons: Причины возврата денег
+    refunded_amount: Возмещенная сумма
+    refunds: Возмещения
+    register: Зарегистрироваться как новый пользователь
+    registration: Регистрация
+    reimburse: Возместить
+    reimbursed: Возмещено
+    reimbursement_states:
+      errored: Ошибка
+      pending: Ожидание
+      reimbursed: Возмещено
+    reimbursement_types: Типы возврата
+    remember_me: Запомнить меня
+    remove: Убрать
+    rename: Переименовать
+    report: Отчет
+    reports: Отчеты
+    resend: Отправить письмо повторно
+    reset_password: Сбросить мой пароль
+    response_code: Код ответа
+    resume: Возобновить
+    resumed: Возобновлен
+    return: Возвратить
+    return_authorization: Запрос на возврат
+    return_authorization_fire_error: Нельзя выполнить это действие
+    return_authorization_reasons: Причины разрешения на возврат
+    return_authorization_states:
+      authorized: Авторизовано
+      canceled: Закрыто
+    return_authorization_updated: Запрос на возврат обновлен
+    return_authorizations: Запросы на возврат
+    return_number: Номер возврата
+    return_quantity: возвращенное количество
+    return_reasons: Причины возврата товара
+    returned: Возвращенные
+    returns: Разрешения на возврат
+    review: Проверить
+    risk: Риск
+    risk_analysis: Анализ риска
+    risky: Рискованно
     rma_credit: RMA Credit
-    rma_number: "Номер RMA"
-    rma_value: "Сумма RMA"
-    roles: "Роли"
-    rules: "Правила"
-    safe: "Безопасный"
-    sales_total: "Итого (продажи)"
-    sales_total_description: "Общий объём продаж по всем заказам"
-    sales_totals: "Всего продано"
-    save_and_continue: "Сохранить и продолжить"
-    save_my_address: "Сохранить адрес"
-    say_no: "Нет"
-    say_yes: "Да"
-    scope: "Фильтр"
-    search: "Поиск"
-    search_results: "Результаты поиска по запросу '%{keywords}'"
-    searching: "Идёт поиск..."
-    secure_connection_type: "Тип защищенного соединения"
-    security_settings: "Настройки безопасности"
-    select: "Выбрать"
-    select_a_return_authorization_reason: "Выбрать причину разрешения на возврат"
-    select_a_stock_location: "Выбрать адрес склада"
-    select_from_prototype: "Выбрать из прототипов"
-    select_stock: "Выбрать склад"
-    selected_quantity_not_available: 'товара %{item} недостаточно.'
-    send_copy_of_all_mails_to: "Отсылать копии всех писем на"
-    send_mails_as: "Отсылать почту как"
-    server: "Сервер"
-    server_error: "На сервере произошла ошибка"
-    settings: "Настройки"
-    ship: "доставка"
-    ship_address: "Адрес доставки"
-    ship_total: "Всего к доставке"
-    shipment: "Отправка"
-    shipment_adjustments: "Корректировки доставки"
-    shipment_details:
+    rma_number: Номер RMA
+    rma_value: Сумма RMA
+    roles: Роли
+    rules: Условия
+    safe: Безопасный
+    sales_total: Итого (продажи)
+    sales_total_description: Общий объём продаж по всем заказам
+    sales_totals: Всего продано
+    save_and_continue: Сохранить и продолжить
+    save_my_address: Сохранить адрес
+    say_no: Нет
+    say_yes: Да
+    scope: Фильтр
+    search: Поиск
+    search_results: Результаты поиска по запросу '%{keywords}'
+    searching: Идёт поиск...
+    secure_connection_type: Тип защищенного соединения
+    security_settings: Настройки безопасности
+    select: Выбрать
+    select_a_reason: Выбрать причину
+    select_a_stock_location: Выбрать адрес склада
+    select_from_prototype: Выбрать из прототипов
+    select_stock: Выбрать склад
+    selected_quantity_not_available: товара %{item} недостаточно.
+    send_copy_of_all_mails_to: Отсылать копии всех писем на
+    send_mailer: Оповестить по почте
+    send_mails_as: Отсылать почту как
+    server: Сервер
+    server_error: На сервере произошла ошибка
+    settings: Настройки
+    ship: доставка
+    ship_address: Адрес доставки
+    ship_address_required: Требуется адрес доставки
+    ship_total: Всего к доставке
+    shipment: Отправка
+    shipment_adjustments: Корректировки доставки
+    shipment_date: Дата доставки
+    shipment_details: Детали доставки
     shipment_mailer:
       shipped_email:
-        dear_customer: "Дорогой покупатель,\n"
-        instructions: "Ваш заказ был успешно отправлен."
-        shipment_summary: "Детали доставки"
-        subject: "Уведомление о доставке"
-        thanks: "Спасибо, что выбрали нас."
-        track_information: "Детали отслеживания доставки: %{tracking}"
-        track_link: "Адрес трекинга: %{url}"
-    shipment_state: "Статус отправки"
+        dear_customer: Дорогой покупатель,
+        instructions: Ваш заказ был успешно отправлен.
+        shipment_summary: Детали доставки
+        subject: Уведомление о доставке
+        thanks: Спасибо, что выбрали нас.
+        track_information: 'Детали отслеживания доставки: %{tracking}'
+        track_link: 'Адрес трекинга: %{url}'
+    shipment_number: Номер доставки
+    shipment_numbers: Номеры доставки
+    shipment_state: Статус отправки
     shipment_states:
-      backorder: "задерживается"
-      canceled:
-      partial: "частично"
-      pending: "ожидает"
-      ready: "готов"
-      shipped: "отправлен"
-    shipment_transfer_error:
-    shipment_transfer_success:
-    shipments: "Отправки"
-    shipped: "Отправлено"
-    shipping: "Доставка"
-    shipping_address: "Адрес доставки"
-    shipping_categories: "Категории доставки"
-    shipping_category: "Категория доставки"
-    shipping_flat_rate_per_item: "Фиксированная ставка за единицу товара"
-    shipping_flat_rate_per_order: "Фиксированная ставка"
-    shipping_flexible_rate: "Гибкая ставка за единицу товара"
-    shipping_instructions: "Иструкции по доставке"
-    shipping_method: "Способ доставки"
-    shipping_methods: "Способы доставки"
-    shipping_price_sack: "Подсчет стоимости доставки"
-    shipping_total: "Итого (доставка)"
-    shop_by_taxonomy: "%{taxonomy}"
-    shopping_cart: "Корзина"
-    show: "Показать"
-    show_active: "Показать активные"
-    show_deleted: "Показать удаленные"
-    show_only_complete_orders: "Показывать только завершённые заказы"
-    show_only_considered_risky:
-    show_rate_in_label: "Показывать процент в названии"
-    sku: "Артикул"
-    skus:
-    slug: "Ссылка"
-    source: "Источник"
-    special_instructions: "Дополнительные инструкции"
-    split: "Разделить"
-    spree_gateway_error_flash_for_checkout: "Возникли проблемы с Вашими реквизитами. Пожалуйста, проверьте их и попробуйте ещё раз."
-    ssl:
-      change_protocol:
-    start: "Начало"
-    state: "Регион/Область"
-    state_based: "Есть области"
-    state_machine_states:
-      accepted:
-      address:
-      authorized:
-      awaiting:
-      awaiting_return:
-      backordered:
-      canceled:
-      cart:
-      checkout:
-      closed:
-      complete:
-      completed:
-      confirm:
-      delivery:
-      errored:
-      failed:
-      given_to_customer:
-      invalid:
-      manual_intervention_required:
-      on_hand:
-      open:
-      order:
-      payment:
-      pending:
-      processing:
-      ready:
-      reimbursed:
-      resumed:
-      returned:
-      shipped:
-      void:
-    states: "Регионы/Области"
-    states_required: "Регионы обязательны"
-    status: "Статус"
-    stock: "Запасы"
-    stock_location: "Расположение склада"
-    stock_location_info: "Подробности расположения склада"
-    stock_locations: "Адреса складов"
-    stock_locations_need_a_default_country:
-    stock_management: "Управление запасами"
-    stock_management_requires_a_stock_location: "Добавьте расположение склада для управления запасами."
-    stock_movements: "Перемещения товаров"
-    stock_movements_for_stock_location: "Перемещения товаров для %{stock_location_name}"
-    stock_successfully_transferred: "Товары успешно перемещены с одного склада на другой."
-    stock_transfer: "Движение товаров"
-    stock_transfers: "Движения товаров"
-    stop: "Конец"
-    store: "В магазин"
-    street_address: "Адрес"
-    street_address_2: "Адрес (строка 2)"
-    subtotal: "Подытог"
-    subtract: "Вычет"
-    success:
-    successfully_created: "%{resource} был успешно создан!"
-    successfully_refunded:
-    successfully_removed: "%{resource} был успешно удален!"
-    successfully_signed_up_for_analytics: "Успешно авторизованы в Spree Analytics"
-    successfully_updated: "%{resource} был успешно обновлен!"
-    summary: "Сводка"
-    tax: "Налог"
-    tax_categories: "Категории налогов"
-    tax_category: "Категория налогов"
-    tax_code:
-    tax_included: "Вкл. налоги"
-    tax_rate_amount_explanation: "Налоговые ставки вводятся как десятичные значения (напр. если налог 5%, то вводите 0.05)"
-    tax_rates: "Налоговые ставки"
-    taxon: "Таксон"
-    taxon_edit: "Редактировать таксон"
-    taxon_placeholder: "Добавить таксон"
-    taxon_rule:
-      choose_taxons:
+      backorder: предзаказ
+      canceled: отменена
+      partial: частично
+      pending: ожидание
+      ready: подготовлена
+      shipped: отправлена
+    shipments: Отправки
+    shipped: Отправлено
+    shipped_at: Дата доставки
+    shipping: Доставка
+    shipping_address: Адрес доставки
+    shipping_categories: Категории доставки
+    shipping_category: Категория доставки
+    shipping_flat_rate_per_item: Фиксированная ставка за единицу товара
+    shipping_flat_rate_per_order: Фиксированная ставка
+    shipping_flexible_rate: Гибкая ставка за единицу товара
+    shipping_instructions: Иструкции по доставке
+    shipping_method: Способ доставки
+    shipping_methods: Способы доставки
+    shipping_price_sack: Подсчет стоимости доставки
+    shipping_rate:
+      display_price:
+        display_price_with_explanations: "%{price} (%{explanations})"
+        tax_label_separator: ", "
+    shipping_rate_tax:
       label:
-      match_all:
-      match_any:
-    taxonomies: "Таксономии"
-    taxonomy: "Таксономия"
-    taxonomy_edit: "Редактирование таксономии"
-    taxonomy_tree_error: "Запрашиваемое изменение не было осуществленно и дерево возвращено в предыдущее состояние. Пожалуйста, попытайтесь снова."
-    taxonomy_tree_instruction: "* Щёлкните правой кнопкой мыши на элеменете дерева для добавления, удаления или сортировки таксонов."
-    taxons: "Таксоны"
-    test: "Тест"
+        sales_tax: "+ %{amount} %{tax_rate_name}"
+        vat: вкл. %{amount} %{tax_rate_name}
+    shipping_total: Итого (доставка)
+    shop_by_taxonomy: "%{taxonomy}"
+    shopping_cart: Корзина
+    show: Показать
+    show_active: Показать активные
+    show_deleted: Показать удаленные
+    show_only_complete_orders: Показывать только завершённые заказы
+    show_only_considered_risky: Показывать только рискованные
+    show_rate_in_label: Показывать ставку в названии
+    sku: Артикул
+    skus: Артикулы
+    slug: Ссылка
+    source: Источник
+    special_instructions: Дополнительные инструкции
+    split: Разделить
+    split_failed: Не удалось разделить
+    spree_gateway_error_flash_for_checkout: Возникли проблемы с Вашими реквизитами.
+      Пожалуйста, проверьте их и попробуйте ещё раз.
+    ssl:
+      change_protocol: Перейдите к использованию HTTP (а не HTTPS) и повторите попытку
+    start: Начало
+    state: Регион/Область
+    state_based: Есть области
+    states: Регионы/Области
+    states_count:
+      many: "%{count} состояний"
+      few: "%{count} состояния"
+      one: "%{count} состояние"
+      other: "%{count} состояний"
+    states_required: Регионы обязательны
+    status: Статус
+    stock: Запасы
+    stock_location: Расположение склада
+    stock_location_info: Подробности расположения склада
+    stock_locations: Адреса складов
+    stock_locations_need_a_default_country: Требуется указать страну для склада
+    stock_management: Управление запасами
+    stock_management_requires_a_stock_location: Добавьте расположение склада для управления
+      запасами.
+    stock_movements: Перемещения товаров
+    stock_movements_for_stock_location: Перемещения товаров для %{stock_location_name}
+    stock_not_below_zero: Склад не может быть менее нуля
+    stock_successfully_transferred: Товары успешно перемещены с одного склада на другой.
+    stock_transfer: Движение товаров
+    stock_transfers: Движения товаров
+    stop: Конец
+    store: В магазин
+    store_credit:
+      actions:
+        invalidate: Аннулировать
+      credit_allocation_memo: Это кредит из внутримагазинного кредита ID %{id}
+      currency_mismatch: Валюта внутримагазинного кредита не соответствует валюте заказа
+      display_action:
+        adjustment: Регулировка
+        admin:
+          authorize: Авторизовано
+          eligible: Требования проверены
+          void: Отменено
+        allocation: Добавлено
+        capture: Проведено
+        credit: Возвращено
+        invalidate: Аннулировано
+        void: Отменено
+      errors:
+        cannot_invalidate_uncaptured_authorization: Нельзя аннулировать внутримагазинный кредит с непроведенной авторизацией
+        unable_to_fund: Нельзя заплатить за заказ используя внутримагазинный кредит
+      expiring: Истекающий
+      insufficient_authorized_amount: Нельзя использовать больше чем разрешенная сумма
+      insufficient_funds: Недостаточно суммы внутримагазинного кредита
+      non_expiring: Не истекающий
+      select_one_store_credit: Выберите внутримагазинный кредит, чтобы перейти к остатку баланса
+      store_credit: Внутримагазинный кредит
+      successful_action: Успешно %{action} внутримагазинный кредит
+      unable_to_credit: 'Невозможно выделить внутримагазинный кредит: %{auth_code}'
+      unable_to_find: Не могу найди внутримагазинный кредит
+      unable_to_find_for_action: 'Нельзя найти внутримагазинный кредит для кода: %{auth_code} и действия: %{action}'
+      unable_to_void: 'Невозможно аннулировать код: %{auth_code}'
+      user_has_no_store_credits: У пользователя нет доступных внутримагазинных кредитов
+    store_credit_category:
+      default: По умолчанию
+    store_rule:
+      choose_stores: Выберите магазины
+    street_address: Адрес
+    street_address_2: Квартира/Офис
+    subtotal: Подытог
+    subtract: Вычет
+    success: Успех
+    successfully_created: "%{resource} был успешно создан!"
+    successfully_refunded: "%{resource} был успешно возмещен!"
+    successfully_removed: "%{resource} был успешно удален!"
+    successfully_signed_up_for_analytics: Успешно авторизованы в Spree Analytics
+    successfully_updated: "%{resource} был успешно обновлен!"
+    summary: Сводка
+    tax: Налог
+    tax_categories: Категории налогов
+    tax_category: Категория налогов
+    tax_code: Код
+    tax_included: Вкл. налоги
+    tax_rate_amount_explanation: Налоговые ставки вводятся как десятичные значения
+      (напр. если налог 5%, то вводите 0.05)
+    tax_rates: Налоговые ставки
+    taxon: Таксон
+    taxon_edit: Редактировать таксон
+    taxon_placeholder: Добавить таксон
+    taxon_rule:
+      choose_taxons: Выбрать таксоны
+      label: 'Заказ должен содержать один из следующих таксонов: %{select}'
+      match_all: все
+      match_any: хотя бы один
+      match_none: ни одного
+    taxonomies: Таксономии
+    taxonomy: Таксономия
+    taxonomy_edit: Редактирование таксономии
+    taxonomy_tree_error: Запрашиваемое изменение не было осуществленно и дерево возвращено
+      в предыдущее состояние. Пожалуйста, попытайтесь снова.
+    taxonomy_tree_instruction: "* Щёлкните правой кнопкой мыши на элеменете дерева
+      для добавления, удаления или сортировки таксонов."
+    taxons: Таксоны
+    test: Тест
     test_mailer:
       test_email:
-        greeting: "Поздравляем!"
-        message: "Если Вы читаете это сообщение, значит почтовые настройки Spree верны."
-        subject: "Тестовое сообщение"
-    test_mode: "Тестовый режим"
-    thank_you_for_your_order: "Спасибо за покупку!"
-    there_are_no_items_for_this_order: "В этом заказе нет товаров. Добавьте товары, чтобы продолжить, пожалуйста."
-    there_were_problems_with_the_following_fields: "Возникли некоторые проблемы со следующими полями"
-    this_order_has_already_received_a_refund:
-    thumbnail: "Миниатюра"
-    tiered_flat_rate:
-    tiered_percent:
-    tiers:
-    time: "Время"
-    to_add_variants_you_must_first_define: "Перед добавлением вариантов, вы должны определить"
-    total: "Итого"
-    total_per_item:
-    total_pre_tax_refund:
-    total_price:
-    total_sales: "Всего продано на"
-    track_inventory: "Отслеживать наличие"
-    tracking: "Отслеживание"
-    tracking_number: "Трекинговый номер"
-    tracking_url: "Трекинговый URL"
-    tracking_url_placeholder: "например, http://quickship.com/package?num=:tracking"
-    transaction_id:
-    transfer_from_location: "Перевести из"
-    transfer_stock: "Перевести Товар"
-    transfer_to_location: "Перевести на"
-    tree: "Дерево"
-    type: "Тип"
-    type_to_search: "Начните печатать чтобы активировать поиск"
-    unable_to_connect_to_gateway: "Не удалось подключиться к платёжному шлюзу."
-    unable_to_create_reimbursements:
-    under_price: "Дешевле %{price}"
-    unlock: "Разблокировать"
-    unrecognized_card_type: "Неизвестный тип карты"
-    unshippable_items: "Неотправляемые Товары"
-    update: "Изменить"
-    updating: "Обновление"
-    usage_limit: "Максимальное количество использований"
-    use_app_default: "По умолчанию"
-    use_billing_address: "Использовать платёжный адрес"
-    use_new_cc: "Использовать новую карту"
-    use_s3: "Использовать Amazon S3 для хранения изображений"
-    user: "Пользователь"
+        greeting: Поздравляем!
+        message: Если Вы читаете это сообщение, значит почтовые настройки верны.
+        subject: Тестовое сообщение
+    test_mode: Тестовый режим
+    thank_you_for_your_order: Спасибо за покупку!
+    there_are_no_items_for_this_order: В этом заказе нет товаров. Добавьте товары,
+      чтобы продолжить, пожалуйста.
+    there_were_problems_with_the_following_fields: Возникли некоторые проблемы со
+      следующими полями
+    this_order_has_already_received_a_refund: Уже было выдано возмещение по данному заказу
+    thumbnail: Миниатюра
+    tiered_flat_rate: Многоуровневая базовая ставка
+    tiered_percent: Многоуровневый процент
+    tiers: Уровни
+    time: Время
+    to: к
+    to_add_variants_you_must_first_define: Перед добавлением вариантов, вы должны
+      определить
+    total: Итого
+    total_excluding_vat: Итого без НДС
+    total_price: Итоговая цена
+    total_pre_tax_refund: Сумма возмещения без налогов
+    total_sales: Всего продано на
+    track_inventory: Отслеживать наличие
+    tracking: Отслеживание
+    tracking_info: Информация отслеживания
+    tracking_number: Трекинговый номер
+    tracking_url: Трекинговый URL
+    tracking_url_placeholder: 'например, http://quickship.com/package?num=:tracking'
+    transaction_id: ID транзакции
+    transfer_from_location: Перевести из
+    transfer_number: Номер перевода
+    transfer_stock: Перевести товар
+    transfer_to_location: Перевести на
+    tree: Дерево
+    try_changing_search_values: Попробуйте изменить поисковый запрос
+    type: Тип
+    type_to_search: Начните печатать чтобы активировать поиск
+    unable_to_connect_to_gateway: Не удалось подключиться к платёжному шлюзу.
+    unable_to_create_reimbursements: Невозможно создать возмещение, потому что есть товары ожидающие ручной обработки
+    unable_to_find_all_inventory_units: Невозможно найти все указанные товары
+    under_price: Дешевле %{price}
+    unfinalize_all_adjustments: Разморозить все корректировки
+    unlock: Разблокировать
+    unrecognized_card_type: Неизвестный тип карты
+    unshippable_items: Неотправляемые Товары
+    update: Изменить
+    updated_successfully: Успешно обновлено
+    updating: Обновление
+    usage_limit: Максимальное количество использований
+    use_app_default: По умолчанию
+    use_billing_address: Использовать платёжный адрес
+    use_existing_cc: Использовать сохранённую карту
+    use_new_cc: Использовать новую карту
+    use_new_cc_or_payment_method: Использовать новую карту или платежный метод
+    use_s3: Использовать Amazon S3 для хранения изображений
+    user: Пользователь
+    user_role_rule:
+      choose_roles: Выберите роли
+      label: 'Пользователь должен иметь следующие роли: %{select}'
+      match_all: все
+      match_any: хотя бы одну
     user_rule:
-      choose_users: "Выбрать пользователей"
-    users: "Пользователи"
+      choose_users: Выбрать пользователей
+    users: Пользователи
     validation:
-      cannot_be_less_than_shipped_units: "не может быть меньше, чем количество отгруженных единиц"
-      cannot_destroy_line_item_as_inventory_units_have_shipped:
-      exceeds_available_stock: "превышает количество на складе. Пожалуйста проверьте количество товара."
-      is_too_large: "слишком много - количество на складе меньше запрошенного количества!"
-      must_be_int: "должно быть целым числом"
-      must_be_non_negative: "должно быть неотрицательным числом"
-      unpaid_amount_not_zero:
-    value: "Значение"
-    variant: "Вариант"
-    variant_placeholder: "Выберите вариант"
-    variant_search_placeholder: "Выберите артикул или вариант"
-    variants: "Варианты"
-    version: "Версия"
-    void: "Аннулировать"
-    weight: "Вес"
-    what_is_a_cvv: "Что такое CVV?"
-    what_is_this: "Что это?"
-    width: "Ширина"
-    year: "Год"
-    you_have_no_orders_yet: "У Вас ещё нет заказов."
-    your_cart_is_empty: "Ваша корзина пуста"
-    your_order_is_empty_add_product: "Ваша корзина пуста, найдите и добавьте продукты, пожалуйста"
-    zip: "Индекс"
-    zipcode: "Почтовый индекс"
-    zone: "Торговая зона"
-    zones: "Торговые зоны"
+      cannot_be_less_than_shipped_units: не может быть меньше, чем количество отгруженных единиц
+      cannot_destroy_line_item_as_inventory_units_have_shipped: Невозможно удалить позицию потому что некоторые товары из неё были отправлены
+      exceeds_available_stock: превышает количество на складе. Пожалуйста проверьте количество товара.
+      is_too_large: слишком много - количество на складе меньше запрошенного количества!
+      must_be_int: должно быть целым числом
+      must_be_non_negative: должно быть неотрицательным числом
+      unpaid_amount_not_zero: 'Сумма не была полностью возмещена, текущая задолженность: %{amount}'
+    validity_period: Период актуальности
+    value: Значение
+    variant: Вариант
+    variant_placeholder: Выберите вариант
+    variant_pricing: Цены вариантов
+    variant_properties: Свойства вариантов
+    variant_search: Поиск по вариантам
+    variant_search_placeholder: Выберите артикул или вариант
+    variant_to_add: Вариант для добавления
+    variant_to_be_received: Вариант для получения
+    variants: Варианты
+    version: Версия
+    void: Отменить
+    weight: Вес
+    what_is_a_cvv: Что такое CVV?
+    what_is_this: Что это?
+    width: Ширина
+    year: Год
+    you_cannot_undo_action: Вы не сможете отменить это действие
+    you_have_no_orders_yet: У Вас ещё нет заказов
+    your_cart_is_empty: Ваша корзина пуста
+    your_order_is_empty_add_product: Ваша корзина пуста, найдите и добавьте продукты, пожалуйста
+    zip: Индекс
+    zipcode: Почтовый индекс
+    zone: Торговая зона
+    zones: Торговые зоны
+  time:
+    formats:
+      solidus:
+        long: '%d %B %Y, %H:%M'
+        short: '%d %b, %H:%M'
