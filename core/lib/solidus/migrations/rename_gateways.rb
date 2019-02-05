@@ -12,6 +12,8 @@ module Solidus
       attr_reader :gateway_mapping
 
       def initialize(gateway_mapping = DEFAULT_MAPPING)
+        Spree::Deprecation.warn 'Solidus::Migrations::RenameGateways is deprecated and will be removed with Solidus 3.0.'
+
         @gateway_mapping = gateway_mapping
       end
 
