@@ -444,7 +444,7 @@ module Spree
     end
 
     def deliver_order_confirmation_email
-      Spree::Config.order_mailer_class.confirm_email(self).deliver_later
+      ActiveSupport::Notifications.instrument 'spree.order.confirm_notification', order: self
       update_column(:confirmation_delivered, true)
     end
 
