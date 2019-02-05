@@ -45,7 +45,7 @@ module Spree
         Migrations.new(config, engine_name).check
       end
 
-      initializer 'spree.core.register_event_processors' do
+      initializer 'spree.core.register_event_mailer_processor' do
         Spree::Event::MailerProcessor.register!
       end
 
