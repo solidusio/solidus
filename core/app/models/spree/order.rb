@@ -418,34 +418,29 @@ module Spree
     # Finalizes an in progress order after checkout is complete.
     # Called after transition to complete state when payments will have been processed
     def finalize!
-      # lock all adjustments (coupon promotions, etc.)
-      all_adjustments.each(&:finalize!)
+      Spree::Event.publish 'order.finalize', order: self do
+        # lock all adjustments (coupon promotions, etc.)
+        all_adjustments.each(&:finalize!)
 
-      # update payment and shipment(s) states, and save
-      updater.update_payment_state
-      shipments.each do |shipment|
-        shipment.update_state
-        shipment.finalize!
+        # update payment and shipment(s) states, and save
+        updater.update_payment_state
+        shipments.each do |shipment|
+          shipment.update_state
+          shipment.finalize!
+        end
+
+        updater.update_shipment_state
+        save!
+        updater.run_hooks
+
+        touch :completed_at
       end
-
-      updater.update_shipment_state
-      save!
-      updater.run_hooks
-
-      touch :completed_at
-
-      deliver_order_confirmation_email unless confirmation_delivered?
     end
 
     def fulfill!
       shipments.each { |shipment| shipment.update_state if shipment.persisted? }
       updater.update_shipment_state
       save!
-    end
-
-    def deliver_order_confirmation_email
-      ActiveSupport::Notifications.instrument 'spree.order.confirm_notification', order: self
-      update_column(:confirmation_delivered, true)
     end
 
     # Helper methods for checkout steps

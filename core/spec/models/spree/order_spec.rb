@@ -16,9 +16,17 @@ RSpec.describe Spree::Order, type: :model do
   let(:code) { promotion.codes.first }
 
   describe '#finalize!' do
-    it 'sends an email' do
-      expect(Spree::Config.order_mailer_class).to receive(:confirm_email).and_call_original
-      order.finalize!
+    context 'with event notifications' do
+      it 'sends an email' do
+        expect(Spree::Config.order_mailer_class).to receive(:confirm_email).and_call_original
+        order.finalize!
+      end
+
+      it 'marks the order as confirmation_delivered' do
+        expect do
+          order.finalize!
+        end.to change(order, :confirmation_delivered).to true
+      end
     end
   end
 

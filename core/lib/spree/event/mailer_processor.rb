@@ -4,9 +4,18 @@ module Spree
       extend self
 
       def register!
-        ActiveSupport::Notifications.subscribe 'spree.order.confirm_notification' do |*args|
+        order_finalize
+      end
+
+      # override if you need to remove behavior or change the existing behavior
+      # add new subscriptions via Event::Subscribe if you want to add new behavior
+
+      def order_finalize
+        Spree::Event.subscribe 'order.finalize' do |*args|
           data = args.extract_options!
-          Spree::Config.order_mailer_class.confirm_email(data[:order]).deliver_later
+          order = data[:order]
+          Spree::Config.order_mailer_class.confirm_email(order).deliver_later
+          order.update_column(:confirmation_delivered, true)
         end
       end
     end
