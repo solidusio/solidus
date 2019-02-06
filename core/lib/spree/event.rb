@@ -13,5 +13,9 @@ module Spree
         yield *args
       end
     end
+
+    def unsubscribe(subscriber)
+      ActiveSupport::Notifications.unsubscribe(subscriber)
+    end
   end
 end

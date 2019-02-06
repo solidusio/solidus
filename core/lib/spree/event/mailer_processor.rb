@@ -1,6 +1,11 @@
+# frozen_string_literal: true
+
 module Spree
   module Event
     module MailerProcessor
+      SUBSCRIPTIONS = [:order_finalize_subscription, :reimbursement_perform_subscription]
+      mattr_accessor *SUBSCRIPTIONS
+
       extend self
 
       def register!
@@ -8,11 +13,19 @@ module Spree
         reimbursement_perform
       end
 
-      # override if you need to remove behavior or change the existing behavior
-      # add new subscriptions via Event::Subscribe if you want to add new behavior
+      def unregister!
+        SUBSCRIPTIONS.each do |subscription|
+          Spree::Event.unsubscribe Spree::Event::MailerProcessor.send(subscription)
+        end
+      end
 
+      # override if you need to change the existing behavior
+      # add new subscriptions via Spree::Event.subscribe if you want to add new behavior
+      # unsubsubscribe if you need to remove behavior:
+      # Spree::Event.unsubscribe Spree::Event::MailerProcessor.order_finalize_subscription
+      # or Spree::Event::MailerProcessor.unregister! if you want to remove all these subscriptions
       def order_finalize
-        Spree::Event.subscribe 'order.finalize' do |*args|
+        self.order_finalize_subscription = Spree::Event.subscribe 'order.finalize' do |*args|
           data = args.extract_options!
           order = data[:order]
           unless order.confirmation_delivered?
@@ -23,7 +36,7 @@ module Spree
       end
 
       def reimbursement_perform
-        Spree::Event.subscribe 'reimbursement.perform' do |*args|
+        self.reimbursement_perform_subscription = Spree::Event.subscribe 'reimbursement.perform' do |*args|
           data = args.extract_options!
           reimbursement = data[:reimbursement]
           if reimbursement.reimbursed?
