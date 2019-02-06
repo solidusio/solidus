@@ -8,26 +8,26 @@ FactoryBot.define do
     association(:payment_method, factory: :credit_card_payment_method)
     source { create(:credit_card, user: order.user, address: order.bill_address) }
     order
-    state 'checkout'
-    response_code '12345'
+    state { 'checkout' }
+    response_code { '12345' }
 
     trait :completed do
-      state 'completed'
+      state { 'completed' }
     end
 
     trait :failing do
-      response_code '00000'
+      response_code { '00000' }
       association(:source, :failing, { factory: :credit_card })
     end
 
     factory :payment_with_refund do
       transient do
-        refund_amount 5
+        refund_amount { 5 }
       end
 
       amount { refund_amount }
 
-      state 'completed'
+      state { 'completed' }
 
       refunds { build_list :refund, 1, amount: refund_amount }
     end

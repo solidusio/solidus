@@ -9,7 +9,7 @@ FactoryBot.define do
     transient do
       property { create(:property) }
       option_value { create(:option_value) }
-      property_value nil
+      property_value { nil }
     end
 
     after(:build) do |rule, evaluator|

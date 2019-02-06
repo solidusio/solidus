@@ -377,13 +377,13 @@ RSpec.describe Spree::Order, type: :model do
 
         it "does nothing if any shipments are ready" do
           shipment = create(:shipment, order: subject, state: "ready")
-          expect { subject.ensure_updated_shipments }.not_to change { subject.reload.shipments }
+          expect { subject.ensure_updated_shipments }.not_to change { subject.reload.shipments.pluck(:id) }
           expect { shipment.reload }.not_to raise_error
         end
 
         it "does nothing if any shipments are shipped" do
           shipment = create(:shipment, order: subject, state: "shipped")
-          expect { subject.ensure_updated_shipments }.not_to change { subject.reload.shipments }
+          expect { subject.ensure_updated_shipments }.not_to change { subject.reload.shipments.pluck(:id) }
           expect { shipment.reload }.not_to raise_error
         end
       end
@@ -1096,11 +1096,12 @@ RSpec.describe Spree::Order, type: :model do
 
     it "raises an error if any shipments are ready" do
       shipment = create(:shipment, order: subject, state: "ready")
+
       expect {
         expect {
           subject.create_proposed_shipments
         }.to raise_error(Spree::Order::CannotRebuildShipments)
-      }.not_to change { subject.reload.shipments }
+      }.not_to change { subject.reload.shipments.pluck(:id) }
 
       expect { shipment.reload }.not_to raise_error
     end
@@ -1111,7 +1112,7 @@ RSpec.describe Spree::Order, type: :model do
         expect {
           subject.create_proposed_shipments
         }.to raise_error(Spree::Order::CannotRebuildShipments)
-      }.not_to change { subject.reload.shipments }
+      }.not_to change { subject.reload.shipments.pluck(:id) }
 
       expect { shipment.reload }.not_to raise_error
     end
