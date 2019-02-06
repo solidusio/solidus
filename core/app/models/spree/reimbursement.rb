@@ -100,22 +100,25 @@ module Spree
     end
 
     def perform!(created_by: nil)
-      unless created_by
-        Spree::Deprecation.warn("Calling #perform on #{self} without created_by is deprecated")
+      Spree::Event.publish 'reimbursement.perform', reimbursement: self do
+        unless created_by
+          Spree::Deprecation.warn("Calling #perform on #{self} without created_by is deprecated")
+        end
+        reimbursement_tax_calculator.call(self)
+        reload
+        update!(total: calculated_total)
+
+        reimbursement_performer.perform(self, created_by: created_by)
+
+        if unpaid_amount_within_tolerance?
+          reimbursed!
+          reimbursement_success_hooks.each { |h| h.call self } # TODO: these should become event subscriptions
+        else
+          errored!
+          reimbursement_failure_hooks.each { |h| h.call self } # TODO: these should become event subscriptions
+        end
       end
-      reimbursement_tax_calculator.call(self)
-      reload
-      update!(total: calculated_total)
-
-      reimbursement_performer.perform(self, created_by: created_by)
-
-      if unpaid_amount_within_tolerance?
-        reimbursed!
-        reimbursement_success_hooks.each { |h| h.call self }
-        send_reimbursement_email
-      else
-        errored!
-        reimbursement_failure_hooks.each { |h| h.call self }
+      if errored?
         raise IncompleteReimbursementError, I18n.t("spree.validation.unpaid_amount_not_zero", amount: unpaid_amount)
       end
     end
@@ -174,10 +177,6 @@ module Spree
       if return_items.any? { |ri| ri.inventory_unit.order_id != order_id }
         errors.add(:base, :return_items_order_id_does_not_match)
       end
-    end
-
-    def send_reimbursement_email
-      Spree::Config.reimbursement_mailer_class.reimbursement_email(id).deliver_later
     end
 
     # If there are multiple different reimbursement types for a single
