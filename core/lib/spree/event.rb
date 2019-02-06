@@ -10,7 +10,8 @@ module Spree
 
     def subscribe(event_name)
       ActiveSupport::Notifications.subscribe "spree.#{event_name}" do |*args|
-        yield *args
+        event = ActiveSupport::Notifications::Event.new(*args)
+        yield event
       end
     end
 

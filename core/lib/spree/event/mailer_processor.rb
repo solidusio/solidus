@@ -25,9 +25,8 @@ module Spree
       # Spree::Event.unsubscribe Spree::Event::MailerProcessor.order_finalize_subscription
       # or Spree::Event::MailerProcessor.unregister! if you want to remove all these subscriptions
       def order_finalize
-        self.order_finalize_subscription = Spree::Event.subscribe 'order.finalize' do |*args|
-          data = args.extract_options!
-          order = data[:order]
+        self.order_finalize_subscription = Spree::Event.subscribe 'order.finalize' do |event|
+          order = event.payload[:order]
           unless order.confirmation_delivered?
             Spree::Config.order_mailer_class.confirm_email(order).deliver_later
             order.update_column(:confirmation_delivered, true)
@@ -36,9 +35,8 @@ module Spree
       end
 
       def reimbursement_perform
-        self.reimbursement_perform_subscription = Spree::Event.subscribe 'reimbursement.perform' do |*args|
-          data = args.extract_options!
-          reimbursement = data[:reimbursement]
+        self.reimbursement_perform_subscription = Spree::Event.subscribe 'reimbursement.perform' do |event|
+          reimbursement = event.payload[:reimbursement]
           if reimbursement.reimbursed?
             Spree::Config.reimbursement_mailer_class.reimbursement_email(reimbursement.id).deliver_later
           end
