@@ -27,7 +27,7 @@ RSpec.describe Spree::Order, type: :model do
         end.to change(order, :confirmation_delivered).to true
       end
 
-      # These specs show how notifications can be removed, one at a time or
+      # These specs show how notifications can be removed, one at a time or
       # all the ones set by MailerProcessor module
       context 'when removing the default email notification subscription' do
         before do

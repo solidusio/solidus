@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   module Event
     module MailerProcessor
@@ -17,11 +19,11 @@ module Spree
         end
       end
 
-      # override if you need to change the existing behavior
+      # override if you need to change the existing behavior
       # add new subscriptions via Spree::Event.subscribe if you want to add new behavior
       # unsubsubscribe if you need to remove behavior:
-      # Spree::Event.unsubscribe Spree::Event::MailerProcessor.order_finalize_subscription
-      # or  Spree::Event::MailerProcessor.unregister! if you want to remove all these subscriptions
+      # Spree::Event.unsubscribe Spree::Event::MailerProcessor.order_finalize_subscription
+      # or Spree::Event::MailerProcessor.unregister! if you want to remove all these subscriptions
       def order_finalize
         self.order_finalize_subscription = Spree::Event.subscribe 'order_finalize' do |event|
           order = event.payload[:order]

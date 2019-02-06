@@ -112,10 +112,10 @@ module Spree
 
         if unpaid_amount_within_tolerance?
           reimbursed!
-          reimbursement_success_hooks.each { |h| h.call self } # TODO these should become event subscriptions
+          reimbursement_success_hooks.each { |h| h.call self } # TODO: these should become event subscriptions
         else
           errored!
-          reimbursement_failure_hooks.each { |h| h.call self } # TODO these should become event subscriptions
+          reimbursement_failure_hooks.each { |h| h.call self } # TODO: these should become event subscriptions
         end
       end
       if errored?

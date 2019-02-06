@@ -45,7 +45,7 @@ module Spree
         Migrations.new(config, engine_name).check
       end
 
-      # This can code can be injected by an external gem/part of Solidus:
+      # This can code can be injected by an external gem/part of Solidus:
       initializer 'spree.core.register_event_mailer_processor' do
         Spree::Event::MailerProcessor.register!
       end
