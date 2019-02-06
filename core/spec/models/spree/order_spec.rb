@@ -34,6 +34,10 @@ RSpec.describe Spree::Order, type: :model do
           Spree::Event.unsubscribe Spree::Event::MailerProcessor.order_finalize_subscription
         end
 
+        after do
+          Spree::Event::MailerProcessor.order_finalize
+        end
+
         it 'does not send the email' do
           expect(Spree::Config.order_mailer_class).not_to receive(:confirm_email)
           order.finalize!
@@ -43,6 +47,10 @@ RSpec.describe Spree::Order, type: :model do
       context 'when removing all the email notification subscriptions' do
         before do
           Spree::Event::MailerProcessor.unregister!
+        end
+
+        after do
+          Spree::Event::MailerProcessor.register!
         end
 
         it 'does not send the email' do
