@@ -5,11 +5,11 @@ module Spree
     extend self
 
     def publish(event_name, opts = {}, &block)
-      ActiveSupport::Notifications.instrument "spree.#{event_name}", opts, &block
+      ActiveSupport::Notifications.instrument "#{event_name}.spree", opts, &block
     end
 
     def subscribe(event_name)
-      ActiveSupport::Notifications.subscribe "spree.#{event_name}" do |*args|
+      ActiveSupport::Notifications.subscribe "#{event_name}.spree" do |*args|
         event = ActiveSupport::Notifications::Event.new(*args)
         yield event
       end
