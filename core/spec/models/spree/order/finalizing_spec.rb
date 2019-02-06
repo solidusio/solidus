@@ -44,7 +44,7 @@ RSpec.describe Spree::Order, type: :model do
     end
 
     it "should not send duplicate confirmation emails" do
-      allow(order).to receive_messages(confirmation_delivered?: true)
+      order.update(confirmation_delivered: true)
       expect(Spree::OrderMailer).not_to receive(:confirm_email)
       order.finalize!
     end
