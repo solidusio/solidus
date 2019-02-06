@@ -5,6 +5,7 @@ module Spree
 
       def register!
         order_finalize
+        reimbursement_perform
       end
 
       # override if you need to remove behavior or change the existing behavior
@@ -17,6 +18,16 @@ module Spree
           unless order.confirmation_delivered?
             Spree::Config.order_mailer_class.confirm_email(order).deliver_later
             order.update_column(:confirmation_delivered, true)
+          end
+        end
+      end
+
+      def reimbursement_perform
+        Spree::Event.subscribe 'reimbursement.perform' do |*args|
+          data = args.extract_options!
+          reimbursement = data[:reimbursement]
+          if reimbursement.reimbursed?
+            Spree::Config.reimbursement_mailer_class.reimbursement_email(reimbursement.id).deliver_later
           end
         end
       end
