@@ -14,8 +14,10 @@ module Spree
         Spree::Event.subscribe 'order.finalize' do |*args|
           data = args.extract_options!
           order = data[:order]
-          Spree::Config.order_mailer_class.confirm_email(order).deliver_later
-          order.update_column(:confirmation_delivered, true)
+          unless order.confirmation_delivered?
+            Spree::Config.order_mailer_class.confirm_email(order).deliver_later
+            order.update_column(:confirmation_delivered, true)
+          end
         end
       end
     end
