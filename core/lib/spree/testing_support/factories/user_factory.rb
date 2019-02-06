@@ -7,7 +7,7 @@ require 'spree/testing_support/factories/address_factory'
 FactoryBot.define do
   factory :user, class: Spree::UserClassHandle.new do
     email { generate(:email) }
-    password 'secret'
+    password { 'secret' }
     password_confirmation { password }
 
     trait :with_api_key do
