@@ -15,7 +15,7 @@ group :backend, :frontend, :core, :api do
     when /postgres/
       gem 'pg', '~> 1.0', require: false
     else
-      gem 'sqlite3', require: false
+      gem 'sqlite3', '~> 1.3.6', require: false
       gem 'fast_sqlite', require: false
     end
   end
