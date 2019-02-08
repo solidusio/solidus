@@ -26,6 +26,13 @@ Spree.config do |config|
   # (To use the legacy Paperclip implementation just comment the following line)
   config.image_attachment_module = 'Spree::Image::ActiveStorageAttachment'
 
+  # Enable ActiveStorage attachments on images, requires:
+  #
+  #   bin/rails active_storage:install
+  #
+  # (To use the legacy Paperclip implementation just comment the following line)
+  config.taxon_attachment_module = 'Spree::Taxon::ActiveStorageAttachment'
+
   <% end %>
 
   # Frontend:

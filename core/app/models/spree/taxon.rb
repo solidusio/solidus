@@ -32,7 +32,12 @@ module Spree
         Please configure Spree::Config.taxon_attachment_module in your store
         initializer.
 
-        To use the Paperclip adapter (default):
+        To use the ActiveStorage adapter (recommended):
+          Spree.config do |config|
+            config.image_attachment_module = 'Spree::Taxon::ActiveStorageAttachment'
+          end
+
+        To use the Paperclip adapter (legacy, deprecated):
           Spree.config do |config|
             config.taxon_attachment_module = 'Spree::Taxon::PaperclipAttachment'
           end

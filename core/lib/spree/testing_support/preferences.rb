@@ -19,10 +19,12 @@ module Spree
         end
 
         ::Spree.config do |config|
-          config.image_attachment_module = if ENV['ACTIVE_STORAGE']
-            'Spree::Image::ActiveStorageAttachment'
+          if ENV['ACTIVE_STORAGE']
+            config.image_attachment_module = 'Spree::Image::ActiveStorageAttachment'
+            config.taxon_attachment_module = 'Spree::Taxon::ActiveStorageAttachment'
           else
-            'Spree::Image::PaperclipAttachment'
+            config.image_attachment_module = 'Spree::Image::PaperclipAttachment'
+            config.taxon_attachment_module = 'Spree::Taxon::PaperclipAttachment'
           end
         end
 

@@ -442,6 +442,10 @@ module Spree
     # `Spree::Taxon::PaperclipAttachment`
     # is the default and provides the classic Paperclip implementation.
     #
+    # `Spree::Taxon::ActiveStorageAttachment`
+    # Is the new ActiveStorage implementation, requires `bin/rails active_storage:install` in
+    # order to work.
+    #
     # @!attribute [rw] taxon_attachment_module
     # @return [Module] a module that can be included into Spree::Taxon to allow attachments
     # Enumerable of taxons adhering to the present_taxon_class interface
