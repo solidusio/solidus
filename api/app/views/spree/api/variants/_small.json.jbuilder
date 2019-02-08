@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
-json.cache! [I18n.locale, variant] do
+json.cache! [I18n.locale, current_pricing_options, variant] do
   json.(variant, *variant_attributes)
-  json.display_price(variant.display_price.to_s)
+  json.price(variant.price_for(current_pricing_options).try(:to_d))
+  json.display_price(variant.price_for(current_pricing_options).to_s)
   json.options_text(variant.options_text)
   json.track_inventory(variant.should_track_inventory?)
   json.in_stock(variant.in_stock?)

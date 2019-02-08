@@ -70,6 +70,29 @@ RSpec.describe Spree::Variant::PricingOptions do
     end
   end
 
+  context ".from_context" do
+    let(:view_context) { double(ApplicationController, current_store: store) }
+    subject { described_class.from_context(view_context) }
+
+    context "if the store has not defined default_currency" do
+      let(:store) { FactoryBot.create :store, default_currency: nil, cart_tax_country_iso: nil }
+
+      it "fallbacks to Spree::Config.currency" do
+        expect(Spree::Variant::PricingOptions).to receive(:new).with(currency: Spree::Config.currency, country_iso: nil)
+        expect(subject).to be_nil
+      end
+    end
+
+    context 'if the store has default_currency and cart_tax_country_iso' do
+      let(:store) { FactoryBot.create :store, default_currency: 'MXN' }
+
+      it "uses current_store information" do
+        expect(Spree::Variant::PricingOptions).to receive(:new).with(currency: store.default_currency, country_iso: store.cart_tax_country_iso)
+        expect(subject).to be_nil
+      end
+    end
+  end
+
   describe '#desired_attributes' do
     context "when called with no arguments" do
       it "returns the default pricing options" do

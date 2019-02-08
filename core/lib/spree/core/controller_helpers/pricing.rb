@@ -14,10 +14,7 @@ module Spree
         end
 
         def current_pricing_options
-          Spree::Config.pricing_options_class.new(
-            currency: current_store.try!(:default_currency).presence || Spree::Config[:currency],
-            country_iso: current_store.try!(:cart_tax_country_iso).presence
-          )
+          Spree::Config.pricing_options_class.from_context(self)
         end
 
         def current_currency

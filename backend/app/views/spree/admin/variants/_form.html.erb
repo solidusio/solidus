@@ -65,7 +65,7 @@
       <div class="col-3">
         <div class="field" data-hook="price">
           <%= f.label :price %>
-          <%= render "spree/admin/shared/number_with_currency", f: f, amount_attr: :price, currency: @variant.default_price.currency %>
+          <%= render "spree/admin/shared/number_with_currency", f: f, amount_attr: :price, currency: @variant.find_or_build_default_price.currency %>
         </div>
       </div>
 
