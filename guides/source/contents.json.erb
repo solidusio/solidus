@@ -1,5 +1,7 @@
 <%
-pages = sitemap.resources.find_all { |p| p.source_file.match(/\.md/) }
+pages = sitemap.resources.find_all do |p|
+  p.source_file.match(/\.md/) if p.source_file
+end
 entries = []
 
 pages.each_with_index do |page, index|
