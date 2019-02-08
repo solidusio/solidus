@@ -29,7 +29,7 @@ Orders have the following attributes:
   `Spree::Address` objects with billing and shipping address information.
 - `payment_total`: The sum of all the *finalized* payments on the order.
 - `shipment_state`: The current [shipment state][shipment-states] of the order.
-- `payment_state`: The current payment state of the order. <!-- TODO: Add link. -->
+- `payment_state`: The current [payment state][payment-states] of the order.
 - `email`: The customer-provided email address for the order. This is stored in
   case the order is for a guest user.
 - `special_instructions`: Any [special shipping
@@ -74,6 +74,7 @@ information, see the [Display totals methods][display-total-methods] article.
 [shipment-states]: ../shipments/overview.html#shipping-states
 [special-instructions]: ../shipments/user-interface-for-shipments.html#shipping-instructions
 [update-orders]: update-orders.html
+[payment-states]: payment-states.html
 
 ## Related models
 
