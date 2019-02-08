@@ -433,6 +433,16 @@ module Spree
     # Enumerable of images adhering to the present_image_class interface
     class_name_attribute :image_attachment_module, default: 'Spree::Image::PaperclipAttachment'
 
+    # Allows switching attachment library for Taxon
+    #
+    # `Spree::Taxon::PaperclipAttachment`
+    # is the default and provides the classic Paperclip implementation.
+    #
+    # @!attribute [rw] taxon_attachment_module
+    # @return [Module] a module that can be included into Spree::Taxon to allow attachments
+    # Enumerable of taxons adhering to the present_taxon_class interface
+    class_name_attribute :taxon_attachment_module, default: 'Spree::Taxon::PaperclipAttachment'
+
     # Allows providing your own class instance for generating order numbers.
     #
     # @!attribute [rw] order_number_generator

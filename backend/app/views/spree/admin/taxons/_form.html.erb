@@ -23,7 +23,7 @@
     <%= f.field_container :icon do %>
       <%= f.label :icon %><br />
       <%= f.file_field :icon %>
-      <%= image_tag f.object.icon(:mini) if f.object.icon.present? %>
+      <%= image_tag f.object.icon(:mini) if f.object.icon_present? %>
     <% end %>
   </div>
 
