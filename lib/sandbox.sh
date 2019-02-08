@@ -51,7 +51,7 @@ RUBY
 
 # Ensure sqlite3 version to match ActiveRecord SQLite adapter requirement
 # (see https://github.com/solidusio/solidus/issues/3087 for details)
-sed -i "/gem 'sqlite3'/c\gem 'sqlite3', '~> 1.3.6'" Gemfile
+sed -i -e "s/gem 'sqlite3'/gem 'sqlite3', '~> 1.3.6'/g" Gemfile
 
 bundle install --gemfile Gemfile
 bundle exec rake db:drop db:create
