@@ -25,6 +25,7 @@ activate :directory_indexes
 page "/developers/*", :directory_index => false
 page "/contributing*", :directory_index => false
 page "/acknowledgements*", :directory_index => false
+page "/users/*", :directory_index => false
 
 set :markdown_engine, :redcarpet
 
