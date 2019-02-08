@@ -4,42 +4,13 @@ require 'active_storage'
 
 module Spree::Image::ActiveStorageAttachment
   extend ActiveSupport::Concern
-
-  module IOAttachmentSupport
-    extend ActiveSupport::Concern
-
-    def attachment=(attachable)
-      case attachable
-      when ActiveStorage::Blob, ActionDispatch::Http::UploadedFile,
-           Rack::Test::UploadedFile, Hash, String
-        super
-      when ActiveStorage::Attached
-        super(attachable.blob)
-      else # assume it's an IO
-        if attachable.respond_to?(:to_path)
-          filename = attachable.to_path
-        else
-          filename = SecureRandom.uuid
-        end
-        attachable.rewind
-
-        super(
-          io: attachable,
-          filename: filename
-        )
-      end
-    end
-  end
+  include Spree::ActiveStorageAttachment
 
   included do
     has_one_attached :attachment
-
+    redefine_attachment_writer_with_legacy_io_support :attachment
+    validate_attachment_to_be_an_image :attachment
     validates :attachment, presence: true
-    validate :attachment_is_an_image
-
-    # This needs to be prepended in order to override the
-    # accessor (#attachment=) defined by ActiveStorage.
-    prepend IOAttachmentSupport
   end
 
   class_methods do
@@ -96,10 +67,6 @@ module Spree::Image::ActiveStorageAttachment
   end
 
   private
-
-  def attachment_is_an_image
-    errors.add :attachment, 'is not an image' unless attachment.try(:attachment).try(:image?)
-  end
 
   def normalize_url_options(options)
     if [true, false].include? options # Paperclip backwards compatibility.
