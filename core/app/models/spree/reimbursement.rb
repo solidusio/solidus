@@ -100,7 +100,7 @@ module Spree
     end
 
     def perform!(created_by: nil)
-      Spree::Event.publish 'reimbursement_perform', reimbursement: self do
+      Spree::Event.instrument 'reimbursement_perform', reimbursement: self do
         unless created_by
           Spree::Deprecation.warn("Calling #perform on #{self} without created_by is deprecated")
         end

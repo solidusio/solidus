@@ -10,7 +10,7 @@ module Spree
 
     mattr_accessor(:adapter) { Spree::Event::Adapters::ActiveSupportNotifications }
 
-    def publish(event_name, opts = {})
+    def instrument(event_name, opts = {})
       adapter.instrument name_with_postfix(event_name), opts do
         yield opts if block_given?
       end
