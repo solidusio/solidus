@@ -23,7 +23,8 @@ module Spree
     end
 
     def unsubscribe(subscriber)
-      adapter.unsubscribe(subscriber)
+      name_or_subscriber = subscriber.is_a?(String) ? name_with_postfix(subscriber) : subscriber
+      adapter.unsubscribe(name_or_subscriber)
     end
 
     def listeners
