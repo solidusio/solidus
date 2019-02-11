@@ -418,7 +418,7 @@ module Spree
     # Finalizes an in progress order after checkout is complete.
     # Called after transition to complete state when payments will have been processed
     def finalize!
-      Spree::Event.publish 'order_finalize', order: self do
+      Spree::Event.instrument 'order_finalize', order: self do
         # lock all adjustments (coupon promotions, etc.)
         all_adjustments.each(&:finalize!)
 
