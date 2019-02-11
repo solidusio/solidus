@@ -17,7 +17,9 @@ module Spree
     end
 
     def subscribe(event_name, &block)
-      adapter.subscribe(name_with_postfix(event_name), &block)
+      name = name_with_postfix(event_name)
+      listener_names << name
+      adapter.subscribe(name, &block)
     end
 
     def unsubscribe(subscriber)
@@ -32,6 +34,10 @@ module Spree
 
     def name_with_postfix(name)
       name.end_with?(POSTFIX) ? name : [name, POSTFIX].join
+    end
+
+    def listener_names
+      @listeners_names ||= Set.new
     end
   end
 end

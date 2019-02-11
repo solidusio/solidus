@@ -22,6 +22,13 @@ module Spree
         def unsubscribe(subscriber)
           ActiveSupport::Notifications.unsubscribe(subscriber)
         end
+
+        def listeners_for(names)
+          names.each_with_object({}) do |name, memo|
+            listeners = ActiveSupport::Notifications.notifier.listeners_for(name)
+            memo[name] = listeners if listeners.present?
+          end
+        end
       end
     end
   end
