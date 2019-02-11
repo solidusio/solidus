@@ -1,22 +1,37 @@
 # frozen_string_literal: true
 
+require_relative 'event/adapters/active_support_notifications'
+
 module Spree
   module Event
+    POSTFIX = '.spree'
+
     extend self
 
-    def publish(event_name, opts = {}, &block)
-      ActiveSupport::Notifications.instrument "#{event_name}.spree", opts, &block
-    end
+    mattr_accessor(:adapter) { Spree::Event::Adapters::ActiveSupportNotifications }
 
-    def subscribe(event_name)
-      ActiveSupport::Notifications.subscribe "#{event_name}.spree" do |*args|
-        event = ActiveSupport::Notifications::Event.new(*args)
-        yield event
+    def publish(event_name, opts = {})
+      adapter.instrument name_with_postfix(event_name), opts do
+        yield opts if block_given?
       end
     end
 
+    def subscribe(event_name, &block)
+      adapter.subscribe(name_with_postfix(event_name), &block)
+    end
+
     def unsubscribe(subscriber)
-      ActiveSupport::Notifications.unsubscribe(subscriber)
+      adapter.unsubscribe(subscriber)
+    end
+
+    def listeners
+      adapter.listeners_for(listener_names)
+    end
+
+    private
+
+    def name_with_postfix(name)
+      name.end_with?(POSTFIX) ? name : [name, POSTFIX].join
     end
   end
 end
