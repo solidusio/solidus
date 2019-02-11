@@ -19,8 +19,8 @@ module Spree
           end
         end
 
-        def unsubscribe(subscriber)
-          ActiveSupport::Notifications.unsubscribe(subscriber)
+        def unsubscribe(subscriber_or_name)
+          ActiveSupport::Notifications.unsubscribe(subscriber_or_name)
         end
 
         def listeners_for(names)
