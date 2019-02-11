@@ -1,0 +1,11 @@
+<nav class="guides-categories-nav">
+  <ul class="nav guides-nav">
+    <% menu_items.each do |menu_item| %>
+      <li class="nav-item">
+        <a class="nav-link <%= 'active' if category_matches_page?(menu_item.href) %>" href="<%= menu_item.href %>">
+          <%= menu_item.title %>
+        </a>
+      </li>
+    <% end %>
+  </ul>
+</nav>
