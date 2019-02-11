@@ -16,10 +16,14 @@ module NavHelpers
   end
 
   def discover_title(page = current_page)
-    category = page.path[/\/(.*?)\/.*\.html/, 1]&.gsub('-', ' ')&.capitalize
     page_title = current_page.data.title || retrieve_page_header(page)
-    table_of_contents ? guide = "Solidus #{current_guide.title}" : guide = config[:site_name]
-    "#{category}: #{page_title} | #{guide}"
+    category = page.path[/\/(.*?)\/.*\.html/, 1]
+    guide_name = table_of_contents ? "Solidus #{current_guide.title}" : config[:site_name]
+
+    return "#{guide_name}: #{page_title}" unless category
+
+    category = category.tr('-', ' ').capitalize
+    "#{category}: #{page_title} | #{guide_name}"
   end
 
   def kabob_case(title)
