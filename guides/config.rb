@@ -22,25 +22,25 @@ set :js_dir, "assets/javascripts"
 set :base_url, build? ? "https://solidus.io" : "http://localhost:4567"
 
 activate :directory_indexes
-page "/developers/*", :directory_index => false
-page "/contributing*", :directory_index => false
-page "/acknowledgements*", :directory_index => false
-page "/users/*", :directory_index => false
+page "/developers/*", directory_index: false
+page "/contributing*", directory_index: false
+page "/acknowledgements*", directory_index: false
+page "/users/*", directory_index: false
 
 set :markdown_engine, :redcarpet
 
 set :markdown,
-  :tables => true,
-  :autolink => true,
-  :fenced_code_blocks => true,
-  :footnotes => true,
-  :smartypants => true,
-  :with_toc_data => true,
-  :renderer => CustomMarkdownRenderer
+  tables: true,
+  autolink: true,
+  fenced_code_blocks: true,
+  footnotes: true,
+  smartypants: true,
+  with_toc_data: true,
+  renderer: CustomMarkdownRenderer
 
 activate :external_pipeline,
          name: :webpack,
-         command: build? ?  "npm run production" : "npm run development",
+         command: build? ? "npm run production" : "npm run development",
          source: ".tmp",
          latency: 1
 
