@@ -2,6 +2,8 @@
 
 class CustomMarkdownRenderer < Redcarpet::Render::HTML
   include ImageHelpers
+  include ::Padrino::Helpers::OutputHelpers
+  include ::Padrino::Helpers::TagHelpers
 
   def block_code(code, language)
     path = code.lines.first[/^#\s(\S*)$/, 1]
@@ -19,7 +21,9 @@ class CustomMarkdownRenderer < Redcarpet::Render::HTML
   end
 
   def header(text, header_level)
-    "<h%s id=\"%s\" class=\"offset\">%s</h%s>" % [header_level, text.parameterize, text, header_level]
+    content_tag "h#{header_level}", id: text.parameterize, class: 'offset' do
+      text
+    end
   end
 
   def link(link, title, content)
