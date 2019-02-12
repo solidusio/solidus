@@ -100,24 +100,7 @@ module Spree
     end
 
     def perform!(created_by: nil)
-      unless created_by
-        Spree::Deprecation.warn("Calling #perform on #{self} without created_by is deprecated")
-      end
-      reimbursement_tax_calculator.call(self)
-      reload
-      update!(total: calculated_total)
-
-      reimbursement_performer.perform(self, created_by: created_by)
-
-      if unpaid_amount_within_tolerance?
-        reimbursed!
-        reimbursement_success_hooks.each { |h| h.call self }
-        send_reimbursement_email
-      else
-        errored!
-        reimbursement_failure_hooks.each { |h| h.call self }
-        raise IncompleteReimbursementError, I18n.t("spree.validation.unpaid_amount_not_zero", amount: unpaid_amount)
-      end
+      Spree::Reimbursement::Interactors::Performer.call(reimbursement: self, created_by: created_by)
     end
 
     def simulate(created_by: nil)
@@ -157,6 +140,28 @@ module Spree
       perform!(created_by: created_by)
     end
 
+    # If there are multiple different reimbursement types for a single
+    # reimbursement we open ourselves to a one-cent rounding error for every
+    # type over the first one. This is due to how we round #unpaid_amount and
+    # how each reimbursement type will round as well. Since at this point the
+    # payments and credits have already been processed, we should allow the
+    # reimbursement to show as 'reimbursed' and not 'errored'.
+    def unpaid_amount_within_tolerance?
+      reimbursement_count = reimbursement_models.count do |model|
+        model.total_amount_reimbursed_for(self) > 0
+      end
+      leniency = if reimbursement_count > 0
+                   (reimbursement_count - 1) * 0.01.to_d
+                 else
+                   0
+                 end
+      unpaid_amount.abs.between?(0, leniency)
+    end
+
+    def send_reimbursement_email
+      Spree::Config.reimbursement_mailer_class.reimbursement_email(id).deliver_later
+    end
+
     private
 
     def calculate_total
@@ -174,28 +179,6 @@ module Spree
       if return_items.any? { |ri| ri.inventory_unit.order_id != order_id }
         errors.add(:base, :return_items_order_id_does_not_match)
       end
-    end
-
-    def send_reimbursement_email
-      Spree::Config.reimbursement_mailer_class.reimbursement_email(id).deliver_later
-    end
-
-    # If there are multiple different reimbursement types for a single
-    # reimbursement we open ourselves to a one-cent rounding error for every
-    # type over the first one. This is due to how we round #unpaid_amount and
-    # how each reimbursement type will round as well. Since at this point the
-    # payments and credits have already been processed, we should allow the
-    # reimbursement to show as 'reimbursed' and not 'errored'.
-    def unpaid_amount_within_tolerance?
-      reimbursement_count = reimbursement_models.count do |model|
-        model.total_amount_reimbursed_for(self) > 0
-      end
-      leniency = if reimbursement_count > 0
-                   (reimbursement_count - 1) * 0.01.to_d
-                 else
-                   0
-                 end
-      unpaid_amount.abs.between?(0, leniency)
     end
   end
 end
