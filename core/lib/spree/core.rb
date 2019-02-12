@@ -15,7 +15,6 @@ require 'state_machines-activerecord'
 
 require 'spree/deprecation'
 require 'spree/paranoia_deprecations'
-require 'spree/event'
 
 # This is required because ActiveModel::Validations#invalid? conflicts with the
 # invalid state of a Payment. In the future this should be removed.
@@ -91,3 +90,5 @@ require 'spree/permission_sets'
 require 'spree/preferences/store'
 require 'spree/preferences/static_model_preferences'
 require 'spree/preferences/scoped_store'
+
+require 'spree/event'
