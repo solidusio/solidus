@@ -12,6 +12,7 @@ require 'paperclip'
 require 'paranoia'
 require 'ransack'
 require 'state_machines-activerecord'
+require 'interactor'
 
 require 'spree/deprecation'
 require 'spree/paranoia_deprecations'

@@ -40,4 +40,5 @@ Gem::Specification.new do |s|
   s.add_dependency 'paranoia', '~> 2.4'
   s.add_dependency 'ransack', '~> 2.0'
   s.add_dependency 'state_machines-activerecord', '~> 0.4'
+  s.add_dependency 'interactor', '~> 3.1'
 end
