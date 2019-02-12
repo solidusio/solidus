@@ -8,8 +8,6 @@ module Spree
 
     extend self
 
-    mattr_accessor(:adapter) { Spree::Event::Adapters::ActiveSupportNotifications }
-
     def instrument(event_name, opts = {})
       adapter.instrument name_with_postfix(event_name), opts do
         yield opts if block_given?
@@ -29,6 +27,10 @@ module Spree
 
     def listeners
       adapter.listeners_for(listener_names)
+    end
+
+    def adapter
+      @adapter ||= Spree::Config.event_adapter_class_name.constantize
     end
 
     private
