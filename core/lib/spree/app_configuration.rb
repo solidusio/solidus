@@ -78,8 +78,6 @@ module Spree
     #   @return [Boolean] Automatically capture the credit card (as opposed to just authorize and capture later) (default: +false+)
     preference :auto_capture_exchanges, :boolean, default: false
 
-    preference :event_adapter_class_name, :string, default: 'Spree::Event::Adapters::ActiveSupportNotifications'
-
     # @!attribute [rw] binary_inventory_cache
     #   Only invalidate product caches when they change from in stock to out of
     #   stock. By default, caches are invalidated on any change of inventory
@@ -449,6 +447,10 @@ module Spree
         roles.assign_permissions :default, ['Spree::PermissionSets::DefaultCustomer']
         roles.assign_permissions :admin, ['Spree::PermissionSets::SuperUser']
       end
+    end
+
+    def events
+      @events_configuration ||= Spree::Event::Configuration.new
     end
 
     def environment
