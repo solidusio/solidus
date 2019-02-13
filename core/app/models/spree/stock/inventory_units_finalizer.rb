@@ -38,7 +38,7 @@ module Spree
           inventory_units_for_shipment.group_by(&:line_item_id).each_value do |units|
             shipment = units.first.shipment
             line_item = units.first.line_item
-            shipment.stock_location.unstock line_item.variant, inventory_units.count, shipment
+            shipment.stock_location.unstock line_item.variant, units.count, shipment
           end
         end
       end
