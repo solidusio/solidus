@@ -427,11 +427,6 @@ module Spree
       save!
     end
 
-    def deliver_order_confirmation_email
-      Spree::Config.order_mailer_class.confirm_email(self).deliver_later
-      update_column(:confirmation_delivered, true)
-    end
-
     # Helper methods for checkout steps
     def paid?
       %w(paid credit_owed).include?(payment_state)

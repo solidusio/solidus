@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'spree/config'
+require 'spree/event/mailer_processor'
 
 module Spree
   module Core
@@ -42,6 +43,11 @@ module Spree
 
       initializer "spree.core.checking_migrations", before: :load_config_initializers do |_app|
         Migrations.new(config, engine_name).check
+      end
+
+      # This code can be injected by an external gem/part of Solidus:
+      initializer 'spree.core.register_event_mailer_processor' do
+        Spree::Event::MailerProcessor.register!
       end
 
       # Load in mailer previews for apps to use in development.

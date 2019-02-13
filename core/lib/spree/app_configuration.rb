@@ -449,6 +449,10 @@ module Spree
       end
     end
 
+    def events
+      @events_configuration ||= Spree::Event::Configuration.new
+    end
+
     def environment
       @environment ||= Spree::Core::Environment.new(self).tap do |env|
         env.calculators.shipping_methods = %w[
