@@ -2,7 +2,7 @@ module Spree
   class Reimbursement
     module Interactors
       class Performer
-        include Interactor
+        include EventedInteractor
 
         delegate :reimbursement_tax_calculator, :reload, :calculated_total,
           :update!, :reimbursement_performer, :unpaid_amount_within_tolerance?,

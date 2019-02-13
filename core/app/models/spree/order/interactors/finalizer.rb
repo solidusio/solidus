@@ -2,7 +2,7 @@ module Spree
   class Order
     module Interactors
       class Finalizer
-        include Interactor
+        include EventedInteractor
 
         delegate :all_adjustments, :updater, :shipments, :save!, :touch,
           :deliver_order_confirmation_email, :confirmation_delivered?, to: :order
