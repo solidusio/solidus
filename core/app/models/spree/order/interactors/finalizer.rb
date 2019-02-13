@@ -8,29 +8,36 @@ module Spree
           :deliver_order_confirmation_email, :confirmation_delivered?, to: :order
 
         def call
-          Spree::Event.instrument 'order_finalize', order: order do
-            # lock all adjustments (coupon promotions, etc.)
-            all_adjustments.each(&:finalize!)
+          # lock all adjustments (coupon promotions, etc.)
+          all_adjustments.each(&:finalize!)
 
-            # update payment and shipment(s) states, and save
-            updater.update_payment_state
-            shipments.each do |shipment|
-              shipment.update_state
-              shipment.finalize!
-            end
-
-            updater.update_shipment_state
-            save!
-            updater.run_hooks
-
-            touch :completed_at
+          # update payment and shipment(s) states, and save
+          updater.update_payment_state
+          shipments.each do |shipment|
+            shipment.update_state
+            shipment.finalize!
           end
+
+          updater.update_shipment_state
+          save!
+          updater.run_hooks
+
+          touch :completed_at
         end
 
         private
 
         def order
           context.order
+        end
+
+        # This overrides the default in Spee::EventedInteractor
+        def event_name
+          'order_finalize'
+        end
+
+        def event_subject
+          order
         end
       end
     end
