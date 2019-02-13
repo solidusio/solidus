@@ -4,6 +4,8 @@ namespace :solidus do
   namespace :migrations do
     namespace :migrate_shipping_rate_taxes do
       task up: :environment do
+        Spree::Deprecation.warn("rake spree:migrations:migrate_shipping_rate_taxes:up has been deprecated and will be removed with Solidus 3.0.")
+
         print "Adding persisted tax notes to historic shipping rates ... "
         Spree::ShippingRate.where.not(tax_rate_id: nil).find_each do |shipping_rate|
           tax_rate = Spree::TaxRate.unscoped.find(shipping_rate.tax_rate_id)
