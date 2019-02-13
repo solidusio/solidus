@@ -5,15 +5,13 @@ require_relative 'event/configuration'
 
 module Spree
   module Event
-    POSTFIX = '.spree'
-
     extend self
 
     # Allows to trigger events that can be subscribed using #subscribe. An
     # optional block can be passed that will be executed immediately. The
     # actual code implementation is delegated to the adapter.
     #
-    # @param [String] event_name the name of the event. The postfix ".spree"
+    # @param [String] event_name the name of the event. The suffix ".spree"
     #  will be added automatically if not present
     # @param [Hash] opts a list of options to be passed to the triggered event
     #
@@ -22,7 +20,7 @@ module Spree
     #     @order.finalize!
     #   end
     def instrument(event_name, opts = {})
-      adapter.instrument name_with_postfix(event_name), opts do
+      adapter.instrument name_with_suffix(event_name), opts do
         yield opts if block_given?
       end
     end
@@ -30,7 +28,7 @@ module Spree
     # Subscribe to an event with the given name. The provided block is executed
     # every time the subscribed event is fired.
     #
-    # @param [String] event_name the name of the event. The postfix ".spree"
+    # @param [String] event_name the name of the event. The suffix ".spree"
     #  will be added automatically if not present
     #
     # @return a subscription object that can be used as reference in order
@@ -44,7 +42,7 @@ module Spree
     #
     # @see Spree::Event#unsubscribe
     def subscribe(event_name, &block)
-      name = name_with_postfix(event_name)
+      name = name_with_suffix(event_name)
       listener_names << name
       adapter.subscribe(name, &block)
     end
@@ -52,7 +50,7 @@ module Spree
     # Unsubscribes a whole event or a specific subscription object
     #
     # @param [String, Object] subscriber the event name as a string (with
-    #  or without the ".spree" postfix) or the subscription object
+    #  or without the ".spree" suffix) or the subscription object
     #
     # @example Unsubscribe a single subscription
     #   subscription = Spree::Event.instrument 'order_finalize'
@@ -62,7 +60,7 @@ module Spree
     # @example Unsubscribe an event by name with explicit prefix
     #   Spree::Event.unsubscribe('order_finalize.spree')
     def unsubscribe(subscriber)
-      name_or_subscriber = subscriber.is_a?(String) ? name_with_postfix(subscriber) : subscriber
+      name_or_subscriber = subscriber.is_a?(String) ? name_with_suffix(subscriber) : subscriber
       adapter.unsubscribe(name_or_subscriber)
     end
 
@@ -91,10 +89,18 @@ module Spree
       Spree::Config.events.adapter
     end
 
+    # The suffix used for namespacing Solidus events, defaults to
+    # `.spree`
+    #
+    # @see Spree::Event::Configuration#suffix
+    def suffix
+      Spree::Config.events.suffix
+    end
+
     private
 
-    def name_with_postfix(name)
-      name.end_with?(POSTFIX) ? name : [name, POSTFIX].join
+    def name_with_suffix(name)
+      name.end_with?(suffix) ? name : [name, suffix].join
     end
 
     def listener_names

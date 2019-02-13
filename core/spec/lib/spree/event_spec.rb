@@ -38,7 +38,7 @@ RSpec.describe Spree::Event do
             Spree::Event.subscribe(subscription_name) { item.do_something }
           end
 
-          it 'includes the new subscription with custom postfix' do
+          it 'includes the new subscription with custom suffix' do
             expect(subject.listeners).to be_present
             subscription_listeners = subject.listeners["#{subscription_name}.spree"]
             expect(subscription_listeners).to be_a Array
