@@ -1,10 +1,12 @@
 <header class="site-header site-header--fixed">
   <div class="navbar container">
-    <div class="logo-wrapper">
-      <a class="site-logo" href="/"><%= inline_svg("logo.svg", class: "isvg") %></a>
-    </div>
+    <div class="main-nav">
+      <a class="site-logo" href="/">
+        <%= inline_svg("logo.svg", class: "isvg") %>
+      </a>
 
-    <div class="navbar-right">
+      <%= partial 'partials/nav_header', locals: { menu_items: data.nav.global.values } %>
+
       <a class="site-menu-toggler" href="#">
         <%= inline_svg("menu.svg", class: "isvg isvg-menu") %>
       </a>

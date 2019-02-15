@@ -1,0 +1,11 @@
+<div class="navbar-content mb-4">
+  <h1><a href="<%= current_guide.href %>"><%= current_guide.title %></a></h1>
+
+  <nav id="site-navbar">
+    <% contents.each_with_index do |menu, index| %>
+      <%= partial 'partials/nav_tree_submenu', locals: { menu_items: menu } %>
+      <hr />
+    <% end %>
+    <%= partial 'partials/nav_tree_single', locals: { menu_items: data.nav.meta } %>
+  </nav>
+</div>

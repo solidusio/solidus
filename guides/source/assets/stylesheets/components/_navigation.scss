@@ -7,27 +7,33 @@
   padding-bottom: 20px;
   flex-wrap: wrap;
 
+  .main-nav {
+    display: flex;
+    align-items: center;
+    width: 100%;
+
+    @include media-breakpoint-up(lg) {
+      flex-wrap: wrap;
+      width: 23%;
+    }
+
+    .site-logo {
+      margin-right: 20px;
+    }
+
+    .site-menu-toggler {
+      justify-content: flex-end;
+
+      @include media-breakpoint-up(lg) { display: none; }
+    }
+  }
+
   .site-logo{
-    float: left;
     .isvg{
       display: block;
       margin: 0 0 auto;
       .inherit-fill { fill: #ffffff !important; }
     }
-  }
-
-  .logo-wrapper, .navbar-right{
-    width: 23%;
-    flex-shrink: 0;
-  }
-
-  .navbar-right{
-    width: 75%;
-    align-items: center;
-    justify-content: flex-end;
-    text-align: right;
-
-    @include media-breakpoint-up(lg){ display: none; }
   }
 
   .search-box{
@@ -79,6 +85,21 @@
   }
 }
 
+.guides-categories-nav {
+  .nav-item {
+    margin: 0;
+  }
+
+  .nav-link {
+    padding: 0.5rem 1rem 0 0;
+    font-size: 13px;
+    color: #ffffff;
+
+    &.active {
+      font-weight: bold;
+    }
+  }
+}
 
 .site-navbar{
   top: 0;
@@ -145,16 +166,13 @@
     @include media-breakpoint-up(lg) { padding: 0; }
   }
 
-  .title{
-    color: $gray-072;
-    font-size: 22px;
-    line-height: 1.05em;
-    font-weight: 600;
-    margin-bottom: 0.625rem;
-    letter-spacing: inherit;
+  h1 {
+    a {
+      color: $gray-072;
+      font-size: 0.7em;
+    }
 
-
-    @include media-breakpoint-up(lg){ margin-bottom: 1.5rem; }
+    @include media-breakpoint-up(md) { padding: 0.85em 0 0.4em; }
   }
 
   nav{
@@ -205,16 +223,16 @@
   width: 100px;
 }
 
-.offset::before { 
-	display: block; 
- 	content: " "; 
-  visibility: hidden; 
-  height: 150px;      
-  margin-top: -150px; 
-  
+.offset::before {
+  display: block;
+  content: " ";
+  visibility: hidden;
+  height: 150px;
+  margin-top: -150px;
+
   @include media-breakpoint-up(lg) {
-    height: 110px;      
-    margin-top: -110px; 
+    height: 110px;
+    margin-top: -110px;
   }
 }
 
@@ -237,7 +255,7 @@
   background-color: $blue;
   border-color: $blue;
   color: white;
-  
+
   svg .inherit-fill { fill: white; }
 }
 .site-navbar ul li {

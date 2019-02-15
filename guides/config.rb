@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
+require 'helpers/nav_helpers'
 require 'helpers/image_helpers'
+require 'lib/custom_markdown_renderer'
 
 page "/*.xml", layout: false
 page "/*.json", layout: false
@@ -10,99 +12,35 @@ page "/contributing*", layout: 'article'
 page "/acknowledgements*", layout: 'article'
 page "/404.html", directory_index: false
 
+# Temporarily redirect /index.html to /developers/index.html
+redirect 'index.html', to: '/developers/index.html'
+
+set :site_name, "Solidus Guides"
 set :css_dir, "assets/stylesheets"
 set :images_dir, "assets/images"
 set :js_dir, "assets/javascripts"
 set :base_url, build? ? "https://solidus.io" : "http://localhost:4567"
 
 activate :directory_indexes
-page "/developers/*", :directory_index => false
-page "/contributing*", :directory_index => false
-page "/acknowledgements*", :directory_index => false
-
-helpers do
-  def kabob_case(title)
-    title.gsub(' ', '-').downcase
-  end
-
-  def category_matches_page?(href)
-    current_page.url.include?(href.sub(/\/[^\/]*$/, ''))
-  end
-
-  def menu_item_matches_page?(href)
-    current_page.url.chomp('/').eql?(href)
-  end
-
-  def retrieve_page_header(page = current_page)
-    markup = String(page.render( {layout: false} ))
-    markup[/>(.*?)<\/h1>/, 1]
-  end
-
-  def discover_title(page = current_page)
-    page_title = current_page.data.title || retrieve_page_header(page)
-    category = page.path[/\/(.*?)\/.*\.html/, 1]&.gsub('-', ' ')&.capitalize
-    [category, page_title, "Solidus Developers Guide"].compact.join(" | ")
-  end
-end
-
-class CustomMarkdownRenderer < Redcarpet::Render::HTML
-  include ImageHelpers
-
-  def block_code(code, language)
-    path = code.lines.first[/^#\s(\S*)$/, 1]
-    code = code.lines[1..-1].join if path
-    code = code.gsub('<', '&lt').gsub('>', '&gt')
-    template = File.read('source/partials/_code_block.erb')
-    ERB.new(template).result(binding)
-  end
-
-  def table(header, body)
-    header_labels = header.scan(/<th>([\s\S]*?)<\/th>/).flatten
-    table_rows = parse_table(body)
-    template = File.read('source/partials/_table.erb')
-    ERB.new(template).result(binding)
-  end
-
-  def header(text, header_level)
-    "<h%s id=\"%s\" class=\"offset\">%s</h%s>" % [header_level, text.parameterize, text, header_level]
-  end
-
-  def link(link, title, content)
-    template = File.read('source/partials/_anchor.erb')
-    ERB.new(template).result(binding)
-  end
-
-  private
-
-  # This function takes an HTML string and parses it into a nested list
-  # The outer list represents table rows, while the inner lists represent the table data itself
-  def parse_table(table_body)
-    [].tap do |table_rows|
-      table_body.scan(/<tr>([\s\S]*?)<\/tr>/).flatten.each do |tr_inner_markup|
-        tds = []
-        tr_inner_markup.scan(/<td>([\s\S]*?)<\/td>/).flatten.each do |td_inner_markup|
-          tds << td_inner_markup
-        end
-        table_rows << tds
-      end
-    end
-  end
-end
+page "/developers/*", directory_index: false
+page "/contributing*", directory_index: false
+page "/acknowledgements*", directory_index: false
+page "/users/*", directory_index: false
 
 set :markdown_engine, :redcarpet
 
 set :markdown,
-  :tables => true,
-  :autolink => true,
-  :fenced_code_blocks => true,
-  :footnotes => true,
-  :smartypants => true,
-  :with_toc_data => true,
-  :renderer => CustomMarkdownRenderer
+  tables: true,
+  autolink: true,
+  fenced_code_blocks: true,
+  footnotes: true,
+  smartypants: true,
+  with_toc_data: true,
+  renderer: CustomMarkdownRenderer
 
 activate :external_pipeline,
          name: :webpack,
-         command: build? ?  "npm run production" : "npm run development",
+         command: build? ? "npm run production" : "npm run development",
          source: ".tmp",
          latency: 1
 
