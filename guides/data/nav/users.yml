@@ -1,4 +1,9 @@
 -
+  - title: "Orders"
+    dropdown:
+      - title: "Overview"
+        href: "/users/orders/overview.html"
+
   - title: "Products"
     dropdown:
       - title: "Overview"
