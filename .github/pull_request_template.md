@@ -11,4 +11,3 @@
 - [ ] I have added a detailed description into each commit message
 - [ ] I have updated Guides and README accordingly to this change (if needed)
 - [ ] I have added tests to cover this change (if needed)
-- [ ] I have added a CHANGELOG entry for this change (if needed)
