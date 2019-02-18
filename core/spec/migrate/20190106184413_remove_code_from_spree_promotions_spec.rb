@@ -44,7 +44,18 @@ RSpec.describe RemoveCodeFromSpreePromotions do
     DatabaseCleaner.clean_with(:truncation)
   end
 
+  let(:promotion_with_code) { create(:promotion) }
+
+  before do
+    # We can't set code via factory since `code=` is currently raising
+    # an error, see more at:
+    # https://github.com/solidusio/solidus/blob/cf96b03eb9e80002b69736e082fd485c870ab5d9/core/app/models/spree/promotion.rb#L65
+    promotion_with_code.update_column(:code, code)
+  end
+
   context 'when there are no promotions with code' do
+    let(:code) { '' }
+
     it 'does not call any promotion with code handler' do
       expect(described_class).not_to receive(:promotions_with_code_handler)
 
@@ -53,14 +64,7 @@ RSpec.describe RemoveCodeFromSpreePromotions do
   end
 
   context 'when there are promotions with code' do
-    let(:promotion_with_code) { create(:promotion) }
-
-    before do
-      # We can't set code via factory since `code=` is currently raising
-      # an error, see more at:
-      # https://github.com/solidusio/solidus/blob/cf96b03eb9e80002b69736e082fd485c870ab5d9/core/app/models/spree/promotion.rb#L65
-      promotion_with_code.update_column(:code, 'Just An Old Promo Code')
-    end
+    let(:code) { 'Just An Old Promo Code' }
 
     context 'with the deafult handler (Solidus::Migrations::PromotionWithCodeHandlers::RaiseException)' do
       it 'raise a StandardError exception' do
