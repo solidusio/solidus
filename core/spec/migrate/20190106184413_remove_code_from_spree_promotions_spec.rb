@@ -96,6 +96,14 @@ RSpec.describe RemoveCodeFromSpreePromotions do
           end
         end
 
+        context 'with promotions with type set (legacy feature)' do
+          let(:promotion_with_code) { create(:promotion, type: 'Spree::Promotion') }
+
+          it 'does not raise a STI error' do
+            expect { subject }.not_to raise_error
+          end
+        end
+
         context 'when there is a Spree::PromotionCode with the same value' do
           context 'associated with the same promotion' do
             let!(:existing_promotion_code) { create(:promotion_code, value: 'just an old promo code', promotion: promotion_with_code) }
