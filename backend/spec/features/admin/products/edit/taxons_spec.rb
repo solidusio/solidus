@@ -29,6 +29,7 @@ describe "Product Display Order", type: :feature do
 
       select2_search "Clothing", from: "Taxon"
       click_button "Update"
+      expect(page).to have_content "Product \"#{product.name}\" has been successfully updated!"
       assert_selected_taxons([taxon_1, taxon_2])
     end
 
