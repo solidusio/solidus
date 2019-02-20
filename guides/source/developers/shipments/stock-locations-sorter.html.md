@@ -1,18 +1,18 @@
-# Stock location sorters
+# Stock locations sorter
 
-This article explains the purpose, interface and correct usage of custom stock location sorters.
+This article explains the purpose, interface and correct usage of a custom stock locations sorter.
 
-Your app's stock location sorter defines the order in which stock locations are used to allocate
+Your app's stock locations sorter defines the order in which stock locations are used to allocate
 inventory when creating packages for an order. The sorter is called by `Spree::Stock::SimpleCoordinator`
 when allocating inventory for an order.
 
 ## Pre-configured sorters
 
-Currently, we only have two sorters, which you should use unless you need custom logic:
+Currently, we only provide two sorters, which you should use unless you need custom logic:
 
-- [Unsorted](https://github.com/solidusio/solidus/blob/master/core/app/models/spree/stock/sorter/unsorted.rb),
+- [Unsorted](https://github.com/solidusio/solidus/blob/master/core/app/models/spree/stock/location_sorter/unsorted.rb),
   which allocates inventory from stock locations as they are returned from the DB.
-- [Default first](https://github.com/solidusio/solidus/blob/master/core/app/models/spree/stock/sorter/default_first.rb),
+- [Default first](https://github.com/solidusio/solidus/blob/master/core/app/models/spree/stock/location_sorter/default_first.rb),
   which allocates inventory from the default stock location first.
 
 ## Custom sorter API
