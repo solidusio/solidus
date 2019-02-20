@@ -26,7 +26,10 @@ module Spree
         @order = order
         @inventory_units = inventory_units || InventoryUnitBuilder.new(order).units
         @splitters = Spree::Config.environment.stock_splitters
-        @stock_locations = Spree::Config.stock.location_sorter_class.new(Spree::StockLocation.active).sort
+
+        filtered_stock_locations = Spree::Config.stock.location_filter_class.new(Spree::StockLocation.all, @order).filter
+        sorted_stock_locations = Spree::Config.stock.location_sorter_class.new(filtered_stock_locations).sort
+        @stock_locations = sorted_stock_locations
 
         @inventory_units_by_variant = @inventory_units.group_by(&:variant)
         @desired = Spree::StockQuantities.new(@inventory_units_by_variant.transform_values(&:count))
