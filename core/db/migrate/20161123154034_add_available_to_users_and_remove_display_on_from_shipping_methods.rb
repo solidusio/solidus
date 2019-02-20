@@ -13,7 +13,7 @@ class AddAvailableToUsersAndRemoveDisplayOnFromShippingMethods < ActiveRecord::M
     add_column(:spree_shipping_methods, :display_on, :string)
     execute("UPDATE spree_shipping_methods "\
             "SET display_on='both' "\
-            "WHERE (available_to_users=#{quoted_true}")
+            "WHERE (available_to_users=#{quoted_true})")
     execute("UPDATE spree_shipping_methods "\
             "SET display_on='back_end' "\
             "WHERE (available_to_users=#{quoted_false})")
