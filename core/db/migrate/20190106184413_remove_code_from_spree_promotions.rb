@@ -5,10 +5,11 @@ require 'solidus/migrations/promotions_with_code_handlers'
 class RemoveCodeFromSpreePromotions < ActiveRecord::Migration[5.1]
   class Promotion < ActiveRecord::Base
     self.table_name = "spree_promotions"
+    self.ignored_columns = %w(type)
   end
 
   def up
-    promotions_with_code = Promotion.where.not(code: nil)
+    promotions_with_code = Promotion.where.not(code: [nil, ''])
 
     if promotions_with_code.any?
       # You have some promotions with "code" field present! This is not good
