@@ -1255,4 +1255,16 @@ RSpec.describe Spree::Payment, type: :model do
       end
     end
   end
+
+  describe '::valid scope' do
+    before do
+      create :payment, state: :void
+      create :payment, state: :failed
+      create :payment, state: :invalid
+    end
+
+    it 'does not include void, failed and invalid payments' do
+      expect(described_class.valid).to be_empty
+    end
+  end
 end
