@@ -11,7 +11,7 @@ module Spree
         # @!attribute [rw] unauthorized_redirect
         #   @!scope class
         #   Extension point for overriding behaviour of access denied errors.
-        #   Default behaviour is to redirect to "/unauthorized" with a flash
+        #   Default behaviour is to redirect back or to "/unauthorized" with a flash
         #   message.
         #   @return [Proc] action to take when access denied error is raised.
 
@@ -22,7 +22,7 @@ module Spree
           class_attribute :unauthorized_redirect
           self.unauthorized_redirect = -> do
             flash[:error] = I18n.t('spree.authorization_failure')
-            redirect_to "/unauthorized"
+            redirect_back(fallback_location: "/unauthorized")
           end
 
           rescue_from CanCan::AccessDenied do
