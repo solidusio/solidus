@@ -116,12 +116,10 @@ Every time that the promotion adjustment needs to be recalculated, the
 `Spree::PromotionRule`s are re-checked to ensure the promotion is still
 eligible.
 
-Note that shipments and taxes can also create adjustments. See the adjustments
+Note that shipments and taxes can also create adjustments. See the [adjustments][adjustments]
 documentation for more information.
 
-<!-- TODO:
-  Once merged, link to documentation about adjustments.
--->
+[adjustments]: ../adjustments/overview.html
 
 ## Eligibility
 
