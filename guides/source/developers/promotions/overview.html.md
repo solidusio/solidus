@@ -138,7 +138,7 @@ See the `eligible?` method defined in the [Spree::Promotion
 model][spree-promotion]:
 
 ```ruby
-# models/spree/promotion.rb : line 123
+# models/spree/promotion.rb
 def eligible?(promotable, promotion_code: nil)
   return false if inactive?
   return false if usage_limit_exceeded?
