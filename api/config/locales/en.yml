@@ -7,8 +7,6 @@ en:
       invalid_api_key: Invalid API key (%{key}) specified.
       invalid_resource: Invalid resource. Please fix errors and try again.
       invalid_taxonomy_id: Invalid taxonomy id.
-      key_cleared: Key cleared
-      key_generated: Key generated
       must_specify_api_key: You must specify an API key.
       order:
         could_not_transition: The order could not be transitioned. Please fix the
@@ -23,4 +21,6 @@ en:
       resource_not_found: The resource you were looking for could not be found.
       shipment:
         cannot_ready: Cannot ready shipment.
+        transfer_success: Variants successfully transferred
+      stock_not_below_zero: Stock must not be below zero.
       unauthorized: You are not authorized to perform that action.

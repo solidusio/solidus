@@ -850,6 +850,9 @@ en:
     adjustment_type: Adjustment type
     adjustments: Adjustments
     admin:
+      api:
+        key_cleared: Key cleared
+        key_generated: Key generated
       images:
         index:
           choose_files: Choose files to upload
@@ -1988,7 +1991,6 @@ en:
       ready: Ready
       shipped: Shipped
     shipment_transfer_error: There was an error transferring variants
-    shipment_transfer_success: Variants successfully transferred
     shipments: Shipments
     shipped: Shipped
     shipped_at: Shipped At
@@ -2054,7 +2056,6 @@ en:
       order to manage stock.
     stock_movements: Stock Movements
     stock_movements_for_stock_location: Stock Movements for %{stock_location_name}
-    stock_not_below_zero: Stock must not be below zero.
     stock_successfully_transferred: Stock was successfully transferred between locations.
     stop: Stop
     store: Store
