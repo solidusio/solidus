@@ -36,17 +36,10 @@ end
 Once you have created the logic for the new sorter, you need to register it so that it's used by
 `Spree::Stock::SimpleCoordinator`.
 
-For example, you can register it in your `/config/application.rb` initializer:
+For example, you can register it in your `/config/initializers/spree.rb` initializer:
 
 ```ruby
-# /config/application.rb
-module MyStore
-  class Application < Rails::Application
-    # ...
+# /config/initializers/spree.rb
 
-    initializer 'spree.register.stock_location_sorter' do |app|
-      app.config.spree.stock.location_sorter_class = 'Spree::Stock::LocationSorter::Priority'
-    end
-  end
-end
+Rails.application.config.spree.stock.location_sorter_class = 'Spree::Stock::LocationSorter::Priority'
 ```

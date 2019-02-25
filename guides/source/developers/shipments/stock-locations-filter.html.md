@@ -38,17 +38,10 @@ end
 Once you have created the logic for the new filter, you need to register it so that it's used in
 the split shipments logic.
 
-For example, you can register it in your `/config/application.rb` initializer:
+For example, you can register it in your `/config/initializers/spree.rb` initializer:
 
 ```ruby
-# /config/application.rb
-module MyStore
-  class Application < Rails::Application
-    # ...
+# /config/initializers/spree.rb
 
-    initializer 'spree.register.stock_location_filters' do |app|
-      app.config.spree.stock.location_filter_class = 'Spree::Stock::LocationFilter::SameOrderCountry'
-    end
-  end
-end
+Rails.application.config.spree.stock.location_filter_class = 'Spree::Stock::LocationFilter::SameOrderCountry'
 ```
