@@ -62,6 +62,63 @@ describe 'Payments', type: :feature do
       expect(page).to have_content 'my cc address'
     end
 
+    context 'when there are multiple pending payments', :js do
+      context 'while marking all payments as void' do
+        let(:card_payment_method) { create(:credit_card_payment_method) }
+
+        let!(:payment) do
+          create(
+            :payment,
+            order: order,
+            amount: order.outstanding_balance,
+            payment_method: card_payment_method,
+            state: :pending
+          )
+        end
+
+        let!(:second_payment) do
+          create(
+            :payment,
+            order: order,
+            amount: order.outstanding_balance,
+            payment_method: card_payment_method,
+            state: :pending
+          )
+        end
+
+        it 'updates the order payment state correctly at each iteration' do
+          visit current_path
+          expect(page).to have_css('#payment_status', text: 'Balance due')
+
+          within '#payments' do
+            expect(page).to have_selector('.pill-pending', count: 2)
+            within "#payment_#{payment.id}" do
+              find('.fa-void').click
+            end
+          end
+
+          expect(page).to have_css('#payment_status', text: 'Balance due')
+
+          within '#payments' do
+            expect(page).to have_selector('.pill-pending', count: 1)
+            within "#payment_#{payment.id}" do
+              expect(page).to have_selector('.pill-void', count: 1)
+            end
+          end
+
+          within "#payment_#{second_payment.id}" do
+            find('.fa-void').click
+          end
+
+          within '#payments' do
+            expect(page).not_to have_selector('.pill-pending')
+            expect(page).to have_selector('.pill-void', count: 2)
+          end
+          expect(page).to have_css('#payment_status', text: 'Failed')
+        end
+      end
+    end
+
     it 'lists, updates and creates payments for an order', js: true do
       within_row(1) do
         expect(column_text(3)).to eq('Credit Card')
@@ -70,7 +127,7 @@ describe 'Payments', type: :feature do
       end
 
       click_icon :void
-      expect(page).to have_css('#payment_status', text: 'Balance due')
+      expect(page).to have_css('#payment_status', text: 'Failed')
       expect(page).to have_content('Payment Updated')
 
       within_row(1) do
