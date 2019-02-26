@@ -9,15 +9,15 @@ rvm:
   - 2.5
 env:
   matrix:
-    - SOLIDUS_BRANCH=v2.3 DB=postgres
     - SOLIDUS_BRANCH=v2.4 DB=postgres
     - SOLIDUS_BRANCH=v2.5 DB=postgres
     - SOLIDUS_BRANCH=v2.6 DB=postgres
     - SOLIDUS_BRANCH=v2.7 DB=postgres
+    - SOLIDUS_BRANCH=v2.8 DB=postgres
     - SOLIDUS_BRANCH=master DB=postgres
-    - SOLIDUS_BRANCH=v2.3 DB=mysql
     - SOLIDUS_BRANCH=v2.4 DB=mysql
     - SOLIDUS_BRANCH=v2.5 DB=mysql
     - SOLIDUS_BRANCH=v2.6 DB=mysql
     - SOLIDUS_BRANCH=v2.7 DB=mysql
+    - SOLIDUS_BRANCH=v2.8 DB=mysql
     - SOLIDUS_BRANCH=master DB=mysql
