@@ -5,17 +5,24 @@ require 'spec_helper'
 describe 'Payments', type: :feature do
   stub_authorization!
 
-  context "with a pre-existing payment" do
-    let!(:payment) do
-      create(:payment,
-        order:          order,
-        amount:         order.outstanding_balance,
+  let(:state) { 'checkout' }
+
+  def create_payment(opts = {})
+    create(
+      :payment,
+      {
+        order: order,
+        amount: order.outstanding_balance,
         payment_method: create(:credit_card_payment_method),
-        state:          state)
-    end
+        state: state
+      }.merge(opts)
+    )
+  end
+
+  context "with a pre-existing payment" do
+    let!(:payment) { create_payment }
 
     let(:order) { create(:completed_order_with_totals, number: 'R100', line_items_price: 50) }
-    let(:state) { 'checkout' }
 
     before do
       visit "/admin/orders/#{order.number}/payments"
@@ -24,12 +31,7 @@ describe 'Payments', type: :feature do
     # Regression tests for https://github.com/spree/spree/issues/1453
     context 'with a check payment', js: true do
       let(:order) { create(:completed_order_with_totals, number: 'R100') }
-      let!(:payment) do
-        create(:payment,
-          order:          order,
-          amount:         order.outstanding_balance,
-          payment_method: create(:check_payment_method, available_to_admin: true)) # Check
-      end
+      let!(:payment) { create_payment(payment_method: create(:check_payment_method, available_to_admin: true)) }
 
       it 'capturing a check payment from a new order' do
         click_icon(:capture)
@@ -67,20 +69,14 @@ describe 'Payments', type: :feature do
         let(:card_payment_method) { create(:credit_card_payment_method) }
 
         let!(:payment) do
-          create(
-            :payment,
-            order: order,
-            amount: order.outstanding_balance,
+          create_payment(
             payment_method: card_payment_method,
             state: :pending
           )
         end
 
         let!(:second_payment) do
-          create(
-            :payment,
-            order: order,
-            amount: order.outstanding_balance,
+          create_payment(
             payment_method: card_payment_method,
             state: :pending
           )
@@ -268,12 +264,7 @@ describe 'Payments', type: :feature do
     context 'with a soft-deleted payment method' do
       let(:order) { create(:completed_order_with_totals, line_items_count: 1) }
       let!(:payment_method) { create(:check_payment_method) }
-      let!(:payment) do
-        create(:payment,
-          order:          order,
-          amount:         order.outstanding_balance,
-          payment_method: payment_method)
-      end
+      let!(:payment) { create_payment(payment_method: payment_method) }
 
       before do
         payment_method.discard
