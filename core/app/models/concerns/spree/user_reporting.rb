@@ -10,7 +10,7 @@ module Spree
     end
 
     def order_count
-      BigDecimal(spree_orders.complete.count)
+      spree_orders.complete.count
     end
 
     def average_order_value
