@@ -49,11 +49,9 @@ describe 'Payments', type: :feature do
 
       visit spree.admin_order_payment_path(order, payment)
       expect(page).to have_content 'Capture Events'
-      # within '#capture_events' do
-      within_row(1) do
+      within '#capture_events' do
         expect(page).to have_content(capture_amount / 100)
       end
-      # end
     end
 
     it 'displays the address for a credit card when present' do
