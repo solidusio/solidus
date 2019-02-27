@@ -19,4 +19,9 @@
   <h5><%= label_tag nil, Spree::Payment.human_attribute_name(:amount) %>: <span class="green"><%= @payment.display_amount.to_html %></span> </h5>
 </div>
 
-<%= render 'spree/admin/payments/capture_events' %>
+<% if @payment.capture_events.any? %>
+  <fieldset class="no-border-bottom">
+    <legend><%= plural_resource_name(Spree::PaymentCaptureEvent) %></legend>
+    <%= render 'spree/admin/payments/capture_events' %>
+  </fieldset>
+<% end %>
