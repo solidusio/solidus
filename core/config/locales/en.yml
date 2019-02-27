@@ -148,6 +148,9 @@ en:
         number: Identifier
         response_code: Transaction ID
         state: State
+      spree/payment_capture_event:
+        created_at: Date/Time
+        amount: Amount
       spree/payment_method:
         active: Active
         auto_capture: Auto Capture
