@@ -53,14 +53,6 @@ module Spree
       order && !UNACTIVATABLE_ORDER_STATES.include?(order.state)
     end
 
-    def code
-      raise "Attempted to call code on a Spree::Promotion. Promotions are now tied to multiple code records"
-    end
-
-    def code=(_val)
-      raise "Attempted to call code= on a Spree::Promotion. Promotions are now tied to multiple code records"
-    end
-
     def self.with_coupon_code(val)
       joins(:codes).where(
         PromotionCode.arel_table[:value].eq(val.downcase)
