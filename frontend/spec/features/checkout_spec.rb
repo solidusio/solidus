@@ -211,6 +211,26 @@ describe "Checkout", type: :feature, inaccessible: true do
     end
   end
 
+  context "when order has only a void payment" do
+    let(:order) { Spree::TestingSupport::OrderWalkthrough.up_to(:payment) }
+
+    before do
+      user = create(:user)
+      order.user = user
+      order.recalculate
+
+      allow_any_instance_of(Spree::CheckoutController).to receive_messages(current_order: order)
+      allow_any_instance_of(Spree::CheckoutController).to receive_messages(try_spree_current_user: user)
+    end
+
+    it "does not allow successful order submission" do
+      visit spree.checkout_path
+      order.payments.first.update state: :void
+      click_button 'Place Order'
+      expect(page).to have_current_path spree.checkout_state_path(:payment)
+    end
+  end
+
   # Regression test for https://github.com/spree/spree/issues/2694 and https://github.com/spree/spree/issues/4117
   context "doesn't allow bad credit card numbers" do
     let!(:payment_method) { create(:credit_card_payment_method) }
