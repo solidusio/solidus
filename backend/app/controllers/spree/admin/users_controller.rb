@@ -71,24 +71,26 @@ module Spree
 
       def items
         params[:q] ||= {}
+
         @search = Spree::Order.includes(
           line_items: {
             variant: [:product, { option_values: :option_type }]
           }
 ).ransack(params[:q].merge(user_id_eq: @user.id))
+
         @orders = @search.result.page(params[:page]).per(Spree::Config[:admin_products_per_page])
       end
 
       def generate_api_key
         if @user.generate_spree_api_key!
-          flash[:success] = t('spree.api.key_generated')
+          flash[:success] = t('spree.admin.api.key_generated')
         end
         redirect_to edit_admin_user_path(@user)
       end
 
       def clear_api_key
         if @user.clear_spree_api_key!
-          flash[:success] = t('spree.api.key_cleared')
+          flash[:success] = t('spree.admin.api.key_cleared')
         end
         redirect_to edit_admin_user_path(@user)
       end

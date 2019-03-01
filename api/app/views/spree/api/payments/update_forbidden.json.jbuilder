@@ -1,3 +1,3 @@
 # frozen_string_literal: true
 
-json.error(I18n.t(:update_forbidden, state: @payment.state, scope: "spree.api.payment"))
+json.error(I18n.t('spree.api.payment.update_forbidden', state: @payment.state))

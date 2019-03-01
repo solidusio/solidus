@@ -170,7 +170,7 @@ module Spree
           it "does not allow negative inventory for the stock item" do
             subject
             expect(response.status).to eq 422
-            expect(response.body).to match I18n.t('spree.stock_not_below_zero')
+            expect(response.body).to match I18n.t('spree.api.stock_not_below_zero')
             expect(assigns(:stock_item).count_on_hand).to eq 0
           end
         end
@@ -236,7 +236,7 @@ module Spree
             it "does not allow negative inventory for the stock item" do
               subject
               expect(response.status).to eq 422
-              expect(response.body).to match I18n.t('spree.stock_not_below_zero')
+              expect(response.body).to match I18n.t('spree.api.stock_not_below_zero')
               expect(assigns(:stock_item).count_on_hand).to eq 10
             end
           end
@@ -294,7 +294,7 @@ module Spree
             it "does not allow negative inventory for the stock item" do
               subject
               expect(response.status).to eq 422
-              expect(response.body).to match I18n.t('spree.stock_not_below_zero')
+              expect(response.body).to match I18n.t('spree.api.stock_not_below_zero')
               expect(assigns(:stock_item).count_on_hand).to eq 10
             end
           end
