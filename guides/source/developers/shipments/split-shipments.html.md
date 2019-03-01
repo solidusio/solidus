@@ -8,7 +8,7 @@ shipments from multiple stock locations.
 [`Spree::Stock::SimpleCoordinator`][simple-coordinator] contains all of the
 business logic for how stock should be packaged. If your store requires a
 specialized flow for handling split shipments, the simple coordinator should
-provide a good starting point for customizations. 
+provide a good starting point for customizations.
 
 <!-- TODO:
   This article doesn't acknowledge the `Spree::Stock::Package` model, which is
@@ -19,7 +19,7 @@ provide a good starting point for customizations.
 ## Creating proposed shipments
 
 An order's shipments are determined by
-[`Spree::Stock::SimpleCoordinator`][simple-coordinator] while the 
+[`Spree::Stock::SimpleCoordinator`][simple-coordinator] while the
 `Spree::Order`'s' state is set to `delivery`. This occurs before the customer
 has completed their order at checkout.
 
@@ -38,10 +38,20 @@ proposals:
 4. Each package generates a new `Spree::Shipment` object that is associated with
    the current order.
 5. It estimates the shipping rates for each shipment.
- 
+
 After the proposed shipments have been determined, the customer can continue the
 checkout process and take the order from the `delivery` state to the `payment`
 state.
+
+## Stock Locations
+
+Stock locations considered while building shipments are configurable via a
+[Stock Locations Filter][stock-locations-filter] class. Since the order of stock locations is
+important to determine which stock items needs to be picked up first, there is also a
+[Stock Locations Sorter][stock-locations-sorter] class that is easily customizable as well.
+
+[stock-locations-filter]: stock-locations-filter.html
+[stock-locations-sorter]: stock-locations-sorter.html
 
 ## Splitters
 

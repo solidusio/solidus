@@ -116,19 +116,12 @@ Once you have created the logic for the new shipping calculator, you need to
 register it so that administrators can create new shipping methods that use the
 custom calculator.
 
-For example, you can register it in your `/config/application.rb` initializer:
+For example, you can register it in your `/config/initializers/spree.rb` initializer:
 
 ```ruby
-# /config/application.rb
-module MyStore
-  class Application < Rails::Application
-    ...
+# /config/initializers/spree.rb
 
-    initializer 'spree.register.calculators' do |app|
-      app.config.spree.calculators.shipping_methods << MyStore::Calculator::Shipping::CustomShippingCalculator
-    end
-  end
-end
+Rails.application.config.spree.calculators.shipping_methods << MyStore::Calculator::Shipping::CustomShippingCalculator
 ```
 
 ## Calculator availability
@@ -180,4 +173,3 @@ should not be treated like a product with the "Default" category.
   calculator taking advantage of shipping categories and/or tax categories to
   produce a specific result.
 -->
-

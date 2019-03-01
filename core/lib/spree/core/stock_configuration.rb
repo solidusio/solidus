@@ -18,6 +18,11 @@ module Spree
         @estimator_class.constantize
       end
 
+      def location_filter_class
+        @location_filter_class ||= '::Spree::Stock::LocationFilter::Active'
+        @location_filter_class.constantize
+      end
+
       def location_sorter_class
         @location_sorter_class ||= '::Spree::Stock::LocationSorter::Unsorted'
         @location_sorter_class.constantize
