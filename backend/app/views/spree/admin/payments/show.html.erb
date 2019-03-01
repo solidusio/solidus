@@ -8,15 +8,22 @@
   </span>
 <% end %>
 
-
-<% content_for :page_actions do %>
-  <li><%= link_to t('spree.logs'), spree.admin_order_payment_log_entries_url(@order, @payment), class: 'btn btn-primary' %></li>
-<% end %>
-
 <%= render partial: "spree/admin/payments/source_views/#{@payment.payment_method.partial_name}", locals: { payment: @payment.source.is_a?(Spree::Payment) ? @payment.source : @payment } %>
 
 <div data-hook="amount" class="align-center">
   <h5><%= label_tag nil, Spree::Payment.human_attribute_name(:amount) %>: <span class="green"><%= @payment.display_amount.to_html %></span> </h5>
 </div>
 
-<%= render 'spree/admin/payments/capture_events' %>
+<% if @payment.capture_events.any? %>
+  <fieldset class="no-border-bottom">
+    <legend><%= plural_resource_name(Spree::PaymentCaptureEvent) %></legend>
+    <%= render 'spree/admin/payments/capture_events' %>
+  </fieldset>
+<% end %>
+
+<% if @payment.log_entries.any? %>
+  <fieldset class="no-border-bottom">
+    <legend><%= plural_resource_name(Spree::LogEntry) %></legend>
+    <%= render 'spree/admin/payments/log_entries', log_entries: @payment.log_entries %>
+  </fieldset>
+<% end %>

@@ -51,11 +51,9 @@ describe 'Payments', type: :feature do
 
       visit spree.admin_order_payment_path(order, payment)
       expect(page).to have_content 'Capture Events'
-      # within '#capture_events' do
-      within_row(1) do
+      within '#capture_events' do
         expect(page).to have_content(capture_amount / 100)
       end
-      # end
     end
 
     it 'displays the address for a credit card when present' do
@@ -158,7 +156,7 @@ describe 'Payments', type: :feature do
         within_row(1) do
           click_icon(:edit)
           fill_in('amount', with: '$1')
-          click_icon(:save)
+          click_icon(:ok)
           expect(page).to have_selector('td.amount span', text: '$1.00')
           expect(payment.reload.amount).to eq(1.00)
         end
@@ -178,7 +176,7 @@ describe 'Payments', type: :feature do
         within_row(1) do
           click_icon(:edit)
           fill_in('amount', with: 'invalid')
-          click_icon(:save)
+          click_icon(:ok)
         end
         expect(page).to have_selector('.flash.error', text: 'Invalid resource. Please fix errors and try again.')
         expect(payment.reload.amount).to eq(150.00)
