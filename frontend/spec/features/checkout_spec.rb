@@ -672,6 +672,57 @@ describe "Checkout", type: :feature, inaccessible: true do
     end
   end
 
+  # Regression test for: https://github.com/solidusio/solidus/issues/2998
+  context 'when two shipping categories are available' do
+    let!(:first_category) { create(:shipping_category) }
+    let!(:second_category) { create(:shipping_category) }
+
+    let!(:first_shipping_method) do
+      create(:shipping_method,
+             shipping_categories: [first_category],
+             stores: [store])
+    end
+
+    let!(:second_shipping_method) do
+      create(:shipping_method,
+             shipping_categories: [second_category],
+             stores: [store])
+    end
+
+    context 'assigned to two different products' do
+      let!(:first_product) do
+        create(:product,
+               name: 'First product',
+               shipping_category: first_category)
+      end
+
+      let!(:second_product) do
+        create(:product,
+               name: 'Second product',
+               shipping_category: second_category)
+      end
+
+      before do
+        stock_location.stock_items.update_all(count_on_hand: 10)
+      end
+
+      it 'transitions successfully to the delivery step', js: true do
+        visit spree.product_path(first_product)
+        click_button 'add-to-cart-button'
+        visit spree.product_path(second_product)
+        click_button 'add-to-cart-button'
+
+        click_button 'Checkout'
+
+        fill_in_address
+        fill_in 'order_email', with: 'test@example.com'
+        click_button 'Save and Continue'
+
+        expect(Spree::Order.last.state).to eq('delivery')
+      end
+    end
+  end
+
   def fill_in_credit_card(number: "4111 1111 1111 1111")
     fill_in "Name on card", with: 'Mary Doe'
     fill_in_with_force "Card Number", with: number
