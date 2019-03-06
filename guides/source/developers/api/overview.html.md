@@ -27,7 +27,7 @@ To make a request to the API, set a Bearer Authentication header with the Spree 
 curl --header "Authorization: Bearer <key>" http://yourstore.com/api/products/1
 ```
 
-Note that for Solidus versions 2.7 and below a custom `X-Spree-Token: <key>` header is used.   
+Note that for Solidus versions 2.7 and below a custom `X-Spree-Token: <key>` header is used.
 
 Alternatively, you can pass through the token as a URL parameter if you are
 unable to pass it through a header:
@@ -42,7 +42,7 @@ as the actual user to whom the token belongs.
 ### Authentication
 
 Any user with a `Spree::Role` of `admin` has an API key generated for them when
-their account is created.You can get the key value from the user table's
+their account is created. You can get the key value from the user table's
 `spree_api_key` column.
 
 For example, if you use the `Spree::User` model provided by the
@@ -57,6 +57,17 @@ Store administrators can view or regenerate API keys from the `solidus_backend`
 interface from the **Users** page by editing a user with the admin role.
 
 [solidus-auth-devise]: https://github.com/solidusio/solidus_auth_devise
+
+By default, all endpoints require an API key to access. If you are developing an application where this is not desired, a JavaScript based frontend application for example, you can allow requests to the API with an initializer like this:
+
+```ruby
+Spree::Api::Config.configure do |config|
+  config.requires_authentication = false
+end
+```
+
+Certain endpoints, like those for updating Orders and Users, will still verify the request has proper access to those objects. This will allow unauthenticated requests to get access to Product data, Taxon data, etc.
+
 
 ## Endpoint rules
 
