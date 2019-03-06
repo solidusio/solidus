@@ -18,6 +18,8 @@
         href: "/developers/api/overview.html"
       - title: "Endpoints"
         href: "/developers/api/endpoints.html"
+      - title: "Orders"
+        href: "/developers/api/orders.html"
 
 -
   - title: "Adjustments"

@@ -15,6 +15,7 @@ PUT /api/orders/R123456789
 ### Successful response
 
 **Response code** 200
+
 ```json
 {
   "id": 1,
@@ -145,6 +146,7 @@ PUT /api/orders/R123456789
 ### Failed response
 
 **Response code** 422
+
 ```json
 {
   "error": "You are not authorized to perform that action."
@@ -181,6 +183,7 @@ POST /api/orders
 ### Successful response
 
 **Response code** 201
+
 ```json
 {
   "id": 2,
@@ -307,6 +310,8 @@ GET /api/orders/current
 ```
 
 ### Successful response
+
+**Response code** 200
 
 ```json
 {
