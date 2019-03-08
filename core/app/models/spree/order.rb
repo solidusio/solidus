@@ -392,7 +392,7 @@ module Spree
     end
 
     def refund_total
-      payments.flat_map(&:refunds).sum(&:amount)
+      refunds.sum(&:amount)
     end
 
     def name
