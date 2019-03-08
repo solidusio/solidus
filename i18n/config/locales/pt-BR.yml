@@ -1373,7 +1373,7 @@ pt-BR:
     info_number_of_skus_not_shown:
       one: e mais um
       other: "e %{count} outros"
-      info_product_has_multiple_skus: "Este produto tem %{count} variantes:"
+    info_product_has_multiple_skus: "Este produto tem %{count} variantes:"
     instructions_to_reset_password: 'Preencha o formulário abaixo e enviaremos instruções
       de como resetar sua senha por email:'
     insufficient_stock: Estoque insuficiente, apenas %{on_hand} em estoque
