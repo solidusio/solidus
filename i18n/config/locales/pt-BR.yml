@@ -2206,3 +2206,9 @@ pt-BR:
       solidus:
         long: "%d/%m/%Y %H:%M"
         short: "%d/%m/%y %H:%M"
+  views:
+      pagination:
+        first: Primeira
+        previous: Anterior
+        next: Pŕoxima
+        last: Última
