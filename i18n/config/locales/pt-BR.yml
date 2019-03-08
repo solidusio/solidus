@@ -1467,6 +1467,7 @@ pt-BR:
     meta_title: Título da Página
     metadata: Metadados
     minimal_amount: Quantidade Mínima
+    modify_stock_count: Modificar Quantidade no Estoque
     month: Mês
     more: Mais
     move_stock_between_locations: Transferir estoque entre localidades
