@@ -224,7 +224,7 @@ pt-BR:
       spree/refund:
         amount: Valor
         description: Descrição
-        refund_reason_id: Rasão do Restituição
+        refund_reason_id: Razão do Restituição
       spree/refund_reason:
         active: Ativo
         code: Código
@@ -255,7 +255,7 @@ pt-BR:
         preferred_reimbursement_type_id:
         reception_status: Status de Recebimento
         resellable: Revenda
-        return_reason: Rasão de Retorno
+        return_reason: Razão de Retorno
         total: Total
       spree/return_reason:
         active: Ativo
@@ -481,8 +481,8 @@ pt-BR:
         one: Ajuste
         other: Ajustes
       spree/adjustment_reason:
-        one: Rasão de Ajuste
-        other: Rasões de Ajustes
+        one: Razão de Ajuste
+        other: Razões de Ajustes
       spree/calculator:
         one: Calculador
         other: Calculadores
@@ -644,8 +644,8 @@ pt-BR:
         one: Razão de retorno
         other: Razões de retorno
       spree/return_reason:
-        one: Rasão de Retorno
-        other: Rasões de Retorno
+        one: Razão de Retorno
+        other: Razões de Retorno
       spree/role:
         one: Função
         other: Funções
@@ -854,7 +854,7 @@ pt-BR:
         new: Novo Crédito da Loja
         no_store_credit_selected: Crédito da Loja não foi selecionado
         payment_originator: "Pagamento - Pedido #%{order_number}"
-        reason_for_updating: Rasão de mudança
+        reason_for_updating: Razão de mudança
         refund_originator: "Restituição - #%{order_number}"
         resource_name: crédito da loja
         select_amount_update_reason: Selecione uma razão para mudar o valor
