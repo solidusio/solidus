@@ -100,24 +100,24 @@ module Spree
     end
 
     def perform!(created_by: nil)
-      Spree::Event.instrument 'reimbursement_perform', reimbursement: self do
-        unless created_by
-          Spree::Deprecation.warn("Calling #perform on #{self} without created_by is deprecated")
-        end
-        reimbursement_tax_calculator.call(self)
-        reload
-        update!(total: calculated_total)
-
-        reimbursement_performer.perform(self, created_by: created_by)
-
-        if unpaid_amount_within_tolerance?
-          reimbursed!
-          reimbursement_success_hooks.each { |h| h.call self } # TODO: these should become event subscriptions
-        else
-          errored!
-          reimbursement_failure_hooks.each { |h| h.call self } # TODO: these should become event subscriptions
-        end
+      unless created_by
+        Spree::Deprecation.warn("Calling #perform on #{self} without created_by is deprecated")
       end
+      reimbursement_tax_calculator.call(self)
+      reload
+      update!(total: calculated_total)
+
+      reimbursement_performer.perform(self, created_by: created_by)
+
+      if unpaid_amount_within_tolerance?
+        reimbursed!
+        reimbursement_success_hooks.each { |h| h.call self } # TODO: these should become event subscriptions
+      else
+        errored!
+        reimbursement_failure_hooks.each { |h| h.call self } # TODO: these should become event subscriptions
+      end
+      Spree::Event.fire 'reimbursement_perform', reimbursement: self
+
       if errored?
         raise IncompleteReimbursementError, I18n.t("spree.validation.unpaid_amount_not_zero", amount: unpaid_amount)
       end
