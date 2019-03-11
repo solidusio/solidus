@@ -6,7 +6,7 @@ module Spree
       module ActiveSupportNotifications
         extend self
 
-        def instrument(event_name, opts)
+        def fire(event_name, opts)
           ActiveSupport::Notifications.instrument event_name, opts do
             yield opts if block_given?
           end

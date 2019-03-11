@@ -16,11 +16,11 @@ module Spree
     # @param [Hash] opts a list of options to be passed to the triggered event
     #
     # @example Trigger an event named 'order_finalize'
-    #   Spree::Event.instrument 'order_finalize', order: @order do
+    #   Spree::Event.fire 'order_finalize', order: @order do
     #     @order.finalize!
     #   end
-    def instrument(event_name, opts = {})
-      adapter.instrument name_with_suffix(event_name), opts do
+    def fire(event_name, opts = {})
+      adapter.fire name_with_suffix(event_name), opts do
         yield opts if block_given?
       end
     end
@@ -53,7 +53,7 @@ module Spree
     #  or without the ".spree" suffix) or the subscription object
     #
     # @example Unsubscribe a single subscription
-    #   subscription = Spree::Event.instrument 'order_finalize'
+    #   subscription = Spree::Event.fire 'order_finalize'
     #   Spree::Event.unsubscribe(subscription)
     # @example Unsubscribe all `order_finalize` event subscriptions
     #   Spree::Event.unsubscribe('order_finalize')

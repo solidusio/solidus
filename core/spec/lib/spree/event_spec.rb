@@ -52,7 +52,7 @@ RSpec.describe Spree::Event do
       describe '#subscribe' do
         it 'can subscribe to events' do
           Spree::Event.subscribe(subscription_name) { item.do_something }
-          Spree::Event.instrument subscription_name
+          Spree::Event.fire subscription_name
           expect(item).to have_received :do_something
         end
       end
@@ -67,7 +67,7 @@ RSpec.describe Spree::Event do
 
           it 'can unsubscribe from single event by object' do
             subject.unsubscribe subscription
-            Spree::Event.instrument subscription_name
+            Spree::Event.fire subscription_name
             expect(item).not_to have_received :do_something
             expect(item).to have_received :do_something_else
           end
@@ -81,7 +81,7 @@ RSpec.describe Spree::Event do
 
           it 'can unsubscribe from multiple events with the same name' do
             subject.unsubscribe subscription_name
-            Spree::Event.instrument subscription_name
+            Spree::Event.fire subscription_name
             expect(item).not_to have_received :do_something
             expect(item).not_to have_received :do_something_else
           end
