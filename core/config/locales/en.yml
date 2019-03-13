@@ -322,7 +322,6 @@ en:
         country_id: Country
         default: Default
         fulfillable: Fulfillable
-        internal_name: Internal Name
         name: Name
         phone: Phone
         propagate_all_variants: Propagate All Variants
@@ -336,6 +335,7 @@ en:
       spree/store:
         available_locales: Locales Available in the Storefront
         cart_tax_country_iso: Tax Country for Empty Carts
+        code: Slug
         default: Default
         default_currency: Default Currency
         mail_from_address: Mail From Address
@@ -1381,8 +1381,10 @@ en:
       spree/store:
         available_locales: This determines which locales are available for your customers
           to choose from in the storefront.
-        cart_tax_country_iso: 'This determines which country is used for taxes on
-          carts (orders which don''t yet have an address).<br/> Default: None.'
+        cart_tax_country_iso: "This determines which country is used for taxes on carts
+          (orders which don't yet have an address).<br/> Default: None."
+        code: 'An identifier for your store. Developers may need this value if you operate
+          multiple storefronts.'
       spree/tax_rate:
         validity_period: This determines the validity period within which the tax
           rate is valid and will be applied to eligible items. <br /> If no start
@@ -1434,7 +1436,6 @@ en:
       quantity.
     intercept_email_address: Intercept Email Address
     intercept_email_instructions: Override email recipient and replace with this address.
-    internal_name: Internal Name
     invalid_exchange_variant: Invalid exchange variant.
     invalid_payment_method_type: Invalid payment method type.
     invalid_promotion_action: Invalid promotion action.

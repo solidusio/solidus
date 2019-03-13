@@ -36,6 +36,10 @@
         href: "/users/settings/taxes.html"
       - title: "Zones"
         href: "/users/settings/zones.html"
+      - title: "Shipping"
+        href: "/users/settings/shipping.html"
+      - title: "Stores"
+        href: "/users/settings/stores.html"
 
   - title: "Stock"
     dropdown:
