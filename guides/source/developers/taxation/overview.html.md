@@ -76,7 +76,7 @@ Spree::Config[:tax_using_ship_address] = true
 ### Use `Spree::TaxLocation` as the tax address
 
 An order's `tax_address` can – through [duck typing][duck-typing] – be a
-`Spree::TaxLocation` instead of the shipping address. The tax location is
+`Spree::Tax::TaxLocation` instead of the shipping address. The tax location is
 computed from the store's `Spree.config.cart_tax_country_iso` setting.
 
 Note that you can only trust the tax address if it has a country. The other
