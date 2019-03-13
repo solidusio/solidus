@@ -475,3 +475,196 @@ GET /api/orders/current
 If there is no order an empty response is returned
 
 **Response code** 204
+
+## Mine
+
+Returns all orders for the current user.
+
+```text
+POST /api/orders/mine
+```
+
+### Successful response
+
+**Response code** 200
+
+```json
+{
+  "orders":
+  [
+    {
+      "id": 1,
+      "number": "R699938235",
+      "item_total": "0.0",
+      "total": "0.0",
+      "ship_total": "0.0",
+      "state": "cart",
+      "adjustment_total": "0.0",
+      "user_id": 2,
+      "created_at": "2019-03-13T05:16:20.118Z",
+      "updated_at": "2019-03-13T05:16:20.124Z",
+      "completed_at": nil,
+      "payment_total": "0.0",
+      "shipment_state": nil,
+      "payment_state": nil,
+      "email": "email2@example.com",
+      "special_instructions": nil,
+      "channel": "spree",
+      "included_tax_total": "0.0",
+      "additional_tax_total": "0.0",
+      "display_included_tax_total": "$0.00",
+      "display_additional_tax_total": "$0.00",
+      "tax_total": "0.0",
+      "currency": "USD",
+      "covered_by_store_credit": true,
+      "display_total_applicable_store_credit": "$0.00",
+      "order_total_after_store_credit": "0.0",
+      "display_order_total_after_store_credit": "$0.00",
+      "total_applicable_store_credit": "0.0",
+      "display_total_available_store_credit": "$0.00",
+      "display_store_credit_remaining_after_capture": "$0.00",
+      "canceler_id": nil,
+      "display_item_total": "$0.00",
+      "total_quantity": 1,
+      "display_total": "$0.00",
+      "display_ship_total": "$0.00",
+      "display_tax_total": "$0.00",
+      "token": "MwrVcCMnZ8FIROmuz8sxzg",
+      "checkout_steps": [
+        "address",
+        "delivery",
+        "confirm",
+        "complete"
+      ],
+      "payment_methods": [],
+      "bill_address":
+     {
+        "id": 3,
+        "firstname": "John",
+        "lastname": nil,
+        "full_name": "John",
+        "address1": "PO Box 1337",
+        "address2": "Northwest",
+        "city": "Herndon",
+        "zipcode": "10003",
+        "phone": "555-555-0199",
+        "company": "Company",
+        "alternative_phone": "555-555-0199",
+        "country_id": 1,
+        "country_iso": "US",
+        "state_id": 1,
+        "state_name": nil,
+        "state_text": "AL",
+        "country": {
+          "id": 1,
+          "iso_name": "UNITED STATES",
+          "iso": "US",
+          "iso3": "USA",
+          "name": "United States",
+          "numcode": 840
+        },
+        "state": {
+          "id": 1,
+          "name": "Alabama",
+          "abbr": "AL",
+          "country_id": 1
+        }
+      },
+      "ship_address":
+     {
+        "id": 4,
+        "firstname": "John",
+        "lastname": nil,
+        "full_name": "John",
+        "address1": "A Different Road",
+        "address2": "Northwest",
+        "city": "Herndon",
+        "zipcode": "10004",
+        "phone": "555-555-0199",
+        "company": "Company",
+        "alternative_phone": "555-555-0199",
+        "country_id": 1,
+        "country_iso": "US",
+        "state_id": 1,
+        "state_name": nil,
+        "state_text": "AL",
+        "country": {
+          "id": 1,
+          "iso_name": "UNITED STATES",
+          "iso": "US",
+          "iso3": "USA",
+          "name": "United States",
+          "numcode": 840
+        },
+        "state": {
+          "id": 1,
+          "name": "Alabama",
+          "abbr": "AL",
+          "country_id": 1
+        }
+      },
+      "line_items":
+     [
+        {
+          "id": 1,
+          "quantity": 1,
+          "price": "10.0",
+          "variant_id": 1,
+          "single_display_amount": "$10.00",
+          "display_amount": "$10.00",
+          "total": "10.0",
+          "variant":
+        {
+            "id": 1,
+            "name": "Product #1 - 6403",
+            "sku": "SKU-1",
+            "weight": "0.0",
+            "height": nil,
+            "width": nil,
+            "depth": nil,
+            "is_master": true,
+            "slug": "product-1-6403",
+            "description": "As seen on TV!",
+            "track_inventory": true,
+            "price": "19.99",
+            "display_price": "$19.99",
+            "options_text": "",
+            "in_stock": false,
+            "is_backorderable": true,
+            "total_on_hand": 0,
+            "is_destroyed": false,
+            "option_values": [],
+            "images": [],
+            "product_id": 1
+          },
+          "adjustments": []
+        }
+      ],
+      "payments": [],
+      "shipments": [],
+      "adjustments": [],
+      "permissions": {
+        "can_update": true
+      },
+      "credit_cards": []
+    }
+  ],
+  "count": 1,
+  "total_count": 1,
+  "current_page": 1,
+  "pages": 1,
+  "per_page": 25
+}
+```
+
+### Failed response
+
+If no user is authenticated an error is returned.
+
+**Response code** 401
+
+```json
+{
+  "error": "You must specify an API key."
+}
+```
