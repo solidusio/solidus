@@ -289,6 +289,24 @@ describe 'Users', type: :feature do
     end
   end
 
+  context 'deleting users' do
+    let!(:an_user) { create(:user_with_addresses, email: 'an_user@example.com') }
+    let!(:order) { create(:completed_order_with_totals, user_id: an_user.id) }
+
+    context 'if an user has placed orders' do
+      before do
+        visit spree.admin_path
+        click_link 'Users'
+      end
+
+      it "can't be deleted" do
+        within "#spree_user_#{an_user.id}" do
+          expect(page).not_to have_selector('.fa-trash')
+        end
+      end
+    end
+  end
+
   context 'order history with sorting' do
     before do
       orders
