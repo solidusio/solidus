@@ -93,7 +93,9 @@ module Spree
       def select_select2_result(value)
         # results are in a div appended to the end of the document
         within_entire_page do
-          page.find("div.select2-result-label", text: /#{Regexp.escape(value)}/i, match: :prefer_exact).click
+          expect(page).to have_selector('.select2-result-label', visible: true)
+          find("div.select2-result-label", text: /#{Regexp.escape(value)}/i, match: :prefer_exact).click
+          expect(page).not_to have_selector('.select2-result-label')
         end
       end
 
