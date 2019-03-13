@@ -366,11 +366,11 @@ module Spree
 
     # Creates new tax charges if there are any applicable rates. If prices already
     # include taxes then price adjustments are created instead.
-    # @deprecated This now happens during #update!
+    # @deprecated This now happens during #recalculate
     def create_tax_charge!
       Spree::Config.tax_adjuster_class.new(self).adjust!
     end
-    deprecate create_tax_charge!: :update!, deprecator: Spree::Deprecation
+    deprecate create_tax_charge!: :recalculate, deprecator: Spree::Deprecation
 
     def reimbursement_total
       reimbursements.sum(:total)
@@ -582,11 +582,12 @@ module Spree
       bill_address == ship_address
     end
 
+    # @deprecated This now happens during #recalculate
     def set_shipments_cost
       shipments.each(&:update_amounts)
       recalculate
     end
-    deprecate set_shipments_cost: :update!, deprecator: Spree::Deprecation
+    deprecate set_shipments_cost: :recalculate, deprecator: Spree::Deprecation
 
     def is_risky?
       payments.risky.count > 0
