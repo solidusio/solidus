@@ -1265,6 +1265,15 @@ table.order-summary {
 
 }
 
+// # Logo
+#logo {
+  padding: 20px 0;
+  
+  > a {
+    display: inline-block;
+  }
+}
+
 @media only screen and (max-width: 767px) {
   #empty-cart {
     clear: both;
