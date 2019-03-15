@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
   padding: 15px $grid-gutter-width;
-  background-color: very-light($color-3, 4);
+  background-color: $color-header-bg;
   border-bottom: 1px solid $color-border;
   height: $main-header-height;
 

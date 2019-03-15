@@ -11,36 +11,38 @@ $font-size-pill: 11px;
 
 // Basic color palette for admin
 $color-1:                        #FFFFFF !default;    // White
-$color-2:                        #9FC820 !default;    // Green
-$color-3:                        #5498DA !default;    // Light Blue
-$color-4:                        #6788A2 !default;    // Dark Blue
-$color-5:                        #C60F13 !default;    // Red
-$color-6:                        #FF9300 !default;    // Yellow
-$color-7:                        #F4F4F4 !default;    // Light Gray
+$color-2:                        #3D76F1 !default;    // Blue
+$color-3:                        #808C9E !default;    // Gray
+$color-4:                        #24282F !default;    // Black
+$color-5:                        #DE3718 !default;    // Red
+$color-6:                        #FFDD59 !default;    // Yellow
+$color-7:                        #F9FAFB !default;    // Lighter Gray
+$color-8:                        #808C9E !default;    // Gray
 
 // Basic accents for admin
-$box-shadow:                     0px 3px 3px -2px hsla(0, 0%, 0%, 0.2) !default;
+$box-shadow:                     0 0 4px 0 rgba(0, 0, 0, .12) !default;
 
 // Body base colors
-$color-border:                   very-light($color-3, 12) !default;
+$color-border:                  #E5E7EB !default;
 
 // Basic navigation colors
-$color-sidebar-bg:              $color-1 !default;
+$color-header-bg:               $color-7 !default;
+$color-sidebar-bg:              $color-7 !default;
 $color-sidebar-border:          $color-border !default;
-$color-navbar:                  $color-1 !default;
-$color-navbar-bg:               $color-3 !default;
-$color-navbar-active:           $color-1 !default;
-$color-navbar-active-bg:        $color-2 !default;
-$color-navbar-submenu:          $color-3 !default;
-$color-navbar-submenu-bg:       very-light($color-navbar-bg, 4) !default;
+$color-navbar:                  $color-4 !default;
+$color-navbar-bg:               $color-7 !default;
+$color-navbar-active:           $color-2 !default;
+$color-navbar-active-bg:        $color-7 !default;
+$color-navbar-submenu:          $color-8 !default;
+$color-navbar-submenu-bg:       $color-7 !default;
 $color-navbar-submenu-active:   $color-2 !default;
-$color-navbar-footer:           $color-3 !default;
-$color-navbar-footer-bg:        $color-sidebar-bg !default;
+$color-navbar-footer:           $color-4 !default;
+$color-navbar-footer-bg:        $color-7 !default;
 $color-navbar-footer-active:    $color-2 !default;
 
 // Basic flash colors
 @include solidus-deprecated-variable("color-success", "brand-success");
-$color-success:                  $color-2 !default;
+$color-success:                  #52B73B !default;
 @include solidus-deprecated-variable("color-notice", "brand-warning");
 $color-notice:                   $color-6 !default;
 @include solidus-deprecated-variable("color-error", "brand-danger");

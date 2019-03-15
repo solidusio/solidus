@@ -62,7 +62,7 @@ nav.menu {
       background: $color-navbar-active-bg;
 
       > a {
-        color: $color-navbar-active;
+        color: $color-navbar;
       }
     }
 
@@ -84,14 +84,17 @@ nav.menu {
         left: 100%;
         width: $width-sidebar-flyout;
         margin-left: 0;
-        border: $border-sidebar;
-        background: $color-navbar-submenu-bg;
-        box-shadow: $box-shadow;
-        @include caret($direction: left, $color-caret: $color-navbar-submenu-bg);
+        background: darken($color-navbar-submenu-bg, 3%);
+        box-shadow: 2px 0 2px 0 rgba(0, 0, 0, .1);
+        @include caret($direction: left, $color-caret: darken($color-navbar-submenu-bg, 3%));
 
       &:before {
         z-index: 1;
         top: 1.5em;
+      }
+      
+      > li {
+        background: darken($color-navbar-submenu-bg, 3%);
       }
      }
     }
@@ -101,13 +104,15 @@ nav.menu {
     display: block;
     padding: $padding-y-navbar $padding-x-navbar;
     color: $color-navbar;
-    font-weight: normal;
+    font-weight: $font-weight-bold;
   }
 
   .icon_link {
     text-indent: 2em;
 
     &:before {
+      color: $color-8;
+      font-weight: $font-weight-normal;
       position: absolute;
       left: 1em;
       transform: translateX(-50%);
@@ -132,6 +137,7 @@ nav.menu {
 
     a {
       color: $color-navbar-submenu;
+      font-weight: $font-weight-normal;
       padding-top:    $padding-y-navbar-submenu;
       padding-bottom: $padding-y-navbar-submenu;
 
@@ -143,6 +149,7 @@ nav.menu {
     .selected {
       a {
         color: $color-navbar-submenu-active;
+        font-weight: $font-weight-bold;
       }
     }
   }
