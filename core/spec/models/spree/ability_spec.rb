@@ -159,25 +159,27 @@ RSpec.describe Spree::Ability, type: :model do
 
       context 'requested by same user' do
         before(:each) { resource.user = user }
-        it_should_behave_like 'access granted'
+        it { expect(ability).to be_able_to(:show, resource) }
         it_should_behave_like 'no index allowed'
       end
 
       context 'requested by other user' do
         before(:each) { resource.user = Spree.user_class.new }
+        it { expect(ability).not_to be_able_to(:show, resource) }
         it_should_behave_like 'create only'
       end
 
       context 'requested with proper token' do
         let(:token) { 'TOKEN123' }
         before(:each) { allow(resource).to receive_messages guest_token: 'TOKEN123' }
-        it_should_behave_like 'access granted'
+        it { expect(ability).to be_able_to(:show, resource, token) }
         it_should_behave_like 'no index allowed'
       end
 
       context 'requested with inproper token' do
         let(:token) { 'FAIL' }
         before(:each) { allow(resource).to receive_messages guest_token: 'TOKEN123' }
+        it { expect(ability).not_to be_able_to(:show, resource, token) }
         it_should_behave_like 'create only'
       end
     end
@@ -254,7 +256,7 @@ RSpec.describe Spree::Ability, type: :model do
       context 'requested by same user' do
         let(:resource) { user }
         it_should_behave_like 'access granted'
-        it_should_behave_like 'no index allowed'
+        it_should_behave_like 'index allowed'
       end
       context 'requested by other user' do
         let(:resource) { Spree.user_class.create }

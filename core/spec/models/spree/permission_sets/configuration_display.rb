@@ -13,20 +13,20 @@ RSpec.describe Spree::PermissionSets::ConfigurationDisplay do
     end
 
     it { is_expected.to be_able_to(:edit, :general_settings) }
-    it { is_expected.to be_able_to(:display, Spree::TaxCategory) }
-    it { is_expected.to be_able_to(:display, Spree::TaxRate) }
-    it { is_expected.to be_able_to(:display, Spree::Zone) }
-    it { is_expected.to be_able_to(:display, Spree::Country) }
-    it { is_expected.to be_able_to(:display, Spree::State) }
-    it { is_expected.to be_able_to(:display, Spree::PaymentMethod) }
-    it { is_expected.to be_able_to(:display, Spree::Taxonomy) }
-    it { is_expected.to be_able_to(:display, Spree::ShippingMethod) }
-    it { is_expected.to be_able_to(:display, Spree::ShippingCategory) }
-    it { is_expected.to be_able_to(:display, Spree::StockLocation) }
-    it { is_expected.to be_able_to(:display, Spree::StockMovement) }
-    it { is_expected.to be_able_to(:display, Spree::RefundReason) }
-    it { is_expected.to be_able_to(:display, Spree::ReimbursementType) }
-    it { is_expected.to be_able_to(:display, Spree::ReturnReason) }
+    it { is_expected.to be_able_to(:read, Spree::TaxCategory) }
+    it { is_expected.to be_able_to(:read, Spree::TaxRate) }
+    it { is_expected.to be_able_to(:read, Spree::Zone) }
+    it { is_expected.to be_able_to(:read, Spree::Country) }
+    it { is_expected.to be_able_to(:read, Spree::State) }
+    it { is_expected.to be_able_to(:read, Spree::PaymentMethod) }
+    it { is_expected.to be_able_to(:read, Spree::Taxonomy) }
+    it { is_expected.to be_able_to(:read, Spree::ShippingMethod) }
+    it { is_expected.to be_able_to(:read, Spree::ShippingCategory) }
+    it { is_expected.to be_able_to(:read, Spree::StockLocation) }
+    it { is_expected.to be_able_to(:read, Spree::StockMovement) }
+    it { is_expected.to be_able_to(:read, Spree::RefundReason) }
+    it { is_expected.to be_able_to(:read, Spree::ReimbursementType) }
+    it { is_expected.to be_able_to(:read, Spree::ReturnReason) }
     it { is_expected.to be_able_to(:admin, :general_settings) }
     it { is_expected.to be_able_to(:admin, Spree::TaxCategory) }
     it { is_expected.to be_able_to(:admin, Spree::TaxRate) }
@@ -46,20 +46,20 @@ RSpec.describe Spree::PermissionSets::ConfigurationDisplay do
 
   context "when not activated" do
     it { is_expected.not_to be_able_to(:edit, :general_settings) }
-    it { is_expected.not_to be_able_to(:display, Spree::TaxCategory) }
-    it { is_expected.not_to be_able_to(:display, Spree::TaxRate) }
-    it { is_expected.not_to be_able_to(:display, Spree::Zone) }
-    it { is_expected.not_to be_able_to(:display, Spree::Country) }
-    it { is_expected.not_to be_able_to(:display, Spree::State) }
-    it { is_expected.not_to be_able_to(:display, Spree::PaymentMethod) }
-    it { is_expected.not_to be_able_to(:display, Spree::Taxonomy) }
-    it { is_expected.not_to be_able_to(:display, Spree::ShippingMethod) }
-    it { is_expected.not_to be_able_to(:display, Spree::ShippingCategory) }
-    it { is_expected.not_to be_able_to(:display, Spree::StockLocation) }
-    it { is_expected.not_to be_able_to(:display, Spree::StockMovement) }
-    it { is_expected.not_to be_able_to(:display, Spree::RefundReason) }
-    it { is_expected.not_to be_able_to(:display, Spree::ReimbursementType) }
-    it { is_expected.not_to be_able_to(:display, Spree::ReturnReason) }
+    it { is_expected.not_to be_able_to(:read, Spree::TaxCategory) }
+    it { is_expected.not_to be_able_to(:read, Spree::TaxRate) }
+    it { is_expected.not_to be_able_to(:read, Spree::Zone) }
+    it { is_expected.not_to be_able_to(:read, Spree::Country) }
+    it { is_expected.not_to be_able_to(:read, Spree::State) }
+    it { is_expected.not_to be_able_to(:read, Spree::PaymentMethod) }
+    it { is_expected.not_to be_able_to(:read, Spree::Taxonomy) }
+    it { is_expected.not_to be_able_to(:read, Spree::ShippingMethod) }
+    it { is_expected.not_to be_able_to(:read, Spree::ShippingCategory) }
+    it { is_expected.not_to be_able_to(:read, Spree::StockLocation) }
+    it { is_expected.not_to be_able_to(:read, Spree::StockMovement) }
+    it { is_expected.not_to be_able_to(:read, Spree::RefundReason) }
+    it { is_expected.not_to be_able_to(:read, Spree::ReimbursementType) }
+    it { is_expected.not_to be_able_to(:read, Spree::ReturnReason) }
     it { is_expected.not_to be_able_to(:admin, :general_settings) }
     it { is_expected.not_to be_able_to(:admin, Spree::TaxCategory) }
     it { is_expected.not_to be_able_to(:admin, Spree::TaxRate) }

@@ -12,11 +12,11 @@ RSpec.describe Spree::PermissionSets::PromotionDisplay do
       described_class.new(ability).activate!
     end
 
-    it { is_expected.to be_able_to(:display, Spree::Promotion) }
-    it { is_expected.to be_able_to(:display, Spree::PromotionRule) }
-    it { is_expected.to be_able_to(:display, Spree::PromotionAction) }
-    it { is_expected.to be_able_to(:display, Spree::PromotionCategory) }
-    it { is_expected.to be_able_to(:display, Spree::PromotionCode) }
+    it { is_expected.to be_able_to(:read, Spree::Promotion) }
+    it { is_expected.to be_able_to(:read, Spree::PromotionRule) }
+    it { is_expected.to be_able_to(:read, Spree::PromotionAction) }
+    it { is_expected.to be_able_to(:read, Spree::PromotionCategory) }
+    it { is_expected.to be_able_to(:read, Spree::PromotionCode) }
     it { is_expected.to be_able_to(:admin, Spree::Promotion) }
     it { is_expected.to be_able_to(:admin, Spree::PromotionRule) }
     it { is_expected.to be_able_to(:admin, Spree::PromotionAction) }
@@ -26,11 +26,11 @@ RSpec.describe Spree::PermissionSets::PromotionDisplay do
   end
 
   context "when not activated" do
-    it { is_expected.not_to be_able_to(:display, Spree::Promotion) }
-    it { is_expected.not_to be_able_to(:display, Spree::PromotionRule) }
-    it { is_expected.not_to be_able_to(:display, Spree::PromotionAction) }
-    it { is_expected.not_to be_able_to(:display, Spree::PromotionCategory) }
-    it { is_expected.not_to be_able_to(:display, Spree::PromotionCode) }
+    it { is_expected.not_to be_able_to(:read, Spree::Promotion) }
+    it { is_expected.not_to be_able_to(:read, Spree::PromotionRule) }
+    it { is_expected.not_to be_able_to(:read, Spree::PromotionAction) }
+    it { is_expected.not_to be_able_to(:read, Spree::PromotionCategory) }
+    it { is_expected.not_to be_able_to(:read, Spree::PromotionCode) }
     it { is_expected.not_to be_able_to(:admin, Spree::Promotion) }
     it { is_expected.not_to be_able_to(:admin, Spree::PromotionRule) }
     it { is_expected.not_to be_able_to(:admin, Spree::PromotionAction) }

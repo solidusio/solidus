@@ -133,13 +133,13 @@ module Spree
 
       def product_scope
         if can?(:admin, Spree::Product)
-          scope = Spree::Product.with_deleted.accessible_by(current_ability, :read).includes(*product_includes)
+          scope = Spree::Product.with_deleted.accessible_by(current_ability).includes(*product_includes)
 
           unless params[:show_deleted]
             scope = scope.not_deleted
           end
         else
-          scope = Spree::Product.accessible_by(current_ability, :read).available.includes(*product_includes)
+          scope = Spree::Product.accessible_by(current_ability).available.includes(*product_includes)
         end
 
         scope
@@ -159,7 +159,7 @@ module Spree
 
       def authorize_for_order
         @order = Spree::Order.find_by(number: order_id)
-        authorize! :read, @order, order_token
+        authorize! :show, @order, order_token
       end
 
       def lock_order

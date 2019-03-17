@@ -13,7 +13,7 @@ RSpec.describe Spree::PermissionSets::UserManagement do
     end
 
     it { is_expected.to be_able_to(:admin, Spree.user_class) }
-    it { is_expected.to be_able_to(:display, Spree.user_class) }
+    it { is_expected.to be_able_to(:read, Spree.user_class) }
     it { is_expected.to be_able_to(:create, Spree.user_class) }
     it { is_expected.to be_able_to(:update, Spree.user_class) }
     it { is_expected.to be_able_to(:save_in_address_book, Spree.user_class) }
@@ -36,7 +36,7 @@ RSpec.describe Spree::PermissionSets::UserManagement do
     it { is_expected.not_to be_able_to(:destroy, Spree.user_class) }
 
     it { is_expected.to be_able_to(:manage, Spree::StoreCredit) }
-    it { is_expected.to be_able_to(:display, Spree::Role) }
+    it { is_expected.to be_able_to(:read, Spree::Role) }
   end
 
   context "when not activated" do
@@ -51,6 +51,6 @@ RSpec.describe Spree::PermissionSets::UserManagement do
     it { is_expected.not_to be_able_to(:items, Spree.user_class) }
     it { is_expected.not_to be_able_to(:destroy, Spree.user_class) }
     it { is_expected.not_to be_able_to(:manage, Spree::StoreCredit) }
-    it { is_expected.not_to be_able_to(:display, Spree::Role) }
+    it { is_expected.not_to be_able_to(:read, Spree::Role) }
   end
 end

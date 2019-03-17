@@ -15,7 +15,7 @@ module Spree
 
     def show
       @order = Spree::Order.find_by!(number: params[:id])
-      authorize! :read, @order, cookies.signed[:guest_token]
+      authorize! :show, @order, cookies.signed[:guest_token]
     end
 
     def update
@@ -40,7 +40,7 @@ module Spree
     # Shows the current incomplete order from the session
     def edit
       @order = current_order || Spree::Order.incomplete.find_or_initialize_by(guest_token: cookies.signed[:guest_token])
-      authorize! :read, @order, cookies.signed[:guest_token]
+      authorize! :edit, @order, cookies.signed[:guest_token]
       associate_user
     end
 
