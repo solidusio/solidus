@@ -27,13 +27,13 @@
   </div>
 </fieldset>
 
-<fieldset id='forgot-password'>
+<fieldset class="no-border-bottom">
   <legend><%= Spree.t(:forgot_password) %></legend>
 
   <%= form_for [@admin, Spree.user_class.new], as: :spree_user, url: spree.admin_reset_password_path do |f| %>
       <%= f.hidden_field :email, value: @user.email %>
 
-    <div class="filter-actions actions">
+    <div class="align-center">
       <%= f.submit Spree.t(:reset_user_password), class: 'button primary' %>
     </div>
   <% end %>
