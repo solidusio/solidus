@@ -59,6 +59,12 @@
 
     <div data-hook="admin_user_form_password_fields" class="col-6">
       <%= f.field_container :password do %>
+        <%= f.label :current_password %>
+        <%= f.password_field :current_password, class: "fullwidth" %>
+        <%= f.error_message_on :current_password %>
+      <% end %>
+
+      <%= f.field_container :password do %>
         <%= f.label :password %>
         <%= f.password_field :password, class: "fullwidth" %>
         <%= f.error_message_on :password %>
