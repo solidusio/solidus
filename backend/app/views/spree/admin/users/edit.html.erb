@@ -28,7 +28,7 @@
 </fieldset>
 
 <fieldset class="no-border-bottom">
-  <legend><%= Spree.t(:forgot_password) %></legend>
+  <legend><%= I18n.t(:'spree.forgot_password') %></legend>
 
   <%= form_for [@admin, Spree.user_class.new], as: :spree_user, url: spree.admin_reset_password_path do |f| %>
       <%= f.hidden_field :email, value: @user.email %>
