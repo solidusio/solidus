@@ -25,7 +25,7 @@ Spree::User.find(1).addresses
 - `phone` and `alternative_phone`: The customer's phone number(s).
 - `state_name`: If the customer uses a region name that doesn't correspond with
   a country's list of states, the address can store the user-entered
-- `state_name` as a fallback. 
+  `state_name` as a fallback.
 - `alternative_phone`: The alternative phone number.
 - `company`: A company name.
 - `state_id` and `country_id`: IDs for the `Spree::State` and `Spree::Country`
