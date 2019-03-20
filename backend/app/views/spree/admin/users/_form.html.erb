@@ -57,27 +57,29 @@
       </div>
     <% end %>
 
-    <div data-hook="admin_user_form_password_fields" class="col-6">
-      <%= f.field_container :password do %>
-        <%= f.label :current_password %>
-        <%= f.password_field :current_password, class: "fullwidth" %>
-        <%= f.error_message_on :current_password %>
-      <% end %>
-
-      <%= f.field_container :password do %>
-        <%= f.label :password %>
-        <%= f.password_field :password, class: "fullwidth" %>
-        <%= f.error_message_on :password %>
-      <% end %>
-
-      <% if f.object.respond_to?(:password_confirmation) %>
+    <% if @user == try_spree_current_user %>
+      <div data-hook="admin_user_form_password_fields" class="col-6">
         <%= f.field_container :password do %>
-          <%= f.label :password_confirmation %>
-          <%= f.password_field :password_confirmation, class: "fullwidth" %>
-          <%= f.error_message_on :password_confirmation %>
+          <%= f.label :current_password %>
+          <%= f.password_field :current_password, class: "fullwidth" %>
+          <%= f.error_message_on :current_password %>
         <% end %>
-      <% end %>
-    </div>
+
+        <%= f.field_container :password do %>
+          <%= f.label :password %>
+          <%= f.password_field :password, class: "fullwidth" %>
+          <%= f.error_message_on :password %>
+        <% end %>
+
+        <% if f.object.respond_to?(:password_confirmation) %>
+          <%= f.field_container :password do %>
+            <%= f.label :password_confirmation %>
+            <%= f.password_field :password_confirmation, class: "fullwidth" %>
+            <%= f.error_message_on :password_confirmation %>
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
 
   </div>
 </div>
