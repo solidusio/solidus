@@ -74,6 +74,16 @@ describe 'Pricing' do
           click_icon :edit
         end
         expect(page).to have_content("Edit Price")
+
+        within("#price_price_field") do
+          expect(page).to have_field('price_price', with: '123.99')
+        end
+
+        fill_in "price_price", with: 999.99
+        click_button "Update"
+        expect(page).to have_content("Price has been successfully updated!")
+        expect(page).to have_content("$999.99")
+        expect(page).to have_content("€34.56")
       end
 
       it "will not reset the currency to default" do
