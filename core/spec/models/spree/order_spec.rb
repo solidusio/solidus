@@ -1470,6 +1470,25 @@ RSpec.describe Spree::Order, type: :model do
       end
     end
 
+    describe "#record_ip_address" do
+      let(:ip_address) { "127.0.0.1" }
+
+      subject { -> { order.record_ip_address(ip_address) } }
+
+      it "updates the last used IP address" do
+        expect(subject).to change(order, :last_ip_address).to(ip_address)
+      end
+
+      # IP address tracking should not raise validation exceptions
+      context "with an invalid order" do
+        before { allow(order).to receive(:valid?).and_return(false) }
+
+        it "updates the IP address" do
+          expect(subject).to change(order, :last_ip_address).to(ip_address)
+        end
+      end
+    end
+
     describe "#display_order_total_after_store_credit" do
       let(:order_total_after_store_credit) { 10.00 }
 

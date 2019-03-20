@@ -765,7 +765,7 @@ module Spree
 
     def record_ip_address(ip_address)
       if last_ip_address != ip_address
-        update_attributes!(last_ip_address: ip_address)
+        update_column(:last_ip_address, ip_address)
       end
     end
 
