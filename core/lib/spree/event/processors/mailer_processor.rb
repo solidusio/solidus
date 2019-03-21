@@ -5,8 +5,8 @@ module Spree
     module Processors
       module MailerProcessor
         SUBSCRIPTIONS = [
-          :order_finalize_subscription,
-          :reimbursement_perform_subscription
+          :order_finalized_subscription,
+          :reimbursement_reimbursed_subscription
         ]
 
         mattr_accessor *SUBSCRIPTIONS
@@ -14,8 +14,8 @@ module Spree
         extend self
 
         def register!
-          order_finalize
-          reimbursement_perform
+          order_finalized
+          reimbursement_reimbursed
         end
 
         def unregister!
@@ -27,11 +27,11 @@ module Spree
         # override if you need to change the existing behavior
         # add new subscriptions via Spree::Event.subscribe if you want to add new behavior
         # unsubsubscribe if you need to remove behavior:
-        # Spree::Event.unsubscribe Spree::Event::Processors::MailerProcessor.order_finalize_subscription
+        # Spree::Event.unsubscribe Spree::Event::Processors::MailerProcessor.order_finalized_subscription
         # or Spree::Event::Processors::MailerProcessor.unregister! if you want to remove all these
         # subscriptions
-        def order_finalize
-          self.order_finalize_subscription = Spree::Event.subscribe 'order_finalize' do |event|
+        def order_finalized
+          self.order_finalized_subscription = Spree::Event.subscribe 'order_finalized' do |event|
             order = event.payload[:order]
             unless order.confirmation_delivered?
               Spree::Config.order_mailer_class.confirm_email(order).deliver_later
@@ -40,12 +40,10 @@ module Spree
           end
         end
 
-        def reimbursement_perform
-          self.reimbursement_perform_subscription = Spree::Event.subscribe 'reimbursement_perform' do |event|
+        def reimbursement_reimbursed
+          self.reimbursement_reimbursed_subscription = Spree::Event.subscribe 'reimbursement_reimbursed' do |event|
             reimbursement = event.payload[:reimbursement]
-            if reimbursement.reimbursed?
-              Spree::Config.reimbursement_mailer_class.reimbursement_email(reimbursement.id).deliver_later
-            end
+            Spree::Config.reimbursement_mailer_class.reimbursement_email(reimbursement.id).deliver_later
           end
         end
       end

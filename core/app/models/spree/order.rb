@@ -434,7 +434,7 @@ module Spree
 
       touch :completed_at
 
-      Spree::Event.fire 'order_finalize', order: self
+      Spree::Event.fire 'order_finalized', order: self
     end
 
     def fulfill!

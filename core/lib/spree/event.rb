@@ -15,8 +15,8 @@ module Spree
     #  will be added automatically if not present
     # @param [Hash] opts a list of options to be passed to the triggered event
     #
-    # @example Trigger an event named 'order_finalize'
-    #   Spree::Event.fire 'order_finalize', order: @order do
+    # @example Trigger an event named 'order_finalized'
+    #   Spree::Event.fire 'order_finalized', order: @order do
     #     @order.finalize!
     #   end
     def fire(event_name, opts = {})
@@ -34,8 +34,8 @@ module Spree
     # @return a subscription object that can be used as reference in order
     #  to remove the subscription
     #
-    # @example Subscribe to the `order_finalize` event
-    #   Spree::Event.subscribe 'order_finalize' do |event|
+    # @example Subscribe to the `order_finalized` event
+    #   Spree::Event.subscribe 'order_finalized' do |event|
     #     order = event.payload[:order]
     #     Spree::Mailer.order_finalized(order).deliver_later
     #   end
@@ -53,12 +53,12 @@ module Spree
     #  or without the ".spree" suffix) or the subscription object
     #
     # @example Unsubscribe a single subscription
-    #   subscription = Spree::Event.fire 'order_finalize'
+    #   subscription = Spree::Event.fire 'order_finalized'
     #   Spree::Event.unsubscribe(subscription)
-    # @example Unsubscribe all `order_finalize` event subscriptions
-    #   Spree::Event.unsubscribe('order_finalize')
+    # @example Unsubscribe all `order_finalized` event subscriptions
+    #   Spree::Event.unsubscribe('order_finalized')
     # @example Unsubscribe an event by name with explicit prefix
-    #   Spree::Event.unsubscribe('order_finalize.spree')
+    #   Spree::Event.unsubscribe('order_finalized.spree')
     def unsubscribe(subscriber)
       name_or_subscriber = subscriber.is_a?(String) ? name_with_suffix(subscriber) : subscriber
       adapter.unsubscribe(name_or_subscriber)
@@ -72,8 +72,8 @@ module Spree
     #
     # @example Current subscriptions
     #  Spree::Event.listeners
-    #    # => {"order_finalize.spree"=> [#<ActiveSupport...>],
-    #      "reimbursement_perform.spree"=> [#<ActiveSupport...>]}
+    #    # => {"order_finalized.spree"=> [#<ActiveSupport...>],
+    #      "reimbursement_reimbursed.spree"=> [#<ActiveSupport...>]}
     def listeners
       adapter.listeners_for(listener_names)
     end

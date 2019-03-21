@@ -31,11 +31,11 @@ RSpec.describe Spree::Order, type: :model do
       # all the ones set by MailerProcessor module
       context 'when removing the default email notification subscription' do
         before do
-          Spree::Event.unsubscribe Spree::Event::Processors::MailerProcessor.order_finalize_subscription
+          Spree::Event.unsubscribe Spree::Event::Processors::MailerProcessor.order_finalized_subscription
         end
 
         after do
-          Spree::Event::Processors::MailerProcessor.order_finalize
+          Spree::Event::Processors::MailerProcessor.order_finalized
         end
 
         it 'does not send the email' do
