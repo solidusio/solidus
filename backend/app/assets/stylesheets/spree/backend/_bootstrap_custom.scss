@@ -7,10 +7,13 @@
 //
 // Grayscale and brand colors for use across Bootstrap.
 
-$blue:   $color-3 !default;
+$primary:          $color-2 !default;
+$secondary:        #C7CDD5 !default;
+
+$blue:   $color-2 !default;
 $red:    $color-5 !default;
 $orange: $color-6 !default;
-$green:  $color-2 !default;
+$green:  $color-success !default;
 
 // Body
 //
@@ -64,7 +67,8 @@ $border-radius:          3px !default;
 
 // Forms
 
-$input-color:                    $color-3 !default;
+$input-color:                    $color-4 !default;
+$input-placeholder-color:        $color-8 !default;
 $input-border-color:             $color-border !default;
 $input-focus-border-color:       $color-2 !default;
 
@@ -75,9 +79,9 @@ $custom-select-focus-border-color: $input-focus-border-color !default;
 // Dropdown menu container and contents.
 
 $dropdown-link-hover-color:      #fff !default;
-$dropdown-link-hover-bg:         $color-3 !default;
+$dropdown-link-hover-bg:         $color-2 !default;
 
 // Breadcrumbs
 
 $breadcrumb-bg:                 transparent !default;
-$breadcrumb-active-color:       $color-4 !default;
+$breadcrumb-active-color:       $color-2 !default;
