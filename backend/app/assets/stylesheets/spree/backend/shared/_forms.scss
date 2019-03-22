@@ -64,7 +64,18 @@ button,
     // In order to avoid the clashing between using `:not(.btn)` and
     // `@extend .btn` we need to use an attribute selector of `[class*="btn"]`.
     @extend .btn;
-    @include button-variant(theme-color("primary"), theme-color("primary"));
+    background: linear-gradient(#FFF, #ECEDF1);
+    color: #24282F;
+    border-color: #C7CDD5;
+    
+    &:hover {
+      background: linear-gradient(#FFF, darken(#ECEDF1, 3%));
+    }
+    
+    &.disabled,
+    &:disabled {
+      color: lighten($color-4, 4%);
+    }
   }
 
   &:before {
