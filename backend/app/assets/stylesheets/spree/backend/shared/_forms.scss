@@ -41,6 +41,8 @@ textarea {
 }
 
 label {
+  font-size: 12px;
+  
   &.required:after {
     content: " *";
   }
@@ -74,7 +76,7 @@ button,
     
     &.disabled,
     &:disabled {
-      color: lighten($color-4, 4%);
+      color: $color-8;
     }
   }
 
