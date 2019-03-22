@@ -41,8 +41,8 @@
 
       </div>
       <div class="filter-actions actions">
-        <%= button_to t('.clear_key'), spree.clear_api_key_admin_user_path(@user), method: :put, data: { confirm: t('.confirm_clear_key') }, class: 'btn btn-primary' %>
-        <%= button_to t('.regenerate_key'), spree.generate_api_key_admin_user_path(@user), method: :put, data: { confirm: t('.confirm_regenerate_key') }, class: 'btn btn-primary' %>
+        <%= button_to t('.clear_key'), spree.clear_api_key_admin_user_path(@user), method: :put, data: { confirm: t('.confirm_clear_key') }, class: 'btn btn-default' %>
+        <%= button_to t('.regenerate_key'), spree.generate_api_key_admin_user_path(@user), method: :put, data: { confirm: t('.confirm_regenerate_key') }, class: 'btn btn-default' %>
       </div>
 
     <% else %>
