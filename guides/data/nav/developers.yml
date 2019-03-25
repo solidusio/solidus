@@ -50,6 +50,10 @@
         href: "/developers/extensions/writing-extensions.html"
       - title: "Testing extensions"
         href: "/developers/extensions/testing-extensions.html"
+  - title: "Events"
+    dropdown:
+      - title: "Overview"
+        href: "/developers/events/overview.html"
   - title: "Inventory"
     dropdown:
       - title: "Overview"
