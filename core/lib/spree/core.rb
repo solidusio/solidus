@@ -63,6 +63,7 @@ require 'spree/core/environment'
 require 'spree/promo/environment'
 require 'spree/migrations'
 require 'spree/migration_helpers'
+require 'spree/event'
 require 'spree/core/engine'
 
 require 'spree/i18n'
@@ -90,5 +91,3 @@ require 'spree/permission_sets'
 require 'spree/preferences/store'
 require 'spree/preferences/static_model_preferences'
 require 'spree/preferences/scoped_store'
-
-require 'spree/event'
