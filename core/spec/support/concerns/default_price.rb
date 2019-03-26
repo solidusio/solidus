@@ -32,5 +32,13 @@ RSpec.shared_examples_for "default_price" do
   describe '#has_default_price?' do
     subject { super().has_default_price? }
     it { is_expected.to be_truthy }
+
+    context 'when default price is discarded' do
+      before do
+        instance.default_price.discard
+      end
+
+      it { is_expected.to be_falsey }
+    end
   end
 end
