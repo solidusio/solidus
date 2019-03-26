@@ -289,7 +289,7 @@ describe "Products", type: :feature do
         check "Show Deleted"
         click_button "Search"
         click_link product.name
-        expect(page).to have_field('Master Price', with: product.price.to_f)
+        expect(page).to_not have_field('Master Price')
         expect(page).to_not have_content('Images')
         expect(page).to_not have_content('Prices')
         expect(page).to_not have_content('Product Properties')

@@ -1765,6 +1765,8 @@ en:
       product_source:
         group: From product group
         manual: Manually choose
+    product_without_default_price_info: 'This Product has no price in the default currency (%{default_currency}).'
+    product_without_default_price_cta: 'Please, create a Master Price!'
     products: Products
     promotion: Promotion
     promotion_action: Promotion Action
