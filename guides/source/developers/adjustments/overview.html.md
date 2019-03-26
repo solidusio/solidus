@@ -57,7 +57,7 @@ The following objects are the sources of adjustments:
 Note that tax adjustments may be treated differently than promotional
 adjustments in some circumstances:
 
-- By default, tax adjustments are always applied before promotional adjustments.
+- By default, promotional adjustments are always applied before tax adjustments.
   This is to comply with well-known tax regulations. See the [taxation][taxation]
   documentation for more information.
 - Typically, an adjustment's value is added to the price of the object it is
