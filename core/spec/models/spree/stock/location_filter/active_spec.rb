@@ -13,8 +13,10 @@ module Spree
 
         it 'returns only active stock locations' do
           active_stock_locations = instance_double('Spree::StockLocation::ActiveRecord_Relation')
-          expect(stock_locations).to receive(:active) { active_stock_locations }
 
+          without_partial_double_verification do
+            expect(stock_locations).to receive(:active) { active_stock_locations }
+          end
           expect(subject.filter).to eq(active_stock_locations)
         end
       end
