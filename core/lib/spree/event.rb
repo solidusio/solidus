@@ -2,6 +2,7 @@
 
 require_relative 'event/adapters/active_support_notifications'
 require_relative 'event/configuration'
+require_relative 'event/subscriber'
 
 module Spree
   module Event

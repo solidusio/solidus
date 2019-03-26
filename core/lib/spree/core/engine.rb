@@ -45,8 +45,8 @@ module Spree
         Migrations.new(config, engine_name).check
       end
 
-      initializer 'spree.core.register_event_mailer_processor' do
-        Spree::Event::Processors::MailerProcessor.register!
+      initializer 'spree.core.subscribe_event_mailer_processor' do
+        Spree::Event::Processors::MailerProcessor.subscribe!
       end
 
       # Load in mailer previews for apps to use in development.
