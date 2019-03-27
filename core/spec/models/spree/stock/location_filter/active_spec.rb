@@ -8,16 +8,13 @@ module Spree
       RSpec.describe Active, type: :model do
         subject { described_class.new(stock_locations, order) }
 
-        let(:stock_locations) { instance_double('Spree::StockLocation::ActiveRecord_Relation') }
+        let!(:active_stock_location) { create(:stock_location) }
+        let!(:inactive_stock_location) { create(:stock_location, active: false) }
+        let(:stock_locations) { Spree::StockLocation.all }
         let(:order) { instance_double('Spree::Order') }
 
         it 'returns only active stock locations' do
-          active_stock_locations = instance_double('Spree::StockLocation::ActiveRecord_Relation')
-
-          without_partial_double_verification do
-            expect(stock_locations).to receive(:active) { active_stock_locations }
-          end
-          expect(subject.filter).to eq(active_stock_locations)
+          expect(subject.filter).to eq([active_stock_location])
         end
       end
     end
