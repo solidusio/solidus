@@ -26,7 +26,7 @@
       <div data-hook="admin_product_price_form_amount" class="col-4">
         <%= f.field_container :price do %>
           <%= f.label :price %>
-          <%= render "spree/admin/shared/number_with_currency", f: f, amount_attr: :price, currency_attr: :currency %>
+          <%= render "spree/admin/shared/number_with_currency", f: f, amount_attr: :price, currency_attr: :currency, currency: @price.currency %>
         <% end %>
       </div>
   </div>
