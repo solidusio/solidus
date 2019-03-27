@@ -358,12 +358,11 @@ describe "Checkout", type: :feature, inaccessible: true do
     it "selects first source available and customer moves on" do
       expect(find("#use_existing_card_yes")).to be_checked
 
-      expect {
-        click_on "Save and Continue"
-      }.not_to change { Spree::CreditCard.count }
-
+      click_on "Save and Continue"
       click_on "Place Order"
       expect(page).to have_current_path(spree.order_path(Spree::Order.last))
+      expect(page).to have_current_path(spree.order_path(Spree::Order.last))
+      expect(page).to have_content("Ending in #{credit_card.last_digits}")
     end
 
     it "allows user to enter a new source" do
@@ -374,14 +373,10 @@ describe "Checkout", type: :feature, inaccessible: true do
       fill_in "card_expiry", with: '04 / 20'
       fill_in "Card Code", with: '123'
 
-      expect {
-        click_on "Save and Continue"
-      }.to change { Spree::CreditCard.count }.by 1
-
-      expect(Spree::CreditCard.last.address).to be_present
-
+      click_on "Save and Continue"
       click_on "Place Order"
       expect(page).to have_current_path(spree.order_path(Spree::Order.last))
+      expect(page).to have_content('Ending in 1111')
     end
   end
 
