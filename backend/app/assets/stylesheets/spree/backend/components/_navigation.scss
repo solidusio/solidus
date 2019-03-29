@@ -42,8 +42,11 @@ nav.menu {
 }
 
 .admin-nav-menu {
+  > ul {
+    margin: 1.5em 0 0;
+  }
+  
   ul {
-    margin: 0;
     padding: 0;
     list-style: none;
   }
@@ -129,6 +132,7 @@ nav.menu {
 
   .admin-subnav {
     background: $color-navbar-submenu-bg;
+    margin: 0;
     padding-top:    $padding-y-navbar - $padding-y-navbar-submenu;
     padding-bottom: $padding-y-navbar - $padding-y-navbar-submenu;
 
