@@ -8,6 +8,8 @@ module Spree
 
     has_many :log_entries, as: :source
 
+    attr_writer :perform_after_creation
+
     validates :payment, presence: true
     validates :reason, presence: true
     validates :transaction_id, presence: true, on: :update # can't require this on create because the before_create needs to run first
@@ -39,9 +41,18 @@ module Spree
 
     private
 
+    def perform_after_creation
+      return true if @perform_after_creation.nil?
+      @perform_after_creation
+    end
+
     # attempts to perform the refund.
     # raises an error if the refund fails.
     def perform!
+      if perform_after_creation
+        Spree::Deprecation.warn('From Solidus v3.0 onwards, #perform! will need to be explicitly called.')
+      end
+
       return true if transaction_id.present?
 
       credit_cents = money.cents
