@@ -17,7 +17,9 @@
   .order-total {
     font-size: 35px;
     font-weight: $font-weight-bold;
-    color: theme-color("success");
+    background: #e3ebfd;
+    padding: .1em .3em;
+    border-radius: 3px;
   }
 }
 
@@ -28,7 +30,9 @@
   .customer {
     font-size: 20px;
     font-weight: $font-weight-bold;
-    color: theme-color("success");
+    background: #e3ebfd;
+    padding: .1em .3em;
+    border-radius: 3px;
   }
 }
 
@@ -37,10 +41,18 @@
     color: $body-color;
 
     .shipment-number {
-      color: theme-color("success");
+      color: #5B6778;
+      background: #e3ebfd;
+      padding: .1em .3em;
+      border-radius: 3px;
     }
     .stock-location-name {
-      color: theme-color("success");
+      color: #5B6778;
+      background: #e3ebfd;
+      padding: .1em .3em;
+      border-radius: 3px;
+      text-transform: uppercase;
+      word-break: break-word;
     }
   }
 }
