@@ -12,12 +12,16 @@ RSpec.describe 'New Refund creation', :js do
 
   it 'creates a new refund' do
     visit spree.new_admin_order_payment_refund_path(order, payment)
+
     expect(page).not_to have_selector 'td', text: amount
+    expect(Spree::Deprecation).to receive(:warn)
+
     within '.new_refund' do
       fill_in 'refund_amount', with: amount
       select reason.name, from: 'Reason'
       click_button 'Refund'
     end
+
     expect(page).to have_content 'Refund has been successfully created!'
     expect(page).to have_selector 'td', text: amount
   end
@@ -25,6 +29,7 @@ RSpec.describe 'New Refund creation', :js do
   it 'disables the button at submit' do
     visit spree.new_admin_order_payment_refund_path(order, payment)
     page.execute_script "$('form').submit(function(e) { e.preventDefault()})"
+
     within '.new_refund' do
       fill_in 'refund_amount', with: amount
       select reason.name, from: 'Reason'

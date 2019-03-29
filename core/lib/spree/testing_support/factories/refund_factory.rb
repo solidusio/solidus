@@ -12,10 +12,13 @@ FactoryBot.define do
     end
 
     amount { 100.00 }
+    perform_after_creation { false }
     transaction_id { generate(:refund_transaction_id) }
+
     payment do
       association(:payment, state: 'completed', amount: payment_amount)
     end
+
     association(:reason, factory: :refund_reason)
   end
 end
