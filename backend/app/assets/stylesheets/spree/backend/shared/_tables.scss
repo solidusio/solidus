@@ -47,12 +47,12 @@ table {
 
       button[class*='fa-'] {
         color: $link-color;
-        background-color: transparent;
+        background: transparent;
         border: 0 none;
         padding: 0 !important;
 
         &:hover {
-          background-color: transparent;
+          background: transparent;
         }
       }
 
