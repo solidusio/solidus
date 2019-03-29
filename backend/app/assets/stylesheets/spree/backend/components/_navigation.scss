@@ -88,17 +88,36 @@ nav.menu {
         left: 100%;
         width: $width-sidebar-flyout;
         margin-left: 0;
-        background: darken($color-navbar-submenu-bg, 3%);
-        box-shadow: 2px 0 2px 0 rgba(0, 0, 0, .1);
-        @include caret($direction: left, $color-caret: darken($color-navbar-submenu-bg, 3%));
+        background: $color-1;
+        box-shadow: 1px 0 4px 0 rgba(0, 0, 0, 0.1);
+        border-radius: 0 4px 4px 4px;
+        border: 1px solid $color-border;
+        @include caret($direction: left, $color-caret: $color-1);
 
       &:before {
         z-index: 1;
         top: 1.5em;
       }
       
+      &:after {
+        content: '';
+        display: block;
+        position: absolute;
+        border-width: 1em 1em;
+        border-style: solid;
+        border-color: transparent;
+        border-right-color: $color-border;
+        left: -2.1em;
+        top: 1.5em;
+        margin-top: -1em;
+      }
+      
       > li {
-        background: darken($color-navbar-submenu-bg, 3%);
+        background: $color-1;
+        
+        a {
+          font-weight: $font-weight-bold;
+        }
       }
      }
     }
