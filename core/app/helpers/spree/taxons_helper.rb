@@ -7,12 +7,12 @@ module Spree
     # to show the most popular products for a particular taxon (that is an exercise left to the developer.)
     def taxon_preview(taxon, max = 4)
       price_scope = Spree::Price.where(current_pricing_options.search_arguments)
-      products = taxon.active_products.joins(:prices).merge(price_scope).select("DISTINCT (spree_products.id), spree_products.*, spree_products_taxons.position").limit(max)
+      products = taxon.active_products.joins(:prices).merge(price_scope).select("DISTINCT spree_products.*, spree_products_taxons.position").limit(max)
       if products.size < max
         products_arel = Spree::Product.arel_table
         taxon.descendants.each do |descendent_taxon|
           to_get = max - products.length
-          products += descendent_taxon.active_products.joins(:prices).merge(price_scope).select("DISTINCT (spree_products.id), spree_products.*, spree_products_taxons.position").where(products_arel[:id].not_in(products.map(&:id))).limit(to_get)
+          products += descendent_taxon.active_products.joins(:prices).merge(price_scope).select("DISTINCT spree_products.*, spree_products_taxons.position").where(products_arel[:id].not_in(products.map(&:id))).limit(to_get)
           break if products.size >= max
         end
       end
