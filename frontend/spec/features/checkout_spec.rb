@@ -509,7 +509,7 @@ describe "Checkout", type: :feature, inaccessible: true do
     end
   end
 
-  context "order has only payment step" do
+  context "order has only payment step", js: true do
     before do
       create(:credit_card_payment_method)
       @old_checkout_flow = Spree::Order.checkout_flow
