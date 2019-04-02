@@ -57,9 +57,26 @@ describe "Product Stock", type: :feature do
       expect(stock_item.stock_movements.first.quantity).to eq(-4)
     end
 
+    it "can toggle backorderable", js: true do
+      toggle_backorderable(value: false)
+
+      click_link "Product Stock"
+      within("tr#spree_variant_#{variant.id}") do
+        expect(find(:css, "input[type='checkbox']")).not_to be_checked
+      end
+    end
+
     def adjust_count_on_hand(count_on_hand)
       within("tr#spree_variant_#{variant.id}") do
         find(:css, "input[type='number']").set(count_on_hand)
+        click_icon :check
+      end
+      expect(page).to have_content('Updated Successfully')
+    end
+
+    def toggle_backorderable(value: true)
+      within("tr#spree_variant_#{variant.id}") do
+        find(:css, "input[type='checkbox']").set(value)
         click_icon :check
       end
       expect(page).to have_content('Updated Successfully')
