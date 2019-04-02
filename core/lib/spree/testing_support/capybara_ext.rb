@@ -13,8 +13,12 @@ module Spree
       end
 
       def fill_in_with_force(locator, with:)
-        field_id = find_field(locator)[:id]
-        page.execute_script "document.getElementById('#{field_id}').value = '#{with}';"
+        if Capybara.current_driver == Capybara.javascript_driver
+          field_id = find_field(locator)[:id]
+          page.execute_script "document.getElementById('#{field_id}').value = '#{with}';"
+        else
+          fill_in locator, with: with
+        end
       end
 
       def within_row(num, &block)
