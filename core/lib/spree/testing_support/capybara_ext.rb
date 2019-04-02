@@ -12,6 +12,11 @@ module Spree
         fill_in field, options
       end
 
+      def fill_in_with_force(locator, with:)
+        field_id = find_field(locator)[:id]
+        page.execute_script "document.getElementById('#{field_id}').value = '#{with}';"
+      end
+
       def within_row(num, &block)
         within("table.index tbody tr:nth-of-type(#{num})", &block)
       end
