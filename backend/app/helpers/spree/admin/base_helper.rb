@@ -30,7 +30,7 @@ module Spree
         end
       end
 
-      def datepicker_field_value(date, with_time = false)
+      def datepicker_field_value(date, with_time: false)
         return if date.blank?
 
         format = if with_time
