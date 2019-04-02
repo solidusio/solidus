@@ -539,8 +539,8 @@ describe "Checkout", type: :feature, inaccessible: true do
 
       choose "Credit Card"
       fill_in "Name on card", with: 'Spree Commerce'
-      fill_in "Card Number", with: '4111 1111 1111 1111'
-      fill_in "card_expiry", with: '04 / 20'
+      fill_in_with_force "Card Number", with: '4111 1111 1111 1111'
+      fill_in_with_force "card_expiry", with: '04 / 20'
       fill_in "Card Code", with: '123'
       click_button "Save and Continue"
 
@@ -680,8 +680,8 @@ describe "Checkout", type: :feature, inaccessible: true do
   end
 
   def fill_in_credit_card(number:)
-    fill_in "Card Number", with: number
-    fill_in "Expiration", with: "12 / 24"
+    fill_in_with_force "Card Number", with: number
+    fill_in_with_force "Expiration", with: "12 / 24"
     fill_in "Card Code", with: "123"
   end
 
