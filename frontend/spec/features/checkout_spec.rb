@@ -367,7 +367,7 @@ describe "Checkout", type: :feature, inaccessible: true do
 
     it "allows user to enter a new source" do
       choose "use_existing_card_no"
-      fill_in_credit_card(number: '4111 1111 1111 1111')
+      fill_in_credit_card
 
       click_on "Save and Continue"
       click_on "Place Order"
@@ -534,7 +534,7 @@ describe "Checkout", type: :feature, inaccessible: true do
       expect(page).to have_current_path(spree.checkout_state_path('payment'))
 
       choose "Credit Card"
-      fill_in_credit_card(number: '4111 1111 1111 1111')
+      fill_in_credit_card
       click_button "Save and Continue"
 
       expect(current_path).to eq spree.checkout_state_path('confirm')
@@ -665,14 +665,14 @@ describe "Checkout", type: :feature, inaccessible: true do
       click_on "Save and Continue"
       click_on "Save and Continue"
 
-      fill_in_credit_card(number: "4111 1111 1111 1111")
+      fill_in_credit_card
       click_on "Save and Continue"
 
       expect(page).to have_current_path("/checkout/confirm")
     end
   end
 
-  def fill_in_credit_card(number:)
+  def fill_in_credit_card(number: "4111 1111 1111 1111")
     fill_in "Name on card", with: 'Mary Doe'
     fill_in_with_force "Card Number", with: number
     fill_in_with_force "Expiration", with: "12 / 24"
