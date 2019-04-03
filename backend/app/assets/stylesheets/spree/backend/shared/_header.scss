@@ -1,8 +1,8 @@
 .main-header {
   display: flex;
   align-items: center;
-  padding: 15px $grid-gutter-width;
   background-color: $color-header-bg;
+  padding: 15px $grid-gutter-width 15px 0;
   border-bottom: 1px solid $color-border;
   border-top: 4px solid $color-primary;
   height: $main-header-height;

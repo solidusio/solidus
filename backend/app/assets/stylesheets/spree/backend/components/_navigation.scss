@@ -5,9 +5,8 @@ $padding-y-navbar-submenu: 9px;
 #admin-nav-toggle {
   position: absolute;
   top: 0;
-  right: 0;
-  padding: 1.75em 1em 1.75em 0;
-  background-color: $color-1;
+  left: 1;
+  padding: 1.75em 1em;
   cursor: pointer;
 
   i {
@@ -24,9 +23,17 @@ $padding-y-navbar-submenu: 9px;
     width: $width-sidebar-collapsed;
   }
 
-  .tab-with-icon .text,
+  .tab-with-icon .text{
+    opacity: 0;
+  }
+
+  .admin-login-nav a{
+    text-overflow:clip;
+  }
+
   .brand-link {
-    display: none;
+    opacity:0;
+    transition: opacity $sidebar-transition;
   }
 
   .selected:not(:hover) .admin-subnav {
@@ -206,6 +213,7 @@ nav.menu {
     font-family: $font-family-base;
     -webkit-font-smoothing: auto;
     -moz-osx-font-smoothing: auto;
+    transition: opacity $sidebar-transition;
   }
 
   .admin-subnav {
