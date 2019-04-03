@@ -63,9 +63,10 @@ module Spree
     #
     #   SELECT COUNT(*) ...
     add_search_scope :in_taxon do |taxon|
-      includes(:classifications).
-      where("spree_products_taxons.taxon_id" => taxon.self_and_descendants.pluck(:id)).
-      order(Spree::Classification.arel_table[:position].asc)
+      includes(:classifications)
+        .where('spree_products_taxons.taxon_id' => taxon.self_and_descendants.pluck(:id))
+        .select(Spree::Classification.arel_table[:position])
+        .order(Spree::Classification.arel_table[:position].asc)
     end
 
     # This scope selects products in all taxons AND all its descendants
