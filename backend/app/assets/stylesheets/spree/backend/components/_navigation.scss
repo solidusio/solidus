@@ -24,7 +24,7 @@ $padding-y-navbar-submenu: 9px;
   }
 
   .tab-with-icon .text{
-    opacity: 0;
+    display:none;
   }
 
   .admin-login-nav a{
@@ -213,7 +213,6 @@ nav.menu {
     font-family: $font-family-base;
     -webkit-font-smoothing: auto;
     -moz-osx-font-smoothing: auto;
-    transition: opacity $sidebar-transition;
   }
 
   .admin-subnav {
