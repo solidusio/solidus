@@ -12,6 +12,6 @@
 
 .sidebar-title {
   @include line-through($color: $color-border);
-  color: $color-4;
+  color: $color-dark;
   font-size: 14px;
 }

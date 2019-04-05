@@ -17,9 +17,9 @@ nav.menu {
       }
 
       &.active a {
-        color: $color-2;
+        color: $color-primary;
         border-left-width: 0;
-        border-bottom-color: $color-2;
+        border-bottom-color: $color-primary;
       }
     }
   }
@@ -32,7 +32,7 @@ nav.menu {
 }
 
 .admin-nav-header {
-  background-color: $color-1;
+  background-color: $color-white;
   border-bottom: 1px solid $color-border;
   text-align: center;
   padding: 0 1.25em;
@@ -88,11 +88,11 @@ nav.menu {
         left: 100%;
         width: $width-sidebar-flyout;
         margin-left: 0;
-        background: $color-1;
+        background: $color-white;
         box-shadow: 1px 0 4px 0 rgba(0, 0, 0, 0.1);
         border-radius: 0 4px 4px 4px;
         border: 1px solid $color-border;
-        @include caret($direction: left, $color-caret: $color-1);
+        @include caret($direction: left, $color-caret: $color-white);
 
       &:before {
         z-index: 1;
@@ -113,7 +113,7 @@ nav.menu {
       }
       
       > li {
-        background: $color-1;
+        background: $color-white;
         
         a {
           font-weight: $font-weight-bold;
@@ -134,7 +134,7 @@ nav.menu {
     text-indent: 2em;
 
     &:before {
-      color: $color-8;
+      color: $color-dark-light;
       font-weight: $font-weight-normal;
       position: absolute;
       left: 1em;

@@ -7,27 +7,27 @@
 //
 // Grayscale and brand colors for use across Bootstrap.
 
-$primary:          $color-2 !default;
+$primary:          $color-primary !default;
 $secondary:        #C7CDD5 !default;
 
-$blue:   $color-2 !default;
-$red:    $color-5 !default;
-$orange: $color-6 !default;
+$blue:   $color-primary !default;
+$red:    $color-red !default;
+$orange: $color-yellow !default;
 $green:  $color-success !default;
 
 // Body
 //
 // Settings for the `<body>` element.
 
-$body-bg:       $color-1 !default;
-$body-color:    $color-4 !default;
+$body-bg:       $color-white !default;
+$body-color:    $color-dark !default;
 
 // Links
 //
 // Style anchor elements.
 
 $link-decoration:       none !default;
-$link-hover-color:      $color-2 !default;
+$link-hover-color:      $color-primary !default;
 $link-hover-decoration: none !default;
 
 // Grid columns
@@ -57,7 +57,7 @@ $h5-font-size: $font-size-root + 4 !default;
 $h6-font-size: $font-size-root + 2 !default;
 
 $headings-font-weight:   $font-weight-bold !default;
-$headings-color:         $color-4 !default;
+$headings-color:         $color-dark !default;
 
 // Components
 //
@@ -67,10 +67,10 @@ $border-radius:          3px !default;
 
 // Forms
 
-$input-color:                    $color-4 !default;
-$input-placeholder-color:        $color-8 !default;
+$input-color:                    $color-dark !default;
+$input-placeholder-color:        $color-dark-light !default;
 $input-border-color:             #D7DAE0 !default;
-$input-focus-border-color:       $color-2 !default;
+$input-focus-border-color:       $color-primary !default;
 
 $custom-select-focus-border-color: $input-focus-border-color !default;
 
@@ -79,9 +79,13 @@ $custom-select-focus-border-color: $input-focus-border-color !default;
 // Dropdown menu container and contents.
 
 $dropdown-link-hover-color:      #fff !default;
-$dropdown-link-hover-bg:         $color-2 !default;
+$dropdown-link-hover-bg:         $color-primary !default;
 
 // Breadcrumbs
 
 $breadcrumb-bg:                 transparent !default;
-$breadcrumb-active-color:       $color-2 !default;
+$breadcrumb-active-color:       $color-primary !default;
+
+// Popover
+
+$popover-header-bg:             #e3ebfd !default;

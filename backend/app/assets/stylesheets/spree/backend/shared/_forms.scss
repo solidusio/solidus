@@ -76,7 +76,7 @@ button,
     
     &.disabled,
     &:disabled {
-      color: $color-8;
+      color: $color-disabled;
     }
   }
 
@@ -185,7 +185,7 @@ fieldset {
   }
 
   legend {
-    color: $color-4;
+    color: $color-dark;
     font-size: 14px;
     font-weight: $font-weight-bold;
     text-align: center;

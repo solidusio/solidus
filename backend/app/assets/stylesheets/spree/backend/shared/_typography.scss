@@ -17,6 +17,11 @@ hr {
   border-left: none;
 }
 
+strong,
+b {
+  font-weight: 600;
+}
+
 // Headings
 //--------------------------------------------------------------
 
@@ -92,10 +97,10 @@ dl {
 
 .uppercase     { text-transform: uppercase }
 
-.green  { color: $color-2 }
-.blue   { color: $color-3 }
-.red    { color: $color-5 }
-.yellow { color: $color-6 }
+.green  { color: $color-green }
+.blue   { color: $color-primary }
+.red    { color: $color-red }
+.yellow { color: $color-yellow }
 
 .negative { color: $red }
 input[type="number"].negative { color: $red } // needed to override blue style that is more specific than '.negative'
