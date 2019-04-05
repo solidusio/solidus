@@ -144,21 +144,21 @@ span.info {
   &.withError {
     .field_with_errors {
       label {
-        color: very-light(theme-color("danger"), 30);
+        color: theme-color("danger");
       }
 
       input {
-        border-color: very-light(theme-color("danger"), 15);
+        border-color: theme-color("danger");
       }
     }
     .formError {
-      color: very-light(theme-color("danger"), 30);
+      color: lighten(theme-color("danger"), 15);
       font-style: italic;
       font-size: 85%;
     }
     .select2-container {
       border-radius: 4px;
-      border: 1px solid very-light(theme-color("danger"), 15);
+      border: 1px solid theme-color("danger");
     }
   }
 }
