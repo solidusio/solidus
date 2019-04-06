@@ -1,6 +1,11 @@
 ---
 inherit_from: .hound.yml
 
+Metrics/BlockLength:
+  Exclude:
+    - spec/**/*
+    - lib/tasks/**/*
+
 AllCops:
   Exclude:
     - spec/dummy/**/*
