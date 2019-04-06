@@ -8,5 +8,6 @@ Metrics/BlockLength:
 
 AllCops:
   Exclude:
-    - spec/dummy/**/*
-    - bin/*
+    - 'spec/dummy/**/*'
+    - 'bin/**/*'
+    - 'vendor/**/*'
