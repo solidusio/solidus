@@ -162,6 +162,7 @@ nav.menu {
       &:before {
         z-index: 1;
         top: 1.5em;
+        pointer-events:none;
       }
 
       &:after {
