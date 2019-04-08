@@ -30,10 +30,16 @@ module Spree
         end
       end
 
-      def datepicker_field_value(date)
-        unless date.blank?
-          l(date, format: t('spree.date_picker.format', default: '%Y/%m/%d'))
+      def datepicker_field_value(date, with_time: false)
+        return if date.blank?
+
+        format = if with_time
+          t('spree.date_picker.format_with_time', default: '%Y/%m/%d %H:%M')
+        else
+          t('spree.date_picker.format', default: '%Y/%m/%d')
         end
+
+        l(date, format: format)
       end
 
       # @deprecated Render `spree/admin/shared/preference_fields/\#{preference_type}' instead
