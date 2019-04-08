@@ -815,6 +815,43 @@ module Spree
           expect(response.status).to eq 201
           expect(json_response["user_id"]).to eq(user.id)
         end
+
+        context "with payment" do
+          let(:params) do
+            {
+              payments: [{
+                amount: '10.0',
+                payment_method: create(:payment_method).name,
+                source: {
+                  month: "01",
+                  year: Date.today.year.to_s.last(2),
+                  cc_type: "123",
+                  last_digits: "1111",
+                  name: "Credit Card"
+                }
+              }]
+            }
+          end
+
+          context "with source" do
+            it "creates a payment" do
+              post spree.api_orders_path, params: { order: params }
+              payment = json_response['payments'].first
+
+              expect(response.status).to eq 201
+              expect(payment['amount']).to eql "10.0"
+              expect(payment['source']['last_digits']).to eql "1111"
+            end
+
+            context "when payment_method is missing" do
+              it "returns an error" do
+                params[:payments][0].delete(:payment_method)
+                post spree.api_orders_path, params: { order: params }
+                expect(response.status).to eq 404
+              end
+            end
+          end
+        end
       end
 
       context "updating" do
