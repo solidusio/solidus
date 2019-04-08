@@ -12,6 +12,21 @@ module Spree
         fill_in field, options
       end
 
+      def fill_in_with_force(locator, with:)
+        if Capybara.current_driver == Capybara.javascript_driver
+          field_id = find_field(locator)[:id]
+          page.execute_script <<-JS
+            var field = document.getElementById('#{field_id}');
+            field.value = '#{with}';
+
+            var event = new Event('change', { bubbles: true });
+            field.dispatchEvent(event);
+          JS
+        else
+          fill_in locator, with: with
+        end
+      end
+
       def within_row(num, &block)
         within("table.index tbody tr:nth-of-type(#{num})", &block)
       end

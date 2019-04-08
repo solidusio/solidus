@@ -205,9 +205,9 @@ describe 'Payments', type: :feature do
       end
 
       it "is able to create a new credit card payment with valid information", js: true do
-        fill_in "Card Number", with: "4111 1111 1111 1111"
+        fill_in_with_force "Card Number", with: "4111 1111 1111 1111"
         fill_in "Name", with: "Test User"
-        fill_in "Expiration", with: "09 / #{Time.current.year + 1}"
+        fill_in_with_force "Expiration", with: "09 / #{Time.current.year + 1}"
         fill_in "Card Code", with: "007"
         # Regression test for https://github.com/spree/spree/issues/4277
         expect(page).to have_css('.ccType[value="visa"]', visible: false)
@@ -290,9 +290,9 @@ describe 'Payments', type: :feature do
 
     it "is able to create a new payment", js: true do
       choose payment_method.name
-      fill_in "Card Number", with: "4111 1111 1111 1111"
+      fill_in_with_force "Card Number", with: "4111 1111 1111 1111"
       fill_in "Name", with: "Test User"
-      fill_in "Expiration", with: "09 / #{Time.current.year + 1}"
+      fill_in_with_force "Expiration", with: "09 / #{Time.current.year + 1}"
       fill_in "Card Code", with: "007"
       click_button "Continue"
       expect(page).to have_content("Payment has been successfully created!")
@@ -319,9 +319,9 @@ describe 'Payments', type: :feature do
 
     it "displays an error" do
       choose payment_method.name
-      fill_in "Card Number", with: "4111 1111 1111 1111"
+      fill_in_with_force "Card Number", with: "4111 1111 1111 1111"
       fill_in "Name", with: "Test User"
-      fill_in "Expiration", with: "09 / #{Time.current.year + 1}"
+      fill_in_with_force "Expiration", with: "09 / #{Time.current.year + 1}"
       fill_in "Card Code", with: "007"
       click_button "Continue"
       expect(page).to have_content I18n.t('spree.insufficient_stock_for_order')
