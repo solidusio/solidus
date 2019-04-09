@@ -1,5 +1,6 @@
 //= require handlebars
 //= require spree/backend/translation
+/* eslint no-undef: "off" */
 
 Handlebars.registerHelper("t", function(key, options) {
   return Spree.t(key, options.hash);

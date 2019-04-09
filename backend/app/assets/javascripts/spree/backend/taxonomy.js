@@ -1,4 +1,5 @@
 //= require 'solidus_admin/Sortable'
+/* eslint no-undef: "off" */
 
 Handlebars.registerHelper('isRootTaxon', function() {
   return this.parent_id == null;

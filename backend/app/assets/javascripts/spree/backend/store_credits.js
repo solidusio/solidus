@@ -1,3 +1,5 @@
+/* eslint no-undef: "off" */
+
 Spree.ready(function() {
   $('.store-credit-memo-row').each(function() {
     var row = this;

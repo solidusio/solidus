@@ -1,4 +1,5 @@
 //= require solidus_admin/Sortable
+/* eslint no-undef: "off" */
 
 Spree.ready(function() {
   var productTemplate = HandlebarsTemplates['products/sortable'];

@@ -1,4 +1,5 @@
 // Shipments AJAX API
+/* eslint no-undef: "off", no-extra-semi: "off", no-unused-vars: "off" */
 
 var ShipmentAddVariantView = Backbone.View.extend({
   events: {
