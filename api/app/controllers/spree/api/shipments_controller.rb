@@ -131,11 +131,8 @@ module Spree
       end
 
       def find_order_on_create
-        # TODO: Can remove conditional here once deprecated #find_order is removed.
-        unless @order.present?
-          @order = Spree::Order.find_by!(number: params[:shipment][:order_id])
-          authorize! :read, @order
-        end
+        @order = Spree::Order.find_by!(number: params[:shipment][:order_id])
+        authorize! :read, @order
       end
 
       def find_shipment
