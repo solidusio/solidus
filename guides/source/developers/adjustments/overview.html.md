@@ -137,20 +137,20 @@ If you want to retrieve the line item adjustments, you can use the
 `line_item_adjustments` method:
 
 ```ruby
-Spree::Order.line_item_adjustments
+Spree::Order.find(1).line_item_adjustments
 ```
 
 Or, if you want to retrieve the shipment adjustments, you can use the
 `shipment_adjustments` method:
 
 ```ruby
-Spree::Order.shipment_adjustments
+Spree::Order.find(1).shipment_adjustments
 ```
 
 Finally, if you want to retrieve all of the adjustments on the order, you can
 use the `all_adjustments` method.
 
 ```ruby
-Spree::Order.all_adjustments
+Spree::Order.find(1).all_adjustments
 ```
 
