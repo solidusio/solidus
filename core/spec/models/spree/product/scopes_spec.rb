@@ -40,7 +40,7 @@ RSpec.describe "Product scopes", type: :model do
 
       it 'after ordering changed' do
         [@child_taxon, other_taxon].each do |taxon|
-          Spree::Classification.find_by(taxon: taxon, product: product).insert_at(2)
+          Spree::Classification.find_by(taxon: taxon, product: product).insert_at(1)
           expect(Spree::Product.in_taxon(taxon)).to eq([product_2, product])
         end
       end

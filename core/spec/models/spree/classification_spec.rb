@@ -92,6 +92,38 @@ module Spree
       end
     end
 
+    context '#insert_at' do
+      it 'moves the element at the top' do
+        classification = taxon_with_5_products.classifications.last
+        classification.insert_at(0)
+        expect(classification.position).to be(1)
+      end
+
+      it 'moves the element to the second place' do
+        classification = taxon_with_5_products.classifications.last
+        classification.insert_at(1)
+        expect(classification.position).to be(2)
+      end
+
+      it 'moves the element at the bottom' do
+        classification = taxon_with_5_products.classifications.first
+        classification.insert_at(4)
+        expect(classification.position).to be(5)
+      end
+
+      it 'moves the element before a gap' do
+        taxon_with_5_products.classifications.second.destroy
+        classification = taxon_with_5_products.classifications.third
+        classification.insert_at(1)
+        expect(classification.position).to be(2)
+      end
+
+      it 'fails moving the the element if position is out of boundaries' do
+        classification = taxon_with_5_products.classifications.first
+        expect(classification.insert_at(6)).to be_falsey
+      end
+    end
+
     it "touches the product" do
       taxon = taxon_with_5_products
       classification = taxon.classifications.first

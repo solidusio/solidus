@@ -6,14 +6,15 @@ module Spree
       def update
         authorize! :update, Product
         authorize! :update, Taxon
-        classification = Spree::Classification.find_by(
-          product_id: params[:product_id],
-          taxon_id: params[:taxon_id]
-        )
-        # Because position we get back is 0-indexed.
-        # acts_as_list is 1-indexed.
-        classification.insert_at(params[:position].to_i + 1)
-        head :ok
+
+        taxon = Spree::Taxon.find(params[:taxon_id])
+        classification = taxon.classifications.find_by(product_id: params[:product_id])
+
+        if classification.insert_at(params[:position].to_i)
+          head :ok
+        else
+          render json: { errors: classification.errors.full_messages }, status: :unprocessable_entity
+        end
       end
     end
   end
