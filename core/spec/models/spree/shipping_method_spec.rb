@@ -257,4 +257,36 @@ RSpec.describe Spree::ShippingMethod, type: :model do
       it { should == 'back_end' }
     end
   end
+
+  describe '.available_to_store' do
+    let(:store) { create(:store) }
+    let(:first_shipping_method) { create(:shipping_method, stores: [store]) }
+    let(:second_shipping_method) { create(:shipping_method, stores: [store]) }
+
+    subject { [first_shipping_method, second_shipping_method] }
+
+    it 'raises an exception if no store is passed as argument' do
+      expect {
+        described_class.available_to_store(nil)
+      }.to raise_exception(ArgumentError, 'You must provide a store')
+    end
+
+    context 'when the store has no shipping methods associated' do
+      before { store.shipping_methods = [] }
+
+      it 'returns all shipping methods' do
+        expect(store.shipping_methods).to eq([])
+        expect(described_class.available_to_store(store)).to eq(subject)
+      end
+    end
+
+    context 'when the store has shipping methods associated' do
+      before { create(:shipping_method) }
+
+      it 'returns the associated records' do
+        expect(store.shipping_methods).to eq(subject)
+        expect(described_class.available_to_store(store)).to eq(subject)
+      end
+    end
+  end
 end
