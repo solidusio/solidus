@@ -34,6 +34,13 @@ module Spree
       register_extension_abilities
     end
 
+    # TODO: overrides cancancan merge action to not merge aliases
+    # see https://github.com/solidusio/solidus/pull/3148/ to remove the TODO
+    def merge(ability)
+      ability.rules.each { |rule| add_rule(rule.dup) }
+      self
+    end
+
     private
 
     def alias_actions
