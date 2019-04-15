@@ -63,6 +63,7 @@ require 'spree/core/environment'
 require 'spree/promo/environment'
 require 'spree/migrations'
 require 'spree/migration_helpers'
+require 'spree/event'
 require 'spree/core/engine'
 
 require 'spree/i18n'

@@ -111,11 +111,15 @@ module Spree
 
       if unpaid_amount_within_tolerance?
         reimbursed!
+        Spree::Event.fire 'reimbursement_reimbursed', reimbursement: self
         reimbursement_success_hooks.each { |h| h.call self }
-        send_reimbursement_email
       else
         errored!
+        Spree::Event.fire 'reimbursement_errored', reimbursement: self
         reimbursement_failure_hooks.each { |h| h.call self }
+      end
+
+      if errored?
         raise IncompleteReimbursementError, I18n.t("spree.validation.unpaid_amount_not_zero", amount: unpaid_amount)
       end
     end
@@ -174,10 +178,6 @@ module Spree
       if return_items.any? { |ri| ri.inventory_unit.order_id != order_id }
         errors.add(:base, :return_items_order_id_does_not_match)
       end
-    end
-
-    def send_reimbursement_email
-      Spree::Config.reimbursement_mailer_class.reimbursement_email(id).deliver_later
     end
 
     # If there are multiple different reimbursement types for a single

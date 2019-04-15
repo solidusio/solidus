@@ -6,6 +6,14 @@
 
 ### Backend
 
+**Added Spree::Event**
+
+Solidus now includes an event library that allows to use different adapters.
+The default adapter is based on `ActiveSupport::Notifications` library.
+Events should allow developers to customize and extend Solidus behavior
+more easily by simply subscribing to certain events. Sending emails may be a
+simple use case for this new feature.
+
 ### API
 
 ### Frontend
