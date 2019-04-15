@@ -8,6 +8,8 @@ module Spree
 
     validates :name, :iso_name, presence: true
 
+    self.whitelisted_ransackable_attributes = %w[name]
+
     def self.default
       if Spree::Config.default_country_id
         Spree::Deprecation.warn("Setting your default country via its ID is deprecated. Please set your default country via the `default_country_iso` setting.", caller)
