@@ -21,12 +21,12 @@
     dropdown:
       - title: "Overview"
         href: "/users/promotions/overview.html"
+      - title: "Promotion Rules"
+        href: "/users/promotions/promotion-rules.html"
       - title: "Promotion Actions"
         href: "/users/promotions/promotion-actions.html"
       - title: "Promotion Calculators"
         href: "/users/promotions/promotion-calculators.html"
-      - title: "Promotion Rules"
-        href: "/users/promotions/promotion-rules.html"
 
   - title: "Settings"
     dropdown:
