@@ -44,6 +44,8 @@ out to the PSP's specifications and API.
 Note that the `Spree::PaymentMethod` base class also has a similar interface to
 the [`active_merchant`][active-merchant] gem.
 
+[active-merchant]: https://github.com/activemerchant/active_merchant
+
 For an example, see how the `solidus_paypal_braintree` gem builds its
 [`SolidusPaypalBraintree::Gateway` class][solidus-paypal-braintree-gateway] class:
 it sets its own preferences and overrides many of the methods originally defined
