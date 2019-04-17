@@ -12,7 +12,7 @@ Solidus includes some payment sources such as `Spree::CreditCard` and
 `Spree::StoreCredit`. However, your [payment method][payment-methods] could
 define any custom payment source in its `payment_source_class` method.
 
-[payment-methods]: payment-methods.html
+[payment-methods]: payment-methods.html.md
 
 ## Credit cards
 
@@ -31,4 +31,4 @@ storing customer data. See the [PCI Security Standards][pci] website for more
 information.
 
 [pci]: https://www.pcisecuritystandards.org
-[payment-processing]: payment-processing.html
+[payment-processing]: payment-processing.html.md
