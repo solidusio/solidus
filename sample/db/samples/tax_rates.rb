@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-north_america = Spree::Zone.find_by!(name: "North America")
-clothing = Spree::TaxCategory.find_by!(name: "Default")
+north_america = Spree::Zone.where(name: "North America").first
+clothing = Spree::TaxCategory.where(name: "Default").first
 tax_rate = Spree::TaxRate.create(
   name: "North America",
   zone: north_america,
