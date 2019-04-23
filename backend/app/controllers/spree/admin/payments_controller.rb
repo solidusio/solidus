@@ -124,6 +124,7 @@ module Spree
         set_order_breadcrumbs
         add_breadcrumb plural_resource_name(Spree::Payment), spree.admin_order_payments_path(@order)
         add_breadcrumb t('spree.new_payment') if action_name == 'new'
+        add_breadcrumb @payment.payment_method.name if action_name == 'show'
       end
     end
   end

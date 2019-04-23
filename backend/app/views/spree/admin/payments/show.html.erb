@@ -1,12 +1,5 @@
 <%= render partial: 'spree/admin/shared/order_tabs', locals: { current: 'Payments' } %>
 
-<% admin_breadcrumb do %>
-  <%= @payment.payment_method.name %>
-  <span class="pill pill-<%= @payment.state %>">
-    <%= t(@payment.state, scope: 'spree.payment_states') %>
-  </span>
-<% end %>
-
 <%= render partial: "spree/admin/payments/source_views/#{@payment.payment_method.partial_name}", locals: { payment: @payment.source.is_a?(Spree::Payment) ? @payment.source : @payment } %>
 
 <div data-hook="amount" class="align-center">

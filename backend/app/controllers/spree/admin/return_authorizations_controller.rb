@@ -63,6 +63,7 @@ module Spree
         set_order_breadcrumbs
         add_breadcrumb plural_resource_name(Spree::ReturnAuthorization), spree.admin_order_return_authorizations_url
         add_breadcrumb t('spree.new_return_authorization') if action_name == 'new'
+        add_breadcrumb @return_authorization.number if action_name == 'edit'
       end
     end
   end
