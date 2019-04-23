@@ -20,8 +20,13 @@ module Spree
         end
 
         content_tag :ol, class: 'breadcrumb' do
-          segments = admin_breadcrumbs.map do |level|
-            content_tag(:li, level, class: "breadcrumb-item #{level == admin_breadcrumbs.last ? 'active' : ''}")
+          segments = admin_breadcrumbs.map.with_index do |(text, path), index|
+            last = index == admin_breadcrumbs.size - 1
+
+            content_tag(:li, class: "breadcrumb-item #{last ? 'active' : ''}") do
+              render partial: 'spree/admin/shared/breadcrumb_item',
+                     locals: { text: text, path: path, last: last }
+            end
           end
           safe_join(segments)
         end
@@ -33,7 +38,7 @@ module Spree
         elsif content_for?(:page_title)
           content_for(:page_title)
         elsif admin_breadcrumbs.any?
-          admin_breadcrumbs.map{ |x| strip_tags(x) }.reverse.join(' - ')
+          admin_breadcrumbs.map{ |x, _| strip_tags(x) }.reverse.join(' - ')
         else
           t(controller.controller_name, default: controller.controller_name.titleize, scope: 'spree')
         end

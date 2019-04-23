@@ -9,6 +9,7 @@ module Spree
 
       before_action :load_roles, only: [:index, :edit, :new]
       before_action :load_stock_locations, only: [:edit, :new]
+      before_action :set_breadcrumbs
 
       def index
         respond_with(@collection) do |format|
@@ -165,6 +166,15 @@ module Spree
 
       def set_stock_locations
         @user.stock_locations = Spree::StockLocation.where(id: (params[:user][:stock_location_ids] || []))
+      end
+
+      def set_breadcrumbs
+        add_breadcrumb plural_resource_name(Spree::LegacyUser), admin_users_path
+        add_breadcrumb @user.email, [:admin, @user]           if params[:id].present?
+        add_breadcrumb t('spree.new_user')                    if action_name == 'new'
+        add_breadcrumb plural_resource_name(Spree::Address)   if action_name == 'addresses'
+        add_breadcrumb t('spree.admin.user.items_purchased')  if action_name == 'items'
+        add_breadcrumb t('spree.admin.user.order_history')    if action_name == 'orders'
       end
     end
   end

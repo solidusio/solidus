@@ -62,6 +62,14 @@ module Spree
       def order_mutex_redirect_path
         edit_admin_order_path(@order)
       end
+
+      def add_breadcrumb(name, path = nil)
+        admin_breadcrumbs << [name, path]
+      end
+
+      def admin_breadcrumbs
+        @admin_breadcrumbs ||= []
+      end
     end
   end
 end
