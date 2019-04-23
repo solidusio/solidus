@@ -64,11 +64,8 @@ module Spree
       end
 
       def add_breadcrumb(name, path = nil)
-        admin_breadcrumbs << [name, path]
-      end
-
-      def admin_breadcrumbs
         @admin_breadcrumbs ||= []
+        @admin_breadcrumbs << [name, path]
       end
 
       # Shared breadcrumbs
