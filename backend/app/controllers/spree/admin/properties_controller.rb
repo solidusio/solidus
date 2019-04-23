@@ -3,6 +3,8 @@
 module Spree
   module Admin
     class PropertiesController < ResourceController
+      before_action :set_breadcrumbs
+
       def index
         respond_with(@collection)
       end
@@ -21,6 +23,12 @@ module Spree
               per(Spree::Config[:properties_per_page])
 
         @collection
+      end
+
+      def set_breadcrumbs
+        add_breadcrumb plural_resource_name(Spree::Product), spree.admin_products_path
+        add_breadcrumb plural_resource_name(Spree::Property), spree.admin_properties_path
+        add_breadcrumb @property.name if action_name == 'edit'
       end
     end
   end

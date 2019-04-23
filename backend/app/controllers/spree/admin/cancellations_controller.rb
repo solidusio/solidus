@@ -4,6 +4,7 @@ module Spree
   module Admin
     class CancellationsController < Spree::Admin::BaseController
       before_action :load_order, only: [:index, :short_ship]
+      before_action :set_breadcrumbs
 
       def index
         @inventory_units = @order.inventory_units.cancelable
@@ -40,6 +41,11 @@ module Spree
 
       def model_class
         Spree::OrderCancellations
+      end
+
+      def set_breadcrumbs
+        set_order_breadcrumbs
+        add_breadcrumb t('spree.cancel_inventory')
       end
     end
   end

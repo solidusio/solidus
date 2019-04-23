@@ -4,6 +4,7 @@ module Spree
   module Admin
     class OptionTypesController < ResourceController
       before_action :setup_new_option_value, only: :edit
+      before_action :set_breadcrumb
 
       def update_values_positions
         params[:positions].each do |id, index|
@@ -35,6 +36,12 @@ module Spree
         else
           Spree::OptionType.all
         end
+      end
+
+      def set_breadcrumb
+        add_breadcrumb plural_resource_name(Spree::Product), spree.admin_products_path
+        add_breadcrumb plural_resource_name(Spree::OptionType), spree.admin_option_types_path
+        add_breadcrumb @option_type.name if params[:id].present?
       end
     end
   end

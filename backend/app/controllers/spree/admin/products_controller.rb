@@ -9,6 +9,7 @@ module Spree
       update.before :update_before
       helper_method :clone_object_url
       before_action :split_params, only: [:create, :update]
+      before_action :set_breadcrumbs
 
       def show
         redirect_to action: :edit
@@ -137,6 +138,12 @@ module Spree
 
       def updating_variant_property_rules?
         params[:product][:variant_property_rules_attributes].present?
+      end
+
+      def set_breadcrumbs
+        set_product_breadcrumbs
+        add_breadcrumb t('spree.product_details') if action_name == 'edit'
+        add_breadcrumb t('spree.new_product')     if action_name == 'new'
       end
     end
   end

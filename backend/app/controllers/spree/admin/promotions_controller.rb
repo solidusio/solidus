@@ -4,6 +4,7 @@ module Spree
   module Admin
     class PromotionsController < ResourceController
       before_action :load_data
+      before_action :set_breadcrumbs
 
       helper 'spree/promotion_rules'
 
@@ -61,6 +62,12 @@ module Spree
 
       def promotion_includes
         [:promotion_actions]
+      end
+
+      def set_breadcrumbs
+        add_breadcrumb plural_resource_name(Spree::Promotion), spree.admin_promotions_path
+        add_breadcrumb @promotion.name          if action_name == 'edit'
+        add_breadcrumb t('spree.new_promotion') if action_name == 'new'
       end
     end
   end

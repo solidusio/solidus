@@ -9,6 +9,7 @@ module Spree
       before_action :parent # ensure order gets loaded to support our pseudo parent-child relationship
       before_action :load_form_data, only: [:new, :edit]
       before_action :build_return_items_from_params, only: [:create]
+      before_action :set_breadcrumbs
       create.fails  :load_form_data
 
       def edit
@@ -70,6 +71,13 @@ module Spree
           end
           return_item
         end.compact
+      end
+
+      def set_breadcrumbs
+        set_order_breadcrumbs
+        add_breadcrumb plural_resource_name(Spree::CustomerReturn), spree.admin_order_customer_returns_url(@order)
+        add_breadcrumb @customer_return.number        if params[:id].present?
+        add_breadcrumb t('spree.new_customer_return') if action_name == 'new'
       end
     end
   end

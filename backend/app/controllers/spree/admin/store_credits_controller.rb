@@ -7,6 +7,7 @@ module Spree
       before_action :load_categories, only: [:new]
       before_action :load_reasons, only: [:edit_amount, :edit_validity]
       before_action :ensure_store_credit_reason, only: [:update_amount, :invalidate]
+      before_action :set_breadcrumbs
 
       helper Spree::Admin::StoreCreditEventsHelper
 
@@ -112,6 +113,20 @@ module Spree
         parent.store_credits.build(
           currency: Spree::Config[:currency]
         )
+      end
+
+      def set_breadcrumbs
+        set_user_breadcrumbs
+
+        if ['edit_validity', 'edit_amount'].include? action_name
+          add_breadcrumb plural_resource_name(Spree::StoreCredit), spree.admin_user_store_credits_path(@user)
+          add_breadcrumb Spree::StoreCredit.model_name.human, admin_user_store_credit_path(@user, @store_credit)
+          add_breadcrumb t('spree.edit')
+        else
+          add_breadcrumb Spree::StoreCredit.model_name.human, spree.admin_user_store_credits_path(@user)
+          add_breadcrumb @store_credit.display_amount.to_html if action_name == 'show'
+          add_breadcrumb t('spree.new_store_credit')          if action_name == 'new'
+        end
       end
     end
   end

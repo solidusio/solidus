@@ -1,8 +1,5 @@
 <% admin_layout "full-width" %>
 
-<% admin_breadcrumb(link_to plural_resource_name(Spree::Promotion), spree.admin_promotions_path) %>
-<% admin_breadcrumb(@promotion.name) %>
-
 <% content_for :page_actions do %>
   <li>
     <% if can?(:display, Spree::PromotionCode) %>

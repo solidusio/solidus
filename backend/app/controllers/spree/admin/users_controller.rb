@@ -169,8 +169,7 @@ module Spree
       end
 
       def set_breadcrumbs
-        add_breadcrumb plural_resource_name(Spree::LegacyUser), admin_users_path
-        add_breadcrumb @user.email, [:admin, @user]           if params[:id].present?
+        set_user_breadcrumbs
         add_breadcrumb t('spree.new_user')                    if action_name == 'new'
         add_breadcrumb plural_resource_name(Spree::Address)   if action_name == 'addresses'
         add_breadcrumb t('spree.admin.user.items_purchased')  if action_name == 'items'

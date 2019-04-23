@@ -12,6 +12,7 @@ module Spree
       skip_before_action :load_resource, only: [:toggle_state, :edit, :update, :destroy]
 
       before_action :find_adjustment, only: [:destroy, :edit, :update]
+      before_action :set_breadcrumbs
 
       helper_method :reasons_for
 
@@ -41,6 +42,13 @@ module Spree
           Spree::AdjustmentReason.active.to_a,
           @adjustment.adjustment_reason
         ].flatten.compact.uniq.sort_by { |r| r.name.downcase }
+      end
+
+      def set_breadcrumbs
+        set_order_breadcrumbs
+        add_breadcrumb plural_resource_name(Spree::Adjustment), spree.admin_order_adjustments_path(@order)
+        add_breadcrumb t('spree.new_adjustment')                                          if action_name == 'new'
+        add_breadcrumb "#{t('spree.actions.edit')} #{Spree::Adjustment.model_name.human}" if action_name == 'edit'
       end
     end
   end

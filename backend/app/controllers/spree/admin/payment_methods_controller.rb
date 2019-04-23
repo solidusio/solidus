@@ -6,6 +6,7 @@ module Spree
       skip_before_action :load_resource, only: :create
       before_action :load_payment_method_types, except: [:index]
       before_action :validate_payment_method_type, only: [:create, :update]
+      before_action :set_breadcrumbs
 
       respond_to :html
 
@@ -80,6 +81,14 @@ module Spree
 
       def payment_method_params
         params.require(:payment_method).permit!
+      end
+
+      def set_breadcrumbs
+        add_breadcrumb t('spree.settings')
+        add_breadcrumb plural_resource_name(Spree::Payment)
+        add_breadcrumb plural_resource_name(Spree::PaymentMethod), spree.admin_payment_methods_path
+        add_breadcrumb t('spree.new_payment_method') if action_name == 'new'
+        add_breadcrumb @payment_method.name          if action_name == 'edit'
       end
     end
   end

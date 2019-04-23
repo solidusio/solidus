@@ -9,6 +9,7 @@ module Spree
       new_action.before :new_before
       before_action :redirect_on_empty_option_values, only: [:new]
       before_action :load_data, only: [:new, :create, :edit, :update]
+      before_action :set_breadcrumbs
 
       private
 
@@ -45,6 +46,13 @@ module Spree
       def parent
         @parent ||= Spree::Product.with_deleted.find_by(slug: params[:product_id])
         @product = @parent
+      end
+
+      def set_breadcrumbs
+        set_product_breadcrumbs
+        add_breadcrumb plural_resource_name(Spree::Variant), admin_product_variants_path(@product)
+        add_breadcrumb @variant.options_text  if action_name == 'edit'
+        add_breadcrumb t('spree.new_variant') if action_name == 'new'
       end
     end
   end

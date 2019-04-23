@@ -6,6 +6,7 @@ module Spree
       before_action :load_data, except: :index
       before_action :set_shipping_category, only: [:create, :update]
       before_action :set_zones, only: [:create, :update]
+      before_action :set_breadcrumbs
 
       def destroy
         @object.discard
@@ -42,6 +43,14 @@ module Spree
         @available_zones = Spree::Zone.order(:name)
         @tax_categories = Spree::TaxCategory.order(:name)
         @calculators = Rails.application.config.spree.calculators.shipping_methods
+      end
+
+      def set_breadcrumbs
+        add_breadcrumb t('spree.settings')
+        add_breadcrumb t('spree.admin.tab.shipping')
+        add_breadcrumb plural_resource_name(Spree::ShippingMethod), spree.admin_shipping_methods_path
+        add_breadcrumb t('spree.new_shipping_method') if action_name == 'new'
+        add_breadcrumb @shipping_method.name          if action_name == 'edit'
       end
     end
   end

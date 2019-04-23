@@ -1,6 +1,3 @@
-<% admin_breadcrumb(t('spree.settings')) %>
-<% admin_breadcrumb(plural_resource_name(Spree::Zone)) %>
-
 <% content_for :page_actions do %>
   <% if can?(:create, Spree::Zone) %>
     <li>

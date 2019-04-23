@@ -9,6 +9,7 @@ module Spree
 
       before_action :load_stock_locations, only: :edit
       before_action :load_simulated_refunds, only: :edit
+      before_action :set_breadcrumbs
       create.after :recalculate_order
 
       rescue_from Spree::Core::GatewayError, with: :spree_core_gateway_error
@@ -68,6 +69,13 @@ module Spree
       def spree_core_gateway_error(error)
         flash[:error] = error.message
         redirect_to edit_admin_order_reimbursement_path(parent, @reimbursement)
+      end
+
+      def set_breadcrumbs
+        set_order_breadcrumbs
+        add_breadcrumb plural_resource_name(Spree::Reimbursement)                          if action_name == 'index'
+        add_breadcrumb "#{t('spree.editing_reimbursement')} #{@reimbursement.number}"      if action_name == 'edit'
+        add_breadcrumb "#{Spree::Reimbursement.model_name.human} #{@reimbursement.number}" if action_name == 'show'
       end
     end
   end

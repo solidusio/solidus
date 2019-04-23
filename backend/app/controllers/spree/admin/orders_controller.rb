@@ -8,6 +8,7 @@ module Spree
       before_action :initialize_order_events
       before_action :load_order, only: [:edit, :update, :complete, :advance, :cancel, :resume, :approve, :resend, :unfinalize_adjustments, :finalize_adjustments, :cart, :confirm]
       around_action :lock_order, only: [:update, :advance, :complete, :confirm, :cancel, :resume, :approve, :resend]
+      before_action :set_breadcrumbs
 
       rescue_from Spree::Order::InsufficientStock, with: :insufficient_stock_error
 
@@ -185,6 +186,13 @@ module Spree
           flash[:notice] = t('spree.fill_in_customer_info')
           redirect_to edit_admin_order_customer_url(@order)
         end
+      end
+
+      def set_breadcrumbs
+        set_order_breadcrumbs
+        add_breadcrumb t('spree.cart')                       if action_name == 'cart'
+        add_breadcrumb t('spree.confirm_order')              if action_name == 'confirm'
+        add_breadcrumb plural_resource_name(Spree::Shipment) if action_name == 'edit'
       end
     end
   end

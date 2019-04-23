@@ -10,6 +10,7 @@ module Spree
       before_action :load_payment_for_fire, only: :fire
       before_action :load_data
       before_action :require_bill_address, only: [:index]
+      before_action :set_breadcrumbs
 
       respond_to :html
 
@@ -117,6 +118,12 @@ module Spree
       def insufficient_stock_error
         flash[:error] = t('spree.insufficient_stock_for_order')
         redirect_to new_admin_order_payment_url(@order)
+      end
+
+      def set_breadcrumbs
+        set_order_breadcrumbs
+        add_breadcrumb plural_resource_name(Spree::Payment), spree.admin_order_payments_path(@order)
+        add_breadcrumb t('spree.new_payment') if action_name == 'new'
       end
     end
   end

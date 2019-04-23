@@ -5,6 +5,8 @@ module Spree
     class TaxonsController < Spree::Admin::BaseController
       respond_to :html, :json, :js
 
+      before_action :set_breadcrumbs
+
       def index
       end
 
@@ -76,6 +78,12 @@ module Spree
 
       def taxon_params
         params.require(:taxon).permit(permitted_taxon_attributes)
+      end
+
+      def set_breadcrumbs
+        add_breadcrumb plural_resource_name(Spree::Product), spree.admin_products_path if action_name == 'index'
+        add_breadcrumb t('spree.admin.taxons.display_order')                           if action_name == 'index'
+        add_breadcrumb t('spree.taxon_edit')                                           if action_name == 'edit'
       end
     end
   end

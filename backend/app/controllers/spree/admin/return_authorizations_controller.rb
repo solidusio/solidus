@@ -6,6 +6,7 @@ module Spree
       belongs_to 'spree/order', find_by: :number
 
       before_action :load_form_data, only: [:new, :edit]
+      before_action :set_breadcrumbs
       create.fails  :load_form_data
       update.fails  :load_form_data
 
@@ -56,6 +57,12 @@ module Spree
 
       def load_stock_locations
         @stock_locations = Spree::StockLocation.order_default.active
+      end
+
+      def set_breadcrumbs
+        set_order_breadcrumbs
+        add_breadcrumb plural_resource_name(Spree::ReturnAuthorization), spree.admin_order_return_authorizations_url
+        add_breadcrumb t('spree.new_return_authorization') if action_name == 'new'
       end
     end
   end

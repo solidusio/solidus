@@ -9,9 +9,6 @@
 
 <%= render partial: 'spree/admin/shared/order_tabs', locals: { current: 'Cart' } %>
 
-<% admin_breadcrumb(t('spree.cart')) %>
-
-
 <div data-hook="admin_order_edit_header">
   <%= render partial: 'spree/shared/error_messages', locals: { target: @order } %>
 </div>

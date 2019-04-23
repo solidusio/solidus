@@ -15,10 +15,6 @@ module Spree
 
       # Render Bootstrap style breadcrumbs
       def render_admin_breadcrumbs
-        if content_for?(:page_title)
-          admin_breadcrumb(content_for(:page_title))
-        end
-
         content_tag :ol, class: 'breadcrumb' do
           segments = admin_breadcrumbs.map.with_index do |(text, path), index|
             last = index == admin_breadcrumbs.size - 1
