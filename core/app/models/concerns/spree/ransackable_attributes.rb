@@ -7,7 +7,7 @@ module Spree::RansackableAttributes
     class_attribute :whitelisted_ransackable_attributes
 
     class_attribute :default_ransackable_attributes
-    self.default_ransackable_attributes = %w[id name]
+    self.default_ransackable_attributes = %w[id]
   end
 
   class_methods do

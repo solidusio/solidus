@@ -16,7 +16,7 @@ module Spree
 
     delegate :name, :presentation, to: :option_type, prefix: :option_type
 
-    self.whitelisted_ransackable_attributes = ['presentation']
+    self.whitelisted_ransackable_attributes = %w[name presentation]
 
     # Updates the updated_at column on all the variants associated with this
     # option value.

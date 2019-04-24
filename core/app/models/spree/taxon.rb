@@ -35,6 +35,8 @@ module Spree
     validates_attachment :icon,
       content_type: { content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif"] }
 
+    self.whitelisted_ransackable_attributes = %w[name]
+
     # @note This method is meant to be overridden on a store by store basis.
     # @return [Array] filters that should be used for a taxon
     def applicable_filters

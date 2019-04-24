@@ -13,6 +13,8 @@ module Spree
 
     default_scope -> { order(position: :asc) }
 
+    self.whitelisted_ransackable_attributes = %w[name]
+
     private
 
     def set_name

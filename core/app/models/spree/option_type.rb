@@ -25,6 +25,8 @@ module Spree
     after_touch :touch_all_products
     after_save :touch_all_products
 
+    self.whitelisted_ransackable_attributes = %w[name]
+
     def touch_all_products
       products.find_each(&:touch)
     end
