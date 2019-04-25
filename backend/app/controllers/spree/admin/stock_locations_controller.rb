@@ -19,7 +19,7 @@ module Spree
         add_breadcrumb t('spree.settings')
         add_breadcrumb t('spree.admin.tab.shipping')
         add_breadcrumb plural_resource_name(Spree::StockLocation), spree.admin_stock_locations_path
-        add_breadcrumb @stock_location.name          if action_name == 'edit'
+        add_breadcrumb @stock_location.name if action_name == 'edit'
         add_breadcrumb t('spree.new_stock_location') if action_name == 'new'
       end
     end

@@ -66,7 +66,7 @@ module Spree
 
       def set_breadcrumbs
         add_breadcrumb plural_resource_name(Spree::Promotion), spree.admin_promotions_path
-        add_breadcrumb @promotion.name          if action_name == 'edit'
+        add_breadcrumb @promotion.name if action_name == 'edit'
         add_breadcrumb t('spree.new_promotion') if action_name == 'new'
       end
     end

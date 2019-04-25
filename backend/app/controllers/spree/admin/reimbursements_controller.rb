@@ -73,7 +73,7 @@ module Spree
 
       def set_breadcrumbs
         set_order_breadcrumbs
-        add_breadcrumb plural_resource_name(Spree::Reimbursement)                          if action_name == 'index'
+        add_breadcrumb plural_resource_name(Spree::Reimbursement) if action_name == 'index'
         add_breadcrumb "#{t('spree.editing_reimbursement')} #{@reimbursement.number}"      if action_name == 'edit'
         add_breadcrumb "#{Spree::Reimbursement.model_name.human} #{@reimbursement.number}" if action_name == 'show'
       end

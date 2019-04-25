@@ -88,7 +88,7 @@ module Spree
         add_breadcrumb plural_resource_name(Spree::Payment)
         add_breadcrumb plural_resource_name(Spree::PaymentMethod), spree.admin_payment_methods_path
         add_breadcrumb t('spree.new_payment_method') if action_name == 'new'
-        add_breadcrumb @payment_method.name          if action_name == 'edit'
+        add_breadcrumb @payment_method.name if action_name == 'edit'
       end
     end
   end

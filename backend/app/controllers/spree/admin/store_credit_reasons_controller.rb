@@ -12,7 +12,7 @@ module Spree
         add_breadcrumb t('spree.admin.tab.checkout')
         add_breadcrumb plural_resource_name(Spree::StoreCreditReason), spree.admin_store_credit_reasons_path
         add_breadcrumb t('spree.new_store_credit_reason') if action_name == 'new'
-        add_breadcrumb @object.name                       if action_name == 'edit'
+        add_breadcrumb @object.name if action_name == 'edit'
       end
     end
   end

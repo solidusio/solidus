@@ -47,7 +47,7 @@ module Spree
       def set_breadcrumbs
         set_order_breadcrumbs
         add_breadcrumb plural_resource_name(Spree::Adjustment), spree.admin_order_adjustments_path(@order)
-        add_breadcrumb t('spree.new_adjustment')                                          if action_name == 'new'
+        add_breadcrumb t('spree.new_adjustment') if action_name == 'new'
         add_breadcrumb "#{t('spree.actions.edit')} #{Spree::Adjustment.model_name.human}" if action_name == 'edit'
       end
     end

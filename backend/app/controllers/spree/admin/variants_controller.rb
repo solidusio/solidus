@@ -51,7 +51,7 @@ module Spree
       def set_breadcrumbs
         set_product_breadcrumbs
         add_breadcrumb plural_resource_name(Spree::Variant), admin_product_variants_path(@product)
-        add_breadcrumb @variant.options_text  if action_name == 'edit'
+        add_breadcrumb @variant.options_text if action_name == 'edit'
         add_breadcrumb t('spree.new_variant') if action_name == 'new'
       end
     end

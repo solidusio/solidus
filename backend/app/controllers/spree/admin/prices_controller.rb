@@ -32,7 +32,7 @@ module Spree
         set_product_breadcrumbs
         add_breadcrumb plural_resource_name(Spree::Price), spree.admin_product_prices_url(@product)
         add_breadcrumb t('spree.actions.edit') if action_name == 'edit'
-        add_breadcrumb t('spree.actions.new')  if action_name == 'new'
+        add_breadcrumb t('spree.actions.new') if action_name == 'new'
       end
     end
   end

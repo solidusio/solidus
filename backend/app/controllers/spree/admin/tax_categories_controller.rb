@@ -11,7 +11,7 @@ module Spree
         add_breadcrumb t('spree.settings')
         add_breadcrumb t('spree.admin.tab.taxes')
         add_breadcrumb plural_resource_name(Spree::TaxCategory), spree.admin_tax_categories_path
-        add_breadcrumb @tax_category.name          if action_name == 'edit'
+        add_breadcrumb @tax_category.name if action_name == 'edit'
         add_breadcrumb t('spree.new_tax_category') if action_name == 'new'
       end
     end

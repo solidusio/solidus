@@ -11,8 +11,8 @@ module Spree
         add_breadcrumb t('spree.settings')
         add_breadcrumb t('spree.admin.tab.checkout')
         add_breadcrumb plural_resource_name(Spree::ReturnReason), spree.admin_return_reasons_path
-        add_breadcrumb t('spree.new_rma_reason')  if action_name == 'new'
-        add_breadcrumb @object.name               if action_name == 'edit'
+        add_breadcrumb t('spree.new_rma_reason') if action_name == 'new'
+        add_breadcrumb @object.name if action_name == 'edit'
       end
     end
   end

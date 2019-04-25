@@ -28,7 +28,7 @@ module Spree
       def set_breadcrumbs
         add_breadcrumb t('spree.settings')
         add_breadcrumb plural_resource_name(Spree::Zone), spree.admin_zones_path
-        add_breadcrumb @zone.name          if action_name == 'edit'
+        add_breadcrumb @zone.name if action_name == 'edit'
         add_breadcrumb t('spree.new_zone') if action_name == 'new'
       end
     end

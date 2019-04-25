@@ -50,7 +50,7 @@ module Spree
         add_breadcrumb t('spree.admin.tab.shipping')
         add_breadcrumb plural_resource_name(Spree::ShippingMethod), spree.admin_shipping_methods_path
         add_breadcrumb t('spree.new_shipping_method') if action_name == 'new'
-        add_breadcrumb @shipping_method.name          if action_name == 'edit'
+        add_breadcrumb @shipping_method.name if action_name == 'edit'
       end
     end
   end

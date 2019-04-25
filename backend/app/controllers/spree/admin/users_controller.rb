@@ -170,10 +170,10 @@ module Spree
 
       def set_breadcrumbs
         set_user_breadcrumbs
-        add_breadcrumb t('spree.new_user')                    if action_name == 'new'
-        add_breadcrumb plural_resource_name(Spree::Address)   if action_name == 'addresses'
-        add_breadcrumb t('spree.admin.user.items_purchased')  if action_name == 'items'
-        add_breadcrumb t('spree.admin.user.order_history')    if action_name == 'orders'
+        add_breadcrumb t('spree.new_user') if action_name == 'new'
+        add_breadcrumb plural_resource_name(Spree::Address) if action_name == 'addresses'
+        add_breadcrumb t('spree.admin.user.items_purchased') if action_name == 'items'
+        add_breadcrumb t('spree.admin.user.order_history') if action_name == 'orders'
       end
     end
   end

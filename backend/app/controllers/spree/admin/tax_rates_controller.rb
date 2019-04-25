@@ -18,7 +18,7 @@ module Spree
         add_breadcrumb t('spree.settings')
         add_breadcrumb t('spree.admin.tab.taxes')
         add_breadcrumb plural_resource_name(Spree::TaxRate), spree.admin_tax_rates_path
-        add_breadcrumb @tax_rate.name          if action_name == 'edit'
+        add_breadcrumb @tax_rate.name if action_name == 'edit'
         add_breadcrumb t('spree.new_tax_rate') if action_name == 'new'
       end
     end

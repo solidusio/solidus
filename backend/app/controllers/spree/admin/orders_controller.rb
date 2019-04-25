@@ -190,8 +190,8 @@ module Spree
 
       def set_breadcrumbs
         set_order_breadcrumbs
-        add_breadcrumb t('spree.cart')                       if action_name == 'cart'
-        add_breadcrumb t('spree.confirm_order')              if action_name == 'confirm'
+        add_breadcrumb t('spree.cart') if action_name == 'cart'
+        add_breadcrumb t('spree.confirm_order') if action_name == 'confirm'
         add_breadcrumb plural_resource_name(Spree::Shipment) if action_name == 'edit'
       end
     end

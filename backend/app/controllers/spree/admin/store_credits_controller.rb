@@ -125,7 +125,7 @@ module Spree
         else
           add_breadcrumb Spree::StoreCredit.model_name.human, spree.admin_user_store_credits_path(@user)
           add_breadcrumb @store_credit.display_amount.to_html if action_name == 'show'
-          add_breadcrumb t('spree.new_store_credit')          if action_name == 'new'
+          add_breadcrumb t('spree.new_store_credit') if action_name == 'new'
         end
       end
     end

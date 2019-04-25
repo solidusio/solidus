@@ -82,8 +82,8 @@ module Spree
 
       def set_breadcrumbs
         add_breadcrumb plural_resource_name(Spree::Product), spree.admin_products_path if action_name == 'index'
-        add_breadcrumb t('spree.admin.taxons.display_order')                           if action_name == 'index'
-        add_breadcrumb t('spree.taxon_edit')                                           if action_name == 'edit'
+        add_breadcrumb t('spree.admin.taxons.display_order') if action_name == 'index'
+        add_breadcrumb t('spree.taxon_edit') if action_name == 'edit'
       end
     end
   end

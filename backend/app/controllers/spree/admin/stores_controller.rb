@@ -26,7 +26,7 @@ module Spree
       def set_breadcrumbs
         add_breadcrumb plural_resource_name(Spree::Store), admin_stores_path
         add_breadcrumb t('spree.new_store') if action_name == 'new'
-        add_breadcrumb @store.name          if action_name == 'edit'
+        add_breadcrumb @store.name if action_name == 'edit'
       end
     end
   end

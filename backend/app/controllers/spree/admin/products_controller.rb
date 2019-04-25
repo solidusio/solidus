@@ -143,7 +143,7 @@ module Spree
       def set_breadcrumbs
         set_product_breadcrumbs
         add_breadcrumb t('spree.product_details') if action_name == 'edit'
-        add_breadcrumb t('spree.new_product')     if action_name == 'new'
+        add_breadcrumb t('spree.new_product') if action_name == 'new'
       end
     end
   end
