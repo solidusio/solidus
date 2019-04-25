@@ -20,7 +20,7 @@ module Spree
           return false unless order.currency == preferred_currency
           item_total = order.item_total
           unless item_total.send(preferred_operator == 'gte' ? :>= : :>, BigDecimal(preferred_amount.to_s))
-            eligibility_errors.add(:base, ineligible_message)
+            eligibility_errors.add(:base, ineligible_message, error_code: ineligible_error_code)
           end
 
           eligibility_errors.empty?
@@ -37,6 +37,14 @@ module Spree
             eligibility_error_message(:item_total_less_than, amount: formatted_amount)
           else
             eligibility_error_message(:item_total_less_than_or_equal, amount: formatted_amount)
+          end
+        end
+
+        def ineligible_error_code
+          if preferred_operator == 'gte'
+            :item_total_less_than
+          else
+            :item_total_less_than_or_equal
           end
         end
       end

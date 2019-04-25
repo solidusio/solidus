@@ -16,7 +16,7 @@ module Spree
 
           if user || email
             if !completed_orders.blank? && completed_orders.first != order
-              eligibility_errors.add(:base, eligibility_error_message(:not_first_order))
+              eligibility_errors.add(:base, eligibility_error_message(:not_first_order), error_code: :not_first_order)
             end
           end
 
