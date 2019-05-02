@@ -136,25 +136,51 @@ RSpec.describe Spree::OrderInventory, type: :model do
     end
 
     it 'should select first non-shipped shipment that already contains given variant' do
-      shipment = subject.send(:determine_target_shipment)
+      shipment = subject.send(:determine_target_shipment, 1)
       expect(shipment.shipped?).to be false
       expect(shipment.inventory_units_for(variant)).not_to be_empty
 
       expect(variant.stock_location_ids.include?(shipment.stock_location_id)).to be true
     end
 
-    context "when no shipments already contain this varint" do
+    context "when no shipments already contain this variant" do
       before do
         subject.line_item.reload
         subject.inventory_units.destroy_all
       end
 
-      it 'selects first non-shipped shipment that leaves from same stock_location' do
-        shipment = subject.send(:determine_target_shipment)
-        shipment.reload
-        expect(shipment.shipped?).to be false
-        expect(shipment.inventory_units_for(variant)).to be_empty
-        expect(variant.stock_location_ids.include?(shipment.stock_location_id)).to be true
+      context 'when availability should be considered' do
+        let(:stock_item) { variant.stock_items.last }
+
+        before do
+          variant.stock_items.update_all backorderable: false
+          variant.stock_items.reload
+        end
+
+        context 'when there is enough availability at one stock location' do
+          before { stock_item.set_count_on_hand 1 }
+
+          it 'favors first non-shipped shipment from same stock location that have enough availability' do
+            shipment = subject.send(:determine_target_shipment, 1)
+            shipment.reload
+
+            expect(shipment.shipped?).to be false
+            expect(shipment.inventory_units_for(variant)).to be_empty
+            expect(shipment.stock_location).to eql stock_item.stock_location
+          end
+        end
+
+        context 'when there is not enough availability at any stock location' do
+          it 'falls-back selecting first non-shipped shipment that leaves from same stock_location' do
+            shipment = subject.send(:determine_target_shipment, 1)
+            shipment.reload
+
+            expect(shipment.shipped?).to be false
+            expect(shipment.inventory_units_for(variant)).to be_empty
+            expect(variant.stock_location_ids.include?(shipment.stock_location_id)).to be true
+            expect(shipment.stock_location).not_to eql stock_item.stock_location
+          end
+        end
       end
     end
   end
