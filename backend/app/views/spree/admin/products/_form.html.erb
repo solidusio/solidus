@@ -32,11 +32,22 @@
       <div data-hook="admin_product_form_price">
         <%= f.field_container :price do %>
           <%= f.label :price, class: Spree::Config.require_master_price ? 'required' : '' %>
-          <%= render "spree/admin/shared/number_with_currency", f: f,
-                     amount_attr: :price,
-                     required: Spree::Config.require_master_price,
-                     currency: Spree::Config.default_pricing_options.currency %>
-          <%= f.error_message_on :price %>
+
+          <% if f.object.new_record? || f.object.has_default_price? %>
+            <%= render "spree/admin/shared/number_with_currency",
+                       f: f,
+                       amount_attr: :price,
+                       required: Spree::Config.require_master_price,
+                       currency: Spree::Config.default_pricing_options.currency %>
+            <%= f.error_message_on :price %>
+          <% else %>
+            <span class="info">
+              <%= t('spree.product_without_default_price_info',
+                    default_currency: Spree::Config.default_pricing_options.currency) %>
+              <%= link_to t('spree.product_without_default_price_cta'),
+                          spree.admin_product_prices_url(@product) %>
+            </span>
+          <% end %>
         <% end %>
       </div>
 
