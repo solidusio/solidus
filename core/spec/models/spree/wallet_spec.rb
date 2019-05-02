@@ -123,7 +123,7 @@ RSpec.describe Spree::Wallet, type: :model do
     end
 
     context 'with a wallet payment source that does not belong to the wallet' do
-      let(:other_wallet_credit_card) { other_wallet.add(credit_card) }
+      let(:other_wallet_credit_card) { other_wallet.add(other_credit_card) }
       let(:other_wallet) { Spree::Wallet.new(other_user) }
       let(:other_credit_card) { create(:credit_card, user_id: other_user.id) }
       let(:other_user) { create(:user) }

@@ -228,7 +228,7 @@ describe 'Payments', type: :feature do
 
     context "user existing card" do
       let!(:cc) do
-        create(:credit_card, payment_method: payment_method, gateway_customer_profile_id: "BGS-RFRE")
+        create(:credit_card, payment_method: payment_method, gateway_customer_profile_id: "BGS-RFRE", user: order.user)
       end
 
       before do
