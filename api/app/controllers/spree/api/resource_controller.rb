@@ -9,7 +9,7 @@ class Spree::Api::ResourceController < Spree::Api::BaseController
       ids = params[:ids].split(",").flatten
       collection_scope = collection_scope.where(id: ids)
     else
-      collection_scope = collection_scope.ransack(params[:q]).result
+      collection_scope = collection_scope.ransack(params[:q]).result(distinct: true)
     end
 
     @collection = paginate(collection_scope)

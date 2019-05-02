@@ -34,6 +34,18 @@ module Spree
       model do
         acts_as_list
         validates :name, presence: true
+        has_many :components
+      end
+    end
+
+    with_model 'Component', scope: :all do
+      table do |t|
+        t.string :name
+        t.belongs_to :widget
+      end
+
+      model do
+        belongs_to :widget
       end
     end
 
@@ -58,6 +70,32 @@ module Spree
       end
 
       context "it has authorization to read widgets" do
+        context "when the widget has many components" do
+          before do
+            2.times{ Component.create!(name: 'a component', widget_id: widget.id) }
+          end
+
+          context "and the query contains multiple attributes" do
+            it "returns unique results" do
+              get(
+                :index,
+                params: {
+                  token: admin_user.spree_api_key,
+                  q: { m: 'or', name_start: 'a wid', components_name_start: 'a comp' }
+                },
+                as: :json
+              )
+              expect(response).to be_successful
+              expect(json_response['widgets']).to contain_exactly(
+                hash_including(
+                  name: 'a widget',
+                  position: 1
+                )
+              )
+            end
+          end
+        end
+
         it "returns widgets" do
           get :index, params: { token: admin_user.spree_api_key }, as: :json
           expect(response).to be_successful
