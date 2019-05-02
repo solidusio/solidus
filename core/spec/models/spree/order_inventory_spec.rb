@@ -308,4 +308,23 @@ RSpec.describe Spree::OrderInventory, type: :model do
       end
     end
   end
+
+  context 'when the order has no suitable shipment for the variant' do
+    let(:new_line_item) { create :line_item, order: order }
+
+    before do
+      new_line_item.inventory_units.destroy_all
+      new_line_item.variant.stock_items.discard_all
+      create :stock_location
+      order.line_items.reload
+    end
+
+    subject { described_class.new(order, new_line_item) }
+
+    it 'creates a new shipment' do
+      expect do
+        subject.verify
+      end.to change { order.shipments.count }.from(1).to 2
+    end
+  end
 end

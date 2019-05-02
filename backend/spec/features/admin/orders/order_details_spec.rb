@@ -53,11 +53,72 @@ describe "Order Details", type: :feature, js: true do
         end
       end
 
-      it "can add an item" do
-        add_line_item "spree t-shirt", quantity: 2
+      context 'when adding an item' do
+        context 'when the item can be added to the existing shipment' do
+          it "adds the item to the existing shipment" do
+            expect(order.shipments.count).to be 1
 
-        within("#order_total") do
-          expect(page).to have_content("$80.00")
+            add_line_item "spree t-shirt", quantity: 2
+
+            within("#order_total") do
+              expect(page).to have_content("$80.00")
+            end
+
+            expect(order.shipments.count).to be 1
+          end
+        end
+
+        context 'when the items cannot be added to the existing shipment' do
+          before do
+            create :payment, order: order, amount: order.amount
+            visit spree.admin_order_payments_path(order)
+            find('.fa-capture').click
+          end
+
+          it "adds an item creating a new shipment and changes the payment status" do
+            within('#payment_status') do
+              expect(page).to have_content("Paid")
+            end
+
+            visit spree.cart_admin_order_path(order)
+
+            stock_location_ids = (0..1).map do |n|
+              create :stock_location, name: "Warehouse #{n}", backorderable_default: false
+            end.map(&:id)
+
+            product = create :product
+
+            product.stock_items.where.not(stock_location_id: stock_location_ids).discard_all
+
+            product.stock_items.where(stock_location_id: stock_location_ids).each do |stock_item|
+              stock_item.set_count_on_hand 1
+            end
+
+            expect(order.shipments.count).to be 1
+
+            add_line_item product.name, quantity: 2
+
+            within 'table.line-items' do
+              expect(page).to have_content product.name
+              expect(page).to have_content product.price
+            end
+
+            expect(order.shipments.count).to be 3
+
+            within("#order_total") do
+              expect(page).to have_content("$79.98")
+            end
+
+            within('#payment_status') do
+              expect(page).to have_content("Balance due")
+            end
+
+            click_link 'Shipments'
+
+            order.shipments.each do |shipment|
+              expect(page).to have_content shipment.number
+            end
+          end
         end
       end
 

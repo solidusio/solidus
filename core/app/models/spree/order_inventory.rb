@@ -24,7 +24,13 @@ module Spree
         desired_quantity = line_item.quantity - existing_quantity
         if desired_quantity > 0
           shipment ||= determine_target_shipment(desired_quantity)
-          add_to_shipment(shipment, desired_quantity)
+          if shipment
+            add_to_shipment(shipment, desired_quantity)
+          else
+            order.create_shipments_for_line_item(line_item).each do |new_shipment|
+              new_shipment.finalize!
+            end
+          end
         elsif desired_quantity < 0
           remove(-desired_quantity, shipment)
         end
