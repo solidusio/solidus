@@ -1,8 +1,6 @@
 .errorExplanation {
   padding: 10px 15px;
-  //border: 1px solid very-light(theme-color("danger"), 12);
   border-top: 3px solid theme-color("danger");
-  //background-color: very-light(theme-color("danger"), 6);
   background-color: lighten(theme-color("danger"), 40);
   border-radius: 0 0 $border-radius $border-radius;
   color: $body-color;
@@ -10,7 +8,6 @@
 
   h2 {
     font-size: 140%;
-    //color: very-light(theme-color("danger"), 30);
     margin-bottom: 5px;
   }
 
