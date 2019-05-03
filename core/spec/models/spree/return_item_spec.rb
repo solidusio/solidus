@@ -43,6 +43,15 @@ RSpec.describe Spree::ReturnItem, type: :model do
       subject
     end
 
+    context 'when the `skip_customer_return_processing` flag is not set to true' do
+      before { return_item.skip_customer_return_processing = false }
+
+      it 'shows a deprecation warning' do
+        expect(Spree::Deprecation).to receive(:warn)
+        subject
+      end
+    end
+
     context 'when there is a received return item with the same inventory unit' do
       let!(:return_item_with_dupe_inventory_unit) { create(:return_item, inventory_unit: inventory_unit, reception_status: 'received') }
 
