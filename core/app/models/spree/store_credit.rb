@@ -268,6 +268,7 @@ class Spree::StoreCredit < Spree::PaymentSource
   def validate_no_amount_used
     if amount_used > 0
       errors.add(:amount_used, 'is greater than zero. Can not delete store credit')
+      throw :abort
     end
   end
 
