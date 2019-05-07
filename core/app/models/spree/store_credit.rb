@@ -39,7 +39,7 @@ class Spree::StoreCredit < Spree::PaymentSource
   before_validation :associate_credit_type
   before_validation :validate_category_unchanged, on: :update
   before_destroy :validate_no_amount_used
-  validate :validate_no_amount_used, if: :discarded?
+  before_discard :validate_no_amount_used
 
   attr_accessor :action, :action_amount, :action_originator, :action_authorization_code, :store_credit_reason
 
