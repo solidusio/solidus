@@ -538,7 +538,7 @@ POST /api/orders/mine
       ],
       "payment_methods": [],
       "bill_address":
-     {
+    {
         "id": 3,
         "firstname": "John",
         "lastname": nil,
@@ -571,7 +571,7 @@ POST /api/orders/mine
         }
       },
       "ship_address":
-     {
+    {
         "id": 4,
         "firstname": "John",
         "lastname": nil,
@@ -604,7 +604,7 @@ POST /api/orders/mine
         }
       },
       "line_items":
-     [
+    [
         {
           "id": 1,
           "quantity": 1,

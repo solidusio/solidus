@@ -9,7 +9,11 @@ class CustomMarkdownRenderer < Redcarpet::Render::HTML
     path = code.lines.first[/^#\s(\S*)$/, 1]
     code = code.lines[1..-1].join if path
     code = code.gsub('<', '&lt').gsub('>', '&gt')
-    template = File.read('source/partials/_code_block.erb')
+    if code.lines.count < 25
+      template = File.read('source/partials/_code_block.erb')
+    else
+      template = File.read('source/partials/_collapsible_code_block.erb')
+    end
     ERB.new(template).result(binding)
   end
 

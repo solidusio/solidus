@@ -1,0 +1,22 @@
+<% id = ('a'..'z').to_a.shuffle[0,12].join %>
+<a class="btn btn-primary" data-toggle="collapse" href="#<%= id %>" role="button" aria-expanded="false" aria-controls="<%= id %>">Toggle Example</a>
+
+<div class="collapse" id="<%= id %>">
+  <div class="code-block">
+    <% if language || path %>
+      <div class="code-block-header">
+        <% if path %>
+          <div class="path"><%= path %></div>
+        <% end %>
+        <% if language %>
+          <div class="language"><%= language.capitalize %></div>
+        <% end %>
+      </div>
+    <% end %>
+    <pre>
+      <code <% if language %> class="language-<%= language %>" <% else %> class="language-bash" <% end %> >
+        <%= code %>
+      </code>
+    </pre>
+  </div>
+</div>
