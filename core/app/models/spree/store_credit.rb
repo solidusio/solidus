@@ -39,7 +39,7 @@ class Spree::StoreCredit < Spree::PaymentSource
   before_validation :associate_credit_type
   before_validation :validate_category_unchanged, on: :update
   before_destroy :validate_no_amount_used
-  validate :validate_no_amount_used, if: :discarded?
+  before_discard :validate_no_amount_used
 
   attr_accessor :action, :action_amount, :action_originator, :action_authorization_code, :store_credit_reason
 
@@ -268,6 +268,7 @@ class Spree::StoreCredit < Spree::PaymentSource
   def validate_no_amount_used
     if amount_used > 0
       errors.add(:amount_used, 'is greater than zero. Can not delete store credit')
+      throw :abort
     end
   end
 
