@@ -167,6 +167,8 @@ If you wish to create an order with a line item matching to a variant whose ID i
 POST /api/orders
 ```
 
+**Params**
+
 ```json
 {
   "order": {
@@ -641,6 +643,213 @@ If there is no order a 404 is returned
 ```json
 {
   "error": "The resource you were looking for could not be found."
+}
+```
+
+## Update
+
+Making changes to an order can be done via a `PUT` request to the order number.
+Order level attributes as well as nested attributes, like `billing_address_attributes`,
+can be passed.
+
+```text
+PUT /api/orders/R123456789
+```
+
+**Params**
+
+```json
+{
+  "order": {
+    "line_items": {
+      "0": {
+        "variant_id": 1,
+        "quantity": 5
+      }
+    },
+    "bill_address_attributes": {
+      "firstname": "Tiago",
+      "lastname": "Motta",
+      "address1": "Av Paulista",
+      "city": "Sao Paulo",
+      "zipcode": "01310-300",
+      "phone": "12345678",
+      "country_id": 2
+    }
+  }
+}
+```
+
+### Successful response
+
+**Response code** 200
+
+```json
+{
+  "id": 2,
+  "number": "R123456789",
+  "item_total": "99.95",
+  "total": "99.95",
+  "ship_total": "0.0",
+  "state": "cart",
+  "adjustment_total": "0.0",
+  "user_id": nil,
+  "created_at": "2019-03-06T05:53:49.319Z",
+  "updated_at": "2019-03-06T05:53:49.412Z",
+  "completed_at": nil,
+  "payment_total": "0.0",
+  "shipment_state": nil,
+  "payment_state": nil,
+  "email": nil,
+  "special_instructions": nil,
+  "channel": "spree",
+  "included_tax_total": "0.0",
+  "additional_tax_total": "0.0",
+  "display_included_tax_total": "$0.00",
+  "display_additional_tax_total": "$0.00",
+  "tax_total": "0.0",
+  "currency": "USD",
+  "covered_by_store_credit": false,
+  "display_total_applicable_store_credit": "$0.00",
+  "order_total_after_store_credit": "99.95",
+  "display_order_total_after_store_credit": "$99.95",
+  "total_applicable_store_credit": 0.0,
+  "display_total_available_store_credit": "$0.00",
+  "display_store_credit_remaining_after_capture": "$0.00",
+  "canceler_id": nil,
+  "display_item_total": "$99.95",
+  "total_quantity": 5,
+  "display_total": "$99.95",
+  "display_ship_total": "$0.00",
+  "display_tax_total": "$0.00",
+  "token": "ABn031jFbeblKvoWRBV7BQ",
+  "checkout_steps": [
+    "address",
+    "delivery",
+    "payment",
+    "confirm",
+    "complete"
+  ],
+  "payment_methods": [],
+  "bill_address":
+   {
+    "id": 3,
+    "firstname": "Tiago",
+    "lastname": "Motta",
+    "full_name": "Tiago Motta",
+    "address1": "Av Paulista",
+    "address2": nil,
+    "city": "Sao Paulo",
+    "zipcode": "01310-300",
+    "phone": "12345678",
+    "company": nil,
+    "alternative_phone": nil,
+    "country_id": 2,
+    "country_iso": "BR",
+    "state_id": nil,
+    "state_name": nil,
+    "state_text": nil,
+    "country": {
+      "id": 2,
+      "iso_name": "BRAZIL",
+      "iso": "BR",
+      "iso3": "BRA",
+      "name": "Brazil",
+      "numcode": 76
+    },
+    "state": nil
+  },
+  "ship_address": nil,
+  "line_items":
+   [
+    {
+      "id": 1,
+      "quantity": 5,
+      "price": "19.99",
+      "variant_id": 1,
+      "single_display_amount": "$19.99",
+      "display_amount": "$99.95",
+      "total": "99.95",
+      "variant":
+      {
+        "id": 2,
+        "name": "Product #1 - 7573",
+        "sku": "SKU-1",
+        "weight": "0.0",
+        "height": nil,
+        "width": nil,
+        "depth": nil,
+        "is_master": false,
+        "slug": "product-1-7573",
+        "description": "As seen on TV!",
+        "track_inventory": true,
+        "price": "19.99",
+        "display_price": "$19.99",
+        "options_text": "Size: S",
+        "in_stock": false,
+        "is_backorderable": true,
+        "total_on_hand": 0,
+        "is_destroyed": false,
+        "option_values": [
+          {
+            "id": 1,
+            "name": "Size-1",
+            "presentation": "S",
+            "option_type_name": "foo-size-1",
+            "option_type_id": 1,
+            "option_type_presentation": "Size"
+          }
+        ],
+        "images": [],
+        "product_id": 1
+      },
+      "adjustments": []
+    }
+  ],
+  "payments": [],
+  "shipments": [],
+  "adjustments": [],
+  "permissions": {
+    "can_update": false
+  },
+  "credit_cards": []
+}
+```
+
+### Failed response
+
+If the user does not have permission to alter the order.
+
+**Response code** 401
+
+```json
+{
+  "error": "You are not authorized to perform that action."
+}
+```
+
+If there is no order a 404 is returned.
+
+**Response code** 404
+
+```json
+{
+  "error": "The resource you were looking for could not be found."
+}
+```
+
+If there are any validation errors they will be returned with a 422 code.
+
+**Response code** 422
+
+```json
+{
+  "error": "Invalid resource. Please fix errors and try again.",
+  "errors": {
+    "ship_address.firstname": [
+      "can't be blank"
+    ]
+  }
 }
 ```
 
