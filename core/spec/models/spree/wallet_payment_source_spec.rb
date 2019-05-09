@@ -26,7 +26,7 @@ RSpec.describe Spree::WalletPaymentSource, type: :model do
 
         expect(wallet_payment_source).not_to be_valid
         expect(wallet_payment_source.errors.messages).to eq(
-          { payment_source: ["has to be a Spree::PaymentSource"] }
+          { payment_source: ["is not a valid payment source"] }
         )
       end
     end
@@ -43,7 +43,7 @@ RSpec.describe Spree::WalletPaymentSource, type: :model do
       )
       expect(wallet_payment_source).not_to be_valid
       expect(wallet_payment_source.errors.messages).to eq(
-        { user_id: ["already has the Spree::PaymentSource in their wallet"] }
+        { user_id: ["already has this payment source in their wallet"] }
       )
     end
 
@@ -54,7 +54,7 @@ RSpec.describe Spree::WalletPaymentSource, type: :model do
       )
       expect(wallet_payment_source).not_to be_valid
       expect(wallet_payment_source.errors.messages).to eq(
-        { payment_source: ["does not belong to user"] }
+        { payment_source: ["does not belong to the user associated with the order"] }
       )
     end
 
