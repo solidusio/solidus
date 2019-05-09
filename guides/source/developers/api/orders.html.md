@@ -323,6 +323,133 @@ PUT /api/orders/R123456789/empty
 }
 ```
 
+## Index
+
+A searchable, paginated list of orders is available through the index endpoint.
+This supports [Ransack](https://github.com/activerecord-hackery/ransack) attributes and pagination.
+
+```text
+GET /api/orders
+```
+
+### Successful response
+
+**Response code** 200
+
+```json
+{
+  "orders": [
+    {
+      "id": 1,
+      "number": "R836616645",
+      "item_total": "0.0",
+      "total": "0.0",
+      "ship_total": "0.0",
+      "state": "cart",
+      "adjustment_total": "0.0",
+      "user_id": 1,
+      "created_at": "2019-05-09T22:26:51.769Z",
+      "updated_at": "2019-05-09T22:26:51.769Z",
+      "completed_at": null,
+      "payment_total": "0.0",
+      "shipment_state": null,
+      "payment_state": null,
+      "email": "email1@example.com",
+      "special_instructions": null,
+      "channel": "spree",
+      "included_tax_total": "0.0",
+      "additional_tax_total": "0.0",
+      "display_included_tax_total": "$0.00",
+      "display_additional_tax_total": "$0.00",
+      "tax_total": "0.0",
+      "currency": "USD",
+      "covered_by_store_credit": true,
+      "display_total_applicable_store_credit": "$0.00",
+      "order_total_after_store_credit": "0.0",
+      "display_order_total_after_store_credit": "$0.00",
+      "total_applicable_store_credit": "0.0",
+      "display_total_available_store_credit": "$0.00",
+      "display_store_credit_remaining_after_capture": "$0.00",
+      "canceler_id": null,
+      "display_item_total": "$0.00",
+      "total_quantity": 0,
+      "display_total": "$0.00",
+      "display_ship_total": "$0.00",
+      "display_tax_total": "$0.00",
+      "token": "Mgz97CxeogKAIQsPzYwlbw",
+      "checkout_steps": [
+        "address",
+        "delivery",
+        "confirm",
+        "complete"
+      ]
+    },
+    {
+      "id": 2,
+      "number": "R126856208",
+      "item_total": "0.0",
+      "total": "0.0",
+      "ship_total": "0.0",
+      "state": "cart",
+      "adjustment_total": "0.0",
+      "user_id": 2,
+      "created_at": "2019-05-09T22:26:51.812Z",
+      "updated_at": "2019-05-09T22:26:51.812Z",
+      "completed_at": null,
+      "payment_total": "0.0",
+      "shipment_state": null,
+      "payment_state": null,
+      "email": "email2@example.com",
+      "special_instructions": null,
+      "channel": "spree",
+      "included_tax_total": "0.0",
+      "additional_tax_total": "0.0",
+      "display_included_tax_total": "$0.00",
+      "display_additional_tax_total": "$0.00",
+      "tax_total": "0.0",
+      "currency": "USD",
+      "covered_by_store_credit": true,
+      "display_total_applicable_store_credit": "$0.00",
+      "order_total_after_store_credit": "0.0",
+      "display_order_total_after_store_credit": "$0.00",
+      "total_applicable_store_credit": "0.0",
+      "display_total_available_store_credit": "$0.00",
+      "display_store_credit_remaining_after_capture": "$0.00",
+      "canceler_id": null,
+      "display_item_total": "$0.00",
+      "total_quantity": 0,
+      "display_total": "$0.00",
+      "display_ship_total": "$0.00",
+      "display_tax_total": "$0.00",
+      "token": "Mz2GGtyyaC29H8a1lGRn6Q",
+      "checkout_steps": [
+        "address",
+        "delivery",
+        "confirm",
+        "complete"
+      ]
+    }
+  ],
+  "count": 2,
+  "total_count": 2,
+  "current_page": 1,
+  "pages": 1,
+  "per_page": 25
+}
+```
+
+### Failed response
+
+If no user is authenticated an error is returned.
+
+**Response code** 422
+
+```json
+{
+  "error": "You are not authorized to perform that action."
+}
+```
+
 ## Current
 
 If you don't know the order number for the current user make this request:
@@ -500,7 +627,7 @@ If there is no order an empty response is returned
 
 ## Mine
 
-Returns all orders for the current user.
+Returns all orders for the current user. This supports [Ransack](https://rollbar.com/deseretbook/oracle_api/items/36/) attributes and pagination.
 
 ```text
 POST /api/orders/mine
