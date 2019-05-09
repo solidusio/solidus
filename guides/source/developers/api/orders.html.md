@@ -301,6 +301,28 @@ If a `variant_id` is passed that does not exist an error will be returned.
 }
 ```
 
+## Empty
+
+To empty an order, make a request using that order's number:
+
+```text
+PUT /api/orders/R123456789/empty
+```
+
+### Successful response
+
+**Response code** 204
+
+### Failed response
+
+**Response code** 422
+
+```json
+{
+  "error": "You are not authorized to perform that action."
+}
+```
+
 ## Current
 
 If you don't know the order number for the current user make this request:
