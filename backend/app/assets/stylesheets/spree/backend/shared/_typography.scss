@@ -7,7 +7,7 @@ html {
 
 body {
   padding: 0;
-  font-weight: 400;
+  font-weight: $font-weight-normal;
   text-rendering: optimizeLegibility;
 }
 
@@ -19,7 +19,7 @@ hr {
 
 strong,
 b {
-  font-weight: 600;
+  font-weight: $font-weight-bold;
 }
 
 // Headings

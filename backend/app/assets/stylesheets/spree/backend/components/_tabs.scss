@@ -46,7 +46,7 @@
     background: white;
     border-bottom-color: white;
     color: $color-navbar-active;
-    font-weight: 600;
+    font-weight: $font-weight-bold;
   }
 
   &:not(.active):hover > a {

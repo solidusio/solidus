@@ -3,7 +3,7 @@
   margin-bottom: 0;
   
   a {
-    color: $color-dark-light;
+    color: $breadcrumb-color;
     
     &:hover {
       color: $breadcrumb-active-color;
@@ -11,6 +11,6 @@
   }
   
   .active {
-    font-weight: 600;
+    font-weight: $font-weight-bold;
   }
 }

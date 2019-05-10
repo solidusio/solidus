@@ -1,12 +1,12 @@
 .btn-default {
-  background: linear-gradient(#FFF, #ECEDF1);
-  color: #24282F;
-  border-color: #C7CDD5;
-  
+  background: linear-gradient($color-white, $color-light-dark);
+  color: $color-dark;
+  border-color: $color-dark-accent;
+
   &:hover {
-    background: linear-gradient(#FFF, darken(#ECEDF1, 3%));
+    background: linear-gradient($color-white, darken($color-light-dark, 3%));
   }
-  
+
   &.disabled,
   &:disabled {
     color: $color-disabled;

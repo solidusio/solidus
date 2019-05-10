@@ -17,7 +17,7 @@
   .order-total {
     font-size: 35px;
     font-weight: $font-weight-bold;
-    background: #e3ebfd;
+    background: $color-primary-light;
     padding: .1em .3em;
     border-radius: 3px;
   }
@@ -30,7 +30,7 @@
   .customer {
     font-size: 20px;
     font-weight: $font-weight-bold;
-    background: #e3ebfd;
+    background: $color-primary-light;
     padding: .1em .3em;
     border-radius: 3px;
   }
@@ -41,14 +41,14 @@
     color: $body-color;
 
     .shipment-number {
-      color: #5B6778;
-      background: #e3ebfd;
+      color: $color-dark-dark;
+      background: $color-primary-light;
       padding: .1em .3em;
       border-radius: 3px;
     }
     .stock-location-name {
-      color: #5B6778;
-      background: #e3ebfd;
+      color: $color-dark-dark;
+      background: $color-primary-light;
       padding: .1em .3em;
       border-radius: 3px;
       word-break: break-word;
@@ -69,8 +69,8 @@ label[for="order_bill_address_attributes_firstname"] {
 }
 
 #risk_analysis legend {
-  background-color: #c00;
-  color: #FFF;
+  background-color: $color-red;
+  color: $color-white;
   font-size: 2em;
 }
 

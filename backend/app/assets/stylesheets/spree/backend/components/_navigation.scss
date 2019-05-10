@@ -134,7 +134,7 @@ nav.menu {
     text-indent: 2em;
 
     &:before {
-      color: $color-dark-light;
+      color: $color-icon-navbar;
       font-weight: $font-weight-normal;
       position: absolute;
       left: 1em;
@@ -214,7 +214,7 @@ nav.menu {
 
   a {
     display: inline-block;
-    font-weight: 600;
+    font-weight: $font-weight-bold;
     max-width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;

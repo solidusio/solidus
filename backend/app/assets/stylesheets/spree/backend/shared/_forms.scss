@@ -41,7 +41,7 @@ textarea {
 }
 
 label {
-  font-size: 12px;
+  font-size: inherit;
   
   &.required:after {
     content: " *";
@@ -66,12 +66,13 @@ button,
     // In order to avoid the clashing between using `:not(.btn)` and
     // `@extend .btn` we need to use an attribute selector of `[class*="btn"]`.
     @extend .btn;
-    background: linear-gradient(#FFF, #ECEDF1);
-    color: #24282F;
-    border-color: #C7CDD5;
+    background: linear-gradient($color-white, $color-light-dark);
+    color: $color-dark;
+    border-color: $color-dark-accent;
     
     &:hover {
-      background: linear-gradient(#FFF, darken(#ECEDF1, 3%));
+      background: linear-gradient($color-white, darken($color-light-dark, 3%));
+      color: $color-primary;
     }
     
     &.disabled,
@@ -118,6 +119,10 @@ span.info {
       cursor: pointer;
       margin-top: 2.25rem;
     }
+  }
+  
+  label {
+    font-size: $label-font-size;
   }
 
   ul {

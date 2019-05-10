@@ -8,7 +8,7 @@
 // Grayscale and brand colors for use across Bootstrap.
 
 $primary:          $color-primary !default;
-$secondary:        #C7CDD5 !default;
+$secondary:        $color-dark-accent !default;
 
 $blue:   $color-primary !default;
 $red:    $color-red !default;
@@ -40,7 +40,7 @@ $grid-gutter-width-base:     1.875rem !default;
 //
 // Font, line-height, and color for body text, headings, and more.
 
-$font-family-sans-serif: "Helvetica Neue", Helvetica, Arial, sans-serif !default;
+$font-family-sans-serif: "Inter", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif !default;
 $font-family-monospace:  Menlo, Monaco, Consolas, "Courier New", monospace !default;
 $font-family-base:       "Inter", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif !default;
 
@@ -69,7 +69,7 @@ $border-radius:          3px !default;
 
 $input-color:                    $color-dark !default;
 $input-placeholder-color:        $color-dark-light !default;
-$input-border-color:             #D7DAE0 !default;
+$input-border-color:             $color-light-accent !default;
 $input-focus-border-color:       $color-primary !default;
 
 $custom-select-focus-border-color: $input-focus-border-color !default;
@@ -78,7 +78,7 @@ $custom-select-focus-border-color: $input-focus-border-color !default;
 //
 // Dropdown menu container and contents.
 
-$dropdown-link-hover-color:      #fff !default;
+$dropdown-link-hover-color:      $color-white !default;
 $dropdown-link-hover-bg:         $color-primary !default;
 
 // Breadcrumbs
@@ -88,5 +88,4 @@ $breadcrumb-active-color:       $color-primary !default;
 
 // Popover
 
-$popover-header-bg:             #e3ebfd !default;
-
+$popover-header-bg:             $color-primary-light !default;

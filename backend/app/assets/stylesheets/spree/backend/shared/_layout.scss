@@ -9,7 +9,7 @@ body {
 }
 
 .admin {
-  background-color: $color-white;
+  background-color: $admin-body-bg;
 }
 
 .admin-nav {
@@ -22,7 +22,7 @@ body {
 }
 
 .content-wrapper {
-  background-color: $color-white;
+  background-color: $content-wrapper-bg;
   padding-top: 1rem;
   padding-left: $grid-gutter-width;
   padding-right: $grid-gutter-width;
