@@ -579,7 +579,6 @@ module Spree
 
     # @deprecated This now happens during #recalculate
     def set_shipments_cost
-      shipments.each(&:update_amounts)
       recalculate
     end
     deprecate set_shipments_cost: :recalculate, deprecator: Spree::Deprecation

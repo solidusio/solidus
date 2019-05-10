@@ -181,7 +181,6 @@ RSpec.describe Spree::Order, type: :model do
     before { allow(order).to receive_messages shipments: [shipment] }
 
     it "update and persist totals" do
-      expect(shipment).to receive :update_amounts
       expect(order.updater).to receive :update
 
       Spree::Deprecation.silence do
