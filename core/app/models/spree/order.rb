@@ -368,7 +368,7 @@ module Spree
     # include taxes then price adjustments are created instead.
     # @deprecated This now happens during #recalculate
     def create_tax_charge!
-      Spree::Config.tax_adjuster_class.new(self).adjust!
+      recalculate
     end
     deprecate create_tax_charge!: :recalculate, deprecator: Spree::Deprecation
 
