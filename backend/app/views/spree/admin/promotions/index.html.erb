@@ -82,7 +82,7 @@
           </td>
           <td>
             <span class="pill pill-<%= promotion.active? ? 'active' : 'inactive' %>">
-              <%= t(promotion.active?? :active : :inactive, scope: 'spree') %>
+              <%= t(admin_promotion_status(promotion), scope: 'spree.admin.promotion_status') %>
             </span>
           </td>
           <td>

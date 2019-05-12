@@ -64,9 +64,24 @@ module Spree
       super
     end
 
+    def not_started?
+      !started?
+    end
+
+    def started?
+      starts_at.nil? || starts_at < Time.current
+    end
+
+    def expired?
+      expires_at.present? && expires_at < Time.current
+    end
+
+    def not_expired?
+      !expired?
+    end
+
     def active?
-      (starts_at.nil? || starts_at < Time.current) &&
-        (expires_at.nil? || expires_at > Time.current)
+      started? && not_expired?
     end
 
     def inactive?

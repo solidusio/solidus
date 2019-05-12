@@ -850,6 +850,11 @@ en:
           expires_at_placeholder: Never
           general: General
           starts_at_placeholder: Immediately
+      promotion_status:
+        active: Active
+        expired: Expired
+        inactive: Inactive
+        not_started: Not started
       stock_locations:
         form:
           address: Address

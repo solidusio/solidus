@@ -384,6 +384,86 @@ RSpec.describe Spree::Promotion, type: :model do
     end
   end
 
+  describe '#not_started?' do
+    let(:promotion) { Spree::Promotion.new(starts_at: starts_at) }
+    subject { promotion.not_started? }
+
+    context 'no starts_at date' do
+      let(:starts_at) { nil }
+      it { is_expected.to be_falsey }
+    end
+
+    context 'when starts_at date is in the past' do
+      let(:starts_at) { Time.current - 1.day }
+      it { is_expected.to be_falsey }
+    end
+
+    context 'when starts_at date is not already reached' do
+      let(:starts_at) { Time.current + 1.day }
+      it { is_expected.to be_truthy }
+    end
+  end
+
+  describe '#started?' do
+    let(:promotion) { Spree::Promotion.new(starts_at: starts_at) }
+    subject { promotion.started? }
+
+    context 'when no starts_at date' do
+      let(:starts_at) { nil }
+      it { is_expected.to be_truthy }
+    end
+
+    context 'when starts_at date is in the past' do
+      let(:starts_at) { Time.current - 1.day }
+      it { is_expected.to be_truthy }
+    end
+
+    context 'when starts_at date is not already reached' do
+      let(:starts_at) { Time.current + 1.day }
+      it { is_expected.to be_falsey }
+    end
+  end
+
+  describe '#expired?' do
+    let(:promotion) { Spree::Promotion.new(expires_at: expires_at) }
+    subject { promotion.expired? }
+
+    context 'when no expires_at date' do
+      let(:expires_at) { nil }
+      it { is_expected.to be_falsey }
+    end
+
+    context 'when expires_at date is not already reached' do
+      let(:expires_at) { Time.current + 1.days }
+      it { is_expected.to be_falsey }
+    end
+
+    context 'when expires_at date is in the past' do
+      let(:expires_at) { Time.current - 1.days }
+      it { is_expected.to be_truthy }
+    end
+  end
+
+  describe '#not_expired?' do
+    let(:promotion) { Spree::Promotion.new(expires_at: expires_at) }
+    subject { promotion.not_expired? }
+
+    context 'when no expired_at date' do
+      let(:expires_at) { nil }
+      it { is_expected.to be_truthy }
+    end
+
+    context 'when expires_at date is not already reached' do
+      let(:expires_at) { Time.current + 1.days }
+      it { is_expected.to be_truthy }
+    end
+
+    context 'when expires_at date is in the past' do
+      let(:expires_at) { Time.current - 1.days }
+      it { is_expected.to be_falsey }
+    end
+  end
+
   context "#active" do
     it "should be active" do
       expect(promotion.active?).to eq(true)
