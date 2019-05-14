@@ -295,6 +295,25 @@ module Spree
           expect(json_response['shipping_category_id']).to eq shipping_id
         end
 
+        context "when tracking is disabled" do
+          before { Config.track_inventory_levels = false }
+
+          it "still displays valid json with total_on_hand Float::INFINITY" do
+            post spree.api_products_path, params: {
+              product: {
+                name: "The Other Product",
+                price: 19.99,
+                shipping_category_id: create(:shipping_category).id
+              }
+            }
+
+            expect(response.status).to eq(201)
+            expect(json_response['total_on_hand']).to eq nil
+          end
+
+          after { Config.track_inventory_levels = true }
+        end
+
         it "puts the created product in the given taxon" do
           product_data[:taxon_ids] = taxon_1.id.to_s
           post spree.api_products_path, params: { product: product_data }
