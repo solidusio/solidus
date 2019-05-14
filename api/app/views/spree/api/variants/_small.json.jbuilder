@@ -9,10 +9,7 @@ json.cache! [I18n.locale, current_pricing_options, variant] do
   json.in_stock(variant.in_stock?)
   json.is_backorderable(variant.is_backorderable?)
 
-  # We can't represent Float::INFINITY in JSON
-  # Under JSON this woulb be NULL
-  # Under oj this would error
-  json.total_on_hand(variant.should_track_inventory? ? variant.total_on_hand : nil)
+  json.total_on_hand(total_on_hand_for(variant))
 
   json.is_destroyed(variant.destroyed?)
   json.option_values(variant.option_values) do |option_value|
