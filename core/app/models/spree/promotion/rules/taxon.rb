@@ -48,13 +48,10 @@ module Spree
           eligibility_errors.empty?
         end
 
-        # TODO: Fix bug - well described by jhawthorn in #1409:
-        # `eligible?` checks the configured taxons and all descendants,
-        # `actionable?` only seems to check against the taxons themselves (not children)
         def actionable?(line_item)
           found = Spree::Classification.where(
             product_id: line_item.variant.product_id,
-            taxon_id: taxon_ids
+            taxon_id: rule_taxon_ids_with_children
           ).exists?
 
           case preferred_match_policy
