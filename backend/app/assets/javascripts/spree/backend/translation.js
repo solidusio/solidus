@@ -1,3 +1,5 @@
+/* eslint no-console: "off" */
+
 (function() {
   // Resolves string keys with dots in a deeply nested object
   // http://stackoverflow.com/a/22129960/4405214

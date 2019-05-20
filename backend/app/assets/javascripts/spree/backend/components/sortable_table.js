@@ -1,4 +1,5 @@
 //= require solidus_admin/Sortable
+/* eslint no-unused-vars: "off" */
 
 Spree.ready(function() {
   var sortable_tables = document.querySelectorAll('table.sortable');

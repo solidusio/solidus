@@ -27,3 +27,6 @@ tags
 .sass-cache
 .localeapp
 .yardoc
+node_modules
+yarn.lock
+package-lock.json
