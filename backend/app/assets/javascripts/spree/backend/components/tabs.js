@@ -1,5 +1,5 @@
 /* global Tabs */
-/* eslint no-global-assign: "off", no-redeclare: "off" */
+/* eslint no-redeclare: "off" */
 
 Tabs = (function() {
   function Tabs(el) {

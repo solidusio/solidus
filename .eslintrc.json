@@ -7,10 +7,12 @@
     "func-names": 0,
     "no-console": 0,
     "no-extra-semi": 0,
-    "no-global-assign": 0,
+    "no-global-assign": ["error", {
+        "exceptions": ["Tabs"]
+    }],
     "no-redeclare": 0,
     "no-shadow": 0,
-    "no-undef": 0,
+    "no-undef": "error",
     "no-unused-vars": 0,
     "no-use-before-define": 0,
     "no-var": 0,
@@ -23,5 +25,22 @@
     "radix": 0,
     "space-before-function-paren": 0,
     "vars-on-top": 0
+  },
+  "globals": {
+    "$": "readonly",
+    "accounting": "readonly",
+    "addVariantFromStockLocation": "writable",
+    "adjustShipmentItems": "writable",
+    "document": "readonly",
+    "error": "writable",
+    "flatpickr": "readonly",
+    "Handlebars": "readonly",
+    "json": "writable",
+    "message": "writable",
+    "shipments": "writable",
+    "Sortable": "readonly",
+    "Spree": "readonly",
+    "Turbolinks": "readonly",
+    "window": "readonly"
   }
 }

@@ -1,4 +1,3 @@
-/* eslint no-undef: "off" */
 'use strict';
 
 Spree.ready(function(){

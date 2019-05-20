@@ -1,7 +1,7 @@
 // Require this file if you plan to use Turbolinks in the Solidus admin
 // It is necessary because extensions may use JS libs that make use of
 // jQuery.ready instead of Spree.ready
-/* eslint no-undef: "off", no-console: "off" */
+/* eslint no-console: "off" */
 
 Spree.jQueryReady = $.fn.ready;
 
