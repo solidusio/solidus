@@ -1,5 +1,9 @@
 {
   "extends": "airbnb-base",
+  "env": {
+    "browser": true,
+    "jquery": true
+  },
   "rules": {
     "camelcase": 0,
     "comma-dangle": 0,
@@ -29,11 +33,9 @@
     "vars-on-top": 0
   },
   "globals": {
-    "$": "readonly",
     "accounting": "readonly",
     "addVariantFromStockLocation": "writable",
     "adjustShipmentItems": "writable",
-    "document": "readonly",
     "error": "writable",
     "flatpickr": "readonly",
     "Handlebars": "readonly",
@@ -42,7 +44,6 @@
     "shipments": "writable",
     "Sortable": "readonly",
     "Spree": "readonly",
-    "Turbolinks": "readonly",
-    "window": "readonly"
+    "Turbolinks": "readonly"
   }
 }
