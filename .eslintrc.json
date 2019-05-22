@@ -5,7 +5,9 @@
     "comma-dangle": 0,
     "dot-notation": 0,
     "func-names": 0,
-    "no-console": 0,
+    "no-console": ["warn", {
+        "allow": ["warn"]
+    }],
     "no-extra-semi": 0,
     "no-global-assign": ["error", {
         "exceptions": ["Tabs"]
