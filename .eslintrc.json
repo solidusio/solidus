@@ -19,7 +19,9 @@
     "no-redeclare": 0,
     "no-shadow": 0,
     "no-undef": "error",
-    "no-unused-vars": 0,
+    "no-unused-vars": ["error", {
+        "vars": "all", "args": "none"
+    }],
     "no-use-before-define": 0,
     "no-var": 0,
     "object-shorthand": 0,
