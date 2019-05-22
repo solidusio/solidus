@@ -35,15 +35,20 @@
     "vars-on-top": 0
   },
   "globals": {
+    "_": "readonly",
     "accounting": "readonly",
     "addVariantFromStockLocation": "writable",
     "adjustShipmentItems": "writable",
+    "Backbone": "readonly",
     "error": "writable",
     "flatpickr": "readonly",
     "Handlebars": "readonly",
+    "HandlebarsTemplates": "readonly",
     "json": "writable",
     "message": "writable",
+    "Select2": "readonly",
     "shipments": "writable",
+    "show_flash": "writable",
     "Sortable": "readonly",
     "Spree": "readonly",
     "Turbolinks": "readonly"
