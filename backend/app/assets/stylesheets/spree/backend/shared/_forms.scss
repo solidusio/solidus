@@ -66,12 +66,12 @@ button,
     // In order to avoid the clashing between using `:not(.btn)` and
     // `@extend .btn` we need to use an attribute selector of `[class*="btn"]`.
     @extend .btn;
-    background: linear-gradient($color-white, $color-light-dark);
+    background: linear-gradient($color-white, lighten($color-light-dark, 2%));
     color: $color-dark;
     border-color: $color-dark-accent;
     
     &:hover {
-      background: linear-gradient($color-white, darken($color-light-dark, 3%));
+      background: linear-gradient($color-white, $color-light-dark);
       color: $color-primary;
     }
     
