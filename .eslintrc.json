@@ -13,11 +13,11 @@
     "no-console": ["warn", {
         "allow": ["warn"]
     }],
-    "no-extra-semi": 0,
+    "no-extra-semi": "error",
     "no-global-assign": ["error", {
         "exceptions": ["Tabs"]
     }],
-    "no-redeclare": 0,
+    "no-redeclare": "error",
     "no-shadow": 0,
     "no-undef": "error",
     "no-unused-vars": ["error", {
