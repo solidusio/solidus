@@ -55,6 +55,7 @@ combine it with your own custom frontend, admin interface, and API.
 [![Slack](http://slack.solidus.io/badge.svg)](http://slack.solidus.io)
 [![Backers on Open Collective](https://opencollective.com/solidus/backers/badge.svg)](#backers)
 [![Sponsors on Open Collective](https://opencollective.com/solidus/sponsors/badge.svg)](#sponsors)
+[![Open Source Helpers](https://www.codetriage.com/solidusio/solidus/badges/users.svg)](https://www.codetriage.com/solidusio/solidus)
 
 ### Supported by
 
