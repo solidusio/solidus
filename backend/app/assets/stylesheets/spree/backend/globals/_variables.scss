@@ -54,11 +54,11 @@ $color-navbar-footer-active:    $color-primary !default;
 $color-icon-navbar:             $color-dark-light !default;
 
 // Basic flash colors
-@include solidus-deprecated-variable("color-success", "brand-success");
+@include bs-deprecated-variable("color-success", "brand-success");
 $color-success:                 $color-green !default;
-@include solidus-deprecated-variable("color-notice", "brand-warning");
+@include bs-deprecated-variable("color-notice", "brand-warning");
 $color-notice:                  $color-yellow !default;
-@include solidus-deprecated-variable("color-error", "brand-danger");
+@include bs-deprecated-variable("color-error", "brand-danger");
 $color-error:                   $color-red !default;
 
 // Breadcrumb custom variable
