@@ -161,7 +161,7 @@ describe "New Order", type: :feature do
       add_line_item product.name
 
       click_on "Payments"
-      click_on "Continue"
+      click_on "Update"
 
       within(".additional-info") do
         expect(page).to have_content("Confirm")
