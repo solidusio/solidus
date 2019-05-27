@@ -4,6 +4,24 @@ module Spree
   module ActiveStorageAttachment
     extend ActiveSupport::Concern
 
+    # @private
+    def self.attachment_variant(attachment, style:, default_style:, styles:)
+      return unless attachment && attachment.attachment
+
+      if style.nil? || style == default_style
+        attachment_variant = attachment
+      else
+        attachment_variant = attachment.variant(
+          resize: styles[style.to_sym],
+          strip: true,
+          'auto-orient': true,
+          colorspace: 'sRGB',
+        ).processed
+      end
+
+      attachment_variant
+    end
+
     class_methods do
       def redefine_attachment_writer_with_legacy_io_support(name)
         define_method :"#{name}=" do |attachable|
