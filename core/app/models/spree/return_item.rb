@@ -130,6 +130,8 @@ module Spree
       after_transition any => any, do: :persist_acceptance_status_errors
     end
 
+    attr_accessor :skip_customer_return_processing
+
     # @param inventory_unit [Spree::InventoryUnit] the inventory for which we
     #   want a return item
     # @return [Spree::ReturnItem] a valid return item for the given inventory
@@ -233,10 +235,12 @@ module Spree
 
     def process_inventory_unit!
       inventory_unit.return!
-
       if customer_return
         customer_return.stock_location.restock(inventory_unit.variant, 1, customer_return) if should_restock?
-        customer_return.process_return!
+        unless skip_customer_return_processing
+          Deprecation.warn 'From Solidus v2.9 onwards, #process_inventory_unit! will not call customer_return#process_return!'
+          customer_return.process_return!
+        end
       end
     end
 

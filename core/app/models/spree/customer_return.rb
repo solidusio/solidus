@@ -53,7 +53,7 @@ module Spree
     end
 
     def process_return!
-      order.return! if order.all_inventory_units_returned?
+      order.return! if order.can_return?
     end
 
     private
