@@ -2,7 +2,8 @@
 
 @product_attributes ||= product_attributes
 json.cache! [I18n.locale, @current_user_roles.include?('admin'), current_pricing_options, @product_attributes, @exclude_data, product] do
-  json.(product, *@product_attributes)
+  json.(product, *(@product_attributes - [:total_on_hand]))
+  json.total_on_hand(total_on_hand_for(product))
   json.price(product.price_for(current_pricing_options).try(:to_d))
   json.display_price(product.price_for(current_pricing_options).to_s)
 

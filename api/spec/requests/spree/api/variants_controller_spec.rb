@@ -248,6 +248,20 @@ module Spree
           expect(json_response["variant_properties"].first).to have_attributes(expected_attrs)
         end
       end
+
+      context "when tracking is disabled" do
+        before do
+          Config.track_inventory_levels = false
+          subject
+        end
+
+        it "still displays valid json with total_on_hand Float::INFINITY" do
+          expect(response.status).to eq(200)
+          expect(json_response['total_on_hand']).to eq nil
+        end
+
+        after { Config.track_inventory_levels = true }
+      end
     end
 
     it "can learn how to create a new variant" do

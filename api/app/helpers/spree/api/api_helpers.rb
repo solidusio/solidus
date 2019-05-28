@@ -183,6 +183,10 @@ module Spree
           @@variant_attributes
         end
       end
+
+      def total_on_hand_for(object)
+        object.total_on_hand.finite? ? object.total_on_hand : nil
+      end
     end
   end
 end
