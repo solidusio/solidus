@@ -361,7 +361,7 @@ module Spree
 
         it 'renders the payment source view for store credit' do
           subject
-          expect(response).to render_template partial: 'spree/api/payments/source_views/_storecredit'
+          expect(response).to render_template partial: 'spree/api/payments/source_views/_store_credit'
         end
       end
     end
