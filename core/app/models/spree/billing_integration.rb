@@ -9,8 +9,13 @@ module Spree
 
     def gateway
       integration_options = options
-      ActiveMerchant::Billing::Base.integration_mode = integration_options[:server].to_sym
-      integration_options[:test] = true if integration_options[:test_mode]
+
+      # All environments except production considered to be test
+      test_server = integration_options[:server] != 'production'
+      test_mode = integration_options[:test_mode]
+
+      integration_options[:test] = (test_server || test_mode)
+
       @gateway ||= gateway_class.new(integration_options)
     end
 
