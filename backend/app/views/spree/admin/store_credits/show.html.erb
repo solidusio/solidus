@@ -8,7 +8,7 @@
 <%= render 'spree/admin/users/tabs', current: :store_credits %>
 <% content_for :page_actions do %>
   <% if @store_credit.editable? && can?(:edit, @store_credit) %>
-    <li><%= link_to t('spree.admin.store_credits.change_amount'), edit_amount_admin_user_store_credit_path(@user, @store_credit), class: 'button' %></li>
+    <li><%= link_to t('spree.admin.store_credits.change_amount'), edit_amount_admin_user_store_credit_path(@user, @store_credit), class: 'button btn btn-primary' %></li>
   <% end %>
   <% if @store_credit.invalidateable? && can?(:invalidate, @store_credit) %>
     <li><%= link_to t('spree.invalidate'), edit_validity_admin_user_store_credit_path(@user, @store_credit), class: 'button' %></li>

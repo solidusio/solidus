@@ -8,6 +8,10 @@ body {
   padding-left: $width-sidebar;
 }
 
+.admin {
+  background-color: $admin-body-bg;
+}
+
 .admin-nav {
   position: absolute;
   top: 0;
@@ -18,6 +22,7 @@ body {
 }
 
 .content-wrapper {
+  background-color: $content-wrapper-bg;
   padding-top: 1rem;
   padding-left: $grid-gutter-width;
   padding-right: $grid-gutter-width;

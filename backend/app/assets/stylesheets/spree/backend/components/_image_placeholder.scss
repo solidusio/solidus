@@ -14,8 +14,8 @@
   display: inline-block;
   margin: auto;
   text-align: center;
-  border: 1px solid #ddd;
-  color: #aaa;
+  border: 1px solid $color-light-dark;
+  color: $color-light-accent;
 
   &:before {
     font: normal normal normal 14px/1 FontAwesome;

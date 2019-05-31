@@ -1,13 +1,23 @@
 .log_entry {
   &.success {
-    i {
-      color: $color-2;
+    background: lighten($color-primary, 15);
+
+    td h4 {
+      color: darken($body-color, 25);
+      i {
+        color: $color-primary;
+      }
     }
   }
 
   &.fail {
-    i {
-      color: $color-5;
+    background: lighten($color-red, 25);
+
+    td h4 {
+      color: lighten($body-color, 50);
+      i {
+        color: $color-red;
+      }
     }
   }
 }

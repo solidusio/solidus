@@ -97,10 +97,10 @@
   <% end %>
   <div class="form-buttons filter-actions actions" data-hook="reimburse-buttons">
     <% if !@reimbursement.reimbursed? %>
-      <%= button_to [:perform, :admin, @order, @reimbursement], { class: 'button', method: 'post' } do %>
+      <%= button_to [:perform, :admin, @order, @reimbursement], { class: 'button btn btn-primary', method: 'post' } do %>
         <%= t('spree.reimburse') %>
       <% end %>
-      <%= link_to t('spree.actions.cancel'), url_for([:admin, @order, @reimbursement.customer_return]), class: 'btn btn-primary' %>
+      <%= link_to t('spree.actions.cancel'), url_for([:admin, @order, @reimbursement.customer_return]), class: 'btn btn-default' %>
     <% end %>
   </div>
 </fieldset>

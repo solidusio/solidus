@@ -1,4 +1,4 @@
-@mixin caret($width: 1em, $height: 1em, $direction: up, $color-caret: $color-3) {
+@mixin caret($width: 1em, $height: 1em, $direction: up, $color-caret: $color-dark-light) {
   &:before {
     content: '';
     display: block;

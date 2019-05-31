@@ -41,6 +41,8 @@ textarea {
 }
 
 label {
+  font-size: inherit;
+  
   &.required:after {
     content: " *";
   }
@@ -64,7 +66,19 @@ button,
     // In order to avoid the clashing between using `:not(.btn)` and
     // `@extend .btn` we need to use an attribute selector of `[class*="btn"]`.
     @extend .btn;
-    @include button-variant(theme-color("primary"), theme-color("primary"));
+    background: linear-gradient($color-white, lighten($color-light-dark, 2%));
+    color: $color-dark;
+    border-color: $color-dark-accent;
+    
+    &:hover {
+      background: linear-gradient($color-white, $color-light-dark);
+      color: $color-primary;
+    }
+    
+    &.disabled,
+    &:disabled {
+      color: $color-disabled;
+    }
   }
 
   &:before {
@@ -106,6 +120,10 @@ span.info {
       margin-top: 2.25rem;
     }
   }
+  
+  label {
+    font-size: $label-font-size;
+  }
 
   ul {
     list-style: none;
@@ -131,21 +149,21 @@ span.info {
   &.withError {
     .field_with_errors {
       label {
-        color: very-light(theme-color("danger"), 30);
+        color: theme-color("danger");
       }
 
       input {
-        border-color: very-light(theme-color("danger"), 15);
+        border-color: theme-color("danger");
       }
     }
     .formError {
-      color: very-light(theme-color("danger"), 30);
+      color: lighten(theme-color("danger"), 15);
       font-style: italic;
       font-size: 85%;
     }
     .select2-container {
       border-radius: 4px;
-      border: 1px solid very-light(theme-color("danger"), 15);
+      border: 1px solid theme-color("danger");
     }
   }
 }
@@ -172,8 +190,8 @@ fieldset {
   }
 
   legend {
-    color: $color-2;
-    font-size: 16px;
+    color: $color-dark;
+    font-size: 14px;
     font-weight: $font-weight-bold;
     text-align: center;
     padding: 8px 15px;

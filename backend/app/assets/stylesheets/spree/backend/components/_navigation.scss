@@ -17,9 +17,9 @@ nav.menu {
       }
 
       &.active a {
-        color: $color-2;
+        color: $color-primary;
         border-left-width: 0;
-        border-bottom-color: $color-2;
+        border-bottom-color: $color-primary;
       }
     }
   }
@@ -32,17 +32,21 @@ nav.menu {
 }
 
 .admin-nav-header {
-  background-color: $color-1;
+  background-color: $color-white;
   border-bottom: 1px solid $color-border;
   text-align: center;
+  padding: 0 1.25em;
   // Using line height for proper vertical centering.
   // As line height does not take the border width into account we need to subtract it.
   line-height: $main-header-height - 1px;
 }
 
 .admin-nav-menu {
+  > ul {
+    margin: 1.5em 0 0;
+  }
+  
   ul {
-    margin: 0;
     padding: 0;
     list-style: none;
   }
@@ -62,7 +66,7 @@ nav.menu {
       background: $color-navbar-active-bg;
 
       > a {
-        color: $color-navbar-active;
+        color: $color-navbar;
       }
     }
 
@@ -84,14 +88,36 @@ nav.menu {
         left: 100%;
         width: $width-sidebar-flyout;
         margin-left: 0;
-        border: $border-sidebar;
-        background: $color-navbar-submenu-bg;
-        box-shadow: $box-shadow;
-        @include caret($direction: left, $color-caret: $color-navbar-submenu-bg);
+        background: $color-white;
+        box-shadow: 1px 0 4px 0 rgba(0, 0, 0, 0.1);
+        border-radius: 0 4px 4px 4px;
+        border: 1px solid $color-border;
+        @include caret($direction: left, $color-caret: $color-white);
 
       &:before {
         z-index: 1;
         top: 1.5em;
+      }
+      
+      &:after {
+        content: '';
+        display: block;
+        position: absolute;
+        border-width: 1em 1em;
+        border-style: solid;
+        border-color: transparent;
+        border-right-color: $color-border;
+        left: -2.1em;
+        top: 1.5em;
+        margin-top: -1em;
+      }
+      
+      > li {
+        background: $color-white;
+        
+        a {
+          font-weight: $font-weight-bold;
+        }
       }
      }
     }
@@ -101,13 +127,15 @@ nav.menu {
     display: block;
     padding: $padding-y-navbar $padding-x-navbar;
     color: $color-navbar;
-    font-weight: normal;
+    font-weight: $font-weight-bold;
   }
 
   .icon_link {
     text-indent: 2em;
 
     &:before {
+      color: $color-icon-navbar;
+      font-weight: $font-weight-normal;
       position: absolute;
       left: 1em;
       transform: translateX(-50%);
@@ -123,6 +151,7 @@ nav.menu {
 
   .admin-subnav {
     background: $color-navbar-submenu-bg;
+    margin: 0;
     padding-top:    $padding-y-navbar - $padding-y-navbar-submenu;
     padding-bottom: $padding-y-navbar - $padding-y-navbar-submenu;
 
@@ -132,6 +161,7 @@ nav.menu {
 
     a {
       color: $color-navbar-submenu;
+      font-weight: $font-weight-normal;
       padding-top:    $padding-y-navbar-submenu;
       padding-bottom: $padding-y-navbar-submenu;
 
@@ -143,6 +173,7 @@ nav.menu {
     .selected {
       a {
         color: $color-navbar-submenu-active;
+        font-weight: $font-weight-bold;
       }
     }
   }
@@ -183,6 +214,7 @@ nav.menu {
 
   a {
     display: inline-block;
+    font-weight: $font-weight-bold;
     max-width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -192,4 +224,8 @@ nav.menu {
   i {
     margin-right: 0.5rem;
   }
+}
+
+.brand-link {
+  display: block;
 }

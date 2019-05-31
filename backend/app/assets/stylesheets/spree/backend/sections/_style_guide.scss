@@ -48,7 +48,7 @@
 
       > a {
         font-size: 1.2rem;
-        font-weight: 300;
+        font-weight: $font-weight-normal;
       }
     }
 
@@ -64,7 +64,7 @@
   }
 
   &-intro,
-  &-section:not(:last-child) {
+  &-section {
     margin: 4rem 0;
   }
 
@@ -112,8 +112,8 @@
   table.with-actions-borders {
     th, td {
       &.actions {
-        border-right: 1px solid #cee1f4 !important;
-        border-bottom: 1px solid #cee1f4 !important;
+        border-right: 1px solid $color-style-guide-table-border !important;
+        border-bottom: 1px solid $color-style-guide-table-border !important;
       }
     }
   }

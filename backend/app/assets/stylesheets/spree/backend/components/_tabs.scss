@@ -23,12 +23,13 @@
 
   // Move down one pixel to sit on top of the ul's border-bottom
   position: relative;
-  top: 1px;
+  top: 2px;
 
   > a {
+    color: $color-navbar-submenu;
     display: block;
     border: 1px solid $color-border;
-    border-radius: 2px 2px 0 0;
+    border-radius: 4px 4px 0 0;
     line-height: 1;
   }
 
@@ -44,12 +45,12 @@
   &.active:hover {
     background: white;
     border-bottom-color: white;
-    color: $body-color;
+    color: $color-navbar-active;
+    font-weight: $font-weight-bold;
   }
 
   &:not(.active):hover > a {
-    background: darken($color-tbl-thead, 5%);
-    color: $link-color;
+    color: $color-navbar-active;
   }
 }
 

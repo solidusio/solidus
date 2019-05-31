@@ -31,7 +31,9 @@ div[data-hook="admin_products_index_search_buttons"] {
   margin-bottom: 15px;
 
   strong {
-    color: $color-2;
+    background: $color-primary-light;
+    padding: .1em .3em;
+    border-radius: 3px;
   }
 }
 

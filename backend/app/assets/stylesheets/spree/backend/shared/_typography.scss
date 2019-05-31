@@ -7,7 +7,7 @@ html {
 
 body {
   padding: 0;
-  font-weight: 400;
+  font-weight: $font-weight-normal;
   text-rendering: optimizeLegibility;
 }
 
@@ -15,6 +15,11 @@ hr {
   border-top: 1px solid $color-border;
   border-bottom: 1px solid $body-bg;
   border-left: none;
+}
+
+strong,
+b {
+  font-weight: $font-weight-bold;
 }
 
 // Headings
@@ -92,10 +97,10 @@ dl {
 
 .uppercase     { text-transform: uppercase }
 
-.green  { color: $color-2 }
-.blue   { color: $color-3 }
-.red    { color: $color-5 }
-.yellow { color: $color-6 }
+.green  { color: $color-green }
+.blue   { color: $color-primary }
+.red    { color: $color-red }
+.yellow { color: $color-yellow }
 
 .negative { color: $red }
 input[type="number"].negative { color: $red } // needed to override blue style that is more specific than '.negative'

@@ -1,14 +1,13 @@
 .errorExplanation {
-  padding: 5px;
-  border: 1px solid very-light(theme-color("danger"), 12);
-  background-color: very-light(theme-color("danger"), 6);
-  border-radius: 3px;
-  color: very-light(theme-color("danger"), 30);
+  padding: 10px 15px;
+  border-top: 3px solid theme-color("danger");
+  background-color: lighten(theme-color("danger"), 40);
+  border-radius: 0 0 $border-radius $border-radius;
+  color: $body-color;
   margin-bottom: 15px;
 
   h2 {
     font-size: 140%;
-    color: very-light(theme-color("danger"), 30);
     margin-bottom: 5px;
   }
 
@@ -34,15 +33,24 @@
 }
 
 .flash {
+  border-top: 3px solid;
   padding: 16px;
   text-align: center;
   font-size: 120%;
-  color: $color-1;
-  font-weight: $font-weight-bold;
+  color: $body-color;
 
-  &.notice  { background-color: rgba(theme-color("warning"),  0.8) }
-  &.success { background-color: rgba(theme-color("success"), 0.8) }
-  &.error   { background-color: rgba(theme-color("danger"),   0.8) }
+  &.notice {
+    background-color: rgba(very-light($color-notice, 15), .95);
+    border-top-color: $color-notice;
+  }
+  &.success {
+    background-color: rgba(very-light($color-success, 30), .95);
+    border-top-color: $color-success;
+  }
+  &.error {
+    background-color: rgba(very-light($color-error, 30), .95);
+    border-top-color: $color-error;
+  }
 }
 
 .alert {
@@ -53,5 +61,5 @@
     text-decoration: underline;
   }
 
-  &.error a { color: very-light(theme-color("danger"), 10) }
+  &.error a { color: lighten(theme-color("danger"), 8); }
 }

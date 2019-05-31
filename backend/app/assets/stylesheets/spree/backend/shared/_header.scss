@@ -2,8 +2,9 @@
   display: flex;
   align-items: center;
   padding: 15px $grid-gutter-width;
-  background-color: very-light($color-3, 4);
+  background-color: $color-header-bg;
   border-bottom: 1px solid $color-border;
+  border-top: 4px solid $color-primary;
   height: $main-header-height;
 
   @media print { display: none }
@@ -17,7 +18,7 @@
   -moz-osx-font-smoothing: grayscale;
 
   i {
-    color: $color-2;
+    color: $color-primary;
   }
 }
 

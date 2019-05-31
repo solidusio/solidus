@@ -8,7 +8,7 @@
   padding: 10px 15px;
   // Place the border on the list items and negative margin up for better styling
   margin-bottom: -1px;
-  border: 1px solid #cee1f4;
+  border: 1px solid $color-border;
 
   // Round the first and last items
   &:first-child {
@@ -22,5 +22,5 @@
 
 a.list-group-item:focus {
   text-decoration: none;
-  background-color: #eff5fc;
+  background-color: $color-light;
 }

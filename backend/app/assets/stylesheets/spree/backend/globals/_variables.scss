@@ -4,65 +4,85 @@
 
 // Fonts
 //--------------------------------------------------------------
-$font-size-pill: 11px;
+$font-size-pill:      11px;
+$label-font-size:     12px;
 
 // Colors
 //--------------------------------------------------------------
 
 // Basic color palette for admin
-$color-1:                        #FFFFFF !default;    // White
-$color-2:                        #9FC820 !default;    // Green
-$color-3:                        #5498DA !default;    // Light Blue
-$color-4:                        #6788A2 !default;    // Dark Blue
-$color-5:                        #C60F13 !default;    // Red
-$color-6:                        #FF9300 !default;    // Yellow
-$color-7:                        #F4F4F4 !default;    // Light Gray
+
+$color-dark:          #24282F !default;
+$color-dark-dark:     #5B6778 !default;
+$color-dark-light:    #808C9E !default;
+$color-dark-accent:   #C7CDD5 !default;
+
+$color-primary:       #3D76F1 !default;
+$color-primary-light: #E3EBFD !default;
+
+$color-light:         #F9FAFB !default;
+$color-light-dark:    #E5E7EB !default;
+$color-light-accent:  #D7DAE0 !default;
+
+$color-white:         #FFFFFF !default;
+
+$color-red:           #CE452A !default;
+$color-yellow:        #FFDD59 !default;
+$color-green:         #52B73B !default;
 
 // Basic accents for admin
-$box-shadow:                     0px 3px 3px -2px hsla(0, 0%, 0%, 0.2) !default;
+$box-shadow:          0 0 4px 0 rgba(0, 0, 0, .12) !default;
 
 // Body base colors
-$color-border:                   very-light($color-3, 12) !default;
+$color-border:       $color-light-dark !default;
+$color-disabled:     $color-dark-light !default;
 
 // Basic navigation colors
-$color-sidebar-bg:              $color-1 !default;
+$color-header-bg:               $color-light !default;
+$color-sidebar-bg:              $color-light !default;
 $color-sidebar-border:          $color-border !default;
-$color-navbar:                  $color-1 !default;
-$color-navbar-bg:               $color-3 !default;
-$color-navbar-active:           $color-1 !default;
-$color-navbar-active-bg:        $color-2 !default;
-$color-navbar-submenu:          $color-3 !default;
-$color-navbar-submenu-bg:       very-light($color-navbar-bg, 4) !default;
-$color-navbar-submenu-active:   $color-2 !default;
-$color-navbar-footer:           $color-3 !default;
-$color-navbar-footer-bg:        $color-sidebar-bg !default;
-$color-navbar-footer-active:    $color-2 !default;
+$color-navbar:                  $color-dark !default;
+$color-navbar-bg:               $color-light !default;
+$color-navbar-active:           $color-primary !default;
+$color-navbar-active-bg:        $color-light !default;
+$color-navbar-submenu:          $color-dark-light !default;
+$color-navbar-submenu-bg:       $color-light !default;
+$color-navbar-submenu-active:   $color-primary !default;
+$color-navbar-footer:           $color-dark !default;
+$color-navbar-footer-bg:        $color-light !default;
+$color-navbar-footer-active:    $color-primary !default;
+$color-icon-navbar:             $color-dark-light !default;
 
 // Basic flash colors
-@include solidus-deprecated-variable("color-success", "brand-success");
-$color-success:                  $color-2 !default;
-@include solidus-deprecated-variable("color-notice", "brand-warning");
-$color-notice:                   $color-6 !default;
-@include solidus-deprecated-variable("color-error", "brand-danger");
-$color-error:                    $color-5 !default;
+@include bs-deprecated-variable("color-success", "brand-success");
+$color-success:                 $color-green !default;
+@include bs-deprecated-variable("color-notice", "brand-warning");
+$color-notice:                  $color-yellow !default;
+@include bs-deprecated-variable("color-error", "brand-danger");
+$color-error:                   $color-red !default;
+
+// Breadcrumb custom variable
+
+$breadcrumb-color: $color-dark-light;
 
 // Color for spinner
-$color-spinner: #fff;
+$color-spinner: $color-white;
 
 // Style Guide
-$color-style-guide-code: darken($color-7, 10%);
-$color-style-guide-link: darken($color-7, 65%);
-$color-style-guide-nav: $color-7;
-$color-style-guide-nav-border: darken($color-7, 5%);
-$color-style-guide-nav-link: darken($color-7, 65%);
-$color-style-guide-nav-link-hover: darken($color-7, 5%);
-$color-style-guide-section-border: darken($color-7, 10%);
-$color-style-guide-swatch-border: darken($color-7, 10%);
+$color-style-guide-code:            darken($color-light, 10%);
+$color-style-guide-link:            darken($color-light, 65%);
+$color-style-guide-nav:             $color-light;
+$color-style-guide-nav-border:      darken($color-light, 5%);
+$color-style-guide-nav-link:        darken($color-light, 65%);
+$color-style-guide-nav-link-hover:  darken($color-light, 5%);
+$color-style-guide-section-border:  darken($color-light, 10%);
+$color-style-guide-swatch-border:   darken($color-light, 10%);
+$color-style-guide-table-border:    #CEE1F4;
 
 // Table colors
-$color-tbl-odd:                  $color-1 !default;
-$color-tbl-even:                 very-light($color-3, 4) !default;
-$color-tbl-thead:                very-light($color-3, 4) !default;
+$color-tbl-odd:                  $color-white !default;
+$color-tbl-even:                 very-light($color-dark-light, 4) !default;
+$color-tbl-thead:                very-light($color-dark-light, 4) !default;
 
 // Pill colors
 //
@@ -146,3 +166,6 @@ $border-sidebar:                 1px solid $color-sidebar-border !default;
 // Main
 //--------------------------------------------------------------
 $main-header-height:             75px !default;
+
+$content-wrapper-bg:             $color-white;
+$admin-body-bg:                  $color-white;
