@@ -708,7 +708,11 @@ es:
           attributes:
             payment_source:
               has_to_be_payment_source_class: "Tiene que ser un Spree::PaymentSource"
-
+  time:
+    formats:
+      solidus:
+        long: '%B %d, %Y %-l:%M %p'
+        short: "%b %-d '%y %-l:%M%P"
   spree:
     abbreviation: Abreviatura
     accept: Aceptar
