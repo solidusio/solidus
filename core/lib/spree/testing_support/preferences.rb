@@ -56,6 +56,27 @@ module Spree
           allow(Spree::Config).to receive(name) { value }
         end
       end
+
+      # This method allows to temporarily switch to an unfrozen Spree::Config preference
+      # store with all proper preferences values set.
+      #
+      # It should be used sparingly, only when `stub_spree_preferences` would not work.
+      #
+      # @example Temporarily switch to an unfrozen store and change some preferences:
+      #   with_unfrozen_spree_preference_store do
+      #     Spree::Config.currency = 'EUR'
+      #     Spree::Config.track_inventory_levels = false
+      #
+      #     expect(Spree::Config.currency).to eql 'EUR'
+      #   end
+      # @see Spree::TestingSupport::Preferences#stub_spree_preferences
+      def with_unfrozen_spree_preference_store
+        frozen_store = Spree::Config.preference_store
+        Spree::Config.preference_store = Spree::Config[:unfrozen_preference_store].dup
+        yield
+      ensure
+        Spree::Config.preference_store = frozen_store
+      end
     end
   end
 end
