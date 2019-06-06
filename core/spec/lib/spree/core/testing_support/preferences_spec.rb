@@ -25,4 +25,12 @@ RSpec.describe Spree::TestingSupport::Preferences do
       expect(Spree::Config.searcher_class).to eq(@original_spree_searcher_class)
     end
   end
+
+  describe '#stub_spree_preferences' do
+    it 'stubs method calls but does not affect actual stored Spree::Config settings' do
+      stub_spree_preferences(currency: 'FOO')
+      expect(Spree::Config.currency).to eq 'FOO'
+      expect(Spree::Config.preference_store[:currency]).to eq 'USD'
+    end
+  end
 end
