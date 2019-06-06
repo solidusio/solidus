@@ -49,7 +49,9 @@ module Spree
       #   Solidus #3219 for more details and motivations.
       def stub_spree_preferences(preferences)
         preferences.each do |name, value|
-          allow(Spree::Config).to receive(:[]).and_call_original
+          if Spree::Config.method(:[]).owner >= Spree::Config.class
+            allow(Spree::Config).to receive(:[]).and_call_original
+          end
           allow(Spree::Config).to receive(:[]).with(name) { value }
           allow(Spree::Config).to receive(name) { value }
         end
