@@ -865,7 +865,7 @@ module Spree
 
       context "can cancel an order" do
         before do
-          Spree::Config[:mails_from] = "spree@example.com"
+          stub_spree_preferences(mails_from: "spree@example.com")
 
           order.completed_at = Time.current
           order.state = 'complete'
