@@ -16,7 +16,7 @@ RSpec.describe Spree::BaseHelper, type: :helper do
 
     context "with no checkout zone defined" do
       before do
-        Spree::Config[:checkout_zone] = nil
+        stub_spree_preferences(checkout_zone: nil)
       end
 
       it "return complete list of countries" do
@@ -33,7 +33,7 @@ RSpec.describe Spree::BaseHelper, type: :helper do
         before do
           @country_zone = create(:zone, name: "CountryZone")
           @country_zone.members.create(zoneable: country)
-          Spree::Config[:checkout_zone] = @country_zone.name
+          stub_spree_preferences(checkout_zone: @country_zone.name)
         end
 
         it "return only the countries defined by the checkout zone" do
@@ -50,7 +50,7 @@ RSpec.describe Spree::BaseHelper, type: :helper do
           state_zone = create(:zone, name: "StateZone")
           state = create(:state, country: country)
           state_zone.members.create(zoneable: state)
-          Spree::Config[:checkout_zone] = state_zone.name
+          stub_spree_preferences(checkout_zone: state_zone.name)
         end
 
         it "return complete list of countries" do

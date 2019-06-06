@@ -12,7 +12,7 @@ module Spree
 
       before do
         # So that Payment#purchase! is called during processing
-        Spree::Config[:auto_capture] = true
+        stub_spree_preferences(auto_capture: true)
       end
 
       let(:payment_method) { create(:credit_card_payment_method) }
@@ -147,12 +147,12 @@ module Spree
         before { expect(payment).to receive(:process!).and_raise(Spree::Core::GatewayError) }
 
         it "should return true when configured to allow checkout on gateway failures" do
-          Spree::Config.set allow_checkout_on_gateway_error: true
+          stub_spree_preferences(allow_checkout_on_gateway_error: true)
           expect(order.process_payments!).to be true
         end
 
         it "should return false when not configured to allow checkout on gateway failures" do
-          Spree::Config.set allow_checkout_on_gateway_error: false
+          stub_spree_preferences(allow_checkout_on_gateway_error: false)
           expect(order.process_payments!).to be false
         end
       end

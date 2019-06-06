@@ -109,7 +109,7 @@ RSpec.describe Spree::OrderMailer, type: :mailer do
 
   context "with preference :send_core_emails set to false" do
     it "sends no email" do
-      Spree::Config.send_core_emails = false
+      stub_spree_preferences(send_core_emails: false)
       message = Spree::OrderMailer.confirm_email(order)
       expect(message.body).to be_blank
     end

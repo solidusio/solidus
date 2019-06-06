@@ -256,7 +256,7 @@ module Spree
 
       context "when automatic_default_address preference is at a default of true" do
         before do
-          Spree::Config.automatic_default_address = true
+          stub_spree_preferences(automatic_default_address: true)
           expect(user).to receive(:save_in_address_book).with(kind_of(Hash), true)
           expect(user).to receive(:save_in_address_book).with(kind_of(Hash), false)
         end
@@ -269,7 +269,7 @@ module Spree
 
       context "when automatic_default_address preference is false" do
         before do
-          Spree::Config.automatic_default_address = false
+          stub_spree_preferences(automatic_default_address: false)
           expect(user).to receive(:save_in_address_book).with(kind_of(Hash), false).twice
           # and not the optional 2nd argument
         end
@@ -283,7 +283,7 @@ module Spree
       context "when address is nil" do
         context "when automatic_default_address preference is at a default of true" do
           before do
-            Spree::Config.automatic_default_address = true
+            stub_spree_preferences(automatic_default_address: true)
             expect(user).to receive(:save_in_address_book).with(kind_of(Hash), true).once
           end
 
@@ -305,7 +305,7 @@ module Spree
 
       context "when automatic_default_address preference is false" do
         before do
-          Spree::Config.automatic_default_address = false
+          stub_spree_preferences(automatic_default_address: false)
           expect(user).to receive(:save_in_address_book).with(kind_of(Hash), false).once
         end
 

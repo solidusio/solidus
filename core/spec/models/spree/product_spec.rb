@@ -153,7 +153,7 @@ RSpec.describe Spree::Product, type: :model do
         before do
           product.master.default_price.currency = 'JPY'
           product.master.default_price.save!
-          Spree::Config[:currency] = 'JPY'
+          stub_spree_preferences(currency: 'JPY')
         end
 
         it "displays the currency in yen" do
@@ -514,12 +514,12 @@ RSpec.describe Spree::Product, type: :model do
 
   context '#total_on_hand' do
     it 'should be infinite if track_inventory_levels is false' do
-      Spree::Config[:track_inventory_levels] = false
+      stub_spree_preferences(track_inventory_levels: false)
       expect(build(:product, variants_including_master: [build(:master_variant)]).total_on_hand).to eql(Float::INFINITY)
     end
 
     it 'should be infinite if variant is on demand' do
-      Spree::Config[:track_inventory_levels] = true
+      stub_spree_preferences(track_inventory_levels: true)
       expect(build(:product, variants_including_master: [build(:on_demand_master_variant)]).total_on_hand).to eql(Float::INFINITY)
     end
 

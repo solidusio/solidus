@@ -18,7 +18,7 @@ RSpec.describe Spree::Variant::VatPriceGenerator do
     let!(:french_vat) { create(:tax_rate, included_in_price: true, amount: 0.20, zone: france_zone, tax_categories: [tax_category]) }
 
     before do
-      Spree::Config.admin_vat_country_iso = "DE"
+      stub_spree_preferences(admin_vat_country_iso: "DE")
     end
 
     it "builds a correct price including VAT for all VAT countries" do

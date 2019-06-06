@@ -4,6 +4,12 @@ require 'rails_helper'
 
 RSpec.describe Spree::TestingSupport::Preferences do
   describe 'resetting the app configuration' do
+    around do |example|
+      with_unfrozen_spree_preference_store do
+        example.run
+      end
+    end
+
     before do
       reset_spree_preferences
       @original_spree_mails_from = Spree::Config.mails_from

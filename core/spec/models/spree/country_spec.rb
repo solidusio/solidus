@@ -13,7 +13,7 @@ RSpec.describe Spree::Country, type: :model do
 
     context 'with the configuration setting an existing legacy default country ID' do
       before do
-        Spree::Config[:default_country_id] = 2
+        stub_spree_preferences(default_country_id: 2)
       end
 
       subject(:default_country) do
@@ -32,7 +32,7 @@ RSpec.describe Spree::Country, type: :model do
 
     context 'with the configuration setting a non-existing legacy default country ID' do
       before do
-        Spree::Config[:default_country_id] = 0
+        stub_spree_preferences(default_country_id: 0)
       end
 
       subject(:default_country) do
@@ -52,7 +52,7 @@ RSpec.describe Spree::Country, type: :model do
     end
 
     context 'with the configuration setting an non-existing ISO code' do
-      before { Spree::Config[:default_country_iso] = "ZZ" }
+      before { stub_spree_preferences(default_country_iso: "ZZ") }
 
       it 'raises a Record not Found error' do
         expect { described_class.default }.to raise_error(ActiveRecord::RecordNotFound)
@@ -71,7 +71,7 @@ RSpec.describe Spree::Country, type: :model do
         let!(:checkout_zone) { create(:zone, name: 'Checkout Zone', countries: [united_states, canada]) }
 
         before do
-          Spree::Config.checkout_zone = checkout_zone.name
+          stub_spree_preferences(checkout_zone: checkout_zone.name)
         end
 
         context 'with no arguments' do
@@ -104,7 +104,7 @@ RSpec.describe Spree::Country, type: :model do
         let!(:checkout_zone) { create(:zone, name: 'Checkout Zone', states: [state]) }
 
         before do
-          Spree::Config[:checkout_zone] = checkout_zone.name
+          stub_spree_preferences(checkout_zone: checkout_zone.name)
         end
 
         context 'with no arguments' do
