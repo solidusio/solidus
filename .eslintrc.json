@@ -1,19 +1,28 @@
 {
   "extends": "airbnb-base",
+  "env": {
+    "es6": false,
+    "browser": true,
+    "jquery": true
+  },
   "rules": {
     "camelcase": 0,
     "comma-dangle": 0,
     "dot-notation": 0,
     "func-names": 0,
-    "no-console": 0,
-    "no-extra-semi": 0,
+    "no-console": ["warn", {
+        "allow": ["warn"]
+    }],
+    "no-extra-semi": "error",
     "no-global-assign": ["error", {
         "exceptions": ["Tabs"]
     }],
-    "no-redeclare": 0,
+    "no-redeclare": "error",
     "no-shadow": 0,
     "no-undef": "error",
-    "no-unused-vars": 0,
+    "no-unused-vars": ["error", {
+        "vars": "all", "args": "none"
+    }],
     "no-use-before-define": 0,
     "no-var": 0,
     "object-shorthand": 0,
@@ -27,20 +36,22 @@
     "vars-on-top": 0
   },
   "globals": {
-    "$": "readonly",
+    "_": "readonly",
     "accounting": "readonly",
     "addVariantFromStockLocation": "writable",
     "adjustShipmentItems": "writable",
-    "document": "readonly",
+    "Backbone": "readonly",
     "error": "writable",
     "flatpickr": "readonly",
     "Handlebars": "readonly",
+    "HandlebarsTemplates": "readonly",
     "json": "writable",
     "message": "writable",
+    "Select2": "readonly",
     "shipments": "writable",
+    "show_flash": "writable",
     "Sortable": "readonly",
     "Spree": "readonly",
-    "Turbolinks": "readonly",
-    "window": "readonly"
+    "Turbolinks": "readonly"
   }
 }
