@@ -140,7 +140,7 @@ describe Spree::Admin::OrdersController, type: :controller do
         end
 
         context 'when order_bill_address_used is true' do
-          before { Spree::Config[:order_bill_address_used] = true }
+          before { stub_spree_preferences(order_bill_address_used: true) }
 
           it "should redirect to the customer details page" do
             get :edit, params: { id: order.number }
@@ -149,7 +149,7 @@ describe Spree::Admin::OrdersController, type: :controller do
         end
 
         context 'when order_bill_address_used is false' do
-          before { Spree::Config[:order_bill_address_used] = false }
+          before { stub_spree_preferences(order_bill_address_used: false) }
 
           it "should redirect to the customer details page" do
             get :edit, params: { id: order.number }

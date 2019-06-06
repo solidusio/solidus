@@ -70,10 +70,10 @@ describe "Customer Details", type: :feature, js: true do
 
   context "editing an order" do
     before do
-      configure_spree_preferences do |config|
-        config.default_country_iso = country.iso
-        config.company = true
-      end
+      stub_spree_preferences(
+        default_country_iso: country.iso,
+        company: true
+      )
 
       visit spree.admin_path
       click_link "Orders"
@@ -153,9 +153,7 @@ describe "Customer Details", type: :feature, js: true do
 
       before do
         order.bill_address.country.destroy
-        configure_spree_preferences do |config|
-          config.default_country_iso = brazil.iso
-        end
+        stub_spree_preferences(default_country_iso: brazil.iso)
       end
 
       it "sets default country when displaying form" do

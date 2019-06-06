@@ -20,7 +20,7 @@ module Spree
         let(:country) { create :country, iso: "BR" }
 
         before do
-          Spree::Config[:default_country_iso] = country.iso
+          stub_spree_preferences(default_country_iso: country.iso)
         end
 
         it "can create a new stock location" do
