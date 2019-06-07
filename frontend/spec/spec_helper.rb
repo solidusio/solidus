@@ -75,7 +75,6 @@ RSpec.configure do |config|
 
   config.before(:each) do
     Rails.cache.clear
-    reset_spree_preferences
   end
 
   config.before(:each, type: :feature) do

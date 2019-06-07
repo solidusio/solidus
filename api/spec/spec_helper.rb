@@ -59,7 +59,6 @@ RSpec.configure do |config|
 
   config.before(:each) do
     Rails.cache.clear
-    reset_spree_preferences
     Spree::Api::Config[:requires_authentication] = true
   end
 
