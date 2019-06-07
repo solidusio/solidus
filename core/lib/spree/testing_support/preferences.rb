@@ -80,3 +80,12 @@ module Spree
     end
   end
 end
+
+RSpec.configure do |config|
+  config.before :suite do
+    # keep a copy of the original unfrozen preference_store for later use:
+    Spree::AppConfiguration.preference :unfrozen_preference_store, :hash
+    Spree::Config.unfrozen_preference_store = Spree::Config.preference_store.dup
+    Spree::Config.preference_store.freeze
+  end
+end
