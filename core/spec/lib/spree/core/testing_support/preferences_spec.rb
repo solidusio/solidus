@@ -5,6 +5,7 @@ require 'rails_helper'
 RSpec.describe Spree::TestingSupport::Preferences do
   describe 'resetting the app configuration' do
     before do
+      reset_spree_preferences
       @original_spree_mails_from = Spree::Config.mails_from
       @original_spree_searcher_class = Spree::Config.searcher_class
       class MySearcherClass; end
