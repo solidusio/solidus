@@ -196,7 +196,7 @@ module Spree
     #     The view that represents your payment method on orders in the backend
     #
     def partial_name
-      deprecated_method_type_override || type.demodulize.downcase
+      deprecated_method_type_override || type.demodulize.underscore
     end
 
     # :nodoc:
