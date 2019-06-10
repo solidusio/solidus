@@ -16,7 +16,6 @@ body {
 #admin-nav-toggle {
   position: absolute;
   top: 15px;
-  margin-left: 199px;
   padding: 7px 0;
   padding-right: 8px;
   z-index: 1;
@@ -30,17 +29,6 @@ body {
   }
 }
 
-.admin-nav {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  width: $width-sidebar;
-  transform: translate3d(0, 0, 0);
-  transition: transform 350ms ease-in-out;
-  @media print { display: none }
-}
-
 #admin-nav-toggle i {
   transform: rotate(0);
   transition: transform 350ms linear;
@@ -48,10 +36,6 @@ body {
 
 .admin-nav-hidden {
   padding-left: 0;
-
-  .admin-nav {
-    transform: translate3d(-100%, 0, 0);
-  }
 
   #admin-nav-toggle i {
     transform: rotate(180deg);

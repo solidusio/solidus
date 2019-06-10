@@ -97,8 +97,7 @@ nav.menu {
   background-color: $color-white;
   border-bottom: 1px solid $color-border;
   text-align: center;
-  height: $main-header-height;
-  padding: 0 2em 0 1em;
+  padding: 0 1.25em;
   // Using line height for proper vertical centering.
   // As line height does not take the border width into account we need to subtract it.
   line-height: $main-header-height - 1px;
@@ -176,6 +175,7 @@ nav.menu {
         left: -2.1em;
         top: 1.5em;
         margin-top: -1em;
+        pointer-events:none;
       }
 
       > li {
