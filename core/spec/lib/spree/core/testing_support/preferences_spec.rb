@@ -6,7 +6,9 @@ RSpec.describe Spree::TestingSupport::Preferences do
   describe 'resetting the app configuration' do
     around do |example|
       with_unfrozen_spree_preference_store do
-        example.run
+        Spree::Deprecation.silence do
+          example.run
+        end
       end
     end
 
