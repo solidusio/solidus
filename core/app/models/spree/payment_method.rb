@@ -130,9 +130,13 @@ module Spree
     def gateway
       gateway_options = options
       gateway_options.delete :login if gateway_options.key?(:login) && gateway_options[:login].nil?
-      if gateway_options[:server]
-        ActiveMerchant::Billing::Base.mode = gateway_options[:server].to_sym
-      end
+
+      # All environments except production considered to be test
+      test_server = gateway_options[:server] != 'production'
+      test_mode = gateway_options[:test_mode]
+
+      gateway_options[:test] = (test_server || test_mode)
+
       @gateway ||= gateway_class.new(gateway_options)
     end
     alias_method :provider, :gateway
