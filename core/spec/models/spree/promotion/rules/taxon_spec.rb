@@ -48,6 +48,11 @@ RSpec.describe Spree::Promotion::Rules::Taxon, type: :model do
           expect(rule.eligibility_errors.full_messages.first).
             to eq "You need to add a product from an applicable category before applying this coupon code."
         end
+        it "sets an error code" do
+          rule.eligible?(order)
+          expect(rule.eligibility_errors.details[:base].first[:error_code]).
+            to eq :no_matching_taxons
+        end
       end
 
       context 'when a product has a taxon child of a taxon rule' do
@@ -82,6 +87,11 @@ RSpec.describe Spree::Promotion::Rules::Taxon, type: :model do
           rule.eligible?(order)
           expect(rule.eligibility_errors.full_messages.first).
             to eq "You need to add a product from all applicable categories before applying this coupon code."
+        end
+        it "sets an error code" do
+          rule.eligible?(order)
+          expect(rule.eligibility_errors.details[:base].first[:error_code]).
+            to eq :missing_taxon
         end
       end
 
@@ -121,6 +131,11 @@ RSpec.describe Spree::Promotion::Rules::Taxon, type: :model do
           rule.eligible?(order)
           expect(rule.eligibility_errors.full_messages.first).
             to eq "Your cart contains a product from an excluded category that prevents this coupon code from being applied."
+        end
+        it "sets an error code" do
+          rule.eligible?(order)
+          expect(rule.eligibility_errors.details[:base].first[:error_code]).
+            to eq :has_excluded_taxon
         end
       end
     end

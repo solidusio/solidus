@@ -27,21 +27,21 @@ module Spree
             end
 
             unless matches_all
-              eligibility_errors.add(:base, eligibility_error_message(:missing_taxon))
+              eligibility_errors.add(:base, eligibility_error_message(:missing_taxon), error_code: :missing_taxon)
             end
           when 'any'
             unless order_taxons.where(id: rule_taxon_ids_with_children).exists?
-              eligibility_errors.add(:base, eligibility_error_message(:no_matching_taxons))
+              eligibility_errors.add(:base, eligibility_error_message(:no_matching_taxons), error_code: :no_matching_taxons)
             end
           when 'none'
             if order_taxons.where(id: rule_taxon_ids_with_children).exists?
-              eligibility_errors.add(:base, eligibility_error_message(:has_excluded_taxon))
+              eligibility_errors.add(:base, eligibility_error_message(:has_excluded_taxon), error_code: :has_excluded_taxon)
             end
           else
             # Change this to an exception in a future version of Solidus
             warn_invalid_match_policy(assume: 'any')
             unless order_taxons.where(id: rule_taxon_ids_with_children).exists?
-              eligibility_errors.add(:base, eligibility_error_message(:no_matching_taxons))
+              eligibility_errors.add(:base, eligibility_error_message(:no_matching_taxons), error_code: :no_matching_taxons)
             end
           end
 

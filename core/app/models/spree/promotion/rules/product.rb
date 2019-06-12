@@ -33,15 +33,15 @@ module Spree
           case preferred_match_policy
           when 'all'
             unless eligible_products.all? { |p| order.products.include?(p) }
-              eligibility_errors.add(:base, eligibility_error_message(:missing_product))
+              eligibility_errors.add(:base, eligibility_error_message(:missing_product), error_code: :missing_product)
             end
           when 'any'
             unless order.products.any? { |p| eligible_products.include?(p) }
-              eligibility_errors.add(:base, eligibility_error_message(:no_applicable_products))
+              eligibility_errors.add(:base, eligibility_error_message(:no_applicable_products), error_code: :no_applicable_products)
             end
           when 'none'
             unless order.products.none? { |p| eligible_products.include?(p) }
-              eligibility_errors.add(:base, eligibility_error_message(:has_excluded_product))
+              eligibility_errors.add(:base, eligibility_error_message(:has_excluded_product), error_code: :has_excluded_product)
             end
           else
             raise "unexpected match policy: #{preferred_match_policy.inspect}"

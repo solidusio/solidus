@@ -44,6 +44,11 @@ RSpec.describe Spree::Promotion::Rules::ItemTotal, type: :model do
         expect(rule.eligibility_errors.full_messages.first).
           to eq "This coupon code can't be applied to orders less than or equal to $50.00."
       end
+      it "sets an error code" do
+        rule.eligible?(order)
+        expect(rule.eligibility_errors.details[:base].first[:error_code]).
+          to eq :item_total_less_than_or_equal
+      end
     end
 
     context "when item total is lower than preferred amount" do
@@ -57,6 +62,11 @@ RSpec.describe Spree::Promotion::Rules::ItemTotal, type: :model do
         rule.eligible?(order)
         expect(rule.eligibility_errors.full_messages.first).
           to eq "This coupon code can't be applied to orders less than or equal to $50.00."
+      end
+      it "sets an error code" do
+        rule.eligible?(order)
+        expect(rule.eligibility_errors.details[:base].first[:error_code]).
+          to eq :item_total_less_than_or_equal
       end
     end
   end
@@ -107,6 +117,11 @@ RSpec.describe Spree::Promotion::Rules::ItemTotal, type: :model do
         rule.eligible?(order)
         expect(rule.eligibility_errors.full_messages.first).
           to eq "This coupon code can't be applied to orders less than $50.00."
+      end
+      it "sets an error code" do
+        rule.eligible?(order)
+        expect(rule.eligibility_errors.details[:base].first[:error_code]).
+          to eq :item_total_less_than
       end
     end
   end
