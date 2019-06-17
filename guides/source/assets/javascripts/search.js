@@ -1,6 +1,7 @@
 import lunr from 'lunr';
+import DOMPurify from 'dompurify';
 
-var query = decodeURIComponent(window.location.search.match(/inputSearch=(.*?)(&|$)/)[1]).replace('+', ' ');
+var query = DOMPurify.sanitize(decodeURIComponent(window.location.search.match(/inputSearch=(.*?)(&|$)/)[1]).replace('+', ' '));
 
 function populateIndex(data) {
   var index = lunr(function(){
