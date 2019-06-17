@@ -25,6 +25,7 @@ Support this project by becoming a Key Stakeholder. Your logo will show up here 
 <a href="https://nebulab.it/"><img src="https://images.opencollective.com/proxy/images?src=https%3A%2F%2Fopencollective-production.s3-us-west-1.amazonaws.com%2F3cc3c170-20cc-11e9-9582-214168b65c9a.png&height=100"></a>
 <a href="https://www.enginecommerce.com/"><img src="https://images.opencollective.com/proxy/images?src=https%3A%2F%2Flogo.clearbit.com%2Fenginecommerce.com&height=100"></a>
 <a href="https://supergood.software/"><img src="https://images.opencollective.com/proxy/images?src=https%3A%2F%2Fopencollective-production.s3-us-west-1.amazonaws.com%2F3bbb1440-727f-11e9-a366-37673cc38cee.png&height=100"></a>
+<a href="https://karmacreative.io/"><img src="https://images.opencollective.com/proxy/images?src=https%3A%2F%2Fopencollective-production.s3-us-west-1.amazonaws.com%2Fab94d2a0-7253-11e9-a366-37673cc38cee.png&height=100"></a>
 
 ## Summary
 
