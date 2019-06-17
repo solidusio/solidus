@@ -80,16 +80,21 @@ module Spree
 
     def configure_application
       application <<-APP
-
-    config.to_prepare do
-      # Load application's model / class decorators
-      Dir.glob(File.join(File.dirname(__FILE__), "../app/**/*_decorator*.rb")) do |c|
-        require_dependency(c)
+    # Load application's model / class decorators
+    initializer 'spree.decorators' do |app|
+      config.to_prepare do
+        Dir.glob(Rails.root.join('app/**/*_decorator*.rb')) do |path|
+          require_dependency(path)
+        end
       end
+    end
 
-      # Load application's view overrides
-      Dir.glob(File.join(File.dirname(__FILE__), "../app/overrides/*.rb")) do |c|
-        require_dependency(c)
+    # Load application's view overrides
+    initializer 'spree.overrides' do |app|
+      config.to_prepare do
+        Dir.glob(Rails.root.join('app/overrides/*.rb')) do |path|
+          require_dependency(path)
+        end
       end
     end
       APP
