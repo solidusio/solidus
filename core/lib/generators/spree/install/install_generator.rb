@@ -79,7 +79,7 @@ module Spree
     end
 
     def configure_application
-      application <<-APP
+      application <<-RUBY
     # Load application's model / class decorators
     initializer 'spree.decorators' do |app|
       config.to_prepare do
@@ -97,22 +97,22 @@ module Spree
         end
       end
     end
-      APP
+      RUBY
 
       if !options[:enforce_available_locales].nil?
-        application <<-APP
+        application <<-RUBY
     # Prevent this deprecation message: https://github.com/svenfuchs/i18n/commit/3b6e56e
     I18n.enforce_available_locales = #{options[:enforce_available_locales]}
-        APP
+        RUBY
       end
     end
 
     def include_seed_data
-      append_file "db/seeds.rb", <<-SEEDS.strip_heredoc
+      append_file "db/seeds.rb", <<-RUBY.strip_heredoc
 
         Spree::Core::Engine.load_seed if defined?(Spree::Core)
         Spree::Auth::Engine.load_seed if defined?(Spree::Auth)
-      SEEDS
+      RUBY
     end
 
     def install_migrations
@@ -162,7 +162,7 @@ module Spree
       routes_file_path = File.join('config', 'routes.rb')
       unless File.read(routes_file_path).include? CORE_MOUNT_ROUTE
         insert_into_file routes_file_path, after: "Rails.application.routes.draw do\n" do
-          <<-ROUTES
+          <<-RUBY
   # This line mounts Solidus's routes at the root of your application.
   # This means, any requests to URLs such as /products, will go to Spree::ProductsController.
   # If you would like to change where this engine is mounted, simply change the :at option to something different.
@@ -170,7 +170,7 @@ module Spree
   # We ask that you don't use the :as option here, as Solidus relies on it being the default of "spree"
   #{CORE_MOUNT_ROUTE}, at: '/'
 
-ROUTES
+          RUBY
         end
       end
 
