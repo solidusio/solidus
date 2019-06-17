@@ -89,4 +89,30 @@ RSpec.describe Spree::Event do
       end
     end
   end
+
+  describe '.subscribers' do
+    let(:subscriber) { instance_double(Module, 'Subscriber') }
+    let(:subscriber_name) { instance_double(String, 'Subscriber name') }
+
+    before do
+      described_class.subscribers.clear
+      allow(subscriber).to receive(:name).and_return(subscriber_name)
+      allow(subscriber_name).to receive(:constantize).and_return(subscriber)
+      allow(subscriber_name).to receive(:to_s).and_return(subscriber_name)
+    end
+
+    it 'accepts the names of constants' do
+      Spree::Config.events.subscribers << subscriber_name
+
+      expect(described_class.subscribers.to_a).to eq([subscriber])
+    end
+
+    it 'discards duplicates' do
+      described_class.subscribers << subscriber_name
+      described_class.subscribers << subscriber_name
+      described_class.subscribers << subscriber_name
+
+      expect(described_class.subscribers.to_a).to eq([subscriber])
+    end
+  end
 end

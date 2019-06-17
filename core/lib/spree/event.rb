@@ -98,6 +98,12 @@ module Spree
       Spree::Config.events.suffix
     end
 
+    # @!attribute [r] subscribers
+    #   @return [Array<Spree::Event::Subscriber>] A list of subscribers used to support class reloading for Spree::Event::Subscriber instances
+    def subscribers
+      Spree::Config.events.subscribers
+    end
+
     private
 
     def name_with_suffix(name)

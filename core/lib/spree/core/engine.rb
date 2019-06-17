@@ -44,8 +44,15 @@ module Spree
         Migrations.new(config, engine_name).check
       end
 
-      initializer 'spree.core.mailer_subscriber' do
-        Spree::MailerSubscriber.subscribe!
+      # Setup Event Subscribers
+      initializer 'spree.core.initialize_subscribers' do |app|
+        app.reloader.to_prepare do
+          Spree::Event.subscribers.each(&:subscribe!)
+        end
+
+        app.reloader.before_class_unload do
+          Spree::Event.subscribers.each(&:unsubscribe!)
+        end
       end
 
       # Load in mailer previews for apps to use in development.
