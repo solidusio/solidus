@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Spree::Order, type: :model do
@@ -507,7 +508,7 @@ RSpec.describe Spree::Order, type: :model do
     let(:order) { build(:order, ship_address: ship_address, bill_address: bill_address, store: store) }
     let(:store) { build(:store) }
 
-    before { Spree::Config[:tax_using_ship_address] = tax_using_ship_address }
+    before { stub_spree_preferences(tax_using_ship_address: tax_using_ship_address) }
     subject { order.tax_address }
 
     context "when the order has no addresses" do

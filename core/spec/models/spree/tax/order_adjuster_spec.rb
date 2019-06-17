@@ -20,7 +20,7 @@ RSpec.describe Spree::Tax::OrderAdjuster do
     let(:custom_calculator_instance) { double }
 
     before do
-      Spree::Config.tax_calculator_class = custom_calculator_class
+      stub_spree_preferences(tax_calculator_class: custom_calculator_class)
     end
 
     it 'calls the configured tax calculator' do

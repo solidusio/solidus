@@ -4,9 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Spree::Money do
   before do
-    configure_spree_preferences do |config|
-      config.currency = "USD"
-    end
+    stub_spree_preferences(currency: "USD")
   end
 
   describe '#initialize' do
@@ -155,9 +153,7 @@ RSpec.describe Spree::Money do
 
   context "JPY" do
     before do
-      configure_spree_preferences do |config|
-        config.currency = "JPY"
-      end
+      stub_spree_preferences(currency: "JPY")
     end
 
     it "formats correctly" do
@@ -168,9 +164,7 @@ RSpec.describe Spree::Money do
 
   context "EUR" do
     before do
-      configure_spree_preferences do |config|
-        config.currency = "EUR"
-      end
+      stub_spree_preferences(currency: "EUR")
     end
 
     # Regression test for https://github.com/spree/spree/issues/2634

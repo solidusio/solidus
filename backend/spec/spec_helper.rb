@@ -89,7 +89,6 @@ RSpec.configure do |config|
 
   config.before do
     Rails.cache.clear
-    reset_spree_preferences
     if RSpec.current_example.metadata[:js] && page.driver.browser.respond_to?(:url_blacklist)
       page.driver.browser.url_blacklist = ['http://fonts.googleapis.com']
     end

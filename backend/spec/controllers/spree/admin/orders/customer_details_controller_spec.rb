@@ -17,12 +17,12 @@ describe Spree::Admin::Orders::CustomerDetailsController, type: :controller do
           let!(:checkout_zone) { create(:zone, name: "Checkout Zone", countries: [canada]) }
 
           before do
-            Spree::Config.checkout_zone = checkout_zone.name
+            stub_spree_preferences(checkout_zone: checkout_zone.name)
           end
 
           context "and default_country_iso of the Canada" do
             before do
-              Spree::Config.default_country_iso = Spree::Country.find_by!(iso: "CA").iso
+              stub_spree_preferences(default_country_iso: Spree::Country.find_by!(iso: "CA").iso)
             end
 
             it 'defaults the shipping address country to Canada' do
@@ -38,7 +38,7 @@ describe Spree::Admin::Orders::CustomerDetailsController, type: :controller do
 
           context "and default_country_iso of the United States" do
             before do
-              Spree::Config.default_country_iso = Spree::Country.find_by!(iso: "US").iso
+              stub_spree_preferences(default_country_iso: Spree::Country.find_by!(iso: "US").iso)
             end
 
             it 'defaults the shipping address country to nil' do

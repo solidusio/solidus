@@ -516,7 +516,7 @@ RSpec.describe Spree::Variant, type: :model do
 
   describe '#in_stock?' do
     before do
-      Spree::Config.track_inventory_levels = true
+      stub_spree_preferences(track_inventory_levels: true)
     end
 
     context 'when stock_items are not backorderable' do
@@ -597,7 +597,7 @@ RSpec.describe Spree::Variant, type: :model do
 
   describe '#total_on_hand' do
     it 'should be infinite if track_inventory_levels is false' do
-      Spree::Config[:track_inventory_levels] = false
+      stub_spree_preferences(track_inventory_levels: false)
       expect(build(:variant).total_on_hand).to eql(Float::INFINITY)
     end
 
@@ -640,19 +640,19 @@ RSpec.describe Spree::Variant, type: :model do
 
   describe "#should_track_inventory?" do
     it 'should not track inventory when global setting is off' do
-      Spree::Config[:track_inventory_levels] = false
+      stub_spree_preferences(track_inventory_levels: false)
 
       expect(build(:variant).should_track_inventory?).to eq(false)
     end
 
     it 'should not track inventory when variant is turned off' do
-      Spree::Config[:track_inventory_levels] = true
+      stub_spree_preferences(track_inventory_levels: true)
 
       expect(build(:on_demand_variant).should_track_inventory?).to eq(false)
     end
 
     it 'should track inventory when global and variant are on' do
-      Spree::Config[:track_inventory_levels] = true
+      stub_spree_preferences(track_inventory_levels: true)
 
       expect(build(:variant).should_track_inventory?).to eq(true)
     end
@@ -749,8 +749,7 @@ RSpec.describe Spree::Variant, type: :model do
     end
 
     context "inventory levels globally not tracked" do
-      before { Spree::Config.track_inventory_levels = false }
-      after { Spree::Config.track_inventory_levels = true }
+      before { stub_spree_preferences(track_inventory_levels: false) }
 
       it 'includes items without inventory' do
         expect( subject ).to include out_of_stock_variant
@@ -788,7 +787,7 @@ RSpec.describe Spree::Variant, type: :model do
     end
 
     context "inventory levels globally not tracked" do
-      before { Spree::Config.track_inventory_levels = false }
+      before { stub_spree_preferences(track_inventory_levels: false) }
 
       it "includes all variants" do
         expect( subject ).to include(in_stock_variant, backordered_variant, out_of_stock_variant)

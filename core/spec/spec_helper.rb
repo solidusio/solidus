@@ -22,10 +22,6 @@ RSpec.configure do |config|
     c.syntax = :expect
   end
 
-  config.before :each do
-    reset_spree_preferences
-  end
-
   config.include Spree::TestingSupport::Preferences
   config.extend WithModel
 

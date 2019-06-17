@@ -77,7 +77,7 @@ module Spree::Stock
         end
 
         context 'with config.track_inventory_levels=false' do
-          before { Spree::Config.track_inventory_levels = false }
+          before { stub_spree_preferences(track_inventory_levels: false) }
 
           it "has infinite inventory " do
             expect(subject).to eq(stock_location1.id => Spree::StockQuantities.new(variant => infinity))

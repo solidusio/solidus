@@ -135,7 +135,7 @@ RSpec.describe "Taxation system integration tests" do
     end
 
     before do
-      Spree::Config.admin_vat_country_iso = "DE"
+      stub_spree_preferences(admin_vat_country_iso: "DE")
       order.contents.add(variant)
     end
 

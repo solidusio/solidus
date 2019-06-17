@@ -469,9 +469,7 @@ describe Spree::CheckoutController, type: :controller do
     before do
       allow(order).to receive_messages(line_items: [line_item], state: "payment")
 
-      configure_spree_preferences do |config|
-        config.track_inventory_levels = true
-      end
+      stub_spree_preferences(track_inventory_levels: true)
     end
 
     context "and back orders are not allowed" do

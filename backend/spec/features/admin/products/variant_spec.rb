@@ -32,7 +32,7 @@ describe "Variants", type: :feature do
     context "currency displaying" do
       context "using Russian Rubles" do
         before do
-          Spree::Config[:currency] = "RUB"
+          stub_spree_preferences(currency: "RUB")
         end
 
         let!(:variant) do

@@ -14,7 +14,7 @@ describe "Switching currencies in backend", type: :feature do
     click_link "RoR Mug"
     click_button "Add To Cart"
     # Now that we have an order...
-    Spree::Config[:currency] = "AUD"
+    stub_spree_preferences(currency: "AUD")
     visit spree.root_path
   end
 end

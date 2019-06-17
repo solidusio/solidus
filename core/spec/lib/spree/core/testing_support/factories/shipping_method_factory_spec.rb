@@ -17,7 +17,7 @@ RSpec.describe 'shipping method factory' do
     end
 
     context 'store using alternate currency' do
-      before { Spree::Config[:currency] = 'CAD' }
+      before { stub_spree_preferences(currency: 'CAD') }
 
       it "should configure the calculator correctly" do
         shipping_method = create(factory)

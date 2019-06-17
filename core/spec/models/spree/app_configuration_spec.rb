@@ -5,6 +5,12 @@ require 'rails_helper'
 RSpec.describe Spree::AppConfiguration, type: :model do
   let(:prefs) { Spree::Config }
 
+  around do |example|
+    with_unfrozen_spree_preference_store do
+      example.run
+    end
+  end
+
   it "should be available from the environment" do
     prefs.layout = "my/layout"
     expect(prefs.layout).to eq "my/layout"

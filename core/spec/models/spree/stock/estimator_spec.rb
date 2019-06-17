@@ -195,13 +195,11 @@ module Spree
               Spree::ShippingRate.new
             end
           end
-          Spree::Config.shipping_rate_selector_class = selector_class
+          stub_spree_preferences(shipping_rate_selector_class: selector_class)
 
           subject.shipping_rates(package)
 
           expect(shipping_rate.selected).to eq(true)
-
-          Spree::Config.shipping_rate_selector_class = nil
         end
 
         it 'uses the configured shipping rate sorter' do
@@ -209,7 +207,8 @@ module Spree
             def initialize(_rates)
             end
           end
-          Spree::Config.shipping_rate_sorter_class = Spree::Stock::TestSorter
+
+          stub_spree_preferences(shipping_rate_sorter_class: Spree::Stock::TestSorter)
 
           sorter = double(:sorter, sort: nil)
           allow(Spree::Stock::TestSorter).to receive(:new) { sorter }
@@ -217,8 +216,6 @@ module Spree
           subject.shipping_rates(package)
 
           expect(sorter).to have_received(:sort)
-
-          Spree::Config.shipping_rate_sorter_class = nil
         end
 
         it 'uses the configured shipping rate taxer' do
@@ -232,7 +229,8 @@ module Spree
               ]
             end
           end
-          Spree::Config.shipping_rate_tax_calculator_class = Spree::Tax::TestTaxCalculator
+
+          stub_spree_preferences(shipping_rate_tax_calculator_class: Spree::Tax::TestTaxCalculator)
 
           expect(Spree::Tax::TestTaxCalculator).to receive(:new).and_call_original
           subject.shipping_rates(package)

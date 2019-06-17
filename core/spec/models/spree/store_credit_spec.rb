@@ -507,7 +507,7 @@ RSpec.describe Spree::StoreCredit do
       let(:auth_code)       { event_auth_code }
 
       context "credit_to_new_allocation is set" do
-        before { Spree::Config[:credit_to_new_allocation] = true }
+        before { stub_spree_preferences(credit_to_new_allocation: true) }
 
         it "returns true" do
           expect(subject).to be true

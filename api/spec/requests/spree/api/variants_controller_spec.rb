@@ -251,7 +251,7 @@ module Spree
 
       context "when tracking is disabled" do
         before do
-          Config.track_inventory_levels = false
+          stub_spree_preferences(track_inventory_levels: false)
           subject
         end
 
@@ -259,8 +259,6 @@ module Spree
           expect(response.status).to eq(200)
           expect(json_response['total_on_hand']).to eq nil
         end
-
-        after { Config.track_inventory_levels = true }
       end
     end
 

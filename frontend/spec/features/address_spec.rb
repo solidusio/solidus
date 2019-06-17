@@ -24,7 +24,7 @@ describe "Address", type: :feature, inaccessible: true do
     let!(:canada) { create(:country, name: "Canada", states_required: true, iso: "CA") }
     let!(:uk) { create(:country, name: "United Kingdom", states_required: true, iso: "GB") }
 
-    before { Spree::Config[:default_country_iso] = uk.iso }
+    before { stub_spree_preferences(default_country_iso: uk.iso) }
 
     context "but has no state" do
       it "shows the state input field" do

@@ -28,8 +28,9 @@ RSpec.describe Spree::Address, type: :model do
 
     context 'address does not require state' do
       before do
-        Spree::Config.address_requires_state = false
+        stub_spree_preferences(address_requires_state: false)
       end
+
       it "address_requires_state preference is false" do
         address.state = nil
         address.state_name = nil
@@ -39,7 +40,7 @@ RSpec.describe Spree::Address, type: :model do
 
     context 'address requires state' do
       before do
-        Spree::Config.address_requires_state = true
+        stub_spree_preferences(address_requires_state: true)
       end
 
       it "state_name is not nil and country does not have any states" do
@@ -145,7 +146,7 @@ RSpec.describe Spree::Address, type: :model do
 
       context 'has a default country' do
         before do
-          Spree::Config[:default_country_iso] = default_country.iso
+          stub_spree_preferences(default_country_iso: default_country.iso)
         end
 
         it "sets up a new record with Spree::Config[:default_country_iso]" do
@@ -155,7 +156,7 @@ RSpec.describe Spree::Address, type: :model do
 
       # Regression test for https://github.com/spree/spree/issues/1142
       it "raises ActiveRecord::RecordNotFound if :default_country_iso is set to an invalid value" do
-        Spree::Config[:default_country_iso] = "00"
+        stub_spree_preferences(default_country_iso: "00")
         expect {
           Spree::Address.build_default.country
         }.to raise_error(ActiveRecord::RecordNotFound)

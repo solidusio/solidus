@@ -189,7 +189,7 @@ RSpec.describe Spree::CustomerReturn, type: :model do
 
       context 'with Config.track_inventory_levels == false' do
         before do
-          Spree::Config.track_inventory_levels = false
+          stub_spree_preferences(track_inventory_levels: false)
           expect(Spree::StockItem).not_to receive(:find_by)
           expect(Spree::StockMovement).not_to receive(:create!)
         end

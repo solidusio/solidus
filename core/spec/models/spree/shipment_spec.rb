@@ -328,7 +328,7 @@ RSpec.describe Spree::Shipment, type: :model do
 
     context "when payment is not required" do
       before do
-        Spree::Config[:require_payment_to_ship] = false
+        stub_spree_preferences(require_payment_to_ship: false)
       end
 
       it "should result in a 'ready' state" do
@@ -391,7 +391,7 @@ RSpec.describe Spree::Shipment, type: :model do
     end
 
     context "with inventory tracking" do
-      before { Spree::Config.set track_inventory_levels: true }
+      before { stub_spree_preferences(track_inventory_levels: true) }
 
       it "should validate with inventory" do
         shipment.inventory_units = [create(:inventory_unit)]
@@ -400,7 +400,7 @@ RSpec.describe Spree::Shipment, type: :model do
     end
 
     context "without inventory tracking" do
-      before { Spree::Config.set track_inventory_levels: false }
+      before { stub_spree_preferences(track_inventory_levels: false) }
 
       it "should validate with no inventory" do
         expect(shipment.valid?).to be true

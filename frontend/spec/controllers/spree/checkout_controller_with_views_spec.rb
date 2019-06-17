@@ -16,7 +16,7 @@ describe Spree::CheckoutController, type: :controller do
   # Regression test for https://github.com/spree/spree/issues/3246
   context "when using GBP" do
     before do
-      Spree::Config[:currency] = "GBP"
+      stub_spree_preferences(currency: "GBP")
     end
 
     context "when order is in delivery" do
