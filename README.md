@@ -210,11 +210,16 @@ testing purposes.
 This sandbox includes solidus\_auth\_devise and generates with seed and sample
 data already loaded.
 
-* Create the sandbox application (`DB=mysql` or `DB=postgresql` can be specified
-  to override the default sqlite)
+* Create the sandbox application 
 
   ```bash
   bundle exec rake sandbox
+  ```
+
+  You can create a sandbox with PostgreSQL or MySQL by setting the DB environment variable.
+
+  ```bash
+  DB=postgresql bundle exec rake sandbox
   ```
 
 * Start the server
