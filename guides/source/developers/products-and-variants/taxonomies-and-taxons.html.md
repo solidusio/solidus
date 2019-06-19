@@ -7,15 +7,6 @@ Administrators can define as many structures as they need from Solidus's
 backend. Then, they can associate individual products with any number of
 taxonomies or taxons using the `Spree::Classification` model.
 
-When working with taxonomies there are two key terms to understand:
-
-- Taxonomy: A hierarchical list which is made up of individual taxons. Each
-  taxonomy relates to one taxon, which is its root node.
-- Taxon: A single child node which exists at a given point within a taxonomy.
-  Each taxon can contain additional child taxons. Administrators can define as
-  many Taxonomies as needed and link a product to multiple taxons from each
-  taxonomy.
-
 ## Taxonomies
 
 Use taxonomies to define the ways that you want to classify products in
