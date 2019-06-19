@@ -39,8 +39,11 @@ Spree.config do |config|
   # Gateway credentials can be configured statically here and referenced from
   # the admin. They can also be fully configured from the admin.
   #
+  # Please note that you need to use the solidus_stripe gem to have
+  # Stripe working: https://github.com/solidusio-contrib/solidus_stripe
+  #
   # config.static_model_preferences.add(
-  #   Spree::Gateway::StripeGateway,
+  #   Spree::PaymentMethod::StripeCreditCard,
   #   'stripe_env_credentials',
   #   secret_key: ENV['STRIPE_SECRET_KEY'],
   #   publishable_key: ENV['STRIPE_PUBLISHABLE_KEY'],
