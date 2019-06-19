@@ -80,3 +80,8 @@ end
 <% end -%>
 
 Spree.user_class = <%= (options[:user_class].blank? ? "Spree::LegacyUser" : options[:user_class]).inspect %>
+
+# If you want to add a field to the whitelisted ransackable attributes,
+# just uncomment the following code and change it as you need.
+#
+# Spree::Model.whitelisted_ransackable_attributes << 'field'
