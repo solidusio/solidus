@@ -24,7 +24,7 @@ Gem::Specification.new do |s|
     actionmailer actionpack actionview activejob activemodel activerecord
     activesupport railties
   ].each do |rails_dep|
-    s.add_dependency rails_dep, ['>= 5.1', '< 5.3.x']
+    s.add_dependency rails_dep, ['>= 5.1', '< 7.0.x']
   end
 
   s.add_dependency 'activemerchant', '~> 1.66'
