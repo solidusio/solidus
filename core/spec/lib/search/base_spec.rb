@@ -60,7 +60,11 @@ RSpec.describe Spree::Core::Search::Base do
                search: { "price_range_any" => ["Under $10.00", "$10.00 - $15.00"] } }
     searcher = Spree::Core::Search::Base.new(params)
     expect(searcher.send(:get_base_scope).to_sql).to match /<= 10/
-    expect(searcher.send(:get_base_scope).to_sql).to match /between 10 and 15/i
+    if Rails.gem_version >= Gem::Version.new('6.0.0')
+      expect(searcher.send(:get_base_scope).to_sql).to match /between 10\.0 and 15\.0/i
+    else
+      expect(searcher.send(:get_base_scope).to_sql).to match /between 10 and 15/i
+    end
     expect(searcher.retrieve_products.count).to eq(2)
   end
 
