@@ -3,15 +3,18 @@
 Spree::Sample.load_sample("option_values")
 Spree::Sample.load_sample("products")
 
-ror_baseball_jersey = Spree::Product.find_by!(name: "Ruby on Rails Baseball Jersey")
-ror_tote = Spree::Product.find_by!(name: "Ruby on Rails Tote")
-ror_bag = Spree::Product.find_by!(name: "Ruby on Rails Bag")
-ror_jr_spaghetti = Spree::Product.find_by!(name: "Ruby on Rails Jr. Spaghetti")
-ror_mug = Spree::Product.find_by!(name: "Ruby on Rails Mug")
-ror_ringer = Spree::Product.find_by!(name: "Ruby on Rails Ringer T-Shirt")
-ror_stein = Spree::Product.find_by!(name: "Ruby on Rails Stein")
-ruby_baseball_jersey = Spree::Product.find_by!(name: "Ruby Baseball Jersey")
-apache_baseball_jersey = Spree::Product.find_by!(name: "Apache Baseball Jersey")
+solidus_tshirt = Spree::Product.find_by!(name: "Solidus T-Shirt")
+solidus_long = Spree::Product.find_by!(name: "Solidus Long Sleeve")
+solidus_snapback_cap = Spree::Product.find_by!(name: "Solidus Snapback Cap")
+solidus_hoodie = Spree::Product.find_by!(name: "Solidus Hoodie Zip")
+ruby_hoodie = Spree::Product.find_by!(name: "Ruby Hoodie")
+ruby_hoodie_zip = Spree::Product.find_by!(name: "Ruby Hoodie Zip")
+ruby_polo = Spree::Product.find_by!(name: "Ruby Polo")
+solidus_mug = Spree::Product.find_by!(name: "Solidus Mug")
+ruby_mug = Spree::Product.find_by!(name: "Ruby Mug")
+solidus_tote = Spree::Product.find_by!(name: "Solidus Tote")
+ruby_tote = Spree::Product.find_by!(name: "Ruby Tote")
+solidus_girly = Spree::Product.find_by!(name: "Solidus Girly")
 
 small = Spree::OptionValue.find_by!(name: "Small")
 medium = Spree::OptionValue.find_by!(name: "Medium")
@@ -21,105 +24,191 @@ extra_large = Spree::OptionValue.find_by!(name: "Extra Large")
 red = Spree::OptionValue.find_by!(name: "Red")
 blue = Spree::OptionValue.find_by!(name: "Blue")
 green = Spree::OptionValue.find_by!(name: "Green")
+black = Spree::OptionValue.find_by!(name: "Black")
+white = Spree::OptionValue.find_by!(name: "White")
 
 variants = [
   {
-    product: ror_baseball_jersey,
-    option_values: [small, red],
-    sku: "ROR-00001",
-    cost_price: 17
-  },
-  {
-    product: ror_baseball_jersey,
+    product: solidus_tshirt,
     option_values: [small, blue],
-    sku: "ROR-00002",
+    sku: "SOL-00003",
     cost_price: 17
   },
   {
-    product: ror_baseball_jersey,
-    option_values: [small, green],
-    sku: "ROR-00003",
+    product: solidus_tshirt,
+    option_values: [small, black],
+    sku: "SOL-00002",
     cost_price: 17
   },
   {
-    product: ror_baseball_jersey,
-    option_values: [medium, red],
-    sku: "ROR-00004",
+    product: solidus_tshirt,
+    option_values: [small, white],
+    sku: "SOL-00004",
     cost_price: 17
   },
   {
-    product: ror_baseball_jersey,
+    product: solidus_tshirt,
     option_values: [medium, blue],
-    sku: "ROR-00005",
+    sku: "SOL-00005",
     cost_price: 17
   },
   {
-    product: ror_baseball_jersey,
-    option_values: [medium, green],
-    sku: "ROR-00006",
+    product: solidus_tshirt,
+    option_values: [large, white],
+    sku: "SOL-00006",
     cost_price: 17
   },
   {
-    product: ror_baseball_jersey,
-    option_values: [large, red],
-    sku: "ROR-00007",
+    product: solidus_tshirt,
+    option_values: [large, black],
+    sku: "SOL-00007",
     cost_price: 17
   },
   {
-    product: ror_baseball_jersey,
+    product: solidus_tshirt,
+    option_values: [extra_large, blue],
+    sku: "SOL-0008",
+    cost_price: 17
+  },
+  {
+    product: solidus_long,
+    option_values: [small, black],
+    sku: "SOL-LS02",
+    cost_price: 17
+  },
+  {
+    product: solidus_long,
+    option_values: [small, white],
+    sku: "SOL-LS01",
+    cost_price: 17
+  },
+  {
+    product: solidus_long,
+    option_values: [small, blue],
+    sku: "SOL-LS03",
+    cost_price: 17
+  },
+  {
+    product: solidus_long,
+    option_values: [medium, white],
+    sku: "SOL-LS04",
+    cost_price: 17
+  },
+  {
+    product: solidus_long,
+    option_values: [medium, black],
+    sku: "SOL-LS05",
+    cost_price: 17
+  },
+  {
+    product: solidus_long,
+    option_values: [medium, blue],
+    sku: "SOL-LS06",
+    cost_price: 17
+  },
+  {
+    product: solidus_long,
+    option_values: [large, white],
+    sku: "SOL-LS07",
+    cost_price: 17
+  },
+  {
+    product: solidus_long,
+    option_values: [large, black],
+    sku: "SOL-LS08",
+    cost_price: 17
+  },
+  {
+    product: solidus_long,
     option_values: [large, blue],
-    sku: "ROR-00008",
+    sku: "SOL-LS09",
     cost_price: 17
   },
   {
-    product: ror_baseball_jersey,
-    option_values: [large, green],
-    sku: "ROR-00009",
+    product: solidus_girly,
+    option_values: [small, black],
+    sku: "SOL-WM001",
     cost_price: 17
   },
   {
-    product: ror_baseball_jersey,
-    option_values: [extra_large, green],
-    sku: "ROR-00010",
+    product: solidus_girly,
+    option_values: [small, blue],
+    sku: "SOL-WM002",
+    cost_price: 17
+  },
+  {
+    product: solidus_girly,
+    option_values: [small, white],
+    sku: "SOL-WM003",
+    cost_price: 17
+  },
+  {
+    product: solidus_girly,
+    option_values: [medium, blue],
+    sku: "SOL-WM004",
+    cost_price: 17
+  },
+  {
+    product: solidus_girly,
+    option_values: [medium, white],
+    sku: "SOL-WM005",
+    cost_price: 17
+  },
+  {
+    product: solidus_girly,
+    option_values: [medium, black],
+    sku: "SOL-WM006",
     cost_price: 17
   }
 ]
 
 masters = {
-  ror_baseball_jersey => {
-    sku: "ROR-001",
+  solidus_tote => {
+    sku: "SOL-TOT01",
     cost_price: 17
   },
-  ror_tote => {
-    sku: "ROR-00011",
+  ruby_tote => {
+    sku: "RUB-TOT01",
     cost_price: 17
   },
-  ror_bag => {
-    sku: "ROR-00012",
-    cost_price: 21
-  },
-  ror_jr_spaghetti => {
-    sku: "ROR-00013",
+  solidus_snapback_cap => {
+    sku: "SOL-SNC01",
     cost_price: 17
   },
-  ror_mug => {
-    sku: "ROR-00014",
-    cost_price: 11
-  },
-  ror_ringer => {
-    sku: "ROR-00015",
+  solidus_tshirt => {
+    sku: "SOL-00001",
     cost_price: 17
   },
-  ror_stein => {
-    sku: "ROR-00016",
-    cost_price: 15
-  },
-  apache_baseball_jersey => {
-    sku: "APC-00001",
+  solidus_long => {
+    sku: "SOL-LS00",
     cost_price: 17
   },
-  ruby_baseball_jersey => {
-    sku: "RUB-00001",
+  solidus_hoodie => {
+    sku: "SOL-HD00",
+    cost_price: 27
+  },
+  ruby_hoodie => {
+    sku: "RUB-HD01",
+    cost_price: 27
+  },
+  ruby_hoodie_zip => {
+    sku: "RUB-HD00",
+    cost_price: 27
+  },
+  ruby_polo => {
+    sku: "RUB-PL01",
+    cost_price: 23
+  },
+  solidus_mug => {
+    sku: "SOL-MG01",
+    cost_price: 7
+  },
+  ruby_mug => {
+    sku: "RUB-MG01",
+    cost_price: 7
+  },
+  solidus_girly => {
+    sku: "SOL-WM00",
     cost_price: 17
   }
 }
