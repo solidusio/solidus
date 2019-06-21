@@ -3,7 +3,7 @@
 require 'spec_helper'
 require 'spree/event'
 
-RSpec.describe Spree::Event do
+RSpec.describe Spree::Event::Subscriber do
   module M
     include Spree::Event::Subscriber
 
