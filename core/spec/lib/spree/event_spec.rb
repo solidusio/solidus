@@ -18,14 +18,26 @@ RSpec.describe Spree::Event do
     before do
       # ActiveSupport::Notifications does not provide an interface to clean all
       # subscribers at once, so some low level brittle code is required
-      @old_subscribers = notifier.instance_variable_get('@subscribers').dup
+      if Rails.gem_version >= Gem::Version.new('6.0.0')
+        @old_string_subscribers = notifier.instance_variable_get('@string_subscribers').dup
+        @old_other_subscribers = notifier.instance_variable_get('@other_subscribers').dup
+        notifier.instance_variable_get('@string_subscribers').clear
+        notifier.instance_variable_get('@other_subscribers').clear
+      else
+        @old_subscribers = notifier.instance_variable_get('@subscribers').dup
+        notifier.instance_variable_get('@subscribers').clear
+      end
       @old_listeners = notifier.instance_variable_get('@listeners_for').dup
-      notifier.instance_variable_get('@subscribers').clear
       notifier.instance_variable_get('@listeners_for').clear
     end
 
     after do
-      notifier.instance_variable_set '@subscribers', @old_subscribers
+      if Rails.gem_version >= Gem::Version.new('6.0.0')
+        notifier.instance_variable_set '@string_subscribers', @old_string_subscribers
+        notifier.instance_variable_set '@other_subscribers', @old_other_subscribers
+      else
+        notifier.instance_variable_set '@subscribers', @old_subscribers
+      end
       notifier.instance_variable_set '@listeners_for', @old_listeners
     end
 
