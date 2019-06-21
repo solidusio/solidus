@@ -14,21 +14,21 @@ RSpec.describe Spree::Event do
     expect(subject.adapter).to eql Spree::Event::Adapters::ActiveSupportNotifications
   end
 
-  before do
-    # ActiveSupport::Notifications does not provide an interface to clean all
-    # subscribers at once, so some low level brittle code is required
-    @old_subscribers = notifier.instance_variable_get('@subscribers').dup
-    @old_listeners = notifier.instance_variable_get('@listeners_for').dup
-    notifier.instance_variable_get('@subscribers').clear
-    notifier.instance_variable_get('@listeners_for').clear
-  end
-
-  after do
-    notifier.instance_variable_set '@subscribers', @old_subscribers
-    notifier.instance_variable_set '@listeners_for', @old_listeners
-  end
-
   context 'with the default adapter' do
+    before do
+      # ActiveSupport::Notifications does not provide an interface to clean all
+      # subscribers at once, so some low level brittle code is required
+      @old_subscribers = notifier.instance_variable_get('@subscribers').dup
+      @old_listeners = notifier.instance_variable_get('@listeners_for').dup
+      notifier.instance_variable_get('@subscribers').clear
+      notifier.instance_variable_get('@listeners_for').clear
+    end
+
+    after do
+      notifier.instance_variable_set '@subscribers', @old_subscribers
+      notifier.instance_variable_set '@listeners_for', @old_listeners
+    end
+
     describe '#listeners' do
       context 'when there is no subscription' do
         it { expect(subject.listeners).to be_empty }
