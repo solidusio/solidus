@@ -25,7 +25,7 @@ Spree::Config.events.adapter = "Spree::EventBus.new"
 
 ## Subscribing to events
 
-`Spree::Event.subscribe` allows to subscribe to a certain event. The event name is mandatory, the optional block will be executed everytime the event is fired:
+`Spree::Event.subscribe` allows to subscribe to a certain event. The event name is mandatory, the optional block will be executed every time the event is fired:
 
 ```ruby
 Spree::Event.subscribe 'order_finalized' do |event|
