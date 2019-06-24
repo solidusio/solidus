@@ -1,10 +1,5 @@
 # Decorators
 
-<!-- TODO:
-  An article about decorators doesn't really belong in the `/extensions`
-  directory. In the future, there will be a better home for it.
--->
-
 Solidus autoloads any file in the `/app` directory that has the suffix
 `_decorator.rb`, just like any other Rails models or controllers. This allows
 you to [monkey patch][monkey-patch] Solidus functionality for your store.
