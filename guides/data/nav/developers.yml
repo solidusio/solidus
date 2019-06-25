@@ -50,6 +50,8 @@
         href: "/developers/customizations/customizing-storefront.html"
       - title: "Decorators"
         href: "/developers/customizations/decorators.html"
+      - title: "Customizing Assets"
+        href: "/developers/customizations/customizing-assets.html"
   - title: "Extensions"
     dropdown:
       - title: "Installing extensions"
