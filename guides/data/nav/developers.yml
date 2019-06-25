@@ -52,6 +52,8 @@
         href: "/developers/customizations/decorators.html"
       - title: "Customizing Assets"
         href: "/developers/customizations/customizing-assets.html"
+      - title: "Customizing Permissions"
+        href: "/developers/customizations/customizing-permissions.html"
   - title: "Extensions"
     dropdown:
       - title: "Installing extensions"
