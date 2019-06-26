@@ -499,33 +499,31 @@ module Spree
           Spree::PaymentMethod::Check
         ]
 
-        env.promotions = Spree::Core::Environment::Promotions.new.tap do |promos|
-          promos.rules = %w[
-            Spree::Promotion::Rules::ItemTotal
-            Spree::Promotion::Rules::Product
-            Spree::Promotion::Rules::User
-            Spree::Promotion::Rules::FirstOrder
-            Spree::Promotion::Rules::UserLoggedIn
-            Spree::Promotion::Rules::OneUsePerUser
-            Spree::Promotion::Rules::Taxon
-            Spree::Promotion::Rules::NthOrder
-            Spree::Promotion::Rules::OptionValue
-            Spree::Promotion::Rules::FirstRepeatPurchaseSince
-            Spree::Promotion::Rules::UserRole
-            Spree::Promotion::Rules::Store
-          ]
+        env.promotions.rules = %w[
+          Spree::Promotion::Rules::ItemTotal
+          Spree::Promotion::Rules::Product
+          Spree::Promotion::Rules::User
+          Spree::Promotion::Rules::FirstOrder
+          Spree::Promotion::Rules::UserLoggedIn
+          Spree::Promotion::Rules::OneUsePerUser
+          Spree::Promotion::Rules::Taxon
+          Spree::Promotion::Rules::NthOrder
+          Spree::Promotion::Rules::OptionValue
+          Spree::Promotion::Rules::FirstRepeatPurchaseSince
+          Spree::Promotion::Rules::UserRole
+          Spree::Promotion::Rules::Store
+        ]
 
-          promos.actions = %w[
-            Spree::Promotion::Actions::CreateAdjustment
-            Spree::Promotion::Actions::CreateItemAdjustments
-            Spree::Promotion::Actions::CreateQuantityAdjustments
-            Spree::Promotion::Actions::FreeShipping
-          ]
+        env.promotions.actions = %w[
+          Spree::Promotion::Actions::CreateAdjustment
+          Spree::Promotion::Actions::CreateItemAdjustments
+          Spree::Promotion::Actions::CreateQuantityAdjustments
+          Spree::Promotion::Actions::FreeShipping
+        ]
 
-          promos.shipping_actions = %w[
-            Spree::Promotion::Actions::FreeShipping
-          ]
-        end
+        env.promotions.shipping_actions = %w[
+          Spree::Promotion::Actions::FreeShipping
+        ]
 
         env.calculators.promotion_actions_create_adjustments = %w[
           Spree::Calculator::FlatPercentItemTotal
