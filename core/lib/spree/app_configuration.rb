@@ -475,6 +475,27 @@ module Spree
 
     def environment
       @environment ||= Spree::Core::Environment.new(self).tap do |env|
+        env.calculators.promotion_actions_create_adjustments = %w[
+          Spree::Calculator::FlatPercentItemTotal
+          Spree::Calculator::FlatRate
+          Spree::Calculator::FlexiRate
+          Spree::Calculator::TieredPercent
+          Spree::Calculator::TieredFlatRate
+        ]
+
+        env.calculators.promotion_actions_create_item_adjustments = %w[
+          Spree::Calculator::DistributedAmount
+          Spree::Calculator::FlatRate
+          Spree::Calculator::FlexiRate
+          Spree::Calculator::PercentOnLineItem
+          Spree::Calculator::TieredPercent
+        ]
+
+        env.calculators.promotion_actions_create_quantity_adjustments = %w[
+          Spree::Calculator::PercentOnLineItem
+          Spree::Calculator::FlatRate
+        ]
+
         env.calculators.shipping_methods = %w[
           Spree::Calculator::Shipping::FlatPercentItemTotal
           Spree::Calculator::Shipping::FlatRate
@@ -485,11 +506,6 @@ module Spree
 
         env.calculators.tax_rates = %w[
           Spree::Calculator::DefaultTax
-        ]
-
-        env.stock_splitters = %w[
-          Spree::Stock::Splitter::ShippingCategory
-          Spree::Stock::Splitter::Backordered
         ]
 
         env.payment_methods = %w[
@@ -525,25 +541,9 @@ module Spree
           Spree::Promotion::Actions::FreeShipping
         ]
 
-        env.calculators.promotion_actions_create_adjustments = %w[
-          Spree::Calculator::FlatPercentItemTotal
-          Spree::Calculator::FlatRate
-          Spree::Calculator::FlexiRate
-          Spree::Calculator::TieredPercent
-          Spree::Calculator::TieredFlatRate
-        ]
-
-        env.calculators.promotion_actions_create_item_adjustments = %w[
-          Spree::Calculator::DistributedAmount
-          Spree::Calculator::FlatRate
-          Spree::Calculator::FlexiRate
-          Spree::Calculator::PercentOnLineItem
-          Spree::Calculator::TieredPercent
-        ]
-
-        env.calculators.promotion_actions_create_quantity_adjustments = %w[
-          Spree::Calculator::PercentOnLineItem
-          Spree::Calculator::FlatRate
+        env.stock_splitters = %w[
+          Spree::Stock::Splitter::ShippingCategory
+          Spree::Stock::Splitter::Backordered
         ]
       end
     end
