@@ -58,25 +58,7 @@ module Spree
 
     scope :shippable, -> { on_hand }
 
-    # state machine (see http://github.com/pluginaweek/state_machine/tree/master for details)
-    state_machine initial: :on_hand do
-      event :fill_backorder do
-        transition to: :on_hand, from: :backordered
-      end
-      after_transition on: :fill_backorder, do: :fulfill_order
-
-      event :ship do
-        transition to: :shipped, if: :allow_ship?
-      end
-
-      event :return do
-        transition to: :returned, from: :shipped
-      end
-
-      event :cancel do
-        transition to: :canceled, from: CANCELABLE_STATES.map(&:to_sym)
-      end
-    end
+    include ::Spree::Config.state_machines.inventory_unit
 
     # Updates the given inventory units to not be pending.
     #

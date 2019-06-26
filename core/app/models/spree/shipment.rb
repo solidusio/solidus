@@ -39,41 +39,7 @@ module Spree
 
     scope :by_store, ->(store) { joins(:order).merge(Spree::Order.by_store(store)) }
 
-    # shipment state machine (see http://github.com/pluginaweek/state_machine/tree/master for details)
-    state_machine initial: :pending, use_transactions: false do
-      event :ready do
-        transition from: :pending, to: :shipped, if: :can_transition_from_pending_to_shipped?
-        transition from: :pending, to: :ready, if: :can_transition_from_pending_to_ready?
-      end
-
-      event :pend do
-        transition from: :ready, to: :pending
-      end
-
-      event :ship do
-        transition from: [:ready, :canceled], to: :shipped
-      end
-      after_transition to: :shipped, do: :after_ship
-
-      event :cancel do
-        transition to: :canceled, from: [:pending, :ready]
-      end
-      after_transition to: :canceled, do: :after_cancel
-
-      event :resume do
-        transition from: :canceled, to: :ready, if: :can_transition_from_canceled_to_ready?
-        transition from: :canceled, to: :pending
-      end
-      after_transition from: :canceled, to: [:pending, :ready, :shipped], do: :after_resume
-
-      after_transition do |shipment, transition|
-        shipment.state_changes.create!(
-          previous_state: transition.from,
-          next_state:     transition.to,
-          name:           'shipment'
-        )
-      end
-    end
+    include ::Spree::Config.state_machines.shipment
 
     self.whitelisted_ransackable_associations = ['order']
     self.whitelisted_ransackable_attributes = ['number']

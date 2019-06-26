@@ -22,13 +22,7 @@ module Spree
     validate :must_have_shipped_units, on: :create
     validate :no_previously_exchanged_inventory_units, on: :create
 
-    state_machine initial: :authorized do
-      before_transition to: :canceled, do: :cancel_return_items
-
-      event :cancel do
-        transition to: :canceled, from: :authorized, if: lambda { |return_authorization| return_authorization.can_cancel_return_items? }
-      end
-    end
+    include ::Spree::Config.state_machines.return_authorization
 
     extend DisplayMoney
     money_methods :pre_tax_total, :amount, :total_excluding_vat
