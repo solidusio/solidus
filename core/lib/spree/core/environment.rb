@@ -15,7 +15,7 @@ module Spree
       def initialize(spree_config)
         @calculators = Calculators.new
         @preferences = spree_config
-        @promotions = Spree::Promo::Environment.new
+        @promotions = Promotions.new
       end
     end
   end

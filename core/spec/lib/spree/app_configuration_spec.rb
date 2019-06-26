@@ -109,7 +109,7 @@ RSpec.describe Spree::AppConfiguration do
 
     context '.promotions' do
       subject(:promotions) { environment.promotions }
-      it { is_expected.to be_a Spree::Promo::Environment }
+      it { is_expected.to be_a Spree::Core::Environment::Promotions }
 
       context '.promotions.rules' do
         subject(:preferences_set) { promotions.rules }

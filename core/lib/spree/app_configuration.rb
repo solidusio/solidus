@@ -499,7 +499,7 @@ module Spree
           Spree::PaymentMethod::Check
         ]
 
-        env.promotions = Spree::Promo::Environment.new.tap do |promos|
+        env.promotions = Spree::Core::Environment::Promotions.new.tap do |promos|
           promos.rules = %w[
             Spree::Promotion::Rules::ItemTotal
             Spree::Promotion::Rules::Product
