@@ -17,13 +17,21 @@ module Spree
       it "can create a new return authorization" do
         stock_location = FactoryBot.create(:stock_location)
         reason = FactoryBot.create(:return_reason)
+        reimbursement = FactoryBot.create(:reimbursement_type)
+        unit = FactoryBot.create(:inventory_unit)
         rma_params = { stock_location_id: stock_location.id,
                        return_reason_id: reason.id,
+                       return_items_attributes: [{
+                         inventory_unit_id: unit.id,
+                         preferred_reimbursement_type_id: reimbursement.id,
+                       }],
                        memo: "Defective" }
         post spree.api_order_return_authorizations_path(order), params: { order_id: order.number, return_authorization: rma_params }
         expect(response.status).to eq(201)
         expect(json_response).to have_attributes(attributes)
         expect(json_response["state"]).not_to be_blank
+        return_authorization = Spree::ReturnAuthorization.last
+        expect(return_authorization.return_items.first.preferred_reimbursement_type).to eql reimbursement
       end
     end
 
