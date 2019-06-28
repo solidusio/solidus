@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::AppConfiguration, type: :model do
+RSpec.describe Spree::AppConfiguration do
   let(:prefs) { Spree::Config }
 
   around do |example|
