@@ -85,6 +85,23 @@ Please update your `Gemfile` if you still need the model translations.
 gem 'solidus_globalize', github: 'solidusio-contrib/solidus_globalize', branch: 'master'
 ```
 
+## Localizing country names
+
+Feel free to define `spree.country_names` in your own locale files if you need custom localization of country names. The value expected is a hash. For example, to have countries in Spanish do:
+
+```yml
+es:
+  spree:
+    country_names:
+      # ISO: Country name
+      US: Estados Unidos de América
+      UK: Reino Unido
+      CA: Canadá
+      # ...
+```
+
+Some supported languages already define localized country names. Take a look at this repo's `.yml` files for your locale to confirm if we already provide translations.
+
 Contributing
 ------------
 
