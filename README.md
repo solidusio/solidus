@@ -139,8 +139,7 @@ gem 'solidus', github: 'solidusio/solidus'
 ```
 
 **Note: The master branch is not guaranteed to ever be in a fully functioning
-state. It is unwise to use this branch in a production system you care deeply
-about.**
+state. It is too risky to use this branch in production.**
 
 By default, the installation generator (`rails g spree:install`) will run
 migrations as well as adding seed and sample data. This can be disabled using
@@ -210,7 +209,7 @@ testing purposes.
 This sandbox includes solidus\_auth\_devise and generates with seed and sample
 data already loaded.
 
-* Create the sandbox application 
+* Create the sandbox application
 
   ```bash
   bundle exec rake sandbox
