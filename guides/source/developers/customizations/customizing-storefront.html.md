@@ -1,6 +1,6 @@
 # Storefront Customizations
 
-The majoirty of stores that use Solidus need to change the look and feel of
+The majority of stores that use Solidus need to change the look and feel of
 the provided user-facing experience, which is just a placeholder. This page
 describes the best practices to build a custom storefront, also referred
 to as frontend in the Solidus domain.
