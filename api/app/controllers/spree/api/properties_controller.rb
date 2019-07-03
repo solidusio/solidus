@@ -49,7 +49,7 @@ module Spree
       def destroy
         if @property
           authorize! :destroy, @property
-          @property.destroy
+          @property.discard
           respond_with(@property, status: 204)
         else
           invalid_resource!(@property)
