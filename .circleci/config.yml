@@ -1,4 +1,4 @@
-version: 2
+version: 2.1
 jobs:
   postgres: &postgres
     working_directory: &workdir ~/solidus
@@ -72,7 +72,6 @@ jobs:
       RAILS_VERSION: '~> 5.1.0'
 
 workflows:
-  version: 2
   build:
     jobs:
       - postgres
