@@ -27,7 +27,7 @@ jobs:
       - run: |
           bundle install --path=vendor/bundle
 
-      - cache-save:
+      - save_cache:
           key: solidus-gems-v1-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
           paths:
             - vendor/bundle
