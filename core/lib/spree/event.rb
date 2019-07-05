@@ -21,7 +21,7 @@ module Spree
     #     @order.finalize!
     #   end
     def fire(event_name, opts = {})
-      adapter.fire name_with_suffix(event_name), opts do
+      adapter.fire name_with_suffix(event_name.to_s), opts do
         yield opts if block_given?
       end
     end
