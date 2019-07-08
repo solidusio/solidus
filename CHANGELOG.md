@@ -2,10 +2,6 @@
 
 ### Major Changes
 
-### Core
-
-### Backend
-
 **Added Spree::Event**
 
 Solidus now includes an event library that allows to use different adapters.
@@ -14,16 +10,228 @@ Events should allow developers to customize and extend Solidus behavior
 more easily by simply subscribing to certain events. Sending emails may be a
 simple use case for this new feature.
 
+- ActiveSupport notifications for Events Handling  [#3081](https://github.com/solidusio/solidus/pull/3081) ([spaghetticode](https://github.com/spaghetticode))
+
+**Attachment adapters**
+
+This is the first step to support other files attachment libraries since
+Paperclip is no more maintained. Solidus will release the ActiveStorage
+support in core in the next releases or via an extension.
+
+- Attachment adapters [#3237](https://github.com/solidusio/solidus/pull/3237) ([elia](https://github.com/elia))
+
+**Add more fields to the API json response for shipments**
+
+This change adds more fields to the API endpoints that return a shipment
+object. We had two partials to represent shipments:
+[`small`](https://github.com/solidusio/solidus/blob/e7260a27a7c292908a835f374d5ba73fe7284cd0/api/app/views/spree/api/shipments/_big.json.jbuilder)
+and
+[`big`](https://github.com/solidusio/solidus/blob/e7260a27a7c292908a835f374d5ba73fe7284cd0/api/app/views/spree/api/shipments/_small.json.jbuilder)
+but some of the `small` fields were not present in the `big` partial. Now they
+are aligned but users that were using those partials could notice some
+difference in how the API endpoints involved respond.
+
+- Complete Shipments Big json with small json fields [#3221](https://github.com/solidusio/solidus/pull/3221) ([JuanCrg90](https://github.com/JuanCrg90))
+
+**Deprecate reset_spree_preferences in test**
+
+Changing preferences and resetting them after any example is not a good
+practice and it's error-prone. The new standard is stubbing preferences and
+it's enforced with a deprecation of reset_spree_preferences. This way we can
+gradually align stores and extensions.
+
+- Allow only stubbed changes to `Spree::Config` in specs [#3220](https://github.com/solidusio/solidus/pull/3220) ([spaghetticode](https://github.com/spaghetticode))
+
+**Changed payment method partials name convention**
+
+Payment methods partials filename are now expected to be the
+Spree::PaymentMethod class underscored instead of downcased. This means that,
+for example, for `Spree::PaymentMethod::StoreCredit` the corresponding partial
+files would be named `_store_credit` and not `_storecredit`. If you overrode
+one of the following files, you should rename it now:
+
+```
+api/app/views/spree/api/payments/source_views/_storecredit.json.jbuilder → api/app/views/spree/api/payments/source_views/_store_credit.json.jbuilder
+backend/app/views/spree/admin/payments/source_forms/_storecredit.html.erb → backend/app/views/spree/admin/payments/source_forms/_store_credit.html.erb
+backend/app/views/spree/admin/payments/source_views/_storecredit.html.erb → backend/app/views/spree/admin/payments/source_views/_store_credit.html.erb
+```
+
+Also, if you've built your own payment method you may need to change the
+corresponding partials filename.
+
+- Change payment method partial name convention [#3217](https://github.com/solidusio/solidus/pull/3217) ([bitberryru](https://github.com/bitberryru))
+
+**Fix non thread safe gateway initialization**
+
+`ActiveMerchant::Billing::Base.mode` is a global `ActiveMerchant` preference
+and we were setting it into each payment gateway initialization. This means
+that if the last instantiated payment method's mode was different from the
+other ones, the last one's mode will be applied to all of them. To fix this
+issue we changed how we tell ActiveMerchant that one gateway is in test mode.
+Please double check your production configuration for payment methods: only
+payment methods where `server` preference set to production and `test_mode`
+turned off will work in "production" mode.
+
+- Fix non thread safe gateway initialization [#3216](https://github.com/solidusio/solidus/pull/3216) ([bitberryru](https://github.com/bitberryru))
+
+**Remove name from default ransackable attributes**
+
+Ransack needs a whitelist of attributes to perform a search against for security
+reasons. We used to whitelist `id` and `name` for all the models but not all
+models have the `name` attribute/column making ransack search raise an error.
+If you have a custom model and you are performing search against its `name`,
+now you have to manually add it to the ransackable whitelist for that resource.
+
+- Remove name column from default ransackable attributes [#3180](https://github.com/solidusio/solidus/pull/3180) ([mdesantis](https://github.com/mdesantis))
+
+**Admin restyle**
+
+Solidus has a fresh Admin UI! Your eyes will thank you and this would not
+impact your store but if you added some custom CSS that matches the old Admin
+UI, you probaly have to make some change at it now.
+
+- Update admin color palette and font [#3192](https://github.com/solidusio/solidus/pull/3192) ([mfrecchiami](https://github.com/mfrecchiami))
+
+**Changes to how returns are processed from a return item**
+
+It you are programmatically calling `Spree::ReturnItem#process_inventory_unit!`
+please notice that it doesn't automatically process return anymore. To remove
+the deprecation warning you have to set an attribute on your `return_item`
+instance before calling `process_inventory_unit!`:
+
+```ruby
+return_item.skip_customer_return_processing = true
+return_item.process_inventory_unit!
+# here you should process the customer return manually
+```
+
+- Allow order with multiple line items to be marked as "Returned" [#3199](https://github.com/solidusio/solidus/pull/3199) ([spaghetticode](https://github.com/spaghetticode))
+
+
+### Core
+
+- Add preferred_reimbursement_type_id as permitted attributes for ReturnAuthorization [#3215](https://github.com/solidusio/solidus/pull/3215) ([ibudiallo](https://github.com/ibudiallo))
+- Add OriginalPayment reimbursement type in seeds [#3213](https://github.com/solidusio/solidus/pull/3213) ([kennyadsl](https://github.com/kennyadsl))
+- Fixes for discard 1.1.0 [#3202](https://github.com/solidusio/solidus/pull/3202) ([kennyadsl](https://github.com/kennyadsl))
+- Improve error messages for wallet payment source [#3196](https://github.com/solidusio/solidus/pull/3196) ([kennyadsl](https://github.com/kennyadsl))
+- Use taxon children when searching classification [#3168](https://github.com/solidusio/solidus/pull/3168) ([fkoessler](https://github.com/fkoessler))
+- Improve promotion statuses [#3157](https://github.com/solidusio/solidus/pull/3157) ([JuanCrg90](https://github.com/JuanCrg90))
+- Fix DB-specific, query-related exceptions [#3156](https://github.com/solidusio/solidus/pull/3156) ([aitbw](https://github.com/aitbw))
+- Convert Tax Categories to discard [#3154](https://github.com/solidusio/solidus/pull/3154) ([kennyadsl](https://github.com/kennyadsl))
+- Don't run validations in Order#record_ip_address [#3145](https://github.com/solidusio/solidus/pull/3145) ([cedum](https://github.com/cedum))
+- Align some deprecation messages in Order model [#3135](https://github.com/solidusio/solidus/pull/3135) ([elia](https://github.com/elia))
+- Refactor order #refund_total [#3134](https://github.com/solidusio/solidus/pull/3134) ([twist900](https://github.com/twist900))
+- Remove code setter/getter from Spree::Promotion [#3127](https://github.com/solidusio/solidus/pull/3127) ([kennyadsl](https://github.com/kennyadsl))
+- Do not allow successful checkout when order has only a void payment [#3123](https://github.com/solidusio/solidus/pull/3123) ([spaghetticode](https://github.com/spaghetticode))
+- Add a stock locations filter configurable class [#3116](https://github.com/solidusio/solidus/pull/3116) ([kennyadsl](https://github.com/kennyadsl))
+- Add migration to drop table/column from `20180710170104` [#3114](https://github.com/solidusio/solidus/pull/3114) ([spaghetticode](https://github.com/spaghetticode))
+- Fix migration `20161123154034` and `20120411123334` [#3113](https://github.com/solidusio/solidus/pull/3113) ([spaghetticode](https://github.com/spaghetticode))
+- Remove destructive actions from migration 20180710170104 [#3109](https://github.com/solidusio/solidus/pull/3109) ([spaghetticode](https://github.com/spaghetticode))
+- Fix remove code from promotions migration [#3108](https://github.com/solidusio/solidus/pull/3108) ([kennyadsl](https://github.com/kennyadsl))
+- Fixing inventory unit finalizer [#3094](https://github.com/solidusio/solidus/pull/3094) ([seand7565](https://github.com/seand7565))
+- Parameterize taxon's permalink also on update [#3090](https://github.com/solidusio/solidus/pull/3090) ([loicginoux](https://github.com/loicginoux))
+- Exclude line item additional taxes from unit cancel adjustment amount [#3072](https://github.com/solidusio/solidus/pull/3072) ([mdesantis](https://github.com/mdesantis))
+- Products at multiple Stock Locations appear as unique variants [#3063](https://github.com/solidusio/solidus/pull/3063) ([mayanktap](https://github.com/mayanktap))
+- Verify ownership of payment_source when creating WalletPaymentSource [#3007](https://github.com/solidusio/solidus/pull/3007) ([ericsaupe](https://github.com/ericsaupe))
+- Remove user prereq from First Order promorule [#2928](https://github.com/solidusio/solidus/pull/2928) ([fastjames](https://github.com/fastjames))
+- Remove belongs_to :return_authorization from InventoryUnit [#2753](https://github.com/solidusio/solidus/pull/2753) ([snarfmason](https://github.com/snarfmason))
+- Improve pricing options flexibility [#2504](https://github.com/solidusio/solidus/pull/2504) ([softr8](https://github.com/softr8))
+
+
+### Backend
+
+- Use `.take` in admin promotion index template [#3224](https://github.com/solidusio/solidus/pull/3224) ([DianeLooney](https://github.com/DianeLooney))
+- Remove unused variable assignment from Admin::OrdersController#index action [#3170](https://github.com/solidusio/solidus/pull/3170) ([aitbw](https://github.com/aitbw))
+- Remove conditional when searching an order when creating a shipment [#3169](https://github.com/solidusio/solidus/pull/3169) ([aitbw](https://github.com/aitbw))
+- Disable adjust stock field when user does not have the correct permission [#3163](https://github.com/solidusio/solidus/pull/3163) ([seand7565](https://github.com/seand7565))
+- Fix stock item form to allow changing backorder value [#3159](https://github.com/solidusio/solidus/pull/3159) ([kennyadsl](https://github.com/kennyadsl))
+- Promotion start/expiration times [#3158](https://github.com/solidusio/solidus/pull/3158) ([aldesantis](https://github.com/aldesantis))
+- Hide Master Price input when there's no default price [#3155](https://github.com/solidusio/solidus/pull/3155) ([kennyadsl](https://github.com/kennyadsl))
+- When editing prices keep the currency locked. [#3150](https://github.com/solidusio/solidus/pull/3150) ([peterberkenbosch](https://github.com/peterberkenbosch))
+- Hide link to delete users if they have orders [#3139](https://github.com/solidusio/solidus/pull/3139) ([aitbw](https://github.com/aitbw))
+- Count only users completed orders in admin users page [#3125](https://github.com/solidusio/solidus/pull/3125) ([brchristian](https://github.com/brchristian))
+- Remove unnecessary decimal conversion [#3124](https://github.com/solidusio/solidus/pull/3124) ([brchristian](https://github.com/brchristian))
+- Set mininum line item quantity in admin cart [#3115](https://github.com/solidusio/solidus/pull/3115) ([mamhoff](https://github.com/mamhoff))
+- Adding else statement back in to show weight and dimensions on no-var… [#3112](https://github.com/solidusio/solidus/pull/3112) ([seand7565](https://github.com/seand7565))
+- Admin payments UI cleanup [#3101](https://github.com/solidusio/solidus/pull/3101) ([tvdeyen](https://github.com/tvdeyen))
+- Fix fieldset legend position in Firefox [#3100](https://github.com/solidusio/solidus/pull/3100) ([tvdeyen](https://github.com/tvdeyen))
+- Add tests for locale switch on backend [#3083](https://github.com/solidusio/solidus/pull/3083) ([coorasse](https://github.com/coorasse))
+- Add countries to state selection for zones [#3037](https://github.com/solidusio/solidus/pull/3037) ([jacobherrington](https://github.com/jacobherrington))
+
 ### API
+
+- Improve jbuilder serialization for Oj gem [#3210](https://github.com/solidusio/solidus/pull/3210) ([kennyadsl](https://github.com/kennyadsl))
+- More error codes to apply_coupon_code api response [#3193](https://github.com/solidusio/solidus/pull/3193) ([fkoessler](https://github.com/fkoessler))
 
 ### Frontend
 
+- Use classes alongside data-hook attributes for gateway partial [#3182](https://github.com/solidusio/solidus/pull/3182) ([aitbw](https://github.com/aitbw))
+
 ### Deprecations
+
+- Deprecate @payment_sources ivar in checkout controller [#3128](https://github.com/solidusio/solidus/pull/3128) ([kennyadsl](https://github.com/kennyadsl))
+- Deprecate core tasks and migration scripts [#3080](https://github.com/solidusio/solidus/pull/3080) ([kennyadsl](https://github.com/kennyadsl))
+
+
+
+
 
 ### Misc
 
+- Move Spree::AppConfiguration specs from app/ to lib/ [#3238](https://github.com/solidusio/solidus/pull/3238) ([kennyadsl](https://github.com/kennyadsl))
+- Add a Sponsor button to our repository [#3228](https://github.com/solidusio/solidus/pull/3228) ([kennyadsl](https://github.com/kennyadsl))
+- Improve JS linting, pt. 2 [#3225](https://github.com/solidusio/solidus/pull/3225) ([aitbw](https://github.com/aitbw))
+- Improve JS linting [#3212](https://github.com/solidusio/solidus/pull/3212) ([aitbw](https://github.com/aitbw))
+- Add basic tooling for JS linting [#3167](https://github.com/solidusio/solidus/pull/3167) ([aitbw](https://github.com/aitbw))
+- Use a rails application template for Heroku + example-app [#3206](https://github.com/solidusio/solidus/pull/3206) ([elia](https://github.com/elia))
+- Eval the custom Gemfile with file and line number [#3204](https://github.com/solidusio/solidus/pull/3204) ([elia](https://github.com/elia))
+- Improve translation [#3200](https://github.com/solidusio/solidus/pull/3200) ([spaghetticode](https://github.com/spaghetticode))
+- Increase Capybara window width size [#3171](https://github.com/solidusio/solidus/pull/3171) ([aitbw](https://github.com/aitbw))
+- Enable extension developers to customize the namespace [#3161](https://github.com/solidusio/solidus/pull/3161) ([mdesantis](https://github.com/mdesantis))
+- Fix flaky specs around admin credit card filling [#3160](https://github.com/solidusio/solidus/pull/3160) ([kennyadsl](https://github.com/kennyadsl))
+- Ensure return from CSS function [#3146](https://github.com/solidusio/solidus/pull/3146) ([fastjames](https://github.com/fastjames))
+- Add missing I18n namespace [#3144](https://github.com/solidusio/solidus/pull/3144) ([aitbw](https://github.com/aitbw))
+- Tentative fix for flaky specs [#3141](https://github.com/solidusio/solidus/pull/3141) ([kennyadsl](https://github.com/kennyadsl))
+- Remove Devise translations [#3132](https://github.com/solidusio/solidus/pull/3132) ([aitbw](https://github.com/aitbw))
+- Tenative fix for flaky spec [#3110](https://github.com/solidusio/solidus/pull/3110) ([spaghetticode](https://github.com/spaghetticode))
+- Enable Docker for demoing purposes [#3106](https://github.com/solidusio/solidus/pull/3106) ([kinduff](https://github.com/kinduff))
+- Fix sed call so it works on mac [#3091](https://github.com/solidusio/solidus/pull/3091) ([peterberkenbosch](https://github.com/peterberkenbosch))
+- Fix flaky specs in `backend/spec/features/admin/users_spec.rb` [#3089](https://github.com/solidusio/solidus/pull/3089) ([spaghetticode](https://github.com/spaghetticode))
+- Lock sqlite3 version to 1.3 [#3088](https://github.com/solidusio/solidus/pull/3088) ([mdesantis](https://github.com/mdesantis))
+- Accept source as permitted attribute importing orders [#3066](https://github.com/solidusio/solidus/pull/3066) ([jtapia](https://github.com/jtapia))
+- Testing tools improvements [#3062](https://github.com/solidusio/solidus/pull/3062) ([kennyadsl](https://github.com/kennyadsl))
+- Add gem-release [#3060](https://github.com/solidusio/solidus/pull/3060) ([kennyadsl](https://github.com/kennyadsl))
+- Normalize API I18n keys [#2988](https://github.com/solidusio/solidus/pull/2988) ([aitbw](https://github.com/aitbw))
+
 ### Docs & Guides
 
+- Document our governance model [#3240](https://github.com/solidusio/solidus/pull/3240) ([aldesantis](https://github.com/aldesantis))
+- Clarify README instructions for Sandbox [#3231](https://github.com/solidusio/solidus/pull/3231) ([k1bs](https://github.com/k1bs))
+- Purify guides search terms before using them [#3230](https://github.com/solidusio/solidus/pull/3230) ([kennyadsl](https://github.com/kennyadsl))
+- Add new Key Stakeholder in the README [#3229](https://github.com/solidusio/solidus/pull/3229) ([davidedistefano](https://github.com/davidedistefano))
+- Bump fstream from 1.0.11 to 1.0.12 in /guides [#3218](https://github.com/solidusio/solidus/pull/3218) ([dependabot](https://github.com/apps/dependabot))
+- Add CodeTriage badge and fix OpenCollective badges links [#3211](https://github.com/solidusio/solidus/pull/3211) ([mdesantis](https://github.com/mdesantis))
+- Fix partner image [#3203](https://github.com/solidusio/solidus/pull/3203) ([jarednorman](https://github.com/jarednorman))
+- Add active merchant reference URL in Guides [#3188](https://github.com/solidusio/solidus/pull/3188) ([jacquesporveau](https://github.com/jacquesporveau))
+- Add promotion rules article for Solidus admins [#3185](https://github.com/solidusio/solidus/pull/3185) ([benjaminwil](https://github.com/benjaminwil))
+- Update class methods to be instance methods. [#3173](https://github.com/solidusio/solidus/pull/3173) ([jacquesporveau](https://github.com/jacquesporveau))
+- Correct adjustment type application order in guide [#3153](https://github.com/solidusio/solidus/pull/3153) ([BenAkroyd](https://github.com/BenAkroyd))
+- Fix typo in "Addresses" developers guide [#3147](https://github.com/solidusio/solidus/pull/3147) ([cedum](https://github.com/cedum))
+- Update TaxLocation Namespace [#3142](https://github.com/solidusio/solidus/pull/3142) ([JuanCrg90](https://github.com/JuanCrg90))
+- Add Adjustment documentation reference links [#3122](https://github.com/solidusio/solidus/pull/3122) ([JuanCrg90](https://github.com/JuanCrg90))
+- Minor updates in promotions overview documentation [#3121](https://github.com/solidusio/solidus/pull/3121) ([JuanCrg90](https://github.com/JuanCrg90))
+- Add initial order documentation for end users [#3105](https://github.com/solidusio/solidus/pull/3105) ([benjaminwil](https://github.com/benjaminwil))
+- Move misplaced end-user documentation [#3104](https://github.com/solidusio/solidus/pull/3104) ([benjaminwil](https://github.com/benjaminwil))
+- Remove CHANGELOG entry from PR's template [#3102](https://github.com/solidusio/solidus/pull/3102) ([kennyadsl](https://github.com/kennyadsl))
+- Update Solidus Guide footer  [#3097](https://github.com/solidusio/solidus/pull/3097) ([davidedistefano](https://github.com/davidedistefano))
+- Add support for multiple tables of contents in the Solidus Guides [#3093](https://github.com/solidusio/solidus/pull/3093) ([kennyadsl](https://github.com/kennyadsl))
+- Add initial shipments documentation for end users [#3092](https://github.com/solidusio/solidus/pull/3092) ([kennyadsl](https://github.com/kennyadsl))
+- Add payment state link in orders overview docs [#3084](https://github.com/solidusio/solidus/pull/3084) ([JuanCrg90](https://github.com/JuanCrg90))
+- Bug report template improvements [#3069](https://github.com/solidusio/solidus/pull/3069) ([mdesantis](https://github.com/mdesantis))
+- Improve Pull Request template [#3058](https://github.com/solidusio/solidus/pull/3058) ([kennyadsl](https://github.com/kennyadsl))
+- Extend Decorator documentation [#3045](https://github.com/solidusio/solidus/pull/3045) ([jacobherrington](https://github.com/jacobherrington))
+- Updating readme to include OpenCollective information [#3042](https://github.com/solidusio/solidus/pull/3042) ([seand7565](https://github.com/seand7565))
+- Add documentation about taxons for end users [#2760](https://github.com/solidusio/solidus/pull/2760) ([benjaminwil](https://github.com/benjaminwil))
 
 ## Solidus 2.8.0 (2019-01-29)
 
