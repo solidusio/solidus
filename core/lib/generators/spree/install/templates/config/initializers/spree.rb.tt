@@ -78,6 +78,10 @@ Spree::Backend::Config.configure do |config|
   #   'icon-name',
   #   url: 'https://solidus.io/'
   # )
+
+  # Uncomment and change the following configuration if you want to add
+  # a new tab in the product page
+  # config.product_tabs.items << 'Spree::Backend::Tabs::Product::YourCustomTab'
 end
 <% end -%>
 
