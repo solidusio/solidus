@@ -475,58 +475,6 @@ module Spree
 
     def environment
       @environment ||= Spree::Core::Environment.new(self).tap do |env|
-        env.calculators.shipping_methods = %w[
-          Spree::Calculator::Shipping::FlatPercentItemTotal
-          Spree::Calculator::Shipping::FlatRate
-          Spree::Calculator::Shipping::FlexiRate
-          Spree::Calculator::Shipping::PerItem
-          Spree::Calculator::Shipping::PriceSack
-        ]
-
-        env.calculators.tax_rates = %w[
-          Spree::Calculator::DefaultTax
-        ]
-
-        env.stock_splitters = %w[
-          Spree::Stock::Splitter::ShippingCategory
-          Spree::Stock::Splitter::Backordered
-        ]
-
-        env.payment_methods = %w[
-          Spree::PaymentMethod::BogusCreditCard
-          Spree::PaymentMethod::SimpleBogusCreditCard
-          Spree::PaymentMethod::StoreCredit
-          Spree::PaymentMethod::Check
-        ]
-
-        env.promotions = Spree::Promo::Environment.new.tap do |promos|
-          promos.rules = %w[
-            Spree::Promotion::Rules::ItemTotal
-            Spree::Promotion::Rules::Product
-            Spree::Promotion::Rules::User
-            Spree::Promotion::Rules::FirstOrder
-            Spree::Promotion::Rules::UserLoggedIn
-            Spree::Promotion::Rules::OneUsePerUser
-            Spree::Promotion::Rules::Taxon
-            Spree::Promotion::Rules::NthOrder
-            Spree::Promotion::Rules::OptionValue
-            Spree::Promotion::Rules::FirstRepeatPurchaseSince
-            Spree::Promotion::Rules::UserRole
-            Spree::Promotion::Rules::Store
-          ]
-
-          promos.actions = %w[
-            Spree::Promotion::Actions::CreateAdjustment
-            Spree::Promotion::Actions::CreateItemAdjustments
-            Spree::Promotion::Actions::CreateQuantityAdjustments
-            Spree::Promotion::Actions::FreeShipping
-          ]
-
-          promos.shipping_actions = %w[
-            Spree::Promotion::Actions::FreeShipping
-          ]
-        end
-
         env.calculators.promotion_actions_create_adjustments = %w[
           Spree::Calculator::FlatPercentItemTotal
           Spree::Calculator::FlatRate
@@ -546,6 +494,56 @@ module Spree
         env.calculators.promotion_actions_create_quantity_adjustments = %w[
           Spree::Calculator::PercentOnLineItem
           Spree::Calculator::FlatRate
+        ]
+
+        env.calculators.shipping_methods = %w[
+          Spree::Calculator::Shipping::FlatPercentItemTotal
+          Spree::Calculator::Shipping::FlatRate
+          Spree::Calculator::Shipping::FlexiRate
+          Spree::Calculator::Shipping::PerItem
+          Spree::Calculator::Shipping::PriceSack
+        ]
+
+        env.calculators.tax_rates = %w[
+          Spree::Calculator::DefaultTax
+        ]
+
+        env.payment_methods = %w[
+          Spree::PaymentMethod::BogusCreditCard
+          Spree::PaymentMethod::SimpleBogusCreditCard
+          Spree::PaymentMethod::StoreCredit
+          Spree::PaymentMethod::Check
+        ]
+
+        env.promotions.rules = %w[
+          Spree::Promotion::Rules::ItemTotal
+          Spree::Promotion::Rules::Product
+          Spree::Promotion::Rules::User
+          Spree::Promotion::Rules::FirstOrder
+          Spree::Promotion::Rules::UserLoggedIn
+          Spree::Promotion::Rules::OneUsePerUser
+          Spree::Promotion::Rules::Taxon
+          Spree::Promotion::Rules::NthOrder
+          Spree::Promotion::Rules::OptionValue
+          Spree::Promotion::Rules::FirstRepeatPurchaseSince
+          Spree::Promotion::Rules::UserRole
+          Spree::Promotion::Rules::Store
+        ]
+
+        env.promotions.actions = %w[
+          Spree::Promotion::Actions::CreateAdjustment
+          Spree::Promotion::Actions::CreateItemAdjustments
+          Spree::Promotion::Actions::CreateQuantityAdjustments
+          Spree::Promotion::Actions::FreeShipping
+        ]
+
+        env.promotions.shipping_actions = %w[
+          Spree::Promotion::Actions::FreeShipping
+        ]
+
+        env.stock_splitters = %w[
+          Spree::Stock::Splitter::ShippingCategory
+          Spree::Stock::Splitter::Backordered
         ]
       end
     end

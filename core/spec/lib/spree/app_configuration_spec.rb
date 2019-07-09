@@ -53,6 +53,81 @@ RSpec.describe Spree::AppConfiguration do
     end
   end
 
+  describe '#environment' do
+    class DummyClass; end;
+
+    subject(:environment) { prefs.environment }
+    it { is_expected.to be_a Spree::Core::Environment }
+
+    shared_examples "working preferences set" do
+      it "allows adding new items" do
+        preferences_set << DummyClass
+        expect(preferences_set).to include DummyClass
+        preferences_set.delete DummyClass
+      end
+    end
+
+    context '.payment_methods' do
+      subject(:preferences_set) { environment.payment_methods }
+      it_should_behave_like "working preferences set"
+    end
+
+    context '.stock_splitters' do
+      subject(:preferences_set) { environment.stock_splitters }
+      it_should_behave_like "working preferences set"
+    end
+
+    context '.calculators' do
+      subject(:calculators) { environment.calculators }
+      it { is_expected.to be_a Spree::Core::Environment::Calculators }
+
+      context '.calculators.shipping_methods' do
+        subject(:preferences_set) { calculators.shipping_methods }
+        it_should_behave_like "working preferences set"
+      end
+
+      context '.calculators.tax_rates' do
+        subject(:preferences_set) { calculators.tax_rates }
+        it_should_behave_like "working preferences set"
+      end
+
+      context '.calculators.promotion_actions_create_adjustments' do
+        subject(:preferences_set) { calculators.promotion_actions_create_adjustments }
+        it_should_behave_like "working preferences set"
+      end
+
+      context '.calculators.promotion_actions_create_item_adjustments' do
+        subject(:preferences_set) { calculators.promotion_actions_create_item_adjustments }
+        it_should_behave_like "working preferences set"
+      end
+
+      context '.calculators.promotion_actions_create_quantity_adjustments' do
+        subject(:preferences_set) { calculators.promotion_actions_create_quantity_adjustments }
+        it_should_behave_like "working preferences set"
+      end
+    end
+
+    context '.promotions' do
+      subject(:promotions) { environment.promotions }
+      it { is_expected.to be_a Spree::Core::Environment::Promotions }
+
+      context '.promotions.rules' do
+        subject(:preferences_set) { promotions.rules }
+        it_should_behave_like "working preferences set"
+      end
+
+      context '.promotions.actions' do
+        subject(:preferences_set) { promotions.actions }
+        it_should_behave_like "working preferences set"
+      end
+
+      context '.promotions.shipping_actions' do
+        subject(:preferences_set) { promotions.shipping_actions }
+        it_should_behave_like "working preferences set"
+      end
+    end
+  end
+
   it 'has a default admin VAT location with nil values by default' do
     expect(prefs.admin_vat_location).to eq(Spree::Tax::TaxLocation.new)
     expect(prefs.admin_vat_location.state_id).to eq(nil)

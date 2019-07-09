@@ -22,6 +22,10 @@ module Spree
 
         delegate :clear, :empty?, to: :@collection
 
+        def delete(object)
+          @collection.delete(object.to_s)
+        end
+
         def each
           @collection.each do |klass|
             yield klass.constantize

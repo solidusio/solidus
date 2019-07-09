@@ -68,4 +68,20 @@ RSpec.describe Spree::Core::ClassConstantizer::Set do
       end
     end
   end
+
+  describe "#delete" do
+    before do
+      set << ClassConstantizerTest::ClassA
+    end
+
+    it "can delete by string" do
+      set.delete "ClassConstantizerTest::ClassA"
+      expect(set).not_to include(ClassConstantizerTest::ClassA)
+    end
+
+    it "can delete by class" do
+      set.delete ClassConstantizerTest::ClassA
+      expect(set).not_to include(ClassConstantizerTest::ClassA)
+    end
+  end
 end

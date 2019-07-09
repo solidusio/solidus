@@ -110,6 +110,7 @@ return_item.process_inventory_unit!
 
 ### Core
 
+- Refactor Promotions Environment Configuration [#3239](https://github.com/solidusio/solidus/pull/3239) ([kennyadsl](https://github.com/kennyadsl))
 - Add preferred_reimbursement_type_id as permitted attributes for ReturnAuthorization [#3215](https://github.com/solidusio/solidus/pull/3215) ([ibudiallo](https://github.com/ibudiallo))
 - Add OriginalPayment reimbursement type in seeds [#3213](https://github.com/solidusio/solidus/pull/3213) ([kennyadsl](https://github.com/kennyadsl))
 - Fixes for discard 1.1.0 [#3202](https://github.com/solidusio/solidus/pull/3202) ([kennyadsl](https://github.com/kennyadsl))

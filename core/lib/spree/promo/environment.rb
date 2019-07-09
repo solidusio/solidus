@@ -2,12 +2,11 @@
 
 module Spree
   module Promo
-    class Environment
-      include Core::EnvironmentExtension
-
-      add_class_set :rules
-      add_class_set :actions
-      add_class_set :shipping_actions
-    end
+    Environment =
+      ActiveSupport::Deprecation::DeprecatedConstantProxy.new(
+        'Spree::Promo::Environment',
+        'Spree::Core::Environment::Promotions',
+        Spree::Deprecation
+      )
   end
 end
