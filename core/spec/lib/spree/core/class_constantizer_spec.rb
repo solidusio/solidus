@@ -29,6 +29,10 @@ RSpec.describe Spree::Core::ClassConstantizer::Set do
       expect(set).to include(ClassConstantizerTest::ClassA)
       expect(set).to include(ClassConstantizerTest::ClassB)
     end
+
+    it "returns itself" do
+      expect(set.concat(['String'])).to eql(set)
+    end
   end
 
   describe "<<" do
