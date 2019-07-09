@@ -112,6 +112,60 @@ for more information about menu items customizations.
 
 [menu-item-doc]: http://docs.solidus.io/Spree/BackendConfiguration/MenuItem.html
 
+## Product Tabs
+
+<!-- TODO: add an admin/products/show screenshot where tabs are visible -->
+
+If in your store you need to add a new tab for products, starting from
+Solidus 2.10 you can use `Spree::Config.product_tabs` configuration.
+
+Suppose you want to add a new tab for a product reviews section, that you
+implemented custom in your store.
+
+You can create a class with your logic, similar to this one:
+
+```ruby
+# lib/spree/backend/tabs/product/reviews.rb
+
+require 'spree/backend/tabs/product/base'
+
+module Spree
+  module Backend
+    module Tabs
+      class Product
+        class Reviews < Base
+          def name
+            'Reviews'
+          end
+
+          def presentation
+            view_context.t('your_app.reviews')
+          end
+
+          def url
+            view_context.spree.admin_product_reviews_url(product)
+          end
+
+          def visible?
+            view_context.can?(:admin, Spree::Review)
+          end
+        end
+      end
+    end
+  end
+end
+```
+
+Next step is adding this class to the list of tabs to load:
+
+```ruby
+# config/initializer/spree.rb
+
+Spree::Backend::Config.configure do |config|
+  config.product_tabs.items << 'Spree::Backend::Tabs::Product::Reviews'
+end
+```
+
 ## Search Forms
 
 Admin UI has a search form in nearly all pages that list resources items, for
