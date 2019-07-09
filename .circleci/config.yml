@@ -1,21 +1,41 @@
 version: 2.1
-jobs:
-  postgres: &postgres
+
+executors:
+  base:
     working_directory: &workdir ~/solidus
     environment: &environment
-      DB: postgresql
-      DB_HOST: localhost
       DEFAULT_MAX_WAIT_TIME: 10
       SOLIDUS_RAISE_DEPRECATIONS: true
       CIRCLE_TEST_REPORTS: /tmp/test-results
       CIRCLE_ARTIFACTS: /tmp/test-artifacts
     docker:
       - image: &image circleci/ruby:2.5-node-browsers
+
+  postgres:
+    working_directory: *workdir
+    environment:
+      <<: *environment
+      DB: postgresql
+      DB_HOST: localhost
+    docker:
+      - image: *image
       - image: jhawthorn/circleci-postgres-fast
         environment:
           POSTGRES_USER: root
-    parallelism: &parallelism 3
-    steps: &steps
+
+  mysql:
+    working_directory: *workdir
+    environment:
+      <<: *environment
+      DB: mysql
+      DB_HOST: 127.0.0.1
+    docker:
+      - image: *image
+      - image: circleci/mysql:5.7-ram
+
+commands:
+  setup:
+    steps:
       - run: .circleci/bin/halt-for-doc-only-changes.sh && circleci step halt || true # skip Circle for guides
       - checkout
 
@@ -32,6 +52,8 @@ jobs:
           paths:
             - vendor/bundle
 
+  test:
+    steps:
       - run:
           name: Run Tests
           command: ./bin/build-ci test
@@ -47,29 +69,38 @@ jobs:
       - store_test_results:
           path: /tmp/test-results
 
-  mysql: &mysql
-    working_directory: *workdir
-    environment: &mysql_environment
-      <<: *environment
-      DB: mysql
-      DB_HOST: 127.0.0.1
-    docker:
-      - image: *image
-      - image: circleci/mysql:5.7-ram
+jobs:
+  postgres:
+    executor: postgres
+    parallelism: &parallelism 3
+    steps:
+      - setup
+      - test
+
+  mysql:
+    executor: mysql
     parallelism: *parallelism
-    steps: *steps
+    steps:
+      - setup
+      - test
 
   postgres_rails51:
-    <<: *postgres
+    executor: postgres
+    parallelism: *parallelism
     environment:
-      <<: *environment
       RAILS_VERSION: '~> 5.1.0'
+    steps:
+      - setup
+      - test
 
   mysql_rails51:
-    <<: *mysql
+    executor: mysql
+    parallelism: *parallelism
     environment:
-      <<: *mysql_environment
       RAILS_VERSION: '~> 5.1.0'
+    steps:
+      - setup
+      - test
 
 workflows:
   build:
