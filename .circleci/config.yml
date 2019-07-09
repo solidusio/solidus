@@ -1,5 +1,8 @@
 version: 2.1
 
+orbs:
+  stoplight: nebulab/stoplight@6.0.0
+
 executors:
   base:
     working_directory: &workdir ~/solidus
@@ -70,6 +73,22 @@ commands:
           path: /tmp/test-results
 
 jobs:
+  persist_version:
+    executor: base
+    steps:
+      - setup
+
+      - run:
+          name: Persist Solidus version
+          command: |
+            mkdir -p workspace
+            bundle exec ruby -e "puts Spree.solidus_gem_version.segments[0..1].join('.')" > workspace/solidus-version
+
+      - persist_to_workspace:
+          root: workspace
+          paths:
+            - solidus-version
+
   postgres:
     executor: postgres
     parallelism: &parallelism 3
@@ -105,7 +124,24 @@ jobs:
 workflows:
   build:
     jobs:
+      - persist_version:
+          filters:
+            branches:
+              only: /master|v\d\.\d/
       - postgres
       - mysql
       - postgres_rails51
       - mysql_rails51
+      - stoplight/push:
+          project: solidus/solidus-api
+          git_token: $STOPLIGHT_GIT_TOKEN
+          source_dir: openapi
+          username: $STOPLIGHT_USERNAME
+          version: "`cat /tmp/workspace/solidus-version`"
+          requires:
+            - persist_version
+      - stoplight/publish:
+          api_token: $STOPLIGHT_API_TOKEN
+          domain: solidus.docs.stoplight.io
+          requires:
+            - stoplight/push
