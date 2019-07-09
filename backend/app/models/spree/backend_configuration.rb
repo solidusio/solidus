@@ -1,8 +1,23 @@
 # frozen_string_literal: true
 
+require 'spree/backend/environment/product_tabs'
+
 module Spree
   class BackendConfiguration < Preferences::Configuration
     preference :locale, :string, default: Rails.application.config.i18n.default_locale
+
+    def product_tabs
+      @product_tabs ||= Backend::Environment::ProductTabs.new.tap do |product_tabs|
+        product_tabs.items = %w[
+          Spree::Backend::Tabs::Product::ProductDetails
+          Spree::Backend::Tabs::Product::Images
+          Spree::Backend::Tabs::Product::Variants
+          Spree::Backend::Tabs::Product::Prices
+          Spree::Backend::Tabs::Product::ProductProperties
+          Spree::Backend::Tabs::Product::StockManagement
+        ]
+      end
+    end
 
     ORDER_TABS         ||= [:orders, :payments, :creditcard_payments,
                             :shipments, :credit_cards, :return_authorizations,
