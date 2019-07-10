@@ -107,6 +107,14 @@ return_item.process_inventory_unit!
 
 - Allow order with multiple line items to be marked as "Returned" [#3199](https://github.com/solidusio/solidus/pull/3199) ([spaghetticode](https://github.com/spaghetticode))
 
+**New REST API documentation**
+
+Our REST API is now documented using the Open API Specification. The
+documentation is part of the repository and published on
+https://solidus.docs.stoplight.io/.
+
+- Document the API via OpenAPI [#3252](https://github.com/solidusio/solidus/pull/3252) ([aldesantis](https://github.com/aldesantis))
+
 
 ### Core
 
