@@ -1,20 +1,17 @@
-<p align="center"><a href="https://solidus.io/" target="_blank" rel="noopener noreferrer"><img width="250" src="./logo.svg" alt="Solidus logo"></a></p>
+<img width="250" src="./logo.svg" alt="Solidus logo">
 
-<p align="center">
-  <a href="https://circleci.com/gh/solidusio/solidus/tree/master"><img src="https://circleci.com/gh/solidusio/solidus/tree/master.svg?style=shield" alt="Circle CI"></a>
-  <a href="https://rubygems.org/gems/solidus"><img src="https://img.shields.io/gem/v/solidus.svg" alt="Gem"></a>
-  <a href="http://img.shields.io/badge/license-BSD-yellowgreen.svg"><img src="http://img.shields.io/badge/license-BSD-yellowgreen.svg" alt="License"></a>
-  <a href="http://slack.solidus.io"><img src="http://slack.solidus.io/badge.svg" alt="Slack"></a>
-  <a href="https://opencollective.com/solidus"><img src="https://opencollective.com/solidus/backers/badge.svg" alt="Backers on Open Collective"></a>
-  <a href="https://opencollective.com/solidus"><img src="https://opencollective.com/solidus/sponsors/badge.svg" alt="Sponsors on Open Collective"></a>
-  <br>
-  <a href="https://www.codetriage.com/solidusio/solidus"><img src="https://www.codetriage.com/solidusio/solidus/badges/users.svg" alt="Open Source Helpers"></a>
-  <a href="https://houndci.com"><img src="https://img.shields.io/badge/Reviewed_by-Hound-8E64B0.svg" alt="Reviewed by Hound"></a>
-</p>
+# Solidus 
 
-<p align="center">
-  <strong>A free, open-source ecommerce platform that gives you complete control over your store.</strong>
-</p>
+[![Circle CI](https://circleci.com/gh/solidusio/solidus/tree/master.svg?style=shield)](https://circleci.com/gh/solidusio/solidus/tree/master)
+[![Gem](https://img.shields.io/gem/v/solidus.svg)](https://rubygems.org/gems/solidus)
+[![License](http://img.shields.io/badge/license-BSD-yellowgreen.svg)](LICENSE.md)
+[![Slack](http://slack.solidus.io/badge.svg)](http://slack.solidus.io)
+[![Backers on Open Collective](https://opencollective.com/solidus/backers/badge.svg)](https://opencollective.com/solidus)
+[![Sponsors on Open Collective](https://opencollective.com/solidus/sponsors/badge.svg)](https://opencollective.com/solidus)
+[![Open Source Helpers](https://www.codetriage.com/solidusio/solidus/badges/users.svg)](https://www.codetriage.com/solidusio/solidus)
+[![Reviewed by Hound](https://img.shields.io/badge/Reviewed_by-Hound-8E64B0.svg)](https://houndci.com)
+
+**A free, open-source ecommerce platform that gives you complete control over your store.**
 
 - **Visit our website**: [https://solidus.io/](https://solidus.io/)
 - **Read our guides**: [https://guides.solidus.io/developers/](https://guides.solidus.io/developers/)
@@ -38,23 +35,15 @@
 - [Become a backer or sponsor on Open Collective](https://opencollective.com/solidus).
 - [Contribute to the project](https://github.com/solidusio/solidus/blob/master/CONTRIBUTING.md).
 
-<h3 align="center">Main Contributor & Director</h3>
+### Main Contributor & Director
+At present, Nebulab is the main code contributor and director of Solidus, providing technical guidance and coordinating community efforts and activities.
 
-<p align="center">
-  At present, Nebulab is the main code contributor and director of Solidus, providing technical guidance and coordinating community efforts and activities.
-</p>
+<a href="https://nebulab.it/" target="_blank">
+  <img width="240px" src="https://nebulab.it/assets/images/public/logo.svg">
+</a>
 
-<p align="center">
-  <a href="https://nebulab.it/" target="_blank">
-    <img width="240px" src="https://nebulab.it/assets/images/public/logo.svg">
-  </a>
-</p>
-
-<h3 align="center">Key Stakeholders</h3>
-
-<p align="center">
-  Support this project by becoming a Key Stakeholder. Your logo will show up here with a link to your website. <a href="https://opencollective.com/solidus#key-stakeholder" target="_blank">Become a Key Stakeholder</a>
-</p>
+### Key Stakeholders
+Support this project by becoming a Key Stakeholder. Your logo will show up here with a link to your website. [Become a Key Stakeholder](https://opencollective.com/solidus#key-stakeholder).
 
 <table>
   <tbody>
