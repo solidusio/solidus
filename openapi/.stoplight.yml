@@ -1,0 +1,7 @@
+stoplight: '1.0'
+environments:
+  default:
+    host: 'http://todos.stoplight.io'
+    todosApiKey: 123
+  staging: {}
+  production: {}
