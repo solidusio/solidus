@@ -4,14 +4,14 @@ module Spree
   # Models the return of Inventory Units to a Stock Location for an Order.
   #
   class ReturnAuthorization < Spree::Base
-    belongs_to :order, class_name: 'Spree::Order', inverse_of: :return_authorizations
+    belongs_to :order, class_name: 'Spree::Order', inverse_of: :return_authorizations, optional: true
 
     has_many :return_items, inverse_of: :return_authorization, dependent: :destroy
     has_many :inventory_units, through: :return_items, dependent: :nullify
     has_many :customer_returns, through: :return_items
 
-    belongs_to :stock_location
-    belongs_to :reason, class_name: 'Spree::ReturnReason', foreign_key: :return_reason_id
+    belongs_to :stock_location, optional: true
+    belongs_to :reason, class_name: 'Spree::ReturnReason', foreign_key: :return_reason_id, optional: true
 
     before_create :generate_number
 

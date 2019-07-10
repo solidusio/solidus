@@ -10,8 +10,8 @@ module Spree
     include Discard::Model
     self.discard_column = :deleted_at
 
-    belongs_to :stock_location, class_name: 'Spree::StockLocation', inverse_of: :stock_items
-    belongs_to :variant, -> { with_deleted }, class_name: 'Spree::Variant', inverse_of: :stock_items
+    belongs_to :stock_location, class_name: 'Spree::StockLocation', inverse_of: :stock_items, optional: true
+    belongs_to :variant, -> { with_deleted }, class_name: 'Spree::Variant', inverse_of: :stock_items, optional: true
     has_many :stock_movements, inverse_of: :stock_item
 
     validates :stock_location, :variant, presence: true

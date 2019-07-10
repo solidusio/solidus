@@ -4,7 +4,7 @@ module Spree
   class PaymentSource < Spree::Base
     self.abstract_class = true
 
-    belongs_to :payment_method
+    belongs_to :payment_method, optional: true
 
     has_many :payments, as: :source
     has_many :wallet_payment_sources, class_name: 'Spree::WalletPaymentSource', as: :payment_source, inverse_of: :payment_source

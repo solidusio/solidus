@@ -14,7 +14,7 @@ module Spree
     include Discard::Model
     self.discard_column = :deleted_at
 
-    belongs_to :promotion, class_name: 'Spree::Promotion', inverse_of: :promotion_actions
+    belongs_to :promotion, class_name: 'Spree::Promotion', inverse_of: :promotion_actions, optional: true
 
     scope :of_type, ->(t) { where(type: Array.wrap(t).map(&:to_s)) }
     scope :shipping, -> { of_type(Spree::Config.environment.promotions.shipping_actions.to_a) }

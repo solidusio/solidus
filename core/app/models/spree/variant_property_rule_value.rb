@@ -6,7 +6,7 @@ module Spree
 
     acts_as_list scope: :variant_property_rule
 
-    belongs_to :property
-    belongs_to :variant_property_rule, touch: true
+    belongs_to :property, optional: true
+    belongs_to :variant_property_rule, touch: true, optional: true
   end
 end

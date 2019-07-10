@@ -7,7 +7,7 @@ module Spree
 
     attr_reader :eligibility_errors
 
-    belongs_to :promotion_category
+    belongs_to :promotion_category, optional: true
 
     has_many :promotion_rules, autosave: true, dependent: :destroy, inverse_of: :promotion
     alias_method :rules, :promotion_rules

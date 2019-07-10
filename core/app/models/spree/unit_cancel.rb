@@ -7,7 +7,7 @@ class Spree::UnitCancel < Spree::Base
   SHORT_SHIP = 'Short Ship'
   DEFAULT_REASON = 'Cancel'
 
-  belongs_to :inventory_unit
+  belongs_to :inventory_unit, optional: true
   has_one :adjustment, as: :source, dependent: :destroy
 
   validates :inventory_unit, presence: true

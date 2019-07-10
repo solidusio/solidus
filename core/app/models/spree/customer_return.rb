@@ -2,7 +2,7 @@
 
 module Spree
   class CustomerReturn < Spree::Base
-    belongs_to :stock_location
+    belongs_to :stock_location, optional: true
 
     has_many :return_items, inverse_of: :customer_return
     has_many :return_authorizations, through: :return_items

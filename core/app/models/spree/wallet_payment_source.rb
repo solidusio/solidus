@@ -2,8 +2,8 @@
 
 module Spree
   class WalletPaymentSource < Spree::Base
-    belongs_to :user, class_name: Spree::UserClassHandle.new, foreign_key: 'user_id', inverse_of: :wallet_payment_sources
-    belongs_to :payment_source, polymorphic: true, inverse_of: :wallet_payment_sources
+    belongs_to :user, class_name: Spree::UserClassHandle.new, foreign_key: 'user_id', inverse_of: :wallet_payment_sources, optional: true
+    belongs_to :payment_source, polymorphic: true, inverse_of: :wallet_payment_sources, optional: true
 
     validates_presence_of :user
     validates_presence_of :payment_source

@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class Spree::Carton < Spree::Base
-  belongs_to :address, class_name: 'Spree::Address'
-  belongs_to :stock_location, class_name: 'Spree::StockLocation', inverse_of: :cartons
-  belongs_to :shipping_method, class_name: 'Spree::ShippingMethod', inverse_of: :cartons
+  belongs_to :address, class_name: 'Spree::Address', optional: true
+  belongs_to :stock_location, class_name: 'Spree::StockLocation', inverse_of: :cartons, optional: true
+  belongs_to :shipping_method, class_name: 'Spree::ShippingMethod', inverse_of: :cartons, optional: true
 
   has_many :inventory_units, class_name: "Spree::InventoryUnit", inverse_of: :carton, dependent: :nullify
   has_many :orders, -> { distinct }, through: :inventory_units

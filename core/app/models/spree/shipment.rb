@@ -4,8 +4,8 @@ module Spree
   # An order's planned shipments including tracking and cost.
   #
   class Shipment < Spree::Base
-    belongs_to :order, class_name: 'Spree::Order', touch: true, inverse_of: :shipments
-    belongs_to :stock_location, class_name: 'Spree::StockLocation'
+    belongs_to :order, class_name: 'Spree::Order', touch: true, inverse_of: :shipments, optional: true
+    belongs_to :stock_location, class_name: 'Spree::StockLocation', optional: true
 
     has_many :adjustments, as: :adjustable, inverse_of: :adjustable, dependent: :delete_all
     has_many :inventory_units, dependent: :destroy, inverse_of: :shipment

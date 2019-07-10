@@ -18,10 +18,10 @@ class Spree::StoreCredit < Spree::PaymentSource
   ADJUSTMENT_ACTION = 'adjustment'
   INVALIDATE_ACTION = 'invalidate'
 
-  belongs_to :user, class_name: Spree::UserClassHandle.new
-  belongs_to :created_by, class_name: Spree::UserClassHandle.new
-  belongs_to :category, class_name: "Spree::StoreCreditCategory"
-  belongs_to :credit_type, class_name: 'Spree::StoreCreditType', foreign_key: 'type_id'
+  belongs_to :user, class_name: Spree::UserClassHandle.new, optional: true
+  belongs_to :created_by, class_name: Spree::UserClassHandle.new, optional: true
+  belongs_to :category, class_name: "Spree::StoreCreditCategory", optional: true
+  belongs_to :credit_type, class_name: 'Spree::StoreCreditType', foreign_key: 'type_id', optional: true
   has_many :store_credit_events
 
   validates_presence_of :user_id, :category_id, :type_id, :created_by_id, :currency

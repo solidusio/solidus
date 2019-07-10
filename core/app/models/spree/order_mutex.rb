@@ -4,7 +4,7 @@ module Spree
   class OrderMutex < Spree::Base
     class LockFailed < StandardError; end
 
-    belongs_to :order, class_name: "Spree::Order"
+    belongs_to :order, class_name: "Spree::Order", optional: true
 
     scope :expired, -> { where(arel_table[:created_at].lteq(Spree::Config[:order_mutex_max_age].seconds.ago)) }
 
