@@ -11,6 +11,7 @@ more easily by simply subscribing to certain events. Sending emails may be a
 simple use case for this new feature.
 
 - ActiveSupport notifications for Events Handling  [#3081](https://github.com/solidusio/solidus/pull/3081) ([spaghetticode](https://github.com/spaghetticode))
+- Support class reloading for Event Subscribers [#3232](https://github.com/solidusio/solidus/pull/3232) ([elia](https://github.com/elia))
 
 **Attachment adapters**
 
