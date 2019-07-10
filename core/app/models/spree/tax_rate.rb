@@ -17,7 +17,7 @@ module Spree
     include Spree::CalculatedAdjustments
     include Spree::AdjustmentSource
 
-    belongs_to :zone, class_name: "Spree::Zone", inverse_of: :tax_rates
+    belongs_to :zone, class_name: "Spree::Zone", inverse_of: :tax_rates, optional: true
 
     has_many :tax_rate_tax_categories,
       class_name: 'Spree::TaxRateTaxCategory',

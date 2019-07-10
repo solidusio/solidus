@@ -29,15 +29,15 @@ module Spree
     class_attribute :refund_amount_calculator
     self.refund_amount_calculator = Calculator::Returns::DefaultRefundAmount
 
-    belongs_to :return_authorization, inverse_of: :return_items
-    belongs_to :inventory_unit, inverse_of: :return_items
-    belongs_to :exchange_variant, class_name: 'Spree::Variant'
-    belongs_to :exchange_inventory_unit, class_name: 'Spree::InventoryUnit', inverse_of: :original_return_item
-    belongs_to :customer_return, inverse_of: :return_items
-    belongs_to :reimbursement, inverse_of: :return_items
-    belongs_to :preferred_reimbursement_type, class_name: 'Spree::ReimbursementType'
-    belongs_to :override_reimbursement_type, class_name: 'Spree::ReimbursementType'
-    belongs_to :return_reason, class_name: 'Spree::ReturnReason', foreign_key: :return_reason_id
+    belongs_to :return_authorization, inverse_of: :return_items, optional: true
+    belongs_to :inventory_unit, inverse_of: :return_items, optional: true
+    belongs_to :exchange_variant, class_name: 'Spree::Variant', optional: true
+    belongs_to :exchange_inventory_unit, class_name: 'Spree::InventoryUnit', inverse_of: :original_return_item, optional: true
+    belongs_to :customer_return, inverse_of: :return_items, optional: true
+    belongs_to :reimbursement, inverse_of: :return_items, optional: true
+    belongs_to :preferred_reimbursement_type, class_name: 'Spree::ReimbursementType', optional: true
+    belongs_to :override_reimbursement_type, class_name: 'Spree::ReimbursementType', optional: true
+    belongs_to :return_reason, class_name: 'Spree::ReturnReason', foreign_key: :return_reason_id, optional: true
 
     validate :eligible_exchange_variant
     validate :belongs_to_same_customer_order

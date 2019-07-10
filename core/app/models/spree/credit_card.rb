@@ -4,8 +4,8 @@ module Spree
   # The default `source` of a `Spree::Payment`.
   #
   class CreditCard < Spree::PaymentSource
-    belongs_to :user, class_name: Spree::UserClassHandle.new, foreign_key: 'user_id'
-    belongs_to :address
+    belongs_to :user, class_name: Spree::UserClassHandle.new, foreign_key: 'user_id', optional: true
+    belongs_to :address, optional: true
 
     before_save :set_last_digits
 

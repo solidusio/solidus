@@ -25,7 +25,7 @@ module Spree
       has_many :addresses, through: :user_addresses
 
       # bill_address is only minimally used now, but we can't get rid of it without a major version release
-      belongs_to :bill_address, class_name: 'Spree::Address'
+      belongs_to :bill_address, class_name: 'Spree::Address', optional: true
 
       has_one :default_user_address, ->{ default }, class_name: 'Spree::UserAddress', foreign_key: 'user_id'
       has_one :default_address, through: :default_user_address, source: :address

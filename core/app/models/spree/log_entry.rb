@@ -2,7 +2,7 @@
 
 module Spree
   class LogEntry < Spree::Base
-    belongs_to :source, polymorphic: true
+    belongs_to :source, polymorphic: true, optional: true
 
     def parsed_details
       @details ||= YAML.load(details)

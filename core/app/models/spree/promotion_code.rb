@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class Spree::PromotionCode < Spree::Base
-  belongs_to :promotion, inverse_of: :codes
-  belongs_to :promotion_code_batch, class_name: "Spree::PromotionCodeBatch"
+  belongs_to :promotion, inverse_of: :codes, optional: true
+  belongs_to :promotion_code_batch, class_name: "Spree::PromotionCodeBatch", optional: true
   has_many :adjustments
 
   validates :value, presence: true, uniqueness: { allow_blank: true }

@@ -37,7 +37,7 @@ module Spree
     include Spree::DefaultPrice
 
     belongs_to :product, -> { with_deleted }, touch: true, class_name: 'Spree::Product', inverse_of: :variants, optional: false
-    belongs_to :tax_category, class_name: 'Spree::TaxCategory'
+    belongs_to :tax_category, class_name: 'Spree::TaxCategory', optional: true
 
     delegate :name, :description, :slug, :available_on, :shipping_category_id,
              :meta_description, :meta_keywords, :shipping_category,

@@ -2,9 +2,9 @@
 
 module Spree
   class Refund < Spree::Base
-    belongs_to :payment, inverse_of: :refunds
-    belongs_to :reason, class_name: 'Spree::RefundReason', foreign_key: :refund_reason_id
-    belongs_to :reimbursement, inverse_of: :refunds
+    belongs_to :payment, inverse_of: :refunds, optional: true
+    belongs_to :reason, class_name: 'Spree::RefundReason', foreign_key: :refund_reason_id, optional: true
+    belongs_to :reimbursement, inverse_of: :refunds, optional: true
 
     has_many :log_entries, as: :source
 

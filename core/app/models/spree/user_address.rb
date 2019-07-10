@@ -2,8 +2,8 @@
 
 module Spree
   class UserAddress < Spree::Base
-    belongs_to :user, class_name: UserClassHandle.new, foreign_key: "user_id"
-    belongs_to :address, class_name: "Spree::Address"
+    belongs_to :user, class_name: UserClassHandle.new, foreign_key: "user_id", optional: true
+    belongs_to :address, class_name: "Spree::Address", optional: true
 
     validates_uniqueness_of :address_id, scope: :user_id
     validates_uniqueness_of :user_id, conditions: -> { active.default }, message: :default_address_exists, if: :default?
