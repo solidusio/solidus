@@ -45,27 +45,8 @@ At present, Nebulab is the main code contributor and director of Solidus, provid
 ### Key Stakeholders
 Support this project by becoming a Key Stakeholder. Your logo will show up here with a link to your website. [Become a Key Stakeholder](https://opencollective.com/solidus#key-stakeholder).
 
-<table>
-  <tbody>
-    <tr height="150px">
-      <td width="294px" align="center" valign="middle">
-        <a href="https://www.enginecommerce.com/" target="_blank">
-          <img src="https://images.opencollective.com/proxy/images?src=https%3A%2F%2Flogo.clearbit.com%2Fenginecommerce.com&height=100">
-        </a>
-      </td>
-      <td width="294px" align="center" valign="middle">
-        <a href="https://supergood.software/" target="_blank">
-          <img src="https://images.opencollective.com/proxy/images?src=https%3A%2F%2Fopencollective-production.s3-us-west-1.amazonaws.com%2F3bbb1440-727f-11e9-a366-37673cc38cee.png&height=100">
-        </a>
-      </td>
-      <td width="294px" align="center" valign="middle">
-        <a href="https://karmacreative.io/" target="_blank">
-          <img src="https://images.opencollective.com/proxy/images?src=https%3A%2F%2Fopencollective-production.s3-us-west-1.amazonaws.com%2Fab94d2a0-7253-11e9-a366-37673cc38cee.png&height=100">
-        </a>
-      </td>
-    </tr>
-  </tbody>
-</table>
+|<a href="https://www.enginecommerce.com/" target="_blank"><img src="https://images.opencollective.com/proxy/images?src=https%3A%2F%2Flogo.clearbit.com%2Fenginecommerce.com&height=100"></a>|<a href="https://supergood.software/" target="_blank"><img src="https://images.opencollective.com/proxy/images?src=https%3A%2F%2Fopencollective-production.s3-us-west-1.amazonaws.com%2F3bbb1440-727f-11e9-a366-37673cc38cee.png&height=100"></a>|<a href="https://karmacreative.io/" target="_blank"><img src="https://images.opencollective.com/proxy/images?src=https%3A%2F%2Fopencollective-production.s3-us-west-1.amazonaws.com%2Fab94d2a0-7253-11e9-a366-37673cc38cee.png&height=100"></a>|
+|---|---|---|
 
 ---
 
