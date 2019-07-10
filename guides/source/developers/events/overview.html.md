@@ -43,6 +43,62 @@ Spree::Event.subscribe 'order_finalized' do |event|
 end
 ```
 
+Another way to subscribe to events is creating a "subscriber" module that
+includes the `Spree::Event::Subscriber` module. For example:
+
+```ruby
+# app/subscribers/spree/sms_subscriber.rb
+
+module Spree
+  module SmsSubscriber
+    include Spree::Event::Subscriber
+
+    event_action :order_finalized
+    event_action :send_reimbursement_sms, event_name: :reimbursement_reimbursed
+
+    def order_finalized(event)
+      order = event.payload[:order]
+      SmsLibrary.deliver(order, :finalized)
+    end
+
+    def send_reimbursement_sms(event)
+      reimbursement = event.payload[:reimbursement]
+      order = reimbursement.order
+      SmsLibrary.deliver(order, :reimbursed)
+    end
+  end
+end
+```
+
+The `Spree::Event::Subscriber` module provides a simple interface that
+allows executing code when a specific event is fired. The `event_action`
+method allows to map a method of the subscriber module to an event that
+happens in the system. If the `event_name` argument is not specified,
+the event name and the method name should match.
+
+These subscribers modules are loaded with the rest of your application but
+you need to manually subscribe to them.
+
+For example, you could subscribe to them programmatically with something like:
+
+```ruby
+if defined?(SmsLibrary)
+  Spree::SmsSubscriber.subscribe!
+end
+```
+
+or just by adding thme to the list of default subscribers, using the
+`Spree::Config.events.subscribers` configuration:
+
+```ruby
+# config/initializers/spree.rb
+
+Spree::Config.events.subscribers << 'Spree::SmsSubscriber'
+```
+
+All the modules present in this array will be loaded while your application
+boots and the `subscribe!` method is automatically called on them.
+
 ## Firing events
 
 `Spree::Event.fire` allows you to fire an event. The event name is mandatory,
