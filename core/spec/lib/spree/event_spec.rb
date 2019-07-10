@@ -14,21 +14,21 @@ RSpec.describe Spree::Event do
     expect(subject.adapter).to eql Spree::Event::Adapters::ActiveSupportNotifications
   end
 
-  before do
-    # ActiveSupport::Notifications does not provide an interface to clean all
-    # subscribers at once, so some low level brittle code is required
-    @old_subscribers = notifier.instance_variable_get('@subscribers').dup
-    @old_listeners = notifier.instance_variable_get('@listeners_for').dup
-    notifier.instance_variable_get('@subscribers').clear
-    notifier.instance_variable_get('@listeners_for').clear
-  end
-
-  after do
-    notifier.instance_variable_set '@subscribers', @old_subscribers
-    notifier.instance_variable_set '@listeners_for', @old_listeners
-  end
-
   context 'with the default adapter' do
+    before do
+      # ActiveSupport::Notifications does not provide an interface to clean all
+      # subscribers at once, so some low level brittle code is required
+      @old_subscribers = notifier.instance_variable_get('@subscribers').dup
+      @old_listeners = notifier.instance_variable_get('@listeners_for').dup
+      notifier.instance_variable_get('@subscribers').clear
+      notifier.instance_variable_get('@listeners_for').clear
+    end
+
+    after do
+      notifier.instance_variable_set '@subscribers', @old_subscribers
+      notifier.instance_variable_set '@listeners_for', @old_listeners
+    end
+
     describe '#listeners' do
       context 'when there is no subscription' do
         it { expect(subject.listeners).to be_empty }
@@ -87,6 +87,32 @@ RSpec.describe Spree::Event do
           end
         end
       end
+    end
+  end
+
+  describe '.subscribers' do
+    let(:subscriber) { instance_double(Module, 'Subscriber') }
+    let(:subscriber_name) { instance_double(String, 'Subscriber name') }
+
+    before do
+      described_class.subscribers.clear
+      allow(subscriber).to receive(:name).and_return(subscriber_name)
+      allow(subscriber_name).to receive(:constantize).and_return(subscriber)
+      allow(subscriber_name).to receive(:to_s).and_return(subscriber_name)
+    end
+
+    it 'accepts the names of constants' do
+      Spree::Config.events.subscribers << subscriber_name
+
+      expect(described_class.subscribers.to_a).to eq([subscriber])
+    end
+
+    it 'discards duplicates' do
+      described_class.subscribers << subscriber_name
+      described_class.subscribers << subscriber_name
+      described_class.subscribers << subscriber_name
+
+      expect(described_class.subscribers.to_a).to eq([subscriber])
     end
   end
 end

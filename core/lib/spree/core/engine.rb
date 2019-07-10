@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'spree/config'
-require 'spree/event/processors/mailer_processor'
 
 module Spree
   module Core
@@ -45,8 +44,15 @@ module Spree
         Migrations.new(config, engine_name).check
       end
 
-      initializer 'spree.core.subscribe_event_mailer_processor' do
-        Spree::Event::Processors::MailerProcessor.subscribe!
+      # Setup Event Subscribers
+      initializer 'spree.core.initialize_subscribers' do |app|
+        app.reloader.to_prepare do
+          Spree::Event.subscribers.each(&:subscribe!)
+        end
+
+        app.reloader.before_class_unload do
+          Spree::Event.subscribers.each(&:unsubscribe!)
+        end
       end
 
       # Load in mailer previews for apps to use in development.

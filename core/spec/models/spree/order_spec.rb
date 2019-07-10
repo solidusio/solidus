@@ -29,14 +29,14 @@ RSpec.describe Spree::Order, type: :model do
       end
 
       # These specs show how notifications can be removed, one at a time or
-      # all the ones set by MailerProcessor module
+      # all the ones set by MailerSubscriber module
       context 'when removing the default email notification subscription' do
         before do
-          Spree::Event.unsubscribe Spree::Event::Processors::MailerProcessor.order_finalized_handler
+          Spree::Event.unsubscribe Spree::MailerSubscriber.order_finalized_handler
         end
 
         after do
-          Spree::Event::Processors::MailerProcessor.subscribe!
+          Spree::MailerSubscriber.subscribe!
         end
 
         it 'does not send the email' do
@@ -47,11 +47,11 @@ RSpec.describe Spree::Order, type: :model do
 
       context 'when removing all the email notification subscriptions' do
         before do
-          Spree::Event::Processors::MailerProcessor.unsubscribe!
+          Spree::MailerSubscriber.unsubscribe!
         end
 
         after do
-          Spree::Event::Processors::MailerProcessor.subscribe!
+          Spree::MailerSubscriber.subscribe!
         end
 
         it 'does not send the email' do
