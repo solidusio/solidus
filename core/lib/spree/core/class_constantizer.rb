@@ -18,6 +18,8 @@ module Spree
           klasses.each do |klass|
             self << klass
           end
+
+          self
         end
 
         delegate :clear, :empty?, to: :@collection
