@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'spree/event/subscriber'
+
 module Spree
   module MailerSubscriber
     include Spree::Event::Subscriber
