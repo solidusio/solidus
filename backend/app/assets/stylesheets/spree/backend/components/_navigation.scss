@@ -42,10 +42,6 @@ nav.menu {
 }
 
 .admin-nav-menu {
-  > ul {
-    margin: 1.5em 0 0;
-  }
-  
   ul {
     padding: 0;
     list-style: none;
@@ -57,7 +53,8 @@ nav.menu {
     &:hover {
       background: $color-navbar-active-bg;
 
-      > a {
+      > a,
+      > a:before {
         color: $color-navbar-active;
       }
     }
@@ -65,8 +62,9 @@ nav.menu {
     &.selected {
       background: $color-navbar-active-bg;
 
-      > a {
-        color: $color-navbar;
+      > a,
+      > a:before {
+        color: $color-navbar-active;
       }
     }
 
