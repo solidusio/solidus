@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'rails/engine'
 require 'spree/api/config'
 
 module Spree
