@@ -2,6 +2,4 @@
 
 require 'spree/core'
 
-require 'responders'
-
 require 'spree/api/engine'
