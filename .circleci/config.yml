@@ -44,14 +44,14 @@ commands:
 
       - restore_cache:
           keys:
-            - solidus-gems-v1-{{ .Branch }}
-            - solidus-gems-v1
+            - solidus-gems-v2-{{ .Branch }}
+            - solidus-gems-v2
 
       - run: |
           bundle install --path=vendor/bundle
 
       - save_cache:
-          key: solidus-gems-v1-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+          key: solidus-gems-v2-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
           paths:
             - vendor/bundle
 
