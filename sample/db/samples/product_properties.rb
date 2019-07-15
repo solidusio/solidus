@@ -107,17 +107,6 @@ products =
       "Fit" => "Slim",
       "Gender" => "Women's"
     }
-    # "Solidus Woman T-Shirt" =>
-    # {
-    #   "Manufacturer" => "Jerseys",
-    #   "Brand" => "Conditioned",
-    #   "Model" => "WM6001",
-    #   "Shirt Type" => "Skinny",
-    #   "Sleeve Type" => "Short",
-    #   "Made from" => "90% Cotton, 10% Nylon",
-    #   "Fit" => "Slim",
-    #   "Gender" => "Women's"
-    # }
   }
 
 products.each do |name, properties|
