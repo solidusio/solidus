@@ -92,6 +92,7 @@ impact your store but if you added some custom CSS that matches the old Admin
 UI, you probaly have to make some change at it now.
 
 - Update admin color palette and font [#3192](https://github.com/solidusio/solidus/pull/3192) ([mfrecchiami](https://github.com/mfrecchiami))
+- Add a color to menu selected items [#3269](https://github.com/solidusio/solidus/pull/3269) ([mfrecchiami](https://github.com/mfrecchiami))
 
 **Changes to how returns are processed from a return item**
 
