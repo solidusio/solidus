@@ -117,7 +117,6 @@ https://solidus.docs.stoplight.io/.
 
 - Document the API via OpenAPI [#3252](https://github.com/solidusio/solidus/pull/3252) ([aldesantis](https://github.com/aldesantis))
 
-
 ### Core
 
 - Refactor Promotions Environment Configuration [#3239](https://github.com/solidusio/solidus/pull/3239) ([kennyadsl](https://github.com/kennyadsl))
@@ -147,7 +146,6 @@ https://solidus.docs.stoplight.io/.
 - Remove user prereq from First Order promorule [#2928](https://github.com/solidusio/solidus/pull/2928) ([fastjames](https://github.com/fastjames))
 - Remove belongs_to :return_authorization from InventoryUnit [#2753](https://github.com/solidusio/solidus/pull/2753) ([snarfmason](https://github.com/snarfmason))
 - Improve pricing options flexibility [#2504](https://github.com/solidusio/solidus/pull/2504) ([softr8](https://github.com/softr8))
-
 
 ### Backend
 
@@ -182,10 +180,6 @@ https://solidus.docs.stoplight.io/.
 
 - Deprecate @payment_sources ivar in checkout controller [#3128](https://github.com/solidusio/solidus/pull/3128) ([kennyadsl](https://github.com/kennyadsl))
 - Deprecate core tasks and migration scripts [#3080](https://github.com/solidusio/solidus/pull/3080) ([kennyadsl](https://github.com/kennyadsl))
-
-
-
-
 
 ### Misc
 
