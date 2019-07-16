@@ -11,6 +11,7 @@ more easily by simply subscribing to certain events. Sending emails may be a
 simple use case for this new feature.
 
 - ActiveSupport notifications for Events Handling  [#3081](https://github.com/solidusio/solidus/pull/3081) ([spaghetticode](https://github.com/spaghetticode))
+- Support class reloading for Event Subscribers [#3232](https://github.com/solidusio/solidus/pull/3232) ([elia](https://github.com/elia))
 
 **Attachment adapters**
 
@@ -91,6 +92,7 @@ impact your store but if you added some custom CSS that matches the old Admin
 UI, you probaly have to make some change at it now.
 
 - Update admin color palette and font [#3192](https://github.com/solidusio/solidus/pull/3192) ([mfrecchiami](https://github.com/mfrecchiami))
+- Add a color to menu selected items [#3269](https://github.com/solidusio/solidus/pull/3269) ([mfrecchiami](https://github.com/mfrecchiami))
 
 **Changes to how returns are processed from a return item**
 
@@ -107,6 +109,13 @@ return_item.process_inventory_unit!
 
 - Allow order with multiple line items to be marked as "Returned" [#3199](https://github.com/solidusio/solidus/pull/3199) ([spaghetticode](https://github.com/spaghetticode))
 
+**New REST API documentation**
+
+Our REST API is now documented using the Open API Specification. The
+documentation is part of the repository and published on
+https://solidus.docs.stoplight.io/.
+
+- Document the API via OpenAPI [#3252](https://github.com/solidusio/solidus/pull/3252) ([aldesantis](https://github.com/aldesantis))
 
 ### Core
 
@@ -137,7 +146,6 @@ return_item.process_inventory_unit!
 - Remove user prereq from First Order promorule [#2928](https://github.com/solidusio/solidus/pull/2928) ([fastjames](https://github.com/fastjames))
 - Remove belongs_to :return_authorization from InventoryUnit [#2753](https://github.com/solidusio/solidus/pull/2753) ([snarfmason](https://github.com/snarfmason))
 - Improve pricing options flexibility [#2504](https://github.com/solidusio/solidus/pull/2504) ([softr8](https://github.com/softr8))
-
 
 ### Backend
 
@@ -172,10 +180,6 @@ return_item.process_inventory_unit!
 
 - Deprecate @payment_sources ivar in checkout controller [#3128](https://github.com/solidusio/solidus/pull/3128) ([kennyadsl](https://github.com/kennyadsl))
 - Deprecate core tasks and migration scripts [#3080](https://github.com/solidusio/solidus/pull/3080) ([kennyadsl](https://github.com/kennyadsl))
-
-
-
-
 
 ### Misc
 
