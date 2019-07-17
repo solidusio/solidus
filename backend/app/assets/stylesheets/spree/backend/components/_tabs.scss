@@ -1,7 +1,7 @@
 .tabs {
   display: flex;
   margin: 1em 0;
-  border-bottom: 1px solid $color-border;
+  border-bottom: 1px solid $color-tab-border;
   white-space: nowrap;
 
   &,
@@ -26,9 +26,9 @@
   top: 2px;
 
   > a {
-    color: $color-navbar-submenu;
+    color: $color-tab;
     display: block;
-    border: 1px solid $color-border;
+    border: 1px solid $color-tab-border;
     border-radius: 4px 4px 0 0;
     line-height: 1;
   }
@@ -38,19 +38,19 @@
   }
 
   &:not(.active) > a {
-    background: $color-tbl-thead;
+    background: $color-tab-bg;
   }
 
   &.active > a,
   &.active:hover {
-    background: white;
-    border-bottom-color: white;
-    color: $color-navbar-active;
+    background: $color-tab-active-bg;
+    border-bottom-color: $color-tab-active-border;
+    color: $color-tab-active;
     font-weight: $font-weight-bold;
   }
 
   &:not(.active):hover > a {
-    color: $color-navbar-active;
+    color: $color-tab-active;
   }
 }
 
@@ -70,7 +70,7 @@
 
   > a {
     position: relative;
-    background: white;
+    background: $color-tab-active-bg;
     z-index: 1;
 
     &:before {
@@ -81,7 +81,7 @@
   }
 
   &:hover > a {
-    background: white;
+    background: $color-tab-active-bg;
   }
 
   &:not(:hover) ul {
@@ -99,7 +99,7 @@
 .tabs li.in-dropdown {
   a {
     display: block;
-    border: 1px solid $color-border;
+    border: 1px solid $color-tab-border;
     background: white;
   }
 

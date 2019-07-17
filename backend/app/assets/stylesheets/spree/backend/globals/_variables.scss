@@ -53,6 +53,14 @@ $color-navbar-footer-bg:        $color-light !default;
 $color-navbar-footer-active:    $color-primary !default;
 $color-icon-navbar:             $color-dark-light !default;
 
+// Basic Tabs colors
+$color-tab:                     $color-dark-light !default;
+$color-tab-bg:                  very-light($color-dark-light, 4) !default;
+$color-tab-border:              $color-border !default;
+$color-tab-active:              $color-primary !default;
+$color-tab-active-bg:           $color-white !default;
+$color-tab-active-border:       $color-white !default;
+
 // Basic flash colors
 @include bs-deprecated-variable("color-success", "brand-success");
 $color-success:                 $color-green !default;
