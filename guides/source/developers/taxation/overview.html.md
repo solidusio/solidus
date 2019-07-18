@@ -49,13 +49,15 @@ In Solidus, a tax rate consists of at least four values:
 
 - The descriptive name for the tax rate. For example, "Minnesota Sales Tax" for
   a Minnesota state tax rate.
-- The zone that the tax rate should apply to. <!-- TODO: Link to zones article.-->
+- The [zone][zone] that the tax rate should apply to.
 - The rate (in the form of a percentage of the price).
 - The "Included in price" boolean. This indicates whether the tax is included in
   the price (for value-added taxes) or added to the price (U.S. taxes).
 
 Solidus calculates tax based on the matching tax rate(s) for the order's [tax
-address](#tax-addresses). 
+address](#tax-addresses).
+
+[zone]: ../locations/zones.html
 
 ## Tax addresses
 
