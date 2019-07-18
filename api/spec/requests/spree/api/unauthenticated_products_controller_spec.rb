@@ -9,7 +9,9 @@ module Spree
     let(:attributes) { [:id, :name, :description, :price, :available_on, :slug, :meta_description, :meta_keywords, :taxon_ids, :meta_title] }
 
     context "without authentication" do
-      before { Spree::Api::Config[:requires_authentication] = false }
+      before do
+        stub_spree_preferences(Spree::Api::Config, requires_authentication: false)
+      end
 
       it "retrieves a list of products" do
         get spree.api_products_path

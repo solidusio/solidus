@@ -326,11 +326,7 @@ module Spree
         # Regression test for https://github.com/spree/spree/issues/2140
         context "with authentication_required set to false" do
           before do
-            Spree::Api::Config.requires_authentication = false
-          end
-
-          after do
-            Spree::Api::Config.requires_authentication = true
+            stub_spree_preferences(Spree::Api::Config, requires_authentication: false)
           end
 
           it "can still create a product" do

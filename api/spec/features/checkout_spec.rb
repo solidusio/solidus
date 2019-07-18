@@ -4,7 +4,9 @@ require 'spec_helper'
 
 module Spree
   describe 'Api Feature Specs', type: :request do
-    before { Spree::Api::Config[:requires_authentication] = false }
+    before do
+      stub_spree_preferences(Spree::Api::Config, requires_authentication: false)
+    end
     let!(:promotion) { FactoryBot.create(:promotion, :with_order_adjustment, code: 'foo', weighted_order_adjustment_amount: 10) }
     let(:promotion_code) { promotion.codes.first }
     let!(:store) { FactoryBot.create(:store) }
