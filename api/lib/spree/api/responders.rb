@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'responders'
 require 'spree/api/responders/rabl_template'
 
 module Spree

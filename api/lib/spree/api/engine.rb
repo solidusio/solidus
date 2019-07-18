@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails/engine'
+require 'spree/api/config'
 
 module Spree
   module Api
@@ -8,9 +8,9 @@ module Spree
       isolate_namespace Spree
       engine_name 'spree_api'
 
-      initializer "spree.api.environment", before: :load_config_initializers do |_app|
-        Spree::Api::Config = Spree::ApiConfiguration.new
-      end
+      # Leave initializer empty for backwards-compatability. Other apps
+      # might still rely on this event.
+      initializer "spree.api.environment", before: :load_config_initializers do; end
     end
   end
 end
