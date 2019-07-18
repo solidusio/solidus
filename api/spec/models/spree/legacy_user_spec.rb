@@ -54,7 +54,7 @@ module Spree
 
           before {
             user.clear_spree_api_key!
-            stub_spree_preferences roles_for_auto_api_key: ['hobbit']
+            stub_spree_preferences(roles_for_auto_api_key: ['hobbit'])
           }
 
           it { expect { subject }.to change { user.reload.spree_api_key }.from(nil) }

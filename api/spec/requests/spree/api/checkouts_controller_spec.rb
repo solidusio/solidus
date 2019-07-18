@@ -6,7 +6,7 @@ module Spree
   describe Api::CheckoutsController, type: :request do
     before(:each) do
       stub_authentication!
-      stub_spree_preferences track_inventory_levels: false
+      stub_spree_preferences(track_inventory_levels: false)
       country_zone = create(:zone, name: 'CountryZone')
       @state = create(:state)
       @country = @state.country
