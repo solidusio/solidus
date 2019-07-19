@@ -29,7 +29,7 @@ RSpec.describe 'New Refund creation', :js do
       fill_in 'refund_amount', with: amount
       select reason.name, from: 'Reason'
       click_button 'Refund'
-      expect(find('input[type="submit"]')).to be_disabled
+      expect(page).to have_button('Refund', disabled: true)
     end
   end
 end
