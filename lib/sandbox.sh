@@ -57,3 +57,8 @@ bundle install --gemfile Gemfile
 bundle exec rake db:drop db:create
 bundle exec rails g spree:install --auto-accept --user_class=Spree::User --enforce_available_locales=true
 bundle exec rails g solidus:auth:install
+
+echo "
+This app is intended for test purposes. If you're interested in running
+Solidus in production, visit:
+https://guides.solidus.io/developers/getting-started/first-time-installation.html 🚀"
