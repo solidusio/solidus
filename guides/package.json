@@ -33,7 +33,7 @@
     "axios": "^0.18.1",
     "dompurify": "1.0.10",
     "headroom.js": "0.9.4",
-    "jquery": "^3.2.1",
+    "jquery": "^3.4.0",
     "js-yaml": "^3.13.1",
     "lunr": "2.2.0",
     "numeral": "^2.0.6",
