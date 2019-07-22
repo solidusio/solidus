@@ -78,7 +78,7 @@
         <tr id="<%= spree_dom_id promotion %>">
           <td><%= promotion.name %></td>
           <td>
-            <%= (promotion.codes.size == 1) ? promotion.codes.take.try!(:value) : t('spree.number_of_codes', count: promotion.codes.size) %>
+            <%= (promotion.codes.size == 1) ? promotion.codes.pluck(:value).first : t('spree.number_of_codes', count: promotion.codes.size) %>
           </td>
           <td>
             <span class="pill pill-<%= promotion.active? ? 'active' : 'inactive' %>">
