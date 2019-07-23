@@ -582,7 +582,6 @@ RSpec.describe Spree::Promotion, type: :model do
     end
 
     context "when the promotion's usage limit is exceeded" do
-      let(:order) { FactoryBot.create(:completed_order_with_promotion, promotion: promotion) }
       let(:promotion) { FactoryBot.create(:promotion, :with_order_adjustment) }
 
       before do
@@ -599,7 +598,6 @@ RSpec.describe Spree::Promotion, type: :model do
     end
 
     context "when the promotion code's usage limit is exceeded" do
-      let(:order) { FactoryBot.create(:completed_order_with_promotion, promotion: promotion) }
       let(:promotion) { create(:promotion, :with_order_adjustment, code: 'abc123', per_code_usage_limit: 1) }
       let(:promotion_code) { promotion.codes.first }
 
@@ -636,8 +634,6 @@ RSpec.describe Spree::Promotion, type: :model do
     end
 
     context "when promotable is a Spree::Order" do
-      let(:promotable) { create :order }
-
       context "and it is empty" do
         it { is_expected.to be true }
       end
