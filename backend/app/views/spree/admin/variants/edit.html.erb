@@ -1,9 +1,5 @@
 <%= render partial: 'spree/admin/shared/product_tabs', locals: { current: 'Variants' } %>
 
-<% admin_breadcrumb(link_to plural_resource_name(Spree::Variant), admin_product_variants_path(@product)) %>
-<% admin_breadcrumb(@variant.options_text) %>
-
-
 <%= render partial: 'spree/shared/error_messages', locals: { target: @variant } %>
 
 

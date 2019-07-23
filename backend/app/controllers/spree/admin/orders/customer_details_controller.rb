@@ -7,6 +7,7 @@ module Spree
         rescue_from Spree::Order::InsufficientStock, with: :insufficient_stock_error
 
         before_action :load_order
+        before_action :set_breadcrumbs
 
         def show
           edit
@@ -74,6 +75,11 @@ module Spree
         def insufficient_stock_error
           flash[:error] = t('spree.insufficient_stock_for_order')
           redirect_to edit_admin_order_customer_url(@order)
+        end
+
+        def set_breadcrumbs
+          set_order_breadcrumbs
+          add_breadcrumb t('spree.customer_details')
         end
       end
     end

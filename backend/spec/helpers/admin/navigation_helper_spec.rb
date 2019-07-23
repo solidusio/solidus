@@ -136,4 +136,31 @@ describe Spree::Admin::NavigationHelper, type: :helper do
       expect(subject).to eq helper.solidus_icon('icon-name')
     end
   end
+
+  describe "#render_admin_breadcrumbs" do
+    before do
+      assign :admin_breadcrumbs, [
+        ["first", "http://first.example.com"],
+        ["second", nil],
+        ["third", nil],
+        ["fourth", "http://fourth.com"]
+      ]
+    end
+
+    subject { helper.render_admin_breadcrumbs }
+
+    it "renders breadcrumb with link when it isn't the last one" do
+      expect(subject).to have_link("first", href: "http://first.example.com")
+    end
+
+    it "renders breadcrumb without link when it's the last one" do
+      expect(subject).to_not have_link("fourth")
+      expect(subject).to have_content("fourth")
+    end
+
+    it "renders breadcrumb without link when path isn't given" do
+      expect(subject).to_not have_link("second")
+      expect(subject).to have_content("second")
+    end
+  end
 end

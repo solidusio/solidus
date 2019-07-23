@@ -3,6 +3,8 @@
 module Spree
   module Admin
     class BaseController < Spree::BaseController
+      include Spree::Admin::Breadcrumbs
+
       helper 'spree/admin/navigation'
       layout '/spree/layouts/admin'
 

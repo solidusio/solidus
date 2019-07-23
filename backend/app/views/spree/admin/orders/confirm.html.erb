@@ -1,8 +1,5 @@
 <%= render partial: 'spree/admin/shared/order_tabs', locals: {current: 'Confirm'} %>
 
-<% admin_breadcrumb(t('spree.confirm_order')) %>
-
-
 <%= render partial: 'spree/admin/orders/confirm/customer_details', locals: {order: @order} %>
 
 <% if Spree::Order.checkout_step_names.include?(:delivery) %>

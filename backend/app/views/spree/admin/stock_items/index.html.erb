@@ -1,12 +1,6 @@
 <% if @product %>
   <%= render partial: 'spree/admin/shared/product_tabs', locals: { current: 'Stock Management' } %>
   <%= render partial: 'spree/shared/error_messages', locals: { target: @product } %>
-  <% admin_breadcrumb(t('spree.manage_stock')) %>
-
-<% else %>
-
-  <% admin_breadcrumb(t('spree.stock')) %>
-
 <% end %>
 
 <% content_for :table_filter_title do %>

@@ -7,6 +7,7 @@ module Spree
       before_action :find_properties
       before_action :setup_property, only: :index, if: -> { can?(:create, model_class) }
       before_action :setup_variant_property_rules, only: :index
+      before_action :set_breadcrumbs
 
       private
 
@@ -23,6 +24,11 @@ module Spree
         @option_value_ids = (params[:ovi] || []).reject(&:blank?).map(&:to_i)
         @variant_property_rule = @product.find_variant_property_rule(@option_value_ids) || @product.variant_property_rules.build
         @variant_property_rule.values.build if can?(:create, Spree::VariantPropertyRuleValue)
+      end
+
+      def set_breadcrumbs
+        set_product_breadcrumbs
+        add_breadcrumb plural_resource_name(Spree::ProductProperty)
       end
     end
   end

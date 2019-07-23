@@ -11,6 +11,7 @@ module Spree
 
       update.before :determine_backorderable
       before_action :load_product, :load_stock_management_data, only: :index
+      before_action :set_breadcrumbs
 
       private
 
@@ -57,6 +58,15 @@ module Spree
 
       def collection
         []
+      end
+
+      def set_breadcrumbs
+        if @product
+          set_product_breadcrumbs
+          add_breadcrumb t('spree.manage_stock')
+        else
+          add_breadcrumb t('spree.stock')
+        end
       end
     end
   end

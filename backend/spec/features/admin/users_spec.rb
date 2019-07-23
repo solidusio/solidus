@@ -242,6 +242,17 @@ describe 'Users', type: :feature do
           expect(page).to have_content("Email is invalid")
         end
       end
+
+      # Regression test for https://github.com/solidusio/solidus/issues/3149
+      it 'shows persisted email in breadcrumb' do
+        fill_in 'user_email', with: 'something'
+        click_button 'Update'
+
+        within('.breadcrumb') do
+          expect(page).to_not have_content('something')
+          expect(page).to have_content(user_a.email)
+        end
+      end
     end
 
     context 'no api key exists' do

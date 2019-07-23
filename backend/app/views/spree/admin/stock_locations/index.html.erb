@@ -1,10 +1,5 @@
 <%= render 'spree/admin/shared/shipping_tabs' %>
 
-<% admin_breadcrumb(t('spree.settings')) %>
-<% admin_breadcrumb(t('spree.admin.tab.shipping')) %>
-<% admin_breadcrumb(plural_resource_name(Spree::StockLocation)) %>
-
-
 <% content_for :page_actions do %>
   <ul class="actions inline-menu">
     <% if can?(:create, Spree::StockLocation) %>

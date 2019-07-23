@@ -1,7 +1,3 @@
-<% admin_breadcrumb(link_to plural_resource_name(Spree::LegacyUser), spree.admin_users_path) %>
-<% admin_breadcrumb(@user.email) %>
-
-
 <%= render 'spree/admin/users/sidebar' %>
 <%= render 'spree/admin/users/tabs', current: :account %>
 <%= render partial: 'spree/admin/users/user_page_actions' %>

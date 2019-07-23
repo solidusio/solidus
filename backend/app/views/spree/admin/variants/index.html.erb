@@ -1,7 +1,5 @@
 <%= render 'spree/admin/shared/product_tabs', current: 'Variants' %>
 
-<% admin_breadcrumb(plural_resource_name(Spree::Variant)) %>
-
 <% content_for :page_actions do %>
   <% if can?(:create, Spree::Variant) && !@product.empty_option_values? %>
     <li id="new_var_link" data-hook>

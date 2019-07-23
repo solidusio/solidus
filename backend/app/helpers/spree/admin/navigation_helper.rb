@@ -4,24 +4,32 @@ module Spree
   module Admin
     module NavigationHelper
       def admin_breadcrumbs
-        @admin_breadcrumbs ||= []
+        @admin_breadcrumbs || []
       end
 
-      # Add items to current page breadcrumb heirarchy
       def admin_breadcrumb(*ancestors, &block)
-        admin_breadcrumbs.concat(ancestors) if ancestors.present?
+        Spree::Deprecation.warn 'admin_breadcrumb method is deprecated and ' \
+          'will be removed in Soldius 3.0. Breadcrumbs should be set at ' \
+          'controller level using the add_breadcrumb method, see #3191', caller
+
+        ancestors.each do |ancestor|
+          unless admin_breadcrumbs.flatten.include?(strip_tags(ancestor))
+            admin_breadcrumbs.concat(Array.wrap(ancestor))
+          end
+        end
         admin_breadcrumbs.push(capture(&block)) if block_given?
       end
 
       # Render Bootstrap style breadcrumbs
       def render_admin_breadcrumbs
-        if content_for?(:page_title)
-          admin_breadcrumb(content_for(:page_title))
-        end
-
         content_tag :ol, class: 'breadcrumb' do
-          segments = admin_breadcrumbs.map do |level|
-            content_tag(:li, level, class: "breadcrumb-item #{level == admin_breadcrumbs.last ? 'active' : ''}")
+          segments = admin_breadcrumbs.map.with_index do |(text, path), index|
+            last = index == admin_breadcrumbs.size - 1
+
+            content_tag(:li, class: "breadcrumb-item #{last ? 'active' : ''}") do
+              render partial: 'spree/admin/shared/breadcrumb_item',
+                     locals: { text: text, path: path, last: last }
+            end
           end
           safe_join(segments)
         end
@@ -33,7 +41,7 @@ module Spree
         elsif content_for?(:page_title)
           content_for(:page_title)
         elsif admin_breadcrumbs.any?
-          admin_breadcrumbs.map{ |x| strip_tags(x) }.reverse.join(' - ')
+          admin_breadcrumbs.map{ |text, _, _| strip_tags(text) }.reverse.join(' - ')
         else
           t(controller.controller_name, default: controller.controller_name.titleize, scope: 'spree')
         end
