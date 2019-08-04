@@ -26,28 +26,44 @@ products = [
     tax_category: tax_category,
     shipping_category: shipping_category,
     price: 15.99,
-    eur_price: 14
+    eur_price: 14,
+    weight: 0.5,
+    height: 5,
+    width: 5,
+    depth: 5
   },
   {
     name: "Ruby on Rails Bag",
     tax_category: tax_category,
     shipping_category: shipping_category,
     price: 22.99,
-    eur_price: 19
+    eur_price: 19,
+    weight: 0.5,
+    height: 5,
+    width: 5,
+    depth: 5
   },
   {
     name: "Ruby on Rails Baseball Jersey",
     tax_category: tax_category,
     shipping_category: shipping_category,
     price: 19.99,
-    eur_price: 16
+    eur_price: 16,
+    weight: 0.5,
+    height: 20,
+    width: 10,
+    depth: 5
   },
   {
     name: "Ruby on Rails Jr. Spaghetti",
     tax_category: tax_category,
     shipping_category: shipping_category,
     price: 19.99,
-    eur_price: 16
+    eur_price: 16,
+    weight: 0.5,
+    height: 20,
+    width: 10,
+    depth: 5
 
   },
   {
@@ -55,33 +71,58 @@ products = [
     shipping_category: shipping_category,
     tax_category: tax_category,
     price: 19.99,
-    eur_price: 16
+    eur_price: 16,
+    weight: 0.5,
+    height: 20,
+    width: 10,
+    depth: 5
+
   },
   {
     name: "Ruby Baseball Jersey",
     tax_category: tax_category,
     shipping_category: shipping_category,
     price: 19.99,
-    eur_price: 16
+    eur_price: 16,
+    weight: 0.5,
+    height: 20,
+    width: 10,
+    depth: 5
+
   },
   {
     name: "Apache Baseball Jersey",
     tax_category: tax_category,
     shipping_category: shipping_category,
     price: 19.99,
-    eur_price: 16
+    eur_price: 16,
+    weight: 0.5,
+    height: 20,
+    width: 10,
+    depth: 5
+
   },
   {
     name: "Ruby on Rails Mug",
     shipping_category: shipping_category,
     price: 13.99,
-    eur_price: 12
+    eur_price: 12,
+    weight: 1,
+    height: 5,
+    width: 5,
+    depth: 5
+
   },
   {
     name: "Ruby on Rails Stein",
     shipping_category: shipping_category,
     price: 16.99,
-    eur_price: 14
+    eur_price: 14,
+    weight: 1,
+    height: 5,
+    width: 5,
+    depth: 5
+
   }
 ]
 
