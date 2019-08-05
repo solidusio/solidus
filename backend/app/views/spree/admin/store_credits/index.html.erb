@@ -6,7 +6,7 @@
 <%= render 'spree/admin/users/sidebar' %>
 <%= render 'spree/admin/users/tabs', current: :store_credits %>
 <% content_for :page_actions do %>
-  <% if can?(:create, Spree::StoreCredit) %>
+  <% if can?(:create, @user.store_credits.new) %>
     <li><%= link_to t('spree.admin.store_credits.add'), new_admin_user_store_credit_path(@user), class: 'button btn btn-primary' %></li>
   <% end %>
 <% end %>
