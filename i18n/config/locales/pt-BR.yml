@@ -5,7 +5,7 @@ pt-BR:
       spree/order_cancellations:
         cancel: Cancelar
         quantity: Quantidate
-        shipment: Enviro
+        shipment: Envio
         state: Estado
   activerecord:
     attributes:
@@ -88,7 +88,7 @@ pt-BR:
         presentation: Apresentação
       spree/option_value:
         name: Nome
-        presentation:
+        presentation: Apresentação
       spree/order:
         additional_tax_total: Total de taxas adicionais
         approved_at: Aprovado em
@@ -547,8 +547,8 @@ pt-BR:
         one: Retorno do Consumidor
         other: Retornos dos Consumidores
       spree/exchange:
-        one:
-        other:
+        one: Troca
+        other: Trocas
       spree/image:
         one: Image
         other: Imagens
@@ -726,7 +726,7 @@ pt-BR:
     account_updated: Conta atualizada!
     action: Ação
     actions:
-      add:
+      add: Adicionar
       cancel: Cancelar
       continue: Continue
       create: Criar
