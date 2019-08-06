@@ -40,7 +40,7 @@ module Spree
         [
           Spree::AdjustmentReason.active.to_a,
           @adjustment.adjustment_reason
-        ].flatten.compact.uniq.sort_by { |r| r.name.downcase }
+        ].flatten.compact.uniq.sort_by { |reason| reason.name.downcase }
       end
     end
   end
