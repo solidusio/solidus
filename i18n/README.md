@@ -87,7 +87,7 @@ gem 'solidus_globalize', github: 'solidusio-contrib/solidus_globalize', branch: 
 
 ## Localizing country names
 
-Feel free to define `spree.country_names` in your own locale files if you need custom localization of country names. The value expected is a hash. For example, to have countries in Spanish do:
+You can translate country names by defining `spree.country_names` in your own locale files. For example, to have countries in Spanish do:
 
 ```yml
 es:
