@@ -44,21 +44,36 @@ module Spree
       # This method  may be used for stubbing one or more different preferences
       # at the same time.
       #
-      # @param [Hash] preferences names and values to be stubbed
+      # @param prefs_or_conf_class [Class, Hash] the class we want to stub
+      #   preferences for or the preferences hash (see prefs param). If this
+      #   param is an Hash, preferences will be stubbed on Spree::Config.
+      # @param prefs [Hash, nil] names and values to be stubbed
       #
-      # @example Stubs `currency` and `track_inventory_levels` preferences
+      # @example Stubs `currency` and `track_inventory_levels` on `Spree::Config`:
       #   stub_spree_preferences(currency: 'EUR', track_inventory_levels: false)
       #   expect(Spree::Config.currency).to eql 'EUR'
       #
+      # @example Stubs `locale` preference on `Spree::Backend::Config`:
+      #   stub_spree_preferences(Spree::Backend::Config, locale: 'fr'),
+      #   expect(Spree::Backend::Config.locale).to eql 'fr'
+      #
       # @see https://github.com/solidusio/solidus/issues/3219
       #   Solidus #3219 for more details and motivations.
-      def stub_spree_preferences(preferences)
+      def stub_spree_preferences(prefs_or_conf_class, prefs = nil)
+        if prefs_or_conf_class.is_a?(Hash)
+          preference_store_class = Spree::Config
+          preferences = prefs_or_conf_class
+        else
+          preference_store_class = prefs_or_conf_class
+          preferences = prefs
+        end
+
         preferences.each do |name, value|
-          if Spree::Config.method(:[]).owner >= Spree::Config.class
-            allow(Spree::Config).to receive(:[]).and_call_original
+          if preference_store_class.method(:[]).owner >= preference_store_class.class
+            allow(preference_store_class).to receive(:[]).and_call_original
           end
-          allow(Spree::Config).to receive(:[]).with(name) { value }
-          allow(Spree::Config).to receive(name) { value }
+          allow(preference_store_class).to receive(:[]).with(name) { value }
+          allow(preference_store_class).to receive(name) { value }
         end
       end
 
@@ -75,12 +90,30 @@ module Spree
       #     expect(Spree::Config.currency).to eql 'EUR'
       #   end
       # @see Spree::TestingSupport::Preferences#stub_spree_preferences
-      def with_unfrozen_spree_preference_store
-        frozen_store = Spree::Config.preference_store
-        Spree::Config.preference_store = Spree::Config[:unfrozen_preference_store].dup
+      def with_unfrozen_spree_preference_store(preference_store_class: Spree::Config)
+        frozen_store = preference_store_class.preference_store
+        preference_store_class.preference_store = preference_store_class[:unfrozen_preference_store].dup
         yield
       ensure
-        Spree::Config.preference_store = frozen_store
+        preference_store_class.preference_store = frozen_store
+      end
+
+      # This class method allows to freeze preferences for a specific
+      # configuration store class. It also stores the current state into
+      # a new preference of that store, so it can be reused when needed
+      # (eg. with_unfrozen_spree_preference_store)
+      #
+      # It is meant to be used by extensions as well, for example if one
+      # extension has its own Spree::ExtensionName::Config class, we can
+      # freeze it and be sure we always stub values on it during tests.
+      #
+      # @param preference_store_class [Class] the configuration class we want
+      #   to freeze.
+      def self.freeze_preferences(preference_store_class)
+        config_class = preference_store_class.class
+        config_class.preference :unfrozen_preference_store, :hash
+        preference_store_class.unfrozen_preference_store = preference_store_class.preference_store.dup
+        preference_store_class.preference_store.freeze
       end
     end
   end
@@ -88,9 +121,15 @@ end
 
 RSpec.configure do |config|
   config.before :suite do
-    # keep a copy of the original unfrozen preference_store for later use:
-    Spree::AppConfiguration.preference :unfrozen_preference_store, :hash
-    Spree::Config.unfrozen_preference_store = Spree::Config.preference_store.dup
-    Spree::Config.preference_store.freeze
+    %w[
+      Spree::Config
+      Spree::Frontend::Config
+      Spree::Backend::Config
+      Spree::Api::Config
+    ].each do |configuration_class|
+      if Object.const_defined?(configuration_class)
+        Spree::TestingSupport::Preferences.freeze_preferences(configuration_class.constantize)
+      end
+    end
   end
 end

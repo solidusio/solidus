@@ -59,7 +59,6 @@ RSpec.configure do |config|
 
   config.before(:each) do
     Rails.cache.clear
-    Spree::Api::Config[:requires_authentication] = true
   end
 
   config.include ActiveJob::TestHelper

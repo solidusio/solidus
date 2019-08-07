@@ -8,7 +8,7 @@ require 'spec_helper'
 describe Spree::ProductsController, type: :controller do
   before do
     I18n.enforce_available_locales = false
-    Spree::Frontend::Config[:locale] = :de
+    stub_spree_preferences(Spree::Frontend::Config, locale: :de)
     I18n.backend.store_translations(:de, spree: {
       i18n: { this_file_language: "Deutsch (DE)" }
     })
@@ -16,7 +16,6 @@ describe Spree::ProductsController, type: :controller do
 
   after do
     I18n.reload!
-    Spree::Frontend::Config[:locale] = :en
     I18n.locale = :en
     I18n.enforce_available_locales = true
   end
