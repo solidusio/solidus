@@ -29,7 +29,13 @@ describe "Product Display Order", type: :feature do
       select2_search "Clothing", from: "Taxon"
       assert_selected_taxons([taxon_1, taxon_2])
 
+      # Without this line we have a flaky spec probably due to select2 not
+      # closing its fixed overlay correctly. Clicking anywhere in the page
+      # before submit apparently solves the issue.
+      find('.edit_product', visible: true).click
+
       click_button "Update"
+
       within('.flash') do
         expect(page).to have_content(%(Product "#{product.name}" has been successfully updated!))
       end
