@@ -349,6 +349,15 @@ RSpec.describe Spree::Promotion, type: :model do
         before { order.adjustments.promotion.update_all(eligible: false) }
         it { is_expected.to eq 0 }
       end
+
+      context "and adjustment is recalculated at promo last available usage" do
+        before do
+          promotion.update(usage_limit: 1)
+          order.adjustments.each(&:recalculate)
+        end
+
+        it { is_expected.to eq 1 }
+      end
     end
   end
 

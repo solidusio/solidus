@@ -126,9 +126,10 @@ module Spree
     # called anytime order.recalculate happens
     def eligible?(promotable, promotion_code: nil)
       return false if inactive?
-      return false if usage_limit_exceeded?
-      return false if promotion_code && promotion_code.usage_limit_exceeded?
+      return false if usage_limit_exceeded?([promotable])
+      return false if promotion_code && promotion_code.usage_limit_exceeded?([promotable])
       return false if blacklisted?(promotable)
+
       !!eligible_rules(promotable, {})
     end
 
@@ -166,21 +167,22 @@ module Spree
     # Whether the promotion has exceeded it's usage restrictions.
     #
     # @return true or false
-    def usage_limit_exceeded?
+    def usage_limit_exceeded?(excluded_orders = [])
       if usage_limit
-        usage_count >= usage_limit
+        usage_count(excluded_orders) >= usage_limit
       end
     end
 
     # Number of times the code has been used overall
     #
     # @return [Integer] usage count
-    def usage_count
+    def usage_count(excluded_orders = [])
       Spree::Adjustment.eligible.
         promotion.
-        where(source_id: actions.map(&:id)).
+        where(source_id: actions).
         joins(:order).
         merge(Spree::Order.complete).
+        where.not(spree_orders: { id: excluded_orders }).
         distinct.
         count(:order_id)
     end
