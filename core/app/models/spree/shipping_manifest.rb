@@ -21,9 +21,9 @@ class Spree::ShippingManifest
         states = {}
         units.group_by(&:state).each { |state, iu| states[state] = iu.count }
 
-        line_item = units.first.line_item
-        variant = units.first.variant
-        ManifestItem.new(line_item, variant, units.length, states)
+        first_unit = units.first
+
+        ManifestItem.new(first_unit.line_item, first_unit.variant, units.length, states)
       end
     end.flatten
   end
