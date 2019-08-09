@@ -26,13 +26,19 @@ describe "Product Display Order", type: :feature do
       visit spree.edit_admin_product_path(product)
 
       assert_selected_taxons([taxon_1])
-
       select2_search "Clothing", from: "Taxon"
       assert_selected_taxons([taxon_1, taxon_2])
 
+      # Without this line we have a flaky spec probably due to select2 not
+      # closing its fixed overlay correctly. Clicking anywhere in the page
+      # before submit apparently solves the issue.
+      find('.edit_product', visible: true, obscured: false).click
+
       click_button "Update"
 
-      expect(find(".flash")).to have_text "Product \"#{product.name}\" has been successfully updated!"
+      within('.flash') do
+        expect(page).to have_content(%(Product "#{product.name}" has been successfully updated!))
+      end
       assert_selected_taxons([taxon_1, taxon_2])
     end
 
