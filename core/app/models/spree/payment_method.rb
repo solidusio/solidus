@@ -199,6 +199,9 @@ module Spree
     #     4. app/views/spree/admin/payments/source_views/_{partial_name}.html.erb
     #     The view that represents your payment method on orders in the backend
     #
+    #     5. app/views/spree/api/payments/source_views/_{partial_name}.json.jbuilder
+    #     The view that represents your payment method on orders through the api
+    #
     def partial_name
       deprecated_method_type_override || type.demodulize.underscore
     end
