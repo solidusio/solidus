@@ -178,7 +178,8 @@ module Spree
     # @return [Integer] usage count
     def usage_count(excluded_orders = [])
       Spree::Adjustment.promotion.
-        adjusted_orders(excluded_orders: excluded_orders).
+        eligible.
+        in_completed_orders(excluded_orders: excluded_orders).
         where(source_id: actions).
         count(:order_id)
     end

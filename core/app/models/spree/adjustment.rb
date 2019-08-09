@@ -56,8 +56,7 @@ module Spree
     extend DisplayMoney
     money_methods :amount
 
-    def self.adjusted_orders(excluded_orders: [])
-      eligible.
+    def self.in_completed_orders(excluded_orders: [])
       joins(:order).
       merge(Spree::Order.complete).
       where.not(spree_orders: { id: excluded_orders }).
