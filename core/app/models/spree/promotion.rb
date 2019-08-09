@@ -127,7 +127,7 @@ module Spree
     def eligible?(promotable, promotion_code: nil)
       return false if inactive?
       return false if usage_limit_exceeded?([promotable])
-      return false if promotion_code && promotion_code.usage_limit_exceeded?([promotable])
+      return false if promotion_code&.usage_limit_exceeded?([promotable])
       return false if blacklisted?(promotable)
 
       !!eligible_rules(promotable, {})
@@ -139,6 +139,7 @@ module Spree
     def eligible_rules(promotable, options = {})
       # Promotions without rules are eligible by default.
       return [] if rules.none?
+
       eligible = lambda { |rule| rule.eligible?(promotable, options) }
       specific_rules = rules.for(promotable)
       return [] if specific_rules.none?
@@ -254,6 +255,7 @@ module Spree
 
     def apply_automatically_disallowed_with_codes_or_paths
       return unless apply_automatically
+
       errors.add(:apply_automatically, :disallowed_with_code) if codes.any?
       errors.add(:apply_automatically, :disallowed_with_path) if path.present?
     end
