@@ -38,14 +38,12 @@
 ### Main Contributor & Director
 At present, Nebulab is the main code contributor and director of Solidus, providing technical guidance and coordinating community efforts and activities.
 
-<a href="https://nebulab.it/" target="_blank">
-  <img width="240px" src="https://nebulab.it/assets/images/public/logo.svg">
-</a>
+[![Nebulab](https://nebulab.it/assets/images/public/logo.svg)](https://nebulab.it/)
 
 ### Key Stakeholders
 Support this project by becoming a Key Stakeholder. Your logo will show up here with a link to your website. [Become a Key Stakeholder](https://opencollective.com/solidus#key-stakeholder).
 
-|<a href="https://www.enginecommerce.com/" target="_blank"><img src="https://images.opencollective.com/proxy/images?src=https%3A%2F%2Flogo.clearbit.com%2Fenginecommerce.com&height=100"></a>|<a href="https://supergood.software/" target="_blank"><img src="https://images.opencollective.com/proxy/images?src=https%3A%2F%2Fopencollective-production.s3-us-west-1.amazonaws.com%2F3bbb1440-727f-11e9-a366-37673cc38cee.png&height=100"></a>|<a href="https://karmacreative.io/" target="_blank"><img src="https://images.opencollective.com/proxy/images?src=https%3A%2F%2Fopencollective-production.s3-us-west-1.amazonaws.com%2Fab94d2a0-7253-11e9-a366-37673cc38cee.png&height=100"></a>|
+|[![Engine](https://images.opencollective.com/proxy/images?src=https%3A%2F%2Flogo.clearbit.com%2Fenginecommerce.com&height=100)](https://www.enginecommerce.com/)|[![Super Good Software](https://images.opencollective.com/proxy/images?src=https%3A%2F%2Fopencollective-production.s3-us-west-1.amazonaws.com%2F3bbb1440-727f-11e9-a366-37673cc38cee.png&height=100)](https://supergood.software/)|[![Karma Creative](https://images.opencollective.com/proxy/images?src=https%3A%2F%2Fopencollective-production.s3-us-west-1.amazonaws.com%2Fab94d2a0-7253-11e9-a366-37673cc38cee.png&height=100)](https://karmacreative.io/)|
 |---|---|---|
 
 ---
