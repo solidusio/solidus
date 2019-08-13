@@ -22,7 +22,40 @@ default_attrs = {
 
 products = [
   {
-    name: "Ruby on Rails Tote",
+    name: "Solidus T-Shirt",
+    tax_category: tax_category,
+    shipping_category: shipping_category,
+    price: 19.99,
+    eur_price: 16,
+    weight: 0.5,
+    height: 20,
+    width: 10,
+    depth: 5
+  },
+  {
+    name: "Solidus Long Sleeve",
+    tax_category: tax_category,
+    shipping_category: shipping_category,
+    price: 19.99,
+    eur_price: 16,
+    weight: 0.5,
+    height: 20,
+    width: 10,
+    depth: 5
+  },
+  {
+    name: "Solidus Girly",
+    tax_category: tax_category,
+    shipping_category: shipping_category,
+    price: 19.99,
+    eur_price: 16,
+    weight: 0.5,
+    height: 20,
+    width: 10,
+    depth: 5
+  },
+  {
+    name: "Solidus Snapback Cap",
     tax_category: tax_category,
     shipping_category: shipping_category,
     price: 15.99,
@@ -33,96 +66,92 @@ products = [
     depth: 5
   },
   {
-    name: "Ruby on Rails Bag",
+    name: "Solidus Hoodie Zip",
     tax_category: tax_category,
     shipping_category: shipping_category,
-    price: 22.99,
-    eur_price: 19,
-    weight: 0.5,
-    height: 5,
-    width: 5,
+    price: 29.99,
+    eur_price: 27,
+    weight: 1,
+    height: 20,
+    width: 10,
     depth: 5
   },
   {
-    name: "Ruby on Rails Baseball Jersey",
+    name: "Ruby Hoodie",
     tax_category: tax_category,
     shipping_category: shipping_category,
-    price: 19.99,
-    eur_price: 16,
+    price: 29.99,
+    eur_price: 27,
+    weight: 1,
+    height: 20,
+    width: 10,
+    depth: 5
+  },
+  {
+    name: "Ruby Hoodie Zip",
+    tax_category: tax_category,
+    shipping_category: shipping_category,
+    price: 29.99,
+    eur_price: 27,
+    weight: 0.8,
+    height: 20,
+    width: 10,
+    depth: 5
+  },
+  {
+    name: "Ruby Polo",
+    tax_category: tax_category,
+    shipping_category: shipping_category,
+    price: 26.99,
+    eur_price: 23,
     weight: 0.5,
     height: 20,
     width: 10,
     depth: 5
   },
   {
-    name: "Ruby on Rails Jr. Spaghetti",
+    name: "Solidus Mug",
     tax_category: tax_category,
     shipping_category: shipping_category,
-    price: 19.99,
-    eur_price: 16,
-    weight: 0.5,
-    height: 20,
-    width: 10,
-    depth: 5
-
-  },
-  {
-    name: "Ruby on Rails Ringer T-Shirt",
-    shipping_category: shipping_category,
-    tax_category: tax_category,
-    price: 19.99,
-    eur_price: 16,
-    weight: 0.5,
-    height: 20,
-    width: 10,
-    depth: 5
-
-  },
-  {
-    name: "Ruby Baseball Jersey",
-    tax_category: tax_category,
-    shipping_category: shipping_category,
-    price: 19.99,
-    eur_price: 16,
-    weight: 0.5,
-    height: 20,
-    width: 10,
-    depth: 5
-
-  },
-  {
-    name: "Apache Baseball Jersey",
-    tax_category: tax_category,
-    shipping_category: shipping_category,
-    price: 19.99,
-    eur_price: 16,
-    weight: 0.5,
-    height: 20,
-    width: 10,
-    depth: 5
-
-  },
-  {
-    name: "Ruby on Rails Mug",
-    shipping_category: shipping_category,
-    price: 13.99,
-    eur_price: 12,
+    price: 9.99,
+    eur_price: 7,
     weight: 1,
     height: 5,
     width: 5,
     depth: 5
-
   },
   {
-    name: "Ruby on Rails Stein",
+    name: "Ruby Mug",
+    tax_category: tax_category,
     shipping_category: shipping_category,
-    price: 16.99,
+    price: 9.99,
+    eur_price: 7,
+    weight: 1,
+    height: 5,
+    width: 5,
+    depth: 5
+  },
+  {
+    name: "Solidus Tote",
+    tax_category: tax_category,
+    shipping_category: shipping_category,
+    price: 15.99,
     eur_price: 14,
-    weight: 1,
-    height: 5,
-    width: 5,
+    weight: 0.5,
+    height: 20,
+    width: 10,
     depth: 5
-
+  },
+  {
+    name: "Ruby Tote",
+    tax_category: tax_category,
+    shipping_category: shipping_category,
+    price: 15.99,
+    eur_price: 14,
+    weight: 0.5,
+    height: 20,
+    width: 10,
+    depth: 5
   }
 ]
 

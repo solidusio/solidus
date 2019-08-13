@@ -33,12 +33,24 @@ Spree::OptionValue.create!([
   {
     name: "Red",
     presentation: "Red",
-    position: 1,
+    position: 5,
     option_type: color
   },
   {
     name: "Green",
     presentation: "Green",
+    position: 4,
+    option_type: color
+  },
+  {
+    name: "Black",
+    presentation: "Black",
+    position: 1,
+    option_type: color
+  },
+  {
+    name: "White",
+    presentation: "White",
     position: 2,
     option_type: color
   },

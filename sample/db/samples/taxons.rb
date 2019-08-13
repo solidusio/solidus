@@ -7,15 +7,18 @@ categories = Spree::Taxonomy.find_by!(name: "Categories")
 brands = Spree::Taxonomy.find_by!(name: "Brand")
 
 products = {
-  ror_tote: "Ruby on Rails Tote",
-  ror_bag: "Ruby on Rails Bag",
-  ror_mug: "Ruby on Rails Mug",
-  ror_stein: "Ruby on Rails Stein",
-  ror_baseball_jersey: "Ruby on Rails Baseball Jersey",
-  ror_jr_spaghetti: "Ruby on Rails Jr. Spaghetti",
-  ror_ringer: "Ruby on Rails Ringer T-Shirt",
-  apache_baseball_jersey: "Apache Baseball Jersey",
-  ruby_baseball_jersey: "Ruby Baseball Jersey"
+  solidus_tshirt: "Solidus T-Shirt",
+  solidus_long: "Solidus Long Sleeve",
+  solidus_tote: "Solidus Tote",
+  ruby_tote: "Ruby Tote",
+  solidus_snapback_cap: "Solidus Snapback Cap",
+  solidus_hoodie: "Solidus Hoodie Zip",
+  ruby_hoodie: "Ruby Hoodie",
+  ruby_hoodie_zip: "Ruby Hoodie Zip",
+  ruby_polo: "Ruby Polo",
+  solidus_mug: "Solidus Mug",
+  ruby_mug: "Ruby Mug",
+  solidus_girly: "Solidus Girly"
 }
 
 products.each do |key, name|
@@ -29,29 +32,38 @@ taxons = [
     position: 0
   },
   {
-    name: "Bags",
+    name: "Clothing",
+    taxonomy: categories,
+    parent: "Categories"
+  },
+  {
+    name: "Caps",
     taxonomy: categories,
     parent: "Categories",
     position: 1,
     products: [
-      products[:ror_tote],
-      products[:ror_bag]
+      products[:solidus_snapback_cap]
+    ]
+  },
+  {
+    name: "Bags",
+    taxonomy: categories,
+    parent: "Categories",
+    position: 2,
+    products: [
+      products[:solidus_tote],
+      products[:ruby_tote]
     ]
   },
   {
     name: "Mugs",
     taxonomy: categories,
     parent: "Categories",
-    position: 2,
+    position: 3,
     products: [
-      products[:ror_mug],
-      products[:ror_stein]
+      products[:solidus_mug],
+      products[:ruby_mug]
     ]
-  },
-  {
-    name: "Clothing",
-    taxonomy: categories,
-    parent: "Categories"
   },
   {
     name: "Shirts",
@@ -59,7 +71,20 @@ taxons = [
     parent: "Clothing",
     position: 0,
     products: [
-      products[:ror_jr_spaghetti]
+      products[:solidus_long],
+      products[:ruby_polo],
+      products[:solidus_girly]
+    ]
+  },
+  {
+    name: "Hoodie",
+    taxonomy: categories,
+    parent: "Clothing",
+    position: 0,
+    products: [
+      products[:solidus_hoodie],
+      products[:ruby_hoodie],
+      products[:ruby_hoodie_zip]
     ]
   },
   {
@@ -67,10 +92,7 @@ taxons = [
     taxonomy: categories,
     parent: "Clothing",
     products: [
-      products[:ror_baseball_jersey],
-      products[:ror_ringer],
-      products[:apache_baseball_jersey],
-      products[:ruby_baseball_jersey]
+      products[:solidus_tshirt]
     ],
     position: 0
   },
@@ -79,33 +101,29 @@ taxons = [
     taxonomy: brands
   },
   {
+    name: "Solidus",
+    taxonomy: brands,
+    parent: "Brand",
+    products: [
+      products[:solidus_tshirt],
+      products[:solidus_long],
+      products[:solidus_snapback_cap],
+      products[:solidus_hoodie],
+      products[:solidus_mug],
+      products[:solidus_tote],
+      products[:solidus_girly]
+    ]
+  },
+  {
     name: "Ruby",
     taxonomy: brands,
     parent: "Brand",
     products: [
-      products[:ruby_baseball_jersey]
-    ]
-  },
-  {
-    name: "Apache",
-    taxonomy: brands,
-    parent: "Brand",
-    products: [
-      products[:apache_baseball_jersey]
-    ]
-  },
-  {
-    name: "Rails",
-    taxonomy: brands,
-    parent: "Brand",
-    products: [
-      products[:ror_tote],
-      products[:ror_bag],
-      products[:ror_mug],
-      products[:ror_stein],
-      products[:ror_baseball_jersey],
-      products[:ror_jr_spaghetti],
-      products[:ror_ringer]
+      products[:ruby_hoodie],
+      products[:ruby_hoodie_zip],
+      products[:ruby_polo],
+      products[:ruby_mug],
+      products[:ruby_tote]
     ]
   }
 ]

@@ -2,60 +2,110 @@
 
 products =
   {
-    "Ruby on Rails Baseball Jersey" =>
+    "Solidus Tote" =>
     {
-      "Manufacturer" => "Wilson",
-      "Brand" => "Wannabe Sports",
-      "Model" => "JK1002",
-      "Shirt Type" => "Baseball Jersey",
-      "Sleeve Type" => "Long",
-      "Made from" => "100% cotton",
-      "Fit" => "Loose",
-      "Gender" => "Men's"
+      "Type" => "Tote",
+      "Size" => %{15" x 18" x 6"},
+      "Material" => "Canvas"
     },
-    "Ruby on Rails Jr. Spaghetti" =>
+    "Ruby Tote" =>
     {
-      "Manufacturer" => "Jerseys",
-      "Brand" => "Resiliance",
-      "Model" => "TL174",
-      "Shirt Type" => "Jr. Spaghetti T",
-      "Sleeve Type" => "None",
-      "Made from" => "90% Cotton, 10% Nylon",
-      "Fit" => "Form",
-      "Gender" => "Women's"
+      "Type" => "Tote",
+      "Size" => %{15" x 18" x 6"},
+      "Material" => "Canvas"
     },
-    "Ruby on Rails Ringer T-Shirt" =>
+    "Solidus Snapback Cap" =>
+    {
+      "Type" => "Snapback Cap",
+      "Size" => "One Size",
+      "Material" => "100% Cotton"
+    },
+    "Solidus T-Shirt" =>
     {
       "Manufacturer" => "Jerseys",
       "Brand" => "Conditioned",
       "Model" => "TL9002",
       "Shirt Type" => "Ringer T",
       "Sleeve Type" => "Short",
-      "Made from" => "100% Vellum",
+      "Made from" => "100% Cotton",
       "Fit" => "Loose",
       "Gender" => "Men's"
     },
-    "Ruby on Rails Tote" =>
+    "Solidus Long Sleeve" =>
     {
-      "Type" => "Tote",
-      "Size" => %{15" x 18" x 6"},
-      "Material" => "Canvas"
+      "Manufacturer" => "Wilson",
+      "Brand" => "Wannabe Sports",
+      "Model" => "TL9002",
+      "Shirt Type" => "Jersey",
+      "Sleeve Type" => "Long",
+      "Made from" => "100% cotton",
+      "Fit" => "Loose",
+      "Gender" => "Men's"
     },
-    "Ruby on Rails Bag" =>
+    "Solidus Hoodie Zip" =>
     {
-      "Type" => "Messenger",
-      "Size" => %{14 1/2" x 12" x 5"},
-      "Material" => "600 Denier Polyester"
+      "Manufacturer" => "Jerseys",
+      "Brand" => "Wannabe Sports",
+      "Model" => "HD9001",
+      "Shirt Type" => "Jersey",
+      "Sleeve Type" => "Long",
+      "Made from" => "100% cotton",
+      "Fit" => "Loose",
+      "Gender" => "Unisex"
     },
-    "Ruby on Rails Mug" =>
+    "Ruby Hoodie" =>
+    {
+      "Manufacturer" => "Wilson",
+      "Brand" => "Resiliance",
+      "Model" => "HD2001",
+      "Shirt Type" => "Baseball",
+      "Sleeve Type" => "Long",
+      "Made from" => "90% Cotton, 10% Nylon",
+      "Fit" => "Loose",
+      "Gender" => "Unisex"
+    },
+    "Ruby Hoodie Zip" =>
+    {
+      "Manufacturer" => "Jerseys",
+      "Brand" => "Wannabe Sports",
+      "Model" => "HD9001",
+      "Shirt Type" => "Jersey",
+      "Sleeve Type" => "Long",
+      "Made from" => "100% cotton",
+      "Fit" => "Loose",
+      "Gender" => "Unisex"
+    },
+    "Ruby Polo" =>
+    {
+      "Manufacturer" => "Wilson",
+      "Brand" => "Resiliance",
+      "Model" => "PL9001",
+      "Shirt Type" => "Ringer T",
+      "Sleeve Type" => "Short",
+      "Made from" => "100% Cotton",
+      "Fit" => "Slim",
+      "Gender" => "Men's"
+    },
+    "Solidus Mug" =>
     {
       "Type" => "Mug",
       "Size" => %{4.5" tall, 3.25" dia.}
     },
-    "Ruby on Rails Stein" =>
+    "Ruby Mug" =>
     {
-      "Type" => "Stein",
-      "Size" => %{6.75" tall, 3.75" dia. base, 3" dia. rim}
+      "Type" => "Mug",
+      "Size" => %{4.5" tall, 3.25" dia.}
+    },
+    "Solidus Girly" =>
+    {
+      "Manufacturer" => "Jerseys",
+      "Brand" => "Conditioned",
+      "Model" => "WM6001",
+      "Shirt Type" => "Skinny",
+      "Sleeve Type" => "Short",
+      "Made from" => "90% Cotton, 10% Nylon",
+      "Fit" => "Slim",
+      "Gender" => "Women's"
     }
   }
 

@@ -4,17 +4,20 @@ Spree::Sample.load_sample("products")
 Spree::Sample.load_sample("variants")
 
 products = {}
-products[:ror_baseball_jersey] = Spree::Product.find_by!(name: "Ruby on Rails Baseball Jersey")
-products[:ror_tote] = Spree::Product.find_by!(name: "Ruby on Rails Tote")
-products[:ror_bag] = Spree::Product.find_by!(name: "Ruby on Rails Bag")
-products[:ror_jr_spaghetti] = Spree::Product.find_by!(name: "Ruby on Rails Jr. Spaghetti")
-products[:ror_mug] = Spree::Product.find_by!(name: "Ruby on Rails Mug")
-products[:ror_ringer] = Spree::Product.find_by!(name: "Ruby on Rails Ringer T-Shirt")
-products[:ror_stein] = Spree::Product.find_by!(name: "Ruby on Rails Stein")
-products[:ruby_baseball_jersey] = Spree::Product.find_by!(name: "Ruby Baseball Jersey")
-products[:apache_baseball_jersey] = Spree::Product.find_by!(name: "Apache Baseball Jersey")
+products[:solidus_tshirt] = Spree::Product.find_by!(name: "Solidus T-Shirt")
+products[:solidus_long] = Spree::Product.find_by!(name: "Solidus Long Sleeve")
+products[:solidus_girly] = Spree::Product.find_by!(name: "Solidus Girly")
+products[:solidus_snapback_cap] = Spree::Product.find_by!(name: "Solidus Snapback Cap")
+products[:solidus_hoodie] = Spree::Product.find_by!(name: "Solidus Hoodie Zip")
+products[:ruby_hoodie] = Spree::Product.find_by!(name: "Ruby Hoodie")
+products[:ruby_hoodie_zip] = Spree::Product.find_by!(name: "Ruby Hoodie Zip")
+products[:ruby_polo] = Spree::Product.find_by!(name: "Ruby Polo")
+products[:solidus_mug] = Spree::Product.find_by!(name: "Solidus Mug")
+products[:ruby_mug] = Spree::Product.find_by!(name: "Ruby Mug")
+products[:solidus_tote] = Spree::Product.find_by!(name: "Solidus Tote")
+products[:ruby_tote] = Spree::Product.find_by!(name: "Ruby Tote")
 
-def image(name, type = "jpeg")
+def image(name, type = "jpg")
   images_path = Pathname.new(File.dirname(__FILE__)) + "images"
   path = images_path + "#{name}.#{type}"
   return false if !File.exist?(path)
@@ -22,77 +25,107 @@ def image(name, type = "jpeg")
 end
 
 images = {
-  products[:ror_tote].master => [
+  products[:solidus_tshirt].master => [
     {
-      attachment: image("ror_tote")
+      attachment: image("solidus_tshirt")
     },
     {
-      attachment: image("ror_tote_back")
+      attachment: image("solidus_tshirt_back")
     }
   ],
-  products[:ror_bag].master => [
+  products[:solidus_long].master => [
     {
-      attachment: image("ror_bag")
-    }
-  ],
-  products[:ror_baseball_jersey].master => [
-    {
-      attachment: image("ror_baseball")
+      attachment: image("solidus_long")
     },
     {
-      attachment: image("ror_baseball_back")
+      attachment: image("solidus_long_back")
     }
   ],
-  products[:ror_jr_spaghetti].master => [
+  products[:solidus_snapback_cap].master => [
     {
-      attachment: image("ror_jr_spaghetti")
+      attachment: image("solidus_snapback_cap")
     }
   ],
-  products[:ror_mug].master => [
+  products[:solidus_hoodie].master => [
     {
-      attachment: image("ror_mug")
+      attachment: image("solidus_hoodie")
+    }
+  ],
+  products[:ruby_hoodie].master => [
+    {
+      attachment: image("ruby_hoodie")
+    }
+  ],
+  products[:ruby_hoodie_zip].master => [
+    {
+      attachment: image("ruby_hoodie_zip")
+    }
+  ],
+  products[:ruby_polo].master => [
+    {
+      attachment: image("ruby_polo")
     },
     {
-      attachment: image("ror_mug_back")
+      attachment: image("ruby_polo_back")
     }
   ],
-  products[:ror_ringer].master => [
+  products[:solidus_mug].master => [
     {
-      attachment: image("ror_ringer")
-    },
-    {
-      attachment: image("ror_ringer_back")
+      attachment: image("solidus_mug")
     }
   ],
-  products[:ror_stein].master => [
+  products[:ruby_mug].master => [
     {
-      attachment: image("ror_stein")
-    },
-    {
-      attachment: image("ror_stein_back")
+      attachment: image("ruby_mug")
     }
   ],
-  products[:apache_baseball_jersey].master => [
+  products[:solidus_tote].master => [
     {
-      attachment: image("apache_baseball", "png")
+      attachment: image("tote_bag_solidus")
     }
   ],
-  products[:ruby_baseball_jersey].master => [
+  products[:ruby_tote].master => [
     {
-      attachment: image("ruby_baseball", "png")
+      attachment: image("tote_bag_ruby")
+    }
+  ],
+  products[:solidus_girly].master => [
+    {
+      attachment: image("solidus_girly")
     }
   ]
 }
 
-products[:ror_baseball_jersey].variants.each do |variant|
+products[:solidus_tshirt].variants.each do |variant|
   color = variant.option_value("tshirt-color").downcase
-  main_image = image("ror_baseball_jersey_#{color}", "png")
+  main_image = image("solidus_tshirt_#{color}", "png")
   File.open(main_image) do |f|
     variant.images.create!(attachment: f)
   end
-  back_image = image("ror_baseball_jersey_back_#{color}", "png")
+  back_image = image("solidus_tshirt_back_#{color}", "png")
   next unless back_image
   File.open(back_image) do |f|
+    variant.images.create!(attachment: f)
+  end
+end
+
+products[:solidus_long].variants.each do |variant|
+  color = variant.option_value("tshirt-color").downcase
+  main_image = image("solidus_long_#{color}", "png")
+  File.open(main_image) do |f|
+    variant.images.create!(attachment: f)
+  end
+  back_image = image("solidus_long_back_#{color}", "png")
+  next unless back_image
+  File.open(back_image) do |f|
+    variant.images.create!(attachment: f)
+  end
+end
+
+products[:solidus_girly].variants.each do |variant|
+  color = variant.option_value("tshirt-color").downcase
+  main_image = image("solidus_girly_#{color}", "png")
+  File.open(main_image) do |f|
     variant.images.create!(attachment: f)
   end
 end
