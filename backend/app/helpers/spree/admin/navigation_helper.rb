@@ -181,7 +181,8 @@ module Spree
                     url.ends_with?("#{controller.controller_name.singularize}/edit")
         options[:class] = 'fa'
         options[:class] += ' active' if is_active
-        options[:datahook] = "admin_settings_#{link_text.downcase.tr(' ', '_')}"
+        options[:data] ||= {}
+        options[:data][:hook] = "admin_settings_#{link_text.downcase.tr(' ', '_')}"
         content_tag(:li, options) do
           link_to(link_text, url)
         end
