@@ -1,31 +1,52 @@
+<img width="250" src="./logo.svg" alt="Solidus logo">
 
-<img src="./logo.svg" width=350>
+# Solidus 
 
-- [solidus.io](http://solidus.io/)
-- [Documentation](https://guides.solidus.io)
-- [Join our Slack](http://slack.solidus.io/) ([solidusio.slack.com](http://solidusio.slack.com))
-- [solidus-security](https://groups.google.com/forum/#!forum/solidus-security) mailing list
+[![Circle CI](https://circleci.com/gh/solidusio/solidus/tree/master.svg?style=shield)](https://circleci.com/gh/solidusio/solidus/tree/master)
+[![Gem](https://img.shields.io/gem/v/solidus.svg)](https://rubygems.org/gems/solidus)
+[![License](http://img.shields.io/badge/license-BSD-yellowgreen.svg)](LICENSE.md)
+[![Slack](http://slack.solidus.io/badge.svg)](http://slack.solidus.io)
+[![Backers on Open Collective](https://opencollective.com/solidus/backers/badge.svg)](https://opencollective.com/solidus)
+[![Sponsors on Open Collective](https://opencollective.com/solidus/sponsors/badge.svg)](https://opencollective.com/solidus)
+[![Open Source Helpers](https://www.codetriage.com/solidusio/solidus/badges/users.svg)](https://www.codetriage.com/solidusio/solidus)
+[![Reviewed by Hound](https://img.shields.io/badge/Reviewed_by-Hound-8E64B0.svg)](https://houndci.com)
+
+**A free, open-source ecommerce platform that gives you complete control over your store.**
+
+- **Visit our website**: [https://solidus.io/](https://solidus.io/)
+- **Read our guides**: [https://guides.solidus.io/developers/](https://guides.solidus.io/developers/)
+- **Join our Slack**: [https://solidusio.slack.com/](https://solidusio.slack.com/)
+- **Solidus Security**: [mailing list](https://groups.google.com/forum/#!forum/solidus-security)
+
 
 ## Table of Contents
-1. [Key Stakeholders](#key-stakeholders)
-2. [Summary](#summary)
-3. [Demo](#demo)
-4. [Getting Started](#getting-started)
-5. [Installation Options](#installation-options)
-6. [Performance](#performance)
-7. [Developing Solidus](#developing-solidus)
-8. [Contributing](#contributing)
+- [Supporting Solidus](#supporting-solidus)
+- [Summary](#summary)
+- [Demo](#demo)
+- [Getting Started](#getting-started)
+- [Installation Options](#installation-options)
+- [Performance](#performance)
+- [Developing Solidus](#developing-solidus)
+- [Contributing](#contributing)
 
-## Key Stakeholders
+## Supporting Solidus
+ As a community-driven project, Solidus relies on funds and time donated by developers and stakeholders who use Solidus for their businesses. If you'd like to help Solidus keep growing, please consider:
 
-Thank you to all our donors! 🙏 [Become a donor](https://opencollective.com/solidus#backer)
+- [Become a backer or sponsor on Open Collective](https://opencollective.com/solidus).
+- [Contribute to the project](https://github.com/solidusio/solidus/blob/master/CONTRIBUTING.md).
 
-Support this project by becoming a Key Stakeholder. Your logo will show up here with a link to your website. [Become a Key Stakeholder](https://opencollective.com/solidus#key-stakeholder)
+### Main Contributor & Director
+At present, Nebulab is the main code contributor and director of Solidus, providing technical guidance and coordinating community efforts and activities.
 
-<a href="https://nebulab.it/"><img src="https://images.opencollective.com/proxy/images?src=https%3A%2F%2Fopencollective-production.s3-us-west-1.amazonaws.com%2F3cc3c170-20cc-11e9-9582-214168b65c9a.png&height=100"></a>
-<a href="https://www.enginecommerce.com/"><img src="https://images.opencollective.com/proxy/images?src=https%3A%2F%2Flogo.clearbit.com%2Fenginecommerce.com&height=100"></a>
-<a href="https://supergood.software/"><img src="https://images.opencollective.com/proxy/images?src=https%3A%2F%2Fopencollective-production.s3-us-west-1.amazonaws.com%2F3bbb1440-727f-11e9-a366-37673cc38cee.png&height=100"></a>
-<a href="https://karmacreative.io/"><img src="https://images.opencollective.com/proxy/images?src=https%3A%2F%2Fopencollective-production.s3-us-west-1.amazonaws.com%2Fab94d2a0-7253-11e9-a366-37673cc38cee.png&height=100"></a>
+[![Nebulab](https://nebulab.it/assets/images/public/logo.svg)](https://nebulab.it/)
+
+### Key Stakeholders
+Support this project by becoming a Key Stakeholder. Your logo will show up here with a link to your website. [Become a Key Stakeholder](https://opencollective.com/solidus#key-stakeholder).
+
+|[![Engine](https://images.opencollective.com/proxy/images?src=https%3A%2F%2Flogo.clearbit.com%2Fenginecommerce.com&height=100)](https://www.enginecommerce.com/)|[![Super Good Software](https://images.opencollective.com/proxy/images?src=https%3A%2F%2Fopencollective-production.s3-us-west-1.amazonaws.com%2F3bbb1440-727f-11e9-a366-37673cc38cee.png&height=100)](https://supergood.software/)|[![Karma Creative](https://images.opencollective.com/proxy/images?src=https%3A%2F%2Fopencollective-production.s3-us-west-1.amazonaws.com%2Fab94d2a0-7253-11e9-a366-37673cc38cee.png&height=100)](https://karmacreative.io/)|
+|---|---|---|
+
+---
 
 ## Summary
 
@@ -49,18 +70,6 @@ All of the gems are designed to work together to provide a fully functional
 ecommerce platform. However, you may only want to use the
 [`solidus_core`](https://github.com/solidusio/solidus/tree/master/core) gem
 combine it with your own custom frontend, admin interface, and API.
-
-[![Circle CI](https://circleci.com/gh/solidusio/solidus/tree/master.svg?style=shield)](https://circleci.com/gh/solidusio/solidus/tree/master)
-[![Gem](https://img.shields.io/gem/v/solidus.svg)](https://rubygems.org/gems/solidus)
-[![License](http://img.shields.io/badge/license-BSD-yellowgreen.svg)](LICENSE.md)
-[![Slack](http://slack.solidus.io/badge.svg)](http://slack.solidus.io)
-[![Backers on Open Collective](https://opencollective.com/solidus/backers/badge.svg)](https://opencollective.com/solidus)
-[![Sponsors on Open Collective](https://opencollective.com/solidus/sponsors/badge.svg)](https://opencollective.com/solidus)
-[![Open Source Helpers](https://www.codetriage.com/solidusio/solidus/badges/users.svg)](https://www.codetriage.com/solidusio/solidus)
-
-### Supported by
-
-[![Reviewed by Hound](https://img.shields.io/badge/Reviewed_by-Hound-8E64B0.svg)](https://houndci.com)
 
 ## Demo
 
