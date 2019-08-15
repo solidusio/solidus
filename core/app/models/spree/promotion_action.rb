@@ -16,7 +16,7 @@ module Spree
 
     belongs_to :promotion, class_name: 'Spree::Promotion', inverse_of: :promotion_actions
 
-    scope :of_type, ->(t) { where(type: Array.wrap(t).map(&:to_s)) }
+    scope :of_type, ->(type) { where(type: Array.wrap(type).map(&:to_s)) }
     scope :shipping, -> { of_type(Spree::Config.environment.promotions.shipping_actions.to_a) }
 
     # Updates the state of the order or performs some other action depending on

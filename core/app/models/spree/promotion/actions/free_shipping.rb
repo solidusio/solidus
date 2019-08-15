@@ -21,7 +21,7 @@ module Spree
           end
           # Did we actually end up applying any adjustments?
           # If so, then this action should be classed as 'successful'
-          results.any? { |r| r == true }
+          results.any? { |result| result == true }
         end
 
         def label

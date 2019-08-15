@@ -25,12 +25,12 @@ module Spree
     # @return [void]
     def apply(taxes)
       @order.line_items.each do |item|
-        taxed_items = taxes.line_item_taxes.select { |i| i.item_id == item.id }
+        taxed_items = taxes.line_item_taxes.select { |element| element.item_id == item.id }
         update_adjustments(item, taxed_items)
       end
 
       @order.shipments.each do |item|
-        taxed_items = taxes.shipment_taxes.select { |i| i.item_id == item.id }
+        taxed_items = taxes.shipment_taxes.select { |element| element.item_id == item.id }
         update_adjustments(item, taxed_items)
       end
     end

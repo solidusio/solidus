@@ -115,8 +115,8 @@ module Spree
         let(:stock_location) { order.shipments.first.stock_location }
 
         before do
-          shipment2 = order.shipments.create!(stock_location: order.shipments.first.stock_location)
-          order.contents.add(variant, 1, shipment: shipment2)
+          shipment_two = order.shipments.create!(stock_location: order.shipments.first.stock_location)
+          order.contents.add(variant, 1, shipment: shipment_two)
           variant.stock_items.first.update_columns(count_on_hand: count_on_hand, backorderable: false)
         end
 

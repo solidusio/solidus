@@ -9,12 +9,12 @@ module Spree
         let(:stock_location) { mock_model(Spree::StockLocation) }
 
         it 'continues to splitter chain' do
-          splitter1 = Base.new(stock_location)
-          splitter2 = Base.new(stock_location, splitter1)
+          splitter_one = Base.new(stock_location)
+          splitter_two = Base.new(stock_location, splitter_one)
           packages = []
 
-          expect(splitter1).to receive(:split).with(packages)
-          splitter2.split(packages)
+          expect(splitter_one).to receive(:split).with(packages)
+          splitter_two.split(packages)
         end
       end
     end

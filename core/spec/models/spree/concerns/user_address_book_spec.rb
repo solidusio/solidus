@@ -77,7 +77,7 @@ module Spree
           end
 
           context "and changing another address field at the same time" do
-            let(:updated_address_attributes) { address.attributes.tap { |a| a[:first_name] = "Newbie" } }
+            let(:updated_address_attributes) { address.attributes.tap { |value| value[:first_name] = "Newbie" } }
 
             subject { user.save_in_address_book(updated_address_attributes, true) }
 
@@ -104,7 +104,7 @@ module Spree
         let(:address1) { create(:address) }
         let(:address2) { create(:address, firstname: "Different") }
         let(:updated_attrs) do
-          address2.attributes.tap { |a| a[:firstname] = "Johnny" }
+          address2.attributes.tap { |value| value[:firstname] = "Johnny" }
         end
 
         before do
@@ -191,8 +191,8 @@ module Spree
 
           it "archives address2" do
             subject
-            user_address2 = user.user_addresses.all_historical.find_by(address_id: address2.id)
-            expect(user_address2.archived).to be true
+            user_address_two = user.user_addresses.all_historical.find_by(address_id: address2.id)
+            expect(user_address_two.archived).to be true
           end
 
           context "via a new address that matches an archived one" do

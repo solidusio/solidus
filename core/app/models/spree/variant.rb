@@ -250,12 +250,12 @@ module Spree
       # no option values on master
       return if is_master
 
-      option_type = Spree::OptionType.where(name: opt_name).first_or_initialize do |o|
-        o.presentation = opt_name
-        o.save!
+      option_type = Spree::OptionType.where(name: opt_name).first_or_initialize do |option|
+        option.presentation = opt_name
+        option.save!
       end
 
-      current_value = option_values.detect { |o| o.option_type.name == opt_name }
+      current_value = option_values.detect { |option| option.option_type.name == opt_name }
 
       if current_value
         return if current_value.name == opt_value
@@ -267,9 +267,9 @@ module Spree
         end
       end
 
-      option_value = Spree::OptionValue.where(option_type_id: option_type.id, name: opt_value).first_or_initialize do |o|
-        o.presentation = opt_value
-        o.save!
+      option_value = Spree::OptionValue.where(option_type_id: option_type.id, name: opt_value).first_or_initialize do |option|
+        option.presentation = opt_value
+        option.save!
       end
 
       option_values << option_value
@@ -281,7 +281,7 @@ module Spree
     # @param opt_name [String] the name of the option whose value you want
     # @return [String] the option value
     def option_value(opt_name)
-      option_values.detect { |o| o.option_type.name == opt_name }.try(:presentation)
+      option_values.detect { |option| option.option_type.name == opt_name }.try(:presentation)
     end
 
     # Returns an instance of the globally configured variant price selector class for this variant.

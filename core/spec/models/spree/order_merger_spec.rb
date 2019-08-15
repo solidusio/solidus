@@ -77,13 +77,13 @@ module Spree
 
       context "2 equal line items" do
         before do
-          @line_item_1 = order_1.contents.add(variant, 1, foos: {})
-          @line_item_2 = order_2.contents.add(variant, 1, foos: {})
+          @line_item_one = order_1.contents.add(variant, 1, foos: {})
+          @line_item_two = order_2.contents.add(variant, 1, foos: {})
         end
 
         specify do
           without_partial_double_verification do
-            expect(order_1).to receive(:foos_match).with(@line_item_1, kind_of(Hash)).and_return(true)
+            expect(order_1).to receive(:foos_match).with(@line_item_one, kind_of(Hash)).and_return(true)
           end
           subject.merge!(order_2)
           expect(order_1.line_items.count).to eq(1)

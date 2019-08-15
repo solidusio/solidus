@@ -69,8 +69,8 @@ module Spree
     # Not public due to the fact this class is a Singleton
     # @!visibility private
     def initialize
-      @roles = Hash.new do |h, name|
-        h[name] = Role.new(name, Set.new)
+      @roles = Hash.new do |hash, name|
+        hash[name] = Role.new(name, Set.new)
       end
     end
 

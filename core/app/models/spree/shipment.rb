@@ -31,7 +31,7 @@ module Spree
     scope :ready,   -> { with_state('ready') }
     scope :shipped, -> { with_state('shipped') }
     scope :trackable, -> { where("tracking IS NOT NULL AND tracking != ''") }
-    scope :with_state, ->(*s) { where(state: s) }
+    scope :with_state, ->(*state) { where(state: state) }
     # sort by most recent shipped_at, falling back to created_at. add "id desc" to make specs that involve this scope more deterministic.
     scope :reverse_chronological, -> {
       order(Arel.sql("coalesce(#{Spree::Shipment.table_name}.shipped_at, #{Spree::Shipment.table_name}.created_at) desc"), id: :desc)
@@ -142,7 +142,7 @@ module Spree
     # @return [BigDecimal] the amount of this item, taking into consideration
     #   all non-tax adjustments.
     def total_before_tax
-      amount + adjustments.select { |a| !a.tax? && a.eligible? }.sum(&:amount)
+      amount + adjustments.select { |adjustment| !adjustment.tax? && adjustment.eligible? }.sum(&:amount)
     end
 
     # @return [BigDecimal] the amount of this shipment before VAT tax
@@ -219,7 +219,7 @@ module Spree
     def select_shipping_method(shipping_method)
       estimator = Spree::Config.stock.estimator_class.new
       rates = estimator.shipping_rates(to_package, false)
-      rate = rates.detect { |r| r.shipping_method_id == shipping_method.id }
+      rate = rates.detect { |detected| detected.shipping_method_id == shipping_method.id }
       rate.selected = true
       self.shipping_rates = [rate]
     end

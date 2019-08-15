@@ -138,7 +138,7 @@ module Spree
     def eligible_rules(promotable, options = {})
       # Promotions without rules are eligible by default.
       return [] if rules.none?
-      eligible = lambda { |r| r.eligible?(promotable, options) }
+      eligible = lambda { |rule| rule.eligible?(promotable, options) }
       specific_rules = rules.for(promotable)
       return [] if specific_rules.none?
 

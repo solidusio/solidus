@@ -239,19 +239,19 @@ module Spree
       # Always return array with at least an empty string to avoid SQL errors
       def prepare_words(words)
         return [''] if words.blank?
-        a = words.split(/[,\s]/).map(&:strip)
-        a.any? ? a : ['']
+        splitted = words.split(/[,\s]/).map(&:strip)
+        splitted.any? ? splitted : ['']
       end
 
       def get_taxons(*ids_or_records_or_names)
         taxons = Spree::Taxon.table_name
-        ids_or_records_or_names.flatten.map { |t|
-          case t
-          when Integer then Spree::Taxon.find_by(id: t)
-          when ActiveRecord::Base then t
+        ids_or_records_or_names.flatten.map { |taxon|
+          case taxon
+          when Integer then Spree::Taxon.find_by(id: taxon)
+          when ActiveRecord::Base then taxon
           when String
-            Spree::Taxon.find_by(name: t) ||
-              Spree::Taxon.where("#{taxons}.permalink LIKE ? OR #{taxons}.permalink = ?", "%/#{t}/", "#{t}/").first
+            Spree::Taxon.find_by(name: taxon) ||
+              Spree::Taxon.where("#{taxons}.permalink LIKE ? OR #{taxons}.permalink = ?", "%/#{taxon}/", "#{taxon}/").first
           end
         }.compact.flatten.uniq
       end

@@ -19,11 +19,11 @@ module Spree
       let(:order) { mock_model(Order, line_items: [line_item1, line_item2]) }
 
       let(:package1) do
-        Package.new(stock_location).tap { |p| p.add(inventory_unit1) }
+        Package.new(stock_location).tap { |package| package.add(inventory_unit1) }
       end
 
       let(:package2) do
-        Package.new(stock_location).tap { |p| p.add(inventory_unit2) }
+        Package.new(stock_location).tap { |package| package.add(inventory_unit2) }
       end
 
       let(:packages) { [package1, package2] }

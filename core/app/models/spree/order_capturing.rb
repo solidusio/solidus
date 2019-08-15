@@ -41,8 +41,8 @@ class Spree::OrderCapturing
   private
 
   def sorted_payments(order)
-    order.payments.pending.sort_by do |p|
-      [@sorted_payment_method_classes.index(p.payment_method.class), p.id]
+    order.payments.pending.sort_by do |payment|
+      [@sorted_payment_method_classes.index(payment.payment_method.class), payment.id]
     end
   end
 end

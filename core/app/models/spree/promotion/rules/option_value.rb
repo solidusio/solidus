@@ -29,8 +29,8 @@ module Spree
         def preferred_eligible_values
           values = preferences[:eligible_values] || {}
           Hash[values.keys.map(&:to_i).zip(
-            values.values.map do |v|
-              (v.is_a?(Array) ? v : v.split(",")).map(&:to_i)
+            values.values.map do |value|
+              (value.is_a?(Array) ? value : value.split(",")).map(&:to_i)
             end
           )]
         end

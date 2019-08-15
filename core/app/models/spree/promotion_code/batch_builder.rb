@@ -33,12 +33,12 @@ class ::Spree::PromotionCode::BatchBuilder
   def build_promotion_codes
     generate_random_codes
     promotion_code_batch.update!(state: "completed")
-  rescue StandardError => e
+  rescue StandardError => error
     promotion_code_batch.update!(
-      error: e.inspect,
+      error: error.inspect,
       state: "failed"
     )
-    raise e
+    raise error
   end
 
   private

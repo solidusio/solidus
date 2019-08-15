@@ -53,17 +53,17 @@ module Spree
         def self.create_shipments_from_params(shipments_hash, order)
           return [] unless shipments_hash
 
-          shipments_hash.each do |s|
+          shipments_hash.each do |target|
             shipment = Shipment.new
-            shipment.tracking       = s[:tracking]
-            shipment.stock_location = Spree::StockLocation.find_by(admin_name: s[:stock_location]) || Spree::StockLocation.find_by!(name: s[:stock_location])
+            shipment.tracking       = target[:tracking]
+            shipment.stock_location = Spree::StockLocation.find_by(admin_name: target[:stock_location]) || Spree::StockLocation.find_by!(name: target[:stock_location])
 
-            inventory_units = s[:inventory_units] || []
-            inventory_units.each do |iu|
-              ensure_variant_id_from_params(iu)
+            inventory_units = target[:inventory_units] || []
+            inventory_units.each do |inventory_unit|
+              ensure_variant_id_from_params(inventory_unit)
 
-              unless line_item = order.line_items.find_by(variant_id: iu[:variant_id])
-                line_item = order.contents.add(Spree::Variant.find(iu[:variant_id]), 1)
+              unless line_item = order.line_items.find_by(variant_id: inventory_unit[:variant_id])
+                line_item = order.contents.add(Spree::Variant.find(inventory_unit[:variant_id]), 1)
               end
 
               # Spree expects a Inventory Unit to always reference a line
@@ -71,14 +71,14 @@ module Spree
               # trying to view these units. Note the Importer might not be
               # able to find the line item if line_item.variant_id |= iu.variant_id
               shipment.inventory_units.new(
-                variant_id: iu[:variant_id],
+                variant_id: inventory_unit[:variant_id],
                 line_item: line_item
               )
             end
 
             # Mark shipped if it should be.
-            if s[:shipped_at].present?
-              shipment.shipped_at = s[:shipped_at]
+            if target[:shipped_at].present?
+              shipment.shipped_at = target[:shipped_at]
               shipment.state      = 'shipped'
               shipment.inventory_units.each do |unit|
                 unit.state = 'shipped'
@@ -88,9 +88,9 @@ module Spree
             order.shipments << shipment
             shipment.save!
 
-            shipping_method = Spree::ShippingMethod.find_by(name: s[:shipping_method]) || Spree::ShippingMethod.find_by!(admin_name: s[:shipping_method])
+            shipping_method = Spree::ShippingMethod.find_by(name: target[:shipping_method]) || Spree::ShippingMethod.find_by!(admin_name: target[:shipping_method])
             rate = shipment.shipping_rates.create!(shipping_method: shipping_method,
-                                                   cost: s[:cost])
+                                                   cost: target[:cost])
             shipment.selected_shipping_rate_id = rate.id
             shipment.update_amounts
           end
@@ -98,9 +98,9 @@ module Spree
 
         def self.create_line_items_from_params(line_items_hash, order)
           return {} unless line_items_hash
-          line_items_hash.each_key do |k|
-            extra_params = line_items_hash[k].except(:variant_id, :quantity, :sku)
-            line_item = ensure_variant_id_from_params(line_items_hash[k])
+          line_items_hash.each_key do |key|
+            extra_params = line_items_hash[key].except(:variant_id, :quantity, :sku)
+            line_item = ensure_variant_id_from_params(line_items_hash[key])
             line_item = order.contents.add(Spree::Variant.find(line_item[:variant_id]), line_item[:quantity])
             # Raise any errors with saving to prevent import succeeding with line items failing silently.
             if extra_params.present?
@@ -113,11 +113,11 @@ module Spree
 
         def self.create_adjustments_from_params(adjustments, order)
           return [] unless adjustments
-          adjustments.each do |a|
+          adjustments.each do |target|
             adjustment = order.adjustments.build(
               order:  order,
-              amount: a[:amount].to_d,
-              label:  a[:label]
+              amount: target[:amount].to_d,
+              label:  target[:label]
             )
             adjustment.save!
             adjustment.finalize!
@@ -126,14 +126,14 @@ module Spree
 
         def self.create_payments_from_params(payments_hash, order)
           return [] unless payments_hash
-          payments_hash.each do |p|
+          payments_hash.each do |target|
             payment = order.payments.build order: order
-            payment.amount = p[:amount].to_f
+            payment.amount = target[:amount].to_f
             # Order API should be using state as that's the normal payment field.
             # spree_wombat serializes payment state as status so imported orders should fall back to status field.
-            payment.state = p[:state] || p[:status] || 'completed'
-            payment.payment_method = Spree::PaymentMethod.find_by!(name: p[:payment_method])
-            payment.source = create_source_payment_from_params(p[:source], payment) if p[:source]
+            payment.state = target[:state] || target[:status] || 'completed'
+            payment.payment_method = Spree::PaymentMethod.find_by!(name: target[:payment_method])
+            payment.source = create_source_payment_from_params(target[:source], payment) if target[:source]
             payment.save!
           end
         end
@@ -170,8 +170,8 @@ module Spree
             search[:iso_name] = iso_name.upcase
           elsif iso = address[:country]['iso']
             search[:iso] = iso.upcase
-          elsif iso3 = address[:country]['iso3']
-            search[:iso3] = iso3.upcase
+          elsif iso_three = address[:country]['iso_three']
+            search[:iso_three] = iso_three.upcase
           end
 
           address.delete(:country)

@@ -18,7 +18,7 @@ module Spree
 
     def initialize(return_items)
       @return_items = return_items
-      @reimbursement_type_hash = Hash.new { |h, k| h[k] = [] }
+      @reimbursement_type_hash = Hash.new { |hash, key| hash[key] = [] }
     end
 
     def calculate_reimbursement_types

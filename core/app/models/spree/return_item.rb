@@ -214,7 +214,7 @@ module Spree
       event_paths.delete(:expired)
       event_paths.delete(:unexchange)
 
-      status_paths.map{ |s| I18n.t("spree.reception_states.#{s}", default: s.to_s.humanize) }.zip(event_paths)
+      status_paths.map{ |status| I18n.t("spree.reception_states.#{status}", default: status.to_s.humanize) }.zip(event_paths)
     end
 
     def part_of_exchange?

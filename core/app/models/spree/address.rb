@@ -121,7 +121,7 @@ module Spree
     # @deprecated Do not use this
     def empty?
       Spree::Deprecation.warn("Address#empty? is deprecated.", caller)
-      attributes.except('id', 'created_at', 'updated_at', 'country_id').all? { |_, v| v.nil? }
+      attributes.except('id', 'created_at', 'updated_at', 'country_id').all? { |_, value| value.nil? }
     end
 
     # This exists because the default Object#blank?, checks empty? if it is

@@ -11,8 +11,8 @@ module Spree
     before_validation do
       # Convert tier values to decimals. Strings don't do us much good.
       if preferred_tiers.is_a?(Hash)
-        self.preferred_tiers = preferred_tiers.map do |k, v|
-          [cast_to_d(k.to_s), cast_to_d(v.to_s)]
+        self.preferred_tiers = preferred_tiers.map do |key, value|
+          [cast_to_d(key.to_s), cast_to_d(value.to_s)]
         end.to_h
       end
     end
@@ -26,8 +26,8 @@ module Spree
     def compute(object)
       order = object.is_a?(Order) ? object : object.order
 
-      _base, percent = preferred_tiers.sort.reverse.detect do |b, _|
-        order.item_total >= b
+      _base, percent = preferred_tiers.sort.reverse.detect do |value, _|
+        order.item_total >= value
       end
 
       if preferred_currency.casecmp(order.currency).zero?
@@ -48,10 +48,10 @@ module Spree
 
     def preferred_tiers_content
       if preferred_tiers.is_a? Hash
-        unless preferred_tiers.keys.all?{ |k| k.is_a?(Numeric) && k > 0 }
+        unless preferred_tiers.keys.all?{ |key| key.is_a?(Numeric) && key > 0 }
           errors.add(:base, :keys_should_be_positive_number)
         end
-        unless preferred_tiers.values.all?{ |k| k.is_a?(Numeric) && k >= 0 && k <= 100 }
+        unless preferred_tiers.values.all?{ |key| key.is_a?(Numeric) && key >= 0 && key <= 100 }
           errors.add(:base, :values_should_be_percent)
         end
       else

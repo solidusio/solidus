@@ -85,7 +85,7 @@ module Spree
       # @return [Fixnum] the number of inventory units in the package,
       #   counting only those in the given state if it was specified
       def quantity(state = nil)
-        matched_contents = state.nil? ? contents : contents.select { |c| c.state.to_s == state.to_s }
+        matched_contents = state.nil? ? contents : contents.select { |content| content.state.to_s == state.to_s }
         matched_contents.map(&:quantity).sum
       end
 

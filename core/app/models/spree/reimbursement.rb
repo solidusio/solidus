@@ -112,11 +112,11 @@ module Spree
       if unpaid_amount_within_tolerance?
         reimbursed!
         Spree::Event.fire 'reimbursement_reimbursed', reimbursement: self
-        reimbursement_success_hooks.each { |h| h.call self }
+        reimbursement_success_hooks.each { |hook| hook.call self }
       else
         errored!
         Spree::Event.fire 'reimbursement_errored', reimbursement: self
-        reimbursement_failure_hooks.each { |h| h.call self }
+        reimbursement_failure_hooks.each { |hook| hook.call self }
       end
 
       if errored?

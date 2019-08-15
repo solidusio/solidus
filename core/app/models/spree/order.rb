@@ -531,7 +531,7 @@ module Spree
     def create_proposed_shipments
       if completed?
         raise CannotRebuildShipments.new(I18n.t('spree.cannot_rebuild_shipments_order_completed'))
-      elsif shipments.any? { |s| !s.pending? }
+      elsif shipments.any? { |shipment| !shipment.pending? }
         raise CannotRebuildShipments.new(I18n.t('spree.cannot_rebuild_shipments_shipments_not_pending'))
       else
         shipments.destroy_all
