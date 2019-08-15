@@ -29,15 +29,15 @@ module Spree
       subject { described_class.new(stock_location) }
 
       it 'splits each package by shipping category' do
-        package1 = Package.new(stock_location)
-        4.times { package1.add inventory_unit1 }
-        8.times { package1.add inventory_unit2 }
+        package_one = Package.new(stock_location)
+        4.times { package_one.add inventory_unit1 }
+        8.times { package_one.add inventory_unit2 }
 
-        package2 = Package.new(stock_location)
-        6.times { package2.add inventory_unit1 }
-        9.times { package2.add inventory_unit2, :backordered }
+        package_two = Package.new(stock_location)
+        6.times { package_two.add inventory_unit1 }
+        9.times { package_two.add inventory_unit2, :backordered }
 
-        packages = subject.split([package1, package2])
+        packages = subject.split([package_one, package_two])
         expect(packages[0].quantity).to eq 4
         expect(packages[1].quantity).to eq 8
         expect(packages[2].quantity).to eq 6

@@ -57,7 +57,7 @@ module Spree
         end
 
         def search_term_params(word)
-          terms = Hash[search_terms(word).map { |t| [t, word] }]
+          terms = Hash[search_terms(word).map { |term| [term, word] }]
           terms.merge(m: 'or')
         end
       end

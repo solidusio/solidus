@@ -17,8 +17,8 @@ module Spree
         shipping_category_id: create(:shipping_category).id }
     end
     let(:attributes_for_variant) do
-      h = attributes_for(:variant).except(:option_values, :product)
-      h.merge({
+      attributes = attributes_for(:variant).except(:option_values, :product)
+      attributes.merge({
         options: [
           { name: "size", value: "small" },
           { name: "color", value: "black" }
@@ -40,7 +40,7 @@ module Spree
 
         it "returns unique products" do
           get spree.api_products_path
-          product_ids = json_response["products"].map { |p| p["id"] }
+          product_ids = json_response["products"].map { |product| product["id"] }
           expect(product_ids.uniq.count).to eq(product_ids.count)
         end
 
@@ -361,8 +361,8 @@ module Spree
           expect(response.status).to eq 200
           expect(json_response['variants'].count).to eq(2) # 2 variants
 
-          variants = json_response['variants'].reject { |v| v['is_master'] }
-          size_option_value = variants.last['option_values'].detect{ |x| x['option_type_name'] == 'size' }
+          variants = json_response['variants'].reject { |variant| variant['is_master'] }
+          size_option_value = variants.last['option_values'].detect{ |value| value['option_type_name'] == 'size' }
           expect(size_option_value['name']).to eq('small')
 
           expect(json_response['option_types'].count).to eq(2) # size, color
@@ -385,7 +385,7 @@ module Spree
           } }
 
           expect(json_response['variants'].count).to eq(1)
-          variants = json_response['variants'].reject { |v| v['is_master'] }
+          variants = json_response['variants'].reject { |variant| variant['is_master'] }
           expect(variants.last['option_values'][0]['name']).to eq('large')
           expect(variants.last['sku']).to eq('456')
           expect(variants.count).to eq(1)

@@ -63,8 +63,8 @@ module Spree
 
     def sorted_eligible_refund_payments(payments)
       if eligible_refund_methods = self.eligible_refund_methods
-        payments = payments.select { |p| eligible_refund_methods.include? p.payment_method.class }
-        payments = payments.sort_by { |p| eligible_refund_methods.index(p.payment_method.class) }
+        payments = payments.select { |payment| eligible_refund_methods.include? payment.payment_method.class }
+        payments = payments.sort_by { |payment| eligible_refund_methods.index(payment.payment_method.class) }
       end
       payments
     end

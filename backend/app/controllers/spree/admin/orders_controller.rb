@@ -105,8 +105,8 @@ module Spree
         @order.complete!
         flash[:success] = t('spree.order_completed')
         redirect_to edit_admin_order_url(@order)
-      rescue StateMachines::InvalidTransition => e
-        flash[:error] = e.message
+      rescue StateMachines::InvalidTransition => error
+        flash[:error] = error.message
         redirect_to confirm_admin_order_url(@order)
       end
 

@@ -48,9 +48,9 @@ module Spree
       end
 
       it "can retrieve a list of option types" do
-        option_value_1 = create(:option_value, option_type: option_type)
+        option_value_one = create(:option_value, option_type: option_type)
         create(:option_value, option_type: option_type)
-        get spree.api_option_values_path, params: { ids: [option_value.id, option_value_1.id] }
+        get spree.api_option_values_path, params: { ids: [option_value.id, option_value_one.id] }
         expect(json_response.count).to eq(2)
       end
 

@@ -46,8 +46,8 @@ module Spree
             flash[:error] = t('spree.payment_could_not_be_created')
             render :new
           end
-        rescue Spree::Core::GatewayError => e
-          flash[:error] = e.message.to_s
+        rescue Spree::Core::GatewayError => error
+          flash[:error] = error.message.to_s
           redirect_to new_admin_order_payment_path(@order)
         end
       end

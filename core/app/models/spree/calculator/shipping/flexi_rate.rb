@@ -18,9 +18,9 @@ module Spree
       def compute_from_quantity(quantity)
         sum = 0
         max = preferred_max_items.to_i
-        quantity.times do |i|
+        quantity.times do |index|
           # check max value to avoid divide by 0 errors
-          if (max == 0 && i == 0) || (max > 0) && (i % max == 0)
+          if (max == 0 && index == 0) || (max > 0) && (index % max == 0)
             sum += preferred_first_item.to_f
           else
             sum += preferred_additional_item.to_f

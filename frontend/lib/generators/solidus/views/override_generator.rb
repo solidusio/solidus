@@ -24,6 +24,7 @@ module Solidus
       def copy_views
         views_to_copy.each do |file|
           next if File.directory?(file)
+
           dest_file = Pathname.new(file).relative_path_from(source_dir)
           copy_file file, Rails.root.join('app', 'views', 'spree', dest_file)
         end
@@ -33,8 +34,8 @@ module Solidus
 
       def views_to_copy
         if @options['only']
-          VIEWS.select do |v|
-            Pathname.new(v).relative_path_from(source_dir).to_s.include?(@options['only'])
+          VIEWS.select do |view|
+            Pathname.new(view).relative_path_from(source_dir).to_s.include?(@options['only'])
           end
         else
           VIEWS

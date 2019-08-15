@@ -93,8 +93,8 @@ module Spree
           else
             active.available_to_users.available_to_admin
           end
-        available_payment_methods.select do |p|
-          store.nil? || store.payment_methods.empty? || store.payment_methods.include?(p)
+        available_payment_methods.select do |payment|
+          store.nil? || store.payment_methods.empty? || store.payment_methods.include?(payment)
         end
       end
 

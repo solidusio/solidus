@@ -18,7 +18,7 @@ module ImageHelpers
     asset = "source/assets/images/#{filename}"
 
     if File.exist?(asset)
-      file = File.open(asset, 'r') { |f| f.read }
+      file = File.open(asset, 'r') { |file_io| file_io.read }
       # we pass svg-targeting css classes through here, ex. .svg-color--blue. The class targets fill, stroke, poly, circle, etc.
       css_class = options[:class]
       # this could be passed via helper, right now this default covers most of our svg use cases.

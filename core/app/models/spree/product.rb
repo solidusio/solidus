@@ -190,7 +190,7 @@ module Spree
     # @return [Hash] option_type as keys, array of variants as values.
     def categorise_variants_from_option(opt_type, pricing_options = Spree::Config.default_pricing_options)
       return {} unless option_types.include?(opt_type)
-      variants.with_prices(pricing_options).group_by { |v| v.option_values.detect { |o| o.option_type == opt_type } }
+      variants.with_prices(pricing_options).group_by { |variant| variant.option_values.detect { |option| option.option_type == opt_type } }
     end
     deprecate :categorise_variants_from_option, deprecator: Spree::Deprecation
 
@@ -323,7 +323,7 @@ module Spree
 
     def any_variants_not_track_inventory?
       if variants_including_master.loaded?
-        variants_including_master.any? { |v| !v.should_track_inventory? }
+        variants_including_master.any? { |variant| !variant.should_track_inventory? }
       else
         !Spree::Config.track_inventory_levels || variants_including_master.where(track_inventory: false).exists?
       end

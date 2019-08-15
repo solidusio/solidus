@@ -67,7 +67,7 @@ module Spree
           line_items = actionable_line_items(order)
 
           actioned_line_items = order.line_item_adjustments.reload.
-            select { |a| a.source == self && a.amount < 0 }.
+            select { |adjustment| adjustment.source == self && adjustment.amount < 0 }.
             map(&:adjustable)
           other_line_items = actioned_line_items - [line_item]
 

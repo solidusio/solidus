@@ -47,7 +47,7 @@ module Spree
     default_scope -> { order(:created_at) }
 
     scope :from_credit_card, -> { where(source_type: 'Spree::CreditCard') }
-    scope :with_state, ->(s) { where(state: s.to_s) }
+    scope :with_state, ->(state) { where(state: state.to_s) }
     # "offset" is reserved by activerecord
     scope :offset_payment, -> { where("source_type = 'Spree::Payment' AND amount < 0 AND state = 'completed'") }
 
@@ -195,8 +195,8 @@ module Spree
       return if source.imported
 
       payment_method.create_profile(self)
-    rescue ActiveMerchant::ConnectionError => e
-      gateway_error e
+    rescue ActiveMerchant::ConnectionError => error
+      gateway_error error
     end
 
     def invalidate_old_payments

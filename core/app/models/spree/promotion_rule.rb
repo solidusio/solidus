@@ -5,7 +5,7 @@ module Spree
   class PromotionRule < Spree::Base
     belongs_to :promotion, class_name: 'Spree::Promotion', inverse_of: :promotion_rules, optional: true
 
-    scope :of_type, ->(t) { where(type: t) }
+    scope :of_type, ->(type) { where(type: type) }
 
     validates :promotion, presence: true
     validate :unique_per_promotion, on: :create

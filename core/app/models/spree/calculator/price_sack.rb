@@ -12,7 +12,7 @@ module Spree
     # as object we always get line items, as calculable we have Coupon, ShippingMethod
     def compute(object)
       if object.is_a?(Array)
-        base = object.map { |o| o.respond_to?(:amount) ? o.amount : BigDecimal(o.to_s) }.sum
+        base = object.map { |element| element.respond_to?(:amount) ? element.amount : BigDecimal(element.to_s) }.sum
       else
         base = object.respond_to?(:amount) ? object.amount : BigDecimal(object.to_s)
       end

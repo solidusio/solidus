@@ -23,8 +23,8 @@ module Spree
         authorize! :update, @order, order_token
         @order.next!
         respond_with(@order, default_template: 'spree/api/orders/show', status: 200)
-      rescue StateMachines::InvalidTransition => e
-        logger.error("invalid_transition #{e.event} from #{e.from} for #{e.object.class.name}. Error: #{e.inspect}")
+      rescue StateMachines::InvalidTransition => error
+        logger.error("invalid_transition #{error.event} from #{error.from} for #{error.object.class.name}. Error: #{error.inspect}")
         respond_with(@order, default_template: 'spree/api/orders/could_not_transition', status: 422)
       end
 
@@ -42,8 +42,8 @@ module Spree
           @order.complete!
           respond_with(@order, default_template: 'spree/api/orders/show', status: 200)
         end
-      rescue StateMachines::InvalidTransition => e
-        logger.error("invalid_transition #{e.event} from #{e.from} for #{e.object.class.name}. Error: #{e.inspect}")
+      rescue StateMachines::InvalidTransition => error
+        logger.error("invalid_transition #{error.event} from #{error.from} for #{error.object.class.name}. Error: #{error.inspect}")
         respond_with(@order, default_template: 'spree/api/orders/could_not_transition', status: 422)
       end
 
