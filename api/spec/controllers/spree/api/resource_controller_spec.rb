@@ -25,10 +25,10 @@ module Spree
     end
 
     with_model 'Widget', scope: :all do
-      table do |t|
-        t.string :name
-        t.integer :position
-        t.timestamps null: false
+      table do |widget|
+        widget.string :name
+        widget.integer :position
+        widget.timestamps null: false
       end
 
       model do

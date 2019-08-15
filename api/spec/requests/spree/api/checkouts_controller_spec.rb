@@ -132,9 +132,9 @@ module Spree
         put spree.api_checkout_path(order.to_param), params: { order_token: order.guest_token, order: { shipments_attributes: { "0" => { selected_shipping_rate_id: shipping_rate.id, id: shipment.id } } } }
         expect(response.status).to eq(200)
         # Find the correct shipment...
-        json_shipment = json_response['shipments'].detect { |s| s["id"] == shipment.id }
+        json_shipment = json_response['shipments'].detect { |value| value["id"] == shipment.id }
         # Find the correct shipping rate for that shipment...
-        json_shipping_rate = json_shipment['shipping_rates'].detect { |sr| sr["id"] == shipping_rate.id }
+        json_shipping_rate = json_shipment['shipping_rates'].detect { |value| value["id"] == shipping_rate.id }
         # ... And finally ensure that it's selected
         expect(json_shipping_rate['selected']).to be true
         # Order should automatically transfer to payment because all criteria are met

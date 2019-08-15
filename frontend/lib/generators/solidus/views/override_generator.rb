@@ -33,8 +33,8 @@ module Solidus
 
       def views_to_copy
         if @options['only']
-          VIEWS.select do |v|
-            Pathname.new(v).relative_path_from(source_dir).to_s.include?(@options['only'])
+          VIEWS.select do |value|
+            Pathname.new(value).relative_path_from(source_dir).to_s.include?(@options['only'])
           end
         else
           VIEWS

@@ -38,11 +38,11 @@ module Spree
         end
 
         def build_query(params)
-          params.map { |k, v|
-            if v.class == Array
-              build_query(v.map { |x| ["#{k}[]", x] })
+          params.map { |key, value|
+            if value.class == Array
+              build_query(value.map { |parameter| ["#{key}[]", parameter] })
             else
-              k + "=" + Rack::Utils.escape(v)
+              key + "=" + Rack::Utils.escape(value)
             end
           }.join("&")
         end

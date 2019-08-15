@@ -246,11 +246,11 @@ module Spree
       it "returns orders in reverse chronological order by completed_at" do
         order.update_columns completed_at: Time.current, created_at: 3.days.ago
 
-        order2 = Order.create user: order.user, completed_at: Time.current - 1.day, created_at: 2.day.ago, store: store
+        order_two = Order.create user: order.user, completed_at: Time.current - 1.day, created_at: 2.day.ago, store: store
         expect(order2.created_at).to be > order.created_at
-        order3 = Order.create user: order.user, completed_at: nil, created_at: 1.day.ago, store: store
+        order_three = Order.create user: order.user, completed_at: nil, created_at: 1.day.ago, store: store
         expect(order3.created_at).to be > order2.created_at
-        order4 = Order.create user: order.user, completed_at: nil, created_at: 0.days.ago, store: store
+        order_four = Order.create user: order.user, completed_at: nil, created_at: 0.days.ago, store: store
         expect(order4.created_at).to be > order3.created_at
 
         get spree.api_my_orders_path, headers: { 'SERVER_NAME' => store.url }
@@ -259,8 +259,8 @@ module Spree
         orders = json_response["orders"]
         expect(orders.length).to eq(4)
         expect(orders[0]["number"]).to eq(order.number)
-        expect(orders[1]["number"]).to eq(order2.number)
-        expect([orders[2]["number"], orders[3]["number"]]).to match_array([order3.number, order4.number])
+        expect(orders[1]["number"]).to eq(order_two.number)
+        expect([orders[2]["number"], orders[3]["number"]]).to match_array([order_three.number, order_four.number])
       end
     end
 
@@ -502,18 +502,18 @@ module Spree
       end
 
       it "adds an extra line item" do
-        variant2 = create(:variant)
+        variant_two = create(:variant)
         put spree.api_order_path(order), params: { order: {
           line_items: {
             "0" => { id: line_item.id, quantity: 10 },
-            "1" => { variant_id: variant2.id, quantity: 1 }
+            "1" => { variant_id: variant_two.id, quantity: 1 }
           }
         } }
 
         expect(response.status).to eq(200)
         expect(json_response['line_items'].count).to eq(2)
         expect(json_response['line_items'][0]['quantity']).to eq(10)
-        expect(json_response['line_items'][1]['variant_id']).to eq(variant2.id)
+        expect(json_response['line_items'][1]['variant_id']).to eq(variant_two.id)
         expect(json_response['line_items'][1]['quantity']).to eq(1)
       end
 
@@ -727,7 +727,7 @@ module Spree
 
           orders = json_response[:orders]
           expect(orders.count).to be >= 3
-          expect(orders.map { |o| o[:id] }).to match_array Order.pluck(:id)
+          expect(orders.map { |order| order[:id] }).to match_array Order.pluck(:id)
         end
 
         after { ActionController::Base.perform_caching = false }

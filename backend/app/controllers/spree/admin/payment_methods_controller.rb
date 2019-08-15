@@ -28,9 +28,9 @@ module Spree
         invoke_callbacks(:update, :before)
 
         attributes = payment_method_params
-        attributes.each do |k, _v|
-          if k.include?("password") && attributes[k].blank?
-            attributes.delete(k)
+        attributes.each do |key, _v|
+          if key.include?("password") && attributes[key].blank?
+            attributes.delete(key)
           end
         end
 
