@@ -56,6 +56,10 @@ module Spree
     extend DisplayMoney
     money_methods :amount
 
+    # Returns Adjustments of completed Orders.
+    #
+    # @param excluded_orders [Array<Spree::Order>] Orders to exclude from query
+    # @return [ActiveRecord::Relation] Scoped Adjustments
     def self.in_completed_orders(excluded_orders: [])
       joins(:order).
       merge(Spree::Order.complete).

@@ -14,6 +14,7 @@ class Spree::PromotionCode < Spree::Base
 
   # Whether the promotion code has exceeded its usage restrictions
   #
+  # @param excluded_orders [Array<Spree::Order>] Orders to exclude from usage limit
   # @return true or false
   def usage_limit_exceeded?(excluded_orders: [])
     if usage_limit
@@ -23,6 +24,7 @@ class Spree::PromotionCode < Spree::Base
 
   # Number of times the code has been used overall
   #
+  # @param excluded_orders [Array<Spree::Order>] Orders to exclude from usage count
   # @return [Integer] usage count
   def usage_count(excluded_orders: [])
     adjustments.
