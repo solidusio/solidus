@@ -48,6 +48,11 @@ RSpec.describe Spree::UnitCancel do
       it "divides the line item total by the uncanceled units size" do
         expect(subject).to eq(-10.0)
       end
+
+      it "raises an error if dividing by 0" do
+        inventory_unit.cancel!
+        expect { subject }.to raise_error ZeroDivisionError, "Line Item does not have any inventory units available to cancel"
+      end
     end
 
     context "it is called with a line item that doesnt belong to the inventory unit" do
