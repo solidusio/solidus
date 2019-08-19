@@ -2,6 +2,9 @@
 
 module Spree
   class Property < Spree::Base
+    include Discard::Model
+    self.discard_column = :deleted_at
+
     has_many :product_properties, dependent: :delete_all, inverse_of: :property
     has_many :products, through: :product_properties
 

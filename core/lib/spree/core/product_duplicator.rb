@@ -68,6 +68,7 @@ module Spree
         prop.dup.tap do |new_prop|
           new_prop.created_at = nil
           new_prop.updated_at = nil
+          new_prop.deleted_at = nil
         end
       end
     end

@@ -477,6 +477,17 @@ RSpec.describe Spree::Product, type: :model do
         expect(product.possible_promotions).to include(promotion)
       end
     end
+
+    context "#discard" do
+      let(:product_property) { create(:product_property) }
+      let(:product) { product_property.product }
+
+      it "does not delete product properties objects" do
+        product.discard
+        expect(product.product_properties).to be_empty
+        expect(product_property.reload.deleted_at).not_to be_nil
+      end
+    end
   end
 
   context "#images" do

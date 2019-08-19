@@ -91,10 +91,10 @@ module Spree
         expect(response.status).to eq(200)
       end
 
-      it "can delete a product property" do
+      it "can soft-delete a product property" do
         delete spree.api_product_product_property_path(product, property_1.property_name)
         expect(response.status).to eq(204)
-        expect { property_1.reload }.to raise_error(ActiveRecord::RecordNotFound)
+        expect(property_1.reload.deleted_at).not_to be_nil
       end
     end
 

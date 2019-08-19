@@ -24,7 +24,7 @@ module Spree
     after_discard do
       variants_including_master.discard_all
       self.product_option_types = []
-      self.product_properties = []
+      product_properties.discard_all
       self.classifications = []
       self.product_promotion_rules = []
     end

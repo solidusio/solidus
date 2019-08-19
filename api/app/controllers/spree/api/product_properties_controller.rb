@@ -48,7 +48,7 @@ module Spree
       def destroy
         if @product_property
           authorize! :destroy, @product_property
-          @product_property.destroy
+          @product_property.discard
           respond_with(@product_property, status: 204)
         else
           invalid_resource!(@product_property)
