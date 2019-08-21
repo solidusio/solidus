@@ -20,11 +20,7 @@
       </div>
     <% end %>
 
-    <%= f.field_container :icon do %>
-      <%= f.label :icon %><br />
-      <%= f.file_field :icon %>
-      <%= image_tag f.object.icon(:mini) if f.object.icon_present? %>
-    <% end %>
+    <%= render "spree/admin/taxons/attachment_forms/#{f.object.attachment_partial_name}", f: f %>
   </div>
 
   <div class="col-5">

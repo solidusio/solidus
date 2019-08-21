@@ -1,0 +1,7 @@
+<% f.object.class.attachment_definitions.each do |attachment, definition| %>
+  <%= f.field_container attachment do %>
+    <%= f.label attachment %><br>
+    <%= f.file_field attachment %>
+    <%= image_tag f.object.send(attachment, definition[:default_style]) if f.object.send(attachment).present? %>
+  <% end %>
+<% end %>
