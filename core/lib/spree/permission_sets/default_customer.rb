@@ -8,7 +8,7 @@ module Spree
         can :display, OptionType
         can :display, OptionValue
         can :create, Order
-        can [:read, :update], Order do |order, token|
+        can [:read, :update], Order, Order.where(user: user) do |order, token|
           order.user == user || (order.guest_token.present? && token == order.guest_token)
         end
         cannot :update, Order do |order|
