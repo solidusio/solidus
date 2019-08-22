@@ -2,7 +2,7 @@
 
 module Spree
   class ShippingMethodZone < Spree::Base
-    belongs_to :zone
-    belongs_to :shipping_method
+    belongs_to :zone, optional: true
+    belongs_to :shipping_method, optional: true
   end
 end

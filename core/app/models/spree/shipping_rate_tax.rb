@@ -7,8 +7,8 @@ module Spree
   # @since 1.3.0
   # @see Spree::Tax::ShippingRateTaxer
   class ShippingRateTax < ActiveRecord::Base
-    belongs_to :shipping_rate, class_name: "Spree::ShippingRate"
-    belongs_to :tax_rate, class_name: "Spree::TaxRate"
+    belongs_to :shipping_rate, class_name: "Spree::ShippingRate", optional: true
+    belongs_to :tax_rate, class_name: "Spree::TaxRate", optional: true
 
     extend DisplayMoney
     money_methods :absolute_amount

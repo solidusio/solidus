@@ -55,15 +55,15 @@ module Spree
     deprecate :temporary_credit_card= => :temporary_payment_source=, deprecator: Spree::Deprecation
 
     # Customer info
-    belongs_to :user, class_name: Spree::UserClassHandle.new
-    belongs_to :bill_address, foreign_key: :bill_address_id, class_name: 'Spree::Address'
+    belongs_to :user, class_name: Spree::UserClassHandle.new, optional: true
+    belongs_to :bill_address, foreign_key: :bill_address_id, class_name: 'Spree::Address', optional: true
     alias_attribute :billing_address, :bill_address
 
-    belongs_to :ship_address, foreign_key: :ship_address_id, class_name: 'Spree::Address'
+    belongs_to :ship_address, foreign_key: :ship_address_id, class_name: 'Spree::Address', optional: true
     alias_attribute :shipping_address, :ship_address
     alias_attribute :ship_total, :shipment_total
 
-    belongs_to :store, class_name: 'Spree::Store'
+    belongs_to :store, class_name: 'Spree::Store', optional: true
 
     # Items
     has_many :line_items, -> { order(:created_at, :id) }, dependent: :destroy, inverse_of: :order
@@ -101,9 +101,9 @@ module Spree
 
     # Logging
     has_many :state_changes, as: :stateful
-    belongs_to :created_by, class_name: Spree::UserClassHandle.new
-    belongs_to :approver, class_name: Spree::UserClassHandle.new
-    belongs_to :canceler, class_name: Spree::UserClassHandle.new
+    belongs_to :created_by, class_name: Spree::UserClassHandle.new, optional: true
+    belongs_to :approver, class_name: Spree::UserClassHandle.new, optional: true
+    belongs_to :canceler, class_name: Spree::UserClassHandle.new, optional: true
 
     accepts_nested_attributes_for :line_items
     accepts_nested_attributes_for :bill_address

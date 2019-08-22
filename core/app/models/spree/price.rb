@@ -12,8 +12,8 @@ module Spree
 
     MAXIMUM_AMOUNT = BigDecimal('99_999_999.99')
 
-    belongs_to :variant, -> { with_deleted }, class_name: 'Spree::Variant', touch: true
-    belongs_to :country, class_name: "Spree::Country", foreign_key: "country_iso", primary_key: "iso"
+    belongs_to :variant, -> { with_deleted }, class_name: 'Spree::Variant', touch: true, optional: true
+    belongs_to :country, class_name: "Spree::Country", foreign_key: "country_iso", primary_key: "iso", optional: true
 
     delegate :product, to: :variant
     delegate :tax_rates, to: :variant

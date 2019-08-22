@@ -16,11 +16,11 @@ module Spree
   #    order's adjustment total. This allows an adjustment to be preserved if
   #    it becomes ineligible so it might be reinstated.
   class Adjustment < Spree::Base
-    belongs_to :adjustable, polymorphic: true, touch: true
-    belongs_to :source, polymorphic: true
-    belongs_to :order, class_name: 'Spree::Order', inverse_of: :all_adjustments
-    belongs_to :promotion_code, class_name: 'Spree::PromotionCode'
-    belongs_to :adjustment_reason, class_name: 'Spree::AdjustmentReason', inverse_of: :adjustments
+    belongs_to :adjustable, polymorphic: true, touch: true, optional: true
+    belongs_to :source, polymorphic: true, optional: true
+    belongs_to :order, class_name: 'Spree::Order', inverse_of: :all_adjustments, optional: true
+    belongs_to :promotion_code, class_name: 'Spree::PromotionCode', optional: true
+    belongs_to :adjustment_reason, class_name: 'Spree::AdjustmentReason', inverse_of: :adjustments, optional: true
 
     validates :adjustable, presence: true
     validates :order, presence: true

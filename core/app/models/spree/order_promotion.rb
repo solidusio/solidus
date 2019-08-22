@@ -8,9 +8,9 @@ module Spree
   class OrderPromotion < Spree::Base
     self.table_name = 'spree_orders_promotions'
 
-    belongs_to :order, class_name: 'Spree::Order'
-    belongs_to :promotion, class_name: 'Spree::Promotion'
-    belongs_to :promotion_code, class_name: 'Spree::PromotionCode'
+    belongs_to :order, class_name: 'Spree::Order', optional: true
+    belongs_to :promotion, class_name: 'Spree::Promotion', optional: true
+    belongs_to :promotion_code, class_name: 'Spree::PromotionCode', optional: true
 
     validates :order, presence: true
     validates :promotion, presence: true
