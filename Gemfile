@@ -46,8 +46,8 @@ group :frontend do
 end
 
 group :backend do
-  gem 'teaspoon', require: false
-  gem 'teaspoon-mocha', require: false
+  gem 'teaspoon', github: 'jejacks0n/teaspoon', require: false
+  gem 'teaspoon-mocha', github: 'jejacks0n/teaspoon', require: false
 end
 
 group :utils do
