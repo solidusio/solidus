@@ -18,6 +18,8 @@
   <%= render 'spree/admin/orders/risk_analysis', latest_payment: @order.payments.reorder("created_at DESC").first %>
 <% end %>
 
+<div data-hook="admin_order_edit_sub_header" />
+
 <% if @order.line_items.empty? %>
   <div class="no-objects-found">
     <p><%= t('spree.your_order_is_empty_add_product') %></p>
