@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
+require 'fileutils'
 require 'pathname'
 
 class Project
@@ -159,7 +160,9 @@ class Project
   end
 
   def run_teaspoon
-    run_test_cmd(%w[bundle exec teaspoon] + teaspoon_arguments)
+    cmd = %w[bundle exec teaspoon] + teaspoon_arguments
+
+    run_test_cmd(cmd)
   end
 
   def run_test_cmd(args)
@@ -170,11 +173,18 @@ class Project
   end
 
   def teaspoon_arguments
+    args = []
+
+    args << '--require=spec/teaspoon_env.rb'
+
     if report_dir
-      %W[--format documentation,junit>#{report_dir}/rspec/#{name}_js.xml]
+      FileUtils.mkdir_p("#{report_dir}/rspec")
+      args << "--format=documentation,junit>#{report_dir}/rspec/#{name}_js.xml"
     else
-      %w[--format documentation]
+      args << '--format=documentation'
     end
+
+    args
   end
 
   def rspec_arguments
