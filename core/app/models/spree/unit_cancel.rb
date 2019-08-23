@@ -41,7 +41,10 @@ class Spree::UnitCancel < Spree::Base
   private
 
   def weighted_line_item_amount(line_item)
-    line_item.total_before_tax / quantity_of_line_item(line_item)
+    quantity_of_line_item = quantity_of_line_item(line_item)
+    raise ZeroDivisionError, "Line Item does not have any inventory units available to cancel" if quantity_of_line_item.zero?
+
+    line_item.total_before_tax / quantity_of_line_item
   end
 
   def quantity_of_line_item(line_item)
