@@ -200,6 +200,7 @@ en:
         starts_at: Start
         status: Status
         usage_limit: Usage Limit
+        uses: Uses
       spree/promotion/actions/create_adjustment:
         description: Creates a promotion credit adjustment on the order
       spree/promotion/actions/create_item_adjustments:
