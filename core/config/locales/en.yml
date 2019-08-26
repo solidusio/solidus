@@ -238,6 +238,7 @@ en:
       spree/promotion/rules/user_role:
         description: Order includes User with specified Role(s)
       spree/promotion_category:
+        code: Code
         name: Name
       spree/property:
         name: Name
