@@ -327,6 +327,7 @@ en:
         phone: Phone
         propagate_all_variants: Propagate All Variants
         restock_inventory: Restock Inventory
+        state: State
         state_id: State
         zipcode: Zip
       spree/stock_movement:
