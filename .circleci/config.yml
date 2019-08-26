@@ -121,6 +121,24 @@ jobs:
       - setup
       - test
 
+  postgres_rails60:
+    executor: postgres
+    parallelism: *parallelism
+    environment:
+      RAILS_VERSION: '~> 6.0.0'
+    steps:
+      - setup
+      - test
+
+  mysql_rails60:
+    executor: mysql
+    parallelism: *parallelism
+    environment:
+      RAILS_VERSION: '~> 6.0.0'
+    steps:
+      - setup
+      - test
+
 workflows:
   build:
     jobs:
@@ -132,6 +150,8 @@ workflows:
       - mysql
       - postgres_rails51
       - mysql_rails51
+      - postgres_rails60
+      - mysql_rails60
       - stoplight/push:
           project: solidus/solidus-api
           git_token: $STOPLIGHT_GIT_TOKEN
