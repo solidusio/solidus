@@ -361,6 +361,9 @@ en:
         action: Action
         amount_remaining: Total Unused
         user_total_amount: Total Amount
+      spree/store_credit_reason:
+        name: Name
+        state: State
       spree/store_credit_update_reason:
         name: Name
       spree/tax_category:
