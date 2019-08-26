@@ -250,6 +250,7 @@ en:
         active: Active
         code: Code
         name: Name
+        state: State
       spree/reimbursement:
         created_at: Date/Time
         number: Number
