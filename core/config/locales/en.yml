@@ -378,6 +378,7 @@ en:
         name: Name
         show_rate_in_label: Show Rate in Label
         starts_at: Start Date
+        tax_categories: Tax Categories
       spree/taxon:
         description: Description
         icon: Icon
