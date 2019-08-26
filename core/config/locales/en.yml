@@ -294,6 +294,7 @@ en:
         name: Name
       spree/shipping_method:
         admin_name: Internal Name
+        available_to_users: Available to users
         carrier: Carrier
         code: Code
         display_on: Display
