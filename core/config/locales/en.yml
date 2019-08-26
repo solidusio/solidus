@@ -241,6 +241,15 @@ en:
       spree/promotion_category:
         code: Code
         name: Name
+      spree/promotion_code:
+        value: Value
+      spree/promotion_code_batch:
+        base_code: Base code
+        email: Email
+        join_characters: Join characters
+        number_of_codes: Number of codes
+        status: Status
+        total_codes: Total codes
       spree/property:
         name: Name
         presentation: Presentation
