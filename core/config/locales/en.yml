@@ -163,8 +163,11 @@ en:
         type: Type
       spree/price:
         amount: Price
+        country: Country
         currency: Currency
         is_default: Currently Valid
+        price: Price
+        variant: Variant
       spree/product:
         available_on: Available On
         cost_currency: Cost Currency
