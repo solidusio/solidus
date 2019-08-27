@@ -147,15 +147,6 @@ RSpec.describe Spree::PromotionCode do
         before { order.adjustments.promotion.update_all(eligible: false) }
         it { is_expected.to eq 0 }
       end
-
-      context "and adjustment is recalculated at promo code last available usage" do
-        before do
-          promotion.update(per_code_usage_limit: 1)
-          order.adjustments.map(&:recalculate)
-        end
-
-        it { is_expected.to eq 1 }
-      end
     end
   end
 

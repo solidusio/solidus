@@ -349,15 +349,6 @@ RSpec.describe Spree::Promotion, type: :model do
         before { order.adjustments.promotion.update_all(eligible: false) }
         it { is_expected.to eq 0 }
       end
-
-      context "and adjustment is recalculated at promo last available usage" do
-        before do
-          promotion.update(usage_limit: 1)
-          order.adjustments.each(&:recalculate)
-        end
-
-        it { is_expected.to eq 1 }
-      end
     end
   end
 
@@ -578,76 +569,69 @@ RSpec.describe Spree::Promotion, type: :model do
 
   context "#eligible?" do
     subject do
-      promotion.eligible?(promotable)
+      promotion.eligible?(promotable, promotion_code: promotion.codes.first)
     end
 
-    let(:promotable) { create :order }
-
-    it { is_expected.to be true }
-
-    context "when promotion is expired" do
-      before { promotion.expires_at = Time.current - 10.days }
-      it { is_expected.to be false }
-    end
-
-    context "when the promotion's usage limit is exceeded" do
-      let(:promotion) { FactoryBot.create(:promotion, :with_order_adjustment) }
-
-      before do
-        FactoryBot.create(
-          :completed_order_with_promotion,
-          promotion: promotion
-        )
-        promotion.usage_limit = 1
-      end
-
-      it "returns false" do
-        expect(promotion.eligible?(promotable)).to eq(false)
-      end
-    end
-
-    context "when the promotion code's usage limit is exceeded" do
-      let(:promotion) { create(:promotion, :with_order_adjustment, code: 'abc123', per_code_usage_limit: 1) }
-      let(:promotion_code) { promotion.codes.first }
-
-      before do
-        FactoryBot.create(
-          :completed_order_with_promotion,
-          promotion: promotion
-        )
-        promotion_code.adjustments.update_all(eligible: true)
-      end
-
-      it "returns false" do
-        expect(promotion.eligible?(promotable, promotion_code: promotion_code)).to eq(false)
-      end
-    end
-
-    context "when promotable is a Spree::LineItem" do
-      let(:promotable) { create :line_item }
-      let(:product) { promotable.product }
-
-      before do
-        product.promotionable = promotionable
-      end
-
-      context "and product is promotionable" do
-        let(:promotionable) { true }
+    shared_examples "a promotable" do
+      context "when empty" do
         it { is_expected.to be true }
       end
 
-      context "and product is not promotionable" do
-        let(:promotionable) { false }
+      context "when promotion is expired" do
+        before { promotion.expires_at = Time.current - 10.days }
+
         it { is_expected.to be false }
+      end
+
+      context "when promotion's usage limit is exceeded" do
+        before do
+          promotion.usage_limit = 1
+          create(:completed_order_with_promotion, promotion: promotion)
+        end
+
+        it { is_expected.to be false }
+      end
+
+      context "when promotion code's usage limit is exceeded" do
+        before do
+          promotion.per_code_usage_limit = 1
+          create(:completed_order_with_promotion, promotion: promotion)
+          promotion.codes.first.adjustments.update_all(eligible: true)
+        end
+
+        it { is_expected.to be false }
+      end
+
+      context "when promotion is at last usage on the same order" do
+        let(:order) { create(:completed_order_with_promotion, promotion: promotion) }
+        let(:promotable) { order }
+
+        before do
+          promotion.usage_limit = 1
+        end
+
+        it { is_expected.to be true }
+      end
+
+      context "when promotion code is at last usage on the same order" do
+        let(:order) { create(:completed_order_with_promotion, promotion: promotion) }
+        let(:promotable) { order }
+
+        before do
+          promotion.per_code_usage_limit = 1
+        end
+
+        it { is_expected.to be true }
       end
     end
 
     context "when promotable is a Spree::Order" do
-      context "and it is empty" do
-        it { is_expected.to be true }
-      end
+      let(:promotion) { create(:promotion, :with_order_adjustment) }
+      let(:promotable) { create :order }
 
-      context "and it contains items" do
+      it_behaves_like "a promotable"
+
+      context "when it contains items" do
         let!(:line_item) { create(:line_item, order: promotable) }
         let!(:line_item2) { create(:line_item, order: promotable) }
 
@@ -655,6 +639,7 @@ RSpec.describe Spree::Promotion, type: :model do
           before do
             line_item.product.update_column(:promotionable, false)
           end
+
           it { is_expected.to be false }
         end
 
@@ -663,6 +648,7 @@ RSpec.describe Spree::Promotion, type: :model do
             line_item.product.update_column(:promotionable, false)
             line_item2.product.update_column(:promotionable, false)
           end
+
           it { is_expected.to be false }
         end
 
@@ -670,6 +656,32 @@ RSpec.describe Spree::Promotion, type: :model do
           it { is_expected.to be true }
         end
       end
+    end
+
+    context "when promotable is a Spree::LineItem" do
+      let(:promotion) { create(:promotion, :with_line_item_adjustment) }
+      let(:promotable) { create(:line_item) }
+
+      it_behaves_like "a promotable"
+
+      context "and product is promotionable" do
+        before { promotable.product.promotionable = true }
+
+        it { is_expected.to be true }
+      end
+
+      context "and product is not promotionable" do
+        before { promotable.product.promotionable = false }
+
+        it { is_expected.to be false }
+      end
+    end
+
+    context "when promotable is a Spree::Shipment" do
+      let(:promotion) { create(:promotion, :with_free_shipping) }
+      let(:promotable) { create(:shipment) }
+
+      it_behaves_like "a promotable"
     end
   end
 

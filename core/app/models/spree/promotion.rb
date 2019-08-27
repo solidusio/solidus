@@ -126,9 +126,11 @@ module Spree
     # called anytime order.recalculate happens
     def eligible?(promotable, promotion_code: nil)
       return false if inactive?
-      return false if usage_limit_exceeded?(excluded_orders: [promotable])
-      return false if promotion_code&.usage_limit_exceeded?(excluded_orders: [promotable])
       return false if blacklisted?(promotable)
+
+      excluded_orders = eligibility_excluded_orders(promotable)
+      return false if usage_limit_exceeded?(excluded_orders: excluded_orders)
+      return false if promotion_code&.usage_limit_exceeded?(excluded_orders: excluded_orders)
 
       !!eligible_rules(promotable, {})
     end
@@ -260,6 +262,16 @@ module Spree
 
       errors.add(:apply_automatically, :disallowed_with_code) if codes.any?
       errors.add(:apply_automatically, :disallowed_with_path) if path.present?
+    end
+
+    def eligibility_excluded_orders(promotable)
+      if promotable.is_a?(Spree::Order)
+        [promotable]
+      elsif promotable.respond_to?(:order)
+        [promotable.order]
+      else
+        []
+      end
     end
   end
 end
