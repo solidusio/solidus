@@ -163,8 +163,11 @@ en:
         type: Type
       spree/price:
         amount: Price
+        country: Country
         currency: Currency
         is_default: Currently Valid
+        price: Price
+        variant: Variant
       spree/product:
         available_on: Available On
         cost_currency: Cost Currency
@@ -200,6 +203,7 @@ en:
         starts_at: Start
         status: Status
         usage_limit: Usage Limit
+        uses: Uses
       spree/promotion/actions/create_adjustment:
         description: Creates a promotion credit adjustment on the order
       spree/promotion/actions/create_item_adjustments:
@@ -238,7 +242,17 @@ en:
       spree/promotion/rules/user_role:
         description: Order includes User with specified Role(s)
       spree/promotion_category:
+        code: Code
         name: Name
+      spree/promotion_code:
+        value: Value
+      spree/promotion_code_batch:
+        base_code: Base code
+        email: Email
+        join_characters: Join characters
+        number_of_codes: Number of codes
+        status: Status
+        total_codes: Total codes
       spree/property:
         name: Name
         presentation: Presentation
@@ -250,6 +264,7 @@ en:
         active: Active
         code: Code
         name: Name
+        state: State
       spree/reimbursement:
         created_at: Date/Time
         number: Number
@@ -294,6 +309,7 @@ en:
         name: Name
       spree/shipping_method:
         admin_name: Internal Name
+        available_to_users: Available to users
         carrier: Carrier
         code: Code
         display_on: Display
@@ -326,6 +342,7 @@ en:
         phone: Phone
         propagate_all_variants: Propagate All Variants
         restock_inventory: Restock Inventory
+        state: State
         state_id: State
         zipcode: Zip
       spree/stock_movement:
@@ -358,6 +375,9 @@ en:
         action: Action
         amount_remaining: Total Unused
         user_total_amount: Total Amount
+      spree/store_credit_reason:
+        name: Name
+        state: State
       spree/store_credit_update_reason:
         name: Name
       spree/tax_category:
@@ -372,6 +392,7 @@ en:
         name: Name
         show_rate_in_label: Show Rate in Label
         starts_at: Start Date
+        tax_categories: Tax Categories
       spree/taxon:
         description: Description
         icon: Icon
