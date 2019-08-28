@@ -39,6 +39,11 @@
     "lunr": "2.2.0",
     "numeral": "^2.0.6",
     "popper.js": "^1.14.3"
+
+  },
+  "resolutions": {
+    "js-yaml": "^3.13.1",
+    "debug": "^2.6.9"
   },
   "babel": {
     "presets": [
