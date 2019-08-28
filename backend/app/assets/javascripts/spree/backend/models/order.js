@@ -21,6 +21,15 @@ Spree.Models.Order = Backbone.Model.extend({
     };
     _.extend(options, opts);
     return this.fetch(options)
+  },
+
+  empty: function (opts) {
+    var options = {
+      url: Spree.routes.orders_api + "/" + this.id + "/empty",
+      type: 'PUT',
+    };
+    _.extend(options, opts);
+    return this.fetch(options)
   }
 });
 

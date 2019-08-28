@@ -19,6 +19,12 @@ Spree.Order.initCartPage = function(order_number) {
     collection: collection
   });
 
+  new Spree.Views.Cart.EmptyCartButton({
+    el: $('.js-empty-cart'),
+    collection: collection,
+    model: order
+  });
+
   new Spree.Views.Order.DetailsTotal({
     el: $('#order-total'),
     model: order

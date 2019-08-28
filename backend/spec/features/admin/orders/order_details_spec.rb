@@ -76,6 +76,19 @@ describe "Order Details", type: :feature, js: true do
         expect(page).to have_field('quantity')
       end
 
+      it "can remove all items with empty cart" do
+        expect(page).to have_content("spree t-shirt")
+
+        accept_confirm "Are you sure you want to delete this record?" do
+          click_on 'Empty Cart'
+        end
+
+        expect(page).not_to have_content("spree t-shirt")
+
+        # Should have a new item row
+        expect(page).to have_field('quantity')
+      end
+
       # Regression test for https://github.com/spree/spree/issues/3862
       it "can cancel removing an item from a shipment" do
         expect(page).to have_content("spree t-shirt")

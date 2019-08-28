@@ -7,6 +7,7 @@
 
   <% if can?(:update, @order) && can?(:create, Spree::LineItem) %>
     <button class="js-add-line-item btn btn-primary" disabled><%= t('spree.add_line_item') %></button>
+    <button class="js-empty-cart btn btn-primary" disabled><%= t('spree.empty_cart') %></button>
   <% end %>
 
   <%= render "spree/admin/orders/order_details", { order: order } %>
