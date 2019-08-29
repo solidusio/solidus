@@ -5,7 +5,7 @@ source 'https://rubygems.org'
 group :backend, :frontend, :core, :api do
   gemspec require: false
 
-  rails_version = ENV['RAILS_VERSION'] || '~> 5.2.0'
+  rails_version = ENV['RAILS_VERSION'] || '~> 6.0.0'
   gem 'rails', rails_version, require: false
 
   platforms :ruby do
