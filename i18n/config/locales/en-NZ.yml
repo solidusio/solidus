@@ -518,10 +518,6 @@ en-NZ:
       jirafe_settings_updated:
     date:
     date_completed: Date Completed
-    date_picker:
-      first_day:
-      format:
-      js_format:
     date_range: Date Range
     default: Default
     default_refund_amount:

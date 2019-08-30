@@ -500,10 +500,6 @@ et:
       jirafe_settings_updated:
     date: Kuupäev
     date_completed:
-    date_picker:
-      first_day:
-      format:
-      js_format:
     date_range: Vali vahemik
     default:
     default_refund_amount:

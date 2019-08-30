@@ -477,7 +477,7 @@ tr:
     date_picker:
       first_day:
       format: "%d.%m%Y"
-      js_format: dd.mm.yyyy
+      js_format: d.m.Y
     date_range: Tarih Aralığı
     default: Varsayılan
     default_refund_amount:

@@ -523,7 +523,7 @@ nl:
     date_picker:
       first_day:
       format: "%d/%m/%Y"
-      js_format: dd/mm/yy
+      js_format: d/m/Y
     date_range: Datumbereik
     default: Standaard
     default_refund_amount:

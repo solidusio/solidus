@@ -521,7 +521,7 @@ en-IN:
     date_picker:
       first_day:
       format: "%Y/%m/%d"
-      js_format: yy/mm/dd
+      js_format: Y/m/d
     date_range: Date Range
     default: Default
     default_refund_amount:

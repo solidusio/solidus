@@ -474,10 +474,6 @@ de-CH:
       jirafe_settings_updated:
     date:
     date_completed:
-    date_picker:
-      first_day:
-      format:
-      js_format:
     date_range: Datum (von/bis)
     default:
     default_refund_amount:

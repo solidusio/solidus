@@ -474,10 +474,6 @@ sl-SI:
       jirafe_settings_updated:
     date:
     date_completed:
-    date_picker:
-      first_day:
-      format:
-      js_format:
     date_range: Obdobje
     default: Privzeto
     default_refund_amount:

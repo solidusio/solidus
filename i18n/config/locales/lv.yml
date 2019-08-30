@@ -512,10 +512,6 @@ lv:
       jirafe_settings_updated:
     date:
     date_completed:
-    date_picker:
-      first_day:
-      format:
-      js_format:
     date_range: Datuma diapazons
     default:
     default_refund_amount:

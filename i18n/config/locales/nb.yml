@@ -518,10 +518,6 @@ nb:
       jirafe_settings_updated:
     date: dato
     date_completed: Fullføringsdato
-    date_picker:
-      first_day:
-      format:
-      js_format:
     date_range: Datoområde
     default: Default
     default_refund_amount:

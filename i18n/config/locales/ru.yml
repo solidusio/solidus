@@ -1145,7 +1145,7 @@ ru:
     date_picker:
       first_day: 1
       format: "%d.%m.%Y"
-      js_format: dd.mm.yy
+      js_format: d.m.Y
     date_range: Период времени
     default: По умолчанию
     default_tax: Стандартный налог

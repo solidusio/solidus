@@ -804,7 +804,7 @@ es-MX:
     date_picker:
       first_day: 1
       format: "%d/%m/%Y"
-      js_format: dd/mm/yy
+      js_format: d/m/Y
     date_range: Rango de Fecha
     default: Por omisión
     default_refund_amount:

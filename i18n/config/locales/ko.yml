@@ -474,10 +474,6 @@ ko:
       jirafe_settings_updated:
     date:
     date_completed:
-    date_picker:
-      first_day:
-      format:
-      js_format:
     date_range: "날짜 범위"
     default: "기본"
     default_refund_amount:

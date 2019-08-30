@@ -1159,7 +1159,7 @@ pt-BR:
     date_picker:
       first_day: 0
       format: "%d/%m/%Y"
-      js_format: dd/mm/yy
+      js_format: d/m/Y
     date_range: Entre as Datas
     default: Padrão
     default_refund_amount: Quantia padrão de restituição
