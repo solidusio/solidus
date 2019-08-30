@@ -42,8 +42,9 @@
 
   },
   "resolutions": {
+    "debug": "^2.6.9",
     "js-yaml": "^3.13.1",
-    "debug": "^2.6.9"
+    "set-value": "^2.0.1"
   },
   "babel": {
     "presets": [
