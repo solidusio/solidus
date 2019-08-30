@@ -55,7 +55,7 @@ $color-icon-navbar:             $color-dark-light !default;
 
 // Basic Tabs colors
 $color-tab:                     $color-dark-light !default;
-$color-tab-bg:                  very-light($color-dark-light, 4) !default;
+$color-tab-bg:                  $color-light !default;
 $color-tab-border:              $color-border !default;
 $color-tab-active:              $color-primary !default;
 $color-tab-active-bg:           $color-white !default;
