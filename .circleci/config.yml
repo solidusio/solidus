@@ -135,7 +135,7 @@ workflows:
       - stoplight/push:
           project: solidus/solidus-api
           git_token: $STOPLIGHT_GIT_TOKEN
-          source_dir: openapi
+          source_dir: api/openapi
           username: $STOPLIGHT_USERNAME
           version: "`cat /tmp/workspace/solidus-version`"
           requires:
