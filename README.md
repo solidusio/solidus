@@ -96,7 +96,7 @@ Begin by making sure you have
 required for Paperclip. (You can install it using [Homebrew](https://brew.sh) if
 you're on a Mac.)
 
-To add solidus, begin with a Rails 5 application and a database configured and
+To add solidus, begin with a Rails 5/6 application and a database configured and
 created. Add the following to your Gemfile.
 
 ```ruby

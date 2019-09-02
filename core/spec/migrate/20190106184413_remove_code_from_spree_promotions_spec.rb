@@ -6,8 +6,12 @@ require Spree::Core::Engine.root.join('db/migrate/20190106184413_remove_code_fro
 RSpec.describe RemoveCodeFromSpreePromotions do
   let(:migrations_paths) { ActiveRecord::Migrator.migrations_paths }
   let(:migrations) do
-    if ActiveRecord::Base.connection.respond_to?(:migration_context)
-      # Rails >= 5.2
+    if Rails.gem_version >= Gem::Version.new('6.0.0')
+      ActiveRecord::MigrationContext.new(
+        migrations_paths,
+        ActiveRecord::SchemaMigration
+      ).migrations
+    elsif Rails.gem_version >= Gem::Version.new('5.2.0')
       ActiveRecord::MigrationContext.new(migrations_paths).migrations
     else
       ActiveRecord::Migrator.migrations(migrations_paths)
@@ -16,7 +20,13 @@ RSpec.describe RemoveCodeFromSpreePromotions do
   let(:previous_version) { 20180710170104 }
   let(:current_version) { 20190106184413 }
 
-  subject { ActiveRecord::Migrator.new(:up, migrations, current_version).migrate }
+  subject do
+    if Rails.gem_version >= Gem::Version.new('6.0.0')
+      ActiveRecord::Migrator.new(:up, migrations, ActiveRecord::SchemaMigration, current_version).migrate
+    else
+      ActiveRecord::Migrator.new(:up, migrations, current_version).migrate
+    end
+  end
 
   # This is needed for MySQL since it is not able to rollback to the previous
   # state when database schema changes within that transaction.
@@ -28,7 +38,11 @@ RSpec.describe RemoveCodeFromSpreePromotions do
     # Silence migrations output in specs report.
     ActiveRecord::Migration.suppress_messages do
       # Migrate back to the previous version
-      ActiveRecord::Migrator.new(:down, migrations, previous_version).migrate
+      if Rails.gem_version >= Gem::Version.new('6.0.0')
+        ActiveRecord::Migrator.new(:down, migrations, ActiveRecord::SchemaMigration, previous_version).migrate
+      else
+        ActiveRecord::Migrator.new(:down, migrations, previous_version).migrate
+      end
       # If other tests using Spree::Promotion ran before this one, Rails has
       # stored information about table's columns and we need to reset those
       # since the migration changed the database structure.
