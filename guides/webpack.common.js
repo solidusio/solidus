@@ -10,9 +10,8 @@ module.exports = {
   entry: {
     "common": './source/assets/javascripts/common.js',
     "search": './source/assets/javascripts/search.js',
-    "search_index": './source/assets/javascripts/search_index.js',
     "site": './source/assets/stylesheets/site.scss',
-    "vendor": ["jquery", "bootstrap", "lunr"],
+    "vendor": ["jquery", "bootstrap"],
   },
   output: {
     path: __dirname + '/.tmp/assets/javascripts',

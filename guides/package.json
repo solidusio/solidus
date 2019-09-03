@@ -32,14 +32,12 @@
   "dependencies": {
     "axios": "^0.18.1",
     "debug": "^2.6.9",
-    "dompurify": "1.0.10",
+    "docsearch.js": "^2.6.3",
     "headroom.js": "0.9.4",
     "jquery": "^3.4.0",
     "js-yaml": "^3.13.1",
-    "lunr": "2.2.0",
     "numeral": "^2.0.6",
     "popper.js": "^1.14.3"
-
   },
   "resolutions": {
     "debug": "^2.6.9",

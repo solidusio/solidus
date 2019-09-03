@@ -71,7 +71,7 @@ function placeholderPolyfill() {
   this.classList[this.value ? 'remove' : 'add']('placeholder-shown');
 }
 
-document.querySelectorAll('[placeholder]').forEach(el => {
+document.querySelectorAll('[placeholder]').forEach((el) => {
   el.addEventListener('change', placeholderPolyfill);
   el.addEventListener('keyup', placeholderPolyfill);
 });
