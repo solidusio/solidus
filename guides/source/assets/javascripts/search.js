@@ -9,13 +9,19 @@ docsearch({
   inputSelector: '#inputSearch',
   autocompleteOptions: {
     autoWidth: false,
-    openOnFocus: true
+    openOnFocus: true,
+    autoselect: true
   }
 })
 
 input.addEventListener('focus', () => {
   input.classList.remove('placeholder-shown')
   label.classList.add('input-focused')
+})
+
+input.form.addEventListener('submit', (event) => {
+  event.preventDefault()
+  return false
 })
 
 input.addEventListener('blur', () => {
