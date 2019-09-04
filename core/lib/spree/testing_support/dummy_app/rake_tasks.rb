@@ -43,10 +43,8 @@ namespace :db do
           [path],
           ActiveRecord::SchemaMigration
         ).migrate
-      elsif Rails.gem_version >= Gem::Version.new('5.2.0')
-        ActiveRecord::MigrationContext.new([path]).migrate
       else
-        ActiveRecord::Migrator.migrate(path)
+        ActiveRecord::MigrationContext.new([path]).migrate
       end
     end
 
