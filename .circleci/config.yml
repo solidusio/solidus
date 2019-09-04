@@ -103,24 +103,6 @@ jobs:
       - setup
       - test
 
-  postgres_rails51:
-    executor: postgres
-    parallelism: *parallelism
-    environment:
-      RAILS_VERSION: '~> 5.1.0'
-    steps:
-      - setup
-      - test
-
-  mysql_rails51:
-    executor: mysql
-    parallelism: *parallelism
-    environment:
-      RAILS_VERSION: '~> 5.1.0'
-    steps:
-      - setup
-      - test
-
   postgres_rails52:
     executor: postgres
     parallelism: *parallelism
@@ -148,8 +130,6 @@ workflows:
               only: /master|v\d\.\d/
       - postgres
       - mysql
-      - postgres_rails51
-      - mysql_rails51
       - postgres_rails52
       - mysql_rails52
       - stoplight/push:
