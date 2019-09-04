@@ -12,10 +12,10 @@
       </a>
     </div>
 
-    <form class="search-box" action="<%= url_for('/search/index.html') %>" novalidate>
+    <form class="search-box" novalidate>
       <div class="form-group form-group-submittable">
         <div class="has-float-label">
-          <input type="email" class="form-control h-auto placeholder-shown" name="inputSearch" id="inputSearch" placeholder="Search Solidus Documentation">
+          <input type="text" class="form-control h-auto placeholder-shown" name="inputSearch" id="inputSearch" placeholder="Search Solidus Documentation" value="">
           <label for="inputSearch">Search Solidus Documentation</label>
           <button type="submit" class="btn btn-link"><%= inline_svg("icons/search.svg", class: "isvg") %></button>
         </div>

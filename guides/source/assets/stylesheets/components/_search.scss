@@ -1,0 +1,19 @@
+.search-box .algolia-autocomplete {
+  width: 100%;
+
+  .ds-dropdown-menu {
+    min-width: 100%;
+    max-width: 100%;
+  }
+
+  &.algolia-autocomplete-right .ds-dropdown-menu::before {
+    left: 48px;
+  }
+}
+
+label[for="inputSearch"].input-focused {
+  padding-bottom: 0;
+  background: #ffffff;
+  font-size: 12px;
+  padding-top: 8px;
+}
