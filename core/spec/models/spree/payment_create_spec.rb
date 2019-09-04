@@ -156,20 +156,10 @@ module Spree
       context "unpermitted" do
         let(:attributes) { ActionController::Parameters.new(valid_attributes) }
 
-        if Rails.gem_version < Gem::Version.new('5.1')
-          it "ignores all attributes" do
-            expect(new_payment).to have_attributes(
-              amount: 0,
-              payment_method: nil,
-              source: nil
-            )
-          end
-        else
-          it "raises an exception" do
-            expect {
-              new_payment
-            }.to raise_exception(ActionController::UnfilteredParameters)
-          end
+        it "raises an exception" do
+          expect {
+            new_payment
+          }.to raise_exception(ActionController::UnfilteredParameters)
         end
       end
 
