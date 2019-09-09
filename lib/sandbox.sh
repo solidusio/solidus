@@ -49,10 +49,6 @@ group :test, :development do
 end
 RUBY
 
-# Ensure sqlite3 version to match ActiveRecord SQLite adapter requirement
-# (see https://github.com/solidusio/solidus/issues/3087 for details)
-sed -i -e "s/gem 'sqlite3'/gem 'sqlite3', '~> 1.3.6'/g" Gemfile
-
 bundle install --gemfile Gemfile
 bundle exec rake db:drop db:create
 bundle exec rails g spree:install --auto-accept --user_class=Spree::User --enforce_available_locales=true
