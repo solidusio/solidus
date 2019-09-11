@@ -114,8 +114,8 @@ table {
   tbody {
     tr {
       &.deleted td {
-        background-color: very-light(theme-color("danger"), 6);
-        border-color: very-light(theme-color("danger"), 15);
+        background-color: lighten(theme-color("danger"), 6);
+        border-color: lighten(theme-color("danger"), 15);
       }
     }
 
