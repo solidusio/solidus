@@ -1,6 +1,6 @@
 <img width="250" src="./logo.svg" alt="Solidus logo">
 
-# Solidus 
+# Solidus
 
 [![Circle CI](https://circleci.com/gh/solidusio/solidus/tree/master.svg?style=shield)](https://circleci.com/gh/solidusio/solidus/tree/master)
 [![Gem](https://img.shields.io/gem/v/solidus.svg)](https://rubygems.org/gems/solidus)
@@ -30,7 +30,7 @@
 - [Contributing](#contributing)
 
 ## Supporting Solidus
- As a community-driven project, Solidus relies on funds and time donated by developers and stakeholders who use Solidus for their businesses. If you'd like to help Solidus keep growing, please consider:
+As a community-driven project, Solidus relies on funds and time donated by developers and stakeholders who use Solidus for their businesses. If you'd like to help Solidus keep growing, please consider:
 
 - [Become a backer or sponsor on Open Collective](https://opencollective.com/solidus).
 - [Contribute to the project](https://github.com/solidusio/solidus/blob/master/CONTRIBUTING.md).
@@ -40,8 +40,8 @@ At present, Nebulab is the main code contributor and director of Solidus, provid
 
 [![Nebulab](https://nebulab.it/assets/images/public/logo.svg)](https://nebulab.it/)
 
-### Key Stakeholders
-Support this project by becoming a Key Stakeholder. Your logo will show up here with a link to your website. [Become a Key Stakeholder](https://opencollective.com/solidus#key-stakeholder).
+### Ambassadors
+Support this project by becoming a Solidus Ambassador. Your logo will show up here with a link to your website. [Become an Ambassador](https://opencollective.com/solidus).
 
 |[![Engine](https://images.opencollective.com/proxy/images?src=https%3A%2F%2Flogo.clearbit.com%2Fenginecommerce.com&height=100)](https://www.enginecommerce.com/)|[![Super Good Software](https://images.opencollective.com/proxy/images?src=https%3A%2F%2Fopencollective-production.s3-us-west-1.amazonaws.com%2F3bbb1440-727f-11e9-a366-37673cc38cee.png&height=100)](https://supergood.software/)|[![Karma Creative](https://images.opencollective.com/proxy/images?src=https%3A%2F%2Fopencollective-production.s3-us-west-1.amazonaws.com%2Fab94d2a0-7253-11e9-a366-37673cc38cee.png&height=100)](https://karmacreative.io/)|
 |---|---|---|
