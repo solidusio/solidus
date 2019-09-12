@@ -40,15 +40,15 @@
   color: $body-color;
 
   &.notice {
-    background-color: rgba(very-light($color-notice, 15), .95);
+    background-color: rgba(lighten($color-notice, 15), .95);
     border-top-color: $color-notice;
   }
   &.success {
-    background-color: rgba(very-light($color-success, 30), .95);
+    background-color: rgba(lighten($color-success, 30), .95);
     border-top-color: $color-success;
   }
   &.error {
-    background-color: rgba(very-light($color-error, 30), .95);
+    background-color: rgba(lighten($color-error, 30), .95);
     border-top-color: $color-error;
   }
 }
