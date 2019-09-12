@@ -154,14 +154,14 @@ describe "New Order", type: :feature do
       click_on "Update"
 
       # Automatically redirected to Shipments page
-      select2_search product.name, from: I18n.t('spree.name_or_sku')
+      within '.no-objects-found' do
+        click_on "Cart"
+      end
 
-      click_icon :plus
-
-      expect(page).to have_css('.stock-item')
+      add_line_item product.name
 
       click_on "Payments"
-      click_on "Continue"
+      click_on "Update"
 
       within(".additional-info") do
         expect(page).to have_content("Confirm")

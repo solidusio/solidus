@@ -18,13 +18,12 @@
   <%= render 'spree/admin/orders/risk_analysis', latest_payment: @order.payments.reorder("created_at DESC").first %>
 <% end %>
 
-<% if can?(:update, Spree::Shipment) && can?(:update, @order) && @order.shipment_state != "shipped" %>
-  <%= render partial: 'add_product' %>
-<% end %>
+<div data-hook="admin_order_edit_sub_header" />
 
 <% if @order.line_items.empty? %>
   <div class="no-objects-found">
-    <%= t('spree.your_order_is_empty_add_product')%>
+    <p><%= t('spree.your_order_is_empty_add_product') %></p>
+    <%= link_to t('spree.cart'), spree.cart_admin_order_url(@order), class: 'btn btn-primary' %>
   </div>
 <% end %>
 
