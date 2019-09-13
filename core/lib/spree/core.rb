@@ -53,6 +53,17 @@ module Spree
   end
 end
 
+if Gem::Version.new(Rails.version) < Gem::Version.new('5.2')
+  warn <<~HEREDOC
+    Rails 5.1 (EOL) is deprecated and will not be supported anymore from the next Solidus version.
+    Please, upgrade to a more recent Rails version.
+
+    Read more on upgrading from Rails 5.1 to Rails 5.2 here:
+    https://guides.rubyonrails.org/upgrading_ruby_on_rails.html#upgrading-from-rails-5-1-to-rails-5-2
+
+  HEREDOC
+end
+
 require 'spree/core/version'
 
 require 'spree/core/active_merchant_dependencies'
