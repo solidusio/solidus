@@ -1,15 +1,17 @@
 <img width="250" src="./logo.svg" alt="Solidus logo">
 
-# Solidus 
+# Solidus
 
 [![Circle CI](https://circleci.com/gh/solidusio/solidus/tree/master.svg?style=shield)](https://circleci.com/gh/solidusio/solidus/tree/master)
 [![Gem](https://img.shields.io/gem/v/solidus.svg)](https://rubygems.org/gems/solidus)
 [![License](http://img.shields.io/badge/license-BSD-yellowgreen.svg)](LICENSE.md)
-[![Slack](http://slack.solidus.io/badge.svg)](http://slack.solidus.io)
-[![Backers on Open Collective](https://opencollective.com/solidus/backers/badge.svg)](https://opencollective.com/solidus)
-[![Sponsors on Open Collective](https://opencollective.com/solidus/sponsors/badge.svg)](https://opencollective.com/solidus)
-[![Open Source Helpers](https://www.codetriage.com/solidusio/solidus/badges/users.svg)](https://www.codetriage.com/solidusio/solidus)
 [![Reviewed by Hound](https://img.shields.io/badge/Reviewed_by-Hound-8E64B0.svg)](https://houndci.com)
+
+[![Enthusiasts on Open Collective](https://opencollective.com/solidus/tiers/enthusiast/badge.svg?label=Enthusiasts&color=brightgree)](https://opencollective.com/solidus)
+[![Supporters on Open Collective](https://opencollective.com/solidus/tiers/supporter/badge.svg?label=Supporters&color=brightgree)](https://opencollective.com/solidus)
+[![Ambassadors on Open Collective](https://opencollective.com/solidus/tiers/ambassador/badge.svg?label=Ambassador&color=brightgree)](https://opencollective.com/solidus)
+[![Open Source Helpers](https://www.codetriage.com/solidusio/solidus/badges/users.svg)](https://www.codetriage.com/solidusio/solidus)
+[![Slack](http://slack.solidus.io/badge.svg)](http://slack.solidus.io)
 
 **A free, open-source ecommerce platform that gives you complete control over your store.**
 
@@ -30,7 +32,7 @@
 - [Contributing](#contributing)
 
 ## Supporting Solidus
- As a community-driven project, Solidus relies on funds and time donated by developers and stakeholders who use Solidus for their businesses. If you'd like to help Solidus keep growing, please consider:
+As a community-driven project, Solidus relies on funds and time donated by developers and stakeholders who use Solidus for their businesses. If you'd like to help Solidus keep growing, please consider:
 
 - [Become a backer or sponsor on Open Collective](https://opencollective.com/solidus).
 - [Contribute to the project](https://github.com/solidusio/solidus/blob/master/CONTRIBUTING.md).
@@ -40,11 +42,12 @@ At present, Nebulab is the main code contributor and director of Solidus, provid
 
 [![Nebulab](https://nebulab.it/assets/images/public/logo.svg)](https://nebulab.it/)
 
-### Key Stakeholders
-Support this project by becoming a Key Stakeholder. Your logo will show up here with a link to your website. [Become a Key Stakeholder](https://opencollective.com/solidus#key-stakeholder).
+### Ambassadors
+Support this project by becoming a Solidus Ambassador. Your logo will show up here with a link to your website. [Become an Ambassador](https://opencollective.com/solidus).
 
 |[![Engine](https://images.opencollective.com/proxy/images?src=https%3A%2F%2Flogo.clearbit.com%2Fenginecommerce.com&height=100)](https://www.enginecommerce.com/)|[![Super Good Software](https://images.opencollective.com/proxy/images?src=https%3A%2F%2Fopencollective-production.s3-us-west-1.amazonaws.com%2F3bbb1440-727f-11e9-a366-37673cc38cee.png&height=100)](https://supergood.software/)|[![Karma Creative](https://images.opencollective.com/proxy/images?src=https%3A%2F%2Fopencollective-production.s3-us-west-1.amazonaws.com%2Fab94d2a0-7253-11e9-a366-37673cc38cee.png&height=100)](https://karmacreative.io/)|
-|---|---|---|
+[![ModdedEuros](https://images.opencollective.com/proxy/images?src=https%3A%2F%2Fimages.opencollective.com%2Fmodded-euros%2Ff1a80ae%2Flogo.png&height=100)](https://www.moddedeuros.com)|
+|---|---|---|---|
 
 ---
 
