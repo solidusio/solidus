@@ -9,6 +9,7 @@ require 'font-awesome-rails'
 require 'autoprefixer-rails'
 require 'jbuilder'
 require 'kaminari'
+require 'responders'
 
 require 'spree_core'
 require 'spree_api'
