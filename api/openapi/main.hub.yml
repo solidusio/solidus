@@ -37,22 +37,22 @@ pages:
           route:
             path: /authentication
           data:
-            $ref: ./authentication.md
+            $ref: ./docs/authentication.md
         - title: Pagination
           route:
             path: /pagination
           data:
-            $ref: ./pagination.md
+            $ref: ./docs/pagination.md
         - title: Errors
           route:
             path: /errors
           data:
-            $ref: ./errors.md
+            $ref: ./docs/errors.md
         - title: Checkout Flow
           route:
             path: /checkout-flow
           data:
-            $ref: ./checkout-flow.md
+            $ref: ./docs/checkout-flow.md
           config:
             sidebar:
               token: ''
