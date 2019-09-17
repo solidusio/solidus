@@ -35,7 +35,7 @@ module Spree
     end
 
     def update_cart(params)
-      if order.update_attributes(params)
+      if order.update(params)
         unless order.completed?
           order.line_items = order.line_items.select { |li| li.quantity > 0 }
           # Update totals, then check if the order is eligible for any cart promotions.
@@ -61,7 +61,7 @@ module Spree
         raise ArgumentError, 'user or name must be specified'
       end
 
-      order.update_attributes!(
+      order.update!(
         approver: user,
         approver_name: name,
         approved_at: Time.current

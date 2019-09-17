@@ -306,7 +306,7 @@ module Spree
 
       context 'when an item does not track inventory' do
         before do
-          order.line_items.first.variant.update_attributes!(track_inventory: false)
+          order.line_items.first.variant.update!(track_inventory: false)
         end
 
         it 'contains stock information on variant' do
@@ -547,7 +547,7 @@ module Spree
       end
 
       it "can add shipping address" do
-        order.update_attributes!(ship_address_id: nil)
+        order.update!(ship_address_id: nil)
 
         expect {
           put spree.api_order_path(order), params: { order: { ship_address_attributes: shipping_address } }
@@ -555,7 +555,7 @@ module Spree
       end
 
       it "receives error message if trying to add shipping address with errors" do
-        order.update_attributes!(ship_address_id: nil)
+        order.update!(ship_address_id: nil)
 
         shipping_address[:firstname] = ""
 

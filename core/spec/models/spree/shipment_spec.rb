@@ -152,7 +152,7 @@ RSpec.describe Spree::Shipment, type: :model do
 
   describe '#total_before_tax' do
     before do
-      shipment.update_attributes!(cost: 10)
+      shipment.update!(cost: 10)
     end
     let!(:admin_adjustment) { create(:adjustment, adjustable: shipment, order: shipment.order, amount: -1, source: nil) }
     let!(:promo_adjustment) { create(:adjustment, adjustable: shipment, order: shipment.order, amount: -2, source: promo_action) }
@@ -250,7 +250,7 @@ RSpec.describe Spree::Shipment, type: :model do
       end
 
       it "can't get rates without a shipping address" do
-        shipment.order.update_attributes!(ship_address: nil)
+        shipment.order.update!(ship_address: nil)
         expect(shipment.refresh_rates).to eq([])
       end
 
@@ -298,7 +298,7 @@ RSpec.describe Spree::Shipment, type: :model do
     shared_examples_for "pending if backordered" do
       it "should have a state of pending if backordered" do
         # Set as ready so we can test for change
-        shipment.update_attributes!(state: 'ready')
+        shipment.update!(state: 'ready')
 
         allow(shipment).to receive_messages(inventory_units: [mock_model(Spree::InventoryUnit, allow_ship?: false, canceled?: false, shipped?: false)])
         expect(shipment).to receive(:update_columns).with(state: 'pending', updated_at: kind_of(Time))
@@ -310,7 +310,7 @@ RSpec.describe Spree::Shipment, type: :model do
       before { allow(order).to receive_messages can_ship?: false }
       it "should result in a 'pending' state" do
         # Set as ready so we can test for change
-        shipment.update_attributes!(state: 'ready')
+        shipment.update!(state: 'ready')
         expect(shipment).to receive(:update_columns).with(state: 'pending', updated_at: kind_of(Time))
         shipment.update_state
       end
@@ -768,8 +768,8 @@ RSpec.describe Spree::Shipment, type: :model do
         .to receive(:new).and_return(inventory_unit_finalizer)
 
       stock_item.set_count_on_hand(10)
-      stock_item.update_attributes!(backorderable: false)
-      inventory_unit.update_attributes!(pending: true)
+      stock_item.update!(backorderable: false)
+      inventory_unit.update!(pending: true)
     end
 
     subject { shipment.finalize! }

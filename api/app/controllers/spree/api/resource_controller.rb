@@ -43,7 +43,7 @@ class Spree::Api::ResourceController < Spree::Api::BaseController
   def update
     authorize! :update, @object
 
-    if @object.update_attributes(permitted_resource_params)
+    if @object.update(permitted_resource_params)
       respond_with(@object, status: 200, default_template: :show)
     else
       invalid_resource!(@object)

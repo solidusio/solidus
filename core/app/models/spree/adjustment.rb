@@ -57,19 +57,19 @@ module Spree
     money_methods :amount
 
     def finalize!
-      update_attributes!(finalized: true)
+      update!(finalized: true)
     end
 
     def unfinalize!
-      update_attributes!(finalized: false)
+      update!(finalized: false)
     end
 
     def finalize
-      update_attributes(finalized: true)
+      update(finalized: true)
     end
 
     def unfinalize
-      update_attributes(finalized: false)
+      update(finalized: false)
     end
 
     def currency

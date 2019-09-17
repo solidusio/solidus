@@ -117,7 +117,7 @@ describe "Customer Details", type: :feature, js: true do
     end
 
     it "should show validation errors" do
-      order.update_attributes!(ship_address_id: nil)
+      order.update!(ship_address_id: nil)
       click_link "Customer"
       click_button "Update"
       expect(page).to have_content("Shipping address first name can't be blank")

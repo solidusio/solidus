@@ -456,7 +456,7 @@ RSpec.describe Spree::Order, type: :model do
         order.line_items << FactoryBot.create(:line_item)
         order.line_items.first.variant.stock_items.each do |si|
           si.set_count_on_hand(0)
-          si.update_attributes(backorderable: false)
+          si.update(backorderable: false)
         end
 
         Spree::OrderUpdater.new(order).update

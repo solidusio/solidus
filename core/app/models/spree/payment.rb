@@ -273,7 +273,7 @@ module Spree
       # type of payment getting refunded, hence the additional check
       # if the source is a store credit.
       if store_credit? && source.is_a?(Spree::StoreCredit)
-        source.update_attributes!({
+        source.update!({
           action: Spree::StoreCredit::ELIGIBLE_ACTION,
           action_amount: amount,
           action_authorization_code: response_code

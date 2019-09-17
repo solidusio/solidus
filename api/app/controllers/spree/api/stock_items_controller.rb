@@ -40,7 +40,7 @@ module Spree
         adjustment -= @stock_item.count_on_hand if params[:stock_item][:force]
 
         Spree::StockItem.transaction do
-          if @stock_item.update_attributes(stock_item_params)
+          if @stock_item.update(stock_item_params)
             adjust_stock_item_count_on_hand(adjustment)
             respond_with(@stock_item, status: 200, default_template: :show)
           else

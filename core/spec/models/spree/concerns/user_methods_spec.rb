@@ -76,19 +76,19 @@ RSpec.describe Spree::UserMethods do
       it { is_expected.to eq(100 + 200) }
 
       context 'when some has been used' do
-        before { credit_1.update_attributes!(amount_used: 35) }
+        before { credit_1.update!(amount_used: 35) }
 
         it { is_expected.to eq(100 + 200 - 35) }
 
         context 'when some has been authorized' do
-          before { credit_1.update_attributes!(amount_authorized: 10) }
+          before { credit_1.update!(amount_authorized: 10) }
 
           it { is_expected.to eq(100 + 200 - 35 - 10) }
         end
       end
 
       context 'when some has been authorized' do
-        before { credit_1.update_attributes!(amount_authorized: 10) }
+        before { credit_1.update!(amount_authorized: 10) }
 
         it { is_expected.to eq(100 + 200 - 10) }
       end

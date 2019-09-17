@@ -12,8 +12,8 @@ module Spree
 
         before do
           stock_item.set_count_on_hand(10)
-          stock_item.update_attributes!(backorderable: false)
-          inventory_unit.update_attributes!(pending: true)
+          stock_item.update!(backorderable: false)
+          inventory_unit.update!(pending: true)
         end
 
         subject { described_class.new([inventory_unit]).run! }
@@ -42,8 +42,8 @@ module Spree
         before do
           stock_item.set_count_on_hand(10)
           stock_item_2.set_count_on_hand(10)
-          inventory_unit.update_attributes!(pending: true)
-          inventory_unit_2.update_attributes!(pending: true)
+          inventory_unit.update!(pending: true)
+          inventory_unit_2.update!(pending: true)
         end
 
         subject { described_class.new([inventory_unit, inventory_unit_2]).run! }

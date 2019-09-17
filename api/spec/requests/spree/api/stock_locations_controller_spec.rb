@@ -21,7 +21,7 @@ module Spree
         end
 
         it "cannot see inactive stock locations" do
-          stock_location.update_attributes!(active: false)
+          stock_location.update!(active: false)
           get spree.api_stock_locations_path
           expect(response).to be_successful
           stock_locations = json_response['stock_locations'].map { |sl| sl['name'] }
@@ -37,7 +37,7 @@ module Spree
         end
 
         it "cannot see inactive stock locations" do
-          stock_location.update_attributes!(active: false)
+          stock_location.update!(active: false)
           get spree.api_stock_location_path(stock_location)
           expect(response).to be_not_found
         end
@@ -84,7 +84,7 @@ module Spree
         end
 
         it "can see inactive stock locations" do
-          stock_location.update_attributes!(active: false)
+          stock_location.update!(active: false)
           get spree.api_stock_locations_path
           expect(response).to be_successful
           stock_locations = json_response['stock_locations'].map { |sl| sl['name'] }
@@ -122,7 +122,7 @@ module Spree
         end
 
         it "can see inactive stock locations" do
-          stock_location.update_attributes!(active: false)
+          stock_location.update!(active: false)
           get spree.api_stock_location_path(stock_location)
           expect(response).to be_successful
           expect(json_response['name']).to eq stock_location.name

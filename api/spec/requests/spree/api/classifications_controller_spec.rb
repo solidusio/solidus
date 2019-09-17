@@ -39,7 +39,7 @@ module Spree
       end
 
       it "should touch the taxon" do
-        taxon.update_attributes(updated_at: Time.current - 10.seconds)
+        taxon.update(updated_at: Time.current - 10.seconds)
         taxon_last_updated_at = taxon.updated_at
         put spree.api_classifications_path, params: { taxon_id: taxon.id, product_id: last_product.id, position: 0 }
         taxon.reload

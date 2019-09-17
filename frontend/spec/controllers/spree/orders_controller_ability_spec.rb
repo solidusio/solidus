@@ -37,7 +37,7 @@ module Spree
 
       context '#update' do
         it 'should check if user is authorized for :update' do
-          allow(order).to receive :update_attributes
+          allow(order).to receive :update
           expect(controller).to receive(:authorize!).with(:update, order, token)
           post :update, params: { order: { email: "foo@bar.com" }, token: token }
         end

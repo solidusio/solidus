@@ -73,8 +73,8 @@ RSpec.describe Spree::Carton do
     let(:email) { 'something@something.com' }
 
     before do
-      first_order.update_attributes!(email: email)
-      second_order.update_attributes!(email: email)
+      first_order.update!(email: email)
+      second_order.update!(email: email)
     end
 
     it "returns a unique list of the order emails it is associated to" do

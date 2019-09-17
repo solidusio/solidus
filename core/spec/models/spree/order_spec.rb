@@ -678,7 +678,7 @@ RSpec.describe Spree::Order, type: :model do
       let!(:payment_method_without_store) { create(:payment_method) }
 
       context 'when the store has payment methods' do
-        before { order.update_attributes!(store: store_with_payment_methods) }
+        before { order.update!(store: store_with_payment_methods) }
 
         it 'returns only the matching payment methods for that store' do
           expect(order.available_payment_methods).to match_array(
@@ -706,7 +706,7 @@ RSpec.describe Spree::Order, type: :model do
       end
 
       context 'when the store does not have payment methods' do
-        before { order.update_attributes!(store: store_without_payment_methods) }
+        before { order.update!(store: store_without_payment_methods) }
 
         it 'returns all matching payment methods regardless of store' do
           expect(order.available_payment_methods).to match_array(
@@ -1443,12 +1443,12 @@ RSpec.describe Spree::Order, type: :model do
 
     describe "#total_applicable_store_credit" do
       context "order is in the confirm state" do
-        before { order.update_attributes(state: 'confirm') }
+        before { order.update(state: 'confirm') }
         include_examples "check total store credit from payments"
       end
 
       context "order is completed" do
-        before { order.update_attributes(state: 'complete') }
+        before { order.update(state: 'complete') }
         include_examples "check total store credit from payments"
       end
 
@@ -1462,7 +1462,7 @@ RSpec.describe Spree::Order, type: :model do
           context "the store credit is more than the order total" do
             let(:order_total) { store_credit.amount - 1 }
 
-            before { order.update_attributes(total: order_total) }
+            before { order.update(total: order_total) }
 
             it "returns the order total" do
               expect(subject.total_applicable_store_credit).to eq order_total
@@ -1472,7 +1472,7 @@ RSpec.describe Spree::Order, type: :model do
           context "the store credit is less than the order total" do
             let(:order_total) { store_credit.amount * 10 }
 
-            before { order.update_attributes(total: order_total) }
+            before { order.update(total: order_total) }
 
             it "returns the store credit amount" do
               expect(subject.total_applicable_store_credit).to eq store_credit.amount

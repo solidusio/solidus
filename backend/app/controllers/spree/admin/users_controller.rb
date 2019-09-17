@@ -38,7 +38,7 @@ module Spree
       end
 
       def update
-        if @user.update_attributes(user_params)
+        if @user.update(user_params)
           set_roles
           set_stock_locations
 
@@ -55,7 +55,7 @@ module Spree
 
       def addresses
         if request.put?
-          if @user.update_attributes(user_params)
+          if @user.update(user_params)
             flash.now[:success] = t('spree.account_updated')
           end
 

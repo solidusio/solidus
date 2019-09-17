@@ -213,7 +213,7 @@ module Spree
         end
 
         context "for canceled orders" do
-          before { order.update_attributes(state: 'canceled') }
+          before { order.update(state: 'canceled') }
 
           it "it should be zero" do
             expect(order.total).to eq(110)
