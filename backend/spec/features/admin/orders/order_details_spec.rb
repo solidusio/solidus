@@ -583,6 +583,29 @@ describe "Order Details", type: :feature, js: true do
             expect(page).to have_content("2 x Backordered")
           end
         end
+
+        context 'when inventory levels are not being tracked' do
+          before do
+            stub_spree_preferences(track_inventory_levels: false)
+            # Simulate the default state of stock when track inventory is false.
+            shipment1.inventory_units.update_all(state: :on_hand)
+            product.master.stock_items.last.update_column(:backorderable, true)
+            product.master.stock_items.last.update_column(:count_on_hand, 0)
+          end
+
+          # Regression for https://github.com/solidusio/solidus/issues/2817
+          it "allows to ship an order's items" do
+            visit spree.edit_admin_order_path(order)
+
+            within('tr', text: line_item.sku) { click_icon 'arrows-h' }
+            complete_split_to(stock_location2)
+
+            expect(page).to have_css('.shipment', count: 2)
+            expect(order.shipments.count).to eq(2)
+            expect(page).not_to have_content('Backordered')
+            expect(page).to have_content('On hand', count: 2)
+          end
+        end
       end
 
       describe 'line item sort order' do

@@ -4,6 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Spree::FulfilmentChanger do
   let(:variant) { create(:variant) }
+  let(:track_inventory) { true }
 
   let(:order) do
     create(
@@ -20,13 +21,16 @@ RSpec.describe Spree::FulfilmentChanger do
   let(:current_shipment) { order.shipments.first }
   let(:desired_shipment) { order.shipments.create!(stock_location: desired_stock_location) }
   let(:desired_stock_location) { current_shipment.stock_location }
+  let(:current_shipment_inventory_unit_count) { 1 }
+  let(:quantity) { current_shipment_inventory_unit_count }
 
   let(:shipment_splitter) do
     described_class.new(
       current_shipment: current_shipment,
       desired_shipment: desired_shipment,
       variant: variant,
-      quantity: quantity
+      quantity: quantity,
+      track_inventory: track_inventory
     )
   end
 
@@ -38,9 +42,6 @@ RSpec.describe Spree::FulfilmentChanger do
   end
 
   context "when the current shipment stock location is the same of the target shipment" do
-    let(:current_shipment_inventory_unit_count) { 1 }
-    let(:quantity) { current_shipment_inventory_unit_count }
-
     context "when the stock location is empty" do
       before do
         variant.stock_items.first.update_column(:count_on_hand, 0)
@@ -66,6 +67,122 @@ RSpec.describe Spree::FulfilmentChanger do
           subject
           expect(desired_shipment.inventory_units.first).to be_on_hand
         end
+      end
+    end
+  end
+
+  context "when track_inventory is not passed" do
+    let(:shipment_splitter) do
+      described_class.new(
+        current_shipment: current_shipment,
+        desired_shipment: desired_shipment,
+        variant: variant,
+        quantity: quantity
+      )
+    end
+
+    it "defaults to true with a deprecation warning" do
+      expect(Spree::Deprecation).to receive(:warn).with(/Not passing `track_inventory` to `Spree::FulfilmentChanger` is deprecated./)
+      expect(shipment_splitter.track_inventory).to be true
+    end
+  end
+
+  context "when tracking inventory is not set (same as false)" do
+    let(:current_shipment_inventory_unit_count) { 2 }
+    let(:quantity) { 1 }
+    let(:track_inventory) { nil }
+
+    it "adds the desired inventory units to the desired shipment" do
+      expect { subject }.to change { desired_shipment.inventory_units.length }.by(quantity)
+    end
+
+    it "removes the desired inventory units from the current shipment" do
+      expect { subject }.to change { current_shipment.inventory_units.length }.by(-quantity)
+    end
+
+    it "recalculates shipping costs for the current shipment" do
+      expect(current_shipment).to receive(:refresh_rates)
+      subject
+    end
+
+    it 'updates order totals' do
+      original_total = order.total
+      original_shipment_total = order.shipment_total
+
+      expect { subject }.
+        to change { order.total }.from(original_total).to(original_total + original_shipment_total).
+        and change { order.shipment_total }.by(original_shipment_total)
+    end
+
+    context "when transferring to another stock location" do
+      let(:desired_stock_location) { create(:stock_location) }
+      let!(:stock_item) do
+        variant.stock_items.find_or_create_by!(
+          stock_location: desired_stock_location,
+          variant: variant,
+        )
+      end
+
+      it "is marked as a successful transfer" do
+        expect(subject).to be true
+      end
+
+      it "does not stock in the current stock location" do
+        expect { subject }.not_to change { current_shipment.stock_location.count_on_hand(variant) }
+      end
+
+      it "does not unstock the desired stock location" do
+        expect { subject }.not_to change { desired_shipment.stock_location.count_on_hand(variant) }
+      end
+    end
+  end
+
+  context "when not tracking inventory" do
+    let(:current_shipment_inventory_unit_count) { 2 }
+    let(:quantity) { 1 }
+    let(:track_inventory) { false }
+
+    it "adds the desired inventory units to the desired shipment" do
+      expect { subject }.to change { desired_shipment.inventory_units.length }.by(quantity)
+    end
+
+    it "removes the desired inventory units from the current shipment" do
+      expect { subject }.to change { current_shipment.inventory_units.length }.by(-quantity)
+    end
+
+    it "recalculates shipping costs for the current shipment" do
+      expect(current_shipment).to receive(:refresh_rates)
+      subject
+    end
+
+    it 'updates order totals' do
+      original_total = order.total
+      original_shipment_total = order.shipment_total
+
+      expect { subject }.
+        to change { order.total }.from(original_total).to(original_total + original_shipment_total).
+        and change { order.shipment_total }.by(original_shipment_total)
+    end
+
+    context "when transferring to another stock location" do
+      let(:desired_stock_location) { create(:stock_location) }
+      let!(:stock_item) do
+        variant.stock_items.find_or_create_by!(
+          stock_location: desired_stock_location,
+          variant: variant,
+        )
+      end
+
+      it "is marked as a successful transfer" do
+        expect(subject).to be true
+      end
+
+      it "does not stock in the current stock location" do
+        expect { subject }.not_to change { current_shipment.stock_location.count_on_hand(variant) }
+      end
+
+      it "does not unstock the desired stock location" do
+        expect { subject }.not_to change { desired_shipment.stock_location.count_on_hand(variant) }
       end
     end
   end
