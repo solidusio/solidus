@@ -196,7 +196,10 @@ describe "Order Details", type: :feature, js: true do
 
     context 'Shipment edit page' do
       context 'when inventory levels are not being tracked' do
-        before { stub_spree_preferences(track_inventory_levels: false) }
+        before do
+          stub_spree_preferences(track_inventory_levels: false)
+          order.inventory_units.update_all(state: :on_hand)
+        end
 
         # Regression for https://github.com/solidusio/solidus/issues/2817
         it "should allow me to ship an order's items" do
