@@ -193,7 +193,7 @@ describe Spree::Admin::StoreCreditsController do
       let(:updated_amount) { 300.0 }
 
       context "the store credit has been partially used" do
-        before { store_credit.update_attributes(amount_used: 10.0) }
+        before { store_credit.update(amount_used: 10.0) }
 
         context "the new amount is greater than the used amount" do
           let(:updated_amount) { 11.0 }

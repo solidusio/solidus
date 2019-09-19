@@ -61,7 +61,7 @@ describe Spree::Admin::Orders::CustomerDetailsController, type: :controller do
       before { allow(Spree::Order).to receive_message_chain(:includes, :find_by!) { order } }
 
       it "updates + progresses the order" do
-        expect(order).to receive(:update_attributes) { true }
+        expect(order).to receive(:update) { true }
         expect(order).to receive(:next) { false }
         attributes = { order_id: order.number, order: { email: "" } }
         put :update, params: attributes
@@ -109,7 +109,7 @@ describe Spree::Admin::Orders::CustomerDetailsController, type: :controller do
 
       context "not false guest checkout param" do
         it "does not attempt to associate the user" do
-          allow(order).to receive_messages(update_attributes: true,
+          allow(order).to receive_messages(update: true,
                                            next: false,
                                            refresh_shipment_rates: true)
 

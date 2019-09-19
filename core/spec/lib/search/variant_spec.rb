@@ -85,7 +85,7 @@ module Spree
           example.run
           described_class.search_terms = search_terms
         end
-        before { variant.update_attributes!(weight: 5000) }
+        before { variant.update!(weight: 5000) }
 
         it { assert_found("5000", variant) }
       end

@@ -16,7 +16,7 @@ RSpec.describe Spree::OrderInventory, type: :model do
     let(:new_quantity) { 3 }
 
     before do
-      line_item.update_attributes!(quantity: old_quantity)
+      line_item.update!(quantity: old_quantity)
 
       line_item.update_column(:quantity, new_quantity)
       subject.line_item.reload
@@ -86,7 +86,7 @@ RSpec.describe Spree::OrderInventory, type: :model do
     end
 
     context "variant doesnt track inventory" do
-      before { variant.update_attributes!(track_inventory: false) }
+      before { variant.update!(track_inventory: false) }
       let(:new_quantity) { 1 }
 
       it "creates on hand inventory units" do
@@ -164,7 +164,7 @@ RSpec.describe Spree::OrderInventory, type: :model do
     let(:new_quantity) { 2 }
 
     before do
-      line_item.update_attributes!(quantity: old_quantity)
+      line_item.update!(quantity: old_quantity)
 
       line_item.update_column(:quantity, new_quantity)
       subject.line_item.reload

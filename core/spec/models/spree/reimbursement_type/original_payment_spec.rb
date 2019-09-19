@@ -63,8 +63,8 @@ module Spree
         let(:refund_payment_methods) { subject.map { |refund| refund.payment.payment_method } }
 
         before do
-          reimbursement.order.payments.first.update_attributes!(amount: 5.0)
-          return_item.update_attributes!(amount: refund_amount)
+          reimbursement.order.payments.first.update!(amount: 5.0)
+          return_item.update!(amount: refund_amount)
         end
 
         it "includes refunds all payment type" do

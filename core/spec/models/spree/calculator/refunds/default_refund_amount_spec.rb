@@ -36,7 +36,7 @@ RSpec.describe Spree::Calculator::Returns::DefaultRefundAmount, type: :model do
           source_type: 'Spree::Order'
         )
 
-        order.adjustments.first.update_attributes(amount: adjustment_amount)
+        order.adjustments.first.update(amount: adjustment_amount)
       end
 
       it 'will return the line item amount deducted of refund' do

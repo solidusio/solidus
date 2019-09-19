@@ -64,7 +64,7 @@ class Spree::OrderShipping
     inventory_units.map(&:shipment).uniq.each do |shipment|
       # Temporarily propagate the tracking number to the shipment as well
       # TODO: Remove tracking numbers from shipments.
-      shipment.update_attributes!(tracking: tracking_number)
+      shipment.update!(tracking: tracking_number)
 
       next unless shipment.inventory_units.reload.all? { |iu| iu.shipped? || iu.canceled? }
       # TODO: make OrderShipping#ship_shipment call Shipment#ship! rather than

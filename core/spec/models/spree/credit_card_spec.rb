@@ -109,10 +109,10 @@ RSpec.describe Spree::CreditCard, type: :model do
     end
 
     it "should save and update addresses through nested attributes" do
-      persisted_card.update_attributes({ address_attributes: valid_address_attributes })
+      persisted_card.update({ address_attributes: valid_address_attributes })
       persisted_card.save!
       updated_attributes = { id: persisted_card.address.id, address1: "123 Main St." }
-      persisted_card.update_attributes({ address_attributes: updated_attributes })
+      persisted_card.update({ address_attributes: updated_attributes })
       expect(persisted_card.address.address1).to eq "123 Main St."
     end
   end

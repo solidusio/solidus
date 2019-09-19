@@ -146,7 +146,7 @@ module Spree
       end
 
       def update_shipment
-        @shipment.update_attributes(shipment_params)
+        @shipment.update(shipment_params)
         @shipment.reload
       end
 

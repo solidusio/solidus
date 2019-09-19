@@ -120,7 +120,7 @@ RSpec.describe Spree::StoreCredit do
       let!(:store_credit) { create(:store_credit) }
       let!(:test_category) { create(:store_credit_category, name: "Testing") }
 
-      subject { store_credit.update_attributes(category: test_category) }
+      subject { store_credit.update(category: test_category) }
 
       it "returns false" do
         expect(subject).to eq false
@@ -170,7 +170,7 @@ RSpec.describe Spree::StoreCredit do
       context "the authorized amount is defined" do
         let(:authorized_amount) { 15.00 }
 
-        before { store_credit.update_attributes(amount_authorized: authorized_amount) }
+        before { store_credit.update(amount_authorized: authorized_amount) }
 
         it "subtracts the authorized amount from the credited amount" do
           expect(store_credit.amount_remaining).to eq(store_credit.amount - authorized_amount)
@@ -181,7 +181,7 @@ RSpec.describe Spree::StoreCredit do
     context "the amount_used is defined" do
       let(:amount_used) { 10.0 }
 
-      before { store_credit.update_attributes(amount_used: amount_used) }
+      before { store_credit.update(amount_used: amount_used) }
 
       context "the authorized amount is not defined" do
         it "subtracts the amount used from the credited amount" do
@@ -192,7 +192,7 @@ RSpec.describe Spree::StoreCredit do
       context "the authorized amount is defined" do
         let(:authorized_amount) { 15.00 }
 
-        before { store_credit.update_attributes(amount_authorized: authorized_amount) }
+        before { store_credit.update(amount_authorized: authorized_amount) }
 
         it "subtracts the amount used and the authorized amount from the credited amount" do
           expect(store_credit.amount_remaining).to eq(store_credit.amount - amount_used - authorized_amount)
@@ -208,7 +208,7 @@ RSpec.describe Spree::StoreCredit do
       let(:originator) { nil }
 
       context "amount has not been authorized yet" do
-        before { store_credit.update_attributes(amount_authorized: authorization_amount) }
+        before { store_credit.update(amount_authorized: authorization_amount) }
 
         it "returns true" do
           expect(store_credit.authorize(store_credit.amount - authorization_amount, store_credit.currency)).to be_truthy
@@ -234,7 +234,7 @@ RSpec.describe Spree::StoreCredit do
       context "authorization has already happened" do
         let!(:auth_event) { create(:store_credit_auth_event, store_credit: store_credit) }
 
-        before { store_credit.update_attributes(amount_authorized: store_credit.amount) }
+        before { store_credit.update(amount_authorized: store_credit.amount) }
 
         it "returns true" do
           expect(store_credit.authorize(store_credit.amount, store_credit.currency, action_authorization_code: auth_event.authorization_code)).to be true
@@ -816,7 +816,7 @@ RSpec.describe Spree::StoreCredit do
     context "amount is valid" do
       let(:amount) { 10.0 }
 
-      before { store_credit.update_attributes!(amount: 30.0) }
+      before { store_credit.update!(amount: 30.0) }
 
       it "returns true" do
         expect(subject).to eq true

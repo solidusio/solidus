@@ -137,7 +137,7 @@ module Spree
       context "for a given payment" do
         context "updating" do
           it "can update" do
-            payment.update_attributes(state: 'pending')
+            payment.update(state: 'pending')
             put spree.api_order_payment_path(order, payment), params: { payment: { amount: 2.01 } }
             expect(response.status).to eq(200)
             expect(payment.reload.amount).to eq(2.01)
@@ -145,14 +145,14 @@ module Spree
 
           context "update fails" do
             it "returns a 422 status when the amount is invalid" do
-              payment.update_attributes(state: 'pending')
+              payment.update(state: 'pending')
               put spree.api_order_payment_path(order, payment), params: { payment: { amount: 'invalid' } }
               expect(response.status).to eq(422)
               expect(json_response["error"]).to eq("Invalid resource. Please fix errors and try again.")
             end
 
             it "returns a 403 status when the payment is not pending" do
-              payment.update_attributes(state: 'completed')
+              payment.update(state: 'completed')
               put spree.api_order_payment_path(order, payment), params: { payment: { amount: 2.01 } }
               expect(response.status).to eq(403)
               expect(json_response["error"]).to eq("This payment cannot be updated because it is completed.")

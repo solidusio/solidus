@@ -16,7 +16,7 @@ RSpec.describe "Outstanding balance integration tests" do
   let!(:order) { create(:order_with_line_items, line_items_count: 2, line_items_price: 3, shipment_cost: 13) }
   let(:item_1) { order.line_items[0] }
   let(:item_2) { order.line_items[1] }
-  before { order.update_attributes!(state: 'complete', completed_at: Time.now) }
+  before { order.update!(state: 'complete', completed_at: Time.now) }
 
   subject do
     order.reload
@@ -44,11 +44,11 @@ RSpec.describe "Outstanding balance integration tests" do
     end
 
     context 'when the order is cancelled' do
-      before { order.update_attributes!(state: "canceled") }
+      before { order.update!(state: "canceled") }
       it { should eq(-19) }
 
       context 'and the payment is voided' do
-        before { payment.update_attributes!(state: "void") }
+        before { payment.update!(state: "void") }
         it { should eq 0 }
       end
 
@@ -116,11 +116,11 @@ RSpec.describe "Outstanding balance integration tests" do
     end
 
     context 'when the order is cancelled' do
-      before { order.update_attributes!(state: "canceled") }
+      before { order.update!(state: "canceled") }
       it { should eq(-10) }
 
       context 'and the payment is voided' do
-        before { payment.update_attributes!(state: "void") }
+        before { payment.update!(state: "void") }
         it { should eq 0 }
       end
 

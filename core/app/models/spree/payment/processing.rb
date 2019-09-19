@@ -59,7 +59,7 @@ module Spree
           )
           money = ::Money.new(amount, currency)
           capture_events.create!(amount: money.to_d)
-          update_attributes!(amount: captured_amount)
+          update!(amount: captured_amount)
           handle_response(response, :complete, :failure)
         end
       end

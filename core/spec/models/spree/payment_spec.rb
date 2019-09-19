@@ -134,7 +134,7 @@ RSpec.describe Spree::Payment, type: :model do
     describe "#process!" do
       context 'with autocapture' do
         before do
-          payment.payment_method.update_attributes!(auto_capture: true)
+          payment.payment_method.update!(auto_capture: true)
         end
 
         it "should purchase" do
@@ -145,11 +145,11 @@ RSpec.describe Spree::Payment, type: :model do
 
       context 'without autocapture' do
         before do
-          payment.payment_method.update_attributes!(auto_capture: false)
+          payment.payment_method.update!(auto_capture: false)
         end
 
         context 'when in the checkout state' do
-          before { payment.update_attributes!(state: 'checkout') }
+          before { payment.update!(state: 'checkout') }
 
           it "authorizes" do
             payment.process!
@@ -158,7 +158,7 @@ RSpec.describe Spree::Payment, type: :model do
         end
 
         context 'when in the processing state' do
-          before { payment.update_attributes!(state: 'processing') }
+          before { payment.update!(state: 'processing') }
 
           it "does not authorize" do
             payment.process!
@@ -167,7 +167,7 @@ RSpec.describe Spree::Payment, type: :model do
         end
 
         context 'when in the pending state' do
-          before { payment.update_attributes!(state: 'pending') }
+          before { payment.update!(state: 'pending') }
 
           it "does not re-authorize" do
             expect(payment).to_not receive(:authorize!)
@@ -177,7 +177,7 @@ RSpec.describe Spree::Payment, type: :model do
         end
 
         context 'when in a failed state' do
-          before { payment.update_attributes!(state: 'failed') }
+          before { payment.update!(state: 'failed') }
 
           it "raises an exception" do
             expect {
@@ -187,7 +187,7 @@ RSpec.describe Spree::Payment, type: :model do
         end
 
         context 'when in the completed state' do
-          before { payment.update_attributes!(state: 'completed') }
+          before { payment.update!(state: 'completed') }
 
           it "authorizes" do
             payment.process!
@@ -253,7 +253,7 @@ RSpec.describe Spree::Payment, type: :model do
 
         context 'when the source is a credit card without an address' do
           let(:card) { create(:credit_card, address: nil) }
-          before { order.update_attributes!(bill_address: address) }
+          before { order.update!(bill_address: address) }
           let(:address) { create(:address) }
 
           it 'send the order bill address' do
@@ -278,7 +278,7 @@ RSpec.describe Spree::Payment, type: :model do
 
           let(:store_credit_payment) { create(:store_credit_payment) }
           let(:store_credit_payment_method) { create(:store_credit_payment_method) }
-          before { order.update_attributes!(bill_address: address) }
+          before { order.update!(bill_address: address) }
           let(:address) { create(:address) }
 
           it 'send the order bill address' do
@@ -932,7 +932,7 @@ RSpec.describe Spree::Payment, type: :model do
         end
 
         context 'the order has no user' do
-          before { order.update_attributes!(user_id: nil) }
+          before { order.update!(user_id: nil) }
           it 'errors' do
             expect { subject }.to raise_error(ActiveRecord::RecordNotFound)
           end
@@ -940,7 +940,7 @@ RSpec.describe Spree::Payment, type: :model do
 
         context 'the order and the credit card have no user' do
           before do
-            order.update_attributes!(user_id: nil)
+            order.update!(user_id: nil)
             credit_card.update!(user_id: nil)
           end
           it 'errors' do
@@ -976,7 +976,7 @@ RSpec.describe Spree::Payment, type: :model do
       # Sets the payment's order to a different Ruby object entirely
       payment.order = Spree::Order.find(payment.order_id)
       email = 'foo@example.com'
-      order.update_attributes(email: email)
+      order.update(email: email)
       expect(payment.gateway_options[:email]).to eq(email)
     end
   end

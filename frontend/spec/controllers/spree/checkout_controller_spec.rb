@@ -91,7 +91,7 @@ describe Spree::CheckoutController, type: :controller do
 
       context "with the order in the cart state", partial_double_verification: false do
         before do
-          order.update_attributes! user: user
+          order.update! user: user
           order.update_column(:state, "cart")
         end
 
@@ -140,7 +140,7 @@ describe Spree::CheckoutController, type: :controller do
 
       context "with the order in the address state", partial_double_verification: false do
         before do
-          order.update_attributes! user: user
+          order.update! user: user
           order.update_columns(ship_address_id: create(:address).id, state: "address")
         end
 
@@ -213,7 +213,7 @@ describe Spree::CheckoutController, type: :controller do
         end
 
         before do
-          order.update_attributes! user: user
+          order.update! user: user
           3.times { order.next! } # should put us in the payment state
         end
 
@@ -245,7 +245,7 @@ describe Spree::CheckoutController, type: :controller do
         end
 
         before do
-          order.update_attributes! user: user
+          order.update! user: user
           3.times { order.next! } # should put us in the payment state
         end
 
@@ -275,7 +275,7 @@ describe Spree::CheckoutController, type: :controller do
 
       context "when in the confirm state" do
         before do
-          order.update_attributes! user: user
+          order.update! user: user
           order.update_column(:state, "confirm")
           # An order requires a payment to reach the complete state
           # This is because payment_required? is true on the order
@@ -305,7 +305,7 @@ describe Spree::CheckoutController, type: :controller do
 
     context "save unsuccessful" do
       before do
-        order.update_attributes! user: user
+        order.update! user: user
         allow(order).to receive_messages valid?: false
       end
 
@@ -340,7 +340,7 @@ describe Spree::CheckoutController, type: :controller do
 
     context "Spree::Core::GatewayError" do
       before do
-        order.update_attributes! user: user
+        order.update! user: user
         allow(order).to receive(:next).and_raise(Spree::Core::GatewayError.new("Invalid something or other."))
         post :update, params: { state: "address" }
       end

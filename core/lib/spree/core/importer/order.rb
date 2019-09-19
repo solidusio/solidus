@@ -29,7 +29,7 @@ module Spree
 
             completed_at = params.delete(:completed_at)
 
-            order.update_attributes!(params)
+            order.update!(params)
 
             order.create_proposed_shipments unless shipments_attrs.present?
 
@@ -104,7 +104,7 @@ module Spree
             line_item = order.contents.add(Spree::Variant.find(line_item[:variant_id]), line_item[:quantity])
             # Raise any errors with saving to prevent import succeeding with line items failing silently.
             if extra_params.present?
-              line_item.update_attributes!(extra_params)
+              line_item.update!(extra_params)
             else
               line_item.save!
             end

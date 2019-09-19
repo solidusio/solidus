@@ -233,7 +233,7 @@ RSpec.describe Spree::CustomerReturn, type: :model do
 
     context "it was not received" do
       before do
-        return_item.update_attributes!(reception_status: "lost_in_transit")
+        return_item.update!(reception_status: "lost_in_transit")
       end
 
       it 'should not updated inventory unit to returned' do

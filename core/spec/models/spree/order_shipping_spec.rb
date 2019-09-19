@@ -181,7 +181,7 @@ RSpec.describe Spree::OrderShipping do
     # OrderShipping#ship rather than vice versa
     context "when the tracking number is already on the shipment" do
       before do
-        shipment.update_attributes!(tracking: 'tracking-number')
+        shipment.update!(tracking: 'tracking-number')
       end
 
       it "sets the tracking-number" do

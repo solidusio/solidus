@@ -26,8 +26,8 @@ RSpec.describe Spree::ReturnItem, type: :model do
     let(:return_item) { create(:return_item, inventory_unit: inventory_unit) }
 
     before do
-      inventory_unit.update_attributes!(state: 'shipped')
-      return_item.update_attributes!(reception_status: 'awaiting')
+      inventory_unit.update!(state: 'shipped')
+      return_item.update!(reception_status: 'awaiting')
       allow(return_item).to receive(:eligible_for_return?).and_return(true)
     end
 
@@ -91,9 +91,9 @@ RSpec.describe Spree::ReturnItem, type: :model do
       let(:stock_item) { stock_location.stock_item(inventory_unit.variant) }
 
       before do
-        inventory_unit.update_attributes!(state: 'shipped')
-        return_item.update_attributes!(reception_status: 'awaiting')
-        stock_location.update_attributes!(restock_inventory: true)
+        inventory_unit.update!(state: 'shipped')
+        return_item.update!(reception_status: 'awaiting')
+        stock_location.update!(restock_inventory: true)
       end
 
       it 'increases the count on hand' do
@@ -102,9 +102,9 @@ RSpec.describe Spree::ReturnItem, type: :model do
 
       context 'when variant does not track inventory' do
         before do
-          inventory_unit.update_attributes!(state: 'shipped')
-          inventory_unit.variant.update_attributes!(track_inventory: false)
-          return_item.update_attributes!(reception_status: 'awaiting')
+          inventory_unit.update!(state: 'shipped')
+          inventory_unit.variant.update!(track_inventory: false)
+          return_item.update!(reception_status: 'awaiting')
         end
 
         it 'does not increase the count on hand' do
@@ -114,7 +114,7 @@ RSpec.describe Spree::ReturnItem, type: :model do
 
       context "when the stock location's restock_inventory is false" do
         before do
-          stock_location.update_attributes!(restock_inventory: false)
+          stock_location.update!(restock_inventory: false)
         end
 
         it 'does not increase the count on hand' do
@@ -135,7 +135,7 @@ RSpec.describe Spree::ReturnItem, type: :model do
 
       Spree::ReturnItem::INTERMEDIATE_RECEPTION_STATUSES.each do |status|
         context "when the item was #{status}" do
-          before { return_item.update_attributes!(reception_status: status) }
+          before { return_item.update!(reception_status: status) }
 
           it 'processes the inventory unit' do
             subject
@@ -293,7 +293,7 @@ RSpec.describe Spree::ReturnItem, type: :model do
       subject { return_item.public_send("#{transition}!") }
       context "awaiting status" do
         before do
-          return_item.update_attributes!(reception_status: 'awaiting')
+          return_item.update!(reception_status: 'awaiting')
           allow(return_item).to receive(:eligible_for_return?).and_return(true)
         end
 

@@ -29,7 +29,7 @@ RSpec.describe Spree::Taxon, type: :model do
     context "updating a taxon permalink" do
       it 'parameterizes permalink correctly' do
         taxon.save!
-        taxon.update_attributes(permalink: 'spécial&charactèrs')
+        taxon.update(permalink: 'spécial&charactèrs')
         expect(taxon.permalink).to eql "special-characters"
       end
     end
@@ -51,7 +51,7 @@ RSpec.describe Spree::Taxon, type: :model do
 
       it 'parameterizes permalink correctly' do
         taxon.save!
-        taxon.update_attributes(permalink_part: 'spécial&charactèrs')
+        taxon.update(permalink_part: 'spécial&charactèrs')
         expect(taxon.reload.permalink).to eql "brands/special-characters"
       end
 

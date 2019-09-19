@@ -122,7 +122,7 @@ module Spree
       end
 
       context 'the order has no user' do
-        before { order.update_attributes!(user_id: nil) }
+        before { order.update!(user_id: nil) }
         it 'errors' do
           expect { new_payment }.to raise_error(ActiveRecord::RecordNotFound)
         end
@@ -130,7 +130,7 @@ module Spree
 
       context 'the order and the credit card have no user' do
         before do
-          order.update_attributes!(user_id: nil)
+          order.update!(user_id: nil)
           credit_card.update!(user_id: nil)
         end
         it 'errors' do

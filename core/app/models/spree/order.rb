@@ -659,7 +659,7 @@ module Spree
       if remaining_total.zero?
         other_payments.each(&:invalidate!)
       elsif other_payments.size == 1
-        other_payments.first.update_attributes!(amount: remaining_total)
+        other_payments.first.update!(amount: remaining_total)
       end
 
       payments.reset

@@ -130,7 +130,7 @@ module Spree
     def remove_from_address_book(address_id)
       user_address = user_addresses.find_by(address_id: address_id)
       if user_address
-        user_address.update_attributes(archived: true, default: false)
+        user_address.update(archived: true, default: false)
       else
         false
       end
