@@ -11,6 +11,7 @@ AllCops:
     - '*/spec/dummy/**/*'
     - 'sandbox/**/*'
     - '**/templates/**/*'
+    - 'guides/node_modules/**/*'
   TargetRubyVersion: 2.4
 
 # Sometimes I believe this reads better
