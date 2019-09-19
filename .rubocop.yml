@@ -1,5 +1,9 @@
 # Relaxed.Ruby.Style
 
+require:
+  - rubocop-performance
+  - rubocop-rails
+
 AllCops:
   Exclude:
     - 'vendor/**/*'
