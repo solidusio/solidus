@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Spree
-  VERSION = "2.10.0.alpha"
+  VERSION = "2.10.0.beta1"
 
   def self.solidus_version
     VERSION
