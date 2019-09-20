@@ -32,8 +32,8 @@ describe "Payment Methods", type: :feature do
     end
   end
 
-  context "admin creating a new payment method" do
-    it "should be able to create a new payment method" do
+  context "admin creating a new payment method", :js do
+    it "creates a new payment method and disables the form" do
       click_link "Payments"
       expect(page).to have_link 'Payment Methods'
       click_link "admin_new_payment_methods_link"
@@ -43,6 +43,15 @@ describe "Payment Methods", type: :feature do
       select Spree::PaymentMethod::Check.model_name.human, from: "Type"
       click_button "Create"
       expect(page).to have_content("successfully created!")
+
+      visit spree.new_admin_payment_method_path
+      page.execute_script "$('form').submit(function(e) { e.preventDefault()})"
+      fill_in "payment_method_name", with: "check90"
+      fill_in "payment_method_description", with: "check90 desc"
+      select Spree::PaymentMethod::Check.model_name.human, from: "Type"
+      click_button "Create"
+
+      expect(page).to have_button("Create", disabled: true)
     end
   end
 
