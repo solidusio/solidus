@@ -25,7 +25,7 @@ describe "Shipping Methods", type: :feature do
   end
 
   context "create", js: true do
-    it "should be able to create a new shipping method" do
+    it "creates a new shipping method and disables the submit button", :js do
       click_link "New Shipping Method"
 
       fill_in "shipping_method_name", with: "bullock cart"
@@ -36,6 +36,18 @@ describe "Shipping Methods", type: :feature do
 
       click_on "Create"
       expect(current_path).to eql(spree.edit_admin_shipping_method_path(Spree::ShippingMethod.last))
+
+      visit spree.new_admin_shipping_method_path
+      page.execute_script "$('form').submit(function(e) { e.preventDefault()})"
+      fill_in "shipping_method_name", with: "bullock cart"
+
+      within("#shipping_method_categories_field") do
+        check first("input[type='checkbox']")["name"]
+      end
+
+      click_on "Create"
+
+      expect(page).to have_button("Create", disabled: true)
     end
 
     context 'with shipping method having a calculator with array or hash preference type' do
