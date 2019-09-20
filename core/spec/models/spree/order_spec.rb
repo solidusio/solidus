@@ -366,26 +366,19 @@ RSpec.describe Spree::Order, type: :model do
     end
   end
 
-  context "add_update_hook", partial_double_verification: false do
-    before do
-      Spree::Order.class_eval do
-        register_update_hook :add_awesome_sauce
-      end
-    end
+  context ".register_update_hook", partial_double_verification: false do
+    let(:order) { create(:order) }
 
-    after do
-      Spree::Order.update_hooks = Set.new
-    end
+    before { Spree::Order.register_update_hook :foo }
+    after { Spree::Order.update_hooks.clear }
 
-    it "calls hook during update" do
-      order = create(:order)
-      expect(order).to receive(:add_awesome_sauce)
+    it "calls hooks during #recalculate" do
+      expect(order).to receive :foo
       order.recalculate
     end
 
-    it "calls hook during finalize" do
-      order = create(:order)
-      expect(order).to receive(:add_awesome_sauce)
+    it "calls hook during #finalize!" do
+      expect(order).to receive :foo
       order.finalize!
     end
   end
