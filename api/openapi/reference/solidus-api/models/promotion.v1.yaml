@@ -1,0 +1,23 @@
+title: Promotion
+type: object
+properties:
+  advertise:
+    type: boolean
+  description:
+    type: string
+  expires_at:
+    type: string
+  id:
+    type: integer
+  match_policy:
+    type: string
+  name:
+    type: string
+  path:
+    type: string
+  starts_at:
+    type: string
+  type:
+    type: string
+  usage_limit:
+    type: integer

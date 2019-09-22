@@ -1,0 +1,7 @@
+title: Line item input
+type: object
+properties:
+  quantity:
+    type: integer
+  options:
+    type: object

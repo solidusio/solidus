@@ -1,0 +1,9 @@
+type: object
+title: Classification
+properties:
+  position:
+    type: integer
+  taxon:
+    $ref: '../openapi.yml#/definitions/taxon'
+  taxon_id:
+    type: integer

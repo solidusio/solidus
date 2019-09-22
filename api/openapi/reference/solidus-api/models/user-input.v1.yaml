@@ -1,0 +1,11 @@
+title: User input
+type: object
+properties:
+  password:
+    type: string
+  password_confirmation:
+    type: string
+  bill_address_attributes:
+    $ref: './address-input.v1.yaml'
+  ship_address_attributes:
+    $ref: './address-input.v1.yaml'

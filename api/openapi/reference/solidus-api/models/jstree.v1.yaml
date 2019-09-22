@@ -1,0 +1,16 @@
+title: jsTree
+type: array
+items:
+  type: object
+  properties:
+    attr:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+    data:
+      type: string
+    state:
+      type: string

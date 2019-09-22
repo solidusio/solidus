@@ -1,0 +1,15 @@
+title: User
+type: object
+properties:
+  bill_address:
+    $ref: './address.v1.yaml'
+  created_at:
+    type: string
+  email:
+    type: string
+  id:
+    type: integer
+  ship_address:
+    $ref: './address.v1.yaml'
+  updated_at:
+    type: string

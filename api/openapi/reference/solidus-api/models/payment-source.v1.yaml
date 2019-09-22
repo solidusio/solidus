@@ -1,0 +1,19 @@
+title: Payment source
+type: object
+properties:
+  cc_type:
+    type: string
+  gateway_customer_profile_id:
+    type: string
+  gateway_payment_profile_id:
+    type: string
+  id:
+    type: integer
+  last_digits:
+    type: string
+  month:
+    type: string
+  name:
+    type: string
+  year:
+    type: string

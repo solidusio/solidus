@@ -1,0 +1,15 @@
+title: Option type
+type: object
+properties:
+  id:
+    type: integer
+  name:
+    type: string
+  option_values:
+    type: array
+    items:
+      $ref: './option-value.v1.yaml'
+  position:
+    type: integer
+  presentation:
+    type: string

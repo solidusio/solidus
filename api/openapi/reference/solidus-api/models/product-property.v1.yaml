@@ -1,0 +1,13 @@
+title: Product property
+type: object
+properties:
+  id:
+    type: integer
+  product_id:
+    type: integer
+  property_id:
+    type: integer
+  property_name:
+    type: string
+  value:
+    type: string

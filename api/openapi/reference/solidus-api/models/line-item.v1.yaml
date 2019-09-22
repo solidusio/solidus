@@ -1,0 +1,23 @@
+title: Line item
+type: object
+properties:
+  adjustments:
+    type: array
+    items:
+      $ref: ./adjustment.v1.yaml
+  display_amount:
+    type: string
+  id:
+    type: integer
+  price:
+    type: string
+  quantity:
+    type: integer
+  single_display_amount:
+    type: string
+  total:
+    type: string
+  variant:
+    $ref: ./variant.v1.yaml
+  variant_id:
+    type: integer

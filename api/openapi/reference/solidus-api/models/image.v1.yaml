@@ -1,0 +1,33 @@
+title: Image
+type: object
+properties:
+  alt:
+    type: string
+  attachment_content_type:
+    type: string
+  attachment_file_name:
+    type: string
+  attachment_height:
+    type: integer
+  attachment_updated_at:
+    type: string
+  attachment_width:
+    type: integer
+  id:
+    type: integer
+  large_url:
+    type: string
+  mini_url:
+    type: string
+  position:
+    type: integer
+  product_url:
+    type: string
+  small_url:
+    type: string
+  type:
+    type: string
+  viewable_id:
+    type: integer
+  viewable_type:
+    type: string

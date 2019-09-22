@@ -1,0 +1,11 @@
+title: Stock movement
+type: object
+properties:
+  id:
+    type: integer
+  quantity:
+    type: integer
+  stock_item:
+    $ref: './stock-item.v1.yaml'
+  stock_item_id:
+    type: integer

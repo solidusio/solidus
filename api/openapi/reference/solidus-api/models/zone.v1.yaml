@@ -1,0 +1,9 @@
+title: Zone
+type: object
+properties:
+  description:
+    type: string
+  id:
+    type: integer
+  name:
+    type: string

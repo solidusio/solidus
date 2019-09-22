@@ -1,0 +1,7 @@
+title: Address book input
+allOf:
+  - $ref: './address-input.v1.yaml'
+  - type: object
+    properties:
+      default:
+        type: boolean

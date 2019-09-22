@@ -1,0 +1,7 @@
+title: Option value input
+type: object
+properties:
+  name:
+    type: string
+  presentation:
+    type: string

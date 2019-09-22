@@ -20,7 +20,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/pagination-data'
+              - $ref: ./models/pagination-data.v1.yaml
               - type: object
                 properties:
                   products:
@@ -58,7 +58,7 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/product-input'
+            $ref: ./models/product-input.v1.yaml
       security:
         - api-key: []
   /orders/mine:
@@ -68,13 +68,13 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/pagination-data'
+              - $ref: ./models/pagination-data.v1.yaml
               - type: object
                 properties:
                   orders:
                     type: array
                     items:
-                      $ref: '#/definitions/order-small'
+                      $ref: './models/order-small.v1.yaml'
         '401':
           $ref: '#/responses/invalid-api-key'
       summary: "List user's orders"
@@ -93,7 +93,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/order-big'
+            $ref: './models/order-big.v1.yaml'
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -116,7 +116,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/order-big'
+            $ref: './models/order-big.v1.yaml'
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -132,7 +132,7 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/order-input'
+            $ref: './models/order-input.v1.yaml'
       security:
         - api-key: []
         - order-token: []
@@ -142,7 +142,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/order-big'
+            $ref: './models/order-big.v1.yaml'
         '401':
           $ref: '#/responses/invalid-api-key'
       summary: Get current order
@@ -160,7 +160,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/pagination-data'
+              - $ref: ./models/pagination-data.v1.yaml
               - type: object
                 properties:
                   countries:
@@ -168,7 +168,7 @@ paths:
                       - string
                       - array
                     items:
-                      $ref: '#/definitions/country'
+                      $ref: ./models/country.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
       summary: List countries
@@ -185,7 +185,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/country'
+            $ref: ./models/country.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -213,7 +213,7 @@ paths:
                   - string
                   - array
                 items:
-                  $ref: '#/definitions/state'
+                  $ref: ./models/state.v1.yaml
               states_required:
                 type: boolean
         '401':
@@ -236,7 +236,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/state'
+            $ref: ./models/state.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -318,7 +318,7 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/product-input'
+            $ref: ./models/product-input.v1.yaml
       security:
         - api-key: []
   '/products/{product_id}/images':
@@ -332,7 +332,7 @@ paths:
               images:
                 type: array
                 items:
-                  $ref: '#/definitions/image'
+                  $ref: ./models/image.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -354,7 +354,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/image'
+            $ref: ./models/image.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -370,7 +370,7 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/image-input'
+            $ref: ./models/image-input.v1.yaml
       security:
         - api-key: []
   '/products/{product_id}/variants':
@@ -380,7 +380,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/pagination-data'
+              - $ref: ./models/pagination-data.v1.yaml
               - type: object
                 properties:
                   variants:
@@ -410,7 +410,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/variant'
+            $ref: ./models/variant.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -426,7 +426,7 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/variant-input'
+            $ref: ./models/variant-input.v1.yaml
       security:
         - api-key: []
   '/products/{product_id}/images/{id}':
@@ -435,7 +435,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/image'
+            $ref: ./models/image.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -461,7 +461,7 @@ paths:
         '204':
           description: ''
           schema:
-            $ref: '#/definitions/image'
+            $ref: ./models/image.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -480,7 +480,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/image'
+            $ref: ./models/image.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -496,7 +496,7 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/image-input'
+            $ref: ./models/image-input.v1.yaml
       security:
         - api-key: []
   '/products/{product_id}/variants/{id}':
@@ -505,7 +505,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/variant'
+            $ref: ./models/variant.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -531,7 +531,7 @@ paths:
         '204':
           description: ''
           schema:
-            $ref: '#/definitions/variant'
+            $ref: ./models/variant.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -550,7 +550,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/variant'
+            $ref: ./models/variant.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -566,7 +566,7 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/variant-input'
+            $ref: ./models/variant-input.v1.yaml
       security:
         - api-key: []
   /states:
@@ -578,7 +578,7 @@ paths:
             type: object
             properties:
               states:
-                $ref: '#/definitions/state'
+                $ref: ./models/state.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
       summary: List states
@@ -592,7 +592,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/state'
+            $ref: ./models/state.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -614,11 +614,11 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/pagination-data'
+              - $ref: ./models/pagination-data.v1.yaml
               - type: object
                 properties:
                   variants:
-                    $ref: '#/definitions/variant'
+                    $ref: ./models/variant.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
       summary: List variants
@@ -636,7 +636,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/variant'
+            $ref: ./models/variant.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '422':
@@ -650,7 +650,7 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/variant-input'
+            $ref: ./models/variant-input.v1.yaml
       security:
         - api-key: []
   '/variants/{id}':
@@ -659,7 +659,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/variant'
+            $ref: ./models/variant.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -681,7 +681,7 @@ paths:
         '204':
           description: ''
           schema:
-            $ref: '#/definitions/variant'
+            $ref: ./models/variant.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -700,7 +700,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/variant'
+            $ref: ./models/variant.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -716,7 +716,7 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/variant-input'
+            $ref: ./models/variant-input.v1.yaml
       security:
         - api-key: []
   '/variants/{variant_id}/images':
@@ -730,7 +730,7 @@ paths:
               images:
                 type: array
                 items:
-                  $ref: '#/definitions/image'
+                  $ref: ./models/image.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -752,7 +752,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/image'
+            $ref: ./models/image.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -768,7 +768,7 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/image-input'
+            $ref: ./models/image-input.v1.yaml
       security:
         - api-key: []
   '/variants/{variant_id}/images/{id}':
@@ -777,7 +777,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/image'
+            $ref: ./models/image.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -803,7 +803,7 @@ paths:
         '204':
           description: ''
           schema:
-            $ref: '#/definitions/image'
+            $ref: ./models/image.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -822,7 +822,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/image'
+            $ref: ./models/image.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -838,7 +838,7 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/image-input'
+            $ref: ./models/image-input.v1.yaml
       security:
         - api-key: []
   '/shipments/{shipment_number}/estimated_rates':
@@ -852,7 +852,7 @@ paths:
               shipping_rates:
                 type: array
                 items:
-                  $ref: '#/definitions/shipping-rate'
+                  $ref: ./models/shipping-rate.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -877,13 +877,13 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/pagination-data'
+              - $ref: ./models/pagination-data.v1.yaml
               - type: object
                 properties:
                   shipments:
                     type: array
                     items:
-                      $ref: '#/definitions/shipment'
+                      $ref: ./models/shipment.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
       summary: "List user's shipments"
@@ -902,7 +902,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/user'
+            $ref: './models/user.v1.yaml'
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -924,7 +924,7 @@ paths:
         '204':
           description: ''
           schema:
-            $ref: '#/definitions/user'
+            $ref: './models/user.v1.yaml'
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -943,7 +943,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/user'
+            $ref: './models/user.v1.yaml'
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -959,7 +959,7 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/user-input'
+            $ref: ./models/user-input.v1.yaml
       security:
         - api-key: []
   '/users/{user_id}/address_book':
@@ -968,7 +968,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/address-book'
+            $ref: ./models/address-book.v1.yaml
           examples: {}
         '401':
           $ref: '#/responses/invalid-api-key'
@@ -991,7 +991,7 @@ paths:
         '204':
           description: ''
           schema:
-            $ref: '#/definitions/address-book'
+            $ref: ./models/address-book.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -1014,7 +1014,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/address-book'
+            $ref: ./models/address-book.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -1029,7 +1029,7 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/address-book-input'
+            $ref: ./models/address-book-input.v1.yaml
       description: "Updates a user's address book."
       security:
         - api-key: []
@@ -1040,13 +1040,13 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/pagination-data'
+              - $ref: ./models/pagination-data.v1.yaml
               - type: object
                 properties:
                   credit_cards:
                     type: array
                     items:
-                      $ref: '#/definitions/credit-card'
+                      $ref: ./models/credit-card.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -1072,7 +1072,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/address'
+            $ref: ./models/address.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -1099,7 +1099,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/address'
+            $ref: ./models/address.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -1115,7 +1115,7 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/address-input'
+            $ref: ./models/address-input.v1.yaml
       security:
         - api-key: []
         - order-token: []
@@ -1126,13 +1126,13 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/pagination-data'
+              - $ref: ./models/pagination-data.v1.yaml
               - type: object
                 properties:
                   payments:
                     type: array
                     items:
-                      $ref: '#/definitions/payment'
+                      $ref: ./models/payment.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -1157,7 +1157,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/payment'
+            $ref: ./models/payment.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -1173,7 +1173,7 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/payment-input'
+            $ref: ./models/payment-input.v1.yaml
       security:
         - api-key: []
         - order-token: []
@@ -1183,7 +1183,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/payment'
+            $ref: ./models/payment.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -1210,7 +1210,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/payment'
+            $ref: ./models/payment.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -1233,7 +1233,7 @@ paths:
               payment_method_id:
                 type: integer
               payment_method:
-                $ref: '#/definitions/payment-method'
+                $ref: ./models/payment-method.v1.yaml
       security:
         - api-key: []
         - order-token: []
@@ -1244,13 +1244,13 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/pagination-data'
+              - $ref: ./models/pagination-data.v1.yaml
               - type: object
                 properties:
                   return_authorizations:
                     type: array
                     items:
-                      $ref: '#/definitions/return-authorization'
+                      $ref: ./models/return-authorization.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -1275,7 +1275,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/return-authorization'
+            $ref: ./models/return-authorization.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -1291,7 +1291,7 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/return-authorization-input'
+            $ref: ./models/return-authorization-input.v1.yaml
       security:
         - api-key: []
   '/checkouts/{checkout_id}/return_authorizations/{id}':
@@ -1325,7 +1325,7 @@ paths:
         '204':
           description: ''
           schema:
-            $ref: '#/definitions/return-authorization'
+            $ref: ./models/return-authorization.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -1344,7 +1344,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/return-authorization'
+            $ref: ./models/return-authorization.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -1360,7 +1360,7 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/return-authorization-input'
+            $ref: ./models/return-authorization-input.v1.yaml
       security:
         - api-key: []
   /orders:
@@ -1370,13 +1370,13 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/pagination-data'
+              - $ref: ./models/pagination-data.v1.yaml
               - type: object
                 properties:
                   orders:
                     type: array
                     items:
-                      $ref: '#/definitions/order-small'
+                      $ref: './models/order-small.v1.yaml'
         '401':
           $ref: '#/responses/invalid-api-key'
       summary: List orders
@@ -1394,7 +1394,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/order-big'
+            $ref: './models/order-big.v1.yaml'
         '401':
           $ref: '#/responses/invalid-api-key'
         '422':
@@ -1408,7 +1408,7 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/order-input'
+            $ref: './models/order-input.v1.yaml'
       security:
         - api-key: []
   '/orders/{order_number}/addresses/{id}':
@@ -1417,7 +1417,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/address'
+            $ref: ./models/address.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -1444,7 +1444,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/address'
+            $ref: ./models/address.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -1458,7 +1458,7 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/address-input'
+            $ref: ./models/address-input.v1.yaml
       tags:
         - Addresses
       security:
@@ -1471,7 +1471,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/pagination-data'
+              - $ref: ./models/pagination-data.v1.yaml
               - type: object
                 properties:
                   payments:
@@ -1479,7 +1479,7 @@ paths:
                       - string
                       - array
                     items:
-                      $ref: '#/definitions/payment'
+                      $ref: ./models/payment.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -1505,7 +1505,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/payment'
+            $ref: ./models/payment.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -1521,7 +1521,7 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/payment-input'
+            $ref: ./models/payment-input.v1.yaml
       security:
         - api-key: []
         - order-token: []
@@ -1557,7 +1557,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/payment'
+            $ref: ./models/payment.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -1573,7 +1573,7 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/payment-input'
+            $ref: ./models/payment-input.v1.yaml
       security:
         - api-key: []
         - order-token: []
@@ -1584,13 +1584,13 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/pagination-data'
+              - $ref: ./models/pagination-data.v1.yaml
               - type: object
                 properties:
                   return_authorizations:
                     type: array
                     items:
-                      $ref: '#/definitions/return-authorization'
+                      $ref: ./models/return-authorization.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -1615,7 +1615,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/return-authorization'
+            $ref: ./models/return-authorization.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -1631,7 +1631,7 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/return-authorization-input'
+            $ref: ./models/return-authorization-input.v1.yaml
       security:
         - api-key: []
   '/orders/{order_number}/return_authorizations/{id}':
@@ -1640,7 +1640,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/return-authorization'
+            $ref: ./models/return-authorization.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -1666,7 +1666,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/return-authorization'
+            $ref: ./models/return-authorization.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -1685,7 +1685,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/return-authorization'
+            $ref: ./models/return-authorization.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -1701,7 +1701,7 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/return-authorization-input'
+            $ref: ./models/return-authorization-input.v1.yaml
       security:
         - api-key: []
   /config:
@@ -1752,7 +1752,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/option-type'
+              $ref: ./models/option-type.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
       summary: List option types
@@ -1767,7 +1767,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/option-type'
+            $ref: ./models/option-type.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '422':
@@ -1781,7 +1781,7 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/option-type-input'
+            $ref: ./models/option-type-input.v1.yaml
       security:
         - api-key: []
   '/option_types/{id}':
@@ -1790,7 +1790,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/option-type'
+            $ref: ./models/option-type.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -1812,7 +1812,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/option-type'
+            $ref: ./models/option-type.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -1831,7 +1831,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/option-type'
+            $ref: ./models/option-type.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -1847,7 +1847,7 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/option-type'
+            $ref: ./models/option-type.v1.yaml
       security:
         - api-key: []
   /option_values:
@@ -1858,7 +1858,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/option-value'
+              $ref: ./models/option-value.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
       summary: List option values
@@ -1873,7 +1873,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/option-value'
+            $ref: ./models/option-value.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '422':
@@ -1887,7 +1887,7 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/option-value-input'
+            $ref: ./models/option-value-input.v1.yaml
       security:
         - api-key: []
   '/option_values/{id}':
@@ -1896,7 +1896,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/option-value'
+            $ref: ./models/option-value.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -1918,7 +1918,7 @@ paths:
         '204':
           description: ''
           schema:
-            $ref: '#/definitions/option-value'
+            $ref: ./models/option-value.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -1937,7 +1937,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/option-value'
+            $ref: ./models/option-value.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -1953,7 +1953,7 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/option-value-input'
+            $ref: ./models/option-value-input.v1.yaml
       security:
         - api-key: []
   '/option_types/{option_type_id}/option_values':
@@ -1964,7 +1964,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/option-value'
+              $ref: ./models/option-value.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -1986,7 +1986,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/option-value'
+            $ref: ./models/option-value.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -2002,7 +2002,7 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/option-value-input'
+            $ref: ./models/option-value-input.v1.yaml
       security:
         - api-key: []
   '/option_types/{option_type_id}/option_values/{id}':
@@ -2036,7 +2036,7 @@ paths:
         '204':
           description: ''
           schema:
-            $ref: '#/definitions/option-value'
+            $ref: ./models/option-value.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -2055,7 +2055,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/option-value'
+            $ref: ./models/option-value.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -2071,7 +2071,7 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/option-value-input'
+            $ref: ./models/option-value-input.v1.yaml
       security:
         - api-key: []
   '/products/{product_id}/product_properties':
@@ -2081,13 +2081,13 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/pagination-data'
+              - $ref: ./models/pagination-data.v1.yaml
               - type: object
                 properties:
                   product_properties:
                     type: array
                     items:
-                      $ref: '#/definitions/product-property'
+                      $ref: ./models/product-property.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -2112,7 +2112,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/product-property'
+            $ref: ./models/product-property.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -2128,7 +2128,7 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/product-property-input'
+            $ref: ./models/product-property-input.v1.yaml
       security:
         - api-key: []
   '/products/{product_id}/product_properties/{id}':
@@ -2137,7 +2137,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/product-property'
+            $ref: ./models/product-property.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -2163,7 +2163,7 @@ paths:
         '204':
           description: ''
           schema:
-            $ref: '#/definitions/product-property'
+            $ref: ./models/product-property.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -2182,7 +2182,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/product-property'
+            $ref: ./models/product-property.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -2198,7 +2198,7 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/product-property-input'
+            $ref: ./models/product-property-input.v1.yaml
       security:
         - api-key: []
   /properties:
@@ -2208,13 +2208,13 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/pagination-data'
+              - $ref: ./models/pagination-data.v1.yaml
               - type: object
                 properties:
                   properties:
                     type: array
                     items:
-                      $ref: '#/definitions/property'
+                      $ref: ./models/property.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
       summary: List properties
@@ -2232,7 +2232,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/property'
+            $ref: ./models/property.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '422':
@@ -2246,7 +2246,7 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/property-input'
+            $ref: ./models/property-input.v1.yaml
       security:
         - api-key: []
   '/properties/{id}':
@@ -2255,7 +2255,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/property'
+            $ref: ./models/property.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -2277,7 +2277,7 @@ paths:
         '204':
           description: ''
           schema:
-            $ref: '#/definitions/property'
+            $ref: ./models/property.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -2296,7 +2296,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/property'
+            $ref: ./models/property.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -2312,7 +2312,7 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/property-input'
+            $ref: ./models/property-input.v1.yaml
       security:
         - api-key: []
   '/inventory_units/{id}':
@@ -2342,7 +2342,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/inventory-unit'
+            $ref: ./models/inventory-unit.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -2358,7 +2358,7 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/inventory-unit-input'
+            $ref: ./models/inventory-unit-input.v1.yaml
       security:
         - api-key: []
   /stock_locations:
@@ -2368,13 +2368,13 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/pagination-data'
+              - $ref: ./models/pagination-data.v1.yaml
               - type: object
                 properties:
                   stock_locations:
                     type: array
                     items:
-                      $ref: '#/definitions/stock-location'
+                      $ref: './models/stock-location.v1.yaml'
         '401':
           $ref: '#/responses/invalid-api-key'
       summary: List stock location
@@ -2392,7 +2392,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/stock-location'
+            $ref: './models/stock-location.v1.yaml'
         '401':
           $ref: '#/responses/invalid-api-key'
         '422':
@@ -2406,7 +2406,7 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/stock-location-input'
+            $ref: './models/stock-location-input.v1.yaml'
       security:
         - api-key: []
   '/stock_locations/{id}':
@@ -2436,7 +2436,7 @@ paths:
         '204':
           description: ''
           schema:
-            $ref: '#/definitions/stock-location'
+            $ref: './models/stock-location.v1.yaml'
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -2455,7 +2455,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/stock-location'
+            $ref: './models/stock-location.v1.yaml'
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -2471,7 +2471,7 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/stock-location-input'
+            $ref: './models/stock-location-input.v1.yaml'
       security:
         - api-key: []
   '/stock_locations/{stock_location_id}/stock_items':
@@ -2481,13 +2481,13 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/pagination-data'
+              - $ref: ./models/pagination-data.v1.yaml
               - type: object
                 properties:
                   stock_items:
                     type: array
                     items:
-                      $ref: '#/definitions/stock-item'
+                      $ref: './models/stock-item.v1.yaml'
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -2512,7 +2512,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/stock-item'
+            $ref: './models/stock-item.v1.yaml'
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -2528,7 +2528,7 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/stock-item-input'
+            $ref: './models/stock-item-input.v1.yaml'
       security:
         - api-key: []
   '/stock_locations/{stock_location_id}/stock_items/{id}':
@@ -2562,7 +2562,7 @@ paths:
         '204':
           description: ''
           schema:
-            $ref: '#/definitions/stock-item'
+            $ref: './models/stock-item.v1.yaml'
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -2581,7 +2581,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/stock-item'
+            $ref: './models/stock-item.v1.yaml'
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -2597,7 +2597,7 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/stock-item-input'
+            $ref: './models/stock-item-input.v1.yaml'
       security:
         - api-key: []
   '/stock_locations/{stock_location_id}/stock_movements':
@@ -2607,11 +2607,11 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/pagination-data'
+              - $ref: ./models/pagination-data.v1.yaml
               - type: object
                 properties:
                   stock_movements:
-                    $ref: '#/definitions/stock-movement'
+                    $ref: './models/stock-movement.v1.yaml'
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -2636,7 +2636,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/stock-movement'
+            $ref: './models/stock-movement.v1.yaml'
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -2652,7 +2652,7 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/stock-movement-input'
+            $ref: './models/stock-movement-input.v1.yaml'
       security:
         - api-key: []
   '/stock_locations/{stock_location_id}/stock_movements/{id}':
@@ -2692,7 +2692,7 @@ paths:
               stores:
                 type: array
                 items:
-                  $ref: '#/definitions/store'
+                  $ref: './models/store.v1.yaml'
         '401':
           $ref: '#/responses/invalid-api-key'
       summary: List stores
@@ -2710,7 +2710,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/store'
+            $ref: './models/store.v1.yaml'
         '401':
           $ref: '#/responses/invalid-api-key'
         '422':
@@ -2729,7 +2729,7 @@ paths:
                 properties:
                   code:
                     type: string
-              - $ref: '#/definitions/store-input'
+              - $ref: './models/store-input.v1.yaml'
       security:
         - api-key: []
   '/stores/{id}':
@@ -2759,7 +2759,7 @@ paths:
         '204':
           description: ''
           schema:
-            $ref: '#/definitions/store'
+            $ref: './models/store.v1.yaml'
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -2778,7 +2778,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/store'
+            $ref: './models/store.v1.yaml'
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -2794,7 +2794,7 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/store-input'
+            $ref: './models/store-input.v1.yaml'
       security:
         - api-key: []
   /taxonomies:
@@ -2804,13 +2804,13 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/pagination-data'
+              - $ref: ./models/pagination-data.v1.yaml
               - type: object
                 properties:
                   taxonomies:
                     type: array
                     items:
-                      $ref: '#/definitions/taxonomy'
+                      $ref: './models/taxonomy.v1.yaml'
         '401':
           $ref: '#/responses/invalid-api-key'
       summary: List taxonomies
@@ -2828,7 +2828,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/taxonomy'
+            $ref: './models/taxonomy.v1.yaml'
         '401':
           $ref: '#/responses/invalid-api-key'
         '422':
@@ -2842,7 +2842,7 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/taxonomy-input'
+            $ref: './models/taxonomy-input.v1.yaml'
       security:
         - api-key: []
   '/taxonomies/{id}':
@@ -2872,7 +2872,7 @@ paths:
         '204':
           description: ''
           schema:
-            $ref: '#/definitions/taxonomy'
+            $ref: './models/taxonomy.v1.yaml'
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -2891,7 +2891,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/taxonomy'
+            $ref: './models/taxonomy.v1.yaml'
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -2907,7 +2907,7 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/taxonomy-input'
+            $ref: './models/taxonomy-input.v1.yaml'
       security:
         - api-key: []
   '/taxonomies/{taxonomy_id}/taxons':
@@ -2917,7 +2917,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/pagination-data'
+              - $ref: ./models/pagination-data.v1.yaml
               - type: object
                 properties:
                   taxons:
@@ -2964,7 +2964,7 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/taxon-input'
+            $ref: './models/taxon-input.v1.yaml'
       security:
         - api-key: []
   '/taxonomies/{taxonomy_id}/taxons/{id}':
@@ -3033,7 +3033,7 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/taxon-input'
+            $ref: './models/taxon-input.v1.yaml'
       security:
         - api-key: []
   /taxons:
@@ -3043,7 +3043,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/pagination-data'
+              - $ref: ./models/pagination-data.v1.yaml
               - type: object
                 properties:
                   taxons:
@@ -3069,7 +3069,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/pagination-data'
+              - $ref: ./models/pagination-data.v1.yaml
               - type: object
                 properties:
                   users:
@@ -3092,7 +3092,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/user'
+            $ref: './models/user.v1.yaml'
         '401':
           $ref: '#/responses/invalid-api-key'
         '422':
@@ -3106,7 +3106,7 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/user-input'
+            $ref: ./models/user-input.v1.yaml
       security:
         - api-key: []
   /zones:
@@ -3116,13 +3116,13 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/pagination-data'
+              - $ref: ./models/pagination-data.v1.yaml
               - type: object
                 properties:
                   zones:
                     type: array
                     items:
-                      $ref: '#/definitions/zone'
+                      $ref: ./models/zone.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
       summary: List zones
@@ -3140,7 +3140,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/zone'
+            $ref: ./models/zone.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '422':
@@ -3154,7 +3154,7 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/zone-input'
+            $ref: ./models/zone-input.v1.yaml
       security:
         - api-key: []
   '/zones/{id}':
@@ -3163,7 +3163,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/zone'
+            $ref: ./models/zone.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -3185,7 +3185,7 @@ paths:
         '204':
           description: ''
           schema:
-            $ref: '#/definitions/zone'
+            $ref: ./models/zone.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -3204,7 +3204,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/zone'
+            $ref: ./models/zone.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -3220,7 +3220,7 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/zone-input'
+            $ref: ./models/zone-input.v1.yaml
       security:
         - api-key: []
   '/taxonomies/{taxonomy_id}/jstree':
@@ -3229,7 +3229,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/jstree'
+            $ref: ./models/jstree.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -3254,7 +3254,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/jstree'
+              $ref: ./models/jstree.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -3281,7 +3281,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/promotion'
+            $ref: ./models/promotion.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -3305,13 +3305,13 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/pagination-data'
+              - $ref: ./models/pagination-data.v1.yaml
               - type: object
                 properties:
                   store_credit_events:
                     type: array
                     items:
-                      $ref: '#/definitions/store-credit-event'
+                      $ref: './models/store-credit-event.v1.yaml'
         '401':
           $ref: '#/responses/invalid-api-key'
       summary: "List current user's store credit events"
@@ -3330,7 +3330,7 @@ paths:
         '204':
           description: ''
           schema:
-            $ref: '#/definitions/line-item'
+            $ref: './models/line-item.v1.yaml'
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -3359,7 +3359,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/line-item'
+            $ref: './models/line-item.v1.yaml'
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -3392,7 +3392,7 @@ paths:
         '204':
           description: ''
           schema:
-            $ref: '#/definitions/coupon-code-handler'
+            $ref: ./models/coupon-code-handler.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -3422,7 +3422,7 @@ paths:
         '204':
           description: ''
           schema:
-            $ref: '#/definitions/line-item'
+            $ref: './models/line-item.v1.yaml'
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -3451,7 +3451,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/line-item'
+            $ref: './models/line-item.v1.yaml'
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -3467,7 +3467,7 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/line-item-input'
+            $ref: './models/line-item-input.v1.yaml'
       security:
         - api-key: []
         - order-token: []
@@ -3477,7 +3477,7 @@ paths:
         '204':
           description: ''
           schema:
-            $ref: '#/definitions/stock-item'
+            $ref: './models/stock-item.v1.yaml'
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -3501,7 +3501,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/stock-item'
+            $ref: './models/stock-item.v1.yaml'
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -3517,7 +3517,7 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/stock-item-input'
+            $ref: './models/stock-item-input.v1.yaml'
       security:
         - api-key: []
   '/checkouts/{id}':
@@ -3526,7 +3526,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/order-big'
+            $ref: './models/order-big.v1.yaml'
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -3542,7 +3542,7 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/checkout-input'
+            $ref: './models/checkout-input.v1.yaml'
       security:
         - api-key: []
         - order-token: []
@@ -3557,7 +3557,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/credit-card'
+            $ref: ./models/credit-card.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -3573,7 +3573,7 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/credit-card-update-input'
+            $ref: ./models/credit-card-update-input.v1.yaml
       security:
         - api-key: []
     parameters:
@@ -3587,7 +3587,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/shipment'
+            $ref: ./models/shipment.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -3603,7 +3603,7 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/shipment-input'
+            $ref: ./models/shipment-input.v1.yaml
       security:
         - api-key: []
     parameters:
@@ -3617,7 +3617,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/payment'
+            $ref: ./models/payment.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -3646,7 +3646,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/payment'
+            $ref: ./models/payment.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -3675,7 +3675,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/payment'
+            $ref: ./models/payment.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -3704,7 +3704,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/payment'
+            $ref: ./models/payment.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -3733,7 +3733,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/payment'
+            $ref: ./models/payment.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -3762,7 +3762,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/return-authorization'
+            $ref: ./models/return-authorization.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -3791,7 +3791,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/order-big'
+            $ref: './models/order-big.v1.yaml'
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -3817,7 +3817,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/order-big'
+            $ref: './models/order-big.v1.yaml'
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -3851,7 +3851,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/order-big'
+            $ref: './models/order-big.v1.yaml'
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -3916,7 +3916,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/coupon-code-handler'
+            $ref: ./models/coupon-code-handler.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -3932,7 +3932,7 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/coupon-code-input'
+            $ref: ./models/coupon-code-input.v1.yaml
       security:
         - api-key: []
         - order-token: []
@@ -3947,7 +3947,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/order-big'
+            $ref: './models/order-big.v1.yaml'
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -4000,7 +4000,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/payment'
+            $ref: ./models/payment.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -4029,7 +4029,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/payment'
+            $ref: ./models/payment.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -4058,7 +4058,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/payment'
+            $ref: ./models/payment.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -4087,7 +4087,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/payment'
+            $ref: ./models/payment.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -4116,7 +4116,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/payment'
+            $ref: ./models/payment.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -4145,7 +4145,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/return-authorization'
+            $ref: ./models/return-authorization.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -4174,7 +4174,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/shipment'
+            $ref: ./models/shipment.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -4209,7 +4209,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/shipment'
+            $ref: ./models/shipment.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -4234,7 +4234,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/shipment'
+            $ref: ./models/shipment.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -4269,7 +4269,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/shipment'
+            $ref: ./models/shipment.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -4301,7 +4301,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/shipment'
+            $ref: ./models/shipment.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -4337,7 +4337,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/line-item'
+            $ref: './models/line-item.v1.yaml'
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -4354,7 +4354,7 @@ paths:
           name: body
           schema:
             allOf:
-              - $ref: '#/definitions/line-item-input'
+              - $ref: './models/line-item-input.v1.yaml'
               - type: object
                 properties:
                   variant_id:
@@ -4373,7 +4373,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/coupon-code-handler'
+            $ref: ./models/coupon-code-handler.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -4389,7 +4389,7 @@ paths:
         - in: body
           name: body
           schema:
-            $ref: '#/definitions/coupon-code-input'
+            $ref: ./models/coupon-code-input.v1.yaml
       security:
         - api-key: []
         - order-token: []
@@ -4404,7 +4404,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/line-item'
+            $ref: './models/line-item.v1.yaml'
         '401':
           $ref: '#/responses/invalid-api-key'
         '404':
@@ -4425,7 +4425,7 @@ paths:
                 properties:
                   variant_id:
                     type: integer
-              - $ref: '#/definitions/line-item-input'
+              - $ref: './models/line-item-input.v1.yaml'
       security:
         - api-key: []
         - order-token: []
@@ -4440,7 +4440,7 @@ paths:
         '200':
           description: ''
           schema:
-            $ref: '#/definitions/shipment'
+            $ref: ./models/shipment.v1.yaml
         '401':
           $ref: '#/responses/invalid-api-key'
         '422':
@@ -4547,7 +4547,7 @@ paths:
           description: ''
           schema:
             allOf:
-              - $ref: '#/definitions/pagination-data'
+              - $ref: ./models/pagination-data.v1.yaml
               - type: object
                 properties:
                   products:
@@ -4619,7 +4619,7 @@ definitions:
       classifications:
         type: array
         items:
-          $ref: '#/definitions/classification'
+          $ref: './models/classification.v1.yaml'
       description:
         type: string
       display_price:
@@ -4629,7 +4629,7 @@ definitions:
       id:
         type: integer
       master:
-        $ref: '#/definitions/variant'
+        $ref: ./models/variant.v1.yaml
       meta_description:
         type: string
       meta_keywords:
@@ -4641,13 +4641,13 @@ definitions:
       option_types:
         type: array
         items:
-          $ref: '#/definitions/option-type'
+          $ref: ./models/option-type.v1.yaml
       price:
         type: string
       product_properties:
         type: array
         items:
-          $ref: '#/definitions/product-property'
+          $ref: ./models/product-property.v1.yaml
       shipping_category_id:
         type: integer
       slug:
@@ -4661,161 +4661,7 @@ definitions:
       variants:
         type: array
         items:
-          $ref: '#/definitions/variant'
-  pagination-data:
-    type: object
-    properties:
-      count:
-        type: integer
-      current_page:
-        type: integer
-      pages:
-        type: integer
-      per_page:
-        type: integer
-      total_count:
-        type: integer
-    title: Pagination data
-  image:
-    type: object
-    properties:
-      alt:
-        type: string
-      attachment_content_type:
-        type: string
-      attachment_file_name:
-        type: string
-      attachment_height:
-        type: integer
-      attachment_updated_at:
-        type: string
-      attachment_width:
-        type: integer
-      id:
-        type: integer
-      large_url:
-        type: string
-      mini_url:
-        type: string
-      position:
-        type: integer
-      product_url:
-        type: string
-      small_url:
-        type: string
-      type:
-        type: string
-      viewable_id:
-        type: integer
-      viewable_type:
-        type: string
-    title: Image
-  variant:
-    type: object
-    title: Variant
-    properties:
-      cost_price:
-        type: string
-      depth:
-        type: string
-      description:
-        type: string
-      display_price:
-        type: string
-      height:
-        type: string
-      id:
-        type: integer
-      images:
-        type: array
-        items:
-          $ref: '#/definitions/image'
-      in_stock:
-        type: boolean
-      is_backorderable:
-        type: boolean
-      is_destroyed:
-        type: boolean
-      is_master:
-        type: boolean
-      name:
-        type: string
-      option_values:
-        type: array
-        items:
-          $ref: '#/definitions/option-value'
-      options_text:
-        type: string
-      price:
-        type: string
-      sku:
-        type: string
-      slug:
-        type: string
-      total_on_hand:
-        type: integer
-      track_inventory:
-        type: boolean
-      weight:
-        type: string
-      width:
-        type: string
-  option-value:
-    type: object
-    properties:
-      id:
-        type: integer
-      name:
-        type: string
-      option_type_id:
-        type: integer
-      option_type_name:
-        type: string
-      option_type_presentation:
-        type: string
-      presentation:
-        type: string
-    title: Option value
-  product-property:
-    type: object
-    properties:
-      id:
-        type: integer
-      product_id:
-        type: integer
-      property_id:
-        type: integer
-      property_name:
-        type: string
-      value:
-        type: string
-    title: Product property
-  option-type:
-    type: object
-    properties:
-      id:
-        type: integer
-      name:
-        type: string
-      option_values:
-        type: array
-        items:
-          $ref: '#/definitions/option-value'
-      position:
-        type: integer
-      presentation:
-        type: string
-    title: Option type
-  classification:
-    type: object
-    title: Classification
-    properties:
-      position:
-        type: integer
-      taxon:
-        $ref: '#/definitions/taxon'
-      taxon_id:
-        type: integer
+          $ref: ./models/variant.v1.yaml
   taxon:
     type: object
     properties:
@@ -4836,1223 +4682,6 @@ definitions:
         items:
           $ref: '#/definitions/taxon'
     title: Taxon
-  order-small:
-    type: object
-    properties:
-      additional_tax_total:
-        type: string
-      adjustment_total:
-        type: string
-      canceler_id:
-        type: integer
-      channel:
-        type: string
-      checkout_steps:
-        type: array
-        items:
-          type: string
-      completed_at:
-        type: string
-      covered_by_store_credit:
-        type: boolean
-      created_at:
-        type: string
-      currency:
-        type: string
-      display_additional_tax_total:
-        type: string
-      display_included_tax_total:
-        type: string
-      display_item_total:
-        type: string
-      display_order_total_after_store_credit:
-        type: string
-      display_ship_total:
-        type: string
-      display_store_credit_remaining_after_capture:
-        type: string
-      display_tax_total:
-        type: string
-      display_total:
-        type: string
-      display_total_applicable_store_credit:
-        type: string
-      display_total_available_store_credit:
-        type: string
-      email:
-        type: string
-      id:
-        type: integer
-      included_tax_total:
-        type: string
-      item_total:
-        type: string
-      number:
-        type: string
-      order_total_after_store_credit:
-        type: string
-      payment_state:
-        type: string
-      payment_total:
-        type: string
-      ship_total:
-        type: string
-      shipment_state:
-        type: string
-      special_instructions:
-        type: string
-      state:
-        type: string
-      tax_total:
-        type: string
-      token:
-        type: string
-      total:
-        type: string
-      total_applicable_store_credit:
-        type: string
-      total_quantity:
-        type: integer
-      updated_at:
-        type: string
-      user_id:
-        type: integer
-    title: Order (small)
-  order-big:
-    type: object
-    title: Order (big)
-    properties:
-      additional_tax_total:
-        type: string
-      adjustment_total:
-        type: string
-      adjustments:
-        type: array
-        items:
-          $ref: '#/definitions/adjustment'
-      bill_address:
-        $ref: '#/definitions/address'
-      canceler_id:
-        type: integer
-      channel:
-        type: string
-      checkout_steps:
-        type: array
-        items:
-          type: string
-      completed_at:
-        type: string
-      covered_by_store_credit:
-        type: boolean
-      created_at:
-        type: string
-      credit_cards:
-        type: array
-        items:
-          $ref: '#/definitions/credit-card'
-      currency:
-        type: string
-      display_additional_tax_total:
-        type: string
-      display_included_tax_total:
-        type: string
-      display_item_total:
-        type: string
-      display_order_total_after_store_credit:
-        type: string
-      display_ship_total:
-        type: string
-      display_store_credit_remaining_after_capture:
-        type: string
-      display_tax_total:
-        type: string
-      display_total:
-        type: string
-      display_total_applicable_store_credit:
-        type: string
-      display_total_available_store_credit:
-        type: string
-      email:
-        type: string
-      id:
-        type: integer
-      included_tax_total:
-        type: string
-      item_total:
-        type: string
-      line_items:
-        type: array
-        items:
-          $ref: '#/definitions/line-item'
-      number:
-        type: string
-      order_total_after_store_credit:
-        type: string
-      payment_methods:
-        type: array
-        items:
-          $ref: '#/definitions/payment-method'
-      payment_state:
-        type: string
-      payment_total:
-        type: string
-      payments:
-        type: array
-        items:
-          $ref: '#/definitions/payment'
-      permissions:
-        $ref: '#/definitions/order-permissions'
-      ship_address:
-        $ref: '#/definitions/address'
-      ship_total:
-        type: string
-      shipment_state:
-        type: string
-      shipments:
-        type: array
-        items:
-          $ref: '#/definitions/shipment'
-      special_instructions:
-        type: string
-      state:
-        type: string
-      tax_total:
-        type: string
-      token:
-        type: string
-      total:
-        type: string
-      total_applicable_store_credit:
-        type: string
-      total_quantity:
-        type: integer
-      updated_at:
-        type: string
-      user_id:
-        type: integer
-  address:
-    type: object
-    title: Address
-    properties:
-      address1:
-        type: string
-      address2:
-        type: string
-      alternative_phone:
-        type: string
-      city:
-        type: string
-      company:
-        type: string
-      country:
-        $ref: '#/definitions/country'
-      country_id:
-        type: integer
-      country_iso:
-        type: string
-      firstname:
-        type: string
-      full_name:
-        type: string
-      id:
-        type: integer
-      lastname:
-        type: string
-      phone:
-        type: string
-      state:
-        $ref: '#/definitions/state'
-      state_id:
-        type: integer
-      state_name:
-        type: string
-      state_text:
-        type: string
-      zipcode:
-        type: string
-  country:
-    type: object
-    properties:
-      id:
-        type: integer
-      iso:
-        type: string
-      iso3:
-        type: string
-      iso_name:
-        type: string
-      name:
-        type: string
-      numcode:
-        type: integer
-    title: Country
-  state:
-    type: object
-    properties:
-      abbr:
-        type: string
-      country_id:
-        type: integer
-      id:
-        type: integer
-      name:
-        type: string
-    title: State
-  adjustment:
-    type: object
-    properties:
-      adjustable_id:
-        type: integer
-      adjustable_type:
-        type: string
-      amount:
-        type: string
-      created_at:
-        type: string
-      display_amount:
-        type: string
-      eligible:
-        type: boolean
-      finalized:
-        type: boolean
-      id:
-        type: integer
-      label:
-        type: string
-      promotion_code_id:
-        type: integer
-      source_id:
-        type: integer
-      source_type:
-        type: string
-      updated_at:
-        type: string
-    title: Adjustment
-  credit-card:
-    type: object
-    title: Credit card
-    properties:
-      address: {}
-      cc_type:
-        type: string
-      id:
-        type: integer
-      last_digits:
-        type: string
-      month:
-        type: string
-      name:
-        type: string
-      year:
-        type: string
-  line-item:
-    type: object
-    title: Line item
-    properties:
-      adjustments:
-        type: array
-        items:
-          $ref: '#/definitions/adjustment'
-      display_amount:
-        type: string
-      id:
-        type: integer
-      price:
-        type: string
-      quantity:
-        type: integer
-      single_display_amount:
-        type: string
-      total:
-        type: string
-      variant:
-        $ref: '#/definitions/variant'
-      variant_id:
-        type: integer
-  payment-method:
-    type: object
-    properties:
-      id:
-        type: integer
-      method_type:
-        type: string
-      name:
-        type: string
-      partial_name:
-        type: string
-    title: Payment method
-  payment:
-    type: object
-    title: Payment
-    properties:
-      amount:
-        type: string
-      avs_response:
-        type: string
-      created_at:
-        type: string
-      display_amount:
-        type: string
-      id:
-        type: integer
-      payment_method:
-        $ref: '#/definitions/payment-method'
-      payment_method_id:
-        type: integer
-      source:
-        $ref: '#/definitions/payment-source'
-      source_id:
-        type: integer
-      source_type:
-        type: integer
-      state:
-        type: string
-      updated_at:
-        type: string
-  payment-source:
-    type: object
-    properties:
-      cc_type:
-        type: string
-      gateway_customer_profile_id:
-        type: string
-      gateway_payment_profile_id:
-        type: string
-      id:
-        type: integer
-      last_digits:
-        type: string
-      month:
-        type: string
-      name:
-        type: string
-      year:
-        type: string
-    title: Payment source
-  order-permissions:
-    type: object
-    properties:
-      can_update:
-        type: boolean
-    title: Order permissions
-  shipment:
-    type: object
-    title: Shipment
-    properties:
-      adjustments:
-        type: array
-        items:
-          $ref: '#/definitions/adjustment'
-      cost:
-        type: string
-      id:
-        type: integer
-      manifest:
-        type: array
-        items:
-          $ref: '#/definitions/shipment-manifest'
-      number:
-        type: string
-      order_id:
-        type: string
-      selected_shipping_rate:
-        $ref: '#/definitions/shipping-rate'
-      shipped_at:
-        type: string
-      shipping_methods:
-        type: array
-        items:
-          $ref: '#/definitions/shipping-method'
-      shipping_rates:
-        type: array
-        items:
-          $ref: '#/definitions/shipping-rate'
-      state:
-        type: string
-      stock_location_name:
-        type: string
-      tracking:
-        type: string
-      tracking_url:
-        type: string
-  shipping-rate:
-    type: object
-    title: Shipping rate
-    properties:
-      cost:
-        type: string
-      display_cost:
-        type: string
-      id:
-        type: integer
-      name:
-        type: string
-      selected:
-        type: boolean
-      shipping_method_code:
-        type: string
-      shipping_method_id:
-        type: integer
-  shipping-method:
-    type: object
-    title: Shipping method
-    properties:
-      code:
-        type: string
-      id:
-        type: integer
-      name:
-        type: string
-      shipping_categories:
-        type: array
-        items:
-          $ref: '#/definitions/shipping-category'
-      zones:
-        type: array
-        items:
-          $ref: '#/definitions/zone'
-  shipment-manifest:
-    type: array
-    title: Shipment manifest
-    items:
-      type: object
-      properties:
-        quantity:
-          type: integer
-        states:
-          type: object
-          properties:
-            on_hand:
-              type: integer
-        variant_id:
-          type: integer
-  shipping-category:
-    type: object
-    properties:
-      id:
-        type: integer
-      name:
-        type: string
-    title: Shipping category
-  zone:
-    type: object
-    properties:
-      description:
-        type: string
-      id:
-        type: integer
-      name:
-        type: string
-    title: Zone
-  user:
-    type: object
-    properties:
-      bill_address:
-        $ref: '#/definitions/address'
-      created_at:
-        type: string
-      email:
-        type: string
-      id:
-        type: integer
-      ship_address:
-        $ref: '#/definitions/address'
-      updated_at:
-        type: string
-    title: User
-  return-authorization:
-    type: object
-    properties: {}
-    title: Return authorization
-  property:
-    type: object
-    properties:
-      id:
-        type: integer
-      name:
-        type: string
-      presentation:
-        type: string
-    title: Property
-  inventory-unit:
-    type: object
-    properties:
-      id:
-        type: integer
-      shipment_id:
-        type: integer
-      state:
-        type: string
-      variant_id:
-        type: integer
-    title: Inventory unit
-  stock-location:
-    type: object
-    title: Stock location
-    properties:
-      active:
-        type: boolean
-      address1:
-        type: string
-      address2:
-        type: string
-      city:
-        type: string
-      country:
-        $ref: '#/definitions/country'
-      country_id:
-        type: integer
-      id:
-        type: integer
-      name:
-        type: string
-      phone:
-        type: string
-      state:
-        $ref: '#/definitions/state'
-      state_id:
-        type: integer
-      state_name:
-        type: string
-      zipcode:
-        type: string
-  stock-item:
-    type: object
-    properties:
-      backorderable:
-        type: boolean
-      count_on_hand:
-        type: integer
-      id:
-        type: integer
-      stock_location_id:
-        type: integer
-      variant:
-        $ref: '#/definitions/variant'
-      variant_id:
-        type: integer
-    title: Stock item
-  stock-movement:
-    type: object
-    title: Stock movement
-    properties:
-      id:
-        type: integer
-      quantity:
-        type: integer
-      stock_item:
-        $ref: '#/definitions/stock-item'
-      stock_item_id:
-        type: integer
-  store:
-    type: object
-    title: Store
-    properties:
-      available_locales:
-        type: array
-        items:
-          type: string
-      code:
-        type: string
-      default:
-        type: boolean
-      default_currency:
-        type: string
-      id:
-        type: integer
-      mail_from_address:
-        type: string
-      meta_description:
-        type: string
-      meta_keywords:
-        type: string
-      name:
-        type: string
-      seo_title:
-        type: string
-      url:
-        type: string
-  taxonomy:
-    type: object
-    properties:
-      id:
-        type: integer
-      name:
-        type: string
-      root:
-        $ref: '#/definitions/taxon'
-    title: Taxonomy
-  jstree:
-    type: array
-    items:
-      type: object
-      properties:
-        attr:
-          type: object
-          properties:
-            id:
-              type: integer
-            name:
-              type: string
-        data:
-          type: string
-        state:
-          type: string
-    title: jsTree
-  promotion:
-    type: object
-    properties:
-      advertise:
-        type: boolean
-      description:
-        type: string
-      expires_at:
-        type: string
-      id:
-        type: integer
-      match_policy:
-        type: string
-      name:
-        type: string
-      path:
-        type: string
-      starts_at:
-        type: string
-      type:
-        type: string
-      usage_limit:
-        type: integer
-    title: Promotion
-  store-credit-event:
-    type: object
-    title: Store credit event
-    properties:
-      display_action:
-        type: string
-      display_amount:
-        type: string
-      display_event_date:
-        type: string
-      display_remaining_amount:
-        type: string
-      display_user_total_amount:
-        type: string
-      order_number:
-        type: string
-  coupon-code-handler:
-    type: object
-    title: Coupon code handler
-    properties:
-      success:
-        type: string
-      error:
-        type: string
-      successful:
-        type: boolean
-      status_code:
-        type: string
-  address-book:
-    type: array
-    title: Address book
-    items:
-      allOf:
-        - $ref: '#/definitions/address'
-        - type: object
-          properties:
-            default:
-              type: boolean
-  return-authorization-input:
-    type: object
-    title: Return Authorization Input
-    properties:
-      memo:
-        type: string
-      stock_location_id:
-        type: integer
-      return_reason_id:
-        type: integer
-      return_items_attributes:
-        type: array
-        items:
-          type: object
-          properties:
-            inventory_unit_id:
-              type: integer
-            exchange_variant_id:
-              type: integer
-            return_reason_id:
-              type: integer
-  address-input:
-    type: object
-    title: Address Input
-    properties:
-      id:
-        type: integer
-      firstname:
-        type: string
-      lastname:
-        type: string
-      address1:
-        type: string
-      address2:
-        type: string
-      city:
-        type: string
-      country_id:
-        type: integer
-      state_id:
-        type: integer
-      zipcode:
-        type: string
-      phone:
-        type: string
-      state_name:
-        type: string
-      country_iso:
-        type: string
-      alternative_phone:
-        type: string
-      company:
-        type: string
-      country:
-        type: object
-        properties:
-          iso:
-            type: string
-          name:
-            type: string
-          iso3:
-            type: string
-          iso_name:
-            type: string
-      state:
-        type: object
-        properties:
-          name:
-            type: string
-          abbr:
-            type: string
-  line-item-input:
-    type: object
-    title: Line item input
-    properties:
-      quantity:
-        type: integer
-      options:
-        type: object
-  option-type-input:
-    type: object
-    title: Option type input
-    properties:
-      name:
-        type: string
-      presentation:
-        type: string
-      option_values_attributes:
-        type: array
-        items:
-          $ref: '#/definitions/option-value-input'
-  option-value-input:
-    type: object
-    title: Option value input
-    properties:
-      name:
-        type: string
-      presentation:
-        type: string
-  checkout-input:
-    type: object
-    title: Checkout input
-    properties:
-      coupon_code:
-        type: string
-      email:
-        type: string
-      special_instructions:
-        type: string
-      use_billing:
-        type: boolean
-      bill_address_attributes:
-        $ref: '#/definitions/address-input'
-      ship_address_attributes:
-        $ref: '#/definitions/address-input'
-      payments_attributes:
-        type: array
-        items:
-          $ref: '#/definitions/payment-input'
-      shipments_attributes:
-        type: array
-        items:
-          $ref: '#/definitions/shipment-input'
-  credit-card-update-input:
-    type: object
-    title: Credit card update input
-    properties:
-      month:
-        type: string
-      year:
-        type: string
-      expirty:
-        type: string
-      first_name:
-        type: string
-      last_name:
-        type: string
-      name:
-        type: string
-      address_attributes:
-        $ref: '#/definitions/address-input'
-  inventory-unit-input:
-    type: object
-    title: Inventory unit input
-    properties:
-      shipment:
-        type: string
-      variant_id:
-        type: integer
-  payment-input:
-    type: object
-    title: Payment input
-    properties:
-      amount:
-        type: string
-      payment_method_id:
-        type: integer
-      payment_method:
-        type: string
-      source_attributes:
-        type: object
-        properties:
-          number:
-            type: string
-          month:
-            type: integer
-          year:
-            type: integer
-          verification_value:
-            type: string
-          first_name:
-            type: string
-          last_name:
-            type: string
-          cc_type:
-            type: string
-          gateway_customer_profile_id:
-            type: string
-          gateway_payment_profile_id:
-            type: string
-          last_digits:
-            type: string
-          name:
-            type: string
-          encrypted_data:
-            type: string
-          existing_card_id:
-            type: integer
-          wallet_payment_source_id:
-            type: integer
-          address_attributes:
-            $ref: '#/definitions/address-input'
-  shipment-input:
-    type: object
-    title: Shipment input
-    properties:
-      special_instructions:
-        type: string
-      stock_location_id:
-        type: integer
-      id:
-        type: integer
-      tracking:
-        type: string
-      selected_shipping_rate_id:
-        type: integer
-  order-input:
-    title: Order input
-    allOf:
-      - $ref: '#/definitions/checkout-input'
-      - type: object
-        properties:
-          line_items_attributes:
-            type: array
-            items:
-              $ref: '#/definitions/line-item-input'
-  product-input:
-    type: object
-    title: Product input
-    properties:
-      name:
-        type: string
-      description:
-        type: string
-      available_on:
-        type: string
-      permalink:
-        type: string
-      meta_description:
-        type: string
-      meta_keywords:
-        type: string
-      price:
-        type: string
-      sku:
-        type: string
-      deleted_at:
-        type: string
-      option_values_hash:
-        type: object
-      weight:
-        type: string
-      height:
-        type: string
-      width:
-        type: string
-      depth:
-        type: string
-      shipping_category_id:
-        type: integer
-      tax_category_id:
-        type: integer
-      taxon_ids:
-        type: array
-        items:
-          type: integer
-      option_type_ids:
-        type: array
-        items:
-          type: integer
-      cost_currency:
-        type: string
-      cost_price:
-        type: string
-      product_properties_attributes:
-        type: array
-        items:
-          $ref: '#/definitions/product-property-input'
-  product-property-input:
-    type: object
-    title: Product property input
-    properties:
-      property_name:
-        type: string
-      value:
-        type: string
-      position:
-        type: integer
-  image-input:
-    type: object
-    title: Image input
-    properties:
-      alt:
-        type: string
-      attachment:
-        type: string
-      position:
-        type: integer
-      viewable_type:
-        type: string
-      viewable_id:
-        type: integer
-  variant-input:
-    type: object
-    title: Variant input
-    properties:
-      name:
-        type: string
-      presentation:
-        type: string
-      cost_price:
-        type: string
-      lock_version:
-        type: string
-      position:
-        type: integer
-      track_inventory:
-        type: boolean
-      product_id:
-        type: integer
-      product:
-        type: integer
-      option_values_attributes:
-        type: array
-        items:
-          $ref: '#/definitions/option-value-input'
-      price:
-        type: string
-      weight:
-        type: string
-      height:
-        type: string
-      width:
-        type: string
-      depth:
-        type: string
-      sku:
-        type: string
-      cost_currency:
-        type: string
-      option_value_ids:
-        type: array
-        items:
-          type: integer
-      options:
-        type: object
-        properties:
-          name:
-            type: string
-          value:
-            type: string
-  property-input:
-    type: object
-    title: Property input
-    properties:
-      name:
-        type: string
-      presentation:
-        type: string
-  stock-item-input:
-    type: object
-    title: Stock item input
-    properties:
-      variant:
-        type: integer
-      stock_location:
-        type: integer
-      backorderable:
-        type: boolean
-      variant_id:
-        type: integer
-  stock-location-input:
-    type: object
-    title: Stock location input
-    properties:
-      name:
-        type: string
-      active:
-        type: boolean
-      address1:
-        type: string
-      address2:
-        type: string
-      city:
-        type: string
-      zipcode:
-        type: string
-      backorderable_default:
-        type: boolean
-      state_name:
-        type: string
-      state_id:
-        type: integer
-      country_id:
-        type: integer
-      phone:
-        type: string
-      propagate_all_variants:
-        type: boolean
-  store-input:
-    type: object
-    title: Store input
-    properties:
-      name:
-        type: string
-      url:
-        type: string
-      seo_title:
-        type: string
-      meta_keywords:
-        type: string
-      meta_description:
-        type: string
-      default_currency:
-        type: string
-      mail_from_address:
-        type: string
-      cart_tax_country_iso:
-        type: string
-  taxonomy-input:
-    type: object
-    title: Taxonomy input
-    properties:
-      name:
-        type: string
-  taxon-input:
-    type: object
-    title: Taxon input
-    properties:
-      name:
-        type: string
-      parent_id:
-        type: integer
-      position:
-        type: integer
-      icon:
-        type: string
-      description:
-        type: string
-      permalink:
-        type: string
-      taxonomy_id:
-        type: integer
-      meta_description:
-        type: string
-      meta_keywords:
-        type: string
-      meta_title:
-        type: string
-      child_index:
-        type: integer
-  user-input:
-    type: object
-    title: User input
-    properties:
-      password:
-        type: string
-      password_confirmation:
-        type: string
-      bill_address_attributes:
-        $ref: '#/definitions/address-input'
-      ship_address_attributes:
-        $ref: '#/definitions/address-input'
-  address-book-input:
-    title: Address book input
-    allOf:
-      - $ref: '#/definitions/address-input'
-      - type: object
-        properties:
-          default:
-            type: boolean
-  zone-input:
-    type: object
-    title: Zone input
-    properties:
-      name:
-        type: string
-      description:
-        type: string
-      zone_members_attributes:
-        type: array
-        items:
-          type: object
-          properties:
-            zoneable_type:
-              type: string
-            zoneable_id:
-              type: integer
-  coupon-code-input:
-    type: object
-    title: Coupon code input
-    properties:
-      coupon_code:
-        type: string
-  stock-movement-input:
-    type: object
-    title: Stock movement input
-    properties:
-      quantity:
-        type: integer
-      stock_item_id:
-        type: integer
 basePath: /api
 securityDefinitions:
   api-key:

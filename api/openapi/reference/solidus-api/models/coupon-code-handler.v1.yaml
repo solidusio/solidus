@@ -1,0 +1,11 @@
+title: Coupon code handler
+type: object
+properties:
+  success:
+    type: string
+  error:
+    type: string
+  successful:
+    type: boolean
+  status_code:
+    type: string

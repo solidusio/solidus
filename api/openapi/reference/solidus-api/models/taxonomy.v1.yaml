@@ -1,0 +1,9 @@
+title: Taxonomy
+type: object
+properties:
+  id:
+    type: integer
+  name:
+    type: string
+  root:
+    $ref: '../openapi.yml#/definitions/taxon'

@@ -1,0 +1,5 @@
+title: Order permissions
+type: object
+properties:
+  can_update:
+    type: boolean

@@ -1,0 +1,5 @@
+type: object
+title: Coupon code input
+properties:
+  coupon_code:
+    type: string

@@ -1,0 +1,48 @@
+title: Variant input
+type: object
+properties:
+  name:
+    type: string
+  presentation:
+    type: string
+  cost_price:
+    type: string
+  lock_version:
+    type: string
+  position:
+    type: integer
+  track_inventory:
+    type: boolean
+  product_id:
+    type: integer
+  product:
+    type: integer
+  option_values_attributes:
+    type: array
+    items:
+      $ref: './option-value-input.v1.yaml'
+  price:
+    type: string
+  weight:
+    type: string
+  height:
+    type: string
+  width:
+    type: string
+  depth:
+    type: string
+  sku:
+    type: string
+  cost_currency:
+    type: string
+  option_value_ids:
+    type: array
+    items:
+      type: integer
+  options:
+    type: object
+    properties:
+      name:
+        type: string
+      value:
+        type: string

@@ -1,0 +1,11 @@
+type: object
+title: Option type input
+properties:
+  name:
+    type: string
+  presentation:
+    type: string
+  option_values_attributes:
+    type: array
+    items:
+      $ref: './option-value-input.v1.yaml'

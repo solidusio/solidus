@@ -1,0 +1,11 @@
+title: Stock item input
+type: object
+properties:
+  variant:
+    type: integer
+  stock_location:
+    type: integer
+  backorderable:
+    type: boolean
+  variant_id:
+    type: integer

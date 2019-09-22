@@ -1,0 +1,25 @@
+title: Taxon input
+type: object
+properties:
+  name:
+    type: string
+  parent_id:
+    type: integer
+  position:
+    type: integer
+  icon:
+    type: string
+  description:
+    type: string
+  permalink:
+    type: string
+  taxonomy_id:
+    type: integer
+  meta_description:
+    type: string
+  meta_keywords:
+    type: string
+  meta_title:
+    type: string
+  child_index:
+    type: integer

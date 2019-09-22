@@ -1,0 +1,17 @@
+title: Credit card update input
+type: object
+properties:
+  month:
+    type: string
+  year:
+    type: string
+  expirty:
+    type: string
+  first_name:
+    type: string
+  last_name:
+    type: string
+  name:
+    type: string
+  address_attributes:
+    $ref: './address-input.v1.yaml'

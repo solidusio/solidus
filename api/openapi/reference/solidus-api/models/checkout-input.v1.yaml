@@ -1,0 +1,23 @@
+type: object
+title: Checkout input
+properties:
+  coupon_code:
+    type: string
+  email:
+    type: string
+  special_instructions:
+    type: string
+  use_billing:
+    type: boolean
+  bill_address_attributes:
+    $ref: ./address-input.v1.yaml
+  ship_address_attributes:
+    $ref: ./address-input.v1.yaml
+  payments_attributes:
+    type: array
+    items:
+      $ref: ./payment-input.v1.yaml
+  shipments_attributes:
+    type: array
+    items:
+      $ref: ./shipment-input.v1.yaml

@@ -1,0 +1,15 @@
+title: Store credit event
+type: object
+properties:
+  display_action:
+    type: string
+  display_amount:
+    type: string
+  display_event_date:
+    type: string
+  display_remaining_amount:
+    type: string
+  display_user_total_amount:
+    type: string
+  order_number:
+    type: string

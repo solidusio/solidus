@@ -1,0 +1,39 @@
+type: object
+title: Address
+properties:
+  address1:
+    type: string
+  address2:
+    type: string
+  alternative_phone:
+    type: string
+  city:
+    type: string
+  company:
+    type: string
+  country:
+    $ref: './country.v1.yaml'
+  country_id:
+    type: integer
+  country_iso:
+    type: string
+  firstname:
+    type: string
+  full_name:
+    type: string
+  id:
+    type: integer
+  lastname:
+    type: string
+  phone:
+    type: string
+  state:
+    $ref: './state.v1.yaml'
+  state_id:
+    type: integer
+  state_name:
+    type: string
+  state_text:
+    type: string
+  zipcode:
+    type: string

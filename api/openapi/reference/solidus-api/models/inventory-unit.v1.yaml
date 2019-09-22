@@ -1,0 +1,11 @@
+title: Inventory unit
+type: object
+properties:
+  id:
+    type: integer
+  shipment_id:
+    type: integer
+  state:
+    type: string
+  variant_id:
+    type: integer

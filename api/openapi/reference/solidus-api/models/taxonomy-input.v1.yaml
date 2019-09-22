@@ -1,0 +1,5 @@
+title: Taxonomy input
+type: object
+properties:
+  name:
+    type: string

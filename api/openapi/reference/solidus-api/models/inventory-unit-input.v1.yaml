@@ -1,0 +1,7 @@
+title: Inventory unit input
+type: object
+properties:
+  shipment:
+    type: string
+  variant_id:
+    type: integer

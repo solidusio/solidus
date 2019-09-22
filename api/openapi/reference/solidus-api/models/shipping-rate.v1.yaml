@@ -1,0 +1,17 @@
+title: Shipping rate
+type: object
+properties:
+  cost:
+    type: string
+  display_cost:
+    type: string
+  id:
+    type: integer
+  name:
+    type: string
+  selected:
+    type: boolean
+  shipping_method_code:
+    type: string
+  shipping_method_id:
+    type: integer

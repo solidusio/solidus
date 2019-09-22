@@ -1,0 +1,13 @@
+title: Shipment input
+type: object
+properties:
+  special_instructions:
+    type: string
+  stock_location_id:
+    type: integer
+  id:
+    type: integer
+  tracking:
+    type: string
+  selected_shipping_rate_id:
+    type: integer

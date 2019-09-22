@@ -1,0 +1,27 @@
+title: Store
+type: object
+properties:
+  available_locales:
+    type: array
+    items:
+      type: string
+  code:
+    type: string
+  default:
+    type: boolean
+  default_currency:
+    type: string
+  id:
+    type: integer
+  mail_from_address:
+    type: string
+  meta_description:
+    type: string
+  meta_keywords:
+    type: string
+  name:
+    type: string
+  seo_title:
+    type: string
+  url:
+    type: string

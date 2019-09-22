@@ -1,0 +1,27 @@
+title: Payment
+type: object
+properties:
+  amount:
+    type: string
+  avs_response:
+    type: string
+  created_at:
+    type: string
+  display_amount:
+    type: string
+  id:
+    type: integer
+  payment_method:
+    $ref: './payment-method.v1.yaml'
+  payment_method_id:
+    type: integer
+  source:
+    $ref: './payment-source.v1.yaml'
+  source_id:
+    type: integer
+  source_type:
+    type: integer
+  state:
+    type: string
+  updated_at:
+    type: string

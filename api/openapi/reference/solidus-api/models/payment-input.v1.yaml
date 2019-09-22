@@ -1,0 +1,42 @@
+title: Payment input
+type: object
+properties:
+  amount:
+    type: string
+  payment_method_id:
+    type: integer
+  payment_method:
+    type: string
+  source_attributes:
+    type: object
+    properties:
+      number:
+        type: string
+      month:
+        type: integer
+      year:
+        type: integer
+      verification_value:
+        type: string
+      first_name:
+        type: string
+      last_name:
+        type: string
+      cc_type:
+        type: string
+      gateway_customer_profile_id:
+        type: string
+      gateway_payment_profile_id:
+        type: string
+      last_digits:
+        type: string
+      name:
+        type: string
+      encrypted_data:
+        type: string
+      existing_card_id:
+        type: integer
+      wallet_payment_source_id:
+        type: integer
+      address_attributes:
+        $ref: './address-input.v1.yaml'

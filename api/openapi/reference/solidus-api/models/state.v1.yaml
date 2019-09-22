@@ -1,0 +1,11 @@
+title: State
+type: object
+properties:
+  abbr:
+    type: string
+  country_id:
+     type: integer
+  id:
+    type: integer
+  name:
+    type: string

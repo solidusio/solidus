@@ -1,0 +1,15 @@
+title: Stock item
+type: object
+properties:
+  backorderable:
+    type: boolean
+  count_on_hand:
+    type: integer
+  id:
+    type: integer
+  stock_location_id:
+    type: integer
+  variant:
+    $ref: ./variant.v1.yaml
+  variant_id:
+    type: integer

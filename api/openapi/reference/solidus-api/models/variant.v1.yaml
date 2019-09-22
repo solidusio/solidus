@@ -1,0 +1,49 @@
+title: Variant
+type: object
+properties:
+  cost_price:
+    type: string
+  depth:
+    type: string
+  description:
+    type: string
+  display_price:
+    type: string
+  height:
+    type: string
+  id:
+    type: integer
+  images:
+    type: array
+    items:
+      $ref: ./image.v1.yaml
+  in_stock:
+    type: boolean
+  is_backorderable:
+    type: boolean
+  is_destroyed:
+    type: boolean
+  is_master:
+    type: boolean
+  name:
+    type: string
+  option_values:
+    type: array
+    items:
+      $ref: './option-value.v1.yaml'
+  options_text:
+    type: string
+  price:
+    type: string
+  sku:
+    type: string
+  slug:
+    type: string
+  total_on_hand:
+    type: integer
+  track_inventory:
+    type: boolean
+  weight:
+    type: string
+  width:
+    type: string

@@ -1,0 +1,17 @@
+title: Shipping method
+type: object
+properties:
+  code:
+    type: string
+  id:
+    type: integer
+  name:
+    type: string
+  shipping_categories:
+    type: array
+    items:
+      $ref: './shipping-category.v1.yaml'
+  zones:
+    type: array
+    items:
+      $ref: './zone.v1.yaml'

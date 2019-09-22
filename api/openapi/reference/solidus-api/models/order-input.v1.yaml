@@ -1,0 +1,9 @@
+title: Order input
+allOf:
+  - $ref: './checkout-input.v1.yaml'
+  - type: object
+    properties:
+      line_items_attributes:
+        type: array
+        items:
+          $ref: './line-item-input.v1.yaml'

@@ -1,0 +1,15 @@
+title: Country
+type: object
+properties:
+  id:
+    type: integer
+  iso:
+   type: string
+  iso3:
+    type: string
+  iso_name:
+    type: string
+  name:
+    type: string
+  numcode:
+    type: integer

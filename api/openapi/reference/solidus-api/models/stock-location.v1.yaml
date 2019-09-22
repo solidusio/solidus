@@ -1,0 +1,29 @@
+title: Stock location
+type: object
+properties:
+  active:
+    type: boolean
+  address1:
+    type: string
+  address2:
+    type: string
+  city:
+    type: string
+  country:
+    $ref: ./country.v1.yaml
+  country_id:
+    type: integer
+  id:
+    type: integer
+  name:
+    type: string
+  phone:
+    type: string
+  state:
+    $ref: ./state.v1.yaml
+  state_id:
+    type: integer
+  state_name:
+    type: string
+  zipcode:
+    type: string

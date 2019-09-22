@@ -1,0 +1,9 @@
+title: Address book
+type: array
+items:
+  allOf:
+    - $ref: './address.v1.yaml'
+    - type: object
+      properties:
+        default:
+          type: boolean

@@ -1,0 +1,20 @@
+title: Return Authorization Input
+type: object
+properties:
+  memo:
+    type: string
+  stock_location_id:
+    type: integer
+  return_reason_id:
+    type: integer
+  return_items_attributes:
+    type: array
+    items:
+      type: object
+      properties:
+        inventory_unit_id:
+          type: integer
+        exchange_variant_id:
+          type: integer
+        return_reason_id:
+          type: integer

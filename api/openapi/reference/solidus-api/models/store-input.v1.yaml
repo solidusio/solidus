@@ -1,0 +1,19 @@
+title: Store input
+type: object
+properties:
+  name:
+    type: string
+  url:
+    type: string
+  seo_title:
+    type: string
+  meta_keywords:
+    type: string
+  meta_description:
+    type: string
+  default_currency:
+    type: string
+  mail_from_address:
+    type: string
+  cart_tax_country_iso:
+    type: string

@@ -1,0 +1,14 @@
+title: Shipment manifest
+type: array
+items:
+  type: object
+  properties:
+    quantity:
+      type: integer
+    states:
+      type: object
+      properties:
+        on_hand:
+          type: integer
+    variant_id:
+      type: integer

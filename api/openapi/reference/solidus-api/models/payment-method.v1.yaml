@@ -1,0 +1,11 @@
+title: Payment method
+type: object
+properties:
+  id:
+    type: integer
+  method_type:
+    type: string
+  name:
+    type: string
+  partial_name:
+    type: string

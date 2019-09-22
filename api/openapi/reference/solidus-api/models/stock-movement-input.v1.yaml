@@ -1,0 +1,7 @@
+title: Stock movement input
+type: object
+properties:
+  quantity:
+    type: integer
+  stock_item_id:
+    type: integer

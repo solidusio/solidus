@@ -1,0 +1,16 @@
+title: Credit card
+type: object
+properties:
+  address: {}
+  cc_type:
+    type: string
+  id:
+    type: integer
+  last_digits:
+    type: string
+  month:
+    type: string
+  name:
+    type: string
+  year:
+    type: string

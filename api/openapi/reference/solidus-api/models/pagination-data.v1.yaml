@@ -1,0 +1,13 @@
+title: Pagination data
+type: object
+properties:
+  count:
+    type: integer
+  current_page:
+    type: integer
+  pages:
+    type: integer
+  per_page:
+    type: integer
+  total_count:
+    type: integer

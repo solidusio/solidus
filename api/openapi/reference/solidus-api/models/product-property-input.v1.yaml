@@ -1,0 +1,9 @@
+title: Product property input
+type: object
+properties:
+  property_name:
+    type: string
+  value:
+    type: string
+  position:
+    type: integer

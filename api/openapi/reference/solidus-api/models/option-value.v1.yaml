@@ -1,0 +1,15 @@
+title: Option value
+type: object
+properties:
+  id:
+    type: integer
+  name:
+    type: string
+  option_type_id:
+    type: integer
+  option_type_name:
+    type: string
+  option_type_presentation:
+    type: string
+  presentation:
+    type: string

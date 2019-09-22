@@ -1,0 +1,39 @@
+title: Shipment
+type: object
+properties:
+  adjustments:
+    type: array
+    items:
+      $ref: './adjustment.v1.yaml'
+  cost:
+    type: string
+  id:
+    type: integer
+  manifest:
+    type: array
+    items:
+      $ref: './shipment-manifest.v1.yaml'
+  number:
+    type: string
+  order_id:
+    type: string
+  selected_shipping_rate:
+    $ref: './shipping-rate.v1.yaml'
+  shipped_at:
+    type: string
+  shipping_methods:
+    type: array
+    items:
+      $ref: './shipping-method.v1.yaml'
+  shipping_rates:
+    type: array
+    items:
+      $ref: './shipping-rate.v1.yaml'
+  state:
+    type: string
+  stock_location_name:
+    type: string
+  tracking:
+    type: string
+  tracking_url:
+    type: string

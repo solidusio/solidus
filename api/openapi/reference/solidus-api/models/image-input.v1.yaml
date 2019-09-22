@@ -1,0 +1,13 @@
+type: object
+title: Image input
+properties:
+  alt:
+    type: string
+  attachment:
+    type: string
+  position:
+    type: integer
+  viewable_type:
+    type: string
+  viewable_id:
+    type: integer

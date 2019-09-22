@@ -1,0 +1,49 @@
+title: Address Input
+type: object
+properties:
+  id:
+    type: integer
+  firstname:
+    type: string
+  lastname:
+    type: string
+  address1:
+    type: string
+  address2:
+    type: string
+  city:
+    type: string
+  country_id:
+    type: integer
+  state_id:
+    type: integer
+  zipcode:
+    type: string
+  phone:
+    type: string
+  state_name:
+    type: string
+  country_iso:
+    type: string
+  alternative_phone:
+    type: string
+  company:
+    type: string
+  country:
+    type: object
+    properties:
+      iso:
+        type: string
+      name:
+        type: string
+      iso3:
+        type: string
+      iso_name:
+        type: string
+  state:
+    type: object
+    properties:
+      name:
+        type: string
+      abbr:
+        type: string
