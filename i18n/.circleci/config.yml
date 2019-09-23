@@ -1,0 +1,35 @@
+version: 2.1
+
+orbs:
+  # Always take the latest version of the orb, this allows us to
+  # run specs against Solidus supported versions only without the need
+  # to change this configuration every time a Solidus version is released
+  # or goes EOL.
+  solidusio_extensions: solidusio/extensions@volatile
+
+jobs:
+  run-specs-with-postgres:
+    executor: solidusio_extensions/postgres
+    steps:
+      - solidusio_extensions/run-tests
+  run-specs-with-mysql:
+    executor: solidusio_extensions/mysql
+    steps:
+      - solidusio_extensions/run-tests
+
+workflows:
+  "Run specs on supported Solidus versions":
+    jobs:
+      - run-specs-with-postgres
+      - run-specs-with-mysql
+  "Weekly run specs against master":
+    triggers:
+      - schedule:
+          cron: "0 0 * * 4" # every Thursday
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - run-specs-with-postgres
+      - run-specs-with-mysql
