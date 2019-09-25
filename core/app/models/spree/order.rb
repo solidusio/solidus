@@ -204,6 +204,14 @@ module Spree
       line_items.to_a.sum(&:total_before_tax)
     end
 
+    def promotable_items
+      line_items.joins(:product).where(spree_products: { promotionable: true })
+    end
+
+    def promotable_item_total
+      promotable_items.to_a.sum(&:amount)
+    end
+
     # Sum of all line item amounts pre-tax
     def item_total_excluding_vat
       line_items.to_a.sum(&:total_excluding_vat)
