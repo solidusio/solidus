@@ -8,10 +8,6 @@ module Spree
     # The class used for tax calculation is configurable, so that the
     # calculation can easily be pushed to third-party services. Users looking
     # to provide their own calculator should adhere to the API of this class.
-    #
-    # @api experimental
-    # @note This API is currently in development and likely to change.
-    #   Specifically, the input format is not yet finalized.
     class Default
       include Spree::Tax::TaxHelpers
 
