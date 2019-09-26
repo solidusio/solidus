@@ -15,7 +15,7 @@ module Spree
         build(:stock_package, variants_contents: { variant1 => 4, variant2 => 6 })
       end
 
-      let(:subject) { FlexiRate.new }
+      let(:subject) { described_class.new }
 
       context "compute" do
         it "should compute amount correctly when all fees are 0" do
@@ -46,7 +46,7 @@ module Spree
         end
 
         it "should allow creation of new object with all the attributes" do
-          FlexiRate.new(preferred_first_item: 1,
+          described_class.new(preferred_first_item: 1,
                         preferred_additional_item: 1,
                         preferred_max_items: 1)
         end

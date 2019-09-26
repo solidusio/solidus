@@ -25,7 +25,7 @@ module Spree
         )
       end
 
-      subject { FlatPercentItemTotal.new(preferred_flat_percent: 10) }
+      subject { described_class.new(preferred_flat_percent: 10) }
 
       it "should round result correctly" do
         expect(subject.compute(package)).to eq(4.04)

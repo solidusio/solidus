@@ -6,7 +6,7 @@ require 'shared_examples/calculator_shared_examples'
 module Spree
   module Calculator::Shipping
     RSpec.describe FlatRate, type: :model do
-      subject { Calculator::Shipping::FlatRate.new(preferred_amount: 4.00) }
+      subject { described_class.new(preferred_amount: 4.00) }
 
       it_behaves_like 'a calculator with a description'
 
