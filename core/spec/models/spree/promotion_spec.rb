@@ -512,7 +512,7 @@ RSpec.describe Spree::Promotion, type: :model do
     end
 
     let!(:action) do
-      calculator = Spree::Calculator::FlatRate.new
+      calculator = Spree::Calculator::Promotion::FlatRate.new
       action_params = { promotion: promotion, calculator: calculator }
       action = Spree::Promotion::Actions::CreateAdjustment.create(action_params)
       promotion.actions << action

@@ -3,11 +3,12 @@
 require_dependency 'spree/calculator'
 
 module Spree
-  class Calculator::PercentOnLineItem < Calculator
-    preference :percent, :decimal, default: 0
-
-    def compute(object)
-      (object.amount * preferred_percent) / 100
-    end
+  class Calculator
+    PercentOnLineItem =
+      ActiveSupport::Deprecation::DeprecatedConstantProxy.new(
+        'Spree::Calculator::PercentOnLineItem',
+        'Spree::Calculator::Promotion::PercentOnLineItem',
+        Spree::Deprecation
+      )
   end
 end

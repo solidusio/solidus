@@ -84,7 +84,7 @@ RSpec.describe Spree::OrderContents, type: :model do
 
     context "running promotions" do
       let(:promotion) { create(:promotion, apply_automatically: true) }
-      let(:calculator) { Spree::Calculator::FlatRate.new(preferred_amount: 10) }
+      let(:calculator) { Spree::Calculator::Promotion::FlatRate.new(preferred_amount: 10) }
 
       shared_context "discount changes order total" do
         before { subject.add(variant, 1) }

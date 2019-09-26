@@ -3,9 +3,9 @@
 require 'rails_helper'
 require 'shared_examples/calculator_shared_examples'
 
-RSpec.describe Spree::Calculator::DistributedAmount, type: :model do
+RSpec.describe Spree::Calculator::Promotion::DistributedAmount, type: :model do
   context 'applied to an order' do
-    let(:calculator) { Spree::Calculator::DistributedAmount.new }
+    let(:calculator) { described_class.new }
     let(:promotion) {
       create :promotion,
         name: '15 spread'
@@ -52,7 +52,7 @@ RSpec.describe Spree::Calculator::DistributedAmount, type: :model do
   describe "#compute_line_item" do
     subject { calculator.compute_line_item(order.line_items.first) }
 
-    let(:calculator) { Spree::Calculator::DistributedAmount.new }
+    let(:calculator) { described_class.new }
     let(:promotion) { create(:promotion) }
 
     let(:order) do

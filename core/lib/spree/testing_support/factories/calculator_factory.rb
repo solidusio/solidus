@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :calculator, aliases: [:flat_rate_calculator], class: 'Spree::Calculator::FlatRate' do
+  factory :calculator, aliases: [:flat_rate_calculator, :promotion_calculator], class: 'Spree::Calculator::Promotion::FlatRate' do
     preferred_amount { 10.0 }
   end
 
-  factory :no_amount_calculator, class: 'Spree::Calculator::FlatRate' do
+  factory :no_amount_calculator, aliases: [:promotion_no_amount_calculator], class: 'Spree::Calculator::Promotion::FlatRate' do
     preferred_amount { 0 }
   end
 
@@ -20,7 +20,7 @@ FactoryBot.define do
     preferred_amount { 0 }
   end
 
-  factory :percent_on_item_calculator, class: 'Spree::Calculator::PercentOnLineItem' do
+  factory :percent_on_item_calculator, class: 'Spree::Calculator::Promotion::PercentOnLineItem' do
     preferred_percent { 10 }
   end
 end

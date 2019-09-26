@@ -9,7 +9,7 @@ module Spree
 
     context "adds item to cart and activates promo" do
       let(:promotion) { Promotion.create name: 'Huhu', apply_automatically: true }
-      let(:calculator) { Calculator::FlatPercentItemTotal.new(preferred_flat_percent: 10) }
+      let(:calculator) { Calculator::Promotion::FlatPercentItemTotal.new(preferred_flat_percent: 10) }
       let!(:action) { Promotion::Actions::CreateAdjustment.create(promotion: promotion, calculator: calculator) }
 
       before { order.contents.add(shirt, 1) }

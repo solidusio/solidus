@@ -467,7 +467,7 @@ describe "Checkout", type: :feature, inaccessible: true do
 
   context "Coupon promotions", js: true do
     let!(:promotion) { create(:promotion, name: "Huhuhu", code: "huhu") }
-    let!(:calculator) { Spree::Calculator::FlatPercentItemTotal.create(preferred_flat_percent: "10") }
+    let!(:calculator) { Spree::Calculator::Promotion::FlatPercentItemTotal.create(preferred_flat_percent: "10") }
     let!(:action) { Spree::Promotion::Actions::CreateItemAdjustments.create(calculator: calculator) }
 
     before do

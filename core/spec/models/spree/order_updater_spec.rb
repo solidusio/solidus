@@ -51,7 +51,7 @@ module Spree
 
       context 'with order promotion followed by line item addition' do
         let(:promotion) { Spree::Promotion.create!(name: "10% off") }
-        let(:calculator) { Calculator::FlatPercentItemTotal.new(preferred_flat_percent: 10) }
+        let(:calculator) { Calculator::Promotion::FlatPercentItemTotal.new(preferred_flat_percent: 10) }
 
         let(:promotion_action) do
           Promotion::Actions::CreateAdjustment.create!({
@@ -92,7 +92,7 @@ module Spree
         context 'when the item quantity has changed' do
           let(:promotion) { create(:promotion, promotion_actions: [promotion_action]) }
           let(:promotion_action) { Spree::Promotion::Actions::CreateItemAdjustments.new(calculator: calculator) }
-          let(:calculator) { Spree::Calculator::FlatPercentItemTotal.new(preferred_flat_percent: 10) }
+          let(:calculator) { Spree::Calculator::Promotion::FlatPercentItemTotal.new(preferred_flat_percent: 10) }
 
           before do
             promotion.activate(order: order)
@@ -126,7 +126,7 @@ module Spree
         end
 
         context 'default promotion chooser (best promotion is always applied)' do
-          let(:calculator) { Calculator::FlatRate.new(preferred_amount: 10) }
+          let(:calculator) { Calculator::Promotion::FlatRate.new(preferred_amount: 10) }
 
           let(:source) do
             Promotion::Actions::CreateItemAdjustments.create!(

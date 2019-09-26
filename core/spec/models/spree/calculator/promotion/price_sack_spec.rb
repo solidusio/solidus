@@ -3,9 +3,9 @@
 require 'rails_helper'
 require 'shared_examples/calculator_shared_examples'
 
-RSpec.describe Spree::Calculator::PriceSack, type: :model do
+RSpec.describe Spree::Calculator::Promotion::PriceSack, type: :model do
   let(:calculator) do
-    calculator = Spree::Calculator::PriceSack.new
+    calculator = described_class.new
     calculator.preferred_minimal_amount = 5
     calculator.preferred_normal_amount = 10
     calculator.preferred_discount_amount = 1

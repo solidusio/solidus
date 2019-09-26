@@ -21,7 +21,7 @@ describe "Coupon code promotions", type: :feature, js: true do
         expires_at: 1.day.from_now
       )
 
-      calculator = Spree::Calculator::FlatRate.new
+      calculator = Spree::Calculator::Promotion::FlatRate.new
       calculator.preferred_amount = 10
 
       action = Spree::Promotion::Actions::CreateItemAdjustments.new
@@ -177,7 +177,7 @@ describe "Coupon code promotions", type: :feature, js: true do
 
       context "calculates the correct amount of money saved with flat percent promotions" do
         before do
-          calculator = Spree::Calculator::FlatPercentItemTotal.new
+          calculator = Spree::Calculator::Promotion::FlatPercentItemTotal.new
           calculator.preferred_flat_percent = 20
           promotion.actions.first.calculator = calculator
           promotion.save
@@ -213,7 +213,7 @@ describe "Coupon code promotions", type: :feature, js: true do
 
       context "calculates the correct amount of money saved with flat 100% promotions on the whole order" do
         before do
-          calculator = Spree::Calculator::FlatPercentItemTotal.new
+          calculator = Spree::Calculator::Promotion::FlatPercentItemTotal.new
           calculator.preferred_flat_percent = 100
 
           promotion.promotion_actions.first.discard

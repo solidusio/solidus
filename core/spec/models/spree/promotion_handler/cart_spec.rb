@@ -8,7 +8,7 @@ module Spree
       let(:line_item) { create(:line_item) }
       let(:order) { line_item.order }
       let(:promotion) { create(:promotion, apply_automatically: true) }
-      let(:calculator) { Calculator::FlatPercentItemTotal.new(preferred_flat_percent: 10) }
+      let(:calculator) { Calculator::Promotion::FlatPercentItemTotal.new(preferred_flat_percent: 10) }
 
       subject { Cart.new(order, line_item) }
 

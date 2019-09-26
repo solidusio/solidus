@@ -3,8 +3,8 @@
 require 'rails_helper'
 require 'shared_examples/calculator_shared_examples'
 
-RSpec.describe Spree::Calculator::TieredPercent, type: :model do
-  let(:calculator) { Spree::Calculator::TieredPercent.new }
+RSpec.describe Spree::Calculator::Promotion::TieredPercent, type: :model do
+  let(:calculator) { described_class.new }
 
   it_behaves_like 'a calculator with a description'
 

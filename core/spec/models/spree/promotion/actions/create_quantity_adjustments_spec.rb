@@ -166,7 +166,7 @@ module Spree::Promotion::Actions
         end
 
         let(:calculator) do
-          Spree::Calculator::TieredPercent.create(preferred_base_percent: 10, preferred_tiers: tiers)
+          Spree::Calculator::Promotion::TieredPercent.create(preferred_base_percent: 10, preferred_tiers: tiers)
         end
         let(:line_items_attributes) do
           [

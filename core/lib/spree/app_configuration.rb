@@ -477,24 +477,24 @@ module Spree
     def environment
       @environment ||= Spree::Core::Environment.new(self).tap do |env|
         env.calculators.promotion_actions_create_adjustments = %w[
-          Spree::Calculator::FlatPercentItemTotal
-          Spree::Calculator::FlatRate
-          Spree::Calculator::FlexiRate
-          Spree::Calculator::TieredPercent
-          Spree::Calculator::TieredFlatRate
+          Spree::Calculator::Promotion::FlatPercentItemTotal
+          Spree::Calculator::Promotion::FlatRate
+          Spree::Calculator::Promotion::FlexiRate
+          Spree::Calculator::Promotion::TieredPercent
+          Spree::Calculator::Promotion::TieredFlatRate
         ]
 
         env.calculators.promotion_actions_create_item_adjustments = %w[
-          Spree::Calculator::DistributedAmount
-          Spree::Calculator::FlatRate
-          Spree::Calculator::FlexiRate
-          Spree::Calculator::PercentOnLineItem
-          Spree::Calculator::TieredPercent
+          Spree::Calculator::Promotion::DistributedAmount
+          Spree::Calculator::Promotion::FlatRate
+          Spree::Calculator::Promotion::FlexiRate
+          Spree::Calculator::Promotion::PercentOnLineItem
+          Spree::Calculator::Promotion::TieredPercent
         ]
 
         env.calculators.promotion_actions_create_quantity_adjustments = %w[
-          Spree::Calculator::PercentOnLineItem
-          Spree::Calculator::FlatRate
+          Spree::Calculator::Promotion::PercentOnLineItem
+          Spree::Calculator::Promotion::FlatRate
         ]
 
         env.calculators.shipping_methods = %w[

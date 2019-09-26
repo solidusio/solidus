@@ -95,7 +95,7 @@ module Spree
         let!(:promotion) { promotion_code.promotion }
         let(:promotion_code) { create(:promotion_code, value: '10off') }
         let!(:action) { Promotion::Actions::CreateItemAdjustments.create(promotion: promotion, calculator: calculator) }
-        let(:calculator) { Calculator::FlatRate.new(preferred_amount: 10) }
+        let(:calculator) { Calculator::Promotion::FlatRate.new(preferred_amount: 10) }
 
         it "fetches with given code" do
           expect(subject.promotion).to eq promotion
@@ -150,7 +150,7 @@ module Spree
 
             before do
               order.coupon_code = "10off"
-              calculator = Calculator::FlatRate.new(preferred_amount: 10)
+              calculator = Calculator::Promotion::FlatRate.new(preferred_amount: 10)
               general_promo = create(:promotion, apply_automatically: true, name: "General Promo")
               Promotion::Actions::CreateItemAdjustments.create(promotion: general_promo, calculator: calculator)
 
@@ -173,7 +173,7 @@ module Spree
 
             before do
               order.coupon_code = "10off"
-              calculator = Calculator::FlatPercentItemTotal.new(preferred_flat_percent: 10)
+              calculator = Calculator::Promotion::FlatPercentItemTotal.new(preferred_flat_percent: 10)
               general_promo = create(:promotion, apply_automatically: true, name: "General Promo")
               Promotion::Actions::CreateItemAdjustments.create!(promotion: general_promo, calculator: calculator)
 
@@ -225,7 +225,7 @@ module Spree
           let!(:action) { Promotion::Actions::CreateAdjustment.create(promotion: promotion, calculator: calculator) }
           context "right coupon given" do
             let(:order) { create(:order) }
-            let(:calculator) { Calculator::FlatRate.new(preferred_amount: 10) }
+            let(:calculator) { Calculator::Promotion::FlatRate.new(preferred_amount: 10) }
 
             before do
               allow(order).to receive_messages({
@@ -351,7 +351,7 @@ module Spree
           context "and multiple quantity per line item" do
             before(:each) do
               twnty_off = create(:promotion, name: "promo", code: "20off")
-              twnty_off_calc = Calculator::FlatRate.new(preferred_amount: 20)
+              twnty_off_calc = Calculator::Promotion::FlatRate.new(preferred_amount: 20)
               Promotion::Actions::CreateItemAdjustments.create(promotion: twnty_off,
                                                                calculator: twnty_off_calc)
 
@@ -381,7 +381,7 @@ module Spree
         let!(:promotion) { promotion_code.promotion }
         let(:promotion_code) { create(:promotion_code, value: '10off') }
         let!(:action) { Promotion::Actions::CreateItemAdjustments.create(promotion: promotion, calculator: calculator) }
-        let(:calculator) { Calculator::FlatRate.new(preferred_amount: 10) }
+        let(:calculator) { Calculator::Promotion::FlatRate.new(preferred_amount: 10) }
         let(:order) { create(:order_with_line_items, line_items_count: 3) }
 
         context 'with an already applied coupon' do

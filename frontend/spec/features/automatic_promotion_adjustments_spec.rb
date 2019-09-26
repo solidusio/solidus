@@ -14,7 +14,7 @@ describe "Automatic promotions", type: :feature, js: true do
   let!(:promotion) do
     promotion = Spree::Promotion.create!(name: "$10 off when you spend more than $100", apply_automatically: true)
 
-    calculator = Spree::Calculator::FlatRate.new
+    calculator = Spree::Calculator::Promotion::FlatRate.new
     calculator.preferred_amount = 10
 
     rule = Spree::Promotion::Rules::ItemTotal.create

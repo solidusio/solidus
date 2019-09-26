@@ -82,7 +82,7 @@ module Spree
 
         def ensure_action_has_calculator
           return if calculator
-          self.calculator = Calculator::PercentOnLineItem.new
+          self.calculator = Calculator::Promotion::PercentOnLineItem.new
         end
 
         def line_items_to_adjust(promotion, order)

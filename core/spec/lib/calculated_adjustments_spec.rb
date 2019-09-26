@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Spree::CalculatedAdjustments do
-  let(:calculator_class) { Spree::Calculator::FlatRate }
+  let(:calculator_class) { Spree::Calculator::Promotion::FlatRate }
 
   with_model :Calculable, scope: :all do
     model do
@@ -100,13 +100,13 @@ RSpec.describe Spree::CalculatedAdjustments do
     end
 
     it "can update both calculator type and attributes" do
-      subject.update!(calculator_type: 'Spree::Calculator::FlexiRate', calculator_attributes: {
+      subject.update!(calculator_type: 'Spree::Calculator::Promotion::FlexiRate', calculator_attributes: {
         preferred_first_item: 123
       })
-      expect(subject.calculator.class).to eq(Spree::Calculator::FlexiRate)
+      expect(subject.calculator.class).to eq(Spree::Calculator::Promotion::FlexiRate)
       expect(subject.calculator.preferred_first_item).to eq(123)
       subject.reload
-      expect(subject.calculator.class).to eq(Spree::Calculator::FlexiRate)
+      expect(subject.calculator.class).to eq(Spree::Calculator::Promotion::FlexiRate)
       expect(subject.calculator.preferred_first_item).to eq(123)
     end
   end
