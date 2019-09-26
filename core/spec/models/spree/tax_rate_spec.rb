@@ -153,6 +153,7 @@ RSpec.describe Spree::TaxRate, type: :model do
 
     describe 'adjustments' do
       before do
+        expect(Spree::Deprecation).to receive(:warn)
         tax_rate.adjust(nil, item)
       end
 

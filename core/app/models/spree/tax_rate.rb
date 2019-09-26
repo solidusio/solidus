@@ -88,7 +88,11 @@ module Spree
     scope :included_in_price, -> { where(included_in_price: true) }
 
     # Creates necessary tax adjustments for the order.
+    #
+    # @deprecated Please use `Spree::Tax::OrderAdjuster#adjust!` instead
     def adjust(_order_tax_zone, item)
+      Spree::Deprecation.warn("`Spree::TaxRate#adjust` is deprecated. Please use `Spree::Tax::OrderAdjuster#adjust!` instead.", caller)
+
       amount = compute_amount(item)
 
       item.adjustments.create!(
