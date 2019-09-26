@@ -26,7 +26,7 @@ promotions:
 
 ### Flat rate
 
-The [`Spree::Calculator::FlatRate` calculator][flat-rate] has the following
+The [`Spree::Calculator::Promotion::FlatRate` calculator][flat-rate] has the following
 preferences:
 
 - `amount`: The amount per item to calculate.
@@ -38,7 +38,7 @@ discounts a fixed amount from it.
 
 ### Flexi rate
 
-The [`Spree::Calculator::FlexiRate` calculator][flexi-rate] provides a flexible
+The [`Spree::Calculator::Promotion::FlexiRate` calculator][flexi-rate] provides a flexible
 rate depending on the number of items on an order.
 
 For example, you could sell one t-shirt for $20. But, if the customer buys five
@@ -57,7 +57,7 @@ To replicate the example above, you could set the `first_item` to `0.0`, the
 
 ### Tiered percent
 
-The [`Spree::Calculator::TieredPercent` calculator][tiered-percent] provides a
+The [`Spree::Calculator::Promotion::TieredPercent` calculator][tiered-percent] provides a
 tiered percent discount. This allows you to charge a percentage-based discount
 that depends on the order total (or applicable line items).
 
@@ -79,9 +79,9 @@ This calculator has the following preferences:
 - `currency`: The currency. The default value is your store's default currency
   setting.
 
-[flat-rate]: https://github.com/solidusio/solidus/blob/master/core/app/models/spree/calculator/flat_rate.rb
-[flexi-rate]: https://github.com/solidusio/solidus/blob/master/core/app/models/spree/calculator/flexi_rate.rb
-[tiered-percent]: https://github.com/solidusio/solidus/blob/master/core/app/models/spree/calculator/tiered_percent.rb
+[flat-rate]: https://github.com/solidusio/solidus/blob/master/core/app/models/spree/calculator/promotion/flat_rate.rb
+[flexi-rate]: https://github.com/solidusio/solidus/blob/master/core/app/models/spree/calculator/promotion/flexi_rate.rb
+[tiered-percent]: https://github.com/solidusio/solidus/blob/master/core/app/models/spree/calculator/promotion/tiered_percent.rb
 
 ## Order promotions only
 
@@ -92,7 +92,7 @@ The following calculators are available to use with order promotions only:
 
 ### Tiered flat rate
 
-The [`Spree::Calculator::TieredFlatRate` calculator][tiered-flat-rate] provides
+The [`Spree::Calculator::Promotion::TieredFlatRate` calculator][tiered-flat-rate] provides
 a tiered flat rate discount. This allows you to charge a rate-based discount
 that depends on the order total. For example, you could set a base discount of
 $10, then give a greater discount on orders over $100, $200, and $500:
@@ -114,7 +114,7 @@ This calculator has the following preferences:
 
 ### Flat percent (item total)
 
-The [`Spree::Calculator::FlatPercentItemTotal`][flat-percent-item-total]
+The [`Spree::Calculator::Promotion::FlatPercentItemTotal`][flat-percent-item-total]
 calculator provides a flat, percentage-based discount on an order. In the
 `solidus_backend` interface administrators can use this calculator by choosing
 the whole-order calculator labeled "Flat Percent". It has the following
@@ -122,8 +122,8 @@ preference:
 
 - `flat_percent`: The percentage that the order should be discounted.
 
-[tiered-flat-rate]: https://github.com/solidusio/solidus/blob/master/core/app/models/spree/calculator/tiered_flat_rate.rb
-[flat-percent-item-total]: https://github.com/solidusio/solidus/blob/master/core/app/models/spree/calculator/flat_percent_item_total.rb
+[tiered-flat-rate]: https://github.com/solidusio/solidus/blob/master/core/app/models/spree/calculator/promotion/tiered_flat_rate.rb
+[flat-percent-item-total]: https://github.com/solidusio/solidus/blob/master/core/app/models/spree/calculator/promotion/flat_percent_item_total.rb
 
 ## Line item promotions only
 
@@ -134,7 +134,7 @@ The following calculators are available to use with line item promotions only:
 
 ### Distributed amount
 
-The [`Spree::Calculator::DistributedAmount` calculator][distributed-amount]
+The [`Spree::Calculator::Promotion::DistributedAmount` calculator][distributed-amount]
 provides an amount-based discount on all of the applicable line items in an
 order. The discount amount is distributed across all of the line items.
 
@@ -150,7 +150,7 @@ This calculator has the following preferences:
 
 ### Percent on line item
 
-The [`Spree::Calculator::PercentOnLineItem` calculator][percent-on-line-item]
+The [`Spree::Calculator::Promotion::PercentOnLineItem` calculator][percent-on-line-item]
 provides a percentage-based discount for each applicable line item in an order.
 In the `solidus_backend` interface, this calculator is labeled "Percent Per
 Item". It has the following preference:
@@ -158,8 +158,8 @@ Item". It has the following preference:
 - `percent`: The percentage discount that should be given to each applicable
   line item.
 
-[distributed-amount]: https://github.com/solidusio/solidus/blob/master/core/app/models/spree/calculator/distributed_amount.rb
-[percent-on-line-item]: https://github.com/solidusio/solidus/blob/master/core/app/models/spree/calculator/percent_on_line_item.rb
+[distributed-amount]: https://github.com/solidusio/solidus/blob/master/core/app/models/spree/calculator/promotion/distributed_amount.rb
+[percent-on-line-item]: https://github.com/solidusio/solidus/blob/master/core/app/models/spree/calculator/promotion/percent_on_line_item.rb
 
 ## Free shipping promotions
 
