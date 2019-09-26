@@ -1588,7 +1588,7 @@ en:
     new_stock_movement: New Stock Movement
     new_store: New Store
     new_store_credit: New Store Credit
-    new_store_credit_reason: New Store Credit Reason
+    new_store_credit_reason: New Adjustment Reason
     new_tax_category: New Tax Category
     new_tax_rate: New Tax Rate
     new_taxon: New Taxon
