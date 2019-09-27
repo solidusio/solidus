@@ -13,6 +13,7 @@ Rails.env = 'test'
 require 'solidus_core'
 
 RAILS_52_OR_ABOVE = Gem::Version.new(Rails.version) >= Gem::Version.new('5.2')
+RAILS_6_OR_ABOVE = Gem::Version.new(Rails.version) >= Gem::Version.new('6.0')
 
 # @private
 class ApplicationController < ActionController::Base
@@ -64,7 +65,9 @@ module DummyApp
 
     if RAILS_52_OR_ABOVE
       config.action_controller.default_protect_from_forgery = true
-      config.active_record.sqlite3.represent_boolean_as_integer = true
+      unless RAILS_6_OR_ABOVE
+        config.active_record.sqlite3.represent_boolean_as_integer = true
+      end
     end
 
     # Avoid issues if an old spec/dummy still exists
