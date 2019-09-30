@@ -18,4 +18,8 @@ module Spree::Taxon::PaperclipAttachment
   def icon_present?
     icon.present?
   end
+
+  def attachment_partial_name
+    'paperclip'
+  end
 end
