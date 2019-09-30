@@ -36,6 +36,8 @@ preferences:
 This calculator takes the total of an applicable order or line item and
 discounts a fixed amount from it.
 
+[flat-rate]: https://github.com/solidusio/solidus/blob/master/core/app/models/spree/calculator/promotion/flat_rate.rb
+
 ### Flexi rate
 
 The [`Spree::Calculator::Promotion::FlexiRate` calculator][flexi-rate] provides a flexible
@@ -54,6 +56,8 @@ It has the following preferences:
 
 To replicate the example above, you could set the `first_item` to `0.0`, the
 `additional_item` to `5.0`, and the `max_items` to `5`.
+
+[flexi-rate]: https://github.com/solidusio/solidus/blob/master/core/app/models/spree/calculator/promotion/flexi_rate.rb
 
 ### Tiered percent
 
@@ -79,8 +83,6 @@ This calculator has the following preferences:
 - `currency`: The currency. The default value is your store's default currency
   setting.
 
-[flat-rate]: https://github.com/solidusio/solidus/blob/master/core/app/models/spree/calculator/promotion/flat_rate.rb
-[flexi-rate]: https://github.com/solidusio/solidus/blob/master/core/app/models/spree/calculator/promotion/flexi_rate.rb
 [tiered-percent]: https://github.com/solidusio/solidus/blob/master/core/app/models/spree/calculator/promotion/tiered_percent.rb
 
 ## Order promotions only
@@ -112,6 +114,8 @@ This calculator has the following preferences:
 - `currency`: The currency. The default value is your store's default currency
   setting.
 
+[tiered-flat-rate]: https://github.com/solidusio/solidus/blob/master/core/app/models/spree/calculator/promotion/tiered_flat_rate.rb
+
 ### Flat percent (item total)
 
 The [`Spree::Calculator::Promotion::FlatPercentItemTotal`][flat-percent-item-total]
@@ -122,7 +126,6 @@ preference:
 
 - `flat_percent`: The percentage that the order should be discounted.
 
-[tiered-flat-rate]: https://github.com/solidusio/solidus/blob/master/core/app/models/spree/calculator/promotion/tiered_flat_rate.rb
 [flat-percent-item-total]: https://github.com/solidusio/solidus/blob/master/core/app/models/spree/calculator/promotion/flat_percent_item_total.rb
 
 ## Line item promotions only
@@ -148,6 +151,8 @@ This calculator has the following preferences:
 - `currency`: The currency. The default value is your store's default currency
   setting.
 
+[distributed-amount]: https://github.com/solidusio/solidus/blob/master/core/app/models/spree/calculator/promotion/distributed_amount.rb
+
 ### Percent on line item
 
 The [`Spree::Calculator::Promotion::PercentOnLineItem` calculator][percent-on-line-item]
@@ -158,7 +163,6 @@ Item". It has the following preference:
 - `percent`: The percentage discount that should be given to each applicable
   line item.
 
-[distributed-amount]: https://github.com/solidusio/solidus/blob/master/core/app/models/spree/calculator/promotion/distributed_amount.rb
 [percent-on-line-item]: https://github.com/solidusio/solidus/blob/master/core/app/models/spree/calculator/promotion/percent_on_line_item.rb
 
 ## Free shipping promotions
