@@ -3,6 +3,9 @@
 require_dependency 'spree/calculator'
 
 module Spree
+  # This calculator provides a tiered percent discount. This allows you to
+  # charge a percentage-based discount that depends on the order total
+  # (or applicable line items).
   class Calculator::Promotion::TieredPercent < Calculator
     preference :base_percent, :decimal, default: 0
     preference :tiers, :hash, default: {}

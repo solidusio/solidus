@@ -3,6 +3,8 @@
 require_dependency 'spree/calculator'
 
 module Spree
+  # This calculator provides a tiered flat rate discount. This allows you to
+  # charge a rate-based discount that depends on the order total.
   class Calculator::Promotion::TieredFlatRate < Calculator
     preference :base_amount, :decimal, default: 0
     preference :tiers, :hash, default: {}

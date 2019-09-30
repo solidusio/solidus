@@ -3,6 +3,7 @@
 require_dependency 'spree/calculator'
 
 module Spree
+  # This calculator provides a flat, percentage-based discount on an order.
   class Calculator::Promotion::FlatPercentItemTotal < Calculator
     preference :flat_percent, :decimal, default: 0
 

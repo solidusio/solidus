@@ -3,6 +3,9 @@
 require_dependency 'spree/calculator'
 
 module Spree
+  # This calculator provides a flexible rate depending on the number of items on an order.
+  # For example, you could sell one t-shirt for $20. But, if the customer buys five
+  # t-shirts, the four additional t-shirt only costs $15.
   class Calculator::Promotion::FlexiRate < Calculator
     preference :first_item,      :decimal, default: 0
     preference :additional_item, :decimal, default: 0
