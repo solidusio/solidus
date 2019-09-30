@@ -5,6 +5,7 @@ module Spree
     class StockConfiguration
       attr_writer :coordinator_class
       attr_writer :estimator_class
+      attr_writer :location_filter_class
       attr_writer :location_sorter_class
       attr_writer :allocator_class
 
