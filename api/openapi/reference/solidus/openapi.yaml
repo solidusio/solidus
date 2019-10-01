@@ -5774,9 +5774,15 @@ definitions:
       - type: object
         properties:
           line_items_attributes:
-            type: array
-            items:
-              $ref: '#/definitions/line-item-input'
+            type: object
+            properties:
+              '0':
+                allOf:
+                  - type: object
+                    properties:
+                      variant_id:
+                        type: integer
+                  - $ref: '#/definitions/line-item-input'
   product-input:
     type: object
     title: Product input
