@@ -77,7 +77,7 @@ paths:
                       $ref: '#/definitions/order-small'
         '401':
           $ref: '#/responses/invalid-api-key'
-      summary: List user's orders
+      summary: "List user's orders"
       description: Lists the orders that belong to the current user.
       operationId: list-user-orders
       tags:
@@ -146,7 +146,7 @@ paths:
         '401':
           $ref: '#/responses/invalid-api-key'
       summary: Get current order
-      description: Retrieves the user's current order.
+      description: "Retrieves the user's current order."
       operationId: get-current-order
       tags:
         - Orders
@@ -224,7 +224,7 @@ paths:
       operationId: list-country-states
       tags:
         - States
-      description: Retrieves a country's states.
+      description: "Retrieves a country's states."
     parameters:
       - name: country_id
         in: path
@@ -245,7 +245,7 @@ paths:
       operationId: get-country-state
       tags:
         - States
-      description: Retrieves a country's state.
+      description: "Retrieves a country's state."
     parameters:
       - name: country_id
         in: path
@@ -338,7 +338,7 @@ paths:
         '404':
           $ref: '#/responses/not-found'
       summary: List product images
-      description: Retrieves a product's images.
+      description: "Retrieves a product's images."
       operationId: list-product-images
       tags:
         - Images
@@ -391,7 +391,7 @@ paths:
         '404':
           $ref: '#/responses/not-found'
       summary: List product variants
-      description: Retrieves a product's variants.
+      description: "Retrieves a product's variants."
       operationId: list-product-variants
       tags:
         - Variants
@@ -441,7 +441,7 @@ paths:
         '404':
           $ref: '#/responses/not-found'
       summary: Get product image
-      description: Retrieves a product's image.
+      description: "Retrieves a product's image."
       operationId: get-product-image
       tags:
         - Images
@@ -469,7 +469,7 @@ paths:
         '422':
           $ref: '#/responses/delete-restriction'
       summary: Delete product image
-      description: Deletes a product's image.
+      description: "Deletes a product's image."
       operationId: delete-product-image
       tags:
         - Images
@@ -488,7 +488,7 @@ paths:
         '422':
           $ref: '#/responses/unprocessable-entity'
       summary: Update product image
-      description: Updates a product's image.
+      description: "Updates a product's image."
       operationId: update-product-image
       tags:
         - Images
@@ -511,7 +511,7 @@ paths:
         '404':
           $ref: '#/responses/not-found'
       summary: Get product variant
-      description: Retrieves a product's variant.
+      description: "Retrieves a product's variant."
       operationId: get-product-variant
       tags:
         - Variants
@@ -539,7 +539,7 @@ paths:
         '422':
           $ref: '#/responses/delete-restriction'
       summary: Delete product variant
-      description: Deletes a product's variant.
+      description: "Deletes a product's variant."
       operationId: delete-product-variant
       tags:
         - Variants
@@ -558,7 +558,7 @@ paths:
         '422':
           $ref: '#/responses/unprocessable-entity'
       summary: Update product variant
-      description: Updates a product's variant.
+      description: "Updates a product's variant."
       operationId: update-product-variant
       tags:
         - Variants
@@ -736,7 +736,7 @@ paths:
         '404':
           $ref: '#/responses/not-found'
       summary: List variant images
-      description: Lists a variant's images.
+      description: "Lists a variant's images."
       operationId: list-variant-images
       tags:
         - Images
@@ -783,7 +783,7 @@ paths:
         '404':
           $ref: '#/responses/not-found'
       summary: Get variant image
-      description: Retrieves a variant's image.
+      description: "Retrieves a variant's image."
       operationId: get-variant-image
       tags:
         - Images
@@ -811,7 +811,7 @@ paths:
         '422':
           $ref: '#/responses/delete-restriction'
       summary: Delete variant image
-      description: Deletes a variant's image.
+      description: "Deletes a variant's image."
       operationId: delete-variant-image
       tags:
         - Images
@@ -830,7 +830,7 @@ paths:
         '422':
           $ref: '#/responses/unprocessable-entity'
       summary: Update variant image
-      description: Updates a variant's image.
+      description: "Updates a variant's image."
       operationId: update-variant-image
       tags:
         - Images
@@ -858,7 +858,7 @@ paths:
         '404':
           $ref: '#/responses/not-found'
       summary: List shipment estimated rates
-      description: Lists a shipment's estimated rates.
+      description: "Lists a shipment's estimated rates."
       operationId: list-shipment-estimated-rates
       tags:
         - Shipments
@@ -886,8 +886,8 @@ paths:
                       $ref: '#/definitions/shipment'
         '401':
           $ref: '#/responses/invalid-api-key'
-      summary: List user's shipments
-      description: Lists the current user's shipments.
+      summary: "List user's shipments"
+      description: "Lists the current user's shipments."
       operationId: list-user-shipments
       tags:
         - Shipments
@@ -976,7 +976,7 @@ paths:
           $ref: '#/responses/not-found'
       summary: Get user address book
       operationId: get-user-address-book
-      description: Retrieves a user's address book.
+      description: "Retrieves a user's address book."
       tags:
         - Address books
       security:
@@ -999,7 +999,7 @@ paths:
         '422':
           $ref: '#/responses/delete-restriction'
       summary: Remove address from user address book
-      description: Removes an address from a user's address book.
+      description: "Removes an address from a user's address book."
       operationId: remove-address-from-user-address-book
       tags:
         - Address books
@@ -1030,7 +1030,7 @@ paths:
           name: body
           schema:
             $ref: '#/definitions/address-book-input'
-      description: Updates a user's address book.
+      description: "Updates a user's address book."
       security:
         - api-key: []
   '/users/{user_id}/credit_cards':
@@ -1052,7 +1052,7 @@ paths:
         '404':
           $ref: '#/responses/not-found'
       summary: List user credit cards
-      description: Lists a user's credit cards.
+      description: "Lists a user's credit cards."
       operationId: list-user-credit-cards
       tags:
         - Credit cards
@@ -1078,7 +1078,7 @@ paths:
         '404':
           $ref: '#/responses/not-found'
       summary: Get checkout address
-      description: Retrieves a checkout's address.
+      description: "Retrieves a checkout's address."
       operationId: get-checkout-address
       tags:
         - Addresses
@@ -1107,7 +1107,7 @@ paths:
         '422':
           $ref: '#/responses/unprocessable-entity'
       summary: Update checkout address
-      description: Updates a checkout's address.
+      description: "Updates a checkout's address."
       operationId: update-checkout-address
       tags:
         - Addresses
@@ -1138,7 +1138,7 @@ paths:
         '404':
           $ref: '#/responses/not-found'
       summary: List checkout payments
-      description: Lists a checkout's payments.
+      description: "Lists a checkout's payments."
       operationId: list-checkout-payments
       tags:
         - Payments
@@ -1189,7 +1189,7 @@ paths:
         '404':
           $ref: '#/responses/not-found'
       summary: Get checkout payment
-      description: Gets a checkout's payment.
+      description: "Gets a checkout's payment."
       operationId: get-checkout-payment
       tags:
         - Payments
@@ -1218,7 +1218,7 @@ paths:
         '422':
           $ref: '#/responses/unprocessable-entity'
       summary: Update checkout payment
-      description: Updates a checkout's payment.
+      description: "Updates a checkout's payment."
       operationId: update-checkout-payment
       tags:
         - Payments
@@ -1256,7 +1256,7 @@ paths:
         '404':
           $ref: '#/responses/not-found'
       summary: List checkout return authorizations
-      description: Lists a checkout's return authorizations.
+      description: "Lists a checkout's return authorizations."
       operationId: list-checkout-return-authorization
       tags:
         - Return authorizations
@@ -1305,7 +1305,7 @@ paths:
         '404':
           $ref: '#/responses/not-found'
       summary: Get checkout return authorization
-      description: Gets a checkout's return authorization.
+      description: "Gets a checkout's return authorization."
       operationId: get-checkout-return-authorization
       tags:
         - Return authorizations
@@ -1333,7 +1333,7 @@ paths:
         '422':
           $ref: '#/responses/delete-restriction'
       summary: Delete checkout return authorization
-      description: Deletes a checkout's return authorization.
+      description: "Deletes a checkout's return authorization."
       operationId: delete-checkout-return-authorization
       tags:
         - Return authorizations
@@ -1352,7 +1352,7 @@ paths:
         '422':
           $ref: '#/responses/unprocessable-entity'
       summary: Update checkout return authorization
-      description: Updates a checkout's return authorization.
+      description: "Updates a checkout's return authorization."
       operationId: update-checkout-return-authorization
       tags:
         - Return authorizations
@@ -1423,7 +1423,7 @@ paths:
         '404':
           $ref: '#/responses/not-found'
       summary: Get order address
-      description: Retrieves an order's address.
+      description: "Retrieves an order's address."
       operationId: get-order-address
       tags:
         - Addresses
@@ -1452,7 +1452,7 @@ paths:
         '422':
           $ref: '#/responses/unprocessable-entity'
       summary: Update order address
-      description: Updates an order's address.
+      description: "Updates an order's address."
       operationId: update-order-address
       parameters:
         - in: body
@@ -1485,7 +1485,7 @@ paths:
         '404':
           $ref: '#/responses/not-found'
       summary: List order payments
-      description: Lists an order's payments.
+      description: "Lists an order's payments."
       operationId: list-order-payments
       tags:
         - Payments
@@ -1536,7 +1536,7 @@ paths:
         '404':
           $ref: '#/responses/not-found'
       summary: Get order payment
-      description: Retrieves an orer's payment.
+      description: "Retrieves an orer's payment."
       operationId: get-order-payment
       tags:
         - Payments
@@ -1565,7 +1565,7 @@ paths:
         '422':
           $ref: '#/responses/unprocessable-entity'
       summary: Update order payment
-      description: Updates an order's payment.
+      description: "Updates an order's payment."
       operationId: update-order-payment
       tags:
         - Payments
@@ -1596,7 +1596,7 @@ paths:
         '404':
           $ref: '#/responses/not-found'
       summary: List order return authorizations
-      description: Lists an order's return authorizations.
+      description: "Lists an order's return authorizations."
       operationId: list-order-return-authorizations
       tags:
         - Return authorizations
@@ -1646,7 +1646,7 @@ paths:
         '404':
           $ref: '#/responses/not-found'
       summary: Get order return authorization
-      description: Retrieves an order's return authorization.
+      description: "Retrieves an order's return authorization."
       operationId: get-order-return-authorization
       tags:
         - Return authorizations
@@ -1674,7 +1674,7 @@ paths:
         '422':
           $ref: '#/responses/delete-restriction'
       summary: Delete order return authorization
-      description: Deletes an order's return authorization.
+      description: "Deletes an order's return authorization."
       operationId: delete-order-return-authorization
       tags:
         - Return authorizations
@@ -1693,7 +1693,7 @@ paths:
         '422':
           $ref: '#/responses/unprocessable-entity'
       summary: Update order return authorization
-      description: Updates an order's return authorization.
+      description: "Updates an order's return authorization."
       operationId: update-order-return-authorization
       tags:
         - Return authorizations
@@ -1719,7 +1719,7 @@ paths:
         '401':
           $ref: '#/responses/invalid-api-key'
       summary: Get system configuration
-      description: Retrieves the system's configuration.
+      description: "Retrieves the system's configuration."
       operationId: get-config
       tags:
         - Configuration
@@ -1738,7 +1738,7 @@ paths:
         '401':
           $ref: '#/responses/invalid-api-key'
       summary: Get money configuration
-      description: Gets the system's money configuration.
+      description: "Gets the system's money configuration."
       operationId: get-money-config
       tags:
         - Configuration
@@ -1756,7 +1756,7 @@ paths:
         '401':
           $ref: '#/responses/invalid-api-key'
       summary: List option types
-      description: Lists the system's option types.
+      description: "Lists the system's option types."
       operationId: list-option-types
       tags:
         - Option types
@@ -1862,7 +1862,7 @@ paths:
         '401':
           $ref: '#/responses/invalid-api-key'
       summary: List option values
-      description: Lists the system's option values.
+      description: "Lists the system's option values."
       operationId: list-option-values
       tags:
         - Option values
@@ -1970,7 +1970,7 @@ paths:
         '404':
           $ref: '#/responses/not-found'
       summary: List option type values
-      description: Retrieves an option type's option values.
+      description: "Retrieves an option type's option values."
       operationId: list-option-type-values
       tags:
         - Option values
@@ -2016,7 +2016,7 @@ paths:
         '404':
           $ref: '#/responses/not-found'
       summary: Get option type value
-      description: Retrieves an option type's value.
+      description: "Retrieves an option type's value."
       operationId: get-option-type-value
       tags:
         - Option values
@@ -2044,7 +2044,7 @@ paths:
         '422':
           $ref: '#/responses/delete-restriction'
       summary: Delete option type value
-      description: Deletes an option type's value.
+      description: "Deletes an option type's value."
       operationId: delete-option-type-value
       tags:
         - Option values
@@ -2063,7 +2063,7 @@ paths:
         '422':
           $ref: '#/responses/unprocessable-entity'
       summary: Update option type value
-      description: Updates an option type's value.
+      description: "Updates an option type's value."
       operationId: update-option-type-value
       tags:
         - Option values
@@ -2093,7 +2093,7 @@ paths:
         '404':
           $ref: '#/responses/not-found'
       summary: List product properties
-      description: Lists a product's properties.
+      description: "Lists a product's properties."
       operationId: list-product-properties
       tags:
         - Product properties
@@ -2143,7 +2143,7 @@ paths:
         '404':
           $ref: '#/responses/not-found'
       summary: Get product property
-      description: Retrieves a product's property.
+      description: "Retrieves a product's property."
       operationId: get-product-property
       tags:
         - Product properties
@@ -2171,7 +2171,7 @@ paths:
         '422':
           $ref: '#/responses/delete-restriction'
       summary: Delete product property
-      description: Deletes a product's property.
+      description: "Deletes a product's property."
       operationId: delete-product-property
       tags:
         - Product properties
@@ -2190,7 +2190,7 @@ paths:
         '422':
           $ref: '#/responses/unprocessable-entity'
       summary: Update product property
-      description: Updates a product's property.
+      description: "Updates a product's property."
       operationId: update-product-property
       tags:
         - Product properties
@@ -2493,7 +2493,7 @@ paths:
         '404':
           $ref: '#/responses/not-found'
       summary: List stock location items
-      description: Lists a stock location's items.
+      description: "Lists a stock location's items."
       operationId: list-stock-location-items
       tags:
         - Stock items
@@ -2542,7 +2542,7 @@ paths:
         '404':
           $ref: '#/responses/not-found'
       summary: Get stock location item
-      description: Retrieves a stock location's item.
+      description: "Retrieves a stock location's item."
       operationId: get-stock-location-item
       tags:
         - Stock items
@@ -2570,7 +2570,7 @@ paths:
         '422':
           $ref: '#/responses/delete-restriction'
       summary: Delete stock location item
-      description: Deletes a stock location's item.
+      description: "Deletes a stock location's item."
       operationId: delete-stock-location-item
       tags:
         - Stock items
@@ -2589,7 +2589,7 @@ paths:
         '422':
           $ref: '#/responses/unprocessable-entity'
       summary: Update stock location item
-      description: Updates a stock location's item.
+      description: "Updates a stock location's item."
       operationId: update-stock-location-item
       tags:
         - Stock items
@@ -2617,7 +2617,7 @@ paths:
         '404':
           $ref: '#/responses/not-found'
       summary: List stock location movements
-      description: Lists a stock location's movements.
+      description: "Lists a stock location's movements."
       operationId: list-stock-location-movements
       tags:
         - Stock movements
@@ -2666,7 +2666,7 @@ paths:
         '404':
           $ref: '#/responses/not-found'
       summary: Get stock location movement
-      description: Retrieves a stock location's movement.
+      description: "Retrieves a stock location's movement."
       operationId: get-stock-location-movement
       tags:
         - Stock movements
@@ -2929,7 +2929,7 @@ paths:
         '404':
           $ref: '#/responses/not-found'
       summary: List taxonomy taxons
-      description: Lists a taxonomy's taxons.
+      description: "Lists a taxonomy's taxons."
       operationId: list-taxonomy-taxons
       tags:
         - Taxons
@@ -2978,7 +2978,7 @@ paths:
         '404':
           $ref: '#/responses/not-found'
       summary: Get taxonomy taxon
-      description: Retrieves a taxonomy's taxon.
+      description: "Retrieves a taxonomy's taxon."
       operationId: get-taxonomy-taxon
       tags:
         - Taxons
@@ -3006,7 +3006,7 @@ paths:
         '422':
           $ref: '#/responses/delete-restriction'
       summary: Delete taxonomy taxon
-      description: Deletes a taxonomy's taxon.
+      description: "Deletes a taxonomy's taxon."
       operationId: delete-taxonomy-taxon
       tags:
         - Taxons
@@ -3025,7 +3025,7 @@ paths:
         '422':
           $ref: '#/responses/unprocessable-entity'
       summary: Update taxonomy taxon
-      description: Updates a taxonomy's taxon.
+      description: "Updates a taxonomy's taxon."
       operationId: update-taxonomy-taxon
       tags:
         - Taxons
@@ -3235,7 +3235,7 @@ paths:
         '404':
           $ref: '#/responses/not-found'
       summary: Get taxonomy jsTree
-      description: Builds a taxonomy's jsTree.
+      description: "Builds a taxonomy's jsTree."
       operationId: get-taxonomy-jstree
       tags:
         - Taxonomies
@@ -3260,7 +3260,7 @@ paths:
         '404':
           $ref: '#/responses/not-found'
       summary: Get taxon jsTree
-      description: Builds a taxon's jsTree.
+      description: "Builds a taxon's jsTree."
       operationId: get-taxon-jstree
       tags:
         - Taxons
@@ -3314,8 +3314,8 @@ paths:
                       $ref: '#/definitions/store-credit-event'
         '401':
           $ref: '#/responses/invalid-api-key'
-      summary: List current user's store credit events
-      description: Lists the current user's store credit events.
+      summary: "List current user's store credit events"
+      description: "Lists the current user's store credit events."
       operationId: list-current-user-store-credit-events
       tags:
         - Store credit events
@@ -3338,7 +3338,7 @@ paths:
         '422':
           $ref: '#/responses/delete-restriction'
       summary: Delete checkout line item
-      description: Deletes a checkout's line item.
+      description: "Deletes a checkout's line item."
       operationId: delete-checkout-line-item
       tags:
         - Line items
@@ -3367,7 +3367,7 @@ paths:
         '422':
           $ref: '#/responses/unprocessable-entity'
       summary: Update checkout line item
-      description: Updates a checkout's line item.
+      description: "Updates a checkout's line item."
       operationId: update-checkout-line-item
       tags:
         - Line items
@@ -3400,7 +3400,7 @@ paths:
         '422':
           $ref: '#/responses/delete-restriction'
       summary: Delete order coupon code
-      description: Deletes an order's coupon code.
+      description: "Deletes an order's coupon code."
       operationId: delete-order-coupon-code
       tags:
         - Coupon codes
@@ -3430,7 +3430,7 @@ paths:
         '422':
           $ref: '#/responses/delete-restriction'
       summary: Delete order line item
-      description: Deletes an order's line item.
+      description: "Deletes an order's line item."
       operationId: delete-order-line-item
       tags:
         - Line items
@@ -3459,7 +3459,7 @@ paths:
         '422':
           $ref: '#/responses/unprocessable-entity'
       summary: Update order line item
-      description: Updates an order's line item.
+      description: "Updates an order's line item."
       operationId: update-order-line-item
       tags:
         - Line items
@@ -3625,7 +3625,7 @@ paths:
         '422':
           $ref: '#/responses/unprocessable-entity'
       summary: Authorize checkout payment
-      description: Authorizes a checkout's payment.
+      description: "Authorizes a checkout's payment."
       operationId: authorize-checkout-payment
       tags:
         - Payments
@@ -3654,7 +3654,7 @@ paths:
         '422':
           $ref: '#/responses/unprocessable-entity'
       summary: Capture checkout payment
-      description: Captures a checkout's payment.
+      description: "Captures a checkout's payment."
       operationId: capture-checkout-payment
       tags:
         - Payments
@@ -3683,7 +3683,7 @@ paths:
         '422':
           $ref: '#/responses/unprocessable-entity'
       summary: Credit checkout payment
-      description: Credits a checkout's payment.
+      description: "Credits a checkout's payment."
       operationId: credit-checkout-payment
       tags:
         - Payments
@@ -3712,7 +3712,7 @@ paths:
         '422':
           $ref: '#/responses/unprocessable-entity'
       summary: Purchase checkout payment
-      description: Purchases a checkout's payment.
+      description: "Purchases a checkout's payment."
       operationId: purchase-checkout-payment
       tags:
         - Payments
@@ -3741,7 +3741,7 @@ paths:
         '422':
           $ref: '#/responses/unprocessable-entity'
       summary: Void checkout payment
-      description: Voids a checkout's payment.
+      description: "Voids a checkout's payment."
       operationId: void-checkout-payment
       tags:
         - Payments
@@ -3770,7 +3770,7 @@ paths:
         '422':
           $ref: '#/responses/unprocessable-entity'
       summary: Cancel checkout return authorization
-      description: Cancels a checkout's return authorization.
+      description: "Cancels a checkout's return authorization."
       operationId: cancel-checkout-return-authorization
       tags:
         - Return authorizations
@@ -3982,7 +3982,7 @@ paths:
         '422':
           $ref: '#/responses/unprocessable-entity'
       summary: Empty order
-      description: Empties an order's cart.
+      description: "Empties an order's cart."
       operationId: empty-order
       tags:
         - Orders
@@ -4008,7 +4008,7 @@ paths:
         '422':
           $ref: '#/responses/unprocessable-entity'
       summary: Authorize order payment
-      description: Authorizes an order's payment.
+      description: "Authorizes an order's payment."
       operationId: authorize-order-payment
       tags:
         - Payments
@@ -4037,7 +4037,7 @@ paths:
         '422':
           $ref: '#/responses/unprocessable-entity'
       summary: Capture order payment
-      description: Captures an order's payment.
+      description: "Captures an order's payment."
       operationId: capture-order-payment
       tags:
         - Payments
@@ -4066,7 +4066,7 @@ paths:
         '422':
           $ref: '#/responses/unprocessable-entity'
       summary: Credit order payment
-      description: Credits an order's payment.
+      description: "Credits an order's payment."
       operationId: credit-order-payment
       tags:
         - Payments
@@ -4095,7 +4095,7 @@ paths:
         '422':
           $ref: '#/responses/unprocessable-entity'
       summary: Purchase order payment
-      description: Purchases an order's payment.
+      description: "Purchases an order's payment."
       operationId: purchase-order-payment
       tags:
         - Payments
@@ -4124,7 +4124,7 @@ paths:
         '422':
           $ref: '#/responses/unprocessable-entity'
       summary: Void order payment
-      description: Voids an order's payment.
+      description: "Voids an order's payment."
       operationId: void-order-payment
       tags:
         - Payments
@@ -4153,7 +4153,7 @@ paths:
         '422':
           $ref: '#/responses/unprocessable-entity'
       summary: Cancel order return authorization
-      description: Cancels an order's return authorization.
+      description: "Cancels an order's return authorization."
       operationId: cancel-order-return-authorization
       tags:
         - Return authorizations
@@ -4481,7 +4481,7 @@ paths:
         '422':
           $ref: '#/responses/unprocessable-entity'
       summary: Transfer shipment item to location
-      description: Transfers a shipment's item to a different stock location.
+      description: "Transfers a shipment's item to a different stock location."
       operationId: transfer-shipment-item-to-location
       tags:
         - Shipments
@@ -4520,7 +4520,7 @@ paths:
         '422':
           $ref: '#/responses/unprocessable-entity'
       summary: Transfer shipment item to shipment
-      description: Transfer a shipment's item to another shipment.
+      description: "Transfer a shipment's item to another shipment."
       operationId: transfer-shipment-item-to-shipment
       tags:
         - Shipments
@@ -4557,7 +4557,7 @@ paths:
         '401':
           $ref: '#/responses/invalid-api-key'
       summary: List taxon products
-      description: Lists a taxon's products.
+      description: "Lists a taxon's products."
       operationId: list-taxon-products
       tags:
         - Products
