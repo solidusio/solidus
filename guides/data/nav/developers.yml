@@ -52,6 +52,8 @@
         href: "/developers/customizations/customizing-assets.html"
       - title: "Customizing Permissions"
         href: "/developers/customizations/customizing-permissions.html"
+      - title: "Customizing Model Attributes"
+        href: "/developers/customizations/customizing-attributes.html"
   - title: "Extensions"
     dropdown:
       - title: "Installing extensions"
