@@ -77,22 +77,8 @@ module Spree
     before_create :set_default_amount, unless: :amount_changed?
     before_save :set_exchange_amount
 
-    state_machine :reception_status, initial: :awaiting do
-      after_transition to: COMPLETED_RECEPTION_STATUSES,  do: :attempt_accept
-      after_transition to: COMPLETED_RECEPTION_STATUSES,  do: :check_unexchange
-      after_transition to: :received, do: :process_inventory_unit!
-
-      event(:cancel) { transition to: :cancelled, from: :awaiting }
-
-      event(:receive) { transition to: :received, from: INTERMEDIATE_RECEPTION_STATUSES + [:awaiting] }
-      event(:unexchange) { transition to: :unexchanged, from: [:awaiting] }
-      event(:give) { transition to: :given_to_customer, from: :awaiting }
-      event(:lost) { transition to: :lost_in_transit, from: :awaiting }
-      event(:wrong_item_shipped) { transition to: :shipped_wrong_item, from: :awaiting }
-      event(:short_shipped) { transition to: :short_shipped, from: :awaiting }
-      event(:in_transit) { transition to: :in_transit, from: :awaiting }
-      event(:expired) { transition to: :expired, from: :awaiting }
-    end
+    include ::Spree::Config.state_machines.return_item_reception
+    include ::Spree::Config.state_machines.return_item_acceptance
 
     extend DisplayMoney
     money_methods :pre_tax_amount, :amount, :total, :total_excluding_vat
@@ -104,31 +90,6 @@ module Spree
       COMPLETED_RECEPTION_STATUSES.map(&:to_s).include?(reception_status.to_s)
     end
 
-    state_machine :acceptance_status, initial: :pending do
-      event :attempt_accept do
-        transition to: :accepted, from: :accepted
-        transition to: :accepted, from: :pending, if: ->(return_item) { return_item.eligible_for_return? }
-        transition to: :manual_intervention_required, from: :pending, if: ->(return_item) { return_item.requires_manual_intervention? }
-        transition to: :rejected, from: :pending
-      end
-
-      # bypasses eligibility checks
-      event :accept do
-        transition to: :accepted, from: [:accepted, :pending, :manual_intervention_required]
-      end
-
-      # bypasses eligibility checks
-      event :reject do
-        transition to: :rejected, from: [:accepted, :pending, :manual_intervention_required]
-      end
-
-      # bypasses eligibility checks
-      event :require_manual_intervention do
-        transition to: :manual_intervention_required, from: [:accepted, :pending, :manual_intervention_required]
-      end
-
-      after_transition any => any, do: :persist_acceptance_status_errors
-    end
 
     attr_accessor :skip_customer_return_processing
 
