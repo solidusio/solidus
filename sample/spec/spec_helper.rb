@@ -5,7 +5,7 @@
 ENV["RAILS_ENV"] ||= 'test'
 
 require 'solidus_sample'
-require 'spree/testing_support/dummy_app'
+require 'solidus/testing_support/dummy_app'
 DummyApp.setup(
   gem_root: File.expand_path('..', __dir__),
   lib_name: 'solidus_sample'

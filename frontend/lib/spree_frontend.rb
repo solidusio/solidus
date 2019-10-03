@@ -1,3 +1,3 @@
 # frozen_string_literal: true
 
-require 'spree/frontend'
+require 'solidus/frontend'

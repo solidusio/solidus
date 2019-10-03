@@ -4,7 +4,7 @@ require 'spec_helper'
 
 ENV["RAILS_ENV"] ||= 'test'
 
-require 'spree/testing_support/dummy_app'
+require 'solidus/testing_support/dummy_app'
 DummyApp.setup(
   gem_root: File.expand_path('..', __dir__),
   lib_name: 'solidus_core'
@@ -16,9 +16,9 @@ require 'database_cleaner'
 
 Dir["./spec/support/**/*.rb"].sort.each { |f| require f }
 
-require 'spree/testing_support/factories'
-require 'spree/testing_support/preferences'
-require 'spree/testing_support/rake'
+require 'solidus/testing_support/factories'
+require 'solidus/testing_support/preferences'
+require 'solidus/testing_support/rake'
 require 'cancan/matchers'
 
 ActiveJob::Base.queue_adapter = :test

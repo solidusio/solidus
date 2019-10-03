@@ -9,7 +9,7 @@ end
 ENV["RAILS_ENV"] ||= 'test'
 
 require 'solidus_api'
-require 'spree/testing_support/dummy_app'
+require 'solidus/testing_support/dummy_app'
 DummyApp.setup(
   gem_root: File.expand_path('..', __dir__),
   lib_name: 'solidus_api'
@@ -26,14 +26,14 @@ require 'with_model'
 # in spec/support/ and its subdirectories.
 Dir[File.dirname(__FILE__) + "/support/**/*.rb"].each { |f| require f }
 
-require 'spree/testing_support/partial_double_verification'
-require 'spree/testing_support/factories'
-require 'spree/testing_support/preferences'
-require 'spree/testing_support/authorization_helpers'
+require 'solidus/testing_support/partial_double_verification'
+require 'solidus/testing_support/factories'
+require 'solidus/testing_support/preferences'
+require 'solidus/testing_support/authorization_helpers'
 
-require 'spree/api/testing_support/caching'
-require 'spree/api/testing_support/helpers'
-require 'spree/api/testing_support/setup'
+require 'solidus/api/testing_support/caching'
+require 'solidus/api/testing_support/helpers'
+require 'solidus/api/testing_support/setup'
 
 ActiveJob::Base.queue_adapter = :test
 

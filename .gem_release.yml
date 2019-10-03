@@ -1,6 +1,6 @@
 bump:
   recurse: false
-  file: 'core/lib/spree/core/version.rb'
+  file: 'core/lib/solidus/core/version.rb'
   message: Bump Solidus to %{version}
 
 release:

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-require 'spree/i18n'
+require 'solidus/i18n'
 
 RSpec.describe "i18n" do
   before do

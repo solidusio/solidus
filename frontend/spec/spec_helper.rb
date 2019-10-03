@@ -10,7 +10,7 @@ end
 ENV["RAILS_ENV"] ||= 'test'
 
 require 'solidus_frontend'
-require 'spree/testing_support/dummy_app'
+require 'solidus/testing_support/dummy_app'
 DummyApp.setup(
   gem_root: File.expand_path('..', __dir__),
   lib_name: 'solidus_frontend'
@@ -26,16 +26,16 @@ Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
 
 require 'database_cleaner'
 
-require 'spree/testing_support/partial_double_verification'
-require 'spree/testing_support/authorization_helpers'
-require 'spree/testing_support/capybara_ext'
-require 'spree/testing_support/factories'
-require 'spree/testing_support/preferences'
-require 'spree/testing_support/controller_requests'
-require 'spree/testing_support/flash'
-require 'spree/testing_support/url_helpers'
-require 'spree/testing_support/order_walkthrough'
-require 'spree/testing_support/caching'
+require 'solidus/testing_support/partial_double_verification'
+require 'solidus/testing_support/authorization_helpers'
+require 'solidus/testing_support/capybara_ext'
+require 'solidus/testing_support/factories'
+require 'solidus/testing_support/preferences'
+require 'solidus/testing_support/controller_requests'
+require 'solidus/testing_support/flash'
+require 'solidus/testing_support/url_helpers'
+require 'solidus/testing_support/order_walkthrough'
+require 'solidus/testing_support/caching'
 
 require 'capybara-screenshot/rspec'
 Capybara.save_path = ENV['CIRCLE_ARTIFACTS'] if ENV['CIRCLE_ARTIFACTS']

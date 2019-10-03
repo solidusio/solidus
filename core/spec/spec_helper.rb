@@ -7,9 +7,9 @@ end
 
 require 'rspec/core'
 
-require 'spree/testing_support/partial_double_verification'
-require 'spree/testing_support/preferences'
-require 'spree/config'
+require 'solidus/testing_support/partial_double_verification'
+require 'solidus/testing_support/preferences'
+require 'solidus/config'
 require 'with_model'
 
 RSpec.configure do |config|

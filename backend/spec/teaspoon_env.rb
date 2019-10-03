@@ -41,7 +41,7 @@ else
 
   require 'teaspoon'
 
-  require 'spree/testing_support/dummy_app'
+  require 'solidus/testing_support/dummy_app'
 
   DummyApp.setup(
     gem_root: File.expand_path('..', __dir__),

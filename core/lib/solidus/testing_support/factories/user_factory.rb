@@ -1,0 +1,28 @@
+# frozen_string_literal: true
+
+require 'solidus/testing_support/sequences'
+require 'solidus/testing_support/factories/role_factory'
+require 'solidus/testing_support/factories/address_factory'
+
+FactoryBot.define do
+  factory :user, class: Solidus::UserClassHandle.new do
+    email { generate(:email) }
+    password { 'secret' }
+    password_confirmation { password }
+
+    trait :with_api_key do
+      after(:create) do |user, _|
+        user.generate_spree_api_key!
+      end
+    end
+
+    factory :admin_user do
+      spree_roles { [Solidus::Role.find_by(name: 'admin') || create(:role, name: 'admin')] }
+    end
+
+    factory :user_with_addresses do |_u|
+      bill_address
+      ship_address
+    end
+  end
+end

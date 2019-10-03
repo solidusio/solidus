@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'spree_core'
-require 'spree/sample'
+require 'solidus/sample'
 
 module SolidusSample
   class Engine < Rails::Engine

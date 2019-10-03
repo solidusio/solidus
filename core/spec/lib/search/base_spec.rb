@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
-require 'spree/core/product_filters'
+require 'solidus/core/product_filters'
 
 RSpec.describe Solidus::Core::Search::Base do
   before do
