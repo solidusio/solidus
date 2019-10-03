@@ -53,7 +53,13 @@ RSpec.describe RemoveCodeFromSpreePromotions do
       # Re-update column information after the migration has been executed
       # again in the example. This will make the promotion attributes cache
       # ready for other tests.
+      Spree::Promotion.delete_all
       Spree::Promotion.reset_column_information
+      if Rails.gem_version >= Gem::Version.new('6.0.0')
+        ActiveRecord::Migrator.new(:up, migrations, ActiveRecord::SchemaMigration).migrate
+      else
+        ActiveRecord::Migrator.new(:up, migrations).migrate
+      end
     end
     DatabaseCleaner.clean_with(:truncation)
   end
