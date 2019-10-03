@@ -1,5 +1,9 @@
 # Relaxed.Ruby.Style
 
+require:
+  - rubocop-performance
+  - rubocop-rails
+
 AllCops:
   Exclude:
     - 'vendor/**/*'
@@ -7,7 +11,8 @@ AllCops:
     - '*/spec/dummy/**/*'
     - 'sandbox/**/*'
     - '**/templates/**/*'
-  TargetRubyVersion: 2.3
+    - 'guides/node_modules/**/*'
+  TargetRubyVersion: 2.4
 
 # Sometimes I believe this reads better
 # This also causes spacing issues on multi-line fixes

@@ -1,5 +1,6 @@
 ruby:
   config_file: .rubocop.yml
+  version: 0.72.0
 erb_lint:
   enabled: true
 scss:
