@@ -93,7 +93,6 @@ You can translate country names by defining `spree.country_names` in your own lo
 es:
   spree:
     country_names:
-      # ISO: Country name
       US: Estados Unidos de América
       UK: Reino Unido
       CA: Canadá
