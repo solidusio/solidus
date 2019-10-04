@@ -16,9 +16,11 @@ and the framework that power Solidus, respectively.
 - [Learn How to Customize the Solidus Classes][decorators]
 - [Learn How to Customize the Assets][assets]
 - [Learn How to Customize the Permissions][permissions]
+- [Learn How to Customize Model Attributes][attributes]
 
 [storefront]: customizing-storefront.html
 [admin]: customizing-admin.html
 [assets]: customizing-assets.html
 [decorators]: decorators.html
 [permissions]: customizing-permissions.html
+[attributes]: customizing-attributes.html
