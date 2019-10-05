@@ -753,11 +753,6 @@ es-MX:
     country: País
     country_based: País base
     country_name: Nombre
-    country_names:
-      CA:
-      FRA:
-      ITA:
-      US:
     coupon: Cupón
     coupon_code: Código de cupón
     coupon_code_already_applied: El código del cupón ya ha sido aplicado en esta orden
