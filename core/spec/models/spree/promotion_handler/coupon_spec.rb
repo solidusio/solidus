@@ -88,6 +88,12 @@ module Spree
             subject.apply
             expect(subject.error).to eq I18n.t('spree.coupon_code_not_found')
           end
+
+          it "logs a warning message" do
+            allow(Rails.logger).to receive(:warn).at_least(:once)
+            subject.apply
+            expect(Rails.logger).to have_received(:warn).with I18n.t(:coupon_code_no_promotion_actions, coupon_code: '10off')
+          end
         end
       end
 

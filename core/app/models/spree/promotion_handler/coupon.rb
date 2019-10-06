@@ -17,6 +17,9 @@ module Spree
             handle_present_promotion(promotion)
           elsif promotion_code && promotion_code.promotion.inactive?
             set_error_code :coupon_code_expired
+          elsif promotion_code && !promotion.actions.exists?
+            set_error_code :coupon_code_not_found
+            Rails.logger.warn I18n.t(:coupon_code_no_promotion_actions, coupon_code: coupon_code)
           else
             set_error_code :coupon_code_not_found
           end

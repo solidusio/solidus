@@ -25,8 +25,12 @@ following steps:
    of many types of discount depending on the promotion calculator being used.
    (For example, the amount could be a flat percentage or a flexible rate.)
 
-Note that if you choose the promotion action type **Free Shipping** that steps
-3. and 4. are not applicable.
+### Notes
+1. If you choose the promotion action type **Free Shipping**, then steps
+**3** and **4** are not applicable.
+2. You can set a coupon code to your promotion, but your customers will be 
+unable to use it when no actions are present. In these cases, a warning message
+will be shown in the logs.
 
 [create-a-new-promotion]: overview.html#create-a-new-promotion
 [promotion-calculators]: promotion-calculators.html

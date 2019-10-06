@@ -1175,6 +1175,7 @@ en:
     coupon_code_removed: The coupon code was successfully removed from this order.
     coupon_code_unknown_error: This coupon code could not be applied to the cart at
       this time.
+    coupon_code_no_promotion_actions: "Failed to apply the coupon code '%{coupon_code}' because it does not have any actions."
     create: Create
     create_a_new_account: Create a new account
     create_one: Create One.
