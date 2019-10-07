@@ -10,6 +10,14 @@ You can use your API key to access all resources in the API. The API key must be
 Authorization: Bearer API_KEY
 ```
 
+As an admin, you can find your API token in the admin section under Users > Your e-email > API Access (at `admin/users/<user_id>/edit`)
+
+Example:
+
+```
+curl --header "Authorization: Bearer 1a6a9936ad150a2ee345c65331da7a3ccc2de" http://www.my-solidus-site.com/api/stores
+```
+
 By default, API keys are only generated for admins, but you can easily customize Solidus to generate them for all users, which is useful for instance if you want users to be able to sign in and manage their profile via the API.
 
 ### Order token
