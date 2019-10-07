@@ -41,6 +41,24 @@ describe "Taxonomies and taxons", type: :feature do
     expect(page).to have_current_path %r{/admin/taxonomies/\d+/taxons/\d+/edit}
   end
 
+  it "can clear taxon icon", js: true do
+    @taxon = create(:taxon, name: 'Shirts')
+    visit spree.edit_admin_taxonomy_taxon_path(@taxon.taxonomy_id, @taxon.id)
+
+    attach_file "taxon_icon", Rails.root.join('..', '..', 'spec', 'support', 'ror_ringer.jpeg')
+
+    click_button "Update"
+    expect(page).to have_content("Taxon \"Shirts\" has been successfully updated!")
+
+    visit spree.edit_admin_taxonomy_taxon_path(@taxon.taxonomy_id, @taxon.id)
+
+    accept_confirm do
+      click_on "Clear icon"
+    end
+
+    expect(page).to have_content("Taxon \"Shirts\" icon has been successfully cleared!")
+  end
+
   context "inside sidebar menu" do
     def only_one_selected_tab_inside?(sub_tab_selector, tab_name, tab_path)
       within(sub_tab_selector) do

@@ -139,6 +139,7 @@ Spree::Core::Engine.routes.draw do
       collection do
         get :search
       end
+      resource :icon, only: :destroy, to: "taxons#clear_icon"
     end
 
     resources :reimbursement_types, only: [:index]

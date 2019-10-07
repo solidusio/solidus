@@ -3,5 +3,6 @@
     <%= f.label attachment %><br>
     <%= f.file_field attachment %>
     <%= image_tag f.object.send(attachment, definition[:default_style]) if f.object.send(attachment).present? %>
+    <%= link_to t('spree.clear_icon'), admin_taxon_icon_path(@taxon.id), method: 'delete', data: { confirm: t('spree.taxon_confirm_clear_icon') }, class: 'btn btn-sm btn-danger' if f.object.send(attachment).present? %>
   <% end %>
 <% end %>

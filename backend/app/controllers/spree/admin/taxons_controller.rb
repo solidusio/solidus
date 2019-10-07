@@ -72,6 +72,19 @@ module Spree
         respond_with(@taxon) { |format| format.json { render json: '' } }
       end
 
+      def clear_icon
+        @taxon = Spree::Taxon.find(params[:taxon_id])
+        @taxon.icon = nil
+
+        if @taxon.save
+          flash[:success] = flash_message_for(@taxon, :successfully_icon_cleared)
+        end
+
+        respond_with(@taxon) do |format|
+          format.html { redirect_to edit_admin_taxonomy_url(@taxon.taxonomy_id) }
+        end
+      end
+
       private
 
       def taxon_params

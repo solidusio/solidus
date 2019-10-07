@@ -1127,6 +1127,7 @@ en:
     clear_cache_ok: Cache was flushed
     clear_cache_warning: Clearing cache will temporarily reduce the performance of
       your store.
+    clear_icon: Clear icon
     clone: Clone
     close: Close
     closed: Closed
@@ -2090,6 +2091,7 @@ en:
     subtract: Subtract
     success: Success
     successfully_created: "%{resource} has been successfully created!"
+    successfully_icon_cleared: "%{resource} icon has been successfully cleared!"
     successfully_refunded: "%{resource} has been successfully refunded!"
     successfully_removed: "%{resource} has been successfully removed!"
     successfully_signed_up_for_analytics: Successfully signed up for Spree Analytics
@@ -2111,6 +2113,7 @@ en:
       match_all: all
       match_any: at least one
       match_none: none
+    taxon_confirm_clear_icon: Are you sure you want to clear this taxon's icon?
     taxonomies: Taxonomies
     taxonomy: Taxonomy
     taxonomy_edit: Edit taxonomy
