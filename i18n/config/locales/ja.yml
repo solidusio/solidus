@@ -581,7 +581,7 @@ ja:
     date_picker:
       first_day: 0
       format: ! '%Y/%m/%d'
-      js_format: yy/mm/dd
+      js_format: Y/m/d
     date_range: "日範囲"
     default: "初期設定"
     default_refund_amount:

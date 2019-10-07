@@ -521,7 +521,7 @@ ro:
     date_picker:
       first_day:
       format: "%d.%m.%Y"
-      js_format: "%d.%m.%Y"
+      js_format: "d.m.Y"
     date_range: Perioada
     default: Standard
     default_refund_amount:

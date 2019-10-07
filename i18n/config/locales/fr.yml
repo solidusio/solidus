@@ -1156,7 +1156,7 @@ fr:
     date_picker:
       first_day: 0
       format: "%d/%m/%Y"
-      js_format: dd/mm/yy
+      js_format: d/m/Y
     date_range: Sélection de dates
     default: Défaut
     default_refund_amount: Montant de remboursement par défaut

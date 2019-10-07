@@ -525,7 +525,7 @@ pl:
     date_picker:
       first_day: 0
       format: "%Y/%m/%d"
-      js_format: yy/mm/dd
+      js_format: Y/m/d
     date_range: Zakres dat
     default: Domyślny
     default_refund_amount:

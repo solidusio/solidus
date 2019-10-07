@@ -477,7 +477,7 @@ vi:
     date_picker:
       first_day:
       format: "%d/%m/%Y"
-      js_format: dd/mm/yy
+      js_format: d/m/Y
     date_range: Giới hạn ngày
     default:
     default_refund_amount:

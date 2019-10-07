@@ -813,12 +813,9 @@ de:
     date: Datum
     date_completed: Abschlußdatum
     date_picker:
-      date_picker:
-        first_day: Erster Tag
-        js_format: Js Format
       first_day: 0
       format: "%d.%m.%Y"
-      js_format: dd.mm.yy
+      js_format: d.m.Y
     date_range: Datum (von/bis)
     default: Standard
     default_refund_amount: Bevorzugte Gutschriftshöhe

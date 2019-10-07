@@ -562,7 +562,7 @@ es-CL:
     date_picker:
       first_day: 1
       format: "%d/%m/%Y"
-      js_format: dd/mm/yy
+      js_format: d/m/Y
     date_range: Rango de fechas
     default: Por defecto
     default_refund_amount: Valor por defecto del reembolso

@@ -546,7 +546,7 @@ cs:
     date_picker:
       first_day: 1
       format: "%d.%m.%Y"
-      js_format: dd.mm.yy
+      js_format: d.m.Y
     date_range: Datum (od-do)
     default: Výchozí
     default_refund_amount: Výchozí částka refundace

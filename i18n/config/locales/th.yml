@@ -517,7 +517,7 @@ th:
     date_picker:
       first_day:
       format: "%Y/%m/%d"
-      js_format: yy/mm/dd
+      js_format: Y/m/d
     date_range: "ช่วงวันที่"
     default: "ค่าเริ่มต้น"
     default_refund_amount:

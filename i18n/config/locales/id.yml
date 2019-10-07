@@ -520,7 +520,7 @@ id:
     date_picker:
       first_day:
       format: "%Y/%m/%d"
-      js_format: yy/mm/dd
+      js_format: Y/m/d
     date_range: Rentang Tanggal
     default: Nilai Awal
     default_refund_amount:

@@ -474,10 +474,6 @@ pt:
       jirafe_settings_updated:
     date:
     date_completed: Date Completed
-    date_picker:
-      first_day:
-      format:
-      js_format:
     date_range: Entre as Datas
     default: Padrão
     default_refund_amount:

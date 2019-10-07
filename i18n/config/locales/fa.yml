@@ -482,10 +482,6 @@ fa:
       jirafe_settings_updated:
     date:
     date_completed: Date Completed
-    date_picker:
-      first_day:
-      format:
-      js_format:
     date_range: محدوده ی زمانی
     default: پیش فرض
     default_meta_description: Default Meta Description

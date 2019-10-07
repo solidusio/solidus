@@ -518,10 +518,6 @@ ca:
       jirafe_settings_updated:
     date: Data
     date_completed:
-    date_picker:
-      first_day:
-      format:
-      js_format:
     date_range: Rang de Data
     default: Per omissió
     default_refund_amount:

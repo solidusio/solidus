@@ -628,7 +628,7 @@ sk:
     date_picker:
       first_day: 1
       format: "%d.%m.%Y"
-      js_format: dd.mm.rr
+      js_format: d.m.Y
     date_range: "Obdobie"
     default: "Predvolené"
     default_refund_amount:
