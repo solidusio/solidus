@@ -20,7 +20,9 @@ products[:ruby_tote] = Spree::Product.find_by!(name: "Ruby Tote")
 def image(name, type = "jpg")
   images_path = Pathname.new(File.dirname(__FILE__)) + "images"
   path = images_path + "#{name}.#{type}"
+
   return false if !File.exist?(path)
+
   path
 end
 
@@ -103,7 +105,9 @@ products[:solidus_tshirt].variants.each do |variant|
     variant.images.create!(attachment: f)
   end
   back_image = image("solidus_tshirt_back_#{color}", "png")
+
   next unless back_image
+
   File.open(back_image) do |f|
     variant.images.create!(attachment: f)
   end
@@ -116,7 +120,9 @@ products[:solidus_long].variants.each do |variant|
     variant.images.create!(attachment: f)
   end
   back_image = image("solidus_long_back_#{color}", "png")
+
   next unless back_image
+
   File.open(back_image) do |f|
     variant.images.create!(attachment: f)
   end
