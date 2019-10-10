@@ -58,6 +58,9 @@ module Spree
 
     def setup_assets
       @lib_name = 'spree'
+
+      empty_directory 'app/assets/images'
+
       %w{javascripts stylesheets images}.each do |path|
         empty_directory "vendor/assets/#{path}/spree/frontend" if defined? Spree::Frontend || Rails.env.test?
         empty_directory "vendor/assets/#{path}/spree/backend" if defined? Spree::Backend || Rails.env.test?
