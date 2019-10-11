@@ -18,3 +18,7 @@ module Solidus
     end
   end
 end
+
+[
+  Solidus::NamespaceMigration::SpreeConstant
+].each(&:activate)
