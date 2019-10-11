@@ -93,3 +93,11 @@ Spree.user_class = <%= (options[:user_class].blank? ? "Spree::LegacyUser" : opti
 # just uncomment the following code and change it as you need.
 #
 # Spree::Model.whitelisted_ransackable_attributes << 'field'
+
+# Rules for avoiding to store the current path into session for redirects
+# When at least one rule is matched, the request path will not be stored
+# in session.
+# You can add your custom rules by uncommenting this line and changing
+# the class name:
+#
+# Spree::UserLastUrlStorer.rules << 'Spree::UserLastUrlStorer::Rules::AuthenticationRule'
