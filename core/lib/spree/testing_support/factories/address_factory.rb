@@ -4,9 +4,9 @@ require 'spree/testing_support/factories/state_factory'
 require 'spree/testing_support/factories/country_factory'
 
 FactoryBot.define do
-  factory :address, class: 'Spree::Address' do
+  factory :address, class: 'Solidus::Address' do
     transient do
-      # There's `Spree::Address#country_iso=`, prohibiting me from using `country_iso` here
+      # There's `Solidus::Address#country_iso=`, prohibiting me from using `country_iso` here
       country_iso_code { 'US' }
       state_code { 'AL' }
     end
@@ -22,7 +22,7 @@ FactoryBot.define do
     alternative_phone { '555-555-0199' }
 
     state do |address|
-      Spree::State.joins(:country).where('spree_countries.iso = (?)', country_iso_code).find_by(abbr: state_code) ||
+      Solidus::State.joins(:country).where('spree_countries.iso = (?)', country_iso_code).find_by(abbr: state_code) ||
         address.association(:state, country_iso: country_iso_code, state_code: state_code)
     end
 

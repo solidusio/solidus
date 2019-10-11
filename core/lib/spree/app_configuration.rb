@@ -22,7 +22,7 @@ require "spree/core/search/variant"
 require 'spree/preferences/configuration'
 require 'spree/core/environment'
 
-module Spree
+module Solidus
   class AppConfiguration < Preferences::Configuration
     # Alphabetized to more easily lookup particular preferences
 
@@ -104,7 +104,7 @@ module Spree
     preference :inventory_cache_threshold, :integer
 
     # @!attribute [rw] checkout_zone
-    #   @return [String] Name of a {Spree::Zone}, which limits available countries to those included in that zone. (default: +nil+)
+    #   @return [String] Name of a {Solidus::Zone}, which limits available countries to those included in that zone. (default: +nil+)
     preference :checkout_zone, :string, default: nil
 
     # @!attribute [rw] company
@@ -118,17 +118,17 @@ module Spree
 
     # @!attribute [rw] default_country_id
     #   @deprecated Use the default country ISO preference instead
-    #   @return [Integer,nil] id of {Spree::Country} to be selected by default in dropdowns (default: nil)
+    #   @return [Integer,nil] id of {Solidus::Country} to be selected by default in dropdowns (default: nil)
     preference :default_country_id, :integer
 
     # @!attribute [rw] default_country_iso
     #   Default customer country ISO code
-    #   @return [String] Two-letter ISO code of a {Spree::Country} to assumed as the country of an unidentified customer (default: "US")
+    #   @return [String] Two-letter ISO code of a {Solidus::Country} to assumed as the country of an unidentified customer (default: "US")
     preference :default_country_iso, :string, default: 'US'
 
     # @!attribute [rw] admin_vat_country_iso
     #   Set this if you want to enter prices in the backend including value added tax.
-    #   @return [String, nil] Two-letter ISO code of that {Spree::Country} for which
+    #   @return [String, nil] Two-letter ISO code of that {Solidus::Country} for which
     #      prices are entered in the backend (default: nil)
     preference :admin_vat_country_iso, :string, default: nil
 
@@ -159,7 +159,7 @@ module Spree
     preference :max_level_in_taxons_menu, :integer, default: 1
 
     # @!attribute [rw] order_mutex_max_age
-    #   @return [Integer] Max age of {Spree::OrderMutex} in seconds (default: 2 minutes)
+    #   @return [Integer] Max age of {Solidus::OrderMutex} in seconds (default: 2 minutes)
     preference :order_mutex_max_age, :integer, default: 120
 
     # @!attribute [rw] orders_per_page
@@ -244,7 +244,7 @@ module Spree
     # Store credits configurations
 
     # @!attribute [rw] credit_to_new_allocation
-    #   @return [Boolean] Creates a new allocation anytime {Spree::StoreCredit#credit} is called
+    #   @return [Boolean] Creates a new allocation anytime {Solidus::StoreCredit#credit} is called
     preference :credit_to_new_allocation, :boolean, default: false
 
     # @!attribute [rw] automatic_default_address
@@ -269,14 +269,14 @@ module Spree
     end
 
     # searcher_class allows spree extension writers to provide their own Search class
-    class_name_attribute :searcher_class, default: 'Spree::Core::Search::Base'
+    class_name_attribute :searcher_class, default: 'Solidus::Core::Search::Base'
 
     # Allows implementing custom pricing for variants
     # @!attribute [rw] variant_price_selector_class
-    # @see Spree::Variant::PriceSelector
+    # @see Solidus::Variant::PriceSelector
     # @return [Class] an object that conforms to the API of
-    #   the standard variant price selector class Spree::Variant::PriceSelector.
-    class_name_attribute :variant_price_selector_class, default: 'Spree::Variant::PriceSelector'
+    #   the standard variant price selector class Solidus::Variant::PriceSelector.
+    class_name_attribute :variant_price_selector_class, default: 'Solidus::Variant::PriceSelector'
 
     # Shortcut for getting the variant price selector's pricing options class
     #
@@ -290,24 +290,24 @@ module Spree
       pricing_options_class.new
     end
 
-    class_name_attribute :variant_search_class, default: 'Spree::Core::Search::Variant'
+    class_name_attribute :variant_search_class, default: 'Solidus::Core::Search::Variant'
 
     # promotion_chooser_class allows extensions to provide their own PromotionChooser
-    class_name_attribute :promotion_chooser_class, default: 'Spree::PromotionChooser'
+    class_name_attribute :promotion_chooser_class, default: 'Solidus::PromotionChooser'
 
-    class_name_attribute :allocator_class, default: 'Spree::Stock::Allocator::OnHandFirst'
+    class_name_attribute :allocator_class, default: 'Solidus::Stock::Allocator::OnHandFirst'
 
-    class_name_attribute :shipping_rate_sorter_class, default: 'Spree::Stock::ShippingRateSorter'
+    class_name_attribute :shipping_rate_sorter_class, default: 'Solidus::Stock::ShippingRateSorter'
 
-    class_name_attribute :shipping_rate_selector_class, default: 'Spree::Stock::ShippingRateSelector'
+    class_name_attribute :shipping_rate_selector_class, default: 'Solidus::Stock::ShippingRateSelector'
 
     # Allows providing your own class for calculating taxes on a shipping rate.
     #
     # @!attribute [rw] shipping_rate_tax_calculator_class
     # @return [Class] a class with the same public interfaces as
-    #   Spree::TaxCalculator::ShippingRate
+    #   Solidus::TaxCalculator::ShippingRate
     # @api experimental
-    class_name_attribute :shipping_rate_tax_calculator_class, default: 'Spree::TaxCalculator::ShippingRate'
+    class_name_attribute :shipping_rate_tax_calculator_class, default: 'Solidus::TaxCalculator::ShippingRate'
 
     # Allows providing your own Mailer for order mailer.
     #
@@ -315,8 +315,8 @@ module Spree
     # @return [ActionMailer::Base] an object that responds to "confirm_email",
     #   "cancel_email" and "inventory_cancellation_email"
     #   (e.g. an ActionMailer with a "confirm_email" method) with the same
-    #   signature as Spree::OrderMailer.confirm_email.
-    class_name_attribute :order_mailer_class, default: 'Spree::OrderMailer'
+    #   signature as Solidus::OrderMailer.confirm_email.
+    class_name_attribute :order_mailer_class, default: 'Solidus::OrderMailer'
 
     # Allows providing your own Mailer for promotion code batch mailer.
     #
@@ -324,39 +324,39 @@ module Spree
     # @return [ActionMailer::Base] an object that responds to "promotion_code_batch_finished",
     #   and "promotion_code_batch_errored"
     #   (e.g. an ActionMailer with a "promotion_code_batch_finished" method) with the same
-    #   signature as Spree::PromotionCodeBatchMailer.promotion_code_batch_finished.
-    class_name_attribute :promotion_code_batch_mailer_class, default: 'Spree::PromotionCodeBatchMailer'
+    #   signature as Solidus::PromotionCodeBatchMailer.promotion_code_batch_finished.
+    class_name_attribute :promotion_code_batch_mailer_class, default: 'Solidus::PromotionCodeBatchMailer'
 
     # Allows providing your own Mailer for reimbursement mailer.
     #
     # @!attribute [rw] reimbursement_mailer_class
     # @return [ActionMailer::Base] an object that responds to "reimbursement_email"
     #   (e.g. an ActionMailer with a "reimbursement_email" method) with the same
-    #   signature as Spree::ReimbursementMailer.reimbursement_email.
-    class_name_attribute :reimbursement_mailer_class, default: 'Spree::ReimbursementMailer'
+    #   signature as Solidus::ReimbursementMailer.reimbursement_email.
+    class_name_attribute :reimbursement_mailer_class, default: 'Solidus::ReimbursementMailer'
 
     # Allows providing your own Mailer for shipped cartons.
     #
     # @!attribute [rw] carton_shipped_email_class
     # @return [ActionMailer::Base] an object that responds to "shipped_email"
     #   (e.g. an ActionMailer with a "shipped_email" method) with the same
-    #   signature as Spree::CartonMailer.shipped_email.
-    class_name_attribute :carton_shipped_email_class, default: 'Spree::CartonMailer'
+    #   signature as Solidus::CartonMailer.shipped_email.
+    class_name_attribute :carton_shipped_email_class, default: 'Solidus::CartonMailer'
 
     # Allows providing your own class for merging two orders.
     #
     # @!attribute [rw] order_merger_class
     # @return [Class] a class with the same public interfaces
-    #   as Spree::OrderMerger.
-    class_name_attribute :order_merger_class, default: 'Spree::OrderMerger'
+    #   as Solidus::OrderMerger.
+    class_name_attribute :order_merger_class, default: 'Solidus::OrderMerger'
 
     # Allows providing your own class for adding default payments to a user's
     # order from their "wallet".
     #
     # @!attribute [rw] default_payment_builder_class
     # @return [Class] a class with the same public interfaces as
-    #   Spree::Wallet::DefaultPaymentBuilder.
-    class_name_attribute :default_payment_builder_class, default: 'Spree::Wallet::DefaultPaymentBuilder'
+    #   Solidus::Wallet::DefaultPaymentBuilder.
+    class_name_attribute :default_payment_builder_class, default: 'Solidus::Wallet::DefaultPaymentBuilder'
 
     # Allows providing your own class for canceling payments.
     #
@@ -364,8 +364,8 @@ module Spree
     # @return [Class] a class instance that responds to `cancel!(payment)`
     attr_writer :payment_canceller
     def payment_canceller
-      @payment_canceller ||= Spree::Payment::Cancellation.new(
-        reason: Spree::Payment::Cancellation::DEFAULT_REASON
+      @payment_canceller ||= Solidus::Payment::Cancellation.new(
+        reason: Solidus::Payment::Cancellation::DEFAULT_REASON
       )
     end
 
@@ -374,8 +374,8 @@ module Spree
     #
     # @!attribute [rw] add_payment_sources_to_wallet_class
     # @return [Class] a class with the same public interfaces
-    #   as Spree::Wallet::AddPaymentSourcesToWallet.
-    class_name_attribute :add_payment_sources_to_wallet_class, default: 'Spree::Wallet::AddPaymentSourcesToWallet'
+    #   as Solidus::Wallet::AddPaymentSourcesToWallet.
+    class_name_attribute :add_payment_sources_to_wallet_class, default: 'Solidus::Wallet::AddPaymentSourcesToWallet'
 
     # Allows providing your own class for calculating taxes on an order.
     #
@@ -383,24 +383,24 @@ module Spree
     #
     # @!attribute [rw] tax_adjuster_class
     # @return [Class] a class with the same public interfaces as
-    #   Spree::Tax::OrderAdjuster
+    #   Solidus::Tax::OrderAdjuster
     # @api experimental
-    class_name_attribute :tax_adjuster_class, default: 'Spree::Tax::OrderAdjuster'
+    class_name_attribute :tax_adjuster_class, default: 'Solidus::Tax::OrderAdjuster'
 
     # Allows providing your own class for calculating taxes on an order.
     #
     # @!attribute [rw] tax_calculator_class
     # @return [Class] a class with the same public interfaces as
-    #   Spree::TaxCalculator::Default
+    #   Solidus::TaxCalculator::Default
     # @api experimental
-    class_name_attribute :tax_calculator_class, default: 'Spree::TaxCalculator::Default'
+    class_name_attribute :tax_calculator_class, default: 'Solidus::TaxCalculator::Default'
 
     # Allows providing your own class for choosing which store to use.
     #
     # @!attribute [rw] current_store_selector_class
     # @return [Class] a class with the same public interfaces as
-    #   Spree::CurrentStoreSelector
-    class_name_attribute :current_store_selector_class, default: 'Spree::StoreSelector::ByServerName'
+    #   Solidus::CurrentStoreSelector
+    class_name_attribute :current_store_selector_class, default: 'Solidus::StoreSelector::ByServerName'
 
     # Allows providing your own class for creating urls on taxons
     #
@@ -414,154 +414,154 @@ module Spree
     # @!attribute [rw] variant_gallery_class
     # @return [Class] a class that implements an `images` method and returns an
     # Enumerable of images adhering to the present_image_class interface
-    class_name_attribute :variant_gallery_class, default: 'Spree::Gallery::VariantGallery'
+    class_name_attribute :variant_gallery_class, default: 'Solidus::Gallery::VariantGallery'
 
     # Allows providing your own class for image galleries on Products
     #
     # @!attribute [rw] product_gallery_class
     # @return [Class] a class that implements an `images` method and returns an
     # Enumerable of images adhering to the present_image_class interface
-    class_name_attribute :product_gallery_class, default: 'Spree::Gallery::ProductGallery'
+    class_name_attribute :product_gallery_class, default: 'Solidus::Gallery::ProductGallery'
 
     # Allows switching attachment library for Image
     #
-    # `Spree::Image::PaperclipAttachment`
+    # `Solidus::Image::PaperclipAttachment`
     # is the default and provides the classic Paperclip implementation.
     #
     # @!attribute [rw] image_attachment_module
-    # @return [Module] a module that can be included into Spree::Image to allow attachments
+    # @return [Module] a module that can be included into Solidus::Image to allow attachments
     # Enumerable of images adhering to the present_image_class interface
-    class_name_attribute :image_attachment_module, default: 'Spree::Image::PaperclipAttachment'
+    class_name_attribute :image_attachment_module, default: 'Solidus::Image::PaperclipAttachment'
 
     # Allows switching attachment library for Taxon
     #
-    # `Spree::Taxon::PaperclipAttachment`
+    # `Solidus::Taxon::PaperclipAttachment`
     # is the default and provides the classic Paperclip implementation.
     #
     # @!attribute [rw] taxon_attachment_module
-    # @return [Module] a module that can be included into Spree::Taxon to allow attachments
+    # @return [Module] a module that can be included into Solidus::Taxon to allow attachments
     # Enumerable of taxons adhering to the present_taxon_class interface
-    class_name_attribute :taxon_attachment_module, default: 'Spree::Taxon::PaperclipAttachment'
+    class_name_attribute :taxon_attachment_module, default: 'Solidus::Taxon::PaperclipAttachment'
 
     # Allows providing your own class instance for generating order numbers.
     #
     # @!attribute [rw] order_number_generator
     # @return [Class] a class instance with the same public interfaces as
-    #   Spree::Order::NumberGenerator
+    #   Solidus::Order::NumberGenerator
     # @api experimental
     attr_writer :order_number_generator
     def order_number_generator
-      @order_number_generator ||= Spree::Order::NumberGenerator.new
+      @order_number_generator ||= Solidus::Order::NumberGenerator.new
     end
 
     def state_machines
-      @state_machines ||= Spree::Core::StateMachines.new
+      @state_machines ||= Solidus::Core::StateMachines.new
     end
 
     def static_model_preferences
-      @static_model_preferences ||= Spree::Preferences::StaticModelPreferences.new
+      @static_model_preferences ||= Solidus::Preferences::StaticModelPreferences.new
     end
 
     def stock
-      @stock_configuration ||= Spree::Core::StockConfiguration.new
+      @stock_configuration ||= Solidus::Core::StockConfiguration.new
     end
 
     def roles
-      @roles ||= Spree::RoleConfiguration.new.tap do |roles|
-        roles.assign_permissions :default, ['Spree::PermissionSets::DefaultCustomer']
-        roles.assign_permissions :admin, ['Spree::PermissionSets::SuperUser']
+      @roles ||= Solidus::RoleConfiguration.new.tap do |roles|
+        roles.assign_permissions :default, ['Solidus::PermissionSets::DefaultCustomer']
+        roles.assign_permissions :admin, ['Solidus::PermissionSets::SuperUser']
       end
     end
 
     def events
-      @events_configuration ||= Spree::Event::Configuration.new
+      @events_configuration ||= Solidus::Event::Configuration.new
     end
 
     def environment
-      @environment ||= Spree::Core::Environment.new(self).tap do |env|
+      @environment ||= Solidus::Core::Environment.new(self).tap do |env|
         env.calculators.promotion_actions_create_adjustments = %w[
-          Spree::Calculator::FlatPercentItemTotal
-          Spree::Calculator::FlatRate
-          Spree::Calculator::FlexiRate
-          Spree::Calculator::TieredPercent
-          Spree::Calculator::TieredFlatRate
+          Solidus::Calculator::FlatPercentItemTotal
+          Solidus::Calculator::FlatRate
+          Solidus::Calculator::FlexiRate
+          Solidus::Calculator::TieredPercent
+          Solidus::Calculator::TieredFlatRate
         ]
 
         env.calculators.promotion_actions_create_item_adjustments = %w[
-          Spree::Calculator::DistributedAmount
-          Spree::Calculator::FlatRate
-          Spree::Calculator::FlexiRate
-          Spree::Calculator::PercentOnLineItem
-          Spree::Calculator::TieredPercent
+          Solidus::Calculator::DistributedAmount
+          Solidus::Calculator::FlatRate
+          Solidus::Calculator::FlexiRate
+          Solidus::Calculator::PercentOnLineItem
+          Solidus::Calculator::TieredPercent
         ]
 
         env.calculators.promotion_actions_create_quantity_adjustments = %w[
-          Spree::Calculator::PercentOnLineItem
-          Spree::Calculator::FlatRate
+          Solidus::Calculator::PercentOnLineItem
+          Solidus::Calculator::FlatRate
         ]
 
         env.calculators.shipping_methods = %w[
-          Spree::Calculator::Shipping::FlatPercentItemTotal
-          Spree::Calculator::Shipping::FlatRate
-          Spree::Calculator::Shipping::FlexiRate
-          Spree::Calculator::Shipping::PerItem
-          Spree::Calculator::Shipping::PriceSack
+          Solidus::Calculator::Shipping::FlatPercentItemTotal
+          Solidus::Calculator::Shipping::FlatRate
+          Solidus::Calculator::Shipping::FlexiRate
+          Solidus::Calculator::Shipping::PerItem
+          Solidus::Calculator::Shipping::PriceSack
         ]
 
         env.calculators.tax_rates = %w[
-          Spree::Calculator::DefaultTax
+          Solidus::Calculator::DefaultTax
         ]
 
         env.payment_methods = %w[
-          Spree::PaymentMethod::BogusCreditCard
-          Spree::PaymentMethod::SimpleBogusCreditCard
-          Spree::PaymentMethod::StoreCredit
-          Spree::PaymentMethod::Check
+          Solidus::PaymentMethod::BogusCreditCard
+          Solidus::PaymentMethod::SimpleBogusCreditCard
+          Solidus::PaymentMethod::StoreCredit
+          Solidus::PaymentMethod::Check
         ]
 
         env.promotions.rules = %w[
-          Spree::Promotion::Rules::ItemTotal
-          Spree::Promotion::Rules::Product
-          Spree::Promotion::Rules::User
-          Spree::Promotion::Rules::FirstOrder
-          Spree::Promotion::Rules::UserLoggedIn
-          Spree::Promotion::Rules::OneUsePerUser
-          Spree::Promotion::Rules::Taxon
-          Spree::Promotion::Rules::NthOrder
-          Spree::Promotion::Rules::OptionValue
-          Spree::Promotion::Rules::FirstRepeatPurchaseSince
-          Spree::Promotion::Rules::UserRole
-          Spree::Promotion::Rules::Store
+          Solidus::Promotion::Rules::ItemTotal
+          Solidus::Promotion::Rules::Product
+          Solidus::Promotion::Rules::User
+          Solidus::Promotion::Rules::FirstOrder
+          Solidus::Promotion::Rules::UserLoggedIn
+          Solidus::Promotion::Rules::OneUsePerUser
+          Solidus::Promotion::Rules::Taxon
+          Solidus::Promotion::Rules::NthOrder
+          Solidus::Promotion::Rules::OptionValue
+          Solidus::Promotion::Rules::FirstRepeatPurchaseSince
+          Solidus::Promotion::Rules::UserRole
+          Solidus::Promotion::Rules::Store
         ]
 
         env.promotions.actions = %w[
-          Spree::Promotion::Actions::CreateAdjustment
-          Spree::Promotion::Actions::CreateItemAdjustments
-          Spree::Promotion::Actions::CreateQuantityAdjustments
-          Spree::Promotion::Actions::FreeShipping
+          Solidus::Promotion::Actions::CreateAdjustment
+          Solidus::Promotion::Actions::CreateItemAdjustments
+          Solidus::Promotion::Actions::CreateQuantityAdjustments
+          Solidus::Promotion::Actions::FreeShipping
         ]
 
         env.promotions.shipping_actions = %w[
-          Spree::Promotion::Actions::FreeShipping
+          Solidus::Promotion::Actions::FreeShipping
         ]
 
         env.stock_splitters = %w[
-          Spree::Stock::Splitter::ShippingCategory
-          Spree::Stock::Splitter::Backordered
+          Solidus::Stock::Splitter::ShippingCategory
+          Solidus::Stock::Splitter::Backordered
         ]
       end
     end
 
     # Default admin VAT location
     #
-    # An object that responds to :state_id and :country_id so it can double as a Spree::Address in
-    # Spree::Zone.for_address. Takes the `admin_vat_country_iso` as input.
+    # An object that responds to :state_id and :country_id so it can double as a Solidus::Address in
+    # Solidus::Zone.for_address. Takes the `admin_vat_country_iso` as input.
     #
     # @see admin_vat_country_iso The admin VAT country
-    # @return [Spree::Tax::TaxLocation] default tax location
+    # @return [Solidus::Tax::TaxLocation] default tax location
     def admin_vat_location
-      @default_tax_location ||= Spree::Tax::TaxLocation.new(
-        country: Spree::Country.find_by(iso: admin_vat_country_iso)
+      @default_tax_location ||= Solidus::Tax::TaxLocation.new(
+        country: Solidus::Country.find_by(iso: admin_vat_country_iso)
       )
     end
   end

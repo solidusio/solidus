@@ -1,23 +1,23 @@
 <%= render partial: 'spree/admin/shared/product_tabs', locals: {current: 'Images'} %>
 
-<% admin_breadcrumb(plural_resource_name(Spree::Image)) %>
+<% admin_breadcrumb(plural_resource_name(Solidus::Image)) %>
 
 
 <% content_for :page_actions do %>
-  <% if can?(:create, Spree::Image) %>
+  <% if can?(:create, Solidus::Image) %>
     <li><%= link_to_with_icon('plus', t('spree.new_image'), new_admin_product_image_url(@product), id: 'new_image_link', class: 'btn btn-primary') %></li>
   <% end %>
 <% end %>
 
 <div id="new_image" class="hidden">
-  <%= render 'new', product: @product, image: Spree::Image.new(viewable: @product) %>
+  <%= render 'new', product: @product, image: Solidus::Image.new(viewable: @product) %>
 </div>
 
 <fieldset class="no-border-bottom">
   <legend align="center"><%= t(".upload_images") %></legend>
 
   <div id="upload-zone">
-    <%= form_for [:admin, @product, Spree::Image.new],
+    <%= form_for [:admin, @product, Solidus::Image.new],
         html: { multipart: true, id: 'upload-form' } do |f| %>
       <label class="upload">
         <i class="fa fa-5x fa-cloud-upload"></i>
@@ -55,9 +55,9 @@
       <th></th>
       <th><%= t('spree.thumbnail') %></th>
       <% if @product.has_variants? %>
-        <th><%= Spree::Variant.model_name.human %></th>
+        <th><%= Solidus::Variant.model_name.human %></th>
       <% end %>
-      <th><%= Spree::Image.human_attribute_name(:alt) %></th>
+      <th><%= Solidus::Image.human_attribute_name(:alt) %></th>
       <th class="actions"></th>
     </tr>
   </thead>

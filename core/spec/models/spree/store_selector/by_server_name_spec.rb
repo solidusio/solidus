@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::StoreSelector::ByServerName do
+RSpec.describe Solidus::StoreSelector::ByServerName do
   describe "#store" do
     subject { described_class.new(request).store }
 

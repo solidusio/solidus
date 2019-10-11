@@ -2,10 +2,10 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::State, type: :model do
+RSpec.describe Solidus::State, type: :model do
   describe '.with_name_or_abbr' do
     subject do
-      Spree::State.with_name_or_abbr(search_term)
+      Solidus::State.with_name_or_abbr(search_term)
     end
 
     let!(:state) { create(:state, name: "California", abbr: "CA") }
@@ -38,6 +38,6 @@ RSpec.describe Spree::State, type: :model do
 
   it "can find all states group by country id" do
     state = create(:state)
-    expect(Spree::State.states_group_by_country_id).to eq({ state.country_id.to_s => [[state.id, state.name]] })
+    expect(Solidus::State.states_group_by_country_id).to eq({ state.country_id.to_s => [[state.id, state.name]] })
   end
 end

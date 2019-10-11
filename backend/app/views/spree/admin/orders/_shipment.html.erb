@@ -1,5 +1,5 @@
 <%
-  manifest_items = Spree::ShippingManifest.new(
+  manifest_items = Solidus::ShippingManifest.new(
     inventory_units: shipment.inventory_units.where(carton_id: nil),
   ).items.sort_by { |item| item.line_item.created_at }
 %>
@@ -37,10 +37,10 @@
 
     <thead>
       <tr>
-        <th colspan="2"><%= Spree::LineItem.human_attribute_name(:description) %></th>
-        <th><%= Spree::LineItem.human_attribute_name(:price) %></th>
-        <th><%= Spree::LineItem.human_attribute_name(:quantity) %></th>
-        <th><%= Spree::LineItem.human_attribute_name(:total) %></th>
+        <th colspan="2"><%= Solidus::LineItem.human_attribute_name(:description) %></th>
+        <th><%= Solidus::LineItem.human_attribute_name(:price) %></th>
+        <th><%= Solidus::LineItem.human_attribute_name(:quantity) %></th>
+        <th><%= Solidus::LineItem.human_attribute_name(:total) %></th>
         <th class="orders-actions actions" data-hook="admin_order_form_line_items_header_actions"></th>
       </tr>
     </thead>

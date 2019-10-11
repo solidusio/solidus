@@ -2,9 +2,9 @@
 
 require_dependency 'spree/calculator'
 
-module Spree
+module Solidus
   class Calculator::DefaultTax < Calculator
-    include Spree::Tax::TaxHelpers
+    include Solidus::Tax::TaxHelpers
 
     # Default tax calculator still needs to support orders for legacy reasons
     # Orders created before Spree 2.1 had tax adjustments applied to the order, as a whole.

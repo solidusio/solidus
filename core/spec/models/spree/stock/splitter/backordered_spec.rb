@@ -2,13 +2,13 @@
 
 require 'rails_helper'
 
-module Spree
+module Solidus
   module Stock
     module Splitter
       RSpec.describe Backordered, type: :model do
         let(:variant) { build(:variant) }
 
-        let(:stock_location) { mock_model(Spree::StockLocation) }
+        let(:stock_location) { mock_model(Solidus::StockLocation) }
 
         subject { Backordered.new(stock_location) }
 

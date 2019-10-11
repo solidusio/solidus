@@ -105,12 +105,12 @@ ActiveSupport.on_load(:action_controller) do
   wrap_parameters format: [:json]
 end
 
-Spree.user_class = 'Spree::LegacyUser'
-Spree.config do |config|
+Solidus.user_class = 'Solidus::LegacyUser'
+Solidus.config do |config|
   config.mails_from = "store@example.com"
 end
 
 # Raise on deprecation warnings
 if ENV['SOLIDUS_RAISE_DEPRECATIONS'].present?
-  Spree::Deprecation.behavior = :raise
+  Solidus::Deprecation.behavior = :raise
 end

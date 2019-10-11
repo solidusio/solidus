@@ -22,11 +22,11 @@ RSpec.describe "Product scopes", type: :model do
       product.taxons -= [@child_taxon]
       expect(product.taxons.count).to eq(1)
 
-      expect(Spree::Product.in_taxon(@parent_taxon)).to include(product)
+      expect(Solidus::Product.in_taxon(@parent_taxon)).to include(product)
     end
 
     it "calling Product.in_taxon should not return duplicate records" do
-      expect(Spree::Product.in_taxon(@parent_taxon).to_a.size).to eq(1)
+      expect(Solidus::Product.in_taxon(@parent_taxon).to_a.size).to eq(1)
     end
 
     context 'orders products based on their ordering within the classifications' do
@@ -34,14 +34,14 @@ RSpec.describe "Product scopes", type: :model do
       let!(:product_2) { create(:product, taxons: [@child_taxon, other_taxon]) }
 
       it 'by initial ordering' do
-        expect(Spree::Product.in_taxon(@child_taxon)).to eq([product, product_2])
-        expect(Spree::Product.in_taxon(other_taxon)).to eq([product, product_2])
+        expect(Solidus::Product.in_taxon(@child_taxon)).to eq([product, product_2])
+        expect(Solidus::Product.in_taxon(other_taxon)).to eq([product, product_2])
       end
 
       it 'after ordering changed' do
         [@child_taxon, other_taxon].each do |taxon|
-          Spree::Classification.find_by(taxon: taxon, product: product).insert_at(2)
-          expect(Spree::Product.in_taxon(taxon)).to eq([product_2, product])
+          Solidus::Classification.find_by(taxon: taxon, product: product).insert_at(2)
+          expect(Solidus::Product.in_taxon(taxon)).to eq([product_2, product])
         end
       end
     end
@@ -58,7 +58,7 @@ RSpec.describe "Product scopes", type: :model do
     end
 
     context "with_property" do
-      let(:with_property) { Spree::Product.method(:with_property) }
+      let(:with_property) { Solidus::Product.method(:with_property) }
       it "finds by a property's name" do
         expect(with_property.call(name).count).to eq(1)
       end
@@ -81,7 +81,7 @@ RSpec.describe "Product scopes", type: :model do
     end
 
     context "with_property_value" do
-      let(:with_property_value) { Spree::Product.method(:with_property_value) }
+      let(:with_property_value) { Solidus::Product.method(:with_property_value) }
       it "finds by a property's name" do
         expect(with_property_value.call(name, value).count).to eq(1)
       end
@@ -121,14 +121,14 @@ RSpec.describe "Product scopes", type: :model do
       let!(:product) { create(:product, available_on: 1.day.ago) }
 
       it "includes the product" do
-        expect(Spree::Product.available).to match_array([product])
+        expect(Solidus::Product.available).to match_array([product])
       end
 
       context "with no master price" do
         before { product.master.prices.delete_all }
 
         it "doesn't include the product" do
-          expect(Spree::Product.available).to match_array([])
+          expect(Solidus::Product.available).to match_array([])
         end
       end
 
@@ -136,7 +136,7 @@ RSpec.describe "Product scopes", type: :model do
         before { product.master.prices.discard_all }
 
         it "doesn't include the product" do
-          expect(Spree::Product.available).to match_array([])
+          expect(Solidus::Product.available).to match_array([])
         end
       end
 
@@ -144,11 +144,11 @@ RSpec.describe "Product scopes", type: :model do
         let!(:second_price) { create(:price, variant: product.master) }
 
         it "includes the product only once" do
-          expect(Spree::Product.available).to match_array([product])
+          expect(Solidus::Product.available).to match_array([product])
         end
 
         it "has a count of 1" do
-          expect(Spree::Product.available.count).to eq(1)
+          expect(Solidus::Product.available.count).to eq(1)
         end
       end
     end
@@ -157,7 +157,7 @@ RSpec.describe "Product scopes", type: :model do
       let!(:product) { create(:product, available_on: 1.day.from_now) }
 
       it "doesn't include the product" do
-        expect(Spree::Product.available).to match_array([])
+        expect(Solidus::Product.available).to match_array([])
       end
     end
   end

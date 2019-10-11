@@ -2,7 +2,7 @@
 
 require 'spree/deprecation'
 
-module Spree
+module Solidus
   module Core
     module Search
       class Base
@@ -11,13 +11,13 @@ module Spree
         attr_accessor :pricing_options
 
         def initialize(params)
-          self.pricing_options = Spree::Config.default_pricing_options
+          self.pricing_options = Solidus::Config.default_pricing_options
           @properties = {}
           prepare(params)
         end
 
         def current_currency=(currency)
-          self.pricing_options = Spree::Config.pricing_options_class.new(
+          self.pricing_options = Solidus::Config.pricing_options_class.new(
             pricing_options.desired_attributes.merge(currency: currency)
           )
         end
@@ -25,21 +25,21 @@ module Spree
         def current_currency
           pricing_options.currency
         end
-        deprecate :current_currency, :current_currency=, deprecator: Spree::Deprecation
+        deprecate :current_currency, :current_currency=, deprecator: Solidus::Deprecation
 
         def retrieve_products
           @products = get_base_scope
           curr_page = @properties[:page] || 1
 
-          unless Spree::Config.show_products_without_price
-            @products = @products.joins(:prices).merge(Spree::Price.where(pricing_options.search_arguments)).distinct
+          unless Solidus::Config.show_products_without_price
+            @products = @products.joins(:prices).merge(Solidus::Price.where(pricing_options.search_arguments)).distinct
           end
           @products = @products.page(curr_page).per(@properties[:per_page])
         end
 
         def method_missing(name)
           if @properties.key?(name)
-            Spree::Deprecation.warn "Accessing Searcher's #{name} property using #{self.class.name}##{name} is deprecated without replacement"
+            Solidus::Deprecation.warn "Accessing Searcher's #{name} property using #{self.class.name}##{name} is deprecated without replacement"
             @properties[name]
           else
             super
@@ -53,7 +53,7 @@ module Spree
         protected
 
         def get_base_scope
-          base_scope = Spree::Product.display_includes.available
+          base_scope = Solidus::Product.display_includes.available
           base_scope = base_scope.in_taxon(@properties[:taxon]) unless @properties[:taxon].blank?
           base_scope = get_products_conditions_for(base_scope, @properties[:keywords])
           base_scope = add_search_scopes(base_scope)
@@ -89,7 +89,7 @@ module Spree
               if base_scope.respond_to?(:search_scopes) && base_scope.search_scopes.include?(scope_name.to_sym)
                 base_scope = base_scope.send(scope_name, *scope_attribute)
               else
-                base_scope = base_scope.merge(Spree::Product.ransack({ scope_name => scope_attribute }).result)
+                base_scope = base_scope.merge(Solidus::Product.ransack({ scope_name => scope_attribute }).result)
               end
             end
           end
@@ -105,13 +105,13 @@ module Spree
         end
 
         def prepare(params)
-          @properties[:taxon] = params[:taxon].blank? ? nil : Spree::Taxon.find(params[:taxon])
+          @properties[:taxon] = params[:taxon].blank? ? nil : Solidus::Taxon.find(params[:taxon])
           @properties[:keywords] = params[:keywords]
           @properties[:search] = params[:search]
           @properties[:include_images] = params[:include_images]
 
           per_page = params[:per_page].to_i
-          @properties[:per_page] = per_page > 0 ? per_page : Spree::Config[:products_per_page]
+          @properties[:per_page] = per_page > 0 ? per_page : Solidus::Config[:products_per_page]
           @properties[:page] = (params[:page].to_i <= 0) ? 1 : params[:page].to_i
         end
       end

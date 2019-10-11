@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :payment_method, aliases: [:credit_card_payment_method], class: 'Spree::PaymentMethod::BogusCreditCard' do
+  factory :payment_method, aliases: [:credit_card_payment_method], class: 'Solidus::PaymentMethod::BogusCreditCard' do
     name { 'Credit Card' }
     available_to_admin { true }
     available_to_users { true }
   end
 
-  factory :check_payment_method, class: 'Spree::PaymentMethod::Check' do
+  factory :check_payment_method, class: 'Solidus::PaymentMethod::Check' do
     name { 'Check' }
     available_to_admin { true }
     available_to_users { true }
@@ -15,13 +15,13 @@ FactoryBot.define do
 
   # authorize.net was moved to spree_gateway.
   # Leaving this factory in place with bogus in case anyone is using it.
-  factory :simple_credit_card_payment_method, class: 'Spree::PaymentMethod::SimpleBogusCreditCard' do
+  factory :simple_credit_card_payment_method, class: 'Solidus::PaymentMethod::SimpleBogusCreditCard' do
     name { 'Credit Card' }
     available_to_admin { true }
     available_to_users { true }
   end
 
-  factory :store_credit_payment_method, class: 'Spree::PaymentMethod::StoreCredit' do
+  factory :store_credit_payment_method, class: 'Solidus::PaymentMethod::StoreCredit' do
     name          { "Store Credit" }
     description   { "Store Credit" }
     active        { true }

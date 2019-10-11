@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-module Spree
-  class Promotion < Spree::Base
+module Solidus
+  class Promotion < Solidus::Base
     module Actions
       class CreateQuantityAdjustments < CreateItemAdjustments
         preference :group_size, :integer, default: 1
@@ -58,7 +58,7 @@ module Spree
         def compute_amount(line_item)
           adjustment_amount = calculator.compute(PartialLineItem.new(line_item))
           if !adjustment_amount.is_a?(BigDecimal)
-            Spree::Deprecation.warn "#{calculator.class.name}#compute returned #{adjustment_amount.inspect}, it should return a BigDecimal"
+            Solidus::Deprecation.warn "#{calculator.class.name}#compute returned #{adjustment_amount.inspect}, it should return a BigDecimal"
           end
           adjustment_amount ||= BigDecimal(0)
           adjustment_amount = adjustment_amount.abs

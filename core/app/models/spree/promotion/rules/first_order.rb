@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-module Spree
-  class Promotion < Spree::Base
+module Solidus
+  class Promotion < Solidus::Base
     module Rules
       class FirstOrder < PromotionRule
         attr_reader :user, :email
 
         def applicable?(promotable)
-          promotable.is_a?(Spree::Order)
+          promotable.is_a?(Solidus::Order)
         end
 
         def eligible?(order, options = {})
@@ -30,7 +30,7 @@ module Spree
         end
 
         def orders_by_email
-          Spree::Order.where(email: email).complete
+          Solidus::Order.where(email: email).complete
         end
       end
     end

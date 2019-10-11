@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::ReturnAuthorization, type: :model do
+RSpec.describe Solidus::ReturnAuthorization, type: :model do
   let(:order) { create(:shipped_order) }
   let(:stock_location) { create(:stock_location) }
   let(:rma_reason) { create(:return_reason) }
@@ -10,13 +10,13 @@ RSpec.describe Spree::ReturnAuthorization, type: :model do
 
   let(:variant) { order.variants.first }
   let(:return_authorization) do
-    Spree::ReturnAuthorization.new(order: order,
+    Solidus::ReturnAuthorization.new(order: order,
       stock_location_id: stock_location.id,
       return_reason_id: rma_reason.id)
   end
 
   context "save" do
-    let(:order) { Spree::Order.create }
+    let(:order) { Solidus::Order.create }
 
     it "should be invalid when order has no inventory units" do
       order.inventory_units.each(&:delete)
@@ -51,7 +51,7 @@ RSpec.describe Spree::ReturnAuthorization, type: :model do
   describe ".before_create" do
     describe "#generate_number" do
       context "number is assigned" do
-        let(:return_authorization) { Spree::ReturnAuthorization.new(number: '123') }
+        let(:return_authorization) { Solidus::ReturnAuthorization.new(number: '123') }
 
         it "should return the assigned number" do
           return_authorization.save
@@ -60,7 +60,7 @@ RSpec.describe Spree::ReturnAuthorization, type: :model do
       end
 
       context "number is not assigned" do
-        let(:return_authorization) { Spree::ReturnAuthorization.new(number: nil) }
+        let(:return_authorization) { Solidus::ReturnAuthorization.new(number: nil) }
 
         before { allow(return_authorization).to receive_messages valid?: true }
 
@@ -97,9 +97,9 @@ RSpec.describe Spree::ReturnAuthorization, type: :model do
   end
 
   describe "#display_total_excluding_vat" do
-    it "returns a Spree::Money" do
+    it "returns a Solidus::Money" do
       allow(return_authorization).to receive_messages(total_excluding_vat: 21.22)
-      expect(return_authorization.display_total_excluding_vat).to eq(Spree::Money.new(21.22))
+      expect(return_authorization.display_total_excluding_vat).to eq(Solidus::Money.new(21.22))
     end
   end
 
@@ -143,7 +143,7 @@ RSpec.describe Spree::ReturnAuthorization, type: :model do
 
   describe "#customer_returned_items?" do
     before do
-      allow_any_instance_of(Spree::Order).to receive_messages(return!: true)
+      allow_any_instance_of(Solidus::Order).to receive_messages(return!: true)
     end
 
     subject { return_authorization.customer_returned_items? }

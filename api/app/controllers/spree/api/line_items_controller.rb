@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module Api
-    class LineItemsController < Spree::Api::BaseController
+    class LineItemsController < Solidus::Api::BaseController
       before_action :load_order, only: [:create, :update, :destroy]
       around_action :lock_order, only: [:create, :update, :destroy]
 
@@ -10,7 +10,7 @@ module Spree
       end
 
       def create
-        variant = Spree::Variant.find(params[:line_item][:variant_id])
+        variant = Solidus::Variant.find(params[:line_item][:variant_id])
         @line_item = @order.contents.add(
           variant,
           params[:line_item][:quantity] || 1,
@@ -43,7 +43,7 @@ module Spree
       private
 
       def load_order
-        @order ||= Spree::Order.includes(:line_items).find_by!(number: order_id)
+        @order ||= Solidus::Order.includes(:line_items).find_by!(number: order_id)
         authorize! :update, @order, order_token
       end
 

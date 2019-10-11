@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-module Spree
-  class Product < Spree::Base
+module Solidus
+  class Product < Solidus::Base
     module Scopes
       def self.prepended(base)
         base.class_eval do
@@ -29,11 +29,11 @@ module Spree
           scope :descend_by_name, -> { order(name: :desc) }
 
           add_search_scope :ascend_by_master_price do
-            joins(master: :default_price).order(Spree::Price.arel_table[:amount].asc)
+            joins(master: :default_price).order(Solidus::Price.arel_table[:amount].asc)
           end
 
           add_search_scope :descend_by_master_price do
-            joins(master: :default_price).order(Spree::Price.arel_table[:amount].desc)
+            joins(master: :default_price).order(Solidus::Price.arel_table[:amount].desc)
           end
 
           add_search_scope :price_between do |low, high|
@@ -51,12 +51,12 @@ module Spree
           # This scope selects products in taxon AND all its descendants
           # If you need products only within one taxon use
           #
-          #   Spree::Product.joins(:taxons).where(Taxon.table_name => { id: taxon.id })
+          #   Solidus::Product.joins(:taxons).where(Taxon.table_name => { id: taxon.id })
           #
           # If you're using count on the result of this scope, you must use the
           # `:distinct` option as well:
           #
-          #   Spree::Product.in_taxon(taxon).count(distinct: true)
+          #   Solidus::Product.in_taxon(taxon).count(distinct: true)
           #
           # This is so that the count query is distinct'd:
           #
@@ -68,14 +68,14 @@ module Spree
           add_search_scope :in_taxon do |taxon|
             includes(:classifications)
               .where('spree_products_taxons.taxon_id' => taxon.self_and_descendants.pluck(:id))
-              .select(Spree::Classification.arel_table[:position])
-              .order(Spree::Classification.arel_table[:position].asc)
+              .select(Solidus::Classification.arel_table[:position])
+              .order(Solidus::Classification.arel_table[:position].asc)
           end
 
           # This scope selects products in all taxons AND all its descendants
           # If you need products only within one taxon use
           #
-          #   Spree::Product.taxons_id_eq([x,y])
+          #   Solidus::Product.taxons_id_eq([x,y])
           add_search_scope :in_taxons do |*taxons|
             taxons = get_taxons(taxons)
             taxons.first ? prepare_taxon_conditions(taxons) : where(nil)
@@ -90,12 +90,12 @@ module Spree
           # note that it can test for properties with NULL values, but not for absent values
           add_search_scope :with_property_value do |property, value|
             joins(:properties)
-              .where("#{Spree::ProductProperty.table_name}.value = ?", value)
+              .where("#{Solidus::ProductProperty.table_name}.value = ?", value)
               .where(property_conditions(property))
           end
 
           add_search_scope :with_option do |option|
-            option_types = Spree::OptionType.table_name
+            option_types = Solidus::OptionType.table_name
             conditions = case option
                          when String     then { "#{option_types}.name" => option }
                          when OptionType then { "#{option_types}.id" => option.id }
@@ -106,10 +106,10 @@ module Spree
           end
 
           add_search_scope :with_option_value do |option, value|
-            option_values = Spree::OptionValue.table_name
+            option_values = Solidus::OptionValue.table_name
             option_type_id = case option
-                             when String then Spree::OptionType.find_by(name: option) || option.to_i
-                             when Spree::OptionType then option.id
+                             when String then Solidus::OptionType.find_by(name: option) || option.to_i
+                             when Solidus::OptionType then option.id
                              else option.to_i
             end
 
@@ -123,7 +123,7 @@ module Spree
           add_search_scope :with do |value|
             includes(variants_including_master: :option_values).
               includes(:product_properties).
-              where("#{Spree::OptionValue.table_name}.name = ? OR #{Spree::ProductProperty.table_name}.value = ?", value, value)
+              where("#{Solidus::OptionValue.table_name}.name = ? OR #{Solidus::ProductProperty.table_name}.value = ?", value, value)
           end
 
           # Finds all products that have a name containing the given words.
@@ -160,45 +160,45 @@ module Spree
               order(%{
            COALESCE((
              SELECT
-               COUNT(#{Spree::LineItem.quoted_table_name}.id)
+               COUNT(#{Solidus::LineItem.quoted_table_name}.id)
              FROM
-               #{Spree::LineItem.quoted_table_name}
+               #{Solidus::LineItem.quoted_table_name}
              JOIN
-               #{Spree::Variant.quoted_table_name} AS popular_variants
+               #{Solidus::Variant.quoted_table_name} AS popular_variants
              ON
-               popular_variants.id = #{Spree::LineItem.quoted_table_name}.variant_id
+               popular_variants.id = #{Solidus::LineItem.quoted_table_name}.variant_id
              WHERE
-               popular_variants.product_id = #{Spree::Product.quoted_table_name}.id
+               popular_variants.product_id = #{Solidus::Product.quoted_table_name}.id
            ), 0) DESC
         })
           end
 
           add_search_scope :not_deleted do
-            where("#{Spree::Product.quoted_table_name}.deleted_at IS NULL or #{Spree::Product.quoted_table_name}.deleted_at >= ?", Time.current)
+            where("#{Solidus::Product.quoted_table_name}.deleted_at IS NULL or #{Solidus::Product.quoted_table_name}.deleted_at >= ?", Time.current)
           end
 
           scope :with_master_price, -> do
-            joins(:master).where(Spree::Price.where(Spree::Variant.arel_table[:id].eq(Spree::Price.arel_table[:variant_id])).arel.exists)
+            joins(:master).where(Solidus::Price.where(Solidus::Variant.arel_table[:id].eq(Solidus::Price.arel_table[:variant_id])).arel.exists)
           end
           # Can't use add_search_scope for this as it needs a default argument
           def self.available(available_on = nil)
-            with_master_price.where("#{Spree::Product.quoted_table_name}.available_on <= ?", available_on || Time.current)
+            with_master_price.where("#{Solidus::Product.quoted_table_name}.available_on <= ?", available_on || Time.current)
           end
           search_scopes << :available
 
           add_search_scope :taxons_name_eq do |name|
-            group("spree_products.id").joins(:taxons).where(Spree::Taxon.arel_table[:name].eq(name))
+            group("spree_products.id").joins(:taxons).where(Solidus::Taxon.arel_table[:name].eq(name))
           end
 
           def self.with_variant_sku_cont(sku)
             sku_match = "%#{sku}%"
-            variant_table = Spree::Variant.arel_table
-            subquery = Spree::Variant.where(variant_table[:sku].matches(sku_match).and(variant_table[:product_id].eq(arel_table[:id])))
+            variant_table = Solidus::Variant.arel_table
+            subquery = Solidus::Variant.where(variant_table[:sku].matches(sku_match).and(variant_table[:product_id].eq(arel_table[:id])))
             where(subquery.arel.exists)
           end
 
           def self.distinct_by_product_ids(sort_order = nil)
-            Spree::Deprecation.warn "Product.distinct_by_product_ids is deprecated and should not be used"
+            Solidus::Deprecation.warn "Product.distinct_by_product_ids is deprecated and should not be used"
 
             sort_column = sort_order.split(" ").first
 
@@ -228,13 +228,13 @@ module Spree
             private
 
             def price_table_name
-              Spree::Price.quoted_table_name
+              Solidus::Price.quoted_table_name
             end
 
             # specifically avoid having an order for taxon search (conflicts with main order)
             def prepare_taxon_conditions(taxons)
               ids = taxons.map { |taxon| taxon.self_and_descendants.pluck(:id) }.flatten.uniq
-              joins(:taxons).where("#{Spree::Taxon.table_name}.id" => ids)
+              joins(:taxons).where("#{Solidus::Taxon.table_name}.id" => ids)
             end
 
             # Produce an array of keywords for use in scopes.
@@ -246,14 +246,14 @@ module Spree
             end
 
             def get_taxons(*ids_or_records_or_names)
-              taxons = Spree::Taxon.table_name
+              taxons = Solidus::Taxon.table_name
               ids_or_records_or_names.flatten.map { |t|
                 case t
-                when Integer then Spree::Taxon.find_by(id: t)
+                when Integer then Solidus::Taxon.find_by(id: t)
                 when ActiveRecord::Base then t
                 when String
-                  Spree::Taxon.find_by(name: t) ||
-                    Spree::Taxon.where("#{taxons}.permalink LIKE ? OR #{taxons}.permalink = ?", "%/#{t}/", "#{t}/").first
+                  Solidus::Taxon.find_by(name: t) ||
+                    Solidus::Taxon.where("#{taxons}.permalink LIKE ? OR #{taxons}.permalink = ?", "%/#{t}/", "#{t}/").first
                 end
               }.compact.flatten.uniq
             end
@@ -261,7 +261,7 @@ module Spree
         end
       end
 
-      ::Spree::Product.prepend self
+      ::Solidus::Product.prepend self
     end
   end
 end

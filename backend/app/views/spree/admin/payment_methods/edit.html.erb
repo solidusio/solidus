@@ -1,8 +1,8 @@
 <%= render 'spree/admin/shared/payments_tabs' %>
 
 <% admin_breadcrumb(t('spree.settings')) %>
-<% admin_breadcrumb(plural_resource_name(Spree::Payment)) %>
-<% admin_breadcrumb(link_to plural_resource_name(Spree::PaymentMethod), spree.admin_payment_methods_path) %>
+<% admin_breadcrumb(plural_resource_name(Solidus::Payment)) %>
+<% admin_breadcrumb(link_to plural_resource_name(Solidus::PaymentMethod), spree.admin_payment_methods_path) %>
 <% admin_breadcrumb(@payment_method.name) %>
 
 <% content_for :page_actions do %>

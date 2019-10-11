@@ -2,8 +2,8 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::BaseHelper, type: :helper do
-  include Spree::BaseHelper
+RSpec.describe Solidus::BaseHelper, type: :helper do
+  include Solidus::BaseHelper
 
   let(:current_store){ create :store }
 
@@ -20,7 +20,7 @@ RSpec.describe Spree::BaseHelper, type: :helper do
       end
 
       it "return complete list of countries" do
-        expect(available_countries.count).to eq(Spree::Country.count)
+        expect(available_countries.count).to eq(Solidus::Country.count)
       end
 
       it "uses locales for country names" do
@@ -54,7 +54,7 @@ RSpec.describe Spree::BaseHelper, type: :helper do
         end
 
         it "return complete list of countries" do
-          expect(available_countries.count).to eq(Spree::Country.count)
+          expect(available_countries.count).to eq(Solidus::Country.count)
         end
       end
     end
@@ -125,7 +125,7 @@ RSpec.describe Spree::BaseHelper, type: :helper do
       # Because the controller_name method returns "test"
       # controller_name is used by this method to infer what it is supposed
       # to be generating meta_data_tags for
-      @test = Spree::Product.new(description: "a" * 200)
+      @test = Solidus::Product.new(description: "a" * 200)
       tags = Nokogiri::HTML.parse(meta_data_tags)
       content = tags.css("meta[name=description]").first["content"]
       expect(content.length).to be <= 160
@@ -151,8 +151,8 @@ RSpec.describe Spree::BaseHelper, type: :helper do
   end
 
   context "plural_resource_name" do
-    let(:plural_config) { Spree::I18N_GENERIC_PLURAL }
-    let(:base_class) { Spree::Product }
+    let(:plural_config) { Solidus::I18N_GENERIC_PLURAL }
+    let(:base_class) { Solidus::Product }
 
     subject { plural_resource_name(base_class) }
 
@@ -160,7 +160,7 @@ RSpec.describe Spree::BaseHelper, type: :helper do
       expect(subject).to eq base_class.model_name.human(count: plural_config)
     end
 
-    it "should use the Spree::I18N_GENERIC_PLURAL constant" do
+    it "should use the Solidus::I18N_GENERIC_PLURAL constant" do
       expect(base_class.model_name).to receive(:human).with(hash_including(count: plural_config))
       subject
     end

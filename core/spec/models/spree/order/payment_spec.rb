@@ -2,10 +2,10 @@
 
 require 'rails_helper'
 
-module Spree
-  RSpec.describe Spree::Order, type: :model do
-    let(:order) { stub_model(Spree::Order) }
-    let(:updater) { Spree::OrderUpdater.new(order) }
+module Solidus
+  RSpec.describe Solidus::Order, type: :model do
+    let(:order) { stub_model(Solidus::Order) }
+    let(:updater) { Solidus::OrderUpdater.new(order) }
 
     context "processing payments" do
       let(:order) { create(:order_with_line_items, shipment_cost: 0, line_items_price: 100) }
@@ -96,7 +96,7 @@ module Spree
     end
 
     context "ensure source attributes stick around" do
-      let(:order){ Spree::Order.create }
+      let(:order){ Solidus::Order.create }
       let(:payment_method){ create(:credit_card_payment_method) }
       let(:payment_attributes) do
         {
@@ -135,7 +135,7 @@ module Spree
     end
 
     context "#process_payments!" do
-      let(:payment) { stub_model(Spree::Payment) }
+      let(:payment) { stub_model(Solidus::Payment) }
       before { allow(order).to receive_messages unprocessed_payments: [payment], total: 10 }
 
       it "should process the payments" do
@@ -144,7 +144,7 @@ module Spree
       end
 
       context "when a payment raises a GatewayError" do
-        before { expect(payment).to receive(:process!).and_raise(Spree::Core::GatewayError) }
+        before { expect(payment).to receive(:process!).and_raise(Solidus::Core::GatewayError) }
 
         it "should return true when configured to allow checkout on gateway failures" do
           stub_spree_preferences(allow_checkout_on_gateway_error: true)
@@ -159,7 +159,7 @@ module Spree
     end
 
     context "#authorize_payments!" do
-      let(:payment) { stub_model(Spree::Payment) }
+      let(:payment) { stub_model(Solidus::Payment) }
       before { allow(order).to receive_messages unprocessed_payments: [payment], total: 10 }
       subject { order.authorize_payments! }
 
@@ -172,7 +172,7 @@ module Spree
     end
 
     context "#capture_payments!" do
-      let(:payment) { stub_model(Spree::Payment) }
+      let(:payment) { stub_model(Solidus::Payment) }
       before { allow(order).to receive_messages unprocessed_payments: [payment], total: 10 }
       subject { order.capture_payments! }
 

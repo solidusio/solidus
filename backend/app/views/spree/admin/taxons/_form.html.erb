@@ -7,7 +7,7 @@
     <% end %>
 
     <%= f.field_container :permalink_part do %>
-      <%= label_tag :permalink_part, Spree::Taxon.human_attribute_name(:permalink), class: 'required' %><br />
+      <%= label_tag :permalink_part, Solidus::Taxon.human_attribute_name(:permalink), class: 'required' %><br />
       <div class="input-group">
         <% if @taxon.parent %>
           <div class="input-group-prepend">

@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-module Spree
-  class StockMovement < Spree::Base
-    belongs_to :stock_item, class_name: 'Spree::StockItem', inverse_of: :stock_movements, optional: true
+module Solidus
+  class StockMovement < Solidus::Base
+    belongs_to :stock_item, class_name: 'Solidus::StockItem', inverse_of: :stock_movements, optional: true
     belongs_to :originator, polymorphic: true, optional: true
 
     after_create :update_stock_item_quantity

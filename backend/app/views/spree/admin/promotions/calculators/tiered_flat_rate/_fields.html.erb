@@ -10,8 +10,8 @@
   <%= select_tag(
     "#{prefix}[calculator_attributes][preferred_currency]",
     options_for_select(
-      Spree::Config.available_currencies,
-      calculator.preferred_currency || Spree::Config[:currency]
+      Solidus::Config.available_currencies,
+      calculator.preferred_currency || Solidus::Config[:currency]
     ),
     { class: 'custom-select fullwidth' }
   ) %>

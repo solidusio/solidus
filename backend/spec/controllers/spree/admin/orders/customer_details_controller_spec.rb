@@ -3,7 +3,7 @@
 require "spec_helper"
 require "cancan"
 
-describe Spree::Admin::Orders::CustomerDetailsController, type: :controller do
+describe Solidus::Admin::Orders::CustomerDetailsController, type: :controller do
   context "with authorization" do
     stub_authorization!
 
@@ -22,7 +22,7 @@ describe Spree::Admin::Orders::CustomerDetailsController, type: :controller do
 
           context "and default_country_iso of the Canada" do
             before do
-              stub_spree_preferences(default_country_iso: Spree::Country.find_by!(iso: "CA").iso)
+              stub_spree_preferences(default_country_iso: Solidus::Country.find_by!(iso: "CA").iso)
             end
 
             it 'defaults the shipping address country to Canada' do
@@ -38,7 +38,7 @@ describe Spree::Admin::Orders::CustomerDetailsController, type: :controller do
 
           context "and default_country_iso of the United States" do
             before do
-              stub_spree_preferences(default_country_iso: Spree::Country.find_by!(iso: "US").iso)
+              stub_spree_preferences(default_country_iso: Solidus::Country.find_by!(iso: "US").iso)
             end
 
             it 'defaults the shipping address country to nil' do
@@ -58,7 +58,7 @@ describe Spree::Admin::Orders::CustomerDetailsController, type: :controller do
     context "#update" do
       let(:order) { create(:order, number: "R123456789") }
 
-      before { allow(Spree::Order).to receive_message_chain(:includes, :find_by!) { order } }
+      before { allow(Solidus::Order).to receive_message_chain(:includes, :find_by!) { order } }
 
       it "updates + progresses the order" do
         expect(order).to receive(:update) { true }

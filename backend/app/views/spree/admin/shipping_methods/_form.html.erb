@@ -41,8 +41,8 @@
 
   <div class="col-5">
     <%= f.field_container :store_ids do %>
-      <%= f.label :store_ids, plural_resource_name(Spree::Store) %>
-      <%= f.collection_select :store_ids, Spree::Store.all, :id, :name, {}, multiple: true, class: "select2 fullwidth" %>
+      <%= f.label :store_ids, plural_resource_name(Solidus::Store) %>
+      <%= f.collection_select :store_ids, Solidus::Store.all, :id, :name, {}, multiple: true, class: "select2 fullwidth" %>
       <%= error_message_on :shipping_method, :store_ids %>
     <% end %>
   </div>
@@ -59,7 +59,7 @@
 <%= f.field_container :available_to_users, class: %w(checkbox) do %>
   <label>
     <%= f.check_box(:available_to_users) %>
-    <%= Spree::ShippingMethod.human_attribute_name :available_to_users %>
+    <%= Solidus::ShippingMethod.human_attribute_name :available_to_users %>
   </label>
   <%= error_message_on :shipping_method, :available_to_users %>
 <% end %>
@@ -68,9 +68,9 @@
   <div class="col-5">
     <div data-hook="admin_shipping_method_form_availability_fields">
       <fieldset class="categories no-border-bottom">
-        <legend align="center"><%= plural_resource_name(Spree::ShippingCategory) %></legend>
+        <legend align="center"><%= plural_resource_name(Solidus::ShippingCategory) %></legend>
         <%= f.field_container :categories do %>
-          <% Spree::ShippingCategory.all.each do |category| %>
+          <% Solidus::ShippingCategory.all.each do |category| %>
             <label>
               <%= check_box_tag('shipping_method[shipping_categories][]', category.id, @shipping_method.shipping_categories.include?(category)) %>
               <%= category.name %><br>
@@ -83,10 +83,10 @@
 
     <div>
       <fieldset class="no-border-bottom">
-        <legend align="center"><%= plural_resource_name(Spree::Zone) %></legend>
+        <legend align="center"><%= plural_resource_name(Solidus::Zone) %></legend>
         <%= f.field_container :zones do %>
           <% shipping_method_zones = @shipping_method.zones.to_a %>
-          <% Spree::Zone.all.each do |zone| %>
+          <% Solidus::Zone.all.each do |zone| %>
             <label>
               <%= check_box_tag('shipping_method[zones][]', zone.id, shipping_method_zones.include?(zone)) %>
               <%= zone.name %>
@@ -104,7 +104,7 @@
     </div>
     <div>
       <fieldset class="tax_categories no-border-bottom">
-        <legend align="center"><%= Spree::TaxCategory.model_name.human %></legend>
+        <legend align="center"><%= Solidus::TaxCategory.model_name.human %></legend>
           <%= f.field_container :tax_categories do %>
             <%= f.select :tax_category_id, @tax_categories.map { |tc| [tc.name, tc.id] }, {include_blank: true}, class: "custom-select fullwidth" %>
             <%= error_message_on :shipping_method, :tax_category_id %>

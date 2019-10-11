@@ -74,7 +74,7 @@
           <%= f.field_container :active do %>
             <label>
               <%= f.check_box :active %>
-              <%= Spree::StockLocation.human_attribute_name :active %>
+              <%= Solidus::StockLocation.human_attribute_name :active %>
               <%= f.field_hint :active %>
             </label>
           <% end %>
@@ -82,14 +82,14 @@
           <%= f.field_container :default do %>
             <label>
               <%= f.check_box :default %>
-              <%= Spree::StockLocation.human_attribute_name :default %>
+              <%= Solidus::StockLocation.human_attribute_name :default %>
             </label>
           <% end %>
 
           <%= f.field_container :backorderable_default do %>
             <label>
               <%= f.check_box :backorderable_default %>
-              <%= Spree::StockLocation.human_attribute_name :backorderable_default %>
+              <%= Solidus::StockLocation.human_attribute_name :backorderable_default %>
               <%= f.field_hint :backorderable_default %>
             </label>
           <% end %>
@@ -99,7 +99,7 @@
           <%= f.field_container :propagate_all_variants do %>
             <label>
               <%= f.check_box :propagate_all_variants %>
-              <%= Spree::StockLocation.human_attribute_name :propagate_all_variants %>
+              <%= Solidus::StockLocation.human_attribute_name :propagate_all_variants %>
               <%= f.field_hint :propagate_all_variants %>
             </label>
           <% end %>
@@ -107,7 +107,7 @@
           <%= f.field_container :restock_inventory do %>
             <label>
               <%= f.check_box :restock_inventory %>
-              <%= Spree::StockLocation.human_attribute_name :restock_inventory %>
+              <%= Solidus::StockLocation.human_attribute_name :restock_inventory %>
               <%= f.field_hint :restock_inventory %>
             </label>
           <% end %>
@@ -115,7 +115,7 @@
           <%= f.field_container :fulfillable do %>
             <label>
               <%= f.check_box :fulfillable %>
-              <%= Spree::StockLocation.human_attribute_name :fulfillable %>
+              <%= Solidus::StockLocation.human_attribute_name :fulfillable %>
               <%= f.field_hint :fulfillable %>
             </label>
           <% end %>
@@ -123,7 +123,7 @@
           <%= f.field_container :check_stock_on_transfer do %>
             <label>
               <%= f.check_box :check_stock_on_transfer %>
-              <%= Spree::StockLocation.human_attribute_name :check_stock_on_transfer %>
+              <%= Solidus::StockLocation.human_attribute_name :check_stock_on_transfer %>
               <%= f.field_hint :check_stock_on_transfer %>
             </label>
           <% end %>

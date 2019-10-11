@@ -2,7 +2,7 @@
 
 require 'carmen'
 
-module Spree
+module Solidus
   module Core
     module ControllerHelpers
       module Common
@@ -26,7 +26,7 @@ module Spree
         def title
           title_string = @title.present? ? @title : accurate_title
           if title_string.present?
-            if Spree::Config[:always_put_site_name_in_title]
+            if Solidus::Config[:always_put_site_name_in_title]
               [title_string, default_title].join(' - ')
             else
               title_string
@@ -52,7 +52,7 @@ module Spree
         end
 
         def set_user_language
-          available_locales = Spree.i18n_available_locales
+          available_locales = Solidus.i18n_available_locales
           locale = [
             params[:locale],
             session[set_user_language_locale_key],
@@ -74,7 +74,7 @@ module Spree
         # Default layout is: +app/views/spree/layouts/spree_application+
         #
         def get_layout
-          Spree::Config[:layout]
+          Solidus::Config[:layout]
         end
       end
     end

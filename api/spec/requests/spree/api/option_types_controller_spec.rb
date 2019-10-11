@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-module Spree
+module Solidus
   describe Api::OptionTypesController, type: :request do
     let(:attributes) { [:id, :name, :position, :presentation] }
     let!(:option_value) { create(:option_value) }

@@ -2,23 +2,23 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::LineItem, type: :model do
+RSpec.describe Solidus::LineItem, type: :model do
   let(:order) { create :order_with_line_items, line_items_count: 1 }
   let(:line_item) { order.line_items.first }
 
   context '#destroy' do
     it "fetches soft-deleted products" do
       line_item.product.discard
-      expect(line_item.reload.product).to be_a Spree::Product
+      expect(line_item.reload.product).to be_a Solidus::Product
     end
 
     it "fetches soft-deleted variants" do
       line_item.variant.discard
-      expect(line_item.reload.variant).to be_a Spree::Variant
+      expect(line_item.reload.variant).to be_a Solidus::Variant
     end
 
     it "returns inventory when a line item is destroyed" do
-      expect_any_instance_of(Spree::OrderInventory).to receive(:verify)
+      expect_any_instance_of(Solidus::OrderInventory).to receive(:verify)
       line_item.destroy
     end
 
@@ -30,8 +30,8 @@ RSpec.describe Spree::LineItem, type: :model do
   context "#save" do
     context "target_shipment is provided" do
       it "verifies inventory" do
-        line_item.target_shipment = Spree::Shipment.new
-        expect_any_instance_of(Spree::OrderInventory).to receive(:verify)
+        line_item.target_shipment = Solidus::Shipment.new
+        expect_any_instance_of(Solidus::OrderInventory).to receive(:verify)
         line_item.save
       end
     end
@@ -40,7 +40,7 @@ RSpec.describe Spree::LineItem, type: :model do
   describe 'line item creation' do
     let(:variant) { create :variant }
 
-    subject(:line_item) { Spree::LineItem.new(variant: variant, order: order) }
+    subject(:line_item) { Solidus::LineItem.new(variant: variant, order: order) }
 
     # Tests for https://github.com/spree/spree/issues/3391
     context 'before validation' do
@@ -67,7 +67,7 @@ RSpec.describe Spree::LineItem, type: :model do
     # Specs for https://github.com/solidusio/solidus/pull/522#issuecomment-170668125
     context "with `#copy_price` defined" do
       before(:context) do
-        Spree::LineItem.class_eval do
+        Solidus::LineItem.class_eval do
           def copy_price
             self.cost_price = 10
             self.price = 20
@@ -76,20 +76,20 @@ RSpec.describe Spree::LineItem, type: :model do
       end
 
       after(:context) do
-        Spree::LineItem.class_eval do
+        Solidus::LineItem.class_eval do
           remove_method :copy_price
         end
       end
 
       it 'should display a deprecation warning' do
-        expect(Spree::Deprecation).to receive(:warn)
-        Spree::LineItem.new(variant: variant, order: order)
+        expect(Solidus::Deprecation).to receive(:warn)
+        Solidus::LineItem.new(variant: variant, order: order)
       end
 
       it 'should run the user-defined copy_price method' do
-        expect_any_instance_of(Spree::LineItem).to receive(:copy_price).and_call_original
-        Spree::Deprecation.silence do
-          Spree::LineItem.new(variant: variant, order: order)
+        expect_any_instance_of(Solidus::LineItem).to receive(:copy_price).and_call_original
+        Solidus::Deprecation.silence do
+          Solidus::LineItem.new(variant: variant, order: order)
         end
       end
     end
@@ -101,15 +101,15 @@ RSpec.describe Spree::LineItem, type: :model do
       line_item.price = 10
       line_item.quantity = 2
       line_item.promo_total = -5
-      expect(Spree::Deprecation.silence { line_item.discounted_amount }).to eq(15)
+      expect(Solidus::Deprecation.silence { line_item.discounted_amount }).to eq(15)
     end
   end
 
   # TODO: Remove this spec after the method has been removed.
   describe "#discounted_money" do
     it "should return a money object with the discounted amount" do
-      expect(Spree::Deprecation.silence { line_item.discounted_amount }).to eq(10.00)
-      expect(Spree::Deprecation.silence { line_item.discounted_money.to_s }).to eq "$10.00"
+      expect(Solidus::Deprecation.silence { line_item.discounted_amount }).to eq(10.00)
+      expect(Solidus::Deprecation.silence { line_item.discounted_money.to_s }).to eq "$10.00"
     end
   end
 
@@ -134,28 +134,28 @@ RSpec.describe Spree::LineItem, type: :model do
       line_item.quantity = 2
     end
 
-    it "returns a Spree::Money representing the total for this line item" do
+    it "returns a Solidus::Money representing the total for this line item" do
       expect(line_item.money.to_s).to eq("$7.00")
     end
   end
 
   describe '.single_money' do
     before { line_item.price = 3.50 }
-    it "returns a Spree::Money representing the price for one variant" do
+    it "returns a Solidus::Money representing the price for one variant" do
       expect(line_item.single_money.to_s).to eq("$3.50")
     end
   end
 
   context 'setting a line item price' do
     let(:store) { create(:store, default: true) }
-    let(:order) { Spree::Order.new(currency: "RUB", store: store) }
-    let(:variant) { Spree::Variant.new(product: Spree::Product.new) }
-    let(:line_item) { Spree::LineItem.new(order: order, variant: variant) }
+    let(:order) { Solidus::Order.new(currency: "RUB", store: store) }
+    let(:variant) { Solidus::Variant.new(product: Solidus::Product.new) }
+    let(:line_item) { Solidus::LineItem.new(order: order, variant: variant) }
 
     before { expect(variant).to receive(:price_for).at_least(:once).and_return(price) }
 
     context "when a price exists in order currency" do
-      let(:price) { Spree::Money.new(99.00, currency: "RUB") }
+      let(:price) { Solidus::Money.new(99.00, currency: "RUB") }
 
       it "is a valid line item" do
         expect(line_item.valid?).to be_truthy
@@ -189,7 +189,7 @@ RSpec.describe Spree::LineItem, type: :model do
       it "sets price anyway, retrieving it from line item options" do
         expect(line_item.variant)
           .to receive(:price_for)
-          .and_return(Spree::Money.new(123, currency: "USD"))
+          .and_return(Solidus::Money.new(123, currency: "USD"))
 
         line_item.options = options
 
@@ -201,7 +201,7 @@ RSpec.describe Spree::LineItem, type: :model do
 
   describe 'money_price=' do
     let(:currency) { "USD" }
-    let(:new_price) { Spree::Money.new(99.00, currency: currency) }
+    let(:new_price) { Solidus::Money.new(99.00, currency: currency) }
 
     it 'assigns a new price' do
       line_item.money_price = new_price
@@ -223,7 +223,7 @@ RSpec.describe Spree::LineItem, type: :model do
       it 'raises an exception' do
         expect {
           line_item.money_price = new_price
-        }.to raise_exception Spree::LineItem::CurrencyMismatch
+        }.to raise_exception Solidus::LineItem::CurrencyMismatch
       end
     end
   end
@@ -231,7 +231,7 @@ RSpec.describe Spree::LineItem, type: :model do
   describe "#pricing_options" do
     subject { line_item.pricing_options }
 
-    it { is_expected.to be_a(Spree::Config.pricing_options_class) }
+    it { is_expected.to be_a(Solidus::Config.pricing_options_class) }
 
     it "holds the order currency" do
       expect(subject.currency).to eq("USD")

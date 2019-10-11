@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-module Spree
-  # The default `source` of a `Spree::Payment`.
+module Solidus
+  # The default `source` of a `Solidus::Payment`.
   #
-  class CreditCard < Spree::PaymentSource
-    belongs_to :user, class_name: Spree::UserClassHandle.new, foreign_key: 'user_id', optional: true
+  class CreditCard < Solidus::PaymentSource
+    belongs_to :user, class_name: Solidus::UserClassHandle.new, foreign_key: 'user_id', optional: true
     belongs_to :address, optional: true
 
     before_save :set_last_digits
@@ -22,7 +22,7 @@ module Spree
     scope :with_payment_profile, -> { where('gateway_customer_profile_id IS NOT NULL') }
 
     def self.default
-      Spree::Deprecation.warn("CreditCard.default is deprecated. Please use Spree::Wallet instead.")
+      Solidus::Deprecation.warn("CreditCard.default is deprecated. Please use Solidus::Wallet instead.")
       joins(:wallet_payment_sources).where(spree_wallet_payment_sources: { default: true })
     end
 
@@ -47,13 +47,13 @@ module Spree
     }.freeze
 
     def default
-      Spree::Deprecation.warn("CreditCard.default is deprecated. Please use user.wallet.default_wallet_payment_source instead.", caller)
+      Solidus::Deprecation.warn("CreditCard.default is deprecated. Please use user.wallet.default_wallet_payment_source instead.", caller)
       return false if user.nil?
       user.wallet.default_wallet_payment_source.try!(:payment_source) == self
     end
 
     def default=(set_as_default)
-      Spree::Deprecation.warn("CreditCard.default= is deprecated. Please use user.wallet.default_wallet_payment_source= instead.", caller)
+      Solidus::Deprecation.warn("CreditCard.default= is deprecated. Please use user.wallet.default_wallet_payment_source= instead.", caller)
       if user.nil?
         raise "Cannot set 'default' on a credit card without a user"
       elsif set_as_default # setting this card as default
@@ -69,7 +69,7 @@ module Spree
     end
 
     def address_attributes=(attributes)
-      self.address = Spree::Address.immutable_merge(address, attributes)
+      self.address = Solidus::Address.immutable_merge(address, attributes)
     end
 
     # Sets the expiry date on this credit card.
@@ -158,7 +158,7 @@ module Spree
     end
 
     # @note ActiveMerchant needs first_name/last_name because we pass it a
-    #   Spree::CreditCard and it calls those methods on it.
+    #   Solidus::CreditCard and it calls those methods on it.
     # @todo We should probably be calling #to_active_merchant before passing
     #   the object to ActiveMerchant.
     # @return [String] the first name on this credit card
@@ -167,7 +167,7 @@ module Spree
     end
 
     # @note ActiveMerchant needs first_name/last_name because we pass it a
-    #   Spree::CreditCard and it calls those methods on it.
+    #   Solidus::CreditCard and it calls those methods on it.
     # @todo We should probably be calling #to_active_merchant before passing
     #   the object to ActiveMerchant.
     # @return [String] the last name on this credit card

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   class ActionCallbacks
     attr_reader :before_methods
     attr_reader :after_methods

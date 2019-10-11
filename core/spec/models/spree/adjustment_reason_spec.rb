@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::AdjustmentReason do
+RSpec.describe Solidus::AdjustmentReason do
   describe 'creation' do
     it 'is successful' do
       create(:adjustment_reason)

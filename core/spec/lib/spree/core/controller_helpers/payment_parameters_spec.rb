@@ -2,9 +2,9 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::Core::ControllerHelpers::PaymentParameters, type: :controller do
+RSpec.describe Solidus::Core::ControllerHelpers::PaymentParameters, type: :controller do
   controller(ApplicationController) do
-    include Spree::Core::ControllerHelpers::PaymentParameters
+    include Solidus::Core::ControllerHelpers::PaymentParameters
   end
 
   let(:params_hash) { subject.permit!.to_h.deep_symbolize_keys }

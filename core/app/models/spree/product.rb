@@ -2,7 +2,7 @@
 
 require 'discard'
 
-module Spree
+module Solidus
   # Products represent an entity for sale in a store. Products can have
   # variations, called variants. Product properties include description,
   # permalink, availability, shipping category, etc. that do not change by
@@ -11,12 +11,12 @@ module Spree
   # @note this model uses {https://github.com/radar/paranoia paranoia}.
   #   +#destroy+ will only soft-destroy records and the default scope hides
   #   soft-destroyed records using +WHERE deleted_at IS NULL+.
-  class Product < Spree::Base
+  class Product < Solidus::Base
     extend FriendlyId
     friendly_id :slug_candidates, use: :history
 
     acts_as_paranoid
-    include Spree::ParanoiaDeprecations
+    include Solidus::ParanoiaDeprecations
 
     include Discard::Model
     self.discard_column = :deleted_at
@@ -44,27 +44,27 @@ module Spree
     has_many :product_promotion_rules, dependent: :destroy
     has_many :promotion_rules, through: :product_promotion_rules
 
-    belongs_to :tax_category, class_name: 'Spree::TaxCategory', optional: true
-    belongs_to :shipping_category, class_name: 'Spree::ShippingCategory', inverse_of: :products, optional: true
+    belongs_to :tax_category, class_name: 'Solidus::TaxCategory', optional: true
+    belongs_to :shipping_category, class_name: 'Solidus::ShippingCategory', inverse_of: :products, optional: true
 
     has_one :master,
       -> { where(is_master: true).with_deleted },
       inverse_of: :product,
-      class_name: 'Spree::Variant',
+      class_name: 'Solidus::Variant',
       autosave: true
 
     has_many :variants,
       -> { where(is_master: false).order(:position) },
       inverse_of: :product,
-      class_name: 'Spree::Variant'
+      class_name: 'Solidus::Variant'
 
     has_many :variants_including_master,
       -> { order(:position) },
       inverse_of: :product,
-      class_name: 'Spree::Variant',
+      class_name: 'Solidus::Variant',
       dependent: :destroy
 
-    has_many :prices, -> { order(Spree::Variant.arel_table[:position].asc, Spree::Variant.arel_table[:id].asc, :currency) }, through: :variants_including_master
+    has_many :prices, -> { order(Solidus::Variant.arel_table[:position].asc, Solidus::Variant.arel_table[:id].asc, :currency) }, through: :variants_including_master
 
     has_many :stock_items, through: :variants_including_master
 
@@ -119,7 +119,7 @@ module Spree
     validates :meta_keywords, length: { maximum: 255 }
     validates :meta_title, length: { maximum: 255 }
     validates :name, presence: true
-    validates :price, presence: true, if: proc { Spree::Config[:require_master_price] }
+    validates :price, presence: true, if: proc { Solidus::Config[:require_master_price] }
     validates :shipping_category_id, presence: true
     validates :slug, presence: true, uniqueness: { allow_blank: true }
 
@@ -142,9 +142,9 @@ module Spree
       variants.any?
     end
 
-    # @return [Spree::TaxCategory] tax category for this product, or the default tax category
+    # @return [Solidus::TaxCategory] tax category for this product, or the default tax category
     def tax_category
-      super || Spree::TaxCategory.find_by(is_default: true)
+      super || Solidus::TaxCategory.find_by(is_default: true)
     end
 
     # Ensures option_types and product_option_types exist for keys in
@@ -159,7 +159,7 @@ module Spree
 
     # Creates a new product with the same attributes, variants, etc.
     #
-    # @return [Spree::Product] the duplicate
+    # @return [Solidus::Product] the duplicate
     def duplicate
       duplicator = ProductDuplicator.new(self)
       duplicator.duplicate
@@ -185,14 +185,14 @@ module Spree
     #
     # @deprecated This method is not called in the Solidus codebase
     # @param opt_type [String] the name of the option type to group by
-    # @param pricing_options [Spree::Config.pricing_options_class] the pricing options to search
+    # @param pricing_options [Solidus::Config.pricing_options_class] the pricing options to search
     #   for, default: the default pricing options
     # @return [Hash] option_type as keys, array of variants as values.
-    def categorise_variants_from_option(opt_type, pricing_options = Spree::Config.default_pricing_options)
+    def categorise_variants_from_option(opt_type, pricing_options = Solidus::Config.default_pricing_options)
       return {} unless option_types.include?(opt_type)
       variants.with_prices(pricing_options).group_by { |v| v.option_values.detect { |o| o.option_type == opt_type } }
     end
-    deprecate :categorise_variants_from_option, deprecator: Spree::Deprecation
+    deprecate :categorise_variants_from_option, deprecator: Solidus::Deprecation
 
     # Poor man's full text search.
     #
@@ -211,19 +211,19 @@ module Spree
 
     # @param current_currency [String] currency to filter variants by; defaults to Spree's default
     # @deprecated This method can only handle prices for currencies
-    # @return [Array<Spree::Variant>] all variants with at least one option value
+    # @return [Array<Solidus::Variant>] all variants with at least one option value
     def variants_and_option_values(current_currency = nil)
       variants.includes(:option_values).active(current_currency).select do |variant|
         variant.option_values.any?
       end
     end
     deprecate variants_and_option_values: :variants_and_option_values_for,
-              deprecator: Spree::Deprecation
+              deprecator: Solidus::Deprecation
 
-    # @param pricing_options [Spree::Variant::PricingOptions] the pricing options to search
+    # @param pricing_options [Solidus::Variant::PricingOptions] the pricing options to search
     #   for, default: the default pricing options
-    # @return [Array<Spree::Variant>] all variants with at least one option value
-    def variants_and_option_values_for(pricing_options = Spree::Config.default_pricing_options)
+    # @return [Array<Solidus::Variant>] all variants with at least one option value
+    def variants_and_option_values_for(pricing_options = Solidus::Config.default_pricing_options)
       variants.includes(:option_values).with_prices(pricing_options).select do |variant|
         variant.option_values.any?
       end
@@ -234,16 +234,16 @@ module Spree
     #
     # @param variant_scope [ActiveRecord_Associations_CollectionProxy] scope to filter the variants
     # used to determine the applied option_types
-    # @return [Hash<Spree::OptionType, Array<Spree::OptionValue>>] all option types and option values
+    # @return [Hash<Solidus::OptionType, Array<Solidus::OptionValue>>] all option types and option values
     # associated with the products variants grouped by option type
     def variant_option_values_by_option_type(variant_scope = nil)
-      option_value_scope = Spree::OptionValuesVariant.joins(:variant)
+      option_value_scope = Solidus::OptionValuesVariant.joins(:variant)
         .where(spree_variants: { product_id: id })
       option_value_scope = option_value_scope.merge(variant_scope) if variant_scope
       option_value_ids = option_value_scope.distinct.pluck(:option_value_id)
-      Spree::OptionValue.where(id: option_value_ids).
+      Solidus::OptionValue.where(id: option_value_ids).
         includes(:option_type).
-        order("#{Spree::OptionType.table_name}.position, #{Spree::OptionValue.table_name}.position").
+        order("#{Solidus::OptionType.table_name}.position, #{Solidus::OptionValue.table_name}.position").
         group_by(&:option_type)
     end
 
@@ -266,8 +266,8 @@ module Spree
     def set_property(property_name, property_value)
       ActiveRecord::Base.transaction do
         # Works around spree_i18n https://github.com/spree/spree/issues/301
-        property = Spree::Property.create_with(presentation: property_name).find_or_create_by(name: property_name)
-        product_property = Spree::ProductProperty.where(product: self, property: property).first_or_initialize
+        property = Solidus::Property.create_with(presentation: property_name).find_or_create_by(name: property_name)
+        product_property = Solidus::ProductProperty.where(product: self, property: property).first_or_initialize
         product_property.value = property_value
         product_property.save!
       end
@@ -276,7 +276,7 @@ module Spree
     # @return [Array] all advertised and not-rejected promotions
     def possible_promotions
       promotion_ids = promotion_rules.map(&:promotion_id).uniq
-      Spree::Promotion.advertised.where(id: promotion_ids).reject(&:inactive?)
+      Solidus::Promotion.advertised.where(id: promotion_ids).reject(&:inactive?)
     end
 
     # The number of on-hand stock items; Infinity if any variant does not track
@@ -295,16 +295,16 @@ module Spree
     #
     # Will first search for images on the product, then those belonging to the
     # variants. If all else fails, will return a new image object.
-    # @return [Spree::Image] the image to display
+    # @return [Solidus::Image] the image to display
     def display_image
-      Spree::Deprecation.warn('Spree::Product#display_image is DEPRECATED. Choose an image from Spree::Product#gallery instead.')
-      images.first || variant_images.first || Spree::Image.new
+      Solidus::Deprecation.warn('Solidus::Product#display_image is DEPRECATED. Choose an image from Solidus::Product#gallery instead.')
+      images.first || variant_images.first || Solidus::Image.new
     end
 
     # Finds the variant property rule that matches the provided option value ids.
     #
     # @param option_value_ids [Array<Integer>] list of option value ids
-    # @return [Spree::VariantPropertyRule] the matching variant property rule
+    # @return [Solidus::VariantPropertyRule] the matching variant property rule
     def find_variant_property_rule(option_value_ids)
       variant_property_rules.find do |rule|
         rule.matches_option_value_ids?(option_value_ids)
@@ -314,9 +314,9 @@ module Spree
     # The gallery for the product, which represents all the images
     # associated with it, including those on its variants
     #
-    # @return [Spree::Gallery] the media for a variant
+    # @return [Solidus::Gallery] the media for a variant
     def gallery
-      @gallery ||= Spree::Config.product_gallery_class.new(self)
+      @gallery ||= Solidus::Config.product_gallery_class.new(self)
     end
 
     private
@@ -325,7 +325,7 @@ module Spree
       if variants_including_master.loaded?
         variants_including_master.any? { |v| !v.should_track_inventory? }
       else
-        !Spree::Config.track_inventory_levels || variants_including_master.where(track_inventory: false).exists?
+        !Solidus::Config.track_inventory_levels || variants_including_master.where(track_inventory: false).exists?
       end
     end
 
@@ -383,10 +383,10 @@ module Spree
     def touch_taxons
       taxons_to_touch = taxons.map(&:self_and_ancestors).flatten.uniq
       unless taxons_to_touch.empty?
-        Spree::Taxon.where(id: taxons_to_touch.map(&:id)).update_all(updated_at: Time.current)
+        Solidus::Taxon.where(id: taxons_to_touch.map(&:id)).update_all(updated_at: Time.current)
 
         taxonomy_ids_to_touch = taxons_to_touch.map(&:taxonomy_id).flatten.uniq
-        Spree::Taxonomy.where(id: taxonomy_ids_to_touch).update_all(updated_at: Time.current)
+        Solidus::Taxonomy.where(id: taxonomy_ids_to_touch).update_all(updated_at: Time.current)
       end
     end
 

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-module Spree
+module Solidus
   RSpec.describe ReturnsCalculator, type: :model do
     let(:return_item) { build(:return_item) }
     subject { ReturnsCalculator.new }

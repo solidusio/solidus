@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-Spree::Sample.load_sample("tax_categories")
-Spree::Sample.load_sample("shipping_categories")
+Solidus::Sample.load_sample("tax_categories")
+Solidus::Sample.load_sample("shipping_categories")
 
-tax_category = Spree::TaxCategory.find_by!(name: "Default")
-shipping_category = Spree::ShippingCategory.find_by!(name: "Default")
+tax_category = Solidus::TaxCategory.find_by!(name: "Default")
+shipping_category = Solidus::ShippingCategory.find_by!(name: "Default")
 
 descriptions = [
   "Occaecati repellendus soluta perspiciatis ea ea voluptatum alias. Dolorem possimus sunt ipsam eos aliquam voluptates. Voluptate est nemo ullam cumque ea ut molestiae iste.",
@@ -157,14 +157,14 @@ products = [
 
 products.each do |product_attrs|
   eur_price = product_attrs.delete(:eur_price)
-  Spree::Config[:currency] = "USD"
+  Solidus::Config[:currency] = "USD"
 
-  product = Spree::Product.create!(default_attrs.merge(product_attrs))
-  Spree::Config[:currency] = "EUR"
+  product = Solidus::Product.create!(default_attrs.merge(product_attrs))
+  Solidus::Config[:currency] = "EUR"
   product.reload
   product.price = eur_price
   product.shipping_category = shipping_category
   product.save!
 end
 
-Spree::Config[:currency] = "USD"
+Solidus::Config[:currency] = "USD"

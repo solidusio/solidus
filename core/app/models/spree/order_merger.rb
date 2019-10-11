@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-module Spree
-  # Spree::OrderMerger is responsible for taking two orders and merging them
+module Solidus
+  # Solidus::OrderMerger is responsible for taking two orders and merging them
   # together by adding the line items from additional orders to the order
   # that the OrderMerger is initialized with.
   #
@@ -10,7 +10,7 @@ module Spree
   class OrderMerger
     # @!attribute order
     #   @api public
-    #   @return [Spree::Order] The order which items wll be merged into.
+    #   @return [Solidus::Order] The order which items wll be merged into.
     attr_accessor :order
 
     delegate :updater, to: :order
@@ -18,7 +18,7 @@ module Spree
     # Create the OrderMerger
     #
     # @api public
-    # @param [Spree::Order] order The order which line items will be merged
+    # @param [Solidus::Order] order The order which line items will be merged
     # into.
     def initialize(order)
       @order = order
@@ -34,17 +34,17 @@ module Spree
     # After the orders have been merged the `other_order` will be destroyed.
     #
     # @example
-    #   initial_order = Spree::Order.find(1)
-    #   order_to_merge = Spree::Order.find(2)
-    #   merger = Spree::OrderMerger.new(initial_order)
+    #   initial_order = Solidus::Order.find(1)
+    #   order_to_merge = Solidus::Order.find(2)
+    #   merger = Solidus::OrderMerger.new(initial_order)
     #   merger.merge!(order_to_merge)
     #   # order_to_merge is destroyed, initial order now contains the line items
     #   # of order_to_merge
     #
     # @api public
-    # @param [Spree::Order] other_order An order which will be merged in to the
+    # @param [Solidus::Order] other_order An order which will be merged in to the
     # order the OrderMerger was initialized with.
-    # @param [Spree::User] user Associate the order the user specified. If not
+    # @param [Solidus::User] user Associate the order the user specified. If not
     # specified, the order user association will not be changed.
     # @return [void]
     def merge!(other_order, user = nil)
@@ -71,9 +71,9 @@ module Spree
     # comparison hooks on the order.
     #
     # @api private
-    # @param [Spree::LineItem] other_order_line_item The line item from
+    # @param [Solidus::LineItem] other_order_line_item The line item from
     # `other_order` we are attempting to merge in.
-    # @return [Spree::LineItem] A matching line item from the order. nil if none
+    # @return [Solidus::LineItem] A matching line item from the order. nil if none
     # exist.
     def find_matching_line_item(other_order_line_item)
       order.line_items.detect do |my_li|
@@ -87,7 +87,7 @@ module Spree
     # Associate the user with the order
     #
     # @api private
-    # @param [Spree::User] user The user to associate with the order. If nil
+    # @param [Solidus::User] user The user to associate with the order. If nil
     # the order user association will remain the same. If the order is already
     # associated with a user, it will not be changed.
     # @return [void]
@@ -104,9 +104,9 @@ module Spree
     # `order`.
     #
     # @api private
-    # @param [Spree::LineItem] current_line_item The line item to be merged
+    # @param [Solidus::LineItem] current_line_item The line item to be merged
     # into. If nil, the `other_order_line_item` will be re-assigned.
-    # @param [Spree::LineItem] other_order_line_item The line item to merge in.
+    # @param [Solidus::LineItem] other_order_line_item The line item to merge in.
     # @return [void]
     def handle_merge(current_line_item, other_order_line_item)
       if current_line_item
@@ -123,7 +123,7 @@ module Spree
     # This adds errors from the line item to the `errors[:base]` of the order.
     #
     # @api private
-    # @param [Spree::LineItem] line_item The line item which could not be saved
+    # @param [Solidus::LineItem] line_item The line item which could not be saved
     # @return [void]
     def handle_error(line_item)
       order.errors[:base] << line_item.errors.full_messages

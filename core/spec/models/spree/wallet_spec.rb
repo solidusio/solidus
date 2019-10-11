@@ -2,21 +2,21 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::Wallet, type: :model do
+RSpec.describe Solidus::Wallet, type: :model do
   let(:user) { create(:user) }
   let(:credit_card) { create(:credit_card, user_id: user.id) }
   let(:store_credit) { create(:store_credit, user_id: user.id) }
-  subject(:wallet) { Spree::Wallet.new(user) }
+  subject(:wallet) { Solidus::Wallet.new(user) }
 
   describe "#add" do
     context "with valid payment source" do
       it "creates a wallet_payment_source for this user's wallet" do
-        expect { subject.add(credit_card) }.to change(Spree::WalletPaymentSource, :count).by(1)
+        expect { subject.add(credit_card) }.to change(Solidus::WalletPaymentSource, :count).by(1)
       end
 
       it "only creates the payment source once" do
         subject.add(credit_card)
-        expect { subject.add(credit_card) }.to_not change(Spree::WalletPaymentSource, :count)
+        expect { subject.add(credit_card) }.to_not change(Solidus::WalletPaymentSource, :count)
       end
     end
   end
@@ -31,7 +31,7 @@ RSpec.describe Spree::Wallet, type: :model do
     context "with the payment_source in the wallet" do
       before { subject.add(credit_card) }
       it "will remove the payment source from the wallet" do
-        expect { subject.remove(credit_card) }.to change(Spree::WalletPaymentSource, :count).by(-1)
+        expect { subject.remove(credit_card) }.to change(Solidus::WalletPaymentSource, :count).by(-1)
       end
     end
   end
@@ -124,14 +124,14 @@ RSpec.describe Spree::Wallet, type: :model do
 
     context 'with a wallet payment source that does not belong to the wallet' do
       let(:other_wallet_credit_card) { other_wallet.add(other_credit_card) }
-      let(:other_wallet) { Spree::Wallet.new(other_user) }
+      let(:other_wallet) { Solidus::Wallet.new(other_user) }
       let(:other_credit_card) { create(:credit_card, user_id: other_user.id) }
       let(:other_user) { create(:user) }
 
       it 'raises an error' do
         expect {
           wallet.default_wallet_payment_source = other_wallet_credit_card
-        }.to raise_error(Spree::Wallet::Unauthorized)
+        }.to raise_error(Solidus::Wallet::Unauthorized)
       end
     end
   end

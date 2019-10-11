@@ -1,19 +1,19 @@
 <fieldset data-hook="store-credit">
-  <legend align="center"><%= Spree::StoreCredit.model_name.human %></legend>
+  <legend align="center"><%= Solidus::StoreCredit.model_name.human %></legend>
 
   <div class="row">
     <div class="col-4">
       <dl>
-        <dt><%= Spree::StoreCreditCategory.model_name.human %>:</dt>
+        <dt><%= Solidus::StoreCreditCategory.model_name.human %>:</dt>
         <dd><%= payment.source.category.name%></dd>
 
-        <dt><%= Spree::StoreCredit.human_attribute_name(:memo) %>:</dt>
+        <dt><%= Solidus::StoreCredit.human_attribute_name(:memo) %>:</dt>
         <dd><%= payment.source.memo %></dd>
 
-        <dt><%= Spree::StoreCredit.human_attribute_name(:created_by) %>:</dt>
+        <dt><%= Solidus::StoreCredit.human_attribute_name(:created_by) %>:</dt>
         <dd><%= payment.source.created_by.email %></dd>
 
-        <dt><%= Spree::StoreCredit.human_attribute_name(:issued_on) %>:</dt>
+        <dt><%= Solidus::StoreCredit.human_attribute_name(:issued_on) %>:</dt>
         <dd><%= l payment.source.created_at.to_date %></dd>
       </dl>
 

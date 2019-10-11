@@ -2,15 +2,15 @@
 
 require_dependency 'spree/calculator'
 
-module Spree
+module Solidus
   class Calculator::FlexiRate < Calculator
     preference :first_item,      :decimal, default: 0
     preference :additional_item, :decimal, default: 0
     preference :max_items,       :integer, default: 0
-    preference :currency,        :string,  default: ->{ Spree::Config[:currency] }
+    preference :currency,        :string,  default: ->{ Solidus::Config[:currency] }
 
     def self.available?(_object)
-      Spree::Deprecation.warn('Spree::Calculator::FlexiRate::available is DEPRECATED. Use the instance method instead.')
+      Solidus::Deprecation.warn('Solidus::Calculator::FlexiRate::available is DEPRECATED. Use the instance method instead.')
       true
     end
 

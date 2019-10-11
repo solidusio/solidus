@@ -11,11 +11,11 @@
       <%= error_message_on :user, :email %>
     <% end %>
 
-    <% if can? :display, Spree::Role %>
+    <% if can? :display, Solidus::Role %>
       <div data-hook="admin_user_form_roles" class="field">
-        <%= label_tag nil, plural_resource_name(Spree::Role) %>
+        <%= label_tag nil, plural_resource_name(Solidus::Role) %>
         <ul>
-          <% if can? :manage, Spree::Role %>
+          <% if can? :manage, Solidus::Role %>
             <%= hidden_field_tag('user[spree_role_ids][]', nil) %>
             <% @roles.each do |role| %>
               <li>
@@ -35,11 +35,11 @@
       </div>
     <% end %>
 
-    <% if Spree::Config[:can_restrict_stock_management] && can?(:display, Spree::StockLocation) %>
+    <% if Solidus::Config[:can_restrict_stock_management] && can?(:display, Solidus::StockLocation) %>
       <div data-hook="admin_user_form_stock_locations" class="field">
-        <%= label_tag nil, plural_resource_name(Spree::StockLocation) %>
+        <%= label_tag nil, plural_resource_name(Solidus::StockLocation) %>
         <ul>
-          <% if can?(:manage, Spree::UserStockLocation) %>
+          <% if can?(:manage, Solidus::UserStockLocation) %>
             <% @stock_locations.each do |stock_location| %>
               <li>
                 <label>

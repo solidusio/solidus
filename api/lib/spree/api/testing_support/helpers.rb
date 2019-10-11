@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module Api
     module TestingSupport
       module Helpers
@@ -24,17 +24,17 @@ module Spree
         end
 
         def stub_authentication!
-          allow(Spree.user_class).to receive(:find_by).with(hash_including(:spree_api_key)) { current_api_user }
+          allow(Solidus.user_class).to receive(:find_by).with(hash_including(:spree_api_key)) { current_api_user }
         end
 
         # This method can be overriden (with a let block) inside a context
         # For instance, if you wanted to have an admin user instead.
         def current_api_user
-          @current_api_user ||= stub_model(Spree::LegacyUser, email: "spree@example.com", spree_roles: [])
+          @current_api_user ||= stub_model(Solidus::LegacyUser, email: "spree@example.com", spree_roles: [])
         end
 
         def image(filename)
-          File.open(Spree::Api::Engine.root + "spec/fixtures" + filename)
+          File.open(Solidus::Api::Engine.root + "spec/fixtures" + filename)
         end
 
         def upload_image(filename)

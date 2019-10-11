@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
-RSpec.describe Spree::PromotionCodeBatchMailer, type: :mailer do
+RSpec.describe Solidus::PromotionCodeBatchMailer, type: :mailer do
   let(:promotion) { create(:promotion, name: "Promotion Test") }
   let(:promotion_code_batch) do
-    Spree::PromotionCodeBatch.create!(
+    Solidus::PromotionCodeBatch.create!(
       promotion_id: promotion.id,
       base_code: "test",
       number_of_codes: 10,

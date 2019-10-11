@@ -15,31 +15,31 @@ RSpec.shared_examples "a payment source" do
 
   describe "#can_capture?" do
     it "should be true if payment is pending" do
-      payment = mock_model(Spree::Payment, pending?: true, created_at: Time.current)
+      payment = mock_model(Solidus::Payment, pending?: true, created_at: Time.current)
       expect(payment_source.can_capture?(payment)).to be true
     end
 
     it "should be true if payment is checkout" do
-      payment = mock_model(Spree::Payment, pending?: false, checkout?: true, created_at: Time.current)
+      payment = mock_model(Solidus::Payment, pending?: false, checkout?: true, created_at: Time.current)
       expect(payment_source.can_capture?(payment)).to be true
     end
   end
 
   describe "#can_void?" do
     it "should be true if payment is not void" do
-      payment = mock_model(Spree::Payment, failed?: false, void?: false)
+      payment = mock_model(Solidus::Payment, failed?: false, void?: false)
       expect(payment_source.can_void?(payment)).to be true
     end
   end
 
   describe "#can_credit?" do
     it "should be false if payment is not completed" do
-      payment = mock_model(Spree::Payment, completed?: false)
+      payment = mock_model(Solidus::Payment, completed?: false)
       expect(payment_source.can_credit?(payment)).to be false
     end
 
     it "should be false when credit_allowed is zero" do
-      payment = mock_model(Spree::Payment, completed?: true, credit_allowed: 0, order: mock_model(Spree::Order, payment_state: 'credit_owed'))
+      payment = mock_model(Solidus::Payment, completed?: true, credit_allowed: 0, order: mock_model(Solidus::Order, payment_state: 'credit_owed'))
       expect(payment_source.can_credit?(payment)).to be false
     end
   end

@@ -1,6 +1,6 @@
-<% admin_breadcrumb(link_to plural_resource_name(Spree::LegacyUser), spree.admin_users_path) %>
+<% admin_breadcrumb(link_to plural_resource_name(Solidus::LegacyUser), spree.admin_users_path) %>
 <% admin_breadcrumb(link_to @user.email, edit_admin_user_url(@user)) %>
-<% admin_breadcrumb(Spree::StoreCredit.model_name.human) %>
+<% admin_breadcrumb(Solidus::StoreCredit.model_name.human) %>
 
 
 <%= render 'spree/admin/users/sidebar' %>
@@ -17,7 +17,7 @@
       <legend>
         <%= t('spree.admin.store_credits.current_balance') %>
         <% total = credits.sum(&:amount_remaining) %>
-        <%= Spree::Money.new(total, currency: currency) %>
+        <%= Solidus::Money.new(total, currency: currency) %>
       </legend>
 
       <table class="sc-table">
@@ -69,7 +69,7 @@
 <% else %>
   <div class="no-objects-found">
     <%= render 'spree/admin/shared/no_objects_found',
-                 resource: Spree::StoreCredit,
+                 resource: Solidus::StoreCredit,
                  new_resource_url: new_object_url %>
   </div>
 <% end %>

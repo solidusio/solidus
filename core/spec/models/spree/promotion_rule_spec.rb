@@ -2,11 +2,11 @@
 
 require 'rails_helper'
 
-module Spree
-  RSpec.describe Spree::PromotionRule, type: :model do
-    class BadTestRule < Spree::PromotionRule; end
+module Solidus
+  RSpec.describe Solidus::PromotionRule, type: :model do
+    class BadTestRule < Solidus::PromotionRule; end
 
-    class TestRule < Spree::PromotionRule
+    class TestRule < Solidus::PromotionRule
       def eligible?(_promotable, _options = {})
         true
       end

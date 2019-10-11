@@ -4,7 +4,7 @@ require 'rails_helper'
 require 'spree/testing_support/factories/tax_rate_factory'
 
 RSpec.describe 'tax rate factory' do
-  let(:factory_class) { Spree::TaxRate }
+  let(:factory_class) { Solidus::TaxRate }
 
   describe 'tax rate' do
     let(:factory) { :tax_rate }

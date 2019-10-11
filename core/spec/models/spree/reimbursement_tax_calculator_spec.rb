@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::ReimbursementTaxCalculator, type: :model do
+RSpec.describe Solidus::ReimbursementTaxCalculator, type: :model do
   let!(:tax_rate) { nil }
 
   let(:reimbursement) { create(:reimbursement, return_items_count: 1) }
@@ -10,7 +10,7 @@ RSpec.describe Spree::ReimbursementTaxCalculator, type: :model do
   let(:line_item) { return_item.inventory_unit.line_item }
 
   subject do
-    Spree::ReimbursementTaxCalculator.call(reimbursement)
+    Solidus::ReimbursementTaxCalculator.call(reimbursement)
   end
 
   context 'without taxes' do

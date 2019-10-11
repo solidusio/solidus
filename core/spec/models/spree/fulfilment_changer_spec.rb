@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::FulfilmentChanger do
+RSpec.describe Solidus::FulfilmentChanger do
   let(:variant) { create(:variant) }
 
   let(:order) do
@@ -310,7 +310,7 @@ RSpec.describe Spree::FulfilmentChanger do
     end
 
     it "removes the current shipment" do
-      expect { subject }.to change { Spree::Shipment.count }.by(-1)
+      expect { subject }.to change { Solidus::Shipment.count }.by(-1)
     end
   end
 
@@ -321,7 +321,7 @@ RSpec.describe Spree::FulfilmentChanger do
     let(:desired_shipment) { order.shipments.build(stock_location: current_shipment.stock_location) }
 
     it "adds the desired inventory units to the desired shipment" do
-      expect { subject }.to change { Spree::Shipment.count }.by(1)
+      expect { subject }.to change { Solidus::Shipment.count }.by(1)
     end
 
     context "if the desired shipment is invalid" do

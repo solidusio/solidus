@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module Stock
     class AvailabilityValidator < ActiveModel::Validator
       def validate(line_item)

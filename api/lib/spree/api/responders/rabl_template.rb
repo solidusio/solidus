@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module Api
     module Responders
       module RablTemplate

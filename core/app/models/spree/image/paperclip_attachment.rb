@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Spree::Image::PaperclipAttachment
+module Solidus::Image::PaperclipAttachment
   extend ActiveSupport::Concern
 
   included do

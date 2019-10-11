@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
-module Spree::Admin::StoreCreditEventsHelper
+module Solidus::Admin::StoreCreditEventsHelper
   mattr_accessor :originator_links
   self.originator_links = {
-    Spree::Payment.to_s => {
+    Solidus::Payment.to_s => {
       new_tab: true,
       href_type: :payment,
       translation_key: 'admin.store_credits.payment_originator'
     },
-    Spree::Refund.to_s => {
+    Solidus::Refund.to_s => {
       new_tab: true,
       href_type: :payments,
       translation_key: 'admin.store_credits.refund_originator'
@@ -16,8 +16,8 @@ module Spree::Admin::StoreCreditEventsHelper
   }
 
   def store_credit_event_admin_action_name(store_credit_event)
-    if Spree::StoreCreditEvent::NON_EXPOSED_ACTIONS.include?(store_credit_event.action) ||
-       store_credit_event.action == Spree::StoreCredit::VOID_ACTION
+    if Solidus::StoreCreditEvent::NON_EXPOSED_ACTIONS.include?(store_credit_event.action) ||
+       store_credit_event.action == Solidus::StoreCredit::VOID_ACTION
       t("spree.store_credit.display_action.admin.#{store_credit_event.action}")
     else
       store_credit_event.display_action
@@ -73,11 +73,11 @@ module Spree::Admin::StoreCreditEventsHelper
   private
 
   # Cannot set the value for a user originator
-  # because Spree.user_class is not defined at that time.
-  # Spree::UserClassHandle does not work here either as
+  # because Solidus.user_class is not defined at that time.
+  # Solidus::UserClassHandle does not work here either as
   # the assignment is evaluated before user_class is set
   def add_user_originator_link
-    originator_links[Spree.user_class.to_s] = {
+    originator_links[Solidus.user_class.to_s] = {
       new_tab: true,
       href_type: :user,
       translation_key: 'admin.store_credits.user_originator'

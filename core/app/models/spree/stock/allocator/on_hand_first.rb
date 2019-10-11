@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module Stock
     module Allocator
-      class OnHandFirst < Spree::Stock::Allocator::Base
+      class OnHandFirst < Solidus::Stock::Allocator::Base
         def allocate_inventory(desired)
           # Allocate any available on hand inventory
           on_hand = allocate_on_hand(desired)

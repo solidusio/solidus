@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   # Service object for creating new payments on an Order
   class PaymentCreate
     # @param order [Order] The order for the new payment
@@ -30,7 +30,7 @@ module Spree
       @payment.attributes = @attributes
 
       if source_attributes[:existing_card_id].present?
-        Spree::Deprecation.warn(
+        Solidus::Deprecation.warn(
           "Passing existing_card_id to PaymentCreate is deprecated. Use wallet_payment_source_id instead.",
           caller,
         )
@@ -84,9 +84,9 @@ module Spree
 
     def available_cards
       if user_id = order.user_id
-        Spree::CreditCard.where(user_id: user_id)
+        Solidus::CreditCard.where(user_id: user_id)
       else
-        Spree::CreditCard.none
+        Solidus::CreditCard.none
       end
     end
   end

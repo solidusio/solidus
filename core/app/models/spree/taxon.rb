@@ -2,11 +2,11 @@
 
 require 'spree/core/product_filters'
 
-module Spree
-  class Taxon < Spree::Base
+module Solidus
+  class Taxon < Solidus::Base
     acts_as_nested_set dependent: :destroy
 
-    belongs_to :taxonomy, class_name: 'Spree::Taxonomy', inverse_of: :taxons
+    belongs_to :taxonomy, class_name: 'Solidus::Taxonomy', inverse_of: :taxons
     has_many :classifications, -> { order(:position) }, dependent: :delete_all, inverse_of: :taxon
     has_many :products, through: :classifications
 
@@ -25,18 +25,18 @@ module Spree
     after_save :touch_ancestors_and_taxonomy
     after_touch :touch_ancestors_and_taxonomy
 
-    include ::Spree::Config.taxon_attachment_module
+    include ::Solidus::Config.taxon_attachment_module
 
     self.whitelisted_ransackable_attributes = %w[name]
 
     # @note This method is meant to be overridden on a store by store basis.
     # @return [Array] filters that should be used for a taxon
     def applicable_filters
-      Spree::Deprecation.warn "Spree::Taxon#applicable_filters is deprecated, if you are using this functionality please move it into your own application."
+      Solidus::Deprecation.warn "Solidus::Taxon#applicable_filters is deprecated, if you are using this functionality please move it into your own application."
 
       fs = []
-      fs << Spree::Core::ProductFilters.price_filter if Spree::Core::ProductFilters.respond_to?(:price_filter)
-      fs << Spree::Core::ProductFilters.brand_filter if Spree::Core::ProductFilters.respond_to?(:brand_filter)
+      fs << Solidus::Core::ProductFilters.price_filter if Solidus::Core::ProductFilters.respond_to?(:price_filter)
+      fs << Solidus::Core::ProductFilters.brand_filter if Solidus::Core::ProductFilters.respond_to?(:brand_filter)
       fs
     end
 
@@ -54,7 +54,7 @@ module Spree
     # name and its parents permalink (if present.)
     def set_permalink
       permalink_tail = permalink.present? ? permalink.split('/').last : name
-      self.permalink_part = Spree::Config.taxon_url_parametizer_class.parameterize(permalink_tail)
+      self.permalink_part = Solidus::Config.taxon_url_parametizer_class.parameterize(permalink_tail)
     end
 
     # Update the permalink for this taxon and all children (if necessary)
@@ -75,13 +75,13 @@ module Spree
       permalink
     end
 
-    # @return [ActiveRecord::Relation<Spree::Product>] the active products the
+    # @return [ActiveRecord::Relation<Solidus::Product>] the active products the
     #   belong to this taxon
     def active_products
       products.not_deleted.available
     end
 
-    # @return [ActiveRecord::Relation<Spree::Product>] all self and descendant products
+    # @return [ActiveRecord::Relation<Solidus::Product>] all self and descendant products
     def all_products
       scope = Product.joins(:taxons)
       scope.where(
@@ -89,7 +89,7 @@ module Spree
       )
     end
 
-    # @return [ActiveRecord::Relation<Spree::Variant>] all self and descendant variants, including master variants.
+    # @return [ActiveRecord::Relation<Solidus::Variant>] all self and descendant variants, including master variants.
     def all_variants
       Variant.where(product_id: all_products.select(:id))
     end

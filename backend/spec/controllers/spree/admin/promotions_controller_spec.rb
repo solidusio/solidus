@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Spree::Admin::PromotionsController, type: :controller do
+describe Solidus::Admin::PromotionsController, type: :controller do
   stub_authorization!
 
   let!(:promotion1) { create(:promotion, name: "name1", code: "code1", path: "path1") }
@@ -57,7 +57,7 @@ describe Spree::Admin::PromotionsController, type: :controller do
     context "it succeeds" do
       context "with no single code param" do
         it "creates a promotion" do
-          expect { subject }.to change { Spree::Promotion.count }.by(1)
+          expect { subject }.to change { Solidus::Promotion.count }.by(1)
         end
 
         it "sets the flash message" do
@@ -71,7 +71,7 @@ describe Spree::Admin::PromotionsController, type: :controller do
         end
 
         it "doesn't create any promotion codes" do
-          expect { subject }.to_not change { Spree::PromotionCode.count }
+          expect { subject }.to_not change { Solidus::PromotionCode.count }
         end
       end
 
@@ -79,7 +79,7 @@ describe Spree::Admin::PromotionsController, type: :controller do
         let(:params) { { promotion: { name: 'some promo' }, single_code: "promo" } }
 
         it "creates a promotion" do
-          expect { subject }.to change { Spree::Promotion.count }.by(1)
+          expect { subject }.to change { Solidus::Promotion.count }.by(1)
         end
 
         it "sets the flash message" do
@@ -93,8 +93,8 @@ describe Spree::Admin::PromotionsController, type: :controller do
         end
 
         it "creates a promotion code" do
-          expect { subject }.to change { Spree::PromotionCode.count }.by(1)
-          expect(Spree::PromotionCode.last.value).to eq("promo")
+          expect { subject }.to change { Solidus::PromotionCode.count }.by(1)
+          expect(Solidus::PromotionCode.last.value).to eq("promo")
         end
       end
     end
@@ -105,7 +105,7 @@ describe Spree::Admin::PromotionsController, type: :controller do
       it "does not create a promotion" do
         expect {
           subject
-        }.not_to change { Spree::Promotion.count }
+        }.not_to change { Solidus::Promotion.count }
       end
 
       it "sets the flash error" do

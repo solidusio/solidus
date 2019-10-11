@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::Variant::PriceSelector do
+RSpec.describe Solidus::Variant::PriceSelector do
   let(:variant) { build_stubbed(:variant) }
 
   subject { described_class.new(variant) }
@@ -12,7 +12,7 @@ RSpec.describe Spree::Variant::PriceSelector do
 
   describe ".pricing_options_class" do
     it "returns the standard pricing options class" do
-      expect(described_class.pricing_options_class).to eq(Spree::Variant::PricingOptions)
+      expect(described_class.pricing_options_class).to eq(Solidus::Variant::PricingOptions)
     end
   end
 
@@ -22,8 +22,8 @@ RSpec.describe Spree::Variant::PriceSelector do
     context "with the default currency" do
       let(:pricing_options) { described_class.pricing_options_class.new(currency: "USD") }
 
-      it "returns the correct (default) price as a Spree::Money object" do
-        expect(subject.price_for(pricing_options)).to eq(Spree::Money.new(12.34, currency: "USD"))
+      it "returns the correct (default) price as a Solidus::Money object" do
+        expect(subject.price_for(pricing_options)).to eq(Solidus::Money.new(12.34, currency: "USD"))
       end
 
       context "with the another country iso" do
@@ -35,11 +35,11 @@ RSpec.describe Spree::Variant::PriceSelector do
 
         context "with a price for that country present" do
           before do
-            variant.prices.create(amount: 44.44, country: country, currency: Spree::Config.currency)
+            variant.prices.create(amount: 44.44, country: country, currency: Solidus::Config.currency)
           end
 
           it "returns the correct price" do
-            expect(subject.price_for(pricing_options)).to eq(Spree::Money.new(44.44, currency: "USD"))
+            expect(subject.price_for(pricing_options)).to eq(Solidus::Money.new(44.44, currency: "USD"))
           end
         end
 
@@ -56,11 +56,11 @@ RSpec.describe Spree::Variant::PriceSelector do
 
           context "and a fallback price for the variant present" do
             before do
-              variant.prices.create(amount: 55.44, country: nil, currency: Spree::Config.currency)
+              variant.prices.create(amount: 55.44, country: nil, currency: Solidus::Config.currency)
             end
 
             it "returns the fallback price" do
-              expect(subject.price_for(pricing_options)).to eq(Spree::Money.new(55.44, currency: "USD"))
+              expect(subject.price_for(pricing_options)).to eq(Solidus::Money.new(55.44, currency: "USD"))
             end
           end
         end
@@ -75,8 +75,8 @@ RSpec.describe Spree::Variant::PriceSelector do
           variant.prices.create(amount: 99.00, currency: "EUR")
         end
 
-        it "returns the price in the correct currency as a Spree::Money object" do
-          expect(subject.price_for(pricing_options)).to eq(Spree::Money.new(99.00, currency: "EUR"))
+        it "returns the price in the correct currency as a Solidus::Money object" do
+          expect(subject.price_for(pricing_options)).to eq(Solidus::Money.new(99.00, currency: "EUR"))
         end
       end
 

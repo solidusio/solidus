@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   class OrderUpdater
     attr_reader :order
     delegate :payments, :line_items, :adjustments, :all_adjustments, :shipments, :update_hooks, :quantity, to: :order
@@ -208,7 +208,7 @@ module Spree
         promotion_adjustments = item.adjustments.select(&:promotion?)
 
         promotion_adjustments.each(&:recalculate)
-        Spree::Config.promotion_chooser_class.new(promotion_adjustments).update
+        Solidus::Config.promotion_chooser_class.new(promotion_adjustments).update
 
         item.promo_total = promotion_adjustments.select(&:eligible?).sum(&:amount)
       end
@@ -221,11 +221,11 @@ module Spree
     def update_order_promotions
       promotion_adjustments = order.adjustments.select(&:promotion?)
       promotion_adjustments.each(&:recalculate)
-      Spree::Config.promotion_chooser_class.new(promotion_adjustments).update
+      Solidus::Config.promotion_chooser_class.new(promotion_adjustments).update
     end
 
     def update_taxes
-      Spree::Config.tax_adjuster_class.new(order).adjust!
+      Solidus::Config.tax_adjuster_class.new(order).adjust!
 
       [*line_items, *shipments].each do |item|
         tax_adjustments = item.adjustments.select(&:tax?)

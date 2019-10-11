@@ -12,12 +12,12 @@ describe "Product Images", type: :feature do
     # Ensure attachment style keys are symbolized before running all tests
     # Otherwise this would result in this error:
     # undefined method `processors' for \"48x48>\
-    Spree::Image.attachment_definitions[:attachment][:styles].symbolize_keys!
+    Solidus::Image.attachment_definitions[:attachment][:styles].symbolize_keys!
   end
 
   context "uploading, editing, and deleting an image", js: true do
     it "should allow an admin to upload and edit an image for a product" do
-      Spree::Image.attachment_definitions[:attachment].delete :storage
+      Solidus::Image.attachment_definitions[:attachment].delete :storage
 
       create(:product)
 

@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module Api
-    class ImagesController < Spree::Api::BaseController
+    class ImagesController < Solidus::Api::BaseController
       def index
         @images = scope.images.accessible_by(current_ability, :read)
         respond_with(@images)
       end
 
       def show
-        @image = Spree::Image.accessible_by(current_ability, :read).find(params[:id])
+        @image = Solidus::Image.accessible_by(current_ability, :read).find(params[:id])
         respond_with(@image)
       end
 
@@ -20,13 +20,13 @@ module Spree
       end
 
       def update
-        @image = Spree::Image.accessible_by(current_ability, :update).find(params[:id])
+        @image = Solidus::Image.accessible_by(current_ability, :update).find(params[:id])
         @image.update(image_params)
         respond_with(@image, default_template: :show)
       end
 
       def destroy
-        @image = Spree::Image.accessible_by(current_ability, :destroy).find(params[:id])
+        @image = Solidus::Image.accessible_by(current_ability, :destroy).find(params[:id])
         @image.destroy
         respond_with(@image, status: 204)
       end
@@ -39,9 +39,9 @@ module Spree
 
       def scope
         if params[:product_id]
-          Spree::Product.friendly.find(params[:product_id])
+          Solidus::Product.friendly.find(params[:product_id])
         elsif params[:variant_id]
-          Spree::Variant.find(params[:variant_id])
+          Solidus::Variant.find(params[:variant_id])
         end
       end
     end

@@ -2,8 +2,8 @@
 
 require 'spec_helper'
 
-module Spree
-  describe Spree::Api::PaymentsController, type: :request do
+module Solidus
+  describe Solidus::Api::PaymentsController, type: :request do
     let!(:order) { create(:order) }
     let!(:payment) { create(:payment, order: order) }
     let!(:attributes) {
@@ -36,7 +36,7 @@ module Spree
 
         context "payment source is not required" do
           before do
-            allow_any_instance_of(Spree::PaymentMethod::BogusCreditCard).to receive(:source_required?).and_return(false)
+            allow_any_instance_of(Solidus::PaymentMethod::BogusCreditCard).to receive(:source_required?).and_return(false)
           end
 
           it "can create a new payment" do
@@ -51,7 +51,7 @@ module Spree
 
               expect {
                 post spree.api_order_payments_path(order), params: { payment: { payment_method_id: PaymentMethod.first.id, amount: 50 } }
-              }.not_to change { Spree::Payment.count }
+              }.not_to change { Solidus::Payment.count }
               expect(response.status).to eq(404)
             end
           end
@@ -170,7 +170,7 @@ module Spree
           context "authorization fails" do
             before do
               fake_response = double(success?: false, to_s: "Could not authorize card")
-              expect_any_instance_of(Spree::PaymentMethod::BogusCreditCard).to receive(:authorize).and_return(fake_response)
+              expect_any_instance_of(Solidus::PaymentMethod::BogusCreditCard).to receive(:authorize).and_return(fake_response)
               put spree.authorize_api_order_payment_path(order, payment)
             end
 
@@ -197,7 +197,7 @@ module Spree
           context "capturing fails" do
             before do
               fake_response = double(success?: false, to_s: "Insufficient funds")
-              expect_any_instance_of(Spree::PaymentMethod::BogusCreditCard).to receive(:capture).and_return(fake_response)
+              expect_any_instance_of(Solidus::PaymentMethod::BogusCreditCard).to receive(:capture).and_return(fake_response)
             end
 
             it "returns a 422 status" do
@@ -219,7 +219,7 @@ module Spree
           context "purchasing fails" do
             before do
               fake_response = double(success?: false, to_s: "Insufficient funds")
-              expect_any_instance_of(Spree::PaymentMethod::BogusCreditCard).to receive(:purchase).and_return(fake_response)
+              expect_any_instance_of(Solidus::PaymentMethod::BogusCreditCard).to receive(:purchase).and_return(fake_response)
             end
 
             it "returns a 422 status" do
@@ -241,7 +241,7 @@ module Spree
           context "voiding fails" do
             before do
               fake_response = double(success?: false, to_s: "NO REFUNDS")
-              expect_any_instance_of(Spree::PaymentMethod::BogusCreditCard).to receive(:void).and_return(fake_response)
+              expect_any_instance_of(Solidus::PaymentMethod::BogusCreditCard).to receive(:void).and_return(fake_response)
             end
 
             it "returns a 422 status" do

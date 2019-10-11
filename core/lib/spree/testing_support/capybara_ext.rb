@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module TestingSupport
     module CapybaraExt
       def click_icon(type)
@@ -36,7 +36,7 @@ module Spree
       end
 
       def fill_in_quantity(table_column, selector, quantity)
-        Spree::Deprecation.warn <<-WARN.strip_heredoc
+        Solidus::Deprecation.warn <<-WARN.strip_heredoc
           fill_in_quantity is deprecated. Instead use:
             within(#{table_column.inspect}) do
               fill_in #{selector.inspect}, with: #{quantity.inspect}
@@ -124,7 +124,7 @@ module Spree
       end
 
       def wait_for_ajax
-        Spree::Deprecation.warn <<-WARN.squish, caller
+        Solidus::Deprecation.warn <<-WARN.squish, caller
           wait_for_ajax has been deprecated.
           Please refer to the capybara documentation on how to properly wait for asyncronous behavior:
           https://github.com/teamcapybara/capybara#asynchronous-javascript-ajax-and-friends
@@ -157,8 +157,8 @@ RSpec::Matchers.define :have_meta do |name, expected|
 end
 
 # @private
-CapybaraExt = ActiveSupport::Deprecation::DeprecatedConstantProxy.new('CapybaraExt', 'Spree::TestingSupport::CapybaraExt')
+CapybaraExt = ActiveSupport::Deprecation::DeprecatedConstantProxy.new('CapybaraExt', 'Solidus::TestingSupport::CapybaraExt')
 
 RSpec.configure do |c|
-  c.include Spree::TestingSupport::CapybaraExt
+  c.include Solidus::TestingSupport::CapybaraExt
 end

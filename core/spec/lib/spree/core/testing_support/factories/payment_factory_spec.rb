@@ -4,7 +4,7 @@ require 'rails_helper'
 require 'spree/testing_support/factories/payment_factory'
 
 RSpec.describe 'payment factory' do
-  let(:factory_class) { Spree::Payment }
+  let(:factory_class) { Solidus::Payment }
 
   describe 'plain (credit card) payment' do
     let(:factory) { :payment }

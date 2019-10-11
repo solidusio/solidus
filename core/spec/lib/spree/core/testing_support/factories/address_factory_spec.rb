@@ -4,7 +4,7 @@ require 'rails_helper'
 require 'spree/testing_support/factories/address_factory'
 
 RSpec.describe 'address factory' do
-  let(:factory_class) { Spree::Address }
+  let(:factory_class) { Solidus::Address }
 
   describe 'plain address' do
     let(:factory) { :address }
@@ -54,8 +54,8 @@ RSpec.describe 'address factory' do
     it 'shares the same country and state objects' do
       expect(address1.country).to eq(address2.country)
       expect(address1.state).to eq(address2.state)
-      expect(Spree::Country.count).to eq(1)
-      expect(Spree::State.count).to eq(1)
+      expect(Solidus::Country.count).to eq(1)
+      expect(Solidus::State.count).to eq(1)
     end
   end
 end

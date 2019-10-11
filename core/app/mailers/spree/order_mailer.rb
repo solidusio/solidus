@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   class OrderMailer < BaseMailer
     def confirm_email(order, resend = false)
       @order = order

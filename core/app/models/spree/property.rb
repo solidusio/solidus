@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-module Spree
-  class Property < Spree::Base
+module Solidus
+  class Property < Solidus::Base
     has_many :product_properties, dependent: :delete_all, inverse_of: :property
     has_many :products, through: :product_properties
 

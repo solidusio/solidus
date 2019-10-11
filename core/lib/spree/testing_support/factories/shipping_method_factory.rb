@@ -10,10 +10,10 @@ FactoryBot.define do
     aliases: [
       :base_shipping_method
     ],
-    class: 'Spree::ShippingMethod'
+    class: 'Solidus::ShippingMethod'
   ) do
     zones do
-      [Spree::Zone.find_by(name: 'GlobalZone') || FactoryBot.create(:global_zone)]
+      [Solidus::Zone.find_by(name: 'GlobalZone') || FactoryBot.create(:global_zone)]
     end
 
     name { 'UPS Ground' }
@@ -25,16 +25,16 @@ FactoryBot.define do
 
     transient do
       cost { 10.0 }
-      currency { Spree::Config[:currency] }
+      currency { Solidus::Config[:currency] }
     end
 
     before(:create) do |shipping_method, _evaluator|
       if shipping_method.shipping_categories.empty?
-        shipping_method.shipping_categories << (Spree::ShippingCategory.first || create(:shipping_category))
+        shipping_method.shipping_categories << (Solidus::ShippingCategory.first || create(:shipping_category))
       end
     end
 
-    factory :free_shipping_method, class: 'Spree::ShippingMethod' do
+    factory :free_shipping_method, class: 'Solidus::ShippingMethod' do
       cost { nil }
       association(:calculator, factory: :shipping_no_amount_calculator, strategy: :build)
     end

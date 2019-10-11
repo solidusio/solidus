@@ -2,11 +2,11 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::Promotion::Rules::UserLoggedIn, type: :model do
-  let(:rule) { Spree::Promotion::Rules::UserLoggedIn.new }
+RSpec.describe Solidus::Promotion::Rules::UserLoggedIn, type: :model do
+  let(:rule) { Solidus::Promotion::Rules::UserLoggedIn.new }
 
   context "#eligible?(order)" do
-    let(:order) { Spree::Order.new }
+    let(:order) { Solidus::Order.new }
 
     it "should be eligible if order has an associated user" do
       user = double('User')

@@ -2,12 +2,12 @@
 
 <% admin_breadcrumb(t('spree.settings')) %>
 <% admin_breadcrumb(t('spree.admin.tab.checkout')) %>
-<% admin_breadcrumb(plural_resource_name(Spree::RefundReason)) %>
+<% admin_breadcrumb(plural_resource_name(Solidus::RefundReason)) %>
 
 
 <% content_for :page_actions do %>
   <ul class="actions inline-menu">
-    <% if can?(:create, Spree::RefundReason) %>
+    <% if can?(:create, Solidus::RefundReason) %>
       <li>
         <%= link_to t('spree.new_refund_reason'), new_object_url, id: 'admin_new_named_type', class: 'btn btn-primary' %>
       </li>
@@ -24,8 +24,8 @@
     </colgroup>
     <thead>
       <tr data-hook="named_types_header">
-        <th><%= Spree::RefundReason.human_attribute_name(:name) %></th>
-        <th><%= Spree::RefundReason.human_attribute_name(:state) %></th>
+        <th><%= Solidus::RefundReason.human_attribute_name(:name) %></th>
+        <th><%= Solidus::RefundReason.human_attribute_name(:state) %></th>
         <th class="actions"></th>
       </tr>
     </thead>
@@ -52,7 +52,7 @@
 <% else %>
   <div class="no-objects-found">
     <%= render 'spree/admin/shared/no_objects_found',
-                 resource: Spree::RefundReason,
+                 resource: Solidus::RefundReason,
                  new_resource_url: new_object_url %>
   </div>
 <% end %>

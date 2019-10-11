@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-module Spree
+module Solidus
   describe LegacyUser, type: :model do
     let(:user) { LegacyUser.new }
 

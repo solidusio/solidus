@@ -11,7 +11,7 @@ describe "Taxonomies and taxons", type: :feature do
     fill_in "Name", with: "Hello"
     click_button "Create"
 
-    @taxonomy = Spree::Taxonomy.last
+    @taxonomy = Solidus::Taxonomy.last
 
     visit spree.edit_admin_taxonomy_taxon_path(@taxonomy, @taxonomy.root.id)
 

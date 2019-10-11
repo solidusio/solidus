@@ -36,7 +36,7 @@ feature 'Promotion with option value rule' do
     expect(page).to have_content("has been successfully updated")
 
     first_rule = promotion.rules.reload.first
-    expect(first_rule.class).to eq Spree::Promotion::Rules::OptionValue
+    expect(first_rule.class).to eq Solidus::Promotion::Rules::OptionValue
     expect(first_rule.preferred_eligible_values).to eq Hash[product.id => [option_value.id]]
   end
 
@@ -64,7 +64,7 @@ feature 'Promotion with option value rule' do
     given(:variant1) { create :variant }
     given(:variant2) { create :variant }
     background do
-      rule = Spree::Promotion::Rules::OptionValue.new
+      rule = Solidus::Promotion::Rules::OptionValue.new
       rule.promotion = promotion
       rule.preferred_eligible_values = Hash[
         variant1.product_id => variant1.option_values.pluck(:id),

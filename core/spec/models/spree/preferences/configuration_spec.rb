@@ -2,9 +2,9 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::Preferences::Configuration, type: :model do
+RSpec.describe Solidus::Preferences::Configuration, type: :model do
   before :all do
-    class AppConfig < Spree::Preferences::Configuration
+    class AppConfig < Solidus::Preferences::Configuration
       preference :color, :string, default: :blue
     end
     @config = AppConfig.new

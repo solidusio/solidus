@@ -3,7 +3,7 @@
 require 'rails_helper'
 require 'spree/testing_support/shared_examples/gallery'
 
-RSpec.describe Spree::Gallery::ProductGallery do
+RSpec.describe Solidus::Gallery::ProductGallery do
   let(:gallery) { described_class.new(product) }
   let(:product) { create(:product) }
 

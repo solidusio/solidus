@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::ShippingRate, type: :model do
+RSpec.describe Solidus::ShippingRate, type: :model do
   let(:address) { create(:address) }
   let(:foreign_address) { create :address, country_iso_code: "DE" }
   let(:order) { create :order, ship_address: address }
@@ -11,7 +11,7 @@ RSpec.describe Spree::ShippingRate, type: :model do
   let(:tax_category) { create :tax_category }
 
   subject(:shipping_rate) do
-    Spree::ShippingRate.new(
+    Solidus::ShippingRate.new(
       shipment: shipment,
       shipping_method: shipping_method,
       cost: 10
@@ -38,7 +38,7 @@ RSpec.describe Spree::ShippingRate, type: :model do
       let(:order_address) { address }
 
       before do
-        Spree::Tax::ShippingRateTaxer.new.tax(shipping_rate)
+        Solidus::Tax::ShippingRateTaxer.new.tax(shipping_rate)
       end
 
       it "shows correct tax amount" do
@@ -68,7 +68,7 @@ RSpec.describe Spree::ShippingRate, type: :model do
       let(:order_address) { address }
 
       before do
-        Spree::Tax::ShippingRateTaxer.new.tax(shipping_rate)
+        Solidus::Tax::ShippingRateTaxer.new.tax(shipping_rate)
       end
 
       it "shows correct tax amount" do
@@ -107,7 +107,7 @@ RSpec.describe Spree::ShippingRate, type: :model do
       let(:order_address) { address }
 
       before do
-        Spree::Tax::ShippingRateTaxer.new.tax(shipping_rate)
+        Solidus::Tax::ShippingRateTaxer.new.tax(shipping_rate)
       end
 
       it "shows correct tax amount" do

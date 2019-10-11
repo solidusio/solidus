@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-module Spree
-  class ReturnItem < Spree::Base
+module Solidus
+  class ReturnItem < Solidus::Base
     module EligibilityValidator
-      class RMARequired < Spree::ReturnItem::EligibilityValidator::BaseValidator
+      class RMARequired < Solidus::ReturnItem::EligibilityValidator::BaseValidator
         def eligible_for_return?
           if @return_item.return_authorization.present?
             true

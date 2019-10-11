@@ -2,14 +2,14 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::Promotion::Rules::OneUsePerUser, type: :model do
+RSpec.describe Solidus::Promotion::Rules::OneUsePerUser, type: :model do
   let(:rule) { described_class.new }
 
   describe '#eligible?(order)' do
     subject { rule.eligible?(order) }
-    let(:order) { double Spree::Order, user: user }
-    let(:user) { double Spree::LegacyUser }
-    let(:promotion) { stub_model Spree::Promotion, used_by?: used_by }
+    let(:order) { double Solidus::Order, user: user }
+    let(:user) { double Solidus::LegacyUser }
+    let(:promotion) { stub_model Solidus::Promotion, used_by?: used_by }
     let(:used_by) { false }
 
     before { rule.promotion = promotion }

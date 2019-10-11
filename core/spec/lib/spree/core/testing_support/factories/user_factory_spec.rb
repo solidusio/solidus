@@ -4,7 +4,7 @@ require 'rails_helper'
 require 'spree/testing_support/factories/user_factory'
 
 RSpec.describe 'user factory' do
-  let(:factory_class) { Spree.user_class }
+  let(:factory_class) { Solidus.user_class }
 
   describe 'user' do
     let(:factory) { :user }

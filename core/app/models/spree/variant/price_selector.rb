@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-module Spree
-  class Variant < Spree::Base
+module Solidus
+  class Variant < Solidus::Base
     # This class is responsible for selecting a price for a variant given certain pricing options.
     # A variant can have multiple or even dynamic prices. The `price_for`
     # method determines which price applies under the given circumstances.
@@ -13,7 +13,7 @@ module Spree
       # embodied in it's pricing options class.
       #
       def self.pricing_options_class
-        Spree::Variant::PricingOptions
+        Solidus::Variant::PricingOptions
       end
 
       attr_reader :variant
@@ -23,8 +23,8 @@ module Spree
       end
 
       # The variant's price, given a set of pricing options
-      # @param [Spree::Variant::PricingOptions] price_options Pricing Options to abide by
-      # @return [Spree::Money, nil] The most specific price for this set of pricing options.
+      # @param [Solidus::Variant::PricingOptions] price_options Pricing Options to abide by
+      # @return [Solidus::Money, nil] The most specific price for this set of pricing options.
       def price_for(price_options)
         variant.currently_valid_prices.detect do |price|
           ( price.country_iso == price_options.desired_attributes[:country_iso] ||

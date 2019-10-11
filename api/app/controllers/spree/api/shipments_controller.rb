@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module Api
-    class ShipmentsController < Spree::Api::BaseController
+    class ShipmentsController < Solidus::Api::BaseController
       before_action :find_order_on_create, only: :create
       before_action :find_shipment, only: [:update, :ship, :ready, :add, :remove, :estimated_rates, :select_shipping_method]
       before_action :load_transfer_params, only: [:transfer_to_location, :transfer_to_shipment]
@@ -11,7 +11,7 @@ module Spree
 
       def mine
         if current_api_user
-          @shipments = Spree::Shipment
+          @shipments = Solidus::Shipment
             .reverse_chronological
             .joins(:order)
             .where(spree_orders: { user_id: current_api_user.id })
@@ -26,13 +26,13 @@ module Spree
 
       def estimated_rates
         authorize! :update, @shipment
-        estimator = Spree::Config.stock.estimator_class.new
+        estimator = Solidus::Config.stock.estimator_class.new
         @shipping_rates = estimator.shipping_rates(@shipment.to_package, false)
       end
 
       def select_shipping_method
         authorize! :update, @shipment
-        shipping_method = Spree::ShippingMethod.find(params.require(:shipping_method_id))
+        shipping_method = Solidus::ShippingMethod.find(params.require(:shipping_method_id))
         @shipment.select_shipping_method(shipping_method)
         @order.recalculate
         respond_with(@shipment, default_template: :show)
@@ -97,15 +97,15 @@ module Spree
       end
 
       def transfer_to_location
-        @desired_stock_location = Spree::StockLocation.find(params[:stock_location_id])
+        @desired_stock_location = Solidus::StockLocation.find(params[:stock_location_id])
         @desired_shipment = @original_shipment.order.shipments.build(stock_location: @desired_stock_location)
         transfer_to_shipment
       end
 
       def transfer_to_shipment
-        @desired_shipment ||= Spree::Shipment.find_by!(number: params[:target_shipment_number])
+        @desired_shipment ||= Solidus::Shipment.find_by!(number: params[:target_shipment_number])
 
-        fulfilment_changer = Spree::FulfilmentChanger.new(
+        fulfilment_changer = Solidus::FulfilmentChanger.new(
           current_shipment: @original_shipment,
           desired_shipment: @desired_shipment,
           variant: @variant,
@@ -122,16 +122,16 @@ module Spree
       private
 
       def load_transfer_params
-        @original_shipment         = Spree::Shipment.find_by!(number: params[:original_shipment_number])
+        @original_shipment         = Solidus::Shipment.find_by!(number: params[:original_shipment_number])
         @order                     = @original_shipment.order
-        @variant                   = Spree::Variant.find(params[:variant_id])
+        @variant                   = Solidus::Variant.find(params[:variant_id])
         @quantity                  = params[:quantity].to_i
         authorize! [:update, :destroy], @original_shipment
         authorize! :create, Shipment
       end
 
       def find_order_on_create
-        @order = Spree::Order.find_by!(number: params[:shipment][:order_id])
+        @order = Solidus::Order.find_by!(number: params[:shipment][:order_id])
         authorize! :read, @order
       end
 
@@ -139,7 +139,7 @@ module Spree
         if @order.present?
           @shipment = @order.shipments.find_by!(number: params[:id])
         else
-          @shipment = Spree::Shipment.readonly(false).find_by!(number: params[:id])
+          @shipment = Solidus::Shipment.readonly(false).find_by!(number: params[:id])
           @order = @shipment.order
         end
         authorize! :update, @shipment
@@ -159,7 +159,7 @@ module Spree
       end
 
       def variant
-        @variant ||= Spree::Variant.unscoped.find(params.fetch(:variant_id))
+        @variant ||= Solidus::Variant.unscoped.find(params.fetch(:variant_id))
       end
 
       def mine_includes

@@ -90,7 +90,7 @@ MD
 
 initializer "00_solidus_example.rb", <<-RUBY
   # Needed so database isn't hit on install
-  Spree::Auth::Config.use_static_preferences!
+  Solidus::Auth::Config.use_static_preferences!
 
   # Required to work around sample data sending emails
   Rails.application.config.action_mailer.raise_delivery_errors = false
@@ -106,11 +106,11 @@ initializer "paperclip.rb", <<-RUBY
 
     Paperclip::Attachment.default_options[:storage] = :cloudinary
 
-    Spree::Image.attachment_definitions[:attachment].delete(:url)
-    Spree::Image.attachment_definitions[:attachment].delete(:path)
-    Spree::Image.attachment_definitions[:attachment].delete(:default_url)
-    Spree::Image.attachment_definitions[:attachment][:path] = 'spree/products/:id/:style/:filename'
-    Spree::Image.attachment_definitions[:attachment][:cloudinary_url_options] = {
+    Solidus::Image.attachment_definitions[:attachment].delete(:url)
+    Solidus::Image.attachment_definitions[:attachment].delete(:path)
+    Solidus::Image.attachment_definitions[:attachment].delete(:default_url)
+    Solidus::Image.attachment_definitions[:attachment][:path] = 'spree/products/:id/:style/:filename'
+    Solidus::Image.attachment_definitions[:attachment][:cloudinary_url_options] = {
       default: { secure: true }
     }
   end
@@ -120,7 +120,7 @@ after_bundle do
   generate(
     "spree:install",
     "--auto-accept",
-    "--user_class=Spree::User",
+    "--user_class=Solidus::User",
     "--enforce_available_locales=true",
   )
 

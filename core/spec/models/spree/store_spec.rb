@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::Store, type: :model do
+RSpec.describe Solidus::Store, type: :model do
   it { is_expected.to respond_to(:cart_tax_country_iso) }
 
   describe ".by_url (deprecated)" do
@@ -10,11 +10,11 @@ RSpec.describe Spree::Store, type: :model do
     let!(:store_2)  { create(:store, url: 'freethewhales.com') }
 
     around do |example|
-      Spree::Deprecation.silence { example.run }
+      Solidus::Deprecation.silence { example.run }
     end
 
     it "should find stores by url" do
-      by_domain = Spree::Store.by_url('www.subdomain.com')
+      by_domain = Solidus::Store.by_url('www.subdomain.com')
 
       expect(by_domain).to include(store)
       expect(by_domain).not_to include(store_2)
@@ -30,7 +30,7 @@ RSpec.describe Spree::Store, type: :model do
     delegate :current, to: :described_class
 
     around do |example|
-      Spree::Deprecation.silence { example.run }
+      Solidus::Deprecation.silence { example.run }
     end
 
     context "with no match" do
@@ -54,7 +54,7 @@ RSpec.describe Spree::Store, type: :model do
 
   describe ".default" do
     it "should ensure saved store becomes default if one doesn't exist yet" do
-      expect(Spree::Store.where(default: true).count).to eq(0)
+      expect(Solidus::Store.where(default: true).count).to eq(0)
       store = build(:store)
       expect(store.default).not_to be true
 
@@ -69,7 +69,7 @@ RSpec.describe Spree::Store, type: :model do
 
       new_default_store = create(:store, default: true)
 
-      expect(Spree::Store.where(default: true).count).to eq(1)
+      expect(Solidus::Store.where(default: true).count).to eq(1)
 
       [orig_default_store, new_default_store].each(&:reload)
 
@@ -92,7 +92,7 @@ RSpec.describe Spree::Store, type: :model do
       let(:cart_tax_country_iso) { country.iso }
 
       it "responds with a default_cart_tax_location with that country" do
-        expect(subject.default_cart_tax_location).to eq(Spree::Tax::TaxLocation.new(country: country))
+        expect(subject.default_cart_tax_location).to eq(Solidus::Tax::TaxLocation.new(country: country))
       end
     end
   end

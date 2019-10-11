@@ -1,6 +1,6 @@
 <%= render partial: 'spree/admin/shared/order_tabs', locals: { current: 'Customer Returns' } %>
 
-<% admin_breadcrumb(link_to plural_resource_name(Spree::CustomerReturn), spree.admin_order_customer_returns_url(@order)) %>
+<% admin_breadcrumb(link_to plural_resource_name(Solidus::CustomerReturn), spree.admin_order_customer_returns_url(@order)) %>
 <% admin_breadcrumb(t('spree.new_customer_return')) %>
 
 
@@ -32,8 +32,8 @@
         </fieldset>
 
         <%= f.field_container :stock_location do %>
-          <%= f.label :stock_location_id, Spree::StockLocation.model_name.human %>
-          <%= f.select :stock_location_id, Spree::StockLocation.order_default.to_a.collect{|l|[l.name, l.id]}, {include_blank: true}, {class: 'custom-select fullwidth', "data-placeholder" => t('spree.select_a_stock_location')} %>
+          <%= f.label :stock_location_id, Solidus::StockLocation.model_name.human %>
+          <%= f.select :stock_location_id, Solidus::StockLocation.order_default.to_a.collect{|l|[l.name, l.id]}, {include_blank: true}, {class: 'custom-select fullwidth', "data-placeholder" => t('spree.select_a_stock_location')} %>
           <%= f.error_message_on :stock_location_id %>
         <% end %>
 

@@ -3,12 +3,12 @@
 require 'spec_helper'
 
 describe 'orders', type: :feature do
-  let(:order) { Spree::TestingSupport::OrderWalkthrough.up_to(:complete) }
+  let(:order) { Solidus::TestingSupport::OrderWalkthrough.up_to(:complete) }
   let(:user) { create(:user) }
 
   before do
     order.update_attribute(:user_id, user.id)
-    allow_any_instance_of(Spree::OrdersController).to receive_messages(try_spree_current_user: user)
+    allow_any_instance_of(Solidus::OrdersController).to receive_messages(try_spree_current_user: user)
   end
 
   it "can visit an order" do

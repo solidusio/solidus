@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::Image, type: :model do
+RSpec.describe Solidus::Image, type: :model do
   context '#save' do
     context 'invalid attachment' do
       let(:invalid_image) { File.open(__FILE__) }

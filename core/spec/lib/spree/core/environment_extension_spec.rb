@@ -3,7 +3,7 @@
 require 'spec_helper'
 require 'spree/core/environment_extension'
 
-RSpec.describe Spree::Core::EnvironmentExtension do
+RSpec.describe Solidus::Core::EnvironmentExtension do
   let(:base) { Class.new }
   subject! { base.include(described_class).new }
 
@@ -18,7 +18,7 @@ RSpec.describe Spree::Core::EnvironmentExtension do
       describe '#foo' do
         it { respond_to?(:foo) }
         it { expect(subject.foo).to be_empty }
-        it { expect(subject.foo).to be_kind_of Spree::Core::ClassConstantizer::Set }
+        it { expect(subject.foo).to be_kind_of Solidus::Core::ClassConstantizer::Set }
       end
 
       describe '#foo=' do

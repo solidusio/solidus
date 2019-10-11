@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   class PromotionChooser
     def initialize(adjustments)
       @adjustments = adjustments

@@ -11,7 +11,7 @@
     <%= f.text_field :lastname, class: 'fullwidth' %>
   </div>
 
-  <% if Spree::Config[:company] %>
+  <% if Solidus::Config[:company] %>
     <div class="field <%= "#{type}-row" %>">
       <%= f.label :company %>
       <%= f.text_field :company, class: 'fullwidth' %>
@@ -39,14 +39,14 @@
   </div>
 
   <div class="field <%= "#{type}-row" %>">
-    <%= f.label :country_id, Spree::Country.model_name.human %>
+    <%= f.label :country_id, Solidus::Country.model_name.human %>
     <span id="<%= s_or_b %>country">
       <%= f.collection_select :country_id, available_countries, :id, :name, {}, {class: 'custom-select fullwidth js-country_id'} %>
     </span>
   </div>
 
   <div class="field <%= "#{type}-row" %>">
-    <%= f.label :state_id, Spree::State.model_name.human %>
+    <%= f.label :state_id, Solidus::State.model_name.human %>
     <span id="<%= s_or_b %>state">
       <%= f.hidden_field :state_name, value: nil %>
       <% states = f.object.country.try(:states).nil? ? [] : f.object.country.states %>

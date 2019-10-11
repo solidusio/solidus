@@ -9,13 +9,13 @@
             <%= check_box_tag 'select-all' %>
           <% end %>
         </th>
-        <th class="return-item-product"><%= Spree::Product.model_name.human %></th>
-        <th class="return-item-state"><%= Spree::ReturnAuthorization.human_attribute_name(:state) %></th>
-        <th class="return-item-charged"><%= Spree::ReturnItem.human_attribute_name(:charged) %></th>
-        <th class="return-item-pre-tax-refund-amount wrap-text"><%= Spree::ReturnItem.human_attribute_name(:amount) %></th>
-        <th class="return-item-reimbursement-type wrap-text"><%= Spree::ReimbursementType.model_name.human %></th>
-        <th class="return-item-exchange-for"><%= Spree::ReturnItem.human_attribute_name(:exchange_variant) %></th>
-        <th class="return-item-reason"><%= Spree::ReturnItem.human_attribute_name(:return_reason) %></th>
+        <th class="return-item-product"><%= Solidus::Product.model_name.human %></th>
+        <th class="return-item-state"><%= Solidus::ReturnAuthorization.human_attribute_name(:state) %></th>
+        <th class="return-item-charged"><%= Solidus::ReturnItem.human_attribute_name(:charged) %></th>
+        <th class="return-item-pre-tax-refund-amount wrap-text"><%= Solidus::ReturnItem.human_attribute_name(:amount) %></th>
+        <th class="return-item-reimbursement-type wrap-text"><%= Solidus::ReimbursementType.model_name.human %></th>
+        <th class="return-item-exchange-for"><%= Solidus::ReturnItem.human_attribute_name(:exchange_variant) %></th>
+        <th class="return-item-reason"><%= Solidus::ReturnItem.human_attribute_name(:return_reason) %></th>
       </tr>
     </thead>
     <tbody>
@@ -80,7 +80,7 @@
   <% end %>
 
   <%= f.field_container :stock_location do %>
-    <%= f.label :stock_location_id, Spree::StockLocation.model_name.human %>
+    <%= f.label :stock_location_id, Solidus::StockLocation.model_name.human %>
     <%= f.select :stock_location_id, @stock_locations.to_a.collect{|l|[l.name, l.id]}, {include_blank: true}, {class: 'custom-select fullwidth', "data-placeholder" => t('spree.select_a_stock_location')} %>
     <%= f.error_message_on :stock_location_id %>
   <% end %>

@@ -8,7 +8,7 @@ require 'spree/testing_support/factories/line_item_factory'
 require 'spree/testing_support/factories/payment_factory'
 
 FactoryBot.define do
-  factory :order, class: 'Spree::Order' do
+  factory :order, class: 'Solidus::Order' do
     user
     bill_address
     ship_address
@@ -140,7 +140,7 @@ FactoryBot.define do
                 shipment.inventory_units.update_all state: 'shipped'
                 shipment.update_columns(state: 'shipped', shipped_at: Time.current)
                 next unless evaluator.with_cartons
-                Spree::Carton.create!(
+                Solidus::Carton.create!(
                   stock_location: shipment.stock_location,
                   address: order.ship_address,
                   shipping_method: shipment.shipping_method,

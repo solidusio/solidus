@@ -13,8 +13,8 @@
     <tr>
       <th></th>
       <th><%= t('spree.options') %></th>
-      <th><%= Spree::Variant.human_attribute_name(:price) %></th>
-      <th><%= Spree::Variant.human_attribute_name(:sku) %></th>
+      <th><%= Solidus::Variant.human_attribute_name(:price) %></th>
+      <th><%= Solidus::Variant.human_attribute_name(:sku) %></th>
       <th class="actions"></th>
     </tr>
   </thead>
@@ -22,7 +22,7 @@
   <% variants.each do |variant| %>
     <tr id="<%= spree_dom_id variant %>" data-hook="variants_row" class="<%= "deleted" if variant.deleted? %>">
       <td>
-        <% if can? :update_positions, Spree::Variant %>
+        <% if can? :update_positions, Solidus::Variant %>
           <span class="handle"></span>
         <% end %>
       </td>

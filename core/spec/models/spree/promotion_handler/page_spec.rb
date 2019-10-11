@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-module Spree
+module Solidus
   module PromotionHandler
     RSpec.describe Page, type: :model do
       let(:order) { create(:order_with_line_items, line_items_count: 1) }
@@ -16,7 +16,7 @@ module Spree
 
       it "activates at the right path" do
         expect(order.line_item_adjustments.count).to eq(0)
-        Spree::PromotionHandler::Page.new(order, '10off').activate
+        Solidus::PromotionHandler::Page.new(order, '10off').activate
         expect(order.line_item_adjustments.count).to eq(1)
       end
 
@@ -30,14 +30,14 @@ module Spree
 
         it "is not activated" do
           expect(order.line_item_adjustments.count).to eq(0)
-          Spree::PromotionHandler::Page.new(order, '10off').activate
+          Solidus::PromotionHandler::Page.new(order, '10off').activate
           expect(order.line_item_adjustments.count).to eq(0)
         end
       end
 
       it "does not activate at the wrong path" do
         expect(order.line_item_adjustments.count).to eq(0)
-        Spree::PromotionHandler::Page.new(order, 'wrongpath').activate
+        Solidus::PromotionHandler::Page.new(order, 'wrongpath').activate
         expect(order.line_item_adjustments.count).to eq(0)
       end
     end

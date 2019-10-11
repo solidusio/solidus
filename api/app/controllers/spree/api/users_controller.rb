@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-class Spree::Api::UsersController < Spree::Api::ResourceController
+class Solidus::Api::UsersController < Solidus::Api::ResourceController
   private
 
   attr_reader :user
 
   def model_class
-    Spree.user_class
+    Solidus.user_class
   end
 
   def user_params

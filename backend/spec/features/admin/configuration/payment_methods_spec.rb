@@ -27,7 +27,7 @@ describe "Payment Methods", type: :feature do
       end
 
       within('table#listing_payment_methods') do
-        expect(page).to have_content(Spree::PaymentMethod::Check.model_name.human)
+        expect(page).to have_content(Solidus::PaymentMethod::Check.model_name.human)
       end
     end
   end
@@ -40,7 +40,7 @@ describe "Payment Methods", type: :feature do
       expect(page).to have_content("New Payment Method")
       fill_in "payment_method_name", with: "check90"
       fill_in "payment_method_description", with: "check90 desc"
-      select Spree::PaymentMethod::Check.model_name.human, from: "Type"
+      select Solidus::PaymentMethod::Check.model_name.human, from: "Type"
       click_button "Create"
       expect(page).to have_content("successfully created!")
     end
@@ -85,7 +85,7 @@ describe "Payment Methods", type: :feature do
     end
 
     context 'with payment method having hash and array as preference' do
-      class ComplexPayments < Spree::PaymentMethod
+      class ComplexPayments < Solidus::PaymentMethod
         preference :name, :string
         preference :mapping, :hash
         preference :recipients, :array
@@ -112,18 +112,18 @@ describe "Payment Methods", type: :feature do
       click_icon :edit
       expect(page).to have_content('Test Mode')
 
-      select Spree::PaymentMethod::Check.model_name.human, from: 'Type'
+      select Solidus::PaymentMethod::Check.model_name.human, from: 'Type'
       expect(page).to have_content('you must save first')
       expect(page).to have_no_content('Test Mode')
 
       # change back
-      select Spree::PaymentMethod::BogusCreditCard.model_name.human, from: 'Type'
+      select Solidus::PaymentMethod::BogusCreditCard.model_name.human, from: 'Type'
       expect(page).to have_no_content('you must save first')
       expect(page).to have_content('Test Mode')
     end
 
     it "displays message when changing preference source" do
-      Spree::Config.static_model_preferences.add(Spree::PaymentMethod::BogusCreditCard, 'my_prefs', {})
+      Solidus::Config.static_model_preferences.add(Solidus::PaymentMethod::BogusCreditCard, 'my_prefs', {})
 
       click_link "Payments"
       expect(page).to have_link 'Payment Methods'
@@ -141,7 +141,7 @@ describe "Payment Methods", type: :feature do
     end
 
     it "updates successfully and keeps secrets" do
-      Spree::Config.static_model_preferences.add(Spree::PaymentMethod::BogusCreditCard, 'my_prefs', { server: 'secret' })
+      Solidus::Config.static_model_preferences.add(Solidus::PaymentMethod::BogusCreditCard, 'my_prefs', { server: 'secret' })
 
       click_link "Payments"
       expect(page).to have_link 'Payment Methods'
@@ -161,7 +161,7 @@ describe "Payment Methods", type: :feature do
 
     after do
       # cleanup
-      Spree::Config.static_model_preferences.for_class(Spree::PaymentMethod::BogusCreditCard).clear
+      Solidus::Config.static_model_preferences.for_class(Solidus::PaymentMethod::BogusCreditCard).clear
     end
   end
 end

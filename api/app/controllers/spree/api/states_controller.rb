@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module Api
-    class StatesController < Spree::Api::BaseController
+    class StatesController < Solidus::Api::BaseController
       skip_before_action :authenticate_user
 
       def index
@@ -25,10 +25,10 @@ module Spree
 
       def scope
         if params[:country_id]
-          @country = Spree::Country.accessible_by(current_ability, :read).find(params[:country_id])
+          @country = Solidus::Country.accessible_by(current_ability, :read).find(params[:country_id])
           @country.states.accessible_by(current_ability, :read)
         else
-          Spree::State.accessible_by(current_ability, :read)
+          Solidus::State.accessible_by(current_ability, :read)
         end
       end
     end

@@ -17,7 +17,7 @@ class MigrateCreditCardsToWalletPaymentSources < ActiveRecord::Migration[4.2]
       WalletPaymentSource.find_or_create_by!(
         user_id: credit_card.user_id,
         payment_source_id: credit_card.id,
-        payment_source_type: 'Spree::CreditCard'
+        payment_source_type: 'Solidus::CreditCard'
       ) do |wallet_source|
         wallet_source.default = credit_card.default
       end

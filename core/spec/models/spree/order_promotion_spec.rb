@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::OrderPromotion do
+RSpec.describe Solidus::OrderPromotion do
   subject do
     order_promotion
   end

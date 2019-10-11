@@ -6,7 +6,7 @@
         <%= f.file_field :attachment %>
       </div>
       <div data-hook="variant" class="field">
-        <%= f.label :viewable_id, Spree::Variant.model_name.human %><br>
+        <%= f.label :viewable_id, Solidus::Variant.model_name.human %><br>
         <%= f.select :viewable_id, @variants, {}, { class: 'custom-select fullwidth' } %>
       </div>
     </div>

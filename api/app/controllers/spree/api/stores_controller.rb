@@ -1,19 +1,19 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module Api
-    class StoresController < Spree::Api::BaseController
+    class StoresController < Solidus::Api::BaseController
       before_action :get_store, except: [:index, :create]
 
       def index
         authorize! :read, Store
-        @stores = Spree::Store.accessible_by(current_ability, :read).all
+        @stores = Solidus::Store.accessible_by(current_ability, :read).all
         respond_with(@stores)
       end
 
       def create
         authorize! :create, Store
-        @store = Spree::Store.new(store_params)
+        @store = Solidus::Store.new(store_params)
         @store.code = params[:store][:code]
         if @store.save
           respond_with(@store, status: 201, default_template: :show)
@@ -45,7 +45,7 @@ module Spree
       private
 
       def get_store
-        @store = Spree::Store.find(params[:id])
+        @store = Solidus::Store.find(params[:id])
       end
 
       def store_params

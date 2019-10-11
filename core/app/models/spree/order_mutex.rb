@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-module Spree
-  class OrderMutex < Spree::Base
+module Solidus
+  class OrderMutex < Solidus::Base
     class LockFailed < StandardError; end
 
-    belongs_to :order, class_name: "Spree::Order", optional: true
+    belongs_to :order, class_name: "Solidus::Order", optional: true
 
-    scope :expired, -> { where(arel_table[:created_at].lteq(Spree::Config[:order_mutex_max_age].seconds.ago)) }
+    scope :expired, -> { where(arel_table[:created_at].lteq(Solidus::Config[:order_mutex_max_age].seconds.ago)) }
 
     class << self
       # Obtain a lock on an order, execute the supplied block and then release the lock.

@@ -1,10 +1,10 @@
 <%= render 'spree/admin/shared/product_tabs', current: 'Product Properties' %>
 <%= render 'spree/shared/error_messages', target: @product %>
 
-<% admin_breadcrumb(plural_resource_name(Spree::ProductProperty)) %>
+<% admin_breadcrumb(plural_resource_name(Solidus::ProductProperty)) %>
 
 <% content_for :page_actions do %>
-  <% if can?(:create, Spree::ProductProperty) %>
+  <% if can?(:create, Solidus::ProductProperty) %>
     <ul class="tollbar inline-menu">
       <li>
         <%= link_to_add_fields t('spree.add_product_properties'), 'tbody#product_properties', class: 'plus btn btn-primary' %>
@@ -15,15 +15,15 @@
 
 <%= form_for @product, url: admin_product_url(@product), method: :put do |f| %>
   <fieldset>
-    <legend align="center"><%= plural_resource_name(Spree::ProductProperty) %></legend>
+    <legend align="center"><%= plural_resource_name(Solidus::ProductProperty) %></legend>
     <div class="add_product_properties" data-hook="add_product_properties"></div>
 
     <table class="index sortable" data-hook data-sortable-link="<%= update_positions_admin_product_product_properties_url %>">
       <thead>
         <tr data-hook="product_properties_header">
           <th></th>
-          <th><%= Spree::Property.model_name.human %></th>
-          <th><%= Spree::ProductProperty.human_attribute_name(:value) %></th>
+          <th><%= Solidus::Property.model_name.human %></th>
+          <th><%= Solidus::ProductProperty.human_attribute_name(:value) %></th>
           <th class="actions"></th>
         </tr>
       </thead>
@@ -34,7 +34,7 @@
       </tbody>
     </table>
 
-    <% if can?([:create, :update], Spree::ProductProperty) %>
+    <% if can?([:create, :update], Solidus::ProductProperty) %>
       <%= render 'spree/admin/shared/edit_resource_links' %>
     <% end %>
 
@@ -72,8 +72,8 @@
           <thead>
             <tr data-hook="variant_property_values_header">
               <th></th>
-              <th><%= Spree::Property.model_name.human %></th>
-              <th><%= Spree::ProductProperty.human_attribute_name(:value) %></th>
+              <th><%= Solidus::Property.model_name.human %></th>
+              <th><%= Solidus::ProductProperty.human_attribute_name(:value) %></th>
               <th class="actions"></th>
             </tr>
           </thead>
@@ -83,7 +83,7 @@
             <% end %>
           </tbody>
         </table>
-        <% if can?([:create, :update], Spree::VariantPropertyRule) %>
+        <% if can?([:create, :update], Solidus::VariantPropertyRule) %>
           <%= render 'spree/admin/shared/edit_resource_links' %>
         <% end %>
       </fieldset>

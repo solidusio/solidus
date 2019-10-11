@@ -2,9 +2,9 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::Preference, type: :model do
+RSpec.describe Solidus::Preference, type: :model do
   it "should require a key" do
-    @preference = Spree::Preference.new
+    @preference = Solidus::Preference.new
     @preference.key = :test
     @preference.value = true
     expect(@preference).to be_valid
@@ -12,12 +12,12 @@ RSpec.describe Spree::Preference, type: :model do
 
   describe "type coversion for values" do
     def round_trip_preference(key, value)
-      p = Spree::Preference.new
+      p = Solidus::Preference.new
       p.value = value
       p.key = key
       p.save
 
-      Spree::Preference.find_by(key: key)
+      Solidus::Preference.find_by(key: key)
     end
 
     it ":boolean" do

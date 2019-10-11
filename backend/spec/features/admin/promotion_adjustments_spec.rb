@@ -33,17 +33,17 @@ describe "Promotion Adjustments", type: :feature, js: true do
       within('#actions_container') { click_button "Update" }
       expect(page).to have_text 'successfully updated'
 
-      promotion = Spree::Promotion.find_by(name: "SAVE SAVE SAVE")
+      promotion = Solidus::Promotion.find_by(name: "SAVE SAVE SAVE")
       expect(promotion.codes.first.value).to eq("order")
 
       first_rule = promotion.rules.first
-      expect(first_rule.class).to eq(Spree::Promotion::Rules::ItemTotal)
+      expect(first_rule.class).to eq(Solidus::Promotion::Rules::ItemTotal)
       expect(first_rule.preferred_amount).to eq(30)
 
       first_action = promotion.actions.first
-      expect(first_action.class).to eq(Spree::Promotion::Actions::CreateAdjustment)
+      expect(first_action.class).to eq(Solidus::Promotion::Actions::CreateAdjustment)
       first_action_calculator = first_action.calculator
-      expect(first_action_calculator.class).to eq(Spree::Calculator::FlatRate)
+      expect(first_action_calculator.class).to eq(Solidus::Calculator::FlatRate)
       expect(first_action_calculator.preferred_amount).to eq(5)
     end
 
@@ -64,14 +64,14 @@ describe "Promotion Adjustments", type: :feature, js: true do
       within('#actions_container') { click_button "Update" }
       expect(page).to have_text 'successfully updated'
 
-      promotion = Spree::Promotion.find_by(name: "SAVE SAVE SAVE")
+      promotion = Solidus::Promotion.find_by(name: "SAVE SAVE SAVE")
       expect(promotion.usage_limit).to eq(1)
       expect(promotion.codes.first.value).to eq("single_use")
 
       first_action = promotion.actions.first
-      expect(first_action.class).to eq(Spree::Promotion::Actions::CreateAdjustment)
+      expect(first_action.class).to eq(Solidus::Promotion::Actions::CreateAdjustment)
       first_action_calculator = first_action.calculator
-      expect(first_action_calculator.class).to eq(Spree::Calculator::FlatRate)
+      expect(first_action_calculator.class).to eq(Solidus::Calculator::FlatRate)
       expect(first_action_calculator.preferred_amount).to eq(5)
     end
 
@@ -96,17 +96,17 @@ describe "Promotion Adjustments", type: :feature, js: true do
       within('#actions_container') { click_button "Update" }
       expect(page).to have_text 'successfully updated'
 
-      promotion = Spree::Promotion.find_by(name: "SAVE SAVE SAVE")
+      promotion = Solidus::Promotion.find_by(name: "SAVE SAVE SAVE")
       expect(promotion.codes.first).to be_nil
 
       first_rule = promotion.rules.first
-      expect(first_rule.class).to eq(Spree::Promotion::Rules::ItemTotal)
+      expect(first_rule.class).to eq(Solidus::Promotion::Rules::ItemTotal)
       expect(first_rule.preferred_amount).to eq(30)
 
       first_action = promotion.actions.first
-      expect(first_action.class).to eq(Spree::Promotion::Actions::CreateAdjustment)
+      expect(first_action.class).to eq(Solidus::Promotion::Actions::CreateAdjustment)
       first_action_calculator = first_action.calculator
-      expect(first_action_calculator.class).to eq(Spree::Calculator::FlatPercentItemTotal)
+      expect(first_action_calculator.class).to eq(Solidus::Calculator::FlatPercentItemTotal)
       expect(first_action_calculator.preferred_flat_percent).to eq(10)
     end
 
@@ -132,17 +132,17 @@ describe "Promotion Adjustments", type: :feature, js: true do
       within('#actions_container') { click_button "Update" }
       expect(page).to have_text 'successfully updated'
 
-      promotion = Spree::Promotion.find_by(name: "SAVE SAVE SAVE")
+      promotion = Solidus::Promotion.find_by(name: "SAVE SAVE SAVE")
       expect(promotion.codes.first).to be_nil
 
       first_rule = promotion.rules.first
-      expect(first_rule.class).to eq(Spree::Promotion::Rules::Product)
+      expect(first_rule.class).to eq(Solidus::Promotion::Rules::Product)
       expect(first_rule.products.map(&:name)).to include("RoR Mug")
 
       first_action = promotion.actions.first
-      expect(first_action.class).to eq(Spree::Promotion::Actions::CreateItemAdjustments)
+      expect(first_action.class).to eq(Solidus::Promotion::Actions::CreateItemAdjustments)
       first_action_calculator = first_action.calculator
-      expect(first_action_calculator.class).to eq(Spree::Calculator::PercentOnLineItem)
+      expect(first_action_calculator.class).to eq(Solidus::Calculator::PercentOnLineItem)
       expect(first_action_calculator.preferred_percent).to eq(10)
     end
 
@@ -161,10 +161,10 @@ describe "Promotion Adjustments", type: :feature, js: true do
       within('#action_fields') { click_button "Add" }
       expect(page).to have_content('Makes all shipments for the order free')
 
-      promotion = Spree::Promotion.find_by(name: "SAVE SAVE SAVE")
+      promotion = Solidus::Promotion.find_by(name: "SAVE SAVE SAVE")
       expect(promotion.codes).to be_empty
-      expect(promotion.rules.first).to be_a(Spree::Promotion::Rules::ItemTotal)
-      expect(promotion.actions.first).to be_a(Spree::Promotion::Actions::FreeShipping)
+      expect(promotion.rules.first).to be_a(Solidus::Promotion::Rules::ItemTotal)
+      expect(promotion.actions.first).to be_a(Solidus::Promotion::Actions::FreeShipping)
     end
 
     it "should allow an admin to create an automatic promotion" do
@@ -173,7 +173,7 @@ describe "Promotion Adjustments", type: :feature, js: true do
       click_button "Create"
       expect(page).to have_title("SAVE SAVE SAVE - Promotions")
 
-      promotion = Spree::Promotion.find_by(name: "SAVE SAVE SAVE")
+      promotion = Solidus::Promotion.find_by(name: "SAVE SAVE SAVE")
       expect(promotion).to be_apply_automatically
       expect(promotion.path).to be_nil
       expect(promotion.codes).to be_empty
@@ -191,7 +191,7 @@ describe "Promotion Adjustments", type: :feature, js: true do
         expect(page).to have_title("SAVE SAVE SAVE - Promotions")
       }
 
-      promotion = Spree::Promotion.find_by(name: "SAVE SAVE SAVE")
+      promotion = Solidus::Promotion.find_by(name: "SAVE SAVE SAVE")
       expect(promotion.path).to be_nil
       expect(promotion).not_to be_apply_automatically
       expect(promotion.rules).to be_blank
@@ -219,21 +219,21 @@ describe "Promotion Adjustments", type: :feature, js: true do
       within('#actions_container') { click_button "Update" }
       expect(page).to have_text 'successfully updated'
 
-      promotion = Spree::Promotion.find_by(name: "SAVE SAVE SAVE")
+      promotion = Solidus::Promotion.find_by(name: "SAVE SAVE SAVE")
 
       first_rule = promotion.rules.first
-      expect(first_rule.class).to eq(Spree::Promotion::Rules::ItemTotal)
+      expect(first_rule.class).to eq(Solidus::Promotion::Rules::ItemTotal)
       expect(first_rule.preferred_amount).to eq(50)
 
       first_action = promotion.actions.first
-      expect(first_action.class).to eq(Spree::Promotion::Actions::CreateAdjustment)
-      expect(first_action.calculator.class).to eq(Spree::Calculator::FlatRate)
+      expect(first_action.class).to eq(Solidus::Promotion::Actions::CreateAdjustment)
+      expect(first_action.calculator.class).to eq(Solidus::Calculator::FlatRate)
       expect(first_action.calculator.preferred_amount).to eq(5)
     end
 
     context 'creating a promotion with promotion action that has a calculator with complex preferences' do
       before do
-        class ComplexCalculator < Spree::Calculator
+        class ComplexCalculator < Solidus::Calculator
           preference :amount, :decimal
           preference :currency, :string
           preference :mapping, :hash

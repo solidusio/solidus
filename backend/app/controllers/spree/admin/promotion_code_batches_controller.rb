@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module Admin
     class PromotionCodeBatchesController < ResourceController
-      belongs_to 'spree/promotion'
+      belongs_to 'solidus/promotion'
 
       create.after :build_promotion_code_batch
 
       def download
         require "csv"
 
-        @promotion_code_batch = Spree::PromotionCodeBatch.find(
+        @promotion_code_batch = Solidus::PromotionCodeBatch.find(
           params[:promotion_code_batch_id]
         )
 

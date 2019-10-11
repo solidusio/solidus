@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module Admin
     class VariantsIncludingMasterController < VariantsController
       def model_class
-        Spree::Variant
+        Solidus::Variant
       end
 
       def object_name

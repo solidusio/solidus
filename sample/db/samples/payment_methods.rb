@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-Spree::PaymentMethod::BogusCreditCard.create!(
+Solidus::PaymentMethod::BogusCreditCard.create!(
   {
     name: "Credit Card",
     description: "Bogus payment gateway",
@@ -8,7 +8,7 @@ Spree::PaymentMethod::BogusCreditCard.create!(
   }
 )
 
-Spree::PaymentMethod::Check.create!(
+Solidus::PaymentMethod::Check.create!(
   {
     name: "Check",
     description: "Pay by check.",

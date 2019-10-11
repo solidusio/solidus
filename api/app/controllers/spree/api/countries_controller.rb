@@ -1,18 +1,18 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module Api
-    class CountriesController < Spree::Api::BaseController
+    class CountriesController < Solidus::Api::BaseController
       skip_before_action :authenticate_user
 
       def index
-        @countries = Spree::Country.
+        @countries = Solidus::Country.
           accessible_by(current_ability, :read).
           ransack(params[:q]).
           result.
           order('name ASC')
 
-        country = Spree::Country.order("updated_at ASC").last
+        country = Solidus::Country.order("updated_at ASC").last
 
         if stale?(country)
           @countries = paginate(@countries)
@@ -21,7 +21,7 @@ module Spree
       end
 
       def show
-        @country = Spree::Country.accessible_by(current_ability, :read).find(params[:id])
+        @country = Solidus::Country.accessible_by(current_ability, :read).find(params[:id])
         respond_with(@country)
       end
     end

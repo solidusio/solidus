@@ -2,14 +2,14 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::OrderCancellations do
+RSpec.describe Solidus::OrderCancellations do
   describe "#cancel_unit" do
     subject { described_class.new(order).cancel_unit(inventory_unit) }
     let(:order) { create(:shipped_order, line_items_count: 1) }
     let(:inventory_unit) { order.inventory_units.first }
 
     it "creates a UnitCancel record" do
-      expect { subject }.to change { Spree::UnitCancel.count }.by(1)
+      expect { subject }.to change { Solidus::UnitCancel.count }.by(1)
       expect(subject.inventory_unit).to eq inventory_unit
     end
 
@@ -27,7 +27,7 @@ RSpec.describe Spree::OrderCancellations do
 
     context "when a reason is not specified" do
       it "sets a default reason on the UnitCancel" do
-        expect(subject.reason).to eq Spree::UnitCancel::DEFAULT_REASON
+        expect(subject.reason).to eq Solidus::UnitCancel::DEFAULT_REASON
       end
     end
 
@@ -35,7 +35,7 @@ RSpec.describe Spree::OrderCancellations do
       subject { order.cancellations.cancel_unit(inventory_unit, whodunnit: "some automated system") }
 
       it "sets the user on the UnitCancel and print a deprecation" do
-        expect(Spree::Deprecation).to receive(:warn)
+        expect(Solidus::Deprecation).to receive(:warn)
         expect(subject.created_by).to eq("some automated system")
       end
     end
@@ -65,16 +65,16 @@ RSpec.describe Spree::OrderCancellations do
     subject { described_class.new(order).reimburse_units(inventory_units, created_by: created_by_user) }
     let(:order) { create(:shipped_order, line_items_count: 2) }
     let(:inventory_units) { order.inventory_units }
-    let!(:default_refund_reason) { Spree::RefundReason.find_or_create_by!(name: Spree::RefundReason::RETURN_PROCESSING_REASON, mutable: false) }
+    let!(:default_refund_reason) { Solidus::RefundReason.find_or_create_by!(name: Solidus::RefundReason::RETURN_PROCESSING_REASON, mutable: false) }
     let(:created_by_user) { create(:user, email: 'user@email.com') }
 
     it "creates and performs a reimbursement" do
-      expect { subject }.to change { Spree::Reimbursement.count }.by(1)
+      expect { subject }.to change { Solidus::Reimbursement.count }.by(1)
       expect(subject.refunds.size).to eq 1
     end
 
     it "creates return items for the inventory units and accepts them" do
-      expect { subject }.to change { Spree::ReturnItem.count }.by(inventory_units.count)
+      expect { subject }.to change { Solidus::ReturnItem.count }.by(inventory_units.count)
 
       return_items = subject.return_items
       expect(return_items.map(&:acceptance_status)).to all eq "accepted"
@@ -90,11 +90,11 @@ RSpec.describe Spree::OrderCancellations do
     let(:shipment) { inventory_unit.shipment }
 
     it "creates a UnitCancel record" do
-      expect { subject }.to change { Spree::UnitCancel.count }.by(1)
+      expect { subject }.to change { Solidus::UnitCancel.count }.by(1)
 
-      unit_cancel = Spree::UnitCancel.last
+      unit_cancel = Solidus::UnitCancel.last
       expect(unit_cancel.inventory_unit).to eq inventory_unit
-      expect(unit_cancel.reason).to eq Spree::UnitCancel::SHORT_SHIP
+      expect(unit_cancel.reason).to eq Solidus::UnitCancel::SHORT_SHIP
     end
 
     it "cancels the inventory unit" do
@@ -118,7 +118,7 @@ RSpec.describe Spree::OrderCancellations do
 
       let(:quantity) { 4 }
       let!(:order) { create(:order_with_line_items, line_items_attributes: [{ quantity: quantity }]) }
-      let(:inventory_units) { Spree::InventoryUnit.find(order.line_items.first.inventory_units.pluck(:id)) }
+      let(:inventory_units) { Solidus::InventoryUnit.find(order.line_items.first.inventory_units.pluck(:id)) }
 
       it "adjusts the order" do
         expect { subject }.to change { order.reload.total }.by(-40.0)
@@ -127,7 +127,7 @@ RSpec.describe Spree::OrderCancellations do
 
     it "sends a cancellation email" do
       mail_double = double
-      expect(Spree::OrderMailer).to receive(:inventory_cancellation_email).with(order, [inventory_unit]).and_return(mail_double)
+      expect(Solidus::OrderMailer).to receive(:inventory_cancellation_email).with(order, [inventory_unit]).and_return(mail_double)
       expect(mail_double).to receive(:deliver_later)
       subject
     end
@@ -143,7 +143,7 @@ RSpec.describe Spree::OrderCancellations do
       after { described_class.send_cancellation_mailer = @original_send_boolean }
 
       it "does not send a cancellation email" do
-        expect(Spree::OrderMailer).not_to receive(:inventory_cancellation_email)
+        expect(Solidus::OrderMailer).not_to receive(:inventory_cancellation_email)
         subject
       end
     end
@@ -154,8 +154,8 @@ RSpec.describe Spree::OrderCancellations do
       let(:user) { order.user }
 
       it "sets the user on the UnitCancel" do
-        expect { subject }.to change { Spree::UnitCancel.count }.by(1)
-        expect(Spree::UnitCancel.last.created_by).to eq("some automated system")
+        expect { subject }.to change { Solidus::UnitCancel.count }.by(1)
+        expect(Solidus::UnitCancel.last.created_by).to eq("some automated system")
       end
     end
 
@@ -165,10 +165,10 @@ RSpec.describe Spree::OrderCancellations do
       let(:user) { order.user }
 
       it "sets the user on the UnitCancel and raises a deprecation # WARNING: " do
-        expect(Spree::Deprecation).to receive(:warn)
+        expect(Solidus::Deprecation).to receive(:warn)
 
-        expect { subject }.to change { Spree::UnitCancel.count }.by(1)
-        expect(Spree::UnitCancel.last.created_by).to eq("some automated system")
+        expect { subject }.to change { Solidus::UnitCancel.count }.by(1)
+        expect(Solidus::UnitCancel.last.created_by).to eq("some automated system")
       end
     end
 

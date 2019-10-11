@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module Api
-    class TaxonomiesController < Spree::Api::BaseController
+    class TaxonomiesController < Solidus::Api::BaseController
       def index
         @taxonomies = paginate(taxonomies)
         respond_with(@taxonomies)
@@ -17,13 +17,13 @@ module Spree
 
       # Because JSTree wants parameters in a *slightly* different format
       def jstree
-        Spree::Deprecation.warn("Please don't use `/api/taxonomies/:taxonomy_id/jstree` endpoint. It is deprecated and will be removed in the next future.", caller)
+        Solidus::Deprecation.warn("Please don't use `/api/taxonomies/:taxonomy_id/jstree` endpoint. It is deprecated and will be removed in the next future.", caller)
         show
       end
 
       def create
         authorize! :create, Taxonomy
-        @taxonomy = Spree::Taxonomy.new(taxonomy_params)
+        @taxonomy = Solidus::Taxonomy.new(taxonomy_params)
         if @taxonomy.save
           respond_with(@taxonomy, status: 201, default_template: :show)
         else
@@ -58,7 +58,7 @@ module Spree
       end
 
       def taxonomy
-        @taxonomy ||= Spree::Taxonomy.accessible_by(current_ability, :read).find(params[:id])
+        @taxonomy ||= Solidus::Taxonomy.accessible_by(current_ability, :read).find(params[:id])
       end
 
       def taxonomy_params

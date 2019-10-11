@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module Stock
     module LocationSorter
       # Stock location sorters are used to determine the order in which
@@ -13,13 +13,13 @@ module Spree
       #   implement {#sort}.
       class Base
         # @!attribute [r] stock_locations
-        #   @return [Enumerable<Spree::StockLocation>]
+        #   @return [Enumerable<Solidus::StockLocation>]
         #     a collection of locations to sort
         attr_reader :stock_locations
 
         # Initializes the stock location sorter.
         #
-        # @param stock_locations [Enumerable<Spree::StockLocation>]
+        # @param stock_locations [Enumerable<Solidus::StockLocation>]
         #   a collection of locations to sort
         def initialize(stock_locations)
           @stock_locations = stock_locations
@@ -27,7 +27,7 @@ module Spree
 
         # Sorts the stock locations.
         #
-        # @return [Enumerable<Spree::StockLocation>]
+        # @return [Enumerable<Solidus::StockLocation>]
         #   a collection of sorted stock locations
         def sort
           raise NotImplementedError

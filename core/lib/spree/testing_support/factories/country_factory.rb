@@ -3,7 +3,7 @@
 require 'carmen'
 
 FactoryBot.define do
-  factory :country, class: 'Spree::Country' do
+  factory :country, class: 'Solidus::Country' do
     iso { 'US' }
 
     transient do

@@ -4,7 +4,7 @@ require 'rails_helper'
 require 'spree/testing_support/factories/zone_factory'
 
 RSpec.describe 'zone factory' do
-  let(:factory_class) { Spree::Zone }
+  let(:factory_class) { Solidus::Zone }
 
   describe 'zone' do
     let(:factory) { :zone }

@@ -2,13 +2,13 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::Core::StockConfiguration do
+RSpec.describe Solidus::Core::StockConfiguration do
   describe '#coordinator_class' do
     let(:stock_configuration) { described_class.new }
     subject { stock_configuration.coordinator_class }
 
-    it "returns Spree::Stock::Coordinator" do
-      is_expected.to be ::Spree::Stock::SimpleCoordinator
+    it "returns Solidus::Stock::Coordinator" do
+      is_expected.to be ::Solidus::Stock::SimpleCoordinator
     end
 
     context "with another constant name assiged" do
@@ -25,8 +25,8 @@ RSpec.describe Spree::Core::StockConfiguration do
     let(:stock_configuration) { described_class.new }
     subject { stock_configuration.estimator_class }
 
-    it "returns Spree::Stock::Estimator" do
-      is_expected.to be ::Spree::Stock::Estimator
+    it "returns Solidus::Stock::Estimator" do
+      is_expected.to be ::Solidus::Stock::Estimator
     end
 
     context "with another constant name assiged" do
@@ -43,8 +43,8 @@ RSpec.describe Spree::Core::StockConfiguration do
     let(:stock_configuration) { described_class.new }
     subject { stock_configuration.location_filter_class }
 
-    it "returns Spree::Stock::LocationFilter::Active" do
-      is_expected.to be ::Spree::Stock::LocationFilter::Active
+    it "returns Solidus::Stock::LocationFilter::Active" do
+      is_expected.to be ::Solidus::Stock::LocationFilter::Active
     end
 
     context "with another constant name assiged" do
@@ -61,8 +61,8 @@ RSpec.describe Spree::Core::StockConfiguration do
     let(:stock_configuration) { described_class.new }
     subject { stock_configuration.location_sorter_class }
 
-    it "returns Spree::Stock::LocationSorter::Unsorted" do
-      is_expected.to be ::Spree::Stock::LocationSorter::Unsorted
+    it "returns Solidus::Stock::LocationSorter::Unsorted" do
+      is_expected.to be ::Solidus::Stock::LocationSorter::Unsorted
     end
 
     context "with another constant name assiged" do
@@ -79,8 +79,8 @@ RSpec.describe Spree::Core::StockConfiguration do
     let(:stock_configuration) { described_class.new }
     subject { stock_configuration.allocator_class }
 
-    it "returns Spree::Stock::Allocator::OnHandFirst" do
-      is_expected.to be ::Spree::Stock::Allocator::OnHandFirst
+    it "returns Solidus::Stock::Allocator::OnHandFirst" do
+      is_expected.to be ::Solidus::Stock::Allocator::OnHandFirst
     end
 
     context "with another constant name assiged" do

@@ -3,7 +3,7 @@
 require 'rails_helper'
 require 'shared_examples/calculator_shared_examples'
 
-module Spree
+module Solidus
   module Calculator::Shipping
     RSpec.describe FlatRate, type: :model do
       subject { Calculator::Shipping::FlatRate.new(preferred_amount: 4.00) }

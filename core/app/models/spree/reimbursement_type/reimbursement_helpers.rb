@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module ReimbursementType::ReimbursementHelpers
     # Ordered list of payment methods that are valid for the reimbursement
     # type to use for reimbursing. Leaving this nil allows anything.
@@ -34,7 +34,7 @@ module Spree
       refund = reimbursement.refunds.build({
         payment: payment,
         amount: amount,
-        reason: Spree::RefundReason.return_processing_reason
+        reason: Solidus::RefundReason.return_processing_reason
       })
 
       simulate ? refund.readonly! : refund.save!
@@ -51,10 +51,10 @@ module Spree
     end
 
     def create_creditable(reimbursement, unpaid_amount, created_by:)
-      Spree::Reimbursement::Credit.default_creditable_class.new(
+      Solidus::Reimbursement::Credit.default_creditable_class.new(
         user: reimbursement.order.user,
         amount: unpaid_amount,
-        category: Spree::StoreCreditCategory.reimbursement_category(reimbursement),
+        category: Solidus::StoreCreditCategory.reimbursement_category(reimbursement),
         created_by: created_by,
         memo: "Refund for uncreditable payments on order #{reimbursement.order.number}",
         currency: reimbursement.order.currency

@@ -1,4 +1,4 @@
-<% @taxons = @taxon && @taxon.parent ? @taxon.parent.children : Spree::Taxon.roots %>
+<% @taxons = @taxon && @taxon.parent ? @taxon.parent.children : Solidus::Taxon.roots %>
 <%= form_tag spree.products_path, method: :get do %>
   <% cache [I18n.locale, @taxons] do %>
     <%= select_tag :taxon,

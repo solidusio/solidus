@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::PaymentMethod::Check do
+RSpec.describe Solidus::PaymentMethod::Check do
   let(:order) { create(:order) }
   subject { described_class.new }
 

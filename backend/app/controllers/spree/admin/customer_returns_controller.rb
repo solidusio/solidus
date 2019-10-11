@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module Admin
     class CustomerReturnsController < ResourceController
-      helper 'spree/admin/reimbursement_type'
-      belongs_to 'spree/order', find_by: :number
+      helper 'solidus/admin/reimbursement_type'
+      belongs_to 'solidus/order', find_by: :number
 
       before_action :parent # ensure order gets loaded to support our pseudo parent-child relationship
       before_action :load_form_data, only: [:new, :edit]
@@ -33,16 +33,16 @@ module Spree
       end
 
       def build_resource
-        Spree::CustomerReturn.new
+        Solidus::CustomerReturn.new
       end
 
       def find_resource
-        Spree::CustomerReturn.accessible_by(current_ability, :read).find(params[:id])
+        Solidus::CustomerReturn.accessible_by(current_ability, :read).find(params[:id])
       end
 
       def collection
         parent # trigger loading the order
-        @collection ||= Spree::ReturnItem
+        @collection ||= Solidus::ReturnItem
           .accessible_by(current_ability, :read)
           .where(inventory_unit_id: @order.inventory_units.pluck(:id))
           .map(&:customer_return).uniq.compact
@@ -56,7 +56,7 @@ module Spree
       end
 
       def load_return_reasons
-        @reasons = Spree::ReturnReason.reasons_for_return_items(@customer_return.return_items)
+        @reasons = Solidus::ReturnReason.reasons_for_return_items(@customer_return.return_items)
       end
 
       def permitted_resource_params
@@ -67,7 +67,7 @@ module Spree
         return_items_params = permitted_resource_params.delete(:return_items_attributes).values
         @customer_return.return_items = return_items_params.map do |item_params|
           next unless item_params.delete('returned') == '1'
-          return_item = item_params[:id] ? Spree::ReturnItem.find(item_params[:id]) : Spree::ReturnItem.new
+          return_item = item_params[:id] ? Solidus::ReturnItem.find(item_params[:id]) : Solidus::ReturnItem.new
           return_item.assign_attributes(item_params)
 
           return_item.skip_customer_return_processing = true

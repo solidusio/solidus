@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::StoreSelector::Legacy do
+RSpec.describe Solidus::StoreSelector::Legacy do
   describe "#store" do
     subject { described_class.new(request).store }
 

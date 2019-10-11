@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module Admin
     class OptionTypesController < ResourceController
       before_action :setup_new_option_value, only: :edit
 
       def update_values_positions
         params[:positions].each do |id, index|
-          Spree::OptionValue.where(id: id).update_all(position: index)
+          Solidus::OptionValue.where(id: id).update_all(position: index)
         end
 
         respond_to do |format|
@@ -22,7 +22,7 @@ module Spree
       end
 
       def load_product
-        @product = Spree::Product.find_by_param!(params[:product_id])
+        @product = Solidus::Product.find_by_param!(params[:product_id])
       end
 
       def setup_new_option_value
@@ -31,9 +31,9 @@ module Spree
 
       def set_available_option_types
         @available_option_types = if @product.option_type_ids.any?
-          Spree::OptionType.where('id NOT IN (?)', @product.option_type_ids)
+          Solidus::OptionType.where('id NOT IN (?)', @product.option_type_ids)
         else
-          Spree::OptionType.all
+          Solidus::OptionType.all
         end
       end
     end

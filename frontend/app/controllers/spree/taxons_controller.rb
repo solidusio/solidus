@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-module Spree
-  class TaxonsController < Spree::StoreController
-    helper 'spree/products', 'spree/taxon_filters'
+module Solidus
+  class TaxonsController < Solidus::StoreController
+    helper 'solidus/products', 'solidus/taxon_filters'
 
     before_action :load_taxon, only: [:show]
 
@@ -11,13 +11,13 @@ module Spree
     def show
       @searcher = build_searcher(params.merge(taxon: @taxon.id, include_images: true))
       @products = @searcher.retrieve_products
-      @taxonomies = Spree::Taxonomy.includes(root: :children)
+      @taxonomies = Solidus::Taxonomy.includes(root: :children)
     end
 
     private
 
     def load_taxon
-      @taxon = Spree::Taxon.find_by!(permalink: params[:id])
+      @taxon = Solidus::Taxon.find_by!(permalink: params[:id])
     end
 
     def accurate_title

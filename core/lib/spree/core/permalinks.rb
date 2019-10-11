@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module Core
     module Permalinks
       extend ActiveSupport::Concern
@@ -64,4 +64,4 @@ module Spree
   end
 end
 
-ActiveRecord::Base.send :include, Spree::Core::Permalinks
+ActiveRecord::Base.send :include, Solidus::Core::Permalinks

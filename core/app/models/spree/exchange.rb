@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   class Exchange
     class UnableToCreateShipments < StandardError; end
     extend ActiveModel::Naming
@@ -17,13 +17,13 @@ module Spree
     end
 
     def display_amount
-      Spree::Money.new @reimbursement_objects.map(&:total).sum
+      Solidus::Money.new @reimbursement_objects.map(&:total).sum
     end
 
     def perform!
       begin
-        shipments = Spree::Config.stock.coordinator_class.new(@order, @reimbursement_objects.map(&:build_exchange_inventory_unit)).shipments
-      rescue Spree::Order::InsufficientStock
+        shipments = Solidus::Config.stock.coordinator_class.new(@order, @reimbursement_objects.map(&:build_exchange_inventory_unit)).shipments
+      rescue Solidus::Order::InsufficientStock
         raise UnableToCreateShipments.new("Could not generate shipments for all items. Out of stock?")
       end
       @order.shipments += shipments

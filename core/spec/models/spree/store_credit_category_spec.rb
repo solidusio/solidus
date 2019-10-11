@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::StoreCreditCategory, type: :model do
+RSpec.describe Solidus::StoreCreditCategory, type: :model do
   describe "#non_expiring?" do
     let(:store_credit_category) { build(:store_credit_category, name: category_name) }
 

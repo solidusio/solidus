@@ -2,9 +2,9 @@
 
 require 'rails_helper'
 
-module Spree::Stock
+module Solidus::Stock
   RSpec.describe Availability do
-    let(:variants) { Spree::Variant.all.to_a }
+    let(:variants) { Solidus::Variant.all.to_a }
     let(:infinity) { Float::INFINITY }
 
     let(:availability) { described_class.new(variants: variants) }
@@ -24,14 +24,14 @@ module Spree::Stock
           before { stock_item.set_count_on_hand(2) }
 
           it "returns the correct value" do
-            expect(subject).to eq(stock_location1.id => Spree::StockQuantities.new(variant => 2))
+            expect(subject).to eq(stock_location1.id => Solidus::StockQuantities.new(variant => 2))
           end
 
           context 'and backorderable false' do
             before { stock_item.update!(backorderable: false) }
 
             it "returns the correct value" do
-              expect(subject).to eq(stock_location1.id => Spree::StockQuantities.new(variant => 2))
+              expect(subject).to eq(stock_location1.id => Solidus::StockQuantities.new(variant => 2))
             end
           end
         end
@@ -40,7 +40,7 @@ module Spree::Stock
           before { stock_item.set_count_on_hand(0) }
 
           it "returns zero on_hand" do
-            expect(subject).to eq(stock_location1.id => Spree::StockQuantities.new(variant => 0))
+            expect(subject).to eq(stock_location1.id => Solidus::StockQuantities.new(variant => 0))
           end
         end
 
@@ -48,7 +48,7 @@ module Spree::Stock
           before { stock_item.set_count_on_hand(-1) }
 
           it "returns zero on_hand" do
-            expect(subject).to eq(stock_location1.id => Spree::StockQuantities.new(variant => 0))
+            expect(subject).to eq(stock_location1.id => Solidus::StockQuantities.new(variant => 0))
           end
         end
 
@@ -72,7 +72,7 @@ module Spree::Stock
           before { variant.update!(track_inventory: false) }
 
           it "has infinite inventory " do
-            expect(subject).to eq(stock_location1.id => Spree::StockQuantities.new(variant => infinity))
+            expect(subject).to eq(stock_location1.id => Solidus::StockQuantities.new(variant => infinity))
           end
         end
 
@@ -80,7 +80,7 @@ module Spree::Stock
           before { stub_spree_preferences(track_inventory_levels: false) }
 
           it "has infinite inventory " do
-            expect(subject).to eq(stock_location1.id => Spree::StockQuantities.new(variant => infinity))
+            expect(subject).to eq(stock_location1.id => Solidus::StockQuantities.new(variant => infinity))
           end
         end
       end
@@ -112,17 +112,17 @@ module Spree::Stock
 
           context 'and positive count_on_hand' do
             before { stock_item.set_count_on_hand(2) }
-            it { is_expected.to eq(stock_location1.id => Spree::StockQuantities.new(variant => infinity)) }
+            it { is_expected.to eq(stock_location1.id => Solidus::StockQuantities.new(variant => infinity)) }
           end
 
           context 'and 0 count_on_hand' do
             before { stock_item.set_count_on_hand(0) }
-            it { is_expected.to eq(stock_location1.id => Spree::StockQuantities.new(variant => infinity)) }
+            it { is_expected.to eq(stock_location1.id => Solidus::StockQuantities.new(variant => infinity)) }
           end
 
           context 'and negative count_on_hand' do
             before { stock_item.set_count_on_hand(-1) }
-            it { is_expected.to eq(stock_location1.id => Spree::StockQuantities.new(variant => infinity)) }
+            it { is_expected.to eq(stock_location1.id => Solidus::StockQuantities.new(variant => infinity)) }
           end
         end
 

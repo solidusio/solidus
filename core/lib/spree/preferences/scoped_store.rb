@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Spree::Preferences
+module Solidus::Preferences
   class ScopedStore
     def initialize(prefix, suffix = nil)
       @prefix = prefix
@@ -8,7 +8,7 @@ module Spree::Preferences
     end
 
     def store
-      Spree::Preferences::Store.instance
+      Solidus::Preferences::Store.instance
     end
 
     def fetch(key, &block)

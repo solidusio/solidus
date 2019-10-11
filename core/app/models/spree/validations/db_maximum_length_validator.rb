@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module Validations
     ##
     # Validates a field based on the maximum length of the underlying DB field, if there is one.

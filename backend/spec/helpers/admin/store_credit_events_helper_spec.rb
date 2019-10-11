@@ -2,14 +2,14 @@
 
 require 'spec_helper'
 
-describe Spree::Admin::StoreCreditEventsHelper, type: :helper do
+describe Solidus::Admin::StoreCreditEventsHelper, type: :helper do
   describe "#store_credit_event_admin_action_name" do
     let(:store_credit_event) { create(:store_credit_event, action: action) }
 
     subject { store_credit_event_admin_action_name(store_credit_event) }
 
     context "capture event" do
-      let(:action) { Spree::StoreCredit::CAPTURE_ACTION }
+      let(:action) { Solidus::StoreCredit::CAPTURE_ACTION }
 
       it "returns the action's display text" do
         expect(subject).to eq "Used"
@@ -17,7 +17,7 @@ describe Spree::Admin::StoreCreditEventsHelper, type: :helper do
     end
 
     context "authorize event" do
-      let(:action) { Spree::StoreCredit::AUTHORIZE_ACTION }
+      let(:action) { Solidus::StoreCredit::AUTHORIZE_ACTION }
 
       it "returns the action's display text" do
         expect(subject).to eq "Authorized"
@@ -25,7 +25,7 @@ describe Spree::Admin::StoreCreditEventsHelper, type: :helper do
     end
 
     context "eligible event" do
-      let(:action) { Spree::StoreCredit::ELIGIBLE_ACTION }
+      let(:action) { Solidus::StoreCredit::ELIGIBLE_ACTION }
 
       it "returns the action's display text" do
         expect(subject).to eq "Eligibility Verified"
@@ -33,7 +33,7 @@ describe Spree::Admin::StoreCreditEventsHelper, type: :helper do
     end
 
     context "allocation event" do
-      let(:action) { Spree::StoreCredit::ALLOCATION_ACTION }
+      let(:action) { Solidus::StoreCredit::ALLOCATION_ACTION }
 
       it "returns the action's display text" do
         expect(subject).to eq "Added"
@@ -41,7 +41,7 @@ describe Spree::Admin::StoreCreditEventsHelper, type: :helper do
     end
 
     context "void event" do
-      let(:action) { Spree::StoreCredit::VOID_ACTION }
+      let(:action) { Solidus::StoreCredit::VOID_ACTION }
 
       it "returns the action's display text" do
         expect(subject).to eq "Voided"
@@ -49,7 +49,7 @@ describe Spree::Admin::StoreCreditEventsHelper, type: :helper do
     end
 
     context "credit event" do
-      let(:action) { Spree::StoreCredit::CREDIT_ACTION }
+      let(:action) { Solidus::StoreCredit::CREDIT_ACTION }
 
       it "returns the action's display text" do
         expect(subject).to eq "Credit"
@@ -90,7 +90,7 @@ describe Spree::Admin::StoreCreditEventsHelper, type: :helper do
       let(:originator) { create(:store_credit) }
 
       it "raises an error" do
-        expect { subject }.to raise_error(RuntimeError, "Unexpected originator type Spree::StoreCredit")
+        expect { subject }.to raise_error(RuntimeError, "Unexpected originator type Solidus::StoreCredit")
       end
     end
   end

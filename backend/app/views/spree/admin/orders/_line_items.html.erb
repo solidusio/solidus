@@ -10,10 +10,10 @@
 
   <thead>
     <tr>
-      <th colspan="2"><%= Spree::Product.human_attribute_name(:name) %></th>
-      <th><%= Spree::LineItem.human_attribute_name(:price) %></th>
-      <th><%= Spree::LineItem.human_attribute_name(:quantity) %></th>
-      <th><%= Spree::LineItem.human_attribute_name(:total) %></th>
+      <th colspan="2"><%= Solidus::Product.human_attribute_name(:name) %></th>
+      <th><%= Solidus::LineItem.human_attribute_name(:price) %></th>
+      <th><%= Solidus::LineItem.human_attribute_name(:quantity) %></th>
+      <th><%= Solidus::LineItem.human_attribute_name(:total) %></th>
       <th class="orders-actions actions" data-hook="admin_order_form_line_items_header_actions">&nbsp;</th>
     </tr>
   </thead>

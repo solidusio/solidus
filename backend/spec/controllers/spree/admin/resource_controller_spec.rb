@@ -2,9 +2,9 @@
 
 require 'spec_helper'
 
-module Spree
+module Solidus
   module Admin
-    class WidgetsController < Spree::Admin::ResourceController
+    class WidgetsController < Solidus::Admin::ResourceController
       prepend_view_path('spec/test_views')
 
       def model_class
@@ -14,11 +14,11 @@ module Spree
   end
 end
 
-describe Spree::Admin::WidgetsController, type: :controller do
+describe Solidus::Admin::WidgetsController, type: :controller do
   stub_authorization!
 
   after(:all) do
-    # Spree::Core::Engine.routes.reload_routes!
+    # Solidus::Core::Engine.routes.reload_routes!
     Rails.application.reload_routes!
   end
 
@@ -43,7 +43,7 @@ describe Spree::Admin::WidgetsController, type: :controller do
   end
 
   before do
-    Spree::Core::Engine.routes.draw do
+    Solidus::Core::Engine.routes.draw do
       namespace :admin do
         resources :widgets do
           post :update_positions, on: :member

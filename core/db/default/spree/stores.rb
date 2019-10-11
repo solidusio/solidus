@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-unless Spree::Store.where(code: 'sample-store').exists?
-  Spree::Store.create!(
+unless Solidus::Store.where(code: 'sample-store').exists?
+  Solidus::Store.create!(
     name: "Sample Store",
     code: "sample-store",
     url: "example.com",

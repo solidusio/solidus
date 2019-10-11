@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module Admin
-    class GeneralSettingsController < Spree::Admin::BaseController
+    class GeneralSettingsController < Solidus::Admin::BaseController
       def edit
         redirect_to admin_stores_path
       end

@@ -2,10 +2,10 @@
 
 require 'spec_helper'
 
-module Spree
+module Solidus
   describe Api::CouponCodesController, type: :request do
     let(:current_api_user) do
-      user = Spree.user_class.new(email: "spree@example.com")
+      user = Solidus.user_class.new(email: "spree@example.com")
       user.generate_spree_api_key!
       user
     end

@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   # An order's planned shipments including tracking and cost.
   #
-  class Shipment < Spree::Base
-    belongs_to :order, class_name: 'Spree::Order', touch: true, inverse_of: :shipments, optional: true
-    belongs_to :stock_location, class_name: 'Spree::StockLocation', optional: true
+  class Shipment < Solidus::Base
+    belongs_to :order, class_name: 'Solidus::Order', touch: true, inverse_of: :shipments, optional: true
+    belongs_to :stock_location, class_name: 'Solidus::StockLocation', optional: true
 
     has_many :adjustments, as: :adjustable, inverse_of: :adjustable, dependent: :delete_all
     has_many :inventory_units, dependent: :destroy, inverse_of: :shipment
@@ -34,12 +34,12 @@ module Spree
     scope :with_state, ->(*s) { where(state: s) }
     # sort by most recent shipped_at, falling back to created_at. add "id desc" to make specs that involve this scope more deterministic.
     scope :reverse_chronological, -> {
-      order(Arel.sql("coalesce(#{Spree::Shipment.table_name}.shipped_at, #{Spree::Shipment.table_name}.created_at) desc"), id: :desc)
+      order(Arel.sql("coalesce(#{Solidus::Shipment.table_name}.shipped_at, #{Solidus::Shipment.table_name}.created_at) desc"), id: :desc)
     }
 
-    scope :by_store, ->(store) { joins(:order).merge(Spree::Order.by_store(store)) }
+    scope :by_store, ->(store) { joins(:order).merge(Solidus::Order.by_store(store)) }
 
-    include ::Spree::Config.state_machines.shipment
+    include ::Solidus::Config.state_machines.shipment
 
     self.whitelisted_ransackable_associations = ['order']
     self.whitelisted_ransackable_attributes = ['number']
@@ -53,7 +53,7 @@ module Spree
     def can_transition_from_pending_to_ready?
       order.can_ship? &&
         inventory_units.all? { |iu| iu.shipped? || iu.allow_ship? || iu.canceled? } &&
-        (order.paid? || !Spree::Config[:require_payment_to_ship])
+        (order.paid? || !Solidus::Config[:require_payment_to_ship])
     end
 
     def can_transition_from_canceled_to_ready?
@@ -65,14 +65,14 @@ module Spree
       :cost, :amount, :discounted_cost, :final_price, :item_cost,
       :total, :total_before_tax,
     )
-    deprecate display_discounted_cost: :display_total_before_tax, deprecator: Spree::Deprecation
-    deprecate display_final_price: :display_total, deprecator: Spree::Deprecation
+    deprecate display_discounted_cost: :display_total_before_tax, deprecator: Solidus::Deprecation
+    deprecate display_final_price: :display_total, deprecator: Solidus::Deprecation
     alias_attribute :amount, :cost
 
     def add_shipping_method(shipping_method, selected = false)
       shipping_rates.create(shipping_method: shipping_method, selected: selected, cost: cost)
     end
-    deprecate :add_shipping_method, deprecator: Spree::Deprecation
+    deprecate :add_shipping_method, deprecator: Solidus::Deprecation
 
     def after_cancel
       manifest.each { |item| manifest_restock(item) }
@@ -87,15 +87,15 @@ module Spree
     end
 
     def currency
-      order ? order.currency : Spree::Config[:currency]
+      order ? order.currency : Solidus::Config[:currency]
     end
 
     def discounted_cost
       cost + promo_total
     end
-    deprecate discounted_cost: :total_before_tax, deprecator: Spree::Deprecation
+    deprecate discounted_cost: :total_before_tax, deprecator: Solidus::Deprecation
     alias discounted_amount discounted_cost
-    deprecate discounted_amount: :total_before_tax, deprecator: Spree::Deprecation
+    deprecate discounted_amount: :total_before_tax, deprecator: Solidus::Deprecation
 
     # @return [BigDecimal] the amount of this shipment, taking into
     #   consideration all its adjustments.
@@ -103,7 +103,7 @@ module Spree
       cost + adjustment_total
     end
     alias final_price total
-    deprecate final_price: :total, deprecator: Spree::Deprecation
+    deprecate final_price: :total, deprecator: Solidus::Deprecation
 
     # @return [BigDecimal] the amount of this item, taking into consideration
     #   all non-tax adjustments.
@@ -117,13 +117,13 @@ module Spree
       total_before_tax - included_tax_total
     end
     alias pre_tax_amount total_excluding_vat
-    deprecate pre_tax_amount: :total_excluding_vat, deprecator: Spree::Deprecation
+    deprecate pre_tax_amount: :total_excluding_vat, deprecator: Solidus::Deprecation
 
     def total_with_items
       total + item_cost
     end
     alias final_price_with_items total_with_items
-    deprecate final_price_with_items: :total_with_items, deprecator: Spree::Deprecation
+    deprecate final_price_with_items: :total_with_items, deprecator: Solidus::Deprecation
 
     def editable_by?(_user)
       !shipped?
@@ -164,7 +164,7 @@ module Spree
       # StockEstimator.new assigment below will replace the current shipping_method
       original_shipping_method_id = shipping_method.try!(:id)
 
-      new_rates = Spree::Config.stock.estimator_class.new.shipping_rates(to_package)
+      new_rates = Solidus::Config.stock.estimator_class.new.shipping_rates(to_package)
 
       # If one of the new rates matches the previously selected shipping
       # method, select that instead of the default provided by the estimator.
@@ -183,7 +183,7 @@ module Spree
     end
 
     def select_shipping_method(shipping_method)
-      estimator = Spree::Config.stock.estimator_class.new
+      estimator = Solidus::Config.stock.estimator_class.new
       rates = estimator.shipping_rates(to_package, false)
       rate = rates.detect { |r| r.shipping_method_id == shipping_method.id }
       rate.selected = true
@@ -195,7 +195,7 @@ module Spree
     end
 
     def manifest
-      @manifest ||= Spree::ShippingManifest.new(inventory_units: inventory_units).items
+      @manifest ||= Solidus::ShippingManifest.new(inventory_units: inventory_units).items
     end
 
     def selected_shipping_rate_id
@@ -321,10 +321,10 @@ module Spree
     end
 
     def update!(order_or_attrs)
-      if order_or_attrs.is_a?(Spree::Order)
-        Spree::Deprecation.warn "Calling Shipment#update! with an order to update the shipments state is deprecated. Please use Shipment#update_state instead."
+      if order_or_attrs.is_a?(Solidus::Order)
+        Solidus::Deprecation.warn "Calling Shipment#update! with an order to update the shipments state is deprecated. Please use Shipment#update_state instead."
         if order_or_attrs.object_id != order.object_id
-          Spree::Deprecation.warn "Additionally, update! is being passed an instance of order which isn't the same object as the shipment's order association"
+          Solidus::Deprecation.warn "Additionally, update! is being passed an instance of order which isn't the same object as the shipment's order association"
         end
         update_state
       else
@@ -333,14 +333,14 @@ module Spree
     end
 
     def transfer_to_location(variant, quantity, stock_location)
-      Spree::Deprecation.warn("Please use the Spree::FulfilmentChanger class instead of Spree::Shipment#transfer_to_location", caller)
+      Solidus::Deprecation.warn("Please use the Solidus::FulfilmentChanger class instead of Solidus::Shipment#transfer_to_location", caller)
       new_shipment = order.shipments.create!(stock_location: stock_location)
       transfer_to_shipment(variant, quantity, new_shipment)
     end
 
     def transfer_to_shipment(variant, quantity, shipment_to_transfer_to)
-      Spree::Deprecation.warn("Please use the Spree::FulfilmentChanger class instead of Spree::Shipment#transfer_to_location", caller)
-      Spree::FulfilmentChanger.new(
+      Solidus::Deprecation.warn("Please use the Solidus::FulfilmentChanger class instead of Solidus::Shipment#transfer_to_location", caller)
+      Solidus::FulfilmentChanger.new(
         current_shipment: self,
         desired_shipment: shipment_to_transfer_to,
         variant: variant,
@@ -353,7 +353,7 @@ module Spree
     end
 
     def address
-      Spree::Deprecation.warn("Calling Shipment#address is deprecated. Use Order#ship_address instead", caller)
+      Solidus::Deprecation.warn("Calling Shipment#address is deprecated. Use Order#ship_address instead", caller)
       order.ship_address if order
     end
 
@@ -361,7 +361,7 @@ module Spree
 
     def finalize_pending_inventory_units
       pending_units = inventory_units.select(&:pending?)
-      Spree::Stock::InventoryUnitsFinalizer.new(pending_units).run!
+      Solidus::Stock::InventoryUnitsFinalizer.new(pending_units).run!
     end
 
     def after_ship

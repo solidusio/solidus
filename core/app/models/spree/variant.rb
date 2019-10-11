@@ -2,7 +2,7 @@
 
 require 'discard'
 
-module Spree
+module Solidus
   # == Master Variant
   #
   # Every product has one master variant, which stores master price and SKU,
@@ -17,11 +17,11 @@ module Spree
   # have inventory units, but not option values. All other variants have
   # option values and may have inventory units. Sum of on_hand each variant's
   # inventory level determine "on_hand" level for the product.
-  class Variant < Spree::Base
+  class Variant < Solidus::Base
     acts_as_list scope: :product
 
     acts_as_paranoid
-    include Spree::ParanoiaDeprecations
+    include Solidus::ParanoiaDeprecations
 
     include Discard::Model
     self.discard_column = :deleted_at
@@ -34,10 +34,10 @@ module Spree
     end
 
     attr_writer :rebuild_vat_prices
-    include Spree::DefaultPrice
+    include Solidus::DefaultPrice
 
-    belongs_to :product, -> { with_deleted }, touch: true, class_name: 'Spree::Product', inverse_of: :variants, optional: false
-    belongs_to :tax_category, class_name: 'Spree::TaxCategory', optional: true
+    belongs_to :product, -> { with_deleted }, touch: true, class_name: 'Solidus::Product', inverse_of: :variants, optional: false
+    belongs_to :tax_category, class_name: 'Solidus::TaxCategory', optional: true
 
     delegate :name, :description, :slug, :available_on, :shipping_category_id,
              :meta_description, :meta_keywords, :shipping_category,
@@ -56,17 +56,17 @@ module Spree
     has_many :option_values_variants
     has_many :option_values, through: :option_values_variants
 
-    has_many :images, -> { order(:position) }, as: :viewable, dependent: :destroy, class_name: "Spree::Image"
+    has_many :images, -> { order(:position) }, as: :viewable, dependent: :destroy, class_name: "Solidus::Image"
 
     has_many :prices,
-      class_name: 'Spree::Price',
+      class_name: 'Solidus::Price',
       dependent: :destroy,
       inverse_of: :variant,
       autosave: true
 
     has_many :currently_valid_prices,
       -> { currently_valid },
-      class_name: 'Spree::Price',
+      class_name: 'Solidus::Price',
       dependent: :destroy,
       inverse_of: :variant,
       autosave: true
@@ -95,13 +95,13 @@ module Spree
     # a parameter, the scope is limited to variants that are in stock in the
     # provided stock locations.
     #
-    # If you want to also include backorderable variants see {Spree::Variant.suppliable}
+    # If you want to also include backorderable variants see {Solidus::Variant.suppliable}
     #
-    # @param stock_locations [Array<Spree::StockLocation>] the stock locations to check
+    # @param stock_locations [Array<Solidus::StockLocation>] the stock locations to check
     # @return [ActiveRecord::Relation]
     def self.in_stock(stock_locations = nil)
-      return all unless Spree::Config.track_inventory_levels
-      in_stock_variants = joins(:stock_items).where(Spree::StockItem.arel_table[:count_on_hand].gt(0).or(arel_table[:track_inventory].eq(false)))
+      return all unless Solidus::Config.track_inventory_levels
+      in_stock_variants = joins(:stock_items).where(Solidus::StockItem.arel_table[:count_on_hand].gt(0).or(arel_table[:track_inventory].eq(false)))
       if stock_locations.present?
         in_stock_variants = in_stock_variants.where(spree_stock_items: { stock_location_id: stock_locations.map(&:id) })
       end
@@ -115,11 +115,11 @@ module Spree
     #
     # @return [ActiveRecord::Relation]
     def self.suppliable
-      return all unless Spree::Config.track_inventory_levels
+      return all unless Solidus::Config.track_inventory_levels
       arel_conditions = [
         arel_table[:track_inventory].eq(false),
-        Spree::StockItem.arel_table[:count_on_hand].gt(0),
-        Spree::StockItem.arel_table[:backorderable].eq(true)
+        Solidus::StockItem.arel_table[:count_on_hand].gt(0),
+        Solidus::StockItem.arel_table[:backorderable].eq(true)
       ]
       joins(:stock_items).where(arel_conditions.inject(:or)).distinct
     end
@@ -134,8 +134,8 @@ module Spree
     # @param currency [String] the currency to filter by; defaults to Spree's default
     # @return [ActiveRecord::Relation]
     def self.active(currency = nil)
-      Spree::Deprecation.warn("`Variant.active(currency)` is deprecated. Please use `Variant.with_prices(pricing_options)` instead.", caller)
-      joins(:prices).where(deleted_at: nil).where('spree_prices.currency' => currency || Spree::Config[:currency]).where('spree_prices.amount IS NOT NULL')
+      Solidus::Deprecation.warn("`Variant.active(currency)` is deprecated. Please use `Variant.with_prices(pricing_options)` instead.", caller)
+      joins(:prices).where(deleted_at: nil).where('spree_prices.currency' => currency || Solidus::Config[:currency]).where('spree_prices.amount IS NOT NULL')
     end
 
     # Returns variants that have a price for the given pricing options
@@ -143,10 +143,10 @@ module Spree
     #
     # @param pricing_options A Pricing Options object as defined on the price selector class
     # @return [ActiveRecord::Relation]
-    def self.with_prices(pricing_options = Spree::Config.default_pricing_options)
+    def self.with_prices(pricing_options = Solidus::Config.default_pricing_options)
       where(
-        Spree::Price.
-          where(Spree::Variant.arel_table[:id].eq(Spree::Price.arel_table[:variant_id])).
+        Solidus::Price.
+          where(Solidus::Variant.arel_table[:id].eq(Solidus::Price.arel_table[:variant_id])).
           # This next clause should just be `where(pricing_options.search_arguments)`, but ActiveRecord
           # generates invalid SQL, so the SQL here is written manually.
           where(
@@ -158,7 +158,7 @@ module Spree
       )
     end
 
-    # @return [Spree::TaxCategory] the variant's tax category
+    # @return [Solidus::TaxCategory] the variant's tax category
     #
     # This returns the product's tax category if the tax category ID on the variant is nil. It looks
     # like an association, but really is an override.
@@ -172,7 +172,7 @@ module Spree
     # @param price [Any] the price to set
     # @return [Bignum]
     def cost_price=(price)
-      self[:cost_price] = Spree::LocalizedNumber.parse(price) if price.present?
+      self[:cost_price] = Solidus::LocalizedNumber.parse(price) if price.present?
     end
 
     # Sets the weight for the variant.
@@ -180,7 +180,7 @@ module Spree
     # @param weight [Any] the weight to set
     # @return [Bignum]
     def weight=(weight)
-      self[:weight] = Spree::LocalizedNumber.parse(weight) if weight.present?
+      self[:weight] = Solidus::LocalizedNumber.parse(weight) if weight.present?
     end
 
     # Counts the number of units currently on backorder for this variant.
@@ -192,7 +192,7 @@ module Spree
 
     # @return [Boolean] true if this variant can be backordered
     def is_backorderable?
-      Spree::Stock::Quantifier.new(self).backorderable?
+      Solidus::Stock::Quantifier.new(self).backorderable?
     end
 
     # Creates a sentence out of the variant's (sorted) option values.
@@ -250,7 +250,7 @@ module Spree
       # no option values on master
       return if is_master
 
-      option_type = Spree::OptionType.where(name: opt_name).first_or_initialize do |o|
+      option_type = Solidus::OptionType.where(name: opt_name).first_or_initialize do |o|
         o.presentation = opt_name
         o.save!
       end
@@ -267,7 +267,7 @@ module Spree
         end
       end
 
-      option_value = Spree::OptionValue.where(option_type_id: option_type.id, name: opt_value).first_or_initialize do |o|
+      option_value = Solidus::OptionValue.where(option_type_id: option_type.id, name: opt_value).first_or_initialize do |o|
         o.presentation = opt_value
         o.save!
       end
@@ -287,25 +287,25 @@ module Spree
     # Returns an instance of the globally configured variant price selector class for this variant.
     # It's cached so we don't create too many objects.
     #
-    # @return [Spree::Variant::PriceSelector] The default price selector class
+    # @return [Solidus::Variant::PriceSelector] The default price selector class
     def price_selector
-      @price_selector ||= Spree::Config.variant_price_selector_class.new(self)
+      @price_selector ||= Solidus::Config.variant_price_selector_class.new(self)
     end
 
     # Chooses an appropriate price for the given pricing options
     #
-    # @see Spree::Variant::PriceSelector#price_for
+    # @see Solidus::Variant::PriceSelector#price_for
     delegate :price_for, to: :price_selector
 
     # Returns the difference in price from the master variant
-    def price_difference_from_master(pricing_options = Spree::Config.default_pricing_options)
+    def price_difference_from_master(pricing_options = Solidus::Config.default_pricing_options)
       master_price = product.master.price_for(pricing_options)
       variant_price = price_for(pricing_options)
       return unless master_price && variant_price
       variant_price - master_price
     end
 
-    def price_same_as_master?(pricing_options = Spree::Config.default_pricing_options)
+    def price_same_as_master?(pricing_options = Solidus::Config.default_pricing_options)
       diff = price_difference_from_master(pricing_options)
       diff && diff.zero?
     end
@@ -314,11 +314,11 @@ module Spree
     #
     # @deprecated Please use #price_for(pricing_options) instead
     # @param currency [String] the desired currency
-    # @return [Spree::Price] the price in the desired currency
+    # @return [Solidus::Price] the price in the desired currency
     def price_in(currency)
       prices.currently_valid.find_by(currency: currency)
     end
-    deprecate price_in: :price_for, deprecator: Spree::Deprecation
+    deprecate price_in: :price_for, deprecator: Solidus::Deprecation
 
     # Fetches the price amount in the specified currency.
     #
@@ -328,7 +328,7 @@ module Spree
     def amount_in(currency)
       price_in(currency).try(:amount)
     end
-    deprecate amount_in: :price_for, deprecator: Spree::Deprecation
+    deprecate amount_in: :price_for, deprecator: Solidus::Deprecation
 
     # Generates a friendly name and sku string.
     #
@@ -354,14 +354,14 @@ module Spree
     # @param quantity [Fixnum] how many are desired
     # @return [Boolean] true if the desired quantity can be supplied
     def can_supply?(quantity = 1)
-      Spree::Stock::Quantifier.new(self).can_supply?(quantity)
+      Solidus::Stock::Quantifier.new(self).can_supply?(quantity)
     end
 
     # Fetches the on-hand quantity of the variant.
     #
     # @return [Fixnum] the number currently on-hand
     def total_on_hand
-      Spree::Stock::Quantifier.new(self).total_on_hand
+      Solidus::Stock::Quantifier.new(self).total_on_hand
     end
 
     # Shortcut method to determine if inventory tracking is enabled for this
@@ -370,26 +370,26 @@ module Spree
     #
     # @return [Boolean] true if inventory tracking is enabled
     def should_track_inventory?
-      track_inventory? && Spree::Config.track_inventory_levels
+      track_inventory? && Solidus::Config.track_inventory_levels
     end
 
     # Image that can be used for the variant.
     #
     # Will first search for images on the variant. If it doesn't find any,
     # it'll fallback to any variant image (unless +fallback+ is +false+) or to
-    # a new {Spree::Image}.
+    # a new {Solidus::Image}.
     # @param fallback [Boolean] whether or not we should fallback to an image
     #   not from this variant
-    # @return [Spree::Image] the image to display
+    # @return [Solidus::Image] the image to display
     def display_image(fallback: true)
-      Spree::Deprecation.warn('Spree::Variant#display_image is DEPRECATED. Choose an image from Spree::Variant#gallery instead')
-      images.first || (fallback && product.variant_images.first) || Spree::Image.new
+      Solidus::Deprecation.warn('Solidus::Variant#display_image is DEPRECATED. Choose an image from Solidus::Variant#gallery instead')
+      images.first || (fallback && product.variant_images.first) || Solidus::Image.new
     end
 
     # Determines the variant's property values by verifying which of the product's
     # variant property rules apply to itself.
     #
-    # @return [Array<Spree::VariantPropertyRuleValue>] variant_properties
+    # @return [Array<Solidus::VariantPropertyRuleValue>] variant_properties
     def variant_properties
       product.variant_property_rules.map do |rule|
         rule.values if rule.applies_to_variant?(self)
@@ -399,9 +399,9 @@ module Spree
     # The gallery for the variant, which represents all the images
     # associated with it
     #
-    # @return [Spree::Gallery] the media for a variant
+    # @return [Solidus::Gallery] the media for a variant
     def gallery
-      @gallery ||= Spree::Config.variant_gallery_class.new(self)
+      @gallery ||= Solidus::Config.variant_gallery_class.new(self)
     end
 
     private
@@ -419,17 +419,17 @@ module Spree
 
     # Ensures a new variant takes the product master price when price is not supplied
     def set_price
-      self.price = product.master.price if price.nil? && Spree::Config[:require_master_price] && !is_master?
+      self.price = product.master.price if price.nil? && Solidus::Config[:require_master_price] && !is_master?
     end
 
     def check_price
-      if price.nil? && Spree::Config[:require_master_price] && is_master?
+      if price.nil? && Solidus::Config[:require_master_price] && is_master?
         errors.add :price, 'Must supply price for variant or master.price for product.'
       end
     end
 
     def set_cost_currency
-      self.cost_currency = Spree::Config[:currency] if cost_currency.blank?
+      self.cost_currency = Solidus::Config[:currency] if cost_currency.blank?
     end
 
     def create_stock_items

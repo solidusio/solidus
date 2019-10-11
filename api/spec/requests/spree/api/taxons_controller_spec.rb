@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-module Spree
+module Solidus
   describe Api::TaxonsController, type: :request do
     let!(:taxonomy) { create(:taxonomy) }
     let!(:taxon) { create(:taxon, name: "Ruby", parent: taxonomy.root, taxonomy: taxonomy) }
@@ -109,7 +109,7 @@ module Spree
       end
 
       it "gets all taxons in JSTree form" do
-        expect(Spree::Deprecation).to(receive(:warn))
+        expect(Solidus::Deprecation).to(receive(:warn))
         get spree.jstree_api_taxonomy_taxon_path(taxonomy, taxon.id)
         response = json_response.first
         expect(response["data"]).to eq(taxon2.name)
@@ -174,7 +174,7 @@ module Spree
         expect(response.status).to eq(201)
 
         expect(taxonomy.reload.root.children.count).to eq 2
-        taxon = Spree::Taxon.where(name: 'Colors').first
+        taxon = Solidus::Taxon.where(name: 'Colors').first
 
         expect(taxon.parent_id).to eq taxonomy.root.id
         expect(taxon.taxonomy_id).to eq taxonomy.id

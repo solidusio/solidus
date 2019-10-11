@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-module Spree
-  class ReturnItem < Spree::Base
+module Solidus
+  class ReturnItem < Solidus::Base
     module EligibilityValidator
-      class Default < Spree::ReturnItem::EligibilityValidator::BaseValidator
+      class Default < Solidus::ReturnItem::EligibilityValidator::BaseValidator
         class_attribute :permitted_eligibility_validators
         self.permitted_eligibility_validators = [
           ReturnItem::EligibilityValidator::OrderCompleted,

@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Spree::Admin::SearchController, type: :controller do
+describe Solidus::Admin::SearchController, type: :controller do
   stub_authorization!
 
   # Regression test for ernie/ransack#176

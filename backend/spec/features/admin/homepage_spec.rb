@@ -67,12 +67,12 @@ describe "Homepage", type: :feature do
 
   context 'as fakedispatch user' do
     before do
-      allow_any_instance_of(Spree::Admin::BaseController).to receive(:try_spree_current_user).and_return(nil)
+      allow_any_instance_of(Solidus::Admin::BaseController).to receive(:try_spree_current_user).and_return(nil)
     end
 
     custom_authorization! do |_user|
       can [:admin, :home], :dashboards
-      can [:admin, :edit, :index, :read], Spree::Order
+      can [:admin, :edit, :index, :read], Solidus::Order
     end
 
     it 'should only display tabs fakedispatch has access to' do

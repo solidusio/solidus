@@ -2,13 +2,13 @@
 
 require 'spree/config'
 
-module Spree
+module Solidus
   module Core
     class Engine < ::Rails::Engine
       CREDIT_CARD_NUMBER_PARAM = /payment.*source.*\.number$/
       CREDIT_CARD_VERIFICATION_VALUE_PARAM = /payment.*source.*\.verification_value$/
 
-      isolate_namespace Spree
+      isolate_namespace Solidus
       engine_name 'spree'
 
       config.generators do |g|
@@ -16,7 +16,7 @@ module Spree
       end
 
       initializer "spree.environment", before: :load_config_initializers do |app|
-        app.config.spree = Spree::Config.environment
+        app.config.spree = Solidus::Config.environment
       end
 
       # leave empty initializers for backwards-compatability. Other apps might still rely on these events
@@ -47,11 +47,11 @@ module Spree
       # Setup Event Subscribers
       initializer 'spree.core.initialize_subscribers' do |app|
         app.reloader.to_prepare do
-          Spree::Event.subscribers.each(&:subscribe!)
+          Solidus::Event.subscribers.each(&:subscribe!)
         end
 
         app.reloader.before_class_unload do
-          Spree::Event.subscribers.each(&:unsubscribe!)
+          Solidus::Event.subscribers.each(&:unsubscribe!)
         end
       end
 

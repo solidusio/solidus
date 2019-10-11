@@ -1,8 +1,8 @@
 <% admin_breadcrumb(t('spree.settings')) %>
-<% admin_breadcrumb(plural_resource_name(Spree::Zone)) %>
+<% admin_breadcrumb(plural_resource_name(Solidus::Zone)) %>
 
 <% content_for :page_actions do %>
-  <% if can?(:create, Spree::Zone) %>
+  <% if can?(:create, Solidus::Zone) %>
     <li>
       <%= link_to t('spree.new_zone'), new_object_url, id: 'admin_new_zone_link', class: 'btn btn-primary' %>
     </li>
@@ -21,9 +21,9 @@
     </colgroup>
     <thead>
       <tr data-hook="zones_header">
-        <th><%= sort_link @search,:name, Spree::Zone.human_attribute_name(:name), title: 'zones_order_by_name_title' %></th>
+        <th><%= sort_link @search,:name, Solidus::Zone.human_attribute_name(:name), title: 'zones_order_by_name_title' %></th>
         <th>
-          <%= sort_link @search,:description, Spree::Zone.human_attribute_name(:description), {}, {title: 'zones_order_by_description_title'} %>
+          <%= sort_link @search,:description, Solidus::Zone.human_attribute_name(:description), {}, {title: 'zones_order_by_description_title'} %>
         </th>
         <th class="actions"></th>
       </tr>
@@ -48,7 +48,7 @@
 <% else %>
   <div class="no-objects-found">
     <%= render 'spree/admin/shared/no_objects_found',
-                 resource: Spree::Zone,
+                 resource: Solidus::Zone,
                  new_resource_url: new_object_url %>
   </div>
 <% end %>

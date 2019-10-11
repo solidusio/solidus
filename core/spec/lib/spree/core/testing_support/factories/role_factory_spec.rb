@@ -4,7 +4,7 @@ require 'rails_helper'
 require 'spree/testing_support/factories/role_factory'
 
 RSpec.describe 'role factory' do
-  let(:factory_class) { Spree::Role }
+  let(:factory_class) { Solidus::Role }
 
   describe 'plain role' do
     let(:factory) { :role }

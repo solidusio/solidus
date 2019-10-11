@@ -4,7 +4,7 @@ require 'spree/testing_support/factories/promotion_code_factory'
 require 'spree/testing_support/factories/variant_factory'
 
 FactoryBot.define do
-  factory :promotion, class: 'Spree::Promotion' do
+  factory :promotion, class: 'Solidus::Promotion' do
     name { 'Promo' }
 
     transient do
@@ -22,9 +22,9 @@ FactoryBot.define do
       end
 
       after(:create) do |promotion, evaluator|
-        calculator = Spree::Calculator::FlatRate.new
+        calculator = Solidus::Calculator::FlatRate.new
         calculator.preferred_amount = evaluator.adjustment_rate
-        Spree::Promotion::Actions::CreateItemAdjustments.create!(calculator: calculator, promotion: promotion)
+        Solidus::Promotion::Actions::CreateItemAdjustments.create!(calculator: calculator, promotion: promotion)
       end
     end
     factory :promotion_with_item_adjustment, traits: [:with_line_item_adjustment]
@@ -35,9 +35,9 @@ FactoryBot.define do
       end
 
       after(:create) do |promotion, evaluator|
-        calculator = Spree::Calculator::FlatRate.new
+        calculator = Solidus::Calculator::FlatRate.new
         calculator.preferred_amount = evaluator.weighted_order_adjustment_amount
-        action = Spree::Promotion::Actions::CreateAdjustment.create!(calculator: calculator)
+        action = Solidus::Promotion::Actions::CreateAdjustment.create!(calculator: calculator)
         promotion.actions << action
         promotion.save!
       end
@@ -50,7 +50,7 @@ FactoryBot.define do
       end
 
       after(:create) do |promotion, evaluator|
-        rule = Spree::Promotion::Rules::ItemTotal.create!(
+        rule = Solidus::Promotion::Rules::ItemTotal.create!(
           promotion: promotion,
           preferred_operator: 'gte',
           preferred_amount: evaluator.item_total_threshold_amount
@@ -62,7 +62,7 @@ FactoryBot.define do
     factory :promotion_with_item_total_rule, traits: [:with_item_total_rule]
     trait :with_first_order_rule do
       after(:create) do |promotion, _evaluator|
-        rule = Spree::Promotion::Rules::FirstOrder.create!(
+        rule = Solidus::Promotion::Rules::FirstOrder.create!(
           promotion: promotion,
         )
         promotion.rules << rule

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-module Spree
+module Solidus
   RSpec.describe Preferences::StaticModelPreferences do
     let(:preference_class) do
       Class.new do

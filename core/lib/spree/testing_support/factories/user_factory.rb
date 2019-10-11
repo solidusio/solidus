@@ -5,7 +5,7 @@ require 'spree/testing_support/factories/role_factory'
 require 'spree/testing_support/factories/address_factory'
 
 FactoryBot.define do
-  factory :user, class: Spree::UserClassHandle.new do
+  factory :user, class: Solidus::UserClassHandle.new do
     email { generate(:email) }
     password { 'secret' }
     password_confirmation { password }
@@ -17,7 +17,7 @@ FactoryBot.define do
     end
 
     factory :admin_user do
-      spree_roles { [Spree::Role.find_by(name: 'admin') || create(:role, name: 'admin')] }
+      spree_roles { [Solidus::Role.find_by(name: 'admin') || create(:role, name: 'admin')] }
     end
 
     factory :user_with_addresses do |_u|

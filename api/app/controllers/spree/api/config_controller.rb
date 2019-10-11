@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module Api
-    class ConfigController < Spree::Api::BaseController
+    class ConfigController < Solidus::Api::BaseController
       def show
       end
 

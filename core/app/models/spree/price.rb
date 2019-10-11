@@ -2,18 +2,18 @@
 
 require 'discard'
 
-module Spree
-  class Price < Spree::Base
+module Solidus
+  class Price < Solidus::Base
     acts_as_paranoid
-    include Spree::ParanoiaDeprecations
+    include Solidus::ParanoiaDeprecations
 
     include Discard::Model
     self.discard_column = :deleted_at
 
     MAXIMUM_AMOUNT = BigDecimal('99_999_999.99')
 
-    belongs_to :variant, -> { with_deleted }, class_name: 'Spree::Variant', touch: true, optional: true
-    belongs_to :country, class_name: "Spree::Country", foreign_key: "country_iso", primary_key: "iso", optional: true
+    belongs_to :variant, -> { with_deleted }, class_name: 'Solidus::Variant', touch: true, optional: true
+    belongs_to :country, class_name: "Solidus::Country", foreign_key: "country_iso", primary_key: "iso", optional: true
 
     delegate :product, to: :variant
     delegate :tax_rates, to: :variant
@@ -30,7 +30,7 @@ module Spree
     scope :for_master, -> { joins(:variant).where(spree_variants: { is_master: true }) }
     scope :for_variant, -> { joins(:variant).where(spree_variants: { is_master: false }) }
     scope :for_any_country, -> { where(country: nil) }
-    scope :with_default_attributes, -> { where(Spree::Config.default_pricing_options.desired_attributes) }
+    scope :with_default_attributes, -> { where(Solidus::Config.default_pricing_options.desired_attributes) }
 
     extend DisplayMoney
     money_methods :amount, :price
@@ -48,7 +48,7 @@ module Spree
     #
     # @param price [String, #to_d] a new amount
     def price=(price)
-      self[:amount] = Spree::LocalizedNumber.parse(price)
+      self[:amount] = Solidus::LocalizedNumber.parse(price)
     end
 
     def net_amount
@@ -79,11 +79,11 @@ module Spree
     end
 
     def check_price
-      self.currency ||= Spree::Config[:currency]
+      self.currency ||= Solidus::Config[:currency]
     end
 
     def pricing_options
-      Spree::Config.pricing_options_class.from_price(self)
+      Solidus::Config.pricing_options_class.from_price(self)
     end
   end
 end

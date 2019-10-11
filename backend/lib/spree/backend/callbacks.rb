@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module Backend
     module Callbacks
       extend ActiveSupport::Concern
@@ -12,27 +12,27 @@ module Spree
 
         def new_action
           @callbacks ||= {}
-          @callbacks[:new_action] ||= Spree::ActionCallbacks.new
+          @callbacks[:new_action] ||= Solidus::ActionCallbacks.new
         end
 
         def create
           @callbacks ||= {}
-          @callbacks[:create] ||= Spree::ActionCallbacks.new
+          @callbacks[:create] ||= Solidus::ActionCallbacks.new
         end
 
         def update
           @callbacks ||= {}
-          @callbacks[:update] ||= Spree::ActionCallbacks.new
+          @callbacks[:update] ||= Solidus::ActionCallbacks.new
         end
 
         def destroy
           @callbacks ||= {}
-          @callbacks[:destroy] ||= Spree::ActionCallbacks.new
+          @callbacks[:destroy] ||= Solidus::ActionCallbacks.new
         end
 
         def custom_callback(action)
           @callbacks ||= {}
-          @callbacks[action] ||= Spree::ActionCallbacks.new
+          @callbacks[action] ||= Solidus::ActionCallbacks.new
         end
       end
 

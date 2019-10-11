@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 
-module Spree
-  # Relatively simple class used to apply a {Spree::Tax::OrderTax} to a
-  # {Spree::Order}.
+module Solidus
+  # Relatively simple class used to apply a {Solidus::Tax::OrderTax} to a
+  # {Solidus::Order}.
   #
   # This class will create or update adjustments on the taxed items and remove
   # any now inapplicable tax adjustments from the order.
   class OrderTaxation
     # Create a new order taxation.
     #
-    # @param [Spree::Order] order the order to apply taxes to
-    # @return [Spree::OrderTaxation] a {Spree::OrderTaxation} object
+    # @param [Solidus::Order] order the order to apply taxes to
+    # @return [Solidus::OrderTaxation] a {Solidus::OrderTaxation} object
     def initialize(order)
       @order = order
     end
@@ -21,7 +21,7 @@ module Spree
     # shipments in the order to reflect the appropriate taxes passed in. It
     # will also remove any now inapplicable tax adjustments.
     #
-    # @param [Spree::Tax::OrderTax] taxes the taxes to apply to the order
+    # @param [Solidus::Tax::OrderTax] taxes the taxes to apply to the order
     # @return [void]
     def apply(taxes)
       @order.line_items.each do |item|
@@ -42,8 +42,8 @@ module Spree
     # adjustments that weren't touched.
     #
     # @private
-    # @param [#adjustments] item a {Spree::LineItem} or {Spree::Shipment}
-    # @param [Array<Spree::Tax::ItemTax>] taxed_items a list of calculated taxes for an item
+    # @param [#adjustments] item a {Solidus::LineItem} or {Solidus::Shipment}
+    # @param [Array<Solidus::Tax::ItemTax>] taxed_items a list of calculated taxes for an item
     # @return [void]
     def update_adjustments(item, taxed_items)
       tax_adjustments = item.adjustments.select(&:tax?)
@@ -60,9 +60,9 @@ module Spree
     # Update or create a new tax adjustment on an item.
     #
     # @private
-    # @param [#adjustments] item a {Spree::LineItem} or {Spree::Shipment}
-    # @param [Spree::Tax::ItemTax] tax_item calculated taxes for an item
-    # @return [Spree::Adjustment] the created or updated tax adjustment
+    # @param [#adjustments] item a {Solidus::LineItem} or {Solidus::Shipment}
+    # @param [Solidus::Tax::ItemTax] tax_item calculated taxes for an item
+    # @return [Solidus::Adjustment] the created or updated tax adjustment
     def update_adjustment(item, tax_item)
       tax_adjustment = item.adjustments.detect do |adjustment|
         adjustment.source == tax_item.tax_rate

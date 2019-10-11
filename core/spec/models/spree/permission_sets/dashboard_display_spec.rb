@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::PermissionSets::DashboardDisplay do
+RSpec.describe Solidus::PermissionSets::DashboardDisplay do
   let(:ability) { DummyAbility.new }
 
   subject { ability }

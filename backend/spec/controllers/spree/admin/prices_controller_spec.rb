@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Spree::Admin::PricesController do
+describe Solidus::Admin::PricesController do
   stub_authorization!
 
   let!(:product) { create(:product) }

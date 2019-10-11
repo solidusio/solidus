@@ -20,7 +20,7 @@ describe "Free shipping promotions", type: :feature, js: true do
     create(
       :promotion,
       apply_automatically: true,
-      promotion_actions: [Spree::Promotion::Actions::FreeShipping.new],
+      promotion_actions: [Solidus::Promotion::Actions::FreeShipping.new],
       name: "Free Shipping",
       starts_at: 1.day.ago,
       expires_at: 1.day.from_now,

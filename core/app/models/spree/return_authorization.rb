@@ -1,17 +1,17 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   # Models the return of Inventory Units to a Stock Location for an Order.
   #
-  class ReturnAuthorization < Spree::Base
-    belongs_to :order, class_name: 'Spree::Order', inverse_of: :return_authorizations, optional: true
+  class ReturnAuthorization < Solidus::Base
+    belongs_to :order, class_name: 'Solidus::Order', inverse_of: :return_authorizations, optional: true
 
     has_many :return_items, inverse_of: :return_authorization, dependent: :destroy
     has_many :inventory_units, through: :return_items, dependent: :nullify
     has_many :customer_returns, through: :return_items
 
     belongs_to :stock_location, optional: true
-    belongs_to :reason, class_name: 'Spree::ReturnReason', foreign_key: :return_reason_id, optional: true
+    belongs_to :reason, class_name: 'Solidus::ReturnReason', foreign_key: :return_reason_id, optional: true
 
     before_create :generate_number
 
@@ -22,11 +22,11 @@ module Spree
     validate :must_have_shipped_units, on: :create
     validate :no_previously_exchanged_inventory_units, on: :create
 
-    include ::Spree::Config.state_machines.return_authorization
+    include ::Solidus::Config.state_machines.return_authorization
 
     extend DisplayMoney
     money_methods :pre_tax_total, :amount, :total_excluding_vat
-    deprecate display_pre_tax_total: :display_total_excluding_vat, deprecator: Spree::Deprecation
+    deprecate display_pre_tax_total: :display_total_excluding_vat, deprecator: Solidus::Deprecation
 
     self.whitelisted_ransackable_attributes = ['memo']
 
@@ -34,7 +34,7 @@ module Spree
       return_items.map(&:total_excluding_vat).sum
     end
     alias pre_tax_total total_excluding_vat
-    deprecate pre_tax_total: :total_excluding_vat, deprecator: Spree::Deprecation
+    deprecate pre_tax_total: :total_excluding_vat, deprecator: Solidus::Deprecation
 
     def amount
       return_items.sum(:amount)

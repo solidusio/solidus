@@ -2,8 +2,8 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::PermissionSets::Base do
-  let(:ability) { Spree::Ability.new nil }
+RSpec.describe Solidus::PermissionSets::Base do
+  let(:ability) { Solidus::Ability.new nil }
   subject { described_class.new(ability).activate! }
 
   describe "activate!" do

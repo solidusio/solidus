@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-module Spree
-  # @deprecated Use Spree::PaymentMethod::BogusCreditCard instead
+module Solidus
+  # @deprecated Use Solidus::PaymentMethod::BogusCreditCard instead
   class Gateway::Bogus < PaymentMethod::BogusCreditCard
     def initialize(*args)
-      Spree::Deprecation.warn \
-        'Spree::Gateway::Bogus is deprecated. ' \
-        'Please use Spree::PaymentMethod::BogusCreditCard instead'
+      Solidus::Deprecation.warn \
+        'Solidus::Gateway::Bogus is deprecated. ' \
+        'Please use Solidus::PaymentMethod::BogusCreditCard instead'
       super
     end
   end

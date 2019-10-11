@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::Tax::ShippingRateTaxer do
+RSpec.describe Solidus::Tax::ShippingRateTaxer do
   let(:shipping_rate) { build_stubbed(:shipping_rate) }
 
   subject(:taxer) { described_class.new(shipping_rate) }
@@ -45,7 +45,7 @@ RSpec.describe Spree::Tax::ShippingRateTaxer do
       end
 
       it 'will produce a shipping rate that, when saved, also saves the taxes' do
-        expect { subject.save }.to change(Spree::ShippingRateTax, :count).by(2)
+        expect { subject.save }.to change(Solidus::ShippingRateTax, :count).by(2)
       end
 
       it 'will produce a shipping rate with correct taxes' do

@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe Spree::BackendConfiguration do
+RSpec.describe Solidus::BackendConfiguration do
   describe '#menu_items' do
     subject do
       described_class.new.menu_items

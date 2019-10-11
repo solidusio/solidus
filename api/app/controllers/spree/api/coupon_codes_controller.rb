@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module Api
-    class CouponCodesController < Spree::Api::BaseController
+    class CouponCodesController < Solidus::Api::BaseController
       before_action :load_order
       around_action :lock_order
 
@@ -37,7 +37,7 @@ module Spree
       private
 
       def load_order
-        @order = Spree::Order.find_by!(number: params[:order_id])
+        @order = Solidus::Order.find_by!(number: params[:order_id])
       end
     end
   end

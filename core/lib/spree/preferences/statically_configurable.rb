@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module Preferences
     module StaticallyConfigurable
       extend ActiveSupport::Concern
 
       class_methods do
         def preference_sources
-          Spree::Config.static_model_preferences.for_class(self)
+          Solidus::Config.static_model_preferences.for_class(self)
         end
 
         def available_preference_sources

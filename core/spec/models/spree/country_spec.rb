@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::Country, type: :model do
+RSpec.describe Solidus::Country, type: :model do
   describe '.default' do
     before do
       create(:country, iso: "DE", id: 1)
@@ -17,16 +17,16 @@ RSpec.describe Spree::Country, type: :model do
       end
 
       subject(:default_country) do
-        Spree::Deprecation.silence { described_class.default }
+        Solidus::Deprecation.silence { described_class.default }
       end
 
       it 'emits a deprecation warning' do
-        expect(Spree::Deprecation).to receive(:warn)
+        expect(Solidus::Deprecation).to receive(:warn)
         default_country
       end
 
       it 'is the country with that ID' do
-        expect(default_country).to eq(Spree::Country.find(2))
+        expect(default_country).to eq(Solidus::Country.find(2))
       end
     end
 
@@ -36,17 +36,17 @@ RSpec.describe Spree::Country, type: :model do
       end
 
       subject(:default_country) do
-        Spree::Deprecation.silence { described_class.default }
+        Solidus::Deprecation.silence { described_class.default }
       end
 
       it 'loads the country configured by the ISO code' do
-        expect(default_country).to eq(Spree::Country.find(2))
+        expect(default_country).to eq(Solidus::Country.find(2))
       end
     end
 
     context 'with the configuration setting an existing ISO code' do
       it 'is a country with the configurations ISO code' do
-        expect(described_class.default).to be_a(Spree::Country)
+        expect(described_class.default).to be_a(Solidus::Country)
         expect(described_class.default.iso).to eq('US')
       end
     end

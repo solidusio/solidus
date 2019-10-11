@@ -1,20 +1,20 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   # Variants placed in the Order at a particular price.
   #
-  # `Spree::LineItem` is an ActiveRecord model which records which `Spree::Variant`
+  # `Solidus::LineItem` is an ActiveRecord model which records which `Solidus::Variant`
   # a customer has chosen to place in their order. It also acts as the permanent
   # record of the customer's order by recording relevant price, taxation, and inventory
   # concerns. Line items can also have adjustments placed on them as part of the
   # promotion system.
   #
-  class LineItem < Spree::Base
+  class LineItem < Solidus::Base
     class CurrencyMismatch < StandardError; end
 
-    belongs_to :order, class_name: "Spree::Order", inverse_of: :line_items, touch: true, optional: true
-    belongs_to :variant, -> { with_deleted }, class_name: "Spree::Variant", inverse_of: :line_items, optional: true
-    belongs_to :tax_category, class_name: "Spree::TaxCategory", optional: true
+    belongs_to :order, class_name: "Solidus::Order", inverse_of: :line_items, touch: true, optional: true
+    belongs_to :variant, -> { with_deleted }, class_name: "Solidus::Variant", inverse_of: :line_items, optional: true
+    belongs_to :tax_category, class_name: "Solidus::TaxCategory", optional: true
 
     has_one :product, through: :variant
 
@@ -59,7 +59,7 @@ module Spree
     def discounted_amount
       amount + promo_total
     end
-    deprecate discounted_amount: :total_before_tax, deprecator: Spree::Deprecation
+    deprecate discounted_amount: :total_before_tax, deprecator: Solidus::Deprecation
 
     # @return [BigDecimal] the amount of this line item, taking into
     #   consideration all its adjustments.
@@ -67,7 +67,7 @@ module Spree
       amount + adjustment_total
     end
     alias final_amount total
-    deprecate final_amount: :total, deprecator: Spree::Deprecation
+    deprecate final_amount: :total, deprecator: Solidus::Deprecation
 
     # @return [BigDecimal] the amount of this item, taking into consideration
     #   all non-tax adjustments.
@@ -81,33 +81,33 @@ module Spree
       total_before_tax - included_tax_total
     end
     alias pre_tax_amount total_excluding_vat
-    deprecate pre_tax_amount: :total_excluding_vat, deprecator: Spree::Deprecation
+    deprecate pre_tax_amount: :total_excluding_vat, deprecator: Solidus::Deprecation
 
-    extend Spree::DisplayMoney
+    extend Solidus::DisplayMoney
     money_methods :amount, :discounted_amount, :price,
                   :included_tax_total, :additional_tax_total,
                   :total, :total_before_tax, :total_excluding_vat
-    deprecate display_discounted_amount: :display_total_before_tax, deprecator: Spree::Deprecation
+    deprecate display_discounted_amount: :display_total_before_tax, deprecator: Solidus::Deprecation
     alias display_final_amount display_total
-    deprecate display_final_amount: :display_total, deprecator: Spree::Deprecation
+    deprecate display_final_amount: :display_total, deprecator: Solidus::Deprecation
     alias display_pre_tax_amount display_total_excluding_vat
-    deprecate display_pre_tax_amount: :display_total_excluding_vat, deprecator: Spree::Deprecation
+    deprecate display_pre_tax_amount: :display_total_excluding_vat, deprecator: Solidus::Deprecation
     alias discounted_money display_discounted_amount
-    deprecate discounted_money: :display_total_before_tax, deprecator: Spree::Deprecation
+    deprecate discounted_money: :display_total_before_tax, deprecator: Solidus::Deprecation
 
-    # @return [Spree::Money] the price of this line item
+    # @return [Solidus::Money] the price of this line item
     alias money_price display_price
     alias single_display_amount display_price
     alias single_money display_price
 
-    # @return [Spree::Money] the amount of this line item
+    # @return [Solidus::Money] the amount of this line item
     alias money display_amount
     alias display_total display_amount
-    deprecate display_total: :display_amount, deprecator: Spree::Deprecation
+    deprecate display_total: :display_amount, deprecator: Solidus::Deprecation
 
-    # Sets price from a `Spree::Money` object
+    # Sets price from a `Solidus::Money` object
     #
-    # @param [Spree::Money] money - the money object to obtain price from
+    # @param [Solidus::Money] money - the money object to obtain price from
     def money_price=(money)
       if !money
         self.price = nil
@@ -150,11 +150,11 @@ module Spree
     end
 
     def pricing_options
-      Spree::Config.pricing_options_class.from_line_item(self)
+      Solidus::Config.pricing_options_class.from_line_item(self)
     end
 
     def currency=(_currency)
-      Spree::Deprecation.warn 'Spree::LineItem#currency= is deprecated ' \
+      Solidus::Deprecation.warn 'Solidus::LineItem#currency= is deprecated ' \
         'and will take no effect.',
         caller
     end
@@ -187,15 +187,15 @@ module Spree
 
     def handle_copy_price_override
       copy_price
-      Spree::Deprecation.warn 'You have overridden Spree::LineItem#copy_price. ' \
-        'This method is now called Spree::LineItem#set_pricing_attributes. ' \
+      Solidus::Deprecation.warn 'You have overridden Solidus::LineItem#copy_price. ' \
+        'This method is now called Solidus::LineItem#set_pricing_attributes. ' \
         'Please adjust your override.',
         caller
     end
 
     def update_inventory
       if (saved_changes? || target_shipment.present?) && order.has_checkout_step?("delivery")
-        Spree::OrderInventory.new(order, self).verify(target_shipment)
+        Solidus::OrderInventory.new(order, self).verify(target_shipment)
       end
     end
 

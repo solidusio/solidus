@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module PermissionSets
     class StockManagement < PermissionSets::Base
       def activate!
-        can :manage, Spree::StockItem
-        can :display, Spree::StockLocation
+        can :manage, Solidus::StockItem
+        can :display, Solidus::StockLocation
       end
     end
   end

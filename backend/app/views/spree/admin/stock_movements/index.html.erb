@@ -1,16 +1,16 @@
 <% admin_breadcrumb(t('spree.settings')) %>
 <% admin_breadcrumb(t('spree.admin.tab.shipping')) %>
-<% if can?(:display, Spree::StockLocation) %>
-  <% admin_breadcrumb(link_to plural_resource_name(Spree::StockLocation), spree.admin_stock_locations_path) %>
+<% if can?(:display, Solidus::StockLocation) %>
+  <% admin_breadcrumb(link_to plural_resource_name(Solidus::StockLocation), spree.admin_stock_locations_path) %>
 <% else %>
-  <% admin_breadcrumb(plural_resource_name(Spree::StockLocation)) %>
+  <% admin_breadcrumb(plural_resource_name(Solidus::StockLocation)) %>
 <% end %>
 <% if can?(:update, @stock_location) %>
   <% admin_breadcrumb(link_to(admin_stock_location_display_name(@stock_location), spree.edit_admin_stock_location_path(@stock_location.id))) %>
 <% else %>
   <% admin_breadcrumb(admin_stock_location_display_name(@stock_location)) %>
 <% end %>
-<% admin_breadcrumb(plural_resource_name(Spree::StockMovement)) %>
+<% admin_breadcrumb(plural_resource_name(Solidus::StockMovement)) %>
 
 <% if @stock_movements.any? %>
 <table class="index" id='listing_stock_movements'>
@@ -21,9 +21,9 @@
   </colgroup>
   <thead>
     <tr data-hook="admin_stock_movements_index_headers">
-      <th><%= Spree::StockMovement.human_attribute_name(:variant) %>
-      <th><%= Spree::StockMovement.human_attribute_name(:quantity) %></th>
-      <th><%= Spree::StockMovement.human_attribute_name(:originated_by) %></th>
+      <th><%= Solidus::StockMovement.human_attribute_name(:variant) %>
+      <th><%= Solidus::StockMovement.human_attribute_name(:quantity) %></th>
+      <th><%= Solidus::StockMovement.human_attribute_name(:originated_by) %></th>
     </tr>
   </thead>
   <tbody>
@@ -41,7 +41,7 @@
 <% else %>
   <div class="no-objects-found">
     <%= render 'spree/admin/shared/no_objects_found',
-                 resource: Spree::StockMovement %>
+                 resource: Solidus::StockMovement %>
   </div>
 <% end %>
 

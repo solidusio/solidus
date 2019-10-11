@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module Api
-    class VariantsController < Spree::Api::BaseController
+    class VariantsController < Solidus::Api::BaseController
       before_action :product
 
       def create
@@ -53,14 +53,14 @@ module Spree
       private
 
       def product
-        @product ||= Spree::Product.accessible_by(current_ability, :read).friendly.find(params[:product_id]) if params[:product_id]
+        @product ||= Solidus::Product.accessible_by(current_ability, :read).friendly.find(params[:product_id]) if params[:product_id]
       end
 
       def scope
         if @product
           variants = @product.variants_including_master
         else
-          variants = Spree::Variant
+          variants = Solidus::Variant
         end
 
         if current_ability.can?(:manage, Variant) && params[:show_deleted]
@@ -70,7 +70,7 @@ module Spree
         in_stock_only = ActiveRecord::Type::Boolean.new.cast(params[:in_stock_only])
         suppliable_only = ActiveRecord::Type::Boolean.new.cast(params[:suppliable_only])
         variants = variants.accessible_by(current_ability, :read)
-        if in_stock_only || cannot?(:view_out_of_stock, Spree::Variant)
+        if in_stock_only || cannot?(:view_out_of_stock, Solidus::Variant)
           variants = variants.in_stock
         elsif suppliable_only
           variants = variants.suppliable

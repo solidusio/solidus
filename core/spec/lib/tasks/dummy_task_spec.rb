@@ -6,7 +6,7 @@ RSpec.describe 'dummy_task' do
   include_context(
     'rake',
     task_name: 'dummy_task',
-    task_path: Spree::Core::Engine.root.join('spec/lib/tasks/dummy_task.rake'),
+    task_path: Solidus::Core::Engine.root.join('spec/lib/tasks/dummy_task.rake'),
   )
 
   it 'calls the dummy task exactly once' do

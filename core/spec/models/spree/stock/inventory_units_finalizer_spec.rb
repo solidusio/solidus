@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-module Spree
+module Solidus
   module Stock
     RSpec.describe InventoryUnitsFinalizer, type: :model do
       context "when finalizing an order with one line_item" do

@@ -6,8 +6,8 @@ describe "Return payment state spec" do
   stub_authorization!
 
   before do
-    Spree::RefundReason.create!(name: Spree::RefundReason::RETURN_PROCESSING_REASON, mutable: false)
-    allow_any_instance_of(Spree::Admin::ReimbursementsController).to receive(:try_spree_current_user).
+    Solidus::RefundReason.create!(name: Solidus::RefundReason::RETURN_PROCESSING_REASON, mutable: false)
+    allow_any_instance_of(Solidus::Admin::ReimbursementsController).to receive(:try_spree_current_user).
       and_return(user)
   end
 
@@ -32,7 +32,7 @@ describe "Return payment state spec" do
     click_on 'New RMA'
 
     find('.add-item').click # check first (and only) item
-    select Spree::StockLocation.first.name, from: 'return_authorization[stock_location_id]', visible: false
+    select Solidus::StockLocation.first.name, from: 'return_authorization[stock_location_id]', visible: false
     click_on 'Create'
 
     # Create a Customer Return (select the item from 'Items in Return Authorizations')
@@ -41,7 +41,7 @@ describe "Return payment state spec" do
 
     find('input.add-item').click # check first (and only) item
     select 'Received', from: 'customer_return[return_items_attributes][0][reception_status_event]', visible: false
-    select Spree::StockLocation.first.name, from: 'customer_return[stock_location_id]', visible: false
+    select Solidus::StockLocation.first.name, from: 'customer_return[stock_location_id]', visible: false
     click_on 'Create'
 
     # Create reimbursement

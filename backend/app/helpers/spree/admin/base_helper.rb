@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module Admin
     module BaseHelper
       def field_container(model, method, options = {}, &block)
@@ -50,7 +50,7 @@ module Spree
       end
       deprecate preference_field_tag:
         "Render `spree/admin/shared/preference_fields/\#{preference_type}' instead",
-        deprecator: Spree::Deprecation
+        deprecator: Solidus::Deprecation
 
       # @deprecated Render `spree/admin/shared/preference_fields/\#{preference_type}' instead
       def preference_field_for(form, field, options)
@@ -60,7 +60,7 @@ module Spree
       end
       deprecate preference_field_for:
         "Render `spree/admin/shared/preference_fields/\#{preference_type}' instead",
-        deprecator: Spree::Deprecation
+        deprecator: Solidus::Deprecation
 
       # @deprecated Pass an `html_options' hash into preference field partial instead
       def preference_field_options(options)
@@ -93,7 +93,7 @@ module Spree
       end
       deprecate preference_field_options: "Pass an `html_options' hash into " \
         "`render('spree/admin/shared/preference_fields/\#{preference_type}')` instead)",
-        deprecator: Spree::Deprecation
+        deprecator: Solidus::Deprecation
 
       # @deprecated Please render each preference keys partial instead. Example:
       # <% @object.preferences.keys.each do |key| %>
@@ -113,7 +113,7 @@ module Spree
         "<% @object.preferences.keys.each do |key| %>\n" \
           "<%= render \"spree/admin/shared/preference_fields/\#{@object.preference_type(key)}\", \n" \
              "form: f, attribute: \"preferred_\#{key}\", label: t(key, scope: 'spree') %>\n" \
-        "<% end %>", deprecator: Spree::Deprecation
+        "<% end %>", deprecator: Solidus::Deprecation
 
       def link_to_add_fields(name, target, options = {})
         name = '' if options[:no_text]

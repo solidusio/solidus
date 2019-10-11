@@ -2,7 +2,7 @@
 
 <%= render partial: 'spree/shared/error_messages', locals: { target: @image } %>
 
-<% admin_breadcrumb(link_to plural_resource_name(Spree::Image), admin_product_images_path(@product)) %>
+<% admin_breadcrumb(link_to plural_resource_name(Solidus::Image), admin_product_images_path(@product)) %>
 <% admin_breadcrumb(@image.filename) %>
 
 

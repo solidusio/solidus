@@ -2,13 +2,13 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::Payment, type: :model do
+RSpec.describe Solidus::Payment, type: :model do
   let(:store) { create :store }
-  let(:order) { Spree::Order.create(store: store) }
+  let(:order) { Solidus::Order.create(store: store) }
   let(:refund_reason) { create(:refund_reason) }
 
   let(:gateway) do
-    gateway = Spree::PaymentMethod::BogusCreditCard.new(active: true, name: 'Bogus gateway')
+    gateway = Solidus::PaymentMethod::BogusCreditCard.new(active: true, name: 'Bogus gateway')
     allow(gateway).to receive_messages(source_required?: true)
     gateway
   end
@@ -19,7 +19,7 @@ RSpec.describe Spree::Payment, type: :model do
   let(:card) { create :credit_card }
 
   let(:payment) do
-    Spree::Payment.create! do |payment|
+    Solidus::Payment.create! do |payment|
       payment.source = card
       payment.order = order
       payment.payment_method = gateway
@@ -84,7 +84,7 @@ RSpec.describe Spree::Payment, type: :model do
 
   context 'validations' do
     it "returns useful error messages when source is invalid" do
-      payment.source = Spree::CreditCard.new
+      payment.source = Solidus::CreditCard.new
       expect(payment).not_to be_valid
       cc_errors = payment.errors['Credit Card']
       expect(cc_errors).to include("Card Number can't be blank")
@@ -204,7 +204,7 @@ RSpec.describe Spree::Payment, type: :model do
 
       it "should invalidate if payment method doesnt support source" do
         expect(payment.payment_method).to receive(:supports?).with(payment.source).and_return(false)
-        expect { payment.process! }.to raise_error(Spree::Core::GatewayError)
+        expect { payment.process! }.to raise_error(Solidus::Core::GatewayError)
         expect(payment.state).to eq('invalid')
       end
     end
@@ -324,7 +324,7 @@ RSpec.describe Spree::Payment, type: :model do
           expect(payment).not_to receive(:pend)
           expect {
             payment.authorize!
-          }.to raise_error(Spree::Core::GatewayError)
+          }.to raise_error(Solidus::Core::GatewayError)
         end
       end
     end
@@ -380,11 +380,11 @@ RSpec.describe Spree::Payment, type: :model do
         end
 
         it "should make payment failed" do
-          expect { payment.purchase! }.to raise_error(Spree::Core::GatewayError)
+          expect { payment.purchase! }.to raise_error(Solidus::Core::GatewayError)
         end
 
         it "should not log a capture event" do
-          expect { payment.purchase! }.to raise_error(Spree::Core::GatewayError)
+          expect { payment.purchase! }.to raise_error(Solidus::Core::GatewayError)
           expect(payment.capture_events.count).to eq(0)
         end
       end
@@ -446,7 +446,7 @@ RSpec.describe Spree::Payment, type: :model do
             allow(gateway).to receive_messages capture: failed_response
             expect(payment).to receive(:failure)
             expect(payment).not_to receive(:complete)
-            expect { payment.capture! }.to raise_error(Spree::Core::GatewayError)
+            expect { payment.capture! }.to raise_error(Solidus::Core::GatewayError)
           end
         end
       end
@@ -494,7 +494,7 @@ RSpec.describe Spree::Payment, type: :model do
         end
 
         it "should raise gateway error and not change payment state or response_code", :aggregate_failures do
-          expect { subject }.to raise_error(Spree::Core::GatewayError)
+          expect { subject }.to raise_error(Solidus::Core::GatewayError)
           expect(payment.state).to eq('pending')
           expect(payment.response_code).to eq('abc')
         end
@@ -542,7 +542,7 @@ RSpec.describe Spree::Payment, type: :model do
         it "should not void the payment" do
           allow(gateway).to receive_messages void: failed_response
           expect(payment).not_to receive(:void)
-          expect { payment.void_transaction! }.to raise_error(Spree::Core::GatewayError)
+          expect { payment.void_transaction! }.to raise_error(Solidus::Core::GatewayError)
         end
       end
 
@@ -575,7 +575,7 @@ RSpec.describe Spree::Payment, type: :model do
       end
 
       specify do
-        expect { payment.process! }.to raise_error(Spree::Core::GatewayError, I18n.t('spree.payment_processing_failed'))
+        expect { payment.process! }.to raise_error(Solidus::Core::GatewayError, I18n.t('spree.payment_processing_failed'))
       end
     end
   end
@@ -646,14 +646,14 @@ RSpec.describe Spree::Payment, type: :model do
     context "not completed payments" do
       it "doesn't update order payment total" do
         expect {
-          Spree::Payment.create(amount: 100, order: order)
+          Solidus::Payment.create(amount: 100, order: order)
         }.not_to change { order.payment_total }
       end
     end
 
     context 'when the payment was completed but now void' do
       let(:payment) do
-        Spree::Payment.create(
+        Solidus::Payment.create(
           amount: 100,
           order: order,
           state: 'completed'
@@ -673,7 +673,7 @@ RSpec.describe Spree::Payment, type: :model do
       it "updates payment_state and shipments" do
         expect(order.updater).to receive(:update_payment_state)
         expect(order.updater).to receive(:update_shipment_state)
-        Spree::Payment.create!(amount: 100, order: order, payment_method: payment_method)
+        Solidus::Payment.create!(amount: 100, order: order, payment_method: payment_method)
       end
     end
 
@@ -687,13 +687,13 @@ RSpec.describe Spree::Payment, type: :model do
         it "should call gateway_error " do
           expect(gateway).to receive(:create_profile).and_raise(ActiveMerchant::ConnectionError.new("foo", nil))
           expect do
-            Spree::Payment.create(
+            Solidus::Payment.create(
               amount: 100,
               order: order,
               source: card,
               payment_method: gateway
             )
-          end.to raise_error(Spree::Core::GatewayError)
+          end.to raise_error(Solidus::Core::GatewayError)
         end
       end
 
@@ -703,16 +703,16 @@ RSpec.describe Spree::Payment, type: :model do
         it "should not try to create profiles on old failed payment attempts" do
           order.payments.destroy_all
 
-          allow_any_instance_of(Spree::Payment).to receive(:payment_method) { gateway }
+          allow_any_instance_of(Solidus::Payment).to receive(:payment_method) { gateway }
 
-          Spree::PaymentCreate.new(order, {
+          Solidus::PaymentCreate.new(order, {
             source_attributes: attributes,
             payment_method: gateway,
             amount: 100
           }).build.save!
           expect(gateway).to receive(:create_profile).exactly :once
           expect(order.payments.count).to eq(1)
-          Spree::PaymentCreate.new(order, {
+          Solidus::PaymentCreate.new(order, {
             source_attributes: attributes,
             payment_method: gateway,
             amount: 100
@@ -723,7 +723,7 @@ RSpec.describe Spree::Payment, type: :model do
       context "when successfully connecting to the gateway" do
         it "should create a payment profile" do
           expect(payment.payment_method).to receive :create_profile
-          Spree::Payment.create(
+          Solidus::Payment.create(
             amount: 100,
             order: order,
             source: card,
@@ -738,7 +738,7 @@ RSpec.describe Spree::Payment, type: :model do
 
       it "should not create a payment profile" do
         expect(gateway).not_to receive :create_profile
-        Spree::Payment.create(
+        Solidus::Payment.create(
           amount: 100,
           order: order,
           source: card,
@@ -751,7 +751,7 @@ RSpec.describe Spree::Payment, type: :model do
   describe '#invalidate_old_payments' do
     it 'should not invalidate other payments if not valid' do
       payment.save
-      invalid_payment = Spree::Payment.new(amount: 100, order: order, state: 'invalid', payment_method: gateway)
+      invalid_payment = Solidus::Payment.new(amount: 100, order: order, state: 'invalid', payment_method: gateway)
       invalid_payment.save
       expect(payment.reload.state).to eq('checkout')
     end
@@ -806,11 +806,11 @@ RSpec.describe Spree::Payment, type: :model do
     describe "invalidating payments updates in memory objects" do
       let(:payment_method) { create(:check_payment_method) }
       before do
-        Spree::PaymentCreate.new(order, amount: 1, payment_method_id: payment_method.id).build.save!
+        Solidus::PaymentCreate.new(order, amount: 1, payment_method_id: payment_method.id).build.save!
         expect(order.payments.map(&:state)).to contain_exactly(
           'checkout'
         )
-        Spree::PaymentCreate.new(order, amount: 2, payment_method_id: payment_method.id).build.save!
+        Solidus::PaymentCreate.new(order, amount: 2, payment_method_id: payment_method.id).build.save!
       end
 
       it 'should not have stale payments' do
@@ -839,14 +839,14 @@ RSpec.describe Spree::Payment, type: :model do
       end
 
       it "should build the payment's source" do
-        payment = Spree::PaymentCreate.new(order, params).build
+        payment = Solidus::PaymentCreate.new(order, params).build
         expect(payment).to be_valid
         expect(payment.source).not_to be_nil
       end
 
       it "assigns user and gateway to payment source" do
         order = create(:order)
-        payment = Spree::PaymentCreate.new(order, params).build
+        payment = Solidus::PaymentCreate.new(order, params).build
         source = payment.source
 
         expect(source.user_id).to eq order.user_id
@@ -857,7 +857,7 @@ RSpec.describe Spree::Payment, type: :model do
         params = { amount: 100, payment_method: gateway,
           source_attributes: { expiry: "1 / 12" } }
 
-        payment = Spree::PaymentCreate.new(order, params).build
+        payment = Solidus::PaymentCreate.new(order, params).build
         expect(payment).not_to be_valid
         expect(payment.source).not_to be_nil
         expect(payment.source.errors[:number].size).to eq(1)
@@ -882,13 +882,13 @@ RSpec.describe Spree::Payment, type: :model do
 
       describe "building a payment" do
         subject do
-          Spree::PaymentCreate.new(order, params).build.save!
+          Solidus::PaymentCreate.new(order, params).build.save!
         end
 
         it 'sets the existing card as the source for the new payment' do
           expect {
             subject
-          }.to change { Spree::Payment.count }.by(1)
+          }.to change { Solidus::Payment.count }.by(1)
 
           expect(order.payments.last.source).to eq(credit_card)
         end
@@ -904,7 +904,7 @@ RSpec.describe Spree::Payment, type: :model do
         end
 
         it 'sets the request_env on the payment' do
-          payment = Spree::PaymentCreate.new(order, params.merge(request_env: { 'USER_AGENT' => 'Firefox' })).build
+          payment = Solidus::PaymentCreate.new(order, params.merge(request_env: { 'USER_AGENT' => 'Firefox' })).build
           payment.save!
           expect(payment.request_env).to eq({ 'USER_AGENT' => 'Firefox' })
         end
@@ -959,8 +959,8 @@ RSpec.describe Spree::Payment, type: :model do
   end
 
   describe "#display_amount" do
-    it "returns a Spree::Money for this amount" do
-      expect(payment.display_amount).to eq(Spree::Money.new(payment.amount))
+    it "returns a Solidus::Money for this amount" do
+      expect(payment.display_amount).to eq(Solidus::Money.new(payment.amount))
     end
   end
 
@@ -974,7 +974,7 @@ RSpec.describe Spree::Payment, type: :model do
 
     it "contains the email address from a persisted order" do
       # Sets the payment's order to a different Ruby object entirely
-      payment.order = Spree::Order.find(payment.order_id)
+      payment.order = Solidus::Order.find(payment.order_id)
       email = 'foo@example.com'
       order.update(email: email)
       expect(payment.gateway_options[:email]).to eq(email)
@@ -1000,7 +1000,7 @@ RSpec.describe Spree::Payment, type: :model do
 
     context "other payment exists" do
       let(:other_payment) {
-        payment = Spree::Payment.new
+        payment = Solidus::Payment.new
         payment.source = card
         payment.order = order
         payment.payment_method = gateway
@@ -1212,7 +1212,7 @@ RSpec.describe Spree::Payment, type: :model do
   end
 
   describe "#actions" do
-    let(:source) { Spree::CreditCard.new }
+    let(:source) { Solidus::CreditCard.new }
     before { allow(subject).to receive(:payment_source) { source } }
 
     it "includes the actions that the source can take" do

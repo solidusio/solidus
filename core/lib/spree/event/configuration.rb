@@ -2,19 +2,19 @@
 
 require 'spree/core/class_constantizer'
 
-module Spree
+module Solidus
   module Event
     class Configuration
       def subscribers
-        @subscribers ||= ::Spree::Core::ClassConstantizer::Set.new.tap do |set|
-          set << 'Spree::MailerSubscriber'
+        @subscribers ||= ::Solidus::Core::ClassConstantizer::Set.new.tap do |set|
+          set << 'Solidus::MailerSubscriber'
         end
       end
 
       attr_writer :adapter, :suffix
 
       def adapter
-        @adapter ||= Spree::Event::Adapters::ActiveSupportNotifications
+        @adapter ||= Solidus::Event::Adapters::ActiveSupportNotifications
       end
 
       def suffix

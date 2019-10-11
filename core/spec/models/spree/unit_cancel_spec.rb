@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::UnitCancel do
+RSpec.describe Solidus::UnitCancel do
   let(:unit_cancel) { described_class.create!(inventory_unit: inventory_unit, reason: described_class::SHORT_SHIP) }
   let(:inventory_unit) { create(:inventory_unit) }
 
@@ -10,9 +10,9 @@ RSpec.describe Spree::UnitCancel do
     subject { unit_cancel.adjust! }
 
     it "creates an adjustment with the correct attributes" do
-      expect { subject }.to change{ Spree::Adjustment.count }.by(1)
+      expect { subject }.to change{ Solidus::Adjustment.count }.by(1)
 
-      adjustment = Spree::Adjustment.last
+      adjustment = Solidus::Adjustment.last
       expect(adjustment.adjustable).to eq inventory_unit.line_item
       expect(adjustment.amount).to eq(-10.0)
       expect(adjustment.order).to eq inventory_unit.order

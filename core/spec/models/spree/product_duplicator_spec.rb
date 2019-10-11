@@ -2,40 +2,40 @@
 
 require 'rails_helper'
 
-module Spree
-  RSpec.describe Spree::ProductDuplicator, type: :model do
+module Solidus
+  RSpec.describe Solidus::ProductDuplicator, type: :model do
     let(:product) { create(:product, properties: [create(:property, name: "MyProperty")]) }
-    let!(:duplicator) { Spree::ProductDuplicator.new(product) }
+    let!(:duplicator) { Solidus::ProductDuplicator.new(product) }
 
     let(:image) { File.open(File.expand_path('../../fixtures/thinking-cat.jpg', __dir__)) }
-    let(:params) { { viewable_id: product.master.id, viewable_type: 'Spree::Variant', attachment: image, alt: "position 1", position: 1 } }
+    let(:params) { { viewable_id: product.master.id, viewable_type: 'Solidus::Variant', attachment: image, alt: "position 1", position: 1 } }
 
     before do
-      Spree::Image.create(params)
+      Solidus::Image.create(params)
     end
 
     it "will duplicate the product" do
-      expect{ duplicator.duplicate }.to change{ Spree::Product.count }.by(1)
+      expect{ duplicator.duplicate }.to change{ Solidus::Product.count }.by(1)
     end
 
     context 'when image duplication enabled' do
       it "will duplicate the product images" do
-        expect{ duplicator.duplicate }.to change{ Spree::Image.count }.by(1)
+        expect{ duplicator.duplicate }.to change{ Solidus::Image.count }.by(1)
       end
     end
 
     context 'when image duplication disabled' do
-      let!(:duplicator) { Spree::ProductDuplicator.new(product, false) }
+      let!(:duplicator) { Solidus::ProductDuplicator.new(product, false) }
 
       it "will not duplicate the product images" do
-        expect{ duplicator.duplicate }.to change{ Spree::Image.count }.by(0)
+        expect{ duplicator.duplicate }.to change{ Solidus::Image.count }.by(0)
       end
     end
 
     context 'image duplication default' do
       context 'when default is set to true' do
         it 'clones images if no flag passed to initializer' do
-          expect{ duplicator.duplicate }.to change{ Spree::Image.count }.by(1)
+          expect{ duplicator.duplicate }.to change{ Solidus::Image.count }.by(1)
         end
       end
 
@@ -49,7 +49,7 @@ module Spree
         end
 
         it 'does not clone images if no flag passed to initializer' do
-          expect{ ProductDuplicator.new(product).duplicate }.to change{ Spree::Image.count }.by(0)
+          expect{ ProductDuplicator.new(product).duplicate }.to change{ Solidus::Image.count }.by(0)
         end
       end
     end
@@ -81,11 +81,11 @@ module Spree
 
       it "will duplciate the variants" do
         # will change the count by 3, since there will be a master variant as well
-        expect{ duplicator.duplicate }.to change{ Spree::Variant.count }.by(3)
+        expect{ duplicator.duplicate }.to change{ Solidus::Variant.count }.by(3)
       end
 
       it "will not duplicate the option values" do
-        expect{ duplicator.duplicate }.to change{ Spree::OptionValue.count }.by(0)
+        expect{ duplicator.duplicate }.to change{ Solidus::OptionValue.count }.by(0)
       end
     end
   end

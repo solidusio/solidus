@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::Promotion::Rules::UserRole, type: :model do
+RSpec.describe Solidus::Promotion::Rules::UserRole, type: :model do
   let(:rule) { described_class.new(preferred_role_ids: roles_for_rule) }
   let(:user) { create(:user, spree_roles: roles_for_user) }
   let(:roles_for_rule) { [] }
@@ -44,7 +44,7 @@ RSpec.describe Spree::Promotion::Rules::UserRole, type: :model do
 
   context '#eligible?(order)' do
     context 'order with no user' do
-      let(:order) { Spree::Order.new }
+      let(:order) { Solidus::Order.new }
 
       it 'should not be eligible' do
         expect(rule).to_not be_eligible(order)
@@ -52,7 +52,7 @@ RSpec.describe Spree::Promotion::Rules::UserRole, type: :model do
     end
 
     context 'order with user' do
-      let(:order) { Spree::Order.new(user: user) }
+      let(:order) { Solidus::Order.new(user: user) }
 
       context 'with any match policy' do
         before { rule.preferred_match_policy = 'any' }

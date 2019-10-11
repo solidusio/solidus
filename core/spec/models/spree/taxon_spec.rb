@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::Taxon, type: :model do
+RSpec.describe Solidus::Taxon, type: :model do
   context "#destroy" do
     subject(:nested_set_options) { described_class.acts_as_nested_set_options }
 

@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module Admin
     class ProductsController < ResourceController
-      helper 'spree/products'
+      helper 'solidus/products'
 
       before_action :load_data, except: [:index]
       update.before :update_before
@@ -43,7 +43,7 @@ module Spree
       end
 
       def destroy
-        @product = Spree::Product.friendly.find(params[:id])
+        @product = Solidus::Product.friendly.find(params[:id])
         @product.discard
 
         flash[:success] = t('spree.notice_messages.product_deleted')
@@ -78,7 +78,7 @@ module Spree
       end
 
       def find_resource
-        Spree::Product.with_deleted.friendly.find(params[:id])
+        Solidus::Product.with_deleted.friendly.find(params[:id])
       end
 
       def location_after_save
@@ -95,8 +95,8 @@ module Spree
       end
 
       def load_data
-        @tax_categories = Spree::TaxCategory.order(:name)
-        @shipping_categories = Spree::ShippingCategory.order(:name)
+        @tax_categories = Solidus::TaxCategory.order(:name)
+        @shipping_categories = Solidus::ShippingCategory.order(:name)
       end
 
       def collection
@@ -109,7 +109,7 @@ module Spree
               order(id: :asc).
               includes(product_includes).
               page(params[:page]).
-              per(Spree::Config[:admin_products_per_page])
+              per(Solidus::Config[:admin_products_per_page])
       end
 
       def update_before

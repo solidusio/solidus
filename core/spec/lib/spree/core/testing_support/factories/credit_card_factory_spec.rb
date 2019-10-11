@@ -4,7 +4,7 @@ require 'rails_helper'
 require 'spree/testing_support/factories/credit_card_factory'
 
 RSpec.describe 'credit card factory' do
-  let(:factory_class) { Spree::CreditCard }
+  let(:factory_class) { Solidus::CreditCard }
 
   describe 'plain credit card' do
     let(:factory) { :credit_card }

@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module Admin
-    class StyleGuideController < Spree::Admin::BaseController
+    class StyleGuideController < Solidus::Admin::BaseController
       respond_to :html
       layout 'spree/layouts/admin_style_guide'
 

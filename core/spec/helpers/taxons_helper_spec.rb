@@ -2,10 +2,10 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::TaxonsHelper, type: :helper do
+RSpec.describe Solidus::TaxonsHelper, type: :helper do
   let(:currency) { 'USD' }
   let(:pricing_options) do
-    Spree::Config.pricing_options_class.new(currency: currency)
+    Solidus::Config.pricing_options_class.new(currency: currency)
   end
   before do
     without_partial_double_verification do

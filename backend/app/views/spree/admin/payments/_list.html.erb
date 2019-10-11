@@ -10,12 +10,12 @@
   </colgroup>
   <thead>
     <tr data-hook="payments_header">
-      <th><%= Spree::Payment.human_attribute_name(:number) %></th>
-      <th><%= Spree::Payment.human_attribute_name(:created_at) %></th>
-      <th><%= Spree::PaymentMethod.model_name.human %></th>
-      <th><%= Spree::Payment.human_attribute_name(:response_code) %></th>
-      <th><%= Spree::Payment.human_attribute_name(:state) %></th>
-      <th class="align-right"><%= Spree::Payment.human_attribute_name(:amount) %></th>
+      <th><%= Solidus::Payment.human_attribute_name(:number) %></th>
+      <th><%= Solidus::Payment.human_attribute_name(:created_at) %></th>
+      <th><%= Solidus::PaymentMethod.model_name.human %></th>
+      <th><%= Solidus::Payment.human_attribute_name(:response_code) %></th>
+      <th><%= Solidus::Payment.human_attribute_name(:state) %></th>
+      <th class="align-right"><%= Solidus::Payment.human_attribute_name(:amount) %></th>
       <th class="actions"></th>
     </tr>
   </thead>

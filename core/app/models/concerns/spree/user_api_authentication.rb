@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module UserApiAuthentication
     def generate_spree_api_key!
       generate_spree_api_key

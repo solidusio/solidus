@@ -1,49 +1,49 @@
 # frozen_string_literal: true
 
-module Spree
-  class Variant < Spree::Base
+module Solidus
+  class Variant < Solidus::Base
     # Instances of this class represent the set of circumstances that influence how expensive a
     # variant is. For this particular pricing options class, country_iso and currency influence
     # the price of a variant.
     #
     # Pricing options can be instantiated from a line item or from the view context:
-    # @see Spree::LineItem#pricing_options
-    # @see Spree::Core::ControllerHelpers::Pricing#current_pricing_options
+    # @see Solidus::LineItem#pricing_options
+    # @see Solidus::Core::ControllerHelpers::Pricing#current_pricing_options
     #
     class PricingOptions
       # When editing variants in the admin, this is the standard price the admin interacts with:
       # The price in the admin's globally configured currency, for the admin's globally configured
       # country. These options get merged with any options the user provides when instantiating
       # new pricing options.
-      # @see Spree::Config.default_pricing_options
+      # @see Solidus::Config.default_pricing_options
       # @see #initialize
       # @return [Hash] The attributes that admin prices usually have
       #
       def self.default_price_attributes
         {
-          currency: Spree::Config.currency,
-          country_iso: Spree::Config.admin_vat_country_iso
+          currency: Solidus::Config.currency,
+          country_iso: Solidus::Config.admin_vat_country_iso
         }
       end
 
       # This creates the correct pricing options for a line item, taking into account
       # its currency and tax address country, if available.
-      # @see Spree::LineItem#set_pricing_attributes
-      # @see Spree::LineItem#pricing_options
-      # @return [Spree::Variant::PricingOptions] pricing options for pricing a line item
+      # @see Solidus::LineItem#set_pricing_attributes
+      # @see Solidus::LineItem#pricing_options
+      # @return [Solidus::Variant::PricingOptions] pricing options for pricing a line item
       #
       def self.from_line_item(line_item)
         tax_address = line_item.order.try!(:tax_address)
         new(
-          currency: line_item.currency || Spree::Config.currency,
+          currency: line_item.currency || Solidus::Config.currency,
           country_iso: tax_address && tax_address.country.try!(:iso)
         )
       end
 
       # This creates the correct pricing options for a price, so that we can easily find other prices
       # with the same pricing-relevant attributes and mark them as non-default.
-      # @see Spree::Price#set_default_price
-      # @return [Spree::Variant::PricingOptions] pricing options for pricing a line item
+      # @see Solidus::Price#set_default_price
+      # @return [Solidus::Variant::PricingOptions] pricing options for pricing a line item
       #
       def self.from_price(price)
         new(currency: price.currency, country_iso: price.country_iso)
@@ -51,10 +51,10 @@ module Spree
 
       # This creates the correct pricing options for a price, so the store owners can easily customize how to
       # find the pricing based on the view context, having available current_store, current_spree_user, request.host_name, etc.
-      # @return [Spree::Variant::PricingOptions] pricing options for pricing a line item
+      # @return [Solidus::Variant::PricingOptions] pricing options for pricing a line item
       def self.from_context(context)
         new(
-          currency: context.current_store.try!(:default_currency).presence || Spree::Config[:currency],
+          currency: context.current_store.try!(:default_currency).presence || Solidus::Config[:currency],
           country_iso: context.current_store.try!(:cart_tax_country_iso).presence
         )
       end
@@ -71,8 +71,8 @@ module Spree
       # this creates an array under the country_iso key that includes both the actual
       # country iso we want and nil as a shorthand for the fallback price.
       # This is useful so that we can determine the availability of variants by price:
-      # @see Spree::Variant.with_prices
-      # @see Spree::Core::Search::Base#retrieve_products
+      # @see Solidus::Variant.with_prices
+      # @see Solidus::Core::Search::Base#retrieve_products
       # @return [Hash] arguments to be passed into ActiveRecord.where()
       #
       def search_arguments

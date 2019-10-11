@@ -3,7 +3,7 @@
 require_dependency 'spree/calculator'
 require_dependency 'spree/returns_calculator'
 
-module Spree
+module Solidus
   module Calculator::Returns
     class DefaultRefundAmount < ReturnsCalculator
       def compute(return_item)

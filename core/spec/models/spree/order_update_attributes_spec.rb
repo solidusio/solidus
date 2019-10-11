@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-module Spree
+module Solidus
   RSpec.describe OrderUpdateAttributes do
     let(:order) { create(:order) }
     let(:payment_method) { create(:payment_method) }

@@ -2,13 +2,13 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::UserMethods do
+RSpec.describe Solidus::UserMethods do
   let(:test_user) { create :user }
 
   describe '#has_spree_role?' do
     subject { test_user.has_spree_role? name }
 
-    let(:role) { Spree::Role.create(name: name) }
+    let(:role) { Solidus::Role.create(name: name) }
     let(:name) { 'test' }
 
     context 'with a role' do
@@ -110,12 +110,12 @@ RSpec.describe Spree::UserMethods do
     end
 
     context 'without credit' do
-      it { is_expected.to eq(Spree::Money.new(0)) }
+      it { is_expected.to eq(Solidus::Money.new(0)) }
     end
 
     context 'with credit' do
       let!(:credit) { create(:store_credit, user: test_user, amount: 100) }
-      it { is_expected.to eq(Spree::Money.new(100)) }
+      it { is_expected.to eq(Solidus::Money.new(100)) }
     end
   end
 end

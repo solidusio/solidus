@@ -3,8 +3,8 @@
 require 'spec_helper'
 require 'shared_examples/protect_product_actions'
 
-module Spree
-  describe Spree::Api::ProductPropertiesController, type: :request do
+module Solidus
+  describe Solidus::Api::ProductPropertiesController, type: :request do
     let!(:product) { create(:product) }
     let!(:property_1) { product.product_properties.create(property_name: "My Property 1", value: "my value 1", position: 0) }
     let!(:property_2) { product.product_properties.create(property_name: "My Property 2", value: "my value 2", position: 1) }
@@ -41,8 +41,8 @@ module Spree
     end
 
     it 'can query the results through a parameter' do
-      Spree::ProductProperty.last.update_attribute(:value, 'loose')
-      property = Spree::ProductProperty.last
+      Solidus::ProductProperty.last.update_attribute(:value, 'loose')
+      property = Solidus::ProductProperty.last
       get spree.api_product_product_properties_path(product), params: { q: { value_cont: 'loose' } }
       expect(json_response['count']).to eq(1)
       expect(json_response['product_properties'].first['value']).to eq property.value

@@ -97,7 +97,7 @@
         <% order.line_item_adjustments.promotion.eligible.group_by(&:label).each do |label, adjustments| %>
           <tr class="total">
             <td colspan="4"><%= t('spree.promotion') %>: <strong><%= label %></strong></td>
-            <td class="total"><span><%= Spree::Money.new(adjustments.sum(&:amount), currency: order.currency) %></span></td>
+            <td class="total"><span><%= Solidus::Money.new(adjustments.sum(&:amount), currency: order.currency) %></span></td>
           </tr>
         <% end %>
       </tfoot>
@@ -108,7 +108,7 @@
     <% order.shipments.group_by { |s| s.selected_shipping_rate.name }.each do |name, shipments| %>
       <tr class="total" data-hook='shipment-row'>
         <td colspan="4"><%= t('spree.shipping') %>: <strong><%= name %></strong></td>
-        <td class="total"><span><%= Spree::Money.new(shipments.sum(&:total_before_tax), currency: order.currency).to_html %></span></td>
+        <td class="total"><span><%= Solidus::Money.new(shipments.sum(&:total_before_tax), currency: order.currency).to_html %></span></td>
       </tr>
     <% end %>
   </tfoot>
@@ -118,7 +118,7 @@
       <% order.all_adjustments.tax.group_by(&:label).each do |label, adjustments| %>
         <tr class="total">
           <td colspan="4"><%= t('spree.tax') %>: <strong><%= label %></strong></td>
-          <td class="total"><span><%= Spree::Money.new(adjustments.sum(&:amount), currency: order.currency) %></span></td>
+          <td class="total"><span><%= Solidus::Money.new(adjustments.sum(&:amount), currency: order.currency) %></span></td>
         </tr>
       <% end %>
     </tfoot>
@@ -135,7 +135,7 @@
 
   <tfoot id="order-charges" data-hook="order_details_adjustments">
     <% order.adjustments.eligible.each do |adjustment| %>
-    <% next if (adjustment.source_type == 'Spree::TaxRate') and (adjustment.amount == 0) %>
+    <% next if (adjustment.source_type == 'Solidus::TaxRate') and (adjustment.amount == 0) %>
       <tr class="total">
         <td colspan="4"><strong><%= adjustment.label %></strong></td>
         <td class="total"><span><%= adjustment.display_amount.to_html %></span></td>

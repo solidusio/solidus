@@ -5,7 +5,7 @@ require 'spree/testing_support/factories/state_factory'
 require 'spree/testing_support/factories/product_factory'
 
 FactoryBot.define do
-  factory :stock_location, class: 'Spree::StockLocation' do
+  factory :stock_location, class: 'Solidus::StockLocation' do
     name { 'NY Warehouse' }
     address1 { '1600 Pennsylvania Ave NW' }
     city { 'Washington' }
@@ -14,7 +14,7 @@ FactoryBot.define do
     active { true }
     backorderable_default { true }
 
-    country  { |stock_location| Spree::Country.first || stock_location.association(:country) }
+    country  { |stock_location| Solidus::Country.first || stock_location.association(:country) }
     state do |stock_location|
       carmen_country = Carmen::Country.coded(stock_location.country.iso)
       if carmen_country.subregions?

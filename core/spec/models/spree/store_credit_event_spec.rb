@@ -2,11 +2,11 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::StoreCreditEvent do
+RSpec.describe Solidus::StoreCreditEvent do
   describe ".exposed_events" do
     [
-      Spree::StoreCredit::ELIGIBLE_ACTION,
-      Spree::StoreCredit::AUTHORIZE_ACTION
+      Solidus::StoreCredit::ELIGIBLE_ACTION,
+      Solidus::StoreCredit::AUTHORIZE_ACTION
     ].each do |action|
       let(:action) { action }
       it "excludes #{action} actions" do
@@ -16,10 +16,10 @@ RSpec.describe Spree::StoreCreditEvent do
     end
 
     [
-      Spree::StoreCredit::VOID_ACTION,
-      Spree::StoreCredit::CREDIT_ACTION,
-      Spree::StoreCredit::CAPTURE_ACTION,
-      Spree::StoreCredit::ALLOCATION_ACTION
+      Solidus::StoreCredit::VOID_ACTION,
+      Solidus::StoreCredit::CREDIT_ACTION,
+      Solidus::StoreCredit::CAPTURE_ACTION,
+      Solidus::StoreCredit::ALLOCATION_ACTION
     ].each do |action|
       it "includes #{action} actions" do
         event = create(:store_credit_event, action: action)
@@ -29,7 +29,7 @@ RSpec.describe Spree::StoreCreditEvent do
 
     it "excludes invalidated store credit events" do
       invalidated_store_credit = create(:store_credit, invalidated_at: Time.current)
-      event = create(:store_credit_event, action: Spree::StoreCredit::VOID_ACTION, store_credit: invalidated_store_credit)
+      event = create(:store_credit_event, action: Solidus::StoreCredit::VOID_ACTION, store_credit: invalidated_store_credit)
       expect(described_class.exposed_events).not_to include event
     end
   end
@@ -168,7 +168,7 @@ RSpec.describe Spree::StoreCreditEvent do
     end
 
     context "for allocation events" do
-      let(:event) { create(:store_credit_event, action: Spree::StoreCredit::ALLOCATION_ACTION) }
+      let(:event) { create(:store_credit_event, action: Solidus::StoreCredit::ALLOCATION_ACTION) }
 
       it "returns false" do
         expect(subject).to eq false
@@ -176,7 +176,7 @@ RSpec.describe Spree::StoreCreditEvent do
     end
 
     context "for void events" do
-      let(:event) { create(:store_credit_event, action: Spree::StoreCredit::VOID_ACTION) }
+      let(:event) { create(:store_credit_event, action: Solidus::StoreCredit::VOID_ACTION) }
 
       it "returns false" do
         expect(subject).to eq false
@@ -184,7 +184,7 @@ RSpec.describe Spree::StoreCreditEvent do
     end
 
     context "for credit events" do
-      let(:event) { create(:store_credit_event, action: Spree::StoreCredit::CREDIT_ACTION) }
+      let(:event) { create(:store_credit_event, action: Solidus::StoreCredit::CREDIT_ACTION) }
 
       it "returns false" do
         expect(subject).to eq false
@@ -197,12 +197,12 @@ RSpec.describe Spree::StoreCreditEvent do
 
     subject { create(:store_credit_auth_event, amount: event_amount) }
 
-    it "returns a Spree::Money instance" do
-      expect(subject.display_amount).to be_instance_of(Spree::Money)
+    it "returns a Solidus::Money instance" do
+      expect(subject.display_amount).to be_instance_of(Solidus::Money)
     end
 
     it "uses the events amount attribute" do
-      expect(subject.display_amount).to eq Spree::Money.new(event_amount, { currency: subject.currency })
+      expect(subject.display_amount).to eq Solidus::Money.new(event_amount, { currency: subject.currency })
     end
   end
 
@@ -211,12 +211,12 @@ RSpec.describe Spree::StoreCreditEvent do
 
     subject { create(:store_credit_auth_event, user_total_amount: user_total_amount) }
 
-    it "returns a Spree::Money instance" do
-      expect(subject.display_user_total_amount).to be_instance_of(Spree::Money)
+    it "returns a Solidus::Money instance" do
+      expect(subject.display_user_total_amount).to be_instance_of(Solidus::Money)
     end
 
     it "uses the events user_total_amount attribute" do
-      expect(subject.display_user_total_amount).to eq Spree::Money.new(user_total_amount, { currency: subject.currency })
+      expect(subject.display_user_total_amount).to eq Solidus::Money.new(user_total_amount, { currency: subject.currency })
     end
   end
 
@@ -225,12 +225,12 @@ RSpec.describe Spree::StoreCreditEvent do
 
     subject { create(:store_credit_auth_event, amount_remaining: amount_remaining) }
 
-    it "returns a Spree::Money instance" do
-      expect(subject.display_remaining_amount).to be_instance_of(Spree::Money)
+    it "returns a Solidus::Money instance" do
+      expect(subject.display_remaining_amount).to be_instance_of(Solidus::Money)
     end
 
     it "uses the events amount_remaining attribute" do
-      expect(subject.display_remaining_amount).to eq Spree::Money.new(amount_remaining, { currency: subject.currency })
+      expect(subject.display_remaining_amount).to eq Solidus::Money.new(amount_remaining, { currency: subject.currency })
     end
   end
 
@@ -256,7 +256,7 @@ RSpec.describe Spree::StoreCreditEvent do
     end
 
     context "allocation event" do
-      let(:event) { create(:store_credit_event, action: Spree::StoreCredit::ALLOCATION_ACTION) }
+      let(:event) { create(:store_credit_event, action: Solidus::StoreCredit::ALLOCATION_ACTION) }
 
       it "returns the action's display text" do
         expect(subject).to eq "Added"
@@ -264,7 +264,7 @@ RSpec.describe Spree::StoreCreditEvent do
     end
 
     context "void event" do
-      let(:event) { create(:store_credit_event, action: Spree::StoreCredit::VOID_ACTION) }
+      let(:event) { create(:store_credit_event, action: Solidus::StoreCredit::VOID_ACTION) }
 
       it "returns the action's display text" do
         expect(subject).to eq "Credit"
@@ -272,7 +272,7 @@ RSpec.describe Spree::StoreCreditEvent do
     end
 
     context "credit event" do
-      let(:event) { create(:store_credit_event, action: Spree::StoreCredit::CREDIT_ACTION) }
+      let(:event) { create(:store_credit_event, action: Solidus::StoreCredit::CREDIT_ACTION) }
 
       it "returns the action's display text" do
         expect(subject).to eq "Credit"
@@ -296,7 +296,7 @@ RSpec.describe Spree::StoreCreditEvent do
     end
 
     context "eligible event" do
-      let(:event) { create(:store_credit_event, action: Spree::StoreCredit::ELIGIBLE_ACTION) }
+      let(:event) { create(:store_credit_event, action: Solidus::StoreCredit::ELIGIBLE_ACTION) }
 
       it "returns nil" do
         expect(subject).to be_nil
@@ -318,7 +318,7 @@ RSpec.describe Spree::StoreCreditEvent do
       let(:order)              { create(:order) }
       let!(:payment)           { create(:store_credit_payment, order: order, response_code: authorization_code) }
 
-      subject { create(:store_credit_auth_event, action: Spree::StoreCredit::CAPTURE_ACTION, authorization_code: authorization_code) }
+      subject { create(:store_credit_auth_event, action: Solidus::StoreCredit::CAPTURE_ACTION, authorization_code: authorization_code) }
 
       it "returns the order associated with the payment" do
         expect(subject.order).to eq order

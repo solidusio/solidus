@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module Api
-    class OrdersController < Spree::Api::BaseController
+    class OrdersController < Solidus::Api::BaseController
       class_attribute :admin_shipment_attributes
       self.admin_shipment_attributes = [:shipping_method, :stock_location, inventory_units: [:variant_id, :sku]]
 
@@ -18,7 +18,7 @@ module Spree
       around_action :lock_order, except: [:create, :mine, :current, :index, :show]
 
       # Dynamically defines our stores checkout steps to ensure we check authorization on each step.
-      Spree::Order.checkout_steps.keys.each do |step|
+      Solidus::Order.checkout_steps.keys.each do |step|
         define_method step do
           authorize! :update, @order, params[:token]
         end
@@ -34,10 +34,10 @@ module Spree
         authorize! :create, Order
 
         if can?(:admin, Order)
-          @order = Spree::Core::Importer::Order.import(determine_order_user, order_params)
+          @order = Solidus::Core::Importer::Order.import(determine_order_user, order_params)
           respond_with(@order, default_template: :show, status: 201)
         else
-          @order = Spree::Order.create!(user: current_api_user, store: current_store)
+          @order = Solidus::Order.create!(user: current_api_user, store: current_store)
           if @order.contents.update_cart order_params
             respond_with(@order, default_template: :show, status: 201)
           else
@@ -61,7 +61,7 @@ module Spree
           :line_items
         ]
         @orders = paginate(
-          Spree::Order
+          Solidus::Order
             .ransack(params[:q])
             .result
             .includes(orders_includes)
@@ -80,7 +80,7 @@ module Spree
         if @order.contents.update_cart(order_params)
           user_id = params[:order][:user_id]
           if can?(:admin, @order) && user_id
-            @order.associate_user!(Spree.user_class.find(user_id))
+            @order.associate_user!(Solidus.user_class.find(user_id))
           end
           respond_with(@order, default_template: :show)
         else
@@ -106,7 +106,7 @@ module Spree
       end
 
       def apply_coupon_code
-        Spree::Deprecation.warn('This method is deprecated. Please use `Spree::Api::CouponCodesController#create` endpoint instead.')
+        Solidus::Deprecation.warn('This method is deprecated. Please use `Solidus::Api::CouponCodesController#create` endpoint instead.')
 
         authorize! :update, @order, order_token
         @order.coupon_code = params[:coupon_code]
@@ -141,18 +141,18 @@ module Spree
       # @api public
       def determine_order_user
         if order_params[:user_id].present?
-          Spree.user_class.find(order_params[:user_id])
+          Solidus.user_class.find(order_params[:user_id])
         else
           current_api_user
         end
       end
 
       def permitted_order_attributes
-        can?(:admin, Spree::Order) ? (super + admin_order_attributes) : super
+        can?(:admin, Solidus::Order) ? (super + admin_order_attributes) : super
       end
 
       def permitted_shipment_attributes
-        if can?(:admin, Spree::Shipment)
+        if can?(:admin, Solidus::Shipment)
           super + admin_shipment_attributes
         else
           super
@@ -160,7 +160,7 @@ module Spree
       end
 
       def permitted_payment_attributes
-        if can?(:admin, Spree::Payment)
+        if can?(:admin, Solidus::Payment)
           super + admin_payment_attributes
         else
           super
@@ -168,7 +168,7 @@ module Spree
       end
 
       def find_order(_lock = false)
-        @order = Spree::Order.find_by!(number: params[:id])
+        @order = Solidus::Order.find_by!(number: params[:id])
       end
 
       def order_id

@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   # Base class for all promotion rules
-  class PromotionRule < Spree::Base
-    belongs_to :promotion, class_name: 'Spree::Promotion', inverse_of: :promotion_rules, optional: true
+  class PromotionRule < Solidus::Base
+    belongs_to :promotion, class_name: 'Solidus::Promotion', inverse_of: :promotion_rules, optional: true
 
     scope :of_type, ->(t) { where(type: t) }
 
@@ -15,11 +15,11 @@ module Spree
     end
 
     def applicable?(_promotable)
-      raise NotImplementedError, "applicable? should be implemented in a sub-class of Spree::PromotionRule"
+      raise NotImplementedError, "applicable? should be implemented in a sub-class of Solidus::PromotionRule"
     end
 
     def eligible?(_promotable, _options = {})
-      raise NotImplementedError, "eligible? should be implemented in a sub-class of Spree::PromotionRule"
+      raise NotImplementedError, "eligible? should be implemented in a sub-class of Solidus::PromotionRule"
     end
 
     # This states if a promotion can be applied to the specified line item
@@ -39,7 +39,7 @@ module Spree
     private
 
     def unique_per_promotion
-      if Spree::PromotionRule.exists?(promotion_id: promotion_id, type: self.class.name)
+      if Solidus::PromotionRule.exists?(promotion_id: promotion_id, type: self.class.name)
         errors[:base] << "Promotion already contains this rule type"
       end
     end

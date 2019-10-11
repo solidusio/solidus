@@ -2,7 +2,7 @@
 
 require 'active_support/deprecation'
 
-module Spree
+module Solidus
   Deprecation = ActiveSupport::Deprecation.new('3.0', 'Solidus')
 
   # This DeprecatedInstanceVariableProxy transforms instance variable to
@@ -13,7 +13,7 @@ module Spree
   #
   #   class Example
   #     def initialize(deprecator)
-  #       @request = Spree::DeprecatedInstanceVariableProxy.new(self, :request, :@request, deprecator, "Please, do not use this thing.")
+  #       @request = Solidus::DeprecatedInstanceVariableProxy.new(self, :request, :@request, deprecator, "Please, do not use this thing.")
   #       @_request = :a_request
   #     end
   #
@@ -31,9 +31,9 @@ module Spree
   # variable via +request+ method and execute the same method on non-proxy
   # instance variable.
   #
-  # Default deprecator is <tt>Spree::Deprecation</tt>.
+  # Default deprecator is <tt>Solidus::Deprecation</tt>.
   class DeprecatedInstanceVariableProxy < ActiveSupport::Deprecation::DeprecationProxy
-    def initialize(instance, method, var = "@#{method}", deprecator = Spree::Deprecation, message = nil)
+    def initialize(instance, method, var = "@#{method}", deprecator = Solidus::Deprecation, message = nil)
       @instance = instance
       @method = method
       @var = var

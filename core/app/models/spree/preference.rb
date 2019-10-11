@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Spree::Preference < Spree::Base
+class Solidus::Preference < Solidus::Base
   serialize :value
 
   validates :key, presence: true, uniqueness: { allow_blank: true }

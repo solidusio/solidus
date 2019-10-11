@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-module Spree
+module Solidus
   describe Api::AddressBooksController, type: :request do
     let!(:state) { create(:state) }
     let!(:harry_address_attributes) do
@@ -121,7 +121,7 @@ module Spree
     context 'on behalf of address book owner' do
       context 'with ability' do
         before do
-          Spree::Config.roles.assign_permissions 'Prefect', [Spree::PermissionSets::UserManagement]
+          Solidus::Config.roles.assign_permissions 'Prefect', [Solidus::PermissionSets::UserManagement]
           create(:user, spree_api_key: 'galleon', spree_roles: [build(:role, name: 'Prefect')])
         end
 

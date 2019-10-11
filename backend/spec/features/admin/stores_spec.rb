@@ -18,7 +18,7 @@ describe 'Stores', type: :feature do
       select 'EUR', from: 'store_default_currency'
       click_button 'Create'
 
-      @store = Spree::Store.last
+      @store = Solidus::Store.last
 
       expect(@store.default_currency).to eq 'EUR'
     end

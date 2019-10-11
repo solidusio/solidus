@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-module Spree
-  class ReturnItem < Spree::Base
+module Solidus
+  class ReturnItem < Solidus::Base
     module ExchangeVariantEligibility
       class SameOptionValue
         class_attribute :option_type_restrictions
         self.option_type_restrictions = []
         # This can be configured in an initializer, e.g.:
-        # Spree::ReturnItem::ExchangeVariantEligibility::SameOptionValue.option_type_restrictions = ["size", "color"]
+        # Solidus::ReturnItem::ExchangeVariantEligibility::SameOptionValue.option_type_restrictions = ["size", "color"]
         #
         # This restriction causes only variants that share the same option value for the
         # specified option types to be returned. e.g.:
@@ -30,7 +30,7 @@ module Spree
             # Finds all the OptionValueVariants that have any of the
             # relevant option values, groups by variant and ensures the variant
             # has ALL of the relevant option values.
-            variant_ids = Spree::OptionValuesVariant.
+            variant_ids = Solidus::OptionValuesVariant.
               where(variant_id: product_variants.distinct.pluck(:id)).
               where(option_value: relevant_option_values).
               group(:variant_id).

@@ -3,9 +3,9 @@
 require 'rails_helper'
 require 'shared_examples/calculator_shared_examples'
 
-RSpec.describe Spree::Calculator::Shipping::PriceSack, type: :model do
+RSpec.describe Solidus::Calculator::Shipping::PriceSack, type: :model do
   let(:calculator) do
-    calculator = Spree::Calculator::PriceSack.new
+    calculator = Solidus::Calculator::PriceSack.new
     calculator.preferred_minimal_amount = 5
     calculator.preferred_normal_amount = 10
     calculator.preferred_discount_amount = 1
@@ -14,8 +14,8 @@ RSpec.describe Spree::Calculator::Shipping::PriceSack, type: :model do
 
   it_behaves_like 'a calculator with a description'
 
-  let(:order) { stub_model(Spree::Order) }
-  let(:shipment) { stub_model(Spree::Shipment, amount: 10) }
+  let(:order) { stub_model(Solidus::Order) }
+  let(:shipment) { stub_model(Solidus::Shipment, amount: 10) }
 
   # Regression test for https://github.com/spree/spree/issues/714 and https://github.com/spree/spree/issues/739
   it "computes with an order object" do

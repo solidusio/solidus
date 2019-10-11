@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-module Spree
+module Solidus
   RSpec.describe StockLocation, type: :model do
     subject { create(:stock_location_with_items, backorderable_default: true) }
     let(:stock_item) { subject.stock_items.order(:id).first }
@@ -141,7 +141,7 @@ module Spree
     it 'can be deactivated' do
       create(:stock_location, active: true)
       create(:stock_location, active: false)
-      expect(Spree::StockLocation.active.count).to eq 1
+      expect(Solidus::StockLocation.active.count).to eq 1
     end
 
     it 'ensures only one stock location is default at a time' do
@@ -243,13 +243,13 @@ module Spree
       end
 
       context 'both name and abbr is present' do
-        let(:state) { stub_model(Spree::State, name: 'virginia', abbr: 'va') }
+        let(:state) { stub_model(Solidus::State, name: 'virginia', abbr: 'va') }
         subject { StockLocation.create(name: "testing", state: state, state_name: nil) }
         specify { expect(subject.state_text).to eq('va') }
       end
 
       context 'only name is present' do
-        let(:state) { stub_model(Spree::State, name: 'virginia', abbr: nil) }
+        let(:state) { stub_model(Solidus::State, name: 'virginia', abbr: nil) }
         subject { StockLocation.create(name: "testing", state: state, state_name: nil) }
         specify { expect(subject.state_text).to eq('virginia') }
       end

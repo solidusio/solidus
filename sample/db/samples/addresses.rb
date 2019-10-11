@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-united_states = Spree::Country.find_by!(iso: "US")
-new_york = Spree::State.find_by!(name: "New York")
+united_states = Solidus::Country.find_by!(iso: "US")
+new_york = Solidus::State.find_by!(name: "New York")
 
 first_names = ["Sterling", "Jennette", "Salome", "Lyla", "Lola", "Cheree",
                "Hettie", "Barbie", "Amelia", "Marceline", "Keeley", "Mi",
@@ -27,7 +27,7 @@ phone_numbers = ["(392)859-7319 x670", "738-831-3210 x6047",
                  "(662)877-7894 x703", "689.578.8564 x72399"]
 
 2.times do
-  Spree::Address.create!(
+  Solidus::Address.create!(
     firstname: first_names.sample,
     lastname: last_names.sample,
     address1: street_addresses.sample,

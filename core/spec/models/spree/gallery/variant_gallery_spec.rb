@@ -3,7 +3,7 @@
 require 'rails_helper'
 require 'spree/testing_support/shared_examples/gallery'
 
-RSpec.describe Spree::Gallery::VariantGallery do
+RSpec.describe Solidus::Gallery::VariantGallery do
   let(:gallery) { described_class.new(variant) }
   let(:variant) { build_stubbed(:variant) }
 

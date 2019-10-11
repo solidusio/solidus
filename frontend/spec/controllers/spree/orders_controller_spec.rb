@@ -2,13 +2,13 @@
 
 require 'spec_helper'
 
-describe Spree::OrdersController, type: :controller do
+describe Solidus::OrdersController, type: :controller do
   let!(:store) { create(:store) }
   let(:user) { create(:user) }
 
   context "Order model mock" do
     let(:order) do
-      Spree::Order.create!
+      Solidus::Order.create!
     end
     let(:variant) { create(:variant) }
 
@@ -22,7 +22,7 @@ describe Spree::OrdersController, type: :controller do
         expect(response).to be_redirect
         expect(cookies.signed[:guest_token]).not_to be_blank
 
-        order_by_token = Spree::Order.find_by(guest_token: cookies.signed[:guest_token])
+        order_by_token = Solidus::Order.find_by(guest_token: cookies.signed[:guest_token])
         assigned_order = assigns[:order]
 
         expect(assigned_order).to eq order_by_token
@@ -44,10 +44,10 @@ describe Spree::OrdersController, type: :controller do
 
         it "shows an error when population fails" do
           request.env["HTTP_REFERER"] = spree.root_path
-          allow_any_instance_of(Spree::LineItem).to(
+          allow_any_instance_of(Solidus::LineItem).to(
             receive(:valid?).and_return(false)
           )
-          allow_any_instance_of(Spree::LineItem).to(
+          allow_any_instance_of(Solidus::LineItem).to(
             receive_message_chain(:errors, :full_messages).
               and_return(["Order population failed"])
           )
@@ -76,8 +76,8 @@ describe Spree::OrdersController, type: :controller do
           it "should populate order with 1 of given variant" do
             expect do
               post :populate, params: { variant_id: variant.id, quantity: '' }
-            end.to change { Spree::Order.count }.by(1)
-            order = Spree::Order.last
+            end.to change { Solidus::Order.count }.by(1)
+            order = Solidus::Order.last
             expect(response).to redirect_to spree.cart_path
             expect(order.line_items.size).to eq(1)
             line_item = order.line_items.first
@@ -90,8 +90,8 @@ describe Spree::OrdersController, type: :controller do
           it "should populate order with 1 of given variant" do
             expect do
               post :populate, params: { variant_id: variant.id, quantity: nil }
-            end.to change { Spree::Order.count }.by(1)
-            order = Spree::Order.last
+            end.to change { Solidus::Order.count }.by(1)
+            order = Solidus::Order.last
             expect(response).to redirect_to spree.cart_path
             expect(order.line_items.size).to eq(1)
             line_item = order.line_items.first
@@ -137,7 +137,7 @@ describe Spree::OrdersController, type: :controller do
             let(:coupon_code) { "" }
 
             it 'does not try to apply coupon code' do
-              expect(Spree::PromotionHandler::Coupon).not_to receive :new
+              expect(Solidus::PromotionHandler::Coupon).not_to receive :new
 
               put :update, params: { state: order.state, order: { coupon_code: coupon_code } }
 
@@ -146,12 +146,12 @@ describe Spree::OrdersController, type: :controller do
           end
 
           context "when coupon code is applied" do
-            let(:promotion_handler) { instance_double('Spree::PromotionHandler::Coupon', error: nil, success: 'Coupon Applied!') }
+            let(:promotion_handler) { instance_double('Solidus::PromotionHandler::Coupon', error: nil, success: 'Coupon Applied!') }
 
             it "continues checkout flow normally" do
-              expect(Spree::Deprecation).to receive(:warn)
+              expect(Solidus::Deprecation).to receive(:warn)
 
-              expect(Spree::PromotionHandler::Coupon)
+              expect(Solidus::PromotionHandler::Coupon)
                 .to receive_message_chain(:new, :apply)
                 .and_return(promotion_handler)
 
@@ -162,12 +162,12 @@ describe Spree::OrdersController, type: :controller do
             end
 
             context "when coupon code is not applied" do
-              let(:promotion_handler) { instance_double('Spree::PromotionHandler::Coupon', error: 'Some error', success: false) }
+              let(:promotion_handler) { instance_double('Solidus::PromotionHandler::Coupon', error: 'Some error', success: false) }
 
               it "render cart with coupon error" do
-                expect(Spree::Deprecation).to receive(:warn)
+                expect(Solidus::Deprecation).to receive(:warn)
 
-                expect(Spree::PromotionHandler::Coupon)
+                expect(Solidus::PromotionHandler::Coupon)
                   .to receive_message_chain(:new, :apply)
                   .and_return(promotion_handler)
 
@@ -211,7 +211,7 @@ describe Spree::OrdersController, type: :controller do
   end
 
   context "line items quantity is 0" do
-    let(:order) { Spree::Order.create(store: store) }
+    let(:order) { Solidus::Order.create(store: store) }
     let(:variant) { create(:variant) }
     let!(:line_item) { order.contents.add(variant, 1) }
 

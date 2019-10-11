@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module Stock
     module Splitter
-      class Weight < Spree::Stock::Splitter::Base
+      class Weight < Solidus::Stock::Splitter::Base
         cattr_accessor :threshold do
           150
         end

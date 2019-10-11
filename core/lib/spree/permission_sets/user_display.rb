@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module PermissionSets
     class UserDisplay < PermissionSets::Base
       def activate!
-        can [:display, :admin, :edit, :addresses, :orders, :items], Spree.user_class
-        can [:display, :admin], Spree::StoreCredit
-        can :display, Spree::Role
+        can [:display, :admin, :edit, :addresses, :orders, :items], Solidus.user_class
+        can [:display, :admin], Solidus::StoreCredit
+        can :display, Solidus::Role
       end
     end
   end

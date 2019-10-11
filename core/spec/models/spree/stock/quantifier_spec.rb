@@ -10,7 +10,7 @@ RSpec.shared_examples_for 'unlimited supply' do
   end
 end
 
-module Spree
+module Solidus
   module Stock
     RSpec.describe Quantifier, type: :model do
       let(:target_stock_location) { nil }
@@ -99,7 +99,7 @@ module Spree
         let(:target_stock_location) { stock_location_3 }
 
         before do
-          Spree::StockItem.update_all(count_on_hand: 0, backorderable: false)
+          Solidus::StockItem.update_all(count_on_hand: 0, backorderable: false)
           stock_location_3.stock_items.where(variant_id: stock_item.variant).update_all(count_on_hand: 5, backorderable: false)
         end
 

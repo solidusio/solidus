@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-module Spree
-  class CustomerReturn < Spree::Base
+module Solidus
+  class CustomerReturn < Solidus::Base
     belongs_to :stock_location, optional: true
 
     has_many :return_items, inverse_of: :customer_return
@@ -19,7 +19,7 @@ module Spree
 
     extend DisplayMoney
     money_methods :pre_tax_total, :total, :total_excluding_vat, :amount
-    deprecate display_pre_tax_total: :display_total_excluding_vat, deprecator: Spree::Deprecation
+    deprecate display_pre_tax_total: :display_total_excluding_vat, deprecator: Solidus::Deprecation
 
     delegate :currency, to: :order
     delegate :id, to: :order, prefix: true, allow_nil: true
@@ -32,7 +32,7 @@ module Spree
       return_items.map(&:total_excluding_vat).sum
     end
     alias pre_tax_total total_excluding_vat
-    deprecate pre_tax_total: :total_excluding_vat, deprecator: Spree::Deprecation
+    deprecate pre_tax_total: :total_excluding_vat, deprecator: Solidus::Deprecation
 
     def amount
       return_items.sum(:amount)

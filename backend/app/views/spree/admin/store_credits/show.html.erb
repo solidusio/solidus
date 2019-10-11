@@ -1,6 +1,6 @@
-<% admin_breadcrumb(link_to plural_resource_name(Spree::LegacyUser), spree.admin_users_path) %>
+<% admin_breadcrumb(link_to plural_resource_name(Solidus::LegacyUser), spree.admin_users_path) %>
 <% admin_breadcrumb(link_to @user.email, edit_admin_user_url(@user)) %>
-<% admin_breadcrumb(link_to Spree::StoreCredit.model_name.human, spree.admin_user_store_credits_path(@user)) %>
+<% admin_breadcrumb(link_to Solidus::StoreCredit.model_name.human, spree.admin_user_store_credits_path(@user)) %>
 <% admin_breadcrumb(@store_credit.display_amount.to_html) %>
 
 
@@ -79,12 +79,12 @@
     <thead>
       <tr>
         <th><%= t('spree.date') %></th>
-        <th><%= Spree::StoreCreditEvent.human_attribute_name(:action) %></th>
+        <th><%= Solidus::StoreCreditEvent.human_attribute_name(:action) %></th>
         <th><%= t('spree.admin.store_credits.amount_credited') %></th>
         <th><%= t('spree.admin.store_credits.created_by') %></th>
-        <th><%= Spree::StoreCreditEvent.human_attribute_name(:user_total_amount) %></th>
-        <th><%= Spree::StoreCreditEvent.human_attribute_name(:amount_remaining) %></th>
-        <th><%= Spree::StoreCreditReason.human_attribute_name(:name) %></th>
+        <th><%= Solidus::StoreCreditEvent.human_attribute_name(:user_total_amount) %></th>
+        <th><%= Solidus::StoreCreditEvent.human_attribute_name(:amount_remaining) %></th>
+        <th><%= Solidus::StoreCreditReason.human_attribute_name(:name) %></th>
       </tr>
     </thead>
     <tbody>

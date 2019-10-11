@@ -23,7 +23,7 @@ country_values = -> do
 
   # find entires already in the database (so that we may ignore them)
   existing_country_isos =
-    Spree::Country.where(iso: carmen_countries.map(&:alpha_2_code)).pluck(:iso)
+    Solidus::Country.where(iso: carmen_countries.map(&:alpha_2_code)).pluck(:iso)
 
   # create VALUES statements for each country _not_ already in the database
   carmen_countries

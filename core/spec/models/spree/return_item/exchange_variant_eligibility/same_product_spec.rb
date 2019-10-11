@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-module Spree
+module Solidus
   module ReturnItem::ExchangeVariantEligibility
     RSpec.describe SameProduct, type: :model do
       describe ".eligible_variants" do

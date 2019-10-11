@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module Stock
     # A simple implementation of Stock Coordination
     #
@@ -12,33 +12,33 @@ module Spree
     #   * Combine allocated and on hand inventory into a single shipment per-location
     #
     # Allocation logic can be changed using a custom class (as
-    # configured in Spree::Config::stock_allocator_class )
+    # configured in Solidus::Config::stock_allocator_class )
     #
     # After allocation, splitters are run on each Package (as configured in
-    # Spree::Config.environment.stock_splitters)
+    # Solidus::Config.environment.stock_splitters)
     #
     # Finally, shipping rates are calculated using the class configured as
-    # Spree::Config.stock.estimator_class.
+    # Solidus::Config.stock.estimator_class.
     class SimpleCoordinator
       attr_reader :order
 
       def initialize(order, inventory_units = nil)
         @order = order
         @inventory_units = inventory_units || InventoryUnitBuilder.new(order).units
-        @splitters = Spree::Config.environment.stock_splitters
+        @splitters = Solidus::Config.environment.stock_splitters
 
-        filtered_stock_locations = Spree::Config.stock.location_filter_class.new(Spree::StockLocation.all, @order).filter
-        sorted_stock_locations = Spree::Config.stock.location_sorter_class.new(filtered_stock_locations).sort
+        filtered_stock_locations = Solidus::Config.stock.location_filter_class.new(Solidus::StockLocation.all, @order).filter
+        sorted_stock_locations = Solidus::Config.stock.location_sorter_class.new(filtered_stock_locations).sort
         @stock_locations = sorted_stock_locations
 
         @inventory_units_by_variant = @inventory_units.group_by(&:variant)
-        @desired = Spree::StockQuantities.new(@inventory_units_by_variant.transform_values(&:count))
-        @availability = Spree::Stock::Availability.new(
+        @desired = Solidus::StockQuantities.new(@inventory_units_by_variant.transform_values(&:count))
+        @availability = Solidus::Stock::Availability.new(
           variants: @desired.variants,
           stock_locations: @stock_locations
         )
 
-        @allocator = Spree::Config.stock.allocator_class.new(@availability)
+        @allocator = Solidus::Config.stock.allocator_class.new(@availability)
       end
 
       def shipments
@@ -52,19 +52,19 @@ module Spree
         on_hand_packages, backordered_packages, leftover = @allocator.allocate_inventory(@desired)
 
         unless leftover.empty?
-          raise Spree::Order::InsufficientStock
+          raise Solidus::Order::InsufficientStock
         end
 
         packages = @stock_locations.map do |stock_location|
           # Combine on_hand and backorders into a single package per-location
-          on_hand = on_hand_packages[stock_location.id] || Spree::StockQuantities.new
-          backordered = backordered_packages[stock_location.id] || Spree::StockQuantities.new
+          on_hand = on_hand_packages[stock_location.id] || Solidus::StockQuantities.new
+          backordered = backordered_packages[stock_location.id] || Solidus::StockQuantities.new
 
           # Skip this location it has no inventory
           next if on_hand.empty? && backordered.empty?
 
           # Turn our raw quantities into a Stock::Package
-          package = Spree::Stock::Package.new(stock_location)
+          package = Solidus::Stock::Package.new(stock_location)
           package.add_multiple(get_units(on_hand), :on_hand)
           package.add_multiple(get_units(backordered), :backordered)
 
@@ -77,7 +77,7 @@ module Spree
         # Turn the Stock::Packages into a Shipment with rates
         packages.map do |package|
           shipment = package.shipment = package.to_shipment
-          shipment.shipping_rates = Spree::Config.stock.estimator_class.new.shipping_rates(package)
+          shipment.shipping_rates = Solidus::Config.stock.estimator_class.new.shipping_rates(package)
           shipment
         end
       end
@@ -85,7 +85,7 @@ module Spree
       def split_packages(initial_packages)
         initial_packages.flat_map do |initial_package|
           stock_location = initial_package.stock_location
-          Spree::Stock::SplitterChain.new(stock_location, @splitters).split([initial_package])
+          Solidus::Stock::SplitterChain.new(stock_location, @splitters).split([initial_package])
         end
       end
 
@@ -101,7 +101,7 @@ module Spree
         end
       end
       deprecate allocate_inventory: 'allocate_inventory is deprecated. Please write your own allocator defining' \
-        'a Spree::Stock::Allocator::Base subclass', deprecator: Spree::Deprecation
+        'a Solidus::Stock::Allocator::Base subclass', deprecator: Solidus::Deprecation
 
       def sort_availability(availability)
         sorted_availability = availability.sort_by do |stock_location_id, _|

@@ -4,7 +4,7 @@ require 'rails_helper'
 require 'spree/testing_support/factories/return_item_factory'
 
 RSpec.describe 'return item factory' do
-  let(:factory_class) { Spree::ReturnItem }
+  let(:factory_class) { Solidus::ReturnItem }
 
   describe 'plain return item' do
     let(:factory) { :return_item }

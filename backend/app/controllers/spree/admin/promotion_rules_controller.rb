@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-class Spree::Admin::PromotionRulesController < Spree::Admin::BaseController
-  helper 'spree/promotion_rules'
+class Solidus::Admin::PromotionRulesController < Solidus::Admin::BaseController
+  helper 'solidus/promotion_rules'
 
   before_action :load_promotion, only: [:create, :destroy]
   before_action :validate_promotion_rule_type, only: :create
@@ -32,11 +32,11 @@ class Spree::Admin::PromotionRulesController < Spree::Admin::BaseController
   private
 
   def load_promotion
-    @promotion = Spree::Promotion.find(params[:promotion_id])
+    @promotion = Solidus::Promotion.find(params[:promotion_id])
   end
 
   def model_class
-    Spree::PromotionRule
+    Solidus::PromotionRule
   end
 
   def validate_promotion_rule_type

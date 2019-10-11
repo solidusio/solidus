@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::Zone, type: :model do
+RSpec.describe Solidus::Zone, type: :model do
   describe 'for_address' do
     let(:new_york_address) { create(:address, state_code: "NY") }
     let(:alabama_address) { create(:address) }
@@ -13,7 +13,7 @@ RSpec.describe Spree::Zone, type: :model do
     let!(:united_states_zone) { create(:zone, countries: [new_york_address.country]) }
     let!(:canada_zone) { create(:zone, countries: [canada_address.country]) }
     let!(:north_america_zone) { create(:zone, countries: [canada_address.country, new_york_address.country]) }
-    subject { Spree::Zone.for_address(address) }
+    subject { Solidus::Zone.for_address(address) }
 
     context 'when there is no address' do
       let(:address) { nil }
@@ -57,7 +57,7 @@ RSpec.describe Spree::Zone, type: :model do
       before { country_zone.members.create(zoneable: country) }
 
       it 'should return a list of countries' do
-        Spree::Deprecation.silence do
+        Solidus::Deprecation.silence do
           expect(country_zone.country_list).to eq([country])
         end
       end
@@ -69,7 +69,7 @@ RSpec.describe Spree::Zone, type: :model do
       before { state_zone.members.create(zoneable: state) }
 
       it 'should return a list of countries' do
-        Spree::Deprecation.silence do
+        Solidus::Deprecation.silence do
           expect(state_zone.country_list).to eq([state.country])
         end
       end
@@ -166,7 +166,7 @@ RSpec.describe Spree::Zone, type: :model do
     let!(:country2) { create(:country, name: 'OtherCountry') }
     let!(:country3) { create(:country, name: 'TaxCountry') }
 
-    subject(:zones_with_shared_members) { Spree::Zone.with_shared_members(zone) }
+    subject(:zones_with_shared_members) { Solidus::Zone.with_shared_members(zone) }
 
     context 'when passing a zone with no members' do
       let!(:zone) { create :zone }

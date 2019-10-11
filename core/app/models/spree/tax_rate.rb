@@ -2,10 +2,10 @@
 
 require 'discard'
 
-module Spree
-  class TaxRate < Spree::Base
+module Solidus
+  class TaxRate < Solidus::Base
     acts_as_paranoid
-    include Spree::ParanoiaDeprecations
+    include Solidus::ParanoiaDeprecations
 
     include Discard::Model
     self.discard_column = :deleted_at
@@ -14,29 +14,29 @@ module Spree
     before_destroy :remove_adjustments_from_incomplete_orders
     before_discard :remove_adjustments_from_incomplete_orders
 
-    include Spree::CalculatedAdjustments
-    include Spree::AdjustmentSource
+    include Solidus::CalculatedAdjustments
+    include Solidus::AdjustmentSource
 
-    belongs_to :zone, class_name: "Spree::Zone", inverse_of: :tax_rates, optional: true
+    belongs_to :zone, class_name: "Solidus::Zone", inverse_of: :tax_rates, optional: true
 
     has_many :tax_rate_tax_categories,
-      class_name: 'Spree::TaxRateTaxCategory',
+      class_name: 'Solidus::TaxRateTaxCategory',
       dependent: :destroy,
       inverse_of: :tax_rate
     has_many :tax_categories,
       through: :tax_rate_tax_categories,
-      class_name: 'Spree::TaxCategory',
+      class_name: 'Solidus::TaxCategory',
       inverse_of: :tax_rates
 
     has_many :adjustments, as: :source
-    has_many :shipping_rate_taxes, class_name: "Spree::ShippingRateTax"
+    has_many :shipping_rate_taxes, class_name: "Solidus::ShippingRateTax"
 
     validates :amount, presence: true, numericality: true
 
     # Finds all tax rates whose zones match a given address
-    scope :for_address, ->(address) { joins(:zone).merge(Spree::Zone.for_address(address)) }
+    scope :for_address, ->(address) { joins(:zone).merge(Solidus::Zone.for_address(address)) }
     scope :for_country,
-          ->(country) { for_address(Spree::Tax::TaxLocation.new(country: country)) }
+          ->(country) { for_address(Solidus::Tax::TaxLocation.new(country: country)) }
 
     # Finds geographically matching tax rates for a tax zone.
     # We do not know if they are/aren't applicable until we attempt to apply these rates to
@@ -80,7 +80,7 @@ module Spree
     # Those rates should never come into play at all and only the French rates should apply.
     scope :for_zone, ->(zone) do
       if zone
-        where(zone_id: Spree::Zone.with_shared_members(zone).pluck(:id))
+        where(zone_id: Solidus::Zone.with_shared_members(zone).pluck(:id))
       else
         none
       end
@@ -127,7 +127,7 @@ module Spree
       tax_categories[0]
     end
 
-    deprecate :tax_category => :tax_categories, :tax_category= => :tax_categories=, deprecator: Spree::Deprecation
+    deprecate :tax_category => :tax_categories, :tax_category= => :tax_categories=, deprecator: Solidus::Deprecation
 
     private
 

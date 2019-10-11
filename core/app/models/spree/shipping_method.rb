@@ -2,21 +2,21 @@
 
 require 'discard'
 
-module Spree
+module Solidus
   # Represents a means of having a shipment delivered, such as FedEx or UPS.
   #
-  class ShippingMethod < Spree::Base
+  class ShippingMethod < Solidus::Base
     acts_as_paranoid
-    include Spree::ParanoiaDeprecations
+    include Solidus::ParanoiaDeprecations
 
     include Discard::Model
     self.discard_column = :deleted_at
 
-    include Spree::CalculatedAdjustments
+    include Solidus::CalculatedAdjustments
     DISPLAY = ActiveSupport::Deprecation::DeprecatedObjectProxy.new(
       [:both, :front_end, :back_end],
-      "Spree::ShippingMethod::DISPLAY is deprecated",
-      Spree::Deprecation
+      "Solidus::ShippingMethod::DISPLAY is deprecated",
+      Solidus::Deprecation
     )
 
     has_many :shipping_method_categories, dependent: :destroy
@@ -28,8 +28,8 @@ module Spree
     has_many :shipping_method_zones, dependent: :destroy
     has_many :zones, through: :shipping_method_zones
 
-    belongs_to :tax_category, -> { with_deleted }, class_name: 'Spree::TaxCategory', optional: true
-    has_many :shipping_method_stock_locations, dependent: :destroy, class_name: "Spree::ShippingMethodStockLocation"
+    belongs_to :tax_category, -> { with_deleted }, class_name: 'Solidus::TaxCategory', optional: true
+    has_many :shipping_method_stock_locations, dependent: :destroy, class_name: "Solidus::ShippingMethodStockLocation"
     has_many :stock_locations, through: :shipping_method_stock_locations
 
     has_many :store_shipping_methods, inverse_of: :shipping_method
@@ -51,7 +51,7 @@ module Spree
       # Some extra care is needed with the having clause to ensure we are
       # counting distinct records of the join table. Otherwise a join could
       # cause this to return incorrect results.
-      join_table = Spree::ShippingMethodCategory.arel_table
+      join_table = Solidus::ShippingMethodCategory.arel_table
       having = join_table[:id].count(true).eq(shipping_category_ids.count)
       subquery = joins(:shipping_method_categories).
         where(spree_shipping_method_categories: { shipping_category_id: shipping_category_ids }).
@@ -61,11 +61,11 @@ module Spree
       where(id: subquery.select(:id))
     end
 
-    # @param stock_location [Spree::StockLocation] stock location
+    # @param stock_location [Solidus::StockLocation] stock location
     # @return [ActiveRecord::Relation] shipping methods which are available
     #   with the stock location or are marked available_to_all
     def self.available_in_stock_location(stock_location)
-      smsl_table = Spree::ShippingMethodStockLocation.arel_table
+      smsl_table = Solidus::ShippingMethodStockLocation.arel_table
 
       # We are searching for either a matching entry in the stock location join
       # table or available_to_all being true.
@@ -83,7 +83,7 @@ module Spree
       joins(arel_join).where(arel_condition).distinct
     end
 
-    # @param address [Spree::Address] address to match against zones
+    # @param address [Solidus::Address] address to match against zones
     # @return [ActiveRecord::Relation] shipping methods which are associated
     #   with zones matching the provided address
     def self.available_for_address(address)
@@ -109,18 +109,18 @@ module Spree
         "back_end"
       end
     end
-    deprecate display_on: :available_to_users?, deprecator: Spree::Deprecation
+    deprecate display_on: :available_to_users?, deprecator: Solidus::Deprecation
 
     def display_on=(value)
       self.available_to_users = (value != "back_end")
     end
-    deprecate 'display_on=': :available_to_users=, deprecator: Spree::Deprecation
+    deprecate 'display_on=': :available_to_users=, deprecator: Solidus::Deprecation
 
     # Some shipping methods are only meant to be set via backend
     def frontend?
       available_to_users?
     end
-    deprecate frontend?: :available_to_users?, deprecator: Spree::Deprecation
+    deprecate frontend?: :available_to_users?, deprecator: Solidus::Deprecation
 
     private
 

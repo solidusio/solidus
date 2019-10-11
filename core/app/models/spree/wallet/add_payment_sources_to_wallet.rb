@@ -2,8 +2,8 @@
 
 # This class is responsible for saving payment sources in the user's "wallet"
 # for future use.  You can substitute your own class via
-# `Spree::Config.add_payment_sources_to_wallet_class`.
-class Spree::Wallet::AddPaymentSourcesToWallet
+# `Solidus::Config.add_payment_sources_to_wallet_class`.
+class Solidus::Wallet::AddPaymentSourcesToWallet
   def initialize(order)
     @order = order
   end

@@ -1,20 +1,20 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   class Reimbursement::ReimbursementTypeEngine
-    include Spree::Reimbursement::ReimbursementTypeValidator
+    include Solidus::Reimbursement::ReimbursementTypeValidator
 
     class_attribute :refund_time_constraint
     self.refund_time_constraint = 90.days
 
     class_attribute :default_reimbursement_type
-    self.default_reimbursement_type = Spree::ReimbursementType::OriginalPayment
+    self.default_reimbursement_type = Solidus::ReimbursementType::OriginalPayment
 
     class_attribute :expired_reimbursement_type
-    self.expired_reimbursement_type = Spree::ReimbursementType::StoreCredit
+    self.expired_reimbursement_type = Solidus::ReimbursementType::StoreCredit
 
     class_attribute :exchange_reimbursement_type
-    self.exchange_reimbursement_type = Spree::ReimbursementType::Exchange
+    self.exchange_reimbursement_type = Solidus::ReimbursementType::Exchange
 
     def initialize(return_items)
       @return_items = return_items

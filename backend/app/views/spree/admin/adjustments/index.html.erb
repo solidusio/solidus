@@ -1,9 +1,9 @@
 <%= render partial: 'spree/admin/shared/order_tabs', locals: { current: 'Adjustments' } %>
 
-<% admin_breadcrumb(plural_resource_name(Spree::Adjustment)) %>
+<% admin_breadcrumb(plural_resource_name(Solidus::Adjustment)) %>
 
 <% content_for :page_actions do %>
-  <% if can? :create, Spree::Adjustment %>
+  <% if can? :create, Solidus::Adjustment %>
     <li>
       <%= link_to t('spree.new_adjustment'), new_admin_order_adjustment_url(@order), class: 'btn btn-primary' %>
     </li>

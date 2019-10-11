@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::OrderShipping do
+RSpec.describe Solidus::OrderShipping do
   include ActiveSupport::Testing::TimeHelpers
 
   let(:order) { create(:order_ready_to_ship, line_items_count: 1) }
@@ -144,7 +144,7 @@ RSpec.describe Spree::OrderShipping do
     context "when all units are canceled or shipped" do
       let(:order) { create(:order_ready_to_ship, line_items_count: 2) }
 
-      before { Spree::OrderCancellations.new(order).short_ship([order.inventory_units.first]) }
+      before { Solidus::OrderCancellations.new(order).short_ship([order.inventory_units.first]) }
 
       it "updates the order shipment state" do
         expect { subject }.to change { order.reload.shipment_state }.from('ready').to('shipped')

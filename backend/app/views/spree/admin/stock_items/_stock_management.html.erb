@@ -15,8 +15,8 @@
   <thead>
     <tr>
       <th><%= t('spree.item') %></th>
-      <th><%= Spree::Variant.model_name.human %></th>
-      <th><%= Spree::StockLocation.model_name.human %></th>
+      <th><%= Solidus::Variant.model_name.human %></th>
+      <th><%= Solidus::StockLocation.model_name.human %></th>
       <th class="align-center"><%= t('spree.backorderable_header') %></th>
       <th class="align-center"><%= t('spree.count_on_hand') %></th>
       <th><%= t('spree.modify_stock_count') %></th>
@@ -72,13 +72,13 @@
             </colgroup>
             <% variant.stock_items.each do |item| %>
               <% if @stock_item_stock_locations.include?(item.stock_location) %>
-                <tr class="js-edit-stock-item stock-item-edit-row" data-variant-id="<%= variant.id %>" data-stock-item="<%= item.to_json %>" data-stock-location-name="<%= item.stock_location.name %>" data-track-inventory="<%= variant.should_track_inventory? %>" data-can-edit="<%= can?(:admin, Spree::StockItem) %>">
+                <tr class="js-edit-stock-item stock-item-edit-row" data-variant-id="<%= variant.id %>" data-stock-item="<%= item.to_json %>" data-stock-location-name="<%= item.stock_location.name %>" data-track-inventory="<%= variant.should_track_inventory? %>" data-can-edit="<%= can?(:admin, Solidus::StockItem) %>">
                   <%# This is rendered in JS %>
                 </tr>
               <% end %>
             <% end %>
             <% locations_without_items = @stock_item_stock_locations - variant.stock_items.flat_map(&:stock_location) %>
-            <% if locations_without_items.any? && can?(:create, Spree::StockItem) %>
+            <% if locations_without_items.any? && can?(:create, Solidus::StockItem) %>
               <tr class="js-add-stock-item stock-item-edit-row" data-variant-id="<%= variant.id %>">
                 <form>
                   <td class='location-name-cell'>

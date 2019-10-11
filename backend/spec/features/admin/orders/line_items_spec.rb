@@ -9,7 +9,7 @@ describe "Order Line Items", type: :feature, js: true do
   before do
     # Removing the delivery step causes the order page to render a different
     # partial, called _line_items, which shows line items rather than shipments
-    allow(Spree::Order).to receive_messages checkout_step_names: [:address, :payment, :confirm, :complete]
+    allow(Solidus::Order).to receive_messages checkout_step_names: [:address, :payment, :confirm, :complete]
   end
 
   let!(:order) do

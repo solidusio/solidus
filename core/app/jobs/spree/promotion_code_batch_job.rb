@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   class PromotionCodeBatchJob < ActiveJob::Base
     queue_as :default
 
@@ -10,13 +10,13 @@ module Spree
       ).build_promotion_codes
 
       if promotion_code_batch.email?
-        Spree::Config.promotion_code_batch_mailer_class
+        Solidus::Config.promotion_code_batch_mailer_class
           .promotion_code_batch_finished(promotion_code_batch)
           .deliver_now
       end
     rescue StandardError => e
       if promotion_code_batch.email?
-        Spree::Config.promotion_code_batch_mailer_class
+        Solidus::Config.promotion_code_batch_mailer_class
           .promotion_code_batch_errored(promotion_code_batch)
           .deliver_now
       end

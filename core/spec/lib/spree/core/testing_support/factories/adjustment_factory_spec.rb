@@ -4,7 +4,7 @@ require 'rails_helper'
 require 'spree/testing_support/factories/adjustment_factory'
 
 RSpec.describe 'adjustment factory' do
-  let(:factory_class) { Spree::Adjustment }
+  let(:factory_class) { Solidus::Adjustment }
 
   describe 'plain adjustment' do
     let(:factory) { :adjustment }

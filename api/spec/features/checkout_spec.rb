@@ -2,10 +2,10 @@
 
 require 'spec_helper'
 
-module Spree
+module Solidus
   describe 'Api Feature Specs', type: :request do
     before do
-      stub_spree_preferences(Spree::Api::Config, requires_authentication: false)
+      stub_spree_preferences(Solidus::Api::Config, requires_authentication: false)
     end
     let!(:promotion) { FactoryBot.create(:promotion, :with_order_adjustment, code: 'foo', weighted_order_adjustment_amount: 10) }
     let(:promotion_code) { promotion.codes.first }
@@ -34,12 +34,12 @@ module Spree
             password: "featurecheckoutuser"
           }
         }
-      }.to change { Spree.user_class.count }.by 1
+      }.to change { Solidus.user_class.count }.by 1
       expect(response).to have_http_status(:created)
-      @user = Spree.user_class.find(parsed['id'])
+      @user = Solidus.user_class.find(parsed['id'])
 
       # copied from api testing helpers support since we can't really sign in
-      allow(Spree::LegacyUser).to receive(:find_by).with(hash_including(:spree_api_key)) { @user }
+      allow(Solidus::LegacyUser).to receive(:find_by).with(hash_including(:spree_api_key)) { @user }
     end
 
     def create_order(order_params: {})

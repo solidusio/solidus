@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-module Spree
+module Solidus
   module Stock
     module LocationFilter
       RSpec.describe Active, type: :model do
@@ -10,8 +10,8 @@ module Spree
 
         let!(:active_stock_location) { create(:stock_location) }
         let!(:inactive_stock_location) { create(:stock_location, active: false) }
-        let(:stock_locations) { Spree::StockLocation.all }
-        let(:order) { instance_double('Spree::Order') }
+        let(:stock_locations) { Solidus::StockLocation.all }
+        let(:order) { instance_double('Solidus::Order') }
 
         it 'returns only active stock locations' do
           expect(subject.filter).to eq([active_stock_location])

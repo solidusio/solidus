@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-module Spree
+module Solidus
   describe Api::AddressesController, type: :request do
     before do
       stub_authentication!

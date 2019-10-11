@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module Stock
     class InventoryUnitBuilder
       def initialize(order)
@@ -10,7 +10,7 @@ module Spree
       def units
         @order.line_items.flat_map do |line_item|
           Array.new(line_item.quantity) do
-            Spree::InventoryUnit.new(
+            Solidus::InventoryUnit.new(
               pending: true,
               variant: line_item.variant,
               line_item: line_item

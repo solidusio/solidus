@@ -1,11 +1,11 @@
 <table class="index" id='payments' data-order-id='<%= @order.number %>'>
   <thead>
     <tr data-hook="refunds_header">
-      <th><%= Spree::Refund.human_attribute_name(:created_at) %></th>
-      <th><%= Spree::Payment.human_attribute_name(:number) %></th>
-      <th><%= Spree::Refund.human_attribute_name(:amount) %></th>
-      <th><%= Spree::PaymentMethod.model_name.human %></th>
-      <th><%= Spree::Refund.human_attribute_name(:transaction_id) %></th>
+      <th><%= Solidus::Refund.human_attribute_name(:created_at) %></th>
+      <th><%= Solidus::Payment.human_attribute_name(:number) %></th>
+      <th><%= Solidus::Refund.human_attribute_name(:amount) %></th>
+      <th><%= Solidus::PaymentMethod.model_name.human %></th>
+      <th><%= Solidus::Refund.human_attribute_name(:transaction_id) %></th>
       <th><%= t('spree.reason') %></th>
       <% if show_actions %>
         <th class="actions"></th>

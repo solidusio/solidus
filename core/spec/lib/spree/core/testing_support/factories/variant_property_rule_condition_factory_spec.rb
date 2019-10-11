@@ -4,7 +4,7 @@ require 'rails_helper'
 require 'spree/testing_support/factories/variant_property_rule_condition_factory'
 
 RSpec.describe 'variant property rule condition factory' do
-  let(:factory_class) { Spree::VariantPropertyRuleCondition }
+  let(:factory_class) { Solidus::VariantPropertyRuleCondition }
 
   describe 'variant property rule condition' do
     let(:factory) { :variant_property_rule_condition }

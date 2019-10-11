@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-module Spree
-  class Zone < Spree::Base
-    has_many :zone_members, dependent: :destroy, class_name: "Spree::ZoneMember", inverse_of: :zone
+module Solidus
+  class Zone < Solidus::Base
+    has_many :zone_members, dependent: :destroy, class_name: "Solidus::ZoneMember", inverse_of: :zone
     has_many :tax_rates, dependent: :destroy, inverse_of: :zone
 
     with_options through: :zone_members, source: :zoneable do
-      has_many :countries, source_type: "Spree::Country"
-      has_many :states, source_type: "Spree::State"
+      has_many :countries, source_type: "Solidus::Country"
+      has_many :states, source_type: "Solidus::State"
     end
 
     has_many :shipping_method_zones, dependent: :destroy
@@ -20,12 +20,12 @@ module Spree
       if !state_ids.present? && !country_ids.present?
         none
       else
-        spree_zone_members_table = Spree::ZoneMember.arel_table
+        spree_zone_members_table = Solidus::ZoneMember.arel_table
         matching_state =
-          spree_zone_members_table[:zoneable_type].eq("Spree::State").
+          spree_zone_members_table[:zoneable_type].eq("Solidus::State").
           and(spree_zone_members_table[:zoneable_id].in(state_ids))
         matching_country =
-          spree_zone_members_table[:zoneable_type].eq("Spree::Country").
+          spree_zone_members_table[:zoneable_type].eq("Solidus::Country").
           and(spree_zone_members_table[:zoneable_id].in(country_ids))
         joins(:zone_members).where(matching_state.or(matching_country)).distinct
       end
@@ -74,9 +74,9 @@ module Spree
 
       members.any? do |zone_member|
         case zone_member.zoneable_type
-        when 'Spree::Country'
+        when 'Solidus::Country'
           zone_member.zoneable_id == address.country_id
-        when 'Spree::State'
+        when 'Solidus::State'
           zone_member.zoneable_id == address.state_id
         else
           false
@@ -120,25 +120,25 @@ module Spree
     end
 
     def country_ids=(ids)
-      set_zone_members(ids, 'Spree::Country')
+      set_zone_members(ids, 'Solidus::Country')
     end
 
     def state_ids=(ids)
-      set_zone_members(ids, 'Spree::State')
+      set_zone_members(ids, 'Solidus::State')
     end
 
     private
 
     def remove_defunct_members
       if zone_members.any?
-        zone_members.where('zoneable_id IS NULL OR zoneable_type != ?', "Spree::#{kind.classify}").destroy_all
+        zone_members.where('zoneable_id IS NULL OR zoneable_type != ?', "Solidus::#{kind.classify}").destroy_all
       end
     end
 
     def set_zone_members(ids, type)
       zone_members.destroy_all
       ids.reject(&:blank?).map do |id|
-        member = Spree::ZoneMember.new
+        member = Solidus::ZoneMember.new
         member.zoneable_type = type
         member.zoneable_id = id
         members << member

@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   class Promotion
     module Rules
       class Store < PromotionRule
-        has_many :promotion_rule_stores, class_name: "Spree::PromotionRuleStore",
+        has_many :promotion_rule_stores, class_name: "Solidus::PromotionRuleStore",
                                          foreign_key: :promotion_rule_id,
                                          dependent: :destroy
-        has_many :stores, through: :promotion_rule_stores, class_name: "Spree::Store"
+        has_many :stores, through: :promotion_rule_stores, class_name: "Solidus::Store"
 
         def applicable?(promotable)
-          promotable.is_a?(Spree::Order)
+          promotable.is_a?(Solidus::Order)
         end
 
         def eligible?(order, _options = {})

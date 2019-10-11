@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module TestingSupport
     module Flash
       def assert_flash_success(flash)

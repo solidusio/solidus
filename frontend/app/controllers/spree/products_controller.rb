@@ -1,18 +1,18 @@
 # frozen_string_literal: true
 
-module Spree
-  class ProductsController < Spree::StoreController
+module Solidus
+  class ProductsController < Solidus::StoreController
     before_action :load_product, only: :show
     before_action :load_taxon, only: :index
 
-    helper 'spree/taxons', 'spree/taxon_filters'
+    helper 'solidus/taxons', 'solidus/taxon_filters'
 
     respond_to :html
 
     def index
       @searcher = build_searcher(params.merge(include_images: true))
       @products = @searcher.retrieve_products
-      @taxonomies = Spree::Taxonomy.includes(root: :children)
+      @taxonomies = Solidus::Taxonomy.includes(root: :children)
     end
 
     def show
@@ -23,7 +23,7 @@ module Spree
         includes([:option_values, :images])
 
       @product_properties = @product.product_properties.includes(:property)
-      @taxon = Spree::Taxon.find(params[:taxon_id]) if params[:taxon_id]
+      @taxon = Solidus::Taxon.find(params[:taxon_id]) if params[:taxon_id]
     end
 
     private
@@ -38,15 +38,15 @@ module Spree
 
     def load_product
       if try_spree_current_user.try(:has_spree_role?, "admin")
-        @products = Spree::Product.with_deleted
+        @products = Solidus::Product.with_deleted
       else
-        @products = Spree::Product.available
+        @products = Solidus::Product.available
       end
       @product = @products.friendly.find(params[:id])
     end
 
     def load_taxon
-      @taxon = Spree::Taxon.find(params[:taxon]) if params[:taxon].present?
+      @taxon = Solidus::Taxon.find(params[:taxon]) if params[:taxon].present?
     end
   end
 end

@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module Admin
-    class TaxonsController < Spree::Admin::BaseController
+    class TaxonsController < Solidus::Admin::BaseController
       respond_to :html, :json, :js
 
       def index
@@ -10,14 +10,14 @@ module Spree
 
       def search
         if params[:ids]
-          @taxons = Spree::Taxon.where(id: params[:ids].split(','))
+          @taxons = Solidus::Taxon.where(id: params[:ids].split(','))
         else
-          @taxons = Spree::Taxon.limit(20).ransack(name_cont: params[:q]).result
+          @taxons = Solidus::Taxon.limit(20).ransack(name_cont: params[:q]).result
         end
       end
 
       def create
-        @taxonomy = Spree::Taxonomy.find(params[:taxonomy_id])
+        @taxonomy = Solidus::Taxonomy.find(params[:taxonomy_id])
         @taxon = @taxonomy.taxons.build(params[:taxon])
         if @taxon.save
           respond_with(@taxon) do |format|
@@ -32,19 +32,19 @@ module Spree
       end
 
       def edit
-        @taxonomy = Spree::Taxonomy.find(params[:taxonomy_id])
+        @taxonomy = Solidus::Taxonomy.find(params[:taxonomy_id])
         @taxon = @taxonomy.taxons.find(params[:id])
         @permalink_part = @taxon.permalink.split("/").last
       end
 
       def update
-        @taxonomy = Spree::Taxonomy.find(params[:taxonomy_id])
+        @taxonomy = Solidus::Taxonomy.find(params[:taxonomy_id])
         @taxon = @taxonomy.taxons.find(params[:id])
         parent_id = params[:taxon][:parent_id]
         new_position = params[:taxon][:position]
 
         if parent_id
-          @taxon.parent = Spree::Taxon.find(parent_id.to_i)
+          @taxon.parent = Solidus::Taxon.find(parent_id.to_i)
         end
 
         if new_position
@@ -67,7 +67,7 @@ module Spree
       end
 
       def destroy
-        @taxon = Spree::Taxon.find(params[:id])
+        @taxon = Solidus::Taxon.find(params[:id])
         @taxon.destroy
         respond_with(@taxon) { |format| format.json { render json: '' } }
       end

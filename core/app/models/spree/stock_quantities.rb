@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   # A value object to hold a map of variants to their quantities
   class StockQuantities
     attr_reader :quantities
     include Enumerable
 
-    # @param quantities [Hash<Spree::Variant=>Numeric>]
+    # @param quantities [Hash<Solidus::Variant=>Numeric>]
     def initialize(quantities = {})
-      raise ArgumentError unless quantities.keys.all?{ |v| v.is_a?(Spree::Variant) }
+      raise ArgumentError unless quantities.keys.all?{ |v| v.is_a?(Solidus::Variant) }
       raise ArgumentError unless quantities.values.all?{ |v| v.is_a?(Numeric) }
 
       @quantities = quantities
@@ -19,19 +19,19 @@ module Spree
       @quantities.each(&block)
     end
 
-    # @param variant [Spree::Variant]
+    # @param variant [Solidus::Variant]
     # @return [Integer] the quantity of variant
     def [](variant)
       @quantities[variant]
     end
 
-    # @return [Array<Spree::Variant>] the variants being tracked
+    # @return [Array<Solidus::Variant>] the variants being tracked
     def variants
       @quantities.keys.uniq
     end
 
     # Adds two StockQuantities together
-    # @return [Spree::StockQuantities]
+    # @return [Solidus::StockQuantities]
     def +(other)
       combine_with(other) do |_variant, a, b|
         (a || 0) + (b || 0)
@@ -39,7 +39,7 @@ module Spree
     end
 
     # Subtracts another StockQuantities from this one
-    # @return [Spree::StockQuantities]
+    # @return [Solidus::StockQuantities]
     def -(other)
       combine_with(other) do |_variant, a, b|
         (a || 0) - (b || 0)
@@ -48,7 +48,7 @@ module Spree
 
     # Finds the intersection or common subset of two StockQuantities: the
     # stock which exists in both StockQuantities.
-    # @return [Spree::StockQuantities]
+    # @return [Solidus::StockQuantities]
     def &(other)
       combine_with(other) do |_variant, a, b|
         next unless a && b

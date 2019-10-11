@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::Variant::PricingOptions do
+RSpec.describe Solidus::Variant::PricingOptions do
   subject { described_class.new }
 
   context '.default_price_attributes' do
@@ -11,15 +11,15 @@ RSpec.describe Spree::Variant::PricingOptions do
     it { is_expected.to have_key(:currency) }
     it { is_expected.to have_key(:country_iso) }
 
-    it 'can be passed into a WHERE clause on Spree::Prices' do
-      expect(Spree::Price.where(subject).to_a).to eq([])
+    it 'can be passed into a WHERE clause on Solidus::Prices' do
+      expect(Solidus::Price.where(subject).to_a).to eq([])
     end
 
     context "with a matching price present" do
       let!(:price) { create(:price) }
 
       it 'returns a matching price' do
-        expect(Spree::Price.where(subject).to_a).to include(price)
+        expect(Solidus::Price.where(subject).to_a).to include(price)
       end
     end
   end
@@ -39,7 +39,7 @@ RSpec.describe Spree::Variant::PricingOptions do
     context 'if order has no currency' do
       before do
         expect(line_item.order).to receive(:currency).at_least(:once).and_return(nil)
-        expect(Spree::Config).to receive(:currency).at_least(:once).and_return("RUB")
+        expect(Solidus::Config).to receive(:currency).at_least(:once).and_return("RUB")
       end
 
       it "returns the configured default currency" do
@@ -50,7 +50,7 @@ RSpec.describe Spree::Variant::PricingOptions do
     context "if line item has no order" do
       before do
         expect(line_item).to receive(:order).at_least(:once).and_return(nil)
-        expect(Spree::Config).to receive(:currency).at_least(:once).and_return("RUB")
+        expect(Solidus::Config).to receive(:currency).at_least(:once).and_return("RUB")
       end
 
       it "returns the configured default currency" do
@@ -77,8 +77,8 @@ RSpec.describe Spree::Variant::PricingOptions do
     context "if the store has not defined default_currency" do
       let(:store) { FactoryBot.create :store, default_currency: nil, cart_tax_country_iso: nil }
 
-      it "fallbacks to Spree::Config.currency" do
-        expect(Spree::Variant::PricingOptions).to receive(:new).with(currency: Spree::Config.currency, country_iso: nil)
+      it "fallbacks to Solidus::Config.currency" do
+        expect(Solidus::Variant::PricingOptions).to receive(:new).with(currency: Solidus::Config.currency, country_iso: nil)
         expect(subject).to be_nil
       end
     end
@@ -87,7 +87,7 @@ RSpec.describe Spree::Variant::PricingOptions do
       let(:store) { FactoryBot.create :store, default_currency: 'MXN' }
 
       it "uses current_store information" do
-        expect(Spree::Variant::PricingOptions).to receive(:new).with(currency: store.default_currency, country_iso: store.cart_tax_country_iso)
+        expect(Solidus::Variant::PricingOptions).to receive(:new).with(currency: store.default_currency, country_iso: store.cart_tax_country_iso)
         expect(subject).to be_nil
       end
     end
@@ -120,7 +120,7 @@ RSpec.describe Spree::Variant::PricingOptions do
   describe "#currency" do
     context "when initialized with no currency" do
       it "returns the default currency" do
-        expect(Spree::Config.currency).to eq("USD")
+        expect(Solidus::Config.currency).to eq("USD")
         expect(subject.currency).to eq("USD")
       end
     end
@@ -137,7 +137,7 @@ RSpec.describe Spree::Variant::PricingOptions do
   describe "#country_iso" do
     context "when initialized with no country_iso" do
       it "returns the default country_iso" do
-        expect(Spree::Config).to receive(:admin_vat_country_iso).and_return("US")
+        expect(Solidus::Config).to receive(:admin_vat_country_iso).and_return("US")
         expect(subject.country_iso).to eq("US")
       end
     end
@@ -183,7 +183,7 @@ RSpec.describe Spree::Variant::PricingOptions do
       let(:options) { { currency: "EUR" } }
 
       it 'can be passed into a `where` clause' do
-        expect(Spree::Price.where(subject)).to eq([price])
+        expect(Solidus::Price.where(subject)).to eq([price])
       end
     end
 

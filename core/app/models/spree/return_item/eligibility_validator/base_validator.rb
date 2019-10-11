@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-module Spree
-  class ReturnItem < Spree::Base
+module Solidus
+  class ReturnItem < Solidus::Base
     module EligibilityValidator
       class BaseValidator
         attr_reader :errors

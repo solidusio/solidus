@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module Api
-    class StockMovementsController < Spree::Api::BaseController
+    class StockMovementsController < Solidus::Api::BaseController
       before_action :stock_location, except: [:update, :destroy]
 
       def index
@@ -29,7 +29,7 @@ module Spree
       private
 
       def stock_location
-        @stock_location ||= Spree::StockLocation.accessible_by(current_ability, :read).find(params[:stock_location_id])
+        @stock_location ||= Solidus::StockLocation.accessible_by(current_ability, :read).find(params[:stock_location_id])
       end
 
       def scope

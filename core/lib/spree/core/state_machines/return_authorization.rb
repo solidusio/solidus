@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module Core
     class StateMachines
       # Return Authorizations' state machine

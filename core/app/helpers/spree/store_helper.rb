@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   # Methods added to this helper will be available to all templates in the
   # frontend.
   module StoreHelper
@@ -10,7 +10,7 @@ module Spree
     end
 
     def cache_key_for_taxons
-      Spree::Deprecation.warn <<-WARN.strip_heredoc
+      Solidus::Deprecation.warn <<-WARN.strip_heredoc
         cache_key_for_taxons is deprecated. Rails >= 5 has built-in support for collection cache keys.
         Instead in your view use:
         cache [I18n.locale, @taxons] do

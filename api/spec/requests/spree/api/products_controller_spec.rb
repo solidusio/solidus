@@ -3,8 +3,8 @@
 require 'spec_helper'
 require 'shared_examples/protect_product_actions'
 
-module Spree
-  describe Spree::Api::ProductsController, type: :request do
+module Solidus
+  describe Solidus::Api::ProductsController, type: :request do
     let!(:product) { create(:product) }
     let!(:inactive_product) { create(:product, available_on: Time.current.tomorrow, name: "inactive") }
     let(:base_attributes) { Api::ApiHelpers.product_attributes }
@@ -326,7 +326,7 @@ module Spree
         # Regression test for https://github.com/spree/spree/issues/2140
         context "with authentication_required set to false" do
           before do
-            stub_spree_preferences(Spree::Api::Config, requires_authentication: false)
+            stub_spree_preferences(Solidus::Api::Config, requires_authentication: false)
           end
 
           it "can still create a product" do

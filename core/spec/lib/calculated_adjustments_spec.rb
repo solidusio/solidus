@@ -2,12 +2,12 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::CalculatedAdjustments do
-  let(:calculator_class) { Spree::Calculator::FlatRate }
+RSpec.describe Solidus::CalculatedAdjustments do
+  let(:calculator_class) { Solidus::Calculator::FlatRate }
 
   with_model :Calculable, scope: :all do
     model do
-      include Spree::CalculatedAdjustments
+      include Solidus::CalculatedAdjustments
     end
   end
 
@@ -100,13 +100,13 @@ RSpec.describe Spree::CalculatedAdjustments do
     end
 
     it "can update both calculator type and attributes" do
-      subject.update!(calculator_type: 'Spree::Calculator::FlexiRate', calculator_attributes: {
+      subject.update!(calculator_type: 'Solidus::Calculator::FlexiRate', calculator_attributes: {
         preferred_first_item: 123
       })
-      expect(subject.calculator.class).to eq(Spree::Calculator::FlexiRate)
+      expect(subject.calculator.class).to eq(Solidus::Calculator::FlexiRate)
       expect(subject.calculator.preferred_first_item).to eq(123)
       subject.reload
-      expect(subject.calculator.class).to eq(Spree::Calculator::FlexiRate)
+      expect(subject.calculator.class).to eq(Solidus::Calculator::FlexiRate)
       expect(subject.calculator.preferred_first_item).to eq(123)
     end
   end
@@ -114,8 +114,8 @@ RSpec.describe Spree::CalculatedAdjustments do
   describe '#calculator_type=' do
     subject { Calculable.new }
 
-    let(:calculator_subclass) { Spree::Calculator::Shipping::FlatRate }
-    let(:calculator_superclass) { Spree::ShippingCalculator }
+    let(:calculator_subclass) { Solidus::Calculator::Shipping::FlatRate }
+    let(:calculator_superclass) { Solidus::ShippingCalculator }
 
     before(:each) do
       subject.calculator_type = calculator_subclass.to_s

@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module PermissionSets
     # This is the base class used for crafting permission sets.
     #
-    # This is used by {Spree::RoleConfiguration} when adding custom behavior to {Spree::Ability}.
-    # See one of the subclasses for example structure such as {Spree::PermissionSets::UserDisplay}
+    # This is used by {Solidus::RoleConfiguration} when adding custom behavior to {Solidus::Ability}.
+    # See one of the subclasses for example structure such as {Solidus::PermissionSets::UserDisplay}
     #
-    # @see Spree::RoleConfiguration
-    # @see Spree::PermissionSets
+    # @see Solidus::RoleConfiguration
+    # @see Solidus::PermissionSets
     class Base
       # @param ability [CanCan::Ability]
       #   The ability that will be extended with the current permission set.

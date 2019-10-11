@@ -2,7 +2,7 @@
 
 require 'spree/core/environment_extension'
 
-module Spree
+module Solidus
   module Core
     class Environment
       include EnvironmentExtension

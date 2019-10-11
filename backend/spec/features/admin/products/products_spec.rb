@@ -79,7 +79,7 @@ describe "Products", type: :feature do
           create(:product, name: "Just a product", price: 19.99)
         end
 
-        it 'defaults it to Spree::Config.currency and sets the price as blank' do
+        it 'defaults it to Solidus::Config.currency and sets the price as blank' do
           stub_spree_preferences(currency: "USD")
           visit spree.admin_product_path(product)
           within("#product_price_field") do
@@ -268,7 +268,7 @@ describe "Products", type: :feature do
         fill_in "product_available_on", with: "2012/12/25"
         click_button "Update"
         expect(page).to have_content("successfully updated!")
-        expect(Spree::Product.last.available_on).to eq('Tue, 25 Dec 2012 00:00:00 UTC +00:00')
+        expect(Solidus::Product.last.available_on).to eq('Tue, 25 Dec 2012 00:00:00 UTC +00:00')
       end
     end
 
@@ -299,11 +299,11 @@ describe "Products", type: :feature do
 
   context 'with only product permissions' do
     before do
-      allow_any_instance_of(Spree::Admin::BaseController).to receive(:try_spree_current_user).and_return(nil)
+      allow_any_instance_of(Solidus::Admin::BaseController).to receive(:try_spree_current_user).and_return(nil)
     end
 
     custom_authorization! do |_user|
-      can [:admin, :update, :index, :read], Spree::Product
+      can [:admin, :update, :index, :read], Solidus::Product
     end
     let!(:product) { create(:product) }
 

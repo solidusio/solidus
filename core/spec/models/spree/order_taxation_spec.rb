@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::OrderTaxation do
+RSpec.describe Solidus::OrderTaxation do
   let(:shipping_address) { FactoryBot.create(:address, state: new_york) }
   let(:order) { FactoryBot.create(:order, ship_address: shipping_address, state: "delivery") }
 
@@ -36,7 +36,7 @@ RSpec.describe Spree::OrderTaxation do
     let(:line_item) { order.contents.add(book.master) }
 
     let(:line_item_tax) do
-      Spree::Tax::ItemTax.new(
+      Solidus::Tax::ItemTax.new(
         item_id: line_item.id,
         label: "Tax!",
         tax_rate: book_tax_rate,
@@ -46,7 +46,7 @@ RSpec.describe Spree::OrderTaxation do
     end
 
     let(:taxes) do
-      Spree::Tax::OrderTax.new(
+      Solidus::Tax::OrderTax.new(
         order_id: order.id,
         line_item_taxes: [line_item_tax],
         shipment_taxes: []
@@ -67,7 +67,7 @@ RSpec.describe Spree::OrderTaxation do
 
     context "when new taxes are applied" do
       let(:new_line_item_tax) do
-        Spree::Tax::ItemTax.new(
+        Solidus::Tax::ItemTax.new(
           item_id: line_item.id,
           label: "Tax!",
           tax_rate: book_tax_rate,
@@ -77,7 +77,7 @@ RSpec.describe Spree::OrderTaxation do
       end
 
       let(:new_taxes) do
-        Spree::Tax::OrderTax.new(
+        Solidus::Tax::OrderTax.new(
           order_id: order.id,
           line_item_taxes: [new_line_item_tax],
           shipment_taxes: []
@@ -109,7 +109,7 @@ RSpec.describe Spree::OrderTaxation do
 
     context "when taxes are removed" do
       let(:new_taxes) do
-        Spree::Tax::OrderTax.new(
+        Solidus::Tax::OrderTax.new(
           order_id: order.id,
           line_item_taxes: [],
           shipment_taxes: []

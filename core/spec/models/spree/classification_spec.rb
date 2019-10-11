@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-module Spree
+module Solidus
   RSpec.describe Classification, type: :model do
     # Regression test for https://github.com/spree/spree/issues/3494
     it "cannot link the same taxon to the same product more than once" do
@@ -29,7 +29,7 @@ module Spree
 
     it "has a valid fixtures" do
       expect positions_to_be_valid(taxon_with_5_products)
-      expect(Spree::Classification.count).to eq 5
+      expect(Solidus::Classification.count).to eq 5
     end
 
     context "removing product from taxon" do

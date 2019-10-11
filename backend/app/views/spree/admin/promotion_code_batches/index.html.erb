@@ -1,10 +1,10 @@
-<% admin_breadcrumb(link_to plural_resource_name(Spree::Promotion), spree.admin_promotions_path) %>
+<% admin_breadcrumb(link_to plural_resource_name(Solidus::Promotion), spree.admin_promotions_path) %>
 <% admin_breadcrumb(link_to @promotion.name, spree.edit_admin_promotion_path(@promotion.id)) %>
-<% admin_breadcrumb(plural_resource_name(Spree::PromotionCodeBatch)) %>
+<% admin_breadcrumb(plural_resource_name(Solidus::PromotionCodeBatch)) %>
 
 <% content_for :page_actions do %>
   <li>
-    <% if can?(:create, Spree::PromotionCodeBatch) %>
+    <% if can?(:create, Solidus::PromotionCodeBatch) %>
       <%= link_to t('spree.new_promotion_code_batch'), new_object_url, class: 'btn btn-primary' %>
     <% end %>
   </li>
@@ -14,10 +14,10 @@
   <table>
     <thead>
       <tr>
-        <th><%= Spree::PromotionCodeBatch.human_attribute_name(:base_code) %></th>
-        <th><%= Spree::PromotionCodeBatch.human_attribute_name(:total_codes) %></th>
-        <th><%= Spree::PromotionCodeBatch.human_attribute_name(:status) %></th>
-        <th><%= Spree::PromotionCodeBatch.human_attribute_name(:email) %></th>
+        <th><%= Solidus::PromotionCodeBatch.human_attribute_name(:base_code) %></th>
+        <th><%= Solidus::PromotionCodeBatch.human_attribute_name(:total_codes) %></th>
+        <th><%= Solidus::PromotionCodeBatch.human_attribute_name(:status) %></th>
+        <th><%= Solidus::PromotionCodeBatch.human_attribute_name(:email) %></th>
       </tr>
     </thead>
     <tbody>
@@ -59,7 +59,7 @@
 <% else %>
   <div class="no-objects-found">
     <%= render 'spree/admin/shared/no_objects_found',
-                 resource: Spree::PromotionCodeBatch,
+                 resource: Solidus::PromotionCodeBatch,
                  new_resource_url: new_object_url %>
   </div>
 <% end %>

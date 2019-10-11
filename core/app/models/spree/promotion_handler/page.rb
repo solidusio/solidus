@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module PromotionHandler
     class Page
       attr_reader :order, :path
@@ -19,7 +19,7 @@ module Spree
       private
 
       def promotion
-        @promotion ||= Spree::Promotion.active.find_by(path: path)
+        @promotion ||= Solidus::Promotion.active.find_by(path: path)
       end
     end
   end

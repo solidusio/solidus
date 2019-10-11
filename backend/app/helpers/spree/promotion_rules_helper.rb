@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module PromotionRulesHelper
     def options_for_promotion_rule_types(promotion)
       existing = promotion.rules.map { |rule| rule.class.name }

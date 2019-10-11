@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::TaxRate, type: :model do
+RSpec.describe Solidus::TaxRate, type: :model do
   it { is_expected.to respond_to(:shipping_rate_taxes) }
 
   context '.for_address' do
@@ -24,7 +24,7 @@ RSpec.describe Spree::TaxRate, type: :model do
     let(:alabama_zone) { create(:zone, states: [alabama]) }
     let!(:alabama_tax) { create(:tax_rate, zone: alabama_zone) }
 
-    subject(:rates_for_address) { Spree::TaxRate.for_address(address) }
+    subject(:rates_for_address) { Solidus::TaxRate.for_address(address) }
 
     context 'when address is in germany' do
       let(:address) { create(:address, country_iso_code: "DE") }
@@ -53,7 +53,7 @@ RSpec.describe Spree::TaxRate, type: :model do
   end
 
   context ".for_zone" do
-    subject(:rates_for_zone) { Spree::TaxRate.for_zone(zone) }
+    subject(:rates_for_zone) { Solidus::TaxRate.for_zone(zone) }
 
     context "when zone is nil" do
       let(:zone) { nil }
@@ -297,17 +297,17 @@ RSpec.describe Spree::TaxRate, type: :model do
     let(:tax_category) { create(:tax_category) }
 
     it "returns the first tax category" do
-      tax_category = Spree::Deprecation.silence { tax_rate.tax_category }
+      tax_category = Solidus::Deprecation.silence { tax_rate.tax_category }
       expect(tax_category).to eq(tax_category)
     end
   end
 
   describe '#tax_category= (deprecated)' do
-    let(:tax_rate) { Spree::TaxRate.new }
+    let(:tax_rate) { Solidus::TaxRate.new }
     let(:tax_category) { create(:tax_category) }
 
     it "can assign the tax categories" do
-      Spree::Deprecation.silence {
+      Solidus::Deprecation.silence {
         tax_rate.tax_category = tax_category
       }
       expect(tax_rate.tax_categories).to eq([tax_category])

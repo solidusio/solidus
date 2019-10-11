@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module UserAddressBook
     extend ActiveSupport::Concern
 
     included do
-      has_many :user_addresses, -> { active }, { foreign_key: "user_id", class_name: "Spree::UserAddress" } do
+      has_many :user_addresses, -> { active }, { foreign_key: "user_id", class_name: "Solidus::UserAddress" } do
         def find_first_by_address_values(address_attrs)
-          detect { |ua| ua.address == Spree::Address.new(address_attrs) }
+          detect { |ua| ua.address == Solidus::Address.new(address_attrs) }
         end
 
         # @note this method enforces only one default address per user
@@ -25,9 +25,9 @@ module Spree
       has_many :addresses, through: :user_addresses
 
       # bill_address is only minimally used now, but we can't get rid of it without a major version release
-      belongs_to :bill_address, class_name: 'Spree::Address', optional: true
+      belongs_to :bill_address, class_name: 'Solidus::Address', optional: true
 
-      has_one :default_user_address, ->{ default }, class_name: 'Spree::UserAddress', foreign_key: 'user_id'
+      has_one :default_user_address, ->{ default }, class_name: 'Solidus::UserAddress', foreign_key: 'user_id'
       has_one :default_address, through: :default_user_address, source: :address
       alias_method :ship_address, :default_address
     end
@@ -39,7 +39,7 @@ module Spree
     end
 
     def bill_address_attributes=(attributes)
-      self.bill_address = Spree::Address.immutable_merge(bill_address, attributes)
+      self.bill_address = Solidus::Address.immutable_merge(bill_address, attributes)
     end
 
     def default_address=(address)
@@ -50,7 +50,7 @@ module Spree
       # see "Nested Attributes Examples" section of http://apidock.com/rails/ActionView/Helpers/FormHelper/fields_for
       # this #{fieldname}_attributes= method works with fields_for in the views
       # even without declaring accepts_nested_attributes_for
-      self.default_address = Spree::Address.immutable_merge(default_address, attributes)
+      self.default_address = Solidus::Address.immutable_merge(default_address, attributes)
     end
 
     alias_method :ship_address_attributes=, :default_address_attributes=
@@ -59,7 +59,7 @@ module Spree
     # sets address to the default if automatic_default_address is set to true
     # if address is nil, does nothing and returns nil
     def ship_address=(address)
-      be_default = Spree::Config.automatic_default_address
+      be_default = Solidus::Config.automatic_default_address
       save_in_address_book(address.attributes, be_default) if address
     end
 
@@ -71,7 +71,7 @@ module Spree
       if order.ship_address
         address = save_in_address_book(
           order.ship_address.attributes,
-          Spree::Config.automatic_default_address
+          Solidus::Config.automatic_default_address
         )
         self.ship_address_id = address.id if address && address.persisted?
       end
@@ -79,7 +79,7 @@ module Spree
       if order.bill_address
         address = save_in_address_book(
           order.bill_address.attributes,
-          order.ship_address.nil? && Spree::Config.automatic_default_address
+          order.ship_address.nil? && Solidus::Config.automatic_default_address
         )
         self.bill_address_id = address.id if address && address.persisted?
       end
@@ -96,7 +96,7 @@ module Spree
       return nil unless address_attributes.present?
       address_attributes = address_attributes.to_h.with_indifferent_access
 
-      new_address = Spree::Address.factory(address_attributes)
+      new_address = Solidus::Address.factory(address_attributes)
       return new_address unless new_address.valid?
 
       first_one = user_addresses.empty?

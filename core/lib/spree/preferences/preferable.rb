@@ -4,7 +4,7 @@ require 'spree/preferences/preferable_class_methods'
 require 'active_support/concern'
 require 'active_support/core_ext/hash/keys'
 
-module Spree
+module Solidus
   module Preferences
     # Preferable allows defining preference accessor methods.
     #
@@ -16,9 +16,9 @@ module Spree
     #
     # Examples:
     #
-    #   # Spree::Base includes Preferable and defines preferences as a serialized
+    #   # Solidus::Base includes Preferable and defines preferences as a serialized
     #   # column.
-    #   class Settings < Spree::Base
+    #   class Settings < Solidus::Base
     #     preference :color,       :string,  default: 'red'
     #     preference :temperature, :integer, default: 21
     #   end
@@ -56,7 +56,7 @@ module Spree
       extend ActiveSupport::Concern
 
       included do
-        extend Spree::Preferences::PreferableClassMethods
+        extend Solidus::Preferences::PreferableClassMethods
       end
 
       # Get a preference
@@ -126,7 +126,7 @@ module Spree
       # and not admin facing we should not render them.
       #
       # Overwrite +allowed_admin_form_preference_types+ in your class that
-      # includes +Spree::Preferable+ if you want to provide more fields.
+      # includes +Solidus::Preferable+ if you want to provide more fields.
       # If you do so, you also need to provide a preference field partial
       # that lives in:
       #

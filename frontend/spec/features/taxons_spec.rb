@@ -13,7 +13,7 @@ describe "viewing products", type: :feature, inaccessible: true do
   end
   let(:metas) { { meta_description: 'Brand new Ruby on Rails TShirts', meta_title: "Ruby On Rails TShirt", meta_keywords: 'ror, tshirt, ruby' } }
   let(:store_name) do
-    ((first_store = Spree::Store.first) && first_store.name).to_s
+    ((first_store = Solidus::Store.first) && first_store.name).to_s
   end
 
   # Regression test for https://github.com/spree/spree/issues/1796
@@ -145,7 +145,7 @@ describe "viewing products", type: :feature, inaccessible: true do
     end
 
     context "with prices in other currency" do
-      before { Spree::Price.update_all(currency: "CAD") }
+      before { Solidus::Price.update_all(currency: "CAD") }
 
       it "shows no products" do
         visit spree.nested_taxons_path(taxonomy.root)

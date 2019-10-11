@@ -16,7 +16,7 @@ RSpec.describe Solidus::Views::OverrideGenerator, type: :generator do
   end
 
   let(:src) do
-    Spree::Frontend::Engine.root.join('app', 'views', 'spree')
+    Solidus::Frontend::Engine.root.join('app', 'views', 'spree')
   end
 
   let(:dest) do

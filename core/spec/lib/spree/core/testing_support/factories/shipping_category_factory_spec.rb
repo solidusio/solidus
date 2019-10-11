@@ -4,7 +4,7 @@ require 'rails_helper'
 require 'spree/testing_support/factories/shipping_category_factory'
 
 RSpec.describe 'shipping category factory' do
-  let(:factory_class) { Spree::ShippingCategory }
+  let(:factory_class) { Solidus::ShippingCategory }
 
   describe 'plain shipping category' do
     let(:factory) { :shipping_category }

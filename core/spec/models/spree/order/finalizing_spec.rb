@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::Order, type: :model do
+RSpec.describe Solidus::Order, type: :model do
   context "#finalize!" do
     let(:order) { create(:order_ready_to_complete) }
 
@@ -32,7 +32,7 @@ RSpec.describe Spree::Order, type: :model do
 
     it "should send an order confirmation email" do
       mail_message = double "Mail::Message"
-      expect(Spree::OrderMailer).to receive(:confirm_email).with(order).and_return mail_message
+      expect(Solidus::OrderMailer).to receive(:confirm_email).with(order).and_return mail_message
       expect(mail_message).to receive :deliver_later
       order.finalize!
     end
@@ -45,14 +45,14 @@ RSpec.describe Spree::Order, type: :model do
 
     it "should not send duplicate confirmation emails" do
       order.update(confirmation_delivered: true)
-      expect(Spree::OrderMailer).not_to receive(:confirm_email)
+      expect(Solidus::OrderMailer).not_to receive(:confirm_email)
       order.finalize!
     end
 
     it "should freeze all adjustments" do
       # Stub this method as it's called due to a callback
       # and it's irrelevant to this test
-      allow(Spree::OrderMailer).to receive_message_chain :confirm_email, :deliver_later
+      allow(Solidus::OrderMailer).to receive_message_chain :confirm_email, :deliver_later
       adjustments = [double]
       expect(order).to receive(:all_adjustments).and_return(adjustments)
       adjustments.each do |adj|

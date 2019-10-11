@@ -1,9 +1,9 @@
 <fieldset id="calculator_fields" class="js-calculator-fields no-border-bottom">
-  <legend align="center"><%= Spree::Calculator.model_name.human %></legend>
+  <legend align="center"><%= Solidus::Calculator.model_name.human %></legend>
 
   <div id="preference-settings">
     <div class="field">
-      <%= f.label(:calculator_type, Spree::Calculator.model_name.human) %>
+      <%= f.label(:calculator_type, Solidus::Calculator.model_name.human) %>
       <%= f.select(:calculator_type, @calculators.map { |c| [c.description, c.name] }, {}, {class: 'custom-select fullwidth js-calculator-type'}) %>
     </div>
 

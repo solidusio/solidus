@@ -3,7 +3,7 @@
 require 'rails_helper'
 require 'shared_examples/calculator_shared_examples'
 
-module Spree
+module Solidus
   module Calculator::Shipping
     RSpec.describe FlatPercentItemTotal, type: :model do
       it_behaves_like 'a calculator with a description'
@@ -18,9 +18,9 @@ module Spree
         build(
           :stock_package,
           contents: [
-            Spree::Stock::ContentItem.new(inventory_unit1),
-            Spree::Stock::ContentItem.new(inventory_unit1),
-            Spree::Stock::ContentItem.new(inventory_unit2),
+            Solidus::Stock::ContentItem.new(inventory_unit1),
+            Solidus::Stock::ContentItem.new(inventory_unit1),
+            Solidus::Stock::ContentItem.new(inventory_unit2),
           ]
         )
       end

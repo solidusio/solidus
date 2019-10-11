@@ -2,14 +2,14 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::Promotion::Rules::Taxon, type: :model do
+RSpec.describe Solidus::Promotion::Rules::Taxon, type: :model do
   let(:taxon)   { create :taxon, name: 'first' }
   let(:taxon2)  { create :taxon, name: 'second' }
   let(:order)   { create :order_with_line_items }
   let(:product) { order.products.first }
 
   let(:rule) do
-    Spree::Promotion::Rules::Taxon.create!(promotion: create(:promotion))
+    Solidus::Promotion::Rules::Taxon.create!(promotion: create(:promotion))
   end
 
   context '#eligible?(order)' do
@@ -149,7 +149,7 @@ RSpec.describe Spree::Promotion::Rules::Taxon, type: :model do
       end
 
       it 'logs a warning and uses "any" policy' do
-        expect(Spree::Deprecation).to(
+        expect(Solidus::Deprecation).to(
           receive(:warn).
           with(/has unexpected match policy "invalid"/)
         )
@@ -175,7 +175,7 @@ RSpec.describe Spree::Promotion::Rules::Taxon, type: :model do
       end
 
       it 'logs a warning and uses "any" policy' do
-        expect(Spree::Deprecation).to(
+        expect(Solidus::Deprecation).to(
           receive(:warn).
           with(/has unexpected match policy "invalid"/)
         )

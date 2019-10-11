@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-module Spree
+module Solidus
   module Stock
     module LocationSorter
       RSpec.describe Unsorted, type: :model do
@@ -10,7 +10,7 @@ module Spree
 
         let!(:first_stock_location) { create(:stock_location) }
         let!(:second_stock_location) { create(:stock_location) }
-        let(:stock_locations) { Spree::StockLocation.all }
+        let(:stock_locations) { Solidus::StockLocation.all }
 
         it 'returns the original stock locations unsorted' do
           expect(subject.sort).to eq(stock_locations)

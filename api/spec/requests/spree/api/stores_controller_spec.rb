@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-module Spree
+module Solidus
   describe Api::StoresController, type: :request do
     let!(:store) do
       create(:store, name: "My Spree Store", url: "spreestore.example.com")

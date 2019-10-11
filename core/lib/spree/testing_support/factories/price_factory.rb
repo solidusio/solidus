@@ -3,7 +3,7 @@
 require 'spree/testing_support/factories/variant_factory'
 
 FactoryBot.define do
-  factory :price, class: 'Spree::Price' do
+  factory :price, class: 'Solidus::Price' do
     variant
     amount { 19.99 }
     currency { 'USD' }

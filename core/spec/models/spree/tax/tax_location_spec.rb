@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::Tax::TaxLocation do
+RSpec.describe Solidus::Tax::TaxLocation do
   let(:country) { build_stubbed(:country) }
   let(:state) { build_stubbed(:state) }
 

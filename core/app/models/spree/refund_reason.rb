@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-module Spree
-  class RefundReason < Spree::Base
-    include Spree::NamedType
+module Solidus
+  class RefundReason < Solidus::Base
+    include Solidus::NamedType
 
     RETURN_PROCESSING_REASON = 'Return processing'
 

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::PromotionCode do
+RSpec.describe Solidus::PromotionCode do
   context 'callbacks' do
     subject { promotion_code.save }
 

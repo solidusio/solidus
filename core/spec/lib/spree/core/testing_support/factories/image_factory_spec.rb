@@ -4,7 +4,7 @@ require 'rails_helper'
 require 'spree/testing_support/factories/image_factory'
 
 RSpec.describe 'image factory' do
-  let(:factory_class) { Spree::Image }
+  let(:factory_class) { Solidus::Image }
 
   describe 'plain adjustment' do
     let(:factory) { :image }

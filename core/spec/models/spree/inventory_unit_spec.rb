@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::InventoryUnit, type: :model do
+RSpec.describe Solidus::InventoryUnit, type: :model do
   let(:stock_location) { create(:stock_location_with_items) }
   let(:stock_item) { stock_location.stock_items.order(:id).first }
   let(:line_item) { create(:line_item, variant: stock_item.variant) }
@@ -49,12 +49,12 @@ RSpec.describe Spree::InventoryUnit, type: :model do
 
     # Regression for https://github.com/spree/spree/issues/3066
     it "returns modifiable objects" do
-      units = Spree::InventoryUnit.backordered_for_stock_item(stock_item)
+      units = Solidus::InventoryUnit.backordered_for_stock_item(stock_item)
       units.first.save!
     end
 
     it "finds inventory units from its stock location when the unit's variant matches the stock item's variant" do
-      expect(Spree::InventoryUnit.backordered_for_stock_item(stock_item)).to match_array([unit])
+      expect(Solidus::InventoryUnit.backordered_for_stock_item(stock_item)).to match_array([unit])
     end
 
     it "does not find inventory units that aren't backordered" do
@@ -64,7 +64,7 @@ RSpec.describe Spree::InventoryUnit, type: :model do
       on_hand_unit.variant = stock_item.variant
       on_hand_unit.save!
 
-      expect(Spree::InventoryUnit.backordered_for_stock_item(stock_item)).not_to include(on_hand_unit)
+      expect(Solidus::InventoryUnit.backordered_for_stock_item(stock_item)).not_to include(on_hand_unit)
     end
 
     it "does not find inventory units that don't match the stock item's variant" do
@@ -74,7 +74,7 @@ RSpec.describe Spree::InventoryUnit, type: :model do
       other_variant_unit.variant = create(:variant)
       other_variant_unit.save!
 
-      expect(Spree::InventoryUnit.backordered_for_stock_item(stock_item)).not_to include(other_variant_unit)
+      expect(Solidus::InventoryUnit.backordered_for_stock_item(stock_item)).not_to include(other_variant_unit)
     end
 
     it "does not change shipping cost when fulfilling the order" do
@@ -93,7 +93,7 @@ RSpec.describe Spree::InventoryUnit, type: :model do
       end
 
       let(:other_shipment) do
-        shipment = Spree::Shipment.new
+        shipment = Solidus::Shipment.new
         shipment.stock_location = stock_location
         shipment.shipping_methods << create(:shipping_method)
         shipment.order = other_order
@@ -109,7 +109,7 @@ RSpec.describe Spree::InventoryUnit, type: :model do
       end
 
       it "does not find inventory units belonging to incomplete orders" do
-        expect(Spree::InventoryUnit.backordered_for_stock_item(stock_item)).not_to include(other_unit)
+        expect(Solidus::InventoryUnit.backordered_for_stock_item(stock_item)).not_to include(other_unit)
       end
     end
   end
@@ -119,13 +119,13 @@ RSpec.describe Spree::InventoryUnit, type: :model do
 
     it "can still fetch variant" do
       unit.variant.discard
-      expect(unit.reload.variant).to be_a Spree::Variant
+      expect(unit.reload.variant).to be_a Solidus::Variant
     end
 
     it "can still fetch variants by eager loading (remove default_scope)" do
       skip "find a way to remove default scope when eager loading associations"
       unit.variant.discard
-      expect(Spree::InventoryUnit.joins(:variant).includes(:variant).first.variant).to be_a Spree::Variant
+      expect(Solidus::InventoryUnit.joins(:variant).includes(:variant).first.variant).to be_a Solidus::Variant
     end
   end
 
@@ -140,8 +140,8 @@ RSpec.describe Spree::InventoryUnit, type: :model do
     }
 
     it "should create a stock movement" do
-      expect(Spree::Deprecation).to receive(:warn)
-      Spree::InventoryUnit.finalize_units!(inventory_units)
+      expect(Solidus::Deprecation).to receive(:warn)
+      Solidus::InventoryUnit.finalize_units!(inventory_units)
       expect(inventory_units.any?(&:pending)).to be false
     end
   end

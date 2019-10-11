@@ -6,7 +6,7 @@ describe 'current order tracking', type: :controller do
   let!(:store) { create(:store) }
   let(:user) { create(:user) }
 
-  controller(Spree::StoreController) do
+  controller(Solidus::StoreController) do
     def index
       head :ok
     end
@@ -27,21 +27,21 @@ describe 'current order tracking', type: :controller do
     it "doesn't create a new order out of the blue" do
       expect {
         get :index
-      }.not_to change { Spree::Order.count }
+      }.not_to change { Solidus::Order.count }
     end
   end
 end
 
-describe Spree::OrdersController, type: :controller do
+describe Solidus::OrdersController, type: :controller do
   let(:user) { create(:user) }
 
   before { allow(controller).to receive_messages(try_spree_current_user: user) }
 
-  describe Spree::OrdersController do
+  describe Solidus::OrdersController do
     it "doesn't create a new order out of the blue" do
       expect {
         get :edit
-      }.not_to change { Spree::Order.count }
+      }.not_to change { Solidus::Order.count }
     end
   end
 end

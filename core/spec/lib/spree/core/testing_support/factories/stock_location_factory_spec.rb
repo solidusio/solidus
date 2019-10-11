@@ -4,7 +4,7 @@ require 'rails_helper'
 require 'spree/testing_support/factories/stock_location_factory'
 
 RSpec.describe 'stock location factory' do
-  let(:factory_class) { Spree::StockLocation }
+  let(:factory_class) { Solidus::StockLocation }
 
   describe 'plain stock location' do
     let(:factory) { :stock_location }
@@ -29,7 +29,7 @@ RSpec.describe 'stock location factory' do
     it 'succeeds' do
       expect(
         create(:stock_location, country: country)
-      ).to be_a(Spree::StockLocation)
+      ).to be_a(Solidus::StockLocation)
     end
   end
 end

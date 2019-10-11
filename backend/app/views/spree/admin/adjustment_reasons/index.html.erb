@@ -2,7 +2,7 @@
 
 <% admin_breadcrumb(t('spree.settings')) %>
 <% admin_breadcrumb(t('spree.admin.tab.checkout')) %>
-<% admin_breadcrumb(plural_resource_name(Spree::AdjustmentReason)) %>
+<% admin_breadcrumb(plural_resource_name(Solidus::AdjustmentReason)) %>
 
 <% content_for :page_actions do %>
   <ul class="actions inline-menu">
@@ -21,8 +21,8 @@
     </colgroup>
     <thead>
       <tr data-hook="adjustment_reasons_header">
-        <th><%= Spree::AdjustmentReason.human_attribute_name(:name) %></th>
-        <th><%= Spree::AdjustmentReason.human_attribute_name(:state) %></th>
+        <th><%= Solidus::AdjustmentReason.human_attribute_name(:name) %></th>
+        <th><%= Solidus::AdjustmentReason.human_attribute_name(:state) %></th>
         <th class="actions"></th>
       </tr>
     </thead>
@@ -47,7 +47,7 @@
 <% else %>
   <div class="no-objects-found">
     <%= render 'spree/admin/shared/no_objects_found',
-                 resource: Spree::AdjustmentReason,
+                 resource: Solidus::AdjustmentReason,
                  new_resource_url: new_object_url %>
   </div>
 <% end %>

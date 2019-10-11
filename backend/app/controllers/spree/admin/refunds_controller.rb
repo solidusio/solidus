@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module Admin
     class RefundsController < ResourceController
-      belongs_to 'spree/payment'
+      belongs_to 'solidus/payment'
       before_action :load_order
 
       helper_method :refund_reasons
 
-      rescue_from Spree::Core::GatewayError, with: :spree_core_gateway_error
+      rescue_from Solidus::Core::GatewayError, with: :spree_core_gateway_error
 
       private
 
@@ -22,7 +22,7 @@ module Spree
       end
 
       def refund_reasons
-        @refund_reasons ||= Spree::RefundReason.active.all
+        @refund_reasons ||= Solidus::RefundReason.active.all
       end
 
       def build_resource

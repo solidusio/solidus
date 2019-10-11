@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module Api
-    class StockItemsController < Spree::Api::BaseController
+    class StockItemsController < Solidus::Api::BaseController
       before_action :load_stock_location, only: [:index, :show, :create]
 
-      rescue_from Spree::StockLocation::InvalidMovementError, with: :render_stock_items_error
+      rescue_from Solidus::StockLocation::InvalidMovementError, with: :render_stock_items_error
 
       def index
         @stock_items = paginate(scope.ransack(params[:q]).result)
@@ -21,7 +21,7 @@ module Spree
         authorize! :create, StockItem
         @stock_item = scope.new(stock_item_params)
 
-        Spree::StockItem.transaction do
+        Solidus::StockItem.transaction do
           if @stock_item.save
             adjust_stock_item_count_on_hand(count_on_hand_adjustment)
             respond_with(@stock_item, status: 201, default_template: :show)
@@ -32,14 +32,14 @@ module Spree
       end
 
       def update
-        @stock_item = Spree::StockItem.accessible_by(current_ability, :update).find(params[:id])
+        @stock_item = Solidus::StockItem.accessible_by(current_ability, :update).find(params[:id])
         @stock_location = @stock_item.stock_location
 
         adjustment = count_on_hand_adjustment
         params[:stock_item].delete(:count_on_hand)
         adjustment -= @stock_item.count_on_hand if params[:stock_item][:force]
 
-        Spree::StockItem.transaction do
+        Solidus::StockItem.transaction do
           if @stock_item.update(stock_item_params)
             adjust_stock_item_count_on_hand(adjustment)
             respond_with(@stock_item, status: 200, default_template: :show)
@@ -50,7 +50,7 @@ module Spree
       end
 
       def destroy
-        @stock_item = Spree::StockItem.accessible_by(current_ability, :destroy).find(params[:id])
+        @stock_item = Solidus::StockItem.accessible_by(current_ability, :destroy).find(params[:id])
         @stock_item.discard
         respond_with(@stock_item, status: 204)
       end
@@ -58,7 +58,7 @@ module Spree
       private
 
       def load_stock_location
-        @stock_location ||= Spree::StockLocation.accessible_by(current_ability).find(params.fetch(:stock_location_id))
+        @stock_location ||= Solidus::StockLocation.accessible_by(current_ability).find(params.fetch(:stock_location_id))
       end
 
       def scope

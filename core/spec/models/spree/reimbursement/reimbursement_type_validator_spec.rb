@@ -2,13 +2,13 @@
 
 require 'rails_helper'
 
-module Spree
+module Solidus
   RSpec.describe Reimbursement::ReimbursementTypeValidator, type: :model do
     class DummyClass
-      include Spree::Reimbursement::ReimbursementTypeValidator
+      include Solidus::Reimbursement::ReimbursementTypeValidator
 
       class_attribute :expired_reimbursement_type
-      self.expired_reimbursement_type = Spree::ReimbursementType::Credit
+      self.expired_reimbursement_type = Solidus::ReimbursementType::Credit
 
       class_attribute :refund_time_constraint
       self.refund_time_constraint = 90.days
@@ -21,7 +21,7 @@ module Spree
       )
     end
     let(:dummy) { DummyClass.new }
-    let(:preferred_reimbursement_type) { Spree::ReimbursementType::Credit.new }
+    let(:preferred_reimbursement_type) { Solidus::ReimbursementType::Credit.new }
 
     describe '#valid_preferred_reimbursement_type?' do
       before do
@@ -44,7 +44,7 @@ module Spree
       context 'is invalid' do
         it 'if the return item is past the eligible time period and the preferred method of reimbursement is not the expired method of reimbursement' do
           return_item.preferred_reimbursement_type =
-            Spree::ReimbursementType::OriginalPayment.new
+            Solidus::ReimbursementType::OriginalPayment.new
           expect(subject).to be false
         end
       end

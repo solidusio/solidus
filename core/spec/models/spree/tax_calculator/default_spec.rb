@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::TaxCalculator::Default do
+RSpec.describe Solidus::TaxCalculator::Default do
   let(:shipping_address) { FactoryBot.create(:address, state: new_york) }
   let(:order) { FactoryBot.create(:order, ship_address: shipping_address, state: "delivery") }
 
@@ -37,7 +37,7 @@ RSpec.describe Spree::TaxCalculator::Default do
   describe '#calculate' do
     subject(:calculated_taxes) { calculator.calculate }
 
-    it { is_expected.to be_a Spree::Tax::OrderTax }
+    it { is_expected.to be_a Solidus::Tax::OrderTax }
 
     it "has tax information for the line item", aggregate_failures: true do
       expect(calculated_taxes.line_item_taxes.count).to eq 1

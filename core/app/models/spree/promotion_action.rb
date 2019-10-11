@@ -2,22 +2,22 @@
 
 require 'discard'
 
-module Spree
+module Solidus
   # Base class for all types of promotion action.
   #
   # PromotionActions perform the necessary tasks when a promotion is activated
   # by an event and determined to be eligible.
-  class PromotionAction < Spree::Base
+  class PromotionAction < Solidus::Base
     acts_as_paranoid
-    include Spree::ParanoiaDeprecations
+    include Solidus::ParanoiaDeprecations
 
     include Discard::Model
     self.discard_column = :deleted_at
 
-    belongs_to :promotion, class_name: 'Spree::Promotion', inverse_of: :promotion_actions, optional: true
+    belongs_to :promotion, class_name: 'Solidus::Promotion', inverse_of: :promotion_actions, optional: true
 
     scope :of_type, ->(t) { where(type: Array.wrap(t).map(&:to_s)) }
-    scope :shipping, -> { of_type(Spree::Config.environment.promotions.shipping_actions.to_a) }
+    scope :shipping, -> { of_type(Solidus::Config.environment.promotions.shipping_actions.to_a) }
 
     # Updates the state of the order or performs some other action depending on
     # the subclass options will contain the payload from the event that
@@ -33,10 +33,10 @@ module Spree
     #
     # @note This method should be overriden in subclassses.
     #
-    # @param order [Spree::Order] the order to remove the action from
+    # @param order [Solidus::Order] the order to remove the action from
     # @return [void]
     def remove_from(order)
-      Spree::Deprecation.warn("#{self.class.name.inspect} does not define #remove_from. The default behavior may be incorrect and will be removed in a future version of Solidus.", caller)
+      Solidus::Deprecation.warn("#{self.class.name.inspect} does not define #remove_from. The default behavior may be incorrect and will be removed in a future version of Solidus.", caller)
       [order, *order.line_items, *order.shipments].each do |item|
         item.adjustments.each do |adjustment|
           if adjustment.source == self

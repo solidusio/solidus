@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Spree::RansackableAttributes
+module Solidus::RansackableAttributes
   extend ActiveSupport::Concern
   included do
     class_attribute :whitelisted_ransackable_associations

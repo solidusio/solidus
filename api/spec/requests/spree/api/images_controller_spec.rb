@@ -2,8 +2,8 @@
 
 require 'spec_helper'
 
-module Spree
-  describe Spree::Api::ImagesController, type: :request do
+module Solidus
+  describe Solidus::Api::ImagesController, type: :request do
     let!(:product) { create(:product) }
     let!(:attributes) {
       [:id, :position, :attachment_content_type,
@@ -23,7 +23,7 @@ module Spree
           post spree.api_product_images_path(product.id), params: {
             image: {
               attachment: upload_image('thinking-cat.jpg'),
-              viewable_type: 'Spree::Variant',
+              viewable_type: 'Solidus::Variant',
               viewable_id: product.master.to_param
             },
           }

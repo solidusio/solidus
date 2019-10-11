@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :role, class: 'Spree::Role' do
+  factory :role, class: 'Solidus::Role' do
     sequence(:name) { |n| "Role ##{n}" }
 
     factory :admin_role do

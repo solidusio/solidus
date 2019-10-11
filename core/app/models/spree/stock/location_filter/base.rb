@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module Stock
     module LocationFilter
       # Stock location filters are used to which stock location should be
@@ -10,20 +10,20 @@ module Spree
       #   implement {#filter}.
       class Base
         # @!attribute [r] stock_locations
-        #   @return [Enumerable<Spree::StockLocation>]
+        #   @return [Enumerable<Solidus::StockLocation>]
         #     a collection of locations to sort
         attr_reader :stock_locations
 
         # @!attribute [r] order
-        #   @return <Spree::Order>
+        #   @return <Solidus::Order>
         #     the order we are creating the shipment for
         attr_reader :order
 
         # Initializes the stock location filter.
         #
-        # @param stock_locations [Enumerable<Spree::StockLocation>]
+        # @param stock_locations [Enumerable<Solidus::StockLocation>]
         #   a collection of locations to sort
-        # @param order <Spree::Order>
+        # @param order <Solidus::Order>
         #   the order we are creating the shipment for
         def initialize(stock_locations, order)
           @stock_locations = stock_locations
@@ -32,7 +32,7 @@ module Spree
 
         # Filter the stock locations.
         #
-        # @return [Enumerable<Spree::StockLocation>]
+        # @return [Enumerable<Solidus::StockLocation>]
         #   a collection of filtered stock locations
         def filter
           raise NotImplementedError

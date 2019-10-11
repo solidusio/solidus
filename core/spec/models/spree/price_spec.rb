@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::Price, type: :model do
+RSpec.describe Solidus::Price, type: :model do
   describe 'searchable columns' do
     subject { described_class.whitelisted_ransackable_attributes }
     it 'allows searching by variant_id' do
@@ -11,8 +11,8 @@ RSpec.describe Spree::Price, type: :model do
   end
 
   describe 'validations' do
-    let(:variant) { stub_model Spree::Variant }
-    subject { Spree::Price.new variant: variant, amount: amount }
+    let(:variant) { stub_model Solidus::Variant }
+    subject { Solidus::Price.new variant: variant, amount: amount }
 
     context 'when the amount is nil' do
       let(:amount) { nil }
@@ -33,7 +33,7 @@ RSpec.describe Spree::Price, type: :model do
     end
 
     context 'when the amount is greater than maximum amount' do
-      let(:amount) { Spree::Price::MAXIMUM_AMOUNT + 1 }
+      let(:amount) { Solidus::Price::MAXIMUM_AMOUNT + 1 }
 
       it 'has 1 error on amount' do
         subject.valid?
@@ -41,12 +41,12 @@ RSpec.describe Spree::Price, type: :model do
       end
       it 'populates errors' do
         subject.valid?
-        expect(subject.errors.messages[:amount].first).to eq "must be less than or equal to #{Spree::Price::MAXIMUM_AMOUNT}"
+        expect(subject.errors.messages[:amount].first).to eq "must be less than or equal to #{Solidus::Price::MAXIMUM_AMOUNT}"
       end
     end
 
     context 'when the amount is between 0 and the maximum amount' do
-      let(:amount) { Spree::Price::MAXIMUM_AMOUNT }
+      let(:amount) { Solidus::Price::MAXIMUM_AMOUNT }
       it { is_expected.to be_valid }
     end
 
@@ -80,7 +80,7 @@ RSpec.describe Spree::Price, type: :model do
     end
 
     describe "country_iso=" do
-      let(:price) { Spree::Price.new(country_iso: "de") }
+      let(:price) { Solidus::Price.new(country_iso: "de") }
 
       it "assigns nil if passed nil" do
         price.country_iso = nil
@@ -99,8 +99,8 @@ RSpec.describe Spree::Price, type: :model do
   end
 
   describe "#currency" do
-    let(:variant) { stub_model Spree::Variant }
-    subject { Spree::Price.new variant: variant, amount: 10, currency: currency }
+    let(:variant) { stub_model Solidus::Variant }
+    subject { Solidus::Price.new variant: variant, amount: 10, currency: currency }
 
     describe "validation" do
       context "with an invalid currency" do

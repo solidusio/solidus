@@ -4,7 +4,7 @@ require 'spec_helper'
 
 RSpec.feature "Quantity Promotions", js: true do
   given(:action) do
-    Spree::Promotion::Actions::CreateQuantityAdjustments.create(
+    Solidus::Promotion::Actions::CreateQuantityAdjustments.create(
       calculator: calculator,
       preferred_group_size: 2
     )
@@ -91,7 +91,7 @@ RSpec.feature "Quantity Promotions", js: true do
 
   context "with a group size of 3" do
     given(:action) do
-      Spree::Promotion::Actions::CreateQuantityAdjustments.create(
+      Solidus::Promotion::Actions::CreateQuantityAdjustments.create(
         calculator: calculator,
         preferred_group_size: 3
       )

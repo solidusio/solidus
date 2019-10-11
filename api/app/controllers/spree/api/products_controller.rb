@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module Api
-    class ProductsController < Spree::Api::BaseController
+    class ProductsController < Solidus::Api::BaseController
       def index
         if params[:ids]
           ids = params[:ids].split(",").flatten
@@ -134,7 +134,7 @@ module Spree
 
       def set_up_shipping_category
         if shipping_category = params[:product].delete(:shipping_category)
-          id = Spree::ShippingCategory.find_or_create_by(name: shipping_category).id
+          id = Solidus::ShippingCategory.find_or_create_by(name: shipping_category).id
           params[:product][:shipping_category_id] = id
         end
       end

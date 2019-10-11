@@ -3,13 +3,13 @@
 require 'rails_helper'
 
 module ThirdParty
-  class Extension < Spree::Base
+  class Extension < Solidus::Base
     # nasty hack so we don't have to create a table to back this fake model
     self.table_name = 'spree_products'
   end
 end
 
-RSpec.describe Spree::Product, type: :model do
+RSpec.describe Solidus::Product, type: :model do
   context 'product instance' do
     let(:product) { create(:product) }
     let(:variant) { create(:variant, product: product) }
@@ -28,7 +28,7 @@ RSpec.describe Spree::Product, type: :model do
       end
 
       it 'calls #duplicate_extra', partial_double_verification: false do
-        expect_any_instance_of(Spree::Product).to receive(:duplicate_extra) do |product, old_product|
+        expect_any_instance_of(Solidus::Product).to receive(:duplicate_extra) do |product, old_product|
           product.name = old_product.name.reverse
         end
 
@@ -189,7 +189,7 @@ RSpec.describe Spree::Product, type: :model do
       before { high.option_values.destroy_all }
 
       it "returns only variants with option values" do
-        Spree::Deprecation.silence do
+        Solidus::Deprecation.silence do
           expect(product.variants_and_option_values).to eq([low])
         end
       end
@@ -208,7 +208,7 @@ RSpec.describe Spree::Product, type: :model do
       end
 
       context "when asking with different pricing options" do
-        let(:pricing_options) { Spree::Config.pricing_options_class.new(currency: "EUR") }
+        let(:pricing_options) { Solidus::Config.pricing_options_class.new(currency: "EUR") }
 
         before do
           low.prices.create(amount: 99.00, currency: "EUR")
@@ -301,7 +301,7 @@ RSpec.describe Spree::Product, type: :model do
       let(:stock_item) { variant.stock_items.first }
 
       it "doesnt raise ReadOnlyRecord error" do
-        Spree::StockMovement.create!(stock_item: stock_item, quantity: 1)
+        Solidus::StockMovement.create!(stock_item: stock_item, quantity: 1)
         product.discard
       end
     end
@@ -372,7 +372,7 @@ RSpec.describe Spree::Product, type: :model do
 
       it "removes from product promotion rules" do
         promotion = create(:promotion)
-        rule = promotion.rules.create!(type: 'Spree::Promotion::Rules::Product', products: [product])
+        rule = promotion.rules.create!(type: 'Solidus::Promotion::Rules::Product', products: [product])
 
         product.discard
 
@@ -454,11 +454,11 @@ RSpec.describe Spree::Product, type: :model do
 
     # Regression test for https://github.com/spree/spree/issues/2455
     it "should not overwrite properties' presentation names" do
-      Spree::Property.where(name: 'foo').first_or_create!(presentation: "Foo's Presentation Name")
+      Solidus::Property.where(name: 'foo').first_or_create!(presentation: "Foo's Presentation Name")
       product.set_property('foo', 'value1')
       product.set_property('bar', 'value2')
-      expect(Spree::Property.where(name: 'foo').first.presentation).to eq("Foo's Presentation Name")
-      expect(Spree::Property.where(name: 'bar').first.presentation).to eq("bar")
+      expect(Solidus::Property.where(name: 'foo').first.presentation).to eq("Foo's Presentation Name")
+      expect(Solidus::Property.where(name: 'bar').first.presentation).to eq("bar")
     end
 
     # Regression test for https://github.com/spree/spree/issues/4416
@@ -467,7 +467,7 @@ RSpec.describe Spree::Product, type: :model do
         create(:promotion, advertise: true, starts_at: 1.day.ago)
       end
       let!(:rule) do
-        Spree::Promotion::Rules::Product.create(
+        Solidus::Promotion::Rules::Product.create(
           promotion: promotion,
           products: [product]
         )
@@ -482,12 +482,12 @@ RSpec.describe Spree::Product, type: :model do
   context "#images" do
     let(:product) { create(:product) }
     let(:image) { File.open(File.expand_path('../../fixtures/thinking-cat.jpg', __dir__)) }
-    let(:params) { { viewable_id: product.master.id, viewable_type: 'Spree::Variant', attachment: image, alt: "position 2", position: 2 } }
+    let(:params) { { viewable_id: product.master.id, viewable_type: 'Solidus::Variant', attachment: image, alt: "position 2", position: 2 } }
 
     before do
-      Spree::Image.create(params)
-      Spree::Image.create(params.merge({ alt: "position 1", position: 1 }))
-      Spree::Image.create(params.merge({ viewable_type: 'ThirdParty::Extension', alt: "position 1", position: 2 }))
+      Solidus::Image.create(params)
+      Solidus::Image.create(params.merge({ alt: "position 1", position: 1 }))
+      Solidus::Image.create(params.merge({ viewable_type: 'ThirdParty::Extension', alt: "position 1", position: 2 }))
     end
 
     it "only looks for variant images" do
@@ -502,12 +502,12 @@ RSpec.describe Spree::Product, type: :model do
   # Regression tests for https://github.com/spree/spree/issues/2352
   context "classifications and taxons" do
     it "is joined through classifications" do
-      reflection = Spree::Product.reflect_on_association(:taxons)
+      reflection = Solidus::Product.reflect_on_association(:taxons)
       expect(reflection.options[:through]).to eq(:classifications)
     end
 
     it "will delete all classifications" do
-      reflection = Spree::Product.reflect_on_association(:classifications)
+      reflection = Solidus::Product.reflect_on_association(:classifications)
       expect(reflection.options[:dependent]).to eq(:delete_all)
     end
   end
@@ -547,7 +547,7 @@ RSpec.describe Spree::Product, type: :model do
   end
 
   describe '.new' do
-    let(:product) { Spree::Product.new(attributes) }
+    let(:product) { Solidus::Product.new(attributes) }
 
     shared_examples "new product with master" do
       it "initializes master correctly" do
@@ -574,7 +574,7 @@ RSpec.describe Spree::Product, type: :model do
   end
 
   describe '#gallery' do
-    let(:product) { Spree::Product.new }
+    let(:product) { Solidus::Product.new }
     subject { product.gallery }
 
     it 'responds to #images' do

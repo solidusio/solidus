@@ -2,8 +2,8 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::WalletPaymentSource, type: :model do
-  subject { Spree::WalletPaymentSource }
+RSpec.describe Solidus::WalletPaymentSource, type: :model do
+  subject { Solidus::WalletPaymentSource }
 
   describe "validation" do
     let(:user) { create(:user) }
@@ -12,14 +12,14 @@ RSpec.describe Spree::WalletPaymentSource, type: :model do
       with_model 'NonPaymentSource', scope: :all do
         model do
           # We have to set this up or else `inverse_of` prevents us from testing our code
-          has_many :wallet_payment_sources, class_name: 'Spree::WalletPaymentSource', as: :payment_source, inverse_of: :payment_source
+          has_many :wallet_payment_sources, class_name: 'Solidus::WalletPaymentSource', as: :payment_source, inverse_of: :payment_source
         end
       end
 
       let(:payment_source) { NonPaymentSource.create! }
 
-      it "errors when `payment_source` is not a `Spree::PaymentSource`" do
-        wallet_payment_source = Spree::WalletPaymentSource.new(
+      it "errors when `payment_source` is not a `Solidus::PaymentSource`" do
+        wallet_payment_source = Solidus::WalletPaymentSource.new(
           payment_source: payment_source,
           user: user
         )
@@ -33,7 +33,7 @@ RSpec.describe Spree::WalletPaymentSource, type: :model do
 
     it "is invalid if `payment_source` is already in the user's wallet" do
       credit_card = create(:credit_card, user: user)
-      Spree::WalletPaymentSource.create(
+      Solidus::WalletPaymentSource.create(
         payment_source: credit_card,
         user: user
       )

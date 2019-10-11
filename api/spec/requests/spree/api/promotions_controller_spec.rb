@@ -2,8 +2,8 @@
 
 require 'spec_helper'
 
-module Spree
-  describe Spree::Api::PromotionsController, type: :request do
+module Solidus
+  describe Solidus::Api::PromotionsController, type: :request do
     shared_examples "a JSON response" do
       it 'should be ok' do
         subject
@@ -14,7 +14,7 @@ module Spree
         subject
         payload = HashWithIndifferentAccess.new(JSON.parse(response.body))
         expect(payload).to_not be_nil
-        Spree::Api::ApiHelpers.promotion_attributes.each do |attribute|
+        Solidus::Api::ApiHelpers.promotion_attributes.each do |attribute|
           expect(payload).to be_has_key(attribute)
         end
       end

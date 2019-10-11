@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   class ReimbursementPerformer
     class << self
       class_attribute :reimbursement_type_engine
-      self.reimbursement_type_engine = Spree::Reimbursement::ReimbursementTypeEngine
+      self.reimbursement_type_engine = Solidus::Reimbursement::ReimbursementTypeEngine
 
       # Simulate performing the reimbursement without actually saving anything or refunding money, etc.
       # This must return an array of objects that respond to the following methods:
@@ -13,7 +13,7 @@ module Spree
       # so they can be displayed in the Admin UI appropriately.
       def simulate(reimbursement, created_by: nil)
         unless created_by
-          Spree::Deprecation.warn("Calling #simulate on #{self} without created_by is deprecated")
+          Solidus::Deprecation.warn("Calling #simulate on #{self} without created_by is deprecated")
         end
         execute(reimbursement, true, created_by: created_by)
       end
@@ -21,7 +21,7 @@ module Spree
       # Actually perform the reimbursement
       def perform(reimbursement, created_by: nil)
         unless created_by
-          Spree::Deprecation.warn("Calling #perform on #{self} without created_by is deprecated")
+          Solidus::Deprecation.warn("Calling #perform on #{self} without created_by is deprecated")
         end
         execute(reimbursement, false, created_by: created_by)
       end
@@ -38,7 +38,7 @@ module Spree
 
       def calculate_reimbursement_types(reimbursement)
         # Engine returns hash of preferred reimbursement types pointing at return items
-        # {Spree::ReimbursementType::OriginalPayment => [ReturnItem, ...], Spree::ReimbursementType::Exchange => [ReturnItem, ...]}
+        # {Solidus::ReimbursementType::OriginalPayment => [ReturnItem, ...], Solidus::ReimbursementType::Exchange => [ReturnItem, ...]}
         reimbursement_type_engine.new(reimbursement.return_items).calculate_reimbursement_types
       end
     end

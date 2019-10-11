@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Spree::Api::StoreCreditEventsController < Spree::Api::BaseController
+class Solidus::Api::StoreCreditEventsController < Solidus::Api::BaseController
   def mine
     if current_api_user
       @store_credit_events = paginate(

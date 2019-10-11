@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-module Spree
-  class Payment < Spree::Base
+module Solidus
+  class Payment < Solidus::Base
     module Processing
       # "process!" means:
       #   - Do nothing when:
@@ -81,7 +81,7 @@ module Spree
       end
 
       def cancel!
-        Spree::Config.payment_canceller.cancel(self)
+        Solidus::Config.payment_canceller.cancel(self)
       end
 
       def gateway_options
@@ -94,7 +94,7 @@ module Spree
           # Need to pass in a unique identifier here to make some
           # payment gateways happy.
           #
-          # For more information, please see Spree::Payment#set_unique_identifier
+          # For more information, please see Solidus::Payment#set_unique_identifier
           order_id: gateway_order_id,
           # The originator is passed to options used by the payment method.
           # One example of a place that it is used is in:

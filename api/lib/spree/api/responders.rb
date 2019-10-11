@@ -3,7 +3,7 @@
 require 'responders'
 require 'spree/api/responders/rabl_template'
 
-module Spree
+module Solidus
   module Api
     module Responders
       class AppResponder < ActionController::Responder

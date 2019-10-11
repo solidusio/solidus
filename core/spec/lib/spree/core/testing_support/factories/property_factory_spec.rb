@@ -4,7 +4,7 @@ require 'rails_helper'
 require 'spree/testing_support/factories/property_factory'
 
 RSpec.describe 'property factory' do
-  let(:factory_class) { Spree::Property }
+  let(:factory_class) { Solidus::Property }
 
   describe 'plain property' do
     let(:factory) { :property }

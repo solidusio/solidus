@@ -4,14 +4,14 @@
       <th>
         <%= check_box_tag 'select-all' %>
       </th>
-      <th><%= Spree::Product.model_name.human %></th>
-      <th><%= Spree::Variant.human_attribute_name(:sku) %></th>
-      <th class="wrap-text"><%= Spree::ReturnItem.human_attribute_name(:amount) %></th>
-      <th class="wrap-text"><%= Spree::ReturnItem.human_attribute_name(:inventory_unit_state) %></th>
-      <th class="wrap-text"><%= Spree::ReturnItem.human_attribute_name(:exchange_variant) %></th>
-      <th><%= Spree::ReturnItem.human_attribute_name(:resellable) %></th>
-      <th class="wrap-text"><%= Spree::ReturnItem.human_attribute_name(:reception_status) %></th>
-      <th class="wrap-text"><%= Spree::ReturnItem.human_attribute_name(:return_reason) %></th>
+      <th><%= Solidus::Product.model_name.human %></th>
+      <th><%= Solidus::Variant.human_attribute_name(:sku) %></th>
+      <th class="wrap-text"><%= Solidus::ReturnItem.human_attribute_name(:amount) %></th>
+      <th class="wrap-text"><%= Solidus::ReturnItem.human_attribute_name(:inventory_unit_state) %></th>
+      <th class="wrap-text"><%= Solidus::ReturnItem.human_attribute_name(:exchange_variant) %></th>
+      <th><%= Solidus::ReturnItem.human_attribute_name(:resellable) %></th>
+      <th class="wrap-text"><%= Solidus::ReturnItem.human_attribute_name(:reception_status) %></th>
+      <th class="wrap-text"><%= Solidus::ReturnItem.human_attribute_name(:return_reason) %></th>
     </tr>
   </thead>
   <tbody>

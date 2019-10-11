@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::CreditCard, type: :model do
+RSpec.describe Solidus::CreditCard, type: :model do
   let(:valid_credit_card_attributes) do
     {
       number: '4111111111111111',
@@ -13,21 +13,21 @@ RSpec.describe Spree::CreditCard, type: :model do
   end
 
   def self.payment_states
-    Spree::Payment.state_machine.states.keys
+    Solidus::Payment.state_machine.states.keys
   end
 
-  let(:credit_card) { Spree::CreditCard.new }
+  let(:credit_card) { Solidus::CreditCard.new }
 
   it_behaves_like 'a payment source'
 
   before(:each) do
     @order = create(:order)
-    @payment = Spree::Payment.create(amount: 100, order: @order)
+    @payment = Solidus::Payment.create(amount: 100, order: @order)
 
     @success_response = double('gateway_response', success?: true, authorization: '123', avs_result: { 'code' => 'avs-code' })
     @fail_response = double('gateway_response', success?: false)
 
-    @payment_gateway = mock_model(Spree::PaymentMethod,
+    @payment_gateway = mock_model(Solidus::PaymentMethod,
       payment_profiles_supported?: true,
       authorize: @success_response,
       purchase: @success_response,
@@ -87,7 +87,7 @@ RSpec.describe Spree::CreditCard, type: :model do
       credit_card.save!
     end
 
-    let!(:persisted_card) { Spree::CreditCard.find(credit_card.id) }
+    let!(:persisted_card) { Solidus::CreditCard.find(credit_card.id) }
     let(:valid_address_attributes) do
       {
         firstname: "Hugo",
@@ -278,7 +278,7 @@ RSpec.describe Spree::CreditCard, type: :model do
   # TODO: Remove these specs once default is removed
   describe 'default' do
     def default_with_silence(card)
-      Spree::Deprecation.silence { card.default }
+      Solidus::Deprecation.silence { card.default }
     end
 
     context 'with a user' do
@@ -305,7 +305,7 @@ RSpec.describe Spree::CreditCard, type: :model do
   # TODO: Remove these specs once default= is removed
   describe 'default=' do
     def default_with_silence(card)
-      Spree::Deprecation.silence { card.default }
+      Solidus::Deprecation.silence { card.default }
     end
 
     context 'with a user' do
@@ -313,7 +313,7 @@ RSpec.describe Spree::CreditCard, type: :model do
       let(:credit_card) { create(:credit_card, user: user) }
 
       it 'updates the wallet information' do
-        Spree::Deprecation.silence do
+        Solidus::Deprecation.silence do
           credit_card.default = true
         end
         expect(user.wallet.default_wallet_payment_source.payment_source).to eq(credit_card)
@@ -326,7 +326,7 @@ RSpec.describe Spree::CreditCard, type: :model do
       let(:second_card) { create(:credit_card, user: user) }
 
       it 'ensures only one default' do
-        Spree::Deprecation.silence do
+        Solidus::Deprecation.silence do
           first_card.default = true
           second_card.default = true
         end
@@ -334,7 +334,7 @@ RSpec.describe Spree::CreditCard, type: :model do
         expect(default_with_silence(first_card)).to be_falsey
         expect(default_with_silence(second_card)).to be_truthy
 
-        Spree::Deprecation.silence do
+        Solidus::Deprecation.silence do
           first_card.default = true
         end
 
@@ -348,7 +348,7 @@ RSpec.describe Spree::CreditCard, type: :model do
       let(:second_card) { create(:credit_card, user: create(:user)) }
 
       it 'allows multiple defaults' do
-        Spree::Deprecation.silence do
+        Solidus::Deprecation.silence do
           first_card.default = true
           second_card.default = true
         end
@@ -363,7 +363,7 @@ RSpec.describe Spree::CreditCard, type: :model do
 
       it 'raises' do
         expect {
-          Spree::Deprecation.silence do
+          Solidus::Deprecation.silence do
             credit_card.default = true
           end
         }.to raise_error("Cannot set 'default' on a credit card without a user")

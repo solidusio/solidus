@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::Taxonomy, type: :model do
+RSpec.describe Solidus::Taxonomy, type: :model do
   context "#destroy" do
     subject(:association_options) do
       described_class.reflect_on_association(:root).options

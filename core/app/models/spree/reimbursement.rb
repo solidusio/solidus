@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
-module Spree
-  class Reimbursement < Spree::Base
+module Solidus
+  class Reimbursement < Solidus::Base
     class IncompleteReimbursementError < StandardError; end
 
     belongs_to :order, inverse_of: :reimbursements, optional: true
     belongs_to :customer_return, inverse_of: :reimbursements, touch: true, optional: true
 
     has_many :refunds, inverse_of: :reimbursement
-    has_many :credits, inverse_of: :reimbursement, class_name: 'Spree::Reimbursement::Credit'
+    has_many :credits, inverse_of: :reimbursement, class_name: 'Solidus::Reimbursement::Credit'
 
     has_many :return_items, inverse_of: :reimbursement
 
@@ -41,7 +41,7 @@ module Spree
     #   Refund.total_amount_reimbursed_for(reimbursement)
     # See the `reimbursement_generator` property regarding the generation of custom reimbursements.
     class_attribute :reimbursement_models
-    self.reimbursement_models = [Spree::Refund, Spree::Reimbursement::Credit]
+    self.reimbursement_models = [Solidus::Refund, Solidus::Reimbursement::Credit]
 
     # The reimbursement_performer property should be set to an object that responds to the following methods:
     # - #perform
@@ -59,7 +59,7 @@ module Spree
     class_attribute :reimbursement_failure_hooks
     self.reimbursement_failure_hooks = []
 
-    include ::Spree::Config.state_machines.reimbursement
+    include ::Solidus::Config.state_machines.reimbursement
 
     class << self
       def build_from_customer_return(customer_return)
@@ -72,7 +72,7 @@ module Spree
     end
 
     def display_total
-      Spree::Money.new(total, { currency: order.currency })
+      Solidus::Money.new(total, { currency: order.currency })
     end
 
     def calculated_total
@@ -93,7 +93,7 @@ module Spree
 
     def perform!(created_by: nil)
       unless created_by
-        Spree::Deprecation.warn("Calling #perform on #{self} without created_by is deprecated")
+        Solidus::Deprecation.warn("Calling #perform on #{self} without created_by is deprecated")
       end
       reimbursement_tax_calculator.call(self)
       reload
@@ -103,11 +103,11 @@ module Spree
 
       if unpaid_amount_within_tolerance?
         reimbursed!
-        Spree::Event.fire 'reimbursement_reimbursed', reimbursement: self
+        Solidus::Event.fire 'reimbursement_reimbursed', reimbursement: self
         reimbursement_success_hooks.each { |h| h.call self }
       else
         errored!
-        Spree::Event.fire 'reimbursement_errored', reimbursement: self
+        Solidus::Event.fire 'reimbursement_errored', reimbursement: self
         reimbursement_failure_hooks.each { |h| h.call self }
       end
 
@@ -118,7 +118,7 @@ module Spree
 
     def simulate(created_by: nil)
       unless created_by
-        Spree::Deprecation.warn("Calling #simulate on #{self} without created_by is deprecated")
+        Solidus::Deprecation.warn("Calling #simulate on #{self} without created_by is deprecated")
       end
       reimbursement_simulator_tax_calculator.call(self)
       reload
@@ -142,11 +142,11 @@ module Spree
     # Accepts all return items, saves the reimbursement, and performs the reimbursement
     #
     # @api public
-    # @param [Spree.user_class] created_by the user that is performing this action
+    # @param [Solidus.user_class] created_by the user that is performing this action
     # @return [void]
     def return_all(created_by: nil)
       unless created_by
-        Spree::Deprecation.warn("Calling #return_all on #{self} without created_by is deprecated")
+        Solidus::Deprecation.warn("Calling #return_all on #{self} without created_by is deprecated")
       end
       return_items.each(&:accept!)
       save!

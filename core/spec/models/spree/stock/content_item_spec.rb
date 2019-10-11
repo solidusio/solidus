@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-module Spree
+module Solidus
   module Stock
     RSpec.describe ContentItem, type: :model do
       let(:instance) { ContentItem.new(inventory_unit, state) }

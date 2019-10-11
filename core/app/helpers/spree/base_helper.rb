@@ -2,7 +2,7 @@
 
 require 'carmen'
 
-module Spree
+module Solidus
   module BaseHelper
     def link_to_cart(text = nil)
       text = text ? h(text) : t('spree.cart')
@@ -33,7 +33,7 @@ module Spree
         meta[:description] = object.meta_description if object[:meta_description].present?
       end
 
-      if meta[:description].blank? && object.is_a?(Spree::Product)
+      if meta[:description].blank? && object.is_a?(Solidus::Product)
         meta[:description] = truncate(strip_tags(object.description), length: 160, separator: ' ')
       end
 
@@ -57,7 +57,7 @@ module Spree
       @body_class
     end
 
-    def logo(image_path = Spree::Config[:logo])
+    def logo(image_path = Solidus::Config[:logo])
       link_to image_tag(image_path), spree.root_path
     end
 
@@ -110,8 +110,8 @@ module Spree
       end
     end
 
-    def available_countries(restrict_to_zone: Spree::Config[:checkout_zone])
-      countries = Spree::Country.available(restrict_to_zone: restrict_to_zone)
+    def available_countries(restrict_to_zone: Solidus::Config[:checkout_zone])
+      countries = Solidus::Country.available(restrict_to_zone: restrict_to_zone)
 
       country_names = Carmen::Country.all.map do |country|
         [country.code, country.name]
@@ -148,7 +148,7 @@ module Spree
     end
 
     def plural_resource_name(resource_class)
-      resource_class.model_name.human(count: Spree::I18N_GENERIC_PLURAL)
+      resource_class.model_name.human(count: Solidus::I18N_GENERIC_PLURAL)
     end
   end
 end

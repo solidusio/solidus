@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   class ApiConfiguration < Preferences::Configuration
     preference :requires_authentication, :boolean, default: true
   end

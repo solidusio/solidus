@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module Api
-    class AddressBooksController < Spree::Api::BaseController
+    class AddressBooksController < Solidus::Api::BaseController
       # Note: the AddressBook is the resource to think about here, not individual addresses
       before_action :load_user_addresses
 
@@ -46,7 +46,7 @@ module Spree
       private
 
       def address_book_user
-        @address_book_user ||= Spree.user_class.find(params[:user_id])
+        @address_book_user ||= Solidus.user_class.find(params[:user_id])
       end
 
       def load_user_addresses

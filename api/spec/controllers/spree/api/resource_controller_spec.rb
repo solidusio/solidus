@@ -2,9 +2,9 @@
 
 require 'spec_helper'
 
-module Spree
+module Solidus
   module Api
-    class WidgetsController < Spree::Api::ResourceController
+    class WidgetsController < Solidus::Api::ResourceController
       prepend_view_path('spec/test_views')
 
       def model_class
@@ -38,7 +38,7 @@ module Spree
     end
 
     before do
-      Spree::Core::Engine.routes.draw do
+      Solidus::Core::Engine.routes.draw do
         namespace :api do
           resources :widgets
         end

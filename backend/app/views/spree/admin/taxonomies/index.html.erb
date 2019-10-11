@@ -1,9 +1,9 @@
-<% admin_breadcrumb(link_to plural_resource_name(Spree::Product), spree.admin_products_path) %>
-<% admin_breadcrumb(plural_resource_name(Spree::Taxonomy)) %>
+<% admin_breadcrumb(link_to plural_resource_name(Solidus::Product), spree.admin_products_path) %>
+<% admin_breadcrumb(plural_resource_name(Solidus::Taxonomy)) %>
 
 
 <% content_for :page_actions do %>
-  <% if can?(:create, Spree::Taxonomy) %>
+  <% if can?(:create, Solidus::Taxonomy) %>
     <li>
       <%= link_to t('spree.new_taxonomy'), spree.new_admin_taxonomy_url, id: 'admin_new_taxonomy_link', class: 'btn btn-primary' %>
     </li>
@@ -17,7 +17,7 @@
 <% else %>
   <div class="no-objects-found">
     <%= render 'spree/admin/shared/no_objects_found',
-                 resource: Spree::Taxonomy,
+                 resource: Solidus::Taxonomy,
                  new_resource_url: new_object_url %>
   </div>
 <% end %>

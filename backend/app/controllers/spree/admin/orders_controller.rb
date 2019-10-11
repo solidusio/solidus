@@ -1,21 +1,21 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module Admin
-    class OrdersController < Spree::Admin::BaseController
-      helper 'spree/admin/payments'
+    class OrdersController < Solidus::Admin::BaseController
+      helper 'solidus/admin/payments'
 
       before_action :initialize_order_events
       before_action :load_order, only: [:edit, :update, :complete, :advance, :cancel, :resume, :approve, :resend, :unfinalize_adjustments, :finalize_adjustments, :cart, :confirm]
       around_action :lock_order, only: [:update, :advance, :complete, :confirm, :cancel, :resume, :approve, :resend]
 
-      rescue_from Spree::Order::InsufficientStock, with: :insufficient_stock_error
+      rescue_from Solidus::Order::InsufficientStock, with: :insufficient_stock_error
 
       respond_to :html
 
       def index
         params[:q] ||= {}
-        params[:q][:completed_at_not_null] ||= '1' if Spree::Config[:show_only_complete_orders_by_default]
+        params[:q][:completed_at_not_null] ||= '1' if Solidus::Config[:show_only_complete_orders_by_default]
         @show_only_completed = params[:q][:completed_at_not_null] == '1'
         params[:q][:s] ||= @show_only_completed ? 'completed_at desc' : 'created_at desc'
         params[:q][:completed_at_not_null] = '' unless @show_only_completed
@@ -49,10 +49,10 @@ module Spree
           params[:q][:completed_at_lt] = params[:q].delete(:created_at_lt)
         end
 
-        @search = Spree::Order.accessible_by(current_ability, :index).ransack(params[:q])
+        @search = Solidus::Order.accessible_by(current_ability, :index).ransack(params[:q])
         @orders = @search.result.includes([:user]).
           page(params[:page]).
-          per(params[:per_page] || Spree::Config[:orders_per_page])
+          per(params[:per_page] || Solidus::Config[:orders_per_page])
 
         # Restore dates
         params[:q][:created_at_gt] = created_at_gt
@@ -60,8 +60,8 @@ module Spree
       end
 
       def new
-        user = Spree.user_class.find_by(id: params[:user_id]) if params[:user_id]
-        @order = Spree::Core::Importer::Order.import(user, order_params)
+        user = Solidus.user_class.find_by(id: params[:user_id]) if params[:user_id]
+        @order = Solidus::Core::Importer::Order.import(user, order_params)
         redirect_to cart_admin_order_url(@order)
       end
 
@@ -129,7 +129,7 @@ module Spree
       end
 
       def resend
-        Spree::Config.order_mailer_class.confirm_email(@order, true).deliver_later
+        Solidus::Config.order_mailer_class.confirm_email(@order, true).deliver_later
         flash[:success] = t('spree.order_email_resent')
 
         redirect_to(spree.edit_admin_order_path(@order))
@@ -162,7 +162,7 @@ module Spree
       end
 
       def load_order
-        @order = Spree::Order.includes(:adjustments).find_by!(number: params[:id])
+        @order = Solidus::Order.includes(:adjustments).find_by!(number: params[:id])
         authorize! action, @order
       end
 
@@ -172,7 +172,7 @@ module Spree
       end
 
       def model_class
-        Spree::Order
+        Solidus::Order
       end
 
       def insufficient_stock_error

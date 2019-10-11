@@ -21,10 +21,10 @@ describe "Coupon code promotions", type: :feature, js: true do
         expires_at: 1.day.from_now
       )
 
-      calculator = Spree::Calculator::FlatRate.new
+      calculator = Solidus::Calculator::FlatRate.new
       calculator.preferred_amount = 10
 
-      action = Spree::Promotion::Actions::CreateItemAdjustments.new
+      action = Solidus::Promotion::Actions::CreateItemAdjustments.new
       action.calculator = calculator
       action.promotion = promotion
       action.save
@@ -85,8 +85,8 @@ describe "Coupon code promotions", type: :feature, js: true do
         let!(:user) { create(:user, bill_address: create(:address), ship_address: create(:address)) }
 
         before do
-          allow_any_instance_of(Spree::CheckoutController).to receive_messages(try_spree_current_user: user)
-          allow_any_instance_of(Spree::OrdersController).to receive_messages(try_spree_current_user: user)
+          allow_any_instance_of(Solidus::CheckoutController).to receive_messages(try_spree_current_user: user)
+          allow_any_instance_of(Solidus::OrdersController).to receive_messages(try_spree_current_user: user)
         end
 
         context 'with saved credit card' do
@@ -142,7 +142,7 @@ describe "Coupon code promotions", type: :feature, js: true do
       end
 
       it "informs the user about a coupon code which has exceeded its usage" do
-        expect_any_instance_of(Spree::Promotion).to receive(:usage_limit_exceeded?).and_return(true)
+        expect_any_instance_of(Solidus::Promotion).to receive(:usage_limit_exceeded?).and_return(true)
 
         fill_in "coupon_code", with: "onetwo"
         click_button "Apply Code"
@@ -151,7 +151,7 @@ describe "Coupon code promotions", type: :feature, js: true do
 
       context "informs the user if the coupon code is not eligible" do
         before do
-          rule = Spree::Promotion::Rules::ItemTotal.new
+          rule = Solidus::Promotion::Rules::ItemTotal.new
           rule.promotion = promotion
           rule.preferred_amount = 100
           rule.save
@@ -177,7 +177,7 @@ describe "Coupon code promotions", type: :feature, js: true do
 
       context "calculates the correct amount of money saved with flat percent promotions" do
         before do
-          calculator = Spree::Calculator::FlatPercentItemTotal.new
+          calculator = Solidus::Calculator::FlatPercentItemTotal.new
           calculator.preferred_flat_percent = 20
           promotion.actions.first.calculator = calculator
           promotion.save
@@ -213,12 +213,12 @@ describe "Coupon code promotions", type: :feature, js: true do
 
       context "calculates the correct amount of money saved with flat 100% promotions on the whole order" do
         before do
-          calculator = Spree::Calculator::FlatPercentItemTotal.new
+          calculator = Solidus::Calculator::FlatPercentItemTotal.new
           calculator.preferred_flat_percent = 100
 
           promotion.promotion_actions.first.discard
 
-          Spree::Promotion::Actions::CreateAdjustment.create!(
+          Solidus::Promotion::Actions::CreateAdjustment.create!(
             calculator: calculator,
             promotion: promotion
           )

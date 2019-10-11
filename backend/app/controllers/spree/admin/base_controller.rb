@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module Admin
-    class BaseController < Spree::BaseController
-      helper 'spree/admin/navigation'
+    class BaseController < Solidus::BaseController
+      helper 'solidus/admin/navigation'
       layout 'spree/layouts/admin'
 
       before_action :authorize_admin
@@ -49,12 +49,12 @@ module Spree
       end
 
       def config_locale
-        Spree::Backend::Config[:locale]
+        Solidus::Backend::Config[:locale]
       end
 
       def lock_order
-        Spree::OrderMutex.with_lock!(@order) { yield }
-      rescue Spree::OrderMutex::LockFailed
+        Solidus::OrderMutex.with_lock!(@order) { yield }
+      rescue Solidus::OrderMutex::LockFailed
         flash[:error] = t('spree.order_mutex_admin_error')
         redirect_to order_mutex_redirect_path
       end

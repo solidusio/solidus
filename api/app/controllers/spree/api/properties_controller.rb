@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module Api
-    class PropertiesController < Spree::Api::BaseController
+    class PropertiesController < Solidus::Api::BaseController
       before_action :find_property, only: [:show, :update, :destroy]
 
       def index
-        @properties = Spree::Property.accessible_by(current_ability, :read)
+        @properties = Solidus::Property.accessible_by(current_ability, :read)
 
         if params[:ids]
           ids = params[:ids].split(",").flatten
@@ -28,7 +28,7 @@ module Spree
 
       def create
         authorize! :create, Property
-        @property = Spree::Property.new(property_params)
+        @property = Solidus::Property.new(property_params)
         if @property.save
           respond_with(@property, status: 201, default_template: :show)
         else
@@ -59,9 +59,9 @@ module Spree
       private
 
       def find_property
-        @property = Spree::Property.accessible_by(current_ability, :read).find(params[:id])
+        @property = Solidus::Property.accessible_by(current_ability, :read).find(params[:id])
       rescue ActiveRecord::RecordNotFound
-        @property = Spree::Property.accessible_by(current_ability, :read).find_by!(name: params[:id])
+        @property = Solidus::Property.accessible_by(current_ability, :read).find_by!(name: params[:id])
       end
 
       def property_params

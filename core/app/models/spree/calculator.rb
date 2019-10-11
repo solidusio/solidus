@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
-module Spree
-  class Calculator < Spree::Base
+module Solidus
+  class Calculator < Solidus::Base
     belongs_to :calculable, polymorphic: true, optional: true
 
     # This method calls a compute_<computable> method. must be overriden in concrete calculator.
     #
     # It should return amount computed based on #calculable and the computable parameter
     def compute(computable)
-      # Spree::LineItem -> :compute_line_item
+      # Solidus::LineItem -> :compute_line_item
       computable_name = computable.class.name.demodulize.underscore
       method = "compute_#{computable_name}".to_sym
       calculator_class = self.class
@@ -29,9 +29,9 @@ module Spree
 
     # Returns all calculators applicable for kind of work
     def self.calculators
-      Spree::Deprecation.warn("Calling .calculators is deprecated. Please access through Rails.application.config.spree.calculators")
+      Solidus::Deprecation.warn("Calling .calculators is deprecated. Please access through Rails.application.config.spree.calculators")
 
-      Spree::Config.environment.calculators
+      Solidus::Config.environment.calculators
     end
 
     def to_s

@@ -2,9 +2,9 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::Promotion::Rules::ItemTotal, type: :model do
+RSpec.describe Solidus::Promotion::Rules::ItemTotal, type: :model do
   let(:rule) do
-    Spree::Promotion::Rules::ItemTotal.new(
+    Solidus::Promotion::Rules::ItemTotal.new(
       preferred_amount: preferred_amount,
       preferred_operator: preferred_operator
     )

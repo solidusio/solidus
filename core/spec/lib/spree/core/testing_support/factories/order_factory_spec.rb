@@ -124,7 +124,7 @@ RSpec.shared_examples "an order with line items factory" do |expected_order_stat
   end
 end
 RSpec.describe 'order factory' do
-  let(:factory_class) { Spree::Order }
+  let(:factory_class) { Solidus::Order }
 
   describe 'plain order' do
     let(:factory) { :order }

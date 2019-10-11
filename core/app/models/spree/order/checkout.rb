@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-module Spree
-  class Order < Spree::Base
+module Solidus
+  class Order < Solidus::Base
     module Checkout
       def self.included(klass)
         klass.extend ClassMethods

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-module Spree
+module Solidus
   RSpec.describe ReimbursementType::Exchange, type: :model do
     describe '.reimburse' do
       let(:reimbursement) { create(:reimbursement, return_items_count: 1) }
@@ -11,11 +11,11 @@ module Spree
       let(:simulate)      { true }
       let(:created_by_user) { create(:user, email: 'user@email.com') }
 
-      subject { Spree::ReimbursementType::Exchange.reimburse(reimbursement, return_items, simulate, created_by: created_by_user) }
+      subject { Solidus::ReimbursementType::Exchange.reimburse(reimbursement, return_items, simulate, created_by: created_by_user) }
 
       context 'return items are supplied' do
         before do
-          expect(Spree::Exchange).to receive(:new).with(reimbursement.order, return_items).and_return(new_exchange)
+          expect(Solidus::Exchange).to receive(:new).with(reimbursement.order, return_items).and_return(new_exchange)
         end
 
         context "simulate is true" do

@@ -2,12 +2,12 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::Promotion, type: :model do
-  let(:promotion) { Spree::Promotion.new }
+RSpec.describe Solidus::Promotion, type: :model do
+  let(:promotion) { Solidus::Promotion.new }
 
   describe "validations" do
     before :each do
-      @valid_promotion = Spree::Promotion.new name: "A promotion"
+      @valid_promotion = Solidus::Promotion.new name: "A promotion"
     end
 
     it "valid_promotion is valid" do
@@ -30,11 +30,11 @@ RSpec.describe Spree::Promotion, type: :model do
 
   describe ".applied" do
     it "scopes promotions that have been applied to an order only" do
-      promotion = Spree::Promotion.create! name: "test"
-      expect(Spree::Promotion.applied).to be_empty
+      promotion = Solidus::Promotion.create! name: "test"
+      expect(Solidus::Promotion.applied).to be_empty
 
       promotion.orders << create(:order)
-      expect(Spree::Promotion.applied.first).to eq promotion
+      expect(Solidus::Promotion.applied.first).to eq promotion
     end
   end
 
@@ -43,7 +43,7 @@ RSpec.describe Spree::Promotion, type: :model do
     let(:advertised_promotion) { create(:promotion, advertise: true) }
 
     it "only shows advertised promotions" do
-      advertised = Spree::Promotion.advertised
+      advertised = Solidus::Promotion.advertised
       expect(advertised).to include(advertised_promotion)
       expect(advertised).not_to include(promotion)
     end
@@ -91,18 +91,18 @@ RSpec.describe Spree::Promotion, type: :model do
   end
 
   describe "#save" do
-    let(:promotion) { Spree::Promotion.create(name: "delete me") }
+    let(:promotion) { Solidus::Promotion.create(name: "delete me") }
 
     before(:each) do
-      promotion.actions << Spree::Promotion::Actions::CreateAdjustment.new
-      promotion.rules << Spree::Promotion::Rules::FirstOrder.new
+      promotion.actions << Solidus::Promotion::Actions::CreateAdjustment.new
+      promotion.rules << Solidus::Promotion::Rules::FirstOrder.new
       promotion.save!
     end
 
     it "should deeply autosave records and preferences" do
       promotion.actions[0].calculator.preferred_flat_percent = 10
       promotion.save!
-      expect(Spree::Calculator.first.preferred_flat_percent).to eq(10)
+      expect(Solidus::Calculator.first.preferred_flat_percent).to eq(10)
     end
   end
 
@@ -110,8 +110,8 @@ RSpec.describe Spree::Promotion, type: :model do
     let(:promotion) { create(:promotion) }
 
     before do
-      @action1 = Spree::Promotion::Actions::CreateAdjustment.create!
-      @action2 = Spree::Promotion::Actions::CreateAdjustment.create!
+      @action1 = Solidus::Promotion::Actions::CreateAdjustment.create!
+      @action2 = Solidus::Promotion::Actions::CreateAdjustment.create!
       allow(@action1).to receive_messages perform: true
       allow(@action2).to receive_messages perform: true
 
@@ -385,7 +385,7 @@ RSpec.describe Spree::Promotion, type: :model do
   end
 
   describe '#not_started?' do
-    let(:promotion) { Spree::Promotion.new(starts_at: starts_at) }
+    let(:promotion) { Solidus::Promotion.new(starts_at: starts_at) }
     subject { promotion.not_started? }
 
     context 'no starts_at date' do
@@ -405,7 +405,7 @@ RSpec.describe Spree::Promotion, type: :model do
   end
 
   describe '#started?' do
-    let(:promotion) { Spree::Promotion.new(starts_at: starts_at) }
+    let(:promotion) { Solidus::Promotion.new(starts_at: starts_at) }
     subject { promotion.started? }
 
     context 'when no starts_at date' do
@@ -425,7 +425,7 @@ RSpec.describe Spree::Promotion, type: :model do
   end
 
   describe '#expired?' do
-    let(:promotion) { Spree::Promotion.new(expires_at: expires_at) }
+    let(:promotion) { Solidus::Promotion.new(expires_at: expires_at) }
     subject { promotion.expired? }
 
     context 'when no expires_at date' do
@@ -445,7 +445,7 @@ RSpec.describe Spree::Promotion, type: :model do
   end
 
   describe '#not_expired?' do
-    let(:promotion) { Spree::Promotion.new(expires_at: expires_at) }
+    let(:promotion) { Solidus::Promotion.new(expires_at: expires_at) }
     subject { promotion.not_expired? }
 
     context 'when no expired_at date' do
@@ -512,16 +512,16 @@ RSpec.describe Spree::Promotion, type: :model do
     end
 
     let!(:action) do
-      calculator = Spree::Calculator::FlatRate.new
+      calculator = Solidus::Calculator::FlatRate.new
       action_params = { promotion: promotion, calculator: calculator }
-      action = Spree::Promotion::Actions::CreateAdjustment.create(action_params)
+      action = Solidus::Promotion::Actions::CreateAdjustment.create(action_params)
       promotion.actions << action
       action
     end
 
     let!(:adjustment) do
       order = create(:order)
-      Spree::Adjustment.create!(
+      Solidus::Adjustment.create!(
         order:      order,
         adjustable: order,
         source:     action,
@@ -547,7 +547,7 @@ RSpec.describe Spree::Promotion, type: :model do
     let(:promotion) { create(:promotion) }
 
     context "when it has product rules with products associated" do
-      let(:promotion_rule) { Spree::Promotion::Rules::Product.new }
+      let(:promotion_rule) { Solidus::Promotion::Rules::Product.new }
 
       before do
         promotion_rule.promotion = promotion
@@ -614,7 +614,7 @@ RSpec.describe Spree::Promotion, type: :model do
       end
     end
 
-    context "when promotable is a Spree::LineItem" do
+    context "when promotable is a Solidus::LineItem" do
       let(:promotable) { create :line_item }
       let(:product) { promotable.product }
 
@@ -633,7 +633,7 @@ RSpec.describe Spree::Promotion, type: :model do
       end
     end
 
-    context "when promotable is a Spree::Order" do
+    context "when promotable is a Solidus::Order" do
       context "and it is empty" do
         it { is_expected.to be true }
       end
@@ -671,14 +671,14 @@ RSpec.describe Spree::Promotion, type: :model do
     end
 
     it "true if there are no applicable rules" do
-      promotion.promotion_rules = [stub_model(Spree::PromotionRule, eligible?: true, applicable?: false)]
+      promotion.promotion_rules = [stub_model(Solidus::PromotionRule, eligible?: true, applicable?: false)]
       allow(promotion.promotion_rules).to receive(:for).and_return([])
       expect(promotion.eligible_rules(promotable)).to eq []
     end
 
     context "with 'all' match policy" do
-      let(:rule1) { Spree::PromotionRule.create!(promotion: promotion) }
-      let(:rule2) { Spree::PromotionRule.create!(promotion: promotion) }
+      let(:rule1) { Solidus::PromotionRule.create!(promotion: promotion) }
+      let(:rule2) { Solidus::PromotionRule.create!(promotion: promotion) }
 
       before { promotion.match_policy = 'all' }
 
@@ -728,14 +728,14 @@ RSpec.describe Spree::Promotion, type: :model do
       end
 
       it "should have eligible rules if any of the rules are eligible" do
-        true_rule = mock_model(Spree::PromotionRule, eligible?: true, applicable?: true)
+        true_rule = mock_model(Solidus::PromotionRule, eligible?: true, applicable?: true)
         promotion.promotion_rules = [true_rule]
         allow(promotion.rules).to receive(:for) { promotion.rules }
         expect(promotion.eligible_rules(promotable)).to eq [true_rule]
       end
 
       context "when none of the rules are eligible" do
-        let(:rule) { Spree::PromotionRule.create!(promotion: promotion) }
+        let(:rule) { Solidus::PromotionRule.create!(promotion: promotion) }
         let(:errors) { double ActiveModel::Errors, empty?: false }
         before do
           allow(rule).to receive_messages(eligible?: false, applicable?: true, eligibility_errors: errors)
@@ -756,10 +756,10 @@ RSpec.describe Spree::Promotion, type: :model do
   end
 
   describe '#line_item_actionable?' do
-    let(:order) { double Spree::Order }
-    let(:line_item) { double Spree::LineItem }
-    let(:true_rule) { mock_model Spree::PromotionRule, eligible?: true, applicable?: true, actionable?: true }
-    let(:false_rule) { mock_model Spree::PromotionRule, eligible?: true, applicable?: true, actionable?: false }
+    let(:order) { double Solidus::Order }
+    let(:line_item) { double Solidus::LineItem }
+    let(:true_rule) { mock_model Solidus::PromotionRule, eligible?: true, applicable?: true, actionable?: true }
+    let(:false_rule) { mock_model Solidus::PromotionRule, eligible?: true, applicable?: true, actionable?: false }
     let(:rules) { [] }
 
     before do
@@ -835,7 +835,7 @@ RSpec.describe Spree::Promotion, type: :model do
   # admin form posts the code and path as empty string
   describe "normalize blank values for path" do
     it "will save blank value as nil value instead" do
-      promotion = Spree::Promotion.create(name: "A promotion", path: "")
+      promotion = Solidus::Promotion.create(name: "A promotion", path: "")
       expect(promotion.path).to be_nil
     end
   end

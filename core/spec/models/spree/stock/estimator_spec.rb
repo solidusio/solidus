@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-module Spree
+module Solidus
   module Stock
     RSpec.describe Estimator, type: :model do
       let(:shipping_rate) { 4.00 }
@@ -29,7 +29,7 @@ module Spree
           it 'raises an error' do
             expect {
               subject.shipping_rates(package)
-            }.to raise_error(Spree::Stock::Estimator::ShipmentRequired)
+            }.to raise_error(Solidus::Stock::Estimator::ShipmentRequired)
           end
         end
 
@@ -38,7 +38,7 @@ module Spree
           it 'raises an error' do
             expect {
               subject.shipping_rates(package)
-            }.to raise_error(Spree::Stock::Estimator::OrderRequired)
+            }.to raise_error(Solidus::Stock::Estimator::OrderRequired)
           end
         end
 
@@ -94,7 +94,7 @@ module Spree
         end
 
         context "general shipping methods" do
-          before { Spree::ShippingMethod.all.each(&:really_destroy!) }
+          before { Solidus::ShippingMethod.all.each(&:really_destroy!) }
 
           context 'with two shipping methods of different cost' do
             let!(:shipping_methods) do
@@ -127,7 +127,7 @@ module Spree
         end
 
         context "involves backend only shipping methods" do
-          before{ Spree::ShippingMethod.all.each(&:really_destroy!) }
+          before{ Solidus::ShippingMethod.all.each(&:really_destroy!) }
           let!(:backend_method) { create(:shipping_method, available_to_users: false, cost: 0.00) }
           let!(:generic_method) { create(:shipping_method, cost: 5.00) }
 
@@ -142,7 +142,7 @@ module Spree
         end
 
         context "excludes shipping methods from other stores" do
-          before{ Spree::ShippingMethod.all.each(&:really_destroy!) }
+          before{ Solidus::ShippingMethod.all.each(&:really_destroy!) }
 
           let!(:other_method) do
             create(
@@ -186,13 +186,13 @@ module Spree
 
         it 'uses the configured shipping rate selector' do
           shipping_rate = build(:shipping_rate)
-          allow(Spree::ShippingRate).to receive(:new).and_return(shipping_rate)
+          allow(Solidus::ShippingRate).to receive(:new).and_return(shipping_rate)
 
           selector_class = Class.new do
             def initialize(_); end;
 
             def find_default
-              Spree::ShippingRate.new
+              Solidus::ShippingRate.new
             end
           end
           stub_spree_preferences(shipping_rate_selector_class: selector_class)
@@ -203,15 +203,15 @@ module Spree
         end
 
         it 'uses the configured shipping rate sorter' do
-          class Spree::Stock::TestSorter
+          class Solidus::Stock::TestSorter
             def initialize(_rates)
             end
           end
 
-          stub_spree_preferences(shipping_rate_sorter_class: Spree::Stock::TestSorter)
+          stub_spree_preferences(shipping_rate_sorter_class: Solidus::Stock::TestSorter)
 
           sorter = double(:sorter, sort: nil)
-          allow(Spree::Stock::TestSorter).to receive(:new) { sorter }
+          allow(Solidus::Stock::TestSorter).to receive(:new) { sorter }
 
           subject.shipping_rates(package)
 
@@ -219,20 +219,20 @@ module Spree
         end
 
         it 'uses the configured shipping rate taxer' do
-          class Spree::Tax::TestTaxCalculator
+          class Solidus::Tax::TestTaxCalculator
             def initialize(_order)
             end
 
             def calculate(_shipping_rate)
               [
-                Spree::Tax::ItemTax.new(label: "TAX", amount: 5)
+                Solidus::Tax::ItemTax.new(label: "TAX", amount: 5)
               ]
             end
           end
 
-          stub_spree_preferences(shipping_rate_tax_calculator_class: Spree::Tax::TestTaxCalculator)
+          stub_spree_preferences(shipping_rate_tax_calculator_class: Solidus::Tax::TestTaxCalculator)
 
-          expect(Spree::Tax::TestTaxCalculator).to receive(:new).and_call_original
+          expect(Solidus::Tax::TestTaxCalculator).to receive(:new).and_call_original
           subject.shipping_rates(package)
         end
       end

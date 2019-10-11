@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Spree::PromotionCodeBatch, type: :model do
+RSpec.describe Solidus::PromotionCodeBatch, type: :model do
   subject do
     described_class.create!(
       promotion_id: create(:promotion).id,
@@ -17,7 +17,7 @@ RSpec.describe Spree::PromotionCodeBatch, type: :model do
     context "with a pending code batch" do
       it "should call the worker" do
         expect { subject.process }
-          .to have_enqueued_job(Spree::PromotionCodeBatchJob)
+          .to have_enqueued_job(Solidus::PromotionCodeBatchJob)
       end
 
       it "should update the state to processing" do
@@ -31,7 +31,7 @@ RSpec.describe Spree::PromotionCodeBatch, type: :model do
       before { subject.update_attribute(:state, "processing") }
 
       it "should raise an error" do
-        expect{ subject.process }.to raise_error Spree::PromotionCodeBatch::CantProcessStartedBatch
+        expect{ subject.process }.to raise_error Solidus::PromotionCodeBatch::CantProcessStartedBatch
       end
     end
 
@@ -39,7 +39,7 @@ RSpec.describe Spree::PromotionCodeBatch, type: :model do
       before { subject.update_attribute(:state, "completed") }
 
       it "should raise an error" do
-        expect{ subject.process }.to raise_error Spree::PromotionCodeBatch::CantProcessStartedBatch
+        expect{ subject.process }.to raise_error Solidus::PromotionCodeBatch::CantProcessStartedBatch
       end
     end
 
@@ -47,7 +47,7 @@ RSpec.describe Spree::PromotionCodeBatch, type: :model do
       before { subject.update_attribute(:state, "failed") }
 
       it "should raise an error" do
-        expect{ subject.process }.to raise_error Spree::PromotionCodeBatch::CantProcessStartedBatch
+        expect{ subject.process }.to raise_error Solidus::PromotionCodeBatch::CantProcessStartedBatch
       end
     end
   end

@@ -2,8 +2,8 @@
 
 require 'spree/frontend_configuration'
 
-module Spree
+module Solidus
   module Frontend
-    Config = Spree::FrontendConfiguration.new
+    Config = Solidus::FrontendConfiguration.new
   end
 end

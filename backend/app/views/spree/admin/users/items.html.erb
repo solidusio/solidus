@@ -1,4 +1,4 @@
-<% admin_breadcrumb(link_to plural_resource_name(Spree::LegacyUser), spree.admin_users_path) %>
+<% admin_breadcrumb(link_to plural_resource_name(Solidus::LegacyUser), spree.admin_users_path) %>
 <% admin_breadcrumb(link_to @user.email, edit_admin_user_url(@user)) %>
 <% admin_breadcrumb(t('spree.admin.user.items_purchased')) %>
 
@@ -26,12 +26,12 @@
       </colgroup>
 
       <thead>
-        <th><%= sort_link @search, :completed_at, Spree::Order.human_attribute_name(:completed_at), {}, {title: 'orders_completed_at_title'} %></th>
-        <th colspan=2><%= Spree::LineItem.human_attribute_name(:description) %></th>
-        <th><%= Spree::LineItem.human_attribute_name(:price) %></th>
-        <th><%= Spree::LineItem.human_attribute_name(:quantity) %></th>
-        <th><%= Spree::Order.human_attribute_name(:total) %></th>
-        <th><%= sort_link @search, :state, Spree::Order.human_attribute_name(:state), {}, {title: 'orders_state_title'} %></th>
+        <th><%= sort_link @search, :completed_at, Solidus::Order.human_attribute_name(:completed_at), {}, {title: 'orders_completed_at_title'} %></th>
+        <th colspan=2><%= Solidus::LineItem.human_attribute_name(:description) %></th>
+        <th><%= Solidus::LineItem.human_attribute_name(:price) %></th>
+        <th><%= Solidus::LineItem.human_attribute_name(:quantity) %></th>
+        <th><%= Solidus::Order.human_attribute_name(:total) %></th>
+        <th><%= sort_link @search, :state, Solidus::Order.human_attribute_name(:state), {}, {title: 'orders_state_title'} %></th>
         <th><%= sort_link @search, :number, t('spree.admin.user.order_num'), {}, {title: 'orders_number_title'} %></th>
       </thead>
 
@@ -73,7 +73,7 @@
   <% else %>
     <div class="no-objects-found">
       <%= render 'spree/admin/shared/no_objects_found',
-                   resource: Spree::Order,
+                   resource: Solidus::Order,
                    new_resource_url: spree.new_admin_order_path %>
     </div>
   <% end %>

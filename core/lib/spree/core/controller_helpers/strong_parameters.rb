@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module Core
     module ControllerHelpers
       module StrongParameters
         def permitted_attributes
-          Spree::PermittedAttributes
+          Solidus::PermittedAttributes
         end
 
-        delegate(*Spree::PermittedAttributes::ATTRIBUTES,
+        delegate(*Solidus::PermittedAttributes::ATTRIBUTES,
                  to: :permitted_attributes,
                  prefix: :permitted)
 

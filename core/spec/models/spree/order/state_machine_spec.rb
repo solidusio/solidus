@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::Order, type: :model do
+RSpec.describe Solidus::Order, type: :model do
   let(:order) { create(:order_with_line_items) }
 
   context "#next!" do
@@ -45,7 +45,7 @@ RSpec.describe Spree::Order, type: :model do
       end
 
       it "adjusts tax rates when transitioning to delivery" do
-        expect(Spree::TaxCalculator::Default).to receive(:new).once.with(order).and_call_original
+        expect(Solidus::TaxCalculator::Default).to receive(:new).once.with(order).and_call_original
         order.next!
       end
     end
@@ -64,7 +64,7 @@ RSpec.describe Spree::Order, type: :model do
       end
     end
 
-    (Spree::Shipment.state_machine.states.keys - states).each do |shipment_state|
+    (Solidus::Shipment.state_machine.states.keys - states).each do |shipment_state|
       it "should be false if shipment_state is #{shipment_state}" do
         expect(order).to be_completed
         order.shipment_state = shipment_state

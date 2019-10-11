@@ -1,4 +1,4 @@
-<% admin_breadcrumb(link_to plural_resource_name(Spree::Product), spree.admin_products_path) %>
+<% admin_breadcrumb(link_to plural_resource_name(Solidus::Product), spree.admin_products_path) %>
 <% admin_breadcrumb(link_to @product.name, spree.admin_product_path(@product)) %>
 
 <% content_for :tabs do %>
@@ -6,22 +6,22 @@
     <ul class="tabs" data-hook="admin_product_tabs">
       <%= content_tag :li, class: ('active' if current == 'Product Details') do %>
         <%= link_to t('spree.product_details'), spree.edit_admin_product_url(@product) %>
-      <% end if can?(:admin, Spree::Product) %>
+      <% end if can?(:admin, Solidus::Product) %>
       <%= content_tag :li, class: ('active' if current == 'Images') do %>
         <%= link_to t('spree.images'), spree.admin_product_images_url(@product) %>
-      <% end if can?(:admin, Spree::Image) && !@product.deleted? %>
+      <% end if can?(:admin, Solidus::Image) && !@product.deleted? %>
       <%= content_tag :li, class: ('active' if current == 'Variants') do %>
-        <%= link_to plural_resource_name(Spree::Variant), spree.admin_product_variants_url(@product) %>
-      <% end if can?(:admin, Spree::Variant) %>
+        <%= link_to plural_resource_name(Solidus::Variant), spree.admin_product_variants_url(@product) %>
+      <% end if can?(:admin, Solidus::Variant) %>
       <%= content_tag :li, class: ('active' if current == 'Prices') do %>
-        <%= link_to plural_resource_name(Spree::Price), spree.admin_product_prices_url(@product) %>
-      <% end if can?(:admin, Spree::Price) && !@product.deleted? %>
+        <%= link_to plural_resource_name(Solidus::Price), spree.admin_product_prices_url(@product) %>
+      <% end if can?(:admin, Solidus::Price) && !@product.deleted? %>
       <%= content_tag :li, class: ('active' if current == 'Product Properties') do %>
-        <%= link_to plural_resource_name(Spree::ProductProperty), spree.admin_product_product_properties_url(@product) %>
-      <% end if can?(:admin, Spree::ProductProperty) && !@product.deleted? %>
+        <%= link_to plural_resource_name(Solidus::ProductProperty), spree.admin_product_product_properties_url(@product) %>
+      <% end if can?(:admin, Solidus::ProductProperty) && !@product.deleted? %>
       <%= content_tag :li, class: ('active' if current == 'Stock Management') do %>
         <%= link_to t('spree.stock_management'), spree.admin_product_stock_url(@product) %>
-      <% end if can?(:admin, Spree::StockItem) && !@product.deleted? %>
+      <% end if can?(:admin, Solidus::StockItem) && !@product.deleted? %>
     </ul>
   </nav>
 <% end %>

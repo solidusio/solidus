@@ -14,7 +14,7 @@ if defined?(DummyApp)
 
   Teaspoon.configure do |config|
     config.mount_at = "/teaspoon"
-    config.root = Spree::Backend::Engine.root
+    config.root = Solidus::Backend::Engine.root
     config.asset_paths = ["spec/javascripts", "spec/javascripts/stylesheets"]
     config.fixture_paths = ["spec/javascripts/fixtures"]
 

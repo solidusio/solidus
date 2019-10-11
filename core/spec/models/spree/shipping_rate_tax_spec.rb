@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-module Spree
+module Solidus
   RSpec.describe ShippingRateTax, type: :model do
     subject(:shipping_rate_tax) { described_class.new }
 

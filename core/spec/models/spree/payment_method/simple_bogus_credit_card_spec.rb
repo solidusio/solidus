@@ -2,8 +2,8 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::PaymentMethod::SimpleBogusCreditCard, type: :model do
-  subject { Spree::PaymentMethod::SimpleBogusCreditCard.new }
+RSpec.describe Solidus::PaymentMethod::SimpleBogusCreditCard, type: :model do
+  subject { Solidus::PaymentMethod::SimpleBogusCreditCard.new }
 
   # regression test for https://github.com/spree/spree/issues/3824
   describe "#capture" do

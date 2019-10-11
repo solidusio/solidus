@@ -4,7 +4,7 @@ require 'rails_helper'
 require 'spree/testing_support/factories/return_reason_factory'
 
 RSpec.describe 'return reason factory' do
-  let(:factory_class) { Spree::ReturnReason }
+  let(:factory_class) { Solidus::ReturnReason }
 
   describe 'plain return reason' do
     let(:factory) { :return_reason }

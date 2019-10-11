@@ -2,12 +2,12 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::Promotion::Rules::NthOrder do
+RSpec.describe Solidus::Promotion::Rules::NthOrder do
   describe "#applicable?" do
     subject { described_class.new.applicable?(promotable) }
 
     context "when the promotable is an order" do
-      let(:promotable) { Spree::Order.new }
+      let(:promotable) { Solidus::Order.new }
 
       it { is_expected.to be true }
     end
@@ -28,7 +28,7 @@ RSpec.describe Spree::Promotion::Rules::NthOrder do
     end
 
     context "when the order does not have a user" do
-      let(:order) { Spree::Order.new }
+      let(:order) { Solidus::Order.new }
 
       it { is_expected.to be false }
     end

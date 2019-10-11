@@ -1,13 +1,13 @@
 <% admin_layout "full-width" %>
 
-<% admin_breadcrumb(plural_resource_name(Spree::Order)) %>
+<% admin_breadcrumb(plural_resource_name(Solidus::Order)) %>
 
 
 <% content_for :page_actions do %>
   <li>
     <%= link_to t('spree.new_order'), new_admin_order_url, id: 'admin_new_order', class: 'btn btn-primary' %>
   </li>
-<% end if can? :create, Spree::Order %>
+<% end if can? :create, Solidus::Order %>
 
 <% content_for :table_filter_title do %>
   <%= t('spree.filter') %>
@@ -35,7 +35,7 @@
 
           <div class="field">
             <%= label_tag :q_state_eq, t('spree.status') %>
-            <%= f.select :state_eq, Spree::Order.state_machines[:state].states.collect {|s| [t(s.name, scope: 'spree.order_state'), s.value]}, {include_blank: true}, class: 'custom-select fullwidth' %>
+            <%= f.select :state_eq, Solidus::Order.state_machines[:state].states.collect {|s| [t(s.name, scope: 'spree.order_state'), s.value]}, {include_blank: true}, class: 'custom-select fullwidth' %>
           </div>
 
           <div class="field">
@@ -85,10 +85,10 @@
         </div>
 
         <div class="col-12 col-md-6 col-lg-4 col-xl-3">
-          <% if Spree::Store.count > 1 %>
+          <% if Solidus::Store.count > 1 %>
             <div class="field">
               <%= label_tag :q_store_id_eq, t('spree.store') %>
-              <%= f.select :store_id_eq, Spree::Store.all.map { |s| [s.name, s.id] }, { include_blank: true }, { class: "custom-select fullwidth" } %>
+              <%= f.select :store_id_eq, Solidus::Store.all.map { |s| [s.name, s.id] }, { include_blank: true }, { class: "custom-select fullwidth" } %>
             </div>
           <% end %>
 
@@ -122,7 +122,7 @@
        <col style="width: 10%;">
        <col style="width: 10%;">
        <col style="width: 12%;">
-       <% if Spree::Order.checkout_step_names.include?(:delivery) %>
+       <% if Solidus::Order.checkout_step_names.include?(:delivery) %>
          <col style="width: 12%;">
        <% end %>
        <col style="width: 25%;">
@@ -139,7 +139,7 @@
         <th><%= sort_link @search, :number %></th>
         <th><%= sort_link @search, :state %></th>
         <th><%= sort_link @search, :payment_state %></th>
-        <% if Spree::Order.checkout_step_names.include?(:delivery) %>
+        <% if Solidus::Order.checkout_step_names.include?(:delivery) %>
           <th><%= sort_link @search, :shipment_state %></th>
         <% end %>
         <th><%= sort_link @search, :email %></th>
@@ -164,7 +164,7 @@
             </span>
           <% end %>
         </td>
-        <% if Spree::Order.checkout_step_names.include?(:delivery) %>
+        <% if Solidus::Order.checkout_step_names.include?(:delivery) %>
           <td>
             <% if order.shipment_state %>
               <span class="pill pill-<%= order.shipment_state %>">
@@ -191,7 +191,7 @@
 <% else %>
   <div class="no-objects-found">
     <%= render 'spree/admin/shared/no_objects_found',
-                 resource: Spree::Order,
+                 resource: Solidus::Order,
                  new_resource_url: spree.new_admin_order_path %>
   </div>
 <% end %>

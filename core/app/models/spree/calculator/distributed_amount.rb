@@ -7,16 +7,16 @@ require_dependency 'spree/calculator'
 # preferred amount and the price of the other line items. More expensive line
 # items will receive a greater share of the preferred amount.
 
-module Spree
+module Solidus
   class Calculator::DistributedAmount < Calculator
     preference :amount, :decimal, default: 0
-    preference :currency, :string, default: -> { Spree::Config[:currency] }
+    preference :currency, :string, default: -> { Solidus::Config[:currency] }
 
     def compute_line_item(line_item)
       return 0 unless line_item
       return 0 unless preferred_currency.casecmp(line_item.currency).zero?
       return 0 unless calculable.promotion.line_item_actionable?(line_item.order, line_item)
-      Spree::DistributedAmountsHandler.new(
+      Solidus::DistributedAmountsHandler.new(
         actionable_line_items(line_item.order),
         preferred_amount
       ).amount(line_item)

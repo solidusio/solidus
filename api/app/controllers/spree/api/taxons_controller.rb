@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module Api
-    class TaxonsController < Spree::Api::BaseController
+    class TaxonsController < Solidus::Api::BaseController
       def index
         if taxonomy
           @taxons = taxonomy.root.children
         elsif params[:ids]
-          @taxons = Spree::Taxon.accessible_by(current_ability, :read).where(id: params[:ids].split(','))
+          @taxons = Solidus::Taxon.accessible_by(current_ability, :read).where(id: params[:ids].split(','))
         else
-          @taxons = Spree::Taxon.accessible_by(current_ability, :read).order(:taxonomy_id, :lft).ransack(params[:q]).result
+          @taxons = Solidus::Taxon.accessible_by(current_ability, :read).order(:taxonomy_id, :lft).ransack(params[:q]).result
         end
 
         unless params[:without_children]
@@ -30,15 +30,15 @@ module Spree
       end
 
       def jstree
-        Spree::Deprecation.warn("Please don't use `/api/taxonomies/:taxonomy_id/taxons/:taxon_id/jstree` endpoint. It is deprecated and will be removed in the next future.", caller)
+        Solidus::Deprecation.warn("Please don't use `/api/taxonomies/:taxonomy_id/taxons/:taxon_id/jstree` endpoint. It is deprecated and will be removed in the next future.", caller)
         show
       end
 
       def create
         authorize! :create, Taxon
-        @taxon = Spree::Taxon.new(taxon_params)
+        @taxon = Solidus::Taxon.new(taxon_params)
         @taxon.taxonomy_id = params[:taxonomy_id]
-        taxonomy = Spree::Taxonomy.find_by(id: params[:taxonomy_id])
+        taxonomy = Solidus::Taxonomy.find_by(id: params[:taxonomy_id])
 
         if taxonomy.nil?
           @taxon.errors.add(:taxonomy_id, I18n.t('spree.api.invalid_taxonomy_id'))
@@ -72,7 +72,7 @@ module Spree
       def products
         # Returns the products sorted by their position with the classification
         # Products#index does not do the sorting.
-        taxon = Spree::Taxon.find(params[:id])
+        taxon = Solidus::Taxon.find(params[:id])
         @products = paginate(taxon.products.ransack(params[:q]).result)
         @products = @products.includes(master: :default_price)
 
@@ -96,7 +96,7 @@ module Spree
 
       def taxonomy
         if params[:taxonomy_id].present?
-          @taxonomy ||= Spree::Taxonomy.accessible_by(current_ability, :read).find(params[:taxonomy_id])
+          @taxonomy ||= Solidus::Taxonomy.accessible_by(current_ability, :read).find(params[:taxonomy_id])
         end
       end
 
@@ -113,13 +113,13 @@ module Spree
       end
 
       def preload_taxon_parents(taxons)
-        parents = Spree::Taxon.none
+        parents = Solidus::Taxon.none
 
         taxons.map do |taxon|
           parents = parents.or(taxon.ancestors)
         end
 
-        Spree::Taxon.associate_parents(taxons + parents)
+        Solidus::Taxon.associate_parents(taxons + parents)
       end
     end
   end

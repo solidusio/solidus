@@ -3,7 +3,7 @@
 require 'spec_helper'
 require 'spree/event'
 
-RSpec.describe Spree::Event do
+RSpec.describe Solidus::Event do
   let(:subscription_name) { 'foo_bar' }
   let(:item) { spy('object') }
   let(:notifier) { ActiveSupport::Notifications.notifier }
@@ -11,7 +11,7 @@ RSpec.describe Spree::Event do
   subject { described_class }
 
   it 'has default adapter' do
-    expect(subject.adapter).to eql Spree::Event::Adapters::ActiveSupportNotifications
+    expect(subject.adapter).to eql Solidus::Event::Adapters::ActiveSupportNotifications
   end
 
   context 'with the default adapter' do
@@ -47,7 +47,7 @@ RSpec.describe Spree::Event do
 
         context 'after adding a subscription' do
           before do
-            Spree::Event.subscribe(subscription_name) { item.do_something }
+            Solidus::Event.subscribe(subscription_name) { item.do_something }
           end
 
           it 'includes the new subscription with custom suffix' do
@@ -63,23 +63,23 @@ RSpec.describe Spree::Event do
     context 'subscriptions' do
       describe '#subscribe' do
         it 'can subscribe to events' do
-          Spree::Event.subscribe(subscription_name) { item.do_something }
-          Spree::Event.fire subscription_name
+          Solidus::Event.subscribe(subscription_name) { item.do_something }
+          Solidus::Event.fire subscription_name
           expect(item).to have_received :do_something
         end
       end
 
       describe '#unsubscribe' do
         context 'when unsubscribing using a subscription object as reference' do
-          let!(:subscription) { Spree::Event.subscribe(subscription_name) { item.do_something } }
+          let!(:subscription) { Solidus::Event.subscribe(subscription_name) { item.do_something } }
 
           before do
-            Spree::Event.subscribe(subscription_name) { item.do_something_else }
+            Solidus::Event.subscribe(subscription_name) { item.do_something_else }
           end
 
           it 'can unsubscribe from single event by object' do
             subject.unsubscribe subscription
-            Spree::Event.fire subscription_name
+            Solidus::Event.fire subscription_name
             expect(item).not_to have_received :do_something
             expect(item).to have_received :do_something_else
           end
@@ -87,13 +87,13 @@ RSpec.describe Spree::Event do
 
         context 'when unsubscribing using a string as reference' do
           before do
-            Spree::Event.subscribe(subscription_name) { item.do_something }
-            Spree::Event.subscribe(subscription_name) { item.do_something_else }
+            Solidus::Event.subscribe(subscription_name) { item.do_something }
+            Solidus::Event.subscribe(subscription_name) { item.do_something_else }
           end
 
           it 'can unsubscribe from multiple events with the same name' do
             subject.unsubscribe subscription_name
-            Spree::Event.fire subscription_name
+            Solidus::Event.fire subscription_name
             expect(item).not_to have_received :do_something
             expect(item).not_to have_received :do_something_else
           end
@@ -114,7 +114,7 @@ RSpec.describe Spree::Event do
     end
 
     it 'accepts the names of constants' do
-      Spree::Config.events.subscribers << subscriber_name
+      Solidus::Config.events.subscribers << subscriber_name
 
       expect(described_class.subscribers.to_a).to eq([subscriber])
     end

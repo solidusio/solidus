@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   # Used to persist shipping rate tax estimations.
-  # @attr [Spree::ShippingRate] shipping_rate The shipping rate to be taxed
-  # @attr [Spree::TaxRate] tax_rate The tax rate used to calculate the tax amount
+  # @attr [Solidus::ShippingRate] shipping_rate The shipping rate to be taxed
+  # @attr [Solidus::TaxRate] tax_rate The tax rate used to calculate the tax amount
   # @since 1.3.0
-  # @see Spree::Tax::ShippingRateTaxer
+  # @see Solidus::Tax::ShippingRateTaxer
   class ShippingRateTax < ActiveRecord::Base
-    belongs_to :shipping_rate, class_name: "Spree::ShippingRate", optional: true
-    belongs_to :tax_rate, class_name: "Spree::TaxRate", optional: true
+    belongs_to :shipping_rate, class_name: "Solidus::ShippingRate", optional: true
+    belongs_to :tax_rate, class_name: "Solidus::TaxRate", optional: true
 
     extend DisplayMoney
     money_methods :absolute_amount

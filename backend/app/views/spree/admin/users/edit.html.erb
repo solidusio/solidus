@@ -1,4 +1,4 @@
-<% admin_breadcrumb(link_to plural_resource_name(Spree::LegacyUser), spree.admin_users_path) %>
+<% admin_breadcrumb(link_to plural_resource_name(Solidus::LegacyUser), spree.admin_users_path) %>
 <% admin_breadcrumb(@user.email) %>
 
 
@@ -7,7 +7,7 @@
 <%= render partial: 'spree/admin/users/user_page_actions' %>
 
 <fieldset data-hook="admin_user_edit_general_settings">
-  <legend><%= Spree.user_class.model_name.human %></legend>
+  <legend><%= Solidus.user_class.model_name.human %></legend>
 
   <div data-hook="admin_user_edit_form_header">
     <%= render partial: 'spree/shared/error_messages', locals: { target: @user } %>

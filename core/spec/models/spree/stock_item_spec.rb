@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::StockItem, type: :model do
+RSpec.describe Solidus::StockItem, type: :model do
   let(:stock_location) { create(:stock_location_with_items) }
 
   subject { stock_location.stock_items.order(:id).first }
@@ -60,7 +60,7 @@ RSpec.describe Spree::StockItem, type: :model do
     let!(:current_on_hand) { subject.count_on_hand }
 
     it 'is updated pessimistically' do
-      copy = Spree::StockItem.find(subject.id)
+      copy = Solidus::StockItem.find(subject.id)
 
       subject.adjust_count_on_hand(5)
       expect(subject.count_on_hand).to eq(current_on_hand + 5)
@@ -113,7 +113,7 @@ RSpec.describe Spree::StockItem, type: :model do
     let!(:current_on_hand) { subject.count_on_hand }
 
     it 'is updated pessimistically' do
-      copy = Spree::StockItem.find(subject.id)
+      copy = Solidus::StockItem.find(subject.id)
 
       subject.set_count_on_hand(5)
       expect(subject.count_on_hand).to eq(5)
@@ -148,7 +148,7 @@ RSpec.describe Spree::StockItem, type: :model do
   end
 
   context "with stock movements" do
-    before { Spree::StockMovement.create(stock_item: subject, quantity: 1) }
+    before { Solidus::StockMovement.create(stock_item: subject, quantity: 1) }
 
     it "doesnt raise ReadOnlyRecord error" do
       subject.discard
@@ -242,7 +242,7 @@ RSpec.describe Spree::StockItem, type: :model do
     context "when deprecated binary_inventory_cache is used" do
       before do
         stub_spree_preferences(binary_inventory_cache: binary_inventory_cache)
-        allow(Spree::Deprecation).to receive(:warn)
+        allow(Solidus::Deprecation).to receive(:warn)
         subject.set_count_on_hand(9)
       end
 
@@ -250,7 +250,7 @@ RSpec.describe Spree::StockItem, type: :model do
         let(:binary_inventory_cache) { true }
 
         it "logs a deprecation warning" do
-          expect(Spree::Deprecation).to have_received(:warn)
+          expect(Solidus::Deprecation).to have_received(:warn)
         end
       end
 
@@ -258,11 +258,11 @@ RSpec.describe Spree::StockItem, type: :model do
         let(:binary_inventory_cache) { false }
 
         it "inventory_cache_threshold remains nil" do
-          expect(Spree::Config.inventory_cache_threshold).to be_nil
+          expect(Solidus::Config.inventory_cache_threshold).to be_nil
         end
 
         it "does not log a deprecation warning" do
-          expect(Spree::Deprecation).not_to have_received(:warn)
+          expect(Solidus::Deprecation).not_to have_received(:warn)
         end
       end
     end

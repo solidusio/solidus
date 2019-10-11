@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-module Spree
+module Solidus
   RSpec.describe Core::Search::Variant do
     def assert_found(query_string, variant)
       expect(described_class.new(query_string).results).to include variant
@@ -56,12 +56,12 @@ module Spree
       it "takes into account a passed in scope" do
         variant.stock_items.first.set_count_on_hand(10)
         expect(
-          described_class.new(variant.sku, scope: Spree::Variant.in_stock).results
+          described_class.new(variant.sku, scope: Solidus::Variant.in_stock).results
         ).to include variant
 
         variant.stock_items.each { |si| si.set_count_on_hand(0) }
         expect(
-          described_class.new(variant.sku, scope: Spree::Variant.in_stock).results
+          described_class.new(variant.sku, scope: Solidus::Variant.in_stock).results
         ).not_to include variant
       end
     end

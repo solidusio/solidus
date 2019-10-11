@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module Admin
     module PromotionsHelper
       def admin_promotion_status(promotion)

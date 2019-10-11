@@ -1,21 +1,21 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   # Records store specific configuration such as store name and URL.
   #
-  # `Spree::Store` provides the foundational ActiveRecord model for recording information
+  # `Solidus::Store` provides the foundational ActiveRecord model for recording information
   # specific to your store such as its name, URL, and tax location. This model will
   # provide the foundation upon which [support for multiple stores](https://github.com/solidusio/solidus/issues/112)
   # hosted by a single Solidus implementation can be built.
   #
-  class Store < Spree::Base
+  class Store < Solidus::Base
     has_many :store_payment_methods, inverse_of: :store
     has_many :payment_methods, through: :store_payment_methods
 
     has_many :store_shipping_methods, inverse_of: :store
     has_many :shipping_methods, through: :store_shipping_methods
 
-    has_many :orders, class_name: "Spree::Order"
+    has_many :orders, class_name: "Solidus::Order"
 
     validates :code, presence: true, uniqueness: { allow_blank: true }
     validates :name, presence: true
@@ -28,7 +28,7 @@ module Spree
     scope :by_url, lambda { |url| where("url like ?", "%#{url}%") }
 
     class << self
-      deprecate by_url: "Spree::Store.by_url is DEPRECATED", deprecator: Spree::Deprecation
+      deprecate by_url: "Solidus::Store.by_url is DEPRECATED", deprecator: Solidus::Deprecation
     end
 
     def available_locales
@@ -36,7 +36,7 @@ module Spree
       if locales
         super().split(",").map(&:to_sym)
       else
-        Spree.i18n_available_locales
+        Solidus.i18n_available_locales
       end
     end
 
@@ -50,7 +50,7 @@ module Spree
     end
 
     def self.current(store_key)
-      Spree::Deprecation.warn "Spree::Store.current is DEPRECATED"
+      Solidus::Deprecation.warn "Solidus::Store.current is DEPRECATED"
       current_store = Store.find_by(code: store_key) || Store.by_url(store_key).first if store_key
       current_store || Store.default
     end
@@ -61,15 +61,15 @@ module Spree
 
     def default_cart_tax_location
       @default_cart_tax_location ||=
-        Spree::Tax::TaxLocation.new(country: Spree::Country.find_by(iso: cart_tax_country_iso))
+        Solidus::Tax::TaxLocation.new(country: Solidus::Country.find_by(iso: cart_tax_country_iso))
     end
 
     private
 
     def ensure_default_exists_and_is_unique
       if default
-        Spree::Store.where.not(id: id).update_all(default: false)
-      elsif Spree::Store.where(default: true).count == 0
+        Solidus::Store.where.not(id: id).update_all(default: false)
+      elsif Solidus::Store.where(default: true).count == 0
         self.default = true
       end
     end

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   class PaymentMethod::Check < PaymentMethod
     def actions
       %w{capture void credit}

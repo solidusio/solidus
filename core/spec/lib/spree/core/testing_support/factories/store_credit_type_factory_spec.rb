@@ -4,7 +4,7 @@ require 'rails_helper'
 require 'spree/testing_support/factories/store_credit_type_factory'
 
 RSpec.describe 'store credit type factory' do
-  let(:factory_class) { Spree::StoreCreditType }
+  let(:factory_class) { Solidus::StoreCreditType }
 
   describe 'primary credit type' do
     let(:factory) { :primary_credit_type }

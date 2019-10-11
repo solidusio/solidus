@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-module Spree
+module Solidus
   describe Api::CheckoutsController, type: :request do
     before(:each) do
       stub_authentication!
@@ -100,7 +100,7 @@ module Spree
 
         # Regression Spec for https://github.com/spree/spree/issues/5389 and https://github.com/spree/spree/issues/5880
         it "can update addresses but not transition to delivery w/o shipping setup" do
-          Spree::ShippingMethod.all.each(&:really_destroy!)
+          Solidus::ShippingMethod.all.each(&:really_destroy!)
           put spree.api_checkout_path(order),
             params: { order_token: order.guest_token, order: {
               bill_address_attributes: address,
@@ -143,7 +143,7 @@ module Spree
 
       it "can update payment method and transition from payment to confirm" do
         order.update_column(:state, "payment")
-        allow_any_instance_of(Spree::PaymentMethod::BogusCreditCard).to receive(:source_required?).and_return(false)
+        allow_any_instance_of(Solidus::PaymentMethod::BogusCreditCard).to receive(:source_required?).and_return(false)
         put spree.api_checkout_path(order.to_param), params: { order_token: order.guest_token, order: { payments_attributes: [{ payment_method_id: @payment_method.id }] } }
         expect(json_response['state']).to eq('confirm')
         expect(json_response['payments'][0]['payment_method']['name']).to eq(@payment_method.name)
@@ -154,11 +154,11 @@ module Spree
       context "with disallowed payment method" do
         it "returns not found" do
           order.update_column(:state, "payment")
-          allow_any_instance_of(Spree::PaymentMethod::BogusCreditCard).to receive(:source_required?).and_return(false)
+          allow_any_instance_of(Solidus::PaymentMethod::BogusCreditCard).to receive(:source_required?).and_return(false)
           @payment_method.update!(available_to_users: false)
           expect {
             put spree.api_checkout_path(order.to_param), params: { order_token: order.guest_token, order: { payments_attributes: [{ payment_method_id: @payment_method.id }] } }
-          }.not_to change { Spree::Payment.count }
+          }.not_to change { Solidus::Payment.count }
           expect(response.status).to eq(404)
         end
       end
@@ -284,7 +284,7 @@ module Spree
           # unfortunately the credit card gets reloaded by `@order.next` before
           # the controller action finishes so this is the best way I could think
           # of to test that the verification_value gets set.
-          expect_any_instance_of(Spree::CreditCard).to(
+          expect_any_instance_of(Solidus::CreditCard).to(
             receive(:verification_value=).with('456').and_call_original
           )
 
@@ -312,7 +312,7 @@ module Spree
           end
 
           it 'succeeds' do
-            Spree::Deprecation.silence do
+            Solidus::Deprecation.silence do
               put spree.api_checkout_path(order), params: params
             end
 
@@ -353,7 +353,7 @@ module Spree
       end
 
       it "can apply a coupon code to an order" do
-        expect(Spree::Deprecation).to receive(:warn)
+        expect(Solidus::Deprecation).to receive(:warn)
         order.update_column(:state, "payment")
         expect(PromotionHandler::Coupon).to receive(:new).with(order).and_call_original
         expect_any_instance_of(PromotionHandler::Coupon).to receive(:apply).and_return({ coupon_applied?: true })
@@ -362,7 +362,7 @@ module Spree
       end
 
       it "renders error failing to apply coupon" do
-        expect(Spree::Deprecation).to receive(:warn)
+        expect(Solidus::Deprecation).to receive(:warn)
         order.update_column(:state, "payment")
         put spree.api_checkout_path(order.to_param), params: { order_token: order.guest_token, order: { coupon_code: "foobar" } }
         expect(response.status).to eq(422)
@@ -414,7 +414,7 @@ module Spree
         end
 
         it "can transition from confirm to complete" do
-          allow_any_instance_of(Spree::Order).to receive_messages(payment_required?: false)
+          allow_any_instance_of(Solidus::Order).to receive_messages(payment_required?: false)
           subject
           expect(json_response['state']).to eq('complete')
           expect(response.status).to eq(200)
@@ -443,7 +443,7 @@ module Spree
       let!(:order) { create(:order_with_line_items) }
 
       it 'continues to advance an order while it can move forward' do
-        expect_any_instance_of(Spree::Order).to receive(:next).exactly(3).times.and_return(true, true, false)
+        expect_any_instance_of(Solidus::Order).to receive(:next).exactly(3).times.and_return(true, true, false)
         put spree.advance_api_checkout_path(order), params: { order_token: order.guest_token }
       end
 

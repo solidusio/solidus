@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-module Spree
+module Solidus
   describe Api::CreditCardsController, type: :request do
     describe '#index' do
       let!(:admin_user) do

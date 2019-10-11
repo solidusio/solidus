@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-module Spree
+module Solidus
   describe Api::StockItemsController, type: :request do
     let!(:stock_location) { create(:stock_location_with_items) }
     let!(:stock_item) { stock_location.stock_items.order(:id).first }
@@ -138,7 +138,7 @@ module Spree
         end
 
         it 'creates a stock movement' do
-          expect { subject }.to change { Spree::StockMovement.count }.by(1)
+          expect { subject }.to change { Solidus::StockMovement.count }.by(1)
           expect(assigns(:stock_movement).quantity).to eq 20
         end
 
@@ -204,8 +204,8 @@ module Spree
           end
 
           it 'creates a stock movement for the adjusted quantity' do
-            expect { subject }.to change { Spree::StockMovement.count }.by(1)
-            expect(Spree::StockMovement.last.quantity).to eq 40
+            expect { subject }.to change { Solidus::StockMovement.count }.by(1)
+            expect(Solidus::StockMovement.last.quantity).to eq 40
           end
 
           context 'tracking inventory' do
@@ -262,7 +262,7 @@ module Spree
           end
 
           it 'creates a stock movement for the adjusted quantity' do
-            expect { subject }.to change { Spree::StockMovement.count }.by(1)
+            expect { subject }.to change { Solidus::StockMovement.count }.by(1)
             expect(assigns(:stock_movement).quantity).to eq 30
           end
 
@@ -304,7 +304,7 @@ module Spree
       it 'can delete a stock item' do
         delete spree.api_stock_item_path(stock_item)
         expect(response.status).to eq(204)
-        expect { Spree::StockItem.find(stock_item.id) }.to raise_error(ActiveRecord::RecordNotFound)
+        expect { Solidus::StockItem.find(stock_item.id) }.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
   end

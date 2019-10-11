@@ -2,7 +2,7 @@
 
 require_dependency 'spree/calculator'
 
-module Spree
+module Solidus
   class Calculator::PercentOnLineItem < Calculator
     preference :percent, :decimal, default: 0
 

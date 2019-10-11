@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Spree::CheckoutController, type: :controller do
+describe Solidus::CheckoutController, type: :controller do
   let(:token) { 'some_token' }
   let(:user) { create(:user) }
   let(:order) { FactoryBot.create(:order_with_totals) }
@@ -185,14 +185,14 @@ describe Spree::CheckoutController, type: :controller do
       # some point?
       context "when there is a checkout step between payment and confirm", partial_double_verification: false do
         before do
-          @old_checkout_flow = Spree::Order.checkout_flow
-          Spree::Order.class_eval do
+          @old_checkout_flow = Solidus::Order.checkout_flow
+          Solidus::Order.class_eval do
             insert_checkout_step :new_step, after: :payment
           end
         end
 
         after do
-          Spree::Order.checkout_flow(&@old_checkout_flow)
+          Solidus::Order.checkout_flow(&@old_checkout_flow)
         end
 
         let(:order) { create(:order_with_line_items) }
@@ -338,10 +338,10 @@ describe Spree::CheckoutController, type: :controller do
       end
     end
 
-    context "Spree::Core::GatewayError" do
+    context "Solidus::Core::GatewayError" do
       before do
         order.update! user: user
-        allow(order).to receive(:next).and_raise(Spree::Core::GatewayError.new("Invalid something or other."))
+        allow(order).to receive(:next).and_raise(Solidus::Core::GatewayError.new("Invalid something or other."))
         post :update, params: { state: "address" }
       end
 
@@ -414,7 +414,7 @@ describe Spree::CheckoutController, type: :controller do
       end
 
       it "fails to transition from payment to complete" do
-        allow_any_instance_of(Spree::Payment).to receive(:process!).and_raise(Spree::Core::GatewayError.new(I18n.t('spree.payment_processing_failed')))
+        allow_any_instance_of(Solidus::Payment).to receive(:process!).and_raise(Solidus::Core::GatewayError.new(I18n.t('spree.payment_processing_failed')))
         put :update, params: { state: order.state, order: {} }
         expect(flash[:error]).to eq(I18n.t('spree.payment_processing_failed'))
       end
@@ -428,12 +428,12 @@ describe Spree::CheckoutController, type: :controller do
       end
 
       context "when the order has no shipments" do
-        let(:order) { Spree::TestingSupport::OrderWalkthrough.up_to(:address) }
+        let(:order) { Solidus::TestingSupport::OrderWalkthrough.up_to(:address) }
 
         before do
           allow(order).to receive_messages shipments: []
           # Order#next is the tipical failure point here:
-          allow(order).to receive(:next).and_raise(Spree::Order::InsufficientStock)
+          allow(order).to receive(:next).and_raise(Solidus::Order::InsufficientStock)
         end
 
         it "redirects the customer to the cart page with an error message" do
@@ -444,10 +444,10 @@ describe Spree::CheckoutController, type: :controller do
       end
 
       context "when the order has shipments" do
-        let(:order) { Spree::TestingSupport::OrderWalkthrough.up_to(:payment) }
+        let(:order) { Solidus::TestingSupport::OrderWalkthrough.up_to(:payment) }
 
         context "when items become somehow not available anymore" do
-          before { Spree::StockItem.update_all backorderable: false }
+          before { Solidus::StockItem.update_all backorderable: false }
 
           it "redirects the customer to the address checkout page with an error message" do
             put :update, params: { state: order.state, order: {} }
@@ -461,9 +461,9 @@ describe Spree::CheckoutController, type: :controller do
   end
 
   context "When last inventory item has been purchased" do
-    let(:product) { mock_model(Spree::Product, name: "Amazing Object") }
-    let(:variant) { mock_model(Spree::Variant) }
-    let(:line_item) { mock_model Spree::LineItem, insufficient_stock?: true, amount: 0, name: "Amazing Item" }
+    let(:product) { mock_model(Solidus::Product, name: "Amazing Object") }
+    let(:variant) { mock_model(Solidus::Variant) }
+    let(:line_item) { mock_model Solidus::LineItem, insufficient_stock?: true, amount: 0, name: "Amazing Item" }
     let(:order) { create(:order) }
 
     before do
@@ -525,7 +525,7 @@ describe Spree::CheckoutController, type: :controller do
       let(:coupon_code) { "" }
 
       it 'does not try to apply coupon code' do
-        expect(Spree::PromotionHandler::Coupon).not_to receive :new
+        expect(Solidus::PromotionHandler::Coupon).not_to receive :new
 
         put :update, params: { state: order.state, order: { coupon_code: coupon_code } }
 
@@ -534,12 +534,12 @@ describe Spree::CheckoutController, type: :controller do
     end
 
     context "when coupon code is applied" do
-      let(:promotion_handler) { instance_double('Spree::PromotionHandler::Coupon', error: nil, success: 'Coupon Applied!') }
+      let(:promotion_handler) { instance_double('Solidus::PromotionHandler::Coupon', error: nil, success: 'Coupon Applied!') }
 
       it "continues checkout flow normally" do
-        expect(Spree::Deprecation).to receive(:warn)
+        expect(Solidus::Deprecation).to receive(:warn)
 
-        expect(Spree::PromotionHandler::Coupon)
+        expect(Solidus::PromotionHandler::Coupon)
           .to receive_message_chain(:new, :apply)
           .and_return(promotion_handler)
 
@@ -550,12 +550,12 @@ describe Spree::CheckoutController, type: :controller do
       end
 
       context "when coupon code is not applied" do
-        let(:promotion_handler) { instance_double('Spree::PromotionHandler::Coupon', error: 'Some error', success: false) }
+        let(:promotion_handler) { instance_double('Solidus::PromotionHandler::Coupon', error: 'Some error', success: false) }
 
         it "setups the current step correctly before rendering" do
-          expect(Spree::Deprecation).to receive(:warn)
+          expect(Solidus::Deprecation).to receive(:warn)
 
-          expect(Spree::PromotionHandler::Coupon)
+          expect(Solidus::PromotionHandler::Coupon)
             .to receive_message_chain(:new, :apply)
             .and_return(promotion_handler)
           expect(controller).to receive(:setup_for_current_state)
@@ -564,9 +564,9 @@ describe Spree::CheckoutController, type: :controller do
         end
 
         it "render cart with coupon error" do
-          expect(Spree::Deprecation).to receive(:warn)
+          expect(Solidus::Deprecation).to receive(:warn)
 
-          expect(Spree::PromotionHandler::Coupon)
+          expect(Solidus::PromotionHandler::Coupon)
             .to receive_message_chain(:new, :apply)
             .and_return(promotion_handler)
 

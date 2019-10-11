@@ -2,11 +2,11 @@
 
 require 'csv'
 
-module Spree
+module Solidus
   module Admin
-    class PromotionCodesController < Spree::Admin::ResourceController
+    class PromotionCodesController < Solidus::Admin::ResourceController
       def index
-        @promotion = Spree::Promotion.accessible_by(current_ability, :read).find(params[:promotion_id])
+        @promotion = Solidus::Promotion.accessible_by(current_ability, :read).find(params[:promotion_id])
         @promotion_codes = @promotion.promotion_codes.order(:value)
 
         respond_to do |format|
@@ -22,12 +22,12 @@ module Spree
       end
 
       def new
-        @promotion = Spree::Promotion.accessible_by(current_ability, :read).find(params[:promotion_id])
+        @promotion = Solidus::Promotion.accessible_by(current_ability, :read).find(params[:promotion_id])
         @promotion_code = @promotion.promotion_codes.build
       end
 
       def create
-        @promotion = Spree::Promotion.accessible_by(current_ability, :read).find(params[:promotion_id])
+        @promotion = Solidus::Promotion.accessible_by(current_ability, :read).find(params[:promotion_id])
         @promotion_code = @promotion.promotion_codes.build(value: params[:promotion_code][:value])
 
         if @promotion_code.save

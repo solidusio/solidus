@@ -8,7 +8,7 @@ shared_examples "update reason loader" do
   end
 end
 
-describe Spree::Admin::StoreCreditsController do
+describe Solidus::Admin::StoreCreditsController do
   stub_authorization!
 
   let(:user) { create(:user) }
@@ -29,7 +29,7 @@ describe Spree::Admin::StoreCreditsController do
     end
 
     it "sets the store_credit_events variable to the store credit's events in chronological order" do
-      allocation_event = store_credit.store_credit_events.find_by(action: Spree::StoreCredit::ALLOCATION_ACTION)
+      allocation_event = store_credit.store_credit_events.find_by(action: Solidus::StoreCredit::ALLOCATION_ACTION)
       expect(assigns(:store_credit_events)).to eq [event, allocation_event]
     end
   end
@@ -60,7 +60,7 @@ describe Spree::Admin::StoreCreditsController do
       end
 
       it "creates a new store credit" do
-        expect { subject }.to change(Spree::StoreCredit, :count).by(1)
+        expect { subject }.to change(Solidus::StoreCredit, :count).by(1)
       end
 
       it "associates the store credit with the user" do
@@ -74,8 +74,8 @@ describe Spree::Admin::StoreCreditsController do
       end
 
       it 'sets the admin as the store credit event originator' do
-        expect { subject }.to change { Spree::StoreCreditEvent.count }.by(1)
-        expect(Spree::StoreCreditEvent.last.originator).to eq admin_user
+        expect { subject }.to change { Solidus::StoreCreditEvent.count }.by(1)
+        expect(Solidus::StoreCreditEvent.last.originator).to eq admin_user
       end
     end
 
@@ -90,7 +90,7 @@ describe Spree::Admin::StoreCreditsController do
         }
       end
 
-      it { expect { subject }.not_to change(Spree::StoreCredit, :count) }
+      it { expect { subject }.not_to change(Solidus::StoreCredit, :count) }
     end
   end
 
@@ -233,7 +233,7 @@ describe Spree::Admin::StoreCreditsController do
         end
 
         it "does not create a new store credit" do
-          expect { subject }.to_not change(Spree::StoreCredit, :count)
+          expect { subject }.to_not change(Solidus::StoreCredit, :count)
         end
 
         it "updates passed amount" do

@@ -1,7 +1,7 @@
 <div id="<%= "shipment_#{shipment.id}" %>" data-hook="admin_shipment_form">
   <fieldset class="no-border-bottom">
     <legend align="center" class="stock-location" data-hook="stock-location">
-      <%= Spree::Shipment.model_name.human %>
+      <%= Solidus::Shipment.model_name.human %>
       <span class="shipment-number"><%= shipment.number %></span>
       <%= t('spree.from') %>
       <strong class="stock-location-name" data-hook="stock-location-name">"<%= shipment.stock_location.name %>"</strong>
@@ -11,11 +11,11 @@
   <table class="stock-contents index" data-hook="stock-contents">
     <thead>
       <th colspan="2">
-        <%= Spree::LineItem.human_attribute_name(:description) %>
+        <%= Solidus::LineItem.human_attribute_name(:description) %>
       </th>
-      <th><%= Spree::LineItem.human_attribute_name(:price) %></th>
-      <th><%= Spree::LineItem.human_attribute_name(:quantity) %></th>
-      <th><%= Spree::LineItem.human_attribute_name(:total) %></th>
+      <th><%= Solidus::LineItem.human_attribute_name(:price) %></th>
+      <th><%= Solidus::LineItem.human_attribute_name(:quantity) %></th>
+      <th><%= Solidus::LineItem.human_attribute_name(:total) %></th>
     </thead>
 
     <tbody data-shipment-number="<%= shipment.number %>" data-order-number="<%= order.number %>">
@@ -36,7 +36,7 @@
 
       <tr class="edit-tracking hidden total">
         <td colspan="5">
-          <label><%= Spree::Shipment.human_attribute_name(:tracking) %>:</label>
+          <label><%= Solidus::Shipment.human_attribute_name(:tracking) %>:</label>
           <%= text_field_tag :tracking, shipment.tracking %>
         </td>
       </tr>
@@ -45,7 +45,7 @@
         <tr class='special_instructions'>
           <td colspan="5">
             <strong>
-              <%= Spree::Order.human_attribute_name(:special_instructions) %>:
+              <%= Solidus::Order.human_attribute_name(:special_instructions) %>:
             </strong>
             <%= order.special_instructions %>
           </td>

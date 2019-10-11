@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-module Spree
-  class Promotion < Spree::Base
+module Solidus
+  class Promotion < Solidus::Base
     module Rules
       class OptionValue < PromotionRule
         MATCH_POLICIES = %w(any)
@@ -9,7 +9,7 @@ module Spree
         preference :eligible_values, :hash
 
         def applicable?(promotable)
-          promotable.is_a?(Spree::Order)
+          promotable.is_a?(Solidus::Order)
         end
 
         def eligible?(promotable, _options = {})

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   class PaymentMethod::BogusCreditCard < PaymentMethod::CreditCard
     TEST_VISA = ['4111111111111111', '4012888888881881', '4222222222222']
     TEST_MC   = ['5500000000000004', '5555555555554444', '5105105105105100']
@@ -57,7 +57,7 @@ module Spree
       ActiveMerchant::Billing::Response.new(true, 'Bogus Gateway: Forced success', {}, test: true, authorization: '12345')
     end
 
-    # @see Spree::PaymentMethod#try_void
+    # @see Solidus::PaymentMethod#try_void
     def try_void(_payment)
       ActiveMerchant::Billing::Response.new(true, 'Bogus Gateway: Forced success', {}, test: true, authorization: '12345')
     end
@@ -82,7 +82,7 @@ module Spree
       prefix = success ? 'BGS' : 'FAIL'
       while record
         random = "#{prefix}-#{Array.new(6){ rand(6) }.join}"
-        record = Spree::CreditCard.where(gateway_customer_profile_id: random).first
+        record = Solidus::CreditCard.where(gateway_customer_profile_id: random).first
       end
       random
     end

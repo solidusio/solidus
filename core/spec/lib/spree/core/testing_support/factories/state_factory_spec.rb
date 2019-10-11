@@ -4,7 +4,7 @@ require 'rails_helper'
 require 'spree/testing_support/factories/state_factory'
 
 RSpec.describe 'state factory' do
-  let(:factory_class) { Spree::State }
+  let(:factory_class) { Solidus::State }
 
   describe 'plain state' do
     let(:factory) { :state }
@@ -29,7 +29,7 @@ RSpec.describe 'state factory' do
       let!(:country){ create(:country, iso: "DE") }
       it 'uses the existing country in the database' do
         expect(state.country).to eq(country)
-        expect(Spree::Country.count).to eq(1)
+        expect(Solidus::Country.count).to eq(1)
       end
     end
   end

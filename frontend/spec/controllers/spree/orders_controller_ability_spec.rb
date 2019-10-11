@@ -2,12 +2,12 @@
 
 require 'spec_helper'
 
-module Spree
+module Solidus
   describe OrdersController, type: :controller do
     ORDER_TOKEN = 'ORDER_TOKEN'
 
     let!(:store) { create(:store) }
-    let(:order) { Spree::Order.create }
+    let(:order) { Solidus::Order.create }
     let(:variant) { create(:variant) }
 
     it 'should understand order routes with token' do

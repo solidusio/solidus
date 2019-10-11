@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   # Service class to change fulfilment of inventory units of a particular variant
   # to another shipment. The other shipment would typically have a different
   # shipping method, stock location or delivery date, such that we actually change
@@ -9,11 +9,11 @@ module Spree
   # Can be used to merge shipments by moving all items to another shipment, because
   # this class will delete any empty original shipment.
   #
-  # @attr [Spree::Shipment] current_shipment The shipment we transfer units from
-  # @attr [Spree::Shipment] desired_shipment The shipment we want to move units onto
-  # @attr [Spree::StockLocation] current_stock_location The stock location of the current shipment
-  # @attr [Spree::StockLocation] desired_stock_location The stock location of the desired shipment
-  # @attr [Spree::Variant] variant We only move units that represent this variant
+  # @attr [Solidus::Shipment] current_shipment The shipment we transfer units from
+  # @attr [Solidus::Shipment] desired_shipment The shipment we want to move units onto
+  # @attr [Solidus::StockLocation] current_stock_location The stock location of the current shipment
+  # @attr [Solidus::StockLocation] desired_stock_location The stock location of the desired shipment
+  # @attr [Solidus::Variant] variant We only move units that represent this variant
   # @attr [Integer] quantity How many units we want to move
   #
   class FulfilmentChanger
@@ -129,7 +129,7 @@ module Spree
     end
 
     def enough_stock_at_desired_location
-      unless Spree::Stock::Quantifier.new(variant, desired_stock_location).can_supply?(quantity)
+      unless Solidus::Stock::Quantifier.new(variant, desired_stock_location).can_supply?(quantity)
         errors.add(:desired_shipment, :not_enough_stock_at_desired_location)
       end
     end

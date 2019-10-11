@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
-module Spree
-  # `Spree::Address` provides the foundational ActiveRecord model for recording and
-  # validating address information for `Spree::Order`, `Spree::Shipment`,
-  # `Spree::UserAddress`, and `Spree::Carton`.
+module Solidus
+  # `Solidus::Address` provides the foundational ActiveRecord model for recording and
+  # validating address information for `Solidus::Order`, `Solidus::Shipment`,
+  # `Solidus::UserAddress`, and `Solidus::Carton`.
   #
-  class Address < Spree::Base
+  class Address < Solidus::Base
     extend ActiveModel::ForbiddenAttributesProtection
 
-    belongs_to :country, class_name: "Spree::Country", optional: true
-    belongs_to :state, class_name: "Spree::State", optional: true
+    belongs_to :country, class_name: "Solidus::Country", optional: true
+    belongs_to :state, class_name: "Solidus::State", optional: true
 
     validates :firstname, :address1, :city, :country_id, presence: true
     validates :zipcode, presence: true, if: :require_zipcode?
@@ -31,7 +31,7 @@ module Spree
     end
 
     def self.build_default
-      new(country: Spree::Country.default)
+      new(country: Solidus::Country.default)
     end
 
     # @return [Address] an equal address already in the database or a newly created one
@@ -108,19 +108,19 @@ module Spree
 
     # @deprecated Do not use this. Use Address.== instead.
     def same_as?(other_address)
-      Spree::Deprecation.warn("Address#same_as? is deprecated. It's equivalent to Address.==", caller)
+      Solidus::Deprecation.warn("Address#same_as? is deprecated. It's equivalent to Address.==", caller)
       self == other_address
     end
 
     # @deprecated Do not use this. Use Address.== instead.
     def same_as(other_address)
-      Spree::Deprecation.warn("Address#same_as is deprecated. It's equivalent to Address.==", caller)
+      Solidus::Deprecation.warn("Address#same_as is deprecated. It's equivalent to Address.==", caller)
       self == other_address
     end
 
     # @deprecated Do not use this
     def empty?
-      Spree::Deprecation.warn("Address#empty? is deprecated.", caller)
+      Solidus::Deprecation.warn("Address#empty? is deprecated.", caller)
       attributes.except('id', 'created_at', 'updated_at', 'country_id').all? { |_, v| v.nil? }
     end
 
@@ -169,7 +169,7 @@ module Spree
     # @return [Country] setter that sets self.country to the Country with a matching 2 letter iso
     # @raise [ActiveRecord::RecordNotFound] if country with the iso doesn't exist
     def country_iso=(iso)
-      self.country = Spree::Country.find_by!(iso: iso)
+      self.country = Solidus::Country.find_by!(iso: iso)
     end
 
     def country_iso
@@ -181,7 +181,7 @@ module Spree
     def state_validate
       # Skip state validation without country (also required)
       # or when disabled by preference
-      return if country.blank? || !Spree::Config[:address_requires_state]
+      return if country.blank? || !Solidus::Config[:address_requires_state]
       return unless country.states_required
 
       # ensure associated state belongs to country

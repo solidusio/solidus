@@ -3,10 +3,10 @@
 require 'rails_helper'
 
 class FakesController < ApplicationController
-  include Spree::Core::ControllerHelpers::Pricing
+  include Solidus::Core::ControllerHelpers::Pricing
 end
 
-RSpec.describe Spree::Core::ControllerHelpers::Pricing, type: :controller do
+RSpec.describe Solidus::Core::ControllerHelpers::Pricing, type: :controller do
   controller(FakesController) {}
 
   before do
@@ -18,19 +18,19 @@ RSpec.describe Spree::Core::ControllerHelpers::Pricing, type: :controller do
 
     context "when store default_currency is nil" do
       let(:store) { nil }
-      it { Spree::Deprecation.silence { is_expected.to eq('USD') } }
+      it { Solidus::Deprecation.silence { is_expected.to eq('USD') } }
     end
 
     context "when the current store default_currency empty" do
       let(:store) { FactoryBot.create :store, default_currency: '' }
 
-      it { Spree::Deprecation.silence { is_expected.to eq('USD') } }
+      it { Solidus::Deprecation.silence { is_expected.to eq('USD') } }
     end
 
     context "when the current store default_currency is a currency" do
       let(:store) { FactoryBot.create :store, default_currency: 'EUR' }
 
-      it { Spree::Deprecation.silence { is_expected.to eq('EUR') } }
+      it { Solidus::Deprecation.silence { is_expected.to eq('EUR') } }
     end
   end
 
@@ -39,7 +39,7 @@ RSpec.describe Spree::Core::ControllerHelpers::Pricing, type: :controller do
 
     let(:store) { FactoryBot.create(:store, default_currency: nil) }
 
-    it { is_expected.to be_a(Spree::Config.pricing_options_class) }
+    it { is_expected.to be_a(Solidus::Config.pricing_options_class) }
 
     context "currency" do
       subject { controller.current_pricing_options.currency }
@@ -85,7 +85,7 @@ RSpec.describe Spree::Core::ControllerHelpers::Pricing, type: :controller do
 
       context "when the whole context is passed" do
         it "receives the right object " do
-          expect(Spree::Config.pricing_options_class).to receive(:from_context).with(controller)
+          expect(Solidus::Config.pricing_options_class).to receive(:from_context).with(controller)
           is_expected.to be_nil
         end
       end

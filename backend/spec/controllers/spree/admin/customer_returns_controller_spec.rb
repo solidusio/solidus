@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-module Spree
+module Solidus
   module Admin
     describe CustomerReturnsController, type: :controller do
       stub_authorization!
@@ -168,7 +168,7 @@ module Spree
 
         it "loads the correct return authorization reasons" do
           subject
-          expect(assigns(:reasons)).to match(Spree::ReturnReason.active)
+          expect(assigns(:reasons)).to match(Solidus::ReturnReason.active)
         end
 
         context "a return item has an inactive return authorization reason" do
@@ -178,7 +178,7 @@ module Spree
 
           it "includes the inactive return authorization reason" do
             subject
-            expect(assigns(:reasons)).to match(Spree::ReturnReason.active + [inactive_rma_reason])
+            expect(assigns(:reasons)).to match(Solidus::ReturnReason.active + [inactive_rma_reason])
           end
         end
       end
@@ -206,27 +206,27 @@ module Spree
 
         subject { post :create, params: customer_return_params }
 
-        it { expect { subject }.to change { Spree::CustomerReturn.count }.by(1) }
+        it { expect { subject }.to change { Solidus::CustomerReturn.count }.by(1) }
         it do
           subject
-          expect(response).to redirect_to spree.edit_admin_order_customer_return_path(order, id: Spree::CustomerReturn.last.id)
+          expect(response).to redirect_to spree.edit_admin_order_customer_return_path(order, id: Solidus::CustomerReturn.last.id)
         end
 
         it 'executes the reception status event on the return items' do
           subject
-          customer_return = Spree::CustomerReturn.last
+          customer_return = Solidus::CustomerReturn.last
           expect(customer_return.return_items.map(&:reception_status).uniq).to eq ['received']
         end
 
         context "missing stock location" do
           let(:stock_location_id) { '' }
-          it { expect{ subject }.to_not change { Spree::CustomerReturn.count } }
+          it { expect{ subject }.to_not change { Solidus::CustomerReturn.count } }
           it { subject; expect(response).to render_template(:new) }
         end
 
         context "missing reception status event" do
           let(:reception_status_event) { '' }
-          it { expect{ subject }.to_not change { Spree::CustomerReturn.count } }
+          it { expect{ subject }.to_not change { Solidus::CustomerReturn.count } }
           it { subject; expect(response).to redirect_to spree.new_admin_order_customer_return_path(order) }
         end
       end

@@ -2,19 +2,19 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::RoleConfiguration do
-  class DummyPermissionSet < Spree::PermissionSets::Base
+RSpec.describe Solidus::RoleConfiguration do
+  class DummyPermissionSet < Solidus::PermissionSets::Base
     def activate!
       can :manage, :things
     end
   end
-  class OtherDummyPermissionSet < Spree::PermissionSets::Base; end
+  class OtherDummyPermissionSet < Solidus::PermissionSets::Base; end
 
-  let(:instance) { Spree::RoleConfiguration.new }
+  let(:instance) { Solidus::RoleConfiguration.new }
 
   describe ".configure" do
     around(:each) do |example|
-      Spree::Deprecation.silence { example.run }
+      Solidus::Deprecation.silence { example.run }
     end
 
     it "yields with the instance" do
@@ -88,7 +88,7 @@ RSpec.describe Spree::RoleConfiguration do
 
     before do
       user.spree_roles = user_roles.map do |role|
-        Spree::Role.create!(name: role)
+        Solidus::Role.create!(name: role)
       end
     end
 

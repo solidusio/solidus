@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Spree::Api::ShipmentsController, type: :request do
+describe Solidus::Api::ShipmentsController, type: :request do
   include ActiveSupport::Testing::TimeHelpers
 
   let!(:shipment) { create(:shipment, inventory_units: [build(:inventory_unit, shipment: nil)]) }
@@ -96,7 +96,7 @@ describe Spree::Api::ShipmentsController, type: :request do
     end
 
     it "can make a shipment ready" do
-      allow_any_instance_of(Spree::Order).to receive_messages(paid?: true, complete?: true)
+      allow_any_instance_of(Solidus::Order).to receive_messages(paid?: true, complete?: true)
       put spree.ready_api_shipment_path(shipment)
       expect(json_response).to have_attributes(attributes)
       expect(json_response["state"]).to eq("ready")
@@ -104,7 +104,7 @@ describe Spree::Api::ShipmentsController, type: :request do
     end
 
     it "cannot make a shipment ready if the order is unpaid" do
-      allow_any_instance_of(Spree::Order).to receive_messages(paid?: false)
+      allow_any_instance_of(Solidus::Order).to receive_messages(paid?: false)
       put spree.ready_api_shipment_path(shipment)
       expect(json_response["error"]).to eq("Cannot ready shipment.")
       expect(response.status).to eq(422)
@@ -344,9 +344,9 @@ describe Spree::Api::ShipmentsController, type: :request do
       sign_in_as_admin!
 
       before do
-        ability = Spree::Ability.new(current_api_user)
-        ability.cannot :ship, Spree::Shipment
-        allow_any_instance_of(Spree::Api::ShipmentsController).to receive(:current_ability) { ability }
+        ability = Solidus::Ability.new(current_api_user)
+        ability.cannot :ship, Solidus::Shipment
+        allow_any_instance_of(Solidus::Api::ShipmentsController).to receive(:current_ability) { ability }
       end
 
       it "does nothing" do
@@ -458,10 +458,10 @@ describe Spree::Api::ShipmentsController, type: :request do
         let(:user) { create(:user, spree_api_key: 'abc123') }
 
         custom_authorization! do |_|
-          can :read, Spree::Shipment
-          cannot :update, Spree::Shipment
-          can :create, Spree::Shipment
-          can :destroy, Spree::Shipment
+          can :read, Solidus::Shipment
+          cannot :update, Solidus::Shipment
+          can :create, Solidus::Shipment
+          can :destroy, Solidus::Shipment
         end
 
         it "is not authorized" do
@@ -474,10 +474,10 @@ describe Spree::Api::ShipmentsController, type: :request do
         let(:user) { create(:user, spree_api_key: 'abc123') }
 
         custom_authorization! do |_|
-          can :read, Spree::Shipment
-          can :update, Spree::Shipment
-          cannot :destroy, Spree::Shipment
-          can :create, Spree::Shipment
+          can :read, Solidus::Shipment
+          can :update, Solidus::Shipment
+          cannot :destroy, Solidus::Shipment
+          can :create, Solidus::Shipment
         end
 
         it "is not authorized" do

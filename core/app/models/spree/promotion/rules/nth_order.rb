@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   class Promotion
     module Rules
       class NthOrder < PromotionRule
@@ -11,13 +11,13 @@ module Spree
 
         # This promotion is applicable to orders only.
         def applicable?(promotable)
-          promotable.is_a?(Spree::Order)
+          promotable.is_a?(Solidus::Order)
         end
 
         # This is never eligible if the order does not have a user, and that user does not have any previous completed orders.
         #
         # Use the first order rule if you want a promotion to be applied to the first order for a user.
-        # @param order [Spree::Order]
+        # @param order [Solidus::Order]
         def eligible?(order, _options = {})
           return false unless order.user
 
@@ -31,7 +31,7 @@ module Spree
             user.
             orders.
             complete.
-            where(Spree::Order.arel_table[:completed_at].lt(order.completed_at || Time.current)).
+            where(Solidus::Order.arel_table[:completed_at].lt(order.completed_at || Time.current)).
             count
         end
 

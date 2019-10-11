@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module Admin
     class ShippingMethodsController < ResourceController
       before_action :load_data, except: :index
@@ -22,14 +22,14 @@ module Spree
 
       def set_shipping_category
         return true if params["shipping_method"][:shipping_categories] == ""
-        @shipping_method.shipping_categories = Spree::ShippingCategory.where(id: params["shipping_method"][:shipping_categories])
+        @shipping_method.shipping_categories = Solidus::ShippingCategory.where(id: params["shipping_method"][:shipping_categories])
         @shipping_method.save
         params[:shipping_method].delete(:shipping_categories)
       end
 
       def set_zones
         return true if params["shipping_method"][:zones] == ""
-        @shipping_method.zones = Spree::Zone.where(id: params["shipping_method"][:zones])
+        @shipping_method.zones = Solidus::Zone.where(id: params["shipping_method"][:zones])
         @shipping_method.save
         params[:shipping_method].delete(:zones)
       end
@@ -39,8 +39,8 @@ module Spree
       end
 
       def load_data
-        @available_zones = Spree::Zone.order(:name)
-        @tax_categories = Spree::TaxCategory.order(:name)
+        @available_zones = Solidus::Zone.order(:name)
+        @tax_categories = Solidus::TaxCategory.order(:name)
         @calculators = Rails.application.config.spree.calculators.shipping_methods
       end
     end

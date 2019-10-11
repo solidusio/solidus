@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-module Spree
+module Solidus
   describe Api::OptionValuesController, type: :request do
     let(:attributes) { [:id, :name, :presentation, :option_type_name, :option_type_name] }
     let!(:option_value) { create(:option_value) }
@@ -117,7 +117,7 @@ module Spree
         end
 
         it "permits the correct attributes" do
-          expect_any_instance_of(Spree::Api::OptionValuesController).to receive(:permitted_option_value_attributes)
+          expect_any_instance_of(Solidus::Api::OptionValuesController).to receive(:permitted_option_value_attributes)
           put spree.api_option_value_path(option_value), params: { option_value: { name: "" } }
         end
 

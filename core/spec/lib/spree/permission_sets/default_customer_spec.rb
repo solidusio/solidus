@@ -2,11 +2,11 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::PermissionSets::DefaultCustomer do
+RSpec.describe Solidus::PermissionSets::DefaultCustomer do
   context 'as Guest User' do
     context 'for Order' do
       context 'guest_token is empty string' do
-        let(:ability) { Spree::Ability.new(nil) }
+        let(:ability) { Solidus::Ability.new(nil) }
         let(:resource) { build(:order) }
         let(:token) { '' }
 

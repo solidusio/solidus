@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-module Spree
+module Solidus
   describe Api::ReturnAuthorizationsController, type: :request do
     let!(:order) { create(:shipped_order) }
 
@@ -30,7 +30,7 @@ module Spree
         expect(response.status).to eq(201)
         expect(json_response).to have_attributes(attributes)
         expect(json_response["state"]).not_to be_blank
-        return_authorization = Spree::ReturnAuthorization.last
+        return_authorization = Solidus::ReturnAuthorization.last
         expect(return_authorization.return_items.first.preferred_reimbursement_type).to eql reimbursement
       end
     end

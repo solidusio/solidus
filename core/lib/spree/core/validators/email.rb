@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   # == An ActiveModel Email Validator
   #
   # === Usage
@@ -8,7 +8,7 @@ module Spree
   #     require 'spree/core/validators/email'
   #
   #     class Person < ApplicationRecord
-  #       validates :email_address, 'spree/email' => true
+  #       validates :email_address, 'solidus/email' => true
   #     end
   #
   class EmailValidator < ActiveModel::EachValidator
@@ -25,6 +25,6 @@ end
 # @private
 EmailValidator = ActiveSupport::Deprecation::DeprecatedConstantProxy.new(
   'EmailValidator',
-  'Spree::EmailValidator',
-  message: "EmailValidator is deprecated! Use Spree::EmailValidator instead.\nChange `validates :email, email: true` to `validates :email, 'spree/email' => true`\n"
+  'Solidus::EmailValidator',
+  message: "EmailValidator is deprecated! Use Solidus::EmailValidator instead.\nChange `validates :email, email: true` to `validates :email, 'spree/email' => true`\n"
 )

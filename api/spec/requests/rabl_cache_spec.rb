@@ -8,7 +8,7 @@ describe "Rabl Cache", type: :request, caching: true do
   before do
     create(:variant)
     user.generate_spree_api_key!
-    expect(Spree::Product.count).to eq(1)
+    expect(Solidus::Product.count).to eq(1)
   end
 
   it "doesn't create a cache key collision for models with different rabl templates" do
@@ -23,7 +23,7 @@ describe "Rabl Cache", type: :request, caching: true do
     expect(variant_a['is_master']).to be false
     expect(variant_a['stock_items']).not_to be_nil
 
-    get "/api/products/#{Spree::Product.first.id}", params: { token: user.spree_api_key }
+    get "/api/products/#{Solidus::Product.first.id}", params: { token: user.spree_api_key }
     expect(response.status).to eq(200)
     variant_b = JSON.parse(response.body)['variants'].last
     expect(variant_b['is_master']).to be false

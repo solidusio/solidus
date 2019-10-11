@@ -2,7 +2,7 @@
 
 require 'spree/preferences/configuration'
 
-module Spree
+module Solidus
   class BackendConfiguration < Preferences::Configuration
     preference :locale, :string, default: I18n.default_locale
 
@@ -67,7 +67,7 @@ module Spree
 
     # Items can be added to the menu by using code like the following:
     #
-    # Spree::Backend::Config.configure do |config|
+    # Solidus::Backend::Config.configure do |config|
     #   config.menu_items << config.class::MenuItem.new(
     #     [:section],
     #     'icon-name',
@@ -76,7 +76,7 @@ module Spree
     # end
     #
     # @!attribute menu_items
-    #   @return [Array<Spree::BackendConfiguration::MenuItem>]
+    #   @return [Array<Solidus::BackendConfiguration::MenuItem>]
     #
     # Positioning can be determined by setting the position attribute to
     # an Integer or nil. Menu Items will be rendered with smaller lower values
@@ -87,19 +87,19 @@ module Spree
     # Return the menu items which should be drawn in the menu
     #
     # @api public
-    # @return [Array<Spree::BackendConfiguration::MenuItem>]
+    # @return [Array<Solidus::BackendConfiguration::MenuItem>]
     def menu_items
       @menu_items ||= [
         MenuItem.new(
           ORDER_TABS,
           'shopping-cart',
-          condition: -> { can?(:admin, Spree::Order) },
+          condition: -> { can?(:admin, Solidus::Order) },
           position: 0
         ),
         MenuItem.new(
           PRODUCT_TABS,
           'th-large',
-          condition: -> { can?(:admin, Spree::Product) },
+          condition: -> { can?(:admin, Solidus::Product) },
           partial: 'spree/admin/shared/product_sub_menu',
           position: 1
         ),
@@ -107,14 +107,14 @@ module Spree
           PROMOTION_TABS,
           'bullhorn',
           partial: 'spree/admin/shared/promotion_sub_menu',
-          condition: -> { can?(:admin, Spree::Promotion) },
+          condition: -> { can?(:admin, Solidus::Promotion) },
           url: :admin_promotions_path,
           position: 2
         ),
         MenuItem.new(
           STOCK_TABS,
           'cubes',
-          condition: -> { can?(:admin, Spree::StockItem) },
+          condition: -> { can?(:admin, Solidus::StockItem) },
           label: :stock,
           url: :admin_stock_items_path,
           match_path: '/stock_items',
@@ -123,14 +123,14 @@ module Spree
         MenuItem.new(
           USER_TABS,
           'user',
-          condition: -> { Spree.user_class && can?(:admin, Spree.user_class) },
+          condition: -> { Solidus.user_class && can?(:admin, Solidus.user_class) },
           url: :admin_users_path,
           position: 4
         ),
         MenuItem.new(
           CONFIGURATION_TABS,
           'wrench',
-          condition: -> { can?(:admin, Spree::Store) },
+          condition: -> { can?(:admin, Solidus::Store) },
           label: :settings,
           partial: 'spree/admin/shared/settings_sub_menu',
           url: :admin_stores_path,

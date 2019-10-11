@@ -5,7 +5,7 @@ require 'cancan'
 require 'cancan/matchers'
 require 'spree/testing_support/ability_helpers'
 
-Spree::Deprecation.silence do
+Solidus::Deprecation.silence do
   require 'spree/testing_support/bar_ability'
 end
 
@@ -15,28 +15,28 @@ class FooAbility
 
   def initialize(_user)
     # allow anyone to perform index on Order
-    can :index, Spree::Order
+    can :index, Solidus::Order
     # allow anyone to update an Order with id of 1
-    can :update, Spree::Order do |order|
+    can :update, Solidus::Order do |order|
       order.id == 1
     end
   end
 end
 
-RSpec.describe Spree::Ability, type: :model do
+RSpec.describe Solidus::Ability, type: :model do
   let(:user) { build(:user) }
-  let(:ability) { Spree::Ability.new(user) }
+  let(:ability) { Solidus::Ability.new(user) }
   let(:token) { nil }
 
   after(:each) {
-    Spree::Ability.abilities = Set.new
+    Solidus::Ability.abilities = Set.new
   }
 
   describe "#initialize" do
-    subject { Spree::Ability.new(user) }
+    subject { Solidus::Ability.new(user) }
 
     it "activates permissions from the role configuration" do
-      expect(Spree::Config.roles).to receive(:activate_permissions!).
+      expect(Solidus::Config.roles).to receive(:activate_permissions!).
         once
 
       subject
@@ -45,13 +45,13 @@ RSpec.describe Spree::Ability, type: :model do
 
   context 'register_ability' do
     it 'should add the ability to the list of abilties' do
-      Spree::Ability.register_ability(FooAbility)
-      expect(Spree::Ability.new(user).abilities).not_to be_empty
+      Solidus::Ability.register_ability(FooAbility)
+      expect(Solidus::Ability.new(user).abilities).not_to be_empty
     end
 
     it 'should apply the registered abilities permissions' do
-      Spree::Ability.register_ability(FooAbility)
-      expect(Spree::Ability.new(user).can?(:update, mock_model(Spree::Order, user: nil, id: 1))).to be true
+      Solidus::Ability.register_ability(FooAbility)
+      expect(Solidus::Ability.new(user).can?(:update, mock_model(Solidus::Order, user: nil, id: 1))).to be true
     end
   end
 
@@ -72,16 +72,16 @@ RSpec.describe Spree::Ability, type: :model do
 
   context 'for admin protected resources' do
     let(:resource) { Object.new }
-    let(:resource_shipment) { Spree::Shipment.new }
-    let(:resource_product) { Spree::Product.new }
+    let(:resource_shipment) { Solidus::Shipment.new }
+    let(:resource_product) { Solidus::Product.new }
     let(:resource_user) { create :user }
-    let(:resource_order) { Spree::Order.new }
-    let(:fakedispatch_user) { Spree.user_class.create }
-    let(:fakedispatch_ability) { Spree::Ability.new(fakedispatch_user) }
+    let(:resource_order) { Solidus::Order.new }
+    let(:fakedispatch_user) { Solidus.user_class.create }
+    let(:fakedispatch_ability) { Solidus::Ability.new(fakedispatch_user) }
 
     context 'with admin user' do
       it 'should be able to admin' do
-        user.spree_roles << Spree::Role.find_or_create_by(name: 'admin')
+        user.spree_roles << Solidus::Role.find_or_create_by(name: 'admin')
         expect(ability).to be_able_to :admin, resource
         expect(ability).to be_able_to :index, resource_order
         expect(ability).to be_able_to :show, resource_product
@@ -91,9 +91,9 @@ RSpec.describe Spree::Ability, type: :model do
 
     context 'with fakedispatch user' do
       it 'should be able to admin on the order and shipment pages' do
-        user.spree_roles << Spree::Role.find_or_create_by(name: 'bar')
+        user.spree_roles << Solidus::Role.find_or_create_by(name: 'bar')
 
-        Spree::Ability.register_ability(BarAbility)
+        Solidus::Ability.register_ability(BarAbility)
 
         expect(ability).not_to be_able_to :admin, resource
 
@@ -118,7 +118,7 @@ RSpec.describe Spree::Ability, type: :model do
 
         # TODO: change the Ability class so only users and customers get the extra premissions?
 
-        Spree::Ability.remove_ability(BarAbility)
+        Solidus::Ability.remove_ability(BarAbility)
       end
     end
 
@@ -134,28 +134,28 @@ RSpec.describe Spree::Ability, type: :model do
 
   context 'as Guest User' do
     context 'for Country' do
-      let(:resource) { Spree::Country.new }
+      let(:resource) { Solidus::Country.new }
       context 'requested by any user' do
         it_should_behave_like 'read only'
       end
     end
 
     context 'for OptionType' do
-      let(:resource) { Spree::OptionType.new }
+      let(:resource) { Solidus::OptionType.new }
       context 'requested by any user' do
         it_should_behave_like 'read only'
       end
     end
 
     context 'for OptionValue' do
-      let(:resource) { Spree::OptionType.new }
+      let(:resource) { Solidus::OptionType.new }
       context 'requested by any user' do
         it_should_behave_like 'read only'
       end
     end
 
     context 'for Order' do
-      let(:resource) { Spree::Order.new }
+      let(:resource) { Solidus::Order.new }
 
       context 'requested by same user' do
         before(:each) { resource.user = user }
@@ -164,7 +164,7 @@ RSpec.describe Spree::Ability, type: :model do
       end
 
       context 'requested by other user' do
-        before(:each) { resource.user = Spree.user_class.new }
+        before(:each) { resource.user = Solidus.user_class.new }
         it_should_behave_like 'create only'
       end
 
@@ -183,35 +183,35 @@ RSpec.describe Spree::Ability, type: :model do
     end
 
     context 'for Product' do
-      let(:resource) { Spree::Product.new }
+      let(:resource) { Solidus::Product.new }
       context 'requested by any user' do
         it_should_behave_like 'read only'
       end
     end
 
     context 'for ProductProperty' do
-      let(:resource) { Spree::Product.new }
+      let(:resource) { Solidus::Product.new }
       context 'requested by any user' do
         it_should_behave_like 'read only'
       end
     end
 
     context 'for Property' do
-      let(:resource) { Spree::Product.new }
+      let(:resource) { Solidus::Product.new }
       context 'requested by any user' do
         it_should_behave_like 'read only'
       end
     end
 
     context 'for State' do
-      let(:resource) { Spree::State.new }
+      let(:resource) { Solidus::State.new }
       context 'requested by any user' do
         it_should_behave_like 'read only'
       end
     end
 
     context 'for Stock Item' do
-      let(:resource) { Spree::StockItem.new }
+      let(:resource) { Solidus::StockItem.new }
       context 'active stock location' do
         before { resource.build_stock_location(active: true) }
         it_should_behave_like 'read only'
@@ -224,7 +224,7 @@ RSpec.describe Spree::Ability, type: :model do
     end
 
     context 'for Stock Location' do
-      let(:resource) { Spree::StockLocation.new }
+      let(:resource) { Solidus::StockLocation.new }
       context 'active' do
         before { resource.active = true }
         it_should_behave_like 'read only'
@@ -237,14 +237,14 @@ RSpec.describe Spree::Ability, type: :model do
     end
 
     context 'for Taxons' do
-      let(:resource) { Spree::Taxon.new }
+      let(:resource) { Solidus::Taxon.new }
       context 'requested by any user' do
         it_should_behave_like 'read only'
       end
     end
 
     context 'for Taxonomy' do
-      let(:resource) { Spree::Taxonomy.new }
+      let(:resource) { Solidus::Taxonomy.new }
       context 'requested by any user' do
         it_should_behave_like 'read only'
       end
@@ -257,20 +257,20 @@ RSpec.describe Spree::Ability, type: :model do
         it_should_behave_like 'no index allowed'
       end
       context 'requested by other user' do
-        let(:resource) { Spree.user_class.create }
+        let(:resource) { Solidus.user_class.create }
         it_should_behave_like 'create only'
       end
     end
 
     context 'for Variant' do
-      let(:resource) { Spree::Variant.new }
+      let(:resource) { Solidus::Variant.new }
       context 'requested by any user' do
         it_should_behave_like 'read only'
       end
     end
 
     context 'for Zone' do
-      let(:resource) { Spree::Zone.new }
+      let(:resource) { Solidus::Zone.new }
       context 'requested by any user' do
         it_should_behave_like 'read only'
       end

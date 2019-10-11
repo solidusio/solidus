@@ -4,7 +4,7 @@ require 'rails_helper'
 require 'spree/testing_support/factories/refund_factory'
 
 RSpec.describe 'refund factory' do
-  let(:factory_class) { Spree::Refund }
+  let(:factory_class) { Solidus::Refund }
 
   describe 'plain refund' do
     let(:factory) { :refund }

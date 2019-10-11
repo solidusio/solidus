@@ -1,7 +1,7 @@
-<% admin_breadcrumb(plural_resource_name(Spree::Promotion)) %>
+<% admin_breadcrumb(plural_resource_name(Solidus::Promotion)) %>
 
 <% content_for :page_actions do %>
-  <% if can? :create, Spree::Promotion %>
+  <% if can? :create, Solidus::Promotion %>
     <li>
       <%= link_to t('spree.new_promotion'), spree.new_admin_promotion_path, class: 'btn btn-primary' %>
     </li>
@@ -18,28 +18,28 @@
       <div class="row">
         <div class="col-3">
           <div class="field">
-            <%= label_tag :q_name_cont, Spree::Promotion.human_attribute_name(:name) %>
+            <%= label_tag :q_name_cont, Solidus::Promotion.human_attribute_name(:name) %>
             <%= f.text_field :name_cont, tabindex: 1 %>
           </div>
         </div>
 
         <div class="col-3">
           <div class="field">
-            <%= label_tag :q_codes_value_cont, Spree::Promotion.human_attribute_name(:code) %>
+            <%= label_tag :q_codes_value_cont, Solidus::Promotion.human_attribute_name(:code) %>
             <%= f.text_field :codes_value_cont, tabindex: 1 %>
           </div>
         </div>
 
         <div class="col-3">
           <div class="field">
-            <%= label_tag :q_path_cont, Spree::Promotion.human_attribute_name(:path) %>
+            <%= label_tag :q_path_cont, Solidus::Promotion.human_attribute_name(:path) %>
             <%= f.text_field :path_cont, tabindex: 1 %>
           </div>
         </div>
 
         <div class="col-3">
           <div class="field">
-            <%= label_tag :q_promotion_category_id_eq, Spree::PromotionCategory.model_name.human %><br>
+            <%= label_tag :q_promotion_category_id_eq, Solidus::PromotionCategory.model_name.human %><br>
             <%= f.collection_select(:promotion_category_id_eq, @promotion_categories, :id, :name, { include_blank: t('spree.match_choices.all') }, { class: 'custom-select fullwidth' }) %>
           </div>
         </div>
@@ -63,13 +63,13 @@
   <table class="index">
     <thead>
       <tr>
-        <th><%= Spree::Promotion.human_attribute_name(:name) %></th>
-        <th><%= Spree::Promotion.human_attribute_name(:code) %></th>
-        <th><%= Spree::Promotion.human_attribute_name(:status) %></th>
-        <th><%= Spree::Promotion.human_attribute_name(:usage_limit) %></th>
-        <th><%= Spree::Promotion.human_attribute_name(:uses) %></th>
-        <th><%= Spree::Promotion.human_attribute_name(:starts_at) %></th>
-        <th><%= Spree::Promotion.human_attribute_name(:expires_at) %></th>
+        <th><%= Solidus::Promotion.human_attribute_name(:name) %></th>
+        <th><%= Solidus::Promotion.human_attribute_name(:code) %></th>
+        <th><%= Solidus::Promotion.human_attribute_name(:status) %></th>
+        <th><%= Solidus::Promotion.human_attribute_name(:usage_limit) %></th>
+        <th><%= Solidus::Promotion.human_attribute_name(:uses) %></th>
+        <th><%= Solidus::Promotion.human_attribute_name(:starts_at) %></th>
+        <th><%= Solidus::Promotion.human_attribute_name(:expires_at) %></th>
         <th class="actions"></th>
       </tr>
     </thead>
@@ -112,7 +112,7 @@
 <% else %>
   <div class="no-objects-found">
     <%= render 'spree/admin/shared/no_objects_found',
-                 resource: Spree::Promotion,
+                 resource: Solidus::Promotion,
                  new_resource_url: new_object_url %>
   </div>
 <% end %>

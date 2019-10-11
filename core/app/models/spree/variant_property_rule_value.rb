@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-module Spree
-  class VariantPropertyRuleValue < Spree::Base
-    include Spree::OrderedPropertyValueList
+module Solidus
+  class VariantPropertyRuleValue < Solidus::Base
+    include Solidus::OrderedPropertyValueList
 
     acts_as_list scope: :variant_property_rule
 

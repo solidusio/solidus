@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Spree::Admin::PromotionActionsController < Spree::Admin::BaseController
+class Solidus::Admin::PromotionActionsController < Solidus::Admin::BaseController
   before_action :load_promotion, only: [:create, :destroy]
   before_action :validate_promotion_action_type, only: :create
 
@@ -31,7 +31,7 @@ class Spree::Admin::PromotionActionsController < Spree::Admin::BaseController
   private
 
   def load_promotion
-    @promotion = Spree::Promotion.find(params[:promotion_id])
+    @promotion = Solidus::Promotion.find(params[:promotion_id])
   end
 
   def validate_promotion_action_type

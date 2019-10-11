@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-module Spree
+module Solidus
   module Admin
     describe StockLocationsController, type: :controller do
       stub_authorization!

@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-module Spree
+module Solidus
   PermittedAttributes.module_eval do
     mattr_writer :line_item_attributes
   end
@@ -186,7 +186,7 @@ module Spree
     context "as just another user" do
       before do
         user = create(:user)
-        allow(Spree.user_class).to receive(:find_by).
+        allow(Solidus.user_class).to receive(:find_by).
                                      and_return(user)
       end
 

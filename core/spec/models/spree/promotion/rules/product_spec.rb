@@ -2,12 +2,12 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::Promotion::Rules::Product, type: :model do
-  let(:rule) { Spree::Promotion::Rules::Product.new(rule_options) }
+RSpec.describe Solidus::Promotion::Rules::Product, type: :model do
+  let(:rule) { Solidus::Promotion::Rules::Product.new(rule_options) }
   let(:rule_options) { {} }
 
   context "#eligible?(order)" do
-    let(:order) { Spree::Order.new }
+    let(:order) { Solidus::Order.new }
 
     it "should be eligible if there are no products" do
       allow(rule).to receive_messages(eligible_products: [])
@@ -15,7 +15,7 @@ RSpec.describe Spree::Promotion::Rules::Product, type: :model do
     end
 
     before do
-      3.times { |i| instance_variable_set("@product#{i}", mock_model(Spree::Product)) }
+      3.times { |i| instance_variable_set("@product#{i}", mock_model(Solidus::Product)) }
     end
 
     context "with 'any' match policy" do
@@ -104,10 +104,10 @@ RSpec.describe Spree::Promotion::Rules::Product, type: :model do
 
     context "with an invalid match policy" do
       let(:rule) do
-        Spree::Promotion::Rules::Product.create!(
+        Solidus::Promotion::Rules::Product.create!(
           promotion: create(:promotion),
           product_promotion_rules: [
-            Spree::ProductPromotionRule.new(product: product),
+            Solidus::ProductPromotionRule.new(product: product),
           ],
         ).tap do |rule|
           rule.preferred_match_policy = 'invalid'
@@ -130,12 +130,12 @@ RSpec.describe Spree::Promotion::Rules::Product, type: :model do
       rule.actionable?(line_item)
     end
 
-    let(:rule_line_item) { Spree::LineItem.new(product: rule_product) }
-    let(:other_line_item) { Spree::LineItem.new(product: other_product) }
+    let(:rule_line_item) { Solidus::LineItem.new(product: rule_product) }
+    let(:other_line_item) { Solidus::LineItem.new(product: other_product) }
 
     let(:rule_options) { super().merge(products: [rule_product]) }
-    let(:rule_product) { mock_model(Spree::Product) }
-    let(:other_product) { mock_model(Spree::Product) }
+    let(:rule_product) { mock_model(Solidus::Product) }
+    let(:other_product) { mock_model(Solidus::Product) }
 
     context "with 'any' match policy" do
       let(:rule_options) { super().merge(preferred_match_policy: 'any') }

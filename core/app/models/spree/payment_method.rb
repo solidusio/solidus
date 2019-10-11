@@ -3,7 +3,7 @@
 require 'discard'
 require 'spree/preferences/statically_configurable'
 
-module Spree
+module Solidus
   # A base class which is used for implementing payment methods.
   #
   # Uses STI (single table inheritance) to store all implemented payment methods
@@ -11,12 +11,12 @@ module Spree
   #
   # This class is not meant to be instantiated. Please create instances of concrete payment methods.
   #
-  class PaymentMethod < Spree::Base
+  class PaymentMethod < Solidus::Base
     preference :server, :string, default: 'test'
     preference :test_mode, :boolean, default: true
 
     acts_as_paranoid
-    include Spree::ParanoiaDeprecations
+    include Solidus::ParanoiaDeprecations
 
     include Discard::Model
     self.discard_column = :deleted_at
@@ -34,8 +34,8 @@ module Spree
 
     validates :name, :type, presence: true
 
-    has_many :payments, class_name: "Spree::Payment", inverse_of: :payment_method
-    has_many :credit_cards, class_name: "Spree::CreditCard"
+    has_many :payments, class_name: "Solidus::Payment", inverse_of: :payment_method
+    has_many :credit_cards, class_name: "Solidus::CreditCard"
     has_many :store_payment_methods, inverse_of: :payment_method
     has_many :stores, through: :store_payment_methods
 
@@ -50,7 +50,7 @@ module Spree
 
     delegate :authorize, :purchase, :capture, :void, :credit, to: :gateway
 
-    include Spree::Preferences::StaticallyConfigurable
+    include Solidus::Preferences::StaticallyConfigurable
 
     # Custom ModelName#human implementation to ensure we don't refer to
     # subclasses as just "PaymentMethod"
@@ -68,18 +68,18 @@ module Spree
     end
 
     class << self
-      # @deprecated Use Spree::Config.environment.payment_methods instead
+      # @deprecated Use Solidus::Config.environment.payment_methods instead
       def providers
-        Spree::Deprecation.warn 'Spree::PaymentMethod.providers is deprecated and will be deleted in Solidus 3.0. ' \
+        Solidus::Deprecation.warn 'Solidus::PaymentMethod.providers is deprecated and will be deleted in Solidus 3.0. ' \
           'Please use Rails.application.config.spree.payment_methods instead'
-        Spree::Config.environment.payment_methods
+        Solidus::Config.environment.payment_methods
       end
 
       # @deprecated Use {.active}, {.available_to_users}, and {.available_to_admin} scopes instead.
       def available(display_on = nil, store: nil)
-        Spree::Deprecation.warn "Spree::PaymentMethod.available is deprecated."\
+        Solidus::Deprecation.warn "Solidus::PaymentMethod.available is deprecated."\
           "Please use .active, .available_to_users, and .available_to_admin scopes instead."\
-          "For payment methods associated with a specific store, use Spree::PaymentMethod.available_to_store(your_store)"\
+          "For payment methods associated with a specific store, use Solidus::PaymentMethod.available_to_store(your_store)"\
           " as the base applying any further filtering"
 
         display_on = display_on.to_s
@@ -99,18 +99,18 @@ module Spree
       end
 
       def model_name
-        ModelName.new(self, Spree)
+        ModelName.new(self, Solidus)
       end
 
       # @deprecated Use .active.any? instead
       def active?
-        Spree::Deprecation.warn "#{self}.active? is deprecated. Use #{self}.active.any? instead"
+        Solidus::Deprecation.warn "#{self}.active? is deprecated. Use #{self}.active.any? instead"
         where(type: to_s, active: true).count > 0
       end
 
       # @deprecated Use .with_deleted.find instead
       def find_with_destroyed(*args)
-        Spree::Deprecation.warn "#{self}.find_with_destroyed is deprecated. Use #{self}.with_deleted.find instead"
+        Solidus::Deprecation.warn "#{self}.find_with_destroyed is deprecated. Use #{self}.with_deleted.find instead"
         unscoped { find(*args) }
       end
     end
@@ -140,7 +140,7 @@ module Spree
       @gateway ||= gateway_class.new(gateway_options)
     end
     alias_method :provider, :gateway
-    deprecate provider: :gateway, deprecator: Spree::Deprecation
+    deprecate provider: :gateway, deprecator: Solidus::Deprecation
 
     # Represents all preferences as a Hash
     #
@@ -153,24 +153,24 @@ module Spree
 
     # The class that will store payment sources (re)usable with this payment method
     #
-    # Used by Spree::Payment as source (e.g. Spree::CreditCard in the case of a credit card payment method).
+    # Used by Solidus::Payment as source (e.g. Solidus::CreditCard in the case of a credit card payment method).
     #
-    # Returning nil means the payment method doesn't support storing sources (e.g. Spree::PaymentMethod::Check)
+    # Returning nil means the payment method doesn't support storing sources (e.g. Solidus::PaymentMethod::Check)
     def payment_source_class
       raise ::NotImplementedError, "You must implement payment_source_class method for #{self.class}."
     end
 
-    # @deprecated Use {Spree::PaymentMethod#available_to_users=} and {Spree::PaymentMethod#available_to_admin=} instead
+    # @deprecated Use {Solidus::PaymentMethod#available_to_users=} and {Solidus::PaymentMethod#available_to_admin=} instead
     def display_on=(value)
-      Spree::Deprecation.warn "Spree::PaymentMethod#display_on= is deprecated."\
+      Solidus::Deprecation.warn "Solidus::PaymentMethod#display_on= is deprecated."\
         "Please use #available_to_users= and #available_to_admin= instead."
       self.available_to_users = value.blank? || value == 'front_end'
       self.available_to_admin = value.blank? || value == 'back_end'
     end
 
-    # @deprecated Use {Spree::PaymentMethod#available_to_users} and {Spree::PaymentMethod#available_to_admin} instead
+    # @deprecated Use {Solidus::PaymentMethod#available_to_users} and {Solidus::PaymentMethod#available_to_admin} instead
     def display_on
-      Spree::Deprecation.warn "Spree::PaymentMethod#display_on is deprecated."\
+      Solidus::Deprecation.warn "Solidus::PaymentMethod#display_on is deprecated."\
         "Please use #available_to_users and #available_to_admin instead."
       if available_to_users? && available_to_admin?
         ''
@@ -209,14 +209,14 @@ module Spree
     # :nodoc:
     # If method_type has been overridden, call it and return the value, otherwise return nil
     def deprecated_method_type_override
-      if method(:method_type).owner != Spree::PaymentMethod
-        Spree::Deprecation.warn "#{method(:method_type).owner} is overriding PaymentMethod#method_type. This is deprecated and will be removed from Solidus 3.0 (override partial_name instead).", caller[1..-1]
+      if method(:method_type).owner != Solidus::PaymentMethod
+        Solidus::Deprecation.warn "#{method(:method_type).owner} is overriding PaymentMethod#method_type. This is deprecated and will be removed from Solidus 3.0 (override partial_name instead).", caller[1..-1]
         method_type
       end
     end
 
     def method_type
-      Spree::Deprecation.warn "method_type is deprecated and will be removed from Solidus 3.0 (use partial_name instead)", caller
+      Solidus::Deprecation.warn "method_type is deprecated and will be removed from Solidus 3.0 (use partial_name instead)", caller
       partial_name
     end
 
@@ -229,25 +229,25 @@ module Spree
     end
 
     # Custom gateways can redefine this method to return reusable sources for an order.
-    # See {Spree::PaymentMethod::CreditCard#reusable_sources} as an example
+    # See {Solidus::PaymentMethod::CreditCard#reusable_sources} as an example
     def reusable_sources(_order)
       []
     end
 
     def auto_capture?
-      auto_capture.nil? ? Spree::Config[:auto_capture] : auto_capture
+      auto_capture.nil? ? Solidus::Config[:auto_capture] : auto_capture
     end
 
     # Check if given source is supported by this payment method
     #
     # Please implement validation logic in your payment method implementation
     #
-    # @see Spree::PaymentMethod::CreditCard#supports?
+    # @see Solidus::PaymentMethod::CreditCard#supports?
     def supports?(_source)
       true
     end
 
-    # Used by Spree::Payment#cancel!
+    # Used by Solidus::Payment#cancel!
     #
     # Implement `try_void` on your payment method implementation to handle void attempts.
     # In that method return a ActiveMerchant::Billing::Response object if the void succeeds.
@@ -267,7 +267,7 @@ module Spree
     end
 
     def store_credit?
-      is_a? Spree::PaymentMethod::StoreCredit
+      is_a? Solidus::PaymentMethod::StoreCredit
     end
 
     protected
@@ -276,7 +276,7 @@ module Spree
     #
     def gateway_class
       if respond_to? :provider_class
-        Spree::Deprecation.warn \
+        Solidus::Deprecation.warn \
           "provider_class is deprecated and will be removed from Solidus 3.0 " \
           "(use gateway_class instead)"
         public_send :provider_class

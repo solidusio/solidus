@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-module Spree
+module Solidus
   RSpec.describe ShippingCalculator, type: :model do
     let(:line_item1) { build(:line_item, price: 10) }
     let(:line_item2) { build(:line_item, price: 20) }
@@ -14,9 +14,9 @@ module Spree
       build(
         :stock_package,
         contents: [
-          Spree::Stock::ContentItem.new(inventory_unit1),
-          Spree::Stock::ContentItem.new(inventory_unit1),
-          Spree::Stock::ContentItem.new(inventory_unit2)
+          Solidus::Stock::ContentItem.new(inventory_unit1),
+          Solidus::Stock::ContentItem.new(inventory_unit1),
+          Solidus::Stock::ContentItem.new(inventory_unit2)
         ]
       )
     end
@@ -24,7 +24,7 @@ module Spree
     subject { ShippingCalculator.new }
 
     it 'computes with a shipment' do
-      shipment = mock_model(Spree::Shipment)
+      shipment = mock_model(Solidus::Shipment)
       expect(subject).to receive(:compute_shipment).with(shipment)
       subject.compute(shipment)
     end

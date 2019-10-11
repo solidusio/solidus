@@ -2,8 +2,8 @@
 
 require 'spree/api_configuration'
 
-module Spree
+module Solidus
   module Api
-    Config = Spree::ApiConfiguration.new
+    Config = Solidus::ApiConfiguration.new
   end
 end

@@ -2,13 +2,13 @@
 
 require 'rails_helper'
 
-module Spree
+module Solidus
   module Stock
     module Allocator
       RSpec.describe OnHandFirst, type: :model do
         subject { described_class.new(availability) }
 
-        let(:availability) { double(Spree::Stock::Availability) }
+        let(:availability) { double(Solidus::Stock::Availability) }
 
         let!(:default_stock_location) { create(:stock_location, default: true, backorderable_default: false) }
         let!(:backorderable_stock_location) { create(:stock_location) }
@@ -23,7 +23,7 @@ module Spree
           quantities
         end
 
-        let(:desired) { Spree::StockQuantities.new(desired_quantities) }
+        let(:desired) { Solidus::StockQuantities.new(desired_quantities) }
 
         describe '#allocate_inventory' do
           let(:default_on_hand_availability) do
@@ -42,8 +42,8 @@ module Spree
 
           let(:on_hand_by_stock_location_id) do
             availability = {}
-            availability[default_stock_location.id] = Spree::StockQuantities.new(default_on_hand_availability)
-            availability[backorderable_stock_location.id] = Spree::StockQuantities.new(dropship_on_hand_availability)
+            availability[default_stock_location.id] = Solidus::StockQuantities.new(default_on_hand_availability)
+            availability[backorderable_stock_location.id] = Solidus::StockQuantities.new(dropship_on_hand_availability)
             availability
           end
 
@@ -56,7 +56,7 @@ module Spree
 
           let(:backorderable_by_stock_location_id) do
             availability = {}
-            availability[backorderable_stock_location.id] = Spree::StockQuantities.new(dropship_backorderable_availability)
+            availability[backorderable_stock_location.id] = Solidus::StockQuantities.new(dropship_backorderable_availability)
             availability
           end
 

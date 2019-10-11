@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe Spree::BackendConfiguration::MenuItem do
+RSpec.describe Solidus::BackendConfiguration::MenuItem do
   describe '#match_path' do
     subject do
       described_class.new([], nil, {

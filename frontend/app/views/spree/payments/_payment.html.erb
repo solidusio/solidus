@@ -1,5 +1,5 @@
 <% source = payment.source %>
-<% if source.is_a?(Spree::CreditCard) %>
+<% if source.is_a?(Solidus::CreditCard) %>
   <span class="cc-type">
     <% unless (cc_type = source.cc_type).blank? %>
       <%= image_tag "credit_cards/icons/#{cc_type}.png" %>
@@ -10,7 +10,7 @@
   </span>
   <br />
   <span class="full-name"><%= source.name %></span>
-<% elsif source.is_a?(Spree::StoreCredit) %>
+<% elsif source.is_a?(Solidus::StoreCredit) %>
   <%= content_tag(:span, payment.payment_method.name) %>:
   <%= content_tag(:span, payment.display_amount) %>
 <% else %>

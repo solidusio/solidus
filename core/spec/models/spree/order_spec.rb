@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::Order, type: :model do
+RSpec.describe Solidus::Order, type: :model do
   let(:store) { create(:store) }
   let(:user) { create(:user, email: "spree@example.com") }
   let(:order) { create(:order, user: user, store: store) }
@@ -18,7 +18,7 @@ RSpec.describe Spree::Order, type: :model do
   describe '#finalize!' do
     context 'with event notifications' do
       it 'sends an email' do
-        expect(Spree::Config.order_mailer_class).to receive(:confirm_email).and_call_original
+        expect(Solidus::Config.order_mailer_class).to receive(:confirm_email).and_call_original
         order.finalize!
       end
 
@@ -32,30 +32,30 @@ RSpec.describe Spree::Order, type: :model do
       # all the ones set by MailerSubscriber module
       context 'when removing the default email notification subscription' do
         before do
-          Spree::Event.unsubscribe Spree::MailerSubscriber.order_finalized_handler
+          Solidus::Event.unsubscribe Solidus::MailerSubscriber.order_finalized_handler
         end
 
         after do
-          Spree::MailerSubscriber.subscribe!
+          Solidus::MailerSubscriber.subscribe!
         end
 
         it 'does not send the email' do
-          expect(Spree::Config.order_mailer_class).not_to receive(:confirm_email)
+          expect(Solidus::Config.order_mailer_class).not_to receive(:confirm_email)
           order.finalize!
         end
       end
 
       context 'when removing all the email notification subscriptions' do
         before do
-          Spree::MailerSubscriber.unsubscribe!
+          Solidus::MailerSubscriber.unsubscribe!
         end
 
         after do
-          Spree::MailerSubscriber.subscribe!
+          Solidus::MailerSubscriber.subscribe!
         end
 
         it 'does not send the email' do
-          expect(Spree::Config.order_mailer_class).not_to receive(:confirm_email)
+          expect(Solidus::Config.order_mailer_class).not_to receive(:confirm_email)
           order.finalize!
         end
       end
@@ -66,7 +66,7 @@ RSpec.describe Spree::Order, type: :model do
     it { is_expected.to respond_to(:store) }
 
     context 'when there is no store assigned' do
-      subject { Spree::Order.new }
+      subject { Solidus::Order.new }
 
       context 'when there is no default store' do
         it "will not be valid" do
@@ -82,7 +82,7 @@ RSpec.describe Spree::Order, type: :model do
     end
 
     context 'when a store is assigned' do
-      subject { Spree::Order.new(store: create(:store)) }
+      subject { Solidus::Order.new(store: create(:store)) }
       it { is_expected.to be_valid }
     end
   end
@@ -108,11 +108,11 @@ RSpec.describe Spree::Order, type: :model do
       end
 
       it "places the order into the canceled scope" do
-        expect{ subject }.to change{ Spree::Order.canceled.include?(order) }.from(false).to(true)
+        expect{ subject }.to change{ Solidus::Order.canceled.include?(order) }.from(false).to(true)
       end
 
       it "removes the order from the not_canceled scope" do
-        expect{ subject }.to change{ Spree::Order.not_canceled.include?(order) }.from(true).to(false)
+        expect{ subject }.to change{ Solidus::Order.not_canceled.include?(order) }.from(true).to(false)
       end
     end
 
@@ -165,7 +165,7 @@ RSpec.describe Spree::Order, type: :model do
 
   context "#create" do
     let!(:store) { create :store }
-    let(:order) { Spree::Order.create }
+    let(:order) { Solidus::Order.create }
 
     it "should assign an order number" do
       expect(order.number).not_to be_nil
@@ -184,14 +184,14 @@ RSpec.describe Spree::Order, type: :model do
     it "update and persist totals" do
       expect(order.updater).to receive :update
 
-      Spree::Deprecation.silence do
+      Solidus::Deprecation.silence do
         order.set_shipments_cost
       end
     end
   end
 
   context "insufficient_stock_lines" do
-    let(:line_item) { mock_model Spree::LineItem, insufficient_stock?: true }
+    let(:line_item) { mock_model Solidus::LineItem, insufficient_stock?: true }
 
     before { allow(order).to receive_messages(line_items: [line_item]) }
 
@@ -291,28 +291,28 @@ RSpec.describe Spree::Order, type: :model do
   context "#display_outstanding_balance" do
     it "returns the value as a spree money" do
       allow(order).to receive(:outstanding_balance) { 10.55 }
-      expect(order.display_outstanding_balance).to eq(Spree::Money.new(10.55))
+      expect(order.display_outstanding_balance).to eq(Solidus::Money.new(10.55))
     end
   end
 
   context "#display_item_total" do
     it "returns the value as a spree money" do
       allow(order).to receive(:item_total) { 10.55 }
-      expect(order.display_item_total).to eq(Spree::Money.new(10.55))
+      expect(order.display_item_total).to eq(Solidus::Money.new(10.55))
     end
   end
 
   context "#display_adjustment_total" do
     it "returns the value as a spree money" do
       order.adjustment_total = 10.55
-      expect(order.display_adjustment_total).to eq(Spree::Money.new(10.55))
+      expect(order.display_adjustment_total).to eq(Solidus::Money.new(10.55))
     end
   end
 
   context "#display_total" do
     it "returns the value as a spree money" do
       order.total = 10.55
-      expect(order.display_total).to eq(Spree::Money.new(10.55))
+      expect(order.display_total).to eq(Solidus::Money.new(10.55))
     end
   end
 
@@ -355,7 +355,7 @@ RSpec.describe Spree::Order, type: :model do
             [@order, other_order, user]
           end
         end
-        Spree::Config.order_merger_class = TestOrderMerger
+        Solidus::Config.order_merger_class = TestOrderMerger
       end
 
       let(:user) { build(:user) }
@@ -368,13 +368,13 @@ RSpec.describe Spree::Order, type: :model do
 
   context "add_update_hook", partial_double_verification: false do
     before do
-      Spree::Order.class_eval do
+      Solidus::Order.class_eval do
         register_update_hook :add_awesome_sauce
       end
     end
 
     after do
-      Spree::Order.update_hooks = Set.new
+      Solidus::Order.update_hooks = Set.new
     end
 
     it "calls hook during update" do
@@ -393,7 +393,7 @@ RSpec.describe Spree::Order, type: :model do
   context "ensure shipments will be updated" do
     subject(:order) { create :order }
     before do
-      Spree::Shipment.create!(order: order)
+      Solidus::Shipment.create!(order: order)
     end
 
     ['payment', 'confirm'].each do |order_state|
@@ -584,7 +584,7 @@ RSpec.describe Spree::Order, type: :model do
       order.update_column(:payment_state, 'balance_due')
       order.payment_state = 'paid'
       expect(order.state_changes).to be_empty
-      Spree::Deprecation.silence do
+      Solidus::Deprecation.silence do
         order.state_changed('payment')
       end
       state_change = order.state_changes.find_by(name: 'payment')
@@ -595,7 +595,7 @@ RSpec.describe Spree::Order, type: :model do
     it "does not do anything if state does not change" do
       order.update_column(:payment_state, 'balance_due')
       expect(order.state_changes).to be_empty
-      Spree::Deprecation.silence do
+      Solidus::Deprecation.silence do
         order.state_changed('payment')
       end
       expect(order.state_changes).to be_empty
@@ -605,7 +605,7 @@ RSpec.describe Spree::Order, type: :model do
   # Regression test for https://github.com/spree/spree/issues/4199
   context "#available_payment_methods" do
     it "includes frontend payment methods" do
-      payment_method = Spree::PaymentMethod::Check.create!({
+      payment_method = Solidus::PaymentMethod::Check.create!({
         name: "Fake",
         active: true,
         available_to_users: true,
@@ -615,7 +615,7 @@ RSpec.describe Spree::Order, type: :model do
     end
 
     it "includes 'both' payment methods" do
-      payment_method = Spree::PaymentMethod::Check.create!({
+      payment_method = Solidus::PaymentMethod::Check.create!({
         name: "Fake",
         active: true,
         available_to_users: true,
@@ -625,7 +625,7 @@ RSpec.describe Spree::Order, type: :model do
     end
 
     it "does not include a payment method twice" do
-      payment_method = Spree::PaymentMethod::Check.create!({
+      payment_method = Solidus::PaymentMethod::Check.create!({
         name: "Fake",
         active: true,
         available_to_users: true,
@@ -636,7 +636,7 @@ RSpec.describe Spree::Order, type: :model do
     end
 
     it "does not include inactive payment methods" do
-      Spree::PaymentMethod::Check.create!({
+      Solidus::PaymentMethod::Check.create!({
         name: "Fake",
         active: false,
         available_to_users: true,
@@ -719,7 +719,7 @@ RSpec.describe Spree::Order, type: :model do
 
   context "#apply_shipping_promotions" do
     it "calls out to the Shipping promotion handler" do
-      expect_any_instance_of(Spree::PromotionHandler::Shipping).to(
+      expect_any_instance_of(Solidus::PromotionHandler::Shipping).to(
         receive(:activate)
       ).and_call_original
 
@@ -731,10 +731,10 @@ RSpec.describe Spree::Order, type: :model do
 
   context "#products" do
     before :each do
-      @variant1 = mock_model(Spree::Variant, product: "product1")
-      @variant2 = mock_model(Spree::Variant, product: "product2")
-      @line_items = [mock_model(Spree::LineItem, product: "product1", variant: @variant1, variant_id: @variant1.id, quantity: 1),
-                     mock_model(Spree::LineItem, product: "product2", variant: @variant2, variant_id: @variant2.id, quantity: 2)]
+      @variant1 = mock_model(Solidus::Variant, product: "product1")
+      @variant2 = mock_model(Solidus::Variant, product: "product2")
+      @line_items = [mock_model(Solidus::LineItem, product: "product1", variant: @variant1, variant_id: @variant1.id, quantity: 1),
+                     mock_model(Solidus::LineItem, product: "product2", variant: @variant2, variant_id: @variant2.id, quantity: 2)]
       allow(order).to receive_messages(line_items: @line_items)
     end
 
@@ -745,23 +745,23 @@ RSpec.describe Spree::Order, type: :model do
     it "gets the quantity of a given variant" do
       expect(order.quantity_of(@variant1)).to eq(1)
 
-      @variant3 = mock_model(Spree::Variant, product: "product3")
+      @variant3 = mock_model(Solidus::Variant, product: "product3")
       expect(order.quantity_of(@variant3)).to eq(0)
     end
 
     it "can find a line item matching a given variant" do
       expect(order.find_line_item_by_variant(@variant1)).not_to be_nil
-      expect(order.find_line_item_by_variant(mock_model(Spree::Variant))).to be_nil
+      expect(order.find_line_item_by_variant(mock_model(Solidus::Variant))).to be_nil
     end
 
     context "match line item with options", partial_double_verification: false do
       before do
-        Spree::Order.register_line_item_comparison_hook(:foos_match)
+        Solidus::Order.register_line_item_comparison_hook(:foos_match)
       end
 
       after do
         # reset to avoid test pollution
-        Spree::Order.line_item_comparison_hooks = Set.new
+        Solidus::Order.line_item_comparison_hooks = Set.new
       end
 
       it "matches line item when options match" do
@@ -781,7 +781,7 @@ RSpec.describe Spree::Order, type: :model do
 
     context "with default app configuration" do
       it 'calls the default order number generator' do
-        expect_any_instance_of(Spree::Order::NumberGenerator).to receive(:generate)
+        expect_any_instance_of(Solidus::Order::NumberGenerator).to receive(:generate)
         order.generate_order_number
       end
     end
@@ -796,7 +796,7 @@ RSpec.describe Spree::Order, type: :model do
       end
 
       before do
-        expect(Spree::Config).to receive(:order_number_generator) do
+        expect(Solidus::Config).to receive(:order_number_generator) do
           TruthNumberGenerator.new
         end
       end
@@ -820,7 +820,7 @@ RSpec.describe Spree::Order, type: :model do
 
     context "passing options" do
       it 'is deprecated' do
-        expect(Spree::Deprecation).to receive(:warn)
+        expect(Solidus::Deprecation).to receive(:warn)
         order.generate_order_number(length: 2)
       end
     end
@@ -864,7 +864,7 @@ RSpec.describe Spree::Order, type: :model do
     end
 
     it "should associate a user with a non-persisted order" do
-      order = Spree::Order.new
+      order = Solidus::Order.new
 
       expect do
         order.associate_user!(user)
@@ -872,7 +872,7 @@ RSpec.describe Spree::Order, type: :model do
     end
 
     it "should not persist an invalid address" do
-      address = Spree::Address.new
+      address = Solidus::Address.new
       order.user = nil
       order.email = nil
       order.ship_address = address
@@ -883,7 +883,7 @@ RSpec.describe Spree::Order, type: :model do
   end
 
   context "#assign_default_user_addresses" do
-    let(:order) { Spree::Order.new }
+    let(:order) { Solidus::Order.new }
 
     subject { order.assign_default_user_addresses }
 
@@ -965,7 +965,7 @@ RSpec.describe Spree::Order, type: :model do
   end
 
   context "#can_ship?" do
-    let(:order) { Spree::Order.create }
+    let(:order) { Solidus::Order.create }
 
     it "should be true for order in the 'complete' state" do
       allow(order).to receive_messages(complete?: true)
@@ -1027,8 +1027,8 @@ RSpec.describe Spree::Order, type: :model do
 
   context "#backordered?" do
     it 'is backordered if one of the shipments is backordered' do
-      allow(order).to receive_messages(shipments: [mock_model(Spree::Shipment, backordered?: false),
-                                                   mock_model(Spree::Shipment, backordered?: true)])
+      allow(order).to receive_messages(shipments: [mock_model(Solidus::Shipment, backordered?: false),
+                                                   mock_model(Solidus::Shipment, backordered?: true)])
       expect(order).to be_backordered
     end
   end
@@ -1059,7 +1059,7 @@ RSpec.describe Spree::Order, type: :model do
 
   # Regression test for https://github.com/spree/spree/issues/4923
   context "locking" do
-    let(:order) { Spree::Order.create } # need a persisted in order to test locking
+    let(:order) { Solidus::Order.create } # need a persisted in order to test locking
 
     it 'can lock' do
       order.with_lock {}
@@ -1069,8 +1069,8 @@ RSpec.describe Spree::Order, type: :model do
   describe "#item_total_excluding_vat" do
     it "sums all of the line items' pre tax amounts" do
       subject.line_items = [
-        Spree::LineItem.new(price: 10, quantity: 2, included_tax_total: 15.0),
-        Spree::LineItem.new(price: 30, quantity: 1, included_tax_total: 16.0)
+        Solidus::LineItem.new(price: 10, quantity: 2, included_tax_total: 15.0),
+        Solidus::LineItem.new(price: 30, quantity: 1, included_tax_total: 16.0)
       ]
       # (2*10)-15 + 30-16 = 5 + 14 = 19
       expect(subject.item_total_excluding_vat).to eq 19.0
@@ -1137,7 +1137,7 @@ RSpec.describe Spree::Order, type: :model do
     subject(:order) { create(:order) }
     it "assigns the coordinator returned shipments to its shipments" do
       shipment = build(:shipment)
-      allow_any_instance_of(Spree::Stock::SimpleCoordinator).to receive(:shipments).and_return([shipment])
+      allow_any_instance_of(Solidus::Stock::SimpleCoordinator).to receive(:shipments).and_return([shipment])
       subject.create_proposed_shipments
       expect(subject.shipments).to eq [shipment]
     end
@@ -1148,7 +1148,7 @@ RSpec.describe Spree::Order, type: :model do
       expect {
         expect {
           subject.create_proposed_shipments
-        }.to raise_error(Spree::Order::CannotRebuildShipments)
+        }.to raise_error(Solidus::Order::CannotRebuildShipments)
       }.not_to change { subject.reload.shipments.pluck(:id) }
 
       expect { shipment.reload }.not_to raise_error
@@ -1159,7 +1159,7 @@ RSpec.describe Spree::Order, type: :model do
       expect {
         expect {
           subject.create_proposed_shipments
-        }.to raise_error(Spree::Order::CannotRebuildShipments)
+        }.to raise_error(Solidus::Order::CannotRebuildShipments)
       }.not_to change { subject.reload.shipments.pluck(:id) }
 
       expect { shipment.reload }.not_to raise_error
@@ -1245,7 +1245,7 @@ RSpec.describe Spree::Order, type: :model do
           it "charges the outstanding balance to the credit card" do
             expect(order.errors.messages).to be_empty
             expect(order.payments.count).to eq 1
-            expect(order.payments.first.source).to be_a(Spree::CreditCard)
+            expect(order.payments.first.source).to be_a(Solidus::CreditCard)
             expect(order.payments.first.amount).to eq order_total
           end
         end
@@ -1327,7 +1327,7 @@ RSpec.describe Spree::Order, type: :model do
           it "charges the outstanding balance to the credit card" do
             expect(order.errors.messages).to be_empty
             expect(order.payments.count).to eq 2
-            expect(order.payments.first.source).to be_a(Spree::CreditCard)
+            expect(order.payments.first.source).to be_a(Solidus::CreditCard)
             expect(order.payments.first.amount).to eq 100
           end
 
@@ -1341,7 +1341,7 @@ RSpec.describe Spree::Order, type: :model do
             it "charges the outstanding balance to the credit card" do
               expect(order.errors.messages).to be_empty
               expect(order.payments.count).to eq 2
-              expect(order.payments.first.source).to be_a(Spree::CreditCard)
+              expect(order.payments.first.source).to be_a(Solidus::CreditCard)
               expect(order.payments.first.amount).to eq 100
             end
           end
@@ -1508,7 +1508,7 @@ RSpec.describe Spree::Order, type: :model do
       before { allow(subject).to receive_messages(total_applicable_store_credit: total_applicable_store_credit) }
 
       it "returns a money instance" do
-        expect(subject.display_total_applicable_store_credit).to be_a(Spree::Money)
+        expect(subject.display_total_applicable_store_credit).to be_a(Solidus::Money)
       end
 
       it "returns a negative amount" do
@@ -1543,7 +1543,7 @@ RSpec.describe Spree::Order, type: :model do
       before { allow(subject).to receive_messages(order_total_after_store_credit: order_total_after_store_credit) }
 
       it "returns a money instance" do
-        expect(subject.display_order_total_after_store_credit).to be_a(Spree::Money)
+        expect(subject.display_order_total_after_store_credit).to be_a(Solidus::Money)
       end
 
       it "returns the order_total_after_store_credit amount" do
@@ -1559,7 +1559,7 @@ RSpec.describe Spree::Order, type: :model do
       before { allow(subject).to receive_messages(total_available_store_credit: total_available_store_credit) }
 
       it "returns a money instance" do
-        expect(subject.display_total_available_store_credit).to be_a(Spree::Money)
+        expect(subject.display_total_available_store_credit).to be_a(Solidus::Money)
       end
 
       it "returns the total_available_store_credit amount" do
@@ -1579,7 +1579,7 @@ RSpec.describe Spree::Order, type: :model do
       end
 
       it "returns a money instance" do
-        expect(subject.display_store_credit_remaining_after_capture).to be_a(Spree::Money)
+        expect(subject.display_store_credit_remaining_after_capture).to be_a(Solidus::Money)
       end
 
       it "returns all of the user's available store credit minus what's applied to the order amount" do
@@ -1635,7 +1635,7 @@ RSpec.describe Spree::Order, type: :model do
 
     it 'is deprecated' do
       subject.instance_variable_set('@updating_params', {})
-      expect(Spree::Deprecation).to receive(:warn)
+      expect(Solidus::Deprecation).to receive(:warn)
       subject.send(:update_params_payment_source)
     end
   end

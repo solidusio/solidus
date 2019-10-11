@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-Spree::Sample.load_sample("option_types")
+Solidus::Sample.load_sample("option_types")
 
-size = Spree::OptionType.find_by!(presentation: "Size")
-color = Spree::OptionType.find_by!(presentation: "Color")
+size = Solidus::OptionType.find_by!(presentation: "Size")
+color = Solidus::OptionType.find_by!(presentation: "Color")
 
-Spree::OptionValue.create!([
+Solidus::OptionValue.create!([
   {
     name: "Small",
     presentation: "S",

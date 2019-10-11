@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module Event
-    # This module simplifies adding and removing subscriptions to {Spree::Event} events.
+    # This module simplifies adding and removing subscriptions to {Solidus::Event} events.
     # Here's a complete example:
     #   module EmailSender
-    #     include Spree::Event::Subscriber
+    #     include Solidus::Event::Subscriber
     #
     #     event_action :order_finalized
     #     event_action :confirm_reimbursement, event_name: :reimbursement_reimbursed
@@ -64,7 +64,7 @@ module Spree
       def subscribe!
         unsubscribe!
         event_actions.each do |event_action, event_name|
-          send "#{event_action}_handler=", Spree::Event.subscribe(event_name) { |event|
+          send "#{event_action}_handler=", Solidus::Event.subscribe(event_name) { |event|
             send event_action, event
           }
         end
@@ -76,7 +76,7 @@ module Spree
       #    EmailSender.unsubscribe!
       def unsubscribe!
         event_actions.keys.each do |event_action|
-          Spree::Event.unsubscribe send("#{event_action}_handler")
+          Solidus::Event.unsubscribe send("#{event_action}_handler")
         end
       end
     end

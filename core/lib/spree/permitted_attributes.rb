@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-module Spree
-  # Spree::PermittedAttributes contains the attributes permitted through strong
+module Solidus
+  # Solidus::PermittedAttributes contains the attributes permitted through strong
   # params in various controllers in the frontend. Extensions and stores that
   # need additional params to be accepted can mutate these arrays to add them.
   module PermittedAttributes

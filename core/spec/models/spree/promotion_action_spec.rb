@@ -2,9 +2,9 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::PromotionAction, type: :model do
+RSpec.describe Solidus::PromotionAction, type: :model do
   describe '#remove_from' do
-    class MyPromotionAction < Spree::PromotionAction
+    class MyPromotionAction < Solidus::PromotionAction
       def perform(options = {})
         order = options[:order]
         order.adjustments.create!(amount: 1, order: order, source: self, label: 'foo')
@@ -31,7 +31,7 @@ RSpec.describe Spree::PromotionAction, type: :model do
     it 'removes the action adjustment' do
       expect(order.adjustments).to match_array([other_adjustment, @action_adjustment])
 
-      expect(Spree::Deprecation).to(
+      expect(Solidus::Deprecation).to(
         receive(:warn).
         with(/"MyPromotionAction" does not define #remove_from/, anything)
       )

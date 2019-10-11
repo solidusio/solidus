@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-module Spree::PromotionHandler
+module Solidus::PromotionHandler
   FreeShipping = ActiveSupport::Deprecation::DeprecatedConstantProxy.new(
-    'Spree::PromotionHandler::FreeShipping',
-    'Spree::PromotionHandler::Shipping',
-    Spree::Deprecation,
+    'Solidus::PromotionHandler::FreeShipping',
+    'Solidus::PromotionHandler::Shipping',
+    Solidus::Deprecation,
   )
 end

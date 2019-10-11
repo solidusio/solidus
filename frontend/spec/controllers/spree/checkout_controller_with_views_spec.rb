@@ -4,10 +4,10 @@ require 'spec_helper'
 
 # This spec is useful for when we just want to make sure a view is rendering correctly
 # Walking through the entire checkout process is rather tedious, don't you think?
-describe Spree::CheckoutController, type: :controller do
+describe Solidus::CheckoutController, type: :controller do
   render_views
   let(:token) { 'some_token' }
-  let(:user) { stub_model(Spree::LegacyUser) }
+  let(:user) { stub_model(Solidus::LegacyUser) }
 
   before do
     allow(controller).to receive_messages try_spree_current_user: user
@@ -23,7 +23,7 @@ describe Spree::CheckoutController, type: :controller do
       before do
         # Using a let block won't acknowledge the currency setting
         # Therefore we just do it like this...
-        order = Spree::TestingSupport::OrderWalkthrough.up_to(:address)
+        order = Solidus::TestingSupport::OrderWalkthrough.up_to(:address)
         allow(controller).to receive_messages current_order: order
       end
 

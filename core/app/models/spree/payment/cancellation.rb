@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   class Payment
     # Payment cancellation handler
     #
@@ -13,7 +13,7 @@ module Spree
       attr_reader :reason
 
       # @param reason [String] (DEFAULT_REASON) -
-      #   The reason used to create the Spree::RefundReason
+      #   The reason used to create the Solidus::RefundReason
       def initialize(reason: DEFAULT_REASON)
         @reason = reason
       end
@@ -23,7 +23,7 @@ module Spree
       # Tries to void the payment by asking the payment method to try a void,
       # if that fails create a refund about the allowed credit amount instead.
       #
-      # @param payment [Spree::Payment] - the payment that should be canceled
+      # @param payment [Solidus::Payment] - the payment that should be canceled
       #
       def cancel(payment)
         # For payment methods already implemeting `try_void`
@@ -42,16 +42,16 @@ module Spree
       private
 
       def refund_reason
-        Spree::RefundReason.where(name: reason).first_or_create
+        Solidus::RefundReason.where(name: reason).first_or_create
       end
 
       def try_void_available?(payment_method)
         payment_method.respond_to?(:try_void) &&
-          payment_method.method(:try_void).owner != Spree::PaymentMethod
+          payment_method.method(:try_void).owner != Solidus::PaymentMethod
       end
 
       def deprecated_behavior(payment)
-        Spree::Deprecation.warn "#{payment.payment_method.class.name}#cancel is deprecated and will be removed. " \
+        Solidus::Deprecation.warn "#{payment.payment_method.class.name}#cancel is deprecated and will be removed. " \
           'Please implement a `try_void` method instead that returns a response object if void succeeds ' \
           'or `false|nil` if not. Solidus will refund the payment then.'
         response = payment.payment_method.cancel(payment.response_code)

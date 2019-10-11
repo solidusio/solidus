@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module PromotionHandler
     class Coupon
       attr_reader :order, :coupon_code
@@ -64,7 +64,7 @@ module Spree
       private
 
       def promotion_code
-        @promotion_code ||= Spree::PromotionCode.where(value: coupon_code).first
+        @promotion_code ||= Solidus::PromotionCode.where(value: coupon_code).first
       end
 
       def handle_present_promotion(promotion)

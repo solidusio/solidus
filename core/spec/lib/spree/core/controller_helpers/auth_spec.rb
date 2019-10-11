@@ -3,16 +3,16 @@
 require 'rails_helper'
 
 class FakesController < ApplicationController
-  include Spree::Core::ControllerHelpers::Auth
+  include Solidus::Core::ControllerHelpers::Auth
   def index; render plain: 'index'; end
 end
 
-RSpec.describe Spree::Core::ControllerHelpers::Auth, type: :controller do
+RSpec.describe Solidus::Core::ControllerHelpers::Auth, type: :controller do
   controller(FakesController) {}
 
   describe '#current_ability' do
-    it 'returns Spree::Ability instance' do
-      expect(controller.current_ability.class).to eq Spree::Ability
+    it 'returns Solidus::Ability instance' do
+      expect(controller.current_ability.class).to eq Solidus::Ability
     end
   end
 

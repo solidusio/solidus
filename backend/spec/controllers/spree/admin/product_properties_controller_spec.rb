@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-module Spree
+module Solidus
   module Admin
     describe ProductPropertiesController, type: :controller do
       stub_authorization!

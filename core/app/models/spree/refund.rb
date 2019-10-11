@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-module Spree
-  class Refund < Spree::Base
+module Solidus
+  class Refund < Solidus::Base
     belongs_to :payment, inverse_of: :refunds, optional: true
-    belongs_to :reason, class_name: 'Spree::RefundReason', foreign_key: :refund_reason_id, optional: true
+    belongs_to :reason, class_name: 'Solidus::RefundReason', foreign_key: :refund_reason_id, optional: true
     belongs_to :reimbursement, inverse_of: :refunds, optional: true
 
     has_many :log_entries, as: :source
@@ -23,7 +23,7 @@ module Spree
     delegate :currency, to: :payment
 
     def money
-      Spree::Money.new(amount, { currency: currency })
+      Solidus::Money.new(amount, { currency: currency })
     end
     alias display_amount money
 

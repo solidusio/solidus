@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 
-module Spree
-  class Promotion < Spree::Base
+module Solidus
+  class Promotion < Solidus::Base
     module Rules
       class User < PromotionRule
-        has_many :promotion_rule_users, class_name: 'Spree::PromotionRuleUser',
+        has_many :promotion_rule_users, class_name: 'Solidus::PromotionRuleUser',
                                         foreign_key: :promotion_rule_id,
                                         dependent: :destroy
-        has_many :users, through: :promotion_rule_users, class_name: Spree::UserClassHandle.new
+        has_many :users, through: :promotion_rule_users, class_name: Solidus::UserClassHandle.new
 
         def applicable?(promotable)
-          promotable.is_a?(Spree::Order)
+          promotable.is_a?(Solidus::Order)
         end
 
         def eligible?(order, _options = {})

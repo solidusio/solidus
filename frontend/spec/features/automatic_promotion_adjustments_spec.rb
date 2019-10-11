@@ -12,18 +12,18 @@ describe "Automatic promotions", type: :feature, js: true do
   let!(:product) { create(:product, name: "RoR Mug", price: 20) }
 
   let!(:promotion) do
-    promotion = Spree::Promotion.create!(name: "$10 off when you spend more than $100", apply_automatically: true)
+    promotion = Solidus::Promotion.create!(name: "$10 off when you spend more than $100", apply_automatically: true)
 
-    calculator = Spree::Calculator::FlatRate.new
+    calculator = Solidus::Calculator::FlatRate.new
     calculator.preferred_amount = 10
 
-    rule = Spree::Promotion::Rules::ItemTotal.create
+    rule = Solidus::Promotion::Rules::ItemTotal.create
     rule.preferred_amount = 100
     rule.save
 
     promotion.rules << rule
 
-    action = Spree::Promotion::Actions::CreateAdjustment.create
+    action = Solidus::Promotion::Actions::CreateAdjustment.create
     action.calculator = calculator
     action.save
 

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module Stock
     class Differentiator
       attr_reader :missing, :packed, :required, :packages, :order

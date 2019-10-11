@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   class ProductDuplicator
     attr_accessor :product
 

@@ -4,7 +4,7 @@ require 'rails_helper'
 require 'spree/testing_support/factories/inventory_unit_factory'
 
 RSpec.describe 'inventory unit factory' do
-  let(:factory_class) { Spree::InventoryUnit }
+  let(:factory_class) { Solidus::InventoryUnit }
 
   describe 'plain inventory unit' do
     let(:factory) { :inventory_unit }

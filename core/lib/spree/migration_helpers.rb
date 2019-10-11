@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module MigrationHelpers
     def safe_remove_index(table, column)
       remove_index(table, column) if index_exists?(table, column)

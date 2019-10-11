@@ -4,7 +4,7 @@ require 'spree/testing_support/factories/shipment_factory'
 require 'spree/testing_support/factories/inventory_unit_factory'
 
 FactoryBot.define do
-  factory :carton, class: 'Spree::Carton' do
+  factory :carton, class: 'Solidus::Carton' do
     address
     stock_location
     shipping_method

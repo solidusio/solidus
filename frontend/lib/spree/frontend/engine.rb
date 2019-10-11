@@ -2,10 +2,10 @@
 
 require 'spree/frontend/config'
 
-module Spree
+module Solidus
   module Frontend
     class Engine < ::Rails::Engine
-      config.middleware.use "Spree::Frontend::Middleware::SeoAssist"
+      config.middleware.use "Solidus::Frontend::Middleware::SeoAssist"
 
       # Leave initializer empty for backwards-compatability. Other apps
       # might still rely on this event.

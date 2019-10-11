@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Spree::DistributedAmountsHandler, type: :model do
+RSpec.describe Solidus::DistributedAmountsHandler, type: :model do
   let(:order) do
     FactoryBot.create(
       :order_with_line_items,

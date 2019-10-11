@@ -1,14 +1,14 @@
 <fieldset class="no-border-bottom">
-  <legend><%= plural_resource_name(Spree::Payment) %></legend>
+  <legend><%= plural_resource_name(Solidus::Payment) %></legend>
   <table class="index">
     <thead>
       <tr data-hook="payments_header">
-        <th><%= Spree::Payment.human_attribute_name(:number) %></th>
-        <th><%= Spree::Payment.human_attribute_name(:created_at) %></th>
-        <th><%= Spree::Payment.human_attribute_name(:amount) %></th>
-        <th><%= Spree::PaymentMethod.model_name.human %></th>
-        <th><%= Spree::Payment.human_attribute_name(:response_code) %></th>
-        <th><%= Spree::Payment.human_attribute_name(:state) %></th>
+        <th><%= Solidus::Payment.human_attribute_name(:number) %></th>
+        <th><%= Solidus::Payment.human_attribute_name(:created_at) %></th>
+        <th><%= Solidus::Payment.human_attribute_name(:amount) %></th>
+        <th><%= Solidus::PaymentMethod.model_name.human %></th>
+        <th><%= Solidus::Payment.human_attribute_name(:response_code) %></th>
+        <th><%= Solidus::Payment.human_attribute_name(:state) %></th>
       </tr>
     </thead>
     <tbody>

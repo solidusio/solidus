@@ -1,9 +1,9 @@
-<% admin_breadcrumb(link_to plural_resource_name(Spree::Product), spree.admin_products_path) %>
-<% admin_breadcrumb(plural_resource_name(Spree::Property)) %>
+<% admin_breadcrumb(link_to plural_resource_name(Solidus::Product), spree.admin_products_path) %>
+<% admin_breadcrumb(plural_resource_name(Solidus::Property)) %>
 
 
 <% content_for :page_actions do %>
-  <% if can?(:create, Spree::Property) %>
+  <% if can?(:create, Solidus::Property) %>
     <li id="new_property_link">
       <%= link_to t('spree.new_property'), new_admin_property_url, remote: true, id: 'new_property_link', class: 'btn btn-primary' %>
     </li>
@@ -52,8 +52,8 @@
   </colgroup>
   <thead>
     <tr data-hook="listing_properties_header">
-      <th><%= Spree::Property.human_attribute_name(:name) %></th>
-      <th><%= Spree::Property.human_attribute_name(:presentation) %></th>
+      <th><%= Solidus::Property.human_attribute_name(:name) %></th>
+      <th><%= Solidus::Property.human_attribute_name(:presentation) %></th>
       <th class="actions"></th>
     </tr>
   </thead>
@@ -77,7 +77,7 @@
 <% else %>
   <div class="no-objects-found">
     <%= render 'spree/admin/shared/no_objects_found',
-                 resource: Spree::Property,
+                 resource: Solidus::Property,
                  new_resource_url: new_object_url %>
   </div>
 <% end %>

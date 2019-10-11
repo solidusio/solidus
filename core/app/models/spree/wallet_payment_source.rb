@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-module Spree
-  class WalletPaymentSource < Spree::Base
-    belongs_to :user, class_name: Spree::UserClassHandle.new, foreign_key: 'user_id', inverse_of: :wallet_payment_sources, optional: true
+module Solidus
+  class WalletPaymentSource < Solidus::Base
+    belongs_to :user, class_name: Solidus::UserClassHandle.new, foreign_key: 'user_id', inverse_of: :wallet_payment_sources, optional: true
     belongs_to :payment_source, polymorphic: true, inverse_of: :wallet_payment_sources, optional: true
 
     validates_presence_of :user
@@ -18,7 +18,7 @@ module Spree
     private
 
     def check_for_payment_source_class
-      if !payment_source.is_a?(Spree::PaymentSource)
+      if !payment_source.is_a?(Solidus::PaymentSource)
         errors.add(:payment_source, :has_to_be_payment_source_class)
       end
     end

@@ -55,7 +55,7 @@ end
 namespace :gem do
   def version
     require_relative 'core/lib/spree/core/version'
-    Spree.solidus_version
+    Solidus.solidus_version
   end
 
   def for_each_gem

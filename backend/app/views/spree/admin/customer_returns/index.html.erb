@@ -1,24 +1,24 @@
 <%= render partial: 'spree/admin/shared/order_tabs', locals: { current: 'Customer Returns' } %>
 
 <% content_for :page_actions do %>
-  <% if can? :create, Spree::CustomerReturn %>
+  <% if can? :create, Solidus::CustomerReturn %>
     <li>
       <%= link_to t('spree.new_customer_return'), spree.new_admin_order_customer_return_path(@order), class: 'btn btn-primary' %>
     </li>
   <% end %>
 <% end %>
 
-<% admin_breadcrumb(plural_resource_name(Spree::CustomerReturn)) %>
+<% admin_breadcrumb(plural_resource_name(Solidus::CustomerReturn)) %>
 
 <% if @customer_returns.any? %>
   <table class="index">
     <thead data-hook="customer_return_header">
       <tr>
-        <th><%= Spree::CustomerReturn.human_attribute_name(:number) %></th>
-        <th><%= Spree::CustomerReturn.human_attribute_name(:total_excluding_vat) %></th>
-        <th><%= Spree::CustomerReturn.human_attribute_name(:total) %></th>
-        <th><%= Spree::CustomerReturn.human_attribute_name(:created_at) %></th>
-        <th><%= Spree::CustomerReturn.human_attribute_name(:reimbursement_status) %></th>
+        <th><%= Solidus::CustomerReturn.human_attribute_name(:number) %></th>
+        <th><%= Solidus::CustomerReturn.human_attribute_name(:total_excluding_vat) %></th>
+        <th><%= Solidus::CustomerReturn.human_attribute_name(:total) %></th>
+        <th><%= Solidus::CustomerReturn.human_attribute_name(:created_at) %></th>
+        <th><%= Solidus::CustomerReturn.human_attribute_name(:reimbursement_status) %></th>
         <th class="actions"></th>
       </tr>
     </thead>
@@ -46,7 +46,7 @@
 <% else %>
   <div class="no-objects-found">
     <%= render 'spree/admin/shared/no_objects_found',
-                 resource: Spree::CustomerReturn,
+                 resource: Solidus::CustomerReturn,
                  new_resource_url: new_object_url %>
   </div>
 <% end %>

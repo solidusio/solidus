@@ -3,7 +3,7 @@
 require_dependency 'spree/calculator'
 require_dependency 'spree/shipping_calculator'
 
-module Spree
+module Solidus
   module Calculator::Shipping
     class FlatPercentItemTotal < ShippingCalculator
       preference :flat_percent, :decimal, default: 0

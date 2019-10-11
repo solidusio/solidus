@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module Stock
     class Quantifier
       attr_reader :stock_items
@@ -9,11 +9,11 @@ module Spree
       # @param [StockLocation, Integer] stock_location The stock_location to check inventory in. If unspecified it will check inventory in all available StockLocations
       def initialize(variant, stock_location = nil)
         @variant = variant
-        @stock_items = Spree::StockItem.where(variant_id: variant)
+        @stock_items = Solidus::StockItem.where(variant_id: variant)
         if stock_location
           @stock_items.where!(stock_location: stock_location)
         else
-          @stock_items.joins!(:stock_location).merge!(Spree::StockLocation.active)
+          @stock_items.joins!(:stock_location).merge!(Solidus::StockLocation.active)
         end
       end
 

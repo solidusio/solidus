@@ -7,7 +7,7 @@
 <br />
 
 <div class="form-buttons" data-hook="buttons">
-  <% Spree::Frontend::Config[:require_terms_and_conditions_acceptance].tap do |requires_acceptance| %>
+  <% Solidus::Frontend::Config[:require_terms_and_conditions_acceptance].tap do |requires_acceptance| %>
     <% if requires_acceptance %>
       <div class="terms_and_conditions" data-hook="terms_and_conditions">
         <div class="policy"><%= render partial: "spree/checkout/terms_and_conditions" %></div>

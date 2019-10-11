@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   # Bogus Gateway that doesn't support payment profiles.
   class PaymentMethod::SimpleBogusCreditCard < PaymentMethod::BogusCreditCard
     def payment_profiles_supported?

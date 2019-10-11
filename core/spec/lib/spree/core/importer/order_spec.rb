@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-module Spree
+module Solidus
   module Core
     RSpec.describe Importer::Order do
       let!(:store) { create(:store) }
@@ -15,7 +15,7 @@ module Spree
       let(:payment_method) { create(:check_payment_method) }
 
       let(:product) {
-        product = Spree::Product.create(name: 'Test',
+        product = Solidus::Product.create(name: 'Test',
                                              sku: 'TEST-1',
                                              price: 33.22)
         product.shipping_category = create(:shipping_category)

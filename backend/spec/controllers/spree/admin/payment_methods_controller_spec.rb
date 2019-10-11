@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-module Spree
+module Solidus
   class GatewayWithPassword < PaymentMethod
     preference :password, :string, default: "password"
   end
@@ -30,14 +30,14 @@ module Spree
 
     context "tries to save invalid payment" do
       it "doesn't break, responds nicely" do
-        post :create, params: { payment_method: { name: "", type: "Spree::PaymentMethod::BogusCreditCard" } }
+        post :create, params: { payment_method: { name: "", type: "Solidus::PaymentMethod::BogusCreditCard" } }
       end
     end
 
     it "can create a payment method of a valid type" do
       expect {
-        post :create, params: { payment_method: { name: "Test Method", type: "Spree::PaymentMethod::BogusCreditCard" } }
-      }.to change(Spree::PaymentMethod, :count).by(1)
+        post :create, params: { payment_method: { name: "Test Method", type: "Solidus::PaymentMethod::BogusCreditCard" } }
+      }.to change(Solidus::PaymentMethod, :count).by(1)
 
       expect(response).to be_redirect
       expect(response).to redirect_to spree.edit_admin_payment_method_path(assigns(:payment_method))
@@ -45,8 +45,8 @@ module Spree
 
     it "can not create a payment method of an invalid type" do
       expect {
-        post :create, params: { payment_method: { name: "Invalid Payment Method", type: "Spree::InvalidType" } }
-      }.to change(Spree::PaymentMethod, :count).by(0)
+        post :create, params: { payment_method: { name: "Invalid Payment Method", type: "Solidus::InvalidType" } }
+      }.to change(Solidus::PaymentMethod, :count).by(0)
 
       expect(response).to be_redirect
       expect(response).to redirect_to spree.new_admin_payment_method_path
@@ -78,7 +78,7 @@ module Spree
           id: payment_method.id,
           payment_method: {
             name: 'Check',
-            type: 'Spree::PaymentMethod::Check'
+            type: 'Solidus::PaymentMethod::Check'
           }
         }
       end
@@ -87,7 +87,7 @@ module Spree
         put :update, params: params
 
         expect(response).to redirect_to(spree.edit_admin_payment_method_path(payment_method))
-        response_payment_method = Spree::PaymentMethod.find(payment_method.id)
+        response_payment_method = Solidus::PaymentMethod.find(payment_method.id)
         expect(response_payment_method.name).to eql('Check')
       end
     end

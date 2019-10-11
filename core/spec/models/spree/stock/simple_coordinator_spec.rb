@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-module Spree
+module Solidus
   module Stock
     RSpec.describe SimpleCoordinator, type: :model do
       let(:order) { create(:order_with_line_items, line_items_count: 2) }
@@ -11,22 +11,22 @@ module Spree
 
       describe "#shipments" do
         it 'uses the pluggable estimator class' do
-          expect(Spree::Config.stock).to receive(:estimator_class).and_call_original
+          expect(Solidus::Config.stock).to receive(:estimator_class).and_call_original
           subject.shipments
         end
 
         it 'uses the configured stock location filter' do
-          expect(Spree::Config.stock).to receive(:location_filter_class).and_call_original
+          expect(Solidus::Config.stock).to receive(:location_filter_class).and_call_original
           subject.shipments
         end
 
         it 'uses the configured stock location sorter' do
-          expect(Spree::Config.stock).to receive(:location_sorter_class).and_call_original
+          expect(Solidus::Config.stock).to receive(:location_sorter_class).and_call_original
           subject.shipments
         end
 
         it 'uses the pluggable allocator class' do
-          expect(Spree::Config.stock).to receive(:allocator_class).and_call_original
+          expect(Solidus::Config.stock).to receive(:allocator_class).and_call_original
           subject.shipments
         end
 
@@ -58,7 +58,7 @@ module Spree
 
       describe "#allocate_inventory" do
         it 'is deprecated' do
-          expect(Spree::Deprecation).to receive(:warn)
+          expect(Solidus::Deprecation).to receive(:warn)
           subject.send :allocate_inventory, subject.instance_variable_get(:@availability).on_hand_by_stock_location_id
         end
       end
@@ -127,7 +127,7 @@ module Spree
 
         shared_examples "an unfulfillable package" do
           it "raises exception" do
-            expect{ shipments }.to raise_error(Spree::Order::InsufficientStock)
+            expect{ shipments }.to raise_error(Solidus::Order::InsufficientStock)
           end
         end
 

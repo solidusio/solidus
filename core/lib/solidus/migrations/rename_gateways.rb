@@ -4,15 +4,15 @@ module Solidus
   module Migrations
     class RenameGateways
       DEFAULT_MAPPING = {
-        'Spree::Gateway' => 'Spree::PaymentMethod::CreditCard',
-        'Spree::Gateway::Bogus' => 'Spree::PaymentMethod::BogusCreditCard',
-        'Spree::Gateway::BogusSimple' => 'Spree::PaymentMethod::SimpleBogusCreditCard'
+        'Solidus::Gateway' => 'Solidus::PaymentMethod::CreditCard',
+        'Solidus::Gateway::Bogus' => 'Solidus::PaymentMethod::BogusCreditCard',
+        'Solidus::Gateway::BogusSimple' => 'Solidus::PaymentMethod::SimpleBogusCreditCard'
       }
 
       attr_reader :gateway_mapping
 
       def initialize(gateway_mapping = DEFAULT_MAPPING)
-        Spree::Deprecation.warn 'Solidus::Migrations::RenameGateways is deprecated and will be removed with Solidus 3.0.'
+        Solidus::Deprecation.warn 'Solidus::Migrations::RenameGateways is deprecated and will be removed with Solidus 3.0.'
 
         @gateway_mapping = gateway_mapping
       end

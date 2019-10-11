@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-module Spree
+module Solidus
   describe Api::CountriesController, type: :request do
     before do
       stub_authentication!

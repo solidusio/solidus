@@ -3,7 +3,7 @@
 require 'rails_helper'
 require 'spree/preferences/statically_configurable'
 
-module Spree
+module Solidus
   RSpec.describe Preferences::StaticallyConfigurable do
     let(:superklass) do
       # Same interface activerecord's serialization would provide
@@ -36,7 +36,7 @@ module Spree
     end
 
     before do
-      Spree::Config.static_model_preferences.add(klass, 'credentials', color: 'red')
+      Solidus::Config.static_model_preferences.add(klass, 'credentials', color: 'red')
     end
 
     describe "available_preference_sources" do

@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-module Spree
-  class LocaleController < Spree::StoreController
+module Solidus
+  class LocaleController < Solidus::StoreController
     def set
-      available_locales = Spree.i18n_available_locales
+      available_locales = Solidus.i18n_available_locales
       requested_locale = params[:switch_to_locale] || params[:locale]
 
       if requested_locale && available_locales.map(&:to_s).include?(requested_locale)

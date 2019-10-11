@@ -2,15 +2,15 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::Adjustment, type: :model do
+RSpec.describe Solidus::Adjustment, type: :model do
   let!(:store) { create :store }
-  let(:order) { Spree::Order.new }
+  let(:order) { Solidus::Order.new }
   let(:line_item) { create :line_item, order: order }
 
-  let(:adjustment) { Spree::Adjustment.create!(label: 'Adjustment', adjustable: order, order: order, amount: 5) }
+  let(:adjustment) { Solidus::Adjustment.create!(label: 'Adjustment', adjustable: order, order: order, amount: 5) }
 
   context '#save' do
-    let(:adjustment) { Spree::Adjustment.create(label: "Adjustment", amount: 5, order: order, adjustable: line_item) }
+    let(:adjustment) { Solidus::Adjustment.create(label: "Adjustment", amount: 5, order: order, adjustable: line_item) }
 
     it 'touches the adjustable' do
       line_item.update_columns(updated_at: 1.day.ago)
@@ -20,7 +20,7 @@ RSpec.describe Spree::Adjustment, type: :model do
 
   describe 'non_tax scope' do
     subject do
-      Spree::Adjustment.non_tax.to_a
+      Solidus::Adjustment.non_tax.to_a
     end
 
     let!(:tax_adjustment) do
@@ -28,7 +28,7 @@ RSpec.describe Spree::Adjustment, type: :model do
     end
 
     let!(:non_tax_adjustment_with_source) do
-      create(:adjustment, adjustable: order, order: order, source_type: 'Spree::Order', source_id: nil)
+      create(:adjustment, adjustable: order, order: order, source_type: 'Solidus::Order', source_id: nil)
     end
 
     let!(:non_tax_adjustment_without_source) do
@@ -43,7 +43,7 @@ RSpec.describe Spree::Adjustment, type: :model do
   end
 
   context '#currency' do
-    let(:order) { Spree::Order.new currency: 'JPY' }
+    let(:order) { Solidus::Order.new currency: 'JPY' }
 
     it 'returns the adjustables currency' do
       expect(adjustment.currency).to eq 'JPY'
@@ -67,7 +67,7 @@ RSpec.describe Spree::Adjustment, type: :model do
     end
 
     context "with currency set to JPY" do
-      let(:order) { Spree::Order.new currency: 'JPY' }
+      let(:order) { Solidus::Order.new currency: 'JPY' }
 
       context "when adjustable is set to an order" do
         it "displays in JPY" do
@@ -105,7 +105,7 @@ RSpec.describe Spree::Adjustment, type: :model do
       end
 
       context 'with a tax adjustment' do
-        let(:source) { mock_model(Spree::TaxRate, compute_amount: 10) }
+        let(:source) { mock_model(Solidus::TaxRate, compute_amount: 10) }
 
         it 'updates the adjustment' do
           expect { subject }.to change { adjustment.amount }.from(5).to(10)
@@ -156,7 +156,7 @@ RSpec.describe Spree::Adjustment, type: :model do
       end
 
       context 'with a tax adjustment' do
-        let(:source) { mock_model(Spree::TaxRate, compute_amount: 10) }
+        let(:source) { mock_model(Solidus::TaxRate, compute_amount: 10) }
 
         it 'updates the adjustment' do
           expect { subject }.to change { adjustment.amount }.from(5).to(10)
@@ -209,7 +209,7 @@ RSpec.describe Spree::Adjustment, type: :model do
       let(:promotion) { create(:promotion, :with_line_item_adjustment) }
 
       def expect_deprecation_warning
-        expect(Spree::Deprecation).to(
+        expect(Solidus::Deprecation).to(
           receive(:warn).
           with(
             /Adjustment \d+ was not added to #{adjustable.class} #{adjustable.id}/,
@@ -239,8 +239,8 @@ RSpec.describe Spree::Adjustment, type: :model do
 
           context 'when the adjustment is destroyed before after_commit runs' do
             it 'does not repair' do
-              expect(Spree::Deprecation).not_to receive(:warn)
-              Spree::Adjustment.transaction do
+              expect(Solidus::Deprecation).not_to receive(:warn)
+              Solidus::Adjustment.transaction do
                 adjustment = create_adjustment
                 adjustment.destroy!
               end
@@ -250,7 +250,7 @@ RSpec.describe Spree::Adjustment, type: :model do
 
         context 'when adjustable.adjustments is not loaded' do
           it 'does repair' do
-            expect(Spree::Deprecation).not_to receive(:warn)
+            expect(Solidus::Deprecation).not_to receive(:warn)
             create_adjustment
           end
         end
@@ -270,14 +270,14 @@ RSpec.describe Spree::Adjustment, type: :model do
           before { adjustable.adjustments.to_a }
 
           it 'does not repair' do
-            expect(Spree::Deprecation).not_to receive(:warn)
+            expect(Solidus::Deprecation).not_to receive(:warn)
             create_adjustment
           end
         end
 
         context 'when adjustable.adjustments is not loaded' do
           it 'does not repair' do
-            expect(Spree::Deprecation).not_to receive(:warn)
+            expect(Solidus::Deprecation).not_to receive(:warn)
             create_adjustment
           end
         end
@@ -289,7 +289,7 @@ RSpec.describe Spree::Adjustment, type: :model do
       let(:adjustable) { adjustment.adjustable }
 
       def expect_deprecation_warning(adjustable)
-        expect(Spree::Deprecation).to(
+        expect(Solidus::Deprecation).to(
           receive(:warn).
           with(
             /Adjustment #{adjustment.id} was not removed from #{adjustable.class} #{adjustable.id}/,
@@ -311,7 +311,7 @@ RSpec.describe Spree::Adjustment, type: :model do
 
         context 'when adjustable.adjustments is not loaded' do
           it 'does not repair' do
-            expect(Spree::Deprecation).not_to receive(:warn)
+            expect(Solidus::Deprecation).not_to receive(:warn)
             adjustment.destroy!
           end
         end
@@ -322,14 +322,14 @@ RSpec.describe Spree::Adjustment, type: :model do
           before { adjustable.adjustments.to_a }
 
           it 'does not repair' do
-            expect(Spree::Deprecation).not_to receive(:warn)
+            expect(Solidus::Deprecation).not_to receive(:warn)
             adjustable.adjustments.destroy(adjustment)
           end
         end
 
         context 'when adjustable.adjustments is not loaded' do
           it 'does not repair' do
-            expect(Spree::Deprecation).not_to receive(:warn)
+            expect(Solidus::Deprecation).not_to receive(:warn)
             adjustable.adjustments.destroy(adjustment)
           end
         end

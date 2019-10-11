@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-class Spree::Admin::ResourceController < Spree::Admin::BaseController
-  include Spree::Backend::Callbacks
+class Solidus::Admin::ResourceController < Solidus::Admin::BaseController
+  include Solidus::Backend::Callbacks
 
   helper_method :new_object_url, :edit_object_url, :object_url, :collection_url
   before_action :load_resource, except: :update_positions
@@ -132,7 +132,7 @@ class Spree::Admin::ResourceController < Spree::Admin::BaseController
   end
 
   def model_class
-    "Spree::#{controller_name.classify}".constantize
+    "Solidus::#{controller_name.classify}".constantize
   end
 
   def parent_model_name
@@ -140,7 +140,7 @@ class Spree::Admin::ResourceController < Spree::Admin::BaseController
   end
 
   def model_name
-    Spree::Deprecation.warn('model_name is deprecated. Please use parent_model_name instead.', caller)
+    Solidus::Deprecation.warn('model_name is deprecated. Please use parent_model_name instead.', caller)
     parent_model_name
   end
 
@@ -177,7 +177,7 @@ class Spree::Admin::ResourceController < Spree::Admin::BaseController
   end
 
   def parent_data
-    Spree::Deprecation.warn('parent_data is deprecated without replacement.', caller)
+    Solidus::Deprecation.warn('parent_data is deprecated without replacement.', caller)
     self.class.parent_data
   end
 
@@ -186,7 +186,7 @@ class Spree::Admin::ResourceController < Spree::Admin::BaseController
       @parent ||= self.class.parent_data[:model_class].find_by(self.class.parent_data[:find_by] => params["#{parent_model_name}_id"])
       instance_variable_set("@#{parent_model_name}", @parent)
     else
-      Spree::Deprecation.warn "Calling #parent is deprecated on a ResourceController which has not defined a belongs_to"
+      Solidus::Deprecation.warn "Calling #parent is deprecated on a ResourceController which has not defined a belongs_to"
       nil
     end
   end

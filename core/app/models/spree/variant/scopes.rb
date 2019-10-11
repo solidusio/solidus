@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-module Spree
-  class Variant < Spree::Base
+module Solidus
+  class Variant < Solidus::Base
     module Scopes
       def self.prepended(base)
         base.class_eval do
           # FIXME: WARNING tested only under sqlite and postgresql
           scope :descend_by_popularity, -> {
-            order(Arel.sql("COALESCE((SELECT COUNT(*) FROM  #{Spree::LineItem.quoted_table_name} GROUP BY #{Spree::LineItem.quoted_table_name}.variant_id HAVING #{Spree::LineItem.quoted_table_name}.variant_id = #{Spree::Variant.quoted_table_name}.id), 0) DESC"))
+            order(Arel.sql("COALESCE((SELECT COUNT(*) FROM  #{Solidus::LineItem.quoted_table_name} GROUP BY #{Solidus::LineItem.quoted_table_name}.variant_id HAVING #{Solidus::LineItem.quoted_table_name}.variant_id = #{Solidus::Variant.quoted_table_name}.id), 0) DESC"))
           }
 
           class << self
@@ -17,7 +17,7 @@ module Spree
             #
             # product.variants_including_master.has_option(OptionType.find_by(name: 'shoe-size'), OptionValue.find_by(name: '8'))
             def has_option(option_type, *option_values)
-              option_types = Spree::OptionType.table_name
+              option_types = Solidus::OptionType.table_name
 
               option_type_conditions = case option_type
                                        when OptionType then { "#{option_types}.name" => option_type.name }
@@ -29,9 +29,9 @@ module Spree
 
               option_values.each do |option_value|
                 option_value_conditions = case option_value
-                                          when OptionValue then { "#{Spree::OptionValue.table_name}.name" => option_value.name }
-                                          when String      then { "#{Spree::OptionValue.table_name}.name" => option_value }
-                                          else { "#{Spree::OptionValue.table_name}.id" => option_value }
+                                          when OptionValue then { "#{Solidus::OptionValue.table_name}.name" => option_value.name }
+                                          when String      then { "#{Solidus::OptionValue.table_name}.name" => option_value }
+                                          else { "#{Solidus::OptionValue.table_name}.id" => option_value }
                                           end
                 relation = relation.where(option_value_conditions)
               end
@@ -44,7 +44,7 @@ module Spree
         end
       end
 
-      ::Spree::Variant.prepend self
+      ::Solidus::Variant.prepend self
     end
   end
 end

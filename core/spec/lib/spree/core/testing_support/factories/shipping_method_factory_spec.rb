@@ -4,7 +4,7 @@ require 'rails_helper'
 require 'spree/testing_support/factories/shipping_method_factory'
 
 RSpec.describe 'shipping method factory' do
-  let(:factory_class) { Spree::ShippingMethod }
+  let(:factory_class) { Solidus::ShippingMethod }
 
   describe 'plain shipping method' do
     let(:factory) { :shipping_method }

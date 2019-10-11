@@ -2,16 +2,16 @@
 
 require 'rails_helper'
 
-module Spree
+module Solidus
   RSpec.describe ReimbursementType::OriginalPayment, type: :model do
     let(:reimbursement)           { create(:reimbursement, return_items_count: 1) }
     let(:return_item)             { reimbursement.return_items.first }
     let(:payment)                 { reimbursement.order.payments.first }
     let(:simulate)                { false }
-    let!(:default_refund_reason)  { Spree::RefundReason.find_or_create_by!(name: Spree::RefundReason::RETURN_PROCESSING_REASON, mutable: false) }
+    let!(:default_refund_reason)  { Solidus::RefundReason.find_or_create_by!(name: Solidus::RefundReason::RETURN_PROCESSING_REASON, mutable: false) }
     let(:created_by_user) { create(:user, email: 'user@email.com') }
 
-    subject { Spree::ReimbursementType::OriginalPayment.reimburse(reimbursement, [return_item], simulate, created_by: created_by_user) }
+    subject { Solidus::ReimbursementType::OriginalPayment.reimburse(reimbursement, [return_item], simulate, created_by: created_by_user) }
 
     before { reimbursement.update!(total: reimbursement.calculated_total) }
 
@@ -20,7 +20,7 @@ module Spree
         let(:simulate) { true }
 
         it "returns an array of readonly refunds" do
-          expect(subject.map(&:class)).to eq [Spree::Refund]
+          expect(subject.map(&:class)).to eq [Solidus::Refund]
           expect(subject.map(&:readonly?)).to eq [true]
         end
       end
@@ -36,7 +36,7 @@ module Spree
 
       context 'when no credit is allowed on the payment' do
         before do
-          expect_any_instance_of(Spree::Payment).to receive(:credit_allowed).and_return 0
+          expect_any_instance_of(Solidus::Payment).to receive(:credit_allowed).and_return 0
         end
 
         it 'returns an empty array' do
@@ -46,7 +46,7 @@ module Spree
 
       context 'when a payment is negative' do
         before do
-          expect_any_instance_of(Spree::Payment).to receive(:amount).and_return(-100)
+          expect_any_instance_of(Solidus::Payment).to receive(:amount).and_return(-100)
         end
 
         it 'returns an empty array' do
@@ -57,7 +57,7 @@ module Spree
       context "multiple payment methods" do
         let(:simulate) { true }
         let!(:check_payment) { create(:check_payment, order: reimbursement.order, amount: 5.0, state: "completed") }
-        let(:payment) { reimbursement.order.payments.detect { |p| p.payment_method.is_a? Spree::PaymentMethod::BogusCreditCard } }
+        let(:payment) { reimbursement.order.payments.detect { |p| p.payment_method.is_a? Solidus::PaymentMethod::BogusCreditCard } }
         let(:refund_amount) { 10.0 }
 
         let(:refund_payment_methods) { subject.map { |refund| refund.payment.payment_method } }

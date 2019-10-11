@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module Core
     module Importer
       class Product
         attr_reader :product, :product_attrs, :variants_attrs, :options_attrs
 
         def initialize(product, product_params, options = {})
-          @product = product || Spree::Product.new(product_params)
+          @product = product || Solidus::Product.new(product_params)
 
           @product_attrs = product_params.to_h
           @variants_attrs = (options[:variants_attrs] || []).map(&:to_h)
@@ -49,7 +49,7 @@ module Spree
 
         def set_up_options
           options_attrs.each do |name|
-            option_type = Spree::OptionType.where(name: name).first_or_initialize do |ot|
+            option_type = Solidus::OptionType.where(name: name).first_or_initialize do |ot|
               ot.presentation = name
               ot.save!
             end

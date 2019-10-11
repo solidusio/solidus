@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-class Spree::Base < ActiveRecord::Base
-  include Spree::Preferences::Preferable
+class Solidus::Base < ActiveRecord::Base
+  include Solidus::Preferences::Preferable
   serialize :preferences, Hash
 
-  include Spree::RansackableAttributes
+  include Solidus::RansackableAttributes
 
   def initialize_preference_defaults
     if has_attribute?(:preferences)
@@ -23,8 +23,8 @@ class Spree::Base < ActiveRecord::Base
 
   if Kaminari.config.page_method_name != :page
     def self.page(num)
-      Spree::Deprecation.warn \
-        "Redefining Spree::Base.page for a different kaminari page name is better done inside " \
+      Solidus::Deprecation.warn \
+        "Redefining Solidus::Base.page for a different kaminari page name is better done inside " \
         "your own app. This will be removed from future versions of solidus."
 
       send Kaminari.config.page_method_name, num

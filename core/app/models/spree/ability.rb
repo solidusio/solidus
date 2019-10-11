@@ -5,7 +5,7 @@
 #
 # See http://github.com/ryanb/cancan for more details on cancan.
 require 'cancan'
-module Spree
+module Solidus
   class Ability
     include CanCan::Ability
 
@@ -27,7 +27,7 @@ module Spree
     end
 
     def initialize(current_user)
-      @user = current_user || Spree.user_class.new
+      @user = current_user || Solidus.user_class.new
 
       alias_actions
       activate_permission_sets
@@ -58,7 +58,7 @@ module Spree
     end
 
     def activate_permission_sets
-      Spree::Config.roles.activate_permissions! self, user
+      Solidus::Config.roles.activate_permissions! self, user
     end
   end
 end

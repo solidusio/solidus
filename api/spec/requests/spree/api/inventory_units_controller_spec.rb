@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-module Spree
+module Solidus
   describe Api::InventoryUnitsController, type: :request do
     let!(:inventory_unit) { create(:inventory_unit) }
 

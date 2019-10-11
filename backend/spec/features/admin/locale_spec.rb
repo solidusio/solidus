@@ -19,7 +19,7 @@ describe "setting locale", type: :feature do
         },
         listing_orders: "Ordres"
       })
-    stub_spree_preferences(Spree::Backend::Config, locale: "fr")
+    stub_spree_preferences(Solidus::Backend::Config, locale: "fr")
   end
 
   after do

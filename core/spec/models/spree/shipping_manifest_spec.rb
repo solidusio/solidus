@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-module Spree
+module Solidus
   RSpec.describe ShippingManifest, type: :model do
     let!(:store) { create :store }
     let(:order) { Order.create! }

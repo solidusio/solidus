@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Spree::Taxon::PaperclipAttachment
+module Solidus::Taxon::PaperclipAttachment
   extend ActiveSupport::Concern
 
   included do

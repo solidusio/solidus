@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module Admin
-    class PaymentsController < Spree::Admin::BaseController
-      rescue_from Spree::Order::InsufficientStock, with: :insufficient_stock_error
+    class PaymentsController < Solidus::Admin::BaseController
+      rescue_from Solidus::Order::InsufficientStock, with: :insufficient_stock_error
 
       before_action :load_order, only: [:create, :new, :index, :fire]
       before_action :load_payment, except: [:create, :new, :index, :fire]
@@ -46,7 +46,7 @@ module Spree
             flash[:error] = t('spree.payment_could_not_be_created')
             render :new
           end
-        rescue Spree::Core::GatewayError => e
+        rescue Solidus::Core::GatewayError => e
           flash[:error] = e.message.to_s
           redirect_to new_admin_order_payment_path(@order)
         end
@@ -62,7 +62,7 @@ module Spree
         else
           flash[:error] = t('spree.cannot_perform_operation')
         end
-      rescue Spree::Core::GatewayError => ge
+      rescue Solidus::Core::GatewayError => ge
         flash[:error] = ge.message.to_s
       ensure
         redirect_to admin_order_payments_path(@order)
@@ -80,7 +80,7 @@ module Spree
 
       def load_data
         @amount = params[:amount] || load_order.total
-        @payment_methods = Spree::PaymentMethod.active.available_to_admin
+        @payment_methods = Solidus::PaymentMethod.active.available_to_admin
         if @payment && @payment.payment_method
           @payment_method = @payment.payment_method
         else
@@ -89,13 +89,13 @@ module Spree
       end
 
       def load_order
-        @order = Spree::Order.find_by!(number: params[:order_id])
+        @order = Solidus::Order.find_by!(number: params[:order_id])
         authorize! action, @order
         @order
       end
 
       def load_payment
-        @payment = Spree::Payment.find(params[:id])
+        @payment = Solidus::Payment.find(params[:id])
       end
 
       def load_payment_for_fire
@@ -104,11 +104,11 @@ module Spree
       end
 
       def model_class
-        Spree::Payment
+        Solidus::Payment
       end
 
       def require_bill_address
-        if Spree::Config[:order_bill_address_used] && @order.bill_address.nil?
+        if Solidus::Config[:order_bill_address_used] && @order.bill_address.nil?
           flash[:notice] = t('spree.fill_in_customer_info')
           redirect_to edit_admin_order_customer_url(@order)
         end

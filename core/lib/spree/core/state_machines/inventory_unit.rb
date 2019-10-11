@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module Core
     class StateMachines
       # Inventory Units' state machine
@@ -32,7 +32,7 @@ module Spree
             end
 
             event :cancel do
-              transition to: :canceled, from: ::Spree::InventoryUnit::CANCELABLE_STATES.map(&:to_sym)
+              transition to: :canceled, from: ::Solidus::InventoryUnit::CANCELABLE_STATES.map(&:to_sym)
             end
           end
         end

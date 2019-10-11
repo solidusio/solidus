@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module UserReporting
     extend DisplayMoney
     money_methods :lifetime_value, :average_order_value

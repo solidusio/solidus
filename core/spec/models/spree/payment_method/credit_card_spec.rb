@@ -2,11 +2,11 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::PaymentMethod::CreditCard, type: :model do
+RSpec.describe Solidus::PaymentMethod::CreditCard, type: :model do
   context "fetching payment sources" do
     let(:store) { create :store }
     let(:user) { create :user }
-    let(:order) { Spree::Order.create(user: user, completed_at: completed_at, store: store) }
+    let(:order) { Solidus::Order.create(user: user, completed_at: completed_at, store: store) }
 
     let(:payment_method) { create(:credit_card_payment_method) }
 
@@ -52,12 +52,12 @@ RSpec.describe Spree::PaymentMethod::CreditCard, type: :model do
   end
 
   context 'using preference_source' do
-    let(:klass){ Spree::PaymentMethod::BogusCreditCard }
+    let(:klass){ Solidus::PaymentMethod::BogusCreditCard }
     before do
-      Spree::Config.static_model_preferences.add(klass, 'test_preference_source', server: 'bar')
+      Solidus::Config.static_model_preferences.add(klass, 'test_preference_source', server: 'bar')
     end
     after do
-      Spree::Config.static_model_preferences.for_class(klass).clear
+      Solidus::Config.static_model_preferences.for_class(klass).clear
     end
     let(:payment_method){ create(:credit_card_payment_method, preference_source: 'test_preference_source') }
 

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   class OrderInventory
     attr_accessor :order, :line_item, :variant
 
@@ -72,7 +72,7 @@ module Spree
 
       # adding to this shipment, and removing from stock_location
       if order.completed?
-        Spree::Stock::InventoryUnitsFinalizer.new(pending_units).run!
+        Solidus::Stock::InventoryUnitsFinalizer.new(pending_units).run!
       end
 
       quantity

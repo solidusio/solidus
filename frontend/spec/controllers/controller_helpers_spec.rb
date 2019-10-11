@@ -3,12 +3,12 @@
 require 'spec_helper'
 
 # In this file, we want to test that the controller helpers function correctly
-# So we need to use one of the controllers inside Spree.
+# So we need to use one of the controllers inside Solidus.
 # ProductsController is good.
-describe Spree::ProductsController, type: :controller do
+describe Solidus::ProductsController, type: :controller do
   before do
     I18n.enforce_available_locales = false
-    stub_spree_preferences(Spree::Frontend::Config, locale: :de)
+    stub_spree_preferences(Solidus::Frontend::Config, locale: :de)
     I18n.backend.store_translations(:de, spree: {
       i18n: { this_file_language: "Deutsch (DE)" }
     })
@@ -21,7 +21,7 @@ describe Spree::ProductsController, type: :controller do
   end
 
   # Regression test for https://github.com/spree/spree/issues/1184
-  it "sets the default locale based off Spree::Frontend::Config[:locale]" do
+  it "sets the default locale based off Solidus::Frontend::Config[:locale]" do
     expect(I18n.locale).to eq(:en)
     get :index
     expect(I18n.locale).to eq(:de)

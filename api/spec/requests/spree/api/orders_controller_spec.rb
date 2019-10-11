@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-module Spree
+module Solidus
   describe Api::OrdersController, type: :request do
     let!(:order) { create(:order) }
     let(:variant) { create(:variant) }
@@ -20,7 +20,7 @@ module Spree
     let(:address_params) { { country_id: Country.first.id, state_id: State.first.id } }
 
     let(:current_api_user) do
-      user = Spree.user_class.new(email: "spree@example.com")
+      user = Solidus.user_class.new(email: "spree@example.com")
       user.generate_spree_api_key!
       user
     end
@@ -41,13 +41,13 @@ module Spree
 
       context "when the current user cannot administrate the order" do
         custom_authorization! do |_|
-          can :create, Spree::Order
+          can :create, Solidus::Order
         end
 
         it "does not include unpermitted params, or allow overriding the user" do
           subject
           expect(response).to be_successful
-          order = Spree::Order.last
+          order = Solidus::Order.last
           expect(order.user).to eq current_api_user
           expect(order.email).to eq target_user.email
         end
@@ -63,7 +63,7 @@ module Spree
             it "creates a payment" do
               expect {
                 subject
-              }.to change { Spree::Payment.count }.by(1)
+              }.to change { Solidus::Payment.count }.by(1)
             end
           end
 
@@ -73,7 +73,7 @@ module Spree
             it "creates no payments" do
               expect {
                 subject
-              }.not_to change { Spree::Payment.count }
+              }.not_to change { Solidus::Payment.count }
             end
           end
         end
@@ -95,12 +95,12 @@ module Spree
 
       context "when the current user can administrate the order" do
         custom_authorization! do |_|
-          can [:admin, :create], Spree::Order
+          can [:admin, :create], Solidus::Order
         end
 
         it "it permits all params and allows overriding the user" do
           subject
-          order = Spree::Order.last
+          order = Solidus::Order.last
           expect(order.user).to eq target_user
           expect(order.email).to eq target_user.email
           expect(order.created_at).to eq date_override
@@ -112,7 +112,7 @@ module Spree
       context 'when the line items have custom attributes' do
         it "can create an order with line items that have custom permitted attributes", :pending do
           PermittedAttributes.line_item_attributes << { options: [:some_option] }
-          expect_any_instance_of(Spree::LineItem).to receive(:some_option=).once.with('4')
+          expect_any_instance_of(Solidus::LineItem).to receive(:some_option=).once.with('4')
           post spree.api_orders_path, params: { order: { line_items: { "0" => { variant_id: variant.to_param, quantity: 5, options: { some_option: 4 } } } } }
           expect(response.status).to eq(201)
           order = Order.last
@@ -132,7 +132,7 @@ module Spree
 
       context "when the user cannot administer the order" do
         custom_authorization! do |_|
-          can [:update], Spree::Order
+          can [:update], Solidus::Order
         end
 
         it "updates the user's email" do
@@ -164,7 +164,7 @@ module Spree
             it "creates a payment" do
               expect {
                 subject
-              }.to change { Spree::Payment.count }.by(1)
+              }.to change { Solidus::Payment.count }.by(1)
             end
           end
 
@@ -174,7 +174,7 @@ module Spree
             it "creates no payments" do
               expect {
                 subject
-              }.not_to change { Spree::Payment.count }
+              }.not_to change { Solidus::Payment.count }
             end
           end
         end
@@ -182,7 +182,7 @@ module Spree
 
       context "when the user can administer the order" do
         custom_authorization! do |_|
-          can [:admin, :update], Spree::Order
+          can [:admin, :update], Solidus::Order
         end
 
         it "will associate users" do
@@ -269,7 +269,7 @@ module Spree
       let!(:order) { create(:order, line_items: [line_item]) }
 
       it "uses the user's last_incomplete_spree_order logic with the current store" do
-        expect(current_api_user).to receive(:last_incomplete_spree_order).with(store: Spree::Store.default)
+        expect(current_api_user).to receive(:last_incomplete_spree_order).with(store: Solidus::Store.default)
         get spree.api_current_order_path(format: 'json')
       end
     end
@@ -374,7 +374,7 @@ module Spree
     end
 
     it "can not view someone else's order" do
-      allow_any_instance_of(Order).to receive_messages user: stub_model(Spree::LegacyUser)
+      allow_any_instance_of(Order).to receive_messages user: stub_model(Solidus::LegacyUser)
       get spree.api_order_path(order)
       assert_unauthorized!
     end
@@ -422,10 +422,10 @@ module Spree
     # Regression test for https://github.com/spree/spree/issues/3404
     it "can specify additional parameters for a line item" do
       without_partial_double_verification do
-        expect_any_instance_of(Spree::LineItem).to receive(:special=).with("foo")
+        expect_any_instance_of(Solidus::LineItem).to receive(:special=).with("foo")
       end
 
-      allow_any_instance_of(Spree::Api::OrdersController).to receive_messages(permitted_line_item_attributes: [:id, :variant_id, :quantity, :special])
+      allow_any_instance_of(Solidus::Api::OrdersController).to receive_messages(permitted_line_item_attributes: [:id, :variant_id, :quantity, :special])
       post spree.api_orders_path, params: {
         order: {
           line_items: {
@@ -567,7 +567,7 @@ module Spree
       end
 
       it "cannot set the user_id for the order" do
-        user = Spree.user_class.create
+        user = Solidus.user_class.create
         original_id = order.user_id
         put spree.api_order_path(order), params: { order: { user_id: user.id } }
         expect(response.status).to eq 200
@@ -709,7 +709,7 @@ module Spree
       sign_in_as_admin!
 
       context "with no orders" do
-        before { Spree::Order.delete_all }
+        before { Solidus::Order.delete_all }
         it "still returns a root :orders key" do
           get spree.api_orders_path
           expect(json_response["orders"]).to eq([])
@@ -772,10 +772,10 @@ module Spree
       context "search" do
         before do
           create(:order)
-          Spree::Order.last.update_attribute(:email, 'spree@spreecommerce.com')
+          Solidus::Order.last.update_attribute(:email, 'spree@spreecommerce.com')
         end
 
-        let(:expected_result) { Spree::Order.last }
+        let(:expected_result) { Solidus::Order.last }
 
         it "can query the results through a parameter" do
           get spree.api_orders_path, params: { q: { email_cont: 'spree' } }
@@ -810,7 +810,7 @@ module Spree
         end
 
         it "can set the user_id for the order" do
-          user = Spree.user_class.create
+          user = Solidus.user_class.create
           post spree.api_orders_path, params: { order: { user_id: user.id } }
           expect(response.status).to eq 201
           expect(json_response["user_id"]).to eq(user.id)
@@ -856,7 +856,7 @@ module Spree
 
       context "updating" do
         it "can set the user_id for the order" do
-          user = Spree.user_class.create
+          user = Solidus.user_class.create
           put spree.api_order_path(order), params: { order: { user_id: user.id } }
           expect(response.status).to eq 200
           expect(json_response["user_id"]).to eq(user.id)
@@ -893,7 +893,7 @@ module Spree
         let(:order) { create(:order_with_line_items) }
 
         it 'applies the coupon' do
-          expect(Spree::Deprecation).to receive(:warn)
+          expect(Solidus::Deprecation).to receive(:warn)
 
           put spree.apply_coupon_code_api_order_path(order), params: { coupon_code: promo_code.value }
 
@@ -912,7 +912,7 @@ module Spree
         let(:order) { create(:order) } # no line items to apply the code to
 
         it 'returns an error' do
-          expect(Spree::Deprecation).to receive(:warn)
+          expect(Solidus::Deprecation).to receive(:warn)
 
           put spree.apply_coupon_code_api_order_path(order), params: { coupon_code: promo_code.value }
 

@@ -1,11 +1,11 @@
 <%= render 'spree/admin/shared/product_tabs', current: 'Prices' %>
-<% admin_breadcrumb(plural_resource_name(Spree::Price)) %>
+<% admin_breadcrumb(plural_resource_name(Solidus::Price)) %>
 
 <% content_for :page_actions do %>
   <li id="new_price_link">
     <%= link_to t(".new_price"), new_object_url, class: 'btn btn-primary' %>
   </li>
-<% end if can?(:create, Spree::Product) %>
+<% end if can?(:create, Solidus::Product) %>
 
 <% content_for :table_filter_title do %>
   <%= t('spree.search') %>
@@ -18,7 +18,7 @@
   <div class="row">
     <div class="col-4">
       <div class="field" data-hook="sku-select">
-        <%= label_tag :q_variant_id_eq, Spree::Variant.model_name.human %>
+        <%= label_tag :q_variant_id_eq, Solidus::Variant.model_name.human %>
         <%= f.select :variant_id_eq,
                     @product.variants_including_master.map { |v| [v.descriptive_name, v.id] },
                     {include_blank: true},
@@ -28,7 +28,7 @@
 
     <div class="col-2">
       <div class="field" data-hook="currency-select">
-        <%= label_tag :q_currency_eq, Spree::Price.human_attribute_name(:currency) %>
+        <%= label_tag :q_currency_eq, Solidus::Price.human_attribute_name(:currency) %>
         <%= f.select :currency_eq,
                     @prices.map(&:currency).uniq,
                     {include_blank: true},
@@ -38,7 +38,7 @@
 
     <div class="col-2">
       <div class="field" data-hook="country-select">
-        <%= label_tag :q_country_iso_eq, Spree::Price.human_attribute_name(:country) %>
+        <%= label_tag :q_country_iso_eq, Solidus::Price.human_attribute_name(:country) %>
         <%= f.select :country_iso_eq,
                     @prices.map(&:country).compact.uniq.map { |c| [c.name, c.iso]},
                     {include_blank: true},

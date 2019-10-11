@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module Admin
-    class StoresController < Spree::Admin::ResourceController
+    class StoresController < Solidus::Admin::ResourceController
       def index
-        if Spree::Store.count == 1
-          redirect_to edit_admin_store_path(Spree::Store.first)
+        if Solidus::Store.count == 1
+          redirect_to edit_admin_store_path(Solidus::Store.first)
         else
-          @stores = Spree::Store.all
+          @stores = Solidus::Store.all
         end
       end
 
@@ -18,7 +18,7 @@ module Spree
       end
 
       def permitted_params
-        Spree::PermittedAttributes.store_attributes
+        Solidus::PermittedAttributes.store_attributes
       end
     end
   end

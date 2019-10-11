@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   class LocalizedNumber
     # Given a string, strips all non-price-like characters from it,
     # taking into account locale settings. Returns the input given anything

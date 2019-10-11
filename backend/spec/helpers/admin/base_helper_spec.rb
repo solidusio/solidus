@@ -2,8 +2,8 @@
 
 require 'spec_helper'
 
-describe Spree::Admin::BaseHelper, type: :helper do
-  include Spree::Admin::BaseHelper
+describe Solidus::Admin::BaseHelper, type: :helper do
+  include Solidus::Admin::BaseHelper
 
   context "#datepicker_field_value" do
     it "should return nil when date is empty" do

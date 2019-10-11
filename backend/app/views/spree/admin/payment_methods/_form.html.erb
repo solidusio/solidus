@@ -31,24 +31,24 @@
         </div>
         <div data-hook="auto_capture" class="field">
           <%= f.label :auto_capture %>
-          <%= f.select :auto_capture, [["#{t('spree.use_app_default')} (#{Spree::Config[:auto_capture]})", ''], [t('spree.say_yes'), true], [t('spree.say_no'), false]], {}, {class: 'custom-select fullwidth'} %>
+          <%= f.select :auto_capture, [["#{t('spree.use_app_default')} (#{Solidus::Config[:auto_capture]})", ''], [t('spree.say_yes'), true], [t('spree.say_no'), false]], {}, {class: 'custom-select fullwidth'} %>
         </div>
         <div data-hook="available_to_user" class="field">
           <label>
             <%= f.check_box :available_to_users %>
-            <%= Spree::PaymentMethod.human_attribute_name :available_to_users %>
+            <%= Solidus::PaymentMethod.human_attribute_name :available_to_users %>
           </label>
         </div>
         <div data-hook="available_to_user" class="field">
           <label>
             <%= f.check_box :available_to_admin %>
-            <%= Spree::PaymentMethod.human_attribute_name :available_to_admin %>
+            <%= Solidus::PaymentMethod.human_attribute_name :available_to_admin %>
           </label>
         </div>
         <div data-hook="active" class="field">
           <label>
             <%= f.check_box :active %>
-            <%= Spree::PaymentMethod.human_attribute_name :active %>
+            <%= Solidus::PaymentMethod.human_attribute_name :active %>
           </label>
         </div>
       </div>
@@ -63,8 +63,8 @@
           <%= f.text_area :description, {cols: 60, rows: 6, class: 'fullwidth'} %>
         </div>
         <div data-hook="stores" class="field">
-          <%= f.label :store_ids, plural_resource_name(Spree::Store) %>
-          <%= f.collection_select :store_ids, Spree::Store.all, :id, :name, {}, multiple: true, class: "select2 fullwidth" %>
+          <%= f.label :store_ids, plural_resource_name(Solidus::Store) %>
+          <%= f.collection_select :store_ids, Solidus::Store.all, :id, :name, {}, multiple: true, class: "select2 fullwidth" %>
         </div>
       </div>
     </div>

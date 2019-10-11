@@ -35,12 +35,12 @@ describe "Shipping Methods", type: :feature do
       end
 
       click_on "Create"
-      expect(current_path).to eql(spree.edit_admin_shipping_method_path(Spree::ShippingMethod.last))
+      expect(current_path).to eql(spree.edit_admin_shipping_method_path(Solidus::ShippingMethod.last))
     end
 
     context 'with shipping method having a calculator with array or hash preference type' do
       before do
-        class ComplexShipments < Spree::ShippingCalculator
+        class ComplexShipments < Solidus::ShippingCalculator
           preference :amount, :decimal
           preference :currency, :string
           preference :mapping, :hash

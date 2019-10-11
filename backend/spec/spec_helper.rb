@@ -107,10 +107,10 @@ RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
   config.include ActiveJob::TestHelper
 
-  config.include Spree::TestingSupport::Preferences
-  config.include Spree::TestingSupport::UrlHelpers
-  config.include Spree::TestingSupport::ControllerRequests, type: :controller
-  config.include Spree::TestingSupport::Flash
+  config.include Solidus::TestingSupport::Preferences
+  config.include Solidus::TestingSupport::UrlHelpers
+  config.include Solidus::TestingSupport::ControllerRequests, type: :controller
+  config.include Solidus::TestingSupport::Flash
 
   config.extend WithModel
 

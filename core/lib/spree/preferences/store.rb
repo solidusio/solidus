@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-# Use singleton class Spree::Preferences::Store.instance to access
+# Use singleton class Solidus::Preferences::Store.instance to access
 #
 
 require 'singleton'
 
-module Spree::Preferences
+module Solidus::Preferences
   class StoreInstance
     def initialize
       @cache = Rails.cache
@@ -19,7 +19,7 @@ module Spree::Preferences
 
     def exist?(key)
       @cache.exist?(key) ||
-        should_persist? && Spree::Preference.where(key: key).exists?
+        should_persist? && Solidus::Preference.where(key: key).exists?
     end
 
     def get(key)
@@ -35,7 +35,7 @@ module Spree::Preferences
         # has been cleared from the cache
 
         # does it exist in the database?
-        if preference = Spree::Preference.find_by(key: key)
+        if preference = Solidus::Preference.find_by(key: key)
           # it does exist
           val = preference.value
         else
@@ -68,7 +68,7 @@ module Spree::Preferences
     def persist(cache_key, value)
       return unless should_persist?
 
-      preference = Spree::Preference.where(key: cache_key).first_or_initialize
+      preference = Solidus::Preference.where(key: cache_key).first_or_initialize
       preference.value = value
       preference.save
     end
@@ -76,12 +76,12 @@ module Spree::Preferences
     def destroy(cache_key)
       return unless should_persist?
 
-      preference = Spree::Preference.find_by(key: cache_key)
+      preference = Solidus::Preference.find_by(key: cache_key)
       preference.destroy if preference
     end
 
     def should_persist?
-      Spree::Preference.table_exists?
+      Solidus::Preference.table_exists?
     end
   end
 

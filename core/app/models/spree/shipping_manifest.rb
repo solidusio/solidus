@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Spree::ShippingManifest
+class Solidus::ShippingManifest
   ManifestItem = Struct.new(:line_item, :variant, :quantity, :states)
 
   def initialize(inventory_units:)
@@ -8,7 +8,7 @@ class Spree::ShippingManifest
   end
 
   def for_order(order)
-    Spree::ShippingManifest.new(
+    Solidus::ShippingManifest.new(
       inventory_units: @inventory_units.select { |iu| iu.order_id == order.id }
     )
   end

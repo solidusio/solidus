@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-module Spree
+module Solidus
   module Stock
     RSpec.describe Package, type: :model do
       let(:variant) { build(:variant, weight: 25.0) }
@@ -102,7 +102,7 @@ module Spree
         shipping_method = build(:shipping_method)
 
         shipment = subject.to_shipment
-        shipment.shipping_rates = [Spree::ShippingRate.new(shipping_method: shipping_method, cost: 10.00, selected: true)]
+        shipment.shipping_rates = [Solidus::ShippingRate.new(shipping_method: shipping_method, cost: 10.00, selected: true)]
         expect(shipment.stock_location).to eq subject.stock_location
         expect(shipment.inventory_units.size).to eq 3
 
@@ -166,7 +166,7 @@ module Spree
           before { subject.add unit }
 
           it "returns an order" do
-            expect(subject.order).to be_a_kind_of Spree::Order
+            expect(subject.order).to be_a_kind_of Solidus::Order
             expect(subject.order).to eq order
           end
         end

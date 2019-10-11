@@ -10,12 +10,12 @@ RSpec.describe "Variant scopes", type: :model do
   context ".with_prices" do
     context "when searching for the default pricing options" do
       it "finds all variants" do
-        expect(Spree::Variant.with_prices).to contain_exactly(product.master, variant_1, variant_2)
+        expect(Solidus::Variant.with_prices).to contain_exactly(product.master, variant_1, variant_2)
       end
     end
 
     context "when searching for different pricing options" do
-      let(:pricing_options) { Spree::Config.pricing_options_class.new(currency: "EUR") }
+      let(:pricing_options) { Solidus::Config.pricing_options_class.new(currency: "EUR") }
       context "when only one variant has price in Euro" do
         before do
           variant_1.prices.create(amount: 99.00, currency: "EUR")
@@ -23,7 +23,7 @@ RSpec.describe "Variant scopes", type: :model do
 
         context "and we search for variants with only prices in Euro" do
           it "finds the one variant with a price in Euro" do
-            expect(Spree::Variant.with_prices(pricing_options)).to contain_exactly(variant_1)
+            expect(Solidus::Variant.with_prices(pricing_options)).to contain_exactly(variant_1)
           end
         end
       end
@@ -31,9 +31,9 @@ RSpec.describe "Variant scopes", type: :model do
 
     context 'when searching for a variant that has two eligible prices (one fallback)' do
       let(:france) { create(:country, iso: "FR") }
-      let(:pricing_options) { Spree::Variant::PricingOptions.new(country_iso: "FR", currency: "EUR") }
+      let(:pricing_options) { Solidus::Variant::PricingOptions.new(country_iso: "FR", currency: "EUR") }
 
-      subject { Spree::Variant.with_prices(pricing_options) }
+      subject { Solidus::Variant.with_prices(pricing_options) }
 
       before do
         variant_1.prices.create!(currency: "EUR", country: france, amount: 10)
@@ -47,9 +47,9 @@ RSpec.describe "Variant scopes", type: :model do
   it ".descend_by_popularity" do
     # Requires a product with at least two variants, where one has a higher number of
     # orders than the other
-    Spree::LineItem.delete_all # FIXME leaky database - too many line_items
+    Solidus::LineItem.delete_all # FIXME leaky database - too many line_items
     create(:line_item, variant: variant_1)
-    expect(Spree::Variant.descend_by_popularity.first).to eq(variant_1)
+    expect(Solidus::Variant.descend_by_popularity.first).to eq(variant_1)
   end
 
   context "finding by option values" do

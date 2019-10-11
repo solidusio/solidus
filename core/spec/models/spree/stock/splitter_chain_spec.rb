@@ -2,9 +2,9 @@
 
 require 'rails_helper'
 
-module Spree::Stock
+module Solidus::Stock
   RSpec.describe SplitterChain, type: :model do
-    let(:stock_location) { mock_model(Spree::StockLocation) }
+    let(:stock_location) { mock_model(Solidus::StockLocation) }
     let(:splitter1) { Class.new(Splitter::Base) }
     let(:splitter2) { Class.new(Splitter::Base) }
 

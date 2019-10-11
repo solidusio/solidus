@@ -1,20 +1,20 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module PermissionSets
     class ProductManagement < PermissionSets::Base
       def activate!
-        can :manage, Spree::Classification
-        can :manage, Spree::Image
-        can :manage, Spree::OptionType
-        can :manage, Spree::OptionValue
-        can :manage, Spree::Price
-        can :manage, Spree::Product
-        can :manage, Spree::ProductProperty
-        can :manage, Spree::Property
-        can :manage, Spree::Taxon
-        can :manage, Spree::Taxonomy
-        can :manage, Spree::Variant
+        can :manage, Solidus::Classification
+        can :manage, Solidus::Image
+        can :manage, Solidus::OptionType
+        can :manage, Solidus::OptionValue
+        can :manage, Solidus::Price
+        can :manage, Solidus::Product
+        can :manage, Solidus::ProductProperty
+        can :manage, Solidus::Property
+        can :manage, Solidus::Taxon
+        can :manage, Solidus::Taxonomy
+        can :manage, Solidus::Variant
       end
     end
   end

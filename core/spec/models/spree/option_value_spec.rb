@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::OptionValue, type: :model do
+RSpec.describe Solidus::OptionValue, type: :model do
   include ActiveSupport::Testing::TimeHelpers
 
   context "touching" do

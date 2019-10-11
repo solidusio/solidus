@@ -1,6 +1,6 @@
 <%= render partial: 'spree/admin/shared/order_tabs', locals: { current: 'Customer Returns' } %>
 
-<% admin_breadcrumb(link_to plural_resource_name(Spree::CustomerReturn), spree.admin_order_customer_returns_url(@order)) %>
+<% admin_breadcrumb(link_to plural_resource_name(Solidus::CustomerReturn), spree.admin_order_customer_returns_url(@order)) %>
 <% admin_breadcrumb(@customer_return.number) %>
 
 <% content_for :page_actions do %>
@@ -37,7 +37,7 @@
 <% if !@customer_return.fully_reimbursed? && @pending_reimbursements.empty? %>
   <fieldset data-hook="reimbursements" class="no-border-bottom no-border-top align-center">
     <% if @customer_return.completely_decided? %>
-      <%= form_for [:admin, @order, Spree::Reimbursement.new] do |f| %>
+      <%= form_for [:admin, @order, Solidus::Reimbursement.new] do |f| %>
         <%= hidden_field_tag :build_from_customer_return_id, @customer_return.id %>
         <%= f.button class: 'button' do %>
           <%= t('spree.create_reimbursement') %>
@@ -52,7 +52,7 @@
 <% end %>
 
 <fieldset data-hook="reimbursements" class="no-border-bottom">
-  <legend align="center"><%= plural_resource_name(Spree::Reimbursement) %></legend>
+  <legend align="center"><%= plural_resource_name(Solidus::Reimbursement) %></legend>
   <% if @customer_return.reimbursements.any? %>
     <%= render partial: 'reimbursements_table', locals: {reimbursements: @customer_return.reimbursements} %>
   <% else %>

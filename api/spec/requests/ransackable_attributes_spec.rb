@@ -12,7 +12,7 @@ describe "Ransackable Attributes" do
       get "/api/variants?q[orders_email_start]=#{order.email}", params: { token: user.spree_api_key }
 
       variants_response = JSON.parse(response.body)
-      expect(variants_response['total_count']).to eq(Spree::Variant.count)
+      expect(variants_response['total_count']).to eq(Solidus::Variant.count)
     end
   end
 
@@ -23,7 +23,7 @@ describe "Ransackable Attributes" do
       get "/api/variants?q[orders_user_email_start]=#{order.user.email}", params: { token: user.spree_api_key }
 
       variants_response = JSON.parse(response.body)
-      expect(variants_response['total_count']).to eq(Spree::Variant.count)
+      expect(variants_response['total_count']).to eq(Solidus::Variant.count)
     end
   end
 
@@ -49,7 +49,7 @@ describe "Ransackable Attributes" do
       get "/api/products?q[description_cont]=special", params: { token: user.spree_api_key }
 
       products_response = JSON.parse(response.body)
-      expect(products_response['total_count']).to eq(Spree::Product.count)
+      expect(products_response['total_count']).to eq(Solidus::Product.count)
     end
 
     it "id is filterable by default" do

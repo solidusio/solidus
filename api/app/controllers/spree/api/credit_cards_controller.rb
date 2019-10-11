@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module Api
-    class CreditCardsController < Spree::Api::BaseController
+    class CreditCardsController < Solidus::Api::BaseController
       before_action :user, only: [:index]
       before_action :find_credit_card, only: [:update]
 
@@ -29,12 +29,12 @@ module Spree
 
       def user
         if params[:user_id].present?
-          @user ||= Spree.user_class.accessible_by(current_ability, :read).find(params[:user_id])
+          @user ||= Solidus.user_class.accessible_by(current_ability, :read).find(params[:user_id])
         end
       end
 
       def find_credit_card
-        @credit_card = Spree::CreditCard.find(params[:id])
+        @credit_card = Solidus::CreditCard.find(params[:id])
         authorize! :update, @credit_card
       end
 

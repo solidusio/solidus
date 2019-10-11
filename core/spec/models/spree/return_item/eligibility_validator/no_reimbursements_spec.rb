@@ -2,8 +2,8 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::ReturnItem::EligibilityValidator::NoReimbursements do
-  let(:validator) { Spree::ReturnItem::EligibilityValidator::NoReimbursements.new(return_item) }
+RSpec.describe Solidus::ReturnItem::EligibilityValidator::NoReimbursements do
+  let(:validator) { Solidus::ReturnItem::EligibilityValidator::NoReimbursements.new(return_item) }
 
   describe "#eligible_for_return?" do
     subject { validator.eligible_for_return? }

@@ -4,7 +4,7 @@ require 'rails_helper'
 require 'spree/testing_support/factories/country_factory'
 
 RSpec.describe 'country factory' do
-  let(:factory_class) { Spree::Country }
+  let(:factory_class) { Solidus::Country }
 
   describe 'plain adjustment' do
     let(:factory) { :country }

@@ -6,7 +6,7 @@ module ControllerHacks
   extend ActiveSupport::Concern
 
   included do
-    routes { Spree::Core::Engine.routes }
+    routes { Solidus::Core::Engine.routes }
   end
 
   def api_get(action, params = {}, session = nil, flash = nil)

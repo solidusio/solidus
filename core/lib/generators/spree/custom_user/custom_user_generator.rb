@@ -2,7 +2,7 @@
 
 require 'rails/generators/active_record/migration'
 
-module Spree
+module Solidus
   # @private
   class CustomUserGenerator < Rails::Generators::NamedBase
     include ActiveRecord::Generators::Migration
@@ -27,7 +27,7 @@ module Spree
         "Rails.application.config.to_prepare do\n  require_dependency 'spree/authentication_helpers'\nend\n"
       end
 
-      gsub_file 'config/initializers/spree.rb', /Spree\.user_class.?=.?.+$/, %{Spree.user_class = "#{class_name}"}
+      gsub_file 'config/initializers/spree.rb', /Spree\.user_class.?=.?.+$/, %{Solidus.user_class = "#{class_name}"}
     end
 
     private

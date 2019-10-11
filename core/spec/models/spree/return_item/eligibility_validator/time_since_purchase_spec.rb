@@ -2,16 +2,16 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::ReturnItem::EligibilityValidator::TimeSincePurchase, type: :model do
+RSpec.describe Solidus::ReturnItem::EligibilityValidator::TimeSincePurchase, type: :model do
   include ActiveSupport::Testing::TimeHelpers
 
-  let(:return_item) { instance_double(Spree::ReturnItem) }
+  let(:return_item) { instance_double(Solidus::ReturnItem) }
   let(:validator) { described_class.new(return_item) }
 
   describe "#eligible_for_return?" do
     subject { validator.eligible_for_return? }
 
-    let(:interval) { Spree::Config[:return_eligibility_number_of_days] }
+    let(:interval) { Solidus::Config[:return_eligibility_number_of_days] }
 
     before do
       allow(return_item).

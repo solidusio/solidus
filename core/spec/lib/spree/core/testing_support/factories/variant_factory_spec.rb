@@ -4,7 +4,7 @@ require 'rails_helper'
 require 'spree/testing_support/factories/variant_factory'
 
 RSpec.describe 'variant factory' do
-  let(:factory_class) { Spree::Variant }
+  let(:factory_class) { Solidus::Variant }
 
   describe 'base variant' do
     let(:factory) { :base_variant }
@@ -38,7 +38,7 @@ RSpec.describe 'variant factory' do
     it "creates only one variant" do
       expect {
         create(factory)
-      }.to change { Spree::Variant.count }.from(0).to(1)
+      }.to change { Solidus::Variant.count }.from(0).to(1)
     end
   end
 

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module Admin
     module StockLocationsHelper
       def admin_stock_location_display_name(stock_location)

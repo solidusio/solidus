@@ -4,7 +4,7 @@ require 'rails_helper'
 require 'spree/testing_support/factories/customer_return_factory'
 
 RSpec.describe 'customer return factory' do
-  let(:factory_class) { Spree::CustomerReturn }
+  let(:factory_class) { Solidus::CustomerReturn }
 
   describe 'customer return' do
     let(:factory) { :customer_return }
@@ -15,8 +15,8 @@ RSpec.describe 'customer return factory' do
     it "creates only one of dependent records" do
       create(:customer_return, line_items_count: 2)
       aggregate_failures "items created" do
-        expect(Spree::Order.count).to eq(1)
-        expect(Spree::ReturnAuthorization.count).to eq(1)
+        expect(Solidus::Order.count).to eq(1)
+        expect(Solidus::ReturnAuthorization.count).to eq(1)
       end
     end
   end

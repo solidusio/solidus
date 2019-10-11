@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module TestingSupport
     class OrderWalkthrough
       def self.up_to(state)
@@ -13,18 +13,18 @@ module Spree
         @country = FactoryBot.create(:country)
         @state = FactoryBot.create(:state, country: @country)
 
-        @zone.members << Spree::ZoneMember.create(zoneable: @country)
+        @zone.members << Solidus::ZoneMember.create(zoneable: @country)
 
         # A shipping method must exist for rates to be displayed on checkout page
         FactoryBot.create(:shipping_method, zones: [@zone]).tap do |sm|
           sm.calculator.preferred_amount = 10
-          sm.calculator.preferred_currency = Spree::Config[:currency]
+          sm.calculator.preferred_currency = Solidus::Config[:currency]
           sm.calculator.save
         end
 
-        order = Spree::Order.create!(
+        order = Solidus::Order.create!(
           email: "spree@example.com",
-          store: Spree::Store.first || FactoryBot.create(:store)
+          store: Solidus::Store.first || FactoryBot.create(:store)
         )
         add_line_item!(order)
         order.next!
@@ -84,4 +84,4 @@ module Spree
 end
 
 # @private
-OrderWalkthrough = ActiveSupport::Deprecation::DeprecatedConstantProxy.new('OrderWalkthrough', 'Spree::TestingSupport::OrderWalkthrough')
+OrderWalkthrough = ActiveSupport::Deprecation::DeprecatedConstantProxy.new('OrderWalkthrough', 'Solidus::TestingSupport::OrderWalkthrough')

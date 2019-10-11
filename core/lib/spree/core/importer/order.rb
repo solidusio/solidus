@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module Core
     module Importer
       class Order
@@ -13,8 +13,8 @@ module Spree
             ensure_state_id_from_params params[:bill_address_attributes]
 
             create_params = params.slice :currency
-            order = Spree::Order.create! create_params
-            order.store ||= Spree::Store.default
+            order = Solidus::Order.create! create_params
+            order.store ||= Solidus::Store.default
             order.associate_user!(user)
             order.save!
 
@@ -56,14 +56,14 @@ module Spree
           shipments_hash.each do |s|
             shipment = Shipment.new
             shipment.tracking       = s[:tracking]
-            shipment.stock_location = Spree::StockLocation.find_by(admin_name: s[:stock_location]) || Spree::StockLocation.find_by!(name: s[:stock_location])
+            shipment.stock_location = Solidus::StockLocation.find_by(admin_name: s[:stock_location]) || Solidus::StockLocation.find_by!(name: s[:stock_location])
 
             inventory_units = s[:inventory_units] || []
             inventory_units.each do |iu|
               ensure_variant_id_from_params(iu)
 
               unless line_item = order.line_items.find_by(variant_id: iu[:variant_id])
-                line_item = order.contents.add(Spree::Variant.find(iu[:variant_id]), 1)
+                line_item = order.contents.add(Solidus::Variant.find(iu[:variant_id]), 1)
               end
 
               # Spree expects a Inventory Unit to always reference a line
@@ -88,7 +88,7 @@ module Spree
             order.shipments << shipment
             shipment.save!
 
-            shipping_method = Spree::ShippingMethod.find_by(name: s[:shipping_method]) || Spree::ShippingMethod.find_by!(admin_name: s[:shipping_method])
+            shipping_method = Solidus::ShippingMethod.find_by(name: s[:shipping_method]) || Solidus::ShippingMethod.find_by!(admin_name: s[:shipping_method])
             rate = shipment.shipping_rates.create!(shipping_method: shipping_method,
                                                    cost: s[:cost])
             shipment.selected_shipping_rate_id = rate.id
@@ -101,7 +101,7 @@ module Spree
           line_items_hash.each_key do |k|
             extra_params = line_items_hash[k].except(:variant_id, :quantity, :sku)
             line_item = ensure_variant_id_from_params(line_items_hash[k])
-            line_item = order.contents.add(Spree::Variant.find(line_item[:variant_id]), line_item[:quantity])
+            line_item = order.contents.add(Solidus::Variant.find(line_item[:variant_id]), line_item[:quantity])
             # Raise any errors with saving to prevent import succeeding with line items failing silently.
             if extra_params.present?
               line_item.update!(extra_params)
@@ -132,14 +132,14 @@ module Spree
             # Order API should be using state as that's the normal payment field.
             # spree_wombat serializes payment state as status so imported orders should fall back to status field.
             payment.state = p[:state] || p[:status] || 'completed'
-            payment.payment_method = Spree::PaymentMethod.find_by!(name: p[:payment_method])
+            payment.payment_method = Solidus::PaymentMethod.find_by!(name: p[:payment_method])
             payment.source = create_source_payment_from_params(p[:source], payment) if p[:source]
             payment.save!
           end
         end
 
         def self.create_source_payment_from_params(source_hash, payment)
-          Spree::CreditCard.create(
+          Solidus::CreditCard.create(
             month: source_hash[:month],
             year: source_hash[:year],
             cc_type: source_hash[:cc_type],
@@ -155,7 +155,7 @@ module Spree
         def self.ensure_variant_id_from_params(hash)
           sku = hash.delete(:sku)
           unless hash[:variant_id].present?
-            hash[:variant_id] = Spree::Variant.with_prices.find_by!(sku: sku).id
+            hash[:variant_id] = Solidus::Variant.with_prices.find_by!(sku: sku).id
           end
           hash
         end
@@ -175,7 +175,7 @@ module Spree
           end
 
           address.delete(:country)
-          address[:country_id] = Spree::Country.where(search).first!.id
+          address[:country_id] = Solidus::Country.where(search).first!.id
         end
 
         def self.ensure_state_id_from_params(address)
@@ -191,7 +191,7 @@ module Spree
           address.delete(:state)
           search[:country_id] = address[:country_id]
 
-          if state = Spree::State.where(search).first
+          if state = Solidus::State.where(search).first
             address[:state_id] = state.id
           else
             address[:state_name] = search[:name] || search[:abbr]

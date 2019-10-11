@@ -4,7 +4,7 @@ require 'rails_helper'
 require 'spree/testing_support/factories/order_promotion_factory'
 
 RSpec.describe 'order promotion factory' do
-  let(:factory_class) { Spree::OrderPromotion }
+  let(:factory_class) { Solidus::OrderPromotion }
 
   describe 'plain order promotion' do
     let(:factory) { :order_promotion }

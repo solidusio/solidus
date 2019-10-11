@@ -5,7 +5,7 @@ require_relative '../core/lib/spree/core/version.rb'
 Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.name        = 'solidus_backend'
-  s.version     = Spree.solidus_version
+  s.version     = Solidus.solidus_version
   s.summary     = 'Admin interface for the Solidus e-commerce framework.'
   s.description = s.summary
 

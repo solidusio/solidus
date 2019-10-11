@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-module Spree
-  class CouponCodesController < Spree::StoreController
+module Solidus
+  class CouponCodesController < Solidus::StoreController
     before_action :load_order, only: :create
     around_action :lock_order, only: :create
 

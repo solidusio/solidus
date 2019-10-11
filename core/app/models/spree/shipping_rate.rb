@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   # Records the costs of different shipping methods for a shipment and which
   # method has been selected to deliver the shipment.
   #
-  class ShippingRate < Spree::Base
-    belongs_to :shipment, class_name: 'Spree::Shipment', touch: true, optional: true
-    belongs_to :shipping_method, -> { with_deleted }, class_name: 'Spree::ShippingMethod', inverse_of: :shipping_rates, optional: true
+  class ShippingRate < Solidus::Base
+    belongs_to :shipment, class_name: 'Solidus::Shipment', touch: true, optional: true
+    belongs_to :shipping_method, -> { with_deleted }, class_name: 'Solidus::ShippingMethod', inverse_of: :shipping_rates, optional: true
 
     has_many :taxes,
-             class_name: "Spree::ShippingRateTax",
+             class_name: "Solidus::ShippingRateTax",
              foreign_key: "shipping_rate_id",
              inverse_of: :shipping_rate,
              dependent: :destroy
@@ -20,7 +20,7 @@ module Spree
     alias_attribute :amount, :cost
 
     alias_method :discounted_amount, :amount
-    deprecate discounted_amount: :total_before_tax, deprecator: Spree::Deprecation
+    deprecate discounted_amount: :total_before_tax, deprecator: Solidus::Deprecation
     alias_method :total_before_tax, :amount
 
     extend DisplayMoney

@@ -4,7 +4,7 @@ require 'rails_helper'
 require 'spree/testing_support/factories/reimbursement_factory'
 
 RSpec.describe 'reimbursement factory' do
-  let(:factory_class) { Spree::Reimbursement }
+  let(:factory_class) { Solidus::Reimbursement }
 
   describe 'plain reimbursement' do
     let(:factory) { :reimbursement }

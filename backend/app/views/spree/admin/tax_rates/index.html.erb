@@ -2,11 +2,11 @@
 
 <% admin_breadcrumb(t('spree.settings')) %>
 <% admin_breadcrumb(t('spree.admin.tab.taxes')) %>
-<% admin_breadcrumb(plural_resource_name(Spree::TaxRate)) %>
+<% admin_breadcrumb(plural_resource_name(Solidus::TaxRate)) %>
 
 
 <% content_for :page_actions do %>
-  <% if can?(:create, Spree::TaxRate) %>
+  <% if can?(:create, Solidus::TaxRate) %>
     <li>
       <%= link_to t('spree.new_tax_rate'), new_object_url, class: 'btn btn-primary' %>
     </li>
@@ -28,14 +28,14 @@
     </colgroup>
     <thead>
       <tr data-hook="rate_header">
-        <th><%= Spree::TaxRate.human_attribute_name(:zone) %></th>
-        <th><%= Spree::TaxRate.human_attribute_name(:name) %></th>
-        <th><%= Spree::TaxRate.human_attribute_name(:tax_categories) %></th>
-        <th><%= Spree::TaxRate.human_attribute_name(:amount) %></th>
-        <th><%= Spree::TaxRate.human_attribute_name(:included_in_price) %></th>
-        <th><%= Spree::TaxRate.human_attribute_name(:show_rate_in_label) %></th>
-        <th><%= Spree::TaxRate.human_attribute_name(:expires_at) %></th>
-        <th><%= Spree::Calculator.model_name.human %></th>
+        <th><%= Solidus::TaxRate.human_attribute_name(:zone) %></th>
+        <th><%= Solidus::TaxRate.human_attribute_name(:name) %></th>
+        <th><%= Solidus::TaxRate.human_attribute_name(:tax_categories) %></th>
+        <th><%= Solidus::TaxRate.human_attribute_name(:amount) %></th>
+        <th><%= Solidus::TaxRate.human_attribute_name(:included_in_price) %></th>
+        <th><%= Solidus::TaxRate.human_attribute_name(:show_rate_in_label) %></th>
+        <th><%= Solidus::TaxRate.human_attribute_name(:expires_at) %></th>
+        <th><%= Solidus::Calculator.model_name.human %></th>
         <th class="actions"></th>
       </tr>
     </thead>
@@ -71,7 +71,7 @@
 <% else %>
   <div class="no-objects-found">
     <%= render 'spree/admin/shared/no_objects_found',
-                 resource: Spree::TaxRate,
+                 resource: Solidus::TaxRate,
                  new_resource_url: new_object_url %>
   </div>
 <% end %>

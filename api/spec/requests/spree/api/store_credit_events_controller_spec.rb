@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Spree::Api::StoreCreditEventsController, type: :request do
+describe Solidus::Api::StoreCreditEventsController, type: :request do
   let(:api_user) { create(:user, :with_api_key) }
 
   describe "GET mine" do

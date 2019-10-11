@@ -4,7 +4,7 @@ require 'rails_helper'
 require 'spree/testing_support/factories/taxon_factory'
 
 RSpec.describe 'taxon factory' do
-  let(:factory_class) { Spree::Taxon }
+  let(:factory_class) { Solidus::Taxon }
 
   describe 'taxon' do
     let(:factory) { :taxon }

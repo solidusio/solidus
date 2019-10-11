@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module PromotionHandler
     # Used for activating promotions with shipping rules
     class Shipping
@@ -51,10 +51,10 @@ module Spree
       end
 
       def active_shipping_promotions
-        Spree::Promotion.all.
+        Solidus::Promotion.all.
           active.
           joins(:promotion_actions).
-          merge(Spree::PromotionAction.shipping)
+          merge(Solidus::PromotionAction.shipping)
       end
     end
   end

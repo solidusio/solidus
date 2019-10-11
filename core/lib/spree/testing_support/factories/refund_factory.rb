@@ -6,7 +6,7 @@ require 'spree/testing_support/factories/refund_reason_factory'
 FactoryBot.define do
   sequence(:refund_transaction_id) { |n| "fake-refund-transaction-#{n}" }
 
-  factory :refund, class: 'Spree::Refund' do
+  factory :refund, class: 'Solidus::Refund' do
     transient do
       payment_amount { 100 }
     end

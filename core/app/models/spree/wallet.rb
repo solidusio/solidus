@@ -7,7 +7,7 @@
 # A Wallet is composed of WalletPaymentSources. A WalletPaymentSource is a join table that
 # links a PaymentSource (e.g. a CreditCard) to a User. One of a user's
 # WalletPaymentSources may be the 'default' WalletPaymentSource.
-class Spree::Wallet
+class Solidus::Wallet
   class Unauthorized < StandardError; end
 
   attr_reader :user
@@ -68,7 +68,7 @@ class Spree::Wallet
       return
     end
 
-    Spree::WalletPaymentSource.transaction do
+    Solidus::WalletPaymentSource.transaction do
       # Unset old default
       default_wallet_payment_source.try!(:update!, default: false)
       # Set new default

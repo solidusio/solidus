@@ -1,3 +1,3 @@
 # frozen_string_literal: true
 
-Spree::Role.where(name: "admin").first_or_create
+Solidus::Role.where(name: "admin").first_or_create

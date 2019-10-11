@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::PermissionSets::PromotionDisplay do
+RSpec.describe Solidus::PermissionSets::PromotionDisplay do
   let(:ability) { DummyAbility.new }
 
   subject { ability }
@@ -12,30 +12,30 @@ RSpec.describe Spree::PermissionSets::PromotionDisplay do
       described_class.new(ability).activate!
     end
 
-    it { is_expected.to be_able_to(:display, Spree::Promotion) }
-    it { is_expected.to be_able_to(:display, Spree::PromotionRule) }
-    it { is_expected.to be_able_to(:display, Spree::PromotionAction) }
-    it { is_expected.to be_able_to(:display, Spree::PromotionCategory) }
-    it { is_expected.to be_able_to(:display, Spree::PromotionCode) }
-    it { is_expected.to be_able_to(:admin, Spree::Promotion) }
-    it { is_expected.to be_able_to(:admin, Spree::PromotionRule) }
-    it { is_expected.to be_able_to(:admin, Spree::PromotionAction) }
-    it { is_expected.to be_able_to(:admin, Spree::PromotionCategory) }
-    it { is_expected.to be_able_to(:admin, Spree::PromotionCode) }
-    it { is_expected.to be_able_to(:edit, Spree::Promotion) }
+    it { is_expected.to be_able_to(:display, Solidus::Promotion) }
+    it { is_expected.to be_able_to(:display, Solidus::PromotionRule) }
+    it { is_expected.to be_able_to(:display, Solidus::PromotionAction) }
+    it { is_expected.to be_able_to(:display, Solidus::PromotionCategory) }
+    it { is_expected.to be_able_to(:display, Solidus::PromotionCode) }
+    it { is_expected.to be_able_to(:admin, Solidus::Promotion) }
+    it { is_expected.to be_able_to(:admin, Solidus::PromotionRule) }
+    it { is_expected.to be_able_to(:admin, Solidus::PromotionAction) }
+    it { is_expected.to be_able_to(:admin, Solidus::PromotionCategory) }
+    it { is_expected.to be_able_to(:admin, Solidus::PromotionCode) }
+    it { is_expected.to be_able_to(:edit, Solidus::Promotion) }
   end
 
   context "when not activated" do
-    it { is_expected.not_to be_able_to(:display, Spree::Promotion) }
-    it { is_expected.not_to be_able_to(:display, Spree::PromotionRule) }
-    it { is_expected.not_to be_able_to(:display, Spree::PromotionAction) }
-    it { is_expected.not_to be_able_to(:display, Spree::PromotionCategory) }
-    it { is_expected.not_to be_able_to(:display, Spree::PromotionCode) }
-    it { is_expected.not_to be_able_to(:admin, Spree::Promotion) }
-    it { is_expected.not_to be_able_to(:admin, Spree::PromotionRule) }
-    it { is_expected.not_to be_able_to(:admin, Spree::PromotionAction) }
-    it { is_expected.not_to be_able_to(:admin, Spree::PromotionCategory) }
-    it { is_expected.not_to be_able_to(:admin, Spree::PromotionCode) }
-    it { is_expected.not_to be_able_to(:edit, Spree::Promotion) }
+    it { is_expected.not_to be_able_to(:display, Solidus::Promotion) }
+    it { is_expected.not_to be_able_to(:display, Solidus::PromotionRule) }
+    it { is_expected.not_to be_able_to(:display, Solidus::PromotionAction) }
+    it { is_expected.not_to be_able_to(:display, Solidus::PromotionCategory) }
+    it { is_expected.not_to be_able_to(:display, Solidus::PromotionCode) }
+    it { is_expected.not_to be_able_to(:admin, Solidus::Promotion) }
+    it { is_expected.not_to be_able_to(:admin, Solidus::PromotionRule) }
+    it { is_expected.not_to be_able_to(:admin, Solidus::PromotionAction) }
+    it { is_expected.not_to be_able_to(:admin, Solidus::PromotionCategory) }
+    it { is_expected.not_to be_able_to(:admin, Solidus::PromotionCode) }
+    it { is_expected.not_to be_able_to(:edit, Solidus::Promotion) }
   end
 end

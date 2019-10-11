@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-module Spree
-  class LogEntry < Spree::Base
+module Solidus
+  class LogEntry < Solidus::Base
     belongs_to :source, polymorphic: true, optional: true
 
     def parsed_details

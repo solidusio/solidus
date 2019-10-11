@@ -2,13 +2,13 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::Order, type: :model do
-  let(:order) { Spree::Order.new }
+RSpec.describe Solidus::Order, type: :model do
+  let(:order) { Solidus::Order.new }
 
   context 'validation' do
     context "when @use_billing is populated" do
       before do
-        order.bill_address = stub_model(Spree::Address)
+        order.bill_address = stub_model(Solidus::Address)
         order.ship_address = nil
       end
 

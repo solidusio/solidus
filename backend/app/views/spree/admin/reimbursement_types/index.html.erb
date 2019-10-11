@@ -2,14 +2,14 @@
 
 <% admin_breadcrumb(t('spree.settings')) %>
 <% admin_breadcrumb(t('spree.admin.tab.checkout')) %>
-<% admin_breadcrumb(plural_resource_name(Spree::ReimbursementType)) %>
+<% admin_breadcrumb(plural_resource_name(Solidus::ReimbursementType)) %>
 
 
 <table class="index" id='listing_reimbursement_types' data-hook>
   <thead>
     <tr data-hook="reimbursement_types_header">
-      <th><%= Spree::ReimbursementType.human_attribute_name(:name) %></th>
-      <th><%= Spree::ReimbursementType.human_attribute_name(:type) %></th>
+      <th><%= Solidus::ReimbursementType.human_attribute_name(:name) %></th>
+      <th><%= Solidus::ReimbursementType.human_attribute_name(:type) %></th>
     </tr>
   </thead>
   <tbody>

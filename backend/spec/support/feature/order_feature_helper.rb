@@ -10,9 +10,9 @@ module OrderFeatureHelper
   end
 
   def complete_split_to(destination, quantity: nil)
-    if destination.is_a?(Spree::Shipment)
+    if destination.is_a?(Solidus::Shipment)
       destination = destination.number
-    elsif destination.is_a?(Spree::StockLocation)
+    elsif destination.is_a?(Solidus::StockLocation)
       destination = destination.name
     end
 

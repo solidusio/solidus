@@ -2,8 +2,8 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::Promotion::Rules::OptionValue do
-  let(:rule) { Spree::Promotion::Rules::OptionValue.new }
+RSpec.describe Solidus::Promotion::Rules::OptionValue do
+  let(:rule) { Solidus::Promotion::Rules::OptionValue.new }
 
   describe "#preferred_eligible_values" do
     subject { rule.preferred_eligible_values }
@@ -16,11 +16,11 @@ RSpec.describe Spree::Promotion::Rules::OptionValue do
   describe "#applicable?" do
     subject { rule.applicable?(promotable) }
     context "when promotable is an order" do
-      let(:promotable) { Spree::Order.new }
+      let(:promotable) { Solidus::Order.new }
       it { is_expected.to be true }
     end
     context "when promotable is not an order" do
-      let(:promotable) { Spree::LineItem.new }
+      let(:promotable) { Solidus::LineItem.new }
       it { is_expected.to be false }
     end
   end

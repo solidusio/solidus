@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-module Spree
-  class ReturnReason < Spree::Base
-    include Spree::NamedType
+module Solidus
+  class ReturnReason < Solidus::Base
+    include Solidus::NamedType
 
     has_many :return_authorizations
 

@@ -7,7 +7,7 @@
   <thead>
     <tr data-hook="taxonomies_header">
       <th></th>
-      <th><%= Spree::Taxonomy.human_attribute_name(:name) %></th>
+      <th><%= Solidus::Taxonomy.human_attribute_name(:name) %></th>
       <th class="actions"></th>
     </tr>
   </thead>
@@ -15,7 +15,7 @@
     <% @taxonomies.each do |taxonomy| %>
       <tr id="<%= spree_dom_id taxonomy %>" data-hook="taxonomies_row">
         <td>
-          <% if can?(:update_positions, Spree::Taxonomy) %>
+          <% if can?(:update_positions, Solidus::Taxonomy) %>
             <span class="handle"></span>
           <% end %>
         </td>

@@ -3,9 +3,9 @@
 require 'rails_helper'
 require 'shared_examples/calculator_shared_examples'
 
-RSpec.describe Spree::Calculator::FlexiRate, type: :model do
+RSpec.describe Solidus::Calculator::FlexiRate, type: :model do
   let(:calculator) do
-    Spree::Calculator::FlexiRate.new(
+    Solidus::Calculator::FlexiRate.new(
       preferred_first_item: first_item,
       preferred_additional_item: additional_item,
       preferred_max_items: max_items
@@ -19,7 +19,7 @@ RSpec.describe Spree::Calculator::FlexiRate, type: :model do
 
   let(:order) do
     mock_model(
-      Spree::Order, quantity: quantity
+      Solidus::Order, quantity: quantity
     )
   end
 
@@ -152,7 +152,7 @@ RSpec.describe Spree::Calculator::FlexiRate, type: :model do
 
   it "should allow creation of new object with all the attributes" do
     attributes = { preferred_first_item: 1, preferred_additional_item: 1, preferred_max_items: 1 }
-    calculator = Spree::Calculator::FlexiRate.new(attributes)
+    calculator = Solidus::Calculator::FlexiRate.new(attributes)
     expect(calculator).to have_attributes(attributes)
   end
 end

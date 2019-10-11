@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-module Spree
-  class State < Spree::Base
-    belongs_to :country, class_name: 'Spree::Country', optional: true
+module Solidus
+  class State < Solidus::Base
+    belongs_to :country, class_name: 'Solidus::Country', optional: true
     has_many :addresses, dependent: :nullify
 
     validates :country, :name, presence: true
@@ -16,7 +16,7 @@ module Spree
     end
     class << self
       alias_method :find_all_by_name_or_abbr, :with_name_or_abbr
-      deprecate find_all_by_name_or_abbr: :with_name_or_abbr, deprecator: Spree::Deprecation
+      deprecate find_all_by_name_or_abbr: :with_name_or_abbr, deprecator: Solidus::Deprecation
     end
 
     self.whitelisted_ransackable_attributes = %w[name]

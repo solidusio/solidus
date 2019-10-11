@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module Admin
-    class LocaleController < Spree::Admin::BaseController
+    class LocaleController < Solidus::Admin::BaseController
       def set
         locale = params[:switch_to_locale].to_s.presence
 

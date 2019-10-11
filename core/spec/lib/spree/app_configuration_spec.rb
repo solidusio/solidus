@@ -2,8 +2,8 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::AppConfiguration do
-  let(:prefs) { Spree::Config }
+RSpec.describe Solidus::AppConfiguration do
+  let(:prefs) { Solidus::Config }
 
   around do |example|
     with_unfrozen_spree_preference_store do
@@ -16,29 +16,29 @@ RSpec.describe Spree::AppConfiguration do
     expect(prefs.layout).to eq "my/layout"
   end
 
-  it "should be available as Spree::Config for legacy access" do
-    expect(Spree::Config).to be_a Spree::AppConfiguration
+  it "should be available as Solidus::Config for legacy access" do
+    expect(Solidus::Config).to be_a Solidus::AppConfiguration
   end
 
   it "uses base searcher class by default" do
-    expect(prefs.searcher_class).to eq Spree::Core::Search::Base
+    expect(prefs.searcher_class).to eq Solidus::Core::Search::Base
   end
 
   it "uses variant search class by default" do
-    expect(prefs.variant_search_class).to eq Spree::Core::Search::Variant
+    expect(prefs.variant_search_class).to eq Solidus::Core::Search::Variant
   end
 
   it "uses variant price selector class by default" do
-    expect(prefs.variant_price_selector_class).to eq Spree::Variant::PriceSelector
+    expect(prefs.variant_price_selector_class).to eq Solidus::Variant::PriceSelector
   end
 
   it "has a getter for the pricing options class provided by the variant price selector class" do
-    expect(prefs.pricing_options_class).to eq Spree::Variant::PriceSelector.pricing_options_class
+    expect(prefs.pricing_options_class).to eq Solidus::Variant::PriceSelector.pricing_options_class
   end
 
   describe '#stock' do
     subject { prefs.stock }
-    it { is_expected.to be_a Spree::Core::StockConfiguration }
+    it { is_expected.to be_a Solidus::Core::StockConfiguration }
   end
 
   describe '@default_country_iso_code' do
@@ -57,7 +57,7 @@ RSpec.describe Spree::AppConfiguration do
     class DummyClass; end;
 
     subject(:environment) { prefs.environment }
-    it { is_expected.to be_a Spree::Core::Environment }
+    it { is_expected.to be_a Solidus::Core::Environment }
 
     shared_examples "working preferences set" do
       it "allows adding new items" do
@@ -79,7 +79,7 @@ RSpec.describe Spree::AppConfiguration do
 
     context '.calculators' do
       subject(:calculators) { environment.calculators }
-      it { is_expected.to be_a Spree::Core::Environment::Calculators }
+      it { is_expected.to be_a Solidus::Core::Environment::Calculators }
 
       context '.calculators.shipping_methods' do
         subject(:preferences_set) { calculators.shipping_methods }
@@ -109,7 +109,7 @@ RSpec.describe Spree::AppConfiguration do
 
     context '.promotions' do
       subject(:promotions) { environment.promotions }
-      it { is_expected.to be_a Spree::Core::Environment::Promotions }
+      it { is_expected.to be_a Solidus::Core::Environment::Promotions }
 
       context '.promotions.rules' do
         subject(:preferences_set) { promotions.rules }
@@ -129,12 +129,12 @@ RSpec.describe Spree::AppConfiguration do
   end
 
   it 'has a default admin VAT location with nil values by default' do
-    expect(prefs.admin_vat_location).to eq(Spree::Tax::TaxLocation.new)
+    expect(prefs.admin_vat_location).to eq(Solidus::Tax::TaxLocation.new)
     expect(prefs.admin_vat_location.state_id).to eq(nil)
     expect(prefs.admin_vat_location.country_id).to eq(nil)
   end
 
   it 'has default Event adapter' do
-    expect(prefs.events.adapter).to eq Spree::Event::Adapters::ActiveSupportNotifications
+    expect(prefs.events.adapter).to eq Solidus::Event::Adapters::ActiveSupportNotifications
   end
 end

@@ -3,10 +3,10 @@
 require 'rails_helper'
 
 class FakesController < ApplicationController
-  include Spree::Core::ControllerHelpers::Order
+  include Solidus::Core::ControllerHelpers::Order
 end
 
-RSpec.describe Spree::Core::ControllerHelpers::Order, type: :controller do
+RSpec.describe Solidus::Core::ControllerHelpers::Order, type: :controller do
   controller(FakesController) {}
 
   let(:user) { create(:user) }
@@ -15,30 +15,30 @@ RSpec.describe Spree::Core::ControllerHelpers::Order, type: :controller do
 
   before do
     allow(controller).to receive_messages(current_store: store)
-    allow(controller).to receive_messages(current_pricing_options: Spree::Config.pricing_options_class.new(currency: Spree::Config.currency))
+    allow(controller).to receive_messages(current_pricing_options: Solidus::Config.pricing_options_class.new(currency: Solidus::Config.currency))
     allow(controller).to receive_messages(try_spree_current_user: user)
   end
 
   describe '#simple_current_order' do
     it "returns an empty order" do
-      Spree::Deprecation.silence do
+      Solidus::Deprecation.silence do
         expect(controller.simple_current_order.item_count).to eq 0
       end
     end
-    it 'returns Spree::Order instance' do
-      Spree::Deprecation.silence do
+    it 'returns Solidus::Order instance' do
+      Solidus::Deprecation.silence do
         allow(controller).to receive_messages(cookies: double(signed: { guest_token: order.guest_token }))
         expect(controller.simple_current_order).to eq order
       end
     end
     it 'assigns the current_store id' do
-      Spree::Deprecation.silence do
+      Solidus::Deprecation.silence do
         expect(controller.simple_current_order.store_id).to eq store.id
       end
     end
     it 'is deprecated' do
-      Spree::Deprecation.silence do
-        expect(Spree::Deprecation).to(receive(:warn))
+      Solidus::Deprecation.silence do
+        expect(Solidus::Deprecation).to(receive(:warn))
         controller.simple_current_order
       end
     end
@@ -58,19 +58,19 @@ RSpec.describe Spree::Core::ControllerHelpers::Order, type: :controller do
       it 'creates new order' do
         expect {
           subject
-        }.to change(Spree::Order, :count).from(0).to(1)
+        }.to change(Solidus::Order, :count).from(0).to(1)
       end
 
       it 'assigns the current_store id' do
         subject
-        expect(Spree::Order.last.store_id).to eq store.id
+        expect(Solidus::Order.last.store_id).to eq store.id
       end
 
       it 'records last_ip_address' do
         expect {
           subject
         }.to change {
-          Spree::Order.last.try!(:last_ip_address)
+          Solidus::Order.last.try!(:last_ip_address)
         }.from(nil).to("0.0.0.0")
       end
     end
@@ -80,14 +80,14 @@ RSpec.describe Spree::Core::ControllerHelpers::Order, type: :controller do
     before { allow(controller).to receive_messages(current_order: order) }
     context "user's email is blank" do
       let(:user) { create(:user, email: '') }
-      it 'calls Spree::Order#associate_user! method' do
-        expect_any_instance_of(Spree::Order).to receive(:associate_user!)
+      it 'calls Solidus::Order#associate_user! method' do
+        expect_any_instance_of(Solidus::Order).to receive(:associate_user!)
         controller.associate_user
       end
     end
     context "user isn't blank" do
-      it 'does not calls Spree::Order#associate_user! method' do
-        expect_any_instance_of(Spree::Order).not_to receive(:associate_user!)
+      it 'does not calls Solidus::Order#associate_user! method' do
+        expect_any_instance_of(Solidus::Order).not_to receive(:associate_user!)
         controller.associate_user
       end
     end
@@ -102,7 +102,7 @@ RSpec.describe Spree::Core::ControllerHelpers::Order, type: :controller do
       context "an order from another store" do
         let(:incomplete_order_store) { create(:store) }
 
-        it 'doesnt call Spree::Order#merge! method' do
+        it 'doesnt call Solidus::Order#merge! method' do
           expect(order).to_not receive(:merge!)
           controller.set_current_order
         end
@@ -110,7 +110,7 @@ RSpec.describe Spree::Core::ControllerHelpers::Order, type: :controller do
       context "an order from the same store" do
         let(:incomplete_order_store) { store }
 
-        it 'calls Spree::Order#merge! method' do
+        it 'calls Solidus::Order#merge! method' do
           expect(order).to receive(:merge!).with(incomplete_order, user)
           controller.set_current_order
         end

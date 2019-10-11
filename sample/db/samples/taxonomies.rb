@@ -6,5 +6,5 @@ taxonomies = [
 ]
 
 taxonomies.each do |taxonomy_attrs|
-  Spree::Taxonomy.create!(taxonomy_attrs)
+  Solidus::Taxonomy.create!(taxonomy_attrs)
 end

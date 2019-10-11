@@ -1,10 +1,10 @@
 <% if order.line_items.exists? %>
   <table class="line-items index" data-hook="line-items">
     <thead>
-      <th colspan="2"><%= Spree::LineItem.human_attribute_name(:name) %></th>
-      <th><%= Spree::LineItem.human_attribute_name(:price) %></th>
-      <th><%= Spree::LineItem.human_attribute_name(:quantity) %></th>
-      <th><%= Spree::LineItem.human_attribute_name(:total_price) %></th>
+      <th colspan="2"><%= Solidus::LineItem.human_attribute_name(:name) %></th>
+      <th><%= Solidus::LineItem.human_attribute_name(:price) %></th>
+      <th><%= Solidus::LineItem.human_attribute_name(:quantity) %></th>
+      <th><%= Solidus::LineItem.human_attribute_name(:total_price) %></th>
     </thead>
 
     <tbody>

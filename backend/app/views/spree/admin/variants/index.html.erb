@@ -1,9 +1,9 @@
 <%= render 'spree/admin/shared/product_tabs', current: 'Variants' %>
 
-<% admin_breadcrumb(plural_resource_name(Spree::Variant)) %>
+<% admin_breadcrumb(plural_resource_name(Solidus::Variant)) %>
 
 <% content_for :page_actions do %>
-  <% if can?(:create, Spree::Variant) && !@product.empty_option_values? %>
+  <% if can?(:create, Solidus::Variant) && !@product.empty_option_values? %>
     <li id="new_var_link" data-hook>
       <%= link_to(
         t('spree.new_variant'),
@@ -18,13 +18,13 @@
   <%= render "table_filter", product: @product %>
   <%= render "table", variants: @variants %>
 <% else %>
-  <% if !Spree::OptionType.any? %>
+  <% if !Solidus::OptionType.any? %>
     <p class='first_add_option_types no-objects-found' data-hook="first_add_option_types">
       <%= t('spree.to_add_variants_you_must_first_define') %>
-      <% if can?(:display, Spree::OptionType) %>
-        <%= link_to plural_resource_name(Spree::OptionType), admin_option_types_path%>
+      <% if can?(:display, Solidus::OptionType) %>
+        <%= link_to plural_resource_name(Solidus::OptionType), admin_option_types_path%>
       <% else %>
-        <%= plural_resource_name(Spree::OptionType) %>
+        <%= plural_resource_name(Solidus::OptionType) %>
       <% end %>
     </p>
   <% elsif @product.empty_option_values? %>
@@ -34,8 +34,8 @@
     </div>
   <% else %>
     <div class="no-objects-found">
-      <%= t('spree.no_resource', resource: plural_resource_name(Spree::Variant)) %>
-      <% if can? :create, Spree::Variant %>
+      <%= t('spree.no_resource', resource: plural_resource_name(Solidus::Variant)) %>
+      <% if can? :create, Solidus::Variant %>
         <%= link_to t('spree.create_one'), new_object_url %>
       <% end %>
     </div>

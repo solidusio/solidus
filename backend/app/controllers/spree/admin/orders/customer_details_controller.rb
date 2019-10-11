@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module Admin
     module Orders
-      class CustomerDetailsController < Spree::Admin::BaseController
-        rescue_from Spree::Order::InsufficientStock, with: :insufficient_stock_error
+      class CustomerDetailsController < Solidus::Admin::BaseController
+        rescue_from Solidus::Order::InsufficientStock, with: :insufficient_stock_error
 
         before_action :load_order
 
@@ -26,7 +26,7 @@ module Spree
           if @order.contents.update_cart(order_params)
 
             if should_associate_user?
-              requested_user = Spree.user_class.find(params[:user_id])
+              requested_user = Solidus.user_class.find(params[:user_id])
               @order.associate_user!(requested_user, @order.email.blank?)
             end
 
@@ -45,9 +45,9 @@ module Spree
         private
 
         def default_country_id
-          country_id = Spree::Country.default.id
+          country_id = Solidus::Country.default.id
 
-          country_id if Spree::Country.available.pluck(:id).include?(country_id)
+          country_id if Solidus::Country.available.pluck(:id).include?(country_id)
         end
 
         def order_params
@@ -60,11 +60,11 @@ module Spree
         end
 
         def load_order
-          @order = Spree::Order.includes(:adjustments).find_by!(number: params[:order_id])
+          @order = Solidus::Order.includes(:adjustments).find_by!(number: params[:order_id])
         end
 
         def model_class
-          Spree::Order
+          Solidus::Order
         end
 
         def should_associate_user?

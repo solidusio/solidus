@@ -2,13 +2,13 @@
 
 require "rails_helper"
 
-RSpec.describe Spree::PromotionCode::BatchBuilder do
+RSpec.describe Solidus::PromotionCode::BatchBuilder do
   let(:promotion) { create(:promotion) }
   let(:base_code) { "abc" }
   let(:options) { {} }
   let(:number_of_codes) { 10 }
   let(:promotion_code_batch) do
-    Spree::PromotionCodeBatch.create!(
+    Solidus::PromotionCodeBatch.create!(
       promotion_id: promotion.id,
       base_code: base_code,
       number_of_codes: number_of_codes,
@@ -34,7 +34,7 @@ RSpec.describe Spree::PromotionCode::BatchBuilder do
 
     context "with a successful build" do
       before do
-        allow(Spree::PromotionCodeBatchMailer)
+        allow(Solidus::PromotionCodeBatchMailer)
           .to receive(:promotion_code_batch_finished)
           .and_call_original
 
@@ -87,7 +87,7 @@ RSpec.describe Spree::PromotionCode::BatchBuilder do
 
     context "with a custom join separator" do
       let(:promotion_code_batch) do
-        Spree::PromotionCodeBatch.create!(
+        Solidus::PromotionCodeBatch.create!(
           promotion_id: promotion.id,
           base_code: base_code,
           number_of_codes: number_of_codes,

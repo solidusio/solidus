@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module Stock
     class ContentItem
       attr_accessor :inventory_unit, :state

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module Core
     module ControllerHelpers
       module Store
@@ -11,7 +11,7 @@ module Spree
         end
 
         def current_store
-          @current_store ||= Spree::Config.current_store_selector_class.new(request).store
+          @current_store ||= Solidus::Config.current_store_selector_class.new(request).store
         end
       end
     end

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
-require Spree::Core::Engine.root.join('db/migrate/20190106184413_remove_code_from_spree_promotions.rb')
+require Solidus::Core::Engine.root.join('db/migrate/20190106184413_remove_code_from_spree_promotions.rb')
 
 RSpec.describe RemoveCodeFromSpreePromotions do
   let(:migrations_paths) { ActiveRecord::Migrator.migrations_paths }
@@ -43,17 +43,17 @@ RSpec.describe RemoveCodeFromSpreePromotions do
       else
         ActiveRecord::Migrator.new(:down, migrations, previous_version).migrate
       end
-      # If other tests using Spree::Promotion ran before this one, Rails has
+      # If other tests using Solidus::Promotion ran before this one, Rails has
       # stored information about table's columns and we need to reset those
       # since the migration changed the database structure.
-      Spree::Promotion.reset_column_information
+      Solidus::Promotion.reset_column_information
 
       example.run
 
       # Re-update column information after the migration has been executed
       # again in the example. This will make the promotion attributes cache
       # ready for other tests.
-      Spree::Promotion.reset_column_information
+      Solidus::Promotion.reset_column_information
     end
     DatabaseCleaner.clean_with(:truncation)
   end
@@ -96,8 +96,8 @@ RSpec.describe RemoveCodeFromSpreePromotions do
       context 'to Solidus::Migrations::PromotionWithCodeHandlers::MoveToSpreePromotionCode' do
         let(:promotions_with_code_handler) { Solidus::Migrations::PromotionWithCodeHandlers::MoveToSpreePromotionCode }
 
-        context 'when there are no Spree::PromotionCode with the same value' do
-          it 'moves the code into a Spree::PromotionCode' do
+        context 'when there are no Solidus::PromotionCode with the same value' do
+          it 'moves the code into a Solidus::PromotionCode' do
             migration_context = double('a migration context')
             allow_any_instance_of(promotions_with_code_handler)
               .to receive(:migration_context)
@@ -105,29 +105,29 @@ RSpec.describe RemoveCodeFromSpreePromotions do
 
             expect(migration_context)
               .to receive(:say)
-              .with("Creating Spree::PromotionCode with value 'just an old promo code' for Spree::Promotion with id '#{promotion_with_code.id}'")
+              .with("Creating Solidus::PromotionCode with value 'just an old promo code' for Solidus::Promotion with id '#{promotion_with_code.id}'")
 
             expect { subject }
-              .to change { Spree::PromotionCode.all.size }
+              .to change { Solidus::PromotionCode.all.size }
               .from(0)
               .to(1)
           end
         end
 
         context 'with promotions with type set (legacy feature)' do
-          let(:promotion_with_code) { create(:promotion, type: 'Spree::Promotion') }
+          let(:promotion_with_code) { create(:promotion, type: 'Solidus::Promotion') }
 
           it 'does not raise a STI error' do
             expect { subject }.not_to raise_error
           end
         end
 
-        context 'when there is a Spree::PromotionCode with the same value' do
+        context 'when there is a Solidus::PromotionCode with the same value' do
           context 'associated with the same promotion' do
             let!(:existing_promotion_code) { create(:promotion_code, value: 'just an old promo code', promotion: promotion_with_code) }
 
-            it 'does not create a new Spree::PromotionCode' do
-              expect { subject }.not_to change { Spree::PromotionCode.all.size }
+            it 'does not create a new Solidus::PromotionCode' do
+              expect { subject }.not_to change { Solidus::PromotionCode.all.size }
             end
           end
 
@@ -152,7 +152,7 @@ RSpec.describe RemoveCodeFromSpreePromotions do
 
           expect(migration_context)
             .to receive(:say)
-            .with("Code 'Just An Old Promo Code' is going to be removed from Spree::Promotion with id '#{promotion_with_code.id}'")
+            .with("Code 'Just An Old Promo Code' is going to be removed from Solidus::Promotion with id '#{promotion_with_code.id}'")
 
           subject
         end

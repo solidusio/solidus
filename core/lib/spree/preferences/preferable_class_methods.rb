@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Spree::Preferences
+module Solidus::Preferences
   module PreferableClassMethods
     DEFAULT_ADMIN_FORM_PREFERENCE_TYPES = %i(
       boolean
@@ -74,7 +74,7 @@ module Spree::Preferences
 
     # List of preference types allowed as form fields in the Solidus admin
     #
-    # Overwrite this method in your class that includes +Spree::Preferable+
+    # Overwrite this method in your class that includes +Solidus::Preferable+
     # if you want to provide more fields. If you do so, you also need to provide
     # a preference field partial that lives in:
     #

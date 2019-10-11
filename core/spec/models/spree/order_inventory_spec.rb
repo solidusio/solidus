@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::OrderInventory, type: :model do
+RSpec.describe Solidus::OrderInventory, type: :model do
   let(:order) { create :completed_order_with_totals }
   let(:line_item) { order.line_items.first }
   let(:shipment) { order.shipments.first }
@@ -38,7 +38,7 @@ RSpec.describe Spree::OrderInventory, type: :model do
       let(:inventory_unit_finalizer) { double(:inventory_unit_finalizer, run!: [true]) }
 
       before do
-        allow(Spree::Stock::InventoryUnitsFinalizer)
+        allow(Solidus::Stock::InventoryUnitsFinalizer)
           .to receive(:new).and_return(inventory_unit_finalizer)
 
         order.update_columns completed_at: nil

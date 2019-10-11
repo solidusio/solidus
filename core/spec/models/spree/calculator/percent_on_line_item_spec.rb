@@ -3,7 +3,7 @@
 require 'rails_helper'
 require 'shared_examples/calculator_shared_examples'
 
-module Spree
+module Solidus
   RSpec.describe Calculator::PercentOnLineItem, type: :model do
     context "compute" do
       let(:line_item) { double("LineItem", amount: 100) }

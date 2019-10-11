@@ -1,21 +1,21 @@
 # frozen_string_literal: true
 
-Spree::Sample.load_sample("products")
-Spree::Sample.load_sample("variants")
+Solidus::Sample.load_sample("products")
+Solidus::Sample.load_sample("variants")
 
 products = {}
-products[:solidus_tshirt] = Spree::Product.find_by!(name: "Solidus T-Shirt")
-products[:solidus_long] = Spree::Product.find_by!(name: "Solidus Long Sleeve")
-products[:solidus_girly] = Spree::Product.find_by!(name: "Solidus Girly")
-products[:solidus_snapback_cap] = Spree::Product.find_by!(name: "Solidus Snapback Cap")
-products[:solidus_hoodie] = Spree::Product.find_by!(name: "Solidus Hoodie Zip")
-products[:ruby_hoodie] = Spree::Product.find_by!(name: "Ruby Hoodie")
-products[:ruby_hoodie_zip] = Spree::Product.find_by!(name: "Ruby Hoodie Zip")
-products[:ruby_polo] = Spree::Product.find_by!(name: "Ruby Polo")
-products[:solidus_mug] = Spree::Product.find_by!(name: "Solidus Mug")
-products[:ruby_mug] = Spree::Product.find_by!(name: "Ruby Mug")
-products[:solidus_tote] = Spree::Product.find_by!(name: "Solidus Tote")
-products[:ruby_tote] = Spree::Product.find_by!(name: "Ruby Tote")
+products[:solidus_tshirt] = Solidus::Product.find_by!(name: "Solidus T-Shirt")
+products[:solidus_long] = Solidus::Product.find_by!(name: "Solidus Long Sleeve")
+products[:solidus_girly] = Solidus::Product.find_by!(name: "Solidus Girly")
+products[:solidus_snapback_cap] = Solidus::Product.find_by!(name: "Solidus Snapback Cap")
+products[:solidus_hoodie] = Solidus::Product.find_by!(name: "Solidus Hoodie Zip")
+products[:ruby_hoodie] = Solidus::Product.find_by!(name: "Ruby Hoodie")
+products[:ruby_hoodie_zip] = Solidus::Product.find_by!(name: "Ruby Hoodie Zip")
+products[:ruby_polo] = Solidus::Product.find_by!(name: "Ruby Polo")
+products[:solidus_mug] = Solidus::Product.find_by!(name: "Solidus Mug")
+products[:ruby_mug] = Solidus::Product.find_by!(name: "Ruby Mug")
+products[:solidus_tote] = Solidus::Product.find_by!(name: "Solidus Tote")
+products[:ruby_tote] = Solidus::Product.find_by!(name: "Ruby Tote")
 
 def image(name, type = "jpg")
   images_path = Pathname.new(File.dirname(__FILE__)) + "images"

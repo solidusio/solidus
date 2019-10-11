@@ -1,5 +1,5 @@
 <%= render 'spree/admin/shared/product_tabs', current: 'Prices' %>
-<% admin_breadcrumb(link_to(plural_resource_name(Spree::Price), spree.admin_product_prices_url(@product))) %>
+<% admin_breadcrumb(link_to(plural_resource_name(Solidus::Price), spree.admin_product_prices_url(@product))) %>
 <% admin_breadcrumb(t('spree.actions.new')) %>
 
 <%= form_for [:admin, @product, @product.prices.build] do |f| %>

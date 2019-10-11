@@ -3,14 +3,14 @@
 require 'rails_helper'
 
 # Regression tests for https://github.com/spree/spree/issues/2179
-module Spree
+module Solidus
   RSpec.describe OrderMerger, type: :model do
     let(:variant) { create(:variant) }
     let!(:store) { create(:store, default: true) }
-    let(:order_1) { Spree::Order.create }
-    let(:order_2) { Spree::Order.create }
-    let(:user) { stub_model(Spree::LegacyUser, email: "spree@example.com") }
-    let(:subject) { Spree::OrderMerger.new(order_1) }
+    let(:order_1) { Solidus::Order.create }
+    let(:order_2) { Solidus::Order.create }
+    let(:user) { stub_model(Solidus::LegacyUser, email: "spree@example.com") }
+    let(:subject) { Solidus::OrderMerger.new(order_1) }
 
     it "destroys the other order" do
       subject.merge!(order_2)
@@ -46,11 +46,11 @@ module Spree
     end
 
     context 'merging together two orders with multiple currencies line items' do
-      let(:order_2) { Spree::Order.create(currency: 'JPY') }
+      let(:order_2) { Solidus::Order.create(currency: 'JPY') }
       let(:variant_2) { create(:variant) }
 
       before do
-        Spree::Price.create(variant: variant_2, amount: 10, currency: 'JPY')
+        Solidus::Price.create(variant: variant_2, amount: 10, currency: 'JPY')
         order_1.contents.add(variant, 1)
         order_2.contents.add(variant_2.reload, 1)
       end
@@ -67,12 +67,12 @@ module Spree
 
     context "merging using extension-specific line_item_comparison_hooks" do
       before do
-        Spree::Order.register_line_item_comparison_hook(:foos_match)
+        Solidus::Order.register_line_item_comparison_hook(:foos_match)
       end
 
       after do
         # reset to avoid test pollution
-        Spree::Order.line_item_comparison_hooks = Set.new
+        Solidus::Order.line_item_comparison_hooks = Set.new
       end
 
       context "2 equal line items" do

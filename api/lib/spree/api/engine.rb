@@ -2,10 +2,10 @@
 
 require 'spree/api/config'
 
-module Spree
+module Solidus
   module Api
     class Engine < Rails::Engine
-      isolate_namespace Spree
+      isolate_namespace Solidus
       engine_name 'spree_api'
 
       # Leave initializer empty for backwards-compatability. Other apps

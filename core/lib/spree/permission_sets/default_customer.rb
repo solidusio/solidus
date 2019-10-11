@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module PermissionSets
     class DefaultCustomer < PermissionSets::Base
       def activate!
@@ -21,14 +21,14 @@ module Spree
         can :display, Product
         can :display, ProductProperty
         can :display, Property
-        can :create, Spree.user_class
-        can [:read, :update, :update_email], Spree.user_class, id: user.id
+        can :create, Solidus.user_class
+        can [:read, :update, :update_email], Solidus.user_class, id: user.id
         can :display, State
         can :display, StockItem, stock_location: { active: true }
         can :display, StockLocation, active: true
         can :display, Taxon
         can :display, Taxonomy
-        can [:save_in_address_book, :remove_from_address_book], Spree.user_class, id: user.id
+        can [:save_in_address_book, :remove_from_address_book], Solidus.user_class, id: user.id
         can [:display, :view_out_of_stock], Variant
         can :display, Zone
       end

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-module Spree
-  class VariantPropertyRuleCondition < Spree::Base
+module Solidus
+  class VariantPropertyRuleCondition < Solidus::Base
     belongs_to :option_value, optional: true
     belongs_to :variant_property_rule, touch: true, optional: true
 

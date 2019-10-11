@@ -4,7 +4,7 @@ require 'rails_helper'
 require 'spree/testing_support/factories/carton_factory'
 
 RSpec.describe 'carton factory' do
-  let(:factory_class) { Spree::Carton }
+  let(:factory_class) { Solidus::Carton }
 
   describe 'plain adjustment' do
     let(:factory) { :carton }

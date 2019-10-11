@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::Preferences::ScopedStore, type: :model do
+RSpec.describe Solidus::Preferences::ScopedStore, type: :model do
   let(:scoped_store){ described_class.new(prefix, suffix) }
   subject{ scoped_store }
   let(:prefix){ nil }
@@ -11,7 +11,7 @@ RSpec.describe Spree::Preferences::ScopedStore, type: :model do
   describe '#store' do
     subject{ scoped_store.store }
     it "uses the global preferences instance" do
-      is_expected.to be Spree::Preferences::Store.instance
+      is_expected.to be Solidus::Preferences::Store.instance
     end
   end
 

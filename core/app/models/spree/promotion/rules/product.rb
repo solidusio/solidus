@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-module Spree
-  class Promotion < Spree::Base
+module Solidus
+  class Promotion < Solidus::Base
     module Rules
       # A rule to limit a promotion based on products in the order.  Can
       # require all or any of the products to be present.  Valid products
@@ -9,8 +9,8 @@ module Spree
       # the rule.
       class Product < PromotionRule
         has_many :product_promotion_rules, dependent: :destroy, foreign_key: :promotion_rule_id,
-                                           class_name: 'Spree::ProductPromotionRule'
-        has_many :products, class_name: 'Spree::Product', through: :product_promotion_rules
+                                           class_name: 'Solidus::ProductPromotionRule'
+        has_many :products, class_name: 'Solidus::Product', through: :product_promotion_rules
 
         MATCH_POLICIES = %w(any all none)
 
@@ -24,7 +24,7 @@ module Spree
         end
 
         def applicable?(promotable)
-          promotable.is_a?(Spree::Order)
+          promotable.is_a?(Solidus::Order)
         end
 
         def eligible?(order, _options = {})

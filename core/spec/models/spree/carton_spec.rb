@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::Carton do
+RSpec.describe Solidus::Carton do
   let(:carton) { create(:carton) }
 
   describe "#create" do

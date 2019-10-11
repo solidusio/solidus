@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   class FrontendConfiguration < Preferences::Configuration
     preference :locale, :string, default: I18n.default_locale
 

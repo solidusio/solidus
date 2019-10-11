@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-module Spree
+module Solidus
   module Stock
     RSpec.describe InventoryUnitBuilder, type: :model do
       let(:line_item_1) { build(:line_item) }

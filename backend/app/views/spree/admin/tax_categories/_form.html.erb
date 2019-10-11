@@ -17,7 +17,7 @@
     <%= f.field_container :is_default, class: ['checkbox'] do %>
       <label>
         <%= f.check_box :is_default %>
-        <%= Spree::TaxCategory.human_attribute_name(:is_default) %>
+        <%= Solidus::TaxCategory.human_attribute_name(:is_default) %>
       </label>
     <% end %>
   </div>

@@ -2,7 +2,7 @@
 
 require 'cancan'
 
-module Spree
+module Solidus
   module Core
     module ControllerHelpers
       module Auth
@@ -32,7 +32,7 @@ module Spree
 
         # Needs to be overriden so that we use Spree's Ability rather than anyone else's.
         def current_ability
-          @current_ability ||= Spree::Ability.new(try_spree_current_user)
+          @current_ability ||= Solidus::Ability.new(try_spree_current_user)
         end
 
         def redirect_back_or_default(default)

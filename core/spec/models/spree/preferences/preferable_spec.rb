@@ -2,10 +2,10 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::Preferences::Preferable, type: :model do
+RSpec.describe Solidus::Preferences::Preferable, type: :model do
   before :all do
     class A
-      include Spree::Preferences::Preferable
+      include Solidus::Preferences::Preferable
       attr_reader :id
 
       def initialize
@@ -114,7 +114,7 @@ RSpec.describe Spree::Preferences::Preferable, type: :model do
 
       before do
         class ComplexPreferableClass
-          include Spree::Preferences::Preferable
+          include Solidus::Preferences::Preferable
           preference :name, :string
           preference :password, :password
           preference :mapping, :hash
@@ -133,7 +133,7 @@ RSpec.describe Spree::Preferences::Preferable, type: :model do
 
         before do
           class ComplexOverwrittenPreferableClass
-            include Spree::Preferences::Preferable
+            include Solidus::Preferences::Preferable
             preference :name, :string
             preference :password, :password
             preference :mapping, :hash
@@ -287,7 +287,7 @@ RSpec.describe Spree::Preferences::Preferable, type: :model do
       ActiveRecord::Migration[4.2].verbose = false
       CreatePrefTest.migrate(:up)
 
-      class PrefTest < Spree::Base
+      class PrefTest < Solidus::Base
         preference :pref_test_pref, :string, default: 'abc'
         preference :pref_test_any, :any, default: []
       end

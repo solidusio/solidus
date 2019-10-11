@@ -4,7 +4,7 @@ require 'rails_helper'
 require 'spree/testing_support/factories/option_value_factory'
 
 RSpec.describe 'option value factory' do
-  let(:factory_class) { Spree::OptionValue }
+  let(:factory_class) { Solidus::OptionValue }
 
   describe 'plain option value' do
     let(:factory) { :option_value }

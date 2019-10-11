@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::LegacyUser, type: :model do
+RSpec.describe Solidus::LegacyUser, type: :model do
   context "#last_incomplete_order" do
     let!(:user) { create(:user) }
 
@@ -74,7 +74,7 @@ RSpec.describe Spree::LegacyUser, type: :model do
 
         expect {
           user.persist_order_address(order)
-        }.not_to change { Spree::Address.count }
+        }.not_to change { Solidus::Address.count }
       end
 
       it "associates both the bill and ship address to the user" do
@@ -94,7 +94,7 @@ RSpec.describe Spree::LegacyUser, type: :model do
       end
 
       it "has payment sources" do
-        Spree::Deprecation.silence do
+        Solidus::Deprecation.silence do
           expect(user.payment_sources.first.gateway_customer_profile_id).not_to be_empty
         end
       end
@@ -102,7 +102,7 @@ RSpec.describe Spree::LegacyUser, type: :model do
   end
 end
 
-RSpec.describe Spree.user_class, type: :model do
+RSpec.describe Solidus.user_class, type: :model do
   context "reporting" do
     let(:order_value) { BigDecimal("80.94") }
     let(:order_count) { 4 }
@@ -132,10 +132,10 @@ RSpec.describe Spree.user_class, type: :model do
     end
 
     describe "#display_lifetime_value" do
-      it "returns a Spree::Money version of lifetime_value" do
+      it "returns a Solidus::Money version of lifetime_value" do
         value = BigDecimal("500.05")
         allow(subject).to receive(:lifetime_value).and_return(value)
-        expect(subject.display_lifetime_value).to eq Spree::Money.new(value)
+        expect(subject.display_lifetime_value).to eq Solidus::Money.new(value)
       end
     end
 
@@ -162,10 +162,10 @@ RSpec.describe Spree.user_class, type: :model do
 
     describe "#display_average_order_value" do
       before { load_orders }
-      it "returns a Spree::Money version of average_order_value" do
+      it "returns a Solidus::Money version of average_order_value" do
         value = BigDecimal("500.05")
         allow(subject).to receive(:average_order_value).and_return(value)
-        expect(subject.display_average_order_value).to eq Spree::Money.new(value)
+        expect(subject.display_average_order_value).to eq Solidus::Money.new(value)
       end
     end
   end
@@ -173,8 +173,8 @@ RSpec.describe Spree.user_class, type: :model do
   # TODO: Remove this after the method has been fully removed
   describe "#total_available_store_credit" do
     before do
-      allow_any_instance_of(Spree::LegacyUser).to receive(:total_available_store_credit).and_wrap_original do |method, *args|
-        Spree::Deprecation.silence do
+      allow_any_instance_of(Solidus::LegacyUser).to receive(:total_available_store_credit).and_wrap_original do |method, *args|
+        Solidus::Deprecation.silence do
           method.call(*args)
         end
       end

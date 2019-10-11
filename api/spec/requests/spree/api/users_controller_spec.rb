@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-module Spree
+module Solidus
   describe Api::UsersController, type: :request do
     let(:user) { create(:user, spree_api_key: SecureRandom.hex) }
     let(:stranger) { create(:user, email: 'stranger@example.com') }
@@ -91,7 +91,7 @@ module Spree
         2.times { create(:user) }
         get spree.api_users_path, params: { token: user.spree_api_key }
 
-        expect(Spree.user_class.count).to eq 3
+        expect(Solidus.user_class.count).to eq 3
         expect(json_response['count']).to eq 1
         expect(json_response['users'].size).to eq 1
       end
@@ -103,12 +103,12 @@ module Spree
       sign_in_as_admin!
 
       it "gets all users" do
-        allow(Spree::LegacyUser).to receive(:find_by).with(hash_including(:spree_api_key)) { current_api_user }
+        allow(Solidus::LegacyUser).to receive(:find_by).with(hash_including(:spree_api_key)) { current_api_user }
 
         2.times { create(:user) }
 
         get spree.api_users_path
-        expect(Spree.user_class.count).to eq 2
+        expect(Solidus.user_class.count).to eq 2
         expect(json_response['count']).to eq 2
         expect(json_response['users'].size).to eq 2
       end

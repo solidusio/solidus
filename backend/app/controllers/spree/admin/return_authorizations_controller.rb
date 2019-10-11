@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module Admin
     class ReturnAuthorizationsController < ResourceController
-      belongs_to 'spree/order', find_by: :number
+      belongs_to 'solidus/order', find_by: :number
 
       before_action :load_form_data, only: [:new, :edit]
       create.fails  :load_form_data
@@ -41,21 +41,21 @@ module Spree
         unassociated_inventory_units = all_inventory_units - associated_inventory_units
 
         new_return_items = unassociated_inventory_units.map do |new_unit|
-          Spree::ReturnItem.new(inventory_unit: new_unit).tap(&:set_default_amount)
+          Solidus::ReturnItem.new(inventory_unit: new_unit).tap(&:set_default_amount)
         end
         @form_return_items = (@return_authorization.return_items + new_return_items).sort_by(&:inventory_unit_id)
       end
 
       def load_reimbursement_types
-        @reimbursement_types = Spree::ReimbursementType.accessible_by(current_ability, :read).active
+        @reimbursement_types = Solidus::ReimbursementType.accessible_by(current_ability, :read).active
       end
 
       def load_return_reasons
-        @reasons = Spree::ReturnReason.reasons_for_return_items(@return_authorization.return_items)
+        @reasons = Solidus::ReturnReason.reasons_for_return_items(@return_authorization.return_items)
       end
 
       def load_stock_locations
-        @stock_locations = Spree::StockLocation.order_default.active
+        @stock_locations = Solidus::StockLocation.order_default.active
       end
     end
   end

@@ -4,7 +4,7 @@ require_relative 'event/adapters/active_support_notifications'
 require_relative 'event/configuration'
 require_relative 'event/subscriber'
 
-module Spree
+module Solidus
   module Event
     extend self
 
@@ -17,7 +17,7 @@ module Spree
     # @param [Hash] opts a list of options to be passed to the triggered event
     #
     # @example Trigger an event named 'order_finalized'
-    #   Spree::Event.fire 'order_finalized', order: @order do
+    #   Solidus::Event.fire 'order_finalized', order: @order do
     #     @order.finalize!
     #   end
     def fire(event_name, opts = {})
@@ -36,12 +36,12 @@ module Spree
     #  to remove the subscription
     #
     # @example Subscribe to the `order_finalized` event
-    #   Spree::Event.subscribe 'order_finalized' do |event|
+    #   Solidus::Event.subscribe 'order_finalized' do |event|
     #     order = event.payload[:order]
-    #     Spree::Mailer.order_finalized(order).deliver_later
+    #     Solidus::Mailer.order_finalized(order).deliver_later
     #   end
     #
-    # @see Spree::Event#unsubscribe
+    # @see Solidus::Event#unsubscribe
     def subscribe(event_name, &block)
       name = name_with_suffix(event_name)
       listener_names << name
@@ -54,12 +54,12 @@ module Spree
     #  or without the ".spree" suffix) or the subscription object
     #
     # @example Unsubscribe a single subscription
-    #   subscription = Spree::Event.fire 'order_finalized'
-    #   Spree::Event.unsubscribe(subscription)
+    #   subscription = Solidus::Event.fire 'order_finalized'
+    #   Solidus::Event.unsubscribe(subscription)
     # @example Unsubscribe all `order_finalized` event subscriptions
-    #   Spree::Event.unsubscribe('order_finalized')
+    #   Solidus::Event.unsubscribe('order_finalized')
     # @example Unsubscribe an event by name with explicit prefix
-    #   Spree::Event.unsubscribe('order_finalized.spree')
+    #   Solidus::Event.unsubscribe('order_finalized.spree')
     def unsubscribe(subscriber)
       name_or_subscriber = subscriber.is_a?(String) ? name_with_suffix(subscriber) : subscriber
       adapter.unsubscribe(name_or_subscriber)
@@ -72,36 +72,36 @@ module Spree
     #  as values
     #
     # @example Current subscriptions
-    #  Spree::Event.listeners
+    #  Solidus::Event.listeners
     #    # => {"order_finalized.spree"=> [#<ActiveSupport...>],
     #      "reimbursement_reimbursed.spree"=> [#<ActiveSupport...>]}
     def listeners
       adapter.listeners_for(listener_names)
     end
 
-    # The adapter used by Spree::Event, defaults to
-    # Spree::Event::Adapters::ActiveSupportNotifications
+    # The adapter used by Solidus::Event, defaults to
+    # Solidus::Event::Adapters::ActiveSupportNotifications
     #
     # @example Change the adapter
-    #   Spree::Config.events.adapter = "Spree::EventBus.new"
+    #   Solidus::Config.events.adapter = "Solidus::EventBus.new"
     #
-    # @see Spree::AppConfiguration
+    # @see Solidus::AppConfiguration
     def adapter
-      Spree::Config.events.adapter
+      Solidus::Config.events.adapter
     end
 
     # The suffix used for namespacing Solidus events, defaults to
     # `.spree`
     #
-    # @see Spree::Event::Configuration#suffix
+    # @see Solidus::Event::Configuration#suffix
     def suffix
-      Spree::Config.events.suffix
+      Solidus::Config.events.suffix
     end
 
     # @!attribute [r] subscribers
-    #   @return [Array<Spree::Event::Subscriber>] A list of subscribers used to support class reloading for Spree::Event::Subscriber instances
+    #   @return [Array<Solidus::Event::Subscriber>] A list of subscribers used to support class reloading for Solidus::Event::Subscriber instances
     def subscribers
-      Spree::Config.events.subscribers
+      Solidus::Config.events.subscribers
     end
 
     private

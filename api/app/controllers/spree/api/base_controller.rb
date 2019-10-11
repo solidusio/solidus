@@ -2,17 +2,17 @@
 
 require 'spree/api/responders'
 
-module Spree
+module Solidus
   module Api
     class BaseController < ActionController::Base
-      self.responder = Spree::Api::Responders::AppResponder
+      self.responder = Solidus::Api::Responders::AppResponder
       respond_to :json
       protect_from_forgery unless: -> { request.format.json? }
 
       include CanCan::ControllerAdditions
-      include Spree::Core::ControllerHelpers::Store
-      include Spree::Core::ControllerHelpers::Pricing
-      include Spree::Core::ControllerHelpers::StrongParameters
+      include Solidus::Core::ControllerHelpers::Store
+      include Solidus::Core::ControllerHelpers::Pricing
+      include Solidus::Core::ControllerHelpers::StrongParameters
 
       class_attribute :admin_line_item_attributes
       self.admin_line_item_attributes = [:price, :variant_id, :sku]
@@ -27,15 +27,15 @@ module Spree
       rescue_from ActionController::ParameterMissing, with: :parameter_missing_error
       rescue_from ActiveRecord::RecordNotFound, with: :not_found
       rescue_from CanCan::AccessDenied, with: :unauthorized
-      rescue_from Spree::Core::GatewayError, with: :gateway_error
+      rescue_from Solidus::Core::GatewayError, with: :gateway_error
 
-      helper Spree::Api::ApiHelpers
+      helper Solidus::Api::ApiHelpers
 
       private
 
       # users should be able to set price when importing orders via api
       def permitted_line_item_attributes
-        if can?(:admin, Spree::LineItem)
+        if can?(:admin, Solidus::LineItem)
           super + admin_line_item_attributes
         else
           super
@@ -43,7 +43,7 @@ module Spree
       end
 
       def load_user
-        @current_api_user ||= Spree.user_class.find_by(spree_api_key: api_key.to_s)
+        @current_api_user ||= Solidus.user_class.find_by(spree_api_key: api_key.to_s)
       end
 
       def authenticate_user
@@ -82,7 +82,7 @@ module Spree
       end
 
       def requires_authentication?
-        Spree::Api::Config[:requires_authentication]
+        Solidus::Api::Config[:requires_authentication]
       end
 
       def not_found
@@ -90,7 +90,7 @@ module Spree
       end
 
       def current_ability
-        Spree::Ability.new(current_api_user)
+        Solidus::Ability.new(current_api_user)
       end
 
       def invalid_resource!(resource)
@@ -114,7 +114,7 @@ module Spree
         token = request.headers["X-Spree-Token"]
         return unless token.present?
 
-        Spree::Deprecation.warn(
+        Solidus::Deprecation.warn(
           'The custom X-Spree-Token request header is deprecated and will be removed in the next release.' \
           ' Please use bearer token authorization header instead.'
         )
@@ -132,14 +132,14 @@ module Spree
       end
 
       def product_scope
-        if can?(:admin, Spree::Product)
-          scope = Spree::Product.with_deleted.accessible_by(current_ability, :read).includes(*product_includes)
+        if can?(:admin, Solidus::Product)
+          scope = Solidus::Product.with_deleted.accessible_by(current_ability, :read).includes(*product_includes)
 
           unless params[:show_deleted]
             scope = scope.not_deleted
           end
         else
-          scope = Spree::Product.accessible_by(current_ability, :read).available.includes(*product_includes)
+          scope = Solidus::Product.accessible_by(current_ability, :read).available.includes(*product_includes)
         end
 
         scope
@@ -158,13 +158,13 @@ module Spree
       end
 
       def authorize_for_order
-        @order = Spree::Order.find_by(number: order_id)
+        @order = Solidus::Order.find_by(number: order_id)
         authorize! :read, @order, order_token
       end
 
       def lock_order
         OrderMutex.with_lock!(@order) { yield }
-      rescue Spree::OrderMutex::LockFailed => e
+      rescue Solidus::OrderMutex::LockFailed => e
         render plain: e.message, status: 409
       end
 

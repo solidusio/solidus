@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module Admin
     class StoreCreditsController < ResourceController
-      belongs_to 'spree/user', model_class: Spree.user_class
+      belongs_to 'solidus/user', model_class: Solidus.user_class
       before_action :load_categories, only: [:new]
       before_action :load_reasons, only: [:edit_amount, :edit_validity]
       before_action :ensure_store_credit_reason, only: [:update_amount, :invalidate]
 
-      helper Spree::Admin::StoreCreditEventsHelper
+      helper Solidus::Admin::StoreCreditEventsHelper
 
       def show
         @store_credit_events = @store_credit.store_credit_events.chronological
@@ -79,15 +79,15 @@ module Spree
       end
 
       def load_reasons
-        @store_credit_reasons = Spree::StoreCreditReason.active.order(:name)
+        @store_credit_reasons = Solidus::StoreCreditReason.active.order(:name)
       end
 
       def load_categories
-        @credit_categories = Spree::StoreCreditCategory.all.order(:name)
+        @credit_categories = Solidus::StoreCreditCategory.all.order(:name)
       end
 
       def ensure_store_credit_reason
-        @store_credit_reason = Spree::StoreCreditReason.find_by(id: params[:store_credit_reason_id])
+        @store_credit_reason = Solidus::StoreCreditReason.find_by(id: params[:store_credit_reason_id])
         unless @store_credit_reason
           @store_credit.errors.add(:base, t('spree.admin.store_credits.errors.store_credit_reason_required'))
           render_edit_page
@@ -110,7 +110,7 @@ module Spree
 
       def build_resource
         parent.store_credits.build(
-          currency: Spree::Config[:currency]
+          currency: Solidus::Config[:currency]
         )
       end
     end

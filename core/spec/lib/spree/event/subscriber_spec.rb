@@ -3,9 +3,9 @@
 require 'spec_helper'
 require 'spree/event'
 
-RSpec.describe Spree::Event::Subscriber do
+RSpec.describe Solidus::Event::Subscriber do
   module M
-    include Spree::Event::Subscriber
+    include Solidus::Event::Subscriber
 
     event_action :event_name
 
@@ -21,27 +21,27 @@ RSpec.describe Spree::Event::Subscriber do
   describe '::subscribe!' do
     before { M.unsubscribe! }
 
-    it 'adds new listeners to Spree::Event' do
-      expect { M.subscribe! }.to change { Spree::Event.listeners }
+    it 'adds new listeners to Solidus::Event' do
+      expect { M.subscribe! }.to change { Solidus::Event.listeners }
     end
 
     context 'when subscriptions are not registered' do
       it 'does not trigger the event callback' do
         expect(M).not_to receive(:event_name)
-        Spree::Event.fire 'event_name'
+        Solidus::Event.fire 'event_name'
       end
     end
 
     it 'subscribes event actions' do
       M.subscribe!
       expect(M).to receive(:event_name)
-      Spree::Event.fire 'event_name'
+      Solidus::Event.fire 'event_name'
     end
 
     it 'does not subscribe event actions more than once' do
       2.times { M.subscribe! }
       expect(M).to receive(:event_name).once
-      Spree::Event.fire 'event_name'
+      Solidus::Event.fire 'event_name'
     end
   end
 
@@ -51,7 +51,7 @@ RSpec.describe Spree::Event::Subscriber do
     it 'removes the subscription' do
       expect(M).not_to receive(:event_name)
       M.unsubscribe!
-      Spree::Event.fire 'event_name'
+      Solidus::Event.fire 'event_name'
     end
   end
 
@@ -61,7 +61,7 @@ RSpec.describe Spree::Event::Subscriber do
 
       it 'does not subscribe the action' do
         expect(M).not_to receive(:other_event)
-        Spree::Event.fire 'other_event'
+        Solidus::Event.fire 'other_event'
       end
     end
 
@@ -78,7 +78,7 @@ RSpec.describe Spree::Event::Subscriber do
 
       it 'subscribe the action' do
         expect(M).to receive(:other_event)
-        Spree::Event.fire 'other_event'
+        Solidus::Event.fire 'other_event'
       end
     end
   end

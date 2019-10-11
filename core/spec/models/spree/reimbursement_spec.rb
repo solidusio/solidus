@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::Reimbursement, type: :model do
+RSpec.describe Solidus::Reimbursement, type: :model do
   describe ".create" do
     let(:customer_return) { create(:customer_return) }
     let(:order) { customer_return.order }
@@ -29,7 +29,7 @@ RSpec.describe Spree::Reimbursement, type: :model do
     describe "#generate_number" do
       context "number is assigned" do
         let(:number)        { '123' }
-        let(:reimbursement) { Spree::Reimbursement.new(number: number) }
+        let(:reimbursement) { Solidus::Reimbursement.new(number: number) }
 
         it "should return the assigned number" do
           reimbursement.save
@@ -38,7 +38,7 @@ RSpec.describe Spree::Reimbursement, type: :model do
       end
 
       context "number is not assigned" do
-        let(:reimbursement) { Spree::Reimbursement.new(number: nil) }
+        let(:reimbursement) { Solidus::Reimbursement.new(number: nil) }
 
         before do
           allow(reimbursement).to receive_messages(valid?: true)
@@ -55,13 +55,13 @@ RSpec.describe Spree::Reimbursement, type: :model do
   describe "#display_total" do
     let(:total)         { 100.50 }
     let(:currency)      { "USD" }
-    let(:order)         { Spree::Order.new(currency: currency) }
-    let(:reimbursement) { Spree::Reimbursement.new(total: total, order: order) }
+    let(:order)         { Solidus::Order.new(currency: currency) }
+    let(:reimbursement) { Solidus::Reimbursement.new(total: total, order: order) }
 
     subject { reimbursement.display_total }
 
-    it "returns the value as a Spree::Money instance" do
-      expect(subject).to eq Spree::Money.new(total)
+    it "returns the value as a Solidus::Money instance" do
+      expect(subject).to eq Solidus::Money.new(total)
     end
 
     it "uses the order's currency" do
@@ -85,7 +85,7 @@ RSpec.describe Spree::Reimbursement, type: :model do
     let(:customer_return)         { build(:customer_return, return_items: [return_item]) }
     let(:return_item)             { build(:return_item, inventory_unit: inventory_unit) }
 
-    let!(:default_refund_reason) { Spree::RefundReason.find_or_create_by!(name: Spree::RefundReason::RETURN_PROCESSING_REASON, mutable: false) }
+    let!(:default_refund_reason) { Solidus::RefundReason.find_or_create_by!(name: Solidus::RefundReason::RETURN_PROCESSING_REASON, mutable: false) }
 
     let(:reimbursement) { create(:reimbursement, customer_return: customer_return, order: order, return_items: [return_item]) }
     let(:created_by_user) { create(:user, email: 'user@email.com') }
@@ -117,8 +117,8 @@ RSpec.describe Spree::Reimbursement, type: :model do
     it "creates a refund" do
       expect {
         subject
-      }.to change{ Spree::Refund.count }.by(1)
-      expect(Spree::Refund.last.amount).to eq order.total
+      }.to change{ Solidus::Refund.count }.by(1)
+      expect(Solidus::Refund.last.amount).to eq order.total
     end
 
     context 'with additional tax' do
@@ -127,12 +127,12 @@ RSpec.describe Spree::Reimbursement, type: :model do
       it 'saves the additional tax and refunds the total' do
         expect {
           subject
-        }.to change { Spree::Refund.count }.by(1)
+        }.to change { Solidus::Refund.count }.by(1)
         return_item.reload
         expect(return_item.additional_tax_total).to be > 0
         expect(return_item.additional_tax_total).to eq line_item.additional_tax_total
         expect(reimbursement.total).to eq line_item.amount + line_item.additional_tax_total
-        expect(Spree::Refund.last.amount).to eq line_item.amount + line_item.additional_tax_total
+        expect(Solidus::Refund.last.amount).to eq line_item.amount + line_item.additional_tax_total
       end
     end
 
@@ -142,12 +142,12 @@ RSpec.describe Spree::Reimbursement, type: :model do
       it 'saves the included tax and refunds the total' do
         expect {
           subject
-        }.to change { Spree::Refund.count }.by(1)
+        }.to change { Solidus::Refund.count }.by(1)
         return_item.reload
         expect(return_item.included_tax_total).to be > 0
         expect(return_item.included_tax_total).to eq line_item.included_tax_total
         expect(reimbursement.total).to eq((line_item.total_excluding_vat + line_item.included_tax_total).round(2, :down))
-        expect(Spree::Refund.last.amount).to eq((line_item.total_excluding_vat + line_item.included_tax_total).round(2, :down))
+        expect(Solidus::Refund.last.amount).to eq((line_item.total_excluding_vat + line_item.included_tax_total).round(2, :down))
       end
     end
 
@@ -155,8 +155,8 @@ RSpec.describe Spree::Reimbursement, type: :model do
       let!(:non_return_refund) { create(:refund, amount: 1, payment: payment) }
 
       it 'does not send a reimbursement email and raises IncompleteReimbursement error' do
-        expect(Spree::ReimbursementMailer).not_to receive(:reimbursement_email)
-        expect { subject }.to raise_error(Spree::Reimbursement::IncompleteReimbursementError)
+        expect(Solidus::ReimbursementMailer).not_to receive(:reimbursement_email)
+        expect { subject }.to raise_error(Solidus::Reimbursement::IncompleteReimbursementError)
       end
     end
 
@@ -170,7 +170,7 @@ RSpec.describe Spree::Reimbursement, type: :model do
     end
 
     it "triggers the reimbursement mailer to be sent via subscribed event" do
-      expect(Spree::ReimbursementMailer).to receive(:reimbursement_email).with(reimbursement.id) { double(deliver_later: true) }
+      expect(Solidus::ReimbursementMailer).to receive(:reimbursement_email).with(reimbursement.id) { double(deliver_later: true) }
       subject
     end
   end
@@ -213,13 +213,13 @@ RSpec.describe Spree::Reimbursement, type: :model do
 
   describe "#calculated_total" do
     context 'with return item amounts that would round up' do
-      let(:reimbursement) { Spree::Reimbursement.new }
+      let(:reimbursement) { Solidus::Reimbursement.new }
 
       subject { reimbursement.calculated_total }
 
       before do
-        reimbursement.return_items << Spree::ReturnItem.new(amount: 10.003)
-        reimbursement.return_items << Spree::ReturnItem.new(amount: 10.003)
+        reimbursement.return_items << Solidus::ReturnItem.new(amount: 10.003)
+        reimbursement.return_items << Solidus::ReturnItem.new(amount: 10.003)
       end
 
       it 'rounds down' do
@@ -238,7 +238,7 @@ RSpec.describe Spree::Reimbursement, type: :model do
     let!(:already_reimbursed_return_item) { customer_return.return_items.fifth }
     let!(:previous_reimbursement) { create(:reimbursement, order: customer_return.order, return_items: [already_reimbursed_return_item]) }
 
-    subject { Spree::Reimbursement.build_from_customer_return(customer_return) }
+    subject { Solidus::Reimbursement.build_from_customer_return(customer_return) }
 
     it 'connects to the accepted return items' do
       expect(subject.return_items.to_a).to eq [accepted_return_item]
@@ -256,7 +256,7 @@ RSpec.describe Spree::Reimbursement, type: :model do
   describe "#return_all" do
     subject { reimbursement.return_all(created_by: created_by_user) }
 
-    let!(:default_refund_reason) { Spree::RefundReason.find_or_create_by!(name: Spree::RefundReason::RETURN_PROCESSING_REASON, mutable: false) }
+    let!(:default_refund_reason) { Solidus::RefundReason.find_or_create_by!(name: Solidus::RefundReason::RETURN_PROCESSING_REASON, mutable: false) }
     let(:order)                  { create(:shipped_order, line_items_count: 1) }
     let(:inventory_unit)         { order.inventory_units.first }
     let(:return_item)            { build(:return_item, inventory_unit: inventory_unit) }

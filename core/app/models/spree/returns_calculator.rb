@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   class ReturnsCalculator < Calculator
     def compute(_return_item)
       raise NotImplementedError, "Please implement 'compute(return_item)' in your calculator: #{self.class.name}"

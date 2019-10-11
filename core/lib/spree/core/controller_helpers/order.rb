@@ -2,7 +2,7 @@
 
 require 'spree/core/controller_helpers/pricing'
 
-module Spree
+module Solidus
   module Core
     module ControllerHelpers
       module Order
@@ -23,10 +23,10 @@ module Spree
             @simple_current_order.last_ip_address = ip_address
             return @simple_current_order
           else
-            @simple_current_order = Spree::Order.new(current_order_params)
+            @simple_current_order = Solidus::Order.new(current_order_params)
           end
         end
-        deprecate simple_current_order: :current_order, deprecator: Spree::Deprecation
+        deprecate simple_current_order: :current_order, deprecator: Solidus::Deprecation
 
         # The current incomplete order from the guest_token for use in cart and during checkout
         def current_order(options = {})
@@ -37,7 +37,7 @@ module Spree
           @current_order = find_order_by_token_or_user(options)
 
           if options[:create_order_if_necessary] && (@current_order.nil? || @current_order.completed?)
-            @current_order = Spree::Order.new(new_order_params)
+            @current_order = Solidus::Order.new(new_order_params)
             @current_order.user ||= try_spree_current_user
             # See issue https://github.com/spree/spree/issues/3346 for reasons why this line is here
             @current_order.created_by ||= try_spree_current_user
@@ -88,10 +88,10 @@ module Spree
 
           # Find any incomplete orders for the guest_token
           if with_adjustments
-            Spree::Deprecation.warn "The second argument to find_order_by_token_or_user is deprecated, and will be removed in a future version."
-            order = Spree::Order.incomplete.includes(:adjustments).lock(options[:lock]).find_by(current_order_params)
+            Solidus::Deprecation.warn "The second argument to find_order_by_token_or_user is deprecated, and will be removed in a future version."
+            order = Solidus::Order.incomplete.includes(:adjustments).lock(options[:lock]).find_by(current_order_params)
           else
-            order = Spree::Order.incomplete.lock(options[:lock]).find_by(current_order_params)
+            order = Solidus::Order.incomplete.lock(options[:lock]).find_by(current_order_params)
           end
 
           # Find any incomplete orders for the current user

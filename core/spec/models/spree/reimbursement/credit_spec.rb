@@ -2,11 +2,11 @@
 
 require 'rails_helper'
 
-module Spree
+module Solidus
   RSpec.describe Reimbursement::Credit, type: :model do
     context 'class methods' do
       describe '.total_amount_reimbursed_for' do
-        subject { Spree::Reimbursement::Credit.total_amount_reimbursed_for(reimbursement) }
+        subject { Solidus::Reimbursement::Credit.total_amount_reimbursed_for(reimbursement) }
 
         let(:reimbursement) { create(:reimbursement) }
         let(:credit_double) { double(amount: 99.99) }
@@ -20,7 +20,7 @@ module Spree
     end
 
     describe '#description' do
-      let(:credit) { Spree::Reimbursement::Credit.new(amount: 100, creditable: mock_model(Spree::PaymentMethod::Check)) }
+      let(:credit) { Solidus::Reimbursement::Credit.new(amount: 100, creditable: mock_model(Solidus::PaymentMethod::Check)) }
 
       it "should be the creditable's class name" do
         expect(credit.description).to eq 'Check'
@@ -28,10 +28,10 @@ module Spree
     end
 
     describe '#display_amount' do
-      let(:credit) { Spree::Reimbursement::Credit.new(amount: 100) }
+      let(:credit) { Solidus::Reimbursement::Credit.new(amount: 100) }
 
       it 'should be a money object' do
-        expect(credit.display_amount).to eq Spree::Money.new(100, currency: "USD")
+        expect(credit.display_amount).to eq Solidus::Money.new(100, currency: "USD")
       end
     end
   end

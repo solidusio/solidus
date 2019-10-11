@@ -1,31 +1,31 @@
 # frozen_string_literal: true
 
-Spree::Sample.load_sample("option_values")
-Spree::Sample.load_sample("products")
+Solidus::Sample.load_sample("option_values")
+Solidus::Sample.load_sample("products")
 
-solidus_tshirt = Spree::Product.find_by!(name: "Solidus T-Shirt")
-solidus_long = Spree::Product.find_by!(name: "Solidus Long Sleeve")
-solidus_snapback_cap = Spree::Product.find_by!(name: "Solidus Snapback Cap")
-solidus_hoodie = Spree::Product.find_by!(name: "Solidus Hoodie Zip")
-ruby_hoodie = Spree::Product.find_by!(name: "Ruby Hoodie")
-ruby_hoodie_zip = Spree::Product.find_by!(name: "Ruby Hoodie Zip")
-ruby_polo = Spree::Product.find_by!(name: "Ruby Polo")
-solidus_mug = Spree::Product.find_by!(name: "Solidus Mug")
-ruby_mug = Spree::Product.find_by!(name: "Ruby Mug")
-solidus_tote = Spree::Product.find_by!(name: "Solidus Tote")
-ruby_tote = Spree::Product.find_by!(name: "Ruby Tote")
-solidus_girly = Spree::Product.find_by!(name: "Solidus Girly")
+solidus_tshirt = Solidus::Product.find_by!(name: "Solidus T-Shirt")
+solidus_long = Solidus::Product.find_by!(name: "Solidus Long Sleeve")
+solidus_snapback_cap = Solidus::Product.find_by!(name: "Solidus Snapback Cap")
+solidus_hoodie = Solidus::Product.find_by!(name: "Solidus Hoodie Zip")
+ruby_hoodie = Solidus::Product.find_by!(name: "Ruby Hoodie")
+ruby_hoodie_zip = Solidus::Product.find_by!(name: "Ruby Hoodie Zip")
+ruby_polo = Solidus::Product.find_by!(name: "Ruby Polo")
+solidus_mug = Solidus::Product.find_by!(name: "Solidus Mug")
+ruby_mug = Solidus::Product.find_by!(name: "Ruby Mug")
+solidus_tote = Solidus::Product.find_by!(name: "Solidus Tote")
+ruby_tote = Solidus::Product.find_by!(name: "Ruby Tote")
+solidus_girly = Solidus::Product.find_by!(name: "Solidus Girly")
 
-small = Spree::OptionValue.find_by!(name: "Small")
-medium = Spree::OptionValue.find_by!(name: "Medium")
-large = Spree::OptionValue.find_by!(name: "Large")
-extra_large = Spree::OptionValue.find_by!(name: "Extra Large")
+small = Solidus::OptionValue.find_by!(name: "Small")
+medium = Solidus::OptionValue.find_by!(name: "Medium")
+large = Solidus::OptionValue.find_by!(name: "Large")
+extra_large = Solidus::OptionValue.find_by!(name: "Extra Large")
 
-red = Spree::OptionValue.find_by!(name: "Red")
-blue = Spree::OptionValue.find_by!(name: "Blue")
-green = Spree::OptionValue.find_by!(name: "Green")
-black = Spree::OptionValue.find_by!(name: "Black")
-white = Spree::OptionValue.find_by!(name: "White")
+red = Solidus::OptionValue.find_by!(name: "Red")
+blue = Solidus::OptionValue.find_by!(name: "Blue")
+green = Solidus::OptionValue.find_by!(name: "Green")
+black = Solidus::OptionValue.find_by!(name: "Black")
+white = Solidus::OptionValue.find_by!(name: "White")
 
 variants = [
   {
@@ -213,7 +213,7 @@ masters = {
   }
 }
 
-Spree::Variant.create!(variants)
+Solidus::Variant.create!(variants)
 
 masters.each do |product, variant_attrs|
   product.master.update!(variant_attrs)

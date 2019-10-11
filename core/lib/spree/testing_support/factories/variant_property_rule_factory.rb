@@ -5,7 +5,7 @@ require 'spree/testing_support/factories/property_factory'
 require 'spree/testing_support/factories/option_value_factory'
 
 FactoryBot.define do
-  factory :variant_property_rule, class: 'Spree::VariantPropertyRule' do
+  factory :variant_property_rule, class: 'Solidus::VariantPropertyRule' do
     product
 
     transient do

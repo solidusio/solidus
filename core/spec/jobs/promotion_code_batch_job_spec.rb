@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
-RSpec.describe Spree::PromotionCodeBatchJob, type: :job do
+RSpec.describe Solidus::PromotionCodeBatchJob, type: :job do
   let(:email) { "test@email.com" }
   let(:promotion_code_batch) do
-    Spree::PromotionCodeBatch.create!(
+    Solidus::PromotionCodeBatch.create!(
       promotion_id: create(:promotion).id,
       base_code: "test",
       number_of_codes: 10,
@@ -13,13 +13,13 @@ RSpec.describe Spree::PromotionCodeBatchJob, type: :job do
   end
   context "with a successful build" do
     before do
-      allow(Spree::PromotionCodeBatchMailer)
+      allow(Solidus::PromotionCodeBatchMailer)
         .to receive(:promotion_code_batch_finished)
         .and_call_original
     end
 
     def codes
-      Spree::PromotionCode.pluck(:value)
+      Solidus::PromotionCode.pluck(:value)
     end
 
     context 'with the default join character' do
@@ -32,7 +32,7 @@ RSpec.describe Spree::PromotionCodeBatchJob, type: :job do
     end
     context 'with a custom join character' do
       let(:promotion_code_batch) do
-        Spree::PromotionCodeBatch.create!(
+        Solidus::PromotionCodeBatch.create!(
           promotion_id: create(:promotion).id,
           base_code: "test",
           number_of_codes: 10,
@@ -50,7 +50,7 @@ RSpec.describe Spree::PromotionCodeBatchJob, type: :job do
     context "with an email address" do
       it "sends an email" do
         subject.perform(promotion_code_batch)
-        expect(Spree::PromotionCodeBatchMailer)
+        expect(Solidus::PromotionCodeBatchMailer)
           .to have_received(:promotion_code_batch_finished)
       end
     end
@@ -58,7 +58,7 @@ RSpec.describe Spree::PromotionCodeBatchJob, type: :job do
       let(:email) { nil }
       it "sends an email" do
         subject.perform(promotion_code_batch)
-        expect(Spree::PromotionCodeBatchMailer)
+        expect(Solidus::PromotionCodeBatchMailer)
           .to_not have_received(:promotion_code_batch_finished)
       end
     end
@@ -66,11 +66,11 @@ RSpec.describe Spree::PromotionCodeBatchJob, type: :job do
 
   context "with a failed build" do
     before do
-      allow_any_instance_of(Spree::PromotionCode::BatchBuilder)
+      allow_any_instance_of(Solidus::PromotionCode::BatchBuilder)
         .to receive(:build_promotion_codes)
         .and_raise("Error")
 
-      allow(Spree::PromotionCodeBatchMailer)
+      allow(Solidus::PromotionCodeBatchMailer)
         .to receive(:promotion_code_batch_errored)
         .and_call_original
 
@@ -80,7 +80,7 @@ RSpec.describe Spree::PromotionCodeBatchJob, type: :job do
 
     context "with an email address" do
       it "sends an email" do
-        expect(Spree::PromotionCodeBatchMailer)
+        expect(Solidus::PromotionCodeBatchMailer)
           .to have_received(:promotion_code_batch_errored)
       end
     end
@@ -88,7 +88,7 @@ RSpec.describe Spree::PromotionCodeBatchJob, type: :job do
     context "with no email address" do
       let(:email) { nil }
       it "sends an email" do
-        expect(Spree::PromotionCodeBatchMailer)
+        expect(Solidus::PromotionCodeBatchMailer)
           .to_not have_received(:promotion_code_batch_errored)
       end
     end

@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-module Spree
+module Solidus
   module Admin
     describe StockItemsController, type: :controller do
       stub_authorization!
@@ -21,9 +21,9 @@ module Spree
         end
 
         it "creates a stock movement with originator" do
-          expect { subject }.to change { Spree::StockMovement.count }.by(1)
-          stock_movement = Spree::StockMovement.last
-          expect(stock_movement.originator_type).to eq "Spree::LegacyUser"
+          expect { subject }.to change { Solidus::StockMovement.count }.by(1)
+          stock_movement = Solidus::StockMovement.last
+          expect(stock_movement.originator_type).to eq "Solidus::LegacyUser"
         end
       end
 

@@ -3,7 +3,7 @@
 require 'spree/testing_support/factories/country_factory'
 
 FactoryBot.define do
-  factory :state, class: 'Spree::State' do
+  factory :state, class: 'Solidus::State' do
     transient do
       country_iso { 'US' }
       state_code { 'AL' }
@@ -21,7 +21,7 @@ FactoryBot.define do
     name { carmen_subregion.name }
 
     country do |country|
-      Spree::Country.find_by(iso: country_iso) ||
+      Solidus::Country.find_by(iso: country_iso) ||
         country.association(:country, iso: country_iso)
     end
   end

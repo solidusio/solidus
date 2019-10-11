@@ -4,7 +4,7 @@ require 'rails_helper'
 require 'spree/testing_support/factories/calculator_factory'
 
 RSpec.describe 'calculator factory' do
-  let(:factory_class) { Spree::Calculator }
+  let(:factory_class) { Solidus::Calculator }
 
   describe 'calculator' do
     let(:factory) { :calculator }

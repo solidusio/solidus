@@ -4,7 +4,7 @@ require 'rails_helper'
 require 'spree/testing_support/factories/stock_movement_factory'
 
 RSpec.describe 'stock movement factory' do
-  let(:factory_class) { Spree::StockMovement }
+  let(:factory_class) { Solidus::StockMovement }
 
   describe 'plain stock movement' do
     let(:factory) { :stock_movement }

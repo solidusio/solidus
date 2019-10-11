@@ -1,12 +1,12 @@
 <%= render 'spree/admin/shared/payments_tabs' %>
 
 <% admin_breadcrumb(t('spree.settings')) %>
-<% admin_breadcrumb(plural_resource_name(Spree::Payment)) %>
-<% admin_breadcrumb(plural_resource_name(Spree::PaymentMethod)) %>
+<% admin_breadcrumb(plural_resource_name(Solidus::Payment)) %>
+<% admin_breadcrumb(plural_resource_name(Solidus::PaymentMethod)) %>
 
 
 <% content_for :page_actions do %>
-  <% if can?(:create, Spree::PaymentMethod) %>
+  <% if can?(:create, Solidus::PaymentMethod) %>
     <li>
       <%= link_to t('spree.new_payment_method'), new_object_url, id: 'admin_new_payment_methods_link', class: 'btn btn-primary' %>
     </li>
@@ -27,11 +27,11 @@
     <thead>
       <tr data-hook="admin_payment_methods_index_headers">
         <th></th>
-        <th><%= Spree::PaymentMethod.human_attribute_name(:name) %></th>
-        <th><%= Spree::PaymentMethod.human_attribute_name(:type) %></th>
-        <th><%= Spree::PaymentMethod.human_attribute_name(:available_to_users) %></th>
-        <th><%= Spree::PaymentMethod.human_attribute_name(:available_to_admin) %></th>
-        <th><%= Spree::PaymentMethod.human_attribute_name(:state) %></th>
+        <th><%= Solidus::PaymentMethod.human_attribute_name(:name) %></th>
+        <th><%= Solidus::PaymentMethod.human_attribute_name(:type) %></th>
+        <th><%= Solidus::PaymentMethod.human_attribute_name(:available_to_users) %></th>
+        <th><%= Solidus::PaymentMethod.human_attribute_name(:available_to_admin) %></th>
+        <th><%= Solidus::PaymentMethod.human_attribute_name(:state) %></th>
         <th data-hook="admin_payment_methods_index_header_actions" class="actions"></th>
       </tr>
     </thead>
@@ -49,11 +49,11 @@
             </span>
           </td>
           <td data-hook="admin_payment_methods_index_row_actions" class="actions">
-            <% if can?(:update, method.becomes(Spree::PaymentMethod)) %>
-              <%= link_to_edit method.becomes(Spree::PaymentMethod), no_text: true %>
+            <% if can?(:update, method.becomes(Solidus::PaymentMethod)) %>
+              <%= link_to_edit method.becomes(Solidus::PaymentMethod), no_text: true %>
             <% end %>
-            <% if can?(:destroy, method.becomes(Spree::PaymentMethod)) %>
-              <%= link_to_delete method.becomes(Spree::PaymentMethod), no_text: true  %>
+            <% if can?(:destroy, method.becomes(Solidus::PaymentMethod)) %>
+              <%= link_to_delete method.becomes(Solidus::PaymentMethod), no_text: true  %>
             <% end %>
           </td>
         </tr>
@@ -63,7 +63,7 @@
 <% else %>
   <div class="no-objects-found">
     <%= render 'spree/admin/shared/no_objects_found',
-                 resource: Spree::PaymentMethod,
+                 resource: Solidus::PaymentMethod,
                  new_resource_url: new_object_url %>
   </div>
 <% end %>

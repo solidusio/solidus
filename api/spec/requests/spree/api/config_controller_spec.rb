@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-module Spree
+module Solidus
   describe Api::ConfigController, type: :request do
     let!(:default_country) { create :country, iso: "US" }
 
@@ -10,7 +10,7 @@ module Spree
       stub_authentication!
     end
 
-    it "returns Spree::Money settings" do
+    it "returns Solidus::Money settings" do
       get '/api/config/money'
       expect(response).to be_successful
       expect(json_response["symbol"]).to eq("$")

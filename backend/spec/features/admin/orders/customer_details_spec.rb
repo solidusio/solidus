@@ -47,7 +47,7 @@ describe "Customer Details", type: :feature, js: true do
       expect(page).to have_select('State', selected: user.bill_address.state.name, visible: false)
       expect(page).to have_field('Phone', with: user.bill_address.phone)
       click_button "Update"
-      expect(Spree::Order.last.user).not_to be_nil
+      expect(Solidus::Order.last.user).not_to be_nil
     end
 
     # Regression test for https://github.com/solidusio/solidus/pull/2176
@@ -165,7 +165,7 @@ describe "Customer Details", type: :feature, js: true do
     # Regression test for https://github.com/spree/spree/issues/942
     context "errors when no shipping methods are available" do
       before do
-        Spree::ShippingMethod.delete_all
+        Solidus::ShippingMethod.delete_all
       end
 
       specify do

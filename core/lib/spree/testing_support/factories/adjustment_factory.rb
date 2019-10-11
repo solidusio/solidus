@@ -7,7 +7,7 @@ require 'spree/testing_support/factories/tax_rate_factory'
 require 'spree/testing_support/factories/zone_factory'
 
 FactoryBot.define do
-  factory :adjustment, class: 'Spree::Adjustment' do
+  factory :adjustment, class: 'Solidus::Adjustment' do
     order
     adjustable { order }
     amount { 100.0 }
@@ -22,7 +22,7 @@ FactoryBot.define do
       end
     end
 
-    factory :tax_adjustment, class: 'Spree::Adjustment' do
+    factory :tax_adjustment, class: 'Solidus::Adjustment' do
       order { adjustable.order }
       association(:adjustable, factory: :line_item)
       amount { 10.0 }
@@ -30,7 +30,7 @@ FactoryBot.define do
 
       after(:create) do |adjustment|
         # Set correct tax category, so that adjustment amount is not 0
-        if adjustment.adjustable.is_a?(Spree::LineItem)
+        if adjustment.adjustable.is_a?(Solidus::LineItem)
           if adjustment.adjustable.tax_category.present?
             adjustment.source.tax_categories = [adjustment.adjustable.tax_category]
           else

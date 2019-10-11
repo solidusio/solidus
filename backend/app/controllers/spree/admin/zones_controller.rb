@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module Admin
     class ZonesController < ResourceController
       before_action :load_data, except: :index
@@ -19,9 +19,9 @@ module Spree
       end
 
       def load_data
-        @countries = Spree::Country.order(:name)
-        @states = Spree::State.order(:name)
-        @zones = Spree::Zone.order(:name)
+        @countries = Solidus::Country.order(:name)
+        @states = Solidus::State.order(:name)
+        @zones = Solidus::Zone.order(:name)
       end
     end
   end

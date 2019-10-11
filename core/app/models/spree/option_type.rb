@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   # Option types denote the different options for a variant. A typical option
   # type would be a size, with that option type’s values being something such
   # as "Small", "Medium" and "Large". Another typical option type could be a
@@ -8,7 +8,7 @@ module Spree
   #
   # A product can be assigned many option types, but must be assigned at least
   # one if you wish to create variants for that product.
-  class OptionType < Spree::Base
+  class OptionType < Solidus::Base
     acts_as_list
 
     has_many :option_values, -> { order(:position) }, dependent: :destroy, inverse_of: :option_type

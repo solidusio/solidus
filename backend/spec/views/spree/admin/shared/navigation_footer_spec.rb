@@ -22,24 +22,24 @@ describe "spree/admin/shared/_navigation_footer", type: :view, partial_double_ve
 
     it "has a user-account-link that links to edit_admin_user_path" do
       render
-      expect(rendered).to have_link(user.email, href: Spree::Core::Engine.routes.url_helpers.edit_admin_user_path(user))
+      expect(rendered).to have_link(user.email, href: Solidus::Core::Engine.routes.url_helpers.edit_admin_user_path(user))
     end
 
     it "has not a user-account-link that links to admin_path" do
       render
-      expect(rendered).to_not have_link(user.email, href: Spree::Core::Engine.routes.url_helpers.admin_path)
+      expect(rendered).to_not have_link(user.email, href: Solidus::Core::Engine.routes.url_helpers.admin_path)
     end
   end
 
   context "unauthorized user" do
     it "has a user-account-link that links to admin_path" do
       render
-      expect(rendered).to_not have_link(user.email, href: Spree::Core::Engine.routes.url_helpers.admin_path)
+      expect(rendered).to_not have_link(user.email, href: Solidus::Core::Engine.routes.url_helpers.admin_path)
     end
 
     it "has not a user-account-link that links to edit_admin_user_path" do
       render
-      expect(rendered).to_not have_link(user.email, href: Spree::Core::Engine.routes.url_helpers.edit_admin_user_path(user))
+      expect(rendered).to_not have_link(user.email, href: Solidus::Core::Engine.routes.url_helpers.edit_admin_user_path(user))
     end
   end
 

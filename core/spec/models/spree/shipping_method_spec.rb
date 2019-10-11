@@ -2,10 +2,10 @@
 
 require 'rails_helper'
 
-class DummyShippingCalculator < Spree::ShippingCalculator
+class DummyShippingCalculator < Solidus::ShippingCalculator
 end
 
-RSpec.describe Spree::ShippingMethod, type: :model do
+RSpec.describe Solidus::ShippingMethod, type: :model do
   # Regression test for https://github.com/spree/spree/issues/4492
   context "#shipments" do
     let!(:shipping_method) { create(:shipping_method) }
@@ -219,7 +219,7 @@ RSpec.describe Spree::ShippingMethod, type: :model do
 
   describe "display_on=" do
     subject do
-      Spree::Deprecation.silence do
+      Solidus::Deprecation.silence do
         described_class.new(display_on: display_on).available_to_users
       end
     end
@@ -242,7 +242,7 @@ RSpec.describe Spree::ShippingMethod, type: :model do
 
   describe "display_on" do
     subject do
-      Spree::Deprecation.silence do
+      Solidus::Deprecation.silence do
         described_class.new(available_to_users: available_to_users).display_on
       end
     end

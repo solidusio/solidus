@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   class CartonMailer < BaseMailer
     # Send an email to customers to notify that an individual carton has been
     # shipped. If a carton contains items from multiple orders then this will be
     # called with that carton one time for each order.
     #
-    # @option options carton [Spree::Carton] the shipped carton
-    # @option options order [Spree::Order] one of the orders with items in the carton
+    # @option options carton [Solidus::Carton] the shipped carton
+    # @option options order [Solidus::Order] one of the orders with items in the carton
     # @option options resend [Boolean] indicates whether the email is a 'resend' (e.g.
     #   triggered by the admin "resend" button)
     # @return [Mail::Message]

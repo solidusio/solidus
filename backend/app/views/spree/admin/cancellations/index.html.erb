@@ -13,11 +13,11 @@
   </colgroup>
 
   <thead>
-    <th colspan="2"><%= Spree::LineItem.human_attribute_name(:description) %></th>
-    <th class="align-center"><%= Spree::OrderCancellations.human_attribute_name(:quantity) %></th>
-    <th><%= Spree::OrderCancellations.human_attribute_name(:state) %></th>
-    <th><%= Spree::OrderCancellations.human_attribute_name(:shipment) %></th>
-    <th class="align-right"><%= Spree::OrderCancellations.human_attribute_name(:cancel) %></th>
+    <th colspan="2"><%= Solidus::LineItem.human_attribute_name(:description) %></th>
+    <th class="align-center"><%= Solidus::OrderCancellations.human_attribute_name(:quantity) %></th>
+    <th><%= Solidus::OrderCancellations.human_attribute_name(:state) %></th>
+    <th><%= Solidus::OrderCancellations.human_attribute_name(:shipment) %></th>
+    <th class="align-right"><%= Solidus::OrderCancellations.human_attribute_name(:cancel) %></th>
   </thead>
 
   <tbody>
@@ -32,7 +32,7 @@
           <td class="inventory-unit-name">
             <%= inventory_unit.variant.product.name %><br><%= "(" + variant_options(inventory_unit.variant) + ")" unless inventory_unit.variant.option_values.empty? %>
             <% if inventory_unit.variant.sku.present? %>
-              <strong><%= Spree::Variant.human_attribute_name(:sku) %>:</strong> <%= inventory_unit.variant.sku %>
+              <strong><%= Solidus::Variant.human_attribute_name(:sku) %>:</strong> <%= inventory_unit.variant.sku %>
             <% end %>
           </td>
           <td class="inventory-unit-quantity align-center">1</td>

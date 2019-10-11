@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-module Spree
+module Solidus
   describe Api::VariantsController, type: :request do
     let!(:product) { create(:product) }
     let!(:variant) do
@@ -317,7 +317,7 @@ module Spree
               option_value_ids: option_values.map(&:id)
             }
           }
-        end.to change { Spree::OptionValuesVariant.count }.by(2)
+        end.to change { Solidus::OptionValuesVariant.count }.by(2)
       end
 
       it "can update a variant" do
@@ -328,7 +328,7 @@ module Spree
       it "can delete a variant" do
         delete spree.api_variant_path(variant)
         expect(response.status).to eq(204)
-        expect { Spree::Variant.find(variant.id) }.to raise_error(ActiveRecord::RecordNotFound)
+        expect { Solidus::Variant.find(variant.id) }.to raise_error(ActiveRecord::RecordNotFound)
       end
 
       it 'variants returned contain cost price data' do

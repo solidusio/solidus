@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::OrderedPropertyValueList do
+RSpec.describe Solidus::OrderedPropertyValueList do
   #
   # Using ProductProperty as a subject
   # since it includes OrderedPropertyValueList
@@ -41,9 +41,9 @@ RSpec.describe Spree::OrderedPropertyValueList do
     # > characters on string columns.
     # http://guides.rubyonrails.org/4_2_release_notes.html#active-record-notable-changes
     # https://github.com/rails/rails/pull/14579
-    if Spree::ProductProperty.columns_hash['value'].limit
+    if Solidus::ProductProperty.columns_hash['value'].limit
       it "should validate length of value" do
-        overflow_length = Spree::ProductProperty.columns_hash['value'].limit + 1
+        overflow_length = Solidus::ProductProperty.columns_hash['value'].limit + 1
         product_property.value = "x" * overflow_length
         expect(product_property).not_to be_valid
       end

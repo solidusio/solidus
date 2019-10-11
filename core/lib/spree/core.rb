@@ -20,36 +20,36 @@ require 'spree/paranoia_deprecations'
 # invalid state of a Payment. In the future this should be removed.
 StateMachines::Machine.ignore_method_conflicts = true
 
-module Spree
+module Solidus
   mattr_accessor :user_class
 
   def self.user_class
     if @@user_class.is_a?(Class)
-      raise "Spree.user_class MUST be a String or Symbol object, not a Class object."
+      raise "Solidus.user_class MUST be a String or Symbol object, not a Class object."
     elsif @@user_class.is_a?(String) || @@user_class.is_a?(Symbol)
       @@user_class.to_s.constantize
     end
   end
 
-  # Used to configure Spree.
+  # Used to configure Solidus.
   #
   # Example:
   #
-  #   Spree.config do |config|
+  #   Solidus.config do |config|
   #     config.track_inventory_levels = false
   #   end
   #
   # This method is defined within the core gem on purpose.
-  # Some people may only wish to use the Core part of Spree.
+  # Some people may only wish to use the Core part of Solidus.
   def self.config(&_block)
-    yield(Spree::Config)
+    yield(Solidus::Config)
   end
 
   module Core
     class GatewayError < RuntimeError; end
 
     include ActiveSupport::Deprecation::DeprecatedConstantAccessor
-    deprecate_constant 'DestroyWithOrdersError', ActiveRecord::DeleteRestrictionError, deprecator: Spree::Deprecation
+    deprecate_constant 'DestroyWithOrdersError', ActiveRecord::DeleteRestrictionError, deprecator: Solidus::Deprecation
   end
 end
 

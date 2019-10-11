@@ -5,7 +5,7 @@ require 'spree/testing_support/factories/return_reason_factory'
 require 'spree/testing_support/factories/return_authorization_factory'
 
 FactoryBot.define do
-  factory :return_item, class: 'Spree::ReturnItem' do
+  factory :return_item, class: 'Solidus::ReturnItem' do
     skip_customer_return_processing { true }
     association(:inventory_unit, factory: :inventory_unit, state: :shipped)
     association(:return_reason, factory: :return_reason)

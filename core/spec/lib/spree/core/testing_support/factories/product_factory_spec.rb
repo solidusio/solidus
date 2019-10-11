@@ -4,7 +4,7 @@ require 'rails_helper'
 require 'spree/testing_support/factories/product_factory'
 
 RSpec.describe 'product factory' do
-  let(:factory_class) { Spree::Product }
+  let(:factory_class) { Solidus::Product }
 
   describe 'plain product' do
     let(:factory) { :product }

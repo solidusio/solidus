@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ::Spree::PromotionCode::BatchBuilder
+class ::Solidus::PromotionCode::BatchBuilder
   attr_reader :promotion_code_batch, :options
   delegate :promotion, :number_of_codes, :base_code, to: :promotion_code_batch
 
@@ -12,12 +12,12 @@ class ::Spree::PromotionCode::BatchBuilder
 
   [:random_code_length, :batch_size, :sample_characters].each do |attr|
     define_singleton_method(attr) do
-      Spree::Deprecation.warn "#{name}.#{attr} is deprecated. Use #{name}::DEFAULT_OPTIONS[:#{attr}] instead"
+      Solidus::Deprecation.warn "#{name}.#{attr} is deprecated. Use #{name}::DEFAULT_OPTIONS[:#{attr}] instead"
       DEFAULT_OPTIONS[attr]
     end
 
     define_singleton_method(:"#{attr}=") do |val|
-      Spree::Deprecation.warn "#{name}.#{attr}= is deprecated. Use #{name}::DEFAULT_OPTIONS[:#{attr}]= instead"
+      Solidus::Deprecation.warn "#{name}.#{attr}= is deprecated. Use #{name}::DEFAULT_OPTIONS[:#{attr}]= instead"
       DEFAULT_OPTIONS[attr] = val
     end
 
@@ -54,7 +54,7 @@ class ::Spree::PromotionCode::BatchBuilder
       codes_for_current_batch = get_unique_codes(new_codes)
 
       codes_for_current_batch.each do |value|
-        Spree::PromotionCode.create!(
+        Solidus::PromotionCode.create!(
           value: value,
           promotion: promotion,
           promotion_code_batch: promotion_code_batch
@@ -73,6 +73,6 @@ class ::Spree::PromotionCode::BatchBuilder
   end
 
   def get_unique_codes(code_set)
-    code_set - Spree::PromotionCode.where(value: code_set.to_a).pluck(:value)
+    code_set - Solidus::PromotionCode.where(value: code_set.to_a).pluck(:value)
   end
 end

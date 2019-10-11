@@ -1,17 +1,17 @@
 <ul class="admin-subnav" data-hook="admin_product_sub_tabs">
-  <% if can? :admin, Spree::Product %>
+  <% if can? :admin, Solidus::Product %>
     <%= tab :products, match_path: '/products' %>
   <% end %>
-  <% if can? :admin, Spree::OptionType %>
+  <% if can? :admin, Solidus::OptionType %>
     <%= tab :option_types, match_path: '/option_types' %>
   <% end %>
-  <% if can? :admin, Spree::Property %>
+  <% if can? :admin, Solidus::Property %>
     <%= tab :properties %>
   <% end %>
-  <% if can? :admin, Spree::Taxonomy %>
+  <% if can? :admin, Solidus::Taxonomy %>
     <%= tab :taxonomies %>
   <% end %>
-  <% if can? :admin, Spree::Taxon %>
+  <% if can? :admin, Solidus::Taxon %>
     <%= tab :taxons, label: :display_order, match_path: '/taxons' %>
   <% end %>
 </ul>

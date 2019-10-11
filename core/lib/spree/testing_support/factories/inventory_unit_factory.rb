@@ -6,7 +6,7 @@ require 'spree/testing_support/factories/order_factory'
 require 'spree/testing_support/factories/shipment_factory'
 
 FactoryBot.define do
-  factory :inventory_unit, class: 'Spree::InventoryUnit' do
+  factory :inventory_unit, class: 'Solidus::InventoryUnit' do
     transient do
       order { nil }
     end

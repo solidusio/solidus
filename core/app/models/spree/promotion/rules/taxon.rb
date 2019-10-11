@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-module Spree
-  class Promotion < Spree::Base
+module Solidus
+  class Promotion < Solidus::Base
     module Rules
       class Taxon < PromotionRule
-        has_many :promotion_rule_taxons, class_name: 'Spree::PromotionRuleTaxon', foreign_key: :promotion_rule_id,
+        has_many :promotion_rule_taxons, class_name: 'Solidus::PromotionRuleTaxon', foreign_key: :promotion_rule_id,
           dependent: :destroy
-        has_many :taxons, through: :promotion_rule_taxons, class_name: 'Spree::Taxon'
+        has_many :taxons, through: :promotion_rule_taxons, class_name: 'Solidus::Taxon'
 
         MATCH_POLICIES = %w(any all none)
 
@@ -14,7 +14,7 @@ module Spree
 
         preference :match_policy, :string, default: MATCH_POLICIES.first
         def applicable?(promotable)
-          promotable.is_a?(Spree::Order)
+          promotable.is_a?(Solidus::Order)
         end
 
         def eligible?(order, _options = {})
@@ -49,7 +49,7 @@ module Spree
         end
 
         def actionable?(line_item)
-          found = Spree::Classification.where(
+          found = Solidus::Classification.where(
             product_id: line_item.variant.product_id,
             taxon_id: rule_taxon_ids_with_children
           ).exists?
@@ -72,13 +72,13 @@ module Spree
 
         def taxon_ids_string=(taxon_ids)
           taxon_ids = taxon_ids.to_s.split(',').map(&:strip)
-          self.taxons = Spree::Taxon.find(taxon_ids)
+          self.taxons = Solidus::Taxon.find(taxon_ids)
         end
 
         private
 
         def warn_invalid_match_policy(assume:)
-          Spree::Deprecation.warn(
+          Solidus::Deprecation.warn(
             "#{self.class.name} id=#{id} has unexpected match policy #{preferred_match_policy.inspect}. "\
             "Interpreting it as '#{assume}'."
           )
@@ -86,7 +86,7 @@ module Spree
 
         # All taxons in an order
         def taxons_in_order(order)
-          Spree::Taxon.joins(products: { variants_including_master: :line_items })
+          Solidus::Taxon.joins(products: { variants_including_master: :line_items })
             .where(spree_line_items: { order_id: order.id }).distinct
         end
 

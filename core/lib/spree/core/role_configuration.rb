@@ -3,17 +3,17 @@
 require 'singleton'
 require 'spree/core/class_constantizer'
 
-module Spree
-  # A class responsible for associating {Spree::Role} with a list of permission sets.
+module Solidus
+  # A class responsible for associating {Solidus::Role} with a list of permission sets.
   #
-  # @see Spree::PermissionSets
+  # @see Solidus::PermissionSets
   #
   # @example Adding order, product, and user display to customer service users.
-  #   Spree::RoleConfiguration.configure do |config|
+  #   Solidus::RoleConfiguration.configure do |config|
   #     config.assign_permissions :customer_service, [
-  #       Spree::PermissionSets::OrderDisplay,
-  #       Spree::PermissionSets::UserDisplay,
-  #       Spree::PermissionSets::ProductDisplay
+  #       Solidus::PermissionSets::OrderDisplay,
+  #       Solidus::PermissionSets::UserDisplay,
+  #       Solidus::PermissionSets::ProductDisplay
   #     ]
   #   end
   class RoleConfiguration
@@ -24,7 +24,7 @@ module Spree
 
       def initialize(name, permission_sets)
         @name = name
-        @permission_sets = Spree::Core::ClassConstantizer::Set.new
+        @permission_sets = Solidus::Core::ClassConstantizer::Set.new
         @permission_sets.concat permission_sets
       end
     end
@@ -33,15 +33,15 @@ module Spree
 
     class << self
       def instance
-        Spree::Deprecation.warn "Spree::RoleConfiguration.instance is DEPRECATED use Spree::Config.roles instead"
-        Spree::Config.roles
+        Solidus::Deprecation.warn "Solidus::RoleConfiguration.instance is DEPRECATED use Solidus::Config.roles instead"
+        Solidus::Config.roles
       end
 
       # Yields the instance of the singleton, used for configuration
-      # @yieldparam instance [Spree::RoleConfiguration]
+      # @yieldparam instance [Solidus::RoleConfiguration]
       def configure
-        Spree::Deprecation.warn "Spree::RoleConfiguration.configure is deprecated. Call Spree::Config.roles.assign_permissions instead"
-        yield(Spree::Config.roles)
+        Solidus::Deprecation.warn "Solidus::RoleConfiguration.configure is deprecated. Call Solidus::Config.roles.assign_permissions instead"
+        yield(Solidus::Config.roles)
       end
     end
 
@@ -74,9 +74,9 @@ module Spree
       end
     end
 
-    # Assign permission sets for a {Spree::Role} that has the name of role_name
+    # Assign permission sets for a {Solidus::Role} that has the name of role_name
     # @param role_name [Symbol, String] The name of the role to associate permissions with
-    # @param permission_sets [Array<Spree::PermissionSets::Base>, Set<Spree::PermissionSets::Base>]
+    # @param permission_sets [Array<Solidus::PermissionSets::Base>, Set<Solidus::PermissionSets::Base>]
     #   A list of permission sets to activate if the user has the role indicated by role_name
     def assign_permissions(role_name, permission_sets)
       name = role_name.to_s

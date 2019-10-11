@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module AdjustmentSource
     def deals_with_adjustments_for_deleted_source
-      Spree::Deprecation.warn "AdjustmentSource#deals_with_adjustments_for_deleted_source is deprecated. Please use AdjustmentSource#remove_adjustments_from_incomplete_orders instead."
+      Solidus::Deprecation.warn "AdjustmentSource#deals_with_adjustments_for_deleted_source is deprecated. Please use AdjustmentSource#remove_adjustments_from_incomplete_orders instead."
 
       remove_adjustments_from_incomplete_orders
 
@@ -13,14 +13,14 @@ module Spree
       # source_id around.
       adjustments.
         joins(:order).
-        merge(Spree::Order.complete).
+        merge(Solidus::Order.complete).
         update_all(source_id: nil, updated_at: Time.current)
     end
 
     def remove_adjustments_from_incomplete_orders
       adjustments.
         joins(:order).
-        merge(Spree::Order.incomplete).
+        merge(Solidus::Order.incomplete).
         destroy_all
     end
   end

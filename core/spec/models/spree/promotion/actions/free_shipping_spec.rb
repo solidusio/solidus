@@ -2,11 +2,11 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::Promotion::Actions::FreeShipping, type: :model do
+RSpec.describe Solidus::Promotion::Actions::FreeShipping, type: :model do
   let(:order) { create(:completed_order_with_totals) }
   let(:shipment) { order.shipments.to_a.first }
   let(:promotion) { create(:promotion, code: 'somecode', promotion_actions: [action]) }
-  let(:action) { Spree::Promotion::Actions::FreeShipping.new }
+  let(:action) { Solidus::Promotion::Actions::FreeShipping.new }
   let(:payload) { { order: order, promotion_code: promotion_code } }
   let(:promotion_code) { promotion.codes.first! }
 

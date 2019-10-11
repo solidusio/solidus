@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::PermissionSets::ConfigurationDisplay do
+RSpec.describe Solidus::PermissionSets::ConfigurationDisplay do
   let(:ability) { DummyAbility.new }
 
   subject { ability }
@@ -13,67 +13,67 @@ RSpec.describe Spree::PermissionSets::ConfigurationDisplay do
     end
 
     it { is_expected.to be_able_to(:edit, :general_settings) }
-    it { is_expected.to be_able_to(:display, Spree::TaxCategory) }
-    it { is_expected.to be_able_to(:display, Spree::TaxRate) }
-    it { is_expected.to be_able_to(:display, Spree::Zone) }
-    it { is_expected.to be_able_to(:display, Spree::Country) }
-    it { is_expected.to be_able_to(:display, Spree::State) }
-    it { is_expected.to be_able_to(:display, Spree::PaymentMethod) }
-    it { is_expected.to be_able_to(:display, Spree::Taxonomy) }
-    it { is_expected.to be_able_to(:display, Spree::ShippingMethod) }
-    it { is_expected.to be_able_to(:display, Spree::ShippingCategory) }
-    it { is_expected.to be_able_to(:display, Spree::StockLocation) }
-    it { is_expected.to be_able_to(:display, Spree::StockMovement) }
-    it { is_expected.to be_able_to(:display, Spree::RefundReason) }
-    it { is_expected.to be_able_to(:display, Spree::ReimbursementType) }
-    it { is_expected.to be_able_to(:display, Spree::ReturnReason) }
+    it { is_expected.to be_able_to(:display, Solidus::TaxCategory) }
+    it { is_expected.to be_able_to(:display, Solidus::TaxRate) }
+    it { is_expected.to be_able_to(:display, Solidus::Zone) }
+    it { is_expected.to be_able_to(:display, Solidus::Country) }
+    it { is_expected.to be_able_to(:display, Solidus::State) }
+    it { is_expected.to be_able_to(:display, Solidus::PaymentMethod) }
+    it { is_expected.to be_able_to(:display, Solidus::Taxonomy) }
+    it { is_expected.to be_able_to(:display, Solidus::ShippingMethod) }
+    it { is_expected.to be_able_to(:display, Solidus::ShippingCategory) }
+    it { is_expected.to be_able_to(:display, Solidus::StockLocation) }
+    it { is_expected.to be_able_to(:display, Solidus::StockMovement) }
+    it { is_expected.to be_able_to(:display, Solidus::RefundReason) }
+    it { is_expected.to be_able_to(:display, Solidus::ReimbursementType) }
+    it { is_expected.to be_able_to(:display, Solidus::ReturnReason) }
     it { is_expected.to be_able_to(:admin, :general_settings) }
-    it { is_expected.to be_able_to(:admin, Spree::TaxCategory) }
-    it { is_expected.to be_able_to(:admin, Spree::TaxRate) }
-    it { is_expected.to be_able_to(:admin, Spree::Zone) }
-    it { is_expected.to be_able_to(:admin, Spree::Country) }
-    it { is_expected.to be_able_to(:admin, Spree::State) }
-    it { is_expected.to be_able_to(:admin, Spree::PaymentMethod) }
-    it { is_expected.to be_able_to(:admin, Spree::Taxonomy) }
-    it { is_expected.to be_able_to(:admin, Spree::ShippingMethod) }
-    it { is_expected.to be_able_to(:admin, Spree::ShippingCategory) }
-    it { is_expected.to be_able_to(:admin, Spree::StockLocation) }
-    it { is_expected.to be_able_to(:admin, Spree::StockMovement) }
-    it { is_expected.to be_able_to(:admin, Spree::RefundReason) }
-    it { is_expected.to be_able_to(:admin, Spree::ReimbursementType) }
-    it { is_expected.to be_able_to(:admin, Spree::ReturnReason) }
+    it { is_expected.to be_able_to(:admin, Solidus::TaxCategory) }
+    it { is_expected.to be_able_to(:admin, Solidus::TaxRate) }
+    it { is_expected.to be_able_to(:admin, Solidus::Zone) }
+    it { is_expected.to be_able_to(:admin, Solidus::Country) }
+    it { is_expected.to be_able_to(:admin, Solidus::State) }
+    it { is_expected.to be_able_to(:admin, Solidus::PaymentMethod) }
+    it { is_expected.to be_able_to(:admin, Solidus::Taxonomy) }
+    it { is_expected.to be_able_to(:admin, Solidus::ShippingMethod) }
+    it { is_expected.to be_able_to(:admin, Solidus::ShippingCategory) }
+    it { is_expected.to be_able_to(:admin, Solidus::StockLocation) }
+    it { is_expected.to be_able_to(:admin, Solidus::StockMovement) }
+    it { is_expected.to be_able_to(:admin, Solidus::RefundReason) }
+    it { is_expected.to be_able_to(:admin, Solidus::ReimbursementType) }
+    it { is_expected.to be_able_to(:admin, Solidus::ReturnReason) }
   end
 
   context "when not activated" do
     it { is_expected.not_to be_able_to(:edit, :general_settings) }
-    it { is_expected.not_to be_able_to(:display, Spree::TaxCategory) }
-    it { is_expected.not_to be_able_to(:display, Spree::TaxRate) }
-    it { is_expected.not_to be_able_to(:display, Spree::Zone) }
-    it { is_expected.not_to be_able_to(:display, Spree::Country) }
-    it { is_expected.not_to be_able_to(:display, Spree::State) }
-    it { is_expected.not_to be_able_to(:display, Spree::PaymentMethod) }
-    it { is_expected.not_to be_able_to(:display, Spree::Taxonomy) }
-    it { is_expected.not_to be_able_to(:display, Spree::ShippingMethod) }
-    it { is_expected.not_to be_able_to(:display, Spree::ShippingCategory) }
-    it { is_expected.not_to be_able_to(:display, Spree::StockLocation) }
-    it { is_expected.not_to be_able_to(:display, Spree::StockMovement) }
-    it { is_expected.not_to be_able_to(:display, Spree::RefundReason) }
-    it { is_expected.not_to be_able_to(:display, Spree::ReimbursementType) }
-    it { is_expected.not_to be_able_to(:display, Spree::ReturnReason) }
+    it { is_expected.not_to be_able_to(:display, Solidus::TaxCategory) }
+    it { is_expected.not_to be_able_to(:display, Solidus::TaxRate) }
+    it { is_expected.not_to be_able_to(:display, Solidus::Zone) }
+    it { is_expected.not_to be_able_to(:display, Solidus::Country) }
+    it { is_expected.not_to be_able_to(:display, Solidus::State) }
+    it { is_expected.not_to be_able_to(:display, Solidus::PaymentMethod) }
+    it { is_expected.not_to be_able_to(:display, Solidus::Taxonomy) }
+    it { is_expected.not_to be_able_to(:display, Solidus::ShippingMethod) }
+    it { is_expected.not_to be_able_to(:display, Solidus::ShippingCategory) }
+    it { is_expected.not_to be_able_to(:display, Solidus::StockLocation) }
+    it { is_expected.not_to be_able_to(:display, Solidus::StockMovement) }
+    it { is_expected.not_to be_able_to(:display, Solidus::RefundReason) }
+    it { is_expected.not_to be_able_to(:display, Solidus::ReimbursementType) }
+    it { is_expected.not_to be_able_to(:display, Solidus::ReturnReason) }
     it { is_expected.not_to be_able_to(:admin, :general_settings) }
-    it { is_expected.not_to be_able_to(:admin, Spree::TaxCategory) }
-    it { is_expected.not_to be_able_to(:admin, Spree::TaxRate) }
-    it { is_expected.not_to be_able_to(:admin, Spree::Zone) }
-    it { is_expected.not_to be_able_to(:admin, Spree::Country) }
-    it { is_expected.not_to be_able_to(:admin, Spree::State) }
-    it { is_expected.not_to be_able_to(:admin, Spree::PaymentMethod) }
-    it { is_expected.not_to be_able_to(:admin, Spree::Taxonomy) }
-    it { is_expected.not_to be_able_to(:admin, Spree::ShippingMethod) }
-    it { is_expected.not_to be_able_to(:admin, Spree::ShippingCategory) }
-    it { is_expected.not_to be_able_to(:admin, Spree::StockLocation) }
-    it { is_expected.not_to be_able_to(:admin, Spree::StockMovement) }
-    it { is_expected.not_to be_able_to(:admin, Spree::RefundReason) }
-    it { is_expected.not_to be_able_to(:admin, Spree::ReimbursementType) }
-    it { is_expected.not_to be_able_to(:admin, Spree::ReturnReason) }
+    it { is_expected.not_to be_able_to(:admin, Solidus::TaxCategory) }
+    it { is_expected.not_to be_able_to(:admin, Solidus::TaxRate) }
+    it { is_expected.not_to be_able_to(:admin, Solidus::Zone) }
+    it { is_expected.not_to be_able_to(:admin, Solidus::Country) }
+    it { is_expected.not_to be_able_to(:admin, Solidus::State) }
+    it { is_expected.not_to be_able_to(:admin, Solidus::PaymentMethod) }
+    it { is_expected.not_to be_able_to(:admin, Solidus::Taxonomy) }
+    it { is_expected.not_to be_able_to(:admin, Solidus::ShippingMethod) }
+    it { is_expected.not_to be_able_to(:admin, Solidus::ShippingCategory) }
+    it { is_expected.not_to be_able_to(:admin, Solidus::StockLocation) }
+    it { is_expected.not_to be_able_to(:admin, Solidus::StockMovement) }
+    it { is_expected.not_to be_able_to(:admin, Solidus::RefundReason) }
+    it { is_expected.not_to be_able_to(:admin, Solidus::ReimbursementType) }
+    it { is_expected.not_to be_able_to(:admin, Solidus::ReturnReason) }
   end
 end

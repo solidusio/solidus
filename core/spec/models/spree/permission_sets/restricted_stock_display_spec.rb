@@ -2,8 +2,8 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::PermissionSets::RestrictedStockDisplay do
-  let(:ability) { Spree::Ability.new(user) }
+RSpec.describe Solidus::PermissionSets::RestrictedStockDisplay do
+  let(:ability) { Solidus::Ability.new(user) }
   let(:user) { create :user }
 
   subject { ability }

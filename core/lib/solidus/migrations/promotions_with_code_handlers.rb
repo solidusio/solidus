@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Solidus
-  module Migrations
+  class Migrations
     module PromotionWithCodeHandlers
       class PromotionCode < ActiveRecord::Base
         self.table_name = "spree_promotion_codes"
@@ -32,8 +32,8 @@ module Solidus
 
       class MoveToSpreePromotionCode < Base
         def call
-          # This is another possible approach, it will convert Spree::Promotion#code
-          # to a Spree::PromotionCode before removing the `code` field.
+          # This is another possible approach, it will convert Solidus::Promotion#code
+          # to a Solidus::PromotionCode before removing the `code` field.
           #
           # NOTE: promotion codes will be downcased and stripped
           promotions.find_each do |promotion|
@@ -43,8 +43,8 @@ module Solidus
               value: normalized_code,
               promotion_id: promotion.id
             ) do
-              migration_context.say "Creating Spree::PromotionCode with value "\
-               "'#{normalized_code}' for Spree::Promotion with id '#{promotion.id}'"
+              migration_context.say "Creating Solidus::PromotionCode with value "\
+               "'#{normalized_code}' for Solidus::Promotion with id '#{promotion.id}'"
             end
           end
         end
@@ -57,7 +57,7 @@ module Solidus
           #
           promotions.find_each do |promotion|
             migration_context.say "Code '#{promotion.code}' is going to be removed "\
-              "from Spree::Promotion with id '#{promotion.id}'"
+              "from Solidus::Promotion with id '#{promotion.id}'"
           end
         end
       end

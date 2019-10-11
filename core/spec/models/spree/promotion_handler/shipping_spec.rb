@@ -2,15 +2,15 @@
 
 require 'rails_helper'
 
-module Spree
+module Solidus
   module PromotionHandler
     RSpec.describe Shipping, type: :model do
       let(:order) { create(:order) }
       let(:shipment) { create(:shipment, order: order ) }
 
-      let(:action) { Spree::Promotion::Actions::FreeShipping.new }
+      let(:action) { Solidus::Promotion::Actions::FreeShipping.new }
 
-      subject { Spree::PromotionHandler::Shipping.new(order) }
+      subject { Solidus::PromotionHandler::Shipping.new(order) }
 
       context 'with apply_automatically' do
         let!(:promotion) { create(:promotion, apply_automatically: true, promotion_actions: [action]) }
@@ -76,13 +76,13 @@ module Spree
         before do
           stub_const('CustomShippingAction', custom_klass)
 
-          allow(Spree::Config.environment.promotions).to receive(:shipping_actions) { ['CustomShippingAction'] }
+          allow(Solidus::Config.environment.promotions).to receive(:shipping_actions) { ['CustomShippingAction'] }
 
           order.order_promotions.create!(promotion: promotion, promotion_code: promotion.codes.first)
         end
 
         let(:action) { custom_klass.new }
-        let(:custom_klass) { Class.new(Spree::Promotion::Actions::FreeShipping) }
+        let(:custom_klass) { Class.new(Solidus::Promotion::Actions::FreeShipping) }
         let(:promotion) { create(:promotion, code: 'customshipping', promotion_actions: [action]) }
 
         it 'adjusts the shipment' do

@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe Spree::Admin::LocaleController, type: :controller do
+RSpec.describe Solidus::Admin::LocaleController, type: :controller do
   stub_authorization!
 
   before { I18n.backend.store_translations(:fr, {}) }

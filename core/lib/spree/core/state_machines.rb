@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module Core
     class StateMachines
       attr_writer :reimbursement,
@@ -14,7 +14,7 @@ module Spree
       def return_authorization
         @return_authorization ||= begin
           require 'spree/core/state_machines/return_authorization'
-          'Spree::Core::StateMachines::ReturnAuthorization'
+          'Solidus::Core::StateMachines::ReturnAuthorization'
         end
 
         @return_authorization.constantize
@@ -23,7 +23,7 @@ module Spree
       def return_item_reception
         @return_item_reception_status ||= begin
           require 'spree/core/state_machines/return_item/reception_status'
-          'Spree::Core::StateMachines::ReturnItem::ReceptionStatus'
+          'Solidus::Core::StateMachines::ReturnItem::ReceptionStatus'
         end
 
         @return_item_reception_status.constantize
@@ -32,7 +32,7 @@ module Spree
       def return_item_acceptance
         @return_item_acceptance_status ||= begin
           require 'spree/core/state_machines/return_item/acceptance_status'
-          'Spree::Core::StateMachines::ReturnItem::AcceptanceStatus'
+          'Solidus::Core::StateMachines::ReturnItem::AcceptanceStatus'
         end
 
         @return_item_acceptance_status.constantize
@@ -41,7 +41,7 @@ module Spree
       def payment
         @payment ||= begin
           require 'spree/core/state_machines/payment'
-          'Spree::Core::StateMachines::Payment'
+          'Solidus::Core::StateMachines::Payment'
         end
 
         @payment.constantize
@@ -50,7 +50,7 @@ module Spree
       def inventory_unit
         @inventory_unit ||= begin
           require 'spree/core/state_machines/inventory_unit'
-          'Spree::Core::StateMachines::InventoryUnit'
+          'Solidus::Core::StateMachines::InventoryUnit'
         end
 
         @inventory_unit.constantize
@@ -59,7 +59,7 @@ module Spree
       def shipment
         @shipment ||= begin
           require 'spree/core/state_machines/shipment'
-          'Spree::Core::StateMachines::Shipment'
+          'Solidus::Core::StateMachines::Shipment'
         end
 
         @shipment.constantize
@@ -68,7 +68,7 @@ module Spree
       def reimbursement
         @reimbursement ||= begin
           require 'spree/core/state_machines/reimbursement'
-          'Spree::Core::StateMachines::Reimbursement'
+          'Solidus::Core::StateMachines::Reimbursement'
         end
 
         @reimbursement.constantize

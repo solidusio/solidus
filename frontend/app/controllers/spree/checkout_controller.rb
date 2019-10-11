@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   # This is somewhat contrary to standard REST convention since there is not
   # actually a Checkout object. There's enough distinct logic specific to
   # checkout which has nothing to do with updating an order that this approach
   # is warranted.
-  class CheckoutController < Spree::StoreController
+  class CheckoutController < Solidus::StoreController
     before_action :load_order
     around_action :lock_order
     before_action :set_state_if_present
@@ -21,10 +21,10 @@ module Spree
 
     before_action :setup_for_current_state, only: [:edit, :update]
 
-    helper 'spree/orders'
+    helper 'solidus/orders'
 
-    rescue_from Spree::Core::GatewayError, with: :rescue_from_spree_gateway_error
-    rescue_from Spree::Order::InsufficientStock, with: :insufficient_stock_error
+    rescue_from Solidus::Core::GatewayError, with: :rescue_from_spree_gateway_error
+    rescue_from Solidus::Order::InsufficientStock, with: :insufficient_stock_error
 
     # Updates the order and advances to the next state (when possible.)
     def update
@@ -100,7 +100,7 @@ module Spree
 
       move_payment_source_into_payments_attributes(massaged_params)
       if massaged_params[:order] && massaged_params[:order][:existing_card].present?
-        Spree::Deprecation.warn("Passing order[:existing_card] is deprecated. Send order[:wallet_payment_source_id] instead.", caller)
+        Solidus::Deprecation.warn("Passing order[:existing_card] is deprecated. Send order[:wallet_payment_source_id] instead.", caller)
         move_existing_card_into_payments_attributes(massaged_params) # deprecated
       end
       move_wallet_payment_source_id_into_payments_attributes(massaged_params)
@@ -169,7 +169,7 @@ module Spree
 
     def apply_coupon_code
       if update_params[:coupon_code].present?
-        Spree::Deprecation.warn('This endpoint is deprecated. Please use `Spree::CouponCodesController#create` endpoint instead.')
+        Solidus::Deprecation.warn('This endpoint is deprecated. Please use `Solidus::CouponCodesController#create` endpoint instead.')
         @order.coupon_code = update_params[:coupon_code]
 
         handler = PromotionHandler::Coupon.new(@order).apply
@@ -194,7 +194,7 @@ module Spree
       @order.assign_default_user_addresses
       # If the user has a default address, the previous method call takes care
       # of setting that; but if he doesn't, we need to build an empty one here
-      default = { country_id: Spree::Country.default.id }
+      default = { country_id: Solidus::Country.default.id }
       @order.build_bill_address(default) unless @order.bill_address
       @order.build_ship_address(default) if @order.checkout_steps.include?('delivery') && !@order.ship_address
     end
@@ -203,13 +203,13 @@ module Spree
       return if params[:order].present?
 
       packages = @order.shipments.map(&:to_package)
-      @differentiator = Spree::Stock::Differentiator.new(@order, packages)
+      @differentiator = Solidus::Stock::Differentiator.new(@order, packages)
     end
 
     def before_payment
       if @order.checkout_steps.include? "delivery"
         packages = @order.shipments.map(&:to_package)
-        @differentiator = Spree::Stock::Differentiator.new(@order, packages)
+        @differentiator = Solidus::Stock::Differentiator.new(@order, packages)
         @differentiator.missing.each do |variant, quantity|
           @order.contents.remove(variant, quantity)
         end
@@ -220,11 +220,11 @@ module Spree
         @default_wallet_payment_source = @wallet_payment_sources.detect(&:default) ||
                                          @wallet_payment_sources.first
 
-        @payment_sources = Spree::DeprecatedInstanceVariableProxy.new(
+        @payment_sources = Solidus::DeprecatedInstanceVariableProxy.new(
           self,
           :deprecated_payment_sources,
           :@payment_sources,
-          Spree::Deprecation,
+          Solidus::Deprecation,
           "Please, do not use @payment_sources anymore, use @wallet_payment_sources instead."
         )
       end
@@ -246,7 +246,7 @@ module Spree
         flash[:error] = I18n.t('spree.insufficient_stock_for_order')
         redirect_to cart_path
       else
-        availability_validator = Spree::Stock::AvailabilityValidator.new
+        availability_validator = Solidus::Stock::AvailabilityValidator.new
         unavailable_items = @order.line_items.reject { |line_item| availability_validator.validate(line_item) }
         if unavailable_items.any?
           item_names = unavailable_items.map(&:name).to_sentence
@@ -264,14 +264,14 @@ module Spree
     #
     # DO NOT USE THIS METHOD!
     #
-    # @return [Array<Spree::PaymentSource>] Payment sources connected to
+    # @return [Array<Solidus::PaymentSource>] Payment sources connected to
     #   current user wallet.
     # @deprecated This method has been added to deprecate @payment_sources
     #   ivar and will be removed. Use @wallet_payment_sources instead.
     def deprecated_payment_sources
       try_spree_current_user.wallet.wallet_payment_sources
         .map(&:payment_source)
-        .select { |ps| ps.is_a?(Spree::CreditCard) }
+        .select { |ps| ps.is_a?(Solidus::CreditCard) }
     end
   end
 end

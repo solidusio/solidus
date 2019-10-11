@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-module Spree
-  class OrdersController < Spree::StoreController
-    helper 'spree/products', 'spree/orders'
+module Solidus
+  class OrdersController < Solidus::StoreController
+    helper 'solidus/products', 'solidus/orders'
 
     respond_to :html
 
@@ -14,7 +14,7 @@ module Spree
     skip_before_action :verify_authenticity_token, only: [:populate]
 
     def show
-      @order = Spree::Order.find_by!(number: params[:id])
+      @order = Solidus::Order.find_by!(number: params[:id])
       authorize! :read, @order, cookies.signed[:guest_token]
     end
 
@@ -39,7 +39,7 @@ module Spree
 
     # Shows the current incomplete order from the session
     def edit
-      @order = current_order || Spree::Order.incomplete.find_or_initialize_by(guest_token: cookies.signed[:guest_token])
+      @order = current_order || Solidus::Order.incomplete.find_or_initialize_by(guest_token: cookies.signed[:guest_token])
       authorize! :read, @order, cookies.signed[:guest_token]
       associate_user
     end
@@ -49,7 +49,7 @@ module Spree
       @order = current_order(create_order_if_necessary: true)
       authorize! :update, @order, cookies.signed[:guest_token]
 
-      variant  = Spree::Variant.find(params[:variant_id])
+      variant  = Solidus::Variant.find(params[:variant_id])
       quantity = params[:quantity].present? ? params[:quantity].to_i : 1
 
       # 2,147,483,647 is crazy. See issue https://github.com/spree/spree/issues/2695.
@@ -122,7 +122,7 @@ module Spree
 
     def apply_coupon_code
       if order_params[:coupon_code].present?
-        Spree::Deprecation.warn('This endpoint is deprecated. Please use `Spree::CouponCodesController#create` endpoint instead.')
+        Solidus::Deprecation.warn('This endpoint is deprecated. Please use `Solidus::CouponCodesController#create` endpoint instead.')
         @order.coupon_code = order_params[:coupon_code]
 
         handler = PromotionHandler::Coupon.new(@order).apply

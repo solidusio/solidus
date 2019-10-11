@@ -2,7 +2,7 @@
 
 require 'spree/deprecation'
 
-module Spree
+module Solidus
   module TestingSupport
     module Preferences
       # Resets all preferences to default values, you can
@@ -14,29 +14,29 @@ module Spree
       #
       # @deprecated
       def reset_spree_preferences(&config_block)
-        Spree::Config.instance_variables.each { |iv| Spree::Config.remove_instance_variable(iv) }
-        Spree::Config.preference_store = Spree::Config.default_preferences
+        Solidus::Config.instance_variables.each { |iv| Solidus::Config.remove_instance_variable(iv) }
+        Solidus::Config.preference_store = Solidus::Config.default_preferences
 
         if defined?(Railties)
-          Rails.application.config.spree = Spree::Config.environment
+          Rails.application.config.spree = Solidus::Config.environment
         end
 
         configure_spree_preferences(&config_block) if block_given?
       end
 
-      deprecate :reset_spree_preferences, deprecator: Spree::Deprecation
+      deprecate :reset_spree_preferences, deprecator: Solidus::Deprecation
 
       def configure_spree_preferences
-        yield(Spree::Config) if block_given?
+        yield(Solidus::Config) if block_given?
       end
 
       def assert_preference_unset(preference)
         find("#preferences_#{preference}")['checked'].should be false
-        Spree::Config[preference].should be false
+        Solidus::Config[preference].should be false
       end
 
       # This is the preferred way for changing temporarily Spree preferences during
-      # tests via stubs, without changing the actual values stored in Spree::Config.
+      # tests via stubs, without changing the actual values stored in Solidus::Config.
       #
       # By using stubs no global preference change will leak outside the lifecycle
       # of each spec example, avoiding possible unpredictable side effects.
@@ -46,22 +46,22 @@ module Spree
       #
       # @param prefs_or_conf_class [Class, Hash] the class we want to stub
       #   preferences for or the preferences hash (see prefs param). If this
-      #   param is an Hash, preferences will be stubbed on Spree::Config.
+      #   param is an Hash, preferences will be stubbed on Solidus::Config.
       # @param prefs [Hash, nil] names and values to be stubbed
       #
-      # @example Stubs `currency` and `track_inventory_levels` on `Spree::Config`:
+      # @example Stubs `currency` and `track_inventory_levels` on `Solidus::Config`:
       #   stub_spree_preferences(currency: 'EUR', track_inventory_levels: false)
-      #   expect(Spree::Config.currency).to eql 'EUR'
+      #   expect(Solidus::Config.currency).to eql 'EUR'
       #
-      # @example Stubs `locale` preference on `Spree::Backend::Config`:
-      #   stub_spree_preferences(Spree::Backend::Config, locale: 'fr'),
-      #   expect(Spree::Backend::Config.locale).to eql 'fr'
+      # @example Stubs `locale` preference on `Solidus::Backend::Config`:
+      #   stub_spree_preferences(Solidus::Backend::Config, locale: 'fr'),
+      #   expect(Solidus::Backend::Config.locale).to eql 'fr'
       #
       # @see https://github.com/solidusio/solidus/issues/3219
       #   Solidus #3219 for more details and motivations.
       def stub_spree_preferences(prefs_or_conf_class, prefs = nil)
         if prefs_or_conf_class.is_a?(Hash)
-          preference_store_class = Spree::Config
+          preference_store_class = Solidus::Config
           preferences = prefs_or_conf_class
         else
           preference_store_class = prefs_or_conf_class
@@ -77,20 +77,20 @@ module Spree
         end
       end
 
-      # This method allows to temporarily switch to an unfrozen Spree::Config preference
+      # This method allows to temporarily switch to an unfrozen Solidus::Config preference
       # store with all proper preferences values set.
       #
       # It should be used sparingly, only when `stub_spree_preferences` would not work.
       #
       # @example Temporarily switch to an unfrozen store and change some preferences:
       #   with_unfrozen_spree_preference_store do
-      #     Spree::Config.currency = 'EUR'
-      #     Spree::Config.track_inventory_levels = false
+      #     Solidus::Config.currency = 'EUR'
+      #     Solidus::Config.track_inventory_levels = false
       #
-      #     expect(Spree::Config.currency).to eql 'EUR'
+      #     expect(Solidus::Config.currency).to eql 'EUR'
       #   end
-      # @see Spree::TestingSupport::Preferences#stub_spree_preferences
-      def with_unfrozen_spree_preference_store(preference_store_class: Spree::Config)
+      # @see Solidus::TestingSupport::Preferences#stub_spree_preferences
+      def with_unfrozen_spree_preference_store(preference_store_class: Solidus::Config)
         frozen_store = preference_store_class.preference_store
         preference_store_class.preference_store = preference_store_class[:unfrozen_preference_store].dup
         yield
@@ -104,7 +104,7 @@ module Spree
       # (eg. with_unfrozen_spree_preference_store)
       #
       # It is meant to be used by extensions as well, for example if one
-      # extension has its own Spree::ExtensionName::Config class, we can
+      # extension has its own Solidus::ExtensionName::Config class, we can
       # freeze it and be sure we always stub values on it during tests.
       #
       # @param preference_store_class [Class] the configuration class we want
@@ -122,13 +122,13 @@ end
 RSpec.configure do |config|
   config.before :suite do
     %w[
-      Spree::Config
-      Spree::Frontend::Config
-      Spree::Backend::Config
-      Spree::Api::Config
+      Solidus::Config
+      Solidus::Frontend::Config
+      Solidus::Backend::Config
+      Solidus::Api::Config
     ].each do |configuration_class|
       if Object.const_defined?(configuration_class)
-        Spree::TestingSupport::Preferences.freeze_preferences(configuration_class.constantize)
+        Solidus::TestingSupport::Preferences.freeze_preferences(configuration_class.constantize)
       end
     end
   end

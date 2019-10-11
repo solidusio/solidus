@@ -4,7 +4,7 @@ require 'rails_helper'
 require 'spree/testing_support/factories/option_type_factory'
 
 RSpec.describe 'option type factory' do
-  let(:factory_class) { Spree::OptionType }
+  let(:factory_class) { Solidus::OptionType }
 
   describe 'plain option type' do
     let(:factory) { :option_type }

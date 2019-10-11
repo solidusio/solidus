@@ -15,7 +15,7 @@ module ClassConstantizerTest
   end
 end
 
-RSpec.describe Spree::Core::ClassConstantizer::Set do
+RSpec.describe Solidus::Core::ClassConstantizer::Set do
   let(:set) { described_class.new }
 
   describe "#concat" do

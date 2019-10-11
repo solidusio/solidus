@@ -3,8 +3,8 @@
 require 'rails_helper'
 require 'shared_examples/calculator_shared_examples'
 
-RSpec.describe Spree::Calculator::FlatPercentItemTotal, type: :model do
-  let(:calculator) { Spree::Calculator::FlatPercentItemTotal.new }
+RSpec.describe Solidus::Calculator::FlatPercentItemTotal, type: :model do
+  let(:calculator) { Solidus::Calculator::FlatPercentItemTotal.new }
   let(:line_item) { create(:line_item) }
 
   it_behaves_like 'a calculator with a description'

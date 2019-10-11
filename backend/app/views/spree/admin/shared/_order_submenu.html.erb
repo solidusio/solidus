@@ -17,18 +17,18 @@
     <% end %>
 
     <li class="<%= "active" if current == "Shipments" %>" data-hook='admin_order_tabs_order_details'>
-      <%= link_to plural_resource_name(Spree::Shipment), spree.edit_admin_order_url(@order) %>
+      <%= link_to plural_resource_name(Solidus::Shipment), spree.edit_admin_order_url(@order) %>
     </li>
 
-    <% if can? :display, Spree::Adjustment %>
+    <% if can? :display, Solidus::Adjustment %>
       <li class="<%= "active" if current == "Adjustments" %>" data-hook='admin_order_tabs_adjustments'>
-        <%= link_to plural_resource_name(Spree::Adjustment), spree.admin_order_adjustments_url(@order) %>
+        <%= link_to plural_resource_name(Solidus::Adjustment), spree.admin_order_adjustments_url(@order) %>
       </li>
     <% end %>
 
-    <% if can?(:display, Spree::Payment) %>
+    <% if can?(:display, Solidus::Payment) %>
       <li class="<%= "active" if current == "Payments" %>" data-hook='admin_order_tabs_payments'>
-        <%= link_to plural_resource_name(Spree::Payment), spree.admin_order_payments_url(@order) %>
+        <%= link_to plural_resource_name(Solidus::Payment), spree.admin_order_payments_url(@order) %>
       </li>
     <% end %>
 
@@ -38,7 +38,7 @@
       </li>
     <% end %>
 
-    <% if can? :display, Spree::ReturnAuthorization %>
+    <% if can? :display, Solidus::ReturnAuthorization %>
       <% if @order.completed? %>
         <li class="tab <%= "active" if current == "Return Authorizations" %>" data-hook='admin_order_tabs_return_authorizations'>
           <%= link_to t('spree.admin.tab.rma'), spree.admin_order_return_authorizations_url(@order) %>
@@ -46,15 +46,15 @@
       <% end %>
     <% end %>
 
-    <% if can? :display, Spree::CustomerReturn %>
+    <% if can? :display, Solidus::CustomerReturn %>
       <% if @order.completed? %>
         <li class="<%= "active" if current == "Customer Returns" %>" data-hook='admin_order_tabs_customer_returns'>
-          <%= link_to plural_resource_name(Spree::CustomerReturn), spree.admin_order_customer_returns_url(@order) %>
+          <%= link_to plural_resource_name(Solidus::CustomerReturn), spree.admin_order_customer_returns_url(@order) %>
         </li>
       <% end %>
     <% end %>
 
-    <% if can?(:manage, Spree::OrderCancellations) && @order.inventory_units.cancelable.present? %>
+    <% if can?(:manage, Solidus::OrderCancellations) && @order.inventory_units.cancelable.present? %>
       <li class="<%= "active" if current == "Cancel Inventory" %>" data-hook='admin_order_tabs_cancel_inventory'>
         <%= link_to t('spree.cancel_inventory'), spree.admin_order_cancellations_path(@order) %>
       </li>

@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-module Spree
-  class Variant < Spree::Base
+module Solidus
+  class Variant < Solidus::Base
     # This class generates gross prices for all countries that have VAT configured.
     # The prices will include their respective VAT rates. It will also generate an
     # export (net) price for any country that doesn't have VAT.
     # @example
     #   The admin is configured to show German gross prices
-    #   (Spree::Config.admin_vat_country_iso == "DE")
+    #   (Solidus::Config.admin_vat_country_iso == "DE")
     #
     #   There is VATs configured for Germany (19%) and Finland (24%).
     #   The VAT price generator is run on a variant with a base (German) price of 10.00.
@@ -52,7 +52,7 @@ module Spree
 
       def vat_for_country_iso(country_iso)
         return 0 unless variant.tax_category
-        variant_vat_rates.for_country(Spree::Country.find_by(iso: country_iso)).sum(:amount)
+        variant_vat_rates.for_country(Solidus::Country.find_by(iso: country_iso)).sum(:amount)
       end
 
       def variant_vat_rates

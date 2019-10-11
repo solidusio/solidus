@@ -8,7 +8,7 @@
   <% end %>
 <% end %>
 
-<% admin_breadcrumb(plural_resource_name(Spree::Payment)) %>
+<% admin_breadcrumb(plural_resource_name(Solidus::Payment)) %>
 
 <% if @order.outstanding_balance? %>
   <h5 class="outstanding-balance"><%= @order.outstanding_balance < 0 ? t('spree.credit_owed') : t('spree.balance_due') %>: <strong><%= @order.display_outstanding_balance %></strong></h5>
@@ -17,13 +17,13 @@
 <% if @payments.any? %>
 
   <fieldset data-hook="payment_list" class="no-border-bottom">
-    <legend align="center"><%= plural_resource_name(Spree::Payment) %></legend>
+    <legend align="center"><%= plural_resource_name(Solidus::Payment) %></legend>
     <%= render partial: 'list', locals: { payments: @payments } %>
   </fieldset>
 
   <% if @refunds.any? %>
     <fieldset data-hook="payment_list" class="no-border-bottom">
-      <legend align="center"><%= plural_resource_name(Spree::Refund) %></legend>
+      <legend align="center"><%= plural_resource_name(Solidus::Refund) %></legend>
       <%= render partial: 'spree/admin/shared/refunds', locals: { refunds: @refunds, show_actions: true } %>
     </fieldset>
   <% end %>

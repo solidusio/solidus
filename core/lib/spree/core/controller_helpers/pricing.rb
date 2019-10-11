@@ -2,7 +2,7 @@
 
 require 'spree/deprecation'
 
-module Spree
+module Solidus
   module Core
     module ControllerHelpers
       module Pricing
@@ -14,13 +14,13 @@ module Spree
         end
 
         def current_pricing_options
-          Spree::Config.pricing_options_class.from_context(self)
+          Solidus::Config.pricing_options_class.from_context(self)
         end
 
         def current_currency
           current_pricing_options.currency
         end
-        deprecate current_currency: :current_pricing_options, deprecator: Spree::Deprecation
+        deprecate current_currency: :current_pricing_options, deprecator: Solidus::Deprecation
       end
     end
   end

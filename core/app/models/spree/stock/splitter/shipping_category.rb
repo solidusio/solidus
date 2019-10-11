@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module Stock
     module Splitter
-      class ShippingCategory < Spree::Stock::Splitter::Base
+      class ShippingCategory < Solidus::Stock::Splitter::Base
         def split(packages)
           split_packages = []
           packages.each do |package|

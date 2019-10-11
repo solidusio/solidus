@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-module Spree
+module Solidus
   describe Api::ZonesController, type: :request do
     let!(:attributes) { [:id, :name, :zone_members] }
     let!(:zone) { create(:zone, name: 'Europe') }
@@ -47,7 +47,7 @@ module Spree
             name: "North Pole",
             zone_members: [
               {
-                zoneable_type: "Spree::Country",
+                zoneable_type: "Solidus::Country",
                 zoneable_id: 1
               }
             ]
@@ -66,7 +66,7 @@ module Spree
             name: "North Pole",
             zone_members: [
               {
-                zoneable_type: "Spree::Country",
+                zoneable_type: "Solidus::Country",
                 zoneable_id: 1
               }
             ]

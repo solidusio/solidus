@@ -22,7 +22,7 @@ RSpec.configure do |config|
     c.syntax = :expect
   end
 
-  config.include Spree::TestingSupport::Preferences
+  config.include Solidus::TestingSupport::Preferences
   config.extend WithModel
 
   config.filter_run focus: true

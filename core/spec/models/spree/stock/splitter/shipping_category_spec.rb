@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-module Spree
+module Solidus
   module Stock
     RSpec.describe Splitter::ShippingCategory, type: :model do
       let(:order) { create(:order_with_line_items, line_items_count: 1) }
@@ -24,7 +24,7 @@ module Spree
         end
       end
 
-      let(:stock_location) { mock_model(Spree::StockLocation) }
+      let(:stock_location) { mock_model(Solidus::StockLocation) }
 
       subject { described_class.new(stock_location) }
 

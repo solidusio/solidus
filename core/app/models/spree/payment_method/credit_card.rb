@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-module Spree
-  # An implementation of a `Spree::PaymentMethod` for credit card payments.
+module Solidus
+  # An implementation of a `Solidus::PaymentMethod` for credit card payments.
   #
   # It's a good candidate as base class for other credit card based payment methods.
   #
@@ -10,7 +10,7 @@ module Spree
   #
   class PaymentMethod::CreditCard < PaymentMethod
     def payment_source_class
-      Spree::CreditCard
+      Solidus::CreditCard
     end
 
     def partial_name
@@ -28,7 +28,7 @@ module Spree
       payment_source_class.where(id: source_ids).select(&:reusable?)
     end
     alias_method :sources_by_order, :reusable_sources_by_order
-    deprecate sources_by_order: :reusable_sources_by_order, deprecator: Spree::Deprecation
+    deprecate sources_by_order: :reusable_sources_by_order, deprecator: Solidus::Deprecation
 
     def reusable_sources(order)
       if order.completed?

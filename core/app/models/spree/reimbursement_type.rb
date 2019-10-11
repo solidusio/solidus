@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-module Spree
-  class ReimbursementType < Spree::Base
-    include Spree::NamedType
+module Solidus
+  class ReimbursementType < Solidus::Base
+    include Solidus::NamedType
 
     ORIGINAL = 'original'
 

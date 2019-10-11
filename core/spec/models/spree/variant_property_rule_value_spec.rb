@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::VariantPropertyRuleValue, type: :model do
+RSpec.describe Solidus::VariantPropertyRuleValue, type: :model do
   context "touching" do
     let(:rule_value) { create(:variant_property_rule_value) }
     let(:rule) { rule_value.variant_property_rule }

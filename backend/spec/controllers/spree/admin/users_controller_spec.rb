@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Spree::Admin::UsersController, type: :controller do
+describe Solidus::Admin::UsersController, type: :controller do
   let(:user) { create(:user) }
 
   let(:state) { create(:state, state_code: 'NY') }
@@ -21,7 +21,7 @@ describe Spree::Admin::UsersController, type: :controller do
 
   context "#show" do
     stub_authorization! do |_user|
-      can [:admin, :manage], Spree.user_class
+      can [:admin, :manage], Solidus.user_class
     end
 
     it "redirects to edit" do
@@ -33,7 +33,7 @@ describe Spree::Admin::UsersController, type: :controller do
   context '#authorize_admin' do
     context "with ability to admin users" do
       stub_authorization! do |_user|
-        can [:manage], Spree.user_class
+        can [:manage], Solidus.user_class
       end
 
       it 'can visit index' do
@@ -69,21 +69,21 @@ describe Spree::Admin::UsersController, type: :controller do
   end
 
   describe "#create" do
-    let(:dummy_role) { Spree::Role.create(name: "dummyrole") }
+    let(:dummy_role) { Solidus::Role.create(name: "dummyrole") }
 
     # The created user
     def user
-      Spree.user_class.last
+      Solidus.user_class.last
     end
 
     stub_authorization! do |_user|
-      can :manage, Spree.user_class
+      can :manage, Solidus.user_class
     end
 
     context "when the user can manage roles" do
       stub_authorization! do |_user|
-        can :manage, Spree.user_class
-        can :manage, Spree::Role
+        can :manage, Solidus.user_class
+        can :manage, Solidus::Role
       end
 
       it "can create user with roles" do
@@ -120,25 +120,25 @@ describe Spree::Admin::UsersController, type: :controller do
     end
 
     it "can set stock locations" do
-      location = Spree::StockLocation.create(name: "my_location")
-      location_2 = Spree::StockLocation.create(name: "my_location_2")
+      location = Solidus::StockLocation.create(name: "my_location")
+      location_2 = Solidus::StockLocation.create(name: "my_location_2")
       post :create, params: { user: { stock_location_ids: [location.id, location_2.id] } }
       expect(user.stock_locations).to match_array([location, location_2])
     end
   end
 
   describe "#update" do
-    let(:dummy_role) { Spree::Role.create(name: "dummyrole") }
-    let(:ability) { Spree::Ability.new(user) }
+    let(:dummy_role) { Solidus::Role.create(name: "dummyrole") }
+    let(:ability) { Solidus::Ability.new(user) }
 
     stub_authorization! do |_user|
-      can :manage, Spree.user_class
+      can :manage, Solidus.user_class
     end
 
     context "when the user can manage roles" do
       stub_authorization! do |_user|
-        can :manage, Spree.user_class
-        can :manage, Spree::Role
+        can :manage, Solidus.user_class
+        can :manage, Solidus::Role
       end
 
       it "can set roles" do
@@ -180,7 +180,7 @@ describe Spree::Admin::UsersController, type: :controller do
 
     context "allowed to update email" do
       stub_authorization! do |_user|
-        can [:admin, :update, :update_email], Spree.user_class
+        can [:admin, :update, :update_email], Solidus.user_class
       end
 
       it "can change email of a user" do
@@ -192,7 +192,7 @@ describe Spree::Admin::UsersController, type: :controller do
 
     context "not allowed to update email" do
       stub_authorization! do |_user|
-        can [:admin, :update], Spree.user_class
+        can [:admin, :update], Solidus.user_class
       end
 
       it "cannot change email of a user" do
@@ -213,8 +213,8 @@ describe Spree::Admin::UsersController, type: :controller do
     end
 
     it "can set stock locations" do
-      location = Spree::StockLocation.create(name: "my_location")
-      location_2 = Spree::StockLocation.create(name: "my_location_2")
+      location = Solidus::StockLocation.create(name: "my_location")
+      location_2 = Solidus::StockLocation.create(name: "my_location_2")
       post :update, params: { id: user.id, user: { stock_location_ids: [location.id, location_2.id] } }
       expect(user.stock_locations).to match_array([location, location_2])
     end
@@ -222,7 +222,7 @@ describe Spree::Admin::UsersController, type: :controller do
 
   describe "#orders" do
     stub_authorization! do |_user|
-      can :manage, Spree.user_class
+      can :manage, Solidus.user_class
     end
 
     let(:order) { create(:order) }
@@ -234,16 +234,16 @@ describe Spree::Admin::UsersController, type: :controller do
       expect(assigns[:orders].first).to eq order
     end
 
-    it "assigns a ransack search for Spree::Order" do
+    it "assigns a ransack search for Solidus::Order" do
       get :orders, params: { id: user.id }
       expect(assigns[:search]).to be_a Ransack::Search
-      expect(assigns[:search].klass).to eq Spree::Order
+      expect(assigns[:search].klass).to eq Solidus::Order
     end
   end
 
   describe "#items" do
     stub_authorization! do |_user|
-      can :manage, Spree.user_class
+      can :manage, Solidus.user_class
     end
 
     let(:order) { create(:order) }
@@ -255,10 +255,10 @@ describe Spree::Admin::UsersController, type: :controller do
       expect(assigns[:orders].first).to eq order
     end
 
-    it "assigns a ransack search for Spree::Order" do
+    it "assigns a ransack search for Solidus::Order" do
       get :items, params: { id: user.id }
       expect(assigns[:search]).to be_a Ransack::Search
-      expect(assigns[:search].klass).to eq Spree::Order
+      expect(assigns[:search].klass).to eq Solidus::Order
     end
   end
 end

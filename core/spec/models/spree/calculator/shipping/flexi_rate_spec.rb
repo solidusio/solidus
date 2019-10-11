@@ -3,7 +3,7 @@
 require 'rails_helper'
 require 'shared_examples/calculator_shared_examples'
 
-module Spree
+module Solidus
   module Calculator::Shipping
     RSpec.describe FlexiRate, type: :model do
       let(:variant1) { build(:variant, price: 10) }

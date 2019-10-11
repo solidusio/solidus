@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   class OrderContents
     attr_accessor :order
 
@@ -11,14 +11,14 @@ module Spree
     # Add a line items to the order if there is inventory to do so
     # and populate Promotions
     #
-    # @param [Spree::Variant] variant The variant the line_item should
+    # @param [Solidus::Variant] variant The variant the line_item should
     #   be associated with
     # @param [Integer] quantity The line_item quantity
     # @param [Hash] options Options for the adding proccess
     #   Valid options:
-    #     shipment: [Spree::Shipment] LineItem target shipment
+    #     shipment: [Solidus::Shipment] LineItem target shipment
     #
-    # @return [Spree::LineItem]
+    # @return [Solidus::LineItem]
     def add(variant, quantity = 1, options = {})
       line_item = add_to_line_item(variant, quantity, options)
       after_add_or_remove(line_item, options)

@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module Admin
     class AdjustmentsController < ResourceController
-      belongs_to 'spree/order', find_by: :number
+      belongs_to 'solidus/order', find_by: :number
 
       create.after :update_totals
       destroy.after :update_totals
@@ -38,7 +38,7 @@ module Spree
 
       def reasons_for(_adjustment)
         [
-          Spree::AdjustmentReason.active.to_a,
+          Solidus::AdjustmentReason.active.to_a,
           @adjustment.adjustment_reason
         ].flatten.compact.uniq.sort_by { |reason| reason.name.downcase }
       end

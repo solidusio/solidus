@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-module Spree
+module Solidus
   RSpec.describe Order, type: :model do
     let(:order) { create(:order) }
     let(:shirt) { create(:variant) }

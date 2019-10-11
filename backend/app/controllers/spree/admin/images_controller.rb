@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module Admin
     class ImagesController < ResourceController
       before_action :load_data
@@ -19,7 +19,7 @@ module Spree
       end
 
       def load_data
-        @product = Spree::Product.friendly.find(params[:product_id])
+        @product = Solidus::Product.friendly.find(params[:product_id])
         @variants = @product.variants.collect do |variant|
           [variant.sku_and_options_text, variant.id]
         end
@@ -27,7 +27,7 @@ module Spree
       end
 
       def set_viewable
-        @image.viewable_type = 'Spree::Variant'
+        @image.viewable_type = 'Solidus::Variant'
         @image.viewable_id = params[:image][:viewable_id]
       end
     end

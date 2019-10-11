@@ -2,7 +2,7 @@
 
 <% admin_breadcrumb(t('spree.settings')) %>
 <% admin_breadcrumb(t('spree.admin.tab.checkout')) %>
-<% admin_breadcrumb(plural_resource_name(Spree::StoreCreditReason)) %>
+<% admin_breadcrumb(plural_resource_name(Solidus::StoreCreditReason)) %>
 
 <% content_for :page_actions do %>
   <ul class='actions inline-menu'>
@@ -21,8 +21,8 @@
     </colgroup>
     <thead>
       <tr data-hook='store_credit_reasons_header'>
-        <th><%= Spree::StoreCreditReason.human_attribute_name(:name) %></th>
-        <th><%= Spree::StoreCreditReason.human_attribute_name(:state) %></th>
+        <th><%= Solidus::StoreCreditReason.human_attribute_name(:name) %></th>
+        <th><%= Solidus::StoreCreditReason.human_attribute_name(:state) %></th>
         <th class='actions'></th>
       </tr>
     </thead>
@@ -50,7 +50,7 @@
 <% else %>
   <div class='no-objects-found'>
     <%= render 'spree/admin/shared/no_objects_found',
-                 resource: Spree::StoreCreditReason,
+                 resource: Solidus::StoreCreditReason,
                  new_resource_url: new_object_url %>
   </div>
 <% end %>

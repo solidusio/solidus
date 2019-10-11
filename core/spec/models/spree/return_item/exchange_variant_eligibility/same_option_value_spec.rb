@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-module Spree
+module Solidus
   module ReturnItem::ExchangeVariantEligibility
     RSpec.describe SameOptionValue, type: :model do
       describe ".eligible_variants" do
@@ -36,7 +36,7 @@ module Spree
         subject { SameOptionValue.eligible_variants(variant.reload) }
 
         it "returns all other variants for the same product with the same option value for the specified option type" do
-          Spree::StockItem.update_all(count_on_hand: 10)
+          Solidus::StockItem.update_all(count_on_hand: 10)
 
           expect(subject.sort).to eq [variant, same_option_values_variant].sort
         end
@@ -55,7 +55,7 @@ module Spree
           after { SameOptionValue.option_type_restrictions = @original_option_type_restrictions }
 
           it "returns all variants for the product" do
-            Spree::StockItem.update_all(count_on_hand: 10)
+            Solidus::StockItem.update_all(count_on_hand: 10)
 
             expect(subject.sort).to eq [variant, same_option_values_variant, different_waist_option_value_variant, different_color_option_value_variant].sort
           end

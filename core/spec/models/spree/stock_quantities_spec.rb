@@ -2,9 +2,9 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::StockQuantities, type: :model do
-  let(:variant1) { mock_model(Spree::Variant) }
-  let(:variant2) { mock_model(Spree::Variant) }
+RSpec.describe Solidus::StockQuantities, type: :model do
+  let(:variant1) { mock_model(Solidus::Variant) }
+  let(:variant2) { mock_model(Solidus::Variant) }
 
   subject do
     described_class.new(quantities)

@@ -2,8 +2,8 @@
 
 require 'spree/backend_configuration'
 
-module Spree
+module Solidus
   module Backend
-    Config = Spree::BackendConfiguration.new
+    Config = Solidus::BackendConfiguration.new
   end
 end

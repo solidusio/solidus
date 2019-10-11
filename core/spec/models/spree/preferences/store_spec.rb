@@ -2,9 +2,9 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::Preferences::Store, type: :model do
+RSpec.describe Solidus::Preferences::Store, type: :model do
   before :each do
-    @store = Spree::Preferences::StoreInstance.new
+    @store = Solidus::Preferences::StoreInstance.new
   end
 
   it "sets and gets a key" do
@@ -19,7 +19,7 @@ RSpec.describe Spree::Preferences::Store, type: :model do
   end
 
   it "will return db value when cache is emtpy and cache the db value" do
-    preference = Spree::Preference.where(key: 'test').first_or_initialize
+    preference = Solidus::Preference.where(key: 'test').first_or_initialize
     preference.value = '123'
     preference.save
 

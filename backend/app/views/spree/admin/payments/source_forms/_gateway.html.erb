@@ -17,7 +17,7 @@
         <div data-hook="card_number">
           <div class="field">
             <%= hidden_field_tag "#{param_prefix}[cc_type]", '', {class: 'ccType'} %>
-            <%= label_tag "card_number#{payment_method.id}", Spree::CreditCard.human_attribute_name(:number), class: 'required' %>
+            <%= label_tag "card_number#{payment_method.id}", Solidus::CreditCard.human_attribute_name(:number), class: 'required' %>
             <%= text_field_tag "#{param_prefix}[number]", '', class: 'required fullwidth cardNumber', id: "card_number#{payment_method.id}", maxlength: 19 %>
           </div>
         </div>
@@ -25,7 +25,7 @@
       <div class="col-6">
         <div data-hook="card_name">
           <div class="field">
-            <%= label_tag "card_name#{payment_method.id}", Spree::CreditCard.human_attribute_name(:name), class: 'required' %>
+            <%= label_tag "card_name#{payment_method.id}", Solidus::CreditCard.human_attribute_name(:name), class: 'required' %>
             <%= text_field_tag "#{param_prefix}[name]", '', id: "card_name#{payment_method.id}", class: 'required fullwidth', maxlength: 19 %>
           </div>
         </div>
@@ -34,13 +34,13 @@
     <div class="row">
       <div class="col-6">
         <div data-hook="card_expiration" class="field">
-          <%= label_tag "card_expiry#{payment_method.id}", Spree::CreditCard.human_attribute_name(:expiration), class: 'required' %>
+          <%= label_tag "card_expiry#{payment_method.id}", Solidus::CreditCard.human_attribute_name(:expiration), class: 'required' %>
           <%= text_field_tag "#{param_prefix}[expiry]", '', id: "card_expiry#{payment_method.id}", class: "required cardExpiry fullwidth", placeholder: "MM / YY" %>
         </div>
       </div>
       <div class="col-6">
         <div data-hook="card_code" class="field">
-          <%= label_tag "card_code#{payment_method.id}", Spree::CreditCard.human_attribute_name(:card_code), class: 'required' %>
+          <%= label_tag "card_code#{payment_method.id}", Solidus::CreditCard.human_attribute_name(:card_code), class: 'required' %>
           <%= text_field_tag "#{param_prefix}[verification_value]", '', id: "card_code#{payment_method.id}", class: 'required fullwidth cardCode', size: 5 %>
         </div>
       </div>
@@ -50,7 +50,7 @@
 
 <fieldset>
   <legend><%= t('spree.billing_address') %></legend>
-  <% address = @order.bill_address || @order.ship_address || Spree::Address.build_default %>
+  <% address = @order.bill_address || @order.ship_address || Solidus::Address.build_default %>
   <%= fields_for "#{param_prefix}[address_attributes]", address do |f| %>
     <%= render partial: 'spree/admin/shared/address_form', locals: { f: f, type: "billing" } %>
   <% end %>

@@ -12,7 +12,7 @@ namespace :db do
 use rake db:load_file[/absolute/path/to/sample/filename.rb]'
 
   task :load_file, [:file, :dir] => :environment do |_t, args|
-    Spree::Deprecation.warn("load_file has been deprecated. Please load your own file.")
+    Solidus::Deprecation.warn("load_file has been deprecated. Please load your own file.")
     file = Pathname.new(args.file)
 
     puts "loading ruby #{file}"
@@ -21,7 +21,7 @@ use rake db:load_file[/absolute/path/to/sample/filename.rb]'
 
   desc "Loads fixtures from the the dir you specify using rake db:load_dir[loadfrom]"
   task :load_dir, [:dir] => :environment do |_t, args|
-    Spree::Deprecation.warn("rake spree:load_dir has been deprecated and will be removed with Solidus 3.0. Please load your files directly.")
+    Solidus::Deprecation.warn("rake spree:load_dir has been deprecated and will be removed with Solidus 3.0. Please load your files directly.")
     dir = args.dir
     dir = File.join(Rails.root, "db", dir) if Pathname.new(dir).relative?
 
@@ -41,7 +41,7 @@ use rake db:load_file[/absolute/path/to/sample/filename.rb]'
 
   desc "Migrate schema to version 0 and back up again. WARNING: Destroys all data in tables!!"
   task remigrate: :environment do
-    Spree::Deprecation.warn("remigrate has been deprecated. Please use db:reset or other db: commands instead.")
+    Solidus::Deprecation.warn("remigrate has been deprecated. Please use db:reset or other db: commands instead.")
 
     if ENV['SKIP_NAG'] || ENV['OVERWRITE'].to_s.casecmp('true') || prompt_for_agree("This task will destroy any data in the database. Are you sure you want to \ncontinue? [y/n] ")
 
@@ -61,7 +61,7 @@ use rake db:load_file[/absolute/path/to/sample/filename.rb]'
 
   desc "Bootstrap is: migrating, loading defaults, sample data and seeding (for all extensions) and load_products tasks"
   task :bootstrap do
-    Spree::Deprecation.warn("rake bootstrap has been deprecated, please run db:setup instead.")
+    Solidus::Deprecation.warn("rake bootstrap has been deprecated, please run db:setup instead.")
 
     # remigrate unless production mode (as saftey check)
     if %w[demo development test].include? Rails.env
@@ -80,13 +80,13 @@ use rake db:load_file[/absolute/path/to/sample/filename.rb]'
 
     ActiveRecord::Base.send(:subclasses).each(&:reset_column_information)
 
-    load_defaults = Spree::Country.count == 0
+    load_defaults = Solidus::Country.count == 0
     load_defaults ||= prompt_for_agree('Countries present, load sample data anyways? [y/n]: ')
     if load_defaults
       Rake::Task["db:seed"].invoke
     end
 
-    if Rails.env.production? && Spree::Product.count > 0
+    if Rails.env.production? && Solidus::Product.count > 0
       load_sample = prompt_for_agree("WARNING: In Production and products exist in database, load sample data anyways? [y/n]:" )
     else
       load_sample = true if ENV['AUTO_ACCEPT']

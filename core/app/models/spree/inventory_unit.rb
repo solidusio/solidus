@@ -1,21 +1,21 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   # Tracks the state of line items' fulfillment.
   #
-  class InventoryUnit < Spree::Base
+  class InventoryUnit < Solidus::Base
     PRE_SHIPMENT_STATES = %w(backordered on_hand)
     POST_SHIPMENT_STATES = %w(returned)
     CANCELABLE_STATES = ['on_hand', 'backordered', 'shipped']
 
-    belongs_to :variant, -> { with_deleted }, class_name: "Spree::Variant", inverse_of: :inventory_units, optional: true
-    belongs_to :shipment, class_name: "Spree::Shipment", touch: true, inverse_of: :inventory_units, optional: true
-    belongs_to :carton, class_name: "Spree::Carton", inverse_of: :inventory_units, optional: true
-    belongs_to :line_item, class_name: "Spree::LineItem", inverse_of: :inventory_units, optional: true
+    belongs_to :variant, -> { with_deleted }, class_name: "Solidus::Variant", inverse_of: :inventory_units, optional: true
+    belongs_to :shipment, class_name: "Solidus::Shipment", touch: true, inverse_of: :inventory_units, optional: true
+    belongs_to :carton, class_name: "Solidus::Carton", inverse_of: :inventory_units, optional: true
+    belongs_to :line_item, class_name: "Solidus::LineItem", inverse_of: :inventory_units, optional: true
 
     has_many :return_items, inverse_of: :inventory_unit, dependent: :destroy
-    has_one :original_return_item, class_name: "Spree::ReturnItem", foreign_key: :exchange_inventory_unit_id, dependent: :destroy
-    has_one :unit_cancel, class_name: "Spree::UnitCancel"
+    has_one :original_return_item, class_name: "Solidus::ReturnItem", foreign_key: :exchange_inventory_unit_id, dependent: :destroy
+    has_one :unit_cancel, class_name: "Solidus::UnitCancel"
     has_one :order, through: :shipment
 
     delegate :order_id, to: :shipment
@@ -37,19 +37,19 @@ module Spree
     scope :returned, -> { where state: 'returned' }
     scope :canceled, -> { where(state: 'canceled') }
     scope :not_canceled, -> { where.not(state: 'canceled') }
-    scope :cancelable, -> { where(state: Spree::InventoryUnit::CANCELABLE_STATES, pending: false) }
+    scope :cancelable, -> { where(state: Solidus::InventoryUnit::CANCELABLE_STATES, pending: false) }
     scope :backordered_per_variant, ->(stock_item) do
       includes(:shipment, :order)
         .where("spree_shipments.state != 'canceled'").references(:shipment)
         .where(variant_id: stock_item.variant_id)
         .where('spree_orders.completed_at is not null')
-        .backordered.order(Spree::Order.arel_table[:completed_at].asc)
+        .backordered.order(Solidus::Order.arel_table[:completed_at].asc)
     end
 
     # @method backordered_for_stock_item(stock_item)
-    # @param stock_item [Spree::StockItem] the stock item of the desired
+    # @param stock_item [Solidus::StockItem] the stock item of the desired
     #   inventory units
-    # @return [ActiveRecord::Relation<Spree::InventoryUnit>] backordered
+    # @return [ActiveRecord::Relation<Solidus::InventoryUnit>] backordered
     #   inventory units for the given stock item
     scope :backordered_for_stock_item, ->(stock_item) do
       backordered_per_variant(stock_item)
@@ -58,18 +58,18 @@ module Spree
 
     scope :shippable, -> { on_hand }
 
-    include ::Spree::Config.state_machines.inventory_unit
+    include ::Solidus::Config.state_machines.inventory_unit
 
     # Updates the given inventory units to not be pending.
     #
     # @deprecated do not use this, use
-    #   Spree::Stock::InventoryUnitsFinalizer.new(inventory_units).run!
-    # @param inventory_units [<Spree::InventoryUnit>] the inventory to be
+    #   Solidus::Stock::InventoryUnitsFinalizer.new(inventory_units).run!
+    # @param inventory_units [<Solidus::InventoryUnit>] the inventory to be
     #   finalized
     def self.finalize_units!(inventory_units)
-      Spree::Deprecation.warn(
+      Solidus::Deprecation.warn(
         "inventory_units.finalize_units!(inventory_units) is deprecated. Please
-        use Spree::Stock::InventoryUnitsFinalizer.new(inventory_units).run!",
+        use Solidus::Stock::InventoryUnitsFinalizer.new(inventory_units).run!",
         caller
       )
 
@@ -81,17 +81,17 @@ module Spree
       end
     end
 
-    # @return [Spree::StockItem] the first stock item from this shipment's
+    # @return [Solidus::StockItem] the first stock item from this shipment's
     #   stock location that is associated with this inventory unit's variant
     def find_stock_item
-      Spree::StockItem.where(stock_location_id: shipment.stock_location_id,
+      Solidus::StockItem.where(stock_location_id: shipment.stock_location_id,
         variant_id: variant_id).first
     end
 
-    # @return [Spree::ReturnItem] a valid return item for this inventory unit
+    # @return [Solidus::ReturnItem] a valid return item for this inventory unit
     #   if one exists, or a new one if one does not
     def current_or_new_return_item
-      Spree::ReturnItem.from_inventory_unit(self)
+      Solidus::ReturnItem.from_inventory_unit(self)
     end
 
     # @return [BigDecimal] the portion of the additional tax on the line item

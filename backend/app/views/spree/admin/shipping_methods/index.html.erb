@@ -2,11 +2,11 @@
 
 <% admin_breadcrumb(t('spree.settings')) %>
 <% admin_breadcrumb(t('spree.admin.tab.shipping')) %>
-<% admin_breadcrumb(plural_resource_name(Spree::ShippingMethod)) %>
+<% admin_breadcrumb(plural_resource_name(Solidus::ShippingMethod)) %>
 
 
 <% content_for :page_actions do %>
-  <% if can?(:create, Spree::ShippingMethod) %>
+  <% if can?(:create, Solidus::ShippingMethod) %>
     <li>
       <%= link_to t('spree.new_shipping_method'), new_object_url, id: 'admin_new_shipping_method_link', class: 'btn btn-primary' %>
     </li>
@@ -24,10 +24,10 @@
     </colgroup>
     <thead>
       <tr data-hook="admin_shipping_methods_index_headers">
-        <th><%= Spree::ShippingMethod.human_attribute_name(:name) %></th>
-        <th><%= Spree::Zone.model_name.human %></th>
-        <th><%= Spree::Calculator.model_name.human %></th>
-        <th><%= Spree::ShippingMethod.human_attribute_name(:available_to_users) %></th>
+        <th><%= Solidus::ShippingMethod.human_attribute_name(:name) %></th>
+        <th><%= Solidus::Zone.model_name.human %></th>
+        <th><%= Solidus::Calculator.model_name.human %></th>
+        <th><%= Solidus::ShippingMethod.human_attribute_name(:available_to_users) %></th>
         <th data-hook="admin_shipping_methods_index_header_actions" class="actions"></th>
       </tr>
     </thead>
@@ -54,7 +54,7 @@
 <% else %>
   <div class="no-objects-found">
     <%= render 'spree/admin/shared/no_objects_found',
-                 resource: Spree::ShippingMethod,
+                 resource: Solidus::ShippingMethod,
                  new_resource_url: new_object_url %>
   </div>
 <% end %>

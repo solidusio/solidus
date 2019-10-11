@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module Admin
-    class SearchController < Spree::Admin::BaseController
+    class SearchController < Solidus::Admin::BaseController
       respond_to :json
       layout false
 
@@ -11,9 +11,9 @@ module Spree
       def users
         if params[:ids]
           # split here may be String#split or Array#split, so we must flatten the results
-          @users = Spree.user_class.where(id: params[:ids].split(',').flatten)
+          @users = Solidus.user_class.where(id: params[:ids].split(',').flatten)
         else
-          @users = Spree.user_class.ransack({
+          @users = Solidus.user_class.ransack({
             m: 'or',
             email_start: params[:q],
             addresses_firstname_start: params[:q],
@@ -25,9 +25,9 @@ module Spree
       def products
         if params[:ids]
           # split here may be String#split or Array#split, so we must flatten the results
-          @products = Spree::Product.where(id: params[:ids].split(",").flatten)
+          @products = Solidus::Product.where(id: params[:ids].split(",").flatten)
         else
-          @products = Spree::Product.ransack(params[:q]).result
+          @products = Solidus::Product.ransack(params[:q]).result
         end
 
         @products = @products.distinct.page(params[:page]).per(params[:per_page])

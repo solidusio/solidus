@@ -8,16 +8,16 @@ describe "Checkout confirm page submission", type: :feature do
   context "when the product from the order is not backorderable but has enough stock quantity" do
     let(:user) { create(:user) }
 
-    let(:order) { Spree::TestingSupport::OrderWalkthrough.up_to(:payment) }
+    let(:order) { Solidus::TestingSupport::OrderWalkthrough.up_to(:payment) }
     let(:order_product) { order.products.first }
     let(:order_stock_item) { order_product.stock_items.first }
 
     before do
       order_stock_item.update! backorderable: false
       order_stock_item.set_count_on_hand(1)
-      allow_any_instance_of(Spree::CheckoutController).to receive_messages(current_order: order)
-      allow_any_instance_of(Spree::CheckoutController).to receive_messages(try_spree_current_user: user)
-      allow_any_instance_of(Spree::OrdersController).to receive_messages(try_spree_current_user: user)
+      allow_any_instance_of(Solidus::CheckoutController).to receive_messages(current_order: order)
+      allow_any_instance_of(Solidus::CheckoutController).to receive_messages(try_spree_current_user: user)
+      allow_any_instance_of(Solidus::OrdersController).to receive_messages(try_spree_current_user: user)
     end
 
     context 'when there are not other backorderable stock locations' do

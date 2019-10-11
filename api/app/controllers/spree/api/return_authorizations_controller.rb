@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module Api
-    class ReturnAuthorizationsController < Spree::Api::BaseController
+    class ReturnAuthorizationsController < Solidus::Api::BaseController
       before_action :load_order
       around_action :lock_order, only: [:create, :update, :destroy, :cancel]
 
-      rescue_from Spree::Order::InsufficientStock, with: :insufficient_stock_error
+      rescue_from Solidus::Order::InsufficientStock, with: :insufficient_stock_error
 
       def create
         authorize! :create, ReturnAuthorization
@@ -69,7 +69,7 @@ module Spree
       private
 
       def load_order
-        @order ||= Spree::Order.find_by!(number: order_id)
+        @order ||= Solidus::Order.find_by!(number: order_id)
         authorize! :read, @order
       end
 

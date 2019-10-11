@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   class BillingIntegration < PaymentMethod
     validates :name, presence: true
 

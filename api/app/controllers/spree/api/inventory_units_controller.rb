@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module Api
-    class InventoryUnitsController < Spree::Api::BaseController
+    class InventoryUnitsController < Solidus::Api::BaseController
       before_action :prepare_event, only: :update
 
       def show
@@ -26,7 +26,7 @@ module Spree
       private
 
       def inventory_unit
-        @inventory_unit ||= Spree::InventoryUnit.accessible_by(current_ability, :read).find(params[:id])
+        @inventory_unit ||= Solidus::InventoryUnit.accessible_by(current_ability, :read).find(params[:id])
       end
 
       def prepare_event

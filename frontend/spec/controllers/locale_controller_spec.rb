@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe Spree::LocaleController, type: :controller do
+RSpec.describe Solidus::LocaleController, type: :controller do
   include_context "fr locale"
 
   context 'switch_to_locale specified' do

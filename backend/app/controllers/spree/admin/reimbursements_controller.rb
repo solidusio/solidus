@@ -1,17 +1,17 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module Admin
     class ReimbursementsController < ResourceController
-      helper 'spree/admin/reimbursement_type'
-      helper 'spree/admin/customer_returns'
-      belongs_to 'spree/order', find_by: :number
+      helper 'solidus/admin/reimbursement_type'
+      helper 'solidus/admin/customer_returns'
+      belongs_to 'solidus/order', find_by: :number
 
       before_action :load_stock_locations, only: :edit
       before_action :load_simulated_refunds, only: :edit
       create.after :recalculate_order
 
-      rescue_from Spree::Core::GatewayError, with: :spree_core_gateway_error
+      rescue_from Solidus::Core::GatewayError, with: :spree_core_gateway_error
 
       def perform
         @reimbursement.perform!(created_by: try_spree_current_user)
@@ -26,9 +26,9 @@ module Spree
 
       def build_resource
         if params[:build_from_customer_return_id].present?
-          customer_return = Spree::CustomerReturn.find(params[:build_from_customer_return_id])
+          customer_return = Solidus::CustomerReturn.find(params[:build_from_customer_return_id])
 
-          Spree::Reimbursement.build_from_customer_return(customer_return)
+          Solidus::Reimbursement.build_from_customer_return(customer_return)
         else
           super
         end
@@ -58,7 +58,7 @@ module Spree
       end
 
       def load_stock_locations
-        @stock_locations = Spree::StockLocation.active
+        @stock_locations = Solidus::StockLocation.active
       end
 
       def load_simulated_refunds

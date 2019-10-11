@@ -2,10 +2,10 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::Payment::Cancellation do
+RSpec.describe Solidus::Payment::Cancellation do
   describe '#initialize' do
     it 'has default refund reason' do
-      expect(subject.reason).to eq Spree::Payment::Cancellation::DEFAULT_REASON
+      expect(subject.reason).to eq Solidus::Payment::Cancellation::DEFAULT_REASON
     end
 
     context 'with reason given' do
@@ -50,7 +50,7 @@ RSpec.describe Spree::Payment::Cancellation do
           before do
             payment.refunds.create!(
               amount: credit_amount,
-              reason: Spree::RefundReason.where(name: 'test').first_or_create
+              reason: Solidus::RefundReason.where(name: 'test').first_or_create
             )
           end
 
@@ -72,11 +72,11 @@ RSpec.describe Spree::Payment::Cancellation do
 
       it 'calls cancel instead' do
         expect(payment_method).to receive(:cancel)
-        Spree::Deprecation.silence { subject }
+        Solidus::Deprecation.silence { subject }
       end
 
       it 'prints depcrecation warning' do
-        expect(Spree::Deprecation).to receive(:warn)
+        expect(Solidus::Deprecation).to receive(:warn)
         subject
       end
     end

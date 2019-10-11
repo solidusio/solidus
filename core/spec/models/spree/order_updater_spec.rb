@@ -2,13 +2,13 @@
 
 require 'rails_helper'
 
-module Spree
+module Solidus
   RSpec.describe OrderUpdater, type: :model do
     include ActiveSupport::Testing::TimeHelpers
 
     let!(:store) { create :store }
-    let(:order) { Spree::Order.create }
-    let(:updater) { Spree::OrderUpdater.new(order) }
+    let(:order) { Solidus::Order.create }
+    let(:updater) { Solidus::OrderUpdater.new(order) }
 
     context "order totals" do
       before do
@@ -50,7 +50,7 @@ module Spree
       end
 
       context 'with order promotion followed by line item addition' do
-        let(:promotion) { Spree::Promotion.create!(name: "10% off") }
+        let(:promotion) { Solidus::Promotion.create!(name: "10% off") }
         let(:calculator) { Calculator::FlatPercentItemTotal.new(preferred_flat_percent: 10) }
 
         let(:promotion_action) do
@@ -91,8 +91,8 @@ module Spree
 
         context 'when the item quantity has changed' do
           let(:promotion) { create(:promotion, promotion_actions: [promotion_action]) }
-          let(:promotion_action) { Spree::Promotion::Actions::CreateItemAdjustments.new(calculator: calculator) }
-          let(:calculator) { Spree::Calculator::FlatPercentItemTotal.new(preferred_flat_percent: 10) }
+          let(:promotion_action) { Solidus::Promotion::Actions::CreateItemAdjustments.new(calculator: calculator) }
+          let(:calculator) { Solidus::Calculator::FlatPercentItemTotal.new(preferred_flat_percent: 10) }
 
           before do
             promotion.activate(order: order)
@@ -111,13 +111,13 @@ module Spree
 
         context 'promotion chooser customization' do
           before do
-            class Spree::TestPromotionChooser
+            class Solidus::TestPromotionChooser
               def initialize(_adjustments)
                 raise 'Custom promotion chooser'
               end
             end
 
-            stub_spree_preferences(promotion_chooser_class: Spree::TestPromotionChooser)
+            stub_spree_preferences(promotion_chooser_class: Solidus::TestPromotionChooser)
           end
 
           it 'uses the defined promotion chooser' do
@@ -328,7 +328,7 @@ module Spree
           it 'uses the configured class' do
             expect(custom_calculator_class).to receive(:new).with(order).at_least(:once).and_return(custom_calculator_instance)
             expect(custom_calculator_instance).to receive(:calculate).at_least(:once).and_return(
-              Spree::Tax::OrderTax.new(order_id: order.id, line_item_taxes: [], shipment_taxes: [])
+              Solidus::Tax::OrderTax.new(order_id: order.id, line_item_taxes: [], shipment_taxes: [])
             )
 
             order.recalculate
@@ -388,7 +388,7 @@ module Spree
 
       context 'invalid payments are present but order total is zero' do
         it 'is paid' do
-          order.payments << Spree::Payment.new(state: 'invalid')
+          order.payments << Solidus::Payment.new(state: 'invalid')
           order.total = 0
           order.payment_total = 0
 
@@ -512,7 +512,7 @@ module Spree
       end
 
       it "doesnt update each shipment" do
-        shipment = stub_model(Spree::Shipment)
+        shipment = stub_model(Solidus::Shipment)
         order.shipments = [shipment]
         allow(order.shipments).to receive_messages(states: [], ready: [], pending: [], shipped: [])
         allow(updater).to receive(:update_totals) # Otherwise this gets called and causes a scene

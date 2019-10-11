@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::Variant, type: :model do
+RSpec.describe Solidus::Variant, type: :model do
   it { is_expected.to be_invalid }
 
   let!(:variant) { create(:variant) }
@@ -33,15 +33,15 @@ RSpec.describe Spree::Variant, type: :model do
     let!(:product) { create(:product) }
 
     it "propagate to stock items" do
-      expect_any_instance_of(Spree::StockLocation).to receive(:propagate_variant)
+      expect_any_instance_of(Solidus::StockLocation).to receive(:propagate_variant)
       product.variants.create!
     end
 
     context "stock location has disable propagate all variants" do
-      before { Spree::StockLocation.update_all propagate_all_variants: false }
+      before { Solidus::StockLocation.update_all propagate_all_variants: false }
 
       it "propagate to stock items" do
-        expect_any_instance_of(Spree::StockLocation).not_to receive(:propagate_variant)
+        expect_any_instance_of(Solidus::StockLocation).not_to receive(:propagate_variant)
         product.variants.create!
       end
     end
@@ -96,7 +96,7 @@ RSpec.describe Spree::Variant, type: :model do
           subject { variant.update(price: 99, rebuild_vat_prices: true, tax_category: tax_category) }
 
           it "creates new appropriate prices for this variant" do
-            expect { subject }.to change { Spree::Price.count }.by(3)
+            expect { subject }.to change { Solidus::Price.count }.by(3)
             expect(variant.prices.find_by(country_iso: "FR").amount).to eq(113.85)
             expect(variant.prices.find_by(country_iso: "DE").amount).to eq(123.75)
             expect(variant.prices.find_by(country_iso: "DK").amount).to eq(123.75)
@@ -108,7 +108,7 @@ RSpec.describe Spree::Variant, type: :model do
           subject { variant.update(price: 99, tax_category: tax_category) }
 
           it "does not create new prices" do
-            expect { subject }.not_to change { Spree::Price.count }
+            expect { subject }.not_to change { Solidus::Price.count }
           end
         end
       end
@@ -163,7 +163,7 @@ RSpec.describe Spree::Variant, type: :model do
 
         it "leaves no stale records behind" do
           expect(old_option_values_variant_ids).to be_present
-          expect(Spree::OptionValuesVariant.where(id: old_option_values_variant_ids)).to be_empty
+          expect(Solidus::OptionValuesVariant.where(id: old_option_values_variant_ids)).to be_empty
         end
       end
     end
@@ -171,27 +171,27 @@ RSpec.describe Spree::Variant, type: :model do
 
   context "#cost_price=" do
     it "should use LocalizedNumber.parse" do
-      expect(Spree::LocalizedNumber).to receive(:parse).with('1,599.99')
+      expect(Solidus::LocalizedNumber).to receive(:parse).with('1,599.99')
       subject.cost_price = '1,599.99'
     end
   end
 
   context "#price=" do
     it "should use LocalizedNumber.parse" do
-      expect(Spree::LocalizedNumber).to receive(:parse).with('1,599.99')
+      expect(Solidus::LocalizedNumber).to receive(:parse).with('1,599.99')
       subject.price = '1,599.99'
     end
   end
 
   context "#weight=" do
     it "should use LocalizedNumber.parse" do
-      expect(Spree::LocalizedNumber).to receive(:parse).with('1,599.99')
+      expect(Solidus::LocalizedNumber).to receive(:parse).with('1,599.99')
       subject.weight = '1,599.99'
     end
   end
 
   context "#display_amount" do
-    it "returns a Spree::Money" do
+    it "returns a Solidus::Money" do
       variant.price = 21.22
       expect(variant.display_amount.to_s).to eql "$21.22"
     end
@@ -209,8 +209,8 @@ RSpec.describe Spree::Variant, type: :model do
 
   context "#default_price" do
     context "when multiple prices are present in addition to a default price" do
-      let(:pricing_options_germany) { Spree::Config.pricing_options_class.new(currency: "EUR") }
-      let(:pricing_options_united_states) { Spree::Config.pricing_options_class.new(currency: "USD") }
+      let(:pricing_options_germany) { Solidus::Config.pricing_options_class.new(currency: "EUR") }
+      let(:pricing_options_united_states) { Solidus::Config.pricing_options_class.new(currency: "USD") }
       before do
         variant.prices.create(currency: "EUR", amount: 29.99)
         variant.reload
@@ -239,7 +239,7 @@ RSpec.describe Spree::Variant, type: :model do
     subject { variant.price_selector }
 
     it "returns an instance of a price selector" do
-      expect(variant.price_selector).to be_a(Spree::Config.variant_price_selector_class)
+      expect(variant.price_selector).to be_a(Solidus::Config.variant_price_selector_class)
     end
 
     it "is instacached" do
@@ -248,7 +248,7 @@ RSpec.describe Spree::Variant, type: :model do
   end
 
   context "#price_for(price_options)" do
-    let(:price_options) { Spree::Config.variant_price_selector_class.pricing_options_class.new }
+    let(:price_options) { Solidus::Config.variant_price_selector_class.pricing_options_class.new }
 
     it "calls the price selector with the given options object" do
       expect(variant.price_selector).to receive(:price_for).with(price_options)
@@ -257,25 +257,25 @@ RSpec.describe Spree::Variant, type: :model do
   end
 
   context "#price_difference_from_master" do
-    let(:pricing_options) { Spree::Config.default_pricing_options }
+    let(:pricing_options) { Solidus::Config.default_pricing_options }
 
     subject { variant.price_difference_from_master(pricing_options) }
 
     it "can be called without pricing options" do
-      expect(variant.price_difference_from_master).to eq(Spree::Money.new(0))
+      expect(variant.price_difference_from_master).to eq(Solidus::Money.new(0))
     end
 
     context "for the master variant" do
       let(:variant) { create(:product).master }
 
-      it { is_expected.to eq(Spree::Money.new(0, currency: Spree::Config.currency)) }
+      it { is_expected.to eq(Solidus::Money.new(0, currency: Solidus::Config.currency)) }
     end
 
     context "when both variants have a price" do
       let(:product) { create(:product, price: 25) }
       let(:variant) { create(:variant, product: product, price: 35) }
 
-      it { is_expected.to eq(Spree::Money.new(10, currency: Spree::Config.currency)) }
+      it { is_expected.to eq(Solidus::Money.new(10, currency: Solidus::Config.currency)) }
     end
 
     context "when the master variant does not have a price" do
@@ -353,7 +353,7 @@ RSpec.describe Spree::Variant, type: :model do
     end
 
     subject do
-      Spree::Deprecation.silence { variant.price_in(currency) }
+      Solidus::Deprecation.silence { variant.price_in(currency) }
     end
 
     context "when currency is not specified" do
@@ -387,7 +387,7 @@ RSpec.describe Spree::Variant, type: :model do
     end
 
     subject do
-      Spree::Deprecation.silence { variant.amount_in(currency) }
+      Solidus::Deprecation.silence { variant.amount_in(currency) }
     end
 
     context "when currency is not specified" do
@@ -521,7 +521,7 @@ RSpec.describe Spree::Variant, type: :model do
 
     context 'when stock_items are not backorderable' do
       before do
-        allow_any_instance_of(Spree::StockItem).to receive_messages(backorderable: false)
+        allow_any_instance_of(Solidus::StockItem).to receive_messages(backorderable: false)
       end
 
       context 'when stock_items in stock' do
@@ -536,8 +536,8 @@ RSpec.describe Spree::Variant, type: :model do
 
       context 'when stock_items out of stock' do
         before do
-          allow_any_instance_of(Spree::StockItem).to receive_messages(backorderable: false)
-          allow_any_instance_of(Spree::StockItem).to receive_messages(count_on_hand: 0)
+          allow_any_instance_of(Solidus::StockItem).to receive_messages(backorderable: false)
+          allow_any_instance_of(Solidus::StockItem).to receive_messages(count_on_hand: 0)
         end
 
         it 'return false if stock_items out of stock' do
@@ -548,7 +548,7 @@ RSpec.describe Spree::Variant, type: :model do
 
     describe "#can_supply?" do
       it "calls out to quantifier" do
-        expect(Spree::Stock::Quantifier).to receive(:new).and_return(quantifier = double)
+        expect(Solidus::Stock::Quantifier).to receive(:new).and_return(quantifier = double)
         expect(quantifier).to receive(:can_supply?).with(10)
         variant.can_supply?(10)
       end
@@ -556,12 +556,12 @@ RSpec.describe Spree::Variant, type: :model do
 
     context 'when stock_items are backorderable' do
       before do
-        allow_any_instance_of(Spree::StockItem).to receive_messages(backorderable: true)
+        allow_any_instance_of(Solidus::StockItem).to receive_messages(backorderable: true)
       end
 
       context 'when stock_items out of stock' do
         before do
-          allow_any_instance_of(Spree::StockItem).to receive_messages(count_on_hand: 0)
+          allow_any_instance_of(Solidus::StockItem).to receive_messages(count_on_hand: 0)
         end
 
         it 'in_stock? returns false' do
@@ -589,8 +589,8 @@ RSpec.describe Spree::Variant, type: :model do
     let(:variant) { build(:variant) }
     subject { variant.is_backorderable? }
 
-    it 'should invoke Spree::Stock::Quantifier' do
-      expect_any_instance_of(Spree::Stock::Quantifier).to receive(:backorderable?) { true }
+    it 'should invoke Solidus::Stock::Quantifier' do
+      expect_any_instance_of(Solidus::Stock::Quantifier).to receive(:backorderable?) { true }
       subject
     end
   end
@@ -603,7 +603,7 @@ RSpec.describe Spree::Variant, type: :model do
 
     it 'should match quantifier total_on_hand' do
       variant = build(:variant)
-      expect(variant.total_on_hand).to eq(Spree::Stock::Quantifier.new(variant).total_on_hand)
+      expect(variant.total_on_hand).to eq(Solidus::Stock::Quantifier.new(variant).total_on_hand)
     end
   end
 
@@ -692,7 +692,7 @@ RSpec.describe Spree::Variant, type: :model do
       context 'when loading with pre-fetching of default_price' do
         it 'also keeps the previous price' do
           variant.discard
-          reloaded_variant = Spree::Variant.with_deleted.includes(:default_price).find_by(id: variant.id)
+          reloaded_variant = Solidus::Variant.with_deleted.includes(:default_price).find_by(id: variant.id)
           expect(reloaded_variant.display_price).to eq(previous_variant_price)
         end
       end
@@ -708,13 +708,13 @@ RSpec.describe Spree::Variant, type: :model do
   end
 
   describe "in_stock scope" do
-    subject { Spree::Variant.in_stock }
+    subject { Solidus::Variant.in_stock }
     let!(:in_stock_variant) { create(:variant) }
     let!(:out_of_stock_variant) { create(:variant) }
     let!(:stock_location) { create(:stock_location) }
 
     context "a stock location is provided" do
-      subject { Spree::Variant.in_stock([stock_location]) }
+      subject { Solidus::Variant.in_stock([stock_location]) }
 
       context "there's stock in the location" do
         before do
@@ -758,7 +758,7 @@ RSpec.describe Spree::Variant, type: :model do
   end
 
   describe ".suppliable" do
-    subject { Spree::Variant.suppliable }
+    subject { Solidus::Variant.suppliable }
     let!(:in_stock_variant) { create(:variant) }
     let!(:out_of_stock_variant) { create(:variant) }
     let!(:backordered_variant) { create(:variant) }
@@ -839,22 +839,22 @@ RSpec.describe Spree::Variant, type: :model do
       end
 
       context "and variant.product.master.images is also empty" do
-        it "returns Spree::Image.none" do
+        it "returns Solidus::Image.none" do
           expect(product.master).not_to eq variant
           expect(product.master.images.presence).to be nil
 
-          expect(variant.gallery.images).to eq Spree::Image.none
+          expect(variant.gallery.images).to eq Solidus::Image.none
         end
       end
 
       context "and is master" do
-        it "returns Spree::Image.none" do
+        it "returns Solidus::Image.none" do
           variant = product.master
 
           expect(variant.is_master?).to be true
           expect(variant.images.presence).to be nil
 
-          expect(variant.gallery.images).to eq Spree::Image.none
+          expect(variant.gallery.images).to eq Solidus::Image.none
         end
       end
     end

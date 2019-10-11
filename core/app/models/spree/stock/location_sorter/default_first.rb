@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module Stock
     module LocationSorter
       # This stock location sorter will give priority to the default stock
       # location.
-      class DefaultFirst < Spree::Stock::LocationSorter::Base
+      class DefaultFirst < Solidus::Stock::LocationSorter::Base
         def sort
           stock_locations.order_default
         end

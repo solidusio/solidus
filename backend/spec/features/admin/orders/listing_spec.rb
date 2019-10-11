@@ -9,7 +9,7 @@ describe "Orders Listing", type: :feature, js: true do
   let(:promotion_code) { promotion.codes.first }
 
   before(:each) do
-    allow_any_instance_of(Spree::OrderInventory).to receive(:add_to_shipment)
+    allow_any_instance_of(Solidus::OrderInventory).to receive(:add_to_shipment)
     @order1 = create(:order_with_line_items, created_at: 1.day.from_now, completed_at: 1.day.from_now, number: "R100")
     @order2 = create(:order, created_at: 1.day.ago, completed_at: 1.day.ago, number: "R200")
     visit spree.admin_orders_path
@@ -21,8 +21,8 @@ describe "Orders Listing", type: :feature, js: true do
 
   context 'without create permission' do
     custom_authorization! do |_user|
-      can :manage, Spree::Order
-      cannot :create, Spree::Order
+      can :manage, Solidus::Order
+      cannot :create, Solidus::Order
     end
 
     it 'does not display the new order button' do
@@ -119,7 +119,7 @@ describe "Orders Listing", type: :feature, js: true do
 
         # Regression test for https://github.com/spree/spree/issues/4004
         it "should be able to go from page to page for incomplete orders" do
-          10.times { Spree::Order.create email: "incomplete@example.com" }
+          10.times { Solidus::Order.create email: "incomplete@example.com" }
           click_on "Filter Results"
           uncheck "q_completed_at_not_null"
           click_on 'Filter Results'

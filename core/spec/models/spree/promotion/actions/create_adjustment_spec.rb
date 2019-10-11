@@ -2,16 +2,16 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::Promotion::Actions::CreateAdjustment, type: :model do
+RSpec.describe Solidus::Promotion::Actions::CreateAdjustment, type: :model do
   let(:order) { create(:order_with_line_items, line_items_count: 1) }
   let(:promotion) { create(:promotion) }
-  let(:action) { Spree::Promotion::Actions::CreateAdjustment.new }
+  let(:action) { Solidus::Promotion::Actions::CreateAdjustment.new }
   let(:payload) { { order: order } }
 
   # From promotion spec:
   context "#perform" do
     before do
-      action.calculator = Spree::Calculator::FlatRate.new(preferred_amount: 10)
+      action.calculator = Solidus::Calculator::FlatRate.new(preferred_amount: 10)
       promotion.promotion_actions = [action]
       allow(action).to receive_messages(promotion: promotion)
     end
@@ -82,7 +82,7 @@ RSpec.describe Spree::Promotion::Actions::CreateAdjustment, type: :model do
 
   shared_examples "destroying adjustments from incomplete orders" do
     before(:each) do
-      action.calculator = Spree::Calculator::FlatRate.new(preferred_amount: 10)
+      action.calculator = Solidus::Calculator::FlatRate.new(preferred_amount: 10)
       promotion.promotion_actions = [action]
     end
 
@@ -120,7 +120,7 @@ RSpec.describe Spree::Promotion::Actions::CreateAdjustment, type: :model do
   end
 
   context "#paranoia_destroy" do
-    subject { Spree::Deprecation.silence { action.paranoia_destroy } }
+    subject { Solidus::Deprecation.silence { action.paranoia_destroy } }
     it_should_behave_like "destroying adjustments from incomplete orders"
   end
 end

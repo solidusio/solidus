@@ -2,8 +2,8 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::Calculator, type: :model do
-  class SimpleCalculator < Spree::Calculator
+RSpec.describe Solidus::Calculator, type: :model do
+  class SimpleCalculator < Solidus::Calculator
     def compute_simple_computable(_line_item)
       'computed'
     end
@@ -13,11 +13,11 @@ RSpec.describe Spree::Calculator, type: :model do
   end
 
   describe "#calculators" do
-    subject { Spree::Calculator.calculators }
+    subject { Solidus::Calculator.calculators }
 
     it 'returns the (deprecated) calculator step' do
-      Spree::Deprecation.silence do
-        expect(subject).to be_a Spree::Core::Environment::Calculators
+      Solidus::Deprecation.silence do
+        expect(subject).to be_a Solidus::Core::Environment::Calculators
       end
     end
   end
@@ -33,7 +33,7 @@ RSpec.describe Spree::Calculator, type: :model do
     end
 
     context 'computable does not implement right function name' do
-      let(:computable) { Spree::LineItem.new }
+      let(:computable) { Solidus::LineItem.new }
 
       it 'raises an error' do
         expect { subject }.to raise_error NotImplementedError, /Please implement \'compute_line_item\(line_item\)\' in your calculator/

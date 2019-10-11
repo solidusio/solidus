@@ -3,14 +3,14 @@
 require 'rails_helper'
 require 'shared_examples/calculator_shared_examples'
 
-RSpec.describe Spree::Calculator::FlatRate, type: :model do
-  let(:calculator) { Spree::Calculator::FlatRate.new }
+RSpec.describe Solidus::Calculator::FlatRate, type: :model do
+  let(:calculator) { Solidus::Calculator::FlatRate.new }
 
   it_behaves_like 'a calculator with a description'
 
   let(:order) do
     mock_model(
-      Spree::Order, quantity: 10, currency: "USD"
+      Solidus::Order, quantity: 10, currency: "USD"
     )
   end
 

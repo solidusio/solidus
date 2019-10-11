@@ -3,11 +3,11 @@
 require 'rails_helper'
 require 'spree/core/validators/email'
 
-RSpec.describe Spree::EmailValidator do
+RSpec.describe Solidus::EmailValidator do
   class Tester
     include ActiveModel::Validations
     attr_accessor :email_address
-    validates :email_address, 'spree/email' => true
+    validates :email_address, 'solidus/email' => true
   end
 
   let(:valid_emails) {

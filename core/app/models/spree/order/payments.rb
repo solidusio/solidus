@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-module Spree
-  class Order < Spree::Base
+module Solidus
+  class Order < Solidus::Base
     module Payments
       # processes any pending payments and must return a boolean as it's
       # return value is used by the checkout state_machine to determine
@@ -47,7 +47,7 @@ module Spree
           payment.public_send(method)
         end
       rescue Core::GatewayError => e
-        result = !!Spree::Config[:allow_checkout_on_gateway_error]
+        result = !!Solidus::Config[:allow_checkout_on_gateway_error]
         errors.add(:base, e.message) && (return result)
       end
     end

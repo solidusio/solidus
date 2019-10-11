@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Spree::Admin::StockMovementsHelper, type: :helper do
+describe Solidus::Admin::StockMovementsHelper, type: :helper do
   describe "#pretty_originator" do
     let!(:stock_location) { create(:stock_location_with_items) }
     let!(:stock_item)     { stock_location.stock_items.first }

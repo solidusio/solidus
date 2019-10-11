@@ -28,6 +28,6 @@ Dummy::Application.configure do
 
   # Raise on deprecation warnings
   if ENV['SOLIDUS_RAISE_DEPRECATIONS'].present?
-    Spree::Deprecation.behavior = :raise
+    Solidus::Deprecation.behavior = :raise
   end
 end

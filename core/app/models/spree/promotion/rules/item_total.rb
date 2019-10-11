@@ -1,19 +1,19 @@
 # frozen_string_literal: true
 
-module Spree
-  class Promotion < Spree::Base
+module Solidus
+  class Promotion < Solidus::Base
     module Rules
       # A rule to apply to an order greater than (or greater than or equal to)
       # a specific amount
       class ItemTotal < PromotionRule
         preference :amount, :decimal, default: 100.00
-        preference :currency, :string, default: ->{ Spree::Config[:currency] }
+        preference :currency, :string, default: ->{ Solidus::Config[:currency] }
         preference :operator, :string, default: '>'
 
         OPERATORS = ['gt', 'gte']
 
         def applicable?(promotable)
-          promotable.is_a?(Spree::Order)
+          promotable.is_a?(Solidus::Order)
         end
 
         def eligible?(order, _options = {})
@@ -29,7 +29,7 @@ module Spree
         private
 
         def formatted_amount
-          Spree::Money.new(preferred_amount, currency: preferred_currency).to_s
+          Solidus::Money.new(preferred_amount, currency: preferred_currency).to_s
         end
 
         def ineligible_message

@@ -3,7 +3,7 @@
 require 'spec_helper'
 require 'cancan'
 
-describe Spree::Admin::OrdersController, type: :controller do
+describe Solidus::Admin::OrdersController, type: :controller do
   let!(:store) { create(:store) }
   context "with authorization" do
     stub_authorization!
@@ -14,20 +14,20 @@ describe Spree::Admin::OrdersController, type: :controller do
 
     let(:order) do
       mock_model(
-        Spree::Order,
+        Solidus::Order,
         completed?:      true,
         total:           100,
         number:          'R123456789',
         all_adjustments: adjustments,
-        ship_address: mock_model(Spree::Address)
+        ship_address: mock_model(Solidus::Address)
       )
     end
 
     let(:adjustments) { double('adjustments') }
 
     before do
-      allow(Spree::Order).to receive_message_chain(:includes, find_by!: order)
-      allow(order).to receive_messages(contents: Spree::OrderContents.new(order))
+      allow(Solidus::Order).to receive_message_chain(:includes, find_by!: order)
+      allow(order).to receive_messages(contents: Solidus::OrderContents.new(order))
     end
 
     context "#approve" do
@@ -58,7 +58,7 @@ describe Spree::Admin::OrdersController, type: :controller do
       let(:order) { create(:completed_order_with_totals) }
       it "resends order email" do
         mail_message = double "Mail::Message"
-        expect(Spree::OrderMailer).to receive(:confirm_email).with(order, true).and_return mail_message
+        expect(Solidus::OrderMailer).to receive(:confirm_email).with(order, true).and_return mail_message
         expect(mail_message).to receive :deliver_later
         post :resend, params: { id: order.number }
         expect(flash[:success]).to eq I18n.t('spree.order_email_resent')
@@ -81,32 +81,32 @@ describe Spree::Admin::OrdersController, type: :controller do
       end
 
       it "imports a new order and sets the current user as a creator" do
-        expect(Spree::Core::Importer::Order).to receive(:import)
+        expect(Solidus::Core::Importer::Order).to receive(:import)
           .with(nil, hash_including(created_by_id: controller.try_spree_current_user.id))
           .and_return(order)
         get :new
       end
 
       it "sets frontend_viewable to false" do
-        expect(Spree::Core::Importer::Order).to receive(:import)
+        expect(Solidus::Core::Importer::Order).to receive(:import)
           .with(nil, hash_including(frontend_viewable: false ))
           .and_return(order)
         get :new
       end
 
       it "should associate the order with a store" do
-        expect(Spree::Core::Importer::Order).to receive(:import)
+        expect(Solidus::Core::Importer::Order).to receive(:import)
           .with(user, hash_including(store_id: controller.current_store.id))
           .and_return(order)
         get :new, params: { user_id: user.id }
       end
 
       context "when a user_id is passed as a parameter" do
-        let(:user)  { mock_model(Spree.user_class) }
-        before { allow(Spree.user_class).to receive_messages find_by: user }
+        let(:user)  { mock_model(Solidus.user_class) }
+        before { allow(Solidus.user_class).to receive_messages find_by: user }
 
         it "imports a new order and assigns the user to the order" do
-          expect(Spree::Core::Importer::Order).to receive(:import)
+          expect(Solidus::Core::Importer::Order).to receive(:import)
             .with(user, hash_including(created_by_id: controller.try_spree_current_user.id))
             .and_return(order)
           get :new, params: { user_id: user.id }
@@ -115,7 +115,7 @@ describe Spree::Admin::OrdersController, type: :controller do
 
       it "should redirect to cart" do
         get :new
-        expect(response).to redirect_to(spree.cart_admin_order_path(Spree::Order.last))
+        expect(response).to redirect_to(spree.cart_admin_order_path(Solidus::Order.last))
       end
     end
 
@@ -272,7 +272,7 @@ describe Spree::Admin::OrdersController, type: :controller do
 
       context 'insufficient stock to complete the order' do
         before do
-          expect(order).to receive(:complete!).and_raise Spree::Order::InsufficientStock
+          expect(order).to receive(:complete!).and_raise Solidus::Order::InsufficientStock
         end
 
         it 'messages and redirects' do
@@ -289,16 +289,16 @@ describe Spree::Admin::OrdersController, type: :controller do
 
       before do
         allow(controller).to receive_messages try_spree_current_user: user
-        user.spree_roles << Spree::Role.find_or_create_by(name: 'admin')
+        user.spree_roles << Solidus::Role.find_or_create_by(name: 'admin')
 
         create_list(:completed_order_with_totals, 2)
-        expect(Spree::Order.count).to eq 2
+        expect(Solidus::Order.count).to eq 2
       end
 
       context 'by line_items_variant_id_in' do
         it "does not display duplicated results" do
           get :index, params: { q: {
-            line_items_variant_id_in: Spree::Order.first.variants.map(&:id)
+            line_items_variant_id_in: Solidus::Order.first.variants.map(&:id)
             } }
           expect(assigns[:orders].size).to eq 1
         end
@@ -307,10 +307,10 @@ describe Spree::Admin::OrdersController, type: :controller do
       context 'by email' do
         it "does not display duplicated results" do
           get :index, params: { q: {
-            email_start: Spree::Order.first.email
+            email_start: Solidus::Order.first.email
             } }
           expect(assigns[:orders].size).to eq 1
-          expect(assigns[:orders][0].email).to eq(Spree::Order.first.email)
+          expect(assigns[:orders][0].email).to eq(Solidus::Order.first.email)
         end
       end
     end
@@ -365,7 +365,7 @@ describe Spree::Admin::OrdersController, type: :controller do
     end
 
     it 'should grant access to users with an admin role' do
-      user.spree_roles << Spree::Role.find_or_create_by(name: 'admin')
+      user.spree_roles << Solidus::Role.find_or_create_by(name: 'admin')
       get :index
       expect(response).to render_template :index
     end
@@ -378,14 +378,14 @@ describe Spree::Admin::OrdersController, type: :controller do
 
     context 'with only permissions on Order' do
       stub_authorization! do |_ability|
-        can [:admin, :manage], Spree::Order, number: 'R987654321'
+        can [:admin, :manage], Solidus::Order, number: 'R987654321'
       end
 
       it 'should restrict returned order(s) on index when using OrderSpecificAbility' do
         number = order.number
 
         3.times { create(:completed_order_with_totals) }
-        expect(Spree::Order.complete.count).to eq 4
+        expect(Solidus::Order.complete.count).to eq 4
 
         allow(user).to receive_messages has_spree_role?: false
         get :index

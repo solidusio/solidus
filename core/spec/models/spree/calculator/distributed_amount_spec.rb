@@ -3,9 +3,9 @@
 require 'rails_helper'
 require 'shared_examples/calculator_shared_examples'
 
-RSpec.describe Spree::Calculator::DistributedAmount, type: :model do
+RSpec.describe Solidus::Calculator::DistributedAmount, type: :model do
   context 'applied to an order' do
-    let(:calculator) { Spree::Calculator::DistributedAmount.new }
+    let(:calculator) { Solidus::Calculator::DistributedAmount.new }
     let(:promotion) {
       create :promotion,
         name: '15 spread'
@@ -18,7 +18,7 @@ RSpec.describe Spree::Calculator::DistributedAmount, type: :model do
 
     before do
       calculator.preferred_amount = 15
-      Spree::Promotion::Actions::CreateItemAdjustments.create!(calculator: calculator, promotion: promotion)
+      Solidus::Promotion::Actions::CreateItemAdjustments.create!(calculator: calculator, promotion: promotion)
       order.recalculate
     end
 
@@ -31,10 +31,10 @@ RSpec.describe Spree::Calculator::DistributedAmount, type: :model do
       let(:first_product) { order.line_items.first.product }
 
       before do
-        rule = Spree::Promotion::Rules::Product.create!(
+        rule = Solidus::Promotion::Rules::Product.create!(
           promotion: promotion,
           product_promotion_rules: [
-            Spree::ProductPromotionRule.new(product: first_product),
+            Solidus::ProductPromotionRule.new(product: first_product),
           ],
         )
         promotion.rules << rule
@@ -52,7 +52,7 @@ RSpec.describe Spree::Calculator::DistributedAmount, type: :model do
   describe "#compute_line_item" do
     subject { calculator.compute_line_item(order.line_items.first) }
 
-    let(:calculator) { Spree::Calculator::DistributedAmount.new }
+    let(:calculator) { Solidus::Calculator::DistributedAmount.new }
     let(:promotion) { create(:promotion) }
 
     let(:order) do
@@ -65,7 +65,7 @@ RSpec.describe Spree::Calculator::DistributedAmount, type: :model do
     before do
       calculator.preferred_amount = 15
       calculator.preferred_currency = currency
-      Spree::Promotion::Actions::CreateItemAdjustments.create!(calculator: calculator, promotion: promotion)
+      Solidus::Promotion::Actions::CreateItemAdjustments.create!(calculator: calculator, promotion: promotion)
     end
 
     context "when the order currency matches the store's currency" do

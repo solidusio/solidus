@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module TestingSupport
     # A module providing convenience methods to test Solidus controllers
     # in Rails controller/functional tests. Possibly from inside an
@@ -10,7 +10,7 @@ module Spree
     # a functional/controller test against a Spree controller, just
     # use standard Rails functionality by including:
     #
-    #   routes { Spree::Core::Engine.routes }
+    #   routes { Solidus::Core::Engine.routes }
     #
     # And then use standard Rails test `get`, `post` etc methods.
     #
@@ -24,7 +24,7 @@ module Spree
     #
     #   require 'spree/testing_support/controller_requests'
     #   RSpec.configure do |c|
-    #     c.include Spree::TestingSupport::ControllerRequests, spree_controller: true
+    #     c.include Solidus::TestingSupport::ControllerRequests, spree_controller: true
     #   end
     #
     # Then, in your controller tests against spree controllers, you can access
@@ -32,7 +32,7 @@ module Spree
     #
     #   require 'spec_helper'
     #
-    #   describe Spree::ProductsController, :spree_controller do
+    #   describe Solidus::ProductsController, :spree_controller do
     #     it "can see all the products" do
     #       spree_get :index
     #     end
@@ -45,51 +45,51 @@ module Spree
       extend ActiveSupport::Concern
 
       included do
-        routes { Spree::Core::Engine.routes }
+        routes { Solidus::Core::Engine.routes }
       end
 
       def spree_get(action, parameters = nil, session = nil, flash = nil)
         process_spree_action(action, parameters, session, flash, "GET")
       end
-      deprecate spree_get: :get, deprecator: Spree::Deprecation
+      deprecate spree_get: :get, deprecator: Solidus::Deprecation
 
       # Executes a request simulating POST HTTP method and set/volley the response
       def spree_post(action, parameters = nil, session = nil, flash = nil)
         process_spree_action(action, parameters, session, flash, "POST")
       end
-      deprecate spree_post: :post, deprecator: Spree::Deprecation
+      deprecate spree_post: :post, deprecator: Solidus::Deprecation
 
       # Executes a request simulating PUT HTTP method and set/volley the response
       def spree_put(action, parameters = nil, session = nil, flash = nil)
         process_spree_action(action, parameters, session, flash, "PUT")
       end
-      deprecate spree_put: :put, deprecator: Spree::Deprecation
+      deprecate spree_put: :put, deprecator: Solidus::Deprecation
 
       # Executes a request simulating DELETE HTTP method and set/volley the response
       def spree_delete(action, parameters = nil, session = nil, flash = nil)
         process_spree_action(action, parameters, session, flash, "DELETE")
       end
-      deprecate spree_delete: :delete, deprecator: Spree::Deprecation
+      deprecate spree_delete: :delete, deprecator: Solidus::Deprecation
 
       def spree_xhr_get(action, parameters = nil, session = nil, flash = nil)
         process_spree_xhr_action(action, parameters, session, flash, :get)
       end
-      deprecate spree_xhr_get: :get, deprecator: Spree::Deprecation
+      deprecate spree_xhr_get: :get, deprecator: Solidus::Deprecation
 
       def spree_xhr_post(action, parameters = nil, session = nil, flash = nil)
         process_spree_xhr_action(action, parameters, session, flash, :post)
       end
-      deprecate spree_xhr_post: :post, deprecator: Spree::Deprecation
+      deprecate spree_xhr_post: :post, deprecator: Solidus::Deprecation
 
       def spree_xhr_put(action, parameters = nil, session = nil, flash = nil)
         process_spree_xhr_action(action, parameters, session, flash, :put)
       end
-      deprecate spree_xhr_put: :put, deprecator: Spree::Deprecation
+      deprecate spree_xhr_put: :put, deprecator: Solidus::Deprecation
 
       def spree_xhr_delete(action, parameters = nil, session = nil, flash = nil)
         process_spree_xhr_action(action, parameters, session, flash, :delete)
       end
-      deprecate spree_xhr_delete: :delete, deprecator: Spree::Deprecation
+      deprecate spree_xhr_delete: :delete, deprecator: Solidus::Deprecation
 
       private
 

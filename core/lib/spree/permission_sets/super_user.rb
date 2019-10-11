@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module PermissionSets
     class SuperUser < PermissionSets::Base
       def activate!

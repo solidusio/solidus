@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-class Spree::PromotionCode < Spree::Base
+class Solidus::PromotionCode < Solidus::Base
   belongs_to :promotion, inverse_of: :codes, optional: true
-  belongs_to :promotion_code_batch, class_name: "Spree::PromotionCodeBatch", optional: true
+  belongs_to :promotion_code_batch, class_name: "Solidus::PromotionCodeBatch", optional: true
   has_many :adjustments
 
   validates :value, presence: true, uniqueness: { allow_blank: true }
@@ -27,7 +27,7 @@ class Spree::PromotionCode < Spree::Base
   def usage_count
     adjustments.eligible.
       joins(:order).
-      merge(Spree::Order.complete).
+      merge(Solidus::Order.complete).
       distinct.
       count(:order_id)
   end

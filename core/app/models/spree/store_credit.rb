@@ -2,9 +2,9 @@
 
 require 'discard'
 
-class Spree::StoreCredit < Spree::PaymentSource
+class Solidus::StoreCredit < Solidus::PaymentSource
   acts_as_paranoid
-  include Spree::ParanoiaDeprecations
+  include Solidus::ParanoiaDeprecations
 
   include Discard::Model
   self.discard_column = :deleted_at
@@ -18,10 +18,10 @@ class Spree::StoreCredit < Spree::PaymentSource
   ADJUSTMENT_ACTION = 'adjustment'
   INVALIDATE_ACTION = 'invalidate'
 
-  belongs_to :user, class_name: Spree::UserClassHandle.new, optional: true
-  belongs_to :created_by, class_name: Spree::UserClassHandle.new, optional: true
-  belongs_to :category, class_name: "Spree::StoreCreditCategory", optional: true
-  belongs_to :credit_type, class_name: 'Spree::StoreCreditType', foreign_key: 'type_id', optional: true
+  belongs_to :user, class_name: Solidus::UserClassHandle.new, optional: true
+  belongs_to :created_by, class_name: Solidus::UserClassHandle.new, optional: true
+  belongs_to :category, class_name: "Solidus::StoreCreditCategory", optional: true
+  belongs_to :credit_type, class_name: 'Solidus::StoreCreditType', foreign_key: 'type_id', optional: true
   has_many :store_credit_events
 
   validates_presence_of :user_id, :category_id, :type_id, :created_by_id, :currency
@@ -43,7 +43,7 @@ class Spree::StoreCredit < Spree::PaymentSource
 
   attr_accessor :action, :action_amount, :action_originator, :action_authorization_code, :store_credit_reason
 
-  extend Spree::DisplayMoney
+  extend Solidus::DisplayMoney
   money_methods :amount, :amount_used, :amount_authorized
 
   def amount_remaining
@@ -199,8 +199,8 @@ class Spree::StoreCredit < Spree::PaymentSource
   def create_credit_record(amount, action_attributes = {})
     # Setting credit_to_new_allocation to true will create a new allocation anytime #credit is called
     # If it is not set, it will update the store credit's amount in place
-    credit = if Spree::Config[:credit_to_new_allocation]
-      Spree::StoreCredit.new(create_credit_record_params(amount))
+    credit = if Solidus::Config[:credit_to_new_allocation]
+      Solidus::StoreCredit.new(create_credit_record_params(amount))
     else
       self.amount_used = amount_used - amount
       self
@@ -276,11 +276,11 @@ class Spree::StoreCredit < Spree::PaymentSource
     unless type_id
       credit_type_name =
         if category.try(:non_expiring?)
-          Spree::StoreCreditType::NON_EXPIRING
+          Solidus::StoreCreditType::NON_EXPIRING
         else
-          Spree::StoreCreditType::EXPIRING
+          Solidus::StoreCreditType::EXPIRING
         end
-      self.credit_type = Spree::StoreCreditType.find_by(name: credit_type_name)
+      self.credit_type = Solidus::StoreCreditType.find_by(name: credit_type_name)
     end
   end
 end

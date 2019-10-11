@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-module Spree
+module Solidus
   module PromotionHandler
     RSpec.describe Coupon, type: :model do
       let(:order) { double("Order", coupon_code: "10off").as_null_object }
@@ -180,7 +180,7 @@ module Spree
               order.contents.add create(:variant, price: 500)
               order.contents.add create(:variant, price: 10)
 
-              Spree::PromotionHandler::Cart.new(order).activate
+              Solidus::PromotionHandler::Cart.new(order).activate
             end
 
             it "successfully activates both promotions and returns success" do
@@ -259,7 +259,7 @@ module Spree
             end
 
             context "when the coupon fails to activate" do
-              before { allow_any_instance_of(Spree::Promotion).to receive(:activate).and_return false }
+              before { allow_any_instance_of(Solidus::Promotion).to receive(:activate).and_return false }
 
               it "is not successful" do
                 subject.apply
@@ -301,7 +301,7 @@ module Spree
           let!(:tax_rate) { create(:tax_rate, amount: 0.1, tax_categories: [tax_category], zone: zone ) }
 
           before(:each) do
-            expect(order).to receive(:tax_address).at_least(:once).and_return(Spree::Tax::TaxLocation.new(country: zone.countries.first))
+            expect(order).to receive(:tax_address).at_least(:once).and_return(Solidus::Tax::TaxLocation.new(country: zone.countries.first))
           end
 
           context "and the product price is less than promo discount" do

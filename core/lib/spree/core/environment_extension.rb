@@ -2,7 +2,7 @@
 
 require 'spree/core/class_constantizer'
 
-module Spree
+module Solidus
   module Core
     module EnvironmentExtension
       extend ActiveSupport::Concern

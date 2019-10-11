@@ -11,13 +11,13 @@
 # An added benefit to this approach is not having to associate existing variant
 # properties with newly created variants. If the variant has the option values
 # targeted by the rule, the properties will automatically apply to the variant.
-module Spree
-  class VariantPropertyRule < Spree::Base
+module Solidus
+  class VariantPropertyRule < Solidus::Base
     belongs_to :product, touch: true, optional: true
 
-    has_many :values, class_name: 'Spree::VariantPropertyRuleValue', dependent: :destroy
+    has_many :values, class_name: 'Solidus::VariantPropertyRuleValue', dependent: :destroy
     has_many :properties, through: :values
-    has_many :conditions, class_name: 'Spree::VariantPropertyRuleCondition', dependent: :destroy
+    has_many :conditions, class_name: 'Solidus::VariantPropertyRuleCondition', dependent: :destroy
     has_many :option_values, through: :conditions
 
     accepts_nested_attributes_for :values, allow_destroy: true, reject_if: lambda { |val| val[:property_name].blank? }
@@ -35,7 +35,7 @@ module Spree
     # checking the rule's conditions against the variant's
     # option values.
     #
-    # @param variant [Spree::Variant] variant to check
+    # @param variant [Solidus::Variant] variant to check
     # @return [Boolean]
     def applies_to_variant?(variant)
       (option_value_ids & variant.option_value_ids).present?

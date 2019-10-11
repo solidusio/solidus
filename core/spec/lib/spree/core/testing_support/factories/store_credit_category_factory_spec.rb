@@ -4,7 +4,7 @@ require 'rails_helper'
 require 'spree/testing_support/factories/store_credit_category_factory'
 
 RSpec.describe 'store credit category factory' do
-  let(:factory_class) { Spree::StoreCreditCategory }
+  let(:factory_class) { Solidus::StoreCreditCategory }
 
   describe 'plain store credit category' do
     let(:factory) { :store_credit_category }

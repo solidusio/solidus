@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   class DistributedAmountsHandler
     attr_reader :line_items, :total_amount
 

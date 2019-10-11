@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module Core
     class StateMachines
       module ReturnItem
@@ -19,13 +19,13 @@ module Spree
 
           included do
             state_machine :reception_status, initial: :awaiting do
-              after_transition to: ::Spree::ReturnItem::COMPLETED_RECEPTION_STATUSES,  do: :attempt_accept
-              after_transition to: ::Spree::ReturnItem::COMPLETED_RECEPTION_STATUSES,  do: :check_unexchange
+              after_transition to: ::Solidus::ReturnItem::COMPLETED_RECEPTION_STATUSES,  do: :attempt_accept
+              after_transition to: ::Solidus::ReturnItem::COMPLETED_RECEPTION_STATUSES,  do: :check_unexchange
               after_transition to: :received, do: :process_inventory_unit!
 
               event(:cancel) { transition to: :cancelled, from: :awaiting }
 
-              event(:receive) { transition to: :received, from: ::Spree::ReturnItem::INTERMEDIATE_RECEPTION_STATUSES + [:awaiting] }
+              event(:receive) { transition to: :received, from: ::Solidus::ReturnItem::INTERMEDIATE_RECEPTION_STATUSES + [:awaiting] }
               event(:unexchange) { transition to: :unexchanged, from: [:awaiting] }
               event(:give) { transition to: :given_to_customer, from: :awaiting }
               event(:lost) { transition to: :lost_in_transit, from: :awaiting }

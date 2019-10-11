@@ -3,7 +3,7 @@
 # A service layer that handles generating Carton objects when inventory units
 # are actually shipped.  It also takes care of things like updating order and
 # shipment states and delivering shipment emails as needed.
-class Spree::OrderShipping
+class Solidus::OrderShipping
   def initialize(order)
     @order = order
   end
@@ -47,10 +47,10 @@ class Spree::OrderShipping
 
     carton = nil
 
-    Spree::InventoryUnit.transaction do
+    Solidus::InventoryUnit.transaction do
       inventory_units.each(&:ship!)
 
-      carton = Spree::Carton.create!(
+      carton = Solidus::Carton.create!(
         stock_location: stock_location,
         address: address,
         shipping_method: shipping_method,
@@ -83,7 +83,7 @@ class Spree::OrderShipping
 
   def send_shipment_emails(carton)
     carton.orders.each do |order|
-      Spree::Config.carton_shipped_email_class.shipped_email(order: order, carton: carton).deliver_later
+      Solidus::Config.carton_shipped_email_class.shipped_email(order: order, carton: carton).deliver_later
     end
   end
 end

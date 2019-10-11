@@ -13,9 +13,9 @@ namespace 'spree:migrations:copy_order_bill_address_to_credit_card' do
   # This task should be safe to run multiple times.
 
   task up: :environment do
-    Spree::Deprecation.warn("rake spree:migrations:copy_order_bill_address_to_credit_card:up has been deprecated and will be removed with Solidus 3.0.")
+    Solidus::Deprecation.warn("rake spree:migrations:copy_order_bill_address_to_credit_card:up has been deprecated and will be removed with Solidus 3.0.")
 
-    if Spree::CreditCard.connection.adapter_name =~ /postgres/i
+    if Solidus::CreditCard.connection.adapter_name =~ /postgres/i
       postgres_copy
     else
       ruby_copy
@@ -23,13 +23,13 @@ namespace 'spree:migrations:copy_order_bill_address_to_credit_card' do
   end
 
   task down: :environment do
-    Spree::Deprecation.warn("rake spree:migrations:copy_order_bill_address_to_credit_card:down has been deprecated and will be removed with Solidus 3.0.")
+    Solidus::Deprecation.warn("rake spree:migrations:copy_order_bill_address_to_credit_card:down has been deprecated and will be removed with Solidus 3.0.")
 
-    Spree::CreditCard.update_all(address_id: nil)
+    Solidus::CreditCard.update_all(address_id: nil)
   end
 
   def ruby_copy
-    scope = Spree::CreditCard.where(address_id: nil).includes(payments: :order)
+    scope = Solidus::CreditCard.where(address_id: nil).includes(payments: :order)
 
     scope.find_each(batch_size: 500) do |cc|
       # remove payments that lack a bill address
@@ -63,7 +63,7 @@ namespace 'spree:migrations:copy_order_bill_address_to_credit_card' do
       puts "updating #{current_start_id} to #{current_end_id}"
 
       # first try to find a valid payment for each credit card
-      Spree::CreditCard.connection.execute(
+      Solidus::CreditCard.connection.execute(
         postgres_sql(
           start_id: current_start_id,
           end_id: current_end_id,
@@ -72,7 +72,7 @@ namespace 'spree:migrations:copy_order_bill_address_to_credit_card' do
       )
 
       # fall back to using invalid payments for each credit card
-      Spree::CreditCard.connection.execute(
+      Solidus::CreditCard.connection.execute(
         postgres_sql(
           start_id: current_start_id,
           end_id: current_end_id,
@@ -100,12 +100,12 @@ namespace 'spree:migrations:copy_order_bill_address_to_credit_card' do
           and o2.bill_address_id is not null
       ) more_recent_payment
         on  more_recent_payment.source_id = p.source_id
-        and more_recent_payment.source_type = 'Spree::CreditCard'
+        and more_recent_payment.source_type = 'Solidus::CreditCard'
         and more_recent_payment.created_at > p.created_at
         and more_recent_payment.state #{payment_state}
       where c.address_id is null
         and p.source_id = c.id
-        and p.source_type = 'Spree::CreditCard'
+        and p.source_type = 'Solidus::CreditCard'
         and p.state #{payment_state}
         and more_recent_payment.id is null
         and o.bill_address_id is not null
@@ -114,6 +114,6 @@ namespace 'spree:migrations:copy_order_bill_address_to_credit_card' do
   end
 
   def last_credit_card_id
-    Spree::CreditCard.last.try!(:id) || 0
+    Solidus::CreditCard.last.try!(:id) || 0
   end
 end

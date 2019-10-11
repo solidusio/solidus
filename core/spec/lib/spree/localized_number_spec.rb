@@ -3,7 +3,7 @@
 require 'spec_helper'
 require 'spree/localized_number'
 
-RSpec.describe Spree::LocalizedNumber do
+RSpec.describe Solidus::LocalizedNumber do
   context ".parse" do
     before do
       I18n.enforce_available_locales = false

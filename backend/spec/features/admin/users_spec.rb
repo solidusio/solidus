@@ -38,7 +38,7 @@ describe 'Users', type: :feature do
     end
 
     it 'can go back to the users list' do
-      expect(page).to have_link Spree::LegacyUser.model_name.human(count: Spree::I18N_GENERIC_PLURAL), href: spree.admin_users_path
+      expect(page).to have_link Solidus::LegacyUser.model_name.human(count: Solidus::I18N_GENERIC_PLURAL), href: spree.admin_users_path
     end
 
     it 'can navigate to the account page' do
@@ -134,7 +134,7 @@ describe 'Users', type: :feature do
       end
 
       it 'displays the correct results for a user search by role' do
-        select 'admin', from: Spree.user_class.human_attribute_name(:spree_roles)
+        select 'admin', from: Solidus.user_class.human_attribute_name(:spree_roles)
         click_button 'Search'
         within_table('listing_users') do
           expect(page).to have_text user_a.email
@@ -176,7 +176,7 @@ describe 'Users', type: :feature do
     end
 
     it 'can delete user roles' do
-      user_a.spree_roles << Spree::Role.create(name: "dummy")
+      user_a.spree_roles << Solidus::Role.create(name: "dummy")
       click_link 'Account'
 
       user_a.spree_roles.each do |role|
@@ -215,18 +215,18 @@ describe 'Users', type: :feature do
 
     context 'invalid entry' do
       around do |example|
-        ::AlwaysInvalidUser = Class.new(Spree.user_class) do
+        ::AlwaysInvalidUser = Class.new(Solidus.user_class) do
           validate :always_invalid_email
           def always_invalid_email
             errors.add(:email, "is invalid")
           end
         end
-        orig_class = Spree.user_class
-        Spree.user_class = "AlwaysInvalidUser"
+        orig_class = Solidus.user_class
+        Solidus.user_class = "AlwaysInvalidUser"
 
         example.run
 
-        Spree.user_class = orig_class.name
+        Solidus.user_class = orig_class.name
         Object.send(:remove_const, "AlwaysInvalidUser")
       end
 
@@ -336,7 +336,7 @@ describe 'Users', type: :feature do
 
     context :total do
       it_behaves_like "a sortable attribute" do
-        # Since Spree::Money renders each piece of the total in it's own span,
+        # Since Solidus::Money renders each piece of the total in it's own span,
         # we are just checking the dollar total matches. Mainly due to how
         # RSpec matcher appear_before works since it can't index the broken up total.
         let(:text_match_1) { order.total.to_i.to_s }

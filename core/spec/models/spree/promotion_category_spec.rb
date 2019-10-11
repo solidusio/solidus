@@ -2,10 +2,10 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::PromotionCategory, type: :model do
+RSpec.describe Solidus::PromotionCategory, type: :model do
   describe 'validation' do
     let(:name) { 'Nom' }
-    subject { Spree::PromotionCategory.new name: name }
+    subject { Solidus::PromotionCategory.new name: name }
 
     context 'when all required attributes are specified' do
       it { is_expected.to be_valid }

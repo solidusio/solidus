@@ -4,7 +4,7 @@ require 'rails_helper'
 require 'spree/testing_support/factories/stock_package_factory'
 
 RSpec.describe 'stock package factory' do
-  let(:factory_class) { Spree::Stock::Package }
+  let(:factory_class) { Solidus::Stock::Package }
 
   describe 'plain stock package' do
     let(:factory) { :stock_package }

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'spree_core'
-module Spree
+module Solidus
   module Sample
     class << self
       def load_sample(file)

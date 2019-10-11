@@ -3,7 +3,7 @@
 require 'rails_helper'
 require 'shared_examples/calculator_shared_examples'
 
-RSpec.describe Spree::Calculator::DefaultTax, type: :model do
+RSpec.describe Solidus::Calculator::DefaultTax, type: :model do
   let(:address) { create(:address) }
   let!(:zone) { create(:zone, name: "Country Zone", countries: [tax_rate_country]) }
   let(:tax_rate_country) { address.country }
@@ -16,7 +16,7 @@ RSpec.describe Spree::Calculator::DefaultTax, type: :model do
                       starts_at: starts_at, expires_at: expires_at)
   end
   let(:included_in_price) { false }
-  subject(:calculator) { Spree::Calculator::DefaultTax.new(calculable: rate ) }
+  subject(:calculator) { Solidus::Calculator::DefaultTax.new(calculable: rate ) }
 
   it_behaves_like 'a calculator with a description'
 
@@ -116,7 +116,7 @@ RSpec.describe Spree::Calculator::DefaultTax, type: :model do
       if adjustment_total.zero?
         []
       else
-       [Spree::Adjustment.new(included: false, source: nil, amount: adjustment_total)]
+       [Solidus::Adjustment.new(included: false, source: nil, amount: adjustment_total)]
       end
     end
     let(:order) { build_stubbed(:order, ship_address: address) }

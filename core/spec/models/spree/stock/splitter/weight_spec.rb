@@ -2,11 +2,11 @@
 
 require 'rails_helper'
 
-module Spree
+module Solidus
   module Stock
     module Splitter
       RSpec.describe Weight, type: :model do
-        let(:stock_location) { mock_model(Spree::StockLocation) }
+        let(:stock_location) { mock_model(Solidus::StockLocation) }
         let(:variant) { build(:base_variant, weight: 100) }
 
         subject { Weight.new(stock_location) }

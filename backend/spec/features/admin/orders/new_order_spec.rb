@@ -23,7 +23,7 @@ describe "New Order", type: :feature do
   it "does check if you have a billing address before letting you add shipments" do
     click_on "Shipments"
     expect(page).to have_content 'Please fill in customer info'
-    expect(current_path).to eql(spree.edit_admin_order_customer_path(Spree::Order.last))
+    expect(current_path).to eql(spree.edit_admin_order_customer_path(Solidus::Order.last))
   end
 
   it "default line item quantity is 1", js: true do
@@ -48,12 +48,12 @@ describe "New Order", type: :feature do
     click_on "Payments"
     click_on "Update"
 
-    expect(current_path).to eql(spree.admin_order_payments_path(Spree::Order.last))
+    expect(current_path).to eql(spree.admin_order_payments_path(Solidus::Order.last))
 
     click_on "Confirm"
     click_on "Complete Order"
 
-    expect(current_path).to eql(spree.edit_admin_order_path(Spree::Order.last))
+    expect(current_path).to eql(spree.edit_admin_order_path(Solidus::Order.last))
 
     click_on "Payments"
     click_icon "capture"
@@ -120,7 +120,7 @@ describe "New Order", type: :feature do
   # Regression test for https://github.com/spree/spree/issues/3958
   context "without a delivery step", js: true do
     before do
-      allow(Spree::Order).to receive_messages checkout_step_names: [:address, :payment, :confirm, :complete]
+      allow(Solidus::Order).to receive_messages checkout_step_names: [:address, :payment, :confirm, :complete]
     end
 
     it "can still see line items" do
@@ -207,13 +207,13 @@ describe "New Order", type: :feature do
     let!(:checkout_zone) { create(:zone, name: 'Checkout Zone', countries: [canada]) }
 
     before do
-      Spree::Country.update_all(states_required: true)
+      Solidus::Country.update_all(states_required: true)
       stub_spree_preferences(checkout_zone: checkout_zone.name)
     end
 
     context 'and default_country_iso of the United States' do
       before do
-        stub_spree_preferences(default_country_iso: Spree::Country.find_by!(iso: 'US').iso)
+        stub_spree_preferences(default_country_iso: Solidus::Country.find_by!(iso: 'US').iso)
       end
 
       it 'the shipping address country select includes only options for Canada' do
@@ -267,7 +267,7 @@ describe "New Order", type: :feature do
 
     context 'and default_country_iso of Canada' do
       before do
-        stub_spree_preferences(default_country_iso: Spree::Country.find_by!(iso: 'CA').iso)
+        stub_spree_preferences(default_country_iso: Solidus::Country.find_by!(iso: 'CA').iso)
       end
 
       it 'defaults the shipping address country to Canada' do

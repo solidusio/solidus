@@ -2,11 +2,11 @@
 
 require 'spec_helper'
 
-describe Spree::Admin::ProductsController, type: :controller do
+describe Solidus::Admin::ProductsController, type: :controller do
   stub_authorization!
 
   context "#index" do
-    let(:ability_user) { stub_model(Spree::LegacyUser, has_spree_role?: true) }
+    let(:ability_user) { stub_model(Solidus::LegacyUser, has_spree_role?: true) }
 
     # Regression test for https://github.com/spree/spree/issues/1259
     it "can find a product by SKU" do
@@ -62,7 +62,7 @@ describe Spree::Admin::ProductsController, type: :controller do
                name: "Product #1 - 9632",
                description: "As seen on TV!",
                price: 19.99,
-               shipping_category_id: Spree::ShippingCategory.first.id,
+               shipping_category_id: Solidus::ShippingCategory.first.id,
              }
            }
       expect(flash[:success]).to eq("Product \"Product #1 - 9632\" has been successfully created!")
@@ -77,7 +77,7 @@ describe Spree::Admin::ProductsController, type: :controller do
                  name: "Product #1 - 9632",
                  description: "As seen on TV!",
                  price: 19.99,
-                 shipping_category_id: Spree::ShippingCategory.first.id,
+                 shipping_category_id: Solidus::ShippingCategory.first.id,
                  taxon_ids: first_taxon.id.to_s
                }
              }
@@ -93,7 +93,7 @@ describe Spree::Admin::ProductsController, type: :controller do
                    name: "Product #1 - 9632",
                    description: "As seen on TV!",
                    price: 19.99,
-                   shipping_category_id: Spree::ShippingCategory.first.id,
+                   shipping_category_id: Solidus::ShippingCategory.first.id,
                    taxon_ids: "#{first_taxon.id}, #{second_taxon.id}"
                  }
                }
@@ -214,7 +214,7 @@ describe Spree::Admin::ProductsController, type: :controller do
     subject { put :update, params: payload }
 
     it "does not create any new rules" do
-      expect { subject }.to_not change { Spree::VariantPropertyRule.count }
+      expect { subject }.to_not change { Solidus::VariantPropertyRule.count }
     end
 
     it "replaces the rule's condition" do
@@ -247,7 +247,7 @@ describe Spree::Admin::ProductsController, type: :controller do
     it "duplicates the product" do
       expect do
         post :clone, params: { id: product.id }
-      end.to change { Spree::Product.count }.by(1)
+      end.to change { Solidus::Product.count }.by(1)
     end
   end
 

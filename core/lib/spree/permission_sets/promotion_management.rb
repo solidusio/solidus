@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module PermissionSets
     class PromotionManagement < PermissionSets::Base
       def activate!
-        can :manage, Spree::Promotion
-        can :manage, Spree::PromotionRule
-        can :manage, Spree::PromotionAction
-        can :manage, Spree::PromotionCategory
-        can :manage, Spree::PromotionCode
+        can :manage, Solidus::Promotion
+        can :manage, Solidus::PromotionRule
+        can :manage, Solidus::PromotionAction
+        can :manage, Solidus::PromotionCategory
+        can :manage, Solidus::PromotionCode
       end
     end
   end

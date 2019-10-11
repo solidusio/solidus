@@ -11,7 +11,7 @@
     <td class="item-name">
       <%= link_to item.variant.product.name, edit_admin_product_path(item.variant.product) %><br><%= "(" + variant_options(item.variant) + ")" unless item.variant.option_values.empty? %>
       <% if item.variant.sku.present? %>
-        <strong><%= Spree::Variant.human_attribute_name(:sku) %>:</strong> <%= item.variant.sku %>
+        <strong><%= Solidus::Variant.human_attribute_name(:sku) %>:</strong> <%= item.variant.sku %>
       <% end %>
     </td>
     <td class="item-price"><%= item.line_item.single_money.to_html %></td>

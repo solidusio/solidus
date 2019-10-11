@@ -2,13 +2,13 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::ReimbursementMailer, type: :mailer do
+RSpec.describe Solidus::ReimbursementMailer, type: :mailer do
   let(:reimbursement) { create(:reimbursement) }
 
   it "accepts a reimbursement id as an alternative to a Reimbursement object" do
-    expect(Spree::Reimbursement).to receive(:find).with(reimbursement.id).and_return(reimbursement)
+    expect(Solidus::Reimbursement).to receive(:find).with(reimbursement.id).and_return(reimbursement)
 
-    Spree::ReimbursementMailer.reimbursement_email(reimbursement.id).body
+    Solidus::ReimbursementMailer.reimbursement_email(reimbursement.id).body
   end
 
   context "emails must be translatable" do
@@ -27,7 +27,7 @@ RSpec.describe Spree::ReimbursementMailer, type: :mailer do
         end
 
         specify do
-          reimbursement_email = Spree::ReimbursementMailer.reimbursement_email(reimbursement)
+          reimbursement_email = Solidus::ReimbursementMailer.reimbursement_email(reimbursement)
           expect(reimbursement_email.parts.first.body).to include("Caro Cliente,")
         end
       end

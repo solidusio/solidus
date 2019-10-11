@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-module Spree::Promotion::Actions
+module Solidus::Promotion::Actions
   RSpec.describe CreateQuantityAdjustments do
     let(:action) { CreateQuantityAdjustments.create!(calculator: calculator, promotion: promotion) }
 
@@ -166,7 +166,7 @@ module Spree::Promotion::Actions
         end
 
         let(:calculator) do
-          Spree::Calculator::TieredPercent.create(preferred_base_percent: 10, preferred_tiers: tiers)
+          Solidus::Calculator::TieredPercent.create(preferred_base_percent: 10, preferred_tiers: tiers)
         end
         let(:line_items_attributes) do
           [
@@ -276,7 +276,7 @@ module Spree::Promotion::Actions
       end
     end
 
-    describe Spree::Promotion::Actions::CreateQuantityAdjustments::PartialLineItem do
+    describe Solidus::Promotion::Actions::CreateQuantityAdjustments::PartialLineItem do
       let!(:item) { FactoryBot.create :line_item, order: order, quantity: quantity, price: 10 }
       let(:quantity) { 5 }
 

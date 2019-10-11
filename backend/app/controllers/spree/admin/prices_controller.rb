@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module Admin
     class PricesController < ResourceController
-      belongs_to 'spree/product', find_by: :slug
+      belongs_to 'solidus/product', find_by: :slug
 
       def index
         params[:q] ||= {}
@@ -13,12 +13,12 @@ module Spree
           .currently_valid
           .for_master
           .order(:variant_id, :country_iso, :currency)
-          .page(params[:page]).per(Spree::Config.admin_variants_per_page)
+          .page(params[:page]).per(Solidus::Config.admin_variants_per_page)
         @variant_prices = @search.result
           .currently_valid
           .for_variant
           .order(:variant_id, :country_iso, :currency)
-          .page(params[:page]).per(Spree::Config.admin_variants_per_page)
+          .page(params[:page]).per(Solidus::Config.admin_variants_per_page)
       end
 
       def edit

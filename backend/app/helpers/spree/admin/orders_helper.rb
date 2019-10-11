@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Spree
+module Solidus
   module Admin
     module OrdersHelper
       # Renders all the extension partials that may have been specified in the extensions
@@ -16,7 +16,7 @@ module Spree
       end
 
       def line_item_shipment_price(line_item, quantity)
-        Spree::Money.new(line_item.price * quantity, { currency: line_item.currency })
+        Solidus::Money.new(line_item.price * quantity, { currency: line_item.currency })
       end
 
       def avs_response_code

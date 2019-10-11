@@ -2,10 +2,10 @@
 
 require 'rails_helper'
 
-RSpec.describe Spree::Order, type: :model do
-  let(:order) { stub_model(Spree::Order) }
+RSpec.describe Solidus::Order, type: :model do
+  let(:order) { stub_model(Solidus::Order) }
   before do
-    Spree::Order.define_state_machine!
+    Solidus::Order.define_state_machine!
   end
 
   context "validations" do

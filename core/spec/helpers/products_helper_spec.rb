@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-module Spree
+module Solidus
   RSpec.describe ProductsHelper, type: :helper do
     include ProductsHelper
 
@@ -11,7 +11,7 @@ module Spree
     let(:variant) { create(:variant, product: product, price: variant_price) }
     let(:currency) { 'USD' }
     let(:pricing_options) do
-      Spree::Config.pricing_options_class.new(currency: currency)
+      Solidus::Config.pricing_options_class.new(currency: currency)
     end
 
     before do
