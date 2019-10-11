@@ -11,6 +11,7 @@ require 'monetize'
 require 'paperclip'
 require 'paranoia'
 require 'ransack'
+require 'responders'
 require 'state_machines-activerecord'
 
 require 'solidus/deprecation'
