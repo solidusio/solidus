@@ -34,8 +34,11 @@ end
 module DummyApp
   def self.setup(gem_root:, lib_name:, auto_migrate: true)
     ENV["LIB_NAME"] = lib_name
-    DummyApp::Application.config.root = File.join(gem_root, 'spec', 'dummy')
+    root = Pathname(gem_root).join('spec/dummy')
+    root.join("app/assets/config").mkpath
+    root.join("app/assets/config/manifest.js").write("// Intentionally empty\n")
 
+    DummyApp::Application.config.root = root
     DummyApp::Application.initialize! unless DummyApp::Application.initialized?
 
     if auto_migrate
