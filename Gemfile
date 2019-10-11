@@ -12,11 +12,6 @@ else
 end
 # rubocop:enable Bundler/DuplicatedGem
 
-# Temporarily locking sprockets to v3.x
-# see https://github.com/solidusio/solidus/issues/3374
-# and https://github.com/rails/sprockets-rails/issues/369
-gem 'sprockets', '~> 3'
-
 gem 'pry'
 gem 'launchy', require: false
 
