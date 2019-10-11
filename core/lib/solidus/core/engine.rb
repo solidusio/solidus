@@ -67,6 +67,12 @@ module Solidus
           end
         end
       end
+
+      initializer 'solidus.core.namespace_migration' do
+        config.to_prepare do
+          Solidus::NamespaceMigration.activate
+        end
+      end
     end
   end
 end
