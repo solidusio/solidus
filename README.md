@@ -212,6 +212,16 @@ Use at own risk.
   bundle install
   ```
 
+  _Note_: If you're using PostgreSQL or MySQL, you'll need to install those gems through the DB environment variable.
+
+  ```bash
+  # PostgreSQL
+  DB=postgresql bundle install
+
+  # MySQL
+  DB=mysql bundle install
+  ```
+
 ### Sandbox
 
 Solidus is meant to be run within the context of Rails application. You can
@@ -230,7 +240,11 @@ data already loaded.
   You can create a sandbox with PostgreSQL or MySQL by setting the DB environment variable.
 
   ```bash
+  # PostgreSQL
   DB=postgresql bundle exec rake sandbox
+
+  # MySQL
+  DB=mysql bundle exec rake sandbox
   ```
 
 * Start the server
