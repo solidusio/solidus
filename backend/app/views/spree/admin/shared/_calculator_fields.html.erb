@@ -4,6 +4,11 @@
   <div id="preference-settings">
     <div class="field">
       <%= f.label(:calculator_type, Spree::Calculator.model_name.human) %>
+
+      <% if local_assigns.has_key? :hint %>
+        <%= admin_hint t("spree.#{hint}"), t(hint, scope: [:spree, :hints, "spree/calculator"]) %>
+      <% end %>
+
       <%= f.select(:calculator_type, @calculators.map { |c| [c.description, c.name] }, {}, {class: 'custom-select fullwidth js-calculator-type'}) %>
     </div>
 

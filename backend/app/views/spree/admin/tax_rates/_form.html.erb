@@ -58,5 +58,5 @@
 
   <div class="clear"></div>
 
-  <%= render 'spree/admin/shared/calculator_fields', f: f %>
+  <%= render partial: 'spree/admin/shared/calculator_fields', locals: { f: f, hint: :tax_rates } %>
 </div>
