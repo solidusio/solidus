@@ -22,7 +22,7 @@ default_attrs = {
 
 products = [
   {
-    name: "Solidus T-Shirt",
+    name: "S T-Shirt",
     tax_category: tax_category,
     shipping_category: shipping_category,
     price: 19.99,
