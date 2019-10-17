@@ -306,7 +306,6 @@ module Spree
     # @!attribute [rw] shipping_rate_tax_calculator_class
     # @return [Class] a class with the same public interfaces as
     #   Spree::TaxCalculator::ShippingRate
-    # @api experimental
     class_name_attribute :shipping_rate_tax_calculator_class, default: 'Spree::TaxCalculator::ShippingRate'
 
     # Allows providing your own Mailer for order mailer.
@@ -384,7 +383,6 @@ module Spree
     # @!attribute [rw] tax_adjuster_class
     # @return [Class] a class with the same public interfaces as
     #   Spree::Tax::OrderAdjuster
-    # @api experimental
     class_name_attribute :tax_adjuster_class, default: 'Spree::Tax::OrderAdjuster'
 
     # Allows providing your own class for calculating taxes on an order.
@@ -392,7 +390,6 @@ module Spree
     # @!attribute [rw] tax_calculator_class
     # @return [Class] a class with the same public interfaces as
     #   Spree::TaxCalculator::Default
-    # @api experimental
     class_name_attribute :tax_calculator_class, default: 'Spree::TaxCalculator::Default'
 
     # Allows providing your own class for choosing which store to use.

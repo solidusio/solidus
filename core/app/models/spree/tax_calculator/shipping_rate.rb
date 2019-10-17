@@ -10,9 +10,6 @@ module Spree
     # class.
     #
     # @see Spree::Tax::ShippingRateTaxer
-    # @api experimental
-    # @note This API is currently in development and likely to change.
-    #   Specifically, the input format is not yet finalized.
     class ShippingRate
       include Spree::Tax::TaxHelpers
 
