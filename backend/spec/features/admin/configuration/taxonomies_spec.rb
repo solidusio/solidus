@@ -38,6 +38,13 @@ describe "Taxonomies", type: :feature do
       click_button "Create"
       expect(page).to have_content("can't be blank")
     end
+
+    it "disables the button at submit", :js do
+      page.execute_script "$('form').submit(function(e) { e.preventDefault()})"
+      fill_in "taxonomy_name", with: "sports"
+      click_button "Create"
+      expect(page).to have_button("Create", disabled: true)
+    end
   end
 
   context "edit" do

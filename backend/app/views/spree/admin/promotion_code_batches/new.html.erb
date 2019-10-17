@@ -24,5 +24,5 @@
     <%= f.label :email %>
     <%= f.text_field :email, class: "fullwidth", value: spree_current_user.email %>
   <% end %>
-  <%= button_tag t('spree.actions.create'), class: 'btn btn-primary' %>
+  <%= f.submit t('spree.actions.create'), class: 'btn btn-primary' %>
 <% end %>
