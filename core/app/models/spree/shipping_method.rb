@@ -41,7 +41,7 @@ module Spree
 
     scope :available_to_store, ->(store) do
       raise ArgumentError, "You must provide a store" if store.nil?
-      store.shipping_methods.empty? ? all : where(id: store.shipping_method_ids)
+      store.shipping_methods.empty? ? all : where(id: store.shipping_methods.ids)
     end
 
     # @param shipping_category_ids [Array<Integer>] ids of desired shipping categories
