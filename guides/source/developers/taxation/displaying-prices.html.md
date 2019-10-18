@@ -41,7 +41,7 @@ administrator lives in Germany, you could change the configured value to the
 ISO code for Germany:
 
 ```ruby
-Spree::Config.admin_vat_country_iso == "DE"
+Spree::Config.admin_vat_country_iso = "DE"
 ```
 
 ## Anticipate the customer's tax jurisdiction
@@ -79,5 +79,5 @@ options][pricing-options] for more information.
 
 [pricing-options]: https://github.com/solidusio/solidus/blob/master/core/app/models/spree/variant/pricing_options.rb
 [pricing-options-spec]: https://github.com/solidusio/solidus/blob/master/core/spec/models/spree/variant/pricing_options_spec.rb
-[price-selector]: https://github.com/solidusio/solidus/blob/master/core/app/models/spree/variant/price_selector.rb 
+[price-selector]: https://github.com/solidusio/solidus/blob/master/core/app/models/spree/variant/price_selector.rb
 [price-selector-spec]: https://github.com/solidusio/solidus/blob/master/core/spec/models/spree/variant/price_selector_spec.rb
