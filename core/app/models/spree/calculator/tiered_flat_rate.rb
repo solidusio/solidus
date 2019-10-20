@@ -8,6 +8,8 @@ module Spree
     preference :tiers, :hash, default: {}
     preference :currency, :string, default: -> { Spree::Config[:currency] }
 
+    attr_reader :object
+
     before_validation do
       # Convert tier values to decimals. Strings don't do us much good.
       if preferred_tiers.is_a?(Hash)
@@ -20,8 +22,9 @@ module Spree
     validate :preferred_tiers_content
 
     def compute(object)
+      @object = object
       _base, amount = preferred_tiers.sort.reverse.detect do |b, _|
-        object.amount >= b
+        calculable_amount >= b
       end
 
       if preferred_currency.casecmp(object.currency).zero?
@@ -37,6 +40,14 @@ module Spree
       value.to_s.to_d
     rescue ArgumentError
       BigDecimal(0)
+    end
+
+    def calculable_amount
+      if object.is_a?(Order)
+        object.promotable_item_total
+      else
+        object.amount
+      end
     end
 
     def preferred_tiers_content
