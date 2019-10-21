@@ -50,7 +50,7 @@ paths:
         '422':
           $ref: '#/responses/unprocessable-entity'
       summary: Create product
-      description: Creaets a product.
+      description: Creates a product.
       operationId: create-product
       tags:
         - Products
