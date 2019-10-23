@@ -963,8 +963,8 @@ p[data-hook="use_billing"] {
   }
 
   input[type="text"] {
-    flex: 3 0;
-    width: 100%;
+    flex: 1 auto;
+    width: 50%;
     margin-right: 5px;
   }
 
@@ -1268,7 +1268,7 @@ table.order-summary {
 // # Logo
 #logo {
   padding: 20px 0;
-  
+
   > a {
     display: inline-block;
   }
