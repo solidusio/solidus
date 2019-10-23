@@ -117,10 +117,10 @@ module Spree
       :meta_description, :meta_keywords, :meta_title, :child_index
     ]
 
-    # intentionally leaving off email here to prevent privilege escalation
+    # Intentionally leaving off email here to prevent privilege escalation
     # by changing a user with higher priveleges' email to one a lower-priveleged
-    # admin owns. creating a user with an email is handled separate at the
-    # controller level
+    # admin owns. Creating a user with an email is handled separate at the
+    # controller level.
     @@user_attributes = [:password, :password_confirmation]
 
     @@variant_attributes = [

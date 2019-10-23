@@ -11,6 +11,9 @@ module Spree
         can :update_email, Spree.user_class do |user|
           user.spree_roles.none?
         end
+        can :update_password, Spree.user_class do |user|
+          user.spree_roles.none?
+        end
 
         cannot [:delete, :destroy], Spree.user_class
         can :manage, Spree::StoreCredit

@@ -131,6 +131,10 @@ module Spree
           attributes += [{ spree_role_ids: [] }]
         end
 
+        unless can? :update_password, @user
+          attributes -= [:password, :password_confirmation]
+        end
+
         params.require(:user).permit(attributes)
       end
 

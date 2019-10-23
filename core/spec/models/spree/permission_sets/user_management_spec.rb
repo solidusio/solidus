@@ -25,11 +25,13 @@ RSpec.describe Spree::PermissionSets::UserManagement do
     context 'when the user does not have a role' do
       let(:user) { create(:user) }
       it { is_expected.to be_able_to(:update_email, user) }
+      it { is_expected.to be_able_to(:update_password, user) }
     end
 
     context 'when the user has a role' do
       let(:user) { create(:user, spree_roles: [create(:role)]) }
       it { is_expected.not_to be_able_to(:update_email, user) }
+      it { is_expected.not_to be_able_to(:update_password, user) }
     end
 
     it { is_expected.not_to be_able_to(:delete, Spree.user_class) }
