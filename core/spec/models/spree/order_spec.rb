@@ -1157,6 +1157,20 @@ RSpec.describe Spree::Order, type: :model do
 
       expect { shipment.reload }.not_to raise_error
     end
+
+    it "creates the right inventory units" do
+      order = create(:order_with_line_items)
+      order.create_proposed_shipments
+      expect(order.shipments.first.inventory_units.count).to be(1)
+    end
+
+    it "validates inventory units info" do
+      order = create(:order_with_line_items)
+      inventory_unit = Spree::InventoryUnit.new
+      shipment = build(:shipment, inventory_units: [inventory_unit])
+      allow_any_instance_of(Spree::Stock::SimpleCoordinator).to receive(:shipments).and_return([shipment])
+      expect { order.create_proposed_shipments }.to raise_error(ActiveRecord::RecordNotSaved)
+    end
   end
 
   describe "#all_inventory_units_returned?" do

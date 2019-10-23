@@ -535,7 +535,33 @@ module Spree
         raise CannotRebuildShipments.new(I18n.t('spree.cannot_rebuild_shipments_shipments_not_pending'))
       else
         shipments.destroy_all
-        self.shipments = Spree::Config.stock.coordinator_class.new(self).shipments
+
+        new_shipments = Spree::Config.stock.coordinator_class.new(self).shipments
+        # By default, rails saves automatically all the new objects recursively
+        # whenever the shipments are assigned to the order, but in terms of inventory
+        # units, it inserts them one by one, we can take advantage of new Rails 6
+        # insert_all functionality here
+        if Spree::InventoryUnit.respond_to?(:insert_all)
+          self.shipments = new_shipments.map do |shipment|
+            # We need to save temporarily the inventory unit attributes and
+            # unset  them from shipment so they do not get saved
+            inventory_units = shipment.inventory_units.map(&:dup)
+            shipment.inventory_units = []
+            shipment.save
+
+            if inventory_units.any?
+              if inventory_units.detect { |iu| iu.shipment = shipment; !iu.valid? }
+                shipment.inventory_units = inventory_units # delegate to rails error reporting
+              else
+                Spree::InventoryUnit.insert_all(inventory_units.map(&:value_attributes))
+                shipment.reload # shipment needs to know about new objects
+              end
+            end
+            shipment
+          end
+        else
+          self.shipments = new_shipments
+        end
       end
     end
 

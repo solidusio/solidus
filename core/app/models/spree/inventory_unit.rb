@@ -118,6 +118,10 @@ module Spree
       on_hand?
     end
 
+    def value_attributes
+      attributes.slice('pending', 'state', 'variant_id', 'line_item_id', 'shipment_id')
+    end
+
     private
 
     def fulfill_order
