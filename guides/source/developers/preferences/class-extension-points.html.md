@@ -16,7 +16,7 @@ begins with `class_name_attribute` defines a different extension point.
 ## Example usage
 
 When you extend a class, you can change the behavior of a single feature or your
-entire store. 
+entire store.
 
 For example, you can change what appears in a customer's search results by
 extending the [`Spree::Core::Search::Base`][search-base]. This way, you do not
@@ -37,7 +37,7 @@ Extending the searcher is a multi-step process:
 2. Define a private `get_base_scope` method to override in classes that inherit
    from `Spree::Core::Search::Base`.
 3. Connect your searcher to the `:searcher_class` extension point in the Solidus
-   initializer at `config/initializers/spree.rb`. 
+   initializer at `config/initializers/spree.rb`.
 
 In your `MyStore::ProductSearch` class, rewrite the
 `Spree::Core::Search::Base`'s `get_base_scope` method with our desired
@@ -51,14 +51,14 @@ module MyStore
     private
 
     def get_base_scope
-      super.where("name LIKE '%rails%'")
+      super.where("name LIKE '%Ruby%'")
     end
   end
 end
 ```
 
 This searcher only displays search results that pass on to the `base_scope`
-variable and have the string `rails` in their name.
+variable and have the string `Ruby` in their name.
 
 Then, you can apply your searcher to the extension point in your
 `config/initializers/spree.rb` initializer:
