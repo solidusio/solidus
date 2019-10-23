@@ -4,9 +4,9 @@ Spree::Sample.load_sample("products")
 Spree::Sample.load_sample("variants")
 
 products = {}
-products[:solidus_tshirt] = Spree::Product.find_by!(name: "Solidus T-Shirt")
-products[:solidus_long] = Spree::Product.find_by!(name: "Solidus Long Sleeve")
-products[:solidus_girly] = Spree::Product.find_by!(name: "Solidus Girly")
+products[:solidus_tshirt] = Spree::Product.includes(variants: [:option_values]).find_by!(name: "Solidus T-Shirt")
+products[:solidus_long] = Spree::Product.includes(variants: [:option_values]).find_by!(name: "Solidus Long Sleeve")
+products[:solidus_girly] = Spree::Product.includes(variants: [:option_values]).find_by!(name: "Solidus Girly")
 products[:solidus_snapback_cap] = Spree::Product.find_by!(name: "Solidus Snapback Cap")
 products[:solidus_hoodie] = Spree::Product.find_by!(name: "Solidus Hoodie Zip")
 products[:ruby_hoodie] = Spree::Product.find_by!(name: "Ruby Hoodie")
