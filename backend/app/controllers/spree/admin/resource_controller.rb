@@ -123,6 +123,7 @@ class Spree::Admin::ResourceController < Spree::Admin::BaseController
       @parent_data[:model_name] = model_name
       @parent_data[:model_class] = (options[:model_class] || model_name.to_s.classify.constantize)
       @parent_data[:find_by] = options[:find_by] || :id
+      @parent_data[:includes] = options[:includes]
     end
   end
 
@@ -183,7 +184,9 @@ class Spree::Admin::ResourceController < Spree::Admin::BaseController
 
   def parent
     if parent?
-      @parent ||= self.class.parent_data[:model_class].find_by(self.class.parent_data[:find_by] => params["#{parent_model_name}_id"])
+      @parent ||= self.class.parent_data[:model_class]
+                    .includes(self.class.parent_data[:includes])
+                    .find_by(self.class.parent_data[:find_by] => params["#{parent_model_name}_id"])
       instance_variable_set("@#{parent_model_name}", @parent)
     else
       Spree::Deprecation.warn "Calling #parent is deprecated on a ResourceController which has not defined a belongs_to"
