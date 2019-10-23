@@ -128,7 +128,7 @@ products[:solidus_long].variants.each do |variant|
   end
 end
 
-products[:solidus_girly].variants.each do |variant|
+products[:solidus_girly].reload.variants.each do |variant|
   color = variant.option_value("tshirt-color").downcase
   main_image = image("solidus_girly_#{color}", "png")
   File.open(main_image) do |f|
