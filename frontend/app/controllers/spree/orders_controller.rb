@@ -42,6 +42,10 @@ module Spree
       @order = current_order || Spree::Order.incomplete.find_or_initialize_by(guest_token: cookies.signed[:guest_token])
       authorize! :read, @order, cookies.signed[:guest_token]
       associate_user
+      if params[:id] && @order.number != params[:id]
+        flash[:error] = t('spree.cannot_edit_orders')
+        redirect_to cart_path
+      end
     end
 
     # Adds a new item to the order (creating a new order if none already exists)
