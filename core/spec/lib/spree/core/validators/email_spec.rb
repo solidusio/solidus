@@ -12,27 +12,27 @@ RSpec.describe Spree::EmailValidator do
 
   let(:valid_emails) {
     [
-    'valid@email.com',
-    'valid@email.com.uk',
-    'e@email.com',
-    'valid+email@email.com',
-    'valid-email@email.com',
-    'valid_email@email.com',
-    'valid.email@email.com'
-  ]
+      'valid@email.com',
+      'valid@email.com.uk',
+      'e@email.com',
+      'valid+email@email.com',
+      'valid-email@email.com',
+      'valid_email@email.com',
+      'valid.email@email.com'
+    ]
   }
   let(:invalid_emails) {
     [
-    'invalid email@email.com',
-    '.invalid.email@email.com',
-    'invalid.email.@email.com',
-    '@email.com',
-    '.@email.com',
-    'invalidemailemail.com',
-    '@invalid.email@email.com',
-    'invalid@email@email.com',
-    'invalid.email@@email.com'
-  ]
+      'invalid email@email.com',
+      '.invalid.email@email.com',
+      'invalid.email.@email.com',
+      '@email.com',
+      '.@email.com',
+      'invalidemailemail.com',
+      '@invalid.email@email.com',
+      'invalid@email@email.com',
+      'invalid.email@@email.com'
+    ]
   }
 
   it 'validates valid email addresses' do
