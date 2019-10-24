@@ -112,7 +112,7 @@ module Spree
 
       def spree_token
         token = request.headers["X-Spree-Token"]
-        return unless token.present?
+        return if token.blank?
 
         Spree::Deprecation.warn(
           'The custom X-Spree-Token request header is deprecated and will be removed in the next release.' \
