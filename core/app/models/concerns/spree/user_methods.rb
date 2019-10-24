@@ -73,7 +73,7 @@ module Spree
     deprecate total_available_store_credit: :available_store_credit_total, deprecator: Spree::Deprecation
 
     def available_store_credit_total(currency:)
-      store_credits.reload.to_a.
+      store_credits.to_a.
         select { |credit| credit.currency == currency }.
         sum(&:amount_remaining)
     end

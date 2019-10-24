@@ -93,6 +93,7 @@ module Spree
 
     # Payments
     has_many :payments, dependent: :destroy, inverse_of: :order
+    has_many :valid_store_credit_payments, -> { store_credits.valid }, inverse_of: :order, class_name: 'Spree::Payment', foreign_key: :order_id
 
     # Returns
     has_many :return_authorizations, dependent: :destroy, inverse_of: :order
@@ -686,7 +687,7 @@ module Spree
 
     def total_applicable_store_credit
       if can_complete? || complete?
-        payments.store_credits.valid.sum(:amount)
+        valid_store_credit_payments.to_a.sum(&:amount)
       else
         [total, (user.try(:available_store_credit_total, currency: currency) || 0.0)].min
       end

@@ -55,10 +55,9 @@ module Spree
       def index
         authorize! :index, Order
         orders_includes = [
-          :user,
-          :payments,
-          :adjustments,
-          :line_items
+          { user: :store_credits },
+          :line_items,
+          :valid_store_credit_payments
         ]
         @orders = paginate(
           Spree::Order
