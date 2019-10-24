@@ -246,7 +246,7 @@ module Spree
       it "returns orders in reverse chronological order by completed_at" do
         order.update_columns completed_at: Time.current, created_at: 3.days.ago
 
-        order_two = Order.create user: order.user, completed_at: Time.current - 1.day, created_at: 2.day.ago, store: store
+        order_two = Order.create user: order.user, completed_at: Time.current - 1.day, created_at: 2.days.ago, store: store
         expect(order_two.created_at).to be > order.created_at
         order_three = Order.create user: order.user, completed_at: nil, created_at: 1.day.ago, store: store
         expect(order_three.created_at).to be > order_two.created_at
