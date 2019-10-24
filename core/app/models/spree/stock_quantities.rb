@@ -52,6 +52,7 @@ module Spree
     def &(other)
       combine_with(other) do |_variant, first, second|
         next unless first && second
+
         [first, second].min
       end
     end
