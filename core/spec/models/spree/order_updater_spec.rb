@@ -158,6 +158,7 @@ module Spree
                                 amount: -500,
                                 finalized: true,
                                 label: 'Some other credit')
+
             line_item.adjustments.each { |item| item.update_column(:eligible, true) }
 
             order.recalculate

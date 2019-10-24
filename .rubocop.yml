@@ -121,6 +121,11 @@ Rails/DynamicFindBy:
     - find_by_param
     - find_by_param!
 
+# It's okay to skip model validations to setup a spec.
+Rails/SkipsModelValidations:
+  Exclude:
+    - '*/spec/**/*'
+
 # We use a lot of
 #
 #     expect {
