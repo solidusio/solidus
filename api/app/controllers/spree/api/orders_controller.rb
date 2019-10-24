@@ -168,7 +168,13 @@ module Spree
       end
 
       def find_order(_lock = false)
-        @order = Spree::Order.find_by!(number: params[:id])
+        @order = Spree::Order.
+          includes(line_items: [:adjustments, { variant: :images }],
+                   payments: :payment_method,
+                   shipments: {
+                     shipping_rates: { shipping_method: :zones, taxes: :tax_rate }
+                   }).
+          find_by!(number: params[:id])
       end
 
       def order_id
