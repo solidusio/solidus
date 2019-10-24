@@ -27,6 +27,10 @@ Style/ClassVars:
 Naming/PredicateName:
   Enabled: false
 
+# We want to name rescued errors as error not simply e.
+Naming/RescuedExceptionsVariableName:
+  Enabled: false
+
 Naming/AccessorMethodName:
   Enabled: false
 
