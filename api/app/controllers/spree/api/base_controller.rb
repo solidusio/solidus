@@ -49,9 +49,9 @@ module Spree
       def authenticate_user
         unless @current_api_user
           if requires_authentication? && api_key.blank? && order_token.blank?
-            render "spree/api/errors/must_specify_api_key", status: 401
+            render "spree/api/errors/must_specify_api_key", status: :unauthorized
           elsif order_token.blank? && (requires_authentication? || api_key.present?)
-            render "spree/api/errors/invalid_api_key", status: 401
+            render "spree/api/errors/invalid_api_key", status: :unauthorized
           end
         end
       end
@@ -65,7 +65,7 @@ module Spree
       end
 
       def unauthorized
-        render "spree/api/errors/unauthorized", status: 401
+        render "spree/api/errors/unauthorized", status: :unauthorized
       end
 
       def gateway_error(exception)
@@ -78,7 +78,7 @@ module Spree
           exception: exception.message,
           error: exception.message,
           missing_param: exception.param
-        }, status: 422
+        }, status: :unprocessable_entity
       end
 
       def requires_authentication?
@@ -86,7 +86,7 @@ module Spree
       end
 
       def not_found
-        render "spree/api/errors/not_found", status: 404
+        render "spree/api/errors/not_found", status: :not_found
       end
 
       def current_ability
@@ -96,7 +96,7 @@ module Spree
       def invalid_resource!(resource)
         Rails.logger.error "invalid_resouce_errors=#{resource.errors.full_messages}"
         @resource = resource
-        render "spree/api/errors/invalid_resource", status: 422
+        render "spree/api/errors/invalid_resource", status: :unprocessable_entity
       end
 
       def api_key
@@ -165,7 +165,7 @@ module Spree
       def lock_order
         OrderMutex.with_lock!(@order) { yield }
       rescue Spree::OrderMutex::LockFailed => error
-        render plain: error.message, status: 409
+        render plain: error.message, status: :conflict
       end
 
       def insufficient_stock_error(exception)
@@ -175,7 +175,7 @@ module Spree
             errors: [I18n.t(:quantity_is_not_available, scope: "spree.api.order")],
             type: 'insufficient_stock'
           },
-          status: 422
+          status: :unprocessable_entity
         )
       end
 
