@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'rails/all'
+require 'action_view/component/base'
 require 'jquery-rails'
 require 'coffee-rails'
 require 'sassc-rails'
