@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+set -e
+
+bundle exec rackup -O Threads=1:1 -p 3000 $@
