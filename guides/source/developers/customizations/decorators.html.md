@@ -22,15 +22,15 @@ methods early in the method lookup chain. So, for method calls on `Spree::Order`
 objects, the decorator's `total` method would override the original `total`
 method.
 
-From now on, every order, when asked for its total, returns an inflated
-total by $10 (or whatever your currency is).
+With the code above live on your server, every call to `Spree::Order.total` will
+return the original total plus $10 (or whatever your currency is).
 
 [monkey-patch]: https://en.wikipedia.org/wiki/Monkey_patch
 
 ## Using class-level methods in decorators
 
-In order to access some class-level methods, you'll need to define a special
-method.
+You'll need to define a special method in order to access some class-level
+methods
 
 ```ruby
 module MyStore::ProductDecorator
