@@ -33,9 +33,7 @@
             <%= adjustment_reason.name %>
           </td>
           <td>
-            <span class="pill pill-<%= adjustment_reason.active? ? 'active' : 'inactive' %>">
-              <%= t(adjustment_reason.active? ? :active : :inactive, scope: 'spree') %>
-            </span>
+            <%= render Spree::Amin::PillComponent, status: adjustment_reason.active? ? :active : :inactive %>
           </td>
           <td class="actions">
             <%= link_to_edit adjustment_reason, no_text: true %>
