@@ -15,7 +15,7 @@ module Spree
     EMAIL_REGEXP = /\A([^@\.]|[^@\.]([^@\s]*)[^@\.])@([^@\s]+\.)+[^@\s]+\z/
 
     def validate_each(record, attribute, value)
-      unless value =~ EMAIL_REGEXP
+      unless EMAIL_REGEXP.match? value
         record.errors.add(attribute, :invalid, { value: value }.merge!(options))
       end
     end
