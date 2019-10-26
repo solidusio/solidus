@@ -4,9 +4,9 @@ Spree::Sample.load_sample("products")
 Spree::Sample.load_sample("variants")
 
 products = {}
-products[:solidus_tshirt] = Spree::Product.find_by!(name: "Solidus T-Shirt")
-products[:solidus_long] = Spree::Product.find_by!(name: "Solidus Long Sleeve")
-products[:solidus_girly] = Spree::Product.find_by!(name: "Solidus Girly")
+products[:solidus_tshirt] = Spree::Product.includes(variants: [:option_values]).find_by!(name: "Solidus T-Shirt")
+products[:solidus_long] = Spree::Product.includes(variants: [:option_values]).find_by!(name: "Solidus Long Sleeve")
+products[:solidus_girly] = Spree::Product.includes(variants: [:option_values]).find_by!(name: "Solidus Girly")
 products[:solidus_snapback_cap] = Spree::Product.find_by!(name: "Solidus Snapback Cap")
 products[:solidus_hoodie] = Spree::Product.find_by!(name: "Solidus Hoodie Zip")
 products[:ruby_hoodie] = Spree::Product.find_by!(name: "Ruby Hoodie")
@@ -20,7 +20,9 @@ products[:ruby_tote] = Spree::Product.find_by!(name: "Ruby Tote")
 def image(name, type = "jpg")
   images_path = Pathname.new(File.dirname(__FILE__)) + "images"
   path = images_path + "#{name}.#{type}"
+
   return false if !File.exist?(path)
+
   path
 end
 
@@ -103,7 +105,9 @@ products[:solidus_tshirt].variants.each do |variant|
     variant.images.create!(attachment: f)
   end
   back_image = image("solidus_tshirt_back_#{color}", "png")
+
   next unless back_image
+
   File.open(back_image) do |f|
     variant.images.create!(attachment: f)
   end
@@ -116,13 +120,15 @@ products[:solidus_long].variants.each do |variant|
     variant.images.create!(attachment: f)
   end
   back_image = image("solidus_long_back_#{color}", "png")
+
   next unless back_image
+
   File.open(back_image) do |f|
     variant.images.create!(attachment: f)
   end
 end
 
-products[:solidus_girly].variants.each do |variant|
+products[:solidus_girly].reload.variants.each do |variant|
   color = variant.option_value("tshirt-color").downcase
   main_image = image("solidus_girly_#{color}", "png")
   File.open(main_image) do |f|

@@ -21,9 +21,7 @@ medium = Spree::OptionValue.find_by!(name: "Medium")
 large = Spree::OptionValue.find_by!(name: "Large")
 extra_large = Spree::OptionValue.find_by!(name: "Extra Large")
 
-red = Spree::OptionValue.find_by!(name: "Red")
 blue = Spree::OptionValue.find_by!(name: "Blue")
-green = Spree::OptionValue.find_by!(name: "Green")
 black = Spree::OptionValue.find_by!(name: "Black")
 white = Spree::OptionValue.find_by!(name: "White")
 
