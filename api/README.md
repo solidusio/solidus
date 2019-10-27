@@ -1,6 +1,7 @@
 # solidus_api
 
-API contains the controllers and rabl views implementing the REST API of Solidus.
+API contains the controllers and rabl views implementing the REST API of
+Solidus.
 
 ## Testing
 
@@ -30,6 +31,13 @@ not compatible with externally-defined models!**
 CircleCI automatically syncs our Git repo with Stoplight Docs when a PR is
 merged, and automatically publishes a new version on Docs when a new Solidus
 version is released.
+
+## Related projects
+
+- [solidus-sdk](https://gitlab.com/deseretbook/packages/solidus-sdk): created
+  by Joel Saupe at [Deseret Book](https://deseretbook.com/), this is a JS SDK
+  that allows you to use the Solidus API. It even supports plug-ins, so you can
+  easily extend it with the endpoints provided by your Solidus extensions!
 
 [docs-dir]: https://github.com/solidusio/solidus/tree/master/api/openapi
 [live-docs]: https://solidus.docs.stoplight.io
