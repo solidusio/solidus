@@ -12,7 +12,7 @@ RSpec.describe Spree::StockQuantities, type: :model do
 
   describe "#each" do
     def expect_each
-      expect { |b| subject.each(&b) }
+      expect { |item| subject.each(&item) }
     end
 
     context "with no items" do

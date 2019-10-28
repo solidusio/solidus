@@ -37,6 +37,7 @@ module Spree
       return if variant.product.variants
                   .with_prices(current_pricing_options)
                   .all? { |variant_with_prices| variant_with_prices.price_same_as_master?(current_pricing_options) }
+
       variant.price_for(current_pricing_options).to_html
     end
 

@@ -11,8 +11,8 @@ module Spree
       isolate_namespace Spree
       engine_name 'spree'
 
-      config.generators do |g|
-        g.test_framework :rspec
+      config.generators do |generator|
+        generator.test_framework :rspec
       end
 
       initializer "spree.environment", before: :load_config_initializers do |app|

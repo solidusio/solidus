@@ -272,9 +272,9 @@ RSpec.describe Spree::Preferences::Preferable, type: :model do
     before(:all) do
       class CreatePrefTest < ActiveRecord::Migration[4.2]
         def self.up
-          create_table :pref_tests do |t|
-            t.string :col
-            t.text :preferences
+          create_table :pref_tests do |item|
+            item.string :col
+            item.text :preferences
           end
         end
 

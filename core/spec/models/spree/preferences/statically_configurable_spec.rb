@@ -30,8 +30,8 @@ module Spree
     end
 
     subject do
-      klass.new.tap do |o|
-        o.preference_source = preference_source
+      klass.new.tap do |item|
+        item.preference_source = preference_source
       end
     end
 

@@ -26,8 +26,8 @@ module Spree
 
     # @return The best promotion from this set of adjustments.
     def best_promotion_adjustment
-      @best_promotion_adjustment ||= @adjustments.select(&:eligible?).min_by do |a|
-        [a.amount, -a.id]
+      @best_promotion_adjustment ||= @adjustments.select(&:eligible?).min_by do |adjustment|
+        [adjustment.amount, -adjustment.id]
       end
     end
   end

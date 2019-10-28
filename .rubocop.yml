@@ -27,6 +27,10 @@ Style/ClassVars:
 Naming/PredicateName:
   Enabled: false
 
+# We want to name rescued errors as error not simply e.
+Naming/RescuedExceptionsVariableName:
+  Enabled: false
+
 Naming/AccessorMethodName:
   Enabled: false
 
@@ -116,6 +120,11 @@ Rails/DynamicFindBy:
   Whitelist:
     - find_by_param
     - find_by_param!
+
+# It's okay to skip model validations to setup a spec.
+Rails/SkipsModelValidations:
+  Exclude:
+    - '*/spec/**/*'
 
 # We use a lot of
 #

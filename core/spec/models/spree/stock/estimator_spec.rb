@@ -8,8 +8,8 @@ module Spree
       let(:shipping_rate) { 4.00 }
       let!(:shipping_method) { create(:shipping_method, cost: shipping_rate, currency: currency) }
       let(:package) do
-        build(:stock_package, contents: inventory_units.map { |i| ContentItem.new(i) }).tap do |p|
-          p.shipment = p.to_shipment
+        build(:stock_package, contents: inventory_units.map { |unit| ContentItem.new(unit) }).tap do |package|
+          package.shipment = package.to_shipment
         end
       end
       let(:order) { create(:order_with_line_items, shipping_method: shipping_method) }
@@ -61,7 +61,7 @@ module Spree
         end
 
         context "when the order's ship address is in a different zone" do
-          before { shipping_method.zones.each{ |z| z.members.delete_all } }
+          before { shipping_method.zones.each{ |zone| zone.members.delete_all } }
           it_should_behave_like "shipping rate doesn't match"
         end
 

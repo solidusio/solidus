@@ -12,10 +12,10 @@ RSpec.describe Spree::Preference, type: :model do
 
   describe "type coversion for values" do
     def round_trip_preference(key, value)
-      p = Spree::Preference.new
-      p.value = value
-      p.key = key
-      p.save
+      element = Spree::Preference.new
+      element.value = value
+      element.key = key
+      element.save
 
       Spree::Preference.find_by(key: key)
     end

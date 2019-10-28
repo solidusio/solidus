@@ -8,8 +8,8 @@ module Spree
 
     # @param quantities [Hash<Spree::Variant=>Numeric>]
     def initialize(quantities = {})
-      raise ArgumentError unless quantities.keys.all?{ |v| v.is_a?(Spree::Variant) }
-      raise ArgumentError unless quantities.values.all?{ |v| v.is_a?(Numeric) }
+      raise ArgumentError unless quantities.keys.all?{ |value| value.is_a?(Spree::Variant) }
+      raise ArgumentError unless quantities.values.all?{ |value| value.is_a?(Numeric) }
 
       @quantities = quantities
     end
@@ -33,16 +33,16 @@ module Spree
     # Adds two StockQuantities together
     # @return [Spree::StockQuantities]
     def +(other)
-      combine_with(other) do |_variant, a, b|
-        (a || 0) + (b || 0)
+      combine_with(other) do |_variant, first, second|
+        (first || 0) + (second || 0)
       end
     end
 
     # Subtracts another StockQuantities from this one
     # @return [Spree::StockQuantities]
     def -(other)
-      combine_with(other) do |_variant, a, b|
-        (a || 0) - (b || 0)
+      combine_with(other) do |_variant, first, second|
+        (first || 0) - (second || 0)
       end
     end
 
@@ -50,9 +50,10 @@ module Spree
     # stock which exists in both StockQuantities.
     # @return [Spree::StockQuantities]
     def &(other)
-      combine_with(other) do |_variant, a, b|
-        next unless a && b
-        [a, b].min
+      combine_with(other) do |_variant, first, second|
+        next unless first && second
+
+        [first, second].min
       end
     end
 
@@ -72,9 +73,9 @@ module Spree
     def combine_with(other)
       self.class.new(
         (variants | other.variants).map do |variant|
-          a = self[variant]
-          b = other[variant]
-          value = yield variant, a, b
+          self_v = self[variant]
+          other_v = other[variant]
+          value = yield variant, self_v, other_v
           [variant, value]
         end.to_h.compact
       )

@@ -158,7 +158,8 @@ module Spree
                                 amount: -500,
                                 finalized: true,
                                 label: 'Some other credit')
-            line_item.adjustments.each { |a| a.update_column(:eligible, true) }
+
+            line_item.adjustments.each { |item| item.update_column(:eligible, true) }
 
             order.recalculate
 
@@ -172,7 +173,7 @@ module Spree
               create_adjustment('Promotion A', -200)
               create_adjustment('Promotion B', -200)
             end
-            line_item.adjustments.each { |a| a.update_column(:eligible, true) }
+            line_item.adjustments.each { |item| item.update_column(:eligible, true) }
 
             order.recalculate
 
@@ -186,7 +187,7 @@ module Spree
               create_adjustment('Promotion A', -200)
               create_adjustment('Promotion B', -200)
             end
-            line_item.adjustments.each { |a| a.update_column(:eligible, true) }
+            line_item.adjustments.each { |item| item.update_column(:eligible, true) }
 
             order.recalculate
 
