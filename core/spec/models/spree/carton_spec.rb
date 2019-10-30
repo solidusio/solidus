@@ -5,6 +5,14 @@ require 'rails_helper'
 RSpec.describe Spree::Carton do
   let(:carton) { create(:carton) }
 
+  describe 'shipping method' do
+    it 'returns soft deleted shipping method' do
+      carton = create(:carton)
+      carton.shipping_method.discard
+      expect(carton.reload.shipping_method).to be_present
+    end
+  end
+
   describe "#create" do
     subject { carton }
 
