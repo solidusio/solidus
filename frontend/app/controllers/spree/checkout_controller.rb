@@ -137,6 +137,10 @@ module Spree
       redirect_to(spree.cart_path) && return unless @order
     end
 
+    # Allow the customer to only go back or stay on the current state
+    # when trying to change it via params[:state]. It's not allowed to
+    # jump forward and skip states (unless #skip_state_validation? is
+    # truthy).
     def set_state_if_present
       if params[:state]
         redirect_to checkout_state_path(@order.state) if @order.can_go_to_state?(params[:state]) && !skip_state_validation?
