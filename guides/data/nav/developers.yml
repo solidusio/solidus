@@ -42,10 +42,10 @@
     dropdown:
       - title: "Overview"
         href: "/developers/customizations/overview.html"
-      - title: "Customizing the Admin Panel"
-        href: "/developers/customizations/customizing-admin.html"
       - title: "Customizing the Storefront"
         href: "/developers/customizations/customizing-storefront.html"
+      - title: "Customizing the Admin Panel"
+        href: "/developers/customizations/customizing-admin.html"
       - title: "Decorators"
         href: "/developers/customizations/decorators.html"
       - title: "State Machines"
