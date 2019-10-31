@@ -56,6 +56,8 @@
         href: "/developers/customizations/customizing-permissions.html"
       - title: "Customizing Model Attributes"
         href: "/developers/customizations/customizing-attributes.html"
+      - title: "Customizing Mailers"
+        href: "/developers/customizations/customizing-mailers.html"
   - title: "Extensions"
     dropdown:
       - title: "Installing extensions"
