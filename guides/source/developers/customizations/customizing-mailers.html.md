@@ -8,6 +8,7 @@ associated with their order. For example, the following actions can trigger an e
 * Completing order checkout
 * Shipping an order
 * Cancelling an order
+* Completing a batch promtion codes creation
 
 Solidus has built-in emails for all of the above scenarios and more. However,
 given that the default Solidus email templates are intended to be very plain,
@@ -33,13 +34,13 @@ Action Mailer emails have two parts:
 1. A view or layout where you can compose and style the email. This could be
   an `html.erb` file, or a `.txt.erb` file for text-only emails. You can also
   configure Action Mailer to parse different templating languages like HAML or
-  MJML if you prefer to use those. See
-  [here](https://guides.rubyonrails.org/v2.3.8/action_mailer_basics.html#configure-action-mailer-to-recognize-haml-templates)
-  for information on how you can configure Action Mailer to recognize HAML
-  templates, for example.
+  MJML if you prefer to use those. See [here][Action Mailer haml] for information
+  on how you can configure Action Mailer to recognize HAML templates, for example.
 2. A mailer, which behaves very similar to a Rails controller. Like a
    controller, customizing the mailer will let you determine what information
    is available in your email's view.
+
+[Action Mailer haml]: https://guides.rubyonrails.org/v2.3.8/action_mailer_basics.html#configure-action-mailer-to-recognize-haml-templates
 
 ## Where to Find Mailers in Solidus
 
@@ -69,24 +70,71 @@ for accessibility purposes.
 
 ## How to Customize Mailers
 
-As with other types of views, the easiest way to begin customizing your mailer is
-to copy the original file from Solidus to the same path in your application.
-For example, if you want to override `order_mailer.rb`, just copy the contents
-of [core/app/mailers/spree/order_mailer.rb][core/app/mailers/spree/order_mailer.rb]
-into your application at `/[your_store]/app/mailers/spree/order_mailer.rb`. Now
-you can edit the order mailer as you like. If, for example, you wish for Rails
-to reconize an alternative template filetype for your order emails, you could
-add that logic here.
+Solidus offers extensions points to fully customize all the emails that are
+delivered by the core:
+
+- `order_mailer_class` which defaults to [Spree::OrderMailer][OrderMailer]
+- `promotion_code_batch_mailer_class` which defaults to [Spree::PromotionCodeBatchMailer][PromotionCodeBatchMailer]
+- `reimbursement_mailer_class` which defaults to [Spree::ReimbursementMailer][ReimbursementMailer]
+- `carton_shipped_email_class` which defaults to [Spree::CartonMailer][CartonMailer]
+
+[OrderMailer]: https://github.com/solidusio/solidus/tree/master/core/app/mailers/spree/order_mailer.rb
+[PromotionCodeBatchMailer]: https://github.com/solidusio/solidus/tree/master/core/app/mailers/spre/promotion_code_batch_mailer.rb]
+[ReimbursementMailer]: https://github.com/solidusio/solidus/tree/master/core/app/mailers/spree/reimbursement_mailer.rb
+[CartonMailer]: https://github.com/solidusio/solidus/tree/master/core/app/mailers/spree/carton_mailer.rb
+
+For example, if you want to change how the `order_mailer.rb` works, you can
+change the `order_mailer_class` preference by adding this line into the
+Solidus initializer:
+
+```ruby
+# config/initializers/spree.rb
+
+Spree.config do |config|
+  config.order_mailer_class = 'c'
+end
+```
+
+and create a new class that responds to the same methods of the original
+[core/app/mailers/spree/order_mailer.rb][core/app/mailers/spree/order_mailer.rb].
+
+You can even make this new class inherit from the original one.
+This way, you can change only the mailers that you need to customize and you
+don't have to copy/paste the mailers that already work for you. For
+example, if you only want to change the email confirmation through the
+`confirm_email` method, the `CustomOrderMailer` would look like:
+
+```ruby
+# app/mailers/spree/custom_order_mailer.rb
+
+module Spree
+  class CustomOrderMailer < OrderMailer
+    def confirm_email(order, resend = false)
+      # Your custom code here
+    end
+  end
+end
+```
+
+Please note that with this change, Rails is going to look for mailer
+templates in `app/views/spree/custom_order_mailer/` rather than
+`app/views/spree/order_mailer/`. You have two options: move the original mailer
+templates into the right directory or add the
+[`prepend_view_path "spree/order_mailer"` directive][action-mailer-views] to
+the new class in order to tell Rails that it should look for templates in the
+original directory.
 
 [core/app/mailers/spree/order_mailer.rb]: https://github.com/solidusio/solidus/tree/master/core/app/mailers/spree/order_mailer.rb
+[action-mailer-views]: https://guides.rubyonrails.org/action_mailer_basics.html#mailer-views
+
 
 ## How to Customize Email Views
 
 Solidus email views are also located in `/core/`, so to create or override email
 views, copy the corresponding directory over to your application. Using
 `order_mailer.rb` as an example again, just copy the directory
-[/core/app/views/spree/order_mailer/][core/app/views/spree/order_mailer] into
+[/core/app/views/spree/order_mailer/][/core/app/views/spree/order_mailer/] into
 your app at `/[your_store]/app/views/spree/order_mailer/`. Both the `.erb` and
 `.txt` files are located within the directory, and can be customized as you like.
 
-[core/app/views/spree/order_mailer/]: https://github.com/solidusio/solidus/tree/master/core/app/views/spree/order_mailer
+[/core/app/views/spree/order_mailer/]: https://github.com/solidusio/solidus/tree/master/core/app/views/spree/order_mailer
