@@ -30,6 +30,10 @@
   left: $width-sidebar;
   right: 0;
   z-index: 1000;
+
+  .admin-nav-hidden & {
+    left: $width-sidebar-collapsed;
+  }
 }
 
 .flash {

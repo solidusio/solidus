@@ -1,15 +1,15 @@
 .breadcrumb {
   font-size: 16px;
   margin-bottom: 0;
-  
+
   a {
     color: $breadcrumb-color;
-    
+
     &:hover {
       color: $breadcrumb-active-color;
     }
   }
-  
+
   .active {
     font-weight: $font-weight-bold;
   }

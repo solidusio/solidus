@@ -169,6 +169,8 @@ $actions-brd-colors: $color-action-edit-brd, $color-action-clone-brd, $color-act
 //--------------------------------------------------------------
 $width-sidebar:                  200px !default;
 $width-sidebar-flyout:           225px !default;
+$width-sidebar-collapsed:        52px !default;
+$sidebar-transition:             250ms ease-in !default;
 $border-sidebar:                 1px solid $color-sidebar-border !default;
 
 // Main

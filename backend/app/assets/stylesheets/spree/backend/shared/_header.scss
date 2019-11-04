@@ -1,10 +1,14 @@
 .main-header {
   display: flex;
   align-items: center;
-  padding: 15px $grid-gutter-width;
   background-color: $color-header-bg;
+  padding: ($grid-gutter-width / 2) $grid-gutter-width;
   border-bottom: 1px solid $color-border;
   height: $main-header-height;
+
+  .admin-nav-hidden & {
+    margin-left: ($width-sidebar - $width-sidebar-collapsed);
+  }
 
   @media print { display: none }
 }
