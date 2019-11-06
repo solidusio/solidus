@@ -202,6 +202,29 @@ describe Spree::Admin::UsersController, type: :controller do
       end
     end
 
+    context "allowed to update passwords" do
+      it "can change password of a user" do
+        expect {
+          put :update, params: { id: user.id, user: { password: "diff123", password_confirmation: "diff123" } }
+        }.to_not raise_error
+      end
+    end
+
+    context "not allowed to update passwords" do
+      stub_authorization! do |_user|
+        can [:admin, :update], Spree.user_class
+      end
+
+      it "cannot change password of a user" do
+        allow(ActionController::Parameters).
+          to receive(:action_on_unpermitted_parameters).and_return(:raise)
+
+        expect {
+          put :update, params: { id: user.id, user: { password: "diff123", password_confirmation: "diff123" } }
+        }.to raise_error(ActionController::UnpermittedParameters)
+      end
+    end
+
     it "can update ship_address attributes" do
       post :update, params: { id: user.id, user: { ship_address_attributes: valid_address_attributes } }
       expect(user.reload.ship_address.city).to eq('New York')

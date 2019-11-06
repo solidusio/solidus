@@ -158,14 +158,6 @@ describe 'Users', type: :feature do
       expect(page).to have_field('user_email', with: 'a@example.com99')
     end
 
-    it 'can edit the user password' do
-      fill_in 'user_password', with: 'welcome'
-      fill_in 'user_password_confirmation', with: 'welcome'
-      click_button 'Update'
-
-      expect(page).to have_text 'Account updated'
-    end
-
     it 'can edit user roles' do
       click_link 'Account'
 
@@ -211,6 +203,24 @@ describe 'Users', type: :feature do
       end
 
       expect(user_a.reload.bill_address.address1).to eq "1313 Mockingbird Ln"
+    end
+
+    it 'can edit the user password' do
+      fill_in 'user_password', with: 'welcome'
+      fill_in 'user_password_confirmation', with: 'welcome'
+      click_button 'Update'
+
+      expect(page).to have_text 'Account updated'
+    end
+
+    context 'without password permissions' do
+      custom_authorization! do |_user|
+        cannot [:update_password], Spree.user_class
+      end
+
+      it 'cannot edit the user password' do
+        expect(page).to_not have_text 'Password'
+      end
     end
 
     context 'invalid entry' do
