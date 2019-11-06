@@ -15,16 +15,9 @@ module Spree
     EMAIL_REGEXP = /\A([^@\.]|[^@\.]([^@\s]*)[^@\.])@([^@\s]+\.)+[^@\s]+\z/
 
     def validate_each(record, attribute, value)
-      unless value =~ EMAIL_REGEXP
+      unless EMAIL_REGEXP.match? value
         record.errors.add(attribute, :invalid, { value: value }.merge!(options))
       end
     end
   end
 end
-
-# @private
-EmailValidator = ActiveSupport::Deprecation::DeprecatedConstantProxy.new(
-  'EmailValidator',
-  'Spree::EmailValidator',
-  message: "EmailValidator is deprecated! Use Spree::EmailValidator instead.\nChange `validates :email, email: true` to `validates :email, 'spree/email' => true`\n"
-)
