@@ -1086,6 +1086,7 @@ en:
     cannot_create_payment_without_payment_methods_html: You cannot create a payment
       for an order without any payment methods defined. %{link}
     cannot_create_returns: Cannot create returns as this order has no shipped units.
+    cannot_edit_orders: You may only edit your current shopping cart.
     cannot_perform_operation: Cannot perform requested operation
     cannot_rebuild_shipments_order_completed: Cannot rebuild shipments for a completed
       order.

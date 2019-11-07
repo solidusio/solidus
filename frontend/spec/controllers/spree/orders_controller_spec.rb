@@ -102,6 +102,31 @@ describe Spree::OrdersController, type: :controller do
       end
     end
 
+    context '#edit' do
+      before do
+        allow(controller).to receive :authorize!
+        allow(controller).to receive_messages current_order: order
+      end
+
+      it 'should render cart' do
+        get :edit, params: { id: order.number }
+
+        expect(flash[:error]).to be_nil
+        expect(response).to be_ok
+      end
+
+      context 'with another order number than the current_order' do
+        let(:other_order) { create(:completed_order_with_totals) }
+
+        it 'should display error message' do
+          get :edit, params: { id: other_order.number }
+
+          expect(flash[:error]).to eq "You may only edit your current shopping cart."
+          expect(response).to redirect_to cart_path
+        end
+      end
+    end
+
     context "#update" do
       context "with authorization" do
         before do
