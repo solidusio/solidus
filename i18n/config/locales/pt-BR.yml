@@ -136,10 +136,13 @@ pt-BR:
       spree/payment_method:
         active: Ativo
         auto_capture: Captura Automática
+        available_to_admin: Disponível para admin
+        available_to_users: Disponível para usuários
         description: Descrição
         display_on: Visível para
         name: Nome
         preference_source: Fonte de preferências
+        state: Estado
         type: Tipo
       spree/price:
         amount: Valor
@@ -224,7 +227,7 @@ pt-BR:
       spree/refund:
         amount: Valor
         description: Descrição
-        refund_reason_id: Rasão do Restituição
+        refund_reason_id: Razão do Restituição
       spree/refund_reason:
         active: Ativo
         code: Código
@@ -255,7 +258,7 @@ pt-BR:
         preferred_reimbursement_type_id:
         reception_status: Status de Recebimento
         resellable: Revenda
-        return_reason: Rasão de Retorno
+        return_reason: Razão de Retorno
         total: Total
       spree/return_reason:
         active: Ativo
@@ -330,7 +333,9 @@ pt-BR:
         source_location_id: Localização Original
         tracking_number: Número de Rastreio
       spree/store:
+        code: Código
         cart_tax_country_iso: ISO do País das Taxas do Carrinho
+        default_currency: Moeda Padrão
         mail_from_address: E-mail para envio de mensagens
         meta_description: Descrição
         meta_keywords: Palavras-Chave
@@ -481,8 +486,8 @@ pt-BR:
         one: Ajuste
         other: Ajustes
       spree/adjustment_reason:
-        one: Rasão de Ajuste
-        other: Rasões de Ajustes
+        one: Razão de Ajuste
+        other: Razões de Ajustes
       spree/calculator:
         one: Calculador
         other: Calculadores
@@ -644,8 +649,8 @@ pt-BR:
         one: Razão de retorno
         other: Razões de retorno
       spree/return_reason:
-        one: Rasão de Retorno
-        other: Rasões de Retorno
+        one: Razão de Retorno
+        other: Razões de Retorno
       spree/role:
         one: Função
         other: Funções
@@ -854,7 +859,7 @@ pt-BR:
         new: Novo Crédito da Loja
         no_store_credit_selected: Crédito da Loja não foi selecionado
         payment_originator: "Pagamento - Pedido #%{order_number}"
-        reason_for_updating: Rasão de mudança
+        reason_for_updating: Razão de mudança
         refund_originator: "Restituição - #%{order_number}"
         resource_name: crédito da loja
         select_amount_update_reason: Selecione uma razão para mudar o valor
@@ -898,6 +903,7 @@ pt-BR:
         taxons: Árvores de Categorias
         transfers: Transferências
         users: Usuários
+        zones: Zonas
       taxons:
         display_order: Ordem de Exibição
       user:
@@ -1367,7 +1373,7 @@ pt-BR:
     info_number_of_skus_not_shown:
       one: e mais um
       other: "e %{count} outros"
-      info_product_has_multiple_skus: "Este produto tem %{count} variantes:"
+    info_product_has_multiple_skus: "Este produto tem %{count} variantes:"
     instructions_to_reset_password: 'Preencha o formulário abaixo e enviaremos instruções
       de como resetar sua senha por e-mail:'
     insufficient_stock: Estoque insuficiente, apenas %{on_hand} em estoque
@@ -1449,6 +1455,7 @@ pt-BR:
     manage_variants: Gerenciar variantes
     manual_intervention_required: Intervenção manual necessária
     master_price: Preço Principal
+    master_sku: SKU Principal
     master_variant: Variante Principal
     match_choices:
       all: Tudo
@@ -1461,6 +1468,7 @@ pt-BR:
     meta_title: Título da Página
     metadata: Metadados
     minimal_amount: Quantidade Mínima
+    modify_stock_count: Modificar Quantidade no Estoque
     month: Mês
     more: Mais
     move_stock_between_locations: Transferir estoque entre localidades
@@ -2179,6 +2187,7 @@ pt-BR:
     variant_to_be_received: Variantes para receber
     variants: Variantes
     version: Versão
+    view_product: Ver Produto na loja
     void: Estornar
     weight: Peso
     what_is_a_cvv: O que é o código de segurança do cartão de crédito (CVV)?
@@ -2199,3 +2208,9 @@ pt-BR:
       solidus:
         long: "%d/%m/%Y %H:%M"
         short: "%d/%m/%y %H:%M"
+  views:
+      pagination:
+        first: Primeira
+        previous: Anterior
+        next: Pŕoxima
+        last: Última
