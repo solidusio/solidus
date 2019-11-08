@@ -1,6 +1,6 @@
 # Solidus Internationalization
 
-[![Build Status](https://travis-ci.org/solidusio/solidus_i18n.svg?branch=master)](https://travis-ci.org/solidusio/solidus_i18n)
+[![CircleCI](https://circleci.com/gh/solidusio/solidus_i18n.svg?style=svg)](https://circleci.com/gh/solidusio/solidus_i18n)
 [![Code Climate](https://codeclimate.com/github/solidusio/solidus_i18n/badges/gpa.svg)](https://codeclimate.com/github/solidusio/solidus_i18n)
 [![Gem Version](https://badge.fury.io/rb/solidus_i18n.svg)](https://badge.fury.io/rb/solidus_i18n)
 
