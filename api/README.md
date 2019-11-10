@@ -1,6 +1,6 @@
 # solidus_api
 
-API contains the controllers and rabl views implementing the REST API of
+API contains the controllers and Jbuilder views implementing the REST API of
 Solidus.
 
 ## Testing

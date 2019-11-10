@@ -3,7 +3,7 @@
 module Spree
   module Api
     module Responders
-      module RablTemplate
+      module JbuilderTemplate
         def to_format
           if template
             render template, status: options[:status] || 200
@@ -16,6 +16,8 @@ module Spree
           options[:default_template]
         end
       end
+
+      RablTemplate = ActiveSupport::Deprecation::DeprecatedConstantProxy.new('RablTemplate', 'JbuilderTemplate')
     end
   end
 end
