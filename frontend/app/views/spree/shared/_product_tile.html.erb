@@ -1,0 +1,15 @@
+<% url = spree.product_path(product, taxon_id: @taxon.try(:id)) %>
+<li id="product_<%= product.id %>" class="columns three <%= cycle("alpha", "secondary", "", "omega secondary", name: "classes") %>" data-hook="products_list_item" itemscope itemtype="http://schema.org/Product">
+  <div class="product-image">
+    <%= link_to(render('spree/shared/image', image: product.gallery.images.first, size: :small, itemprop: "image"), url, itemprop: 'url') %>
+  </div>
+  <%= link_to truncate(product.name, length: 50), url, class: 'info', itemprop: "name", title: product.name %>
+  <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+    <% if price = product.price_for_options(current_pricing_options)&.money %>
+      <span class="price selling" itemprop="price" content="<%= price.to_d %>">
+        <%= price.to_html %>
+      </span>
+    <% end %>
+    <span itemprop="priceCurrency" content="<%= current_pricing_options.currency %>"></span>
+  </div>
+</li>

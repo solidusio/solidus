@@ -10,6 +10,15 @@ module Spree
       def clear_cache_events
         @cache_write_events = []
       end
+
+      def render_collection_cache_hits_for(partial = nil)
+        @render_collection_events.inject(0) do |final, event|
+          if event[:identifier].include?(partial)
+            final += event[:cache_hits]
+          end
+          final
+        end
+      end
     end
   end
 end
@@ -23,6 +32,11 @@ RSpec.configure do |config|
     ActiveSupport::Notifications.subscribe("write_fragment.action_controller") do |_event, _start_time, _finish_time, _, details|
       @cache_write_events ||= []
       @cache_write_events << details
+    end
+
+    ActiveSupport::Notifications.subscribe("render_collection.action_view") do |_event, _start_time, _finish_time, _, details|
+      @render_collection_events ||= []
+      @render_collection_events << details
     end
   end
 
