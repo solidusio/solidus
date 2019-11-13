@@ -1372,6 +1372,14 @@ en:
     hidden: hidden
     hide_out_of_stock: Hide out of stock
     hints:
+      spree/calculator:
+        tax_rates: This is used to calculate both sales tax (United States-style taxes)
+          and value-added tax (VAT). Typically this calculator should be the only tax
+          calculator required by your store.
+        shipping_methods: This is used to calculate the shipping rates on a per order or
+          per package rate.
+        promotions: This is used to determine the promotional discount to be applied to an
+          order, an item, or shipping charges.
       spree/price:
         country: 'This determines in what country the price is valid.<br/>Default:
           Any Country'

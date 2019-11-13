@@ -7,6 +7,7 @@
       <% if can?(:update, @promotion) %>
         <div class="field">
           <%= label_tag :action_type, t('spree.adjustment_type')%>
+          <%= admin_hint t('spree.adjustment_type'), t(:promotions, scope: [:spree, :hints, "spree/calculator"]) %>
           <%= select_tag 'action_type', options, include_blank: t(:choose_promotion_action, scope: 'spree'), class: 'custom-select fullwidth' %>
         </div>
         <div class="filter-actions actions">
