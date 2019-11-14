@@ -5,7 +5,7 @@ require 'spec_helper'
 describe "Product Images", type: :feature do
   stub_authorization!
 
-  let(:file_path) { Rails.root + "../../spec/support/ror_ringer.jpeg" }
+  let(:file_path) { file_fixture("ror_ringer.jpeg") }
   let(:product)   { create(:product) }
 
   before do
