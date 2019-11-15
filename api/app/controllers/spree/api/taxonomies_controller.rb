@@ -58,7 +58,9 @@ module Spree
       end
 
       def taxonomy
-        @taxonomy ||= Spree::Taxonomy.accessible_by(current_ability, :read).find(params[:id])
+        @taxonomy ||= Spree::Taxonomy.accessible_by(current_ability, :read).
+          includes(root: :children).
+          find(params[:id])
       end
 
       def taxonomy_params

@@ -62,7 +62,7 @@ RSpec.describe Spree::UserMethods do
 
   describe '#available_store_credit_total' do
     subject do
-      test_user.available_store_credit_total(currency: 'USD')
+      test_user.reload.available_store_credit_total(currency: 'USD')
     end
 
     context 'when the user does not have any credit' do
@@ -95,6 +95,7 @@ RSpec.describe Spree::UserMethods do
 
       context 'with credits of multiple currencies' do
         let!(:credit_3) { create(:store_credit, user: test_user, amount: 400, currency: 'GBP') }
+        before { test_user.reload }
 
         it 'separates the currencies' do
           expect(test_user.available_store_credit_total(currency: 'USD')).to eq(100 + 200)

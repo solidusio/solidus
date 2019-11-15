@@ -777,7 +777,7 @@ RSpec.describe Spree::StoreCredit do
           let!(:store_credits) do
             [
               create(:store_credit, user: user, amount: store_credit_amount),
-              create(:store_credit, user: user, amount: additional_store_credit_amount)
+              create(:store_credit, user: user.reload, amount: additional_store_credit_amount)
             ]
           end
 
