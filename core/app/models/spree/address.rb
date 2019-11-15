@@ -30,8 +30,9 @@ module Spree
       where(value_attributes(attributes))
     end
 
-    def self.build_default
-      new(country: Spree::Country.default)
+    # @return [Address] an address with default attributes
+    def self.build_default(*args, &block)
+      where(country: Spree::Country.default).build(*args, &block)
     end
 
     # @return [Address] an equal address already in the database or a newly created one
