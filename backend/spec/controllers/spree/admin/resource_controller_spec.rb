@@ -37,6 +37,7 @@ describe Spree::Admin::WidgetsController, type: :controller do
       def check_destroy_constraints
         return unless name == 'undestroyable'
         errors.add :base, "You can't destroy undestroyable things!"
+        errors.add :base, "Terrible things might happen."
         throw(:abort)
       end
     end
@@ -164,7 +165,7 @@ describe Spree::Admin::WidgetsController, type: :controller do
         it 'responds with error message' do
           subject
           expect(response).to be_unprocessable
-          expect(response.body).to eq assigns(:widget).errors.full_messages.join(', ')
+          expect(response.body).to eq assigns(:widget).errors.full_messages.to_sentence
         end
       end
     end
