@@ -168,6 +168,16 @@ describe Spree::Admin::WidgetsController, type: :controller do
           expect(response.body).to eq assigns(:widget).errors.full_messages.to_sentence
         end
       end
+
+      context 'html format' do
+        subject { delete :destroy, params: params }
+
+        it 'responds with error message' do
+          subject
+          expect(response).to be_redirect
+          expect(flash[:error]).to eq assigns(:widget).errors.full_messages.to_sentence
+        end
+      end
     end
   end
 

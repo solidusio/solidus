@@ -107,8 +107,14 @@ class Spree::Admin::ResourceController < Spree::Admin::BaseController
     else
       invoke_callbacks(:destroy, :fails)
       respond_with(@object) do |format|
-        format.html { redirect_to location_after_destroy }
-        format.js { render status: :unprocessable_entity, plain: @object.errors.full_messages.to_sentence }
+        message = @object.errors.full_messages.to_sentence
+        format.html do
+          flash[:error] = message
+          redirect_to location_after_destroy
+        end
+        format.js do
+          render status: :unprocessable_entity, plain: message
+        end
       end
     end
   end
