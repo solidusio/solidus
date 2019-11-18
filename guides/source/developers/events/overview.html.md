@@ -11,6 +11,11 @@ Among other uses, the Solidus codebase uses events in order to send
 confirmation emails when an order is finalized, or again to send emails
 when an order is refunded successfully.
 
+Currently, the events fired by default in Solidus are:
+* `order_finalized`
+* `reimbursement_reimbursed`
+* `reimbursement_errored`
+
 Events make extending Solidus with custom behavior easy. For example,
 if besides the standard email you also want to send a SMS text message to
 the customer when a order is finalized, this pseudo-code may do the trick:
