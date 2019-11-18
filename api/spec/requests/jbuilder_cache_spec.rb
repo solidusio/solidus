@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe "Rabl Cache", type: :request, caching: true do
+describe "Jbuilder Cache", type: :request, caching: true do
   let!(:user)  { create(:admin_user) }
 
   before do
@@ -11,7 +11,7 @@ describe "Rabl Cache", type: :request, caching: true do
     expect(Spree::Product.count).to eq(1)
   end
 
-  it "doesn't create a cache key collision for models with different rabl templates" do
+  it "doesn't create a cache key collision for models with different jbuilder templates" do
     get "/api/variants", params: { token: user.spree_api_key }
     expect(response.status).to eq(200)
 
