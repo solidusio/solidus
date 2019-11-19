@@ -8,7 +8,7 @@ module Spree
       class ItemTotal < PromotionRule
         preference :amount, :decimal, default: 100.00
         preference :currency, :string, default: ->{ Spree::Config[:currency] }
-        preference :operator, :string, default: '>'
+        preference :operator, :string, default: 'gt'
 
         OPERATORS = ['gt', 'gte']
 
