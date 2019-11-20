@@ -434,12 +434,12 @@ RSpec.describe Spree::Promotion, type: :model do
     end
 
     context 'when expires_at date is not already reached' do
-      let(:expires_at) { Time.current + 1.days }
+      let(:expires_at) { Time.current + 1.day }
       it { is_expected.to be_falsey }
     end
 
     context 'when expires_at date is in the past' do
-      let(:expires_at) { Time.current - 1.days }
+      let(:expires_at) { Time.current - 1.day }
       it { is_expected.to be_truthy }
     end
   end
@@ -454,12 +454,12 @@ RSpec.describe Spree::Promotion, type: :model do
     end
 
     context 'when expires_at date is not already reached' do
-      let(:expires_at) { Time.current + 1.days }
+      let(:expires_at) { Time.current + 1.day }
       it { is_expected.to be_truthy }
     end
 
     context 'when expires_at date is in the past' do
-      let(:expires_at) { Time.current - 1.days }
+      let(:expires_at) { Time.current - 1.day }
       it { is_expected.to be_falsey }
     end
   end
