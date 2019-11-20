@@ -22,7 +22,7 @@ class CustomMarkdownRenderer < Redcarpet::Render::HTML
 
   def header(text, header_level)
     content_tag "h#{header_level}", id: text.parameterize, class: 'offset' do
-      text
+      mark_safe(text)
     end
   end
 
