@@ -152,6 +152,29 @@ RSpec.describe Spree::Address, type: :model do
         it "sets up a new record with Spree::Config[:default_country_iso]" do
           expect(Spree::Address.build_default.country).to eq default_country
         end
+
+        it 'accepts other attributes' do
+          address = Spree::Address.build_default(first_name: 'Ryan')
+
+          expect(address.country).to eq default_country
+          expect(address.first_name).to eq 'Ryan'
+        end
+
+        it 'accepts a block' do
+          address = Spree::Address.build_default do |record|
+            record.first_name = 'Ryan'
+          end
+
+          expect(address.country).to eq default_country
+          expect(address.first_name).to eq 'Ryan'
+        end
+
+        it 'can override the country' do
+          another_country = build :country
+          address = Spree::Address.build_default(country: another_country)
+
+          expect(address.country).to eq another_country
+        end
       end
 
       # Regression test for https://github.com/spree/spree/issues/1142
