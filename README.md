@@ -17,7 +17,7 @@
 
 - **Visit our website**: [https://solidus.io/](https://solidus.io/)
 - **Read our guides**: [https://guides.solidus.io/developers/](https://guides.solidus.io/developers/)
-- **Join our Slack**: [https://solidusio.slack.com/](https://solidusio.slack.com/)
+- **Join our Slack**: [http://slack.solidus.io/](http://slack.solidus.io/)
 - **Solidus Security**: [mailing list](https://groups.google.com/forum/#!forum/solidus-security)
 
 
@@ -141,7 +141,7 @@ As part of running the above installation steps, you will be asked to set an adm
 
 ### Questions?
 
-The best way to ask questions is via the [#support channel on the Solidus Slack](https://solidusio.slack.com/messages/support/details/).
+The best way to ask questions is to [join the Solidus Slack](http://slack.solidus.io/) and join the [#support channel](https://solidusio.slack.com/messages/support/details/).
 
 ## Installation options
 
