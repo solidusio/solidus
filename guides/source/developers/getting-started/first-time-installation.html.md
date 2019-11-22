@@ -1,7 +1,7 @@
 # First-time installation
 
 This article will help you install and run Solidus on your local machine for the
-first time. This guide is aimed specifically at developers running macOS. 
+first time. This guide is aimed specifically at developers running macOS.
 
 If you run Linux or Windows, or you don't use [Homebrew][brew] on your Mac, you
 can still follow this guide. However, you may want to consult other
@@ -20,7 +20,7 @@ If you are still not able to get Solidus running, [open an issue on
 GitHub][solidus-github-issue] with any information you think would help us
 reproduce the issues you're having. That would include your operating system and
 its version, the versions of Ruby, Rails, and SQLite 3 that you are running, and
-the specific error messages you are receiving during installation. 
+the specific error messages you are receiving during installation.
 
 [solidus-github-issue]: https://github.com/solidusio/solidus/issues/new
 [slack-invitation]: http://slack.solidus.io
@@ -63,14 +63,14 @@ Homebrew][ruby-homebrew] if you need to upgrade from your system's Ruby.
 Using Homebrew, you can install all of the requirements using the following
 commands:
 
-```bash 
+```bash
 brew install ruby sqlite3 imagemagick
 gem install rails
 ```
 
 See more detailed installation information below.
 
-### Upgrade Ruby on macOS 
+### Upgrade Ruby on macOS
 
 If you run macOS Sierra or an older OS, you system's version of Ruby will need
 to be upgraded from 2.0.x to 2.2.2 or newer. You can check what version of Ruby
@@ -129,7 +129,7 @@ This will install Rails as well as its dependencies.
 ImageMagick helps you create, edit, and save to hundreds of image file formats.
 It is required by [Paperclip](https://github.com/thoughtbot/paperclip),
 which Solidus currently uses to handle file attachments. To install ImageMagick
-via Homebrew, use the command: 
+via Homebrew, use the command:
 
 ```bash
 brew install imagemagick
@@ -148,14 +148,18 @@ Solidus.
 First, we need a new Rails project:
 
 ```bash
-rails new your_solidus_project_name
+rails new your_solidus_project_name --skip_webpack_install
 ```
+
+This command will create a new Rails application without installing
+[webpacker][webpacker], which is not required for a sample Solidus store. You
+are free to install and configure webpacker in your Solidus store though.
 
 Once the new project has finished being created, we can open the project's newly
 created `Gemfile` in a text editor and add the required Solidus gems as new
 lines:
 
-```ruby 
+```ruby
 gem 'solidus'
 gem 'solidus_auth_devise'
 ```
@@ -192,6 +196,7 @@ bundle install
 [solidus-backend]: https://github.com/solidusio/solidus/tree/master/backend
 [solidus-sample]: https://github.com/solidusio/solidus/tree/master/sample
 [solidus-gem-documentation]: http://docs.solidus.io
+[webpacker]: https://github.com/rails/webpacker/
 
 ### Start generating Solidus configuration files
 
