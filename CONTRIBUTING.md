@@ -1,3 +1,9 @@
+## Read our community guidelines
+
+Before you contribute, please take a look at the [Community Guidelines](https://solidus.io/community-guidelines/).
+
+Thanks for your interest in contributing to the Solidus project!
+
 ## Filing an issue
 
 When filing an issue on the Solidus project, please provide these details:
