@@ -11,7 +11,9 @@ module Spree
     belongs_to :country, class_name: "Spree::Country", optional: true
     belongs_to :state, class_name: "Spree::State", optional: true
 
-    validates :firstname, :address1, :city, :country_id, presence: true
+    validates :firstname, presence: true, if: -> { name.blank? || lastname? }
+    validates :name, presence: true, unless: :firstname?
+    validates :address1, :city, :country_id, presence: true
     validates :zipcode, presence: true, if: :require_zipcode?
     validates :phone, presence: true, if: :require_phone?
 
@@ -20,6 +22,7 @@ module Spree
 
     alias_attribute :first_name, :firstname
     alias_attribute :last_name, :lastname
+    alias_attribute :full_name, :name
 
     DB_ONLY_ATTRS = %w(id updated_at created_at)
     TAXATION_ATTRS = %w(state_id country_id zipcode)
@@ -85,25 +88,21 @@ module Spree
       self.class.value_attributes(attributes.slice(*TAXATION_ATTRS))
     end
 
-    # @return [String] the full name on this address
-    def full_name
-      "#{firstname} #{lastname}".strip
-    end
-
     # @return [String] a string representation of this state
     def state_text
       state.try(:abbr) || state.try(:name) || state_name
     end
 
     def to_s
-      "#{full_name}: #{address1}"
+      "#{name}: #{address1}"
     end
 
     # @note This compares the addresses based on only the fields that make up
     #   the logical "address" and excludes the database specific fields (id, created_at, updated_at).
     # @return [Boolean] true if the two addresses have the same address fields
     def ==(other_address)
-      return false unless other_address && other_address.respond_to?(:value_attributes)
+      return false unless other_address&.respond_to?(:value_attributes)
+
       value_attributes == other_address.value_attributes
     end
 
@@ -135,7 +134,7 @@ module Spree
     # @return [Hash] an ActiveMerchant compatible address hash
     def active_merchant_hash
       {
-        name: full_name,
+        name: name,
         address1: address1,
         address2: address2,
         city: city,
@@ -174,10 +173,24 @@ module Spree
     end
 
     def country_iso
-      country && country.iso
+      country&.iso
+    end
+
+    def firstname=(value)
+      super
+      set_name
+    end
+
+    def lastname=(value)
+      super
+      set_name
     end
 
     private
+
+    def set_name
+      self.name = "#{firstname} #{lastname}".strip
+    end
 
     def state_validate
       # Skip state validation without country (also required)
