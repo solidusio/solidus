@@ -31,8 +31,8 @@ module Spree
 
     extend Spree::DisplayMoney
     money_methods :outstanding_balance, :item_total, :adjustment_total,
-      :included_tax_total, :additional_tax_total, :tax_total,
-      :shipment_total, :total, :order_total_after_store_credit, :total_available_store_credit
+                  :included_tax_total, :additional_tax_total, :tax_total,
+                  :shipment_total, :total, :order_total_after_store_credit, :total_available_store_credit
     alias :display_ship_total :display_shipment_total
 
     checkout_flow do
@@ -136,7 +136,8 @@ module Spree
       find_by! number: value
     end
 
-    delegate :firstname, :lastname, to: :bill_address, prefix: true, allow_nil: true
+    delegate :name, :firstname, :lastname, to: :bill_address, prefix: true, allow_nil: true
+    alias_method :billing_name, :bill_address_name
     alias_method :billing_firstname, :bill_address_firstname
     alias_method :billing_lastname, :bill_address_lastname
 
@@ -283,6 +284,7 @@ module Spree
 
     def allow_cancel?
       return false unless completed? && state != 'canceled'
+
       shipment_state.nil? || %w{ready backorder pending}.include?(shipment_state)
     end
 
@@ -398,7 +400,7 @@ module Spree
 
     def name
       if (address = bill_address || ship_address)
-        "#{address.firstname} #{address.lastname}"
+        address.name
       end
     end
 
@@ -524,7 +526,7 @@ module Spree
     end
 
     def ensure_shipping_address
-      unless ship_address && ship_address.valid?
+      unless ship_address&.valid?
         errors.add(:base, I18n.t('spree.ship_address_required')) && (return false)
       end
     end
@@ -672,12 +674,14 @@ module Spree
 
     def covered_by_store_credit?
       return false unless user
+
       user.available_store_credit_total(currency: currency) >= total
     end
     alias_method :covered_by_store_credit, :covered_by_store_credit?
 
     def total_available_store_credit
       return 0.0 unless user
+
       user.available_store_credit_total(currency: currency)
     end
 
@@ -717,10 +721,10 @@ module Spree
         bill_address = (user.bill_address || user.default_address)
         ship_address = (user.ship_address || user.default_address)
         # this is one of 2 places still using User#bill_address
-        self.bill_address ||= bill_address if bill_address.try!(:valid?)
+        self.bill_address ||= bill_address if bill_address&.valid?
         # Skip setting ship address if order doesn't have a delivery checkout step
         # to avoid triggering validations on shipping address
-        self.ship_address ||= ship_address if ship_address.try!(:valid?) && checkout_steps.include?("delivery")
+        self.ship_address ||= ship_address if ship_address&.valid? && checkout_steps.include?("delivery")
       end
     end
 
@@ -858,7 +862,7 @@ module Spree
     end
 
     def ensure_line_items_present
-      unless line_items.present?
+      if line_items.blank?
         errors.add(:base, I18n.t('spree.there_are_no_items_for_this_order')) && (return false)
       end
     end

@@ -12,7 +12,7 @@ FactoryBot.define do
     end
 
     firstname { 'John' }
-    lastname { nil }
+    name { firstname }
     company { 'Company' }
     address1 { '10 Lovely Street' }
     address2 { 'Northwest' }

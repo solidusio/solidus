@@ -664,7 +664,7 @@ RSpec.describe Spree::Order, type: :model do
 
       let!(:store_with_payment_methods) do
         create(:store,
-          payment_methods: [payment_method_with_store])
+               payment_methods: [payment_method_with_store])
       end
       let!(:payment_method_with_store) { create(:payment_method) }
       let!(:store_without_payment_methods) { create(:store) }
@@ -682,8 +682,8 @@ RSpec.describe Spree::Order, type: :model do
         context 'and the store has an extra payment method unavailable to users' do
           let!(:admin_only_payment_method) do
             create(:payment_method,
-                                                     available_to_users: false,
-                                                     available_to_admin: true)
+                   available_to_users: false,
+                   available_to_admin: true)
           end
 
           before do
@@ -908,7 +908,7 @@ RSpec.describe Spree::Order, type: :model do
       end
 
       context "and has an invalid bill address associated " do
-        let(:bill_address) { build(:address, firstname: nil) } # invalid address
+        let(:bill_address) { build(:address, city: nil) } # invalid address
 
         it "does not associate any bill address" do
           expect { subject }.not_to change { order.bill_address }.from(nil)
@@ -930,7 +930,7 @@ RSpec.describe Spree::Order, type: :model do
       end
 
       context "and has an invalid ship address associated " do
-        let(:ship_address) { build(:address, firstname: nil) } # invalid address
+        let(:ship_address) { build(:address, city: nil) } # invalid address
 
         it "does not associate any ship address" do
           expect { subject }.not_to change { order.ship_address }.from(nil)

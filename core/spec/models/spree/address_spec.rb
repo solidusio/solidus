@@ -23,6 +23,33 @@ RSpec.describe Spree::Address, type: :model do
 
       expect(address.name).to eq('Ryan Small')
     end
+
+    it 'updates firstname and lastname when updating name' do
+      address.name = 'Jane Von Doe'
+
+      expect(address.firstname).to eq('Jane')
+      expect(address.lastname).to eq('Von Doe')
+    end
+  end
+
+  context 'equals' do
+    it 'returns true when all attributes matches' do
+      an_address = build_stubbed(:address)
+      another_address = build_stubbed(:address, an_address.attributes)
+
+      expect(an_address).to eq(another_address)
+    end
+
+    it 'returns true when firstname and lastname matches with name' do
+      an_address = build_stubbed(:address, firstname: 'Jane', lastname: 'Von Doe')
+      an_address.write_attribute(:name, nil)
+      another_address = build_stubbed(:address, an_address.attributes)
+      another_address.write_attribute(:name, 'Jane Von Doe')
+      another_address.write_attribute(:firstname, nil)
+      another_address.write_attribute(:lastname, nil)
+
+      expect(an_address).to eq(another_address)
+    end
   end
 
   context 'aliased attributes' do
@@ -194,19 +221,19 @@ RSpec.describe Spree::Address, type: :model do
         end
 
         it 'accepts other attributes' do
-          address = described_class.build_default(first_name: 'Ryan')
+          address = described_class.build_default(name: 'Ryan')
 
           expect(address.country).to eq default_country
-          expect(address.first_name).to eq 'Ryan'
+          expect(address.name).to eq 'Ryan'
         end
 
         it 'accepts a block' do
           address = described_class.build_default do |record|
-            record.first_name = 'Ryan'
+            record.name = 'Ryan'
           end
 
           expect(address.country).to eq default_country
-          expect(address.first_name).to eq 'Ryan'
+          expect(address.name).to eq 'Ryan'
         end
 
         it 'can override the country' do
@@ -240,7 +267,7 @@ RSpec.describe Spree::Address, type: :model do
 
   context '.immutable_merge' do
     RSpec::Matchers.define :be_address_equivalent_attributes do |expected|
-      fields_of_interest = [:name, :firstname, :lastname, :company, :address1, :address2, :city, :zipcode, :phone, :alternative_phone]
+      fields_of_interest = [:name, :company, :address1, :address2, :city, :zipcode, :phone, :alternative_phone]
       match do |actual|
         expected_attrs = expected.symbolize_keys.slice(*fields_of_interest)
         actual_attrs = actual.symbolize_keys.slice(*fields_of_interest)
@@ -262,7 +289,7 @@ RSpec.describe Spree::Address, type: :model do
 
       context 'and there is a matching address in the database' do
         let(:new_address_attributes) { described_class.value_attributes(matching_address.attributes) }
-        let!(:matching_address) { create(:address, firstname: 'Jordan') }
+        let!(:matching_address) { create(:address, name: 'Jordan') }
 
         it 'returns the matching address' do
           expect(subject.attributes).to be_address_equivalent_attributes(new_address_attributes)
@@ -291,7 +318,7 @@ RSpec.describe Spree::Address, type: :model do
 
       context 'and changed address matches an existing address' do
         let(:new_address_attributes) { described_class.value_attributes(matching_address.attributes) }
-        let!(:matching_address) { create(:address, firstname: 'Jordan') }
+        let!(:matching_address) { create(:address, name: 'Jordan') }
 
         it 'returns the matching address' do
           expect(subject.attributes).to be_address_equivalent_attributes(new_address_attributes)
@@ -341,7 +368,11 @@ RSpec.describe Spree::Address, type: :model do
       let(:merge_attributes) { { 'last_name' => 'Brough' } }
 
       it 'renames them to the normalized value' do
-        expect(subject).to eq('firstname' => 'Jordan', 'lastname' => 'Brough')
+        expect(subject).to eq(
+          'firstname' => 'Jordan',
+          'lastname' => 'Brough',
+          'name' => 'Jordan Brough'
+        )
       end
 
       it 'does not modify the original hashes' do
@@ -408,7 +439,8 @@ RSpec.describe Spree::Address, type: :model do
 
     context 'both first and last names are blank' do
       let(:address) { described_class.new(firstname: nil, lastname: nil) }
-      specify { expect(address.full_name).to eq('') }
+
+      specify { expect(address.full_name).to be_nil }
     end
   end
 

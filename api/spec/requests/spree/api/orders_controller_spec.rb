@@ -537,13 +537,13 @@ module Spree
       end
 
       it "receives error message if trying to add billing address with errors" do
-        billing_address[:firstname] = ""
+        billing_address[:city] = ""
 
         put spree.api_order_path(order), params: { order: { bill_address_attributes: billing_address } }
 
         expect(json_response['error']).not_to be_nil
         expect(json_response['errors']).not_to be_nil
-        expect(json_response['errors']['bill_address.firstname'].first).to eq "can't be blank"
+        expect(json_response['errors']['bill_address.city'].first).to eq "can't be blank"
       end
 
       it "can add shipping address" do
@@ -557,13 +557,13 @@ module Spree
       it "receives error message if trying to add shipping address with errors" do
         order.update!(ship_address_id: nil)
 
-        shipping_address[:firstname] = ""
+        shipping_address[:city] = ""
 
         put spree.api_order_path(order), params: { order: { ship_address_attributes: shipping_address } }
 
         expect(json_response['error']).not_to be_nil
         expect(json_response['errors']).not_to be_nil
-        expect(json_response['errors']['ship_address.firstname'].first).to eq "can't be blank"
+        expect(json_response['errors']['ship_address.city'].first).to eq "can't be blank"
       end
 
       it "cannot set the user_id for the order" do

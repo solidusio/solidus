@@ -49,7 +49,8 @@ module Spree
     def default
       Spree::Deprecation.warn("CreditCard#default is deprecated. Please use user.wallet.default_wallet_payment_source instead.", caller)
       return false if user.nil?
-      user.wallet.default_wallet_payment_source.try!(:payment_source) == self
+
+      user.wallet.default_wallet_payment_source&.payment_source == self
     end
 
     def default=(set_as_default)
@@ -61,7 +62,7 @@ module Spree
         user.wallet.default_wallet_payment_source = wallet_payment_source
         true
       else # removing this card as default
-        if user.wallet.default_wallet_payment_source.try!(:payment_source) == self
+        if user.wallet.default_wallet_payment_source&.payment_source == self
           user.wallet.default_wallet_payment_source = nil
         end
         false
@@ -77,10 +78,10 @@ module Spree
     # @param expiry [String] the desired new expiry date in one of the
     #   following formats: "mm/yy", "mm / yyyy", "mmyy", "mmyyyy"
     def expiry=(expiry)
-      return unless expiry.present?
+      return if expiry.blank?
 
       self[:month], self[:year] =
-        if expiry =~ /\d{2}\s?\/\s?\d{2,4}/ # will match mm/yy and mm / yyyy
+        if /\d{2}\s?\/\s?\d{2,4}/.match?(expiry) # will match mm/yy and mm / yyyy
           expiry.delete(' ').split('/')
         elsif match = expiry.match(/(\d{2})(\d{2,4})/) # will match mmyy and mmyyyy
           [match[1], match[2]]
@@ -131,7 +132,7 @@ module Spree
     #   number, otherwise the empty string
     def try_type_from_number
       CARD_TYPES.each do |type, pattern|
-        return type if number =~ pattern
+        return type if number&.match?(pattern)
       end
       ''
     end
@@ -163,7 +164,7 @@ module Spree
     #   the object to ActiveMerchant.
     # @return [String] the first name on this credit card
     def first_name
-      name.to_s.split(/[[:space:]]/, 2)[0]
+      Spree::Name.new(name).first_name
     end
 
     # @note ActiveMerchant needs first_name/last_name because we pass it a
@@ -172,7 +173,7 @@ module Spree
     #   the object to ActiveMerchant.
     # @return [String] the last name on this credit card
     def last_name
-      name.to_s.split(/[[:space:]]/, 2)[1]
+      Spree::Name.new(name).last_name
     end
 
     # @return [ActiveMerchant::Billing::CreditCard] an ActiveMerchant credit
@@ -191,7 +192,7 @@ module Spree
     private
 
     def require_card_numbers?
-      !encrypted_data.present? && !has_payment_profile?
+      encrypted_data.blank? && !has_payment_profile?
     end
   end
 end

@@ -26,6 +26,7 @@ en:
         address2: Street Address (cont'd)
         city: City
         company: Company
+        name: Name
         firstname: First Name
         lastname: Last Name
         phone: Phone
@@ -129,6 +130,7 @@ en:
       spree/order/bill_address:
         address1: Billing address street
         city: Billing address city
+        name: Billing address name
         firstname: Billing address first name
         lastname: Billing address last name
         phone: Billing address phone
@@ -137,6 +139,7 @@ en:
       spree/order/ship_address:
         address1: Shipping address street
         city: Shipping address city
+        name: Shipping address name
         firstname: Shipping address first name
         lastname: Shipping address last name
         phone: Shipping address phone

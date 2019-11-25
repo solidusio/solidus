@@ -33,17 +33,17 @@ module Spree
       let(:variant_id) { variant.id }
 
       let(:line_items) { { "0" => { variant_id: variant.id, quantity: 5 } } }
-      let(:ship_address) {
+      let(:ship_address) do
         {
-         address1: '123 Testable Way',
-         firstname: 'Fox',
-         lastname: 'Mulder',
-         city: 'Washington',
-         country_id: country.id,
-         state_id: state.id,
-         zipcode: '66666',
-         phone: '666-666-6666'
-      }}
+          address1: '123 Testable Way',
+          name: 'Fox Mulder',
+          city: 'Washington',
+          country_id: country.id,
+          state_id: state.id,
+          zipcode: '66666',
+          phone: '666-666-6666'
+        }
+      end
 
       it 'can import an order number' do
         params = { number: '123-456-789' }

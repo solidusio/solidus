@@ -77,16 +77,16 @@ module Spree
           end
 
           context "and changing another address field at the same time" do
-            let(:updated_address_attributes) { address.attributes.tap { |value| value[:first_name] = "Newbie" } }
+            let(:updated_address_attributes) { address.attributes.tap { |value| value['name'] = "Newbie" } }
 
             subject { user.save_in_address_book(updated_address_attributes, true) }
 
-            it "changes first name" do
-              expect(subject.first_name).to eq updated_address_attributes[:first_name]
+            it "changes name" do
+              expect(subject.name).to eq updated_address_attributes['name']
             end
 
-            it "preserves last name" do
-              expect(subject.last_name).to eq address.last_name
+            it "preserves city" do
+              expect(subject.city).to eq address.city
             end
 
             it "is a new immutable address instance" do
@@ -102,9 +102,9 @@ module Spree
 
       context "updating an address and making default at once" do
         let(:address1) { create(:address) }
-        let(:address2) { create(:address, firstname: "Different") }
+        let(:address2) { create(:address, name: "Different") }
         let(:updated_attrs) do
-          address2.attributes.tap { |value| value[:firstname] = "Johnny" }
+          address2.attributes.tap { |value| value['name'] = "Johnny" }
         end
 
         before do
@@ -114,7 +114,7 @@ module Spree
 
         it "returns the edit as the first address" do
           user.save_in_address_book(updated_attrs, true)
-          expect(user.user_addresses.first.address.firstname).to eq "Johnny"
+          expect(user.user_addresses.first.address.name).to eq "Johnny"
         end
       end
 
@@ -173,7 +173,7 @@ module Spree
         end
 
         context "via an edit to another address" do
-          let(:address2) { create(:address, firstname: "Different") }
+          let(:address2) { create(:address, name: "Different") }
           let(:edited_attributes) do
             # conceptually edit address2 to match the values of address
             edited_attributes = address.attributes
@@ -219,7 +219,7 @@ module Spree
 
     context "#remove_from_address_book" do
       let(:address1) { create(:address) }
-      let(:address2) { create(:address, firstname: "Different") }
+      let(:address2) { create(:address, name: "Different") }
       let(:remove_id) { address1.id }
       subject { user.remove_from_address_book(remove_id) }
 

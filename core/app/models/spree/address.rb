@@ -11,12 +11,11 @@ module Spree
     belongs_to :country, class_name: "Spree::Country", optional: true
     belongs_to :state, class_name: "Spree::State", optional: true
 
-    validates :firstname, presence: true, if: -> { name.blank? || lastname? }
-    validates :name, presence: true, unless: :firstname?
     validates :address1, :city, :country_id, presence: true
     validates :zipcode, presence: true, if: :require_zipcode?
     validates :phone, presence: true, if: :require_phone?
 
+    validate :validate_name
     validate :state_validate
     validate :validate_state_matches_country
 
@@ -24,10 +23,12 @@ module Spree
     alias_attribute :last_name, :lastname
     alias_attribute :full_name, :name
 
+    DEPRECATION = { firstname: :name, lastname: :name, full_name: :name }
     DB_ONLY_ATTRS = %w(id updated_at created_at)
     TAXATION_ATTRS = %w(state_id country_id zipcode)
+    DEPRECATED_ATTRS = DEPRECATION.stringify_keys.keys
 
-    self.whitelisted_ransackable_attributes = %w[firstname lastname]
+    self.whitelisted_ransackable_attributes = %w[name firstname lastname]
 
     scope :with_values, ->(attributes) do
       where(value_attributes(attributes))
@@ -41,7 +42,7 @@ module Spree
     # @return [Address] an equal address already in the database or a newly created one
     def self.factory(attributes)
       full_attributes = value_attributes(column_defaults, new(attributes).attributes)
-      find_or_initialize_by(full_attributes)
+      find_by(full_attributes.except(DEPRECATED_ATTRS)) || new(full_attributes)
     end
 
     # @return [Address] address from existing address plus new_attributes as diff
@@ -49,7 +50,6 @@ module Spree
     def self.immutable_merge(existing_address, new_attributes)
       # Ensure new_attributes is a sanitized hash
       new_attributes = sanitize_for_mass_assignment(new_attributes)
-
       return factory(new_attributes) if existing_address.nil?
 
       merged_attributes = value_attributes(existing_address.attributes, new_attributes)
@@ -62,21 +62,20 @@ module Spree
     end
 
     # @return [Hash] hash of attributes contributing to value equality with optional merge
-    def self.value_attributes(base_attributes, merge_attributes = nil)
-      # dup because we may modify firstname/lastname.
-      base = base_attributes.dup
-
-      base.stringify_keys!
-
-      if merge_attributes
-        base.merge!(merge_attributes.stringify_keys)
+    def self.value_attributes(base_attributes, merge_attributes = {})
+      base = base_attributes.stringify_keys.merge(merge_attributes.stringify_keys)
+      name_from_attributes = Spree::Name.from_attributes(base)
+      if base.key?('firstname') || base.key?('first_name')
+        base['firstname'] = name_from_attributes.first_name
+        base['name'] = name_from_attributes.to_s
       end
+      if base.key?('lastname') || base.key?('last_name')
+        base['lastname'] = name_from_attributes.last_name
+        base['name'] = name_from_attributes.to_s
+      end
+      excluded_attributes = DB_ONLY_ATTRS + %w(first_name last_name)
 
-      # TODO: Deprecate these aliased attributes
-      base['firstname'] = base.delete('first_name') if base.key?('first_name')
-      base['lastname'] = base.delete('last_name') if base.key?('last_name')
-
-      base.except!(*DB_ONLY_ATTRS)
+      base.except(*excluded_attributes)
     end
 
     # @return [Hash] hash of attributes contributing to value equality
@@ -103,7 +102,8 @@ module Spree
     def ==(other_address)
       return false unless other_address&.respond_to?(:value_attributes)
 
-      value_attributes == other_address.value_attributes
+      value_attributes.except(DEPRECATED_ATTRS) ==
+        other_address.value_attributes.except(DEPRECATED_ATTRS)
     end
 
     # @deprecated Do not use this. Use Address.== instead.
@@ -176,20 +176,36 @@ module Spree
       country&.iso
     end
 
+    # @deprecated Use {#name} instead
     def firstname=(value)
       super
       set_name
     end
 
+    # @deprecated Use {#name} instead
     def lastname=(value)
       super
       set_name
     end
 
+    def name=(value)
+      super
+      return if name.nil?
+
+      current_name = Spree::Name.new(name)
+      write_attribute(:firstname, current_name.first_name)
+      write_attribute(:lastname, current_name.last_name)
+    end
+
     private
 
     def set_name
-      self.name = "#{firstname} #{lastname}".strip
+      Spree::Deprecation.silence do
+        return if firstname.nil? && lastname.nil?
+
+        current_name = Spree::Name.new(firstname, lastname)
+        write_attribute(:name, current_name.to_s)
+      end
     end
 
     def state_validate
@@ -230,6 +246,13 @@ module Spree
     def validate_state_matches_country
       if state && state.country != country
         errors.add(:state, :does_not_match_country)
+      end
+    end
+
+    def validate_name
+      Spree::Deprecation.silence do
+        errors.add(:firstname, :blank) if firstname.blank? && (name.blank? || lastname.present?)
+        errors.add(:name, :blank) if name.blank? && firstname.blank?
       end
     end
   end

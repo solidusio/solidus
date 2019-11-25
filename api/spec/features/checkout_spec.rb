@@ -57,7 +57,7 @@ module Spree
     def create_line_item(variant, quantity = 1)
       expect {
         post "/api/orders/#{@order.number}/line_items",
-          params: { line_item: { variant_id: variant.id, quantity: quantity } }
+             params: { line_item: { variant_id: variant.id, quantity: quantity } }
       }.to change { @order.line_items.count }.by 1
       expect(response).to have_http_status(:created)
     end
@@ -65,7 +65,7 @@ module Spree
     def add_promotion(_promotion)
       expect {
         post "/api/orders/#{@order.number}/coupon_codes",
-          params: { coupon_code: promotion_code.value }
+             params: { coupon_code: promotion_code.value }
       }.to change { @order.promotions.count }.by 1
       expect(response).to have_http_status(:ok)
     end
@@ -82,7 +82,7 @@ module Spree
     def add_payment
       expect {
         post "/api/orders/#{@order.number}/payments",
-          params: { payment: { payment_method_id: payment_method.id } }
+             params: { payment: { payment_method_id: payment_method.id } }
       }.to change { @order.reload.payments.count }.by 1
       expect(response).to have_http_status(:created)
       expect(@order.payments.last.payment_method).to eq payment_method
@@ -139,8 +139,8 @@ module Spree
 
       create_order(order_params: {
         order: {
-          bill_address: bill_address.as_json.except('id'),
-          ship_address: ship_address.as_json.except('id'),
+          bill_address: bill_address.value_attributes,
+          ship_address: ship_address.value_attributes,
           line_items: {
             0 => { variant_id: variant_1.id, quantity: 2 },
             1 => { variant_id: variant_2.id, quantity: 2 }
@@ -167,8 +167,8 @@ module Spree
       create_order
       update_order(order_params: {
         order: {
-          bill_address: bill_address.as_json.except('id'),
-          ship_address: ship_address.as_json.except('id'),
+          bill_address: bill_address.value_attributes,
+          ship_address: ship_address.value_attributes,
           line_items: {
             0 => { variant_id: variant_1.id, quantity: 2 },
             1 => { variant_id: variant_2.id, quantity: 2 }
