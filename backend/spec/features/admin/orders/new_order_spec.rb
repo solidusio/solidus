@@ -169,6 +169,54 @@ describe "New Order", type: :feature do
     end
   end
 
+  context "when changing customer", :js do
+    let!(:other_user) { create :user, bill_address: bill_address }
+
+    context "when one customer address have only textual state" do
+      let(:country) { create :country, iso: "IT" }
+      let(:bill_address) { create :address, country: country, state: nil, state_name: "Veneto" }
+
+      it "changes the bill address state accordingly" do
+        click_on "Customer"
+
+        within "#select-customer" do
+          targetted_select2_search user.email, from: "#s2id_customer_search"
+        end
+
+        expect(find("select#order_bill_address_attributes_state_id").value).to eq user.bill_address.state_id.to_s
+
+        within "#select-customer" do
+          targetted_select2_search other_user.email, from: "#s2id_customer_search"
+        end
+
+        expect(find("select#order_bill_address_attributes_state_id", visible: false).value).to eq ""
+        expect(find("#order_bill_address_attributes_state_name").value).to eq other_user.bill_address.state_name
+      end
+    end
+
+    context "when customers have same country but different state" do
+      let(:different_state) { Spree::State.where.not(id: user.bill_address.state_id).first }
+
+      let(:bill_address) { create :address, country: user.bill_address.country, state: different_state }
+
+      it "changes the bill address state accordingly" do
+        click_on "Customer"
+
+        within "#select-customer" do
+          targetted_select2_search user.email, from: "#s2id_customer_search"
+        end
+
+        expect(find('#order_bill_address_attributes_state_id').value).to eq user.bill_address.state_id.to_s
+
+        within "#select-customer" do
+          targetted_select2_search other_user.email, from: "#s2id_customer_search"
+        end
+
+        expect(find('#order_bill_address_attributes_state_id').value).to eq other_user.bill_address.state_id.to_s
+      end
+    end
+  end
+
   # Regression test for https://github.com/spree/spree/issues/5327
   context "customer with default credit card", js: true do
     let!(:credit_card) { create(:credit_card, user: user) }
