@@ -27,9 +27,13 @@ phone_numbers = ["(392)859-7319 x670", "738-831-3210 x6047",
                  "(662)877-7894 x703", "689.578.8564 x72399"]
 
 2.times do
+  first_name = first_names.sample
+  last_name = last_names.sample
+  name = "#{first_name} #{last_name}"
   Spree::Address.create!(
-    firstname: first_names.sample,
-    lastname: last_names.sample,
+    name: name,
+    firstname: first_name,
+    lastname: last_name,
     address1: street_addresses.sample,
     address2: secondary_addresses.sample,
     city: cities.sample,

@@ -18,7 +18,7 @@ Dir["./spec/support/**/*.rb"].sort.each { |f| require f }
 
 require 'spree/testing_support/factories'
 require 'spree/testing_support/preferences'
-require 'spree/testing_support/rake'
+require 'spree/testing_support/shared_contexts/rake'
 require 'cancan/matchers'
 
 ActiveJob::Base.queue_adapter = :test

@@ -121,10 +121,11 @@ Rails/DynamicFindBy:
     - find_by_param
     - find_by_param!
 
-# It's okay to skip model validations to setup a spec.
+# It's okay to skip model validations to setup a spec and during data migrations
 Rails/SkipsModelValidations:
   Exclude:
     - '*/spec/**/*'
+    - '*/lib/tasks/migrations/**/*'
 
 # We use a lot of
 #
@@ -333,4 +334,8 @@ Lint/UselessComparison:
   Enabled: false
 
 Lint/HandleExceptions:
+  Enabled: false
+
+# ApplicationRecord hasn't been implemented in Solidus yet
+Rails/ApplicationRecord: 
   Enabled: false
