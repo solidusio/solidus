@@ -143,17 +143,19 @@ RSpec.describe Spree::TaxRate, type: :model do
     let!(:foreign_zone) { create(:zone, countries: [foreign_address.country]) }
     let(:tax_rate) do
       create(:tax_rate,
-        included_in_price: included_in_price,
-        show_rate_in_label: show_rate_in_label,
-        amount: 0.125,
-        zone: tax_zone)
+             included_in_price: included_in_price,
+             show_rate_in_label: show_rate_in_label,
+             amount: 0.125,
+             zone: tax_zone)
     end
 
     let(:item) { order.line_items.first }
 
     describe 'adjustments' do
       before do
-        expect(Spree::Deprecation).to receive(:warn)
+        allow(Spree::Deprecation).to receive(:warn)
+        expect(Spree::Deprecation).to receive(:warn).with(/Spree::Tax::OrderAdjuster#adjust!/, any_args)
+
         tax_rate.adjust(nil, item)
       end
 

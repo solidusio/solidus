@@ -239,7 +239,7 @@ RSpec.describe Spree::Adjustment, type: :model do
 
           context 'when the adjustment is destroyed before after_commit runs' do
             it 'does not repair' do
-              expect(Spree::Deprecation).not_to receive(:warn)
+              expect_no_deprecation_warning
               Spree::Adjustment.transaction do
                 adjustment = create_adjustment
                 adjustment.destroy!
@@ -250,7 +250,7 @@ RSpec.describe Spree::Adjustment, type: :model do
 
         context 'when adjustable.adjustments is not loaded' do
           it 'does repair' do
-            expect(Spree::Deprecation).not_to receive(:warn)
+            expect_no_deprecation_warning
             create_adjustment
           end
         end
@@ -270,14 +270,14 @@ RSpec.describe Spree::Adjustment, type: :model do
           before { adjustable.adjustments.to_a }
 
           it 'does not repair' do
-            expect(Spree::Deprecation).not_to receive(:warn)
+            expect_no_deprecation_warning
             create_adjustment
           end
         end
 
         context 'when adjustable.adjustments is not loaded' do
           it 'does not repair' do
-            expect(Spree::Deprecation).not_to receive(:warn)
+            expect_no_deprecation_warning
             create_adjustment
           end
         end
@@ -311,7 +311,7 @@ RSpec.describe Spree::Adjustment, type: :model do
 
         context 'when adjustable.adjustments is not loaded' do
           it 'does not repair' do
-            expect(Spree::Deprecation).not_to receive(:warn)
+            expect_no_deprecation_warning
             adjustment.destroy!
           end
         end
@@ -322,18 +322,25 @@ RSpec.describe Spree::Adjustment, type: :model do
           before { adjustable.adjustments.to_a }
 
           it 'does not repair' do
-            expect(Spree::Deprecation).not_to receive(:warn)
+            expect_no_deprecation_warning
             adjustable.adjustments.destroy(adjustment)
           end
         end
 
         context 'when adjustable.adjustments is not loaded' do
           it 'does not repair' do
-            expect(Spree::Deprecation).not_to receive(:warn)
+            expect_no_deprecation_warning
             adjustable.adjustments.destroy(adjustment)
           end
         end
       end
+    end
+
+    private
+
+    def expect_no_deprecation_warning
+      expect(Spree::Deprecation).not_to receive(:warn)
+        .with(/Adjustment/, any_args)
     end
   end
 end

@@ -34,6 +34,8 @@ module Spree
       where(value_attributes(attributes))
     end
 
+    Spree::Deprecation.deprecate_methods(Spree::Address, DEPRECATION)
+
     # @return [Address] an address with default attributes
     def self.build_default(*args, &block)
       where(country: Spree::Country.default).build(*args, &block)

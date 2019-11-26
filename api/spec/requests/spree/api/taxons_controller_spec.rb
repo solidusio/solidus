@@ -92,7 +92,7 @@ module Spree
 
         it 'returns only requested ids' do
           # We need a completly new branch to avoid having parent that can be preloaded from the rails ancestors
-          python   = create(:taxon, name: "Python", parent: taxonomy.root, taxonomy: taxonomy)
+          python = create(:taxon, name: "Python", parent: taxonomy.root, taxonomy: taxonomy)
           python_three = create(:taxon, name: "3.0", parent: python, taxonomy: taxonomy)
 
           get spree.api_taxons_path, params: { ids: [rails_v3_2_2.id, python_three.id] }
@@ -109,7 +109,10 @@ module Spree
       end
 
       it "gets all taxons in JSTree form" do
-        expect(Spree::Deprecation).to(receive(:warn))
+        allow(Spree::Deprecation).to receive(:warn)
+        expect(Spree::Deprecation).to receive(:warn)
+          .with(%r{/api/taxonomies/:taxonomy_id/taxons/:taxon_id/jstree}, any_args)
+
         get spree.jstree_api_taxonomy_taxon_path(taxonomy, taxon.id)
         response = json_response.first
         expect(response["data"]).to eq(taxon2.name)

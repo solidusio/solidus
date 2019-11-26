@@ -10,6 +10,9 @@ Spree.config do |config|
   # from address for transactional emails
   config.mails_from = "store@example.com"
 
+  # Do not show deprecated model attributes in HTML views and API responses
+  config.show_address_deprecated_attributes = false
+
   # Uncomment to stop tracking inventory levels in the application
   # config.track_inventory_levels = false
 

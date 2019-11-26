@@ -88,10 +88,10 @@ module Spree
 
         it "can update addresses and transition from address to delivery" do
           put spree.api_checkout_path(order),
-            params: { order_token: order.guest_token, order: {
-              bill_address_attributes: address,
-              ship_address_attributes: address
-            } }
+              params: { order_token: order.guest_token, order: {
+                bill_address_attributes: address,
+                ship_address_attributes: address
+              } }
           expect(json_response['state']).to eq('delivery')
           expect(json_response['bill_address']['firstname']).to eq('John')
           expect(json_response['ship_address']['firstname']).to eq('John')
@@ -102,10 +102,10 @@ module Spree
         it "can update addresses but not transition to delivery w/o shipping setup" do
           Spree::ShippingMethod.all.each(&:really_destroy!)
           put spree.api_checkout_path(order),
-            params: { order_token: order.guest_token, order: {
-              bill_address_attributes: address,
-              ship_address_attributes: address
-            } }
+              params: { order_token: order.guest_token, order: {
+                bill_address_attributes: address,
+                ship_address_attributes: address
+              } }
           expect(json_response['error']).to eq(I18n.t(:could_not_transition, scope: "spree.api.order"))
           expect(response.status).to eq(422)
         end
@@ -113,10 +113,10 @@ module Spree
         # Regression test for https://github.com/spree/spree/issues/4498
         it "does not contain duplicate variant data in delivery return" do
           put spree.api_checkout_path(order),
-            params: { order_token: order.guest_token, order: {
-              bill_address_attributes: address,
-              ship_address_attributes: address
-            } }
+              params: { order_token: order.guest_token, order: {
+                bill_address_attributes: address,
+                ship_address_attributes: address
+              } }
           # Shipments manifests should not return the ENTIRE variant
           # This information is already present within the order's line items
           expect(json_response['shipments'].first['manifest'].first['variant']).to be_nil
@@ -353,7 +353,10 @@ module Spree
       end
 
       it "can apply a coupon code to an order" do
+        allow(Spree::Deprecation).to receive(:warn)
         expect(Spree::Deprecation).to receive(:warn)
+          .with(/Spree::Api::CouponCodesController#create/, any_args)
+
         order.update_column(:state, "payment")
         expect(PromotionHandler::Coupon).to receive(:new).with(order).and_call_original
         expect_any_instance_of(PromotionHandler::Coupon).to receive(:apply).and_return({ coupon_applied?: true })
@@ -362,7 +365,10 @@ module Spree
       end
 
       it "renders error failing to apply coupon" do
+        allow(Spree::Deprecation).to receive(:warn)
         expect(Spree::Deprecation).to receive(:warn)
+          .with(/Spree::Api::CouponCodesController#create/, any_args)
+
         order.update_column(:state, "payment")
         put spree.api_checkout_path(order.to_param), params: { order_token: order.guest_token, order: { coupon_code: "foobar" } }
         expect(response.status).to eq(422)

@@ -140,7 +140,10 @@ RSpec.describe Spree::InventoryUnit, type: :model do
     }
 
     it "should create a stock movement" do
+      allow(Spree::Deprecation).to receive(:warn)
       expect(Spree::Deprecation).to receive(:warn)
+        .with(/Spree::Stock::InventoryUnitsFinalizer/, any_args)
+
       Spree::InventoryUnit.finalize_units!(inventory_units)
       expect(inventory_units.any?(&:pending)).to be false
     end

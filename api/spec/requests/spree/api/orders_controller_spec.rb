@@ -31,7 +31,7 @@ module Spree
 
     describe "POST create" do
       let(:target_user) { create :user }
-      let(:date_override) { Time.parse('2015-01-01') }
+      let(:date_override) { Time.zone.parse('2015-01-01') }
       let(:attributes) { { user_id: target_user.id, created_at: date_override, email: target_user.email } }
 
       subject do
@@ -625,9 +625,9 @@ module Spree
 
         it "lists line item adjustments" do
           adjustment = create(:adjustment,
-            label: "10% off!",
-            order: order,
-            adjustable: order.line_items.first)
+                              label: "10% off!",
+                              order: order,
+                              adjustable: order.line_items.first)
           adjustment.update_column(:amount, 5)
           get spree.api_order_path(order)
 
@@ -824,7 +824,7 @@ module Spree
                 payment_method: create(:payment_method).name,
                 source: {
                   month: "01",
-                  year: Date.today.year.to_s.last(2),
+                  year: Time.zone.today.year.to_s.last(2),
                   cc_type: "123",
                   last_digits: "1111",
                   name: "Credit Card"
@@ -887,14 +887,15 @@ module Spree
 
       before do
         allow_any_instance_of(Order).to receive_messages user: current_api_user
+        allow(Spree::Deprecation).to receive(:warn)
+        expect(Spree::Deprecation).to receive(:warn)
+          .with(/Spree::Api::CouponCodesController#create/, any_args)
       end
 
       context 'when successful' do
         let(:order) { create(:order_with_line_items) }
 
         it 'applies the coupon' do
-          expect(Spree::Deprecation).to receive(:warn)
-
           put spree.apply_coupon_code_api_order_path(order), params: { coupon_code: promo_code.value }
 
           expect(response.status).to eq 200
@@ -912,8 +913,6 @@ module Spree
         let(:order) { create(:order) } # no line items to apply the code to
 
         it 'returns an error' do
-          expect(Spree::Deprecation).to receive(:warn)
-
           put spree.apply_coupon_code_api_order_path(order), params: { coupon_code: promo_code.value }
 
           expect(response.status).to eq 422

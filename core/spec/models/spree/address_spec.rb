@@ -5,6 +5,10 @@ require 'rails_helper'
 RSpec.describe Spree::Address, type: :model do
   subject { described_class }
 
+  before do
+    allow(Spree::Deprecation).to receive(:warn).with(/firstname|lastname|full_name/, any_args)
+  end
+
   context 'name syncs with firstname and lastname' do
     let(:address) { described_class.new(firstname: 'Ryan', lastname: 'Bigg') }
 
@@ -467,5 +471,27 @@ RSpec.describe Spree::Address, type: :model do
     subject { described_class.new }
 
     it { is_expected.to be_require_phone }
+  end
+
+  context 'deprecations' do
+    let(:address) { described_class.new }
+
+    specify 'firstname is deprecated' do
+      expect(Spree::Deprecation).to receive(:warn).with(/firstname/, any_args)
+
+      address.firstname
+    end
+
+    specify 'lastname is deprecated' do
+      expect(Spree::Deprecation).to receive(:warn).with(/lastname/, any_args)
+
+      address.lastname
+    end
+
+    specify 'full_name is deprecated' do
+      expect(Spree::Deprecation).to receive(:warn).with(/full_name/, any_args)
+
+      address.full_name
+    end
   end
 end

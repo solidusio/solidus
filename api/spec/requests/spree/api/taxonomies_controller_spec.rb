@@ -60,8 +60,12 @@ module Spree
       end
 
       it "gets the jstree-friendly version of a taxonomy" do
-        expect(Spree::Deprecation).to(receive(:warn))
+        allow(Spree::Deprecation).to receive(:warn)
+        expect(Spree::Deprecation).to receive(:warn)
+          .with(%r{/api/taxonomies/:taxonomy_id/jstree}, any_args)
+
         get spree.jstree_api_taxonomy_path(taxonomy.id)
+
         expect(json_response["data"]).to eq(taxonomy.root.name)
         expect(json_response["attr"]).to eq({ "id" => taxonomy.root.id, "name" => taxonomy.root.name })
         expect(json_response["state"]).to eq("closed")

@@ -82,7 +82,10 @@ RSpec.describe Spree::LineItem, type: :model do
       end
 
       it 'should display a deprecation warning' do
+        allow(Spree::Deprecation).to receive(:warn)
         expect(Spree::Deprecation).to receive(:warn)
+          .with(/Spree::LineItem#set_pricing_attributes/, any_args)
+
         Spree::LineItem.new(variant: variant, order: order)
       end
 

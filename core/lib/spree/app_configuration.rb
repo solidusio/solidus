@@ -116,6 +116,10 @@ module Spree
     #   @return [String] ISO 4217 Three letter currency code
     preference :currency, :string, default: "USD"
 
+    # @!attribute [rw] customer_returns_per_page
+    #   @return [Integer] Customer returns to show per-page in the admin (default: +15+)
+    preference :customer_returns_per_page, :integer, default: 15
+
     # @!attribute [rw] default_country_id
     #   @deprecated Use the default country ISO preference instead
     #   @return [Integer,nil] id of {Spree::Country} to be selected by default in dropdowns (default: nil)
@@ -145,6 +149,10 @@ module Spree
     #   @return [String] URL of logo used on frontend (default: +'logo/solidus.svg'+)
     preference :logo, :string, default: 'logo/solidus.svg'
 
+    # @!attribute [rw] max_level_in_taxons_menu
+    #   @return [Integer] maximum nesting level in taxons menu (default: +1+)
+    preference :max_level_in_taxons_menu, :integer, default: 1
+
     # @!attribute [rw] order_bill_address_used
     #   @return [Boolean] Use the order's bill address, as opposed to storing
     #   bill addresses on payment sources. (default: +true+)
@@ -153,10 +161,6 @@ module Spree
     # @!attribute [rw] order_capturing_time_window
     #   @return [Integer] the number of days to look back for fully-shipped/cancelled orders in order to charge for them
     preference :order_capturing_time_window, :integer, default: 14
-
-    # @!attribute [rw] max_level_in_taxons_menu
-    #   @return [Integer] maximum nesting level in taxons menu (default: +1+)
-    preference :max_level_in_taxons_menu, :integer, default: 1
 
     # @!attribute [rw] order_mutex_max_age
     #   @return [Integer] Max age of {Spree::OrderMutex} in seconds (default: 2 minutes)
@@ -177,10 +181,6 @@ module Spree
     # @!attribute [rw] promotions_per_page
     #   @return [Integer] Promotions to show per-page in the admin (default: +15+)
     preference :promotions_per_page, :integer, default: 15
-
-    # @!attribute [rw] customer_returns_per_page
-    #   @return [Integer] Customer returns to show per-page in the admin (default: +15+)
-    preference :customer_returns_per_page, :integer, default: 15
 
     # @!attribute [rw] require_master_price
     #   @return [Boolean] Require a price on the master variant of a product (default: +true+)
@@ -203,6 +203,11 @@ module Spree
     # @!attribute [rw] shipping_instructions
     #   @return [Boolean] Request instructions/info for shipping (default: +false+)
     preference :shipping_instructions, :boolean, default: false
+
+    # @!attribute [rw] show_address_deprecated_attributes
+    #   @return [Boolean] Show Spree::Address deprecated attributes in HTML views and
+    #   API responses. (default: +true+)
+    preference :show_address_deprecated_attributes, :boolean, default: true
 
     # @!attribute [rw] show_only_complete_orders_by_default
     #   @return [Boolean] Only show completed orders by default in the admin (default: +true+)

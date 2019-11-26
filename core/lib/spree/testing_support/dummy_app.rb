@@ -108,6 +108,7 @@ end
 Spree.user_class = 'Spree::LegacyUser'
 Spree.config do |config|
   config.mails_from = "store@example.com"
+  config.show_address_deprecated_attributes = false
 end
 
 # Raise on deprecation warnings
