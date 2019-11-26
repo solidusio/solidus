@@ -36,7 +36,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'friendly_id', '~> 5.0'
   s.add_dependency 'kaminari-activerecord', '~> 1.1'
   s.add_dependency 'monetize', '~> 1.8'
-  s.add_dependency 'paperclip', ['>= 4.2', '< 6']
+  s.add_dependency 'paperclip', '>= 4.2'
   s.add_dependency 'paranoia', '~> 2.4'
   s.add_dependency 'ransack', '~> 2.0'
   s.add_dependency 'state_machines-activerecord', '~> 0.6'
