@@ -474,6 +474,12 @@ module Spree
       @events_configuration ||= Spree::Event::Configuration.new
     end
 
+    def user_last_url_storer_rules
+      @user_last_url_storer_rules ||= ::Spree::Core::ClassConstantizer::Set.new.tap do |set|
+        set << 'Spree::UserLastUrlStorer::Rules::AuthenticationRule'
+      end
+    end
+
     def environment
       @environment ||= Spree::Core::Environment.new(self).tap do |env|
         env.calculators.promotion_actions_create_adjustments = %w[
