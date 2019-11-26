@@ -25,7 +25,7 @@ module Spree
       variants_including_master.discard_all
       self.product_option_types = []
       self.product_properties = []
-      self.classifications = []
+      self.classifications.destroy_all
       self.product_promotion_rules = []
     end
 

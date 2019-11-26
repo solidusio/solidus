@@ -44,6 +44,18 @@ module Spree
       end
     end
 
+    context "Discard'ing a product" do
+      before :each do
+        element = taxon_with_5_products.products[1]
+        expect(element.classifications.first.position).to eq(2)
+        element.discard
+      end
+
+      it "resets positions" do
+        expect positions_to_be_valid(taxon_with_5_products)
+      end
+    end
+
     context "replacing taxon's products" do
       before :each do
         products = taxon_with_5_products.products.to_a
