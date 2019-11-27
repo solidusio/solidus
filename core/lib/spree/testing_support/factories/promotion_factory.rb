@@ -27,7 +27,14 @@ FactoryBot.define do
         Spree::Promotion::Actions::CreateItemAdjustments.create!(calculator: calculator, promotion: promotion)
       end
     end
+
     factory :promotion_with_item_adjustment, traits: [:with_line_item_adjustment]
+
+    trait :with_free_shipping do
+      after(:create) do |promotion|
+        Spree::Promotion::Actions::FreeShipping.create!(promotion: promotion)
+      end
+    end
 
     trait :with_order_adjustment do
       transient do

@@ -126,9 +126,12 @@ module Spree
     # called anytime order.recalculate happens
     def eligible?(promotable, promotion_code: nil)
       return false if inactive?
-      return false if usage_limit_exceeded?
-      return false if promotion_code && promotion_code.usage_limit_exceeded?
       return false if blacklisted?(promotable)
+
+      excluded_orders = eligibility_excluded_orders(promotable)
+      return false if usage_limit_exceeded?(excluded_orders: excluded_orders)
+      return false if promotion_code&.usage_limit_exceeded?(excluded_orders: excluded_orders)
+
       !!eligible_rules(promotable, {})
     end
 
@@ -138,6 +141,7 @@ module Spree
     def eligible_rules(promotable, options = {})
       # Promotions without rules are eligible by default.
       return [] if rules.none?
+
       eligible = lambda { |rule| rule.eligible?(promotable, options) }
       specific_rules = rules.for(promotable)
       return [] if specific_rules.none?
@@ -165,23 +169,23 @@ module Spree
 
     # Whether the promotion has exceeded it's usage restrictions.
     #
+    # @param excluded_orders [Array<Spree::Order>] Orders to exclude from usage limit
     # @return true or false
-    def usage_limit_exceeded?
+    def usage_limit_exceeded?(excluded_orders: [])
       if usage_limit
-        usage_count >= usage_limit
+        usage_count(excluded_orders: excluded_orders) >= usage_limit
       end
     end
 
     # Number of times the code has been used overall
     #
+    # @param excluded_orders [Array<Spree::Order>] Orders to exclude from usage count
     # @return [Integer] usage count
-    def usage_count
-      Spree::Adjustment.eligible.
-        promotion.
-        where(source_id: actions.map(&:id)).
-        joins(:order).
-        merge(Spree::Order.complete).
-        distinct.
+    def usage_count(excluded_orders: [])
+      Spree::Adjustment.promotion.
+        eligible.
+        in_completed_orders(excluded_orders: excluded_orders).
+        where(source_id: actions).
         count(:order_id)
     end
 
@@ -255,8 +259,19 @@ module Spree
 
     def apply_automatically_disallowed_with_codes_or_paths
       return unless apply_automatically
+
       errors.add(:apply_automatically, :disallowed_with_code) if codes.any?
       errors.add(:apply_automatically, :disallowed_with_path) if path.present?
+    end
+
+    def eligibility_excluded_orders(promotable)
+      if promotable.is_a?(Spree::Order)
+        [promotable]
+      elsif promotable.respond_to?(:order)
+        [promotable.order]
+      else
+        []
+      end
     end
   end
 end
