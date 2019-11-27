@@ -920,7 +920,7 @@ es:
           use_product_tax_category: Usar Categoría de Impuestos del Producto
           pricing: Precio
           pricing_hint: Estos valores se informan en la página de detalle del producto y se pueden sobreescribir más abajo
-    admin_login: Ingreso de Administrador
+    admin_login: Ingreso de administrador
     administration: Administración
     agree_to_privacy_policy: Acepto la Política de Privacidad
     agree_to_terms_of_service: Acepto los Términos y Condiciones de Uso del Servicio
