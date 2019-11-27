@@ -1398,6 +1398,7 @@ es:
     manual_intervention_required: Se requiere intervención manual
     manage_variants: Gestionar Variantes
     master_price: Precio principal
+    master_sku: SKU principal
     master_variant: Variante principal
     match_choices:
       all: Todos
