@@ -2044,6 +2044,7 @@ es:
     variant_to_be_received: Variante a recibir
     variants: Variantes
     version: Versión
+    view_product: "Ver producto"
     void: Vacío
     weight: Peso
     what_is_a_cvv: ¿Qué es el código (CVV) de la tarjeta de crédito?
