@@ -892,6 +892,7 @@ es:
         taxonomies: Taxonomías
         taxons: Taxons
         users: Usuarios
+        zones: Zonas
       taxons:
         display_order: Mostrar Pedido
       user:
