@@ -1528,6 +1528,7 @@ en:
     log_entries: Log Entries
     logged_in_as: Logged in as
     logged_in_succesfully: Logged in successfully
+    logged_in_successfully: Logged in successfully
     logged_out: You have been logged out.
     login: Login
     login_as_existing: Login as Existing Customer
