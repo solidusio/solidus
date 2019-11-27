@@ -1413,6 +1413,7 @@ es:
     meta_title: Meta Title
     metadata: Metadata
     minimal_amount: Cantidad Mínima
+    modify_stock_count: Modificar Existencias
     month: Mes
     more: Más
     move_stock_between_locations: Mover Stock Entre Localizaciones
