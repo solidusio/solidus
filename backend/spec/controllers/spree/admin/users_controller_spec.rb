@@ -42,6 +42,7 @@ describe Spree::Admin::UsersController, type: :controller do
       end
 
       it "allows admins to update a user's API key" do
+        expect(Spree::Deprecation).to receive(:warn)
         expect {
           put :generate_api_key, params: { id: user.id }
         }.to change { user.reload.spree_api_key }
@@ -49,6 +50,7 @@ describe Spree::Admin::UsersController, type: :controller do
       end
 
       it "allows admins to clear a user's API key" do
+        expect(Spree::Deprecation).to receive(:warn)
         user.generate_spree_api_key!
         expect {
           put :clear_api_key, params: { id: user.id }

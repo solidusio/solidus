@@ -82,6 +82,16 @@ module Spree
       end
 
       def generate_api_key
+        Spree::Deprecation.warn <<-WARN.strip_heredoc, caller
+          The route or controller action you are using is deprecated.
+
+          Instead of:
+          generate_api_key_admin_user PUT    /admin/users/:id/generate_api_key
+
+          Please use:
+          admin_user_api_key          POST   /admin/users/:user_id/api_key
+        WARN
+
         if @user.generate_spree_api_key!
           flash[:success] = t('spree.admin.api.key_generated')
         end
@@ -89,6 +99,16 @@ module Spree
       end
 
       def clear_api_key
+        Spree::Deprecation.warn <<-WARN.strip_heredoc, caller
+          The route or controller action you are using is deprecated.
+
+          Instead of:
+          clear_api_key_admin_user PUT    /admin/users/:id/clear_api_key
+
+          Please use:
+          admin_user_api_key       DELETE /admin/users/:user_id/api_key
+        WARN
+
         if @user.clear_spree_api_key!
           flash[:success] = t('spree.admin.api.key_cleared')
         end
