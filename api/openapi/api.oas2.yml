@@ -5050,6 +5050,8 @@ definitions:
         type: integer
       country_iso:
         type: string
+      name:
+        type: string
       firstname:
         type: string
       full_name:
@@ -5588,6 +5590,8 @@ definitions:
     properties:
       id:
         type: integer
+      name:
+        type: string
       firstname:
         type: string
       lastname:

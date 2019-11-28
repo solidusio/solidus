@@ -121,11 +121,18 @@ module Spree
         :id, :number, :state, :order_id, :memo, :created_at, :updated_at
       ]
 
-      @@address_attributes = [
-        :id, :firstname, :lastname, :full_name, :address1, :address2, :city,
-        :zipcode, :phone, :company, :alternative_phone, :country_id, :country_iso,
-        :state_id, :state_name, :state_text
+      @@full_address_attributes = [
+        :id, :name, :firstname, :lastname, :full_name, :address1, :address2,
+        :city, :zipcode, :phone, :company, :alternative_phone, :country_id,
+        :country_iso, :state_id, :state_name, :state_text
       ]
+
+      @@address_attributes = if Spree::Config[:show_address_deprecated_attributes]
+                               @@full_address_attributes
+                             else
+                               @@full_address_attributes -
+                                 Spree::Address::DEPRECATED_ATTRS.map(&:to_sym)
+                             end
 
       @@country_attributes = [:id, :iso_name, :iso, :iso3, :name, :numcode]
 

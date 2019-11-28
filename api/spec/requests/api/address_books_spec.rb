@@ -7,8 +7,7 @@ module Spree
     let!(:state) { create(:state) }
     let!(:harry_address_attributes) do
       {
-        'firstname' => 'Harry',
-        'lastname' => 'Potter',
+        'name' => 'Harry lastname',
         'address1' => '4 Privet Drive',
         'address2' => 'cupboard under the stairs',
         'city' => 'Surrey',
@@ -21,8 +20,7 @@ module Spree
 
     let!(:ron_address_attributes) do
       {
-        'firstname' => 'Ron',
-        'lastname' => 'Weasly',
+        'name' => 'Ron Weasly',
         'address1' => 'Ottery St. Catchpole',
         'address2' => '4th floor',
         'city' => 'Devon, West Country',
@@ -41,26 +39,26 @@ module Spree
           user.save_in_address_book(ron_address_attributes, false)
 
           get "/api/users/#{user.id}/address_book",
-            headers: { Authorization: 'Bearer galleon' }
+              headers: { Authorization: 'Bearer galleon' }
 
           json_response = JSON.parse(response.body)
           expect(response.status).to eq(200)
           expect(json_response.length).to eq(2)
           expect(json_response).to include(
             hash_including(harry_address_attributes.merge!('default' => true)),
-              hash_including(ron_address_attributes.merge!('default' => false))
+            hash_including(ron_address_attributes.merge!('default' => false))
             )
         end
 
         it 'updates my address book' do
           user = create(:user, spree_api_key: 'galleon')
           address = user.save_in_address_book(harry_address_attributes, true)
-          harry_address_attributes['firstname'] = 'Ron'
+          harry_address_attributes['name'] = 'Ron Weasly'
 
           expect {
             put "/api/users/#{user.id}/address_book",
-              params:  { address_book: harry_address_attributes.merge('id' => address.id) },
-              headers: { Authorization: 'Bearer galleon' }
+                params:  { address_book: harry_address_attributes.merge('id' => address.id) },
+                headers: { Authorization: 'Bearer galleon' }
           }.to change { UserAddress.count }.from(1).to(2)
 
           expect(response.status).to eq(200)
@@ -73,8 +71,8 @@ module Spree
 
             expect {
               put "/api/users/#{user.id}/address_book",
-                params:  { address_book: harry_address_attributes },
-                headers: { Authorization: 'Bearer galleon' }
+                  params:  { address_book: harry_address_attributes },
+                  headers: { Authorization: 'Bearer galleon' }
             }.to change { UserAddress.count }.by(1)
 
             user_address = UserAddress.last
@@ -92,8 +90,8 @@ module Spree
 
             expect {
               put "/api/users/#{user.id}/address_book",
-                params:  { address_book: harry_address_attributes },
-                headers: { Authorization: 'Bearer galleon' }
+                  params:  { address_book: harry_address_attributes },
+                  headers: { Authorization: 'Bearer galleon' }
             }.to_not change { UserAddress.count }
 
             expect(response.status).to eq(200)
@@ -109,8 +107,8 @@ module Spree
 
           expect {
             delete "/api/users/#{user.id}/address_book",
-              params:  { address_id: address.id },
-              headers: { Authorization: 'Bearer galleon' }
+                   params:  { address_id: address.id },
+                   headers: { Authorization: 'Bearer galleon' }
           }.to change { user.reload.user_addresses.count }.from(1).to(0)
 
           expect(response.status).to eq(200)
@@ -131,26 +129,26 @@ module Spree
           other_user.save_in_address_book(ron_address_attributes, false)
 
           get "/api/users/#{other_user.id}/address_book",
-            headers: { Authorization: 'Bearer galleon' }
+              headers: { Authorization: 'Bearer galleon' }
 
           json_response = JSON.parse(response.body)
           expect(response.status).to eq(200)
           expect(json_response.length).to eq(2)
           expect(json_response).to include(
             hash_including(harry_address_attributes.merge!('default' => true)),
-              hash_including(ron_address_attributes.merge!('default' => false))
+            hash_including(ron_address_attributes.merge!('default' => false))
             )
         end
 
         it "updates another user's address" do
           other_user = create(:user)
           address = other_user.save_in_address_book(harry_address_attributes, true)
-          updated_harry_address = harry_address_attributes.merge('firstname' => 'Ron')
+          updated_harry_address = harry_address_attributes.merge('name' => 'Ron Weasly')
 
           expect {
             put "/api/users/#{other_user.id}/address_book",
-            params:  { address_book: updated_harry_address.merge('id' => address.id) },
-            headers: { Authorization: 'Bearer galleon' }
+                params:  { address_book: updated_harry_address.merge('id' => address.id) },
+                headers: { Authorization: 'Bearer galleon' }
           }.to change { UserAddress.count }.from(1).to(2)
 
           expect(response.status).to eq(200)
@@ -164,8 +162,8 @@ module Spree
 
           expect {
             delete "/api/users/#{other_user.id}/address_book",
-              params:  { address_id: address.id },
-              headers: { Authorization: 'Bearer galleon' }
+                   params:  { address_id: address.id },
+                   headers: { Authorization: 'Bearer galleon' }
           }.to change { other_user.reload.user_addresses.count }.from(1).to(0)
 
           expect(response.status).to eq(200)
@@ -179,7 +177,7 @@ module Spree
           other_user.save_in_address_book(harry_address_attributes, true)
 
           get "/api/users/#{other_user.id}/address_book",
-            headers: { Authorization: 'Bearer galleon' }
+              headers: { Authorization: 'Bearer galleon' }
 
           expect(response.status).to eq(401)
         end
@@ -192,8 +190,8 @@ module Spree
 
           expect {
             put "/api/users/#{other_user.id}/address_book",
-            params:  { address_book: other_user_address.attributes.merge('address1' => 'Hogwarts') },
-            headers: { Authorization: 'Bearer galleon' }
+                params:  { address_book: other_user_address.attributes.merge('address1' => 'Hogwarts') },
+                headers: { Authorization: 'Bearer galleon' }
           }.not_to change { UserAddress.count }
 
           expect(response.status).to eq(401)
@@ -207,8 +205,8 @@ module Spree
 
           expect {
             delete "/api/users/#{other_user.id}/address_book",
-              params:  { address_id: address.id },
-              headers: { Authorization: 'Bearer galleon' }
+                   params:  { address_id: address.id },
+                   headers: { Authorization: 'Bearer galleon' }
           }.not_to change { other_user.user_addresses.count }
 
           expect(response.status).to eq(401)

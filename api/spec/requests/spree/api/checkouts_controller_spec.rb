@@ -75,8 +75,7 @@ module Spree
 
         let(:address) do
           {
-            firstname:  'John',
-            lastname:   'Doe',
+            name:  'John Doe',
             address1:   '7735 Old Georgetown Road',
             city:       'Bethesda',
             phone:      '3014445002',
@@ -88,13 +87,16 @@ module Spree
 
         it "can update addresses and transition from address to delivery" do
           put spree.api_checkout_path(order),
-              params: { order_token: order.guest_token, order: {
-                bill_address_attributes: address,
-                ship_address_attributes: address
-              } }
+              params: {
+            order_token: order.guest_token,
+            order: {
+              bill_address_attributes: address,
+              ship_address_attributes: address
+            }
+          }
           expect(json_response['state']).to eq('delivery')
-          expect(json_response['bill_address']['firstname']).to eq('John')
-          expect(json_response['ship_address']['firstname']).to eq('John')
+          expect(json_response['bill_address']['name']).to eq('John Doe')
+          expect(json_response['ship_address']['name']).to eq('John Doe')
           expect(response.status).to eq(200)
         end
 
@@ -102,10 +104,13 @@ module Spree
         it "can update addresses but not transition to delivery w/o shipping setup" do
           Spree::ShippingMethod.all.each(&:really_destroy!)
           put spree.api_checkout_path(order),
-              params: { order_token: order.guest_token, order: {
-                bill_address_attributes: address,
-                ship_address_attributes: address
-              } }
+              params: {
+            order_token: order.guest_token,
+            order: {
+              bill_address_attributes: address,
+              ship_address_attributes: address
+            }
+          }
           expect(json_response['error']).to eq(I18n.t(:could_not_transition, scope: "spree.api.order"))
           expect(response.status).to eq(422)
         end
@@ -113,10 +118,13 @@ module Spree
         # Regression test for https://github.com/spree/spree/issues/4498
         it "does not contain duplicate variant data in delivery return" do
           put spree.api_checkout_path(order),
-              params: { order_token: order.guest_token, order: {
-                bill_address_attributes: address,
-                ship_address_attributes: address
-              } }
+              params: {
+            order_token: order.guest_token,
+            order: {
+              bill_address_attributes: address,
+              ship_address_attributes: address
+            }
+          }
           # Shipments manifests should not return the ENTIRE variant
           # This information is already present within the order's line items
           expect(json_response['shipments'].first['manifest'].first['variant']).to be_nil

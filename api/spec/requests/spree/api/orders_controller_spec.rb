@@ -476,14 +476,14 @@ module Spree
 
       let(:address_params) { { country_id: country.id } }
       let(:billing_address) {
-        { firstname: "Tiago", lastname: "Motta", address1: "Av Paulista",
-                                city: "Sao Paulo", zipcode: "01310-300", phone: "12345678",
-                                country_id: country.id }
+        { name: "Tiago Motta", address1: "Av Paulista",
+          city: "Sao Paulo", zipcode: "01310-300", phone: "12345678",
+          country_id: country.id }
       }
       let(:shipping_address) {
-        { firstname: "Tiago", lastname: "Motta", address1: "Av Paulista",
-                                 city: "Sao Paulo", zipcode: "01310-300", phone: "12345678",
-                                 country_id: country.id }
+        { name: "Tiago Motta", address1: "Av Paulista",
+          city: "Sao Paulo", zipcode: "01310-300", phone: "12345678",
+          country_id: country.id }
       }
       let(:country) { create(:country, { name: "Brazil", iso_name: "BRAZIL", iso: "BR", iso3: "BRA", numcode: 76 }) }
 
@@ -556,7 +556,6 @@ module Spree
 
       it "receives error message if trying to add shipping address with errors" do
         order.update!(ship_address_id: nil)
-
         shipping_address[:city] = ""
 
         put spree.api_order_path(order), params: { order: { ship_address_attributes: shipping_address } }
