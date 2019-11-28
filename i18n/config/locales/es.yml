@@ -871,7 +871,7 @@ es:
         areas: Ubicaciones
         checkout: Reembolsos y Devoluciones
         configuration: Configuración
-        display_order: Mostrar Pedido
+        display_order: Orden de presentación
         option_types: Tipos de Opción
         orders: Pedidos
         overview: Resumen
@@ -894,7 +894,7 @@ es:
         users: Usuarios
         zones: Zonas
       taxons:
-        display_order: "Orden de presentación"
+        display_order: Orden de presentación
       user:
         account: Cuenta
         addresses: Direcciones
