@@ -189,15 +189,19 @@ config.assets.debug = false
 
 To gain some extra speed you may enable Turbolinks inside of Solidus admin.
 
-Add `gem 'turbolinks', '~> 5.0.0'` into your `Gemfile` (if not already present) and append these lines to `vendor/assets/spree/backend/all.js`:
+Add `gem 'turbolinks', '~> 5.0.0'` into your `Gemfile` (if not already present)
+and change `vendor/assets/javascripts/spree/backend/all.js` as follows:
 
 ```js
 //= require turbolinks
-//= require backend/app/assets/javascripts/spree/backend/turbolinks-integration.js
+//
+// ... current file content
+//
+//= require spree/backend/turbolinks-integration.js
 ```
 
-**CAUTION** Please be aware that Turbolinks can break extensions and/or customizations to the Solidus admin.
-Use at own risk.
+**CAUTION** Please be aware that Turbolinks can break extensions
+and/or customizations to the Solidus admin. Use at your own risk.
 
 ## Developing Solidus
 
