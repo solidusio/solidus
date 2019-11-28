@@ -894,7 +894,7 @@ es:
         users: Usuarios
         zones: Zonas
       taxons:
-        display_order: Mostrar Pedido
+        display_order: "Orden de presentación"
       user:
         account: Cuenta
         addresses: Direcciones
