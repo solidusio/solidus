@@ -1,5 +1,9 @@
-<%= form.hidden_field :firstname %>
-<%= form.hidden_field :lastname %>
+<% if Spree::Config[:show_address_deprecated_attributes] %>
+  <%= form.hidden_field :firstname %>
+  <%= form.hidden_field :lastname %>
+<% else %>
+  <%= form.hidden_field :name %>
+<% end %>
 <%= form.hidden_field :company %>
 <%= form.hidden_field :address1 %>
 <%= form.hidden_field :address2 %>

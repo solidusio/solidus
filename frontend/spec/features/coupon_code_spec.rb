@@ -42,8 +42,7 @@ describe "Coupon code promotions", type: :feature, js: true do
           click_button "add-to-cart-button"
           click_button "Checkout"
           fill_in "order_email", with: "spree@example.com"
-          fill_in "First Name", with: "John"
-          fill_in "Last Name", with: "Smith"
+          fill_in "Name", with: "John Smith"
           fill_in "Street Address", with: "1 John Street"
           fill_in "City", with: "City of John"
           fill_in "Zip", with: "01337"
@@ -167,8 +166,8 @@ describe "Coupon code promotions", type: :feature, js: true do
       end
 
       it "informs the user if the coupon is expired" do
-        promotion.expires_at = Date.today.beginning_of_week
-        promotion.starts_at = Date.today.beginning_of_week.advance(day: 3)
+        promotion.expires_at = Time.zone.today.beginning_of_week
+        promotion.starts_at = Time.zone.today.beginning_of_week.advance(day: 3)
         promotion.save!
         fill_in "coupon_code", with: "onetwo"
         click_button "Apply Code"
