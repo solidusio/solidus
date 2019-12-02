@@ -367,12 +367,11 @@ describe "New Order", type: :feature do
   end
 
   def fill_in_address
-    fill_in "First Name",                with: "John 99"
-    fill_in "Last Name",                 with: "Doe"
-    fill_in "Street Address",            with: "100 first lane"
-    fill_in "Street Address (cont'd)",   with: "#101"
-    fill_in "City",                      with: "Bethesda"
-    fill_in "Zip Code",                  with: "20170"
+    fill_in "Name", with: "John 99 Doe"
+    fill_in "Street Address", with: "100 first lane"
+    fill_in "Street Address (cont'd)", with: "#101"
+    fill_in "City", with: "Bethesda"
+    fill_in "Zip Code", with: "20170"
     select state.name, from: "State"
     fill_in "Phone", with: "123-456-7890"
   end

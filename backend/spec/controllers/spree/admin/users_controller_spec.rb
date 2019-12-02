@@ -8,8 +8,7 @@ describe Spree::Admin::UsersController, type: :controller do
   let(:state) { create(:state, state_code: 'NY') }
   let(:valid_address_attributes) do
     {
-      firstname: 'Foo',
-      lastname: 'Bar',
+      name: 'Foo Bar',
       city: "New York",
       country_id: state.country.id,
       state_id: state.id,

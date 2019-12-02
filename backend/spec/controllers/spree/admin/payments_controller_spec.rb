@@ -55,7 +55,7 @@ module Spree
 
             let(:address_attributes) do
               {
-                'firstname' => address.firstname,
+                'name' => address.name,
                 'address1' => address.address1,
                 'city' => address.city,
                 'country_id' => address.country_id,

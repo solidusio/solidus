@@ -103,14 +103,13 @@ module Spree
 
       def collection
         return @collection if @collection
+
         if request.xhr? && params[:q].present?
           @collection = Spree.user_class.includes(:bill_address, :ship_address)
                             .where("#{Spree.user_class.table_name}.email #{LIKE} :search
-                                   OR (spree_addresses.firstname #{LIKE} :search AND spree_addresses.id = #{Spree.user_class.table_name}.bill_address_id)
-                                   OR (spree_addresses.lastname  #{LIKE} :search AND spree_addresses.id = #{Spree.user_class.table_name}.bill_address_id)
-                                   OR (spree_addresses.firstname #{LIKE} :search AND spree_addresses.id = #{Spree.user_class.table_name}.ship_address_id)
-                                   OR (spree_addresses.lastname  #{LIKE} :search AND spree_addresses.id = #{Spree.user_class.table_name}.ship_address_id)",
-                                  { search: "#{params[:q].strip}%" })
+                                   OR (spree_addresses.name #{LIKE} :search AND spree_addresses.id = #{Spree.user_class.table_name}.bill_address_id)
+                                   OR (spree_addresses.name #{LIKE} :search AND spree_addresses.id = #{Spree.user_class.table_name}.ship_address_id)",
+                                   { search: "#{params[:q].strip}%" })
                             .limit(params[:limit] || 100)
         else
           @search = Spree.user_class.ransack(params[:q])

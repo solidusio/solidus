@@ -36,9 +36,7 @@ describe "Customer Details", type: :feature, js: true do
 
     # Regression test for https://github.com/spree/spree/issues/3335 and https://github.com/spree/spree/issues/5317
     it "associates a user when not using guest checkout" do
-      # 5317 - Address prefills using user's default.
-      expect(page).to have_field('First Name', with: user.bill_address.firstname)
-      expect(page).to have_field('Last Name', with: user.bill_address.lastname)
+      expect(page).to have_field('Name', with: user.bill_address.name)
       expect(page).to have_field('Street Address', with: user.bill_address.address1)
       expect(page).to have_field("Street Address (cont'd)", with: user.bill_address.address2)
       expect(page).to have_field('City', with: user.bill_address.city)
@@ -171,13 +169,12 @@ describe "Customer Details", type: :feature, js: true do
       specify do
         click_link "Customer"
         # Need to fill in valid information so it passes validations
-        fill_in "order_ship_address_attributes_firstname",  with: "John 99"
-        fill_in "order_ship_address_attributes_lastname",   with: "Doe"
-        fill_in "order_ship_address_attributes_lastname",   with: "Company"
-        fill_in "order_ship_address_attributes_address1",   with: "100 first lane"
-        fill_in "order_ship_address_attributes_address2",   with: "#101"
-        fill_in "order_ship_address_attributes_city",       with: "Bethesda"
-        fill_in "order_ship_address_attributes_zipcode",    with: "20170"
+        fill_in "order_ship_address_attributes_name", with: "John 99 Doe"
+        fill_in "order_ship_address_attributes_company", with: "Company"
+        fill_in "order_ship_address_attributes_address1", with: "100 first lane"
+        fill_in "order_ship_address_attributes_address2", with: "#101"
+        fill_in "order_ship_address_attributes_city", with: "Bethesda"
+        fill_in "order_ship_address_attributes_zipcode", with: "20170"
 
         within("#shipping") do
           select 'Alabama', from: "State"
@@ -190,13 +187,12 @@ describe "Customer Details", type: :feature, js: true do
   end
 
   def fill_in_address
-    fill_in "First Name",              with: "John 99"
-    fill_in "Last Name",               with: "Doe"
-    fill_in "Company",                 with: "Company"
-    fill_in "Street Address",          with: "100 first lane"
+    fill_in "Name", with: "John 99 Doe"
+    fill_in "Company", with: "Company"
+    fill_in "Street Address", with: "100 first lane"
     fill_in "Street Address (cont'd)", with: "#101"
-    fill_in "City",                    with: "Bethesda"
-    fill_in "Zip Code",                with: "20170"
+    fill_in "City", with: "Bethesda"
+    fill_in "Zip Code", with: "20170"
     select 'Alabama', from: "State"
     fill_in "Phone", with: "123-456-7890"
   end

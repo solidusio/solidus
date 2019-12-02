@@ -2,7 +2,6 @@
 
 <% admin_breadcrumb(plural_resource_name(Spree::Order)) %>
 
-
 <% content_for :page_actions do %>
   <li>
     <%= link_to t('spree.new_order'), new_admin_order_url, id: 'admin_new_order', class: 'btn btn-primary' %>
@@ -65,14 +64,21 @@
             </div>
 
             <div class="col-12 col-xl-6">
-              <div class="field">
-                <%= label_tag :q_bill_address_firstname_start, t('spree.first_name_begins_with') %>
-                <%= f.text_field :bill_address_firstname_start, size: 25 %>
-              </div>
-              <div class="field">
-                <%= label_tag :q_bill_address_lastname_start, t('spree.last_name_begins_with') %>
-                <%= f.text_field :bill_address_lastname_start, size: 25%>
-              </div>
+              <% if Spree::Config[:show_address_deprecated_attributes] %>
+                <div class="field">
+                  <%= label_tag :q_bill_address_firstname_start, t('spree.first_name_begins_with') %>
+                  <%= f.text_field :bill_address_firstname_start, size: 25 %>
+                </div>
+                <div class="field">
+                  <%= label_tag :q_bill_address_lastname_start, t('spree.last_name_begins_with') %>
+                  <%= f.text_field :bill_address_lastname_start, size: 25 %>
+                </div>
+              <% else %>
+                <div class="field">
+                  <%= label_tag :q_bill_address_name_start, t('spree.name_begins_with') %>
+                  <%= f.text_field :bill_address_name_start, size: 25 %>
+                </div>
+              <% end %>
             </div>
 
             <div class="col-12 col-xl-6">
@@ -158,7 +164,7 @@
           </span>
         </td>
         <td>
-          <% if order.payment_state  %>
+          <% if order.payment_state %>
             <span class="pill pill-<%= order.payment_state %>">
               <%= t(order.payment_state, scope: 'spree.payment_states') %>
             </span>

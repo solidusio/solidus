@@ -4,7 +4,21 @@ json.array!(@users) do |user|
   json.id user.id
   json.email user.email
 
-  address_fields = [:firstname, :lastname, :address1, :address2, :city, :zipcode, :phone, :state_name, :state_id, :country_id, :company]
+  address_fields = [
+    :name,
+    :address1,
+    :address2,
+    :city,
+    :zipcode,
+    :phone,
+    :state_name,
+    :state_id,
+    :country_id,
+    :company
+  ]
+  if Spree::Config[:show_address_deprecated_attributes]
+    address_fields.push(:firstname, :lastname)
+  end
   json.ship_address do
     if user.ship_address
       json.(user.ship_address, *address_fields)
