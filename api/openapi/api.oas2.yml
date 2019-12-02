@@ -4353,12 +4353,7 @@ paths:
         - in: body
           name: body
           schema:
-            allOf:
-              - $ref: '#/definitions/line-item-input'
-              - type: object
-                properties:
-                  variant_id:
-                    type: integer
+            $ref: '#/definitions/line-item-input'
       security:
         - api-key: []
         - order-token: []
@@ -4420,12 +4415,7 @@ paths:
         - in: body
           name: body
           schema:
-            allOf:
-              - type: object
-                properties:
-                  variant_id:
-                    type: integer
-              - $ref: '#/definitions/line-item-input'
+            $ref: '#/definitions/line-item-input'
       security:
         - api-key: []
         - order-token: []
@@ -5638,8 +5628,16 @@ definitions:
     properties:
       quantity:
         type: integer
+        description: 'Passing `0`, the line item will be removed.'
       options:
         type: object
+        description: 'This field can be used to pass custom line item attributes. When used, it will force a new price calculation, unless `price` is one of the options.'
+      id:
+        type: integer
+        description: Required for existing line items only.
+      variant_id:
+        type: integer
+        description: Required for new line items only.
   option-type-input:
     type: object
     title: Option type input
