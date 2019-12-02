@@ -37,7 +37,7 @@ body{
 
 //Site header
 .site-header{
-  background-image: linear-gradient(to top, #716ff9, #3c76f0);
+  background: #3c76f0;
   transition: transform .3s ease-in-out;
 
   @include media-breakpoint-down(md){
