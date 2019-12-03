@@ -32,6 +32,16 @@ module Spree
       alias_method :ship_address, :default_address
     end
 
+    class_methods do
+      def by_name(name, limit: 100)
+        Spree.user_class.ransack(
+          m: 'or',
+          email_start: name,
+          addresses_name_start: name
+        ).result.limit(limit)
+      end
+    end
+
     def bill_address=(address)
       # stow a copy in our address book too
       address = save_in_address_book(address.attributes) if address
@@ -73,7 +83,7 @@ module Spree
           order.ship_address.attributes,
           Spree::Config.automatic_default_address
         )
-        self.ship_address_id = address.id if address && address.persisted?
+        self.ship_address_id = address.id if address&.persisted?
       end
 
       if order.bill_address
@@ -81,7 +91,7 @@ module Spree
           order.bill_address.attributes,
           order.ship_address.nil? && Spree::Config.automatic_default_address
         )
-        self.bill_address_id = address.id if address && address.persisted?
+        self.bill_address_id = address.id if address&.persisted?
       end
 
       save! # In case the ship_address_id or bill_address_id was set
@@ -93,7 +103,8 @@ module Spree
     # @param default set whether or not this address will show up from
     # #default_address or not
     def save_in_address_book(address_attributes, default = false)
-      return nil unless address_attributes.present?
+      return nil if address_attributes.blank?
+
       address_attributes = address_attributes.to_h.with_indifferent_access
 
       new_address = Spree::Address.factory(address_attributes)

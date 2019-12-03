@@ -354,5 +354,33 @@ module Spree
         expect(user.ship_address).to eq(address)
       end
     end
+
+    describe "search by name" do
+      it 'finds users by email' do
+        user = create(:user)
+
+        users = Spree.user_class.by_name(user.email)
+
+        expect(users).to contain_exactly(user)
+      end
+
+      it 'finds users by billing address name' do
+        address = create(:address, name: 'billing address name')
+        user = create(:user, bill_address: address)
+
+        users = Spree.user_class.by_name('billing')
+
+        expect(users).to contain_exactly(user)
+      end
+
+      it 'finds users by shipping address name' do
+        address = create(:address, name: 'shipping address name')
+        user = create(:user, ship_address: address)
+
+        users = Spree.user_class.by_name('shipping')
+
+        expect(users).to contain_exactly(user)
+      end
+    end
   end
 end

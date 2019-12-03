@@ -76,7 +76,7 @@ module Spree
           line_items: {
             variant: [:product, { option_values: :option_type }]
           }
-).ransack(params[:q].merge(user_id_eq: @user.id))
+        ).ransack(params[:q].merge(user_id_eq: @user.id))
 
         @orders = @search.result.page(params[:page]).per(Spree::Config[:admin_products_per_page])
       end
@@ -105,17 +105,11 @@ module Spree
         return @collection if @collection
 
         if request.xhr? && params[:q].present?
-          @collection = Spree.user_class.includes(:bill_address, :ship_address)
-                            .where("#{Spree.user_class.table_name}.email #{LIKE} :search
-                                   OR (spree_addresses.name #{LIKE} :search AND spree_addresses.id = #{Spree.user_class.table_name}.bill_address_id)
-                                   OR (spree_addresses.name #{LIKE} :search AND spree_addresses.id = #{Spree.user_class.table_name}.ship_address_id)",
-                                   { search: "#{params[:q].strip}%" })
-                            .limit(params[:limit] || 100)
+          @collection = Spree.user_class.by_name(params[:q])
         else
           @search = Spree.user_class.ransack(params[:q])
-          @collection = @search.result.includes(:spree_roles)
-          @collection = @collection.includes(:spree_orders)
-          @collection = @collection.page(params[:page]).per(Spree::Config[:admin_products_per_page])
+          @collection = @search.result.includes(:spree_roles, :spree_orders)
+            .page(params[:page]).per(Spree::Config[:admin_products_per_page])
         end
       end
 

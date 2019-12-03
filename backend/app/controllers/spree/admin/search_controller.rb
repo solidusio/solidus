@@ -6,18 +6,12 @@ module Spree
       respond_to :json
       layout false
 
-      # TODO: Clean this up by moving searching out to user_class_extensions
-      # And then JSON building with something like Active Model Serializers
       def users
         if params[:ids]
           # split here may be String#split or Array#split, so we must flatten the results
           @users = Spree.user_class.where(id: params[:ids].split(',').flatten)
         else
-          @users = Spree.user_class.ransack({
-            m: 'or',
-            email_start: params[:q],
-            addresses_name_start: params[:q]
-          }).result.limit(10)
+          @users = Spree.user_class.by_name(params[:q], limit: 10)
         end
       end
 
