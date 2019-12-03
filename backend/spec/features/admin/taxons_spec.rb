@@ -75,4 +75,16 @@ describe "Taxonomies and taxons", type: :feature do
       end
     end
   end
+
+  scenario "Removes attachments from taxon" do
+    taxon = create(:taxon)
+    taxon.update(icon: File.new(file_fixture('ror_ringer.jpeg')))
+
+    visit spree.edit_admin_taxonomy_taxon_path(taxon.taxonomy, taxon.id)
+    within('#taxon_icon_field') do
+      click_on 'Remove'
+    end
+
+    expect(page).to have_content("Icon has been successfully removed!")
+  end
 end
