@@ -439,7 +439,7 @@ module Spree
     end
 
     def build_vat_prices
-      VatPriceGenerator.new(self).run
+      Spree::Config.variant_vat_prices_generator_class.new(self).run
     end
 
     def set_position
