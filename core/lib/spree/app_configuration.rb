@@ -116,6 +116,13 @@ module Spree
     #   @return [String] ISO 4217 Three letter currency code
     preference :currency, :string, default: "USD"
 
+    # @!attribute [rw] raise_with_invalid_currency
+    #   Whether to raise an exception if trying to set a line item currency
+    #   different from the order currency. When false a validation error
+    #   is added to the instance instead.
+    #   @return [Boolean] (default: +true+)
+    preference :raise_with_invalid_currency, :boolean, default: true
+
     # @!attribute [rw] default_country_id
     #   @deprecated Use the default country ISO preference instead
     #   @return [Integer,nil] id of {Spree::Country} to be selected by default in dropdowns (default: nil)

@@ -33,6 +33,7 @@ module Spree
       greater_than: -1
     }
     validates :price, numericality: true
+    validate :price_match_order_currency
 
     after_save :update_inventory
 
@@ -42,7 +43,7 @@ module Spree
     delegate :name, :description, :sku, :should_track_inventory?, to: :variant
     delegate :currency, to: :order, allow_nil: true
 
-    attr_accessor :target_shipment
+    attr_accessor :target_shipment, :price_currency
 
     self.whitelisted_ransackable_associations = ['variant']
     self.whitelisted_ransackable_attributes = ['variant_id']
@@ -111,9 +112,10 @@ module Spree
     def money_price=(money)
       if !money
         self.price = nil
-      elsif money.currency.iso_code != currency
+      elsif money.currency.iso_code != currency && Spree::Config.raise_with_invalid_currency
         raise CurrencyMismatch, "Line item price currency must match order currency!"
       else
+        self.price_currency = money.currency.iso_code
         self.price = money.to_d
       end
     end
@@ -201,6 +203,12 @@ module Spree
 
     def destroy_inventory_units
       inventory_units.destroy_all
+    end
+
+    def price_match_order_currency
+      return if price_currency.blank? || price_currency == currency
+
+      errors.add(:price, "Line item price currency must match order currency!")
     end
   end
 end
