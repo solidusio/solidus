@@ -45,6 +45,16 @@ cd sandbox
 rails server
 ```
 
+If you need to create a Rails 5.2 application for your sandbox, for example
+if you are still using Ruby 2.4 which is not supported by Rails 6, you can
+use the `RAILS_VERSION` environment variable.
+
+```bash
+  export RAILS_VERSION='~> 5.2.0'
+  bundle install
+  bundle exec rake sandbox
+```
+
 [contributing]: https://github.com/solidusio/solidus/blob/master/CONTRIBUTING.md
 [solidus-auth-devise]: https://github.com/solidusio/solidus_auth_devise
 
