@@ -108,6 +108,7 @@ end
 Spree.user_class = 'Spree::LegacyUser'
 Spree.config do |config|
   config.mails_from = "store@example.com"
+  config.raise_with_invalid_currency = false
 end
 
 # Raise on deprecation warnings

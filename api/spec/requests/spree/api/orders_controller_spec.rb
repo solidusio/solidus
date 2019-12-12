@@ -110,9 +110,11 @@ module Spree
       end
 
       context 'when the line items have custom attributes' do
-        it "can create an order with line items that have custom permitted attributes", :pending do
+        it "can create an order with line items that have custom permitted attributes" do
           PermittedAttributes.line_item_attributes << { options: [:some_option] }
-          expect_any_instance_of(Spree::LineItem).to receive(:some_option=).once.with('4')
+          without_partial_double_verification do
+            expect_any_instance_of(Spree::LineItem).to receive(:some_option=).once.with('4')
+          end
           post spree.api_orders_path, params: { order: { line_items: { "0" => { variant_id: variant.to_param, quantity: 5, options: { some_option: 4 } } } } }
           expect(response.status).to eq(201)
           order = Order.last
@@ -419,23 +421,43 @@ module Spree
       expect(json_response['email']).to eq "guest@spreecommerce.com"
     end
 
-    # Regression test for https://github.com/spree/spree/issues/3404
-    it "can specify additional parameters for a line item" do
-      without_partial_double_verification do
-        expect_any_instance_of(Spree::LineItem).to receive(:special=).with("foo")
-      end
+    context "specifying additional parameters for a line items" do
+      # Regression test for https://github.com/spree/spree/issues/3404
+      it "is allowed on line item level" do
+        without_partial_double_verification do
+          expect_any_instance_of(Spree::LineItem).to receive(:special=).with("foo")
+        end
 
-      allow_any_instance_of(Spree::Api::OrdersController).to receive_messages(permitted_line_item_attributes: [:id, :variant_id, :quantity, :special])
-      post spree.api_orders_path, params: {
-        order: {
-          line_items: {
-            "0" => {
-              variant_id: variant.to_param, quantity: 5, special: "foo"
+        allow_any_instance_of(Spree::Api::OrdersController).to receive_messages(permitted_line_item_attributes: [:id, :variant_id, :quantity, :special])
+        post spree.api_orders_path, params: {
+          order: {
+            line_items: {
+              "0" => {
+                variant_id: variant.to_param, quantity: 5, special: "foo"
+              }
             }
           }
         }
-      }
-      expect(response.status).to eq(201)
+        expect(response.status).to eq(201)
+      end
+
+      it "is allowed using options parameter" do
+        without_partial_double_verification do
+          expect_any_instance_of(Spree::LineItem).to receive(:special=).with("foo")
+        end
+
+        allow_any_instance_of(Spree::Api::OrdersController).to receive_messages(permitted_line_item_attributes: [:id, :variant_id, :quantity, options: :special])
+        post spree.api_orders_path, params: {
+          order: {
+            line_items: {
+              "0" => {
+                variant_id: variant.to_param, quantity: 5, options: { special: "foo" }
+              }
+            }
+          }
+        }
+        expect(response.status).to eq(201)
+      end
     end
 
     it "cannot arbitrarily set the line items price" do
