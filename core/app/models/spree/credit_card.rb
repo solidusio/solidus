@@ -163,7 +163,7 @@ module Spree
     #   the object to ActiveMerchant.
     # @return [String] the first name on this credit card
     def first_name
-      name.to_s.split(/[[:space:]]/, 2)[0]
+      Spree::Address::Name.new(name).first_name
     end
 
     # @note ActiveMerchant needs first_name/last_name because we pass it a
@@ -172,7 +172,7 @@ module Spree
     #   the object to ActiveMerchant.
     # @return [String] the last name on this credit card
     def last_name
-      name.to_s.split(/[[:space:]]/, 2)[1]
+      Spree::Address::Name.new(name).last_name
     end
 
     # @return [ActiveMerchant::Billing::CreditCard] an ActiveMerchant credit
