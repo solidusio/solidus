@@ -3,12 +3,10 @@
 united_states = Spree::Country.find_by!(iso: "US")
 new_york = Spree::State.find_by!(name: "New York")
 
-first_names = ["Sterling", "Jennette", "Salome", "Lyla", "Lola", "Cheree",
-               "Hettie", "Barbie", "Amelia", "Marceline", "Keeley", "Mi",
-               "Karon", "Jessika", "Emmy"]
-last_names = ["Torp", "Vandervort", "Stroman", "Lang", "Zulauf", "Bruen",
-              "Torp", "Gutmann", "Renner", "Bergstrom", "Sauer", "Gaylord",
-              "Mills", "Daugherty", "Stark"]
+names = ["Sterling Torp", "Jennette Vandervort", "Salome Stroman", "Lyla Lang",
+         "Lola Zulauf", "Cheree Bruen", "Hettie Torp", "Barbie Gutmann",
+         "Amelia Renner", "Marceline Bergstrom", "Keeley Sauer", "Mi Gaylord",
+         "Karon Mills", "Jessika Daugherty", "Emmy Stark"]
 street_addresses = ["7377 Jacobi Passage", "4725 Serena Ridges",
                     "79832 Hamill Creek", "0746 Genoveva Villages",
                     "86717 D'Amore Hollow", "8529 Delena Well",
@@ -28,8 +26,7 @@ phone_numbers = ["(392)859-7319 x670", "738-831-3210 x6047",
 
 2.times do
   Spree::Address.create!(
-    firstname: first_names.sample,
-    lastname: last_names.sample,
+    name: names.sample,
     address1: street_addresses.sample,
     address2: secondary_addresses.sample,
     city: cities.sample,

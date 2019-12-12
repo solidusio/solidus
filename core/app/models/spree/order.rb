@@ -136,9 +136,10 @@ module Spree
       find_by! number: value
     end
 
-    delegate :firstname, :lastname, to: :bill_address, prefix: true, allow_nil: true
+    delegate :name, :firstname, :lastname, to: :bill_address, prefix: true, allow_nil: true
     alias_method :billing_firstname, :bill_address_firstname
     alias_method :billing_lastname, :bill_address_lastname
+    alias_method :billing_name, :bill_address_name
 
     class_attribute :update_hooks
     self.update_hooks = Set.new
@@ -398,7 +399,7 @@ module Spree
 
     def name
       if (address = bill_address || ship_address)
-        "#{address.firstname} #{address.lastname}"
+        address.name
       end
     end
 

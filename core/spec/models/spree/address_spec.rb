@@ -350,25 +350,29 @@ RSpec.describe Spree::Address, type: :model do
     end
   end
 
-  context '#full_name' do
-    context 'both first and last names are present' do
-      let(:address) { Spree::Address.new firstname: 'Michael', lastname: 'Jackson' }
-      specify { expect(address.full_name).to eq('Michael Jackson') }
+  context '#name' do
+    it 'concatenates firstname and lastname' do
+      address = Spree::Address.new(firstname: 'Michael J.', lastname: 'Jackson')
+
+      expect(address.name).to eq('Michael J. Jackson')
     end
 
-    context 'first name is blank' do
-      let(:address) { Spree::Address.new firstname: nil, lastname: 'Jackson' }
-      specify { expect(address.full_name).to eq('Jackson') }
+    it 'returns lastname when firstname is blank' do
+      address = Spree::Address.new(firstname: nil, lastname: 'Jackson')
+
+      expect(address.name).to eq('Jackson')
     end
 
-    context 'last name is blank' do
-      let(:address) { Spree::Address.new firstname: 'Michael', lastname: nil }
-      specify { expect(address.full_name).to eq('Michael') }
+    it 'returns firstanme when lastname is blank' do
+      address = Spree::Address.new(firstname: 'Michael J.', lastname: nil)
+
+      expect(address.name).to eq('Michael J.')
     end
 
-    context 'both first and last names are blank' do
-      let(:address) { Spree::Address.new firstname: nil, lastname: nil }
-      specify { expect(address.full_name).to eq('') }
+    it 'returns empty string when firstname and lastname are blank' do
+      address = Spree::Address.new(firstname: nil, lastname: nil)
+
+      expect(address.name).to eq('')
     end
   end
 

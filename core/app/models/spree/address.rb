@@ -20,6 +20,7 @@ module Spree
 
     alias_attribute :first_name, :firstname
     alias_attribute :last_name, :lastname
+    alias_attribute :full_name, :name
 
     DB_ONLY_ATTRS = %w(id updated_at created_at)
     TAXATION_ATTRS = %w(state_id country_id zipcode)
@@ -62,10 +63,13 @@ module Spree
     def self.value_attributes(base_attributes, merge_attributes = {})
       base = base_attributes.stringify_keys.merge(merge_attributes.stringify_keys)
 
-      # TODO: Deprecate these aliased attributes
-      base['firstname'] = base['first_name'] if base.key?('first_name')
-      base['lastname'] = base['last_name'] if base.key?('last_name')
-
+      name_from_attributes = Spree::Address::Name.from_attributes(base)
+      if base['firstname'].presence || base['first_name'].presence
+        base['firstname'] = name_from_attributes.first_name
+      end
+      if base['lastname'].presence || base['last_name'].presence
+        base['lastname'] = name_from_attributes.last_name
+      end
       excluded_attributes = DB_ONLY_ATTRS + %w(first_name last_name)
 
       base.except(*excluded_attributes)
@@ -80,18 +84,13 @@ module Spree
       self.class.value_attributes(attributes.slice(*TAXATION_ATTRS))
     end
 
-    # @return [String] the full name on this address
-    def full_name
-      "#{firstname} #{lastname}".strip
-    end
-
     # @return [String] a string representation of this state
     def state_text
       state.try(:abbr) || state.try(:name) || state_name
     end
 
     def to_s
-      "#{full_name}: #{address1}"
+      "#{name}: #{address1}"
     end
 
     # @note This compares the addresses based on only the fields that make up
@@ -130,7 +129,7 @@ module Spree
     # @return [Hash] an ActiveMerchant compatible address hash
     def active_merchant_hash
       {
-        name: full_name,
+        name: name,
         address1: address1,
         address2: address2,
         city: city,
@@ -170,6 +169,19 @@ module Spree
 
     def country_iso
       country && country.iso
+    end
+
+    # @return [String] the full name on this address
+    def name
+      Spree::Address::Name.new(firstname, lastname).value
+    end
+
+    def name=(value)
+      return if value.nil?
+
+      name_from_value = Spree::Address::Name.new(value)
+      write_attribute(:firstname, name_from_value.first_name)
+      write_attribute(:lastname, name_from_value.last_name)
     end
 
     private
