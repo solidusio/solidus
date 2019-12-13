@@ -249,6 +249,16 @@ data already loaded.
   DB=mysql bundle exec rake sandbox
   ```
 
+  If you need to create a Rails 5.2 application for your sandbox, for example
+  if you are still using Ruby 2.4 which is not supported by Rails 6, you can
+  use the `RAILS_VERSION` environment variable.
+
+  ```bash
+    export RAILS_VERSION='~> 5.2.0'
+    bundle install
+    bundle exec rake sandbox
+  ```
+
 * Start the server
 
   ```bash
