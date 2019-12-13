@@ -81,12 +81,16 @@ Solidus admin. First, add the `turbolinks` gem to your project's `Gemfile`:
 gem 'turbolinks', '~> 5.0.0'
 ```
 
-Then, enable Turbolinks in the backend by appending these lines to the
-JavaScript manifest at `vendor/assets/spree/backend/all/js`:
+Then, enable Turbolinks in the backend by changing the Backend
+JavaScript manifest at `vendor/assets/javascripts/spree/backend/all.js`
+as follow:
 
 ```js
 //= require turbolinks
-//= require backend/app/assets/javascripts/spree/backend/turbolinks-integration.js
+//
+// ... current file content
+//
+//= require spree/backend/turbolinks-integration.js
 ```
 
 Note that Turbolinks can break your custom Solidus extensions or other
