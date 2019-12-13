@@ -468,6 +468,7 @@ en:
           attributes:
             price:
               not_a_number: is not valid
+              does_not_match_order_currency: Line item price currency must match order currency!
         spree/price:
           attributes:
             currency:

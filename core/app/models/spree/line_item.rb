@@ -113,7 +113,8 @@ module Spree
       if !money
         self.price = nil
       elsif money.currency.iso_code != currency && Spree::Config.raise_with_invalid_currency
-        raise CurrencyMismatch, "Line item price currency must match order currency!"
+        line_item_errors = ActiveModel::Errors.new(self)
+        raise CurrencyMismatch, line_item_errors.generate_message(:price, :does_not_match_order_currency, locale: :en)
       else
         self.price_currency = money.currency.iso_code
         self.price = money.to_d
@@ -208,7 +209,7 @@ module Spree
     def price_match_order_currency
       return if price_currency.blank? || price_currency == currency
 
-      errors.add(:price, "Line item price currency must match order currency!")
+      errors.add(:price, :does_not_match_order_currency)
     end
   end
 end

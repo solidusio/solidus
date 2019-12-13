@@ -230,7 +230,10 @@ RSpec.describe Spree::LineItem, type: :model do
         it 'raises an exception' do
           expect {
             line_item.money_price = new_price
-          }.to raise_exception Spree::LineItem::CurrencyMismatch
+          }.to raise_exception(
+            Spree::LineItem::CurrencyMismatch,
+            'Line item price currency must match order currency!'
+          )
         end
       end
 
@@ -240,6 +243,8 @@ RSpec.describe Spree::LineItem, type: :model do
         it 'is not valid' do
           line_item.money_price = new_price
           expect(line_item).not_to be_valid
+          expect(line_item.errors[:price])
+            .to include 'Line item price currency must match order currency!'
         end
       end
     end
