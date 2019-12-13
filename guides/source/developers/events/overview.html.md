@@ -62,12 +62,12 @@ module Spree
     event_action :send_reimbursement_sms, event_name: :reimbursement_reimbursed
 
     def order_finalized(event)
-      order = event.payload[:order]
+      order = event.payload[:context]
       SmsLibrary.deliver(order, :finalized)
     end
 
     def send_reimbursement_sms(event)
-      reimbursement = event.payload[:reimbursement]
+      reimbursement = event.payload[:context]
       order = reimbursement.order
       SmsLibrary.deliver(order, :reimbursed)
     end
@@ -111,7 +111,7 @@ then both a hash of options (it will be available as the event payload)
 and an optional code block can be passed:
 
 ```ruby
-Spree::Event.fire 'order_finalized', order: @order do
+Spree::Event.fire 'order_finalized', context: @order do
   @order.finalize!
 end
 ```
@@ -121,7 +121,7 @@ without the block:
 
 ```ruby
 @order.finalize!
-Spree::Event.fire 'order_finalized', order: @order
+Spree::Event.fire 'order_finalized', context: @order
 ```
 
 For further information, please refer to the RDOC documentation included in
