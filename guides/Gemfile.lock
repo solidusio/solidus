@@ -22,7 +22,7 @@ GEM
     contracts (0.13.0)
     dotenv (2.4.0)
     erubis (2.7.0)
-    excon (0.62.0)
+    excon (0.71.0)
     execjs (2.7.0)
     fast_blank (1.0.0)
     fastimage (2.1.3)
