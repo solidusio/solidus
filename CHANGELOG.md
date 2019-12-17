@@ -332,7 +332,6 @@ should respond to `call`.
 
 - Fix Spree::Variant inconsistency due to lack of product association [#3043](https://github.com/solidusio/solidus/pull/3043) ([rubenochiavone](https://github.com/rubenochiavone))
 - Make seed file fully idempotent [#3033](https://github.com/solidusio/solidus/pull/3033) ([jontarg](https://github.com/jontarg))
-- Implement stock location sorters [#2783](https://github.com/solidusio/solidus/pull/2783) ([aldesantis](https://github.com/aldesantis))
 - Fix multiple Money deprecation warnings. Now using html_wrap option which causes each piece of the price to be wrapped in span tags with specific classes for easier styling, but this may break existing stores' custom styles.
 [#2912](https://github.com/solidusio/solidus/pull/2912) ([JDutil](https://github.com/JDutil))
 - Remove update_totals/persist_totals delegation [#3012](https://github.com/solidusio/solidus/pull/3012) ([jarednorman](https://github.com/jarednorman))
