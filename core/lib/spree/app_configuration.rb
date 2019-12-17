@@ -292,6 +292,14 @@ module Spree
 
     class_name_attribute :variant_search_class, default: 'Spree::Core::Search::Variant'
 
+    # Allows implementing custom vat prices generation
+    # @!attribute [rw] variant_vat_prices_generator_class
+    # @see Spree::Variant::VatPriceGenerator
+    # @return [Class] an object that conforms to the API of
+    #   the standard variant vat prices generator class
+    #   Spree::Variant::VatPriceGenerator.
+    class_name_attribute :variant_vat_prices_generator_class, default: 'Spree::Variant::VatPriceGenerator'
+
     # promotion_chooser_class allows extensions to provide their own PromotionChooser
     class_name_attribute :promotion_chooser_class, default: 'Spree::PromotionChooser'
 
