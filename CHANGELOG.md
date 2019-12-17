@@ -605,7 +605,6 @@ should respond to `call`.
 - Deprecate existing coupon codes methods [#2958](https://github.com/solidusio/solidus/pull/2958) ([aitbw](https://github.com/aitbw))
 - Fix deprecation warning for Spree::Shipment#reverse_chronological scope [#2921](https://github.com/solidusio/solidus/pull/2921) ([aitbw](https://github.com/aitbw))
 - Add deprecation warning for Spree.t [#2915](https://github.com/solidusio/solidus/pull/2915) ([JDutil](https://github.com/JDutil))
-- Fix money deprecation warning. [#2912](https://github.com/solidusio/solidus/pull/2912) ([JDutil](https://github.com/JDutil))
 
 ### Misc
 
