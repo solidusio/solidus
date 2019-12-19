@@ -44,13 +44,6 @@ activate :external_pipeline,
          source: ".tmp",
          latency: 1
 
-activate :s3_sync do |s3_sync|
-  s3_sync.bucket = ENV["AWS_BUCKET"]
-  s3_sync.region = ENV["AWS_REGION"]
-  s3_sync.aws_access_key_id = ENV["AWS_ACCESS"]
-  s3_sync.aws_secret_access_key = ENV["AWS_SECRET"]
-end
-
 default_caching_policy max_age: (60 * 60 * 24 * 365)
 caching_policy "text/html", max_age: 0, must_revalidate: true
 caching_policy "application/xml", max_age: 0, must_revalidate: true
