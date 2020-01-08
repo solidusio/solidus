@@ -22,6 +22,10 @@ module Spree
           end
         end
       end
+
+      def add_class(name)
+        singleton_class.send(:add_class_set, name)
+      end
     end
   end
 end
