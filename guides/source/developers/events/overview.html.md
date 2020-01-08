@@ -92,18 +92,6 @@ if defined?(SmsLibrary)
 end
 ```
 
-or just by adding thme to the list of default subscribers, using the
-`Spree::Config.events.subscribers` configuration:
-
-```ruby
-# config/initializers/spree.rb
-
-Spree::Config.events.subscribers << 'Spree::SmsSubscriber'
-```
-
-All the modules present in this array will be loaded while your application
-boots and the `subscribe!` method is automatically called on them.
-
 ## Firing events
 
 `Spree::Event.fire` allows you to fire an event. The event name is mandatory,
