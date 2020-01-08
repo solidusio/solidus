@@ -22,4 +22,13 @@ module Spree::Taxon::PaperclipAttachment
   def attachment_partial_name
     'paperclip'
   end
+
+  def destroy_attachment(definition)
+    return false unless respond_to?(definition)
+
+    attached_file = send(definition)
+    return false unless attached_file.exists?
+
+    attached_file.destroy
+  end
 end

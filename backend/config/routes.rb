@@ -128,7 +128,9 @@ Spree::Core::Engine.routes.draw do
       collection do
         post :update_positions
       end
-      resources :taxons
+      resources :taxons do
+        resource :attachment, controller: 'taxons/attachment', only: [:destroy]
+      end
     end
 
     resources :taxons, only: [:index, :show] do

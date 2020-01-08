@@ -2114,6 +2114,7 @@ en:
       (i.e. if the tax rate is 5% then enter 0.05)
     tax_rates: Tax Rates
     taxon: Taxon
+    taxon_attachment_removal_error: There was an error removing the attachment
     taxon_edit: Edit Taxon
     taxon_placeholder: Add a Taxon
     taxon_rule:
