@@ -87,6 +87,10 @@ module Solidus
       application <<-RUBY
     # Load application's model / class decorators
     initializer 'spree.decorators' do |app|
+      # Ensure decorated constants are unloaded before reloading decorators
+      config.to_prepare_blocks.unshift -> { ActiveSupport::Dependencies.clear }
+
+      # Load application's decorators
       config.to_prepare do
         app.root.glob('app/**/*_decorator*.rb') { |path| require_dependency(path.to_s)
       end

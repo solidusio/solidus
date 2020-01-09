@@ -4,8 +4,22 @@ Solidus autoloads any file in the `/app` directory that has the suffix
 `_decorator.rb`, just like any other Rails models or controllers. This allows
 you to [monkey patch][monkey-patch] Solidus functionality for your store.
 
+*Solidus install generator will add code such as this to `config/application.rb`*
+
+```ruby
+initializer 'spree.decorators' do |app|
+  # Ensure decorated constants are unloaded before reloading decorators
+  config.to_prepare_blocks.unshift -> { ActiveSupport::Dependencies.clear }
+
+  # Load application's decorators
+  config.to_prepare do
+    app.root.glob('app/**/*_decorator*.rb') { |path| require_dependency(path.to_s) }
+  end
+end
+```
+
 For example, if you want to add a method to the `Spree::Order` model, you could
-create `/app/models/mystore/order_decorator.rb` with the following contents:
+create `/app/models/my_store/order_decorator.rb` with the following contents:
 
 ```ruby
 module MyStore::OrderDecorator
