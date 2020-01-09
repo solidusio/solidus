@@ -88,18 +88,14 @@ module Solidus
     # Load application's model / class decorators
     initializer 'spree.decorators' do |app|
       config.to_prepare do
-        Dir.glob(Rails.root.join('app/**/*_decorator*.rb')) do |path|
-          require_dependency(path)
-        end
+        app.root.glob('app/**/*_decorator*.rb') { |path| require_dependency(path.to_s)
       end
     end
 
     # Load application's view overrides
     initializer 'spree.overrides' do |app|
       config.to_prepare do
-        Dir.glob(Rails.root.join('app/overrides/*.rb')) do |path|
-          require_dependency(path)
-        end
+        app.root.glob('app/overrides/*.rb') { |path| require_dependency(path.to_s) }
       end
     end
       RUBY
