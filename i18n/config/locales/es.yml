@@ -871,7 +871,7 @@ es:
         areas: Ubicaciones
         checkout: Reembolsos y Devoluciones
         configuration: Configuración
-        display_order: Mostrar Pedido
+        display_order: Orden de presentación
         option_types: Tipos de Opción
         orders: Pedidos
         overview: Resumen
@@ -892,8 +892,9 @@ es:
         taxonomies: Taxonomías
         taxons: Taxons
         users: Usuarios
+        zones: Zonas
       taxons:
-        display_order: Mostrar Pedido
+        display_order: Orden de presentación
       user:
         account: Cuenta
         addresses: Direcciones
@@ -919,6 +920,7 @@ es:
           use_product_tax_category: Usar Categoría de Impuestos del Producto
           pricing: Precio
           pricing_hint: Estos valores se informan en la página de detalle del producto y se pueden sobreescribir más abajo
+    admin_login: Ingreso de administrador
     administration: Administración
     agree_to_privacy_policy: Acepto la Política de Privacidad
     agree_to_terms_of_service: Acepto los Términos y Condiciones de Uso del Servicio
@@ -1256,6 +1258,7 @@ es:
     failure: Fallo
     filename: Nombre de fichero
     fill_in_customer_info: Por favor rellenar en información de Cliente
+    filter: Filtros
     filter_results: Filtrar Resultados
     finalize: Finalizar
     finalize_all_adjustments: Finalizar todos los Ajustes
@@ -1398,6 +1401,7 @@ es:
     manual_intervention_required: Se requiere intervención manual
     manage_variants: Gestionar Variantes
     master_price: Precio principal
+    master_sku: SKU principal
     master_variant: Variante principal
     match_choices:
       all: Todos
@@ -1410,6 +1414,7 @@ es:
     meta_title: Meta Title
     metadata: Metadata
     minimal_amount: Cantidad Mínima
+    modify_stock_count: Modificar Existencias
     month: Mes
     more: Más
     move_stock_between_locations: Mover Stock Entre Localizaciones
@@ -2044,6 +2049,7 @@ es:
     variant_to_be_received: Variante a recibir
     variants: Variantes
     version: Versión
+    view_product: Ver producto
     void: Vacío
     weight: Peso
     what_is_a_cvv: ¿Qué es el código (CVV) de la tarjeta de crédito?
