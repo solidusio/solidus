@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Spree
-  class PromotionCodeBatch < ActiveRecord::Base
+  class PromotionCodeBatch < Spree::Base
     class CantProcessStartedBatch < StandardError
     end
 
