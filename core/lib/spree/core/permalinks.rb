@@ -9,7 +9,7 @@ module Spree
         class_attribute :permalink_options
       end
 
-      module ClassMethods
+      class_methods do
         def make_permalink(options = {})
           options[:field] ||= :permalink
           self.permalink_options = options
