@@ -241,17 +241,19 @@ data already loaded.
 * Create the sandbox application
 
   ```bash
-  bundle exec rake sandbox
+  bin/sandbox
   ```
 
   You can create a sandbox with PostgreSQL or MySQL by setting the DB environment variable.
 
   ```bash
   # PostgreSQL
-  DB=postgresql bundle exec rake sandbox
+  export DB=postgresql
+  bin/sandbox
 
   # MySQL
-  DB=mysql bundle exec rake sandbox
+  export DB=mysql
+  bin/sandbox
   ```
 
   If you need to create a Rails 5.2 application for your sandbox, for example
@@ -260,15 +262,14 @@ data already loaded.
 
   ```bash
     export RAILS_VERSION='~> 5.2.0'
-    bundle install
-    bundle exec rake sandbox
+    bin/setup
+    bin/sandbox
   ```
 
-* Start the server
+* Start the server (`bin/rails` will forward any argument to the sandbox)
 
   ```bash
-  cd sandbox
-  rails server
+  bin/rails server
   ```
 
 ### Tests
