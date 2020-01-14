@@ -105,7 +105,6 @@ end
 
 desc "Creates a sandbox application for simulating the Solidus code in a deployed Rails app"
 task :sandbox do
-  Bundler.with_clean_env do
-    exec("lib/sandbox.sh")
-  end
+  warn "Using `rake sandbox` is deprecated, please use bin/sandbox directly instead."
+  sh("bin/sandbox")
 end
