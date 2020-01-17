@@ -16,6 +16,7 @@
 **A free, open-source ecommerce platform that gives you complete control over your store.**
 
 - **Visit our website**: [https://solidus.io/](https://solidus.io/)
+- **Read our Community Guidelines**: [https://solidus.io/community-guidelines/](https://solidus.io/community-guidelines/)
 - **Read our guides**: [https://guides.solidus.io/developers/](https://guides.solidus.io/developers/)
 - **Join our Slack**: [http://slack.solidus.io/](http://slack.solidus.io/)
 - **Solidus Security**: [mailing list](https://groups.google.com/forum/#!forum/solidus-security)
