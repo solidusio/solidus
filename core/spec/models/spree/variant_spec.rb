@@ -174,14 +174,7 @@ RSpec.describe Spree::Variant, type: :model do
       context "and a variant is really deleted" do
         let!(:old_option_values_variant_ids) { variant.option_values_variants.pluck(:id) }
 
-        before do
-          allow(Spree::Deprecation).to receive(:warn).
-            with(/^.*\.with_deleted has been deprecated/, any_args)
-
-          # #really_destroy! will be replaced here with #destroy when Paranoia
-          # will be removed in Solidus 3.0
-          variant.really_destroy!
-        end
+        before { variant.destroy }
 
         it "leaves no stale records behind" do
           expect(old_option_values_variant_ids).to be_present

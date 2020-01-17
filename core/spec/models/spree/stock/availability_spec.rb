@@ -53,7 +53,7 @@ module Spree::Stock
         end
 
         context 'with no stock_item' do
-          before { stock_item.really_destroy! }
+          before { stock_item.destroy! }
 
           it "returns empty hash" do
             expect(subject).to eq({})
@@ -133,7 +133,7 @@ module Spree::Stock
         end
 
         context 'with no stock_item' do
-          before { stock_item.really_destroy! }
+          before { stock_item.destroy }
 
           it { is_expected.to eq({}) }
         end
