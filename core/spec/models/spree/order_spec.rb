@@ -908,7 +908,7 @@ RSpec.describe Spree::Order, type: :model do
       end
 
       context "and has an invalid bill address associated " do
-        let(:bill_address) { build(:address, firstname: nil) } # invalid address
+        let(:bill_address) { build(:address, city: nil) } # invalid address
 
         it "does not associate any bill address" do
           expect { subject }.not_to change { order.bill_address }.from(nil)
@@ -930,7 +930,7 @@ RSpec.describe Spree::Order, type: :model do
       end
 
       context "and has an invalid ship address associated " do
-        let(:ship_address) { build(:address, firstname: nil) } # invalid address
+        let(:ship_address) { build(:address, city: nil) } # invalid address
 
         it "does not associate any ship address" do
           expect { subject }.not_to change { order.ship_address }.from(nil)

@@ -36,8 +36,7 @@ module Spree
       let(:ship_address) {
         {
          address1: '123 Testable Way',
-         firstname: 'Fox',
-         lastname: 'Mulder',
+         name: 'Fox Mulder',
          city: 'Washington',
          country_id: country.id,
          state_id: state.id,

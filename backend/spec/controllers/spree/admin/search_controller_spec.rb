@@ -33,6 +33,12 @@ describe Spree::Admin::SearchController, type: :controller do
         end
       end
 
+      context 'when searching by ship addresss name' do
+        it_should_behave_like 'user found by search' do
+          let(:user_attribute) { user.ship_address.name }
+        end
+      end
+
       context 'when searching by ship addresss first name' do
         it_should_behave_like 'user found by search' do
           let(:user_attribute) { user.ship_address.firstname }

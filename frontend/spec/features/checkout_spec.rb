@@ -113,8 +113,8 @@ describe "Checkout", type: :feature, inaccessible: true do
       end
 
       context "when user has default addresses saved" do
-        let(:saved_bill_address) { create(:address, firstname: 'Bill') }
-        let(:saved_ship_address) { create(:address, firstname: 'Steve') }
+        let(:saved_bill_address) { create(:address, name: 'Bill') }
+        let(:saved_ship_address) { create(:address, name: 'Steve') }
 
         it "shows the saved addresses" do
           within("#billing") do
@@ -194,8 +194,8 @@ describe "Checkout", type: :feature, inaccessible: true do
 
         # Regression test for https://github.com/solidusio/solidus/issues/1811
         context "when does have saved addresses" do
-          let(:saved_bill_address) { create(:address, firstname: 'Bill') }
-          let(:saved_ship_address) { create(:address, firstname: 'Steve') }
+          let(:saved_bill_address) { create(:address, name: 'Bill') }
+          let(:saved_ship_address) { create(:address, name: 'Steve') }
 
           it 'shows empty addresses' do
             within("#billing") do
