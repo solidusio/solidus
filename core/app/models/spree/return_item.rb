@@ -196,12 +196,14 @@ module Spree
 
     def process_inventory_unit!
       inventory_unit.return!
-      if customer_return
-        customer_return.stock_location.restock(inventory_unit.variant, 1, customer_return) if should_restock?
-        unless skip_customer_return_processing
-          Deprecation.warn 'From Solidus v2.9 onwards, #process_inventory_unit! will not call customer_return#process_return!'
-          customer_return.process_return!
-        end
+
+      if should_restock?
+        customer_return.stock_location.restock(inventory_unit.variant, 1, customer_return)
+      end
+
+      if customer_return && !skip_customer_return_processing
+        Deprecation.warn 'From Solidus v2.9 onwards, #process_inventory_unit! will not call customer_return#process_return!'
+        customer_return.process_return!
       end
     end
 
@@ -276,9 +278,9 @@ module Spree
     end
 
     def should_restock?
-      resellable? &&
+      customer_return &&
+        resellable? &&
         variant.should_track_inventory? &&
-        customer_return &&
         customer_return.stock_location.restock_inventory?
     end
   end
