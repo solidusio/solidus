@@ -130,6 +130,7 @@ module Spree
     def remove_from_address_book(address_id)
       user_address = user_addresses.find_by(address_id: address_id)
       if user_address
+        remove_user_address_reference(address_id)
         user_address.update(archived: true, default: false)
       else
         false
@@ -144,6 +145,12 @@ module Spree
       user_address.address = new_address
       user_address.archived = false
       user_address
+    end
+
+    def remove_user_address_reference(address_id)
+      self.bill_address_id = bill_address_id == address_id.to_i ? nil : bill_address_id
+      self.ship_address_id = ship_address_id == address_id.to_i ? nil : ship_address_id
+      save if changed?
     end
   end
 end
