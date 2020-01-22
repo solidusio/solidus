@@ -1,4 +1,6 @@
-## Solidus 2.10.0 (master, unreleased)
+## Solidus 2.11.0 (master, unreleased)
+
+## Solidus 2.10.0 (2020-01-15)
 
 ### Major Changes
 
