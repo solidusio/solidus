@@ -222,6 +222,23 @@ RSpec.describe Spree::ReturnItem, type: :model do
     it "starts off in the awaiting state" do
       expect(return_item).to be_awaiting
     end
+
+    context 'when transitioning to :received' do
+      let(:return_item) { create(:return_item) }
+      subject { return_item.receive! }
+
+      # StateMachines has some "smart" code for guessing how many arguments to
+      # send to the callback methods that interferes with rspec-mocks.
+      around { |e| without_partial_double_verification { e.call } }
+
+      it 'calls #attempt_accept, #check_unexchange, and #process_inventory_unit!' do
+        expect(return_item).to receive(:attempt_accept)
+        expect(return_item).to receive(:check_unexchange)
+        expect(return_item).to receive(:process_inventory_unit!)
+
+        subject
+      end
+    end
   end
 
   describe "acceptance_status state_machine" do
