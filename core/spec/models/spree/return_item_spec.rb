@@ -2,17 +2,17 @@
 
 require 'rails_helper'
 
-RSpec.shared_examples "an invalid state transition" do |status, expected_status|
-  let(:status) { status }
-
-  it "cannot transition to #{expected_status}" do
-    expect { subject }.to raise_error(StateMachines::InvalidTransition)
-  end
-end
-
 RSpec.describe Spree::ReturnItem, type: :model do
   all_reception_statuses = Spree::ReturnItem.state_machines[:reception_status].states.map(&:name).map(&:to_s)
   all_acceptance_statuses = Spree::ReturnItem.state_machines[:acceptance_status].states.map(&:name).map(&:to_s)
+
+  shared_examples "an invalid state transition" do |status, expected_status|
+    let(:status) { status }
+
+    it "cannot transition to #{expected_status}" do
+      expect { subject }.to raise_error(StateMachines::InvalidTransition)
+    end
+  end
 
   before do
     allow_any_instance_of(Spree::Order).to receive(:return!).and_return(true)
