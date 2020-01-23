@@ -1,0 +1,29 @@
+#!/usr/bin/env ruby
+
+require 'fileutils'
+include FileUtils
+require 'shellwords'
+
+ROOT = File.expand_path('..', __dir__)
+
+def system(*args)
+  puts "$ #{args.size == 1 ? args.first : args.shelljoin}"
+  super
+end
+
+def system!(*args)
+  system(*args) || abort("\n== Command #{args} failed ==")
+end
+
+cd ROOT do
+  puts "== Installing dependencies =="
+  bundler_version = `ruby -rbundler -e"print Bundler::VERSION"`
+
+  # Update Bundler if older than 2.1
+  if Gem::Version.new(bundler_version) < Gem::Version.new('2.1')
+    system! 'gem install bundler -v"~> 2.1" --conservative'
+    system! 'bundle update --bundler'
+  end
+
+  system('bundle check') || system('bundle install') || system!('bundle update')
+end

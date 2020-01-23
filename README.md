@@ -216,17 +216,19 @@ and/or customizations to the Solidus admin. Use at your own risk.
 * Install the gem dependencies
 
   ```bash
-  bundle install
+  bin/setup
   ```
 
   _Note_: If you're using PostgreSQL or MySQL, you'll need to install those gems through the DB environment variable.
 
   ```bash
   # PostgreSQL
-  DB=postgresql bundle install
+  export DB=postgresql
+  bin/setup
 
   # MySQL
-  DB=mysql bundle install
+  export DB=mysql
+  bin/setup
   ```
 
 ### Sandbox
