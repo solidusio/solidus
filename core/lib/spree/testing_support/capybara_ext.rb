@@ -162,3 +162,6 @@ CapybaraExt = ActiveSupport::Deprecation::DeprecatedConstantProxy.new('CapybaraE
 RSpec.configure do |c|
   c.include Spree::TestingSupport::CapybaraExt
 end
+
+# A workaround for https://github.com/rspec/rspec-rails/issues/1897
+Capybara.server = :puma, { Silent: true }
