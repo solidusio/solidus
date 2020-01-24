@@ -3918,7 +3918,10 @@ paths:
         '422':
           $ref: '#/responses/unprocessable-entity'
       summary: Update classification
-      description: Updates a classification.
+      description: |-
+        Updates a classification.
+
+        This method only updates the classification position.
       operationId: update-classification
       tags:
         - Classifications
