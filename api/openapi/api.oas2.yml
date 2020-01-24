@@ -3429,6 +3429,7 @@ paths:
         in: path
         type: string
         required: true
+        description: This is the coupon code
   '/orders/{order_number}/line_items/{id}':
     delete:
       responses:
