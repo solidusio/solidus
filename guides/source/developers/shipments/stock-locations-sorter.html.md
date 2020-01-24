@@ -39,7 +39,10 @@ Once you have created the logic for the new sorter, you need to register it so t
 For example, you can register it in your `/config/initializers/spree.rb` initializer:
 
 ```ruby
-# /config/initializers/spree.rb
-
-Rails.application.config.spree.stock.location_sorter_class = 'Spree::Stock::LocationSorter::Priority'
+# /config/initializer/spree.rb
+Spree.config do |config|
+  # ...
+  config.stock.location_sorter_class = 'Spree::Stock::LocationSorter::Priority'
+  # ...
+end
 ```
