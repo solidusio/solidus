@@ -1,0 +1,49 @@
+#!/usr/bin/env ruby
+
+ROOT = File.expand_path('..', __dir__)
+
+LIBS = %w[
+  api
+  backend
+  core
+  frontend
+  sample
+]
+
+# Is it a spec file or an RSpec option?
+is_spec = ->(path) {
+  path = path.split(':', 2).first # ignore line info
+  File.directory?(path) ? path.include?('/spec') : path.end_with?('_spec.rb')
+}
+
+# Find the Solidus library for this path
+find_lib = ->(path) {
+  LIBS.find { |lib| path.start_with? File.join(ROOT, lib) +'/' }
+}
+
+spec_files, options = ARGV.partition(&is_spec) # Separate specs and options
+spec_files.map! { |f| File.expand_path(f) } # Let all paths be absolute
+specs = {}
+
+if spec_files.any?
+  specs = spec_files.group_by(&find_lib)
+else
+  # If no files are provided run all specs in each lib.
+  LIBS.each { |lib| specs[lib] = [] }
+end
+
+# If we weren't able to find the solidus lib for some files
+# then we have them under the nil key.
+if specs.key?(nil)
+  abort "Couldn't find a lib for these files: #{specs[nil].join(' ')}"
+end
+
+# Run specs for each lib separately
+specs.each do |lib, files|
+  Dir.chdir(lib) do
+    command = ['bundle', 'exec', 'rspec', *options, *files]
+    warn "$ cd #{lib}; #{command.join(' ')}; cd -"
+    system *command
+    exit $?.exitstatus unless $?.success?
+  end
+end
