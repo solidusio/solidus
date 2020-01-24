@@ -59,6 +59,10 @@ module Spree
               transition to: :canceled, if: :allow_cancel?
             end
 
+            event :merge do
+              transition to: :merged
+            end
+
             event :return do
               transition to: :returned, from: [:returned, :complete, :awaiting_return, :canceled], if: :all_inventory_units_returned?
             end
@@ -89,7 +93,9 @@ module Spree
               # be added in the correct sequence.
             end
 
-            before_transition from: :cart, do: :ensure_line_items_present
+            before_transition from: :cart, except_to: :merged, do: :ensure_line_items_present
+
+            before_transition to: :merged, do: :ensure_merged_to_order_present
 
             if states[:address]
               before_transition to: :address, do: :assign_default_user_addresses
@@ -105,6 +111,11 @@ module Spree
 
             before_transition to: :resumed, do: :ensure_line_item_variants_are_not_deleted
             before_transition to: :resumed, do: :validate_line_item_availability
+
+            before_transition from: :merged do |order|
+              order.errors.add(:base, :cannot_transition_from_merged)
+              false
+            end
 
             # Sequence of before_transition to: :complete
             # calls matter so that we do not process payments
