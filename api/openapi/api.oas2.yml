@@ -3949,7 +3949,10 @@ paths:
         '422':
           $ref: '#/responses/unprocessable-entity'
       summary: Apply order coupon code
-      description: Applies a coupon code on the order.
+      description: |-
+        **Deprecated:** This method is deprecated. Please use `Spree::Api::CouponCodesController#create` endpoint instead.
+
+        Applies a coupon code on the order.
       operationId: apply-order-coupon-code
       tags:
         - Coupon codes
