@@ -12,9 +12,15 @@ module Spree
     let(:user) { stub_model(Spree::LegacyUser, email: "spree@example.com") }
     let(:subject) { Spree::OrderMerger.new(order_1) }
 
-    it "destroys the other order" do
+    it "marks the other order as merged" do
       subject.merge!(order_2)
-      expect { order_2.reload }.to raise_error(ActiveRecord::RecordNotFound)
+      expect(order_2).to be_merged
+    end
+
+    it "associates the merged orders" do
+      subject.merge!(order_2)
+      expect(order_2.merged_to_order).to eq order_1
+      expect(order_1.from_merged_orders).to include order_2
     end
 
     it "persist the merge" do
