@@ -1,7 +1,15 @@
 #!/usr/bin/env ruby
 
-ENGINE_ROOT = File.expand_path('../..', __FILE__)
-ENGINE_PATH = File.expand_path('../../lib/solidus_i18n/engine', __FILE__)
+# frozen_string_literal: true
 
-require 'rails/all'
-require 'rails/engine/commands'
+app_root = 'spec/dummy'
+
+unless File.exist? "#{app_root}/bin/rails"
+  system "bin/rake", app_root or begin # rubocop:disable Style/AndOr
+    warn "Automatic creation of the dummy app failed"
+    exit 1
+  end
+end
+
+Dir.chdir app_root
+exec 'bin/rails', *ARGV
