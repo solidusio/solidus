@@ -49,7 +49,7 @@ module Spree
           params[:q][:completed_at_lt] = params[:q].delete(:created_at_lt)
         end
 
-        @search = Spree::Order.accessible_by(current_ability, :index).ransack(params[:q])
+        @search = Spree::Order.not_merged.accessible_by(current_ability, :index).ransack(params[:q])
         @orders = @search.result.includes([:user]).
           page(params[:page]).
           per(params[:per_page] || Spree::Config[:orders_per_page])
