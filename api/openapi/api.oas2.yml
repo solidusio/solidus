@@ -3547,7 +3547,10 @@ paths:
         '422':
           $ref: '#/responses/unprocessable-entity'
       summary: Update checkout
-      description: Updates a checkout.
+      description: |-
+        Updates a checkout.
+
+        **Note:** In addition to the order update, this action always attempts to perform an order state machine transition which results in a `422` response if it cannot be transitioned.
       operationId: update-checkout
       tags:
         - Checkouts
