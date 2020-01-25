@@ -48,7 +48,7 @@ describe "Shipments", type: :feature do
     end
 
     it "doesn't send a shipping confirmation email when ask to suppress the mailer" do
-      uncheck 'Send Mailer'
+      uncheck 'Send Shipment Email'
 
       expect {
         perform_enqueued_jobs {
