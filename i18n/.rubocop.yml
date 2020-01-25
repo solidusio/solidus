@@ -1,13 +1,4 @@
----
-inherit_from: .hound.yml
+require:
+  - solidus_dev_support/rubocop
 
-Metrics/BlockLength:
-  Exclude:
-    - spec/**/*
-    - lib/tasks/**/*
-
-AllCops:
-  Exclude:
-    - 'spec/dummy/**/*'
-    - 'bin/**/*'
-    - 'vendor/**/*'
+inherit_from: .rubocop_todo.yml

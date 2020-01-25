@@ -1,0 +1,5 @@
+bump:
+  recurse: false
+  file: 'lib/solidus_i18n/version.rb'
+  message: Bump SolidusI18n to %{version}
+  tag: true

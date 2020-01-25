@@ -1,31 +1,36 @@
 # frozen_string_literal: true
 
-lib = File.expand_path('lib', __dir__)
-$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+$:.push File.expand_path('lib', __dir__)
 require 'solidus_i18n/version'
 
-Gem::Specification.new do |spec|
-  spec.name        = 'solidus_i18n'
-  spec.version     = SolidusI18n.version
-  spec.authors = ['Thomas von Deyen']
-  spec.email       = ['tvd@magiclabs.de']
+Gem::Specification.new do |s|
+  s.name        = 'solidus_i18n'
+  s.version     = SolidusI18n.version
+  s.summary     = 'Provides locale information for use in Solidus.'
+  s.description = 'A collection of translations for Solidus.'
 
-  spec.summary     = 'Provides locale information for use in Solidus.'
-  spec.description = 'A collection of translations for Solidus.'
-  spec.homepage    = 'https://solidus.io'
-  spec.license     = 'BSD-3-Clause'
+  s.required_ruby_version = '~> 2.4'
 
-  spec.files = Dir.chdir(File.expand_path(__dir__)) do
+  s.author   = 'Thomas von Deyen'
+  s.email    = 'tvd@magiclabs.de'
+  s.homepage = 'https://github.com/solidusio/solidus_i18n'
+  s.license  = 'BSD-3-Clause'
+
+  s.files = Dir.chdir(File.expand_path(__dir__)) do
     `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
   end
+  s.test_files = Dir['spec/**/*']
+  s.bindir = "exe"
+  s.executables = s.files.grep(%r{^exe/}) { |f| File.basename(f) }
+  s.require_paths = ["lib"]
 
-  spec.require_paths = ['lib']
+  if s.respond_to?(:metadata)
+    s.metadata["homepage_uri"] = s.homepage if s.homepage
+    s.metadata["source_code_uri"] = s.homepage if s.homepage
+  end
 
-  spec.add_runtime_dependency 'solidus_core', ['>= 1.1', '< 3']
+  s.add_runtime_dependency 'solidus_core', ['>= 1.1', '< 3']
+  s.add_runtime_dependency 'solidus_support', '~> 0.4.0'
 
-  spec.add_development_dependency 'pry-rails', '~> 0.3.0'
-  spec.add_development_dependency 'rspec-rails', '~> 3.1'
-  spec.add_development_dependency 'rubocop', '~> 0.67.2'
-  spec.add_development_dependency 'simplecov', '~> 0.9'
-  spec.add_development_dependency 'sqlite3', '~> 1.3'
+  s.add_development_dependency 'solidus_dev_support'
 end
