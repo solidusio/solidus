@@ -621,7 +621,7 @@ RSpec.describe Spree::Order, type: :model do
     it "should not keep old events when checkout_flow is redefined" do
       state_machine = Spree::Order.state_machine
       expect(state_machine.states.any? { |s| s.name == :address }).to be false
-      known_states = state_machine.events[:next].branches.map(&:known_states).flatten
+      known_states = state_machine.events[:next].branches.flat_map(&:known_states)
       expect(known_states).not_to include(:address)
       expect(known_states).not_to include(:delivery)
       expect(known_states).not_to include(:confirm)

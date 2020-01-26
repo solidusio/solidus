@@ -28,9 +28,9 @@ module Spree
     # Copied from per_item.rb
     def matching_products
       if compute_on_promotion?
-        calculable.promotion.rules.map do |rule|
+        calculable.promotion.rules.flat_map do |rule|
           rule.respond_to?(:products) ? rule.products : []
-        end.flatten
+        end
       end
     end
 

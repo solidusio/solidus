@@ -218,7 +218,7 @@ describe "Visiting Products", type: :feature, inaccessible: true do
     within(:css, '#sidebar_products_search') { click_button "Search" }
 
     expect(page.all('ul.product-listing li').size).to eq(3)
-    tmp = page.all('ul.product-listing li a').map(&:text).flatten.compact
+    tmp = page.all('ul.product-listing li a').flat_map(&:text).compact
     tmp.delete("")
     expect(tmp.sort!).to eq(["Ruby on Rails Mug", "Ruby on Rails Stein", "Ruby on Rails Tote"])
   end
@@ -245,7 +245,7 @@ describe "Visiting Products", type: :feature, inaccessible: true do
     within(:css, '#sidebar_products_search') { click_button "Search" }
 
     expect(page.all('ul.product-listing li').size).to eq(4)
-    tmp = page.all('ul.product-listing li a').map(&:text).flatten.compact
+    tmp = page.all('ul.product-listing li a').flat_map(&:text).compact
     tmp.delete("")
     expect(tmp.sort!).to eq(["Ruby on Rails Bag",
                              "Ruby on Rails Baseball Jersey",

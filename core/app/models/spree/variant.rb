@@ -391,9 +391,9 @@ module Spree
     #
     # @return [Array<Spree::VariantPropertyRuleValue>] variant_properties
     def variant_properties
-      product.variant_property_rules.map do |rule|
+      product.variant_property_rules.flat_map do |rule|
         rule.values if rule.applies_to_variant?(self)
-      end.flatten.compact
+      end.compact
     end
 
     # The gallery for the variant, which represents all the images

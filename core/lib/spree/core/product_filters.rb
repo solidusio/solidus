@@ -107,7 +107,7 @@ module Spree
         brand_property = Spree::Property.find_by(name: 'brand')
         brands = brand_property ? Spree::ProductProperty.where(property_id: brand_property.id).pluck(:value).uniq.map(&:to_s) : []
         pp = Spree::ProductProperty.arel_table
-        conds = Hash[*brands.map { |brand| [brand, pp[:value].eq(brand)] }.flatten]
+        conds = Hash[*brands.flat_map { |brand| [brand, pp[:value].eq(brand)] }]
         {
           name:   'Brands',
           scope:  :brand_any,
@@ -184,7 +184,7 @@ module Spree
       # idea: expand the format to allow nesting of labels?
       def self.all_taxons
         Spree::Deprecation.warn "all_taxons is deprecated in solidus_core. Please add it to your own application to continue using it."
-        taxons = Spree::Taxonomy.all.map { |element| [element.root] + element.root.descendants }.flatten
+        taxons = Spree::Taxonomy.all.flat_map { |element| [element.root] + element.root.descendants }
         {
           name:   'All taxons',
           scope:  :taxons_id_equals_any,

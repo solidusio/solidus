@@ -381,11 +381,11 @@ module Spree
 
     # Iterate through this product's taxons and taxonomies and touch their timestamps in a batch
     def touch_taxons
-      taxons_to_touch = taxons.map(&:self_and_ancestors).flatten.uniq
+      taxons_to_touch = taxons.flat_map(&:self_and_ancestors).uniq
       unless taxons_to_touch.empty?
         Spree::Taxon.where(id: taxons_to_touch.map(&:id)).update_all(updated_at: Time.current)
 
-        taxonomy_ids_to_touch = taxons_to_touch.map(&:taxonomy_id).flatten.uniq
+        taxonomy_ids_to_touch = taxons_to_touch.flat_map(&:taxonomy_id).uniq
         Spree::Taxonomy.where(id: taxonomy_ids_to_touch).update_all(updated_at: Time.current)
       end
     end

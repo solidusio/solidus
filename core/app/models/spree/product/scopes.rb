@@ -233,7 +233,7 @@ module Spree
 
             # specifically avoid having an order for taxon search (conflicts with main order)
             def prepare_taxon_conditions(taxons)
-              ids = taxons.map { |taxon| taxon.self_and_descendants.pluck(:id) }.flatten.uniq
+              ids = taxons.flat_map { |taxon| taxon.self_and_descendants.pluck(:id) }.uniq
               joins(:taxons).where("#{Spree::Taxon.table_name}.id" => ids)
             end
 
