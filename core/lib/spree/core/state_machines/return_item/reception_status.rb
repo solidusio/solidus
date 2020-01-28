@@ -19,8 +19,8 @@ module Spree
 
           included do
             state_machine :reception_status, initial: :awaiting do
-              after_transition to: ::Spree::ReturnItem::COMPLETED_RECEPTION_STATUSES,  do: :attempt_accept
-              after_transition to: ::Spree::ReturnItem::COMPLETED_RECEPTION_STATUSES,  do: :check_unexchange
+              after_transition to: ::Spree::ReturnItem::COMPLETED_RECEPTION_STATUSES, do: :attempt_accept, if: :can_attempt_accept?
+              after_transition to: ::Spree::ReturnItem::COMPLETED_RECEPTION_STATUSES, do: :check_unexchange
               after_transition to: :received, do: :process_inventory_unit!
 
               event(:cancel) { transition to: :cancelled, from: :awaiting }

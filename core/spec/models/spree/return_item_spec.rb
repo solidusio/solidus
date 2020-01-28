@@ -238,6 +238,18 @@ RSpec.describe Spree::ReturnItem, type: :model do
 
         subject
       end
+
+      context 'when the :acceptance_status is in a state that does not support the :attempt_accept event' do
+        before { return_item.require_manual_intervention! }
+
+        it 'only skips the call to :attempt_accept' do
+          expect(return_item).not_to receive(:attempt_accept)
+          expect(return_item).to receive(:check_unexchange)
+          expect(return_item).to receive(:process_inventory_unit!)
+
+          subject
+        end
+      end
     end
   end
 

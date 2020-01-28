@@ -203,8 +203,9 @@ module Spree
 
       if customer_return && !skip_customer_return_processing
         Deprecation.warn 'From Solidus v2.9 onwards, #process_inventory_unit! will not call customer_return#process_return!'
-        customer_return.process_return!
       end
+
+      customer_return&.process_return!
     end
 
     def sibling_intended_for_exchange(status)

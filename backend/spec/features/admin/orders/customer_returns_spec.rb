@@ -17,6 +17,10 @@ describe 'Customer returns', type: :feature do
   end
 
   before do
+    allow(Spree::Deprecation).to receive(:warn) do |message|
+      expect(message).to match('#process_inventory_unit! will not call')
+    end
+
     visit spree.new_admin_order_customer_return_path(order)
   end
 
@@ -39,6 +43,44 @@ describe 'Customer returns', type: :feature do
       create_customer_return('receive')
 
       expect(page).to have_button("Create", disabled: true)
+    end
+
+    context 'when creating a return with state "In Transit" and then marking it as "Received"' do
+      it 'marks the order as returned', :js do
+        create_customer_return('in_transit')
+        expect(page).to have_content 'Customer Return has been successfully created'
+        expect(order_state_label).to eq('Complete')
+
+        within('[data-hook="rejected_return_items"] tbody tr:nth-child(1)') { click_button('Receive') }
+        expect(order_state_label).to eq('Complete')
+
+        within('[data-hook="rejected_return_items"] tbody tr:nth-child(2)') { click_button('Receive') }
+        expect(order_state_label).to eq('Returned')
+      end
+    end
+  end
+
+  context 'when the order has only one line item' do
+    let(:order) { create :shipped_order, line_items_count: 1 }
+
+    context 'when creating a return with state "Received"' do
+      it 'marks the order as returned', :js do
+        create_customer_return('receive')
+
+        expect(page).to have_content 'Customer Return has been successfully created'
+        expect(order_state_label).to eq('Returned')
+      end
+    end
+
+    context 'when creating a return with state "In Transit" and then marking it as "Received"' do
+      it 'marks the order as returned', :js do
+        create_customer_return('in_transit')
+        expect(page).to have_content 'Customer Return has been successfully created'
+        expect(order_state_label).to eq('Complete')
+
+        within('[data-hook="rejected_return_items"] tbody tr:nth-child(1)') { click_button('Receive') }
+        expect(order_state_label).to eq('Returned')
+      end
     end
   end
 end
