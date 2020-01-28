@@ -220,10 +220,32 @@ RSpec.describe Spree::LineItem, type: :model do
     context 'when the price has a currency different from the order currency' do
       let(:currency) { "RUB" }
 
-      it 'raises an exception' do
-        expect {
+      before do
+        stub_spree_preferences(raise_with_invalid_currency: raise_with_invalid_currency)
+      end
+
+      context 'when raise_with_invalid_currency preference is true' do
+        let(:raise_with_invalid_currency) { true }
+
+        it 'raises an exception' do
+          expect {
+            line_item.money_price = new_price
+          }.to raise_exception(
+            Spree::LineItem::CurrencyMismatch,
+            'Line item price currency must match order currency!'
+          )
+        end
+      end
+
+      context 'when raise_with_invalid_currency preference is false' do
+        let(:raise_with_invalid_currency) { false }
+
+        it 'is not valid' do
           line_item.money_price = new_price
-        }.to raise_exception Spree::LineItem::CurrencyMismatch
+          expect(line_item).not_to be_valid
+          expect(line_item.errors[:price])
+            .to include 'Line item price currency must match order currency!'
+        end
       end
     end
   end

@@ -55,6 +55,17 @@ module Spree
         end
       end
 
+      config.after_initialize do
+        if Spree::Config.raise_with_invalid_currency == true
+          Spree::Deprecation.warn(
+            'Spree::Config.raise_with_invalid_currency set to true is ' \
+            'deprecated. Please note that by switching this value, ' \
+            'Spree::LineItem::CurrencyMismatch will not be raised anymore.',
+            caller
+          )
+        end
+      end
+
       # Load in mailer previews for apps to use in development.
       # We need to make sure we call `Preview.all` before requiring our
       # previews, otherwise any previews the app attempts to add need to be
