@@ -43,8 +43,8 @@ RSpec.describe Spree::ReturnItem, type: :model do
       subject
     end
 
-    context 'when the `skip_customer_return_processing` flag is not set to true' do
-      before { return_item.skip_customer_return_processing = false }
+    context 'when the `skip_customer_return_processing` flag is set' do
+      before { Spree::Deprecation.silence { return_item.skip_customer_return_processing = false } }
 
       it 'shows a deprecation warning' do
         expect(Spree::Deprecation).to receive(:warn)
@@ -808,6 +808,18 @@ RSpec.describe Spree::ReturnItem, type: :model do
             expect(subject).to be_valid
           end
         end
+      end
+    end
+  end
+
+  describe '#skip_customer_return_processing=' do
+    context 'when it receives a value' do
+      let(:return_item) { described_class.new }
+      subject { return_item.skip_customer_return_processing = :foo }
+
+      it 'shows a deprecation warning' do
+        expect(Spree::Deprecation).to receive(:warn)
+        subject
       end
     end
   end

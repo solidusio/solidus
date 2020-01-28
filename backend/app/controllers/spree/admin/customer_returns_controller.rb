@@ -70,8 +70,6 @@ module Spree
           return_item = item_params[:id] ? Spree::ReturnItem.find(item_params[:id]) : Spree::ReturnItem.new
           return_item.assign_attributes(item_params)
 
-          return_item.skip_customer_return_processing = true
-
           if item_params[:reception_status_event].blank?
             return redirect_to(new_object_url, flash: { error: 'Reception status choice required' })
           end
