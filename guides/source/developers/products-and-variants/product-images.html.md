@@ -50,24 +50,20 @@ You can check the default settings by calling the `attachment_definitions`
 method on `Spree::Image` in your Rails console:
 
 ```ruby
-Spree::Image.attachment_definitions[:attachment][:styles]
-=> {
-  mini=>"48x48>",
-  small=>"100x100>",
-  product=>"240x240>",
-  large=>"600x600>"
-}
+>> Spree::Image.attachment_definitions[:attachment][:styles]
+=> {:mini=>"48x48>", :small=>"400x400>", :product=>"680x680>", :large=>"1200x1200>"}
 ```
 
 The default sizes can be changed in an initializer. For example, in your
 `config/initializers/paperclip.rb` file. You can set new defaults like this:
 
 ```ruby
+# E.g. these were the default values for Solidus up to version 2.9
 Spree::Image.attachment_definitions[:attachment][:styles] = {
-  mini: '128x128>',
-  small: '256x256>',
-  product: '512x512>',
-  large: '1024x1024>'
+  mini: '48x48>',
+  small: '100x100>',
+  product: '240x240>',
+  large: '600x600>'
 }
 ```
 
