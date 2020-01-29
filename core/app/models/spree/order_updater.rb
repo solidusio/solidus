@@ -136,16 +136,12 @@ module Spree
     end
 
     def update_shipment_amounts
-      shipments.each do |shipment|
-        shipment.update_amounts
-      end
+      shipments.each(&:update_amounts)
     end
 
     # give each of the shipments a chance to update themselves
     def update_shipments
-      shipments.each do |shipment|
-        shipment.update_state
-      end
+      shipments.each(&:update_state)
     end
 
     def update_payment_total

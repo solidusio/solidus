@@ -119,7 +119,7 @@ module Spree
         shared_examples "a fulfillable package" do
           it "packages correctly" do
             expect(shipments).not_to be_empty
-            inventory_units = shipments.flat_map { |shipment| shipment.inventory_units }
+            inventory_units = shipments.flat_map(&:inventory_units)
             expect(inventory_units.size).to eq(5)
             expect(inventory_units.uniq.size).to eq(5)
           end

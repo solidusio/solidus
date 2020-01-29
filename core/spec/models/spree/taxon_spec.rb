@@ -190,7 +190,7 @@ RSpec.describe Spree::Taxon, type: :model do
       it 'returns all descendant variants' do
         variants = taxon.all_variants
         expect(variants.count).to eq(9)
-        expect(variants).to match_array([product1, product2, product3].flat_map{ |p| p.variants_including_master })
+        expect(variants).to match_array([product1, product2, product3].flat_map(&:variants_including_master))
       end
     end
   end
