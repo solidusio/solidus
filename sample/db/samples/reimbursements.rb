@@ -7,6 +7,11 @@ inventory_unit = order.inventory_units.take!
 stock_location = inventory_unit.find_stock_item.stock_location
 return_reason = Spree::ReturnReason.active.take!
 preferred_reimbursement_type = Spree::ReimbursementType.where(name: 'Original').take!
+admin_user = if defined?(Spree::Auth)
+  Spree.user_class.admin.take!
+else
+  Spree.user_class.find_or_create_by!(email: 'admin@example.com')
+end
 
 # Mark the order paid and shipped
 order.payments.pending.each(&:complete)
@@ -38,8 +43,5 @@ return_item.receive!
 customer_return.process_return!
 
 # Accept the customer return and reimburse it
-return_item.accept!
-order.reimbursements.create(
-  customer_return: customer_return,
-  return_items: [return_item]
-)
+reimbursement = Spree::Reimbursement.build_from_customer_return(customer_return)
+reimbursement.return_all(created_by: admin_user)
