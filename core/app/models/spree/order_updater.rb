@@ -149,7 +149,7 @@ module Spree
     end
 
     def update_payment_total
-      order.payment_total = payments.completed.includes(:refunds).map { |payment| payment.amount - payment.refunds.sum(:amount) }.sum
+      order.payment_total = payments.completed.includes(:refunds).sum { |payment| payment.amount - payment.refunds.sum(:amount) }
     end
 
     def update_shipment_total

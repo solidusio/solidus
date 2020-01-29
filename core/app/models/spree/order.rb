@@ -193,7 +193,7 @@ module Spree
 
     # For compatiblity with Calculator::PriceSack
     def amount
-      line_items.map(&:amount).sum
+      line_items.sum(&:amount)
     end
 
     # Sum of all line item amounts after promotions, before added tax

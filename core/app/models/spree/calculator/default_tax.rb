@@ -54,7 +54,7 @@ module Spree
     end
 
     def sum_of_included_tax_rates(item)
-      rates_for_item(item).map(&:amount).sum
+      rates_for_item(item).sum(&:amount)
     end
   end
 end

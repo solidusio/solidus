@@ -31,7 +31,7 @@ module Spree
     self.whitelisted_ransackable_attributes = ['memo']
 
     def total_excluding_vat
-      return_items.map(&:total_excluding_vat).sum
+      return_items.sum(&:total_excluding_vat)
     end
     alias pre_tax_total total_excluding_vat
     deprecate pre_tax_total: :total_excluding_vat, deprecator: Spree::Deprecation

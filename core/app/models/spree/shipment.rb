@@ -150,7 +150,7 @@ module Spree
     end
 
     def item_cost
-      line_items.map(&:total).sum
+      line_items.sum(&:total)
     end
 
     def ready_or_pending?

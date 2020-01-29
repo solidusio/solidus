@@ -16,9 +16,9 @@ module Spree
 
     def compute(object = nil)
       return 0 if object.nil?
-      object.line_items.map { |line_item|
+      object.line_items.sum { |line_item|
         value_for_line_item(line_item)
-      }.sum
+      }
     end
 
     private
