@@ -478,6 +478,10 @@ en:
             apply_automatically:
               disallowed_with_code: Disallowed for promotions with a code
               disallowed_with_path: Disallowed for promotions with a path
+        spree/promotion_code:
+          attributes:
+            base:
+              disallowed_with_apply_automatically: Could not create promotion code on promotion that apply automatically
         spree/refund:
           attributes:
             amount:

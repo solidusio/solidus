@@ -203,4 +203,11 @@ RSpec.describe Spree::PromotionCode do
       }.to change{ order.reload.state }.from("confirm").to("address")
     end
   end
+
+  it "cannot create promotion code on apply automatically promotion" do
+    promotion = create(:promotion, apply_automatically: true)
+    expect {
+      create(:promotion_code, promotion: promotion)
+    }.to raise_error ActiveRecord::RecordInvalid, "Validation failed: Could not create promotion code on promotion that apply automatically"
+  end
 end
