@@ -9,7 +9,7 @@ module Spree
         class_attribute :permalink_options
       end
 
-      module ClassMethods
+      class_methods do
         def make_permalink(options = {})
           options[:field] ||= :permalink
           self.permalink_options = options
@@ -63,5 +63,3 @@ module Spree
     end
   end
 end
-
-ActiveRecord::Base.send :include, Spree::Core::Permalinks

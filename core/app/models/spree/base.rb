@@ -2,6 +2,7 @@
 
 class Spree::Base < ActiveRecord::Base
   include Spree::Preferences::Preferable
+  include Spree::Core::Permalinks
   serialize :preferences, Hash
 
   include Spree::RansackableAttributes

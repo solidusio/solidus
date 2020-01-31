@@ -3,7 +3,7 @@
 module Solidus
   module Migrations
     module PromotionWithCodeHandlers
-      class PromotionCode < ActiveRecord::Base
+      class PromotionCode < Spree::Base
         self.table_name = "spree_promotion_codes"
       end
 

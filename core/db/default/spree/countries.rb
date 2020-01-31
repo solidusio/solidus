@@ -5,7 +5,7 @@ require 'carmen'
 # Insert Countries into the spree_countries table, checking to ensure that no
 # duplicates are created, using as few SQL statements as possible (2)
 
-connection = ApplicationRecord.connection
+connection = Spree::Base.connection
 
 country_mapper = ->(country) do
   name            = connection.quote country.name
