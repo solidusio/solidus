@@ -4,7 +4,7 @@
     <div class="form-check">
       <label class="form-check-label">
         <%= radio_button_tag('activation_type', 'auto', activation_type == 'auto') %>
-        <%= t('.auto') %>
+        <%= t('.auto') %> <%= f.field_hint :promo_code_will_be_disabled %>
       </label>
     </div>
     <div class="form-check">
