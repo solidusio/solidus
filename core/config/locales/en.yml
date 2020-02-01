@@ -476,7 +476,6 @@ en:
         spree/promotion:
           attributes:
             apply_automatically:
-              disallowed_with_code: Disallowed for promotions with a code
               disallowed_with_path: Disallowed for promotions with a path
         spree/promotion_code:
           attributes:
