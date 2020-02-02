@@ -199,6 +199,23 @@ RSpec.describe Spree::Adjustment, type: :model do
         it { is_expected.to include("can't be blank") }
       end
     end
+
+    context "when the adjustment is a promotion that apply automatically adjustment" do
+      let(:adjustment) { build(:adjustment, source: promotion.actions.first) }
+      let(:promotion) { create(:promotion, :with_order_adjustment, apply_automatically: true) }
+
+      context "when the promotion does not have a code" do
+        it { is_expected.to be_blank }
+      end
+
+      context "when the promotion has a code" do
+        let!(:promotion_code) do
+          promotion.codes << build(:promotion_code, promotion: promotion)
+        end
+
+        it { is_expected.to be_blank }
+      end
+    end
   end
 
   describe 'repairing adjustment associations' do

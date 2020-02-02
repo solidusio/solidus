@@ -159,7 +159,7 @@ module Spree
     private
 
     def require_promotion_code?
-      promotion? && source.promotion.codes.any?
+      promotion? && !source.promotion.apply_automatically && source.promotion.codes.any?
     end
 
     def repair_adjustments_associations_on_create

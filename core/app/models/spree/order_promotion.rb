@@ -21,7 +21,7 @@ module Spree
     private
 
     def require_promotion_code?
-      promotion && promotion.codes.any?
+      promotion && !promotion.apply_automatically && promotion.codes.any?
     end
   end
 end
