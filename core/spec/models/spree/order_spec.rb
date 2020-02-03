@@ -1526,6 +1526,14 @@ RSpec.describe Spree::Order, type: :model do
           expect(subject).to change(order, :last_ip_address).to(ip_address)
         end
       end
+
+      context "with a new order" do
+        let(:order) { build(:order) }
+
+        it "updates the IP address" do
+          expect(subject).to change(order, :last_ip_address).to(ip_address)
+        end
+      end
     end
 
     describe "#display_order_total_after_store_credit" do

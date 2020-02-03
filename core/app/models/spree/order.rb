@@ -778,7 +778,9 @@ module Spree
     deprecate assign_default_credit_card: :add_default_payment_from_wallet, deprecator: Spree::Deprecation
 
     def record_ip_address(ip_address)
-      if last_ip_address != ip_address
+      if new_record?
+        self.last_ip_address = ip_address
+      elsif last_ip_address != ip_address
         update_column(:last_ip_address, ip_address)
       end
     end
