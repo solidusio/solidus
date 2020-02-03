@@ -251,4 +251,12 @@ describe Spree::OrdersController, type: :controller do
       expect(order.reload.line_items.count).to eq 0
     end
   end
+
+  describe '#edit' do
+    it "doesn't create a new order" do
+      allow(controller).to receive_messages(try_spree_current_user: user)
+
+      expect { get :edit }.not_to change { Spree::Order.count }
+    end
+  end
 end

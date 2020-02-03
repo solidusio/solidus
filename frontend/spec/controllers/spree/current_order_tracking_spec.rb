@@ -31,17 +31,3 @@ describe 'current order tracking', type: :controller do
     end
   end
 end
-
-describe Spree::OrdersController, type: :controller do
-  let(:user) { create(:user) }
-
-  before { allow(controller).to receive_messages(try_spree_current_user: user) }
-
-  describe Spree::OrdersController do
-    it "doesn't create a new order out of the blue" do
-      expect {
-        get :edit
-      }.not_to change { Spree::Order.count }
-    end
-  end
-end
