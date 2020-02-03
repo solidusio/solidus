@@ -2,12 +2,10 @@
 
 require 'rails_helper'
 
-class FakesController < ApplicationController
-  include Spree::Core::ControllerHelpers::Store
-end
-
 RSpec.describe Spree::Core::ControllerHelpers::Store, type: :controller do
-  controller(FakesController) {}
+  controller(ApplicationController) {
+    include Spree::Core::ControllerHelpers::Store
+  }
 
   describe '#current_store' do
     let!(:store) { create :store, default: true }

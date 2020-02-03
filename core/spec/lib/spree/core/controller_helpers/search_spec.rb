@@ -2,12 +2,12 @@
 
 require 'rails_helper'
 
-class FakesController < ApplicationController
-  include Spree::Core::ControllerHelpers::Search
-end
-
 RSpec.describe Spree::Core::ControllerHelpers::Search, type: :controller do
-  controller(FakesController) {}
+  controller(ApplicationController) {
+    include Spree::Core::ControllerHelpers::Auth
+    include Spree::Core::ControllerHelpers::Pricing
+    include Spree::Core::ControllerHelpers::Search
+  }
 
   describe '#build_searcher' do
     it 'returns Spree::Core::Search::Base instance' do

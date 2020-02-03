@@ -2,12 +2,13 @@
 
 require 'rails_helper'
 
-class FakesController < ApplicationController
-  include Spree::Core::ControllerHelpers::Order
-end
-
 RSpec.describe Spree::Core::ControllerHelpers::Order, type: :controller do
-  controller(FakesController) {}
+  controller(ApplicationController) {
+    include Spree::Core::ControllerHelpers::Store
+    include Spree::Core::ControllerHelpers::Pricing
+    include Spree::Core::ControllerHelpers::Auth
+    include Spree::Core::ControllerHelpers::Order
+  }
 
   let(:user) { create(:user) }
   let(:order) { create(:order, user: user, store: store) }
