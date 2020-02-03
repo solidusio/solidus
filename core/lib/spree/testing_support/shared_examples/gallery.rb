@@ -10,7 +10,7 @@ RSpec.shared_examples 'a gallery' do
       include_context 'has multiple images'
 
       it 'has the associated images' do
-        expect(subject.map { |picture| picture.id }).
+        expect(subject.map(&:id)).
           to match_array([first_image.id, second_image.id])
       end
     end
