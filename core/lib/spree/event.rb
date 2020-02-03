@@ -17,7 +17,7 @@ module Spree
     # @param [Hash] opts a list of options to be passed to the triggered event
     #
     # @example Trigger an event named 'order_finalized'
-    #   Spree::Event.fire 'order_finalized', order: @order do
+    #   Spree::Event.fire 'order_finalized', context: @order do
     #     @order.finalize!
     #   end
     def fire(event_name, opts = {})
