@@ -34,7 +34,7 @@ module Spree
 
           return @current_order if @current_order
 
-          @current_order = find_order_by_token_or_user(options)
+          @current_order = find_order_by_token_or_user(lock: options[:lock])
 
           if options[:create_order_if_necessary] && (@current_order.nil? || @current_order.completed?)
             @current_order = Spree::Order.new(new_order_params)
