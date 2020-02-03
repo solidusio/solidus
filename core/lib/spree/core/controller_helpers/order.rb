@@ -31,17 +31,18 @@ module Spree
         # The current incomplete order from the guest_token for use in cart and during checkout
         def current_order(options = {})
           should_create = options[:create_order_if_necessary] || false
+          should_build = options[:build_order_if_necessary] || should_create
 
           return @current_order if @current_order
 
           @current_order = find_order_by_token_or_user(lock: options[:lock])
 
-          if should_create && (@current_order.nil? || @current_order.completed?)
+          if should_build && (@current_order.nil? || @current_order.completed?)
             @current_order = Spree::Order.new(new_order_params)
             @current_order.user ||= try_spree_current_user
             # See issue https://github.com/spree/spree/issues/3346 for reasons why this line is here
             @current_order.created_by ||= try_spree_current_user
-            @current_order.save!
+            @current_order.save! if should_create
           end
 
           if @current_order

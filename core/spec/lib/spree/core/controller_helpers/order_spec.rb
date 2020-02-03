@@ -75,6 +75,23 @@ RSpec.describe Spree::Core::ControllerHelpers::Order, type: :controller do
         }.from(nil).to("0.0.0.0")
       end
     end
+
+    context 'build_order_if_necessary option is true' do
+      subject { controller.current_order(build_order_if_necessary: true) }
+
+      it 'builds a new order' do
+        expect { subject }.not_to change(Spree::Order, :count).from(0)
+        expect(subject).not_to be_persisted
+      end
+
+      it 'assigns the current_store id' do
+        expect(subject.store_id).to eq store.id
+      end
+
+      it 'records last_ip_address' do
+        expect(subject.last_ip_address).to eq("0.0.0.0")
+      end
+    end
   end
 
   describe '#associate_user' do
