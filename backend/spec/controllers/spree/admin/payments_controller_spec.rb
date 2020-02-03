@@ -100,6 +100,18 @@ module Spree
               expect(assigns[:payment_methods]).to be_empty
             end
           end
+
+          it "loads the payment methods in order" do
+            check = create :check_payment_method, position: 2
+            credit_card = create :payment_method, position: 1
+
+            get :new, params: { order_id: order.number }
+
+            expect(assigns(:payment_methods)).to eq [
+              credit_card, check
+            ]
+            expect(assigns(:payment_method)).to eq credit_card
+          end
         end
       end
 
