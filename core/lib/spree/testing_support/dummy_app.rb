@@ -44,20 +44,20 @@ module DummyApp
   end
 
   class Application < ::Rails::Application
-    config.eager_load                                 = false
-    config.cache_classes                              = true
-    config.cache_store                                = :memory_store
-    config.serve_static_assets                        = true
-    config.public_file_server.headers                 = { 'Cache-Control' => 'public, max-age=3600' }
-    config.whiny_nils                                 = true
-    config.consider_all_requests_local                = true
+    config.eager_load = false
+    config.cache_classes = true
+    config.cache_store = :memory_store
+    config.serve_static_assets = true
+    config.public_file_server.headers = { 'Cache-Control' => 'public, max-age=3600' }
+    config.whiny_nils = true
+    config.consider_all_requests_local = true
     config.action_controller.allow_forgery_protection = true
-    config.action_controller.perform_caching          = false
-    config.action_dispatch.show_exceptions            = false
-    config.active_support.deprecation                 = :stderr
-    config.action_mailer.delivery_method              = :test
-    config.active_support.deprecation                 = :stderr
-    config.secret_key_base                            = 'SECRET_TOKEN'
+    config.action_controller.perform_caching = false
+    config.action_dispatch.show_exceptions = false
+    config.active_support.deprecation = :stderr
+    config.action_mailer.delivery_method = :test
+    config.active_support.deprecation = :stderr
+    config.secret_key_base = 'SECRET_TOKEN'
 
     config.action_controller.default_protect_from_forgery = true
     unless RAILS_6_OR_ABOVE
