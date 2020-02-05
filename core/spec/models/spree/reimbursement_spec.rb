@@ -275,4 +275,30 @@ RSpec.describe Spree::Reimbursement, type: :model do
       expect { subject }.to change { reimbursement.refunds.count }.by(1)
     end
   end
+
+  describe '#store_credit_category' do
+    let(:reimbursement) { create(:reimbursement) }
+
+    before do
+      create(:store_credit_category, name: 'foo')
+      create(:store_credit_category, :reimbursement)
+    end
+
+    context 'when using the legacy version' do
+      before do
+        stub_spree_preferences(use_legacy_store_credit_reimbursement_category_name: true)
+      end
+
+      it 'issues a deprecation warning and returns the first category created' do
+        expect(Spree::StoreCreditCategory).to receive(:reimbursement_category_name)
+        expect(Spree::Deprecation).to receive(:warn)
+        expect(reimbursement.store_credit_category.name).to eq('foo')
+      end
+    end
+
+    it 'fetches the the default reimbursement store category' do
+      expect(Spree::Config.use_legacy_store_credit_reimbursement_category_name).to eq(false)
+      expect(reimbursement.store_credit_category.name).to eq('Reimbursement')
+    end
+  end
 end

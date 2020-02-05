@@ -16,4 +16,26 @@ RSpec.describe Spree::StoreCreditCategory, type: :model do
       it { expect(store_credit_category).not_to be_non_expiring }
     end
   end
+
+  describe '.reimbursement_category' do
+    it 'raises a dreprecation warning' do
+      allow(Spree::Deprecation).to receive(:warn)
+
+      described_class.reimbursement_category(Spree::Reimbursement.new)
+
+      expect(Spree::Deprecation).to have_received(:warn)
+        .with(/reimbursement_category /, any_args)
+    end
+  end
+
+  describe '.reimbursement_category_name' do
+    it 'raises a dreprecation warning' do
+      allow(Spree::Deprecation).to receive(:warn)
+
+      described_class.reimbursement_category_name
+
+      expect(Spree::Deprecation).to have_received(:warn)
+        .with(/reimbursement_category_name /, any_args)
+    end
+  end
 end
