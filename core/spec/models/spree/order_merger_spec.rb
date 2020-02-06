@@ -135,7 +135,7 @@ module Spree
         expect(order_1.line_items.count).to eq(2)
 
         expect(order_1.item_count).to eq 2
-        expect(order_1.item_total).to eq order_1.line_items.map(&:amount).sum
+        expect(order_1.item_total).to eq order_1.line_items.sum(&:amount)
 
         # No guarantee on ordering of line items, so we do this:
         expect(order_1.line_items.pluck(:quantity)).to match_array([1, 1])

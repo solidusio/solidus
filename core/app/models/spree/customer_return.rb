@@ -25,11 +25,11 @@ module Spree
     delegate :id, to: :order, prefix: true, allow_nil: true
 
     def total
-      return_items.map(&:total).sum
+      return_items.sum(&:total)
     end
 
     def total_excluding_vat
-      return_items.map(&:total_excluding_vat).sum
+      return_items.sum(&:total_excluding_vat)
     end
     alias pre_tax_total total_excluding_vat
     deprecate pre_tax_total: :total_excluding_vat, deprecator: Spree::Deprecation
