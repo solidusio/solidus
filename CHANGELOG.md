@@ -110,7 +110,7 @@ is not compliant with 2.2 anymore.
 - Use relative path to specify layouts path [#3335](https://github.com/solidusio/solidus/pull/3335) ([kennyadsl](https://github.com/kennyadsl))
 - Use default sass function to lighten colors [#3331](https://github.com/solidusio/solidus/pull/3331) ([mfrecchiami](https://github.com/mfrecchiami))
 - Style collapsing sidebar [#3322](https://github.com/solidusio/solidus/pull/3322) ([mfrecchiami](https://github.com/mfrecchiami))
-- Fix tab background color, too dark #3311 [#3320](https://github.com/solidusio/solidus/pull/3320) ([Ajmal](https://github.com/Ajmal))
+- Fix tab background color, too dark [#3320](https://github.com/solidusio/solidus/pull/3320) ([Ajmal](https://github.com/Ajmal))
 - Added empty cart button in admin cart [#3316](https://github.com/solidusio/solidus/pull/3316) ([ericsaupe](https://github.com/ericsaupe))
 - Making taxon form to render attachment definitions dynamically [#3308](https://github.com/solidusio/solidus/pull/3308) ([softr8](https://github.com/softr8))
 - Fix hook attr name for settings tab item in admin [#3301](https://github.com/solidusio/solidus/pull/3301) ([cedum](https://github.com/cedum))
