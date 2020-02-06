@@ -204,21 +204,41 @@ module Spree
       end
 
       def gateway_error(error)
-        if error.is_a? ActiveMerchant::Billing::Response
-          text = error.params['message'] || error.params['response_reason_text'] || error.message
-        elsif error.is_a? ActiveMerchant::ConnectionError
-          text = I18n.t('spree.unable_to_connect_to_gateway')
-        else
-          text = error.to_s
-        end
-        logger.error(I18n.t('spree.gateway_error'))
-        logger.error("  #{error.to_yaml}")
-        raise Core::GatewayError.new(text)
+        message, log = case error
+                       when ActiveMerchant::Billing::Response
+                          [
+                            error.params['message'] || error.params['response_reason_text'] || error.message,
+                            basic_response_info(error)
+                          ]
+                        when ActiveMerchant::ConnectionError
+                          [I18n.t('spree.unable_to_connect_to_gateway')] * 2
+                        else
+                          [error.to_s, error]
+                        end
+
+        logger.error("#{I18n.t('spree.gateway_error')}: #{log}")
+        raise Core::GatewayError.new(message)
       end
 
       # The unique identifier to be passed in to the payment gateway
       def gateway_order_id
         "#{order.number}-#{number}"
+      end
+
+      # The gateway response information without the params since the params
+      # can contain PII.
+      def basic_response_info(response)
+        {
+          message: response.message,
+          test: response.test,
+          authorization: response.authorization,
+          avs_result: response.avs_result,
+          cvv_result: response.cvv_result,
+          error_code: response.error_code,
+          emv_authorization: response.emv_authorization,
+          gateway_order_id: gateway_order_id,
+          order_number: order.number
+        }
       end
     end
   end

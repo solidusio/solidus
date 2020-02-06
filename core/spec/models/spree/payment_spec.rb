@@ -38,7 +38,12 @@ RSpec.describe Spree::Payment, type: :model do
   end
 
   let(:failed_response) do
-    ActiveMerchant::Billing::Response.new(false, '', {}, {})
+    ActiveMerchant::Billing::Response.new(
+      false,
+      'Declined',
+      { transaction: {} },
+      {}
+    )
   end
 
   context '.risky' do
@@ -318,10 +323,21 @@ RSpec.describe Spree::Payment, type: :model do
       end
 
       context "if unsuccessful" do
-        it "should mark payment as failed" do
+        before do
           allow(gateway).to receive(:authorize).and_return(failed_response)
+        end
+
+        it "should mark payment as failed" do
           expect(payment).to receive(:failure)
           expect(payment).not_to receive(:pend)
+          expect {
+            payment.authorize!
+          }.to raise_error(Spree::Core::GatewayError)
+        end
+
+        it "should not log response params" do
+          expect(Rails.logger).to receive(:error).with(/Gateway Error/)
+          expect(Rails.logger).to_not receive(:error).with(/transaction/)
           expect {
             payment.authorize!
           }.to raise_error(Spree::Core::GatewayError)
@@ -387,6 +403,14 @@ RSpec.describe Spree::Payment, type: :model do
           expect { payment.purchase! }.to raise_error(Spree::Core::GatewayError)
           expect(payment.capture_events.count).to eq(0)
         end
+
+        it "should not log response params" do
+          expect(Rails.logger).to receive(:error).with(/Gateway Error/)
+          expect(Rails.logger).to_not receive(:error).with(/transaction/)
+          expect {
+            payment.purchase!
+          }.to raise_error(Spree::Core::GatewayError)
+        end
       end
     end
 
@@ -442,11 +466,22 @@ RSpec.describe Spree::Payment, type: :model do
         end
 
         context "if unsuccessful" do
-          it "should not make payment complete" do
+          before do
             allow(gateway).to receive_messages capture: failed_response
+          end
+
+          it "should not make payment complete" do
             expect(payment).to receive(:failure)
             expect(payment).not_to receive(:complete)
             expect { payment.capture! }.to raise_error(Spree::Core::GatewayError)
+          end
+
+          it "should not log response params" do
+            expect(Rails.logger).to receive(:error).with(/Gateway Error/)
+            expect(Rails.logger).to_not receive(:error).with(/transaction/)
+            expect {
+              payment.capture!
+            }.to raise_error(Spree::Core::GatewayError)
           end
         end
       end
@@ -498,6 +533,14 @@ RSpec.describe Spree::Payment, type: :model do
           expect(payment.state).to eq('pending')
           expect(payment.response_code).to eq('abc')
         end
+
+        it "should not log response params" do
+          expect(Rails.logger).to receive(:error).with(/Gateway Error/)
+          expect(Rails.logger).to_not receive(:error).with(/transaction/)
+          expect {
+            subject
+          }.to raise_error(Spree::Core::GatewayError)
+        end
       end
     end
 
@@ -539,10 +582,21 @@ RSpec.describe Spree::Payment, type: :model do
       end
 
       context "if unsuccessful" do
-        it "should not void the payment" do
+        before do
           allow(gateway).to receive_messages void: failed_response
+        end
+
+        it "should not void the payment" do
           expect(payment).not_to receive(:void)
           expect { payment.void_transaction! }.to raise_error(Spree::Core::GatewayError)
+        end
+
+        it "should not log response params" do
+          expect(Rails.logger).to receive(:error).with(/Gateway Error/)
+          expect(Rails.logger).to_not receive(:error).with(/transaction/)
+          expect {
+            payment.void_transaction!
+          }.to raise_error(Spree::Core::GatewayError)
         end
       end
 
