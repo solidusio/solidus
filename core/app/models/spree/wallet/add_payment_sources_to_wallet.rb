@@ -24,14 +24,19 @@ class Spree::Wallet::AddPaymentSourcesToWallet
       # add valid sources to wallet and optionally set a default
       if sources.any?
         # arbitrarily sort by id for picking a default
-        wallet_payment_sources = sources.sort_by(&:id).map do |source|
+        sources.sort_by(&:id).each do |source|
           order.user.wallet.add(source)
         end
 
-        order.user.wallet.default_wallet_payment_source =
-          wallet_payment_sources.last
+        make_default
       end
     end
+  end
+
+  protected
+
+  def make_default
+    order.user.wallet.default_wallet_payment_source = order.user.wallet_payment_sources.last
   end
 
   private
