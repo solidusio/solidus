@@ -15,10 +15,10 @@ Spree.Views.Cart.EmptyCartButton = Backbone.View.extend({
     }
 
     this.model.empty({
-      success: () => {
+      success: function () {
         this.collection.reset()
         this.collection.push({})
-      }
+      }.bind(this)
     })
   },
 
