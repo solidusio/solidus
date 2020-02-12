@@ -999,7 +999,10 @@ paths:
         '422':
           $ref: '#/responses/delete-restriction'
       summary: Remove address from user address book
-      description: Removes an address from a user's address book.
+      description: |-
+        Removes an address from a user's address book.
+
+        **Note:** Rather than delete a `Spree::UserAddress` record this action set its `archived` attribute to `true`.
       operationId: remove-address-from-user-address-book
       tags:
         - Address books
@@ -1030,7 +1033,11 @@ paths:
           name: body
           schema:
             $ref: '#/definitions/address-book-input'
-      description: Updates a user's address book.
+      description: |-
+        Updates a user's address book.
+
+        **Note:** if the passed `id` matches an existing `address` a new `Spree::Address` record will be created and the matched `address` `archived` on `Spree::UserAddress`. For a similar logic, if the passed `id` matches an existing `address` which is in `archived` state, the `Spree::UserAddress#archived` record will be restored to `false`.
+        See `user_address_book.rb` for further information.
       security:
         - api-key: []
   '/users/{user_id}/credit_cards':
@@ -1090,6 +1097,7 @@ paths:
         in: path
         type: string
         required: true
+        description: The order number
       - name: id
         in: path
         type: string
@@ -1152,6 +1160,7 @@ paths:
         in: path
         type: string
         required: true
+        description: The order number
     post:
       responses:
         '200':
@@ -1201,6 +1210,7 @@ paths:
         in: path
         type: string
         required: true
+        description: The order number
       - name: id
         in: path
         type: string
@@ -1270,6 +1280,7 @@ paths:
         in: path
         type: string
         required: true
+        description: The order number
     post:
       responses:
         '200':
@@ -1316,6 +1327,7 @@ paths:
         in: path
         type: string
         required: true
+        description: The order number
       - name: id
         in: path
         type: string
@@ -3350,6 +3362,7 @@ paths:
         in: path
         type: string
         required: true
+        description: The order number
       - name: id
         in: path
         type: string
@@ -3416,6 +3429,7 @@ paths:
         in: path
         type: string
         required: true
+        description: This is the coupon code
   '/orders/{order_number}/line_items/{id}':
     delete:
       responses:
@@ -3534,7 +3548,10 @@ paths:
         '422':
           $ref: '#/responses/unprocessable-entity'
       summary: Update checkout
-      description: Updates a checkout.
+      description: |-
+        Updates a checkout.
+
+        **Note:** In addition to the order update, this action always attempts to perform an order state machine transition which results in a `422` response if it cannot be transitioned.
       operationId: update-checkout
       tags:
         - Checkouts
@@ -3636,6 +3653,7 @@ paths:
         in: path
         type: string
         required: true
+        description: The order number
       - name: payment_id
         in: path
         type: string
@@ -3665,6 +3683,7 @@ paths:
         in: path
         type: string
         required: true
+        description: The order number
       - name: payment_id
         in: path
         type: string
@@ -3694,6 +3713,7 @@ paths:
         in: path
         type: string
         required: true
+        description: The order number
       - name: payment_id
         in: path
         type: string
@@ -3723,6 +3743,7 @@ paths:
         in: path
         type: string
         required: true
+        description: The order number
       - name: payment_id
         in: path
         type: string
@@ -3752,6 +3773,7 @@ paths:
         in: path
         type: string
         required: true
+        description: The order number
       - name: payment_id
         in: path
         type: string
@@ -3781,6 +3803,7 @@ paths:
         in: path
         type: string
         required: true
+        description: The order number
       - name: return_authorization_id
         in: path
         type: string
@@ -3811,6 +3834,7 @@ paths:
         in: path
         type: string
         required: true
+        description: The order number
   '/checkouts/{checkout_id}/complete':
     put:
       responses:
@@ -3845,6 +3869,7 @@ paths:
         in: path
         type: string
         required: true
+        description: The order number
   '/checkouts/{checkout_id}/next':
     put:
       responses:
@@ -3879,6 +3904,7 @@ paths:
         in: path
         type: string
         required: true
+        description: The order number
   /classifications:
     put:
       responses:
@@ -3892,7 +3918,10 @@ paths:
         '422':
           $ref: '#/responses/unprocessable-entity'
       summary: Update classification
-      description: Updates a classification.
+      description: |-
+        Updates a classification.
+
+        This method only updates the classification position.
       operationId: update-classification
       tags:
         - Classifications
@@ -3924,7 +3953,10 @@ paths:
         '422':
           $ref: '#/responses/unprocessable-entity'
       summary: Apply order coupon code
-      description: Applies a coupon code on the order.
+      description: |-
+        **Deprecated:** This method is deprecated. Please use `Spree::Api::CouponCodesController#create` endpoint instead.
+
+        Applies a coupon code on the order.
       operationId: apply-order-coupon-code
       tags:
         - Coupon codes
@@ -4362,6 +4394,7 @@ paths:
         in: path
         type: string
         required: true
+        description: The order number
   '/orders/{order_number}/coupon_codes':
     post:
       responses:
