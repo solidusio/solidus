@@ -48,6 +48,19 @@ Spree::Event.subscribe 'order_finalized' do |event|
 end
 ```
 
+When using the default event adapter it's possible to subscribe to multiple
+events using a regexp:
+
+```ruby
+Spree::Event.subscribe /.*\.spree$/ do |event|
+  puts "Event with name `#{event.name}` was just fired!"
+end
+```
+
+Please note that, unless you add explicitly the `.spree` suffix namespace,
+you will register to all ActiveSupportNotifications, including Rails internal
+ones.
+
 Another way to subscribe to events is creating a "subscriber" module that
 includes the `Spree::Event::Subscriber` module. For example:
 
