@@ -61,6 +61,7 @@ RSpec.configure do |config|
     Rails.cache.clear
   end
 
+  config.include ActiveSupport::Testing::Assertions
   config.include ActiveJob::TestHelper
 
   config.use_transactional_fixtures = true

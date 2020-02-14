@@ -41,6 +41,7 @@ RSpec.configure do |config|
     Rails.cache.clear
   end
 
+  config.include ActiveSupport::Testing::Assertions
   config.include ActiveJob::TestHelper
   config.include FactoryBot::Syntax::Methods
 end
