@@ -59,7 +59,6 @@ Spree::Core::Engine.routes.draw do
     end
     resources :option_values
 
-    resources :option_values, only: :index
     get '/orders/mine', to: 'orders#mine', as: 'my_orders'
     get "/orders/current", to: "orders#current", as: "current_order"
 
