@@ -5,42 +5,30 @@ set -e
 # Target postgresql. Override with: `env DB=sqlite bin/build`
 export DB=${DB:-postgresql}
 
-# Solidus defaults
-echo "Installing Solidus test dependencies"
-bundle check || bundle update --quiet
+bin/setup
 
-# Solidus API
 echo "***********************"
 echo "* Testing Solidus API *"
 echo "***********************"
-cd api
-bundle exec rspec spec
+bin/rspec api/spec
 
-# Solidus Backend
 echo "***************************"
 echo "* Testing Solidus Backend *"
 echo "***************************"
-cd ../backend
-bundle exec rspec spec
-bundle exec teaspoon --require=../backend/spec/teaspoon_env.rb
+bin/rspec backend/spec
+bundle exec teaspoon --require=backend/spec/teaspoon_env.rb
 
-# Solidus Core
 echo "************************"
 echo "* Testing Solidus Core *"
 echo "************************"
-cd ../core
-bundle exec rspec spec
+bin/rspec core/spec
 
-# Solidus Frontend
 echo "****************************"
 echo "* Testing Solidus Frontend *"
 echo "****************************"
-cd ../frontend
-bundle exec rspec spec
+bin/rspec frontend/spec
 
-# Solidus Sample
 echo "**************************"
 echo "* Testing Solidus Sample *"
 echo "**************************"
-cd ../sample
-bundle exec rspec spec
+bin/rspec sample/spec

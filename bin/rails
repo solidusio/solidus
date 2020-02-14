@@ -1,0 +1,18 @@
+#!/usr/bin/env ruby
+
+app_root = File.expand_path "#{__dir__}/../sandbox"
+
+unless File.exist? app_root
+  system "#{__dir__}/sandbox" or begin
+    warn "Automatic creation of the sandbox app failed"
+    exit 1
+  end
+end
+
+puts "Running Rails from: #{app_root}"
+Dir.chdir app_root
+
+require 'bundler'
+
+exec Bundler.unbundled_env, 'bin/rails', *ARGV
+

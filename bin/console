@@ -1,0 +1,54 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require "bundler/setup"
+require "solidus"
+
+module IRBSolidusHelpers
+  def dummy_app
+    @dummy_app ||= begin
+      print "Loading the dummy app..."
+      ENV['DATABASE_URL'] ||= 'sqlite3::memory:?pool=1'
+
+      require "spree/testing_support/dummy_app"
+
+      class << (Rails.application)
+        # Allow to run migrations from the console
+        def migrate!
+          ActiveRecord::Migrator.migrations_paths =
+            Rails.application.migration_railties.flat_map do |engine|
+              (engine.paths['db/migrate'] if engine.respond_to?(:paths)).to_a
+            end
+          ActiveRecord::Migration.verbose = false
+
+          # Prepare the db with a basic spree structure for LegacyUser
+          ActiveRecord::Base.connection.migration_context.run(:up, '20160101010000_solidus_one_four'.to_i)
+
+          ActiveRecord::Tasks::DatabaseTasks.migrate
+          self
+        end
+
+        # Avoid flooding the console with the original #inspect
+        def inspect
+          "#<#{self.class.name} root=#{root}>"
+        end
+      end
+
+      puts "done."
+      Rails.application
+    end
+  end
+
+  USAGE = <<~TXT
+    USAGE:
+      dummy_app             # Load the dummy app and return the Rails.application instance
+      dummy_app.initialize! # Initialize the dummy app
+      dummy_app.migrate!    # Run all the dummy app migrations
+  TXT
+end
+
+puts IRBSolidusHelpers::USAGE
+
+require "irb"
+IRB::ExtendCommandBundle.prepend IRBSolidusHelpers
+IRB.start(__FILE__)

@@ -12,7 +12,7 @@ Gemfile.lock
 Gemfile-custom
 log
 pkg
-sandbox
+/sandbox
 **/spec/dummy
 **/spec/examples.txt
 tmp
