@@ -38,12 +38,12 @@
           <%= return_item.display_amount %>
         </td>
         <td>
-          <span class="pill pill-<%= return_item.inventory_unit.state %>">
+          <%= render Spree::Admin::PillComponent, state: return_item.inventory_unit.state do %>
             <%= t(
               return_item.inventory_unit.state,
               scope: 'spree.inventory_states'
             ) %>
-          </span>
+          <% end %>
         </td>
         <td>
           <%= return_item.exchange_variant.try(:exchange_name) %>

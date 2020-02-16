@@ -20,12 +20,12 @@
         </td>
         <td><%= reimbursement.display_total %></td>
         <td>
-          <span class="pill pill-<%= reimbursement.reimbursement_status %>">
+          <%= render Spree::Admin::PillComponent, state: reimbursement.reimbursement_status do %>
             <%= t(
               reimbursement.reimbursement_status,
               scope: 'spree.reimbursement_states'
             ) %>
-          </span>
+          <% end %>
         </td>
         <td><%= pretty_time(reimbursement.created_at) %></td>
         <td class="actions">

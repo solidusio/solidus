@@ -24,6 +24,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'solidus_api', s.version
   s.add_dependency 'solidus_core', s.version
 
+  s.add_dependency 'actionview-component', '~> 1.3'
   s.add_dependency 'coffee-rails'
   s.add_dependency 'font-awesome-rails', '~> 4.0'
   s.add_dependency 'jbuilder', '~> 2.8'
