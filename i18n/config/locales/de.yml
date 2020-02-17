@@ -134,6 +134,10 @@ de:
         display_on: Angezeigter Wert
         name: Name
         type: Anbieter
+      spree/price:
+        amount: Preis
+        currency: Währung
+        is_default: im Augenblick gültig
       spree/product:
         available_on: Erhältlich ab
         cost_currency: Kostenwährung
@@ -386,8 +390,11 @@ de:
         one: Kreditkarte
         other: Kreditkarten
       spree/customer_return:
-        one: Kundenrückersendung
+        one: Kundenrücksendung
         other: Kundenrücksendungen
+      spree/image:
+        one: Bild
+        other: Bilder
       spree/inventory_unit:
         one: Inventarnummer
         other: Inventarnummern
@@ -414,6 +421,9 @@ de:
       spree/payment_method:
         one: Zahlungsart
         other: Zahlungsarten
+      spree/price:
+        one: Preis
+        other: Preise
       spree/product:
         one: Produkt
         other: Produkte
@@ -558,6 +568,7 @@ de:
     add_state: Bundesland hinzufügen
     add_stock: Lager hinzufügen
     add_stock_management: Lagerverwaltung hinzufügen
+    add_taxon: Klassifizierung hinzufügen
     add_to_cart: In den Warenkorb
     add_variant: Variante hinzufügen
     additional_item: Kosten für weiteren Artikel
@@ -577,8 +588,86 @@ de:
     adjustment_successfully_closed: Anpassung wurde erfolgreich geschlossen!
     adjustment_successfully_opened: Anpassung wurde erfolgreich geöffnet!
     adjustment_total: Anpassungen Gesamt
+    adjustment_types: Anpassungsarten
     adjustments: Anpassungen
     admin:
+      images:
+        index:
+          choose_files: Wähle Dateien zum Hochladen aus
+          drag_and_drop: oder per Drag and Drop hier
+          image_process_failed: Server konnte das Bild nicht verarbeiten
+          upload_images: Bilder Hochladen
+      prices:
+        any_country: Jedes Land
+        edit:
+          edit_price: Preis bearbeiten
+        index:
+          amount_greater_than: Betrag größer als
+          amount_less_than: Betrag kleiner als
+          new_price: Neuer Preis
+        new:
+          new_price: Neuer Preis
+      promotions:
+        actions:
+          calculator_label: Berechnet von
+        activations_edit:
+          auto: Alle Bestellungen werden versuchen diese Werbeaktion zu benutzen.
+          multiple_codes_html: Diese Werbeaktion benutzt %{count} Promotion Codes
+          single_code_html: 'Diese Werbeaktion benutzt den Promotion Code: <code>%{code}</code>'
+        activations_new:
+          auto: Auf alle Bestellungen anwenden
+          multiple_codes: Mehrere Promotion Codes
+          single_code: Ein Promotion Code
+        form:
+          activation: Aktivierung
+          expires_at_placeholder: Nie
+          general: Allgemein
+          starts_at_placeholder: Sofort
+      store_credits:
+        add: Guthaben hinzufügen
+        amount_authorized: Berechtigt
+        amount_credited: Gutgeschrieben
+        amount_used: Benutzt
+        back_to_edit: Zurück zum Bearbeiten
+        back_to_store_credit_list: Zurück zur Liste der Guthaben
+        back_to_user_list: Zurück zur Benutzerliste
+        change_amount: Betrag ändern
+        created_at: Ausgestellt am
+        created_by: Angelegt von
+        credit_type: Typ
+        current_balance: 'Aktuelles Guthaben:'
+        edit: Guthaben bearbeiten
+        edit_amount: Guthaben-Betrag bearbeiten
+        errors:
+          amount_authorized_exceeds_total_credit: " überschreitet das erhältliche Guthaben"
+          amount_used_cannot_be_greater: kann nicht größer als der gutgeschriebene Betrag sein
+          amount_used_not_zero: ist größer als Null. Guthaben kann nicht gelöscht werden.
+          cannot_be_modified: kann nicht geändert werden
+          cannot_change_used_store_credit: Guthaben, dass beansprucht wurde, kann nicht geändert werden
+          update_reason_required: Ein Grund für diese Änderung muss angegeben werden
+          store_credit_reason_required: Ein Grund für diese Änderung muss angegeben werden
+        history: Guthaben Historie
+        invalidate_store_credit: Guthaben ungültig erklären
+        invalidated: ungültig erklärt
+        issued_on: Ausgestellt am
+        memo: Memo
+        new: Neues Guthaben
+        no_store_credit_selected: Kein Guthaben wurde ausgewählt
+        payment_originator: 'Zahlung - Bestellung #%{order_number}'
+        reason_for_updating: Grund für Aktualisierung
+        refund_originator: 'Rückerstatten - Bestellung #%{order_number}'
+        resource_name: Guthaben
+        select_amount_store_credit_reason: Gib einen Grund an, um die Summe zu aktualisieren
+        select_amount_update_reason: Gib einen Grund an, um die Summe zu aktualisieren
+        select_reason: Gib einen Grund für dieses Guthaben an
+        total_unused: Gesamt unbenutzt
+        type_html_header: Kreditart
+        unable_to_create: Guthaben konnte nicht angelegt werden
+        unable_to_delete: Guthaben konnte nicht gelöscht werden
+        unable_to_invalidate: Guthaben konnte nicht ungültig gemacht werden
+        unable_to_update: Guthaben konnte nicht aktualisiert werden
+        user_originator: Benutzer - %{email}
+        view: Guthaben anschauen
       order:
         events:
           admin:
@@ -593,6 +682,7 @@ de:
         checkout: Zur Kasse
         configuration: Konfiguration
         general: Allgemein
+        display_order: Darstellungsreihenfolge
         option_types: Optionen
         orders: Bestellungen
         overview: Übersicht
@@ -603,12 +693,23 @@ de:
         properties: Eigenschaften
         prototypes: Prototypen
         reports: Berichte
+        taxonomies: Klassifikationen
+        taxons: Klassifikation
+        users: Benutzer
+        checkout: Zur Kasse
+        general: Allgemein
+        stores: Shops
+        payments: Zahlungen
+        taxes: Steuern
         settings: Einstellungen
         shipping: Lieferung
+        zones: Gebiete
         stock: Lager
         taxonomies: Klassifikationen
         taxons: Klassifikation
         users: Benutzer
+      taxons:
+        display_order: Darstellungsreihenfolge
       user:
         account: Konto
         addresses: Adressen
@@ -620,7 +721,20 @@ de:
         order_history: Bestellhistorie
         order_num: Bestellnummer
         orders: Bestellungen
+        store_credit: Guthaben
         user_information: Benutzerinformationen
+      users:
+        edit:
+          api_access: API Zugriff
+          clear_key: Schlüssel löschen
+          confirm_clear_key: Sind Sie sicher, dass Sie den API Schlüssel löschen wollen? Das wird den bisherigen Schlüssel ungültig machen.
+          confirm_regenerate_key: Sind Sie sicher, dass sie den API Schlüssel dieses Benutzer regenerieren wollen? Das wird den bisherigen Schlüssel ungültig machen.
+          generate_key: API Schlüssel generieren
+          key: Schlüssel
+          no_key: Kein Schlüssel
+          regenerate_key: Schlüssel neu generieren
+        user_page_actions:
+          create_order: Bestellung für diesen Benutzer anlegen
     administration: Verwaltung
     advertise: Bewerben
     agree_to_privacy_policy: Datenschutzerklärung akzeptieren
@@ -672,16 +786,19 @@ de:
     avs_response: Ergebnis der Adressprüfung
     back: Zurück
     back_end: Backend
+    back_to_images_list: Zurück zur Bilderliste
     back_to_payment: Zurück zur Zahlung
     back_to_resource_list: Zurück zur Bestellliste
     back_to_rma_reason_list: Zurück zur Rücksendeliste
     back_to_stock_locations_list: Zurück zur Lagerstandort Liste
     back_to_stock_movements_list: Zurück zur Bestandsführung Liste
     back_to_store: Zurück zum Shop
+    back_to_taxonomies_list: Zurück zur Liste der Klassifizierungen
     back_to_users_list: Zurück zur Benutzerliste
     backorder: Nachlieferung
     backorderable: Nachbestellbar
     backorderable_default: Nachbestellbar (standard)
+    backorderable_header: Nachbestellbar
     backordered: Nachbestellt
     backorders_allowed: Nachbestellt (standard)
     balance_due: Soll
@@ -693,8 +810,7 @@ de:
     both: beides
     calculated_reimbursements: Errechnete Vergütung
     calculator: Rechner
-    calculator_settings_warning: Wenn Sie den Berechungs-Typ ändern, müssen Sie erst speichern, bevor Sie die Berechnungs-Einstellungen bearbeiten
-      können
+    calculator_settings_warning: Wenn Sie den Berechnungs-Typ ändern, müssen Sie erst speichern, bevor Sie die Berechnungs-Einstellungen bearbeiten können
     cancel: abbrechen
     cancel_inventory: Inventar löschen
     canceled: Storniert
@@ -720,6 +836,7 @@ de:
       other: Zwischensumme (%{count} Artikel)
     categories: Kategorien
     category: Kategorie
+    character_limit: Begrenzung von 255 Zeichen
     charged: Berechnet
     check_for_spree_alerts: Auf Warnungen von Spree prüfen
     checkout: Zur Kasse
@@ -772,9 +889,10 @@ de:
     coupon_code_max_usage: Limit für Gutschein-Codes erreicht
     coupon_code_not_eligible: Der Gutschein-Code kann nicht auf diese Bestellung angewendet werden
     coupon_code_not_found: Der eingegebene Gutschein-Code existiert nicht. Bitte versuchen Sie es noch einmal.
-    coupon_code_unknown_error: Der Gutschein-Code verursachte ein unbekannntes Problem
+    coupon_code_unknown_error: Der Gutschein-Code verursachte ein unbekanntes Problem
     create: Erstellen
     create_a_new_account: Neues Konto erstellen
+    create_one: Eine(s) anlegen
     create_new_order: Neuer Bestellung
     create_reimbursement: Vergütung beantragen
     created_at: Erstellt am
@@ -784,7 +902,7 @@ de:
     credit_cards: Kreditkarten
     credit_owed: Betrag ausstehend
     credits: Gutschrift
-    currency: Currency
+    currency: Währung
     currency_decimal_mark: Dezimaltrennzeichen
     currency_settings: Währungseinstellungen
     currency_symbol_position: Währungssymbol vor oder nach dem Betrag anzeigen?
@@ -804,8 +922,7 @@ de:
         app_id: App ID
         app_token: App Token
         currently_unavailable: Jirafe ist zurzeit nicht erreichbar. Spree stellt automatisch eine Verbindung her, sobald es wieder verfügbar ist.
-        explanation: Die unten stehenden Felder sind evtl. schon ausgefüllt, wenn Sie die Registrierung mit Jirafe im Admin-Dashboard gewählt
-          haben.
+        explanation: Die unten stehenden Felder sind evtl. schon ausgefüllt, wenn Sie die Registrierung mit Jirafe im Admin-Dashboard gewählt haben.
         header: Jirafe Analytics Einstellungen
         site_id: Seiten ID
         token: Token
@@ -824,7 +941,7 @@ de:
     delete: Löschen
     delete_from_taxon: Von Klassifikation löschen
     deleted: Gelöscht
-    deleted_variants_present: In dieser Bestellung sind Artikel enhalten welche nicht länger verfügbar sind.
+    deleted_variants_present: In dieser Bestellung sind Artikel enthalten welche nicht länger verfügbar sind.
     delivery: Versand
     depth: Tiefe
     description: Beschreibung
@@ -834,8 +951,10 @@ de:
     discontinue_on: Eingestellt am
     discontinued: Eingestellt
     discount_amount: Skonto
+    discount_rules: Regeln für Discount
     dismiss_banner: Nein. Danke! Ich bin nicht interessiert, bitte diese Nachricht nicht erneut anzeigen.
     display: Angezeigter Wert
+    download_promotion_codes_list: Code Liste herunterladen
     display_currency: Währung anzeigen
     doesnt_track_inventory: Bestandsverfolgung ist deaktiviert
     edit: Bearbeiten
@@ -892,14 +1011,12 @@ de:
           signup: Kundenregistrierung
     exceptions:
       count_on_hand_setter: >-
-        Kann count_on_hand nicht manuell setzten, da es automatisch durch das recalculate_count_on_hand callback gesetzt wird. Bitte `update_column(:count_on_hand,
-        value)` verwenden.
+        Kann count_on_hand nicht manuell setzten, da es automatisch durch das recalculate_count_on_hand callback gesetzt wird. Bitte `update_column(:count_on_hand, value)` verwenden.
     exchange_for: Tauschen mit
     excl: Ausschl.
     existing_shipments: Bestehende Sendungen
     expedited_exchanges_warning: >-
-      Sämtliche Änderungen werden dem Kunden ab Speicherung sofort zugesendet. Dem Kunden wird der Gesamtwert erstattet, insofern er das bestellte
-      Produkt innerhalb %{days_window} Tagen zurück sendet.
+      Sämtliche Änderungen werden dem Kunden ab Speicherung sofort zugesendet. Dem Kunden wird der Gesamtwert erstattet, insofern er das bestellte Produkt innerhalb %{days_window} Tagen zurück sendet.
     expiration: Verfallsdatum
     extension: Erweiterung
     failed_payment_attempts: Fehlgeschlagene Zahlversuche
@@ -933,6 +1050,36 @@ de:
     guest_user_account: Ohne Registrierung bestellen
     has_no_shipped_units: hat keine gelieferten Einheiten
     height: Höhe
+    hints:
+      spree/price:
+        country: 'Legt fest, für welches Land der Preis gültig ist.<br>Voreinstellung: Alle Länder'
+        master_variant: 'Das Ändern des allgemeinen Preises ändert nicht die Preise der Varianten unten, wird aber benutzt für neue Varianten'
+        options: 'Diese Optionen werden benutzt, um Varianten in der Variantentabelle hinzuzufügen. Sie können im Variantenreiter geändert werden.'
+      spree/product:
+        available_on: 'Setzt das Erhältlichkeitsdatum des Artikels. Wenn diese Datum leer ist oder in der Zukunft liegt, so ist das Produkt nicht im Shop zu sehen.'
+        promotionable: 'Hier wird festgelegt, ob Werbeaktionen auf diesen Artikel angewendet werden können.<br>Voreinstellung: ja'
+        shipping_category: 'Hier wird festgelegt, welche Art von Lieferung dieser Artikel benötigt.<br/>Voreinstellung: Default'
+        tax_category: 'Hier wird festgelegt, welche Art von Besteuerung dieser Artikel benötigt.<br/>Voreinstellung: Keine'
+      spree/promotion:
+        expires_at: 'Hier wird festgelegt, wann die Werbeaktion abläuft.<br/>Wenn nichts festgelegt wird, läuft die Werbeaktion nie aus.'
+        starts_at: 'Hier wird festgelegt, wann die Werbeaktion beginnt.<br/>Wenn nichts festgelegt wird, beginnt die Werbeaktion sofort.'
+      spree/stock_location:
+        active: 'Hier wird festgelegt, ob Bestand aus diesem Lagerstandort benutzt werden kann um Artikel zu versenden.<br/>Voreinstellung: ja'
+        backorderable_default: 'Wenn ausgewählt, können Lagerartikel von diesem Standort per Voreinstellung nachbestellt werden.<br/> Voreinstellung: Nein'
+        check_stock_on_transfer: 'Wenn ausgewählt, werden die Lagerbestände beim Lagertransfer geprüft.<br/> Voreinstellung: ja'
+        fulfillable: 'Wenn nicht ausgewählt, müssen Lagerartikel von diesem Standort nicht vorhanden sein.<br/> Voreinstellung: ja'
+        propagate_all_variants: 'Wenn ausgewählt, wird ein Lagerartikel in diesem Lagerstandort kreiert.<br/> Voreinstellung: ja'
+        restock_inventory: 'Wenn ausgewählt, können zurückgegebene Artikel zu dem Bestand dieses Standorts wieder hinzugefügt werden.<br/> Voreinstellung: ja'
+      spree/store:
+        available_locales: 'Hier wird festgelegt, welche Locales für die Besucher des Shops verfügbar sind.'
+        cart_tax_country_iso: 'Hier wird festgelegt welches Land für Steuern auf Warenkörbe verwendet wird (bei Bestellungen, die noch keine Adresse haben).<br/> Voreinstellung: Keins.'
+      spree/tax_rate:
+        validity_period: 'Hier wird der Gültigkeitszeitraum, in der der Steuersatz auf Artikel angewendet wird, festgelegt.<br /> Wenn kein Startdatum festgelegt ist, so wird der Steuersatz ab sofort angewendet.<br /> Wenn kein Enddatum festgelegt ist, so wird der Steuersatz für immer gültig sein.'
+      spree/variant:
+        deleted: 'Gelöschte Variante'
+        deleted_explanation: Dies Variante wurde entfernt am %{date}.
+        deleted_explanation_with_replacement: Dies Variante wurde entfernt am %{date}. Sie wurde mit einer Variante gleicher ID ersetzt.
+        tax_category: 'Hier wird festgelegt, welche Art von Besteuerung bei dieser Variante angewendet wird.<br/>Voreinstellung: Es wird die gleiche Steuerkategorie wie beim zugehörigen Produkt verwendet.'
     hide_cents: Centbeträge ausblenden
     home: Home
     i18n:
@@ -963,12 +1110,12 @@ de:
       one: und ein weiteres
       other: und %{count} weitere
     info_product_has_multiple_skus: 'Dieses Produkt hat %{count} Varianten:'
-    instructions_to_reset_password: 'Füllen Sie das untenstehende Formular aus und folgen Sie den Anweisungen um Ihr neues Passwort per E-Mail
+    instructions_to_reset_password: 'Füllen Sie das unten stehende Formular aus und folgen Sie den Anweisungen um Ihr neues Passwort per E-Mail
       zu erhalten:'
     insufficient_stock: Nicht genügend auf Lager. Nur noch %{on_hand} verbleibend.
-    insufficient_stock_lines_present: In dieser Bestellung haben div. Artikelpositionen eine nichtvalide Stückzahl.
-    intercept_email_address: Email-Adresse deaktivieren
-    intercept_email_instructions: Email-Empfänger überschreiben und mit dieser Adresse ersetzen.
+    insufficient_stock_lines_present: In dieser Bestellung haben div. Artikelpositionen eine nicht valide Stückzahl.
+    intercept_email_address: E-Mail-Adresse deaktivieren
+    intercept_email_instructions: E-Mail-Empfänger überschreiben und mit dieser Adresse ersetzen.
     internal_name: Interne Bezeichnung
     invalid_credit_card: Falsche Kreditkarte
     invalid_exchange_variant: Falsche Umtauschvariante
@@ -985,7 +1132,7 @@ de:
       returned: zurück erstattet
       shipped: Ausgeliefert
     is_not_available_to_shipment_address: ist nicht erhältlich für Lieferadresse
-    iso_name: Iso-Name
+    iso_name: ISO-Name
     item: Artikel
     item_description: Artikelbeschreibung
     item_total: Artikel gesamt
@@ -1001,7 +1148,6 @@ de:
     items_to_be_reimbursed: Zu vergütende Artikel
     jirafe: Jirafe
     landing_page_rule:
-      must_have_visited_path: Muss benutzen Pfad haben
       path: Pfad
     last_name: Nachname
     last_name_begins_with: Nachname beginnt mit
@@ -1011,7 +1157,7 @@ de:
     list: Liste
     loading: Laden
     loading_tree: Loading tree. Please wait…
-    locale_changed: Sprache geändert
+    locale_changed: Locale geändert
     locale_not_changed: Locale wurde nicht geändert
     location: Standort
     lock: Sperren
@@ -1027,11 +1173,13 @@ de:
     logs: Logs
     look_for_similar_items: Ähnliche Artikel
     make_refund: Gutschrift erstellen
-    make_sure_the_above_reimbursement_amount_is_correct: Stellen Sie sicher, dass die obrige Summe der Vergütung korrekt ist!
+    make_sure_the_above_reimbursement_amount_is_correct: Stellen Sie sicher, dass die obige Summe der Vergütung korrekt ist!
     manage_promotion_categories: Werbungskategorien editieren.
+    manage_stock: Lagerverwaltung
     manage_variants: Varianten editieren
     manual_intervention_required: Manuelles eingreifen erforderlich
     master_price: Verkaufspreis (netto)
+    master_sku: Artikelnummer
     match_choices:
       all: Alle
       none: Keins
@@ -1043,7 +1191,8 @@ de:
     meta_title: Meta-Titel
     metadata: Metadaten
     minimal_amount: Mindestanzahl
-    missing_return_authorization: Fehlende Rückerstattungserlaubniss %{item_name}.
+    modify_stock_count: Modifizieren (+/-)
+    missing_return_authorization: Fehlende Rückerstattungserlaubnis %{item_name}.
     month: Monat
     more: Mehr
     move_stock_between_locations: Lager zwischen Standorten bewegen
@@ -1081,6 +1230,9 @@ de:
     new_stock_location: Neuer Lagerstandort
     new_stock_movement: Neue Lagerbewegung
     new_stock_transfer: Neuer Lagertransfer
+    new_store: Neuer Shop
+    new_store_credit: Neues Guthaben
+    new_store_credit_reason: Neuer Grund für Guthaben
     new_tax_category: Neue Steuer-Kategorie
     new_tax_rate: Neuer Steuersatz
     new_taxon: Neue Produktklasse
@@ -1091,12 +1243,16 @@ de:
     new_zone: Neues Gebiet
     next: weiter
     no_actions_added: Keine Aktionen hinzugefügt
+    no_images_found: Keine Bilder gefunden
     no_available_date_set: Verfügbarkeitsdatum nicht vorhanden
     no_payment_found: Keine Zahlung gefunden
     no_pending_payments: Keine ausstehenden Zahlungen
     no_products_found: Keine Produkte gefunden
     no_resource_found: Keine Einträge gefunden
     no_resource_found_link: Hinzufügen
+    no_promotions_found: Keine Werbeaktionen gefunden
+    no_resource: Keine %{resource} gefunden.
+    no_resource_found_html: Keine %{resource} gefunden, %{add_one_link}!
     no_results: Keine Ergebnisse
     no_returns_found: Keine Erstattung gefunden
     no_rules_added: Keine Regeln verfügbar
@@ -1209,7 +1365,7 @@ de:
     payment_method_not_supported: Zahlungsmethode wird nicht unterstützt
     payment_methods: Zahlungsmethoden
     payment_processing_failed: Die Bezahlung konnte nicht abgeschlossen werden, bitte überprüfen Sie Ihre Angaben.
-    payment_processor_choose_banner_text: Wenn Sie hilfe bei der Auswahl des Zahlungsabwicklers haben, bitte besuchen Sie
+    payment_processor_choose_banner_text: Wenn Sie Hilfe bei der Auswahl des Zahlungsabwicklers haben, bitte besuchen Sie
     payment_processor_choose_link: unsere Zahlungsabwickler-Seite
     payment_state: Zahlungsstatus
     payment_states:
@@ -1234,7 +1390,7 @@ de:
     place_order: Zahlungspflichtig bestellen
     please_define_payment_methods: Bitte definieren Sie zuerst mindestens eine Zahlungsmethode.
     please_enter_reasonable_quantity: Bitte geben Sie eine zumutbare Menge ein
-    populate_get_error: Da ist etwas schief gelaufen. Bitte versuchen sie den Artikel erneut in den Warenkob zu tun.
+    populate_get_error: Da ist etwas schief gelaufen. Bitte versuchen sie den Artikel erneut in den Warenkorb zu tun.
     powered_by: Unterstützt von
     pre_tax_amount: Vorsteuer Zwischensumme
     pre_tax_refund_amount: Vorsteuer Gutschrift
@@ -1366,7 +1522,7 @@ de:
     rejected: abgelehnt
     remember_me: Auf diesem Computer speichern
     remove: Entfernen
-    rename: Rename
+    rename: Umbenennen
     report: Bericht
     reports: Berichte
     resellable: Wiederverkäuflich
@@ -1405,6 +1561,7 @@ de:
     sales_total: Gesamtumsatz
     sales_total_description: Gesamtsumme aller Bestellungen
     sales_totals: Gesamtumsätze
+    save_and_continue: Speichern und weiter
     save_my_address: Adresse speichern
     say_no: false
     say_yes: true
@@ -1489,8 +1646,7 @@ de:
     source: Quelle
     special_instructions: Spezielle Anweisungen
     split: Aufteilen
-    spree_gateway_error_flash_for_checkout: Es gab Probleme mit Ihren Zahlungsinformationen. Bitte überprüfen Sie Ihre Angaben und probieren Sie
-      es erneut.
+    spree_gateway_error_flash_for_checkout: Es gab Probleme mit Ihren Zahlungsinformationen. Bitte überprüfen Sie Ihre Angaben und probieren Sie es erneut.
     ssl:
       change_protocol: Protokoll wechseln
     start: Von
@@ -1537,7 +1693,7 @@ de:
     stock_location: Lagerstandort
     stock_location_info: Lagerstandort Info
     stock_locations: Lagerstandorte
-    stock_locations_need_a_default_country: Sie müssen erst ein standard Land einrichten bevor sie einen Lagerstandort erstellen können
+    stock_locations_need_a_default_country: Sie müssen erst ein Standard-Land einrichten bevor sie einen Lagerstandort erstellen können
     stock_management: Lagerverwaltung
     stock_management_requires_a_stock_location: Bitte erstellen Sie einen Lagerstandort um das Lager zu verwalten.
     stock_movements: Lagerbewegungen
@@ -1593,7 +1749,7 @@ de:
     test_mailer:
       test_email:
         greeting: Glückwunsch!
-        message: Wenn Sie diese Email empfangen, sind Ihre E-Mail-Einstellungen korrekt
+        message: Wenn Sie diese E-Mail empfangen, sind Ihre E-Mail-Einstellungen korrekt
         subject: Spree Test E-Mail
     test_mode: Testmodus
     thank_you_for_your_order: Vielen Dank für Ihre Bestellung
@@ -1623,7 +1779,7 @@ de:
     tree: Baum
     type: Typ
     type_to_search: Typ suchen
-    unable_to_connect_to_gateway: Konnte nicht zur Schnitstelle verbinden.
+    unable_to_connect_to_gateway: Konnte nicht zur Schnittstelle verbinden.
     unable_to_create_reimbursements: Konnte Vergütung nicht erstellen.
     under_price: Unter %{price}
     unfinalize_all_adjustments: Alle Anpassungen definalisieren
@@ -1654,8 +1810,13 @@ de:
     value: Wert
     variant: Variante
     variant_placeholder: Variante wählen
+    variant_properties: Varianteneigenschaften
+    variant_search: Variantensuche
+    variant_search_placeholder: Artikelnr. oder Optionswert
     variants: Varianten
     version: Version
+    view_product: Produkt anschauen
+    view_promotion_codes_list: Codeliste anschauen
     void: entwerten
     weight: Gewicht
     what_is_a_cvv: Was ist die (CVV) Kreditkartenprüfnummer?
