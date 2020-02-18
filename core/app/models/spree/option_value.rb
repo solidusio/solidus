@@ -14,7 +14,7 @@ module Spree
     after_save :touch, if: :saved_changes?
     after_touch :touch_all_variants
 
-    delegate :name, :presentation, to: :option_type, prefix: :option_type
+    delegate :name, :presentation, to: :option_type, prefix: :option_type, allow_nil: true
 
     self.whitelisted_ransackable_attributes = %w[name presentation]
 
