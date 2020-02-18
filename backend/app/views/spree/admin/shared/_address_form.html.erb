@@ -1,15 +1,22 @@
 <% s_or_b = type.chars.first %>
 
 <div id="<%= type %>" data-hook="address_fields">
-  <div class="field <%= "#{type}-row" %>">
-    <%= f.label :firstname %>
-    <%= f.text_field :firstname, class: 'fullwidth' %>
-  </div>
+  <% if Spree::Config.use_combined_first_and_last_name_in_address %>
+    <div class="field <%= "#{type}-row" %>">
+      <%= f.label :name %>
+      <%= f.text_field :name, class: 'fullwidth' %>
+    </div>
+  <% else %>
+    <div class="field <%= "#{type}-row" %>">
+      <%= f.label :firstname %>
+      <%= f.text_field :firstname, class: 'fullwidth' %>
+    </div>
 
-  <div class="field <%= "#{type}-row" %>">
-    <%= f.label :lastname %>
-    <%= f.text_field :lastname, class: 'fullwidth' %>
-  </div>
+    <div class="field <%= "#{type}-row" %>">
+      <%= f.label :lastname %>
+      <%= f.text_field :lastname, class: 'fullwidth' %>
+    </div>
+  <% end %>
 
   <% if Spree::Config[:company] %>
     <div class="field <%= "#{type}-row" %>">

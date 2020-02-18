@@ -39,27 +39,9 @@ describe Spree::Admin::SearchController, type: :controller do
         end
       end
 
-      context 'when searching by ship addresss first name' do
+      context 'when searching by bill address name' do
         it_should_behave_like 'user found by search' do
-          let(:user_attribute) { user.ship_address.firstname }
-        end
-      end
-
-      context 'when searching by ship address last name' do
-        it_should_behave_like 'user found by search' do
-          let(:user_attribute) { user.ship_address.lastname }
-        end
-      end
-
-      context 'when searching by bill address first name' do
-        it_should_behave_like 'user found by search' do
-          let(:user_attribute) { user.bill_address.firstname }
-        end
-      end
-
-      context 'when searching by bill address last name' do
-        it_should_behave_like 'user found by search' do
-          let(:user_attribute) { user.bill_address.lastname }
+          let(:user_attribute) { user.bill_address.name }
         end
       end
     end

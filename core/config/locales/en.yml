@@ -1570,6 +1570,7 @@ en:
     my_account: My Account
     my_orders: My Orders
     name: Name
+    name_contains: Name Contains
     name_on_card: Name on card
     name_or_sku: Name or SKU (enter at least first 4 characters of product name)
     negative_movement_absent_item: Cannot create negative movement for absent stock

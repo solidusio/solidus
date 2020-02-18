@@ -28,8 +28,7 @@ $.fn.userAutocomplete = function () {
           q: {
             m: 'or',
             email_start: term,
-            addresses_firstname_start: term,
-            addresses_lastname_start: term
+            firstname_or_lastname_start: term
           }
         };
       },
