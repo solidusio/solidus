@@ -498,12 +498,12 @@ module Spree
 
       let(:address_params) { { country_id: country.id } }
       let(:billing_address) {
-        { firstname: "Tiago", lastname: "Motta", address1: "Av Paulista",
+        { name: "Tiago Motta", address1: "Av Paulista",
                                 city: "Sao Paulo", zipcode: "01310-300", phone: "12345678",
                                 country_id: country.id }
       }
       let(:shipping_address) {
-        { firstname: "Tiago", lastname: "Motta", address1: "Av Paulista",
+        { name: "Tiago Motta", address1: "Av Paulista",
                                  city: "Sao Paulo", zipcode: "01310-300", phone: "12345678",
                                  country_id: country.id }
       }

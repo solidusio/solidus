@@ -5084,6 +5084,8 @@ definitions:
         type: integer
       lastname:
         type: string
+      name:
+        type: string
       phone:
         type: string
       state:
@@ -5614,6 +5616,8 @@ definitions:
     properties:
       id:
         type: integer
+      name:
+        type: string
       firstname:
         type: string
       lastname:

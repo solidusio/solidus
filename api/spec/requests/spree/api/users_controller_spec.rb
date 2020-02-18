@@ -47,8 +47,7 @@ module Spree
         put spree.api_user_path(user.id), params: { token: user.spree_api_key, user: {
           email: "mine@example.com",
           bill_address_attributes: {
-            first_name: 'First',
-            last_name: 'Last',
+            name: 'First Last',
             address1: '1 Test Rd',
             city: 'City',
             country_id: country.id,
@@ -57,8 +56,7 @@ module Spree
             phone: '5555555555'
           },
           ship_address_attributes: {
-            first_name: 'First',
-            last_name: 'Last',
+            name: 'First Last',
             address1: '1 Test Rd',
             city: 'City',
             country_id: country.id,

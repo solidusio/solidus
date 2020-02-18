@@ -25,6 +25,7 @@ module Spree
 
     DB_ONLY_ATTRS = %w(id updated_at created_at)
     TAXATION_ATTRS = %w(state_id country_id zipcode)
+    LEGACY_NAME_ATTRS = %w(firstname lastname full_name)
 
     self.whitelisted_ransackable_attributes = %w[firstname lastname]
 
