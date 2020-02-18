@@ -11,10 +11,11 @@ module Spree
     belongs_to :country, class_name: "Spree::Country", optional: true
     belongs_to :state, class_name: "Spree::State", optional: true
 
-    validates :firstname, :address1, :city, :country_id, presence: true
+    validates :address1, :city, :country_id, presence: true
     validates :zipcode, presence: true, if: :require_zipcode?
     validates :phone, presence: true, if: :require_phone?
 
+    validate :validate_name
     validate :state_validate
     validate :validate_state_matches_country
 
@@ -185,6 +186,17 @@ module Spree
     end
 
     private
+
+    def validate_name
+      return if firstname.present?
+
+      name_attribute = if Spree::Config.use_combined_first_and_last_name_in_address
+        :name
+      else
+        :firstname
+      end
+      errors.add(name_attribute, :blank)
+    end
 
     def state_validate
       # Skip state validation without country (also required)
