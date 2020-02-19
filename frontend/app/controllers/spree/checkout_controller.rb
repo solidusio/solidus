@@ -8,8 +8,8 @@ module Spree
   class CheckoutController < Spree::StoreController
     before_action :load_order
     around_action :lock_order
-    before_action :set_state_if_present
 
+    before_action :ensure_order_is_not_skipping_states
     before_action :ensure_order_not_completed
     before_action :ensure_checkout_allowed
     before_action :ensure_sufficient_stock_lines
@@ -141,12 +141,17 @@ module Spree
     # when trying to change it via params[:state]. It's not allowed to
     # jump forward and skip states (unless #skip_state_validation? is
     # truthy).
-    def set_state_if_present
+    def ensure_order_is_not_skipping_states
       if params[:state]
         redirect_to checkout_state_path(@order.state) if @order.can_go_to_state?(params[:state]) && !skip_state_validation?
         @order.state = params[:state]
       end
     end
+
+    def set_state_if_present
+      ensure_order_is_not_skipping_states
+    end
+    deprecate set_state_if_present: :prevent_order_from_skipping_states, deprecator: Spree::Deprecation
 
     def ensure_checkout_allowed
       unless @order.checkout_allowed?
