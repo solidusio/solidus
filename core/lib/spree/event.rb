@@ -21,7 +21,7 @@ module Spree
     #     @order.finalize!
     #   end
     def fire(event_name, opts = {})
-      adapter.fire name_with_suffix(event_name.to_s), opts do
+      adapter.fire normalize_name(event_name), opts do
         yield opts if block_given?
       end
     end
@@ -30,7 +30,8 @@ module Spree
     # every time the subscribed event is fired.
     #
     # @param [String] event_name the name of the event. The suffix ".spree"
-    #  will be added automatically if not present
+    #  will be added automatically if not present, when using the default
+    #  adapter for ActiveSupportNotifications.
     #
     # @return a subscription object that can be used as reference in order
     #  to remove the subscription
@@ -43,7 +44,7 @@ module Spree
     #
     # @see Spree::Event#unsubscribe
     def subscribe(event_name, &block)
-      name = name_with_suffix(event_name)
+      name = normalize_name(event_name)
       listener_names << name
       adapter.subscribe(name, &block)
     end
@@ -61,7 +62,7 @@ module Spree
     # @example Unsubscribe an event by name with explicit prefix
     #   Spree::Event.unsubscribe('order_finalized.spree')
     def unsubscribe(subscriber)
-      name_or_subscriber = subscriber.is_a?(String) ? name_with_suffix(subscriber) : subscriber
+      name_or_subscriber = subscriber.is_a?(String) ? normalize_name(subscriber) : subscriber
       adapter.unsubscribe(name_or_subscriber)
     end
 
@@ -95,6 +96,7 @@ module Spree
     #
     # @see Spree::Event::Configuration#suffix
     def suffix
+      Spree::Deprecation.warn "This method is deprecated and will be removed. Please use Event::Adapters::ActiveSupportNotifications#suffix"
       Spree::Config.events.suffix
     end
 
@@ -106,8 +108,8 @@ module Spree
 
     private
 
-    def name_with_suffix(name)
-      name.end_with?(suffix) ? name : [name, suffix].join
+    def normalize_name(name)
+     adapter.normalize_name(name)
     end
 
     def listener_names

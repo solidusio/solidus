@@ -29,6 +29,22 @@ module Spree
             memo[name] = listeners if listeners.present?
           end
         end
+
+        # Normalizes the event name according to this specific adapter rules.
+        # @param [String, Symbol] event_name the event name, with or without the
+        #   .spree" suffix)
+        def normalize_name(event_name)
+          name = event_name.to_s
+          name.end_with?(suffix) ? name : [name, suffix].join
+        end
+
+        # The suffix used for namespacing event names, defaults to
+        # `.spree`
+        #
+        # @see Spree::Event::Configuration#suffix
+        def suffix
+          Spree::Config.events.suffix
+        end
       end
     end
   end
