@@ -346,7 +346,7 @@ project.
 A list can be found at [extensions.solidus.io](http://extensions.solidus.io/).
 
 If you want to write an extension for Solidus, you can use the
-[solidus_cmd](https://www.github.com/solidusio/solidus_cmd.git) gem.
+[solidus_dev_support](https://github.com/solidusio/solidus_dev_support.git) gem.
 
 ## Contributing
 
