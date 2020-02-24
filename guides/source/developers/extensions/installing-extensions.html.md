@@ -1,7 +1,7 @@
 # Installing extensions
 
 Solidus extensions are gems that change or extend Solidus's functionality. Many
-Solidus extensions can be installed in a few simple steps: 
+Solidus extensions can be installed in a few simple steps:
 
 1. Add the extension gem to your project's `Gemfile`.
 2. Run `bundle install` to install the gem and its dependencies.
@@ -13,7 +13,7 @@ extension provides a generic way to define relationships between your store's
 products by using `RelationTypes`. The extension's documentation clearly lays
 out the installation process: add the `solidus_related_products` gem to your
 `Gemfile`, then run `bundle install` and `bundle exec rails generate
-solidus_related_products:install`. 
+solidus_related_products:install`.
 
 Some extensions require other custom configuration before they can be
 initialized.
@@ -26,19 +26,18 @@ to run it in a production environment.*
 ## Supported extensions
 
 You can add additional features to your store using Solidus extensions. A list
-of supported extensions can be found at [extensions.solidus.io][extensions].
+of supported extensions can be found at [solidus.io/extensions][extensions].
 
-You can use the [`solidus_cmd`][solidus-cmd] gem if you want to start creating a
-new Solidus extension.
+You can use the [`solidus_dev_support`][solidus_dev_support] gem if you want
+to start creating a new Solidus extension.
 
-[extensions]: http://extensions.solidus.io
-[solidus-cmd]: https://github.com/solidusio/solidus_cmd
+[extensions]: http://solidus.io/extensions
+[solidus_dev_support]: https://github.com/solidusio/solidus_dev_support
 
 ## Soliton
 
-You can search for other Solidus extensions using [Soliton][soliton], a Solidus
-extension search engine courtesy of [Nebulab][nebulab].
+You can search for other Solidus extensions on GitHub using [Soliton][soliton],
+a Solidus extension search engine courtesy of [Nebulab][nebulab].
 
 [soliton]: http://soliton.nebulab.it
 [nebulab]: https://nebulab.it
-
