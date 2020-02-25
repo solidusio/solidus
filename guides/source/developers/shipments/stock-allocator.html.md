@@ -50,9 +50,8 @@ For example, you can register it in your `/config/initializer/spree.rb` initiali
 ```ruby
 # /config/initializer/spree.rb
 Spree.config do |config|
-    # ...
-
-    config.stock.allocator_class = 'Spree::Stock::Allocator::CustomAllocator'
-  end
+  # ...
+  config.stock.allocator_class = 'Spree::Stock::Allocator::CustomAllocator'
+  # ...
 end
 ```

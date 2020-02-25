@@ -41,7 +41,10 @@ the split shipments logic.
 For example, you can register it in your `/config/initializers/spree.rb` initializer:
 
 ```ruby
-# /config/initializers/spree.rb
-
-Rails.application.config.spree.stock.location_filter_class = 'Spree::Stock::LocationFilter::SameOrderCountry'
+# /config/initializer/spree.rb
+Spree.config do |config|
+  # ... 
+  config.stock.location_filter_class = 'Spree::Stock::LocationFilter::SameOrderCountry'
+  # ... 
+end
 ```
