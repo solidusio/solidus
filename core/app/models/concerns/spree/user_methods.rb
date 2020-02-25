@@ -39,7 +39,7 @@ module Spree
     end
 
     def wallet
-      Spree::Wallet.new(self)
+      @wallet ||= Spree::Wallet.new(self)
     end
 
     # has_spree_role? simply needs to return true or false whether a user has a role or not.
