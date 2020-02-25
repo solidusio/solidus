@@ -17,6 +17,7 @@ Spree::User.find(1).addresses
 
 `Spree::Address` objects have the following attributes:
 
+- `name`: The full name for the person at this address.
 - `firstname`: The first name for the person at this address.
 - `lastname`: The last name for the person at this address.
 - `address1` and `address2`: The street address (with an optional second line).
