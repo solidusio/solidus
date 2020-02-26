@@ -4586,10 +4586,13 @@ paths:
         - Products
       parameters:
         - in: query
-          name: taxon_id
+          name: id
           type: integer
         - $ref: '#/parameters/page'
         - $ref: '#/parameters/per_page'
+        - type: boolean
+          in: query
+          name: simple
       security:
         - api-key: []
 schemes:
