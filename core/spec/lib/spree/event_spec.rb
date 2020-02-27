@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-require 'spree/event'
+require 'rails_helper'
 
 RSpec.describe Spree::Event do
   let(:subscription_name) { 'foo_bar' }
