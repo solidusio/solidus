@@ -7,47 +7,29 @@ Solidus extensions.
 
 [contrib]: https://github.com/solidusio-contrib
 
-## TravisCI
+## CircleCI
 
-We usually test our extensions on TravisCI and make use of their [build matrix
-feature][build-matrix] to test across multiple Solidus versions. We also test
-against multiple databases: MySQL and PostgreSQL.
+We usually test our extensions against multiple Solidus versions and databases:
+MySQL and PostgreSQL. We use a [CircleCI Orb][orb] to re-use and maintain a
+single configuration that will be executed against all Solidus extensions.
 
-Solidus extensions should be tested across all versions of Solidus that have not
-reached [End of Life](https://solidus.io/blog/2018/01/04/maintenance-eol-policy.html)
-including the `master` branch.
+This Orb will take care of testing extensions against all versions of Solidus
+that have not reached [End of Life][eol] including the `master` branch.
 
-Here's an example `.travis.yml` testing versions 2.2 through 2.7 and the
-`master` branch:
+You can find an example `.circleci/config.yml` file [here][circle-config].
 
-```yaml
-language: ruby
-rvm:
-  - 2.3.1
-env:
-  matrix:
-    - SOLIDUS_BRANCH=v2.2 DB=postgres
-    - SOLIDUS_BRANCH=v2.3 DB=postgres
-    - SOLIDUS_BRANCH=v2.4 DB=postgres
-    - SOLIDUS_BRANCH=v2.5 DB=postgres
-    - SOLIDUS_BRANCH=v2.6 DB=postgres
-    - SOLIDUS_BRANCH=v2.7 DB=postgres
-    - SOLIDUS_BRANCH=master DB=postgres
-    - SOLIDUS_BRANCH=v2.2 DB=mysql
-    - SOLIDUS_BRANCH=v2.3 DB=mysql
-    - SOLIDUS_BRANCH=v2.4 DB=mysql
-    - SOLIDUS_BRANCH=v2.5 DB=mysql
-    - SOLIDUS_BRANCH=v2.6 DB=mysql
-    - SOLIDUS_BRANCH=v2.7 DB=mysql
-    - SOLIDUS_BRANCH=master DB=mysql
-```
+It runs specs against all supported versions, databases and setups a weekly
+nightly build to be sure the extension works even when it has not been updated
+for a while since Solidus could change in the meantime.
 
-[build-matrix]: https://docs.travis-ci.com/user/customizing-the-build/#Build-Matrix
+[orb]: https://github.com/solidusio/circleci-orbs-extensions
+[circle-config]: https://github.com/solidusio/solidus_dev_support/blob/master/lib/solidus_dev_support/templates/extension/.circleci/config.yml
+[eol]: https://solidus.io/security/
 
 ## Gemfile
 
-To use the versions of Solidus specified from the TravisCI build matrix, we need
-to use those environment variables in the `Gemfile`. Here's an example:
+To use the versions of Solidus specified from the CircleCI configuration,
+we need to use those environment variables in the `Gemfile`. Here's an example:
 
 ```ruby
 source "https://rubygems.org"
@@ -113,15 +95,15 @@ sed -i 's/ActiveRecord::Migration/SolidusSupport::Migration[4.2]/' db/migrate/*.
 
 [solidus-support]: https://github.com/solidusio/solidus_support
 
-## extensions.solidus.io
+## solidus.io/extensions
 
 You can see a list of Solidus extensions and their test suite statuses at
-[extensions.solidus.io][extensions].
+[solidus.io/extensions][extensions].
 
 If you'd like to have your extension added, [join the Solidus Slack team][slack]
 let us know in the [#solidus channel][solidus-channel].
 
-[extensions]: http://extensions.solidus.io
+[extensions]: http://solidus.io/extensions
 [slack]: http://slack.solidus.io
 [solidus-channel]: https://solidusio.slack.com/messages/solidus
 
@@ -145,4 +127,3 @@ This can be fixed automatically using the
 
 [rails-test-params-backport]: https://github.com/zendesk/rails_test_params_backport
 [rails5-spec-converter]: https://github.com/tjgrathwell/rails5-spec-converter
-

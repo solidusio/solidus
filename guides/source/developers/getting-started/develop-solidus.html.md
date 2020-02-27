@@ -128,7 +128,7 @@ env COVERAGE=true bundle exec rspec
 You can add additional features to your store using Solidus extensions. A list
 of supported extensions can be found at [extensions.solidus.io][extensions].
 
-You can use the [`solidus_cmd`][solidus-cmd] gem as an example if you want to
+You can use the [`solidus_dev_support`][solidus_dev_support] gem as an example if you want to
 start creating a new Solidus extension. Check out the doc on
 [writing extensions][writing-extensions] to learn more.
 
@@ -136,4 +136,4 @@ start creating a new Solidus extension. Check out the doc on
 [circleci]: https://circleci.com/gh/solidusio/solidus
 [extensions]: http://extensions.solidus.io
 [writing-extensions]: https://guides.solidus.io/developers/extensions/writing-extensions.html
-[solidus-cmd]: https://github.com/solidusio/solidus_cmd
+[solidus_dev_support]: https://github.com/solidusio/solidus_dev_support
