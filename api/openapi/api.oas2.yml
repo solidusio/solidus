@@ -545,7 +545,7 @@ paths:
         - Variants
       security:
         - api-key: []
-    post:
+    put:
       responses:
         '200':
           description: ''
@@ -4264,7 +4264,7 @@ paths:
         type: string
         required: true
   '/shipments/{shipment_number}/select_shipping_method':
-    get:
+    put:
       responses:
         '200':
           description: ''
