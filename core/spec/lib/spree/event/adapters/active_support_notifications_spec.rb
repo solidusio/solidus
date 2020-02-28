@@ -17,6 +17,22 @@ module Spree
               expect(subject).to eql "foo.spree"
             end
           end
+
+          context "when event name is a regexp" do
+            let(:event_name) { /.*/ }
+
+            it "never changes the regexp" do
+              expect(subject).to eq event_name
+            end
+          end
+
+          context "when event name is a class not handled" do
+            let(:event_name) { Object.new }
+
+            it "raises a InvalidEventNameType error" do
+              expect { subject }.to raise_error(described_class::InvalidEventNameType)
+            end
+          end
         end
       end
     end

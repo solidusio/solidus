@@ -66,6 +66,13 @@ RSpec.describe Spree::Event do
           Spree::Event.fire subscription_name
           expect(item).to have_received :do_something
         end
+
+        it 'can subscribe to multiple events using a regexp' do
+          Spree::Event.subscribe(/.*\.spree$/) { item.do_something_else }
+          Spree::Event.fire subscription_name
+          Spree::Event.fire 'another_event'
+          expect(item).to have_received(:do_something_else).twice
+        end
       end
 
       describe '#unsubscribe' do

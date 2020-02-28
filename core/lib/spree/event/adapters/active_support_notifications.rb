@@ -4,6 +4,8 @@ module Spree
   module Event
     module Adapters
       module ActiveSupportNotifications
+        class InvalidEventNameType < StandardError; end
+
         extend self
 
         def fire(event_name, opts)
@@ -31,11 +33,25 @@ module Spree
         end
 
         # Normalizes the event name according to this specific adapter rules.
-        # @param [String, Symbol] event_name the event name, with or without the
-        #   .spree" suffix)
+        #  When the event name is a string or a symbol, if the suffix is missing, then
+        #  it is added automatically.
+        #  When the event name is a regexp, due to the huge variability of regexps, adding
+        #  or not the suffix is developer's responsibility (if you don't, you will subscribe
+        #  to all internal rails events as well).
+        #  When the event type is not supported, an error is raised.
+        #
+        # @param [String, Symbol, Regexp] event_name the event name, with or without the
+        #  suffix (Spree::Config.events.suffix defaults to `.spree`).
         def normalize_name(event_name)
-          name = event_name.to_s
-          name.end_with?(suffix) ? name : [name, suffix].join
+          case event_name
+          when Regexp
+            event_name
+          when String, Symbol
+            name = event_name.to_s
+            name.end_with?(suffix) ? name : [name, suffix].join
+          else
+            raise InvalidEventNameType, "Invalid event name type: #{event_name.class}"
+          end
         end
 
         # The suffix used for namespacing event names, defaults to
