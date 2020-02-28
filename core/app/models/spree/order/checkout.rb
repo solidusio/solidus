@@ -68,7 +68,7 @@ module Spree
             end
 
             event :authorize_return do
-              transition to: :awaiting_return
+              transition to: :awaiting_return, from: :complete
             end
 
             event :complete do
