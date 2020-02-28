@@ -56,7 +56,7 @@ module Spree
             end
 
             event :cancel do
-              transition to: :canceled, if: :allow_cancel?
+              transition to: :canceled, if: :allow_cancel?, from: :complete
             end
 
             event :return do
