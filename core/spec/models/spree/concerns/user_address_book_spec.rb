@@ -221,6 +221,7 @@ module Spree
       let(:address1) { create(:address) }
       let(:address2) { create(:address, name: "Different") }
       let(:remove_id) { address1.id }
+
       subject { user.remove_from_address_book(remove_id) }
 
       before do
@@ -241,6 +242,49 @@ module Spree
 
       it "returns false if the addresses is not there" do
         expect(user.remove_from_address_book(0)).to be false
+      end
+
+      context 'when user has previous order addresses' do
+        let(:order) { create(:order, ship_address: address1, bill_address: address2) }
+
+        before { user.persist_order_address(order) }
+
+        context 'when address does not match any user address references' do
+          let(:another_address) { create(:address) }
+
+          let(:remove_id) { another_address.id }
+
+          it 'leaves current user ship address' do
+            expect { subject }.not_to change(user, :ship_address_id).from(address1.id)
+          end
+
+          it 'leaves current user bill address' do
+            expect { subject }.not_to change(user, :bill_address_id).from(address2.id)
+          end
+        end
+
+        context 'when address matches user ship address' do
+          it 'removes the ship address reference from user' do
+            expect { subject }.to change(user, :ship_address_id).from(address1.id).to(nil)
+          end
+        end
+
+        context 'when address matches user bill address' do
+          let(:remove_id) { address2.id }
+
+          it 'removes the bill address reference from user' do
+            expect { subject }.to change(user, :bill_address_id).from(address2.id).to(nil)
+          end
+        end
+
+        context 'when address matches user bill and ship address' do
+          let(:order) { create(:order, ship_address: address1, bill_address: address1) }
+
+          it 'removes the address references from user' do
+            expect { subject }.to change(user, :ship_address_id).from(address1.id).to(nil)
+              .and change(user, :bill_address_id).from(address1.id).to(nil)
+          end
+        end
       end
     end
 
