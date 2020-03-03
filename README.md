@@ -114,7 +114,7 @@ After installing gems, you'll have to run the generators to create necessary
 configuration files and migrations.
 
 ```bash
-bundle exec rails g spree:install
+bundle exec rails g solidus:install
 bundle exec rails g solidus:auth:install
 bundle exec rake railties:install:migrations
 ```
@@ -156,11 +156,11 @@ gem 'solidus', github: 'solidusio/solidus'
 **Note: The master branch is not guaranteed to ever be in a fully functioning
 state. It is too risky to use this branch in production.**
 
-By default, the installation generator (`rails g spree:install`) will run
+By default, the installation generator (`rails g solidus:install`) will run
 migrations as well as adding seed and sample data. This can be disabled using
 
 ```bash
-rails g spree:install --migrate=false --sample=false --seed=false
+rails g solidus:install --migrate=false --sample=false --seed=false
 ```
 
 You can always perform any of these steps later by using these commands.

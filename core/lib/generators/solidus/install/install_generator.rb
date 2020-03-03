@@ -4,7 +4,7 @@ require 'rails/generators'
 require 'bundler'
 require 'bundler/cli'
 
-module Spree
+module Solidus
   # @private
   class InstallGenerator < Rails::Generators::Base
     CORE_MOUNT_ROUTE = "mount Spree::Core::Engine"
@@ -44,6 +44,7 @@ module Spree
 
     def additional_tweaks
       return unless File.exist? 'public/robots.txt'
+
       append_file "public/robots.txt", <<-ROBOTS.strip_heredoc
         User-agent: *
         Disallow: /checkout

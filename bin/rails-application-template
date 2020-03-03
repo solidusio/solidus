@@ -118,7 +118,7 @@ RUBY
 
 after_bundle do
   generate(
-    "spree:install",
+    "solidus:install",
     "--auto-accept",
     "--user_class=Spree::User",
     "--enforce_available_locales=true",
