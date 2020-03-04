@@ -20,7 +20,6 @@ module Spree
           respond_with(@order, default_template: 'spree/api/orders/expected_total_mismatch', status: 400)
           return
         end
-        authorize! :update, @order, order_token
         @order.next!
         respond_with(@order, default_template: 'spree/api/orders/show', status: 200)
       end
