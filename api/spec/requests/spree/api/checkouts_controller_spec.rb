@@ -388,7 +388,6 @@ module Spree
           state: 'address',
           email: nil
         )
-
         put spree.next_api_checkout_path(order), params: { id: order.to_param, order_token: order.guest_token }
         expect(response.status).to eq(422)
         expect(json_response['error']).to match(/could not be transitioned/)
@@ -429,6 +428,19 @@ module Spree
             subject
             expect(response.status).to eq(400)
             expect(json_response['errors']['expected_total']).to include(I18n.t('spree.api.order.expected_total_mismatch'))
+          end
+        end
+
+        context 'when cannot complete' do
+          let(:order) { create(:order) }
+
+          before { order.update(state: 'cart') }
+
+          it 'returns a state machine error' do
+            subject
+
+            expect(json_response['error']).to eq(I18n.t(:could_not_transition, scope: "spree.api", resource: 'order'))
+            expect(response.status).to eq(422)
           end
         end
       end

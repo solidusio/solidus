@@ -23,9 +23,6 @@ module Spree
         authorize! :update, @order, order_token
         @order.next!
         respond_with(@order, default_template: 'spree/api/orders/show', status: 200)
-      rescue StateMachines::InvalidTransition => error
-        logger.error("invalid_transition #{error.event} from #{error.from} for #{error.object.class.name}. Error: #{error.inspect}")
-        respond_with(@order, default_template: 'spree/api/orders/could_not_transition', status: 422)
       end
 
       def advance
@@ -42,9 +39,6 @@ module Spree
           @order.complete!
           respond_with(@order, default_template: 'spree/api/orders/show', status: 200)
         end
-      rescue StateMachines::InvalidTransition => error
-        logger.error("invalid_transition #{error.event} from #{error.from} for #{error.object.class.name}. Error: #{error.inspect}")
-        respond_with(@order, default_template: 'spree/api/orders/could_not_transition', status: 422)
       end
 
       def update
@@ -57,12 +51,9 @@ module Spree
 
           return if after_update_attributes
 
-          if @order.completed? || @order.next
+          if @order.completed? || @order.next!
             state_callback(:after)
             respond_with(@order, default_template: 'spree/api/orders/show')
-          else
-            logger.error("failed_to_transition_errors=#{@order.errors.full_messages}")
-            respond_with(@order, default_template: 'spree/api/orders/could_not_transition', status: 422)
           end
         else
           invalid_resource!(@order)
