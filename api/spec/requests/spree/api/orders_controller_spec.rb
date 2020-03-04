@@ -883,6 +883,13 @@ module Spree
           expect(response.status).to eq 200
           expect(json_response["user_id"]).to eq(user.id)
         end
+
+        it "cannot cancel not completed order" do
+          put spree.cancel_api_order_path(order)
+
+          expect(json_response['error']).to eq(I18n.t(:could_not_transition, scope: "spree.api", resource: 'order'))
+          expect(response.status).to eq(422)
+        end
       end
 
       context "can cancel an order" do
