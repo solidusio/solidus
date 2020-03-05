@@ -11,6 +11,8 @@
         href: "/developers/getting-started/forking-solidus.html"
       - title: "Customer flow"
         href: "/developers/getting-started/customer-flow.html"
+      - title: "System Requirements"
+        href: "/developers/getting-started/system-requirements.html"
 -
   - title: "API"
     dropdown:
