@@ -11,29 +11,29 @@ gem 'solidus'
 
 ## Bleeding edge Solidus
 
-If you want to use the bleeding edge version of Solidus, you can require the 
-Solidus GitHub repo's master branch: 
+If you want to use the bleeding edge version of Solidus, you can require the
+Solidus GitHub repo's master branch:
 
 ```ruby
 gem 'solidus', github: 'solidusio/solidus'
 ```
 
 The master branch is updated frequently and may break. Do not use this branch on
-a production system. 
+a production system.
 
-## Manually run migrations 
+## Manually run migrations
 
-When you run the `spree:install` generator without arguments, it runs
+When you run the `solidus:install` generator without arguments, it runs
 migrations, adds sample data, and seeds your database:
 
 ```bash
-rails generate spree:install
+rails generate solidus:install
 ```
 
 You can use command arguments to skip any of these steps of the generator:
 
 ```bash
-rails generate spree:install --migrate=false --sample=false --seed=false
+rails generate solidus:install --migrate=false --sample=false --seed=false
 ```
 
 If you want to perform these tasks later, you can use these commands.

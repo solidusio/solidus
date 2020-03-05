@@ -204,17 +204,17 @@ After the gems have been successfully installed, you need to create the
 necessary configuration files and instructions for the database using generators
 provided by Solidus and Railties.
 
-First, run the `spree:install` generator:
+First, run the `solidus:install` generator:
 
 ```bash
-bundle exec rails generate spree:install
+bundle exec rails generate solidus:install
 ```
 
 This may take a few minutes to complete, and it requires some user confirmation.
 
 ### Set the administrator username and password
 
-The `spree:install` generator prompts you to configure the Solidus administrator
+The `solidus:install` generator prompts you to configure the Solidus administrator
 username and password values.
 
 The default values are as follows:

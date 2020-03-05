@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-unless defined?(Spree::InstallGenerator)
-  require 'generators/spree/install/install_generator'
+unless defined?(Solidus::InstallGenerator)
+  require 'generators/solidus/install/install_generator'
 end
 
 require 'generators/spree/dummy/dummy_generator'
@@ -14,7 +14,7 @@ namespace :common do
     ENV["RAILS_ENV"] = 'test'
 
     Spree::DummyGenerator.start ["--lib_name=#{ENV['LIB_NAME']}", "--quiet"]
-    Spree::InstallGenerator.start ["--lib_name=#{ENV['LIB_NAME']}", "--auto-accept", "--migrate=false", "--seed=false", "--sample=false", "--quiet", "--user_class=#{args[:user_class]}"]
+    Solidus::InstallGenerator.start ["--lib_name=#{ENV['LIB_NAME']}", "--auto-accept", "--migrate=false", "--seed=false", "--sample=false", "--quiet", "--user_class=#{args[:user_class]}"]
 
     puts "Setting up dummy database..."
 
