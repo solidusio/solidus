@@ -8,8 +8,7 @@ describe Spree::Admin::UsersController, type: :controller do
   let(:state) { create(:state, state_code: 'NY') }
   let(:valid_address_attributes) do
     {
-      firstname: 'Foo',
-      lastname: 'Bar',
+      name: 'Foo Bar',
       city: "New York",
       country_id: state.country.id,
       state_id: state.id,
@@ -89,24 +88,24 @@ describe Spree::Admin::UsersController, type: :controller do
       end
 
       it "can create user with roles" do
-        post :create, params: { user: { first_name: "Bob", spree_role_ids: [dummy_role.id] } }
+        post :create, params: { user: { name: "Bob Bloggs", spree_role_ids: [dummy_role.id] } }
         expect(user.spree_roles).to eq([dummy_role])
       end
 
       it "can create user without roles" do
-        post :create, params: { user: { first_name: "Bob" } }
+        post :create, params: { user: { name: "Bob Bloggs" } }
         expect(user.spree_roles).to eq([])
       end
     end
 
     context "when the user cannot manage roles" do
       it "cannot assign users roles" do
-        post :create, params: { user: { first_name: "Bob", spree_role_ids: [dummy_role.id] } }
+        post :create, params: { user: { name: "Bob Bloggs", spree_role_ids: [dummy_role.id] } }
         expect(user.spree_roles).to eq([])
       end
 
       it "can create user without roles" do
-        post :create, params: { user: { first_name: "Bob" } }
+        post :create, params: { user: { name: "Bob Bloggs" } }
         expect(user.spree_roles).to eq([])
       end
     end
@@ -145,21 +144,21 @@ describe Spree::Admin::UsersController, type: :controller do
 
       it "can set roles" do
         expect {
-          put :update, params: { id: user.id, user: { first_name: "Bob", spree_role_ids: [dummy_role.id] } }
+          put :update, params: { id: user.id, user: { name: "Bob Bloggs", spree_role_ids: [dummy_role.id] } }
         }.to change { user.reload.spree_roles.to_a }.to([dummy_role])
       end
 
       it "can clear roles" do
         user.spree_roles << dummy_role
         expect {
-          put :update, params: { id: user.id, user: { first_name: "Bob", spree_role_ids: [""] } }
+          put :update, params: { id: user.id, user: { name: "Bob Bloggs", spree_role_ids: [""] } }
         }.to change { user.reload.spree_roles.to_a }.to([])
       end
 
       context 'when no role params are present' do
         it 'does not clear all present user roles' do
           user.spree_roles << dummy_role
-          put :update, params: { id: user.id, user: { first_name: "Bob" } }
+          put :update, params: { id: user.id, user: { name: "Bob Bloggs" } }
           expect(user.reload.spree_roles).to_not be_empty
         end
       end
@@ -168,14 +167,14 @@ describe Spree::Admin::UsersController, type: :controller do
     context "when the user cannot manage roles" do
       it "cannot set roles" do
         expect {
-          put :update, params: { id: user.id, user: { first_name: "Bob", spree_role_ids: [dummy_role.id] } }
+          put :update, params: { id: user.id, user: { name: "Bob Bloggs", spree_role_ids: [dummy_role.id] } }
         }.not_to change { user.reload.spree_roles.to_a }
       end
 
       it "cannot clear roles" do
         user.spree_roles << dummy_role
         expect {
-          put :update, params: { id: user.id, user: { first_name: "Bob" } }
+          put :update, params: { id: user.id, user: { name: "Bob Bloggs" } }
         }.not_to change { user.reload.spree_roles.to_a }
       end
     end

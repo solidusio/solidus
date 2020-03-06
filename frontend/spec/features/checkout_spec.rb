@@ -113,16 +113,16 @@ describe "Checkout", type: :feature, inaccessible: true do
       end
 
       context "when user has default addresses saved" do
-        let(:saved_bill_address) { create(:address, name: 'Bill') }
-        let(:saved_ship_address) { create(:address, name: 'Steve') }
+        let(:saved_bill_address) { create(:address, name: 'Bill Doe') }
+        let(:saved_ship_address) { create(:address, name: 'Steve Smith') }
 
         it "shows the saved addresses" do
           within("#billing") do
-            expect(find_field('First Name').value).to eq 'Bill'
+            expect(find_field('Name').value).to eq 'Bill Doe'
           end
 
           within("#shipping") do
-            expect(find_field('First Name').value).to eq 'Steve'
+            expect(find_field('Name').value).to eq 'Steve Smith'
           end
         end
       end
@@ -133,11 +133,11 @@ describe "Checkout", type: :feature, inaccessible: true do
 
         it 'shows an empty address' do
           within("#billing") do
-            expect(find_field('First Name').value).to be_nil
+            expect(find_field('Name').value).to be_blank
           end
 
           within("#shipping") do
-            expect(find_field('First Name').value).to be_nil
+            expect(find_field('Name').value).to be_blank
           end
         end
       end
@@ -150,11 +150,11 @@ describe "Checkout", type: :feature, inaccessible: true do
           click_button "Checkout"
 
           within("#billing") do
-            expect(find_field('First Name').value).to be_nil
+            expect(find_field('Name').value).to be_blank
           end
 
           within("#shipping") do
-            expect(find_field('First Name').value).to be_nil
+            expect(find_field('Name').value).to be_blank
           end
         end
       end
@@ -183,27 +183,27 @@ describe "Checkout", type: :feature, inaccessible: true do
 
           it 'shows empty addresses' do
             within("#billing") do
-              expect(find_field('First Name').value).to be_nil
+              expect(find_field('Name').value).to be_blank
             end
 
             within("#shipping") do
-              expect(find_field('First Name').value).to be_nil
+              expect(find_field('Name').value).to be_blank
             end
           end
         end
 
         # Regression test for https://github.com/solidusio/solidus/issues/1811
         context "when does have saved addresses" do
-          let(:saved_bill_address) { create(:address, name: 'Bill') }
-          let(:saved_ship_address) { create(:address, name: 'Steve') }
+          let(:saved_bill_address) { create(:address, name: 'Bill Doe') }
+          let(:saved_ship_address) { create(:address, name: 'Steve Smith') }
 
           it 'shows empty addresses' do
             within("#billing") do
-              expect(find_field('First Name').value).to eq 'Bill'
+              expect(find_field('Name').value).to eq 'Bill Doe'
             end
 
             within("#shipping") do
-              expect(find_field('First Name').value).to eq 'Steve'
+              expect(find_field('Name').value).to eq 'Steve Smith'
             end
           end
         end
@@ -396,7 +396,7 @@ describe "Checkout", type: :feature, inaccessible: true do
 
       click_on "Checkout"
       # edit an address field
-      fill_in "order_bill_address_attributes_firstname", with: "Ryann"
+      fill_in "order_bill_address_attributes_name", with: "Ryann Bigg"
       click_on "Save and Continue"
       click_on "Save and Continue"
       click_on "Save and Continue"
@@ -732,8 +732,7 @@ describe "Checkout", type: :feature, inaccessible: true do
 
   def fill_in_address
     address = "order_bill_address_attributes"
-    fill_in "#{address}_firstname", with: "Ryan"
-    fill_in "#{address}_lastname", with: "Bigg"
+    fill_in "#{address}_name", with: "Ryan Bigg"
     fill_in "#{address}_address1", with: "143 Swan Street"
     fill_in "#{address}_city", with: "Richmond"
     select "United States of America", from: "#{address}_country_id"

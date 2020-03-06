@@ -75,8 +75,7 @@ module Spree
 
         let(:address) do
           {
-            firstname:  'John',
-            lastname:   'Doe',
+            name:  'John Doe',
             address1:   '7735 Old Georgetown Road',
             city:       'Bethesda',
             phone:      '3014445002',
@@ -93,8 +92,8 @@ module Spree
               ship_address_attributes: address
             } }
           expect(json_response['state']).to eq('delivery')
-          expect(json_response['bill_address']['firstname']).to eq('John')
-          expect(json_response['ship_address']['firstname']).to eq('John')
+          expect(json_response['bill_address']['name']).to eq('John Doe')
+          expect(json_response['ship_address']['name']).to eq('John Doe')
           expect(response.status).to eq(200)
         end
 

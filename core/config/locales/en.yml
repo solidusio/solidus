@@ -28,6 +28,7 @@ en:
         company: Company
         firstname: First Name
         lastname: Last Name
+        name: Name
         phone: Phone
         zipcode: Zip Code
       spree/adjustment:
@@ -131,6 +132,7 @@ en:
         city: Billing address city
         firstname: Billing address first name
         lastname: Billing address last name
+        name: Billing address name
         phone: Billing address phone
         state: Billing address state
         zipcode: Billing address zipcode
@@ -139,6 +141,7 @@ en:
         city: Shipping address city
         firstname: Shipping address first name
         lastname: Shipping address last name
+        name: Shipping address name
         phone: Shipping address phone
         state: Shipping address state
         zipcode: Shipping address zipcode
@@ -1567,6 +1570,7 @@ en:
     my_account: My Account
     my_orders: My Orders
     name: Name
+    name_contains: Name Contains
     name_on_card: Name on card
     name_or_sku: Name or SKU (enter at least first 4 characters of product name)
     negative_movement_absent_item: Cannot create negative movement for absent stock

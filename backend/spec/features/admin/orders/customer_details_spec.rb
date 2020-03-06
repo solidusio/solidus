@@ -14,8 +14,8 @@ describe "Customer Details", type: :feature, js: true do
   let!(:product) { create(:product_in_stock) }
 
   # We need a unique name that will appear for the customer dropdown
-  let!(:ship_address) { create(:address, country: country, state: state, first_name: "Rumpelstiltskin") }
-  let!(:bill_address) { create(:address, country: country, state: state, first_name: "Rumpelstiltskin") }
+  let!(:ship_address) { create(:address, country: country, state: state, name: "Jane Doe") }
+  let!(:bill_address) { create(:address, country: country, state: state, name: "Jane Doe") }
 
   let!(:user) { create(:user, email: 'foobar@example.com', ship_address: ship_address, bill_address: bill_address) }
 
@@ -37,8 +37,7 @@ describe "Customer Details", type: :feature, js: true do
     # Regression test for https://github.com/spree/spree/issues/3335 and https://github.com/spree/spree/issues/5317
     it "associates a user when not using guest checkout" do
       # 5317 - Address prefills using user's default.
-      expect(page).to have_field('First Name', with: user.bill_address.firstname)
-      expect(page).to have_field('Last Name', with: user.bill_address.lastname)
+      expect(page).to have_field('Name', with: user.bill_address.name)
       expect(page).to have_field('Street Address', with: user.bill_address.address1)
       expect(page).to have_field("Street Address (cont'd)", with: user.bill_address.address2)
       expect(page).to have_field('City', with: user.bill_address.city)
@@ -120,7 +119,7 @@ describe "Customer Details", type: :feature, js: true do
       order.update!(ship_address_id: nil)
       click_link "Customer"
       click_button "Update"
-      expect(page).to have_content("Shipping address first name can't be blank")
+      expect(page).to have_content("Shipping address name can't be blank")
     end
 
     context "for an order in confirm state with a user" do
@@ -171,9 +170,8 @@ describe "Customer Details", type: :feature, js: true do
       specify do
         click_link "Customer"
         # Need to fill in valid information so it passes validations
-        fill_in "order_ship_address_attributes_firstname",  with: "John 99"
-        fill_in "order_ship_address_attributes_lastname",   with: "Doe"
-        fill_in "order_ship_address_attributes_lastname",   with: "Company"
+        fill_in "order_ship_address_attributes_name",       with: "John 99 Doe"
+        fill_in "order_ship_address_attributes_company",    with: "Company"
         fill_in "order_ship_address_attributes_address1",   with: "100 first lane"
         fill_in "order_ship_address_attributes_address2",   with: "#101"
         fill_in "order_ship_address_attributes_city",       with: "Bethesda"
@@ -190,8 +188,7 @@ describe "Customer Details", type: :feature, js: true do
   end
 
   def fill_in_address
-    fill_in "First Name",              with: "John 99"
-    fill_in "Last Name",               with: "Doe"
+    fill_in "Name",                    with: "John 99 Doe"
     fill_in "Company",                 with: "Company"
     fill_in "Street Address",          with: "100 first lane"
     fill_in "Street Address (cont'd)", with: "#101"

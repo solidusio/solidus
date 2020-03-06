@@ -227,6 +227,11 @@ module Spree
     #   @return [Boolean] Don't escape HTML of product descriptions. (default: +false+)
     preference :show_raw_product_description, :boolean, default: false
 
+    # @!attribute [rw] use_combined_first_and_last_name_in_address
+    #   @return [Boolean] Use Spree::Address combined first and last name in HTML views and
+    #   API responses. (default: +false+)
+    preference :use_combined_first_and_last_name_in_address, :boolean, default: false
+
     # @!attribute [rw] tax_using_ship_address
     #   @return [Boolean] Use the shipping address rather than the billing address to determine tax (default: +true+)
     preference :tax_using_ship_address, :boolean, default: true

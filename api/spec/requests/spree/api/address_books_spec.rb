@@ -7,8 +7,7 @@ module Spree
     let!(:state) { create(:state) }
     let!(:harry_address_attributes) do
       {
-        'firstname' => 'Harry',
-        'lastname' => 'Potter',
+        'name' => 'Harry Potter',
         'address1' => '4 Privet Drive',
         'address2' => 'cupboard under the stairs',
         'city' => 'Surrey',
@@ -21,8 +20,7 @@ module Spree
 
     let!(:ron_address_attributes) do
       {
-        'firstname' => 'Ron',
-        'lastname' => 'Weasly',
+        'name' => 'Ron Weasly',
         'address1' => 'Ottery St. Catchpole',
         'address2' => '4th floor',
         'city' => 'Devon, West Country',
@@ -55,7 +53,7 @@ module Spree
         it 'updates my address book' do
           user = create(:user, spree_api_key: 'galleon')
           address = user.save_in_address_book(harry_address_attributes, true)
-          harry_address_attributes['firstname'] = 'Ron'
+          harry_address_attributes['name'] = 'Ron Weasly'
 
           expect {
             put "/api/users/#{user.id}/address_book",
@@ -145,7 +143,7 @@ module Spree
         it "updates another user's address" do
           other_user = create(:user)
           address = other_user.save_in_address_book(harry_address_attributes, true)
-          updated_harry_address = harry_address_attributes.merge('firstname' => 'Ron')
+          updated_harry_address = harry_address_attributes.merge('name' => 'Ron Weasly')
 
           expect {
             put "/api/users/#{other_user.id}/address_book",

@@ -42,8 +42,9 @@ module Spree
       go_to_state :confirm
     end
 
+    ransack_alias :bill_address_firstname_or_lastname, :bill_address_firstname_or_bill_address_lastname
     self.whitelisted_ransackable_associations = %w[shipments user order_promotions promotions bill_address ship_address line_items]
-    self.whitelisted_ransackable_attributes = %w[completed_at created_at email number state payment_state shipment_state total store_id]
+    self.whitelisted_ransackable_attributes = %w[bill_address_firstname_or_lastname completed_at created_at email number state payment_state shipment_state total store_id]
 
     attr_reader :coupon_code
     attr_accessor :temporary_address

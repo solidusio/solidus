@@ -8,8 +8,8 @@ describe Spree::CheckoutController, type: :controller do
   let(:order) { FactoryBot.create(:order_with_totals) }
 
   let(:address_params) do
-    address = FactoryBot.build(:address)
-    address.attributes.except("created_at", "updated_at")
+    attributes_for(:address, name: 'John Doe')
+      .except("created_at", "updated_at")
   end
 
   before do

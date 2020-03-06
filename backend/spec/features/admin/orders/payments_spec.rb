@@ -7,18 +7,6 @@ describe 'Payments', type: :feature do
 
   let(:state) { 'checkout' }
 
-  def create_payment(opts = {})
-    create(
-      :payment,
-      {
-        order: order,
-        amount: order.outstanding_balance,
-        payment_method: create(:credit_card_payment_method),
-        state: state
-      }.merge(opts)
-    )
-  end
-
   context "with a pre-existing payment" do
     let!(:payment) { create_payment }
 
@@ -205,10 +193,7 @@ describe 'Payments', type: :feature do
       end
 
       it "is able to create a new credit card payment with valid information", js: true do
-        fill_in_with_force "Card Number", with: "4111 1111 1111 1111"
-        fill_in "Name", with: "Test User"
-        fill_in_with_force "Expiration", with: "09 / #{Time.current.year + 1}"
-        fill_in "Card Code", with: "007"
+        fill_in_credit_card_form
         # Regression test for https://github.com/spree/spree/issues/4277
         expect(page).to have_css('.ccType[value="visa"]', visible: false)
         click_button "Continue"
@@ -290,10 +275,7 @@ describe 'Payments', type: :feature do
 
     it "is able to create a new payment", js: true do
       choose payment_method.name
-      fill_in_with_force "Card Number", with: "4111 1111 1111 1111"
-      fill_in "Name", with: "Test User"
-      fill_in_with_force "Expiration", with: "09 / #{Time.current.year + 1}"
-      fill_in "Card Code", with: "007"
+      fill_in_credit_card_form
       click_button "Continue"
       expect(page).to have_content("Payment has been successfully created!")
     end
@@ -319,12 +301,32 @@ describe 'Payments', type: :feature do
 
     it "displays an error" do
       choose payment_method.name
+      fill_in_credit_card_form
+      click_button "Continue"
+      expect(page).to have_content I18n.t('spree.insufficient_stock_for_order')
+    end
+  end
+
+  private
+
+  def create_payment(opts = {})
+    create(
+      :payment,
+      {
+        order: order,
+        amount: order.outstanding_balance,
+        payment_method: create(:credit_card_payment_method),
+        state: state
+      }.merge(opts)
+    )
+  end
+
+  def fill_in_credit_card_form
+    within('.js-new-credit-card-form') do
       fill_in_with_force "Card Number", with: "4111 1111 1111 1111"
       fill_in "Name", with: "Test User"
       fill_in_with_force "Expiration", with: "09 / #{Time.current.year + 1}"
       fill_in "Card Code", with: "007"
-      click_button "Continue"
-      expect(page).to have_content I18n.t('spree.insufficient_stock_for_order')
     end
   end
 end
