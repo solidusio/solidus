@@ -96,6 +96,18 @@ module Spree
         expect(response.status).to eq(204)
         expect { property_1.reload }.to raise_error(ActiveRecord::RecordNotFound)
       end
+
+      context 'when product property does not exist' do
+        it 'cannot update because is not found' do
+          put spree.api_product_product_property_path(product, 'no property'), params: { product_property: { value: "my value 456" } }
+          expect(response.status).to eq(404)
+        end
+
+        it 'cannot delete because is not found' do
+          delete spree.api_product_product_property_path(product, 'no property')
+          expect(response.status).to eq(404)
+        end
+      end
     end
 
     context "with product identified by id" do
