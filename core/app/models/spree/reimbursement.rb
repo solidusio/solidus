@@ -104,10 +104,20 @@ module Spree
       if unpaid_amount_within_tolerance?
         reimbursed!
         Spree::Event.fire 'reimbursement_reimbursed', reimbursement: self
+        if reimbursement_success_hooks.any?
+          Spree::Deprecation.warn \
+            "reimbursement_success_hooks are deprecated. Please remove them " \
+            "and subscribe to `reimbursement_reimbursed` event instead", caller(1)
+        end
         reimbursement_success_hooks.each { |hook| hook.call self }
       else
         errored!
         Spree::Event.fire 'reimbursement_errored', reimbursement: self
+        if reimbursement_failure_hooks.any?
+          Spree::Deprecation.warn \
+            "reimbursement_failure_hooks are deprecated. Please remove them " \
+            "and subscribe to `reimbursement_errored` event instead", caller(1)
+        end
         reimbursement_failure_hooks.each { |hook| hook.call self }
       end
 
