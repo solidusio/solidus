@@ -23,7 +23,8 @@ module Spree
     ORDER_NUMBER_LETTERS = false
     ORDER_NUMBER_PREFIX  = 'R'
 
-    include Spree::Order::Checkout
+    include ::Spree::Config.state_machines.order
+
     include Spree::Order::Payments
 
     class InsufficientStock < StandardError

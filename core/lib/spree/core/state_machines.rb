@@ -9,7 +9,8 @@ module Spree
                   :return_item_reception,
                   :payment,
                   :inventory_unit,
-                  :shipment
+                  :shipment,
+                  :order
 
       def return_authorization
         @return_authorization ||= begin
@@ -63,6 +64,24 @@ module Spree
         end
 
         @shipment.constantize
+      end
+
+      def order
+        @order ||= begin
+          if Spree::Config.use_legacy_order_state_machine
+            Spree::Deprecation.warn(
+              "Spree::Order state machine defined in Spree::Order::Checkout is deprecated." \
+              "Future versions of Solidus will use Spree::Core::StateMachines::Order}",
+              caller
+            )
+            'Spree::Order::Checkout'
+          else
+            require 'spree/core/state_machines/order'
+            'Spree::Core::StateMachines::Order'
+          end
+        end
+
+        @order.constantize
       end
 
       def reimbursement
