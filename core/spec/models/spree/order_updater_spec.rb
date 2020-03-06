@@ -552,5 +552,23 @@ module Spree
         }.to change { line_item.reload.adjustment_total }.from(100).to(0)
       end
     end
+
+    context "with 'order_recalculated' event subscription" do
+      let(:item) { spy('object') }
+
+      let!(:event) do
+        Spree::Event.subscribe :order_recalculated do
+          item.do_something
+        end
+      end
+
+      after { Spree::Event.unsubscribe event }
+
+      it "fires the 'order_recalculated' event" do
+        order.recalculate
+
+        expect(item).to have_received(:do_something)
+      end
+    end
   end
 end

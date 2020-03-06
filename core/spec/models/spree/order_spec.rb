@@ -369,7 +369,11 @@ RSpec.describe Spree::Order, type: :model do
   context ".register_update_hook", partial_double_verification: false do
     let(:order) { create(:order) }
 
-    before { Spree::Order.register_update_hook :foo }
+    before do
+      allow(Spree::Deprecation).to receive(:warn)
+      Spree::Order.register_update_hook :foo
+    end
+
     after { Spree::Order.update_hooks.clear }
 
     it "calls hooks during #recalculate" do
