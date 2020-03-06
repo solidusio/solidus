@@ -106,6 +106,7 @@ RSpec.configure do |config|
   end
 
   config.include FactoryBot::Syntax::Methods
+  config.include ActiveSupport::Testing::Assertions
   config.include ActiveJob::TestHelper
 
   config.include Spree::TestingSupport::Preferences

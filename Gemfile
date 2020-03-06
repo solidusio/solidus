@@ -5,8 +5,13 @@ source 'https://rubygems.org'
 group :backend, :frontend, :core, :api do
   gemspec require: false
 
-  rails_version = ENV['RAILS_VERSION'] || '~> 6.0.0'
-  gem 'rails', rails_version, require: false
+  # rubocop:disable Bundler/DuplicatedGem
+  if ENV['RAILS_VERSION'] == 'master'
+    gem 'rails', github: 'rails', require: false
+  else
+    gem 'rails', ENV['RAILS_VERSION'] || '~> 6.0.0', require: false
+  end
+  # rubocop:enable Bundler/DuplicatedGem
 
   # Temporarily locking sprockets to v3.x
   # see https://github.com/solidusio/solidus/issues/3374
