@@ -19,6 +19,7 @@ Dir["./spec/support/**/*.rb"].sort.each { |f| require f }
 require 'spree/testing_support/factories'
 require 'spree/testing_support/preferences'
 require 'spree/testing_support/rake'
+require 'spree/testing_support/job_helpers'
 require 'cancan/matchers'
 
 ActiveJob::Base.queue_adapter = :test
@@ -43,7 +44,8 @@ RSpec.configure do |config|
     Rails.cache.clear
   end
 
+  config.include Spree::TestingSupport::JobHelpers
+
   config.include ActiveSupport::Testing::Assertions
-  config.include ActiveJob::TestHelper
   config.include FactoryBot::Syntax::Methods
 end

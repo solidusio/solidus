@@ -38,6 +38,7 @@ require 'spree/testing_support/order_walkthrough'
 require 'spree/testing_support/capybara_ext'
 require 'spree/testing_support/precompiled_assets'
 require 'spree/testing_support/translations'
+require 'spree/testing_support/job_helpers'
 
 require 'capybara-screenshot/rspec'
 Capybara.save_path = ENV['CIRCLE_ARTIFACTS'] if ENV['CIRCLE_ARTIFACTS']
@@ -93,13 +94,13 @@ RSpec.configure do |config|
 
   config.include FactoryBot::Syntax::Methods
   config.include ActiveSupport::Testing::Assertions
-  config.include ActiveJob::TestHelper
 
   config.include Spree::TestingSupport::Preferences
   config.include Spree::TestingSupport::UrlHelpers
   config.include Spree::TestingSupport::ControllerRequests, type: :controller
   config.include Spree::TestingSupport::Flash
   config.include Spree::TestingSupport::Translations
+  config.include Spree::TestingSupport::JobHelpers
 
   config.extend WithModel
 
