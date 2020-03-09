@@ -289,7 +289,11 @@ module Spree
     end
 
     def all_inventory_units_returned?
-      inventory_units.all?(&:returned?)
+      # Inventory units are transitioned to the "return" state through CustomerReturn and
+      # ReturnItem instead of using Order#inventory_units, thus making the latter method
+      # potentially return stale data. This situation requires to *reload* `inventory_units`
+      # in order to pick-up the latest changes and make the check on `returned?` reliable.
+      inventory_units.reload.all?(&:returned?)
     end
 
     def contents

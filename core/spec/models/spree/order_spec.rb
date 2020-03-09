@@ -1187,6 +1187,18 @@ RSpec.describe Spree::Order, type: :model do
         expect(subject).to eq false
       end
     end
+
+    context "all inventory units are returned on the database (e.g. through another association)" do
+      it "is true" do
+        expect {
+          Spree::InventoryUnit
+            .where(id: order.inventory_unit_ids)
+            .update_all(state: 'returned')
+        }.to change {
+          order.all_inventory_units_returned?
+        }.from(false).to(true)
+      end
+    end
   end
 
   context "store credit" do

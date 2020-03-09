@@ -90,8 +90,13 @@ module Spree
       COMPLETED_RECEPTION_STATUSES.map(&:to_s).include?(reception_status.to_s)
     end
 
-
-    attr_accessor :skip_customer_return_processing
+    def skip_customer_return_processing=(value)
+      @skip_customer_return_processing = value
+      Deprecation.warn \
+        'From Solidus v2.11 onwards, #skip_customer_return_processing does ' \
+        'nothing, and #process_inventory_unit! will restore calling ' \
+        'customer_return#process_return!', caller(1)
+    end
 
     # @param inventory_unit [Spree::InventoryUnit] the inventory for which we
     #   want a return item
@@ -196,13 +201,19 @@ module Spree
 
     def process_inventory_unit!
       inventory_unit.return!
-      if customer_return
-        customer_return.stock_location.restock(inventory_unit.variant, 1, customer_return) if should_restock?
-        unless skip_customer_return_processing
-          Deprecation.warn 'From Solidus v2.9 onwards, #process_inventory_unit! will not call customer_return#process_return!'
-          customer_return.process_return!
-        end
+
+      if should_restock?
+        customer_return.stock_location.restock(inventory_unit.variant, 1, customer_return)
       end
+
+      unless @skip_customer_return_processing.nil?
+        Deprecation.warn \
+          'From Solidus v2.11 onwards, #skip_customer_return_processing does ' \
+          'nothing, and #process_inventory_unit! will restore calling ' \
+          'customer_return#process_return!'
+      end
+
+      customer_return&.process_return!
     end
 
     def sibling_intended_for_exchange(status)
@@ -276,9 +287,9 @@ module Spree
     end
 
     def should_restock?
-      resellable? &&
+      customer_return &&
+        resellable? &&
         variant.should_track_inventory? &&
-        customer_return &&
         customer_return.stock_location.restock_inventory?
     end
   end

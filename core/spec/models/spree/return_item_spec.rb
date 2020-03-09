@@ -2,17 +2,17 @@
 
 require 'rails_helper'
 
-RSpec.shared_examples "an invalid state transition" do |status, expected_status|
-  let(:status) { status }
-
-  it "cannot transition to #{expected_status}" do
-    expect { subject }.to raise_error(StateMachines::InvalidTransition)
-  end
-end
-
 RSpec.describe Spree::ReturnItem, type: :model do
   all_reception_statuses = Spree::ReturnItem.state_machines[:reception_status].states.map(&:name).map(&:to_s)
   all_acceptance_statuses = Spree::ReturnItem.state_machines[:acceptance_status].states.map(&:name).map(&:to_s)
+
+  shared_examples "an invalid state transition" do |status, expected_status|
+    let(:status) { status }
+
+    it "cannot transition to #{expected_status}" do
+      expect { subject }.to raise_error(StateMachines::InvalidTransition)
+    end
+  end
 
   before do
     allow_any_instance_of(Spree::Order).to receive(:return!).and_return(true)
@@ -43,8 +43,8 @@ RSpec.describe Spree::ReturnItem, type: :model do
       subject
     end
 
-    context 'when the `skip_customer_return_processing` flag is not set to true' do
-      before { return_item.skip_customer_return_processing = false }
+    context 'when the `skip_customer_return_processing` flag is set' do
+      before { Spree::Deprecation.silence { return_item.skip_customer_return_processing = false } }
 
       it 'shows a deprecation warning' do
         expect(Spree::Deprecation).to receive(:warn)
@@ -221,6 +221,35 @@ RSpec.describe Spree::ReturnItem, type: :model do
 
     it "starts off in the awaiting state" do
       expect(return_item).to be_awaiting
+    end
+
+    context 'when transitioning to :received' do
+      let(:return_item) { create(:return_item) }
+      subject { return_item.receive! }
+
+      # StateMachines has some "smart" code for guessing how many arguments to
+      # send to the callback methods that interferes with rspec-mocks.
+      around { |e| without_partial_double_verification { e.call } }
+
+      it 'calls #attempt_accept, #check_unexchange, and #process_inventory_unit!' do
+        expect(return_item).to receive(:attempt_accept)
+        expect(return_item).to receive(:check_unexchange)
+        expect(return_item).to receive(:process_inventory_unit!)
+
+        subject
+      end
+
+      context 'when the :acceptance_status is in a state that does not support the :attempt_accept event' do
+        before { return_item.require_manual_intervention! }
+
+        it 'only skips the call to :attempt_accept' do
+          expect(return_item).not_to receive(:attempt_accept)
+          expect(return_item).to receive(:check_unexchange)
+          expect(return_item).to receive(:process_inventory_unit!)
+
+          subject
+        end
+      end
     end
   end
 
@@ -779,6 +808,18 @@ RSpec.describe Spree::ReturnItem, type: :model do
             expect(subject).to be_valid
           end
         end
+      end
+    end
+  end
+
+  describe '#skip_customer_return_processing=' do
+    context 'when it receives a value' do
+      let(:return_item) { described_class.new }
+      subject { return_item.skip_customer_return_processing = :foo }
+
+      it 'shows a deprecation warning' do
+        expect(Spree::Deprecation).to receive(:warn)
+        subject
       end
     end
   end

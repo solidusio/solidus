@@ -38,7 +38,6 @@ customer_return = Spree::CustomerReturn.create!(
   stock_location: stock_location
 )
 return_item.reload
-return_item.skip_customer_return_processing = true
 return_item.receive!
 customer_return.process_return!
 
