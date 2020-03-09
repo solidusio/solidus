@@ -113,13 +113,13 @@ After installing gems, you'll have to run the generator to create necessary
 configuration files and migrations.
 
 ```bash
-bundle exec rails g solidus:install
+bin/rails g solidus:install
 ```
 
 And start the rails server
 
 ```bash
-bundle exec rails s
+bin/rails s
 ```
 
 The [`solidus_frontend`](https://github.com/solidusio/solidus/tree/master/frontend) storefront will be accessible at [http://localhost:3000/](http://localhost:3000/)
@@ -147,20 +147,20 @@ gem 'solidus', github: 'solidusio/solidus'
 **Note: The master branch is not guaranteed to ever be in a fully functioning
 state. It is too risky to use this branch in production.**
 
-By default, the installation generator (`rails g solidus:install`) will run
+By default, the installation generator (`solidus:install`) will run
 migrations as well as adding seed and sample data. This can be disabled using
 
 ```bash
-rails g solidus:install --migrate=false --sample=false --seed=false
+bin/rails g solidus:install --migrate=false --sample=false --seed=false
 ```
 
 You can always perform any of these steps later by using these commands.
 
 ```bash
-bundle exec rake railties:install:migrations
-bundle exec rake db:migrate
-bundle exec rake db:seed
-bundle exec rake spree_sample:load
+bin/rails railties:install:migrations
+bin/rails db:migrate
+bin/rails db:seed
+bin/rails spree_sample:load
 ```
 
 There are also options and rake tasks provided by

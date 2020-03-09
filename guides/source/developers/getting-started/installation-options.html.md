@@ -27,22 +27,22 @@ When you run the `solidus:install` generator without arguments, it runs
 migrations, adds sample data, and seeds your database:
 
 ```bash
-rails generate solidus:install
+bin/rails generate solidus:install
 ```
 
 You can use command arguments to skip any of these steps of the generator:
 
 ```bash
-rails generate solidus:install --migrate=false --sample=false --seed=false
+bin/rails generate solidus:install --migrate=false --sample=false --seed=false
 ```
 
 If you want to perform these tasks later, you can use these commands.
 
 ```bash
-bundle exec rake railties:install:migrations       # installs migrations
-bundle exec rake db:migrate                        # runs migrations
-bundle exec rake db:seed                           # seeds your database
-bundle exec rake spree_sample:load                 # loads sample data
+bin/rails railties:install:migrations       # installs migrations
+bin/rails db:migrate                        # runs migrations
+bin/rails db:seed                           # seeds your database
+bin/rails spree_sample:load                 # loads sample data
 ```
 
 ## Authentication via Devise
@@ -58,7 +58,7 @@ If you don't want to install the default authentication extension, you can answe
 or run the Solidus installer with the following command:
 
 ```bash
-rails generate solidus:install --with-authentication=false
+bin/rails generate solidus:install --with-authentication=false
 ```
 
 If you prefer to install [`solidus-auth-devise`][solidus-auth-devise] gem manually,
@@ -66,10 +66,10 @@ after adding it in your Gemfile, you can run the following commands to install a
 run its migrations, then seed the database:
 
 ```bash
-bundle install                                     # install gem and dependencies
-bundle exec rake solidus_auth:install:migrations   # installs solidus_auth_devise migrations
-bundle exec rake db:migrate                        # runs solidus_auth_devise migrations
-bundle exec rake db:seed                           # seeds your database
+bundle install                              # install gem and dependencies
+bin/rails solidus_auth:install:migrations   # installs solidus_auth_devise migrations
+bin/rails db:migrate                        # runs solidus_auth_devise migrations
+bin/rails db:seed                           # seeds your database
 ```
 
 [solidus-auth-devise]: https://github.com/solidusio/solidus_auth_devise

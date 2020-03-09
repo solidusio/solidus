@@ -206,7 +206,7 @@ provided by Solidus and Railties.
 First, run the `solidus:install` generator:
 
 ```bash
-bundle exec rails generate solidus:install
+bin/rails generate solidus:install
 ```
 
 This may take a few minutes to complete, and it requires some user confirmation.
@@ -232,7 +232,7 @@ successfully start the Rails server and see the sample store in your browser.
 First, start the server:
 
 ```bash
-bundle exec rails server
+bin/rails server
 ```
 
 Once the server has started, you can access your store from the following URLs:
