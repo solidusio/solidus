@@ -45,14 +45,35 @@ bundle exec rake db:seed                           # seeds your database
 bundle exec rake spree_sample:load                 # loads sample data
 ```
 
-If you use `solidus_auth_devise` for user authentication, you can also install
-and run its migrations, then seed the database separately:
+## Authentication via Devise
+
+During the installation, you have been prompted to add the default authentication extension
+to your project. It is called [`solidus-auth-devise`][solidus-auth-devise] and it uses the
+well-known authentication library for Rails called [Devise][devise].
+
+If you answered "yes", there's nothing else left to do. The extension is already
+added and installed in your application.
+
+If you don't want to install the default authentication extension, you can answer "no",
+or run the Solidus installer with the following command:
 
 ```bash
+rails generate solidus:install --with-authentication=false
+```
+
+If you prefer to install [`solidus-auth-devise`][solidus-auth-devise] gem manually,
+after adding it in your Gemfile, you can run the following commands to install and
+run its migrations, then seed the database:
+
+```bash
+bundle install                                     # install gem and dependencies
 bundle exec rake solidus_auth:install:migrations   # installs solidus_auth_devise migrations
 bundle exec rake db:migrate                        # runs solidus_auth_devise migrations
 bundle exec rake db:seed                           # seeds your database
 ```
+
+[solidus-auth-devise]: https://github.com/solidusio/solidus_auth_devise
+[devise]: https://github.com/heartcombo/devise
 
 ## Development environment performance gains
 

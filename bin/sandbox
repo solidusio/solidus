@@ -65,6 +65,7 @@ unbundled bin/rails generate solidus:install \
   --auto-accept \
   --user_class=Spree::User \
   --enforce_available_locales=true \
+  --with_authentication=false \
   $@
 
 unbundled bin/rails generate solidus:auth:install

@@ -105,7 +105,6 @@ created. Add the following to your Gemfile.
 
 ```ruby
 gem 'solidus'
-gem 'solidus_auth_devise'
 ```
 
 Run the `bundle` command to install.
@@ -115,7 +114,6 @@ configuration files and migrations.
 
 ```bash
 bundle exec rails g solidus:install
-bundle exec rails g solidus:auth:install
 bundle exec rake railties:install:migrations
 ```
 

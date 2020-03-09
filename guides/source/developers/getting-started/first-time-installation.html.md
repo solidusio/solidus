@@ -161,7 +161,6 @@ lines:
 
 ```ruby
 gem 'solidus'
-gem 'solidus_auth_devise'
 ```
 
 By requiring [`solidus`][solidus-repo] in your `Gemfile`, you are actually
@@ -224,23 +223,6 @@ The default values are as follows:
 
 The password must contain a minimum of 6 characters, or the account creation
 will fail without asking the user to try again.
-
-### Prepare Solidus database migrations
-
-Next, you need to run the `solidus:auth:install` generator and install your
-database migrations using the following commands:
-
-```bash
-bundle exec rails generate solidus:auth:install
-bundle exec rake railties:install:migrations
-```
-
-Finally, you need to run the migrations that Railties created. This creates the
-e-commerce–friendly models that Solidus uses for its database:
-
-```bash
-bundle exec rake db:migrate
-```
 
 ### Start the Rails server and use the sample store
 
