@@ -109,21 +109,14 @@ gem 'solidus'
 
 Run the `bundle` command to install.
 
-After installing gems, you'll have to run the generators to create necessary
+After installing gems, you'll have to run the generator to create necessary
 configuration files and migrations.
 
 ```bash
 bundle exec rails g solidus:install
-bundle exec rake railties:install:migrations
 ```
 
-Run migrations to create the new models in the database.
-
-```bash
-bundle exec rake db:migrate
-```
-
-Finally start the rails server
+And start the rails server
 
 ```bash
 bundle exec rails s
