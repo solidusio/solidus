@@ -14,7 +14,6 @@ Gem::Specification.new do |gem|
   gem.files = `git ls-files -z`.split("\x0").reject do |f|
     f.match(%r{^(spec|script)/})
   end
-  gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
   gem.name          = "solidus_api"
   gem.require_paths = ["lib"]
   gem.version = Spree.solidus_version
