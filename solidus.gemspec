@@ -10,7 +10,6 @@ Gem::Specification.new do |s|
   s.description = 'Solidus is an open source e-commerce framework for Ruby on Rails.'
 
   s.files        = Dir['README.md', 'lib/**/*']
-  s.require_path = 'lib'
   s.requirements << 'none'
 
   s.required_ruby_version = '>= 2.4.0'
