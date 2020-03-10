@@ -17,7 +17,6 @@ Gem::Specification.new do |s|
   s.files = `git ls-files -z`.split("\x0").reject do |f|
     f.match(%r{^(spec|script)/})
   end
-  s.requirements << 'none'
 
   s.required_ruby_version = '>= 2.4.0'
   s.required_rubygems_version = '>= 1.8.23'
