@@ -11,9 +11,10 @@ Gem::Specification.new do |gem|
   gem.summary       = 'REST API for the Solidus e-commerce framework.'
   gem.description   = gem.summary
 
-  gem.files         = `git ls-files`.split($\)
+  gem.files = `git ls-files -z`.split("\x0").reject do |f|
+    f.match(%r{^(spec|script)/})
+  end
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
-  gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.name          = "solidus_api"
   gem.require_paths = ["lib"]
   gem.version = Spree.solidus_version

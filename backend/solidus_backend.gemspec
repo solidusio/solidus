@@ -14,7 +14,9 @@ Gem::Specification.new do |s|
   s.homepage    = 'http://solidus.io'
   s.license     = 'BSD-3-Clause'
 
-  s.files        = `git ls-files`.split("\n")
+  s.files = `git ls-files -z`.split("\x0").reject do |f|
+    f.match(%r{^(spec|script)/})
+  end
   s.require_path = 'lib'
   s.requirements << 'none'
 
