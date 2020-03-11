@@ -9,17 +9,15 @@ Gem::Specification.new do |s|
   s.summary     = 'Full-stack e-commerce framework for Ruby on Rails.'
   s.description = 'Solidus is an open source e-commerce framework for Ruby on Rails.'
 
-  s.files        = Dir['README.md', 'lib/**/*']
-  s.require_path = 'lib'
-  s.requirements << 'none'
+  s.author      = 'Solidus Team'
+  s.email       = 'contact@solidus.io'
+  s.homepage    = 'http://solidus.io'
+  s.license     = 'BSD-3-Clause'
+
+  s.files = Dir['README.md', 'lib/**/*']
 
   s.required_ruby_version = '>= 2.4.0'
   s.required_rubygems_version = '>= 1.8.23'
-
-  s.author       = 'Solidus Team'
-  s.email        = 'contact@solidus.io'
-  s.homepage     = 'http://solidus.io'
-  s.license      = 'BSD-3-Clause'
 
   s.add_dependency 'solidus_api', s.version
   s.add_dependency 'solidus_backend', s.version

@@ -2,27 +2,27 @@
 
 require_relative '../core/lib/spree/core/version.rb'
 
-Gem::Specification.new do |gem|
-  gem.author        = 'Solidus Team'
-  gem.email         = 'contact@solidus.io'
-  gem.homepage      = 'http://solidus.io/'
-  gem.license       = 'BSD-3-Clause'
+Gem::Specification.new do |s|
+  s.platform    = Gem::Platform::RUBY
+  s.name        = "solidus_api"
+  s.version     = Spree.solidus_version
+  s.summary     = 'REST API for the Solidus e-commerce framework.'
+  s.description = s.summary
 
-  gem.summary       = 'REST API for the Solidus e-commerce framework.'
-  gem.description   = gem.summary
+  s.author      = 'Solidus Team'
+  s.email       = 'contact@solidus.io'
+  s.homepage    = 'http://solidus.io'
+  s.license     = 'BSD-3-Clause'
 
-  gem.files         = `git ls-files`.split($\)
-  gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
-  gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
-  gem.name          = "solidus_api"
-  gem.require_paths = ["lib"]
-  gem.version = Spree.solidus_version
+  s.files = `git ls-files -z`.split("\x0").reject do |f|
+    f.match(%r{^(spec|script)/})
+  end
 
-  gem.required_ruby_version = '>= 2.4.0'
-  gem.required_rubygems_version = '>= 1.8.23'
+  s.required_ruby_version = '>= 2.4.0'
+  s.required_rubygems_version = '>= 1.8.23'
 
-  gem.add_dependency 'jbuilder', '~> 2.8'
-  gem.add_dependency 'kaminari-activerecord', '~> 1.1'
-  gem.add_dependency 'responders'
-  gem.add_dependency 'solidus_core', gem.version
+  s.add_dependency 'jbuilder', '~> 2.8'
+  s.add_dependency 'kaminari-activerecord', '~> 1.1'
+  s.add_dependency 'responders'
+  s.add_dependency 'solidus_core', s.version
 end

@@ -11,12 +11,12 @@ Gem::Specification.new do |s|
 
   s.author      = 'Solidus Team'
   s.email       = 'contact@solidus.io'
-  s.homepage    = 'http://solidus.io/'
+  s.homepage    = 'http://solidus.io'
   s.license     = 'BSD-3-Clause'
 
-  s.files        = `git ls-files`.split("\n")
-  s.require_path = 'lib'
-  s.requirements << 'none'
+  s.files = `git ls-files -z`.split("\x0").reject do |f|
+    f.match(%r{^(spec|script)/})
+  end
 
   s.required_ruby_version = '>= 2.4.0'
   s.required_rubygems_version = '>= 1.8.23'
