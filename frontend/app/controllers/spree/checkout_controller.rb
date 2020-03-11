@@ -203,9 +203,8 @@ module Spree
       @order.assign_default_user_addresses
       # If the user has a default address, the previous method call takes care
       # of setting that; but if he doesn't, we need to build an empty one here
-      default = { country_id: Spree::Country.default.id }
-      @order.build_bill_address(default) unless @order.bill_address
-      @order.build_ship_address(default) if @order.checkout_steps.include?('delivery') && !@order.ship_address
+      @order.bill_address ||= Spree::Address.build_default
+      @order.ship_address ||= Spree::Address.build_default if @order.checkout_steps.include?('delivery')
     end
 
     def before_delivery
