@@ -122,6 +122,7 @@ after_bundle do
     "--auto-accept",
     "--user_class=Spree::User",
     "--enforce_available_locales=true",
+    "--with-authentication=false",
   )
 
   generate('solidus_auth:install')

@@ -17,6 +17,7 @@ module Solidus
     class_option :admin_email, type: :string
     class_option :admin_password, type: :string
     class_option :lib_name, type: :string, default: 'spree'
+    class_option :with_authentication, type: :boolean, default: true
     class_option :enforce_available_locales, type: :boolean, default: nil
 
     def self.source_paths
@@ -108,6 +109,17 @@ module Solidus
     # Prevent this deprecation message: https://github.com/svenfuchs/i18n/commit/3b6e56e
     I18n.enforce_available_locales = #{options[:enforce_available_locales]}
         RUBY
+      end
+    end
+
+    def install_default_plugins
+      if options[:with_authentication] && (options[:auto_accept] || yes?("
+  Solidus has a default authentication extension that uses Devise.
+  You can find more info at github.com/solidusio/solidus_auth_devise.
+
+  Would you like to install it? (y/n)"))
+
+        gem 'solidus_auth_devise'
       end
     end
 
