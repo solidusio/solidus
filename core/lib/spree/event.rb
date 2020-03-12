@@ -29,9 +29,15 @@ module Spree
     # Subscribe to an event with the given name. The provided block is executed
     # every time the subscribed event is fired.
     #
-    # @param [String] event_name the name of the event. The suffix ".spree"
-    #  will be added automatically if not present, when using the default
-    #  adapter for ActiveSupportNotifications.
+    # @param [String, Regexp] event_name the name of the event.
+    #  When String, the suffix ".spree" will be added automatically if not present,
+    #  when using the default adapter for ActiveSupportNotifications.
+    #  When Regexp, due to the unpredictability of all possible regexp combinations,
+    #  adding the suffix is developer's responsibility (if you don't, you will
+    #  subscribe to all notifications, including internal Rails notifications
+    #  as well).
+    #
+    # @see Spree::Event::Adapters::ActiveSupportNotifications#normalize_name
     #
     # @return a subscription object that can be used as reference in order
     #  to remove the subscription
