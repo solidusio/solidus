@@ -96,7 +96,7 @@
   <% end %>
   <div class="form-buttons filter-actions actions" data-hook="reimburse-buttons">
     <% if !@reimbursement.reimbursed? %>
-      <%= button_to [:perform, :admin, @order, @reimbursement], { class: 'button btn btn-primary', method: 'post' } do %>
+      <%= button_to [:perform, :admin, @order, @reimbursement], { class: 'button btn btn-primary', method: 'post', data: { disable_with: t('spree.reimburse') }} do %>
         <%= t('spree.reimburse') %>
       <% end %>
       <%= link_to t('spree.actions.cancel'), url_for([:edit, :admin, @order, @reimbursement.customer_return]), class: 'btn btn-default' %>
