@@ -563,6 +563,13 @@ module Spree
       end
     end
 
+    def create_shipments_for_line_item(line_item)
+      units = Spree::Stock::InventoryUnitBuilder.new(self).missing_units_for_line_item(line_item)
+      Spree::Config.stock.coordinator_class.new(self, units).shipments.each do |shipment|
+        shipments << shipment
+      end
+    end
+
     def apply_shipping_promotions
       Spree::PromotionHandler::Shipping.new(self).activate
       recalculate

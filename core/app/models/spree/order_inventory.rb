@@ -23,8 +23,14 @@ module Spree
         existing_quantity = inventory_units.count
         desired_quantity = line_item.quantity - existing_quantity
         if desired_quantity > 0
-          shipment ||= determine_target_shipment
-          add_to_shipment(shipment, desired_quantity)
+          shipment ||= determine_target_shipment(desired_quantity)
+          if shipment
+            add_to_shipment(shipment, desired_quantity)
+          else
+            order.create_shipments_for_line_item(line_item).each do |new_shipment|
+              new_shipment.finalize!
+            end
+          end
         elsif desired_quantity < 0
           remove(-desired_quantity, shipment)
         end
@@ -48,12 +54,18 @@ module Spree
     # Returns either one of the shipment:
     #
     # first unshipped that already includes this variant
-    # first unshipped that's leaving from a stock_location that stocks this variant
-    def determine_target_shipment
+    # first unshipped that's leaving from a stock_location that stocks this variant, with availability check
+    # first unshipped that's leaving from a stock_location that stocks this variant, without availability check
+    def determine_target_shipment(quantity)
       potential_shipments = order.shipments.select(&:ready_or_pending?)
 
       potential_shipments.detect do |shipment|
         shipment.include?(variant)
+      end || potential_shipments.detect do |shipment|
+        stock_item = shipment.stock_location.stock_item(variant.id)
+        if stock_item
+          stock_item.backorderable? || stock_item.count_on_hand >= quantity
+        end
       end || potential_shipments.detect do |shipment|
         variant.stock_location_ids.include?(shipment.stock_location_id)
       end
