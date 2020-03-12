@@ -62,9 +62,7 @@
   </fieldset>
 
   <div class="form-buttons filter-actions actions" data-hook="buttons">
-    <%= f.button do %>
-      <%= t('spree.update') %>
-    <% end %>
+    <%= f.submit t('spree.update'), class: "btn btn-primary" %>
   </div>
   <br>
 <% end %>
