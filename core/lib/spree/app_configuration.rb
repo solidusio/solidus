@@ -24,7 +24,7 @@ require 'spree/core/environment'
 
 module Spree
   class AppConfiguration < Preferences::Configuration
-    # Alphabetized to more easily lookup particular preferences
+    # Preferences (alphabetized to more easily lookup particular preferences)
 
     # @!attribute [rw] address_requires_state
     #   @return [Boolean] should state/state_name be required (default: +true+)
@@ -41,6 +41,12 @@ module Spree
     # @!attribute [rw] admin_variants_per_page
     #   @return [Integer] Number of variants to display in admin (default: +20+)
     preference :admin_variants_per_page, :integer, default: 20
+
+    # @!attribute [rw] admin_vat_country_iso
+    #   Set this if you want to enter prices in the backend including value added tax.
+    #   @return [String, nil] Two-letter ISO code of that {Spree::Country} for which
+    #      prices are entered in the backend (default: nil)
+    preference :admin_vat_country_iso, :string, default: nil
 
     # @!attribute [rw] allow_checkout_on_gateway_error
     #   @return [Boolean] Allow checkout to complete after a failed payment (default: +false+)
@@ -78,6 +84,14 @@ module Spree
     #   @return [Boolean] Automatically capture the credit card (as opposed to just authorize and capture later) (default: +false+)
     preference :auto_capture_exchanges, :boolean, default: false
 
+    # @!attribute [rw] automatic_default_address
+    #   The default value of true preserves existing backwards compatible feature of
+    #   treating the most recently used address in checkout as the user's default address.
+    #   Setting to false means that the user should manage their own default via some
+    #   custom UI that uses AddressBookController.
+    #   @return [Boolean] Whether use of an address in checkout marks it as user's default
+    preference :automatic_default_address, :boolean, default: true
+
     # @!attribute [rw] binary_inventory_cache
     #   Only invalidate product caches when they change from in stock to out of
     #   stock. By default, caches are invalidated on any change of inventory
@@ -88,20 +102,9 @@ module Spree
     #   @return [Boolean]
     preference :binary_inventory_cache, :boolean, default: false
 
-    # @!attribute [rw] completable_order_created_cutoff
-    #   @return [Integer] the number of days to look back for created orders which get returned to the user as last completed
-    preference :completable_order_created_cutoff_days, :integer, default: nil
-
-    # @!attribute [rw] completable_order_created_cutoff
-    #   @return [Integer] the number of days to look back for updated orders which get returned to the user as last completed
-    preference :completable_order_updated_cutoff_days, :integer, default: nil
-
-    # @!attribute [rw] inventory_cache_threshold
-    #   Only invalidate product caches when the count on hand for a stock item
-    #   falls below or rises about the inventory_cache_threshold.  When undefined, the
-    #   product caches will be invalidated anytime the count on hand is changed.
-    #   @return [Integer]
-    preference :inventory_cache_threshold, :integer
+    # @!attribute [rw] can_restrict_stock_management
+    #   @return [Boolean] Indicates if stock management can be restricted by location
+    preference :can_restrict_stock_management, :boolean, default: false
 
     # @!attribute [rw] checkout_zone
     #   @return [String] Name of a {Spree::Zone}, which limits available countries to those included in that zone. (default: +nil+)
@@ -111,17 +114,26 @@ module Spree
     #   @return [Boolean] Request company field for billing and shipping addresses. (default: +false+)
     preference :company, :boolean, default: false
 
+    # @!attribute [rw] completable_order_created_cutoff
+    #   @return [Integer] the number of days to look back for created orders which get returned to the user as last completed
+    preference :completable_order_created_cutoff_days, :integer, default: nil
+
+    # @!attribute [rw] completable_order_created_cutoff
+    #   @return [Integer] the number of days to look back for updated orders which get returned to the user as last completed
+    preference :completable_order_updated_cutoff_days, :integer, default: nil
+
+    # @!attribute [rw] credit_to_new_allocation
+    #   @return [Boolean] Creates a new allocation anytime {Spree::StoreCredit#credit} is called
+    preference :credit_to_new_allocation, :boolean, default: false
+
     # @!attribute [rw] currency
     #   Currency to use by default when not defined on the site (default: +"USD"+)
     #   @return [String] ISO 4217 Three letter currency code
     preference :currency, :string, default: "USD"
 
-    # @!attribute [rw] raise_with_invalid_currency
-    #   Whether to raise an exception if trying to set a line item currency
-    #   different from the order currency. When false a validation error
-    #   is added to the instance instead.
-    #   @return [Boolean] (default: +true+)
-    preference :raise_with_invalid_currency, :boolean, default: true
+    # @!attribute [rw] customer_returns_per_page
+    #   @return [Integer] Customer returns to show per-page in the admin (default: +15+)
+    preference :customer_returns_per_page, :integer, default: 15
 
     # @!attribute [rw] default_country_id
     #   @deprecated Use the default country ISO preference instead
@@ -133,16 +145,17 @@ module Spree
     #   @return [String] Two-letter ISO code of a {Spree::Country} to assumed as the country of an unidentified customer (default: "US")
     preference :default_country_iso, :string, default: 'US'
 
-    # @!attribute [rw] admin_vat_country_iso
-    #   Set this if you want to enter prices in the backend including value added tax.
-    #   @return [String, nil] Two-letter ISO code of that {Spree::Country} for which
-    #      prices are entered in the backend (default: nil)
-    preference :admin_vat_country_iso, :string, default: nil
-
     # @!attribute [rw] generate_api_key_for_all_roles
     #   @return [Boolean] Allow generating api key automatically for user
     #   at role_user creation for all roles. (default: +false+)
     preference :generate_api_key_for_all_roles, :boolean, default: false
+
+    # @!attribute [rw] inventory_cache_threshold
+    #   Only invalidate product caches when the count on hand for a stock item
+    #   falls below or rises about the inventory_cache_threshold.  When undefined, the
+    #   product caches will be invalidated anytime the count on hand is changed.
+    #   @return [Integer]
+    preference :inventory_cache_threshold, :integer
 
     # @!attribute [rw] layout
     #   @return [String] template to use for layout on the frontend (default: +"spree/layouts/spree_application"+)
@@ -152,6 +165,14 @@ module Spree
     #   @return [String] URL of logo used on frontend (default: +'logo/solidus.svg'+)
     preference :logo, :string, default: 'logo/solidus.svg'
 
+    # @!attribute [rw] mails_from
+    #   @return [String] Email address used as +From:+ field in transactional emails.
+    preference :mails_from, :string, default: 'spree@example.com'
+
+    # @!attribute [rw] max_level_in_taxons_menu
+    #   @return [Integer] maximum nesting level in taxons menu (default: +1+)
+    preference :max_level_in_taxons_menu, :integer, default: 1
+
     # @!attribute [rw] order_bill_address_used
     #   @return [Boolean] Use the order's bill address, as opposed to storing
     #   bill addresses on payment sources. (default: +true+)
@@ -160,10 +181,6 @@ module Spree
     # @!attribute [rw] order_capturing_time_window
     #   @return [Integer] the number of days to look back for fully-shipped/cancelled orders in order to charge for them
     preference :order_capturing_time_window, :integer, default: 14
-
-    # @!attribute [rw] max_level_in_taxons_menu
-    #   @return [Integer] maximum nesting level in taxons menu (default: +1+)
-    preference :max_level_in_taxons_menu, :integer, default: 1
 
     # @!attribute [rw] order_mutex_max_age
     #   @return [Integer] Max age of {Spree::OrderMutex} in seconds (default: 2 minutes)
@@ -185,9 +202,12 @@ module Spree
     #   @return [Integer] Promotions to show per-page in the admin (default: +15+)
     preference :promotions_per_page, :integer, default: 15
 
-    # @!attribute [rw] customer_returns_per_page
-    #   @return [Integer] Customer returns to show per-page in the admin (default: +15+)
-    preference :customer_returns_per_page, :integer, default: 15
+    # @!attribute [rw] raise_with_invalid_currency
+    #   Whether to raise an exception if trying to set a line item currency
+    #   different from the order currency. When false a validation error
+    #   is added to the instance instead.
+    #   @return [Boolean] (default: +true+)
+    preference :raise_with_invalid_currency, :boolean, default: true
 
     # @!attribute [rw] require_master_price
     #   @return [Boolean] Require a price on the master variant of a product (default: +true+)
@@ -206,6 +226,10 @@ module Spree
     #   at role_user creation is desired when user has one of these roles.
     #   (default: +['admin']+)
     preference :roles_for_auto_api_key, :array, default: ['admin']
+
+    # @!attribute [rw] send_core_emails
+    #   @return [Boolean] Whether to send transactional emails (default: true)
+    preference :send_core_emails, :boolean, default: true
 
     # @!attribute [rw] shipping_instructions
     #   @return [Boolean] Request instructions/info for shipping (default: +false+)
@@ -227,11 +251,6 @@ module Spree
     #   @return [Boolean] Don't escape HTML of product descriptions. (default: +false+)
     preference :show_raw_product_description, :boolean, default: false
 
-    # @!attribute [rw] use_combined_first_and_last_name_in_address
-    #   @return [Boolean] Use Spree::Address combined first and last name in HTML views and
-    #   API responses. (default: +false+)
-    preference :use_combined_first_and_last_name_in_address, :boolean, default: false
-
     # @!attribute [rw] tax_using_ship_address
     #   @return [Boolean] Use the shipping address rather than the billing address to determine tax (default: +true+)
     preference :tax_using_ship_address, :boolean, default: true
@@ -243,33 +262,12 @@ module Spree
     #   @return [] Track on_hand values for variants / products. (default: true)
     preference :track_inventory_levels, :boolean, default: true
 
-    # Default mail headers settings
+    # @!attribute [rw] use_combined_first_and_last_name_in_address
+    #   @return [Boolean] Use Spree::Address combined first and last name in HTML views and
+    #   API responses. (default: +false+)
+    preference :use_combined_first_and_last_name_in_address, :boolean, default: false
 
-    # @!attribute [rw] send_core_emails
-    #   @return [Boolean] Whether to send transactional emails (default: true)
-    preference :send_core_emails, :boolean, default: true
-
-    # @!attribute [rw] mails_from
-    #   @return [String] Email address used as +From:+ field in transactional emails.
-    preference :mails_from, :string, default: 'spree@example.com'
-
-    # Store credits configurations
-
-    # @!attribute [rw] credit_to_new_allocation
-    #   @return [Boolean] Creates a new allocation anytime {Spree::StoreCredit#credit} is called
-    preference :credit_to_new_allocation, :boolean, default: false
-
-    # @!attribute [rw] automatic_default_address
-    #   The default value of true preserves existing backwards compatible feature of
-    #   treating the most recently used address in checkout as the user's default address.
-    #   Setting to false means that the user should manage their own default via some
-    #   custom UI that uses AddressBookController.
-    #   @return [Boolean] Whether use of an address in checkout marks it as user's default
-    preference :automatic_default_address, :boolean, default: true
-
-    # @!attribute [rw] can_restrict_stock_management
-    #   @return [Boolean] Indicates if stock management can be restricted by location
-    preference :can_restrict_stock_management, :boolean, default: false
+    # Other configurations
 
     # Allows restricting what currencies will be available.
     #
