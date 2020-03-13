@@ -7,7 +7,9 @@
   <% if can?(:create, Spree::ProductProperty) %>
     <ul class="tollbar inline-menu">
       <li>
-        <%= link_to_add_fields t('spree.add_product_properties'), 'tbody#product_properties', class: 'plus btn btn-primary' %>
+        <%= button_tag t('spree.add_product_properties'), type: 'button',
+              data: { target: 'tbody#product_properties' },
+              class: 'btn btn-primary spree_add_fields' %>
       </li>
     </ul>
   <% end %>
@@ -55,7 +57,9 @@
       <div class="form-buttons filter-actions actions">
         <%= button_tag t('spree.filter_results'), class: 'btn btn-primary' %>
         <% if @option_value_ids.present? %>
-          <%= link_to_add_fields t('spree.add_variant_properties'), 'tbody#variant_property_values', class: 'plus button' %>
+          <%= button_tag t('spree.add_variant_properties'), type: 'button',
+                data: { target: 'tbody#variant_property_values' },
+                class: 'button spree_add_fields' %>
         <% end %>
       </div>
     </fieldset>
