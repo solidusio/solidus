@@ -133,7 +133,7 @@ module Spree
 
       def product_scope
         if can?(:admin, Spree::Product)
-          scope = Spree::Product.with_deleted.accessible_by(current_ability, :read).includes(*product_includes)
+          scope = Spree::Product.with_discarded.accessible_by(current_ability, :read).includes(*product_includes)
 
           unless params[:show_deleted]
             scope = scope.not_deleted

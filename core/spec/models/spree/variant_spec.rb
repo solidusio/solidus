@@ -692,7 +692,7 @@ RSpec.describe Spree::Variant, type: :model do
       context 'when loading with pre-fetching of default_price' do
         it 'also keeps the previous price' do
           variant.discard
-          reloaded_variant = Spree::Variant.with_deleted.includes(:default_price).find_by(id: variant.id)
+          reloaded_variant = Spree::Variant.with_discarded.includes(:default_price).find_by(id: variant.id)
           expect(reloaded_variant.display_price).to eq(previous_variant_price)
         end
       end

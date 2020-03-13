@@ -6,7 +6,7 @@ module Spree
 
     included do
       has_one :default_price,
-        -> { with_deleted.currently_valid.with_default_attributes },
+        -> { with_discarded.currently_valid.with_default_attributes },
         class_name: 'Spree::Price',
         inverse_of: :variant,
         dependent: :destroy,

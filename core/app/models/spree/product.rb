@@ -48,7 +48,7 @@ module Spree
     belongs_to :shipping_category, class_name: 'Spree::ShippingCategory', inverse_of: :products, optional: true
 
     has_one :master,
-      -> { where(is_master: true).with_deleted },
+      -> { where(is_master: true).with_discarded },
       inverse_of: :product,
       class_name: 'Spree::Variant',
       autosave: true
@@ -134,7 +134,7 @@ module Spree
     self.whitelisted_ransackable_attributes = %w[name slug]
 
     def self.ransackable_scopes(_auth_object = nil)
-      %i(with_deleted with_variant_sku_cont)
+      %i(with_discarded with_variant_sku_cont)
     end
 
     # @return [Boolean] true if there are any variants

@@ -108,9 +108,9 @@ module Spree
         where(type: to_s, active: true).count > 0
       end
 
-      # @deprecated Use .with_deleted.find instead
+      # @deprecated Use .with_discarded.find instead
       def find_with_destroyed(*args)
-        Spree::Deprecation.warn "#{self}.find_with_destroyed is deprecated. Use #{self}.with_deleted.find instead"
+        Spree::Deprecation.warn "#{self}.find_with_destroyed is deprecated. Use #{self}.with_discarded.find instead"
         unscoped { find(*args) }
       end
     end

@@ -13,7 +13,7 @@ module Spree
     class CurrencyMismatch < StandardError; end
 
     belongs_to :order, class_name: "Spree::Order", inverse_of: :line_items, touch: true, optional: true
-    belongs_to :variant, -> { with_deleted }, class_name: "Spree::Variant", inverse_of: :line_items, optional: true
+    belongs_to :variant, -> { with_discarded }, class_name: "Spree::Variant", inverse_of: :line_items, optional: true
     belongs_to :tax_category, class_name: "Spree::TaxCategory", optional: true
 
     has_one :product, through: :variant

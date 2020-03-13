@@ -64,7 +64,7 @@ module Spree
         end
 
         if current_ability.can?(:manage, Variant) && params[:show_deleted]
-          variants = variants.with_deleted
+          variants = variants.with_discarded
         end
 
         in_stock_only = ActiveRecord::Type::Boolean.new.cast(params[:in_stock_only])
