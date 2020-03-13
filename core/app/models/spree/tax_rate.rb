@@ -1,14 +1,8 @@
 # frozen_string_literal: true
 
-require 'discard'
-
 module Spree
   class TaxRate < Spree::Base
-    acts_as_paranoid
-    include Spree::ParanoiaDeprecations
-
-    include Discard::Model
-    self.discard_column = :deleted_at
+    include Spree::SoftDeletable
 
     # Need to deal with adjustments before calculator is destroyed.
     before_destroy :remove_adjustments_from_incomplete_orders

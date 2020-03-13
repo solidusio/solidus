@@ -1,14 +1,8 @@
 # frozen_string_literal: true
 
-require 'discard'
-
 module Spree
   class TaxCategory < Spree::Base
-    acts_as_paranoid
-    include Spree::ParanoiaDeprecations
-
-    include Discard::Model
-    self.discard_column = :deleted_at
+    include Spree::SoftDeletable
 
     after_discard do
       self.tax_rate_tax_categories = []

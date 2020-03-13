@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'discard'
-
 module Spree
   # Products represent an entity for sale in a store. Products can have
   # variations, called variants. Product properties include description,
@@ -15,11 +13,7 @@ module Spree
     extend FriendlyId
     friendly_id :slug_candidates, use: :history
 
-    acts_as_paranoid
-    include Spree::ParanoiaDeprecations
-
-    include Discard::Model
-    self.discard_column = :deleted_at
+    include Spree::SoftDeletable
 
     after_discard do
       variants_including_master.discard_all

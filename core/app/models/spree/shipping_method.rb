@@ -1,17 +1,10 @@
 # frozen_string_literal: true
 
-require 'discard'
-
 module Spree
   # Represents a means of having a shipment delivered, such as FedEx or UPS.
   #
   class ShippingMethod < Spree::Base
-    acts_as_paranoid
-    include Spree::ParanoiaDeprecations
-
-    include Discard::Model
-    self.discard_column = :deleted_at
-
+    include Spree::SoftDeletable
     include Spree::CalculatedAdjustments
     DISPLAY = ActiveSupport::Deprecation::DeprecatedObjectProxy.new(
       [:both, :front_end, :back_end],

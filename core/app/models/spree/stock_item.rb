@@ -1,14 +1,8 @@
 # frozen_string_literal: true
 
-require 'discard'
-
 module Spree
   class StockItem < Spree::Base
-    acts_as_paranoid
-    include Spree::ParanoiaDeprecations
-
-    include Discard::Model
-    self.discard_column = :deleted_at
+    include Spree::SoftDeletable
 
     belongs_to :stock_location, class_name: 'Spree::StockLocation', inverse_of: :stock_items, optional: true
     belongs_to :variant, -> { with_discarded }, class_name: 'Spree::Variant', inverse_of: :stock_items, optional: true
