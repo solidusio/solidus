@@ -96,6 +96,15 @@ jobs:
       - setup
       - test
 
+  postgres_rails_master:
+    executor: postgres
+    parallelism: *parallelism
+    environment:
+      RAILS_VERSION: 'master'
+    steps:
+      - setup
+      - test
+
   mysql:
     executor: mysql
     parallelism: *parallelism
@@ -132,6 +141,7 @@ workflows:
       - mysql
       - postgres_rails52
       - mysql_rails52
+      - postgres_rails_master
       - stoplight/push:
           project: solidus/solidus-api
           git_token: $STOPLIGHT_GIT_TOKEN
