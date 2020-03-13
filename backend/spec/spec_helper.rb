@@ -59,6 +59,14 @@ Capybara.default_max_wait_time = ENV['DEFAULT_MAX_WAIT_TIME'].to_f if ENV['DEFAU
 
 ActiveJob::Base.queue_adapter = :test
 
+def check_missing_translations(page, example)
+  missing_translations = page.body.scan(/translation missing: #{I18n.locale}\.(.*?)[\s<\"&]/)
+  if missing_translations.any?
+    puts "Found missing translations: #{missing_translations.inspect}"
+    puts "In spec: #{example.location}"
+  end
+end
+
 RSpec.configure do |config|
   config.color = true
   config.infer_spec_type_from_file_location!
@@ -88,6 +96,12 @@ RSpec.configure do |config|
     end
   end
 
+  config.when_first_matching_example_defined(type: :system) do
+    config.before :suite do
+      Rails.application.precompiled_assets
+    end
+  end
+
   config.before do
     Rails.cache.clear
     if RSpec.current_example.metadata[:js] && page.driver.browser.respond_to?(:url_blacklist)
@@ -96,13 +110,14 @@ RSpec.configure do |config|
   end
 
   config.include BaseFeatureHelper, type: :feature
+  config.include BaseFeatureHelper, type: :system
 
   config.after(:each, type: :feature) do |example|
-    missing_translations = page.body.scan(/translation missing: #{I18n.locale}\.(.*?)[\s<\"&]/)
-    if missing_translations.any?
-      puts "Found missing translations: #{missing_translations.inspect}"
-      puts "In spec: #{example.location}"
-    end
+    check_missing_translations(page, example)
+  end
+
+  config.after(:each, type: :system) do |example|
+    check_missing_translations(page, example)
   end
 
   config.include FactoryBot::Syntax::Methods

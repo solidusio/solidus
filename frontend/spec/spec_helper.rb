@@ -46,6 +46,20 @@ Capybara.javascript_driver = (ENV['CAPYBARA_DRIVER'] || :selenium_chrome_headles
 
 ActiveJob::Base.queue_adapter = :test
 
+def check_missing_translations(page, example)
+  missing_translations = page.body.scan(/translation missing: #{I18n.locale}\.(.*?)[\s<\"&]/)
+  if missing_translations.any?
+    puts "Found missing translations: #{missing_translations.inspect}"
+    puts "In spec: #{example.location}"
+  end
+end
+
+def set_url_blacklist(browser)
+  if browser.respond_to?(:url_blacklist)
+    browser.url_blacklist = ['http://fonts.googleapis.com']
+  end
+end
+
 RSpec.configure do |config|
   config.color = true
   config.infer_spec_type_from_file_location!
@@ -78,17 +92,19 @@ RSpec.configure do |config|
   end
 
   config.before(:each, type: :feature) do
-    if page.driver.browser.respond_to?(:url_blacklist)
-      page.driver.browser.url_blacklist = ['http://fonts.googleapis.com']
-    end
+    set_url_blacklist(page.driver.browser)
+  end
+
+  config.before(:each, type: :system) do
+    set_url_blacklist(page.driver.browser)
   end
 
   config.after(:each, type: :feature) do |example|
-    missing_translations = page.body.scan(/translation missing: #{I18n.locale}\.(.*?)[\s<\"&]/)
-    if missing_translations.any?
-      puts "Found missing translations: #{missing_translations.inspect}"
-      puts "In spec: #{example.location}"
-    end
+    check_missing_translations(page, example)
+  end
+
+  config.after(:each, type: :system) do |example|
+    check_missing_translations(page, example)
   end
 
   config.include FactoryBot::Syntax::Methods
