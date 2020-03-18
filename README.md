@@ -101,22 +101,53 @@ required for Paperclip. (You can install it using [Homebrew](https://brew.sh) if
 you're on a Mac.)
 
 To add solidus, begin with a Rails 5/6 application and a database configured and
-created. Add the following to your Gemfile.
+created.
 
-```ruby
-gem 'solidus'
-```
+### Installing Solidus
 
-Run the `bundle` command to install.
+<details>
+  <summary>For Solidus v2.10 and below</summary>
 
-After installing gems, you'll have to run the generator to create necessary
-configuration files and migrations.
+  Add the following to your Gemfile. Skip the `solidus_auth_devise` part
+  if you want to use a custom authentication system.
 
-```bash
-bin/rails g solidus:install
-```
+  ```ruby
+  gem 'solidus'
+  gem 'solidus_auth_devise'
+  ```
 
-And start the rails server
+  Run the `bundle` command to install.
+
+  After installing gems, you'll have to run the generator to create necessary
+  configuration files and migrations.
+
+  ```bash
+  bin/rails g spree:install
+  ```
+</details>
+
+<details>
+  <summary>For Solidus v2.11 (still unreleased) and above</summary>
+
+  Add the following to your Gemfile.
+
+  ```ruby
+  gem 'solidus'
+  ```
+
+  Run the `bundle` command to install.
+
+  After installing gems, you'll have to run the generator to create necessary
+  configuration files and migrations.
+
+  ```bash
+  bin/rails g solidus:install
+  ```
+</details>
+
+### Accessing Solidus Store
+
+Start the Rails server with the command:
 
 ```bash
 bin/rails s
