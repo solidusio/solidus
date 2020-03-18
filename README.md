@@ -113,7 +113,7 @@ After installing gems, you'll have to run the generator to create necessary
 configuration files and migrations.
 
 ```bash
-bin/rails g solidus:install
+bin/rails g spree:install
 ```
 
 And start the rails server
