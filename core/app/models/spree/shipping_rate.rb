@@ -6,7 +6,7 @@ module Spree
   #
   class ShippingRate < Spree::Base
     belongs_to :shipment, class_name: 'Spree::Shipment', touch: true, optional: true
-    belongs_to :shipping_method, -> { with_deleted }, class_name: 'Spree::ShippingMethod', inverse_of: :shipping_rates, optional: true
+    belongs_to :shipping_method, -> { with_discarded }, class_name: 'Spree::ShippingMethod', inverse_of: :shipping_rates, optional: true
 
     has_many :taxes,
              class_name: "Spree::ShippingRateTax",

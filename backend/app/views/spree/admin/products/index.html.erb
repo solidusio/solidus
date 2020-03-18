@@ -34,7 +34,7 @@
           <div class="col-2">
             <div class="field checkbox">
               <label>
-                <%= f.check_box :with_deleted, { checked: params[:q][:with_deleted] == 'true' }, 'true', 'false' %>
+                <%= f.check_box :with_discarded, { checked: params[:q][:with_discarded] == 'true' }, 'true', 'false' %>
                 <%= t('spree.show_deleted') %>
               </label>
             </div>

@@ -99,7 +99,7 @@ describe "Products", type: :feature do
         expect(page).not_to have_content("apache baseball cap")
         check "Show Deleted"
         click_button 'Search'
-        expect(find('input[name="q[with_deleted]"]')).to be_checked
+        expect(find('input[name="q[with_discarded]"]')).to be_checked
         expect(page).to have_content("zomg shirt")
         expect(page).to have_content("apache baseball cap")
         uncheck "Show Deleted"

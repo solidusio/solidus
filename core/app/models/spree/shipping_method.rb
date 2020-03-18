@@ -28,7 +28,7 @@ module Spree
     has_many :shipping_method_zones, dependent: :destroy
     has_many :zones, through: :shipping_method_zones
 
-    belongs_to :tax_category, -> { with_deleted }, class_name: 'Spree::TaxCategory', optional: true
+    belongs_to :tax_category, -> { with_discarded }, class_name: 'Spree::TaxCategory', optional: true
     has_many :shipping_method_stock_locations, dependent: :destroy, class_name: "Spree::ShippingMethodStockLocation"
     has_many :stock_locations, through: :shipping_method_stock_locations
 

@@ -21,7 +21,7 @@ module Spree
 
       def collection
         if params[:deleted] == "on"
-          base_variant_scope ||= super.with_deleted
+          base_variant_scope ||= super.with_discarded
         else
           base_variant_scope ||= super
         end
@@ -43,7 +43,7 @@ module Spree
       end
 
       def parent
-        @parent ||= Spree::Product.with_deleted.find_by(slug: params[:product_id])
+        @parent ||= Spree::Product.with_discarded.find_by(slug: params[:product_id])
         @product = @parent
       end
     end

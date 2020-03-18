@@ -21,7 +21,7 @@ describe Spree::Admin::ProductsController, type: :controller do
       let!(:soft_deleted_product) { create(:product, sku: "ABC123") }
       before { soft_deleted_product.discard }
 
-      context 'when params[:q][:with_deleted] is not set' do
+      context 'when params[:q][:with_discarded] is not set' do
         let(:params) { { q: {} } }
 
         it 'filters out soft-deleted products by default' do
@@ -30,8 +30,8 @@ describe Spree::Admin::ProductsController, type: :controller do
         end
       end
 
-      context 'when params[:q][:with_deleted] is set to "true"' do
-        let(:params) { { q: { with_deleted: 'true' } } }
+      context 'when params[:q][:with_discarded] is set to "true"' do
+        let(:params) { { q: { with_discarded: 'true' } } }
 
         it 'includes soft-deleted products' do
           get :index, params: params
