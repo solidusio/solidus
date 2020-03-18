@@ -251,4 +251,25 @@ describe Spree::OrdersController, type: :controller do
       expect(order.reload.line_items.count).to eq 0
     end
   end
+
+  describe '#edit' do
+    subject { get :edit }
+    let(:user) { build :user }
+
+    it "builds a new valid order with complete meta-data" do
+      allow(controller).to receive_messages(try_spree_current_user: user)
+
+      subject
+
+      order = controller.instance_variable_get(:@order)
+
+      aggregate_failures do
+        expect(order).to be_valid
+        expect(order).not_to be_persisted
+        expect(order.store).to be_present
+        expect(order.user).to eq(user)
+        expect(order.created_by).to eq(user)
+      end
+    end
+  end
 end

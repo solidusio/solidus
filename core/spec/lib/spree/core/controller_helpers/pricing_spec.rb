@@ -2,12 +2,11 @@
 
 require 'rails_helper'
 
-class FakesController < ApplicationController
-  include Spree::Core::ControllerHelpers::Pricing
-end
-
 RSpec.describe Spree::Core::ControllerHelpers::Pricing, type: :controller do
-  controller(FakesController) {}
+  controller(ApplicationController) {
+    include Spree::Core::ControllerHelpers::Store
+    include Spree::Core::ControllerHelpers::Pricing
+  }
 
   before do
     allow(controller).to receive(:current_store).and_return(store)

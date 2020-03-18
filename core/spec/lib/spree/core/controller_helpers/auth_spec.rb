@@ -2,13 +2,11 @@
 
 require 'rails_helper'
 
-class FakesController < ApplicationController
-  include Spree::Core::ControllerHelpers::Auth
-  def index; render plain: 'index'; end
-end
-
 RSpec.describe Spree::Core::ControllerHelpers::Auth, type: :controller do
-  controller(FakesController) {}
+  controller(ApplicationController) {
+    include Spree::Core::ControllerHelpers::Auth
+    def index; render plain: 'index'; end
+  }
 
   describe '#current_ability' do
     it 'returns Spree::Ability instance' do
@@ -17,9 +15,12 @@ RSpec.describe Spree::Core::ControllerHelpers::Auth, type: :controller do
   end
 
   describe '#redirect_back_or_default' do
-    controller(FakesController) do
-      def index; redirect_back_or_default('/'); end
+    before do
+      def controller.index
+        redirect_back_or_default('/')
+      end
     end
+
     it 'redirects to session url' do
       session[:spree_user_return_to] = '/redirect'
       get :index
@@ -32,12 +33,13 @@ RSpec.describe Spree::Core::ControllerHelpers::Auth, type: :controller do
   end
 
   describe '#set_guest_token' do
-    controller(FakesController) do
-      def index
+    before do
+      def controller.index
         set_guest_token
         render plain: 'index'
       end
     end
+
     it 'sends cookie header' do
       get :index
       expect(response.headers["Set-Cookie"]).to match(/guest_token.*HttpOnly/)

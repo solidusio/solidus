@@ -2,12 +2,10 @@
 
 require 'rails_helper'
 
-class FakesController < ApplicationController
-  include Spree::Core::ControllerHelpers::StrongParameters
-end
-
 RSpec.describe Spree::Core::ControllerHelpers::StrongParameters, type: :controller do
-  controller(FakesController) {}
+  controller(ApplicationController) {
+    include Spree::Core::ControllerHelpers::StrongParameters
+  }
 
   describe '#permitted_attributes' do
     it 'returns Spree::PermittedAttributes module' do
