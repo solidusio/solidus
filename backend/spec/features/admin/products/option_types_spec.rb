@@ -94,7 +94,7 @@ describe "Option Types", type: :feature do
     expect(page).to have_css("tbody#option_values tr", count: 1)
 
     # Add a new option type
-    click_link "Add Option Value"
+    click_button "Add Option Value"
     expect(page).to have_css("tbody#option_values tr", count: 2)
 
     # Remove default option type
