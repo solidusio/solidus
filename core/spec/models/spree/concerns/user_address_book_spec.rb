@@ -415,5 +415,52 @@ module Spree
         expect(user.bill_address).to eq(address)
       end
     end
+
+    describe "#mark_default_address" do
+      let(:address) { build :address }
+
+      it "calls #mark_default_ship_address and warns user of deprecation" do
+        expect(user).to receive(:mark_default_ship_address)
+
+        expect {
+          user.mark_default_address(address)
+        }
+        .to output("Hey, this method is deprecated and it sets the ship_address only! Please start using #mark_default_ship_address for that\n").to_stdout
+      end
+    end
+
+    describe "#mark_default_ship_address" do
+      let(:address) { build :address }
+      let(:user_address) { double }
+      let(:user_addresses) { double }
+
+      before do
+        allow(user).to receive(:user_addresses).and_return user_addresses
+        allow(user_addresses).to receive(:find_by).and_return user_address
+      end
+
+      it "calls #mark_default with default address kind" do
+        expect(user_addresses).to receive(:mark_default).with(user_address)
+
+        user.mark_default_ship_address(address)
+      end
+    end
+
+    describe "#mark_default_bill_address" do
+      let(:address) { build :address }
+      let(:user_address) { double }
+      let(:user_addresses) { double }
+
+      before do
+        allow(user).to receive(:user_addresses).and_return user_addresses
+        allow(user_addresses).to receive(:find_by).and_return user_address
+      end
+
+      it "calls #mark_default with billing address kind" do
+        expect(user_addresses).to receive(:mark_default).with(user_address, :billing)
+
+        user.mark_default_bill_address(address)
+      end
+    end
   end
 end

@@ -15,7 +15,7 @@ module Spree
           default_flag = address_kind == :shipping ? :default : :default_billing
           ActiveRecord::Base.transaction do
             (self - [user_address]).each do |ua| # update_all would be nice, but it bypasses ActiveRecord callbacks
-              ua.persisted? ? ua.update!(default_flag => false) : ua.send(default_flag, false)
+              ua.persisted? ? ua.update!({ default_flag => false }) : ua.write_attribute(default_flag, false)
             end
             user_address.persisted? ? user_address.update!({ default_flag => true, :archived => false }) : user_address.write_attribute(default_flag, true)
           end
@@ -73,7 +73,7 @@ module Spree
           order.ship_address.attributes,
           Spree::Config.automatic_default_address
         )
-        self.ship_address_id = address.id if address && address.persisted?
+        self.ship_address_id = address.id if address&.persisted?
       end
 
       if order.bill_address
@@ -82,7 +82,7 @@ module Spree
           Spree::Config.automatic_default_address,
           :billing
         )
-        self.bill_address_id = address.id if address && address.persisted?
+        self.bill_address_id = address.id if address&.persisted?
       end
 
       save! # In case the ship_address_id or bill_address_id was set
@@ -127,7 +127,17 @@ module Spree
     end
 
     def mark_default_address(address)
+      puts "Hey, this method is deprecated and it sets the ship_address only! Please start using #mark_default_ship_address for that"
+
+      mark_default_ship_address(address)
+    end
+
+    def mark_default_ship_address(address)
       user_addresses.mark_default(user_addresses.find_by(address: address))
+    end
+
+    def mark_default_bill_address(address)
+      user_addresses.mark_default(user_addresses.find_by(address: address), :billing)
     end
 
     def remove_from_address_book(address_id)
