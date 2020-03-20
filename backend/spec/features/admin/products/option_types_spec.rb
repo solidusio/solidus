@@ -64,53 +64,15 @@ describe "Option Types", type: :feature do
     click_link "Option Types"
     within('table#listing_option_types') { click_icon :edit }
     expect(page).to have_title("#{option_value.option_type.name} - Option Types - Products")
-    expect(page).to have_css("tbody#option_values tr", count: 1)
-    within("tbody#option_values") do
-      find('.spree_remove_fields').click
-    end
-    # Assert that the field is hidden automatically
-    expect(page).to have_no_css("tbody#option_values tr")
-
-    # Ensure the DELETE request finishes
-    expect(page).to have_no_css("#progress")
-
-    # Then assert that on a page refresh that it's still not visible
-    visit page.current_url
-    # What *is* visible is a new option value field, with blank values
-    # Sometimes the page doesn't load before the all check is done
-    # lazily finding the element gives the page 10 seconds
-    expect(page).to have_css("tbody#option_values")
-    all("tbody#option_values tr input", count: 2).each do |input|
-      expect(input.value).to be_blank
-    end
-  end
-
-  # Regression test for https://github.com/spree/spree/issues/3204
-  it "can remove a non-persisted option value from an option type", js: true do
-    create(:option_type)
-    click_link "Option Types"
-    within('table#listing_option_types') { click_icon :edit }
-
-    expect(page).to have_css("tbody#option_values tr", count: 1)
-
-    # Add a new option type
-    click_button "Add Option Value"
+    # persisted and new element is seen
     expect(page).to have_css("tbody#option_values tr", count: 2)
 
-    # Remove default option type
-    within("tbody#option_values") do
-      within_row(1) do
-        find('.fa-trash').click
-      end
+    accept_alert do
+      click_icon :trash
     end
-    # Assert that the field is hidden automatically
-    expect(page).to have_css("tbody#option_values tr", count: 1)
+    expect(page).to have_content 'successfully removed'
 
-    # Remove added option type
-    within("tbody#option_values") do
-      find('.fa-trash').click
-    end
-    # Assert that the field is hidden automatically
-    expect(page).to have_css("tbody#option_values tr", count: 0)
+    # only the new element is left
+    expect(page).to have_css("tbody#option_values tr", count: 1)
   end
 end

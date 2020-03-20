@@ -6,7 +6,8 @@ module Spree
       def destroy
         option_value = Spree::OptionValue.find(params[:id])
         option_value.destroy
-        render plain: nil
+        flash[:success] = flash_message_for(option_value, :successfully_removed)
+        render partial: "spree/admin/shared/destroy"
       end
     end
   end

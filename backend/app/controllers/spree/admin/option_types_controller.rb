@@ -3,7 +3,7 @@
 module Spree
   module Admin
     class OptionTypesController < ResourceController
-      before_action :setup_new_option_value, only: :edit
+      before_action :setup_new_option_value, only: :edit, if: -> { can?(:create, model_class) }
 
       def update_values_positions
         params[:positions].each do |id, index|
@@ -26,7 +26,7 @@ module Spree
       end
 
       def setup_new_option_value
-        @option_type.option_values.build if @option_type.option_values.empty?
+        @option_type.option_values.build
       end
 
       def set_available_option_types
