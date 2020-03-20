@@ -289,52 +289,50 @@ module Spree
     end
 
     context "#persist_order_address" do
-      it 'will save the bill/ship_address reference if it can' do
-        order = create :order
-        user.persist_order_address(order)
-
-        expect( user.bill_address_id ).to eq order.bill_address_id
-        expect( user.ship_address_id ).to eq order.ship_address_id
-        expect( user.bill_address_id ).not_to eq user.ship_address_id
-      end
-
       context "when automatic_default_address preference is at a default of true" do
-        before do
-          stub_spree_preferences(automatic_default_address: true)
-          expect(user).to receive(:save_in_address_book).with(kind_of(Hash), true)
-          expect(user).to receive(:save_in_address_book).with(kind_of(Hash), false)
-        end
+        let(:order) { build :order }
 
-        it "does set the default: true flag" do
-          order = build(:order)
+        it 'will save both bill/ship_address references' do
           user.persist_order_address(order)
+
+          expect( user.bill_address_id ).to eq order.bill_address_id
+          expect( user.ship_address_id ).to eq order.ship_address_id
+          expect( user.bill_address_id ).not_to eq user.ship_address_id
+
+          expect( user.bill_address).to eq order.bill_address
+          expect( user.ship_address).to eq order.ship_address
         end
       end
 
       context "when automatic_default_address preference is false" do
+        let(:order) { build :order }
+
         before do
           stub_spree_preferences(automatic_default_address: false)
-          expect(user).to receive(:save_in_address_book).with(kind_of(Hash), false).twice
-          # and not the optional 2nd argument
         end
 
-        it "does not set the default: true flag" do
-          order = build(:order)
+        it "will save only the default ship address on user as it is the first address at all" do
           user.persist_order_address(order)
+
+          expect( user.bill_address_id ).to eq order.bill_address_id
+          expect( user.ship_address_id ).to eq order.ship_address_id
+
+          expect( user.bill_address).to be_nil
+          expect( user.ship_address).to eq order.ship_address
         end
       end
 
-      context "when address is nil" do
+      context "when one order address is nil" do
         context "when automatic_default_address preference is at a default of true" do
           before do
             stub_spree_preferences(automatic_default_address: true)
-            expect(user).to receive(:save_in_address_book).with(kind_of(Hash), true).once
           end
 
           it "does not call save_in_address_book on ship address" do
             order = build(:order)
             order.ship_address = nil
 
+            expect(user).to receive(:save_in_address_book).with(kind_of(Hash), true, :billing).once
             user.persist_order_address(order)
           end
 
@@ -342,29 +340,31 @@ module Spree
             order = build(:order)
             order.bill_address = nil
 
+            expect(user).to receive(:save_in_address_book).with(kind_of(Hash), true).once
             user.persist_order_address(order)
           end
         end
-      end
 
-      context "when automatic_default_address preference is false" do
-        before do
-          stub_spree_preferences(automatic_default_address: false)
-          expect(user).to receive(:save_in_address_book).with(kind_of(Hash), false).once
-        end
+        context "when automatic_default_address preference is false" do
+          before do
+            stub_spree_preferences(automatic_default_address: false)
+          end
 
-        it "does not call save_in_address_book on ship address" do
-          order = build(:order)
-          order.ship_address = nil
+          it "does not call save_in_address_book on ship address" do
+            order = build(:order)
+            order.ship_address = nil
 
-          user.persist_order_address(order)
-        end
+            expect(user).to receive(:save_in_address_book).with(kind_of(Hash), false, :billing).once
+            user.persist_order_address(order)
+          end
 
-        it "does not call save_in_address_book on bill address" do
-          order = build(:order)
-          order.bill_address = nil
+          it "does not call save_in_address_book on bill address" do
+            order = build(:order)
+            order.bill_address = nil
 
-          user.persist_order_address(order)
+            expect(user).to receive(:save_in_address_book).with(kind_of(Hash), false).once
+            user.persist_order_address(order)
+          end
         end
       end
     end
@@ -396,6 +396,23 @@ module Spree
 
         user.reload
         expect(user.ship_address).to eq(address)
+      end
+    end
+
+    describe "bill_address=" do
+      let!(:user) { create(:user) }
+      let!(:address) { create(:address) }
+
+      # https://github.com/solidusio/solidus/issuesÎ/1241
+      it "resets the association and persists" do
+        # Load (which will cache) the has_one association
+        expect(user.bill_address).to be_nil
+
+        user.update!(bill_address: address)
+        expect(user.bill_address).to eq(address)
+
+        user.reload
+        expect(user.bill_address).to eq(address)
       end
     end
   end

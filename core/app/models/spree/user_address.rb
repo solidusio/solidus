@@ -16,6 +16,7 @@ module Spree
 
     scope :all_historical, -> { unscope(where: :archived) }
     scope :default, -> { where(default: true) }
+    scope :default_billing, -> { where(default_billing: true) }
     scope :active, -> { where(archived: false) }
 
     default_scope -> { order([default: :desc, updated_at: :desc]) }
