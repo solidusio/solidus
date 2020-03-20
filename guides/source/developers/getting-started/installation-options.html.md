@@ -48,7 +48,7 @@ bin/rails spree_sample:load                 # loads sample data
 ## Authentication via Devise
 
 During the installation, you have been prompted to add the default authentication extension
-to your project. It is called [`solidus-auth-devise`][solidus-auth-devise] and it uses the
+to your project. It is called [`solidus_auth_devise`][solidus-auth-devise] and it uses the
 well-known authentication library for Rails called [Devise][devise].
 
 If you answered "yes", there's nothing else left to do. The extension is already
@@ -61,7 +61,7 @@ or run the Solidus installer with the following command:
 bin/rails generate solidus:install --with-authentication=false
 ```
 
-If you prefer to install [`solidus-auth-devise`][solidus-auth-devise] gem manually,
+If you prefer to install [`solidus_auth_devise`][solidus-auth-devise] gem manually,
 after adding it in your Gemfile, you can run the following commands to install and
 run its migrations, then seed the database:
 

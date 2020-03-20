@@ -112,13 +112,36 @@ After the gems have been successfully installed, you need to create the
 necessary configuration files and instructions for the database using generators
 provided by Solidus and Railties.
 
-First, run the `solidus:install` generator:
+#### For Solidus v2.11 (still unreleased) and above
+
+Run the `solidus:install` generator:
 
 ```bash
 bin/rails generate solidus:install
 ```
 
 This may take a few minutes to complete, and it requires some user confirmation.
+
+#### For Solidus v2.10 and below
+
+If you are using Solidus 2.10 or below, this step is quite different.
+
+First of all, if you want to install the default authentication system provided
+by Solidus ([`solidus_auth_devise`][solidus-auth-devise]), your `Gemfile` should
+look like:
+
+```
+gem 'solidus'
+gem 'solidus_auth_devise'
+```
+
+Once you have run `bundle install`, you can install Solidus with the command:
+
+```bash
+bin/rails generate spree:install
+```
+
+[solidus-auth-devise]: https://github.com/solidusio/solidus_auth_devise
 
 ### Set the administrator username and password
 
