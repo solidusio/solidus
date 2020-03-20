@@ -33,6 +33,10 @@ module Spree
     end
 
     def run_hooks
+      Spree::Deprecation.warn \
+        "This method is deprecated. Please run your hooks by subscribing " \
+        "to `order_recalculated` and/or `order_finalized` events instead, depending " \
+        " on when OrderUpdater#run_hooks was called.", caller(1)
       update_hooks.each { |hook| order.send hook }
     end
 
