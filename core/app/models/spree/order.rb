@@ -440,7 +440,7 @@ module Spree
 
       updater.update_shipment_state
       save!
-      updater.run_hooks
+      updater.run_hooks if update_hooks.any?
 
       touch :completed_at
 
