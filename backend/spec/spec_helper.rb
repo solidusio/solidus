@@ -36,6 +36,8 @@ require 'spree/testing_support/flash'
 require 'spree/testing_support/url_helpers'
 require 'spree/testing_support/order_walkthrough'
 require 'spree/testing_support/capybara_ext'
+require 'spree/testing_support/precompiled_assets'
+require 'spree/testing_support/translations'
 
 require 'capybara-screenshot/rspec'
 Capybara.save_path = ENV['CIRCLE_ARTIFACTS'] if ENV['CIRCLE_ARTIFACTS']
@@ -79,15 +81,6 @@ RSpec.configure do |config|
     DatabaseCleaner.clean_with :truncation
   end
 
-  config.when_first_matching_example_defined(type: :feature) do
-    config.before :suite do
-      # Preload assets
-      # This should avoid capybara timeouts, and avoid counting asset compilation
-      # towards the timing of the first feature spec.
-      Rails.application.precompiled_assets
-    end
-  end
-
   config.before do
     Rails.cache.clear
     if RSpec.current_example.metadata[:js] && page.driver.browser.respond_to?(:url_blacklist)
@@ -96,14 +89,7 @@ RSpec.configure do |config|
   end
 
   config.include BaseFeatureHelper, type: :feature
-
-  config.after(:each, type: :feature) do |example|
-    missing_translations = page.body.scan(/translation missing: #{I18n.locale}\.(.*?)[\s<\"&]/)
-    if missing_translations.any?
-      puts "Found missing translations: #{missing_translations.inspect}"
-      puts "In spec: #{example.location}"
-    end
-  end
+  config.include BaseFeatureHelper, type: :system
 
   config.include FactoryBot::Syntax::Methods
   config.include ActiveSupport::Testing::Assertions
@@ -113,6 +99,7 @@ RSpec.configure do |config|
   config.include Spree::TestingSupport::UrlHelpers
   config.include Spree::TestingSupport::ControllerRequests, type: :controller
   config.include Spree::TestingSupport::Flash
+  config.include Spree::TestingSupport::Translations
 
   config.extend WithModel
 

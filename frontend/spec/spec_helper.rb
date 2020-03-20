@@ -36,6 +36,8 @@ require 'spree/testing_support/flash'
 require 'spree/testing_support/url_helpers'
 require 'spree/testing_support/order_walkthrough'
 require 'spree/testing_support/caching'
+require 'spree/testing_support/blacklist_urls'
+require 'spree/testing_support/translations'
 
 require 'capybara-screenshot/rspec'
 Capybara.save_path = ENV['CIRCLE_ARTIFACTS'] if ENV['CIRCLE_ARTIFACTS']
@@ -77,26 +79,14 @@ RSpec.configure do |config|
     Rails.cache.clear
   end
 
-  config.before(:each, type: :feature) do
-    if page.driver.browser.respond_to?(:url_blacklist)
-      page.driver.browser.url_blacklist = ['http://fonts.googleapis.com']
-    end
-  end
-
-  config.after(:each, type: :feature) do |example|
-    missing_translations = page.body.scan(/translation missing: #{I18n.locale}\.(.*?)[\s<\"&]/)
-    if missing_translations.any?
-      puts "Found missing translations: #{missing_translations.inspect}"
-      puts "In spec: #{example.location}"
-    end
-  end
-
   config.include FactoryBot::Syntax::Methods
 
   config.include Spree::TestingSupport::Preferences
   config.include Spree::TestingSupport::UrlHelpers
   config.include Spree::TestingSupport::ControllerRequests, type: :controller
   config.include Spree::TestingSupport::Flash
+  config.include Spree::TestingSupport::BlacklistUrls
+  config.include Spree::TestingSupport::Translations
 
   config.example_status_persistence_file_path = "./spec/examples.txt"
 
