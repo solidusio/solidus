@@ -13,6 +13,7 @@ when an order is refunded successfully.
 
 Currently, the events fired by default in Solidus are:
 * `order_finalized`
+* `order_recalculated`
 * `reimbursement_reimbursed`
 * `reimbursement_errored`
 
