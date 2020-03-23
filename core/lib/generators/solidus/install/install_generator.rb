@@ -87,19 +87,19 @@ module Solidus
       application <<-RUBY
     # Load application's model / class decorators
     initializer 'spree.decorators' do |app|
+      # Ensure decorated constants are unloaded before reloading decorators
+      config.to_prepare_blocks.unshift -> { ActiveSupport::Dependencies.clear }
+
+      # Load application's decorators
       config.to_prepare do
-        Dir.glob(Rails.root.join('app/**/*_decorator*.rb')) do |path|
-          require_dependency(path)
-        end
+        app.root.glob('app/**/*_decorator*.rb') { |path| require_dependency(path.to_s)
       end
     end
 
     # Load application's view overrides
     initializer 'spree.overrides' do |app|
       config.to_prepare do
-        Dir.glob(Rails.root.join('app/overrides/*.rb')) do |path|
-          require_dependency(path)
-        end
+        app.root.glob('app/overrides/*.rb') { |path| require_dependency(path.to_s) }
       end
     end
       RUBY
