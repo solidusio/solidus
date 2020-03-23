@@ -44,6 +44,7 @@ Capybara.save_path = ENV['CIRCLE_ARTIFACTS'] if ENV['CIRCLE_ARTIFACTS']
 Capybara.exact = true
 
 require "selenium/webdriver"
+Capybara.javascript_driver = (ENV['CAPYBARA_DRIVER'] || :selenium_chrome_headless).to_sym
 
 Capybara.register_driver :selenium_chrome_headless do |app|
   browser_options = ::Selenium::WebDriver::Chrome::Options.new
@@ -52,8 +53,6 @@ Capybara.register_driver :selenium_chrome_headless do |app|
   browser_options.args << '--window-size=1920,1080'
   Capybara::Selenium::Driver.new(app, browser: :chrome, options: browser_options)
 end
-
-Capybara.javascript_driver = (ENV['CAPYBARA_DRIVER'] || :selenium_chrome_headless).to_sym
 
 ActionView::Base.raise_on_missing_translations = true
 
@@ -86,6 +85,14 @@ RSpec.configure do |config|
     if RSpec.current_example.metadata[:js] && page.driver.browser.respond_to?(:url_blacklist)
       page.driver.browser.url_blacklist = ['http://fonts.googleapis.com']
     end
+  end
+
+  config.before(:each, type: :system) do
+    driven_by :rack_test
+  end
+
+  config.before(:each, type: :system, js: true) do
+    driven_by (ENV['CAPYBARA_DRIVER'] || :selenium_chrome_headless).to_sym
   end
 
   config.include BaseFeatureHelper, type: :feature
