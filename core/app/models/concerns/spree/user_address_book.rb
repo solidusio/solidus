@@ -10,14 +10,13 @@ module Spree
           detect { |ua| ua.address == Spree::Address.new(address_attrs) }
         end
 
-        def mark_default(user_address, address_kind = :shipping)
-          # the checks of persisted? allow us to build a User and associate Addresses at once
-          default_flag = address_kind == :shipping ? :default : :default_billing
+        def mark_default(user_address, address_type: :shipping)
+          column_for_default = address_type == :shipping ? :default : :default_billing
           ActiveRecord::Base.transaction do
             (self - [user_address]).each do |ua| # update_all would be nice, but it bypasses ActiveRecord callbacks
-              ua.persisted? ? ua.update!({ default_flag => false }) : ua.write_attribute(default_flag, false)
+              ua.persisted? ? ua.update!({ column_for_default => false }) : ua.write_attribute(column_for_default, false)
             end
-            user_address.persisted? ? user_address.update!({ default_flag => true, :archived => false }) : user_address.write_attribute(default_flag, true)
+            user_address.persisted? ? user_address.update!({ column_for_default => true, :archived => false }) : user_address.write_attribute(column_for_default, true)
           end
         end
       end
@@ -34,8 +33,11 @@ module Spree
 
     def bill_address=(address)
       # stow a copy in our address book too
-      be_default = Spree::Config.automatic_default_address
-      save_in_address_book(address.attributes, be_default, :billing) if address
+      if address
+        save_in_address_book(address.attributes,
+                             Spree::Config.automatic_default_address,
+                             :billing)
+      end
     end
 
     def bill_address_attributes=(attributes)
@@ -93,7 +95,7 @@ module Spree
     # treated as value equality to de-dup among existing Addresses
     # @param default set whether or not this address will show up from
     # #default_address or not
-    def save_in_address_book(address_attributes, default = false, address_kind = :shipping)
+    def save_in_address_book(address_attributes, default = false, address_type = :shipping)
       return nil unless address_attributes.present?
       address_attributes = address_attributes.to_h.with_indifferent_access
 
@@ -107,7 +109,7 @@ module Spree
       end
 
       user_address = prepare_user_address(new_address)
-      user_addresses.mark_default(user_address, address_kind) if default || first_one
+      user_addresses.mark_default(user_address, address_type: address_type) if default || first_one
 
       if persisted?
         user_address.save!
