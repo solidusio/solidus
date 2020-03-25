@@ -26,13 +26,50 @@ module Spree
       has_one :default_user_bill_address, ->{ default_billing }, class_name: 'Spree::UserAddress', foreign_key: 'user_id'
       has_one :bill_address, through: :default_user_bill_address, source: :address
 
-      has_one :default_user_address, ->{ default }, class_name: 'Spree::UserAddress', foreign_key: 'user_id'
-      has_one :default_address, through: :default_user_address, source: :address
-      alias_method :ship_address, :default_address
+      has_one :default_user_ship_address, ->{ default }, class_name: 'Spree::UserAddress', foreign_key: 'user_id'
+      has_one :ship_address, through: :default_user_ship_address, source: :address
+    end
+
+    def default_address
+      Spree::Deprecation.warn "This association is deprecated. Please start using ship_address = address"
+      ship_address
+    end
+
+    def default_user_address
+      Spree::Deprecation.warn "This association is deprecated. Please start using #default_user_ship_address."
+      default_user_ship_address
+    end
+
+    def default_address=(address)
+      Spree::Deprecation.warn "This setter does not take into account Spree::Config.automatic_default_address and is deprecated. "\
+        "Please start using ship_address = address"
+      self.ship_address = address if address
+    end
+
+    def default_address_attributes=(attributes)
+      # see "Nested Attributes Examples" section of http://apidock.com/rails/ActionView/Helpers/FormHelper/fields_for
+      # this #{fieldname}_attributes= method works with fields_for in the views
+      # even without declaring accepts_nested_attributes_for
+      Spree::Deprecation.warn "This setter is deprecated. Please start using ship_address_attributes = attributes"
+
+      self.default_address = Spree::Address.immutable_merge(ship_address, attributes)
+    end
+
+    # saves address in address book
+    # sets address to the default if automatic_default_address is set to true
+    # if address is nil, does nothing and returns nil
+    def ship_address=(address)
+      if address
+        save_in_address_book(address.attributes,
+                             Spree::Config.automatic_default_address)
+      end
+    end
+
+    def ship_address_attributes=(attributes)
+      self.ship_address = Spree::Address.immutable_merge(ship_address, attributes)
     end
 
     def bill_address=(address)
-      # stow a copy in our address book too
       if address
         save_in_address_book(address.attributes,
                              Spree::Config.automatic_default_address,
@@ -42,27 +79,6 @@ module Spree
 
     def bill_address_attributes=(attributes)
       self.bill_address = Spree::Address.immutable_merge(bill_address, attributes)
-    end
-
-    def default_address=(address)
-      save_in_address_book(address.attributes, true) if address
-    end
-
-    def default_address_attributes=(attributes)
-      # see "Nested Attributes Examples" section of http://apidock.com/rails/ActionView/Helpers/FormHelper/fields_for
-      # this #{fieldname}_attributes= method works with fields_for in the views
-      # even without declaring accepts_nested_attributes_for
-      self.default_address = Spree::Address.immutable_merge(default_address, attributes)
-    end
-
-    alias_method :ship_address_attributes=, :default_address_attributes=
-
-    # saves address in address book
-    # sets address to the default if automatic_default_address is set to true
-    # if address is nil, does nothing and returns nil
-    def ship_address=(address)
-      be_default = Spree::Config.automatic_default_address
-      save_in_address_book(address.attributes, be_default) if address
     end
 
     # saves order.ship_address and order.bill_address in address book
@@ -119,8 +135,8 @@ module Spree
         # user_addresses need to be reset to get the new ordering based on any changes
         # {default_,}user_address needs to be reset as its result is likely to have changed.
         user_addresses.reset
-        association(:default_user_address).reset
-        association(:default_address).reset
+        association(:default_user_ship_address).reset
+        association(:ship_address).reset
         association(:default_user_bill_address).reset
         association(:bill_address).reset
       end
@@ -129,7 +145,8 @@ module Spree
     end
 
     def mark_default_address(address)
-      puts "Hey, this method is deprecated and it sets the ship_address only! Please start using #mark_default_ship_address for that"
+      Spree::Deprecation.warn "This method is deprecated and it sets the ship_address only. " \
+        "Please start using #mark_default_ship_address for that"
 
       mark_default_ship_address(address)
     end

@@ -80,6 +80,7 @@ module Spree
                 user.save_in_address_book(original_default_address.attributes, true)
                 user.save_in_address_book(address.attributes, true)
                 expect(user.addresses.count).to eq 3
+                expect(user.ship_address.address1).to eq address.address1
                 expect(user.default_address.address1).to eq address.address1
               end
             end
@@ -122,7 +123,7 @@ module Spree
 
           context "properly sets the default flag" do
             context "shipping address" do
-              it { expect(subject).to eq user.default_address }
+              it { expect(subject).to eq user.ship_address }
             end
 
             context "billing address" do
@@ -150,7 +151,7 @@ module Spree
 
             context "is the new default" do
               context "shipping address" do
-                it { expect(subject).to eq user.default_address }
+                it { expect(subject).to eq user.ship_address }
               end
 
               context "billing address" do
@@ -247,6 +248,7 @@ module Spree
         context "when called with default address_type" do
           it "sets the passed address as default shipping address" do
             subject
+            expect(user.ship_address).to eq address
             expect(user.default_address).to eq address
           end
         end
@@ -466,11 +468,12 @@ module Spree
       end
 
       it "is also available as default_address" do
+        expect(subject.ship_address).to eq ship_address
         expect(subject.default_address).to eq ship_address
       end
     end
 
-    describe "ship_address=" do
+    describe "#ship_address=" do
       let!(:user) { create(:user) }
       let!(:address) { create(:address) }
 
@@ -487,7 +490,7 @@ module Spree
       end
     end
 
-    describe "bill_address=" do
+    describe "#bill_address=" do
       let!(:user) { create(:user) }
       let!(:address) { create(:address) }
 
@@ -504,16 +507,92 @@ module Spree
       end
     end
 
-    describe "#mark_default_address" do
+    describe "#default_address" do
+      let(:deprecation_message) do
+        "This association is deprecated. Please start using ship_address = address"
+      end
+
+      it "calls #ship_address and warns caller of deprecation" do
+        expect(user).to receive(:ship_address)
+
+        expect(Spree::Deprecation).to receive(:warn).with deprecation_message
+
+        user.default_address
+      end
+    end
+
+    describe "#default_user_address" do
+      let(:deprecation_message) do
+        "This association is deprecated. Please start using #default_user_ship_address."
+      end
+
+      it "calls #ship_address and warns caller of deprecation" do
+        expect(user).to receive(:default_user_ship_address)
+
+        expect(Spree::Deprecation).to receive(:warn).with deprecation_message
+
+        user.default_user_address
+      end
+    end
+
+    describe "#default_address=" do
       let(:address) { build :address }
 
-      it "calls #mark_default_ship_address and warns user of deprecation" do
+      let(:deprecation_message) do
+        "This setter does not take into account Spree::Config.automatic_default_address and is deprecated. "\
+        "Please start using ship_address = address"
+      end
+
+      it "calls #ship_address= and warns caller of deprecation" do
+        expect(user).to receive(:ship_address=).with address
+        expect(Spree::Deprecation).to receive(:warn).with deprecation_message
+
+        user.default_address = address
+      end
+    end
+
+    describe "#default_address_attributes=" do
+      let(:deprecation_message) do
+        "This setter is deprecated. Please start using ship_address_attributes = attributes"
+      end
+
+      it "warns caller of deprecation" do
+        expect(Spree::Deprecation).to receive(:warn).ordered.with deprecation_message
+        expect(Spree::Deprecation).to receive(:warn).ordered
+
+        user.default_address_attributes = {}
+      end
+    end
+
+    describe "#ship_address_attributes=" do
+      let(:attributes) { {} }
+      let(:address) { build :address }
+
+      before do
+        allow(Spree::Address).to receive(:immutable_merge).and_return address
+      end
+
+      it do
+        expect(Spree::Address).to receive(:immutable_merge).with(user.ship_address, attributes)
+        expect(user).to receive(:ship_address=).with address
+
+        user.ship_address_attributes = attributes
+      end
+    end
+
+    describe "#mark_default_address" do
+      let(:address) { build :address }
+      let(:deprecation_message) do
+        "This method is deprecated and it sets the ship_address only. " \
+        "Please start using #mark_default_ship_address for that"
+      end
+
+      it "calls #mark_default_ship_address and warns caller of deprecation" do
         expect(user).to receive(:mark_default_ship_address)
 
-        expect {
-          user.mark_default_address(address)
-        }
-        .to output("Hey, this method is deprecated and it sets the ship_address only! Please start using #mark_default_ship_address for that\n").to_stdout
+        expect(Spree::Deprecation).to receive(:warn).with deprecation_message
+
+        user.mark_default_address(address)
       end
     end
 
