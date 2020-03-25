@@ -26,7 +26,7 @@ module Spree
       has_one :default_user_bill_address, ->{ default_billing }, class_name: 'Spree::UserAddress', foreign_key: 'user_id'
       has_one :bill_address, through: :default_user_bill_address, source: :address
 
-      has_one :default_user_ship_address, ->{ default }, class_name: 'Spree::UserAddress', foreign_key: 'user_id'
+      has_one :default_user_ship_address, ->{ default_shipping }, class_name: 'Spree::UserAddress', foreign_key: 'user_id'
       has_one :ship_address, through: :default_user_ship_address, source: :address
     end
 

@@ -11,7 +11,7 @@ module Spree
     let!(:user) { create(:user) }
 
     describe "#save_in_address_book" do
-      context "saving a default (shipping) address" do
+      context "saving a shipping address" do
         let(:user_address) { user.user_addresses.find_first_by_address_values(address.attributes) }
 
         subject { user.save_in_address_book(address.attributes, true) }
@@ -33,7 +33,7 @@ module Spree
             expect(user_address.default_billing).to be_falsey
           end
 
-          context "billing address" do
+          context "saving a billing address" do
             subject { user.save_in_address_book(address.attributes, true, :billing) }
 
             it "sets the UserAddress default_billing flag to true" do
