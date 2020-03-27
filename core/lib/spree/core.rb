@@ -17,7 +17,6 @@ require 'kaminari/activerecord'
 require 'mail'
 require 'monetize'
 require 'paperclip'
-require 'paranoia'
 require 'ransack'
 require 'state_machines-activerecord'
 
