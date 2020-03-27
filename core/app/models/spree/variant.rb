@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'discard'
-
 module Spree
   # == Master Variant
   #
@@ -20,11 +18,7 @@ module Spree
   class Variant < Spree::Base
     acts_as_list scope: :product
 
-    acts_as_paranoid
-    include Spree::ParanoiaDeprecations
-
-    include Discard::Model
-    self.discard_column = :deleted_at
+    include Spree::SoftDeletable
 
     after_discard do
       stock_items.discard_all
