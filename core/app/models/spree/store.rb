@@ -17,7 +17,7 @@ module Spree
 
     has_many :orders, class_name: "Spree::Order"
 
-    validates :code, presence: true, uniqueness: { allow_blank: true }
+    validates :code, presence: true, uniqueness: { allow_blank: true, case_sensitive: true }
     validates :name, presence: true
     validates :url, presence: true
     validates :mail_from_address, presence: true

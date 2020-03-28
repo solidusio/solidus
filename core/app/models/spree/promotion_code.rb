@@ -5,7 +5,7 @@ class Spree::PromotionCode < Spree::Base
   belongs_to :promotion_code_batch, class_name: "Spree::PromotionCodeBatch", optional: true
   has_many :adjustments
 
-  validates :value, presence: true, uniqueness: { allow_blank: true }
+  validates :value, presence: true, uniqueness: { allow_blank: true, case_sensitive: true }
   validates :promotion, presence: true
 
   before_save :normalize_code
