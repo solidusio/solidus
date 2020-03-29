@@ -11,7 +11,7 @@ module Spree
     let!(:user) { create(:user) }
 
     describe "#save_in_address_book" do
-      context "saving a shipping address" do
+      context "saving a default shipping address" do
         let(:user_address) { user.user_addresses.find_first_by_address_values(address.attributes) }
 
         subject do
@@ -45,7 +45,7 @@ module Spree
             end
           end
 
-          it "adds the address to the user's the associated addresses" do
+          it "adds the address to the user's associated addresses" do
             is_expected.to change { user.reload.addresses.count }.by(1)
           end
         end
@@ -79,7 +79,6 @@ module Spree
                 user.save_in_address_book(address.attributes, true)
                 expect(user.addresses.count).to eq 3
                 expect(user.ship_address.address1).to eq address.address1
-                expect(user.default_address.address1).to eq address.address1
               end
             end
           end
@@ -243,7 +242,6 @@ module Spree
           it "sets the passed address as default shipping address" do
             subject
             expect(user.ship_address).to eq address
-            expect(user.default_address).to eq address
           end
         end
 
@@ -406,7 +404,7 @@ module Spree
         end
       end
 
-      context "when one order address is nil" do
+      context "when either ship_address or bill_address is nil" do
         context "when automatic_default_address preference is at a default of true" do
           before do
             stub_spree_preferences(automatic_default_address: true)
@@ -430,12 +428,13 @@ module Spree
         end
 
         context "when automatic_default_address preference is false" do
+          let(:order) { build(:order) }
+
           before do
             stub_spree_preferences(automatic_default_address: false)
           end
 
           it "does not call save_in_address_book on ship address" do
-            order = build(:order)
             order.ship_address = nil
 
             expect(user).to receive(:save_in_address_book).with(kind_of(Hash), false, :billing).once
@@ -443,7 +442,6 @@ module Spree
           end
 
           it "does not call save_in_address_book on bill address" do
-            order = build(:order)
             order.bill_address = nil
 
             expect(user).to receive(:save_in_address_book).with(kind_of(Hash), false).once
@@ -460,11 +458,6 @@ module Spree
       it "stores the ship_address" do
         expect(subject.ship_address).to eq ship_address
       end
-
-      it "is also available as default_address" do
-        expect(subject.ship_address).to eq ship_address
-        expect(subject.default_address).to eq ship_address
-      end
     end
 
     describe "#ship_address=" do
@@ -472,7 +465,7 @@ module Spree
       let!(:address) { create(:address) }
 
       # https://github.com/solidusio/solidus/issues/1241
-      it "resets the association and persists" do
+      it "resets the association and persists the ship_address" do
         # Load (which will cache) the has_one association
         expect(user.ship_address).to be_nil
 
@@ -489,7 +482,7 @@ module Spree
       let!(:address) { create(:address) }
 
       # https://github.com/solidusio/solidus/issues/1241
-      it "resets the association and persists" do
+      it "resets the association and persists the bill_address" do
         # Load (which will cache) the has_one association
         expect(user.bill_address).to be_nil
 
@@ -566,7 +559,7 @@ module Spree
         allow(Spree::Address).to receive(:immutable_merge).and_return address
       end
 
-      it do
+      it "updates ship_address with its present attributes merged with the passed ones" do
         expect(Spree::Address).to receive(:immutable_merge).with(user.ship_address, attributes)
         expect(user).to receive(:ship_address=).with address
 

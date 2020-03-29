@@ -13,10 +13,19 @@ module Spree
         def mark_default(user_address, address_type: :shipping)
           column_for_default = address_type == :shipping ? :default : :default_billing
           ActiveRecord::Base.transaction do
-            (self - [user_address]).each do |ua| # update_all would be nice, but it bypasses ActiveRecord callbacks
-              ua.persisted? ? ua.update!({ column_for_default => false }) : ua.write_attribute(column_for_default, false)
+            (self - [user_address]).each do |address| # update_all would be nice, but it bypasses ActiveRecord callbacks
+              if address.persisted?
+                address.update!(column_for_default => false)
+              else
+                address.write_attribute(column_for_default, false)
+              end
             end
-            user_address.persisted? ? user_address.update!({ column_for_default => true, :archived => false }) : user_address.write_attribute(column_for_default, true)
+
+            if user_address.persisted?
+              user_address.update!(column_for_default => true, archived: false)
+            else
+              user_address.write_attribute(column_for_default, true)
+            end
           end
         end
       end
@@ -112,7 +121,8 @@ module Spree
     # @param default set whether or not this address will show up from
     # #default_address or not
     def save_in_address_book(address_attributes, default = false, address_type = :shipping)
-      return nil unless address_attributes.present?
+      return nil if address_attributes.blank?
+
       address_attributes = address_attributes.to_h.with_indifferent_access
 
       new_address = Spree::Address.factory(address_attributes)

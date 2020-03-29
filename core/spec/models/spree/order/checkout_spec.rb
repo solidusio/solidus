@@ -140,7 +140,7 @@ RSpec.describe Spree::Order, type: :model do
             let(:address_kind) { :ship }
             before do
               order.user = FactoryBot.create(:user)
-              order.user.default_address = default_address
+              order.user.ship_address = default_address
               order.next!
               order.reload
             end
@@ -150,7 +150,7 @@ RSpec.describe Spree::Order, type: :model do
             let(:address_kind) { :bill }
             before do
               order.user = FactoryBot.create(:user)
-              order.user.default_address = default_address
+              order.user.bill_address = default_address
               order.next!
               order.reload
             end
