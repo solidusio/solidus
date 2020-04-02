@@ -62,7 +62,13 @@ module Spree
         end
 
         respond_with(@taxon) do |format|
-          format.html { redirect_to edit_admin_taxonomy_url(@taxonomy) }
+          format.html do
+            if @taxon.valid?
+              redirect_to edit_admin_taxonomy_url(@taxonomy)
+            else
+              render :edit
+            end
+          end
         end
       end
 
