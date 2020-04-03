@@ -26,7 +26,14 @@ module Spree
     include Spree::Order::Checkout
     include Spree::Order::Payments
 
-    class InsufficientStock < StandardError; end
+    class InsufficientStock < StandardError
+      attr_reader :items
+
+      def initialize(message = nil, items: {})
+        @items = items
+        super message
+      end
+    end
     class CannotRebuildShipments < StandardError; end
 
     extend Spree::DisplayMoney

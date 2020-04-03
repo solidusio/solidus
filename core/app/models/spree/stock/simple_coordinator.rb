@@ -51,9 +51,7 @@ module Spree
         # Allocate any available on hand inventory and remaining desired inventory from backorders
         on_hand_packages, backordered_packages, leftover = @allocator.allocate_inventory(@desired)
 
-        unless leftover.empty?
-          raise Spree::Order::InsufficientStock
-        end
+        raise Spree::Order::InsufficientStock.new(items: leftover.quantities) unless leftover.empty?
 
         packages = @stock_locations.map do |stock_location|
           # Combine on_hand and backorders into a single package per-location
