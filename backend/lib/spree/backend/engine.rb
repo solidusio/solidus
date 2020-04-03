@@ -5,8 +5,6 @@ require 'spree/backend/config'
 module Spree
   module Backend
     class Engine < ::Rails::Engine
-      config.middleware.use "Spree::Backend::Middleware::SeoAssist"
-
       # Leave initializer empty for backwards-compatability. Other apps
       # might still rely on this event.
       initializer "spree.backend.environment", before: :load_config_initializers do; end
