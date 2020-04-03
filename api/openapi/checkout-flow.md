@@ -27,7 +27,7 @@ When you are ready to start the checkout flow, you can call `PUT /checkouts/:ord
 
 To enter the billing and shipping addresses, use the `PATCH /checkouts/:order_number` endpoint.
 
-Once again, call `PUT /checkouts/:order_number/next` to transition the order from the `address` to the `shipping` state.
+The `checkouts#update` endpoint always advance the order to the next state. If the above request is successful, the order should now be in the `delivery` state.
 
 ## 6. Select a shipping method
 
@@ -48,7 +48,7 @@ When you want to select a shipping method, call `PUT /checkouts/:order_number`:
   }
 ```
 
-Finally, call `PUT /checkouts/:order_number/next` to transition the order from the `shipping` to the `payment` state.
+If the above request is successful, the order should now be in the `payment` state.
 
 ## 7. Enter payment details
 
