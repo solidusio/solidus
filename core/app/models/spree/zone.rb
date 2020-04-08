@@ -13,7 +13,7 @@ module Spree
     has_many :shipping_method_zones, dependent: :destroy
     has_many :shipping_methods, through: :shipping_method_zones
 
-    validates :name, presence: true, uniqueness: { allow_blank: true }
+    validates :name, presence: true, uniqueness: { allow_blank: true, case_sensitive: true }
     after_save :remove_defunct_members
 
     scope :with_member_ids, ->(state_ids, country_ids) do

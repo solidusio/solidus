@@ -115,7 +115,7 @@ module Spree
     validates :name, presence: true
     validates :price, presence: true, if: proc { Spree::Config[:require_master_price] }
     validates :shipping_category_id, presence: true
-    validates :slug, presence: true, uniqueness: { allow_blank: true }
+    validates :slug, presence: true, uniqueness: { allow_blank: true, case_sensitive: true }
 
     attr_accessor :option_values_hash
 

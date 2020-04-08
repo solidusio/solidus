@@ -8,7 +8,7 @@ module Spree
     has_many :option_values_variants, dependent: :destroy
     has_many :variants, through: :option_values_variants
 
-    validates :name, presence: true, uniqueness: { scope: :option_type_id, allow_blank: true }
+    validates :name, presence: true, uniqueness: { scope: :option_type_id, allow_blank: true, case_sensitive: true }
     validates :presentation, presence: true
 
     after_save :touch, if: :saved_changes?
