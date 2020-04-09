@@ -117,6 +117,11 @@ module Spree
         options
       end
 
+      # The unique identifier to be passed in to the payment gateway
+      def gateway_order_id
+        "#{order.number}-#{number}"
+      end
+
       private
 
       def process_authorization
@@ -218,11 +223,6 @@ module Spree
 
         logger.error("#{I18n.t('spree.gateway_error')}: #{log}")
         raise Core::GatewayError.new(message)
-      end
-
-      # The unique identifier to be passed in to the payment gateway
-      def gateway_order_id
-        "#{order.number}-#{number}"
       end
 
       # The gateway response information without the params since the params
