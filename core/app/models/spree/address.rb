@@ -180,7 +180,10 @@ module Spree
 
     # @return [String] the full name on this address
     def name
-      Spree::Address::Name.new(firstname, lastname).value
+      Spree::Address::Name.new(
+        read_attribute(:firstname),
+        read_attribute(:lastname)
+      ).value
     end
 
     def name=(value)
@@ -204,7 +207,7 @@ module Spree
     private
 
     def validate_name
-      return if firstname.present?
+      return if name.present?
 
       name_attribute = if Spree::Config.use_combined_first_and_last_name_in_address
         :name

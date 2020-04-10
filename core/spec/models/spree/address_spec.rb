@@ -159,19 +159,19 @@ RSpec.describe Spree::Address, type: :model do
         end
 
         it 'accepts other attributes' do
-          address = Spree::Address.build_default(first_name: 'Ryan')
+          address = Spree::Address.build_default(name: 'Ryan')
 
           expect(address.country).to eq default_country
-          expect(address.first_name).to eq 'Ryan'
+          expect(address.name).to eq 'Ryan'
         end
 
         it 'accepts a block' do
           address = Spree::Address.build_default do |record|
-            record.first_name = 'Ryan'
+            record.name = 'Ryan'
           end
 
           expect(address.country).to eq default_country
-          expect(address.first_name).to eq 'Ryan'
+          expect(address.name).to eq 'Ryan'
         end
 
         it 'can override the country' do
@@ -213,7 +213,7 @@ RSpec.describe Spree::Address, type: :model do
       end
     end
 
-    let(:new_address_attributes) { attributes_for(:address) }
+    let(:new_address_attributes) { build(:address).attributes }
     subject { Spree::Address.immutable_merge(existing_address, new_address_attributes) }
 
     context "no existing address supplied" do
@@ -227,7 +227,7 @@ RSpec.describe Spree::Address, type: :model do
 
       context 'and there is a matching address in the database' do
         let(:new_address_attributes) { Spree::Address.value_attributes(matching_address.attributes) }
-        let!(:matching_address) { create(:address, firstname: 'Jordan') }
+        let!(:matching_address) { create(:address, name: 'Jordan') }
 
         it "returns the matching address" do
           expect(subject.attributes).to be_address_equivalent_attributes(new_address_attributes)
@@ -256,7 +256,7 @@ RSpec.describe Spree::Address, type: :model do
 
       context 'and changed address matches an existing address' do
         let(:new_address_attributes) { Spree::Address.value_attributes(matching_address.attributes) }
-        let!(:matching_address) { create(:address, firstname: 'Jordan') }
+        let!(:matching_address) { create(:address, name: 'Jordan') }
 
         it 'returns the matching address' do
           expect(subject.attributes).to be_address_equivalent_attributes(new_address_attributes)
@@ -319,10 +319,10 @@ RSpec.describe Spree::Address, type: :model do
 
   describe '.taxation_attributes' do
     context 'both taxation and non-taxation attributes are present ' do
-      let(:address) { Spree::Address.new firstname: 'Michael', lastname: 'Jackson', state_id: 1, country_id: 2, zipcode: '12345' }
+      let(:address) { Spree::Address.new name: 'Michael Jackson', state_id: 1, country_id: 2, zipcode: '12345' }
 
       it 'removes the non-taxation attributes' do
-        expect(address.taxation_attributes).not_to eq('firstname' => 'Michael', 'lastname' => 'Jackson')
+        expect(address.taxation_attributes).not_to eq('name' => 'Michael Jackson')
       end
 
       it 'returns only the taxation attributes' do
@@ -331,7 +331,7 @@ RSpec.describe Spree::Address, type: :model do
     end
 
     context 'taxation attributes are blank' do
-      let(:address) { Spree::Address.new firstname: 'Michael', lastname: 'Jackson' }
+      let(:address) { Spree::Address.new name: 'Michael Jackson' }
 
       it 'returns a subset of the attributes with the correct keys and nil values' do
         expect(address.taxation_attributes).to eq('state_id' => nil, 'country_id' => nil, 'zipcode' => nil)

@@ -55,7 +55,7 @@ module Spree
 
             let(:address_attributes) do
               {
-                'firstname' => address.firstname,
+                'name' => address.name,
                 'address1' => address.address1,
                 'city' => address.city,
                 'country_id' => address.country_id,
@@ -68,7 +68,7 @@ module Spree
             it 'associates the address' do
               expect(order.payments.count).to eq(1)
               credit_card = order.payments.last.source
-              expect(credit_card.address.attributes).to include(address_attributes)
+              expect(credit_card.address.as_json).to include(address_attributes)
             end
           end
         end
