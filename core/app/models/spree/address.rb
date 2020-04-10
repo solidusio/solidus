@@ -191,6 +191,16 @@ module Spree
       write_attribute(:lastname, name_from_value.last_name)
     end
 
+    def as_json(options = {})
+      if Spree::Config.use_combined_first_and_last_name_in_address
+        super(options.merge(except: LEGACY_NAME_ATTRS)).tap do |hash|
+          hash['name'] = name
+        end
+      else
+        super
+      end
+    end
+
     private
 
     def validate_name

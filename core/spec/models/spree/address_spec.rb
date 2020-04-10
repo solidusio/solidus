@@ -379,6 +379,12 @@ RSpec.describe Spree::Address, type: :model do
 
       expect(address.name).to eq('')
     end
+
+    it 'is included in json representation' do
+      address = Spree::Address.new(name: 'Jane Von Doe')
+
+      expect(address.as_json).to include('name' => 'Jane Von Doe')
+    end
   end
 
   context '#state_text' do
@@ -408,6 +414,10 @@ RSpec.describe Spree::Address, type: :model do
 
   context 'deprecations' do
     let(:address) { described_class.new }
+
+    specify 'json representation does not contain deprecated fields' do
+      expect(address.as_json).not_to include('firstname', 'lastname')
+    end
 
     specify 'firstname is deprecated' do
       expect(Spree::Deprecation).to receive(:warn).with(/firstname/, any_args)
