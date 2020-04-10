@@ -96,11 +96,12 @@ jobs:
       - setup
       - test
 
-  postgres_rails_master:
+  postgres_rails_master_activestorage:
     executor: postgres
     parallelism: *parallelism
     environment:
       RAILS_VERSION: 'master'
+      ENABLE_ACTIVE_STORAGE: true
     steps:
       - setup
       - test
@@ -141,7 +142,7 @@ workflows:
       - mysql
       - postgres_rails52
       - mysql_rails52
-      - postgres_rails_master
+      - postgres_rails_master_activestorage
       - stoplight/push:
           project: solidus/solidus-api
           git_token: $STOPLIGHT_GIT_TOKEN
