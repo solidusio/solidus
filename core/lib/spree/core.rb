@@ -94,6 +94,6 @@ require 'spree/preferences/store'
 require 'spree/preferences/static_model_preferences'
 require 'spree/preferences/scoped_store'
 
-if Gem::Version.new(Rails.version) >= Gem::Version.new('6.1.0.alpha')
+if Rails.gem_version >= Gem::Version.new('6.1.0.alpha')
   require 'spree/awesome_nested_set_override'
 end
