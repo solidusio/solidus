@@ -13,6 +13,7 @@ module Spree
       include Spree::Core::ControllerHelpers::Store
       include Spree::Core::ControllerHelpers::Pricing
       include Spree::Core::ControllerHelpers::StrongParameters
+      include ActiveStorage::SetCurrent if Spree::Config.active_storage_enabled?
 
       class_attribute :admin_line_item_attributes
       self.admin_line_item_attributes = [:price, :variant_id, :sku]
