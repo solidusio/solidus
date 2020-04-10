@@ -101,6 +101,8 @@ RSpec.describe Spree::Promotion::Rules::Taxon, type: :model do
         before do
           taxon.children << taxon2
           taxon.save!
+          taxon.reload
+
           product.taxons = [taxon2, taxon3]
           rule.taxons = [taxon, taxon3]
         end
