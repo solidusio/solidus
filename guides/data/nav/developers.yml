@@ -216,3 +216,9 @@
         href: "/developers/views/custom-frontend.html"
       - title: "Override views"
         href: "/developers/views/override-views.html"
+
+-
+  - title: "Integrations"
+    dropdown:
+      - title: "Google Analytics"
+        href: "/developers/integrations/google-analytics.html"
