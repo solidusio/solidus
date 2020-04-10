@@ -3,23 +3,34 @@
 require 'rails_helper'
 
 RSpec.describe Spree::Image, type: :model do
-  context '#save' do
-    context 'invalid attachment' do
-      let(:invalid_image) { File.open(__FILE__) }
-      subject { described_class.new(attachment: invalid_image) }
+  it_behaves_like 'an attachment' do
+    subject { create(:image) }
+    let(:attachment_name) { :attachment }
+    let(:default_style) { :product }
+  end
 
-      it 'returns false' do
-        expect(subject.save).to be false
-      end
+  describe 'attachment details' do
+    let(:image_file) { File.open(File.join('spec', 'fixtures', 'thinking-cat.jpg')) }
+    subject { create(:image, attachment: image_file) }
+
+    it 'returns if attachment is present' do
+      expect(subject.attachment_present?).to be_truthy
     end
 
-    context 'valid attachment' do
-      let(:valid_image) { File.open(File.join('spec', 'fixtures', 'thinking-cat.jpg')) }
-      subject { described_class.new(attachment: valid_image) }
+    it 'returns attachment filename' do
+      expect(subject.filename).to end_with('thinking-cat.jpg')
+    end
 
-      it 'returns true' do
-        expect(subject.save).to be true
-      end
+    it 'returns attachment url' do
+      expect(subject.url(:product)).to include('thinking-cat.jpg')
+    end
+
+    it 'computes attachment width' do
+      expect(subject.attachment_width).to eq(489)
+    end
+
+    it 'computes attachment height' do
+      expect(subject.attachment_height).to eq(490)
     end
   end
 end

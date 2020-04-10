@@ -3,6 +3,12 @@
 require 'rails_helper'
 
 RSpec.describe Spree::Taxon, type: :model do
+  it_behaves_like 'an attachment' do
+    subject { create(:taxon) }
+    let(:attachment_name) { :icon }
+    let(:default_style) { :mini }
+  end
+
   context "#destroy" do
     subject(:nested_set_options) { described_class.acts_as_nested_set_options }
 
