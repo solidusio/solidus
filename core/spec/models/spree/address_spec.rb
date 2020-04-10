@@ -6,6 +6,11 @@ RSpec.describe Spree::Address, type: :model do
   subject { Spree::Address }
 
   context "aliased attributes" do
+    before do
+      allow(Spree::Deprecation).to receive(:warn).and_call_original
+      allow(Spree::Deprecation).to receive(:warn).with(/firstname|lastname/, any_args)
+    end
+
     let(:address) { Spree::Address.new firstname: 'Ryan', lastname: 'Bigg' }
 
     it " first_name" do
@@ -399,5 +404,27 @@ RSpec.describe Spree::Address, type: :model do
     subject { described_class.new }
 
     it { is_expected.to be_require_phone }
+  end
+
+  context 'deprecations' do
+    let(:address) { described_class.new }
+
+    specify 'firstname is deprecated' do
+      expect(Spree::Deprecation).to receive(:warn).with(/firstname/, any_args)
+
+      address.firstname
+    end
+
+    specify 'lastname is deprecated' do
+      expect(Spree::Deprecation).to receive(:warn).with(/lastname/, any_args)
+
+      address.lastname
+    end
+
+    specify 'full_name is deprecated' do
+      expect(Spree::Deprecation).to receive(:warn).with(/full_name/, any_args)
+
+      address.full_name
+    end
   end
 end
