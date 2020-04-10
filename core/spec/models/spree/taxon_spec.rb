@@ -17,6 +17,34 @@ RSpec.describe Spree::Taxon, type: :model do
     end
   end
 
+  describe "#destroy_attachment" do
+    context "when trying to destroy a valid attachment definition" do
+      context "and taxon has a file attached " do
+        it "removes the attachment" do
+          taxon = create(:taxon, :with_icon)
+
+          expect(taxon.destroy_attachment(:icon)).to be_truthy
+        end
+      end
+
+      context "and the taxon does not have any file attached yet" do
+        it "returns false" do
+          taxon = create(:taxon)
+
+          expect(taxon.destroy_attachment(:icon)).to be_falsey
+        end
+      end
+    end
+
+    context "when trying to destroy an invalid attachment" do
+      it 'returns false' do
+        taxon = create(:taxon)
+
+        expect(taxon.destroy_attachment(:foo)).to be_falsey
+      end
+    end
+  end
+
   describe '#to_param' do
     let(:taxon) { FactoryBot.build(:taxon, name: "Ruby on Rails") }
 
