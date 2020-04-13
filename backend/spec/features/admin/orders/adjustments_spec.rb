@@ -21,6 +21,7 @@ describe "Adjustments", type: :feature do
   let(:tax_category) { create(:tax_category) }
   let(:variant) { create(:variant, tax_category: tax_category) }
 
+  let!(:non_eligible_adjustment) { order.adjustments.create!(order: order, label: 'Non-Eligible', amount: 10, eligible: false) }
   let!(:adjustment) { order.adjustments.create!(order: order, label: 'Rebate', amount: 10) }
 
   before(:each) do
@@ -40,8 +41,11 @@ describe "Adjustments", type: :feature do
       end
     end
 
-    it "only shows eligible adjustments" do
-      expect(page).not_to have_content("ineligible")
+    it "shows both eligible and non-eligible adjustments" do
+      expect(page).to have_content("Rebate")
+      expect(page).to have_content("Non-Eligible")
+      expect(find('tr', text: 'Rebate')[:class]).not_to eq('adjustment-ineligible')
+      expect(find('tr', text: 'Non-Eligible')[:class]).to eq('adjustment-ineligible')
     end
   end
 
