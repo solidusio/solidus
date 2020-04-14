@@ -59,7 +59,7 @@
 
 <%= paginate @promotions, theme: "solidus_admin" %>
 
-<% if @promotions.any? %>
+<% if @promotions.length > 0 %>
   <table class="index">
     <thead>
       <tr>
