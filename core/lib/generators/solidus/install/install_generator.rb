@@ -93,15 +93,6 @@ module Solidus
         end
       end
     end
-
-    # Load application's view overrides
-    initializer 'spree.overrides' do |app|
-      config.to_prepare do
-        Dir.glob(Rails.root.join('app/overrides/*.rb')) do |path|
-          require_dependency(path)
-        end
-      end
-    end
       RUBY
 
       if !options[:enforce_available_locales].nil?
