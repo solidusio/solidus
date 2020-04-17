@@ -77,16 +77,16 @@ module Spree
           end
 
           context "and changing another address field at the same time" do
-            let(:updated_address_attributes) { address.attributes.tap { |value| value[:first_name] = "Newbie" } }
+            let(:updated_address_attributes) { address.attributes.tap { |value| value[:city] = "Dallas" } }
 
             subject { user.save_in_address_book(updated_address_attributes, true) }
 
-            it "changes first name" do
-              expect(subject.first_name).to eq updated_address_attributes[:first_name]
+            it "changes city" do
+              expect(subject.city).to eq updated_address_attributes[:city]
             end
 
-            it "preserves last name" do
-              expect(subject.last_name).to eq address.last_name
+            it "preserves name" do
+              expect(subject.name).to eq address.name
             end
 
             it "is a new immutable address instance" do

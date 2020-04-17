@@ -5078,12 +5078,15 @@ definitions:
         type: string
       firstname:
         type: string
+        description: '*Deprecated: will be removed in Solidus 3.0, please use `name` property*'
       full_name:
         type: string
+        description: '*Deprecated: will be removed in Solidus 3.0, please use `name` property*'
       id:
         type: integer
       lastname:
         type: string
+        description: '*Deprecated: will be removed in Solidus 3.0, please use `name` property*'
       name:
         type: string
       phone:
@@ -5620,8 +5623,10 @@ definitions:
         type: string
       firstname:
         type: string
+        description: '*Deprecated: will be removed in Solidus 3.0, please use `name` property*'
       lastname:
         type: string
+        description: '*Deprecated: will be removed in Solidus 3.0, please use `name` property*'
       address1:
         type: string
       address2:

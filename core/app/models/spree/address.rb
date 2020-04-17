@@ -33,6 +33,11 @@ module Spree
       where(value_attributes(attributes))
     end
 
+    Spree::Deprecation.deprecate_methods(
+      Spree::Address,
+      LEGACY_NAME_ATTRS.product([:name]).to_h
+    )
+
     # @return [Address] an address with default attributes
     def self.build_default(*args, &block)
       where(country: Spree::Country.default).build(*args, &block)
@@ -175,7 +180,10 @@ module Spree
 
     # @return [String] the full name on this address
     def name
-      Spree::Address::Name.new(firstname, lastname).value
+      Spree::Address::Name.new(
+        read_attribute(:firstname),
+        read_attribute(:lastname)
+      ).value
     end
 
     def name=(value)
@@ -186,10 +194,20 @@ module Spree
       write_attribute(:lastname, name_from_value.last_name)
     end
 
+    def as_json(options = {})
+      if Spree::Config.use_combined_first_and_last_name_in_address
+        super(options.merge(except: LEGACY_NAME_ATTRS)).tap do |hash|
+          hash['name'] = name
+        end
+      else
+        super
+      end
+    end
+
     private
 
     def validate_name
-      return if firstname.present?
+      return if name.present?
 
       name_attribute = if Spree::Config.use_combined_first_and_last_name_in_address
         :name

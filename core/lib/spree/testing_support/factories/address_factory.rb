@@ -11,8 +11,7 @@ FactoryBot.define do
       state_code { 'AL' }
     end
 
-    firstname { 'John' }
-    lastname { nil }
+    name { 'John Von Doe' }
     company { 'Company' }
     address1 { '10 Lovely Street' }
     address2 { 'Northwest' }
