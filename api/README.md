@@ -20,9 +20,9 @@ If you want to contribute, you can use [Stoplight Studio][studio]. Simply
 follow these steps:
 
 1. Create a new Stoplight Studio project
-2. Copy-paste the content of `openapi/api.oas2.yml` into your project
+2. Copy-paste the content of `openapi/solidus-api.oas.yml` into your project
 3. Edit the endpoints and models as needed
-4. Copy-paste the result back into `openapi/api.oas2.yml`
+4. Copy-paste the result back into `openapi/solidus-api.oas.yml`
 5. Open a PR!
 
 **Note: Only use embedded models in Stoplight Studio, as Stoplight Docs is
