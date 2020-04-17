@@ -189,7 +189,7 @@ module Spree
       end
 
       it "cannot create a new taxon with invalid attributes" do
-        post spree.api_taxonomy_taxons_path(taxonomy), params: { taxon: { foo: :bar } }
+        post spree.api_taxonomy_taxons_path(taxonomy), params: { taxon: { name: '' } }
         expect(response.status).to eq(422)
         expect(json_response["error"]).to eq("Invalid resource. Please fix errors and try again.")
 
