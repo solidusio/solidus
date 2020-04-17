@@ -59,12 +59,8 @@ module Spree
       end
 
       it "will return an error if the order cannot transition" do
-        skip "not sure if this test is valid"
-        order.bill_address = nil
-        order.save
-        order.update_column(:state, "address")
+        order.update!(state: 'address', ship_address: nil)
         put spree.api_checkout_path(order.to_param), params: { order_token: order.guest_token }
-        # Order has not transitioned
         expect(response.status).to eq(422)
       end
 
