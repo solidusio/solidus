@@ -197,5 +197,17 @@ describe Spree::Admin::WidgetsController, type: :controller do
     it 'updates the position of widget 2' do
       expect { subject }.to change { widget_2.reload.position }.from(2).to(1)
     end
+
+    context 'passing a not persisted item' do
+      subject do
+        post :update_positions, params: { id: widget_1.to_param,
+          positions: { widget_1.id => '2', widget_2.id => '1', 'widget' => '3' }, format: 'js' }
+      end
+
+      it 'only updates the position of persisted attributes' do
+        subject
+        expect(Widget.all.order('position')).to eq [widget_2, widget_1]
+      end
+    end
   end
 end
