@@ -5649,24 +5649,6 @@ definitions:
         type: string
       company:
         type: string
-      country:
-        type: object
-        properties:
-          iso:
-            type: string
-          name:
-            type: string
-          iso3:
-            type: string
-          iso_name:
-            type: string
-      state:
-        type: object
-        properties:
-          name:
-            type: string
-          abbr:
-            type: string
   line-item-input:
     type: object
     title: Line item input
