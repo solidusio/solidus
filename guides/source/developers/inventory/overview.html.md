@@ -121,4 +121,5 @@ for many reasons.
 For more information, see the [Returns][returns]
 documentation.
 
+[return-authorizations]: ../returns/return-authorizations.html
 [returns]: ../returns/overview.html
