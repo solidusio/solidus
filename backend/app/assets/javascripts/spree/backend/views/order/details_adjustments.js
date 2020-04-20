@@ -10,11 +10,7 @@ Spree.Views.Order.DetailsAdjustments = Backbone.View.extend({
     collection
       .map(function(item) {
         return (item.get("adjustments") || [])
-          .filter(function(adjustment) {
-            if (adjustment.eligible === true) {
-              return adjustment;
-            }
-          });
+          .filter(function(adjustment) { return (adjustment.eligible === true); });
       })
       .flatten(true)
       .each(function(adjustment){
