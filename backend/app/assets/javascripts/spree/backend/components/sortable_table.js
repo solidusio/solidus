@@ -15,7 +15,9 @@ Spree.ready(function() {
           var idAttr = el.id;
           if (idAttr) {
             var objId = idAttr.split('_').slice(-1);
-            positions['positions['+objId+']'] = index + 1;
+            if (!isNaN(objId)) {
+              positions['positions['+objId+']'] = index + 1;
+            }
           }
         });
         Spree.ajax({
