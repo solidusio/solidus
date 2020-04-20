@@ -79,6 +79,14 @@ RSpec.configure do |config|
     Rails.cache.clear
   end
 
+  config.before(:each, type: :system) do
+    driven_by :rack_test
+  end
+
+  config.before(:each, type: :system, js: true) do
+    driven_by (ENV['CAPYBARA_DRIVER'] || :selenium_chrome_headless).to_sym
+  end
+
   config.include FactoryBot::Syntax::Methods
 
   config.include Spree::TestingSupport::Preferences
