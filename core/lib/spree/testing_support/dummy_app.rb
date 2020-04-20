@@ -12,7 +12,7 @@ Rails.env = 'test'
 
 require 'solidus_core'
 
-RAILS_6_OR_ABOVE = Gem::Version.new(Rails.version) >= Gem::Version.new('6.0')
+RAILS_6_OR_ABOVE = Rails.gem_version >= Gem::Version.new('6.0')
 
 # @private
 class ApplicationController < ActionController::Base
@@ -64,6 +64,20 @@ module DummyApp
       config.active_record.sqlite3.represent_boolean_as_integer = true
     end
 
+    config.storage_path = Rails.root.join('tmp', 'storage')
+
+    if ENV['ENABLE_ACTIVE_STORAGE']
+      initializer 'solidus.active_storage' do
+        config.active_storage.service_configurations = {
+          test: {
+            service: 'Disk',
+            root: config.storage_path
+          }
+        }
+        config.active_storage.service = :test
+      end
+    end
+
     # Avoid issues if an old spec/dummy still exists
     config.paths['config/initializers'] = []
     config.paths['config/environments'] = []
@@ -104,6 +118,11 @@ Spree.config do |config|
   config.mails_from = "store@example.com"
   config.raise_with_invalid_currency = false
   config.use_combined_first_and_last_name_in_address = true
+
+  if ENV['ENABLE_ACTIVE_STORAGE']
+    config.image_attachment_module = 'Spree::Image::ActiveStorageAttachment'
+    config.taxon_attachment_module = 'Spree::Taxon::ActiveStorageAttachment'
+  end
 end
 
 # Raise on deprecation warnings

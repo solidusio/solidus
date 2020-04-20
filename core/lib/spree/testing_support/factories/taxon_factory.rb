@@ -7,5 +7,9 @@ FactoryBot.define do
     name { 'Ruby on Rails' }
     taxonomy
     parent_id { nil }
+
+    trait :with_icon do
+      icon { Spree::Core::Engine.root.join('spec', 'fixtures', 'thinking-cat.jpg').open }
+    end
   end
 end

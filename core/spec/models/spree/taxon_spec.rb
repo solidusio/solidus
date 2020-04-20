@@ -3,11 +3,45 @@
 require 'rails_helper'
 
 RSpec.describe Spree::Taxon, type: :model do
+  it_behaves_like 'an attachment' do
+    subject { create(:taxon) }
+    let(:attachment_name) { :icon }
+    let(:default_style) { :mini }
+  end
+
   context "#destroy" do
     subject(:nested_set_options) { described_class.acts_as_nested_set_options }
 
     it "should destroy all associated taxons" do
       expect(nested_set_options[:dependent]).to eq :destroy
+    end
+  end
+
+  describe "#destroy_attachment" do
+    context "when trying to destroy a valid attachment definition" do
+      context "and taxon has a file attached " do
+        it "removes the attachment" do
+          taxon = create(:taxon, :with_icon)
+
+          expect(taxon.destroy_attachment(:icon)).to be_truthy
+        end
+      end
+
+      context "and the taxon does not have any file attached yet" do
+        it "returns false" do
+          taxon = create(:taxon)
+
+          expect(taxon.destroy_attachment(:icon)).to be_falsey
+        end
+      end
+    end
+
+    context "when trying to destroy an invalid attachment" do
+      it 'returns false' do
+        taxon = create(:taxon)
+
+        expect(taxon.destroy_attachment(:foo)).to be_falsey
+      end
     end
   end
 
