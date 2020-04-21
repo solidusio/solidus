@@ -8,7 +8,10 @@ Spree.Views.Order.DetailsAdjustments = Backbone.View.extend({
     var totals = {};
     var collection = this.collection ? this.collection.chain() : _.chain([this.model]);
     collection
-      .map(function(item){ return item.get("adjustments") || [] })
+      .map(function(item) {
+        return (item.get("adjustments") || [])
+          .filter(function(adjustment) { return (adjustment.eligible === true); });
+      })
       .flatten(true)
       .each(function(adjustment){
         var label = adjustment.label;
