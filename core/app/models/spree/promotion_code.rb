@@ -7,6 +7,7 @@ class Spree::PromotionCode < Spree::Base
 
   validates :value, presence: true, uniqueness: { allow_blank: true, case_sensitive: true }
   validates :promotion, presence: true
+  validate :promotion_not_apply_automatically, on: :create
 
   before_save :normalize_code
 
@@ -35,6 +36,10 @@ class Spree::PromotionCode < Spree::Base
 
   def usage_limit
     promotion.per_code_usage_limit
+  end
+
+  def promotion_not_apply_automatically
+    errors.add(:base, :disallowed_with_apply_automatically) if promotion.apply_automatically
   end
 
   private

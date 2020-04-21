@@ -29,4 +29,11 @@ describe Spree::Admin::PromotionCodesController do
     expect(flash[:error]).not_to be_nil
     expect(Spree::PromotionCode.where(promotion: promotion).count).to eql(3)
   end
+
+  it "can't create a new code on promotions that apply automatically" do
+    apply_automatically_promotion = create(:promotion, apply_automatically: true)
+    get :new, params: { promotion_id: apply_automatically_promotion.id }
+    expect(response).to redirect_to(spree.admin_promotion_promotion_codes_path(apply_automatically_promotion))
+    expect(flash[:error]).not_to be_nil
+  end
 end

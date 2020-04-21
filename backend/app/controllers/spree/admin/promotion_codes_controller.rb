@@ -23,7 +23,12 @@ module Spree
 
       def new
         @promotion = Spree::Promotion.accessible_by(current_ability, :read).find(params[:promotion_id])
-        @promotion_code = @promotion.promotion_codes.build
+        if @promotion.apply_automatically
+          flash[:error] = t('activerecord.errors.models.spree/promotion_code.attributes.base.disallowed_with_apply_automatically')
+          redirect_to admin_promotion_promotion_codes_url(@promotion)
+        else
+          @promotion_code = @promotion.promotion_codes.build
+        end
       end
 
       def create

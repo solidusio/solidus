@@ -76,12 +76,6 @@ RSpec.describe Spree::Promotion, type: :model do
         expect(subject).to be_valid
       end
 
-      it "invalidates the promotion when it has a code" do
-        subject.codes.build(value: "foo")
-        expect(subject).to_not be_valid
-        expect(subject.errors).to include(:apply_automatically)
-      end
-
       it "invalidates the promotion when it has a path" do
         subject.path = "foo"
         expect(subject).to_not be_valid
