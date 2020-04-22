@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
+require "private_address_check/tcpsocket_ext"
 
 module Spree
   describe Spree::Api::ImagesController, type: :request do
@@ -36,7 +37,7 @@ module Spree
         expect do
           post spree.api_product_images_path(product.id), params: {
             image: {
-              attachment: 'https://github.com/solidusio/brand/raw/1827e7afb7ebcf5a1fc9cf7bf6cf9d277183ef11/PNG/solidus-logo-dark.png',
+              attachment: 'https://raw.githubusercontent.com/solidusio/brand/1827e7afb7ebcf5a1fc9cf7bf6cf9d277183ef11/PNG/solidus-logo-dark.png',
               viewable_type: 'Spree::Variant',
               viewable_id: product.master.to_param,
               alt: 'just a test'
@@ -46,6 +47,30 @@ module Spree
           expect(json_response).to have_attributes(attributes)
           expect(json_response[:alt]).to eq('just a test')
         end.to change(Image, :count).by(1)
+      end
+
+      it 'will raise an exception if URL passed as attachment parameter attempts to redirect' do
+        expect do
+          post spree.api_product_images_path(product.id), params: {
+            image: {
+              attachment: 'https://github.com/solidusio/brand/raw/1827e7afb7ebcf5a1fc9cf7bf6cf9d277183ef11/PNG/solidus-logo-dark.png',
+              viewable_type: 'Spree::Variant',
+              viewable_id: product.master.to_param,
+            },
+          }
+        end.to raise_error(OpenURI::HTTPRedirect)
+      end
+
+      it 'will raise an exception if URL passed is a private address' do
+        expect do
+          post spree.api_product_images_path(product.id), params: {
+            image: {
+              attachment: 'https://10.10.10.2/foo.png',
+              viewable_type: 'Spree::Variant',
+              viewable_id: product.master.to_param,
+            },
+          }
+        end.to raise_error(PrivateAddressCheck::PrivateConnectionAttemptedError)
       end
 
       context "working with an existing product image" do
@@ -90,7 +115,7 @@ module Spree
           put spree.api_variant_image_path(product.master.id, product_image), params: {
             image: {
               position: 2,
-              attachment: 'https://github.com/solidusio/brand/raw/1827e7afb7ebcf5a1fc9cf7bf6cf9d277183ef11/PNG/solidus-logo-dark.png'
+              attachment: 'https://raw.githubusercontent.com/solidusio/brand/1827e7afb7ebcf5a1fc9cf7bf6cf9d277183ef11/PNG/solidus-logo-dark.png'
             },
           }
           expect(response.status).to eq(200)
