@@ -17,6 +17,7 @@ module Spree
 
         cannot [:delete, :destroy], Spree.user_class
         can :manage, Spree::StoreCredit
+        can :manage, Spree::Wallet
         can :display, Spree::Role
       end
     end
