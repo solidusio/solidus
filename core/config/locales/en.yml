@@ -748,6 +748,9 @@ en:
       spree/variant:
         one: Variant
         other: Variants
+      spree/wallet_payment_source:
+        one: Wallet Payment
+        other: Wallet Payments
       spree/zone:
         one: Zone
         other: Zones
