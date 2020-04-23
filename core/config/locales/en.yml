@@ -971,6 +971,7 @@ en:
         orders: Orders
         store_credit: Store Credit
         user_information: User Information
+        wallet: Wallet
       users:
         edit:
           api_access: API Access
