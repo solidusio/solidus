@@ -9,6 +9,7 @@
 # WalletPaymentSources may be the 'default' WalletPaymentSource.
 class Spree::Wallet
   extend ActiveModel::Naming
+  extend ActiveModel::Translation
 
   class Unauthorized < StandardError; end
 

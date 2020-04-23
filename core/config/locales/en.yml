@@ -423,6 +423,9 @@ en:
         tax_category: Variant Tax Category
         weight: Weight
         width: Width
+      spree/wallet:
+        payment_source: Payment Source
+        default: Default
       spree/zone:
         description: Description
         name: Name
