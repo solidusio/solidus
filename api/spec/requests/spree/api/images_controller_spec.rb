@@ -34,31 +34,35 @@ module Spree
       end
 
       it 'can upload a new image from a valid URL' do
-        expect do
-          post spree.api_product_images_path(product.id), params: {
-            image: {
-              attachment: 'https://raw.githubusercontent.com/solidusio/brand/1827e7afb7ebcf5a1fc9cf7bf6cf9d277183ef11/PNG/solidus-logo-dark.png',
-              viewable_type: 'Spree::Variant',
-              viewable_id: product.master.to_param,
-              alt: 'just a test'
-            },
-          }
-          expect(response.status).to eq(201)
-          expect(json_response).to have_attributes(attributes)
-          expect(json_response[:alt]).to eq('just a test')
-        end.to change(Image, :count).by(1)
+        VCR.use_cassette('api-image-upload') do
+          expect do
+            post spree.api_product_images_path(product.id), params: {
+              image: {
+                attachment: 'https://raw.githubusercontent.com/solidusio/brand/1827e7afb7ebcf5a1fc9cf7bf6cf9d277183ef11/PNG/solidus-logo-dark.png',
+                viewable_type: 'Spree::Variant',
+                viewable_id: product.master.to_param,
+                alt: 'just a test'
+              },
+            }
+            expect(response.status).to eq(201)
+            expect(json_response).to have_attributes(attributes)
+            expect(json_response[:alt]).to eq('just a test')
+          end.to change(Image, :count).by(1)
+        end
       end
 
       it 'will raise an exception if URL passed as attachment parameter attempts to redirect' do
-        expect do
-          post spree.api_product_images_path(product.id), params: {
-            image: {
-              attachment: 'https://github.com/solidusio/brand/raw/1827e7afb7ebcf5a1fc9cf7bf6cf9d277183ef11/PNG/solidus-logo-dark.png',
-              viewable_type: 'Spree::Variant',
-              viewable_id: product.master.to_param,
-            },
-          }
-        end.to raise_error(OpenURI::HTTPRedirect)
+        VCR.use_cassette('api-image-upload-redirect') do
+          expect do
+            post spree.api_product_images_path(product.id), params: {
+              image: {
+                attachment: 'https://github.com/solidusio/brand/raw/1827e7afb7ebcf5a1fc9cf7bf6cf9d277183ef11/PNG/solidus-logo-dark.png',
+                viewable_type: 'Spree::Variant',
+                viewable_id: product.master.to_param,
+              },
+            }
+          end.to raise_error(OpenURI::HTTPRedirect)
+        end
       end
 
       it 'will raise an exception if URL passed is a private address' do
@@ -111,17 +115,19 @@ module Spree
         end
 
         it "can update image URL" do
-          expect(product_image.position).to eq(1)
-          put spree.api_variant_image_path(product.master.id, product_image), params: {
-            image: {
-              position: 2,
-              attachment: 'https://raw.githubusercontent.com/solidusio/brand/1827e7afb7ebcf5a1fc9cf7bf6cf9d277183ef11/PNG/solidus-logo-dark.png'
-            },
-          }
-          expect(response.status).to eq(200)
-          expect(json_response).to have_attributes(attributes)
-          expect(product_image.reload.position).to eq(2)
-          expect(product_image.reload.attachment_height).to eq(420)
+          VCR.use_cassette('api-image-upload') do
+            expect(product_image.position).to eq(1)
+            put spree.api_variant_image_path(product.master.id, product_image), params: {
+              image: {
+                position: 2,
+                attachment: 'https://raw.githubusercontent.com/solidusio/brand/1827e7afb7ebcf5a1fc9cf7bf6cf9d277183ef11/PNG/solidus-logo-dark.png'
+              },
+            }
+            expect(response.status).to eq(200)
+            expect(json_response).to have_attributes(attributes)
+            expect(product_image.reload.position).to eq(2)
+            expect(product_image.reload.attachment_height).to eq(420)
+          end
         end
 
         it "can delete an image" do
