@@ -27,6 +27,8 @@
                 <span class="pill pill-active">
                   <%= t('spree.default') %>
                 </span>
+              <% else %>
+                <%= link_to t('spree.make_default'), admin_user_wallet_payment_default_path(wallet_payment.user, wallet_payment), method: :post %>
               <% end %>
             </td>
             <td class="align-center">
