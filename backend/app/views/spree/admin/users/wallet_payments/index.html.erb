@@ -15,6 +15,7 @@
         <tr data-hook="admin_users_wallet_payments_index_headers">
           <th><%= Spree::Wallet.human_attribute_name(:payment_source) %></th>
           <th class="align-center"><%= Spree::Wallet.human_attribute_name(:default) %></th>
+          <th class="actions"></th>
         </tr>
       </thead>
       <tbody>
@@ -26,6 +27,11 @@
                 <span class="pill pill-active">
                   <%= t('spree.default') %>
                 </span>
+              <% end %>
+            </td>
+            <td class="align-center">
+              <% if can?(:destroy, wallet_payment) %>
+                <%= link_to_delete wallet_payment, url: admin_user_wallet_payment_path(wallet_payment.user, wallet_payment), method: :delete, no_text: true %>
               <% end %>
             </td>
           </tr>

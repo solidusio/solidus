@@ -41,5 +41,15 @@ describe "User's Wallet Payments", type: :feature do
       expect(page).to have_content('XXXX-XXXX-XXXX-1111 - Peter Parker')
       expect(page).to have_content('XXXX-XXXX-XXXX-0004 - Auntie May')
     end
+
+    it 'allows to remove payment sources', js: true do
+      within 'tr', text: 'XXXX-XXXX-XXXX-1111 - Peter Parker' do
+        accept_alert do
+          click_icon :trash
+        end
+      end
+      expect(page).to have_content 'successfully removed'
+      expect(page).not_to have_content('XXXX-XXXX-XXXX-1111 - Peter Parker')
+    end
   end
 end
