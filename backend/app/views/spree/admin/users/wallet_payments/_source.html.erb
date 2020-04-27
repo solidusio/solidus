@@ -8,4 +8,10 @@
     <% end %>
   </span> -
   <span class="full-name"><%= source.name %></span>
+
+  <% if source.month && source.year %>
+    <span class="pill pill-<%= source.expired? ? 'expired' : 'ready' %>">
+      <%= source.month %>/<%= source.year %>
+    </span>
+  <% end %>
 <% end %>
