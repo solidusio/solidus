@@ -255,6 +255,50 @@ RSpec.describe Spree::CreditCard, type: :model do
     end
   end
 
+  describe '#expired?' do
+    it 'returns true with cards expired 1 year ago' do
+      credit_card.year = 1.year.ago.year
+      credit_card.month = Time.now.month
+
+      expect(credit_card.expired?).to be_truthy
+    end
+
+    it 'returns true with cards expired 1 month ago' do
+      credit_card.year = Time.now.year
+      credit_card.month = 1.month.ago.month
+
+      expect(credit_card.expired?).to be_truthy
+    end
+
+    it 'returns false with cards expired this month' do
+      credit_card.year = Time.now.year
+      credit_card.month = Time.now.month
+
+      expect(credit_card.expired?).to be_falsey
+    end
+
+    it 'returns false with cards expired next month' do
+      credit_card.year = Time.now.year
+      credit_card.month = 1.month.from_now.month
+
+      expect(credit_card.expired?).to be_falsey
+    end
+
+    it 'returns false with cards expired next year' do
+      credit_card.year = 1.year.from_now.year
+      credit_card.month = 1.month.from_now.month
+
+      expect(credit_card.expired?).to be_falsey
+    end
+
+    it 'returns false with cards expired next year, one month ago' do
+      credit_card.year = 1.year.from_now.year
+      credit_card.month = 1.month.ago.month
+
+      expect(credit_card.expired?).to be_falsey
+    end
+  end
+
   describe "#to_active_merchant" do
     before do
       credit_card.number = "4111111111111111"

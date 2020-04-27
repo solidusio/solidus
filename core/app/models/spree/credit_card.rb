@@ -147,6 +147,13 @@ module Spree
       "XXXX-XXXX-XXXX-#{last_digits}"
     end
 
+    # @return [Boolean] true when the card has month/year set and the
+    #   card is expired.
+    def expired?
+      return false if month.blank? || year.blank?
+      year.to_i < Time.now.year || (year.to_i == Time.now.year && month.to_i < Time.now.month)
+    end
+
     def reusable?
       has_payment_profile?
     end
