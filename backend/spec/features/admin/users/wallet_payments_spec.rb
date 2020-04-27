@@ -51,5 +51,17 @@ describe "User's Wallet Payments", type: :feature do
       expect(page).to have_content 'successfully removed'
       expect(page).not_to have_content('XXXX-XXXX-XXXX-1111 - Peter Parker')
     end
+
+    it 'allows to mark payment sources as default', js: true do
+      within 'tr', text: 'XXXX-XXXX-XXXX-1111 - Peter Parker' do
+        click_link 'Make Default'
+      end
+
+      within 'tr', text: 'XXXX-XXXX-XXXX-1111 - Peter Parker' do
+        within '.pill' do
+          expect(page).to have_content('Default')
+        end
+      end
+    end
   end
 end

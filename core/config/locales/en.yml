@@ -1544,6 +1544,7 @@ en:
     logout: Logout
     logs: Logs
     look_for_similar_items: Look for similar items
+    make_default: Make Default
     make_refund: Make refund
     make_sure_the_above_reimbursement_amount_is_correct: Make sure the above reimbursement
       amount is correct
