@@ -33,4 +33,26 @@ describe Spree::Admin::Users::WalletPaymentsController, type: :controller do
       end
     end
   end
+
+  context "#destroy" do
+    context "when user is not authorized to manage users wallets" do
+      it "denies access" do
+        get :destroy, params: { user_id: user.id, id: first_credit_card.id }
+        expect(response).to redirect_to('/unauthorized')
+      end
+    end
+
+    context "when user is authorized to manage users' wallet" do
+      stub_authorization! do |_user|
+        can :manage, Spree::Wallet
+      end
+
+      it "removes it and redirects to user's wallet with a flash message" do
+        get :destroy, params: { user_id: user.id, id: first_credit_card.id }
+
+        expect(response).to redirect_to admin_user_wallet_payments_path(user)
+        expect(flash[:success]).to eq("Wallet Payment has been successfully removed!")
+      end
+    end
+  end
 end
