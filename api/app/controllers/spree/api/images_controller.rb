@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'private_address_check'
-
 module Spree
   module Api
     class ImagesController < Spree::Api::BaseController
@@ -59,10 +57,13 @@ module Spree
 
       def prepared_attachment
         uri = URI.parse image_params[:attachment]
-        if PrivateAddressCheck.resolves_to_private_address? uri.host
-          raise PrivateAddressCheck::PrivateConnectionAttemptedError
-        elsif uri.is_a? URI::HTTP
-          URI.open(image_params[:attachment], redirect: false)
+        if uri.is_a? URI::HTTP
+          require 'private_address_check'
+          if PrivateAddressCheck.resolves_to_private_address? uri.host
+            raise PrivateAddressCheck::PrivateConnectionAttemptedError
+          else
+            URI.open(image_params[:attachment], redirect: false)
+          end
         else
           image_params[:attachment]
         end

@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-require "private_address_check/tcpsocket_ext"
 
 module Spree
   describe Spree::Api::ImagesController, type: :request do
@@ -66,6 +65,7 @@ module Spree
       end
 
       it 'will raise an exception if URL passed is a private address' do
+        require "private_address_check/tcpsocket_ext"
         expect do
           post spree.api_product_images_path(product.id), params: {
             image: {
