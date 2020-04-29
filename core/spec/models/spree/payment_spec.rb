@@ -833,7 +833,7 @@ RSpec.describe Spree::Payment, type: :model do
             expiry: "01 / 99",
             number: '1234567890123',
             verification_value: '123',
-            name: 'Spree Commerce'
+            name: 'Mary Jane Watson'
           }
         }
       end

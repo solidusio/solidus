@@ -172,6 +172,9 @@ Spree::Core::Engine.routes.draw do
         get :addresses
         put :addresses
       end
+      resources :wallet_payments, controller: 'users/wallet_payments', only: [:index, :destroy] do
+        post :default, to: 'users/default_wallet_payments#update'
+      end
       resources :store_credits, except: [:destroy] do
         member do
           get :edit_amount

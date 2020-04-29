@@ -423,6 +423,9 @@ en:
         tax_category: Variant Tax Category
         weight: Weight
         width: Width
+      spree/wallet:
+        payment_source: Payment Source
+        default: Default
       spree/zone:
         description: Description
         name: Name
@@ -745,6 +748,9 @@ en:
       spree/variant:
         one: Variant
         other: Variants
+      spree/wallet_payment_source:
+        one: Wallet Payment
+        other: Wallet Payments
       spree/zone:
         one: Zone
         other: Zones
@@ -965,6 +971,7 @@ en:
         orders: Orders
         store_credit: Store Credit
         user_information: User Information
+        wallet: Wallet
       users:
         edit:
           api_access: API Access
@@ -1537,6 +1544,7 @@ en:
     logout: Logout
     logs: Logs
     look_for_similar_items: Look for similar items
+    make_default: Make Default
     make_refund: Make refund
     make_sure_the_above_reimbursement_amount_is_correct: Make sure the above reimbursement
       amount is correct

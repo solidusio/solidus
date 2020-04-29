@@ -24,6 +24,11 @@
           <%= link_to t("spree.admin.user.store_credit"), spree.admin_user_store_credits_path(@user) %>
         </li>
       <% end %>
+      <% if can?(:admin, @user.wallet) %>
+        <li<%== ' class="active"' if current == :wallet %>>
+          <%= link_to t("spree.admin.user.wallet"), spree.admin_user_wallet_payments_path(@user) %>
+        </li>
+      <% end %>
     </ul>
   </nav>
 <% end %>

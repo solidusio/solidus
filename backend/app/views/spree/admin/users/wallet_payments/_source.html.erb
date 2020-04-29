@@ -1,0 +1,17 @@
+<% if source.is_a?(Spree::CreditCard) %>
+  <span class="cc-type">
+    <% unless (cc_type = source.cc_type).blank? %>
+      <%= image_tag "credit_cards/icons/#{cc_type}.png" %>
+    <% end %>
+    <% if source.last_digits %>
+      <%= source.display_number %>
+    <% end %>
+  </span> -
+  <span class="full-name"><%= source.name %></span>
+
+  <% if source.month && source.year %>
+    <span class="pill pill-<%= source.expired? ? 'expired' : 'ready' %>">
+      <%= source.month %>/<%= source.year %>
+    </span>
+  <% end %>
+<% end %>

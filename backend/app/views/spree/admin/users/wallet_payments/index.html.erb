@@ -1,0 +1,48 @@
+<% admin_breadcrumb(link_to plural_resource_name(Spree::LegacyUser), spree.admin_users_path) %>
+<% admin_breadcrumb(link_to @user.email, edit_admin_user_url(@user)) %>
+<% admin_breadcrumb(t('spree.admin.user.wallet')) %>
+
+<%= render 'spree/admin/users/sidebar' %>
+<%= render 'spree/admin/users/tabs', current: :wallet %>
+<%= render partial: 'spree/admin/users/user_page_actions' %>
+
+<fieldset data-hook="admin_user_wallet_payments" class="no-border-bottom">
+  <legend><%= t("spree.admin.user.wallet") %></legend>
+
+  <% if @wallet_payments.any? %>
+    <table class="index">
+      <thead>
+        <tr data-hook="admin_users_wallet_payments_index_headers">
+          <th><%= Spree::Wallet.human_attribute_name(:payment_source) %></th>
+          <th class="align-center"><%= Spree::Wallet.human_attribute_name(:default) %></th>
+          <th class="actions"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @wallet_payments.each do |wallet_payment| %>
+          <tr>
+            <td><%= render 'source', source: wallet_payment.payment_source %></td>
+            <td class="align-center">
+              <% if wallet_payment.default? %>
+                <span class="pill pill-active">
+                  <%= t('spree.default') %>
+                </span>
+              <% else %>
+                <%= link_to t('spree.make_default'), admin_user_wallet_payment_default_path(wallet_payment.user, wallet_payment), method: :post %>
+              <% end %>
+            </td>
+            <td class="align-center">
+              <% if can?(:destroy, wallet_payment) %>
+                <%= link_to_delete wallet_payment, url: admin_user_wallet_payment_path(wallet_payment.user, wallet_payment), method: :delete, no_text: true %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+    </table>
+  <% else %>
+    <div class="no-objects-found">
+      <%= render 'spree/admin/shared/no_objects_found',
+                   resource: Spree::WalletPaymentSource %>
+    </div>
+  <% end %>
+</fieldset>

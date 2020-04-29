@@ -8,6 +8,9 @@
 # links a PaymentSource (e.g. a CreditCard) to a User. One of a user's
 # WalletPaymentSources may be the 'default' WalletPaymentSource.
 class Spree::Wallet
+  extend ActiveModel::Naming
+  extend ActiveModel::Translation
+
   class Unauthorized < StandardError; end
 
   attr_reader :user
