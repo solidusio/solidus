@@ -7,6 +7,7 @@ describe Spree::Admin::PromotionsController, type: :controller do
 
   let!(:promotion1) { create(:promotion, name: "name1", code: "code1", path: "path1") }
   let!(:promotion2) { create(:promotion, name: "name2", code: "code2", path: "path2") }
+  let!(:promotion3) { create(:promotion, name: "name2", code: "code3", path: "path3", expires_at: Date.yesterday) }
   let!(:category) { create :promotion_category }
 
   describe "#show" do
@@ -19,7 +20,7 @@ describe Spree::Admin::PromotionsController, type: :controller do
   describe "#index" do
     it "succeeds" do
       get :index
-      expect(assigns[:promotions]).to match_array [promotion2, promotion1]
+      expect(assigns[:promotions]).to match_array [promotion3, promotion2, promotion1]
     end
 
     it "assigns promotion categories" do
@@ -30,7 +31,7 @@ describe Spree::Admin::PromotionsController, type: :controller do
     context "search" do
       it "pages results" do
         get :index, params: { per_page: '1' }
-        expect(assigns[:promotions]).to eq [promotion2]
+        expect(assigns[:promotions]).to eq [promotion3]
       end
 
       it "filters by name" do
@@ -46,6 +47,11 @@ describe Spree::Admin::PromotionsController, type: :controller do
       it "filters by path" do
         get :index, params: { q: { path_cont: promotion1.path } }
         expect(assigns[:promotions]).to eq [promotion1]
+      end
+
+      it "filters by active" do
+        get :index, params: { q: { active: true } }
+        expect(assigns[:promotions]).to match_array [promotion2, promotion1]
       end
     end
   end
