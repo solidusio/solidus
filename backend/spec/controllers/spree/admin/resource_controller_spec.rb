@@ -141,6 +141,17 @@ describe Spree::Admin::WidgetsController, type: :controller do
         expect(flash[:error]).to eq assigns(:widget).errors.full_messages.join(', ')
       end
     end
+
+    context 'resource invalid' do
+      before do
+        allow_any_instance_of(Widget).to receive(:update).and_raise(ActiveRecord::RecordInvalid)
+      end
+
+      it 'returns to edit page with error' do
+        put :update, params: params
+        expect(flash[:error]).to eq('Record invalid')
+      end
+    end
   end
 
   describe '#destroy' do
