@@ -9,6 +9,7 @@ module Spree
       update.before :update_before
       helper_method :clone_object_url
       before_action :split_params, only: [:create, :update]
+      before_action :normalize_variant_property_rules, only: [:update]
 
       def show
         redirect_to action: :edit
@@ -17,29 +18,6 @@ module Spree
       def index
         session[:return_to] = request.url
         respond_with(@collection)
-      end
-
-      def update
-        if updating_variant_property_rules?
-          params[:product][:variant_property_rules_attributes].each do |_index, param_attrs|
-            param_attrs[:option_value_ids] = param_attrs[:option_value_ids].split(',')
-          end
-        end
-        invoke_callbacks(:update, :before)
-        if @object.update(permitted_resource_params)
-          invoke_callbacks(:update, :after)
-          flash[:success] = flash_message_for(@object, :successfully_updated)
-          respond_with(@object) do |format|
-            format.html { redirect_to location_after_save }
-            format.js   { render layout: false }
-          end
-        else
-          # Stops people submitting blank slugs, causing errors when they try to
-          # update the product again
-          @product.slug = @product.slug_was if @product.slug.blank?
-          invoke_callbacks(:update, :fails)
-          respond_with(@object)
-        end
       end
 
       def destroy
@@ -137,6 +115,21 @@ module Spree
 
       def updating_variant_property_rules?
         params[:product][:variant_property_rules_attributes].present?
+      end
+
+      def render_after_update_error
+        # Stops people submitting blank slugs, causing errors when they try to
+        # update the product again
+        @product.slug = @product.slug_was if @product.slug.blank?
+        render action: 'edit'
+      end
+
+      def normalize_variant_property_rules
+        return unless updating_variant_property_rules?
+
+        params[:product][:variant_property_rules_attributes].each do |_index, param_attrs|
+          param_attrs[:option_value_ids] = param_attrs[:option_value_ids].split(',')
+        end
       end
     end
   end
