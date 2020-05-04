@@ -131,7 +131,7 @@ Spree.ready(function(){
       data: {
         token: Spree.api_key
       },
-      url: Spree.routes.checkouts_api + "/" + window.order_number + "/advance"
+      url: Spree.pathFor('api/checkouts/' + window.order_number + '/advance')
     }).done(function() {
       window.location.reload();
     });

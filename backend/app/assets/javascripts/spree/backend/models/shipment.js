@@ -1,7 +1,7 @@
 Spree.Models.Shipment = Backbone.Model.extend({
   idAttribute: "number",
   paramRoot: "shipment",
-  urlRoot: Spree.routes.shipments_api,
+  urlRoot: Spree.pathFor('api/shipments'),
 
   relations: {
     "selected_shipping_rate": Backbone.Model,

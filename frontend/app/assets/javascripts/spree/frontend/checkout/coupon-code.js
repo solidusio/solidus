@@ -15,7 +15,7 @@ Spree.onCouponCodeApply = function(e) {
   };
   var req = Spree.ajax({
     method: 'POST',
-    url: Spree.routes.apply_coupon_code(Spree.current_order_id),
+    url: Spree.pathFor('api/orders/' + Spree.current_order_id + '/coupon_codes'),
     data: JSON.stringify(data),
     contentType: "application/json"
   });

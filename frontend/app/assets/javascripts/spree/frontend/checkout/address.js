@@ -14,7 +14,7 @@ Spree.ready(function($) {
       if (countryId != null) {
         if (statesByCountry[countryId] == null) {
           $.get(
-            Spree.routes.states_search,
+            Spree.pathFor('api/states'),
             {
               country_id: countryId
             },

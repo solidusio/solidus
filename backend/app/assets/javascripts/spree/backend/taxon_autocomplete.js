@@ -10,7 +10,7 @@ $.fn.taxonAutocomplete = function () {
 
         Spree.ajax({
           type: "GET",
-          url: Spree.routes.taxons_search,
+          url: Spree.pathFor('api/taxons'),
           data: {
             ids: ids,
             per_page: count,
@@ -22,7 +22,7 @@ $.fn.taxonAutocomplete = function () {
         });
       },
       ajax: {
-        url: Spree.routes.taxons_search,
+        url: Spree.pathFor('api/taxons'),
         datatype: 'json',
         data: function (term, page) {
           return {

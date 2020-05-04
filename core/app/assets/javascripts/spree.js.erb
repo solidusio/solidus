@@ -51,12 +51,41 @@ Spree.ajax = function(url, options) {
   return $.ajax(url, options);
 };
 
-Spree.routes = {
+/**
+ * @deprecated Spree.routes will be removed in a future release. Please use Spree.pathFor instead.
+ * See: https://github.com/solidusio/solidus/issues/3405
+ */
+Spree.routesDeprecationProxy = {
+  get: function(obj, prop) {
+    <% if Rails.env != "production" %>
+      console.log("Spree.routes is deprecated, please use pathFor instead. See: https://github.com/solidusio/solidus/issues/3405");
+    <% end %>
+
+    return obj[prop]
+  },
+
+  set: function(obj, prop, value) {
+    <% if Rails.env != "production" %>
+      console.log("Spree.routes is deprecated, please use pathFor instead. See: https://github.com/solidusio/solidus/issues/3405");
+    <% end %>
+
+    obj[prop] = value
+    return value;
+  }
+};
+
+var frontend_routes = {
   states_search: Spree.pathFor('api/states'),
   apply_coupon_code: function(order_id) {
     return Spree.pathFor("api/orders/" + order_id + "/coupon_codes");
   }
-};
+}
+
+if(typeof Proxy == "function") {
+  Spree.routes = new Proxy(frontend_routes, Spree.routesDeprecationProxy);
+} else {
+  Spree.routes = frontend_routes
+}
 
 Spree.getJSON = function(url, data, success) {
   if (typeof data === 'function') {
