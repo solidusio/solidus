@@ -62,4 +62,4 @@ pages:
           route:
             path: /api-reference
           data:
-            $ref: ./api.oas2.yml
+            $ref: ./solidus-api.oas.yml
