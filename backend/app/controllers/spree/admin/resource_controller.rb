@@ -6,6 +6,7 @@ class Spree::Admin::ResourceController < Spree::Admin::BaseController
   helper_method :new_object_url, :edit_object_url, :object_url, :collection_url
   before_action :load_resource, except: :update_positions
   rescue_from ActiveRecord::RecordNotFound, with: :resource_not_found
+  rescue_from ActiveRecord::RecordInvalid, with: :resource_invalid
 
   respond_to :html
 
@@ -298,5 +299,20 @@ class Spree::Admin::ResourceController < Spree::Admin::BaseController
 
   def render_after_update_error
     render action: 'edit'
+  end
+
+  def resource_invalid(exception)
+    invoke_callbacks(action, :fails)
+    respond_with(@object) do |format|
+      format.html do
+        flash.now[:error] = exception.message
+        if @object.new_record?
+          render_after_create_error
+        else
+          render_after_update_error
+        end
+      end
+      format.js { render layout: false }
+    end
   end
 end
