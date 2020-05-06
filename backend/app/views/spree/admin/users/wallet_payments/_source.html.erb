@@ -1,17 +1,19 @@
 <% if source.is_a?(Spree::CreditCard) %>
-  <span class="cc-type">
-    <% unless (cc_type = source.cc_type).blank? %>
-      <%= image_tag "credit_cards/icons/#{cc_type}.png" %>
-    <% end %>
-    <% if source.last_digits %>
-      <%= source.display_number %>
-    <% end %>
-  </span> -
-  <span class="full-name"><%= source.name %></span>
+  <dl>
+    <dt><%= t('spree.name_on_card') %>:</dt>
+    <dd><%= source.name %></dd>
 
-  <% if source.month && source.year %>
-    <span class="pill pill-<%= source.expired? ? 'expired' : 'ready' %>">
-      <%= source.month %>/<%= source.year %>
-    </span>
-  <% end %>
+    <dt><%= Spree::CreditCard.human_attribute_name(:cc_type) %>:</dt>
+    <dd><%= source.cc_type %></dd>
+
+    <dt><%= Spree::CreditCard.human_attribute_name(:number) %>:</dt>
+    <dd><%= source.display_number %></dd>
+
+    <dt><%= Spree::CreditCard.human_attribute_name(:expiration) %>:</dt>
+    <dd>
+      <span class="pill pill-<%= source.expired? ? 'expired' : 'ready' %>">
+        <%= source.month %>/<%= source.year %>
+      </span>
+    </dd>
+  </dl>
 <% end %>
