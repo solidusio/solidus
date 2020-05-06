@@ -16,6 +16,7 @@
 <% end %>
 
 <% if @stock_locations.any? %>
+  <%= paginate @stock_locations, theme: "solidus_admin" %>
   <table class="index sortable" id='listing_stock_locations' data-hook data-sortable-link="<%= update_positions_admin_stock_locations_url %>">
     <colgroup>
       <col style="width: 10%">
@@ -69,6 +70,7 @@
       <% end %>
     </tbody>
   </table>
+  <%= paginate @stock_locations, theme: "solidus_admin" %>
 <% else %>
   <div class="no-objects-found">
     <%= render 'spree/admin/shared/no_objects_found',
