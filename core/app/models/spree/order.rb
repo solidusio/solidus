@@ -183,6 +183,9 @@ module Spree
     # Use this method in other gems that wish to register their own custom logic
     # that should be called after Order#update
     def self.register_update_hook(hook)
+      Spree::Deprecation.warn \
+        "Spree::Order::update_hooks are deprecated. Please remove them " \
+        "and subscribe to `order_recalculated` and/or `order_finalized` event instead", caller(1)
       update_hooks.add(hook)
     end
 
@@ -437,7 +440,7 @@ module Spree
 
       updater.update_shipment_state
       save!
-      updater.run_hooks
+      updater.run_hooks if update_hooks.any?
 
       touch :completed_at
 

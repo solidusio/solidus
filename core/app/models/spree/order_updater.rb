@@ -17,7 +17,7 @@ module Spree
     # object with callbacks (otherwise you will end up in an infinite recursion as the
     # associations try to save and then in turn try to call +update!+ again.)
     def update
-      @order.transaction do
+      order.transaction do
         update_item_count
         update_shipment_amounts
         update_totals
@@ -26,12 +26,17 @@ module Spree
           update_shipments
           update_shipment_state
         end
-        run_hooks
+        run_hooks if update_hooks.any?
+        Spree::Event.fire 'order_recalculated', order: order
         persist_totals
       end
     end
 
     def run_hooks
+      Spree::Deprecation.warn \
+        "This method is deprecated. Please run your hooks by subscribing " \
+        "to `order_recalculated` and/or `order_finalized` events instead, depending " \
+        " on when OrderUpdater#run_hooks was called.", caller(1)
       update_hooks.each { |hook| order.send hook }
     end
 
