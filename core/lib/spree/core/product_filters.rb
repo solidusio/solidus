@@ -60,6 +60,7 @@ module Spree
         conds.each do |new_scope|
           scope = scope.or(new_scope)
         end
+
         Spree::Product.joins(master: :default_price).where(scope)
       end
 
@@ -70,9 +71,9 @@ module Spree
       def self.price_filter
         value = Spree::Price.arel_table
         conds = [[I18n.t('spree.under_price', price: format_price(10)), value[:amount].lteq(10)],
-                 ["#{format_price(10)} - #{format_price(15)}", value[:amount].in(10..15)],
-                 ["#{format_price(15)} - #{format_price(18)}", value[:amount].in(15..18)],
-                 ["#{format_price(18)} - #{format_price(20)}", value[:amount].in(18..20)],
+                 ["#{format_price(10)} - #{format_price(15)}", value[:amount].between(10..15)],
+                 ["#{format_price(15)} - #{format_price(18)}", value[:amount].between(15..18)],
+                 ["#{format_price(18)} - #{format_price(20)}", value[:amount].between(18..20)],
                  [I18n.t('spree.or_over_price', price: format_price(20)), value[:amount].gteq(20)]]
         {
           name:   I18n.t('spree.price_range'),
