@@ -496,7 +496,7 @@ module Spree
 
     describe "#default_address" do
       let(:deprecation_message) do
-        "This association is deprecated. Please start using ship_address = address"
+        "#default_address is deprecated. Please start using #ship_address."
       end
 
       it "calls #ship_address and warns caller of deprecation" do
@@ -510,7 +510,7 @@ module Spree
 
     describe "#default_user_address" do
       let(:deprecation_message) do
-        "This association is deprecated. Please start using #default_user_ship_address."
+        "#default_user_address is deprecated. Please start using #default_user_ship_address."
       end
 
       it "calls #ship_address and warns caller of deprecation" do
@@ -526,8 +526,8 @@ module Spree
       let(:address) { build :address }
 
       let(:deprecation_message) do
-        "This setter does not take into account Spree::Config.automatic_default_address and is deprecated. "\
-        "Please start using ship_address = address"
+        "#default_address= does not take Spree::Config.automatic_default_address into account and is deprecated. " \
+        "Please use #ship_address=."
       end
 
       it "calls #ship_address= and warns caller of deprecation" do
@@ -540,7 +540,7 @@ module Spree
 
     describe "#default_address_attributes=" do
       let(:deprecation_message) do
-        "This setter is deprecated. Please start using ship_address_attributes = attributes"
+        "#default_address_attributes= is deprecated. Please use #ship_address_attributes=."
       end
 
       it "warns caller of deprecation" do
@@ -570,8 +570,8 @@ module Spree
     describe "#mark_default_address" do
       let(:address) { build :address }
       let(:deprecation_message) do
-        "This method is deprecated and it sets the ship_address only. " \
-        "Please start using #mark_default_ship_address for that"
+        "#mark_default_address is deprecated and it sets the ship_address only. " \
+        "Please use #mark_default_ship_address."
       end
 
       it "calls #mark_default_ship_address and warns caller of deprecation" do

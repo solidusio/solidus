@@ -40,18 +40,21 @@ module Spree
     end
 
     def default_address
-      Spree::Deprecation.warn "This association is deprecated. Please start using ship_address = address"
+      Spree::Deprecation.warn "#default_address is deprecated. Please start using #ship_address."
       ship_address
     end
 
     def default_user_address
-      Spree::Deprecation.warn "This association is deprecated. Please start using #default_user_ship_address."
+      Spree::Deprecation.warn "#default_user_address is deprecated. Please start using #default_user_ship_address."
       default_user_ship_address
     end
 
     def default_address=(address)
-      Spree::Deprecation.warn "This setter does not take into account Spree::Config.automatic_default_address and is deprecated. "\
-        "Please start using ship_address = address"
+      Spree::Deprecation.warn(
+        "#default_address= does not take Spree::Config.automatic_default_address into account and is deprecated. " \
+        "Please use #ship_address=."
+      )
+
       self.ship_address = address if address
     end
 
@@ -59,7 +62,7 @@ module Spree
       # see "Nested Attributes Examples" section of http://apidock.com/rails/ActionView/Helpers/FormHelper/fields_for
       # this #{fieldname}_attributes= method works with fields_for in the views
       # even without declaring accepts_nested_attributes_for
-      Spree::Deprecation.warn "This setter is deprecated. Please start using ship_address_attributes = attributes"
+      Spree::Deprecation.warn "#default_address_attributes= is deprecated. Please use #ship_address_attributes=."
 
       self.default_address = Spree::Address.immutable_merge(ship_address, attributes)
     end
@@ -155,8 +158,10 @@ module Spree
     end
 
     def mark_default_address(address)
-      Spree::Deprecation.warn "This method is deprecated and it sets the ship_address only. " \
-        "Please start using #mark_default_ship_address for that"
+      Spree::Deprecation.warn(
+        "#mark_default_address is deprecated and it sets the ship_address only. " \
+        "Please use #mark_default_ship_address."
+      )
 
       mark_default_ship_address(address)
     end
