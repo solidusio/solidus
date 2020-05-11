@@ -251,7 +251,7 @@ module Spree
               ids_or_records_or_names.flatten.map { |taxon|
                 case taxon
                 when Integer then Spree::Taxon.find_by(id: taxon)
-                when ActiveRecord::Base then t
+                when ActiveRecord::Base then taxon
                 when String
                   Spree::Taxon.find_by(name: taxon) ||
                     Spree::Taxon.where("#{taxons}.permalink LIKE ? OR #{taxons}.permalink = ?", "%/#{taxon}/", "#{taxon}/").first
