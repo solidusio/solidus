@@ -45,6 +45,25 @@ RSpec.describe Spree::Core::ControllerHelpers::Auth, type: :controller do
       expect(response.headers["Set-Cookie"]).to match(/guest_token.*HttpOnly/)
       expect(response.cookies['guest_token']).not_to be_nil
     end
+
+    context 'with guest_token_cookie_options configured' do
+      it 'sends cookie with these options' do
+        stub_spree_preferences(guest_token_cookie_options: {
+          domain: :all,
+          path: '/api'
+        })
+        get :index
+        expect(response.headers["Set-Cookie"]).to match(/domain=\.test\.host; path=\/api/)
+      end
+
+      it 'never overwrites httponly' do
+        stub_spree_preferences(guest_token_cookie_options: {
+          httponly: false
+        })
+        get :index
+        expect(response.headers["Set-Cookie"]).to match(/guest_token.*HttpOnly/)
+      end
+    end
   end
 
   describe '#store_location' do
