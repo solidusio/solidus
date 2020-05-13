@@ -107,6 +107,11 @@ RSpec.describe Spree::Order, type: :model do
         expect(order).to be_canceled
       end
 
+      it 'should save canceled_at' do
+        subject
+        expect(order.reload.canceled_at).to_not be_nil
+      end
+
       it "places the order into the canceled scope" do
         expect{ subject }.to change{ Spree::Order.canceled.include?(order) }.from(false).to(true)
       end
@@ -150,11 +155,6 @@ RSpec.describe Spree::Order, type: :model do
     it 'should save canceler_id' do
       subject
       expect(order.reload.canceler_id).to eq(admin_user.id)
-    end
-
-    it 'should save canceled_at' do
-      subject
-      expect(order.reload.canceled_at).to_not be_nil
     end
 
     it 'should have canceler' do
