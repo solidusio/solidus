@@ -6378,7 +6378,6 @@ components:
           type: string
         attachment:
           type: string
-          description: 'This field can be used to pass an image URL. When used in this manner, the image undergoes the standard post upload processing via paperclip.'
         position:
           type: integer
         viewable_type:
