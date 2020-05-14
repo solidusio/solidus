@@ -56,6 +56,10 @@ module Spree
     #   @return [Boolean] When false, customers must create an account to complete an order (default: +true+)
     preference :allow_guest_checkout, :boolean, default: true
 
+    # @!attribute [rw] guest_token_cookie_options
+    #   @return [Hash] Add additional guest_token cookie options here (ie. domain or path)
+    preference :guest_token_cookie_options, :hash, default: {}
+
     # @!attribute [rw] allow_return_item_amount_editing
     #   @return [Boolean] Determines whether an admin is allowed to change a return item's pre-calculated amount (default: +false+)
     preference :allow_return_item_amount_editing, :boolean, default: false
