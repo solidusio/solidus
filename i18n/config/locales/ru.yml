@@ -6,7 +6,7 @@ ru:
         cancel: Отменить
         quantity: Количество
         shipment: Доставка
-        state: Статус
+        state: Состояние
   activerecord:
     attributes:
       spree/address:
@@ -26,12 +26,12 @@ ru:
         amount: Сумма
         label: Метка
         name: Название
-        state: Статус
+        state: Состояние
       spree/adjustment_reason:
         active: Активен
         code: Код
         name: Название
-        state: Статус
+        state: Состояние
       spree/calculator/flat_rate:
         preferred_amount: Сумма
       spree/calculator/tiered_flat_rate:
@@ -72,7 +72,7 @@ ru:
         alt: Текстовое название
         attachment: Имя файла
       spree/inventory_unit:
-        state: Статус
+        state: Состояние
       spree/legacy_user:
         email: Электронная почта
         password: Пароль
@@ -99,20 +99,20 @@ ru:
         canceled_at: Дата отмены
         canceler: Отменил
         checkout_complete: Оформление заказа завершено
-        completed_at: Завершено
+        completed_at: Дата завершения
         considered_risky: Статус риска
         coupon_code: Код купона
-        created_at: Дата заказа
+        created_at: Дата создания
         email: Электронная почта покупателя
         included_tax_total: Налоги (вкл.)
         ip_address: IP-адрес
         item_total: Итого по товарам
         number: Номер
-        payment_state: Статус оплаты
-        shipment_state: Статус доставки
+        payment_state: Состояние оплаты
+        shipment_state: Состояние доставки
         shipment_total: Итого по доставке
         special_instructions: Специальные инструкции
-        state: Статус
+        state: Состояние
         total: Итого по заказу
       spree/order/bill_address:
         address1: Улица
@@ -135,7 +135,7 @@ ru:
         created_at: Дата создания
         number: Номер
         response_code: Код ответа
-        state: Статус
+        state: Состояние
       spree/payment_method:
         active: Активен
         auto_capture: Автоматическая проводка
@@ -144,7 +144,7 @@ ru:
         description: Описание
         name: Название
         preference_source: Источник настроек
-        state: Статус
+        state: Состояние
         type: Тип
       spree/price:
         amount: Сумма
@@ -167,7 +167,7 @@ ru:
         name: Название
         on_hand: На складе
         price: Цена
-        promotionable: Акционный
+        promotionable: Подходит для акций
         shipping_category: Категория доставки
         slug: Ссылка
         tax_category: Категория налогов
@@ -249,7 +249,7 @@ ru:
         active: Активен
         code: Код
         name: Название
-        state: Статус
+        state: Состояние
       spree/reimbursement:
         created_at: Дата создания
         number: Номер
@@ -285,7 +285,7 @@ ru:
         memo: Заметка
         name: Название
         number: Номер
-        state: Статус
+        state: Состояние
       spree/role:
         name: Название
       spree/shipment:
@@ -398,8 +398,10 @@ ru:
         depth: Толщина
         height: Высота
         price: Цена
+        rebuild_vat_prices: Пересчитать НДС
         sku: Артикул
         tax_category: Категория налогов
+        track_inventory: Отслеживать наличие
         weight: Вес
         width: Ширина
       spree/zone:
@@ -679,6 +681,14 @@ ru:
         many: Областей/Регионов
         one: Область/Регион
         other: Области/Регионы
+      spree/stock:
+        many: Складов
+        one: Склад
+        other: Склады
+      spree/stock_item:
+        many: Складских позиций
+        one: Складская позиция
+        other: Складские позиции
       spree/stock_location:
         many: Расположений складов
         one: Расположение склада
@@ -976,6 +986,9 @@ ru:
     analytics_desc_list_4: Полностью бесплатный!
     analytics_trackers: Трекеры веб-аналитики
     and: и
+    api:
+      resource_not_found: Ресурс не найден
+      unauthorized: У вас недостаточно прав
     apply_code: Применить код
     approve: Подтвердить
     approved_at: Подтверждено
@@ -1023,6 +1036,7 @@ ru:
     cannot_create_payment_link: Пожалуйста настройте сперва способы оплаты.
     cannot_create_payment_without_payment_methods_html: Нельзя создать платеж для заказа, если не настроен ни один из способов оплаты. %{link}
     cannot_create_returns: Невозможно оформить возврат, т.к. этот заказ ещё не отправлен.
+    cannot_edit_orders: Вы можете редактировать только ваш текущий заказ в корзине
     cannot_perform_operation: Невозможно выполнить требуемую операцию
     cannot_rebuild_shipments_order_completed: Нельзя пересобрать доставки для завершенного заказа
     cannot_rebuild_shipments_shipments_not_pending: Нельзя пересобрать доставки для заказа с не ожидающими доставками
@@ -1164,6 +1178,8 @@ ru:
     display_currency: Показывать валюту
     download_promotion_code_list: Скачать список промокодов
     edit: Редактировать
+    editing_refund: Редактирование возмещения
+    editing_refund_reason: Редактирование причины возмещения
     editing_reimbursement: Редактирование возмещения
     editing_user: Редактирование пользователя
     email: Электронная почта
@@ -1257,7 +1273,7 @@ ru:
         options: Эти опции используются для создания вариантов. Их можно изменить во вкладке варианты
       spree/product:
         available_on: После этой даты продукт станет доступным. Если ничего не установлено продукт не будет отображаться в магазине.
-        promotionable: Указывает может ли этот продукт использоваться в промо. По умолчанию активно.
+        promotionable: Указывает может ли этот продукт использоваться в промо-акциях. По умолчанию активно.
         shipping_category: Указывает набор способов для доставки продукта
         tax_category: Указывает налогообложение применяемое для данного продукта
       spree/promotion:
@@ -1270,6 +1286,7 @@ ru:
       spree/store:
         available_locales: Список языков доступных пользователям для выбора
         cart_tax_country_iso: Если указано, то для заказов без адреса будут использованы настройки этой страны для расчета величины налога
+        code: Идентификатор магазина, требуется разработчикам для организации сайта с несколькими витринами (магазинами)
       spree/tax_rate:
         validity_period: Указывает период в течение которого эта ставка налога актуальна и будет применяться при расчете. Если ничего не указано, то ограничений нет.
       spree/variant:
@@ -1323,8 +1340,7 @@ ru:
     invalidate: Аннулировать
     inventory: Товарная номенклатура
     inventory_adjustment: Корректировки
-    inventory_error_flash_for_insufficient_quantity: Один из товаров вашей корзины
-      стал недоступен.
+    inventory_error_flash_for_insufficient_quantity: Один из товаров вашей корзины стал недоступен.
     inventory_states:
       backordered: Предзаказан
       canceled: Отменен
@@ -1356,6 +1372,7 @@ ru:
     list: Список
     loading: Загружается
     locale_changed: Язык изменён
+    locale_not_changed: Не удалось сменить язык
     location: Местоположение
     lock: Замок
     log_entries: Записи в журнале
@@ -1374,6 +1391,7 @@ ru:
     manage_stock: Управление складом
     manage_variants: Управление вариантами
     master_price: Основная цена
+    master_sku: Основной артикул
     master_variant: Основной вариант
     match_choices:
       all: Все
@@ -1386,6 +1404,8 @@ ru:
     meta_title: Мета-тег заголовок
     metadata: Метаданные
     minimal_amount: Минимальная сумма
+    minimize_menu: Свернуть меню
+    modify_stock_count: Изменить количество товара в наличии
     month: Месяц
     more: Больше
     move_stock_between_locations: Перемещение товаров между складами
@@ -1434,7 +1454,7 @@ ru:
     no_actions_added: Нет действий
     no_images_found: Изображения не найдены
     no_inventory_selected: Инвентарь не выбран
-    no_option_values_on_product_html: У этого продукта нет свойств. Добавьте несколько во вкладке свойства здесь %{link}.
+    no_option_values_on_product_html: У этого продукта нет товарных опций. Добавьте несколько здесь %{link}.
     no_orders_found: Не найдено заказов
     no_payment_found: Не найдено платежей
     no_payment_methods_found: Не найдено платежных методов
@@ -1442,7 +1462,7 @@ ru:
     no_products_found: Не найдено ни одного товара
     no_promotions_found: Акции не найдены
     no_resource: "%{resource} не найдены."
-    no_resource_found: "%{resource} не найдены" # todo remove?
+    no_resource_found: "%{resource} не найдены"
     no_resource_found_html: "%{resource} не найдены, %{add_one_link}!"
     no_resource_found_link: Добавить
     no_results: Ничего не найдено
@@ -1530,10 +1550,10 @@ ru:
       address: Адрес
       awaiting_return: Ожидает возврата
       canceled: Отменён
-      cart: Корзина
-      complete: Завершение
+      cart: В корзине
+      complete: Завершен
       confirm: Подтверждение
-      considered_risky: Риск
+      considered_risky: Рискованный
       delivery: Доставка
       payment: Оплата
       resumed: Возобновлён
@@ -1568,14 +1588,14 @@ ru:
     payment_processor_choose_banner_text: Если Вам нужна помощь в выборе способа оплаты,
       пожалуйста, зайдите на
     payment_processor_choose_link: наша страница оплаты
-    payment_state: Статус платежа
+    payment_state: Состояние платежа
     payment_states:
-      balance_due: задолженность
-      credit_owed: переплата
-      failed: ошибка
-      paid: оплачено
-      void: отменён
-      invalid: недействителен
+      balance_due: Задолжность
+      credit_owed: Переплата
+      failed: Ошибка
+      paid: Оплачено
+      void: Отменена
+      invalid: Недействительна
     payment_updated: Платёж обновлён
     payments: Платежи
     payments_failed_count:
@@ -1590,6 +1610,7 @@ ru:
     phone: Телефон
     place_order: Разместить заказ
     please_define_payment_methods: Сначала определите способ оплаты.
+    please_enter_reasonable_quantity: Установите, пожалуйста, адекватное количество.
     populate_get_error: Что-то пошло не так. Попробуйте добавить товар еще раз.
     powered_by: Работает на
     pre_tax_amount: Сумма до уплаты налогов
@@ -1640,7 +1661,7 @@ ru:
     promotion_rule: Условие
     promotion_successfully_created: Акция была успешно создана
     promotion_uses: Акция использует
-    promotionable: Акционный
+    promotionable: Подходит для акций
     promotions: Промо-акции
     propagate_all_variants: Применить ко всем вариантам
     properties: Свойства
@@ -1768,7 +1789,7 @@ ru:
         track_link: 'Адрес трекинга: %{url}'
     shipment_number: Номер доставки
     shipment_numbers: Номеры доставки
-    shipment_state: Статус отправки
+    shipment_state: Состояние доставки
     shipment_states:
       backorder: предзаказ
       canceled: отменена
@@ -1814,8 +1835,7 @@ ru:
     special_instructions: Дополнительные инструкции
     split: Разделить
     split_failed: Не удалось разделить
-    spree_gateway_error_flash_for_checkout: Возникли проблемы с Вашими реквизитами.
-      Пожалуйста, проверьте их и попробуйте ещё раз.
+    spree_gateway_error_flash_for_checkout: Платежный шлюз не принял введенные платежные данные. Пожалуйста, проверьте их и попробуйте ещё раз.
     ssl:
       change_protocol: Перейдите к использованию HTTP (а не HTTPS) и повторите попытку
     start: Начало
@@ -1957,7 +1977,7 @@ ru:
     try_changing_search_values: Попробуйте изменить поисковый запрос
     type: Тип
     type_to_search: Начните печатать чтобы активировать поиск
-    unable_to_connect_to_gateway: Не удалось подключиться к платёжному шлюзу.
+    unable_to_connect_to_gateway: Не удалось подключиться к платёжному шлюзу
     unable_to_create_reimbursements: Невозможно создать возмещение, потому что есть товары ожидающие ручной обработки
     unable_to_find_all_inventory_units: Невозможно найти все указанные товары
     under_price: Дешевле %{price}
@@ -2004,6 +2024,8 @@ ru:
     variant_to_be_received: Вариант для получения
     variants: Варианты
     version: Версия
+    view_product: Посмотреть в магазине
+    view_promotion_codes_list: Посмотреть список промо-кодов
     void: Отменить
     weight: Вес
     what_is_a_cvv: Что такое CVV?
