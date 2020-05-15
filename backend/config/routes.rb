@@ -166,11 +166,15 @@ Spree::Core::Engine.routes.draw do
     end
 
     resources :users do
+      resource :api_key, controller: 'users/api_key', only: [:create, :destroy]
+
       member do
         get :orders
         get :items
         get :addresses
         put :addresses
+        put :generate_api_key # Deprecated
+        put :clear_api_key # Deprecated
       end
       resources :store_credits, except: [:destroy] do
         member do
