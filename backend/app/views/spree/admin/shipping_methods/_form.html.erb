@@ -54,6 +54,24 @@
       <%= error_message_on :shipping_method, :tracking_url %>
     <% end %>
   </div>
+
+  <div class="col-5 label-block">
+    <%= f.field_container :stock_locations do %>
+      <label>
+        <%= f.check_box(:available_to_all) %>
+        <%= Spree::ShippingMethod.human_attribute_name :available_to_all %>
+        <%= f.field_hint :available_to_all %>
+        <%= error_message_on :shipping_method, :available_to_all %>
+      </label>
+      <%= f.collection_select :stock_location_ids,
+        Spree::StockLocation.order_default, :id, :name,
+        {},
+        class: 'fullwidth select2',
+        multiple: true,
+        placeholder: t('spree.admin.shipping_methods.form.stock_locations_placeholder') %>
+      <%= error_message_on :shipping_method, :stock_locations %>
+    <% end %>
+  </div>
 </div>
 
 <%= f.field_container :available_to_users, class: %w(checkbox) do %>
