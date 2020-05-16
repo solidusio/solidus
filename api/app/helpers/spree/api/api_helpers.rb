@@ -22,6 +22,7 @@ module Spree
         :state_attributes,
         :adjustment_attributes,
         :inventory_unit_attributes,
+        :customer_return_attributes,
         :return_authorization_attributes,
         :creditcard_attributes,
         :payment_source_attributes,
@@ -115,6 +116,10 @@ module Spree
 
       @@inventory_unit_attributes = [
         :id, :state, :variant_id, :shipment_id
+      ]
+
+      @@customer_return_attributes = [
+        :id, :number, :stock_location_id, :created_at, :updated_at
       ]
 
       @@return_authorization_attributes = [
