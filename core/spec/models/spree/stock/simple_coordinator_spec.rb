@@ -129,6 +129,14 @@ module Spree
           it "raises exception" do
             expect{ shipments }.to raise_error(Spree::Order::InsufficientStock)
           end
+
+          it 'raises exception and includes unfulfillable items' do
+            begin
+              expect(shipments).not_to be_empty
+            rescue Spree::Order::InsufficientStock => e
+              expect(e.items.keys.map(&:id)).to contain_exactly(variant.id)
+            end
+          end
         end
 
         context 'with no stock locations' do
