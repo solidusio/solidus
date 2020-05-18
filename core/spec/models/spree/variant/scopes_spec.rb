@@ -52,6 +52,20 @@ RSpec.describe "Variant scopes", type: :model do
     expect(Spree::Variant.descend_by_popularity.first).to eq(variant_1)
   end
 
+  describe ".by_stock_location" do
+    let!(:stock_location_1) { create(:stock_location) }
+    let!(:stock_location_2) { create(:stock_location) }
+
+    it "finds variants by stock location" do
+      variants = Spree::Variant.where(id: [variant_1.id, variant_2.id]) # exclude the master variant
+      variant_1.stock_items.where.not(stock_location_id: stock_location_1.id).delete_all
+      variant_2.stock_items.where.not(stock_location_id: stock_location_2.id).delete_all
+
+      expect(variants.by_stock_location(stock_location_1.id)).to contain_exactly(variant_1)
+      expect(variants.by_stock_location(stock_location_2.id)).to contain_exactly(variant_2)
+    end
+  end
+
   describe ".has_option" do
     let!(:option_type) { create(:option_type, name: "bar") }
     let!(:option_value_1) do
