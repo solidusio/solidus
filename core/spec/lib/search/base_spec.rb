@@ -20,7 +20,7 @@ RSpec.describe Spree::Core::Search::Base do
     expect(searcher.retrieve_products.count).to eq(3)
   end
 
-  context "when include_images is included in the initalization params" do
+  context "when include_images is included in the initialization params" do
     let(:params) { { include_images: true, keyword: @product1.name, taxon: @taxon.id } }
     subject { described_class.new(params).retrieve_products }
 
@@ -33,6 +33,26 @@ RSpec.describe Spree::Core::Search::Base do
     it "returns images in correct order" do
       expect(subject.first).to eq @product1
       expect(subject.first.images).to eq @product1.master.images
+    end
+  end
+
+  context "when ascend_by_master_price scope is included in the initialization params" do
+    let(:params) { { search: { ascend_by_master_price: nil } } }
+
+    subject { described_class.new(params).retrieve_products }
+
+    it "returns products in ascending order" do
+      expect(subject.map { |product| product.price.to_i }).to eq [9, 11, 16]
+    end
+  end
+
+  context "when descend_by_master_price scope is included in the initialization params" do
+    let(:params) { { search: { descend_by_master_price: nil } } }
+
+    subject { described_class.new(params).retrieve_products }
+
+    it "returns products in descending order" do
+      expect(subject.map { |product| product.price.to_i }).to eq [16, 11, 9]
     end
   end
 
