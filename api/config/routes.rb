@@ -1,17 +1,6 @@
 # frozen_string_literal: true
 
 Spree::Core::Engine.routes.draw do
-  namespace :admin do
-    resources :users do
-      resource :api_key, controller: 'users/api_key', only: [:create, :destroy]
-
-      member do
-        put :generate_api_key # Deprecated
-        put :clear_api_key # Deprecated
-      end
-    end
-  end
-
   namespace :api, defaults: { format: 'json' } do
     resources :promotions, only: [:show]
 
@@ -114,6 +103,7 @@ Spree::Core::Engine.routes.draw do
     resources :users do
       resources :credit_cards, only: [:index]
       resource :address_book, only: [:show, :update, :destroy]
+      resource :api_key, controller: 'users/api_key', only: [:create, :destroy]
     end
 
     resources :credit_cards, only: [:update]

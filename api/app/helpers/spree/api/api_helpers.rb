@@ -26,6 +26,7 @@ module Spree
         :creditcard_attributes,
         :payment_source_attributes,
         :user_attributes,
+        :user_api_key_attributes,
         :property_attributes,
         :stock_location_attributes,
         :stock_movement_attributes,
@@ -153,6 +154,8 @@ module Spree
       ]
 
       @@user_attributes = [:id, :email, :created_at, :updated_at]
+
+      @@user_api_key_attributes = [:spree_api_key]
 
       @@property_attributes = [:id, :name, :presentation]
 
