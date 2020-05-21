@@ -357,7 +357,7 @@ RSpec.describe Spree::Product, type: :model do
       it "destroys related associations" do
         create(:variant, product: product)
         product.option_types = [create(:option_type)]
-        product.master.images = [create(:image)]
+        product.master.images_variants.create(image: create(:image))
         product.taxons = [create(:taxon)]
         product.properties = [create(:property)]
 
@@ -474,12 +474,19 @@ RSpec.describe Spree::Product, type: :model do
 
   context "#images" do
     let(:product) { create(:product) }
-    let(:image) { File.open(File.expand_path('../../fixtures/thinking-cat.jpg', __dir__)) }
-    let(:params) { { viewable_id: product.master.id, viewable_type: 'Spree::Variant', attachment: image, alt: "position 2", position: 2 } }
+    let(:image_attachment) { File.open(File.expand_path('../../fixtures/thinking-cat.jpg', __dir__)) }
+    let(:params) { { attachment: image_attachment, alt: "position 2", position: 2 } }
 
     before do
-      Spree::Image.create(params)
-      Spree::Image.create(params.merge({ alt: "position 1", position: 1 }))
+      image2 = create(:image, params)
+      image1 = create(:image, params.merge(alt: 'position 1', position: 1))
+      images_variant2 = Spree::ImagesVariant.create(image: image2)
+      images_variant1 = Spree::ImagesVariant.create(image: image1)
+      image2.update(viewable: images_variant2)
+      image1.update(viewable: images_variant1)
+      images_variant2.update(variants: [product.master])
+      images_variant1.update(variants: [product.master])
+
       Spree::Image.create(params.merge({ viewable_type: 'ThirdParty::Extension', alt: "position 1", position: 2 }))
     end
 

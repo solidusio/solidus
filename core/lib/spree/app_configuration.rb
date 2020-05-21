@@ -435,6 +435,14 @@ module Spree
     # Enumerable of images adhering to the present_image_class interface
     class_name_attribute :variant_gallery_class, default: 'Spree::Gallery::VariantGallery'
 
+    # Allows providing your own module defining Variants and images relationships
+    #
+    # @!attribute [rw] variant_images_definition_module
+    # @return [Module] a module that implements Variant relationship with images,
+    # can be `has_many :images, as: :viewable` by default or use
+    # Spree::Variant::HABTMImagesDefinition for `has_many :images, trought: :images_variants`
+    class_name_attribute :variant_images_definition_module, default: 'Spree::Variant::HabtmImagesDefinition'
+
     # Allows providing your own class for image galleries on Products
     #
     # @!attribute [rw] product_gallery_class

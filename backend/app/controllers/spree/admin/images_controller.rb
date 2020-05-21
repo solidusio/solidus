@@ -6,7 +6,7 @@ module Spree
       before_action :load_data
 
       create.before :set_viewable
-      update.before :set_viewable
+      create.after :update_variant_image
 
       private
 
@@ -27,8 +27,15 @@ module Spree
       end
 
       def set_viewable
-        @image.viewable_type = 'Spree::Variant'
-        @image.viewable_id = params[:image][:viewable_id]
+        variant = @product.variants_including_master.find(params[:image][:viewable_id])
+        @variant_image = variant.images_variants.create
+        @image.viewable_type = 'Spree::ImagesVariant'
+        @image.viewable_id = @variant_image.id
+      end
+
+      def update_variant_image
+        @variant_image.image = @image
+        @variant_image.save
       end
     end
   end

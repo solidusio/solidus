@@ -12,8 +12,8 @@ RSpec.describe Spree::Gallery::ProductGallery do
     let(:second_image) { build(:image) }
 
     before do
-      product.images << first_image
-      product.images << second_image
+      product.master.images_variants.create(image: first_image)
+      product.master.images_variants.create(image: second_image)
     end
   end
 

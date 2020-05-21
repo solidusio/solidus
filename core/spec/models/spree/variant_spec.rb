@@ -664,7 +664,7 @@ RSpec.describe Spree::Variant, type: :model do
 
   describe "#discard" do
     it "discards related associations" do
-      variant.images = [create(:image)]
+      variant.images_variants.create(image: create(:image))
 
       expect(variant.stock_items).not_to be_empty
       expect(variant.prices).not_to be_empty
@@ -835,7 +835,7 @@ RSpec.describe Spree::Variant, type: :model do
       let(:variant) { create(:variant, product: product) }
 
       it "fallbacks to variant.product.master.images" do
-        product.master.images = [create(:image)]
+        product.master.images_variants.create(image: create(:image))
 
         expect(product.master).not_to eq variant
 

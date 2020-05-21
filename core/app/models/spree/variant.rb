@@ -19,10 +19,10 @@ module Spree
     acts_as_list scope: :product
 
     include Spree::SoftDeletable
+    include ::Spree::Config.variant_images_definition_module
 
     after_discard do
       stock_items.discard_all
-      images.destroy_all
       prices.discard_all
       currently_valid_prices.discard_all
     end
@@ -49,8 +49,6 @@ module Spree
 
     has_many :option_values_variants
     has_many :option_values, through: :option_values_variants
-
-    has_many :images, -> { order(:position) }, as: :viewable, dependent: :destroy, class_name: "Spree::Image"
 
     has_many :prices,
       class_name: 'Spree::Price',

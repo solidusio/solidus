@@ -12,8 +12,8 @@ RSpec.describe Spree::Gallery::VariantGallery do
     let(:second_image) { build(:image) }
 
     before do
-      variant.images << first_image
-      variant.images << second_image
+      variant.images_variants.create(image: first_image)
+      variant.images_variants.create(image: second_image)
     end
   end
 

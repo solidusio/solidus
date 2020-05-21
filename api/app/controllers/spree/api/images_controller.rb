@@ -20,7 +20,8 @@ module Spree
       end
 
       def update
-        @image = scope.images.accessible_by(current_ability, :update).find(params[:id])
+        @image = scope.variant_images.accessible_by(current_ability, :update).find(params[:id])
+        @image.viewable.variants = scope.variants_including_master.where(id: params[:variant_ids]).presence || [scope.master]
         @image.update(image_params)
         respond_with(@image, default_template: :show)
       end
