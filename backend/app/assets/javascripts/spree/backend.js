@@ -59,5 +59,6 @@
 //= require spree/backend/taxonomy
 //= require spree/backend/taxons
 //= require spree/backend/user_picker
+//= require spree/backend/user_api_key
 //= require spree/backend/variant_autocomplete
 //= require spree/backend/zone
