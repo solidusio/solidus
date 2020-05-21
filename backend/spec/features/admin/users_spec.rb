@@ -254,47 +254,56 @@ describe 'Users', type: :feature do
       end
     end
 
-    context 'no api key exists' do
-      it 'can generate a new api key' do
-        within("#admin_user_edit_api_key") do
-          expect(user_a.spree_api_key).to be_blank
-          click_button "Generate API key"
+    describe 'api key', js: true do
+      context 'no api key exists' do
+        it 'can generate a new api key' do
+          within("#admin_user_edit_api_key") do
+            expect(user_a.spree_api_key).to be_blank
+            expect(page).to_not have_css('#current-api-key')
+            click_button "Generate API key"
+          end
+
+          sleep(2)
+          expect(user_a.reload.spree_api_key).to be_present
+
+          expect(page).to have_content('Key: (hidden)')
+        end
+      end
+
+      context 'an api key exists' do
+        before do
+          user_a.generate_spree_api_key!
+          expect(user_a.reload.spree_api_key).to be_present
+          visit current_path
         end
 
-        expect(user_a.reload.spree_api_key).to be_present
+        it 'can clear an api key' do
+          expect(page).to have_css('#current-api-key')
 
-        expect(page).to have_content('Key: (hidden)')
-      end
-    end
+          within("#admin_user_edit_api_key") do
+            accept_confirm do
+              click_button "Clear key"
+            end
+          end
 
-    context 'an api key exists' do
-      before do
-        user_a.generate_spree_api_key!
-        expect(user_a.reload.spree_api_key).to be_present
-        visit current_path
-      end
+          expect(page).to have_no_css('#current-api-key')
 
-      it 'can clear an api key' do
-        expect(page).to have_css('#current-api-key')
-
-        click_button "Clear key"
-
-        expect(page).to have_no_css('#current-api-key')
-
-        expect(user_a.reload.spree_api_key).to be_blank
-      end
-
-      it 'can regenerate an api key' do
-        old_key = user_a.spree_api_key
-
-        within("#admin_user_edit_api_key") do
-          click_button "Regenerate key"
+          expect(user_a.reload.spree_api_key).to be_blank
         end
 
-        expect(user_a.reload.spree_api_key).to be_present
-        expect(user_a.reload.spree_api_key).not_to eq old_key
+        it 'can regenerate an api key' do
+          old_key = user_a.spree_api_key
 
-        expect(page).to have_content('Key: (hidden)')
+          accept_confirm do
+            click_button "Regenerate key"
+          end
+
+          sleep(2)
+          expect(user_a.reload.spree_api_key).to be_present
+          expect(user_a.reload.spree_api_key).not_to eq old_key
+
+          expect(page).to have_content('Key: (hidden)')
+        end
       end
     end
   end
