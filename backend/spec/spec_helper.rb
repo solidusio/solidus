@@ -93,7 +93,6 @@ RSpec.configure do |config|
   config.include BaseFeatureHelper, type: :system
 
   config.include FactoryBot::Syntax::Methods
-  config.include ActiveSupport::Testing::Assertions
 
   config.include Spree::TestingSupport::Preferences
   config.include Spree::TestingSupport::UrlHelpers

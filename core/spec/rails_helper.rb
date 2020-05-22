@@ -46,6 +46,5 @@ RSpec.configure do |config|
 
   config.include Spree::TestingSupport::JobHelpers
 
-  config.include ActiveSupport::Testing::Assertions
   config.include FactoryBot::Syntax::Methods
 end

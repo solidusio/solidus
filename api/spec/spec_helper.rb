@@ -63,8 +63,6 @@ RSpec.configure do |config|
     Rails.cache.clear
   end
 
-  config.include ActiveSupport::Testing::Assertions
-
   config.use_transactional_fixtures = true
 
   config.example_status_persistence_file_path = "./spec/examples.txt"
