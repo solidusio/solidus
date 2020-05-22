@@ -119,6 +119,8 @@ RSpec.describe Spree::Event do
       allow(subscriber_name).to receive(:to_s).and_return(subscriber_name)
     end
 
+    after { described_class.subscribers.clear }
+
     it 'accepts the names of constants' do
       Spree::Config.events.subscribers << subscriber_name
 
@@ -131,6 +133,52 @@ RSpec.describe Spree::Event do
       described_class.subscribers << subscriber_name
 
       expect(described_class.subscribers.to_a).to eq([subscriber])
+    end
+  end
+
+  describe '.require_subscriber_files' do
+    let(:susbcribers_dir) { Rails.root.join('app', 'subscribers', 'spree') }
+
+    def create_subscriber_file(constant_name)
+      FileUtils.mkdir_p(susbcribers_dir)
+      File.open File.join(susbcribers_dir, "#{constant_name.underscore}.rb"), 'w' do |f|
+        f.puts "module Spree::#{constant_name}; include Spree::Event::Subscriber; end"
+      end
+    end
+
+    after { FileUtils.rm_rf(susbcribers_dir) }
+
+    context 'when Spree::Config.events.autoload_subscribers is true (default)' do
+      let(:events_config) { double(autoload_subscribers: true, subscribers: Set.new) }
+
+      before { create_subscriber_file('FooSubscriber') }
+
+      it 'requires subscriber files and loads them into Spree::Event.subscribers' do
+        expect do
+          described_class.require_subscriber_files
+        end.to change { described_class.subscribers.count }.by 1
+
+        expect(defined? Spree::FooSubscriber).to be_truthy
+        expect(described_class.subscribers).to include(Spree::FooSubscriber)
+      end
+    end
+
+    context 'when Spree::Config.autoload_subscribers is false' do
+      let(:events_config) { double(autoload_subscribers: false, subscribers: Set.new) }
+
+      before do
+        stub_spree_preferences(events: events_config)
+        create_subscriber_file('BarSubscriber')
+      end
+
+      it 'does not requires subscriber files' do
+        expect do
+          described_class.require_subscriber_files
+        end.not_to change { described_class.subscribers.count }
+
+        expect(defined? Spree::BarSubscriber).to be_falsey
+        expect(described_class.subscribers).to be_empty
+      end
     end
   end
 end

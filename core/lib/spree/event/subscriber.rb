@@ -26,6 +26,8 @@ module Spree
 
         base.mattr_accessor :event_actions
         base.event_actions = {}
+
+        Spree::Event.subscribers << base.name
       end
 
       # Declares a method name in the including module that can be subscribed/unsubscribed
