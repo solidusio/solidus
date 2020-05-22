@@ -589,11 +589,5 @@ module Spree
         country: Spree::Country.find_by(iso: admin_vat_country_iso)
       )
     end
-
-    def active_storage_enabled?
-      @active_storage_enabled ||=
-        Spree::Config.image_attachment_module == Spree::Image::ActiveStorageAttachment ||
-        Spree::Config.taxon_attachment_module == Spree::Taxon::ActiveStorageAttachment
-    end
   end
 end
