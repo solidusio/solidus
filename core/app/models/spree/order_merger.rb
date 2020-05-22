@@ -31,15 +31,16 @@ module Spree
     # will add the quantity of the incoming line item to the existing line item.
     # Otherwise, it will assign the line item to the new order.
     #
-    # After the orders have been merged the `other_order` will be destroyed.
+    # After the orders have been merged the `other_order` will be marked as merged.
     #
     # @example
     #   initial_order = Spree::Order.find(1)
     #   order_to_merge = Spree::Order.find(2)
     #   merger = Spree::OrderMerger.new(initial_order)
     #   merger.merge!(order_to_merge)
-    #   # order_to_merge is destroyed, initial order now contains the line items
-    #   # of order_to_merge
+
+    # order_to_merge is marked as merged, initial order now contains the line
+    # items of order_to_merge
     #
     # @api public
     # @param [Spree::Order] other_order An order which will be merged in to the
@@ -58,9 +59,8 @@ module Spree
       set_user(user)
       persist_merge
 
-      # So that the destroy doesn't take out line items which may have been re-assigned
-      other_order.line_items.reload
-      other_order.destroy
+      other_order.merged_to_order = order
+      other_order.merge && other_order.save!
     end
 
     private

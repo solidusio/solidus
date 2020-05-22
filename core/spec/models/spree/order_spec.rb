@@ -334,14 +334,40 @@ RSpec.describe Spree::Order, type: :model do
     end
   end
 
+  context "when changing order state to 'merged'" do
+    it "requires the merged_to_order association to be present" do
+      expect(subject.merge).to be false
+      expect(subject.errors[:base]).to be_present
+    end
+  end
+
+  context "when the order is in 'merged' state" do
+    before { subject.update(state: :merged) }
+
+    it "cannot transition to other states" do
+      %w[cancel return resume complete authorize_return].each do |transition|
+        expect do
+          subject.send("#{transition}!")
+        end.to raise_error StateMachines::InvalidTransition
+      end
+    end
+  end
+
   describe '#merge!' do
     let(:order1) { create(:order_with_line_items) }
     let(:order2) { create(:order_with_line_items) }
 
+    subject { order1.merge!(order2) }
+
     it 'merges the orders' do
-      order1.merge!(order2)
+      subject
       expect(order1.line_items.count).to eq(2)
-      expect(order2.destroyed?).to be_truthy
+      expect(order2).to be_merged
+    end
+
+    it 'sets both orders "merge" associations' do
+      expect { subject }.to change { order2.merged_to_order }.to(order1)
+        .and change { order1.reload.from_merged_orders }.to([order2])
     end
 
     describe 'order_merger_class customization' do

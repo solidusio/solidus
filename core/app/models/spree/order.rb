@@ -62,6 +62,9 @@ module Spree
     deprecate temporary_credit_card: :temporary_payment_source, deprecator: Spree::Deprecation
     deprecate :temporary_credit_card= => :temporary_payment_source=, deprecator: Spree::Deprecation
 
+    has_many :from_merged_orders, foreign_key: :merged_to_order_id, class_name: 'Spree::Order', inverse_of: :merged_to_order
+    belongs_to :merged_to_order, foreign_key: :merged_to_order_id, class_name: 'Spree::Order', inverse_of: :from_merged_orders, optional: true
+
     # Customer info
     belongs_to :user, class_name: Spree::UserClassHandle.new, optional: true
     belongs_to :bill_address, foreign_key: :bill_address_id, class_name: 'Spree::Address', optional: true
@@ -185,6 +188,14 @@ module Spree
 
     def self.not_canceled
       where.not(state: 'canceled')
+    end
+
+    def self.merged
+      where(state: 'merged')
+    end
+
+    def self.not_merged
+      where.not(state: 'merged')
     end
 
     # Use this method in other gems that wish to register their own custom logic
@@ -869,7 +880,7 @@ module Spree
 
     # Determine if email is required (we don't want validation errors before we hit the checkout)
     def require_email
-      true unless new_record? || ['cart', 'address'].include?(state)
+      true unless new_record? || ['cart', 'address', 'merged'].include?(state)
     end
 
     def ensure_inventory_units
@@ -896,6 +907,12 @@ module Spree
     def validate_line_item_availability
       availability_validator = Spree::Stock::AvailabilityValidator.new
       raise InsufficientStock unless line_items.all? { |line_item| availability_validator.validate(line_item) }
+    end
+
+    def ensure_merged_to_order_present
+      if merged_to_order.blank?
+        errors.add(:base, :merged_to_order_must_be_present) && (return false)
+      end
     end
 
     def ensure_line_items_present

@@ -472,6 +472,12 @@ en:
             price:
               not_a_number: is not valid
               does_not_match_order_currency: Line item price currency must match order currency!
+        spree/order:
+          attributes:
+            base:
+              cannot_transition_from_merged: Cannot transition from merged
+              merged_to_order_must_be_present: The order must be associated with
+                the order that is merged into via the `merged_to_order` association
         spree/price:
           attributes:
             currency:
@@ -1725,6 +1731,7 @@ en:
       complete: Complete
       confirm: Confirm
       delivery: Delivery
+      merged: Merged
       payment: Payment
       resumed: Resumed
       returned: Returned
