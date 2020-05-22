@@ -171,7 +171,7 @@ module Spree
     end
 
     def mark_default_bill_address(address)
-      user_addresses.mark_default(user_addresses.find_by(address: address), :billing)
+      user_addresses.mark_default(user_addresses.find_by(address: address), address_type: :billing)
     end
 
     def remove_from_address_book(address_id)
