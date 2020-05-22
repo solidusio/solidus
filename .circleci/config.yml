@@ -137,7 +137,7 @@ workflows:
       - persist_version:
           filters:
             branches:
-              only: /master|v\d\.\d/
+              only: /master|v\d\.\d+/
       - postgres
       - mysql
       - postgres_rails52
