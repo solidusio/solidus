@@ -10,57 +10,87 @@ module Spree
           detect { |ua| ua.address == Spree::Address.new(address_attrs) }
         end
 
-        # @note this method enforces only one default address per user
-        def mark_default(user_address)
-          # the checks of persisted? allow us to build a User and associate Addresses at once
+        def mark_default(user_address, address_type: :shipping)
+          column_for_default = address_type == :shipping ? :default : :default_billing
           ActiveRecord::Base.transaction do
-            (self - [user_address]).each do |ua| # update_all would be nice, but it bypasses ActiveRecord callbacks
-              ua.persisted? ? ua.update!(default: false) : ua.default = false
+            (self - [user_address]).each do |address| # update_all would be nice, but it bypasses ActiveRecord callbacks
+              if address.persisted?
+                address.update!(column_for_default => false)
+              else
+                address.write_attribute(column_for_default, false)
+              end
             end
-            user_address.persisted? ? user_address.update!(default: true, archived: false) : user_address.default = true
+
+            if user_address.persisted?
+              user_address.update!(column_for_default => true, archived: false)
+            else
+              user_address.write_attribute(column_for_default, true)
+            end
           end
         end
       end
 
       has_many :addresses, through: :user_addresses
 
-      # bill_address is only minimally used now, but we can't get rid of it without a major version release
-      belongs_to :bill_address, class_name: 'Spree::Address', optional: true
+      has_one :default_user_bill_address, ->{ default_billing }, class_name: 'Spree::UserAddress', foreign_key: 'user_id'
+      has_one :bill_address, through: :default_user_bill_address, source: :address
 
-      has_one :default_user_address, ->{ default }, class_name: 'Spree::UserAddress', foreign_key: 'user_id'
-      has_one :default_address, through: :default_user_address, source: :address
-      alias_method :ship_address, :default_address
+      has_one :default_user_ship_address, ->{ default_shipping }, class_name: 'Spree::UserAddress', foreign_key: 'user_id'
+      has_one :ship_address, through: :default_user_ship_address, source: :address
     end
 
-    def bill_address=(address)
-      # stow a copy in our address book too
-      address = save_in_address_book(address.attributes) if address
-      super(address)
+    def default_address
+      Spree::Deprecation.warn "#default_address is deprecated. Please start using #ship_address."
+      ship_address
     end
 
-    def bill_address_attributes=(attributes)
-      self.bill_address = Spree::Address.immutable_merge(bill_address, attributes)
+    def default_user_address
+      Spree::Deprecation.warn "#default_user_address is deprecated. Please start using #default_user_ship_address."
+      default_user_ship_address
     end
 
     def default_address=(address)
-      save_in_address_book(address.attributes, true) if address
+      Spree::Deprecation.warn(
+        "#default_address= does not take Spree::Config.automatic_default_address into account and is deprecated. " \
+        "Please use #ship_address=."
+      )
+
+      self.ship_address = address if address
     end
 
     def default_address_attributes=(attributes)
       # see "Nested Attributes Examples" section of http://apidock.com/rails/ActionView/Helpers/FormHelper/fields_for
       # this #{fieldname}_attributes= method works with fields_for in the views
       # even without declaring accepts_nested_attributes_for
-      self.default_address = Spree::Address.immutable_merge(default_address, attributes)
-    end
+      Spree::Deprecation.warn "#default_address_attributes= is deprecated. Please use #ship_address_attributes=."
 
-    alias_method :ship_address_attributes=, :default_address_attributes=
+      self.default_address = Spree::Address.immutable_merge(ship_address, attributes)
+    end
 
     # saves address in address book
     # sets address to the default if automatic_default_address is set to true
     # if address is nil, does nothing and returns nil
     def ship_address=(address)
-      be_default = Spree::Config.automatic_default_address
-      save_in_address_book(address.attributes, be_default) if address
+      if address
+        save_in_address_book(address.attributes,
+                             Spree::Config.automatic_default_address)
+      end
+    end
+
+    def ship_address_attributes=(attributes)
+      self.ship_address = Spree::Address.immutable_merge(ship_address, attributes)
+    end
+
+    def bill_address=(address)
+      if address
+        save_in_address_book(address.attributes,
+                             Spree::Config.automatic_default_address,
+                             :billing)
+      end
+    end
+
+    def bill_address_attributes=(attributes)
+      self.bill_address = Spree::Address.immutable_merge(bill_address, attributes)
     end
 
     # saves order.ship_address and order.bill_address in address book
@@ -73,15 +103,16 @@ module Spree
           order.ship_address.attributes,
           Spree::Config.automatic_default_address
         )
-        self.ship_address_id = address.id if address && address.persisted?
+        self.ship_address_id = address.id if address&.persisted?
       end
 
       if order.bill_address
         address = save_in_address_book(
           order.bill_address.attributes,
-          order.ship_address.nil? && Spree::Config.automatic_default_address
+          Spree::Config.automatic_default_address,
+          :billing
         )
-        self.bill_address_id = address.id if address && address.persisted?
+        self.bill_address_id = address.id if address&.persisted?
       end
 
       save! # In case the ship_address_id or bill_address_id was set
@@ -92,8 +123,9 @@ module Spree
     # treated as value equality to de-dup among existing Addresses
     # @param default set whether or not this address will show up from
     # #default_address or not
-    def save_in_address_book(address_attributes, default = false)
-      return nil unless address_attributes.present?
+    def save_in_address_book(address_attributes, default = false, address_type = :shipping)
+      return nil if address_attributes.blank?
+
       address_attributes = address_attributes.to_h.with_indifferent_access
 
       new_address = Spree::Address.factory(address_attributes)
@@ -106,7 +138,7 @@ module Spree
       end
 
       user_address = prepare_user_address(new_address)
-      user_addresses.mark_default(user_address) if default || first_one
+      user_addresses.mark_default(user_address, address_type: address_type) if default || first_one
 
       if persisted?
         user_address.save!
@@ -116,15 +148,30 @@ module Spree
         # user_addresses need to be reset to get the new ordering based on any changes
         # {default_,}user_address needs to be reset as its result is likely to have changed.
         user_addresses.reset
-        association(:default_user_address).reset
-        association(:default_address).reset
+        association(:default_user_ship_address).reset
+        association(:ship_address).reset
+        association(:default_user_bill_address).reset
+        association(:bill_address).reset
       end
 
       user_address.address
     end
 
     def mark_default_address(address)
+      Spree::Deprecation.warn(
+        "#mark_default_address is deprecated and it sets the ship_address only. " \
+        "Please use #mark_default_ship_address."
+      )
+
+      mark_default_ship_address(address)
+    end
+
+    def mark_default_ship_address(address)
       user_addresses.mark_default(user_addresses.find_by(address: address))
+    end
+
+    def mark_default_bill_address(address)
+      user_addresses.mark_default(user_addresses.find_by(address: address), :billing)
     end
 
     def remove_from_address_book(address_id)

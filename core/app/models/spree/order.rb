@@ -753,8 +753,8 @@ module Spree
     # @note This doesn't persist the change bill_address or ship_address
     def assign_default_user_addresses
       if user
-        bill_address = (user.bill_address || user.default_address)
-        ship_address = (user.ship_address || user.default_address)
+        bill_address = user.bill_address
+        ship_address = user.ship_address
         # this is one of 2 places still using User#bill_address
         self.bill_address ||= bill_address if bill_address.try!(:valid?)
         # Skip setting ship address if order doesn't have a delivery checkout step
