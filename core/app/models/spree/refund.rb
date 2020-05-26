@@ -14,6 +14,11 @@ module Spree
 
     validate :amount_is_less_than_or_equal_to_allowed_amount, on: :create
 
+    attr_accessor :perform_after_create
+    after_create :set_perform_after_create_default
+    after_create :perform!
+    after_create :clear_perform_after_create
+
     scope :non_reimbursement, -> { where(reimbursement_id: nil) }
 
     delegate :currency, to: :payment
@@ -38,6 +43,7 @@ module Spree
     # Attempts to perform the refund,
     # raises an error if the refund fails.
     def perform!
+      return true if perform_after_create == false
       return true if transaction_id.present?
 
       credit_cents = money.cents
@@ -50,6 +56,38 @@ module Spree
     end
 
     private
+
+    # This callback takes care of setting the behavior that determines if it is needed
+    # to execute the perform! callback after_create.
+    # Existing code that creates refund without explicitely passing
+    #
+    # perform_after_create: false
+    #
+    # as attribute will still call perform! but a deprecation warning is emitted in order
+    # to ask users to change their code with the new supported behavior.
+    def set_perform_after_create_default
+      return true if perform_after_create == false
+
+      Spree::Deprecation.warn <<-WARN.strip_heredoc, caller
+        From Solidus v3.0 onwards, #perform! will need to be explicitly called when creating new
+        refunds. Please, change your code from:
+
+          Spree::Refund.create(your: attributes)
+
+        to:
+
+          Spree::Refund.create(your: attributes, perform_after_create: false).perform!
+      WARN
+
+      self.perform_after_create = true
+    end
+
+    # This is needed to avoid that when you create a refund with perform_after_create = false,
+    # it's not possibile to call perform! on that instance, since the value of this attribute
+    # will remain false until a reload of the instance.
+    def clear_perform_after_create
+      @perform_after_create = nil
+    end
 
     # return an activemerchant response object if successful or else raise an error
     def process!(credit_cents)

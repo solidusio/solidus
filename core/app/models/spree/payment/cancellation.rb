@@ -31,7 +31,7 @@ module Spree
           if response = payment.payment_method.try_void(payment)
             payment.send(:handle_void_response, response)
           else
-            payment.refunds.create!(amount: payment.credit_allowed, reason: refund_reason).perform!
+            payment.refunds.create!(amount: payment.credit_allowed, reason: refund_reason, perform_after_create: false).perform!
           end
         else
           # For payment methods not yet implemeting `try_void`
