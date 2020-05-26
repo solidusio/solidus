@@ -229,7 +229,7 @@ module Spree
     end
 
     def shipping_discount
-      shipment_adjustments.eligible.sum(:amount) * - 1
+      shipment_adjustments.credit.eligible.sum(:amount) * - 1
     end
 
     def to_param
