@@ -11,7 +11,7 @@ var ShipShipmentView = Backbone.View.extend({
   onSubmit: function(e){
     Spree.ajax({
       type: "PUT",
-      url: Spree.routes.shipments_api + "/" + this.shipment_number + "/ship",
+      url: Spree.pathFor('api/shipments/' + this.shipment_number + '/ship'),
       data: {
         send_mailer: this.$("[name='send_mailer']").is(":checked")
       },
@@ -27,7 +27,7 @@ adjustShipmentItems = function(shipment_number, variant_id, quantity){
   var shipment = _.findWhere(shipments, {number: shipment_number});
   var inventory_units = _.where(shipment.inventory_units, {variant_id: variant_id});
 
-  var url = Spree.routes.shipments_api + "/" + shipment_number;
+  var url = Spree.pathFor('api/shipments/' + shipment_number);
 
   var new_quantity = 0;
   if(inventory_units.length<quantity){
@@ -106,7 +106,7 @@ var ShipmentSplitItemView = Backbone.View.extend({
       split_attr.stock_location_id = target_id;
       jqXHR = Spree.ajax({
         type: "POST",
-        url: Spree.routes.shipments_api + "/transfer_to_location",
+        url: Spree.pathFor('api/shipments/transfer_to_location'),
         data: split_attr
       });
     } else if (target_type == 'shipment') {
@@ -114,7 +114,7 @@ var ShipmentSplitItemView = Backbone.View.extend({
       split_attr.target_shipment_number = target_id;
       jqXHR = Spree.ajax({
         type: "POST",
-        url: Spree.routes.shipments_api + "/transfer_to_shipment",
+        url: Spree.pathFor('api/shipments/transfer_to_shipment'),
         data: split_attr
       });
     } else {
@@ -179,7 +179,7 @@ var ShipmentItemView = Backbone.View.extend({
     var _this = this;
     Spree.ajax({
       type: "GET",
-      url: Spree.routes.variants_api + "/" + this.variant_id,
+      url: Spree.pathFor('api/variants/' + this.variant_id),
     }).success(function(variant){
       var split = new ShipmentSplitItemView({
         shipmentItemView: _this,

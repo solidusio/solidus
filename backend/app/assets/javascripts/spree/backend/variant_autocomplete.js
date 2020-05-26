@@ -16,12 +16,12 @@
       minimumInputLength: 3,
       initSelection: function(element, callback) {
         Spree.ajax({
-          url: Spree.routes.variants_api + "/" + element.val(),
+          url: Spree.pathFor('api/variants/' + element.val()),
           success: callback
         });
       },
       ajax: {
-        url: Spree.routes.variants_api,
+        url: Spree.pathFor('api/variants'),
         datatype: "json",
         quietMillis: 500,
         params: {

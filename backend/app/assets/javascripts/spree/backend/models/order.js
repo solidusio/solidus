@@ -4,7 +4,7 @@
 //= require spree/backend/models/address
 
 Spree.Models.Order = Backbone.Model.extend({
-  urlRoot: Spree.routes.orders_api,
+  urlRoot: Spree.pathFor('api/orders'),
   idAttribute: "number",
 
   relations: {
@@ -16,7 +16,7 @@ Spree.Models.Order = Backbone.Model.extend({
 
   advance: function(opts) {
     var options = {
-      url: Spree.routes.checkouts_api + "/" + this.id + "/advance",
+      url: Spree.pathFor('api/checkouts/' + this.id + '/advance'),
       type: 'PUT',
     };
     _.extend(options, opts);
@@ -25,7 +25,7 @@ Spree.Models.Order = Backbone.Model.extend({
 
   empty: function (opts) {
     var options = {
-      url: Spree.routes.orders_api + "/" + this.id + "/empty",
+      url: Spree.pathFor('api/orders/' + this.id + '/empty'),
       type: 'PUT',
     };
     _.extend(options, opts);

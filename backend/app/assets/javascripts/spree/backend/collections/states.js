@@ -4,7 +4,7 @@ Spree.Collections.States = Backbone.Collection.extend({
   },
 
   url: function () {
-    return Spree.routes.states_search + "?country_id=" + this.country_id
+    return Spree.pathFor('api/states?country_id=' + this.country_id)
   },
 
   parse: function(resp, options) {

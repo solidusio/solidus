@@ -9,7 +9,7 @@ Spree.ready(function() {
   var saveSort = function(e) {
     var item = e.item;
     Spree.ajax({
-      url: Spree.routes.classifications_api,
+      url: Spree.pathFor('api/classifications'),
       method: 'PUT',
       data: {
         product_id: item.getAttribute('data-product-id'),
@@ -27,7 +27,7 @@ Spree.ready(function() {
     dropdownCssClass: "taxon_select_box",
     placeholder: Spree.translations.find_a_taxon,
     ajax: {
-      url: Spree.routes.taxons_search,
+      url: Spree.pathFor('api/taxons'),
       params: {
         "headers": {
           'Authorization': 'Bearer ' + Spree.api_key
@@ -55,7 +55,7 @@ Spree.ready(function() {
 
   $('#taxon_id').on("change", function(e) {
     Spree.ajax({
-      url: Spree.routes.taxon_products_api,
+      url: Spree.pathFor('api/taxons/products'),
       data: {
         id: e.val,
         simple: 1
