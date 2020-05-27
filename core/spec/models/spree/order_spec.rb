@@ -1720,4 +1720,19 @@ RSpec.describe Spree::Order, type: :model do
       end.to change { subject.shipments.count }.by 1
     end
   end
+
+  describe '#shipping_discount' do
+    let(:shipment) { create(:shipment) }
+    let(:order) { shipment.order }
+
+    let!(:charge_shipment_adjustment) { create :adjustment, adjustable: shipment, amount: 20 }
+    let!(:shipment_adjustment) { create :adjustment, adjustable: shipment, amount: -10 }
+    let!(:other_shipment_adjustment) { create :adjustment, adjustable: shipment, amount: -30 }
+
+    subject { order.shipping_discount }
+
+    it 'sums eligible shipping adjustments with negative amount (credit)' do
+      expect(subject).to eq 40
+    end
+  end
 end
