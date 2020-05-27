@@ -159,6 +159,11 @@ module Spree
       payment_method.try!(:store_credit?)
     end
 
+    # @return [String] the (computed) redirection url for offsite payment. returning nil for onsite payment methods
+    def redirect_url
+      payment_method&.redirect_url(self)
+    end
+
     private
 
     def source_actions

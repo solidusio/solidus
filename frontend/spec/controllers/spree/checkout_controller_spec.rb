@@ -458,6 +458,20 @@ describe Spree::CheckoutController, type: :controller do
         end
       end
     end
+
+    context "Using a payment method with a redirect url" do
+      let!(:payment_method) { create(:check_payment_method) }
+      before do
+        allow_any_instance_of(Spree::PaymentMethod).to receive_messages redirect_url: "http://example.com"
+        allow(controller).to receive_messages current_order: order
+        order.update! user: user
+      end
+
+      it "redirects to the payment method site" do
+        patch :update, params: { state: "payment", order: { payments_attributes: [payment_method_id: payment_method.id] } }
+        expect(response).to redirect_to("http://example.com")
+      end
+    end
   end
 
   context "When last inventory item has been purchased" do

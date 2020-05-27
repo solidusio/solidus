@@ -265,6 +265,11 @@ module Spree
       is_a? Spree::PaymentMethod::StoreCredit
     end
 
+    # provides hook for redirecting to offsite payment method.
+    def redirect_url(_payment)
+      nil
+    end
+
     protected
 
     # Represents the gateway class of this payment method

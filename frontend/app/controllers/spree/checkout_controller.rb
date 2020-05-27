@@ -31,6 +31,7 @@ module Spree
       if update_order
 
         assign_temp_address
+        return if follow_payment_redirect
 
         unless transition_forward
           redirect_on_failure
@@ -280,6 +281,16 @@ module Spree
       try_spree_current_user.wallet.wallet_payment_sources
         .map(&:payment_source)
         .select { |ps| ps.is_a?(Spree::CreditCard) }
+    end
+
+    def follow_payment_redirect
+      return unless params[:state] == "payment"
+
+      payment = @order.payments.valid.last
+      if redirect_url = payment.try(:redirect_url)
+        redirect_to redirect_url
+        true
+      end
     end
   end
 end

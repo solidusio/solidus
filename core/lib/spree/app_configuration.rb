@@ -462,6 +462,15 @@ module Spree
     # Enumerable of taxons adhering to the present_taxon_class interface
     class_name_attribute :taxon_attachment_module, default: 'Spree::Taxon::PaperclipAttachment'
 
+    # Handler for handling the confirm callback for payment gateways
+    # `Spree::PaymentGatewayConfirmHandler`
+    # is the default.
+    #
+    # @!attribute[rw] params
+    # @return
+    class_name_attribute :payment_gateway_confirm_handler_class, default: 'Spree::PaymentGatewayConfirmHandler'
+    class_name_attribute :payment_gateway_cancel_handler_class, default: 'Spree::PaymentGatewayCancelHandler'
+
     # Allows providing your own class instance for generating order numbers.
     #
     # @!attribute [rw] order_number_generator

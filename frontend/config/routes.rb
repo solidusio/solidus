@@ -21,6 +21,9 @@ Spree::Core::Engine.routes.draw do
     resources :coupon_codes, only: :create
   end
 
+  post '/payment/confirm', controller: 'payment_gateway_callback#confirm', as: :confirm_payment_callback
+  get '/payment/cancel', controller: 'payment_gateway_callback#cancel', as: :cancel_payment_callback
+
   get '/cart', to: 'orders#edit', as: :cart
   patch '/cart', to: 'orders#update', as: :update_cart
   put '/cart/empty', to: 'orders#empty', as: :empty_cart
