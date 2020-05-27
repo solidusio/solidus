@@ -584,36 +584,21 @@ module Spree
     end
 
     describe "#mark_default_ship_address" do
-      let(:address) { build :address }
-      let(:user_address) { double }
-      let(:user_addresses) { double }
+      let(:user_address) { user.user_addresses.create(address: build(:address), default: false) }
 
-      before do
-        allow(user).to receive(:user_addresses).and_return user_addresses
-        allow(user_addresses).to receive(:find_by).and_return user_address
-      end
-
-      it "calls #mark_default with default address kind" do
-        expect(user_addresses).to receive(:mark_default).with(user_address)
-
-        user.mark_default_ship_address(address)
+      it "marks address specified as default shipping" do
+        user.mark_default_ship_address(user_address.address)
+        expect(user_address.reload.default).to be_truthy
       end
     end
 
     describe "#mark_default_bill_address" do
-      let(:address) { build :address }
-      let(:user_address) { double }
-      let(:user_addresses) { double }
+      let(:user) { create(:user_with_addresses) }
+      let(:user_address) { user.user_addresses.find_by(default_billing: false) }
 
-      before do
-        allow(user).to receive(:user_addresses).and_return user_addresses
-        allow(user_addresses).to receive(:find_by).and_return user_address
-      end
-
-      it "calls #mark_default with billing address kind" do
-        expect(user_addresses).to receive(:mark_default).with(user_address, :billing)
-
-        user.mark_default_bill_address(address)
+      it "marks address specified as default billing" do
+        user.mark_default_bill_address(user_address.address)
+        expect(user_address.reload.default_billing).to be_truthy
       end
     end
   end
