@@ -574,10 +574,26 @@ module Spree
     context "with invalid associated objects" do
       let(:order) { Spree::Order.create(ship_address: Spree::Address.new) }
 
-      subject { updater.update }
+      before do
+        stub_spree_preferences(run_order_validations_on_order_updater: run_order_validations_on_order_updater)
+      end
 
-      it "raises because of the invalid object" do
-        expect { subject }.to raise_exception(ActiveRecord::RecordInvalid)
+      context "when run_order_validations_on_order_updater is true" do
+        let(:run_order_validations_on_order_updater) { true }
+        subject { updater.update }
+
+        it "raises because of the invalid object" do
+          expect { subject }.to raise_error(ActiveRecord::RecordInvalid)
+        end
+      end
+
+      context "when run_order_validations_on_order_updater is false" do
+        let(:run_order_validations_on_order_updater) { false }
+        subject { updater.update }
+
+        it "does not raise because of the invalid object" do
+          expect { subject }.not_to raise_error
+        end
       end
     end
   end

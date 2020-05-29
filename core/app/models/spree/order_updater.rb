@@ -186,7 +186,7 @@ module Spree
     end
 
     def persist_totals
-      order.save!
+      order.save!(validate: Spree::Config[:run_order_validations_on_order_updater])
     end
 
     def log_state_change(name)

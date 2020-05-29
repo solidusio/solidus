@@ -231,6 +231,10 @@ module Spree
     #   (default: +['admin']+)
     preference :roles_for_auto_api_key, :array, default: ['admin']
 
+    # @!attribute [rw] run_order_validations_on_order_updater
+    #   @return [Boolean] Whether to run validation when updating an order with the OrderUpdater
+    preference :run_order_validations_on_order_updater, :boolean, default: false
+
     # @!attribute [rw] send_core_emails
     #   @return [Boolean] Whether to send transactional emails (default: true)
     preference :send_core_emails, :boolean, default: true
