@@ -127,7 +127,7 @@ RSpec.describe Spree::Order, type: :model do
       let(:payment) { create(:payment, order: order, amount: payment_amount, state: 'completed') }
 
       before do
-        create(:refund, payment: payment, amount: payment_amount)
+        create(:refund, payment: payment, amount: payment_amount).perform!
       end
 
       it "cancels the order" do
@@ -281,7 +281,7 @@ RSpec.describe Spree::Order, type: :model do
       order.cancellations.short_ship([order.inventory_units.first])
       expect(order.outstanding_balance).to be_negative
       expect(order.payment_state).to eq('credit_owed')
-      create(:refund, amount: order.outstanding_balance.abs, payment: payment, transaction_id: nil)
+      create(:refund, amount: order.outstanding_balance.abs, payment: payment, transaction_id: nil).perform!
       order.reload
       expect(order.outstanding_balance).to eq(0)
       expect(order.payment_state).to eq('paid')

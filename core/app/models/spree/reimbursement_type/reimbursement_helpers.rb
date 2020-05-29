@@ -34,10 +34,17 @@ module Spree
       refund = reimbursement.refunds.build({
         payment: payment,
         amount: amount,
-        reason: Spree::RefundReason.return_processing_reason
+        reason: Spree::RefundReason.return_processing_reason,
+        perform_after_create: false
       })
 
-      simulate ? refund.readonly! : refund.save!
+      if simulate
+        refund.readonly!
+      else
+        refund.save!
+        refund.perform!
+      end
+
       refund
     end
 
