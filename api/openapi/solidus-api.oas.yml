@@ -5976,6 +5976,8 @@ components:
           type: integer
         mail_from_address:
           type: string
+        bcc_email:
+          type: string
         meta_description:
           type: string
         meta_keywords:
@@ -6498,6 +6500,8 @@ components:
         default_currency:
           type: string
         mail_from_address:
+          type: string
+        bcc_email:
           type: string
         cart_tax_country_iso:
           type: string

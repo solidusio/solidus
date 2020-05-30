@@ -175,7 +175,8 @@ module Spree
 
       @@store_attributes = [
         :id, :name, :url, :meta_description, :meta_keywords, :seo_title,
-        :mail_from_address, :default_currency, :code, :default, :available_locales
+        :mail_from_address, :default_currency, :code, :default, :available_locales,
+        :bcc_email
       ]
 
       @@store_credit_history_attributes = [
