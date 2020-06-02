@@ -70,5 +70,5 @@ locations within the hierarchy of the item. This logic is handled by the
 `awesome_nested_set` gem. See [the gem's documentation][awesome-nested-set]
 for more information about these fields.
 
-[awesome-nested-set-usage]: https://github.com/collectiveidea/awesome_nested_set
+[awesome-nested-set]: https://github.com/collectiveidea/awesome_nested_set
 [nested-set-model]: http://en.wikipedia.org/wiki/Nested_set_model
