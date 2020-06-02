@@ -359,6 +359,7 @@ en:
         default: Default
         default_currency: Default Currency
         mail_from_address: Mail From Address
+        bcc_email: BCC Email
         meta_description: Meta Description
         meta_keywords: Meta Keywords
         name: Site Name

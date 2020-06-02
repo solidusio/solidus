@@ -6,6 +6,10 @@ module Spree
       store.mail_from_address
     end
 
+    def bcc_address(store)
+      store.bcc_email
+    end
+
     def money(amount, currency = Spree::Config[:currency])
       Spree::Money.new(amount, currency: currency).to_s
     end

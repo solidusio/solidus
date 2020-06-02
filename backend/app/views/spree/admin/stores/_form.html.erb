@@ -44,6 +44,12 @@
       <%= f.error_message_on :mail_from_address %>
     <% end %>
 
+    <%= f.field_container :bcc_email do %>
+      <%= f.label :bcc_email %>
+      <%= f.text_field :bcc_email, class: 'fullwidth' %>
+      <%= f.error_message_on :bcc_email %>
+    <% end %>
+
     <%= f.field_container :default_currency do %>
       <%= f.label :default_currency %>
       <%= f.select :default_currency,
