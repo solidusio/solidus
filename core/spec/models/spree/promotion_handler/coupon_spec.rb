@@ -169,7 +169,7 @@ module Spree
           end
 
           context "applied alongside another valid promotion " do
-            let!(:order) { Order.create }
+            let!(:order) { create(:order) }
 
             before do
               order.coupon_code = "10off"

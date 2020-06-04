@@ -34,6 +34,12 @@ Spree.config do |config|
   # See https://github.com/solidusio/solidus/pull/3456 for more info.
   config.raise_with_invalid_currency = false
 
+  # Set this configuration to `false` to avoid running validations when
+  # updating an order. Be careful since you can end up having inconsistent
+  # data in your database turning it on.
+  # See https://github.com/solidusio/solidus/pull/3645 for more info.
+  config.run_order_validations_on_order_updater = true
+
   # Permission Sets:
 
   # Uncomment and customize the following line to add custom permission sets

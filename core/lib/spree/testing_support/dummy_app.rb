@@ -117,6 +117,7 @@ Spree.user_class = 'Spree::LegacyUser'
 Spree.config do |config|
   config.mails_from = "store@example.com"
   config.raise_with_invalid_currency = false
+  config.run_order_validations_on_order_updater = true
   config.use_combined_first_and_last_name_in_address = true
 
   if ENV['ENABLE_ACTIVE_STORAGE']

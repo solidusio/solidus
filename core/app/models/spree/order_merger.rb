@@ -56,11 +56,13 @@ module Spree
       end
 
       set_user(user)
-      persist_merge
+      if order.valid?
+        persist_merge
 
-      # So that the destroy doesn't take out line items which may have been re-assigned
-      other_order.line_items.reload
-      other_order.destroy
+        # So that the destroy doesn't take out line items which may have been re-assigned
+        other_order.line_items.reload
+        other_order.destroy
+      end
     end
 
     private

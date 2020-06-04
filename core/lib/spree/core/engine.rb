@@ -64,6 +64,15 @@ module Spree
             caller
           )
         end
+
+        if Spree::Config.run_order_validations_on_order_updater != true
+          Spree::Deprecation.warn(
+            'Spree::Config.run_order_validations_on_order_updater set to false is ' \
+            'deprecated and will not be possibile in Solidus 3.0. Please switch this ' \
+            'value to true and check that everything works as expected.',
+            caller
+          )
+        end
       end
 
       # Load in mailer previews for apps to use in development.
