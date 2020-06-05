@@ -57,11 +57,11 @@ module Spree
               end
 
               event :cancel do
-                transition to: :canceled, if: :allow_cancel?
+                transition to: :canceled, if: :allow_cancel?, from: :complete
               end
 
               event :return do
-                transition to: :returned, from: [:returned, :complete, :awaiting_return, :canceled], if: :all_inventory_units_returned?
+                transition to: :returned, from: [:complete, :awaiting_return], if: :all_inventory_units_returned?
               end
 
               event :resume do
@@ -69,7 +69,7 @@ module Spree
               end
 
               event :authorize_return do
-                transition to: :awaiting_return
+                transition to: :awaiting_return, from: :complete
               end
 
               event :complete do
