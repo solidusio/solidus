@@ -56,7 +56,9 @@ module Spree
           shipments_hash.each do |target|
             shipment = Shipment.new
             shipment.tracking       = target[:tracking]
-            shipment.stock_location = Spree::StockLocation.find_by(admin_name: target[:stock_location]) || Spree::StockLocation.find_by!(name: target[:stock_location])
+            shipment.stock_location = Spree::StockLocation.find_by(id: target[:stock_location_id]) ||
+            Spree::StockLocation.find_by(admin_name: target[:stock_location]) ||
+            Spree::StockLocation.find_by!(name: target[:stock_location])
 
             inventory_units = target[:inventory_units] || []
             inventory_units.each do |inventory_unit|

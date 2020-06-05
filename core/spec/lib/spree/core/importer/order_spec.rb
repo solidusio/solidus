@@ -325,6 +325,15 @@ module Spree
           }.to raise_error ActiveRecord::RecordNotFound
         end
 
+        it "accepts stock_location_id" do
+          params[:shipments_attributes][0][:stock_location] = nil
+          params[:shipments_attributes][0][:stock_location_id] = stock_location.id
+          order = Importer::Order.import(user, params)
+          shipment = order.shipments.first
+
+          expect(shipment.stock_location).to eq stock_location
+        end
+
         context 'when completed_at and shipped_at present' do
           let(:params) do
             {
