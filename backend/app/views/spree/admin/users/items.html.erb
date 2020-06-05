@@ -72,9 +72,11 @@
     </table>
   <% else %>
     <div class="no-objects-found">
-      <%= render 'spree/admin/shared/no_objects_found',
-                   resource: Spree::Order,
-                   new_resource_url: spree.new_admin_order_path(user_id: @user.id) %>
+      <% if can? :manage, Spree::Order %>
+        <%= render 'spree/admin/shared/no_objects_found',
+                     resource: Spree::Order,
+                     new_resource_url: spree.new_admin_order_path(user_id: @user.id) %>
+      <% end %>
     </div>
   <% end %>
   <%= paginate @orders, theme: "solidus_admin" %>
