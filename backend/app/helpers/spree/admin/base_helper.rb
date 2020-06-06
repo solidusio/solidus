@@ -134,7 +134,7 @@ module Spree
       end
       deprecate link_to_remove_fields: "Please use link_to_delete instead, Example: \n" \
         "link_to_delete \"form.object\"", deprecator: Spree::Deprecation
-        
+
       def spree_dom_id(record)
         dom_id(record, 'spree')
       end
