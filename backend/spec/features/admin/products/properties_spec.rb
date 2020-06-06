@@ -88,25 +88,30 @@ describe "Properties", type: :feature do
     it "successfully create and then remove product property" do
       fill_in_property
 
-      check_property_row_count(2)
+      check_persisted_property_row_count(1)
 
       delete_product_property
 
-      check_property_row_count(1)
+      check_persisted_property_row_count(0)
     end
 
     # Regression test for https://github.com/spree/spree/issues/4466
     it "successfully remove and create a product property at the same time" do
       fill_in_property
 
-      expect(page).to have_css('tr.product_property', count: 2)
+      expect(page).to have_css('tr.product_property', count: 1)
 
-      within '#spree_new_product_property' do
+      click_button "Add Product Properties"
+      within '.product_property:first-child' do
         find('[id$=_property_name]').set("New Property")
         find('[id$=_value]').set("New Value")
       end
+      expect(page).to have_css('tr.product_property', count: 2)
 
-      delete_product_property
+      # delete 2nd line (persisted product)
+      accept_alert do
+        within_row(2) { click_icon :trash }
+      end
 
       # Give fadeOut time to complete
       expect(page).to have_css('tr.product_property', count: 1)
@@ -115,7 +120,7 @@ describe "Properties", type: :feature do
 
       expect(page).not_to have_content("Product is not found")
 
-      check_property_row_count(2)
+      check_persisted_property_row_count(1)
     end
 
     def fill_in_property
@@ -133,9 +138,9 @@ describe "Properties", type: :feature do
       expect(page).to have_content 'successfully removed'
     end
 
-    def check_property_row_count(expected_row_count)
+    def check_persisted_property_row_count(expected_row_count)
       click_link "Product Properties"
-      expect(page).to have_css("tbody#product_properties tr", count: expected_row_count)
+      expect(page).to have_css("tbody#product_properties tr:not(#spree_new_product_property)", count: expected_row_count)
     end
   end
 end

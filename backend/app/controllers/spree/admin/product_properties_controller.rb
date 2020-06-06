@@ -15,7 +15,7 @@ module Spree
       end
 
       def setup_property
-        @product.product_properties.build
+        @product.product_properties.build if @product.product_properties.empty?
       end
 
       def setup_variant_property_rules
