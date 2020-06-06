@@ -7,5 +7,12 @@
   </td>
   <td class="name"><%= f.text_field :name %></td>
   <td class="presentation"><%= f.text_field :presentation %></td>
-  <td class="actions"><%= link_to_remove_fields t('spree.actions.remove'), f, no_text: true %></td>
+  <td class="actions">
+    <% if f.object.persisted? %>
+      <%= link_to_delete f.object, no_text: true %>
+    <% else %>
+      <%= link_to_with_icon('trash', 'remove', '#', no_text: true, class: "spree_remove_fields",
+            data: { action: 'remove' }, title: t('spree.actions.remove')) %>
+    <% end %>
+  </td>
 </tr>
