@@ -58,6 +58,14 @@ Spree.ready(function(){
   $('.spree_add_fields').click(function() {
     var target = $(this).data("target");
     var new_table_row = $(target + ' tr:visible:last').clone();
+
+    // remove id
+    new_table_row.attr("id", "");
+
+    // Remove sort handle
+    new_table_row.find("td").first().empty();
+
+    // set unique form ids and names of new item
     var new_id = new Date().getTime() + (uniqueId++);
     new_table_row.find("input, select").each(function () {
       var el = $(this);
@@ -66,13 +74,10 @@ Spree.ready(function(){
       el.prop("id", el.prop("id").replace(/\d+(?=[^\d]*$)/, new_id))
       el.prop("name", el.prop("name").replace(/\d+(?=[^\d]*$)/, new_id))
     })
-    // When cloning a new row, set the href of all icons to be an empty "#"
-    // This is so that clicking on them does not perform the actions for the
-    // duplicated row
-    new_table_row.find("a").each(function () {
-      var el = $(this);
-      el.prop('href', '#');
-    })
+
+    // Add a remove button to the actions column of the new row
+    new_table_row.find("td").last().empty().append('<a class="spree_remove_fields no-text with-tip fa fa-trash icon_link with-tip" data-action="remove" href="#" data-original-title="Remove"><span class="text"></span></a>');
+
     $(target).append(new_table_row);
   })
 
