@@ -73,7 +73,7 @@ Spree.ready(function(){
       var el = $(this);
       el.prop('href', '#');
     })
-    $(target).prepend(new_table_row);
+    $(target).append(new_table_row);
   })
 
   $('body').on('click', '.delete-resource', function() {

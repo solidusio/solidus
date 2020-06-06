@@ -108,10 +108,7 @@ describe "Properties", type: :feature do
       end
       expect(page).to have_css('tr.product_property', count: 2)
 
-      # delete 2nd line (persisted product)
-      accept_alert do
-        within_row(2) { click_icon :trash }
-      end
+      delete_product_property
 
       # Give fadeOut time to complete
       expect(page).to have_css('tr.product_property', count: 1)
@@ -120,7 +117,7 @@ describe "Properties", type: :feature do
 
       expect(page).not_to have_content("Product is not found")
 
-      check_persisted_property_row_count(1)
+      check_persisted_property_row_count(0)
     end
 
     def fill_in_property
@@ -133,7 +130,7 @@ describe "Properties", type: :feature do
 
     def delete_product_property
       accept_alert do
-        click_icon :trash
+        within_row(1) { click_icon :trash }
       end
       expect(page).to have_content 'successfully removed'
     end
