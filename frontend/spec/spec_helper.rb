@@ -36,7 +36,7 @@ require 'spree/testing_support/flash'
 require 'spree/testing_support/url_helpers'
 require 'spree/testing_support/order_walkthrough'
 require 'spree/testing_support/caching'
-require 'spree/testing_support/blacklist_urls'
+require 'spree/testing_support/deny_urls'
 require 'spree/testing_support/translations'
 
 require 'capybara-screenshot/rspec'
@@ -86,7 +86,7 @@ RSpec.configure do |config|
   config.include Spree::TestingSupport::UrlHelpers
   config.include Spree::TestingSupport::ControllerRequests, type: :controller
   config.include Spree::TestingSupport::Flash
-  config.include Spree::TestingSupport::BlacklistUrls
+  config.include Spree::TestingSupport::DenyUrls
   config.include Spree::TestingSupport::Translations
 
   config.example_status_persistence_file_path = "./spec/examples.txt"

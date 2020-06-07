@@ -2,8 +2,8 @@
 
 module Spree
   module TestingSupport
-    module BlacklistUrls
-      def setup_url_blacklist(browser)
+    module DenyUrls
+      def setup_url_denied_for(browser)
         if browser.respond_to?(:url_blacklist)
           browser.url_blacklist = ['http://fonts.googleapis.com']
         end
@@ -14,10 +14,10 @@ end
 
 RSpec.configure do |config|
   config.before(:each, type: :feature) do
-    setup_url_blacklist(page.driver.browser)
+    setup_url_denied_for(page.driver.browser)
   end
 
   config.before(:each, type: :system) do
-    setup_url_blacklist(page.driver.browser)
+    setup_url_denied_for(page.driver.browser)
   end
 end
