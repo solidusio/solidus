@@ -11,7 +11,7 @@ module Spree
 
     after_touch :touch_all_products
 
-    self.whitelisted_ransackable_attributes = %w[name]
+    self.allowed_ransackable_attributes = %w[name]
 
     private
 

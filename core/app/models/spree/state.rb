@@ -19,7 +19,7 @@ module Spree
       deprecate find_all_by_name_or_abbr: :with_name_or_abbr, deprecator: Spree::Deprecation
     end
 
-    self.whitelisted_ransackable_attributes = %w[name]
+    self.allowed_ransackable_attributes = %w[name]
 
     # table of { country.id => [ state.id , state.name ] }, arrays sorted by name
     # blank is added elsewhere, if needed

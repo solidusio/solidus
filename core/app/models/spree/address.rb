@@ -27,7 +27,7 @@ module Spree
     TAXATION_ATTRS = %w(state_id country_id zipcode)
     LEGACY_NAME_ATTRS = %w(firstname lastname full_name)
 
-    self.whitelisted_ransackable_attributes = %w[firstname lastname]
+    self.allowed_ransackable_attributes = %w[firstname lastname]
 
     scope :with_values, ->(attributes) do
       where(value_attributes(attributes))

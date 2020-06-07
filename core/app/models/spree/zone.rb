@@ -42,7 +42,7 @@ module Spree
     alias :members :zone_members
     accepts_nested_attributes_for :zone_members, allow_destroy: true, reject_if: proc { |member| member['zoneable_id'].blank? }
 
-    self.whitelisted_ransackable_attributes = %w[name description]
+    self.allowed_ransackable_attributes = %w[name description]
 
     # Returns all zones that contain any of the zone members of the zone passed
     # in. This also includes any country zones that contain the state of the
