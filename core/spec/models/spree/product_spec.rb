@@ -470,6 +470,9 @@ RSpec.describe Spree::Product, type: :model do
           products: [product]
         )
       end
+      before do
+        promotion.actions << Spree::Promotion::Actions::CreateAdjustment.new
+      end
 
       it "lists the promotion as a possible promotion" do
         expect(product.possible_promotions).to include(promotion)

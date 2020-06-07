@@ -347,6 +347,10 @@ RSpec.describe Spree::Promotion, type: :model do
   end
 
   context "#inactive" do
+    before do
+      promotion.actions << Spree::Promotion::Actions::CreateAdjustment.new
+    end
+
     it "should not be exipired" do
       expect(promotion).not_to be_inactive
     end

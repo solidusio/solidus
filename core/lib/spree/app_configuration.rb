@@ -217,6 +217,10 @@ module Spree
     #   @return [Integer] Promotions to show per-page in the admin (default: +15+)
     preference :promotions_per_page, :integer, default: 15
 
+    # @!attribute [rw] disable_actionless_promotion_validation
+    #   @return [Boolean] Promotions should have actions associated before activation (default: +true+)
+    preference :actionless_promotion_inactive, :boolean, default: false
+
     # @!attribute [rw] raise_with_invalid_currency
     #   Whether to raise an exception if trying to set a line item currency
     #   different from the order currency. When false a validation error
