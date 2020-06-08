@@ -5,7 +5,7 @@ require 'spree/testing_support/order_walkthrough'
 
 RSpec.describe Spree::Order, type: :model do
   let!(:store) { create(:store) }
-  let(:order) { Spree::Order.new(store: store) }
+  let(:order) { create(:order, store: store) }
 
   def assert_state_changed(order, from, to)
     state_change_exists = order.state_changes.where(previous_state: from, next_state: to).exists?
@@ -139,6 +139,7 @@ RSpec.describe Spree::Order, type: :model do
           it_behaves_like "it references the user's the default address" do
             let(:address_kind) { :ship }
             before do
+              order.ship_address = nil
               order.user = FactoryBot.create(:user)
               order.user.ship_address = default_address
               order.next!
@@ -149,6 +150,7 @@ RSpec.describe Spree::Order, type: :model do
           it_behaves_like "it references the user's the default address" do
             let(:address_kind) { :bill }
             before do
+              order.bill_address = nil
               order.user = FactoryBot.create(:user)
               order.user.bill_address = default_address
               order.next!
@@ -204,6 +206,7 @@ RSpec.describe Spree::Order, type: :model do
       end
 
       it "does not call persist_order_address if there is no address on the order" do
+        order.bill_address = nil
         order.user = FactoryBot.create(:user)
         order.save!
 
@@ -278,10 +281,8 @@ RSpec.describe Spree::Order, type: :model do
     end
 
     context "from delivery", partial_double_verification: false do
-      let(:ship_address) { FactoryBot.create(:ship_address) }
 
       before do
-        order.ship_address = ship_address
         order.state = 'delivery'
         allow(order).to receive(:apply_shipping_promotions)
         allow(order).to receive(:ensure_available_shipping_rates) { true }
