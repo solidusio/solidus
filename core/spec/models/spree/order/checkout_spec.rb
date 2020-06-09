@@ -303,6 +303,16 @@ RSpec.describe Spree::Order, type: :model do
           assert_state_changed(order, 'delivery', 'payment')
           expect(order.state).to eq('payment')
         end
+
+        it 'fails if billing address is required and missing' do
+          payment_method = create(:payment_method)
+          allow(payment_method).to receive(:billing_address_required?).and_return(true)
+          allow(order).to receive(:available_payment_methods).and_return([payment_method])
+          order.bill_address = nil
+          allow(Spree::Config).to receive(:billing_address_required).and_return(true)
+
+          expect { order.next! }.to raise_error(StateMachines::InvalidTransition, /#{I18n.t('spree.bill_address_required')}/)
+        end
       end
 
       context "without payment required" do

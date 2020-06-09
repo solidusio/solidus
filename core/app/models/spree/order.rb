@@ -562,6 +562,14 @@ module Spree
       end
     end
 
+    def ensure_billing_address
+      return unless billing_address_required?
+      return if bill_address&.valid?
+
+      errors.add(:base, I18n.t('spree.bill_address_required'))
+      false
+    end
+
     def billing_address_required?
       Spree::Config.billing_address_required
     end
