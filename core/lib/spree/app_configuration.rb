@@ -96,6 +96,13 @@ module Spree
     #   @return [Boolean] Whether use of an address in checkout marks it as user's default
     preference :automatic_default_address, :boolean, default: true
 
+    # @!attribute [rw] billing_address_required
+    #   Controls whether billing address is required or not in the checkout process
+    #   by default, can be overridden at order level.
+    #   (default: +false+)
+    #   @return [Boolean]
+    preference :billing_address_required, :boolean, default: false
+
     # @!attribute [rw] binary_inventory_cache
     #   Only invalidate product caches when they change from in stock to out of
     #   stock. By default, caches are invalidated on any change of inventory

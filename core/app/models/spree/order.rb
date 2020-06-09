@@ -562,6 +562,10 @@ module Spree
       end
     end
 
+    def billing_address_required?
+      Spree::Config.billing_address_required
+    end
+
     def create_proposed_shipments
       if completed?
         raise CannotRebuildShipments.new(I18n.t('spree.cannot_rebuild_shipments_order_completed'))
