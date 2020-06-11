@@ -1,5 +1,9 @@
 ## Solidus 2.11.0 (master, unreleased)
 
+## Solidus 2.10.1 (2020-05-14)
+
+- Fix in_taxons scope when taxon is an ActiveRecord::Base [3617](https://github.com/solidusio/solidus/pull/3617) ([kennyadsl](https://github.com/kennyadsl))
+
 ## Solidus 2.10.0 (2020-01-15)
 
 ### Major Changes
