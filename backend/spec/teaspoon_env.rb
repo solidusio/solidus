@@ -3,6 +3,7 @@
 ENV['RAILS_ENV'] = 'test'
 
 require 'teaspoon/driver/selenium'
+require 'webdrivers'
 
 # Similar to setup described in
 # https://github.com/jejacks0n/teaspoon/wiki/Micro-Applications
