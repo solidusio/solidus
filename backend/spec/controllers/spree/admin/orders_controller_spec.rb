@@ -102,7 +102,7 @@ describe Spree::Admin::OrdersController, type: :controller do
       end
 
       context "when a user_id is passed as a parameter" do
-        let(:user)  { mock_model(Spree.user_class) }
+        let(:user)  { mock_model(Spree.user_class, ship_address: mock_model(Spree::Address), bill_address: nil) }
         before { allow(Spree.user_class).to receive_messages find_by: user }
 
         it "imports a new order and assigns the user to the order" do
