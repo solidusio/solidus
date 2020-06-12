@@ -70,7 +70,6 @@ methods:
   configured promotion rules. See [Multiple promotion
   codes](#multiple-promotion-codes) below for more information.
 
-[promotion-rules]: promotion-rules.html
 
 ### Multiple promotions codes
 
@@ -95,7 +94,7 @@ codes that were generated for it:
 
 1. Go to the **Promotions** page of the Solidus admin.
 2. Select the **Edit** button next to the promotion that you want to download
-   promotion codes for.dd
+   promotion codes for.
 3. Select the **Download Code List** button to download a list of codes in CSV
    format.
 
@@ -116,3 +115,6 @@ List** link next to the batch you want the codes for.
 You can set up promotion categories to organize your promotions. Promotion
 categories have a **Name** and a **Code**. Your customers cannot see promotion
 categories. Only store administrators can see promotion categories.
+
+[promotion-rules]: promotion-rules.html
+[promotion-actions]: promotion-actions.html

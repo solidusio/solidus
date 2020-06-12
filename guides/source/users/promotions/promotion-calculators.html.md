@@ -26,16 +26,16 @@ available to calculate:
 | [Distributed Amount][1] |            | Available   |                             |               |
 | [Free Shipping][2]      |            |             |                             | Available     |
 | [Flat Percent][3]       | Available  |             |                             |               |
-| [Flat Rat][4]           | Available  | Available   | Available                   |               |
+| [Flat Rate][4]          | Available  | Available   | Available                   |               |
 | [Flexible Rate][5]      | Available  | Available   | Available                   |               |
 | [Tiered Flat Rate][6]   | Available  |             |                             |               |
 | [Tiered Percent][7]     | Available  | Available   |                             |               |
 | [Percent Per Item][8]   |            | Available   |                             |               |
 
 The following sections outline all of the promotion calculators, the contexts
-they can be used in, and how they work. 
+they can be used in, and how they work.
 
-[1]: #distributed-amount 
+[1]: #distributed-amount
 [2]: #free-shipping
 [3]: #flat-percent
 [4]: #flat-rate
@@ -63,7 +63,7 @@ items as a discount.
 
 The free shipping calculator only requires that you use the promotion action
 type **Free shipping** when you create the promotion action. Then, all shipping
-charges from an order are deducted when the promotion is activated. 
+charges from an order are deducted when the promotion is activated.
 
 ## Flat percent
 
@@ -97,7 +97,7 @@ To replicate the example above, you could set the **First Item** amount to
 ## Tiered flat rate
 
 The **Tiered Flat Rate** calculator provides a tiered flat rate discount. This
-allows you to charge a rate-based discount that depends on the order total. 
+allows you to charge a rate-based discount that depends on the order total.
 
 This calculator has the following settings:
 
@@ -150,7 +150,7 @@ Amount ($)** of money that triggers the next tier. For each trigger that you
 create, you also set a new **Discount Percentage (%)**  that should be used as
 new discount level for that tier.
 
-In the following example, there are tiers set up for the $100 and $100 purchase
+In the following example, there are tiers set up for the $100 and $200 purchase
 mark:
 
 |   | Tier             | Discount (%) |
@@ -164,8 +164,7 @@ mark:
   example information.
 -->
 
-## Percent per item 
+## Percent per item
 
 The **Percent Per Item** calculator provides a percentage-based discount for
-each applicable line item in an order. 
-
+each applicable line item in an order.
