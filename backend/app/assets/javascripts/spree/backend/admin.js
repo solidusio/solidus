@@ -101,7 +101,7 @@ Spree.ready(function(){
 
   $('body').on('click', 'a.spree_remove_fields', function() {
     var el = $(this);
-    el.prev("input[type=hidden]").val("1");
+    el.next("input[type=hidden]").val("1");
     el.closest(".fields").hide();
     if (el.prop("href").substr(-1) == '#') {
       el.parents("tr").fadeOut('hide');
