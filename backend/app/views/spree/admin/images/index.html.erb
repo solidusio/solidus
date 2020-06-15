@@ -13,29 +13,31 @@
   <%= render 'new', product: @product, image: Spree::Image.new(viewable: @product) %>
 </div>
 
-<fieldset class="no-border-bottom">
-  <legend align="center"><%= t(".upload_images") %></legend>
+<% if can?(:create, Spree::Image) %>
+  <fieldset class="no-border-bottom">
+    <legend align="center"><%= t(".upload_images") %></legend>
 
-  <div id="upload-zone">
-    <%= form_for [:admin, @product, Spree::Image.new],
-        html: { multipart: true, id: 'upload-form' } do |f| %>
-      <label class="upload">
-        <i class="fa fa-5x fa-cloud-upload"></i>
-        <p>
-          <span class="button"><%= t(".choose_files") %></span>
-        </p>
-        <p>
-          <%= t(".drag_and_drop") %>
-        </p>
+    <div id="upload-zone">
+      <%= form_for [:admin, @product, Spree::Image.new],
+          html: { multipart: true, id: 'upload-form' } do |f| %>
+        <label class="upload">
+          <i class="fa fa-5x fa-cloud-upload"></i>
+          <p>
+            <span class="button"><%= t(".choose_files") %></span>
+          </p>
+          <p>
+            <%= t(".drag_and_drop") %>
+          </p>
 
-        <%= f.file_field :attachment, multiple: '', class: 'hidden' %>
-        <%= f.hidden_field :viewable_id, value: @product.master.id %>
-      </label>
-    <% end %>
-  </div>
+          <%= f.file_field :attachment, multiple: '', class: 'hidden' %>
+          <%= f.hidden_field :viewable_id, value: @product.master.id %>
+        </label>
+      <% end %>
+    </div>
 
-  <div id="progress-zone" class="row"></div>
-</fieldset>
+    <div id="progress-zone" class="row"></div>
+  </fieldset>
+<% end %>
 
 <% no_images = @product.gallery.images.empty? %>
 

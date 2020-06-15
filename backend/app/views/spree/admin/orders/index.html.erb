@@ -7,7 +7,7 @@
   <li>
     <%= link_to t('spree.new_order'), new_admin_order_url, id: 'admin_new_order', class: 'btn btn-primary' %>
   </li>
-<% end if can? :create, Spree::Order %>
+<% end if can? :manage, Spree::Order %>
 
 <% content_for :table_filter_title do %>
   <%= t('spree.filter') %>
@@ -197,9 +197,11 @@
   </table>
 <% else %>
   <div class="no-objects-found">
-    <%= render 'spree/admin/shared/no_objects_found',
-                 resource: Spree::Order,
-                 new_resource_url: spree.new_admin_order_path %>
+    <% if can? :manage, Spree::Order %>
+      <%= render 'spree/admin/shared/no_objects_found',
+                   resource: Spree::Order,
+                   new_resource_url: spree.new_admin_order_path %>
+    <% end %>
   </div>
 <% end %>
 

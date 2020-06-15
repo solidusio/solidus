@@ -21,8 +21,9 @@ describe "Orders Listing", type: :feature, js: true do
 
   context 'without create permission' do
     custom_authorization! do |_user|
-      can :manage, Spree::Order
-      cannot :create, Spree::Order
+      cannot :manage, Spree::Order
+      can :admin, Spree::Order
+      can :display, Spree::Order
     end
 
     it 'does not display the new order button' do

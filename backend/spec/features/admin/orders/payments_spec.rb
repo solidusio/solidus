@@ -16,6 +16,18 @@ describe 'Payments', type: :feature do
       visit "/admin/orders/#{order.number}/payments"
     end
 
+    context "when the user cannot create payments" do
+      custom_authorization! do |_user|
+        cannot :create, Spree::Payment
+      end
+
+      it "does not show the link for creating new payments" do
+        within "#content-header" do
+          expect(page).not_to have_content "New Payment"
+        end
+      end
+    end
+
     # Regression tests for https://github.com/spree/spree/issues/1453
     context 'with a check payment', js: true do
       let(:order) { create(:completed_order_with_totals, number: 'R100') }
