@@ -30,7 +30,7 @@ Gem::Specification.new do |s|
   end
 
   s.add_runtime_dependency 'solidus_core', ['>= 1.1', '< 3']
-  s.add_runtime_dependency 'solidus_support', '~> 0.4.0'
+  s.add_runtime_dependency 'solidus_support', '~> 0.4'
 
   s.add_development_dependency 'solidus_dev_support'
 end
