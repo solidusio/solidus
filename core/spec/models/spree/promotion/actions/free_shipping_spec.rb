@@ -11,7 +11,7 @@ RSpec.describe Spree::Promotion::Actions::FreeShipping, type: :model do
   let(:promotion_code) { promotion.codes.first! }
 
   # From promotion spec:
-  context "#perform" do
+  describe "#perform" do
     before do
       order.shipments << create(:shipment)
       promotion.promotion_actions << action
