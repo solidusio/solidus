@@ -31,12 +31,55 @@ RSpec.describe Spree::Promotion::Actions::FreeShipping, type: :model do
       end
     end
 
-    context "when order already has one from this promotion" do
-      it "should not create a discount" do
-        expect(action.perform(payload)).to be true
-        expect(action.perform(payload)).to be false
-        expect(promotion.usage_count).to eq(1)
-        expect(order.shipment_adjustments.count).to eq(2)
+    context "when a number of the orders shipments already have free shipping" do
+      let(:shipments) { order.shipments }
+
+      context "when all the shipments have free shipping" do
+        before do
+          shipments.each do |shipment|
+            shipment.adjustments.create!(
+              order: order,
+              amount: shipment.cost * -1,
+              source: action,
+              promotion_code: promotion_code,
+              label: 'somelabel'
+            )
+          end
+        end
+
+        it "should not create any more discounts" do
+          expect { action.perform(payload) }.not_to change {
+            order.shipment_adjustments.count
+          }
+        end
+
+        it "should return false" do
+          expect(action.perform(payload)).to eq(false)
+        end
+      end
+
+      context "when some of the shipments have free shipping" do
+        before do
+          shipment = shipments.last
+
+          shipment.adjustments.create!(
+            order: order,
+            amount: shipment.cost * -1,
+            source: action,
+            promotion_code: promotion_code,
+            label: 'somelabel'
+          )
+        end
+
+        it "should create more discounts" do
+          expect { action.perform(payload) }.to change {
+            order.shipment_adjustments.count
+          }.by(1)
+        end
+
+        it "should return true" do
+          expect(action.perform(payload)).to eq(true)
+        end
       end
     end
   end

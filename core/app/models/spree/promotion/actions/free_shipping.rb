@@ -8,8 +8,9 @@ module Spree
           order = payload[:order]
           promotion_code = payload[:promotion_code]
 
-          results = order.shipments.map do |shipment|
-            return false if promotion_credit_exists?(shipment)
+          created_adjustments = order.shipments.map do |shipment|
+            next if promotion_credit_exists?(shipment)
+
             shipment.adjustments.create!(
               order: shipment.order,
               amount: compute_amount(shipment),
@@ -17,11 +18,11 @@ module Spree
               promotion_code: promotion_code,
               label: label
             )
-            true
           end
-          # Did we actually end up applying any adjustments?
+
+          # Did we actually end up creating any adjustments?
           # If so, then this action should be classed as 'successful'
-          results.any? { |result| result == true }
+          created_adjustments.any?
         end
 
         def label
