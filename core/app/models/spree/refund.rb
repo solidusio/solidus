@@ -52,6 +52,14 @@ module Spree
 
       @perform_response = process!(credit_cents)
 
+      @response = Spree::DeprecatedInstanceVariableProxy.new(
+        self,
+        :perform_response,
+        :@response,
+        Spree::Deprecation,
+        "Please, do not use Spree::Refund @response anymore, use Spree::Refund#perform_response"
+      )
+
       log_entries.build(details: perform_response.to_yaml)
       update!(transaction_id: perform_response.authorization)
       update_order
