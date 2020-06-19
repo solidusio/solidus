@@ -676,8 +676,6 @@ module Spree
 
       remaining_total = outstanding_balance - authorized_total
 
-      matching_store_credits = user.store_credits.where(currency: currency)
-
       if matching_store_credits.any?
         payment_method = Spree::PaymentMethod::StoreCredit.first
 
@@ -823,6 +821,20 @@ module Spree
     end
 
     private
+
+    def matching_store_credits
+      @matching_store_credits ||= if use_store_credits?
+                                    user.store_credits.where(currency: currency)
+                                  else
+                                    []
+                                  end
+    end
+
+    def use_store_credits?
+      return Spree::Config[:default_use_store_credits] if use_store_credits.nil?
+
+      super
+    end
 
     def process_payments_before_complete
       return if !payment_required?
