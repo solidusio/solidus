@@ -266,6 +266,45 @@ RSpec.describe Spree::Preferences::Preferable, type: :model do
         expect(@a.preferences[:product_attributes]).to eq({ id: 1, name: 2 })
       end
     end
+
+    context "converts encrypted_string preferences to encrypted values" do
+      it "with string, encryption key provided as option" do
+        A.preference :secret, :encrypted_string,
+                     encryption_key: 'VkYp3s6v9y$B?E(H+MbQeThWmZq4t7w!'
+
+        @a.set_preference(:secret, 'secret_client_id')
+        expect(@a.get_preference(:secret)).to eq('secret_client_id')
+        expect(@a.preferences[:secret]).not_to eq('secret_client_id')
+      end
+
+      it "with string, encryption key provided as env variable" do
+        expect(ENV).to receive(:[]).with("SOLIDUS_PREFERENCES_MASTER_KEY").and_return("VkYp3s6v9y$B?E(H+MbQeThWmZq4t7w!")
+
+        A.preference :secret, :encrypted_string
+
+        @a.set_preference(:secret, 'secret_client_id')
+        expect(@a.get_preference(:secret)).to eq('secret_client_id')
+        expect(@a.preferences[:secret]).not_to eq('secret_client_id')
+      end
+
+      it "with string, encryption key provided as option, set using syntactic sugar method" do
+        A.preference :secret, :encrypted_string,
+                     encryption_key: 'VkYp3s6v9y$B?E(H+MbQeThWmZq4t7w!'
+
+        @a.preferred_secret = 'secret_client_id'
+        expect(@a.preferred_secret).to eq('secret_client_id')
+        expect(@a.preferences[:secret]).not_to eq('secret_client_id')
+      end
+
+      it "with string, default value" do
+        A.preference :secret, :encrypted_string,
+                     default: 'my_default_secret',
+                     encryption_key: 'VkYp3s6v9y$B?E(H+MbQeThWmZq4t7w!'
+
+        expect(@a.get_preference(:secret)).to eq('my_default_secret')
+        expect(@a.preferences[:secret]).not_to eq('my_default_secret')
+      end
+    end
   end
 
   describe "persisted preferables" do
@@ -290,6 +329,7 @@ RSpec.describe Spree::Preferences::Preferable, type: :model do
       class PrefTest < Spree::Base
         preference :pref_test_pref, :string, default: 'abc'
         preference :pref_test_any, :any, default: []
+        preference :pref_test_encrypted_string, :encrypted_string, encryption_key: 'VkYp3s6v9y$B?E(H+MbQeThWmZq4t7w!'
       end
     end
 
@@ -317,6 +357,17 @@ RSpec.describe Spree::Preferences::Preferable, type: :model do
         expect(pr.get_preference(:pref_test_any)).to eq([1, 2])
         pr.save!
         expect(pr.get_preference(:pref_test_any)).to eq([1, 2])
+      end
+
+      it "saves encrypted preferences for serialized object" do
+        pr = PrefTest.new
+        pr.set_preference(:pref_test_encrypted_string, 'secret_client_id')
+        expect(pr.get_preference(:pref_test_encrypted_string)).to eq('secret_client_id')
+        pr.save!
+        preferences_value_on_db = ActiveRecord::Base.connection.execute(
+          "SELECT preferences FROM pref_tests WHERE id=#{pr.id}"
+        ).first
+        expect(preferences_value_on_db).not_to include('secret_client_id')
       end
     end
 

@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'spree/encryptor'
+
 module Spree::Preferences
   module PreferableClassMethods
     DEFAULT_ADMIN_FORM_PREFERENCE_TYPES = %i(
@@ -16,7 +18,13 @@ module Spree::Preferences
     end
 
     def preference(name, type, options = {})
-      options.assert_valid_keys(:default)
+      options.assert_valid_keys(:default, :encryption_key)
+
+      if type == :encrypted_string
+        preference_encryptor = preference_encryptor(options)
+        options[:default] = preference_encryptor.encrypt(options[:default])
+      end
+
       default = options[:default]
       default = ->{ options[:default] } unless default.is_a?(Proc)
 
@@ -34,13 +42,15 @@ module Spree::Preferences
       # cache_key will be nil for new objects, then if we check if there
       # is a pending preference before going to default
       define_method preference_getter_method(name) do
-        preferences.fetch(name) do
+        value = preferences.fetch(name) do
           default.call
         end
+        value = preference_encryptor.decrypt(value) if preference_encryptor.present?
+        value
       end
 
       define_method preference_setter_method(name) do |value|
-        value = convert_preference_value(value, type)
+        value = convert_preference_value(value, type, preference_encryptor)
         preferences[name] = value
 
         # If this is an activerecord object, we need to inform
@@ -70,6 +80,14 @@ module Spree::Preferences
 
     def preference_type_getter_method(name)
       "preferred_#{name}_type".to_sym
+    end
+
+    def preference_encryptor(options)
+      key = options[:encryption_key] ||
+            ENV['SOLIDUS_PREFERENCES_MASTER_KEY'] ||
+            Rails.application.credentials.secret_key_base
+
+      Spree::Encryptor.new(key)
     end
 
     # List of preference types allowed as form fields in the Solidus admin
