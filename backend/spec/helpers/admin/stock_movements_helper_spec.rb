@@ -11,7 +11,7 @@ describe Spree::Admin::StockMovementsHelper, type: :helper do
     subject { helper.pretty_originator(stock_movement) }
 
     context "originator has a number" do
-      let(:originator) { create(:order) }
+      let(:originator) { build(:order) }
 
       it "returns the originator's number" do
         expect(subject).to eq originator.number
@@ -19,7 +19,7 @@ describe Spree::Admin::StockMovementsHelper, type: :helper do
     end
 
     context "originator doesn't have a number" do
-      let(:originator) { create(:user) }
+      let(:originator) { build(:user) }
 
       it "returns an empty string" do
         expect(subject).to eq ""
