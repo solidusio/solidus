@@ -4,11 +4,13 @@ module Spree
   module Admin
     module StockMovementsHelper
       def pretty_originator(stock_movement)
-        if stock_movement.originator.respond_to?(:number)
-          if stock_movement.originator.respond_to?(:order)
-            link_to stock_movement.originator.number, [:edit, :admin, stock_movement.originator.order]
+        originator = stock_movement.originator
+
+        if originator.respond_to?(:number)
+          if originator.respond_to?(:order)
+            link_to originator.number, [:edit, :admin, originator.order]
           else
-            stock_movement.originator.number
+            originator.number
           end
         else
           ""
