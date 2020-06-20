@@ -12,6 +12,8 @@ module Spree
           else
             originator.number
           end
+        elsif originator.respond_to?(:email)
+          originator.email
         else
           ""
         end

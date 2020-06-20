@@ -18,8 +18,16 @@ describe Spree::Admin::StockMovementsHelper, type: :helper do
       end
     end
 
-    context "originator doesn't have a number" do
-      let(:originator) { build(:user) }
+    context "originator has an email" do
+      let(:originator) { build(:user, email: "stock_mover@example.com") }
+
+      it "returns the originator's email" do
+        expect(subject).to eq "stock_mover@example.com"
+      end
+    end
+
+    context "the stock movement doesn't have an originator" do
+      let(:originator) { nil }
 
       it "returns an empty string" do
         expect(subject).to eq ""
