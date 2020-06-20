@@ -11,6 +11,7 @@ module Spree::Preferences
       password
       string
       text
+      encrypted_string
     )
 
     def defined_preferences
