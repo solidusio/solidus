@@ -1,6 +1,19 @@
 # frozen_string_literal: true
 
 class Spree::Api::UsersController < Spree::Api::ResourceController
+  def index
+    user_scope = model_class.accessible_by(current_ability, :read)
+    if params[:ids]
+      ids = params[:ids].split(",").flatten
+      @users = user_scope.where(id: ids)
+    else
+      @users = user_scope.ransack(params[:q]).result
+    end
+
+    @users = paginate(@users.distinct)
+    respond_with(@users)
+  end
+
   private
 
   attr_reader :user
