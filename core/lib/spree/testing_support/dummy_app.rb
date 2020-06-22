@@ -119,6 +119,7 @@ Spree.config do |config|
   config.raise_with_invalid_currency = false
   config.run_order_validations_on_order_updater = true
   config.use_combined_first_and_last_name_in_address = true
+  config.associate_user_in_authentication_extension = true
 
   if ENV['ENABLE_ACTIVE_STORAGE']
     config.image_attachment_module = 'Spree::Image::ActiveStorageAttachment'
