@@ -926,15 +926,27 @@ module Spree
     end
 
     def after_cancel
-      shipments.each(&:cancel!)
-      payments.completed.each { |payment| payment.cancel! unless payment.fully_refunded? }
-      payments.store_credits.pending.each(&:void_transaction!)
+      cancel_shipments!
+      cancel_payments!
 
       send_cancel_email
       # rubocop:disable Rails/SkipsModelValidations
       update_column(:canceled_at, Time.current)
       # rubocop:enable Rails/SkipsModelValidations
       recalculate
+    end
+
+    def cancel_shipments!
+      shipments.each(&:cancel!)
+    end
+
+    def cancel_payments!
+      payments.each do |payment|
+        next if payment.fully_refunded?
+        next unless payment.pending? || payment.completed?
+
+        payment.cancel!
+      end
     end
 
     def send_cancel_email
