@@ -40,6 +40,8 @@ Spree::Core::Engine.routes.draw do
           put :cancel
         end
       end
+
+      resources :customer_returns, except: :destroy
     end
 
     resources :checkouts, only: [:update], concerns: :order_routes do

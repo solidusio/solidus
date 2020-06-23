@@ -105,6 +105,8 @@ module Spree
 
     # Returns
     has_many :return_authorizations, dependent: :destroy, inverse_of: :order
+    has_many :return_items, through: :inventory_units
+    has_many :customer_returns, through: :return_items
     has_many :reimbursements, inverse_of: :order
     has_many :refunds, through: :payments
 
