@@ -11,15 +11,23 @@ describe Spree::Admin::StockMovementsHelper, type: :helper do
     subject { helper.pretty_originator(stock_movement) }
 
     context "originator has a number" do
-      let(:originator) { create(:order) }
+      let(:originator) { build(:order) }
 
       it "returns the originator's number" do
         expect(subject).to eq originator.number
       end
     end
 
-    context "originator doesn't have a number" do
-      let(:originator) { create(:user) }
+    context "originator has an email" do
+      let(:originator) { build(:user, email: "stock_mover@example.com") }
+
+      it "returns the originator's email" do
+        expect(subject).to eq "stock_mover@example.com"
+      end
+    end
+
+    context "the stock movement doesn't have an originator" do
+      let(:originator) { nil }
 
       it "returns an empty string" do
         expect(subject).to eq ""
