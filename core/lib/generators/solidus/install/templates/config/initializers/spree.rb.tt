@@ -34,6 +34,11 @@ Spree.config do |config|
   # See https://github.com/solidusio/solidus/pull/3456 for more info.
   config.raise_with_invalid_currency = false
 
+  # Set this configuration to false to always redirect the user to
+  # /unauthorized when needed, without trying to redirect them to
+  # their previous location first.
+  config.redirect_back_on_unauthorized = true
+
   # Set this configuration to `false` to avoid running validations when
   # updating an order. Be careful since you can end up having inconsistent
   # data in your database turning it on.

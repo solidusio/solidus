@@ -11,7 +11,7 @@ module Spree
         # @!attribute [rw] unauthorized_redirect
         #   @!scope class
         #   Extension point for overriding behaviour of access denied errors.
-        #   Default behaviour is to redirect to "/unauthorized" with a flash
+        #   Default behaviour is to redirect back or to "/unauthorized" with a flash
         #   message.
         #   @return [Proc] action to take when access denied error is raised.
 
@@ -22,7 +22,20 @@ module Spree
           class_attribute :unauthorized_redirect
           self.unauthorized_redirect = -> do
             flash[:error] = I18n.t('spree.authorization_failure')
-            redirect_to "/unauthorized"
+            if Spree::Config.redirect_back_on_unauthorized
+              redirect_back(fallback_location: "/unauthorized")
+            else
+              Spree::Deprecation.warn <<-WARN.strip_heredoc, caller
+                Having Spree::Config.redirect_back_on_unauthorized set
+                to `false` is deprecated and will not be supported in Solidus 3.0.
+
+                Please change this configuration to `true` and be sure that your
+                application does not break trying to redirect back when there is
+                an unauthorized access.
+              WARN
+
+              redirect_to "/unauthorized"
+            end
           end
 
           rescue_from CanCan::AccessDenied do

@@ -220,6 +220,12 @@ module Spree
     #   @return [Boolean] (default: +true+)
     preference :raise_with_invalid_currency, :boolean, default: true
 
+    # @!attribute [rw] redirect_back_on_unauthorized
+    #   Whether to try to redirect users back when they try to access
+    #   unauthorized routes, before redirect them to /unauthorized.
+    #   @return [Boolean] (default: +false+)
+    preference :redirect_back_on_unauthorized, :boolean, default: false
+
     # @!attribute [rw] require_master_price
     #   @return [Boolean] Require a price on the master variant of a product (default: +true+)
     preference :require_master_price, :boolean, default: true

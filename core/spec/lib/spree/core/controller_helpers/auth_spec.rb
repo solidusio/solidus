@@ -91,4 +91,26 @@ RSpec.describe Spree::Core::ControllerHelpers::Auth, type: :controller do
       expect(controller.try_spree_current_user).to eq nil
     end
   end
+
+  describe '#unauthorized_redirect' do
+    before do
+      def controller.index
+        authorize!(:read, :something)
+      end
+    end
+
+    context "http_referrer is present" do
+      before { request.env['HTTP_REFERER'] = '/redirect' }
+
+      it "redirects back" do
+        get :index
+        expect(response).to redirect_to('/redirect')
+      end
+    end
+
+    it "redirects to unauthorized" do
+      get :index
+      expect(response).to redirect_to('/unauthorized')
+    end
+  end
 end
