@@ -11,7 +11,7 @@ class Spree::PromotionCode < Spree::Base
 
   before_save :normalize_code
 
-  self.whitelisted_ransackable_attributes = ['value']
+  self.allowed_ransackable_attributes = ['value']
 
   # Whether the promotion code has exceeded its usage restrictions
   #

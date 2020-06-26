@@ -8,7 +8,7 @@ module Spree
 
     validates :name, :iso_name, presence: true
 
-    self.whitelisted_ransackable_attributes = %w[name]
+    self.allowed_ransackable_attributes = %w[name]
 
     def self.default
       if Spree::Config.default_country_id

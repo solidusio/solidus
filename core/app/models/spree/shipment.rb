@@ -41,8 +41,8 @@ module Spree
 
     include ::Spree::Config.state_machines.shipment
 
-    self.whitelisted_ransackable_associations = ['order']
-    self.whitelisted_ransackable_attributes = ['number']
+    self.allowed_ransackable_associations = ['order']
+    self.allowed_ransackable_attributes = ['number']
 
     delegate :tax_category, :tax_category_id, to: :selected_shipping_rate, allow_nil: true
 

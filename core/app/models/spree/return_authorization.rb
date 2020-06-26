@@ -28,7 +28,7 @@ module Spree
     money_methods :pre_tax_total, :amount, :total_excluding_vat
     deprecate display_pre_tax_total: :display_total_excluding_vat, deprecator: Spree::Deprecation
 
-    self.whitelisted_ransackable_attributes = ['memo']
+    self.allowed_ransackable_attributes = ['memo']
 
     def total_excluding_vat
       return_items.sum(&:total_excluding_vat)

@@ -27,7 +27,7 @@ module Spree
 
     include ::Spree::Config.taxon_attachment_module
 
-    self.whitelisted_ransackable_attributes = %w[name]
+    self.allowed_ransackable_attributes = %w[name]
 
     # @note This method is meant to be overridden on a store by store basis.
     # @return [Array] filters that should be used for a taxon

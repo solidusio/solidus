@@ -155,7 +155,7 @@ needed for the search. You do this by using a specific method provided by
 the `config/initializers/spree.rb` initializer:
 
 ```rb
-Spree::Order.whitelisted_ransackable_attributes << 'last_ip_address'
+Spree::Order.allowed_ransackable_attributes << 'last_ip_address'
 ```
 
 [ransack]: https://github.com/activerecord-hackery/ransack

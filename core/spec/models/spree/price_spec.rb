@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Spree::Price, type: :model do
   describe 'searchable columns' do
-    subject { described_class.whitelisted_ransackable_attributes }
+    subject { described_class.allowed_ransackable_attributes }
     it 'allows searching by variant_id' do
       expect(subject).to include("variant_id")
     end
