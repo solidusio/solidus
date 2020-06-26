@@ -66,7 +66,9 @@ describe "Option Types", type: :feature do
     expect(page).to have_title("#{option_value.option_type.name} - Option Types - Products")
     expect(page).to have_css("tbody#option_values tr", count: 1)
     within("tbody#option_values") do
-      find('.spree_remove_fields').click
+      accept_alert do
+        find('.fa-trash').click
+      end
     end
     # Assert that the field is hidden automatically
     expect(page).to have_no_css("tbody#option_values tr")
