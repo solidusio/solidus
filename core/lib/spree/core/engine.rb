@@ -47,6 +47,7 @@ module Spree
       # Setup Event Subscribers
       initializer 'spree.core.initialize_subscribers' do |app|
         app.reloader.to_prepare do
+          Spree::Event.require_subscriber_files
           Spree::Event.subscribers.each(&:subscribe!)
         end
 

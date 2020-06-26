@@ -6,12 +6,14 @@ module Spree
   module Event
     class Configuration
       def subscribers
-        @subscribers ||= ::Spree::Core::ClassConstantizer::Set.new.tap do |set|
-          set << 'Spree::MailerSubscriber'
-        end
+        @subscribers ||= ::Spree::Core::ClassConstantizer::Set.new
       end
 
-      attr_writer :adapter, :suffix
+      attr_writer :adapter, :suffix, :autoload_subscribers
+
+      def autoload_subscribers
+        @autoload_subscribers.nil? ? true : !!@autoload_subscribers
+      end
 
       def adapter
         @adapter ||= Spree::Event::Adapters::ActiveSupportNotifications
