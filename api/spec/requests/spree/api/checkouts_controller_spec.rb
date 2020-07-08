@@ -167,6 +167,7 @@ module Spree
       end
 
       describe 'setting the payment amount' do
+        let(:order) { create(:order_with_line_items, state: :payment) }
         let(:params) do
           {
             order_token: order.guest_token,
@@ -323,11 +324,15 @@ module Spree
         assert_unauthorized!
       end
 
-      # Regression test for https://github.com/spree/spree/issues/3784
-      it "can update the special instructions for an order" do
-        instructions = "Don't drop it. (Please)"
-        put spree.api_checkout_path(order.to_param), params: { order_token: order.guest_token, order: { special_instructions: instructions } }
-        expect(json_response['special_instructions']).to eql(instructions)
+      context "in delivery state" do
+        let(:order) { create(:order_with_line_items, state: :delivery) }
+
+        # Regression test for https://github.com/spree/spree/issues/3784
+        it "can update the special instructions for an order" do
+          instructions = "Don't drop it. (Please)"
+          put spree.api_checkout_path(order.to_param), params: { order_token: order.guest_token, order: { special_instructions: instructions } }
+          expect(json_response['special_instructions']).to eql(instructions)
+        end
       end
 
       context "as an admin" do
