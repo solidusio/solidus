@@ -130,7 +130,13 @@ module Spree
       end
 
       def normalize_params
-        params[:order][:payments_attributes] = params[:order].delete(:payments) if params[:order][:payments]
+        if params[:order][:payments]
+          payments_params = params[:order].delete(:payments)
+          params[:order][:payments_attributes] = payments_params.map do |payment_params|
+            payment_params[:source_attributes] = payment_params.delete(:source) if payment_params[:source].present?
+            payment_params
+          end
+        end
         params[:order][:shipments_attributes] = params[:order].delete(:shipments) if params[:order][:shipments]
         params[:order][:line_items_attributes] = params[:order].delete(:line_items) if params[:order][:line_items]
         params[:order][:ship_address_attributes] = params[:order].delete(:ship_address) if params[:order][:ship_address].present?
