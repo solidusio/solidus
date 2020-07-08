@@ -68,7 +68,7 @@ describe Spree::CheckoutController, type: :controller do
     it 'should check if the user is authorized for :edit' do
       expect(controller).to receive(:authorize!).with(:edit, order, token)
       request.cookie_jar.signed[:guest_token] = token
-      post :update, params: { state: 'address' }
+      post :update, params: { state: 'address', order: { bill_address_attributes: address_params } }
     end
 
     context "save successful" do
@@ -96,7 +96,7 @@ describe Spree::CheckoutController, type: :controller do
         end
 
         it "should assign order" do
-          post :update, params: { state: "address" }
+          post :update, params: { state: "address", order: { bill_address_attributes: address_params } }
           expect(assigns[:order]).not_to be_nil
         end
 
@@ -310,16 +310,18 @@ describe Spree::CheckoutController, type: :controller do
       end
 
       it "should not assign order" do
-        post :update, params: { state: "address", email: '' }
+        post :update, params: { state: "address", order: { email: ''}  }
         expect(assigns[:order]).not_to be_nil
       end
 
       it "should not change the order state" do
-        post :update, params: { state: 'address' }
+        expect do
+          post :update, params: { state: 'address', order: { bill_address_attributes: address_params } }
+        end.not_to change { order.reload.state }
       end
 
       it "should render the edit template" do
-        post :update, params: { state: 'address' }
+        post :update, params: { state: 'address', order: { bill_address_attributes: address_params } }
         expect(response).to render_template :edit
       end
     end
@@ -342,7 +344,7 @@ describe Spree::CheckoutController, type: :controller do
       before do
         order.update! user: user
         allow(order).to receive(:next).and_raise(Spree::Core::GatewayError.new("Invalid something or other."))
-        post :update, params: { state: "address" }
+        post :update, params: { state: "address", order: { bill_address_attributes: address_params } }
       end
 
       it "should render the edit template and display exception message" do
@@ -373,7 +375,7 @@ describe Spree::CheckoutController, type: :controller do
         end
 
         it "due to the order having errors" do
-          put :update, params: { state: order.state, order: {} }
+          put :update, params: { state: order.state, order: { bill_address_attributes: address_params } }
           expect(flash[:error]).to eq("Base error\nAdjustments error")
           expect(response).to redirect_to(spree.checkout_state_path('address'))
         end
@@ -387,7 +389,7 @@ describe Spree::CheckoutController, type: :controller do
         end
 
         it "due to no available shipping rates for any of the shipments" do
-          put :update, params: { state: "address", order: {} }
+          put :update, params: { state: "address", order: { bill_address_attributes: address_params } }
           expect(flash[:error]).to eq(I18n.t('spree.items_cannot_be_shipped'))
           expect(response).to redirect_to(spree.checkout_state_path('address'))
         end
@@ -437,7 +439,7 @@ describe Spree::CheckoutController, type: :controller do
         end
 
         it "redirects the customer to the cart page with an error message" do
-          put :update, params: { state: order.state, order: {} }
+          put :update, params: { state: order.state, order: { bill_address_attributes: address_params } }
           expect(flash[:error]).to eq(I18n.t('spree.insufficient_stock_for_order'))
           expect(response).to redirect_to(spree.cart_path)
         end
@@ -494,9 +496,11 @@ describe Spree::CheckoutController, type: :controller do
       allow(controller).to receive_messages check_authorization: true
     end
 
-    it "doesn't set shipping address on the order" do
+    # This does not test whether the shipping address is set via params.
+    # It only tests whether it is set in the before action.
+    it "doesn't set a default shipping address on the order" do
       expect(order).to_not receive(:ship_address=)
-      post :update, params: { state: order.state }
+      post :update, params: { state: order.state, order: { bill_address_attributes: address_params } }
     end
 
     it "doesn't remove unshippable items before payment" do
@@ -511,7 +515,7 @@ describe Spree::CheckoutController, type: :controller do
     allow(controller).to receive_messages check_authorization: true
 
     expect {
-      post :update, params: { state: "payment" }
+      post :update, params: { state: "payment", order: { email: "johndoe@example.com"} }
     }.to change { order.line_items.to_a.size }.from(1).to(0)
   end
 
