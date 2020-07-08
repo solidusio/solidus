@@ -271,6 +271,31 @@ describe Spree::CheckoutController, type: :controller do
             expect(order.payments).to be_empty
           end
         end
+
+        context 'trying to change the address' do
+          let(:params) do
+            {
+              state: 'payment',
+              order: {
+                payments_attributes: [
+                  {
+                    payment_method_id: payment_method.id.to_s,
+                    source_attributes: attributes_for(:credit_card)
+                  }
+                ],
+                ship_address_attributes: {
+                  zipcode: 'TEST'
+                }
+              }
+            }
+          end
+
+          it 'does not change the address' do
+            expect do
+              post :update, params: params
+            end.not_to change { order.reload.ship_address.zipcode }
+          end
+        end
       end
 
       context "when in the confirm state" do
