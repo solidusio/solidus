@@ -31,16 +31,30 @@ module Spree
         end
 
         def permitted_checkout_attributes
-          permitted_attributes.checkout_attributes + [
-            bill_address_attributes: permitted_address_attributes,
-            ship_address_attributes: permitted_address_attributes,
-            payments_attributes: permitted_payment_attributes,
-            shipments_attributes: permitted_shipment_attributes
-          ]
+          permitted_attributes.checkout_attributes
+        end
+
+        def permitted_checkout_address_attributes
+          permitted_attributes.checkout_address_attributes
+        end
+
+        def permitted_checkout_delivery_attributes
+          permitted_attributes.checkout_delivery_attributes
+        end
+
+        def permitted_checkout_payment_attributes
+          permitted_attributes.checkout_payment_attributes
+        end
+
+        def permitted_checkout_confirm_attributes
+          permitted_attributes.checkout_confirm_attributes
         end
 
         def permitted_order_attributes
-          permitted_checkout_attributes + [
+          permitted_checkout_address_attributes +
+          permitted_checkout_delivery_attributes +
+          permitted_checkout_payment_attributes +
+          permitted_checkout_confirm_attributes + [
             line_items_attributes: permitted_line_item_attributes
           ]
         end
