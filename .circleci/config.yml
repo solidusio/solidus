@@ -50,6 +50,7 @@ commands:
 
       - run: |
           bundle install --path=vendor/bundle
+          bundle clean
 
       - save_cache:
           key: solidus-gems-v2-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
