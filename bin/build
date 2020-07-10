@@ -22,7 +22,7 @@ echo "* Testing Solidus Backend *"
 echo "***************************"
 cd ../backend
 bundle exec rspec spec
-bundle exec teaspoon
+bundle exec teaspoon --require=../backend/spec/teaspoon_env.rb
 
 # Solidus Core
 echo "************************"
