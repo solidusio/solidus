@@ -41,7 +41,9 @@ commands:
     steps:
       - run: .circleci/bin/halt-for-doc-only-changes.sh && circleci step halt || true # skip Circle for guides
       - checkout
-      - run: bundle lock
+      - run: |
+          gem install bundler -v"~> 2.1" --conservative
+          bundle lock
       - restore_cache:
           keys:
             - solidus-gems-v2-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
