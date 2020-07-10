@@ -120,6 +120,7 @@ Spree.config do |config|
   config.redirect_back_on_unauthorized = true
   config.run_order_validations_on_order_updater = true
   config.use_combined_first_and_last_name_in_address = true
+  config.use_legacy_order_state_machine = false
 
   if ENV['ENABLE_ACTIVE_STORAGE']
     config.image_attachment_module = 'Spree::Image::ActiveStorageAttachment'

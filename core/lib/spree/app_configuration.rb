@@ -288,6 +288,11 @@ module Spree
     #   API responses. (default: +false+)
     preference :use_combined_first_and_last_name_in_address, :boolean, default: false
 
+    # @!attribute [rw] use_legacy_order_state_machine
+    #   @return [Boolean] Uses the legacy order state machine from Spree::Order::Checkout
+    #   (default: +false+)
+    preference :use_legacy_order_state_machine, :boolean, default: true
+
     # Other configurations
 
     # Allows restricting what currencies will be available.
