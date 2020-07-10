@@ -278,4 +278,45 @@ RSpec.describe Spree::Ability, type: :model do
       end
     end
   end
+
+  describe 'legacy aliases deprecation' do
+    before do
+      allow(Spree::Deprecation).to receive(:warn)
+    end
+
+    it 'raises warning on read' do
+      ability.can?(:read, Object.new)
+
+      expect(Spree::Deprecation).to have_received(:warn)
+        .with(/`:read` action alias will be changing/)
+    end
+
+    it 'raises deprecation on display' do
+      ability.can?(:display, Object.new)
+
+      expect(Spree::Deprecation).to have_received(:warn)
+        .with(/alias action display is deprecated/)
+    end
+
+    it 'raises deprecation on destroy' do
+      ability.can?(:destroy, Object.new)
+
+      expect(Spree::Deprecation).to have_received(:warn)
+        .with(/alias action destroy is deprecated/)
+    end
+
+    it 'raises deprecation on :new_action' do
+      ability.can?(:new_action, Object.new)
+
+      expect(Spree::Deprecation).to have_received(:warn)
+        .with(/alias action new_action is deprecated/)
+    end
+
+    it 'raises deprecation on display' do
+      ability.can?(:display, Object.new)
+
+      expect(Spree::Deprecation).to have_received(:warn)
+        .with(/alias action display is deprecated/)
+    end
+  end
 end

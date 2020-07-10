@@ -14,6 +14,13 @@ module Spree
 
     attr_reader :user
 
+    CUSTOM_ALIASES_MAP = {
+      destroy: :delete,
+      display: :read,
+      new_action: :create,
+      read: :show
+    }.freeze
+
     # Allows us to go beyond the standard cancan initialize method which makes it difficult for engines to
     # modify the default +Ability+ of an application.  The +ability+ argument must be a class that includes
     # the +CanCan::Ability+ module.  The registered ability should behave properly as a stand-alone class
@@ -33,7 +40,28 @@ module Spree
       register_extension_abilities
     end
 
+    def can?(action, *args)
+      super(normalize_action(action), *args)
+    end
+
     private
+
+    def normalize_action(action)
+      if action == :read
+        Spree::Deprecation.warn <<~WARN
+          The behavior of CanCanCan `:read` action alias will be changing in Solidus 3.0.
+          The current alias is: `:show, :to => :read`
+          The new alias will be compliant with CanCanCan default: `index, :show, :to => :read`
+        WARN
+      elsif action.in? CUSTOM_ALIASES_MAP.keys
+        Spree::Deprecation.warn <<~WARN
+          Calling CanCanCan alias action #{action} is deprecated.
+          In Solidus 3.0 non-standard CanCanCan action aliases will be replaced with default ones
+        WARN
+      end
+
+      CUSTOM_ALIASES_MAP.fetch(action, action)
+    end
 
     # Before, this was the only way to extend this ability. Permission sets have been added since.
     # It is recommended to use them instead for extension purposes if possible.
