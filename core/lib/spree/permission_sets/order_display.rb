@@ -4,17 +4,17 @@ module Spree
   module PermissionSets
     class OrderDisplay < PermissionSets::Base
       def activate!
-        can [:display, :admin, :edit, :cart], Spree::Order
-        can [:display, :admin], Spree::Payment
-        can [:display, :admin], Spree::Shipment
-        can [:display, :admin], Spree::Adjustment
-        can [:display, :admin], Spree::LineItem
-        can [:display, :admin], Spree::ReturnAuthorization
-        can [:display, :admin], Spree::CustomerReturn
-        can [:display, :admin], Spree::OrderCancellations
-        can [:display, :admin], Spree::Reimbursement
-        can [:display, :admin], Spree::ReturnItem
-        can [:display, :admin], Spree::Refund
+        can [:read, :admin, :edit, :cart], Spree::Order
+        can [:read, :admin], Spree::Payment
+        can [:read, :admin], Spree::Shipment
+        can [:read, :admin], Spree::Adjustment
+        can [:read, :admin], Spree::LineItem
+        can [:read, :admin], Spree::ReturnAuthorization
+        can [:read, :admin], Spree::CustomerReturn
+        can [:read, :admin], Spree::OrderCancellations
+        can [:read, :admin], Spree::Reimbursement
+        can [:read, :admin], Spree::ReturnItem
+        can [:read, :admin], Spree::Refund
       end
     end
   end

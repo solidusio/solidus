@@ -53,7 +53,7 @@ module Spree
       end
 
       def index
-        authorize! :index, Order
+        authorize! :admin, Order
         orders_includes = [
           { user: :store_credits },
           :line_items,

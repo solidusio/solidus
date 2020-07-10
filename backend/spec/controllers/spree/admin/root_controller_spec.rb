@@ -17,7 +17,7 @@ describe Spree::Admin::RootController do
     context "when a user can admin and display spree orders" do
       before do
         ability.can :admin, Spree::Order
-        ability.can :display, Spree::Order
+        ability.can :read, Spree::Order
       end
 
       it { is_expected.to redirect_to(spree.admin_orders_path) }

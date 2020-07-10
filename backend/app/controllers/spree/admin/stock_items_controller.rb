@@ -15,8 +15,8 @@ module Spree
       private
 
       def build_resource
-        variant = Spree::Variant.accessible_by(current_ability, :read).find(params[:variant_id])
-        stock_location = Spree::StockLocation.accessible_by(current_ability, :read).find(params[:stock_location_id])
+        variant = Spree::Variant.accessible_by(current_ability, :show).find(params[:variant_id])
+        stock_location = Spree::StockLocation.accessible_by(current_ability, :show).find(params[:stock_location_id])
         stock_location.stock_movements.build(stock_movement_params).tap do |stock_movement|
           stock_movement.originator = try_spree_current_user
           stock_movement.stock_item = stock_location.set_up_stock_item(variant)
@@ -36,11 +36,11 @@ module Spree
       end
 
       def load_product
-        @product = Spree::Product.accessible_by(current_ability, :read).friendly.find(params[:product_slug]) if params[:product_slug]
+        @product = Spree::Product.accessible_by(current_ability, :show).friendly.find(params[:product_slug]) if params[:product_slug]
       end
 
       def load_stock_management_data
-        @stock_locations = Spree::StockLocation.accessible_by(current_ability, :read)
+        @stock_locations = Spree::StockLocation.accessible_by(current_ability)
         @stock_item_stock_locations = params[:stock_location_id].present? ? @stock_locations.where(id: params[:stock_location_id]) : @stock_locations
         @variant_display_attributes = self.class.variant_display_attributes
         @variants = Spree::Config.variant_search_class.new(params[:variant_search_term], scope: variant_scope).results
@@ -50,7 +50,7 @@ module Spree
       end
 
       def variant_scope
-        scope = Spree::Variant.accessible_by(current_ability, :read)
+        scope = Spree::Variant.accessible_by(current_ability)
         scope = scope.where(product: @product) if @product
         scope
       end

@@ -12,7 +12,7 @@ module Spree
       private
 
       def admin_root_redirect_path
-        if can?(:display, Spree::Order) && can?(:admin, Spree::Order)
+        if can?(:show, Spree::Order) && can?(:admin, Spree::Order)
           spree.admin_orders_path
         elsif can?(:admin, :dashboards) && can?(:home, :dashboards)
           spree.home_admin_dashboards_path

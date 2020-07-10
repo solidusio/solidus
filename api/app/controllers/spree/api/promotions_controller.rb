@@ -6,7 +6,7 @@ module Spree
       before_action :load_promotion
 
       def show
-        authorize! :read, @promotion
+        authorize! :show, @promotion
         respond_with(@promotion, default_template: :show)
       end
 

@@ -11,7 +11,7 @@
       <%= error_message_on :user, :email %>
     <% end %>
 
-    <% if can? :display, Spree::Role %>
+    <% if can? :read, Spree::Role %>
       <div data-hook="admin_user_form_roles" class="field">
         <%= label_tag nil, plural_resource_name(Spree::Role) %>
         <ul>
@@ -35,7 +35,7 @@
       </div>
     <% end %>
 
-    <% if Spree::Config[:can_restrict_stock_management] && can?(:display, Spree::StockLocation) %>
+    <% if Spree::Config[:can_restrict_stock_management] && can?(:read, Spree::StockLocation) %>
       <div data-hook="admin_user_form_stock_locations" class="field">
         <%= label_tag nil, plural_resource_name(Spree::StockLocation) %>
         <ul>

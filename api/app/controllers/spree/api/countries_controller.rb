@@ -7,7 +7,7 @@ module Spree
 
       def index
         @countries = Spree::Country.
-          accessible_by(current_ability, :read).
+          accessible_by(current_ability).
           ransack(params[:q]).
           result.
           order('name ASC')
@@ -21,7 +21,7 @@ module Spree
       end
 
       def show
-        @country = Spree::Country.accessible_by(current_ability, :read).find(params[:id])
+        @country = Spree::Country.accessible_by(current_ability, :show).find(params[:id])
         respond_with(@country)
       end
     end

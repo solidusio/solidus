@@ -21,7 +21,7 @@ module Spree
 
       def index
         @zones = Spree::Zone.
-          accessible_by(current_ability, :read).
+          accessible_by(current_ability).
           order('name ASC').
           ransack(params[:q]).
           result
@@ -55,7 +55,7 @@ module Spree
       end
 
       def zone
-        @zone ||= Spree::Zone.accessible_by(current_ability, :read).find(params[:id])
+        @zone ||= Spree::Zone.accessible_by(current_ability, :show).find(params[:id])
       end
     end
   end

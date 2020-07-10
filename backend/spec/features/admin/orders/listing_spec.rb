@@ -23,7 +23,7 @@ describe "Orders Listing", type: :feature, js: true do
     custom_authorization! do |_user|
       cannot :manage, Spree::Order
       can :admin, Spree::Order
-      can :display, Spree::Order
+      can :read, Spree::Order
     end
 
     it 'does not display the new order button' do

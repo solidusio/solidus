@@ -165,6 +165,7 @@ RSpec.describe Spree::Ability, type: :model do
 
       context 'requested by other user' do
         before(:each) { resource.user = Spree.user_class.new }
+        it { expect(ability).not_to be_able_to(:show, resource) }
         it_should_behave_like 'create only'
       end
 
@@ -178,6 +179,7 @@ RSpec.describe Spree::Ability, type: :model do
       context 'requested with inproper token' do
         let(:token) { 'FAIL' }
         before(:each) { allow(resource).to receive_messages guest_token: 'TOKEN123' }
+        it { expect(ability).not_to be_able_to(:show, resource, token) }
         it_should_behave_like 'create only'
       end
     end

@@ -1,23 +1,23 @@
 <% content_for :tabs do %>
   <nav>
     <ul class="tabs" data-hook="admin_settings_checkout_tabs">
-      <% if can?(:display, Spree::RefundReason) %>
+      <% if can?(:read, Spree::RefundReason) %>
         <%= settings_tab_item plural_resource_name(Spree::RefundReason), spree.admin_refund_reasons_path %>
       <% end %>
 
-      <% if can?(:display, Spree::ReimbursementType) %>
+      <% if can?(:read, Spree::ReimbursementType) %>
         <%= settings_tab_item plural_resource_name(Spree::ReimbursementType), spree.admin_reimbursement_types_path %>
       <% end %>
 
-      <% if can?(:display, Spree::ReturnReason) %>
+      <% if can?(:read, Spree::ReturnReason) %>
         <%= settings_tab_item plural_resource_name(Spree::ReturnReason), spree.admin_return_reasons_path %>
       <% end %>
 
-      <% if can?(:display, Spree::AdjustmentReason) %>
+      <% if can?(:read, Spree::AdjustmentReason) %>
         <%= settings_tab_item plural_resource_name(Spree::AdjustmentReason), spree.admin_adjustment_reasons_path %>
       <% end %>
 
-      <% if can?(:display, Spree::StoreCreditReason) %>
+      <% if can?(:read, Spree::StoreCreditReason) %>
         <%= settings_tab_item plural_resource_name(Spree::StoreCreditReason), spree.admin_store_credit_reasons_path %>
       <% end %>
     </ul>

@@ -315,7 +315,7 @@ describe "Products", type: :feature do
     end
 
     custom_authorization! do |_user|
-      can [:admin, :update, :index, :read], Spree::Product
+      can [:admin, :update, :index, :show], Spree::Product
     end
     let!(:product) { create(:product) }
 
