@@ -51,7 +51,8 @@ commands:
             - solidus-gems-v2
 
       - run: |
-          bundle install --path=vendor/bundle
+          bundle config set path 'vendor/bundle'
+          bundle check || bundle install
           bundle clean
 
       - save_cache:
