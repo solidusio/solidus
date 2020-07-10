@@ -46,10 +46,10 @@ commands:
           bundle lock
       - restore_cache:
           keys:
-            - solidus-gems-v2-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
-            - solidus-gems-v2-{{ .Branch }}
-            - solidus-gems-v2-master
-            - solidus-gems-v2
+            - solidus-gems-v3-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+            - solidus-gems-v3-{{ .Branch }}
+            - solidus-gems-v3-master
+            - solidus-gems-v3
 
       - run: |
           bundle config set path 'vendor/bundle'
@@ -57,7 +57,7 @@ commands:
           bundle clean
 
       - save_cache:
-          key: solidus-gems-v2-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+          key: solidus-gems-v3-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
           paths:
             - vendor/bundle
 
