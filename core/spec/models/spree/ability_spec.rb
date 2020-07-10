@@ -281,6 +281,8 @@ RSpec.describe Spree::Ability, type: :model do
 
   describe 'legacy aliases deprecation' do
     before do
+      allow(Spree::Config).to receive(:use_custom_cancancan_actions)
+        .and_return(true)
       allow(Spree::Deprecation).to receive(:warn)
     end
 

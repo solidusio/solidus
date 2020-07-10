@@ -51,6 +51,8 @@ module Spree
     private
 
     def normalize_action(action)
+      return action unless Spree::Config.use_custom_cancancan_actions
+
       if action == :read
         Spree::Deprecation.warn <<~WARN
           The behavior of CanCanCan `:read` action alias will be changing in Solidus 3.0.

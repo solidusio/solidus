@@ -156,6 +156,10 @@ module Spree
     #   @return [String] Two-letter ISO code of a {Spree::Country} to assumed as the country of an unidentified customer (default: "US")
     preference :default_country_iso, :string, default: 'US'
 
+    # @!attribute [rw] use_custom_cancancan_actions
+    #   @return [Boolean] Allow to use legacy Solidus custom CanCanCan action aliases (default: +true+)
+    preference :use_custom_cancancan_actions, :boolean, default: true
+
     # @!attribute [rw] generate_api_key_for_all_roles
     #   @return [Boolean] Allow generating api key automatically for user
     #   at role_user creation for all roles. (default: +false+)
