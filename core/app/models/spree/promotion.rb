@@ -170,7 +170,7 @@ module Spree
       rules.where(type: "Spree::Promotion::Rules::Product").flat_map(&:products).uniq
     end
 
-    # Whether the promotion has exceeded it's usage restrictions.
+    # Whether the promotion has exceeded its usage restrictions.
     #
     # @param excluded_orders [Array<Spree::Order>] Orders to exclude from usage limit
     # @return true or false
