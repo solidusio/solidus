@@ -38,7 +38,7 @@ describe "ReturnAuthorizations", type: :feature do
         visit spree.new_admin_order_return_authorization_path(order)
       end
 
-      it "creates a return authorization" do
+      it "creates a return authorization", :js do
         create_return_authorization
 
         expect(page).to have_content "Return Authorization has been successfully created!"

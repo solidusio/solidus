@@ -24,5 +24,7 @@
 //= require 'spree/backend/views/promotions/option_values_rule'
 //= require 'spree/backend/views/tables/editable_table'
 //= require 'spree/backend/views/tables/editable_table_row'
+//= require 'spree/backend/views/tables/return_items'
 //= require 'spree/backend/views/tables/selectable_table'
 //= require 'spree/backend/views/tables/selectable_table/summary'
+//= require 'spree/backend/views/tables/selectable_table/sum_return_item_amount'
