@@ -30,6 +30,7 @@
 //= require spree/backend/components/tooltips
 //= require spree/backend/components/editable_table
 //= require spree/backend/components/selectable_table
+//= require spree/backend/components/selectable_table/summary
 //= require spree/backend/components/sortable_table
 //= require spree/backend/components/admin_nav
 //= require spree/backend/datepicker
