@@ -12,6 +12,7 @@ Spree.Views.Tables.SelectableTable = Backbone.View.extend({
     this.listenTo(this.model, 'change', this.detectChanges)
 
     this.render();
+    Backbone.trigger("selectableTable:init", this)
   },
 
   onSelectedItem: function(event) {
