@@ -1,0 +1,25 @@
+  {{#if apiKey}}
+    <div id="current-api-key">
+      <strong>{{ t 'key' localeOpts }}: </strong>
+      {{#if isCurrentUser}}
+        {{apiKey}}
+      {{else}}
+        <i>({{ t 'hidden' }})</i>
+      {{/if}}
+      <div class="filter-actions actions">
+        <button class='btn btn-default clear-key-btn'>
+          {{ t 'clear_key' localeOpts }}
+        </button>
+        <button class='btn btn-default regenerate-key-btn'>
+          {{ t 'regenerate_key' localeOpts }}
+        </button>
+      </div>
+    </div>
+  {{else}}
+    <div class="no-objects-found">{{ t 'no_key' localeOpts }}</div>
+    <div class="filter-actions actions">
+      <button class='btn btn-primary generate-key-btn'>
+        {{ t 'generate_key' localeOpts }}
+      </button>
+    </div>
+  {{/if}}

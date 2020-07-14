@@ -10,6 +10,7 @@ _.extend(window.Spree, {
     Payment: {},
     Promotions: {},
     Stock: {},
-    Tables: {}
+    Tables: {},
+    User: {}
   }
 })

@@ -15,3 +15,4 @@
 //= require spree/backend/templates/variants/autocomplete
 //= require spree/backend/templates/variants/line_items_autocomplete_stock
 //= require spree/backend/templates/variants/split
+//= require spree/backend/templates/users/api_key

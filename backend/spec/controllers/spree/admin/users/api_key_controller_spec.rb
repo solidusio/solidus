@@ -13,6 +13,7 @@ describe Spree::Admin::Users::ApiKeyController, type: :controller do
       end
 
       it "allows admins to create a new user's API key" do
+        expect(Spree::Deprecation).to receive(:warn)
         post :create, params: { user_id: user.id }
 
         expect(flash[:success]).to eq I18n.t('spree.admin.api.key_generated')
@@ -41,6 +42,7 @@ describe Spree::Admin::Users::ApiKeyController, type: :controller do
       end
 
       it "allows admins to clear an existing user's API key" do
+        expect(Spree::Deprecation).to receive(:warn)
         user.generate_spree_api_key!
         delete :destroy, params: { user_id: user.id }
 

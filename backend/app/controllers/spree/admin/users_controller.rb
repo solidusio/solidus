@@ -89,7 +89,7 @@ module Spree
           generate_api_key_admin_user PUT    /admin/users/:id/generate_api_key
 
           Please use:
-          admin_user_api_key          POST   /admin/users/:user_id/api_key
+          api_user_api_key            POST   /api/users/:user_id/api_key
         WARN
 
         if @user.generate_spree_api_key!
@@ -106,7 +106,7 @@ module Spree
           clear_api_key_admin_user PUT    /admin/users/:id/clear_api_key
 
           Please use:
-          admin_user_api_key       DELETE /admin/users/:user_id/api_key
+          api_user_api_key         DELETE /api/users/:user_id/api_key
         WARN
 
         if @user.clear_spree_api_key!
