@@ -6,6 +6,13 @@ module Spree
       belongs_to 'spree/stock_location'
       before_action :parent
 
+      def index
+        params[:q] ||= {}
+
+        @search = collection.ransack(params[:q])
+        @stock_movements = @search.result.page(params[:page])
+      end
+
       private
 
       def permitted_resource_params
