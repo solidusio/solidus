@@ -122,6 +122,17 @@ module Spree
         "#{order.number}-#{number}"
       end
 
+      def handle_void_response(response)
+        record_response(response)
+
+        if response.success?
+          self.response_code = response.authorization
+          void
+        else
+          gateway_error(response)
+        end
+      end
+
       private
 
       def process_authorization
@@ -183,17 +194,6 @@ module Spree
           send("#{success_state}!")
         else
           send(failure_state)
-          gateway_error(response)
-        end
-      end
-
-      def handle_void_response(response)
-        record_response(response)
-
-        if response.success?
-          self.response_code = response.authorization
-          void
-        else
           gateway_error(response)
         end
       end
