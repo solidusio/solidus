@@ -31,7 +31,12 @@
         </div>
         <div data-hook="auto_capture" class="field">
           <%= f.label :auto_capture %>
-          <%= f.select :auto_capture, [["#{t('spree.use_app_default')} (#{Spree::Config[:auto_capture]})", ''], [t('spree.say_yes'), true], [t('spree.say_no'), false]], {}, {class: 'custom-select fullwidth'} %>
+          <%= f.select :auto_capture,
+            [["#{t('spree.use_app_default')} (#{Spree::Config[:auto_capture] ? t('spree.say_yes') : t('spree.say_no')})", ''],
+             [t('spree.say_yes'), true],
+             [t('spree.say_no'), false]],
+          {},
+          {class: 'custom-select fullwidth'} %>
         </div>
         <div data-hook="available_to_user" class="field">
           <label>
