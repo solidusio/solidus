@@ -153,16 +153,18 @@ Additionally, for security reasons you will need to whitelist the new attribute
 needed for the search. You do this by using a specific method provided by
 [ransack][ransack]. The easiest way to achieve this is by adding a decorator
 which will update the attributes. This ensures that the code is reloaded correctly
-when needed. (Using an initializer does not work with Rails 6+ and Zeitwerk) For this
+when needed - using an initializer does not work with Rails 6+ and Zeitwerk. For this
 example, you would add the following code to `app/models/your_app/spree/order_decorator.rb`:
 
 ```rb
 module YourApp
   module Spree
     class OrderDecorator
-       Spree::Order.whitelisted_ransackable_attributes << 'last_ip_address'
+      def self.prepended(base)
+        base.whitelisted_ransackable_attributes << 'last_ip_address'
+      end
 
-       Spree::Order.prepend self
+      Spree::Order.prepend self                                          
     end
   end
 end
