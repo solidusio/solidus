@@ -151,11 +151,21 @@ See the ransack documentation for more information.
 
 Additionally, for security reasons you will need to whitelist the new attribute
 needed for the search. You do this by using a specific method provided by
-[ransack][ransack].  This can be easily done by adding the following line into
-the `config/initializers/spree.rb` initializer:
+[ransack][ransack]. The easiest way to achieve this is by adding a decorator
+which will update the attributes. This ensures that the code is reloaded correctly
+when needed. (Using an initializer does not work with Rails 6+ and Zeitwerk) For this
+example, you would add the following code to `app/models/your_app/spree/order_decorator.rb`:
 
 ```rb
-Spree::Order.whitelisted_ransackable_attributes << 'last_ip_address'
+module YourApp
+  module Spree
+    class OrderDecorator
+       Spree::Order.whitelisted_ransackable_attributes << 'last_ip_address'
+
+       Spree::Order.prepend self
+    end
+  end
+end
 ```
 
 [ransack]: https://github.com/activerecord-hackery/ransack
