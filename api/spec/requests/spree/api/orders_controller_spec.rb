@@ -158,6 +158,7 @@ module Spree
         end
 
         context 'creating payment' do
+          let!(:order) { create(:order_with_line_items) }
           let(:order_params) { super().merge(payments_attributes: [{ payment_method_id: payment_method.id }]) }
 
           context "with allowed payment method" do
@@ -167,6 +168,28 @@ module Spree
               expect {
                 subject
               }.to change { Spree::Payment.count }.by(1)
+            end
+
+            context 'trying to change the address' do
+              let(:order_params) do
+                super().merge(
+                  ship_address_attributes: {
+                    zipcode: '90100'
+                  }
+                )
+              end
+
+              it 'changes the address' do
+                expect {
+                  subject
+                }.to change { order.reload.ship_address.zipcode }
+              end
+
+              it 'invalidates the shipments' do
+                expect {
+                  subject
+                }.to change { order.reload.shipments }.to([])
+              end
             end
           end
 

@@ -8,7 +8,10 @@ module Spree
     ATTRIBUTES = [
       :address_attributes,
       :address_book_attributes,
-      :checkout_attributes,
+      :checkout_address_attributes,
+      :checkout_delivery_attributes,
+      :checkout_payment_attributes,
+      :checkout_confirm_attributes,
       :credit_card_update_attributes,
       :customer_return_attributes,
       :image_attributes,
@@ -44,10 +47,6 @@ module Spree
     ]
 
     @@address_book_attributes = address_attributes + [:default]
-
-    @@checkout_attributes = [
-      :coupon_code, :email, :special_instructions, :use_billing
-    ]
 
     @@credit_card_update_attributes = [
       :month, :year, :expiry, :first_name, :last_name, :name
@@ -130,5 +129,75 @@ module Spree
       :product_id, :product, :option_values_attributes, :price,
       :weight, :height, :width, :depth, :sku, :cost_currency, option_value_ids: [], options: [:name, :value]
     ]
+
+    @@checkout_address_attributes = [
+      :use_billing,
+      :email,
+      bill_address_attributes: address_attributes,
+      ship_address_attributes: address_attributes
+    ]
+
+    @@checkout_delivery_attributes = [
+      :special_instructions,
+      shipments_attributes: shipment_attributes
+    ]
+
+    @@checkout_payment_attributes = [
+      :coupon_code,
+      payments_attributes: payment_attributes + [
+        source_attributes: source_attributes
+      ]
+    ]
+
+    @@checkout_confirm_attributes = []
+
+    def self.checkout_attributes
+      Spree::Deprecation.warn <<-WARN.squish, caller
+        checkout_attributes is deprecated, please use the permitted
+        attributes set for the specific step that needs to be updated.
+
+        E.g. permitted_checkout_address_attributes
+      WARN
+
+      CheckoutAdditionalAttributes.new(
+        checkout_address_attributes +
+        checkout_delivery_attributes +
+        checkout_payment_attributes +
+        checkout_confirm_attributes
+      )
+    end
+  end
+
+  class CheckoutAdditionalAttributes < Array
+    def <<(*attributes)
+      super
+
+      inject_attributes_to_all_steps(attributes, :<<)
+    end
+
+    def push(*attributes)
+      super
+
+      inject_attributes_to_all_steps(attributes, :push)
+    end
+    alias append push
+
+    def prepend(*attributes)
+      super
+
+      inject_attributes_to_all_steps(attributes, :prepend)
+    end
+    alias unshift prepend
+
+    private
+
+    def inject_attributes_to_all_steps(attributes, method)
+      attributes.each do |attribute|
+        PermittedAttributes.checkout_address_attributes.send(method, attribute)
+        PermittedAttributes.checkout_delivery_attributes.send(method, attribute)
+        PermittedAttributes.checkout_payment_attributes.send(method, attribute)
+        PermittedAttributes.checkout_confirm_attributes.send(method, attribute)
+      end
+    end
   end
 end

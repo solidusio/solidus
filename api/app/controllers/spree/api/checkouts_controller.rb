@@ -66,11 +66,24 @@ module Spree
       end
 
       def update_params
-        if update_params = massaged_params[:order]
-          update_params.permit(permitted_checkout_attributes)
+        state = @order.state
+        case state.to_sym
+        when :cart, :address
+          massaged_params.fetch(:order, {}).permit(
+            permitted_checkout_address_attributes
+          )
+        when :delivery
+          massaged_params.require(:order).permit(
+            permitted_checkout_delivery_attributes
+          )
+        when :payment
+          massaged_params.require(:order).permit(
+            permitted_checkout_payment_attributes
+          )
         else
-          # We current allow update requests without any parameters in them.
-          {}
+          massaged_params.fetch(:order, {}).permit(
+            permitted_checkout_confirm_attributes
+          )
         end
       end
 
