@@ -172,6 +172,7 @@ module Spree
       end
 
       describe 'setting the payment amount' do
+        let(:order) { create(:order_with_line_items, state: :payment) }
         let(:params) do
           {
             order_token: order.guest_token,
@@ -322,17 +323,44 @@ module Spree
         end
       end
 
+      it "cannot update attributes of another step" do
+        order.update_column(:state, "payment")
+
+        params = {
+          order_token: order.guest_token,
+          order: {
+            payments_attributes: [
+              {
+                payment_method_id: @payment_method.id.to_s,
+                source_attributes: attributes_for(:credit_card)
+              }
+            ],
+            ship_address_attributes: {
+              zipcode: 'MALICIOUS ZIPCODE'
+            }
+          }
+        }
+        expect do
+          put spree.api_checkout_path(order), params: params
+        end.not_to change { order.reload.ship_address.zipcode }
+        expect(response.status).to eq(200)
+      end
+
       it "returns the order if the order is already complete" do
         order.update_columns(completed_at: Time.current, state: 'complete')
         put spree.api_checkout_path(order.to_param), params: { order_token: order.guest_token }
         assert_unauthorized!
       end
 
-      # Regression test for https://github.com/spree/spree/issues/3784
-      it "can update the special instructions for an order" do
-        instructions = "Don't drop it. (Please)"
-        put spree.api_checkout_path(order.to_param), params: { order_token: order.guest_token, order: { special_instructions: instructions } }
-        expect(json_response['special_instructions']).to eql(instructions)
+      context "in delivery state" do
+        let(:order) { create(:order_with_line_items, state: :delivery) }
+
+        # Regression test for https://github.com/spree/spree/issues/3784
+        it "can update the special instructions for an order" do
+          instructions = "Don't drop it. (Please)"
+          put spree.api_checkout_path(order.to_param), params: { order_token: order.guest_token, order: { special_instructions: instructions } }
+          expect(json_response['special_instructions']).to eql(instructions)
+        end
       end
 
       context "as an admin" do
