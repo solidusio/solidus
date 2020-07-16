@@ -133,7 +133,9 @@ module Spree
             # spree_wombat serializes payment state as status so imported orders should fall back to status field.
             payment.state = p[:state] || p[:status] || 'completed'
             payment.payment_method = Spree::PaymentMethod.find_by!(name: p[:payment_method])
-            payment.source = create_source_payment_from_params(p[:source], payment) if p[:source]
+            source_attributes = p[:source] || p[:source_attributes]
+            payment.source = create_source_payment_from_params(source_attributes, payment) if source_attributes
+
             payment.save!
           end
         end
