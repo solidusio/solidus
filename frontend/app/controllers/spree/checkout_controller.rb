@@ -17,7 +17,7 @@ module Spree
 
     before_action :associate_user
     before_action :check_authorization
-    before_action :apply_coupon_code
+    before_action :apply_coupon_code, only: [:update]
 
     before_action :setup_for_current_state, only: [:edit, :update]
 
@@ -87,11 +87,23 @@ module Spree
     end
 
     def update_params
-      if update_params = massaged_params[:order]
-        update_params.permit(permitted_checkout_attributes)
+      case params[:state].to_sym
+      when :address
+        massaged_params.require(:order).permit(
+          permitted_checkout_address_attributes
+        )
+      when :delivery
+        massaged_params.require(:order).permit(
+          permitted_checkout_delivery_attributes
+        )
+      when :payment
+        massaged_params.require(:order).permit(
+          permitted_checkout_payment_attributes
+        )
       else
-        # We currently allow update requests without any parameters in them.
-        {}
+        massaged_params.fetch(:order, {}).permit(
+          permitted_checkout_confirm_attributes
+        )
       end
     end
 
