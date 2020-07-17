@@ -3,6 +3,10 @@
 require 'spec_helper'
 
 describe 'api', type: :routing do
+  let!(:current_disable_api_routes_setting) do
+    Spree::Api::Config[:disable_api_routes]
+  end
+
   context 'when disable_api_routes is enabled' do
     before do
       stub_spree_preferences(Spree::Api::Config, disable_api_routes: true)
@@ -29,5 +33,14 @@ describe 'api', type: :routing do
         expect(get: '/api/products').to be_routable
       end
     end
+  end
+
+  after do
+    stub_spree_preferences(
+      Spree::Api::Config,
+      disable_api_routes: current_disable_api_routes_setting
+    )
+
+    Rails.application.reload_routes!
   end
 end
