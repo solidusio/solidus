@@ -355,8 +355,11 @@ nav.menu {
 
 .brand-link {
   display: block;
+  height: $main-header-height - 1px;
+  overflow: hidden;
 
   img {
-    max-width: 125px;
+    max-height: 100%;
+    max-width: 100%;
   }
 }
