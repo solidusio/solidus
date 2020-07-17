@@ -396,13 +396,13 @@ RSpec.describe Spree::PaymentMethod, type: :model do
 
   describe "::DISPLAY" do
     it "returns [:both, :front_end, :back_end]" do
-      # Emits deprecation warning on first reference
-      Spree::Deprecation.silence do
-        expect(Spree::PaymentMethod::DISPLAY).to eq([:both, :front_end, :back_end])
-      end
+      expect(Spree::Deprecation).to receive(:warn).
+        with(/^Spree::PaymentMethod::DISPLAY has been deprecated and will be removed/, any_args).once
 
+      # Emits deprecation warning on first reference
+      expect(described_class::DISPLAY).to eq([:both, :front_end, :back_end])
       # but not subsequent
-      expect(Spree::PaymentMethod::DISPLAY).to eq([:both, :front_end, :back_end])
+      expect(described_class::DISPLAY).to eq([:both, :front_end, :back_end])
     end
   end
 end
