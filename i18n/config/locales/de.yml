@@ -1709,11 +1709,20 @@ de:
     stop: Bis
     store: Shop
     store_credit:
+      actions:
+        invalidate: ungültig machen
+      credit_allocation_memo: Dies ist ein Guthaben der ID %{id}
+      currency_mismatch: Die Währung des Guthabens passt nicht zur Währung der Bestellung
       display_action:
         adjustment: Anpassung
         admin:
           authorize: Autorisiert
+          eligible: Berechtigung überprüft
+          void: Entwertet
+        allocation: Zuweisung
+        capture: Erfassung
         credit: Guthaben
+        invalidate: ungültig gemacht
         void: Guthaben
     store_credit_category:
       default: Standard
@@ -1839,3 +1848,4 @@ de:
     formats:
       solidus:
         long: "%d.%m.%Y %H:%M"
+        short: "%e.%-m.%y %k:%M"
