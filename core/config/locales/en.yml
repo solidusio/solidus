@@ -1516,6 +1516,11 @@ en:
     iso_name: Iso Name
     item: Item
     item_description: Item Description
+    items_selected:
+      all: All Items Selected
+      none: No Item Selected
+      one: One Item Selected
+      custom: Items Selected
     item_total: Item Total
     item_total_rule:
       operators:
