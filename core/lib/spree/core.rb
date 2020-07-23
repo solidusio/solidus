@@ -53,7 +53,7 @@ module Spree
   end
 end
 
-require 'spree/core/version'
+require 'solidus/version'
 
 require 'spree/core/active_merchant_dependencies'
 require 'spree/core/class_constantizer'
