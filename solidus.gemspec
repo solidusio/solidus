@@ -14,7 +14,11 @@ Gem::Specification.new do |s|
   s.homepage    = 'http://solidus.io'
   s.license     = 'BSD-3-Clause'
 
-  s.files = Dir['README.md', 'lib/**/*']
+  # Specify which files should be added to the gem when it is released.
+  # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
+  files = Dir.chdir(__dir__) { `git ls-files -z`.split("\x0") }
+
+  s.files = files.grep(%r{^(lib/|[A-Z]+\.md$)})
 
   s.required_ruby_version = '>= 2.5.0'
   s.required_rubygems_version = '>= 1.8.23'
