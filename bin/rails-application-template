@@ -17,7 +17,8 @@ if $0 == __FILE__
   exec *command
 end
 
-gem 'solidus'
+require_relative "../core/lib/spree/core/version"
+gem 'solidus', "~> #{Spree::VERSION}"
 gem 'solidus_auth_devise'
 gem 'rails_12factor'
 
