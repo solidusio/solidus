@@ -64,21 +64,17 @@ You may want to alter Solidus's address requirements for your store. For
 example, if you do not require customer phone numbers in order for them to check
 out.
 
-Right now, you need to [monkey-patch][monkey-patch] the `Spree::Address` model
-in order to change its requirements. For example, you could prepend your custom
-behavior that redefines `Spree::Address`'s `require_phone?` method: 
+In that case, you can set the `address_requires_phone` preference to `false` in
+an initializer.
 
 ```ruby
-module PhoneNotRequired
-  def require_phone?
-    false
-  end
+Spree::Config.configure do |config|
+  config.address_requires_phone = false
 end
-
-Spree::Address.prepend(PhoneNotRequired)
 ```
 
-Similarly, if you ship to countries that don't require postal codes, like Hong
+With the exception of phone number, you need to [monkey-patch][monkey-patch] the `Spree::Address` model
+in order to change its requirements. If you ship to countries that don't require postal codes, like Hong
 Kong or Macau, you may want to make postal codes optional instead of required.
 
 Right now, you can monkey-patch the `Spree::Address` model in order to remove or

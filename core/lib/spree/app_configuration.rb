@@ -26,6 +26,10 @@ module Spree
   class AppConfiguration < Preferences::Configuration
     # Preferences (alphabetized to more easily lookup particular preferences)
 
+    # @!attribute [rw] address_requires_phone
+    #   @return [Boolean] should phone number be required (default: +true+)
+    preference :address_requires_phone, :boolean, default: true
+
     # @!attribute [rw] address_requires_state
     #   @return [Boolean] should state/state_name be required (default: +true+)
     preference :address_requires_state, :boolean, default: true
