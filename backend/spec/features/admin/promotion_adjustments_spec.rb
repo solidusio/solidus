@@ -240,6 +240,27 @@ describe "Promotion Adjustments", type: :feature, js: true do
       expect(first_action.calculator.preferred_amount).to eq(5)
     end
 
+    context 'creating a promotion with discount rules and adjustments' do
+      before do
+        fill_in "Name", with: "SAVE SAVE SAVE"
+        choose "Apply to all orders"
+        click_button "Create"
+        expect(page).to have_title("SAVE SAVE SAVE - Promotions")
+      end
+
+      it "should not allow an Discount Rule to be added without selecting an option" do
+        within('#rule_fields') { click_button "Add" }
+        message = page.find("#promotion_rule_type").native.attribute("validationMessage")
+        expect(message).to eq "Please select an item in the list."
+      end
+
+      it "should not allow an Adjusment type to be added without selecting an option" do
+        within('#action_fields') { click_button "Add" }
+        message = page.find("#action_type").native.attribute("validationMessage")
+        expect(message).to eq "Please select an item in the list."
+      end
+    end
+
     context 'creating a promotion with promotion action that has a calculator with complex preferences' do
       before do
         class ComplexCalculator < Spree::Calculator

@@ -7,7 +7,7 @@
       <% if can?(:update, @promotion) %>
         <div class="field">
           <%= label_tag :promotion_rule_type, t('spree.discount_rules') %>
-          <%= select_tag('promotion_rule[type]', options_for_promotion_rule_types(@promotion), include_blank: t(:choose_promotion_rule, scope: 'spree'), class: 'custom-select fullwidth') %>
+          <%= select_tag('promotion_rule[type]', options_for_promotion_rule_types(@promotion), include_blank: t(:choose_promotion_rule, scope: 'spree'), class: 'custom-select fullwidth', required: true) %>
         </div>
         <div class="filter-actions actions">
           <%= button_tag t('spree.actions.add'), class: 'btn btn-primary' %>
