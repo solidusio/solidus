@@ -96,6 +96,13 @@ module Spree
     #   @return [Boolean] Whether use of an address in checkout marks it as user's default
     preference :automatic_default_address, :boolean, default: true
 
+    # @!attribute [rw] billing_address_required
+    #   Controls whether billing address is required or not in the checkout process
+    #   by default, can be overridden at order level.
+    #   (default: +false+)
+    #   @return [Boolean]
+    preference :billing_address_required, :boolean, default: false
+
     # @!attribute [rw] binary_inventory_cache
     #   Only invalidate product caches when they change from in stock to out of
     #   stock. By default, caches are invalidated on any change of inventory
@@ -217,6 +224,12 @@ module Spree
     #   @return [Boolean] (default: +true+)
     preference :raise_with_invalid_currency, :boolean, default: true
 
+    # @!attribute [rw] redirect_back_on_unauthorized
+    #   Whether to try to redirect users back when they try to access
+    #   unauthorized routes, before redirect them to /unauthorized.
+    #   @return [Boolean] (default: +false+)
+    preference :redirect_back_on_unauthorized, :boolean, default: false
+
     # @!attribute [rw] require_master_price
     #   @return [Boolean] Require a price on the master variant of a product (default: +true+)
     preference :require_master_price, :boolean, default: true
@@ -278,6 +291,11 @@ module Spree
     #   @return [Boolean] Use Spree::Address combined first and last name in HTML views and
     #   API responses. (default: +false+)
     preference :use_combined_first_and_last_name_in_address, :boolean, default: false
+
+    # @!attribute [rw] use_legacy_order_state_machine
+    #   @return [Boolean] Uses the legacy order state machine from Spree::Order::Checkout
+    #   (default: +false+)
+    preference :use_legacy_order_state_machine, :boolean, default: true
 
     # Other configurations
 

@@ -99,6 +99,19 @@ RSpec.describe Spree::Refund, type: :model do
     context "with perform_after_create: true" do
       let(:perform_after_create) { true }
 
+      it "deprecates usage of the instance variable @response" do
+        expect(Spree::Deprecation).to receive(:warn).twice
+
+        response = refund.instance_variable_get("@response")
+        response.to_s
+      end
+
+      it "sets #perform_response with the gateway response from the payment provider" do
+        expect(Spree::Deprecation).to receive(:warn)
+
+        expect(refund.perform_response).to eq gateway_response
+      end
+
       it "does nothing, perform! already happened after create" do
         expect(Spree::Deprecation).to receive(:warn)
         refund

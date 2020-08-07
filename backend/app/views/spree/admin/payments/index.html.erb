@@ -3,7 +3,9 @@
 <% content_for :page_actions do %>
   <% if @order.outstanding_balance? %>
     <li id="new_payment_section">
-      <%= link_to t('spree.new_payment'), new_admin_order_payment_url(@order), class: 'btn btn-primary' %>
+      <% if can? :create, Spree::Payment %>
+        <%= link_to t('spree.new_payment'), new_admin_order_payment_url(@order), class: 'btn btn-primary' %>
+      <% end %>
     </li>
   <% end %>
 <% end %>

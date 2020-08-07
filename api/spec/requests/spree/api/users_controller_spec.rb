@@ -144,6 +144,21 @@ module Spree
         expect(response.status).to eq(422)
         expect(json_response).to eq({ "error" => "Cannot delete record." })
       end
+
+      it "returns distinct search results" do
+        distinct_user = create(:user, email: 'distinct_test@solidus.com')
+        distinct_user.addresses << create(:address)
+        distinct_user.addresses << create(:address)
+        get spree.api_users_path, params: {
+          q: {
+            m: 'or',
+            email_start: 'distinct_test',
+            firstname_or_lastname_start: 'distinct_test'
+          }
+        }
+        expect(json_response['count']).to eq(1)
+        expect(json_response['users'].first['email']).to eq distinct_user.email
+      end
     end
   end
 end

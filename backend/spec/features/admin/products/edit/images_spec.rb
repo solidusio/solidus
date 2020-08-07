@@ -16,15 +16,30 @@ describe "Product Images", type: :feature do
   end
 
   context "uploading, editing, and deleting an image", js: true do
-    it "should allow an admin to upload and edit an image for a product" do
+    before do
       Spree::Image.attachment_definitions[:attachment].delete :storage
-
       create(:product)
 
       visit spree.admin_path
       click_nav "Products"
       click_icon(:edit)
       click_link "Images"
+    end
+
+    context 'when the user cannot create images' do
+      custom_authorization! do |_user|
+        cannot :create, Spree::Image
+      end
+
+      it "does not show links for creating images" do
+        within '#content-header' do
+          expect(page).not_to have_content 'New Image'
+        end
+        expect(page).not_to have_content 'Choose files to upload'
+      end
+    end
+
+    it "should allow an admin to upload and edit an image for a product" do
       click_link "new_image_link"
       within_fieldset 'New Image' do
         attach_file('image_attachment', file_path)

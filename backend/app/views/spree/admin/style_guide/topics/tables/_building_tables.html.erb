@@ -1,7 +1,8 @@
 <%- snippet = capture do %>
-  <table>
+  <table class='selectable-table'>
     <thead>
       <tr>
+        <th></th>
         <th colspan="2">Item Description</th>
         <th>Long Item Text</th>
         <th>Price</th>
@@ -12,6 +13,7 @@
 
     <tbody>
       <tr>
+        <td><%= check_box_tag 'selected_ids[]', 1, false, class: 'selectable' %></td>
         <td class="item-image">
           <img src="http://placehold.it/50x50">
         </td>
@@ -33,13 +35,35 @@
         <td>$22.99</td>
       </tr>
       <tr>
-        <td colspan="5">UPS Ground (USD)</td>
+        <td><%= check_box_tag 'selected_ids[]', 1, false, class: 'selectable' %></td>
+        <td class="item-image">
+          <img src="http://placehold.it/50x50">
+        </td>
+        <td class="no-wrap">
+          Ruby on Rails Bag<br>
+          SKU: ROR-00012
+        </td>
+        <td>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nihil illinc huc pervenit.
+          Sed quae tandem ista ratio est? Ergo ita: non posse honeste vivi, nisi honeste vivatur?
+          Scisse enim te quis coarguere possit? Duo Reges: constructio interrete.
+          Sic, et quidem diligentius saepiusque ista loquemur inter nos agemusque communiter.
+          Sed in rebus apertissimis nimium longi sumus.
+          Quod si ita se habeat, non possit beatam praestare vitam sapientia.
+          Etenim nec iustitia nec amicitia esse omnino poterunt, nisi ipsae per se expetuntur.
+        </td>
+        <td>$22.99</td>
+        <td class="no-wrap">1 x on hand</td>
+        <td>$22.99</td>
+      </tr>
+      <tr>
+        <td colspan="6">UPS Ground (USD)</td>
         <td>
           <span>$5.00</span>
         </td>
       </tr>
       <tr>
-        <td colspan="6">No tracking details provided.</td>
+        <td colspan="7">No tracking details provided.</td>
       </tr>
     </tbody>
   </table>

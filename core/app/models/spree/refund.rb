@@ -14,7 +14,9 @@ module Spree
 
     validate :amount_is_less_than_or_equal_to_allowed_amount, on: :create
 
+    attr_reader :perform_response
     attr_accessor :perform_after_create
+
     after_create :set_perform_after_create_default
     after_create :perform!
     after_create :clear_perform_after_create
@@ -48,10 +50,18 @@ module Spree
 
       credit_cents = money.cents
 
-      response = process!(credit_cents)
-      log_entries.build(details: response.to_yaml)
+      @perform_response = process!(credit_cents)
 
-      update!(transaction_id: response.authorization)
+      @response = Spree::DeprecatedInstanceVariableProxy.new(
+        self,
+        :perform_response,
+        :@response,
+        Spree::Deprecation,
+        "Please, do not use Spree::Refund @response anymore, use Spree::Refund#perform_response"
+      )
+
+      log_entries.build(details: perform_response.to_yaml)
+      update!(transaction_id: perform_response.authorization)
       update_order
     end
 

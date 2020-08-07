@@ -26,6 +26,30 @@ module Spree
       end
     end
 
+    # Loads all Solidus' core and application's event subscribers files.
+    # The latter are loaded automatically only when the preference
+    # Spree::Config.events.autoload_subscribers is set to a truthy value.
+    #
+    # Files must be placed under the directory `app/subscribers` and their
+    # name must end with `_subscriber.rb`.
+    #
+    # Loading the files has the side effect of adding their module to the
+    # list in Spree::Event.subscribers.
+    def require_subscriber_files
+      pattern = "app/subscribers/**/*_subscriber.rb"
+
+      # Load Solidus subscribers
+      # rubocop:disable Rails/DynamicFindBy
+      solidus_core_dir = Gem::Specification.find_by_name('solidus_core').gem_dir
+      # rubocop:enable Rails/DynamicFindBy
+      Dir.glob(File.join(solidus_core_dir, pattern)) { |c| require_dependency(c.to_s) }
+
+      # Load application subscribers, only when the flag is set to true:
+      if Spree::Config.events.autoload_subscribers
+        Rails.root.glob(pattern) { |c| require_dependency(c.to_s) }
+      end
+    end
+
     # Subscribe to an event with the given name. The provided block is executed
     # every time the subscribed event is fired.
     #

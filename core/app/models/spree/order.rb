@@ -23,7 +23,8 @@ module Spree
     ORDER_NUMBER_LETTERS = false
     ORDER_NUMBER_PREFIX  = 'R'
 
-    include Spree::Order::Checkout
+    include ::Spree::Config.state_machines.order
+
     include Spree::Order::Payments
 
     class InsufficientStock < StandardError
@@ -105,6 +106,8 @@ module Spree
 
     # Returns
     has_many :return_authorizations, dependent: :destroy, inverse_of: :order
+    has_many :return_items, through: :inventory_units
+    has_many :customer_returns, through: :return_items
     has_many :reimbursements, inverse_of: :order
     has_many :refunds, through: :payments
 
@@ -562,6 +565,18 @@ module Spree
       end
     end
 
+    def ensure_billing_address
+      return unless billing_address_required?
+      return if bill_address&.valid?
+
+      errors.add(:base, I18n.t('spree.bill_address_required'))
+      false
+    end
+
+    def billing_address_required?
+      Spree::Config.billing_address_required
+    end
+
     def create_proposed_shipments
       if completed?
         raise CannotRebuildShipments.new(I18n.t('spree.cannot_rebuild_shipments_order_completed'))
@@ -914,15 +929,27 @@ module Spree
     end
 
     def after_cancel
-      shipments.each(&:cancel!)
-      payments.completed.each { |payment| payment.cancel! unless payment.fully_refunded? }
-      payments.store_credits.pending.each(&:void_transaction!)
+      cancel_shipments!
+      cancel_payments!
 
       send_cancel_email
       # rubocop:disable Rails/SkipsModelValidations
       update_column(:canceled_at, Time.current)
       # rubocop:enable Rails/SkipsModelValidations
       recalculate
+    end
+
+    def cancel_shipments!
+      shipments.each(&:cancel!)
+    end
+
+    def cancel_payments!
+      payments.each do |payment|
+        next if payment.fully_refunded?
+        next unless payment.pending? || payment.completed?
+
+        payment.cancel!
+      end
     end
 
     def send_cancel_email

@@ -809,6 +809,8 @@ en:
     add_option_value: Add Option Value
     add_product: Add Product
     add_product_properties: Add Product Properties
+    add_variant_properties: Add Variant Properties
+    applies_to_all_variant_properties: Applies to all Variant Properties above
     add_rule_of_type: Add rule of type
     add_state: Add State
     add_stock: Add Stock
@@ -1514,6 +1516,11 @@ en:
     iso_name: Iso Name
     item: Item
     item_description: Item Description
+    items_selected:
+      all: All Items Selected
+      none: No Item Selected
+      one: One Item Selected
+      custom: Items Selected
     item_total: Item Total
     item_total_rule:
       operators:
@@ -1984,6 +1991,7 @@ en:
     ship: ship
     ship_address: Ship Address
     ship_address_required: Valid shipping address required
+    bill_address_required: Valid billing address required
     ship_total: Ship Total
     shipment: Shipment
     shipment_adjustments: Shipment adjustments

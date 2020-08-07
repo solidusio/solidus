@@ -22,7 +22,7 @@ in service of an order:
 -->
 
 - **[Customer][users]**: Every order requires an associated customer (also called a
-  *user*.
+  *user*).
 - **Shipments**: An order may have one or many shipments associated with it.
 - **Adjustments**: Additional charges (taxes and shipping fees) and credits
   ([promotional discounts][promotions]) are tied to the order.

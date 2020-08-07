@@ -1475,6 +1475,60 @@ paths:
         - api-key: []
       requestBody:
         $ref: '#/components/requestBodies/return-authorization-input'
+  '/orders/{order_id}/customer_returns/{id}':
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+      summary: Get order customer return
+      description: Gets an orders customer return.
+      operationId: get-order-customer-return
+      tags:
+        - Customer returns
+      security:
+        - api-key: []
+    parameters:
+      - name: order_id
+        in: path
+        required: true
+        description: The order number
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+    put:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/customer-return'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Update order customer return
+      description: "Updates an orders customer return."
+      operationId: update-order-customer-return
+      tags:
+        - Customer returns
+      requestBody:
+        $ref: '#/components/requestBodies/customer-return-input'
+      security:
+        - api-key: []
   /orders:
     get:
       responses:
@@ -4908,6 +4962,65 @@ paths:
             type: boolean
       security:
         - api-key: []
+  '/orders/{order_number}/customer_returns':
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/pagination-data'
+                  - type: object
+                    properties:
+                      customer_returns:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/customer-return'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+      summary: List order customer returns
+      description: "Lists an order's customer returns."
+      operationId: list-order-customer-returns
+      tags:
+        - Customer returns
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/per_page'
+      security:
+        - api-key: []
+    parameters:
+      - name: order_number
+        in: path
+        schema:
+          type: string
+        required: true
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/customer-return'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Create order customer return
+      description: Creates a customer return for an order.
+      operationId: create-order-customer-return
+      tags:
+        - Customer returns
+      requestBody:
+        $ref: '#/components/requestBodies/customer-return-input'
+      security:
+        - api-key: []
 tags:
   - name: Address books
   - name: Addresses
@@ -4929,6 +5042,7 @@ tags:
   - name: Promotions
   - name: Properties
   - name: Return authorizations
+  - name: Customer returns
   - name: Shipments
   - name: States
   - name: Stock items
@@ -5068,6 +5182,11 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/return-authorization-input'
+    customer-return-input:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/customer-return-input'
     option-value-input:
       content:
         application/json:
@@ -6587,4 +6706,48 @@ components:
         quantity:
           type: integer
         stock_item_id:
+          type: integer
+    customer-return-input:
+      type: object
+      title: Customer return
+      properties:
+        number:
+          type: string
+        stock_location_id:
+          type: integer
+        return_items_attributes:
+          type: array
+          items:
+            type: object
+            properties:
+              inventory_unit_id:
+                type: integer
+              reception_status_event:
+                type: string
+              return_authorization_id:
+                type: integer
+              exchange_variant_id:
+                type: integer
+              preferred_reimbursement_type_id:
+                type: integer
+              resellable:
+                type: boolean
+            required:
+              - inventory_unit_id
+      required:
+        - stock_location_id
+        - return_items_attributes
+      x-examples:
+        Create New Customer Return:
+          stock_location_id: 1
+          return_items_attributes:
+            - inventory_unit_id: 198
+              reception_status_event: receive
+    customer-return:
+      type: object
+      title: Customer return
+      properties:
+        number:
+          type: string
+        stock_location_id:
           type: integer

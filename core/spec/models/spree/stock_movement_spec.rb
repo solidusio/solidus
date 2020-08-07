@@ -11,6 +11,10 @@ RSpec.describe Spree::StockMovement, type: :model do
     expect(subject).to respond_to(:stock_item)
   end
 
+  it 'should have a variant' do
+    expect(subject).to respond_to(:variant)
+  end
+
   it 'is readonly unless new' do
     subject.save
     expect {

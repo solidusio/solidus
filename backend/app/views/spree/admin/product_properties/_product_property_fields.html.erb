@@ -12,8 +12,13 @@
     <%= f.text_field :value %>
   </td>
   <td class="actions">
-    <% if f.object.persisted? && can?(:destroy, f.object) %>
-      <%= link_to_delete f.object, no_text: true %>
+    <% if f.object.persisted? %>
+      <% if can?(:destroy, f.object) %>
+        <%= link_to_delete f.object, no_text: true %>
+      <% end %>
+    <% else %>
+      <%= link_to_with_icon('trash', 'remove', '#', no_text: true, class: "spree_remove_fields",
+            data: { action: 'remove' }, title: t('spree.actions.remove')) %>
     <% end %>
   </td>
 </tr>

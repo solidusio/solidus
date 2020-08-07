@@ -23,6 +23,21 @@ describe 'Users', type: :feature do
 
   let(:orders) { [order, order_2] }
 
+  describe 'the user items page' do
+    context 'when the user cannot manage orders' do
+      custom_authorization! do |_user|
+        cannot :manage, Spree::Order
+        can [:display, :admin], Spree::Order
+      end
+
+      before { visit spree.items_admin_user_path(user_a) }
+
+      it 'does not show the link for creating new orders' do
+        expect(page).not_to have_content 'No Orders found. Create One.'
+      end
+    end
+  end
+
   shared_examples_for 'a user page' do
     it 'has lifetime stats' do
       orders

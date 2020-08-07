@@ -122,6 +122,10 @@
 .style-guide-code,
 .style-guide-result {
   margin: 1rem 0;
+
+  img {
+    max-width: none;
+  }
 }
 
 .color-variables {

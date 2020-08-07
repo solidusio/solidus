@@ -56,7 +56,9 @@ module Spree
           shipments_hash.each do |target|
             shipment = Shipment.new
             shipment.tracking       = target[:tracking]
-            shipment.stock_location = Spree::StockLocation.find_by(admin_name: target[:stock_location]) || Spree::StockLocation.find_by!(name: target[:stock_location])
+            shipment.stock_location = Spree::StockLocation.find_by(id: target[:stock_location_id]) ||
+              Spree::StockLocation.find_by(admin_name: target[:stock_location]) ||
+              Spree::StockLocation.find_by!(name: target[:stock_location])
 
             inventory_units = target[:inventory_units] || []
             inventory_units.each do |inventory_unit|
@@ -98,16 +100,28 @@ module Spree
 
         def self.create_line_items_from_params(line_items_hash, order)
           return {} unless line_items_hash
-          line_items_hash.each_key do |key|
-            extra_params = line_items_hash[key].except(:variant_id, :quantity, :sku)
-            line_item = ensure_variant_id_from_params(line_items_hash[key])
-            line_item = order.contents.add(Spree::Variant.find(line_item[:variant_id]), line_item[:quantity])
-            # Raise any errors with saving to prevent import succeeding with line items failing silently.
-            if extra_params.present?
-              line_item.update!(extra_params)
-            else
-              line_item.save!
+
+          case line_items_hash
+          when Hash
+            line_items_hash.each_key do |key|
+              create_line_item(line_items_hash[key], order)
             end
+          when Array
+            line_items_hash.each do |line_item_hash|
+              create_line_item(line_item_hash, order)
+            end
+          end
+        end
+
+        def self.create_line_item(line_item_hash, order)
+          extra_params = line_item_hash.except(:variant_id, :quantity, :sku)
+          line_item = ensure_variant_id_from_params(line_item_hash)
+          line_item = order.contents.add(Spree::Variant.find(line_item[:variant_id]), line_item[:quantity])
+          # Raise any errors with saving to prevent import succeeding with line items failing silently.
+          if extra_params.present?
+            line_item.update!(extra_params)
+          else
+            line_item.save!
           end
         end
 
@@ -133,7 +147,8 @@ module Spree
             # spree_wombat serializes payment state as status so imported orders should fall back to status field.
             payment.state = target[:state] || target[:status] || 'completed'
             payment.payment_method = Spree::PaymentMethod.find_by!(name: target[:payment_method])
-            payment.source = create_source_payment_from_params(target[:source], payment) if target[:source]
+            source_attributes = target[:source] || target[:source_attributes]
+            payment.source = create_source_payment_from_params(source_attributes, payment) if source_attributes
             payment.save!
           end
         end
