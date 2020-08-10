@@ -41,5 +41,14 @@ describe Spree::Admin::PricesController do
         expect(assigns(:product)).to eq(product)
       end
     end
+    context "existent product id not given" do
+      subject { get :index, params: { product_id: 'non-existent-product' } }
+
+      it "cannot find non-existent product" do
+        subject
+        expect(response).to redirect_to(spree.admin_products_path)
+        expect(flash[:error]).to eql("Product is not found")
+      end
+    end
   end
 end

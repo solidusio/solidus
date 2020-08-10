@@ -53,6 +53,15 @@ module Spree
                 expect(assigns(:collection)).to include deleted_variant
               end
             end
+            context "existent product id not given" do
+              let(:params) { { product_id: 'non-existent-product' } }
+
+              it "cannot find non-existent product" do
+                subject
+                expect(response).to redirect_to(spree.admin_products_path)
+                expect(flash[:error]).to eql("Product is not found")
+              end
+            end
           end
         end
       end

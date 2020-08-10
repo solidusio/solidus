@@ -36,6 +36,8 @@ module Spree
       def load_order
         @order = Spree::Order.find_by!(number: params[:order_id])
         authorize! action, @order
+      rescue ActiveRecord::RecordNotFound
+        resource_not_found(flash_class: Spree::Order, redirect_url: admin_orders_path)
       end
 
       def model_class

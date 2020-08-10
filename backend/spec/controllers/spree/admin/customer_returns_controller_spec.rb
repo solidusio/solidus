@@ -26,6 +26,14 @@ module Spree
         end
       end
 
+      context "existent order id not given" do
+        it "redirects and flashes about the non-existent order" do
+          get :index, params: { order_id: 'non-existent-order' }
+          expect(response).to redirect_to(spree.admin_orders_path)
+          expect(flash[:error]).to eql("Order is not found")
+        end
+      end
+
       describe "#new" do
         let(:order) { create(:shipped_order, line_items_count: 1) }
         let!(:inactive_reimbursement_type)      { create(:reimbursement_type, active: false) }
