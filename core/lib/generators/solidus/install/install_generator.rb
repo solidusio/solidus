@@ -9,6 +9,11 @@ module Solidus
   class InstallGenerator < Rails::Generators::Base
     CORE_MOUNT_ROUTE = "mount Spree::Core::Engine"
 
+    PAYMENT_METHODS = {
+      'paypal' => 'solidus_paypal_commerce_platform',
+      'none' => nil,
+    }
+
     class_option :migrate, type: :boolean, default: true, banner: 'Run Solidus migrations'
     class_option :seed, type: :boolean, default: true, banner: 'Load seed data (migrations must be run)'
     class_option :sample, type: :boolean, default: true, banner: 'Load sample data (migrations must be run)'
@@ -19,6 +24,11 @@ module Solidus
     class_option :lib_name, type: :string, default: 'spree'
     class_option :with_authentication, type: :boolean, default: true
     class_option :enforce_available_locales, type: :boolean, default: nil
+    class_option :payment_method,
+                 type: :string,
+                 enum: PAYMENT_METHODS.keys,
+                 default: PAYMENT_METHODS.keys.first,
+                 desc: "Indicates which payment method to install."
 
     def self.source_paths
       paths = superclass.source_paths
@@ -112,6 +122,22 @@ module Solidus
 
         gem 'solidus_auth_devise'
       end
+    end
+
+    def install_payment_method
+      name = options[:payment_method]
+
+      unless options[:auto_accept]
+        available_names = PAYMENT_METHODS.keys
+
+        name = ask("
+  You can select a payment method to be included in the installation process.
+  Please select a payment method name:", limited_to: available_names, default: available_names.first)
+      end
+
+      gem_name = PAYMENT_METHODS.fetch(name)
+
+      gem gem_name if gem_name
     end
 
     def include_seed_data
