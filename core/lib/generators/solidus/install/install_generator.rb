@@ -10,8 +10,8 @@ module Solidus
     CORE_MOUNT_ROUTE = "mount Spree::Core::Engine"
 
     class_option :migrate, type: :boolean, default: true, banner: 'Run Solidus migrations'
-    class_option :seed, type: :boolean, default: true, banner: 'load seed data (migrations must be run)'
-    class_option :sample, type: :boolean, default: true, banner: 'load sample data (migrations must be run)'
+    class_option :seed, type: :boolean, default: true, banner: 'Load seed data (migrations must be run)'
+    class_option :sample, type: :boolean, default: true, banner: 'Load sample data (migrations must be run)'
     class_option :auto_accept, type: :boolean
     class_option :user_class, type: :string
     class_option :admin_email, type: :string
