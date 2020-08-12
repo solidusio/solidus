@@ -114,7 +114,7 @@ module Solidus
     end
 
     def install_default_plugins
-      if options[:with_authentication] && (options[:auto_accept] || yes?("
+      if options[:with_authentication] && (options[:auto_accept] || !no?("
   Solidus has a default authentication extension that uses Devise.
   You can find more info at https://github.com/solidusio/solidus_auth_devise.
 
