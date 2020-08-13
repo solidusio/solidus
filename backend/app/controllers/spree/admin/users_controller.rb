@@ -124,7 +124,7 @@ module Spree
       def collection
         return @collection if @collection
 
-        @search = Spree.user_class.ransack(params[:q])
+        @search = super.ransack(params[:q])
         @collection = @search.result.includes(:spree_roles)
         @collection = @collection.includes(:spree_orders)
         @collection = @collection.page(params[:page]).per(Spree::Config[:admin_products_per_page])

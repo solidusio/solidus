@@ -18,6 +18,49 @@ describe Spree::Admin::UsersController, type: :controller do
     }
   end
 
+  context "#index" do
+    stub_authorization! do |_user|
+      can :manage, Spree.user_class
+    end
+
+    context "when the user can manage all users" do
+      it "assigns a list of all users as @collection" do
+        get :index, params: { id: user.id }
+        expect(assigns(:collection)).to eq [user]
+      end
+
+      it "assigns a ransack search for Spree.user_class" do
+        get :index, params: { id: user.id }
+        expect(assigns[:search]).to be_a Ransack::Search
+        expect(assigns[:search].klass).to eq Spree.user_class
+      end
+    end
+
+    context "when user cannot manage some users" do
+      stub_authorization! do |_user|
+        can :manage, Spree.user_class
+        cannot :manage, Spree.user_class, email: 'not_accessible_user@example.com'
+      end
+
+      it "assigns a list of accessible users as @collection" do
+        not_accessible_user = create(:user, email: 'not_accessible_user@example.com')
+
+        get :index, params: { id: user.id }
+        expect(assigns(:collection)).to_not include not_accessible_user
+      end
+    end
+
+    context "when Spree.user_class does not respond to #accessible_by" do
+      it "assigns a list of all users as @collection" do
+        allow(Spree.user_class).to receive(:respond_to?).and_call_original
+        allow(Spree.user_class).to receive(:respond_to?).with(:accessible_by).and_return(false)
+
+        get :index, params: { id: user.id }
+        expect(assigns(:collection)).to eq [user]
+      end
+    end
+  end
+
   context "#show" do
     stub_authorization! do |_user|
       can [:admin, :manage], Spree.user_class
