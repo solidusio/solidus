@@ -43,10 +43,10 @@ describe Spree::Admin::UsersController, type: :controller do
       end
 
       it "assigns a list of accessible users as @collection" do
-        not_accessible_user = create(:user, email: 'not_accessible_user@example.com')
+        create(:user, email: 'not_accessible_user@example.com')
 
         get :index, params: { id: user.id }
-        expect(assigns(:collection)).to_not include not_accessible_user
+        expect(assigns(:collection)).to eq [user]
       end
     end
 
@@ -108,6 +108,38 @@ describe Spree::Admin::UsersController, type: :controller do
       it 'denies access' do
         post :index
         expect(response).to redirect_to '/unauthorized'
+      end
+    end
+  end
+
+  context '#new' do
+    context "when the user can manage all roles" do
+      stub_authorization! do |_user|
+        can :manage, Spree.user_class
+        can :index, Spree::Role
+      end
+
+      it "assigns a list of all roles as @roles" do
+        role = create(:role)
+
+        get :new, params: { id: user.id }
+        expect(assigns(:roles)).to eq [role]
+      end
+    end
+
+    context "when user cannot list some roles" do
+      stub_authorization! do |_user|
+        can :manage, Spree.user_class
+        can :index, Spree::Role
+        cannot :index, Spree::Role, name: 'not_accessible_role'
+      end
+
+      it "assigns a list of accessible roles as @roles" do
+        accessible_role = create(:role, name: 'accessible_role')
+        create(:role, name: 'not_accessible_role')
+
+        get :new, params: { id: user.id }
+        expect(assigns(:roles)).to eq [accessible_role]
       end
     end
   end

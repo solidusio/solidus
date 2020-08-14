@@ -161,7 +161,7 @@ module Spree
       end
 
       def load_roles
-        @roles = Spree::Role.all
+        @roles = Spree::Role.accessible_by(current_ability)
         if @user
           @user_roles = @user.spree_roles
         end
