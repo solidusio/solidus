@@ -141,6 +141,10 @@ module Spree
           attributes += [{ spree_role_ids: [] }]
         end
 
+        if can? :manage, Spree::StockLocation
+          attributes += [{ stock_location_ids: [] }]
+        end
+
         unless can? :update_password, @user
           attributes -= [:password, :password_confirmation]
         end
@@ -178,7 +182,10 @@ module Spree
       end
 
       def set_stock_locations
-        @user.stock_locations = Spree::StockLocation.where(id: (params[:user][:stock_location_ids] || []))
+        if user_params[:stock_location_ids]
+          @user.stock_locations =
+            Spree::StockLocation.accessible_by(current_ability).where(id: user_params[:stock_location_ids])
+        end
       end
     end
   end

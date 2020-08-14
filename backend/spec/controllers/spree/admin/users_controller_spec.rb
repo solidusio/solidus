@@ -225,11 +225,45 @@ describe Spree::Admin::UsersController, type: :controller do
       expect(user.reload.bill_address.city).to eq('New York')
     end
 
-    it "can set stock locations" do
-      location = Spree::StockLocation.create(name: "my_location")
-      location_2 = Spree::StockLocation.create(name: "my_location_2")
-      post :create, params: { user: { stock_location_ids: [location.id, location_2.id] } }
-      expect(user.stock_locations).to match_array([location, location_2])
+    context "when the user can manage stock locations" do
+      stub_authorization! do |_user|
+        can :manage, Spree.user_class
+        can :manage, Spree::StockLocation
+      end
+
+      it "can create user with stock locations" do
+        location = Spree::StockLocation.create(name: "my_location")
+        post :create, params: { user: { stock_location_ids: [location.id] } }
+        expect(user.stock_locations).to eq([location])
+      end
+    end
+
+    context "when the user cannot manage stock locations" do
+      stub_authorization! do |_user|
+        can :manage, Spree.user_class
+        cannot :manage, Spree::StockLocation
+      end
+
+      it "cannot assign users stock locations" do
+        location = Spree::StockLocation.create(name: "my_location")
+        post :create, params: { user: { stock_location_ids: [location.id] } }
+        expect(user.stock_locations).to eq([])
+      end
+    end
+
+    context "when the user can manage only some stock locations" do
+      stub_authorization! do |_user|
+        can :manage, Spree.user_class
+        can :manage, Spree::StockLocation
+        cannot :manage, Spree::StockLocation, name: 'not_accessible_location'
+      end
+
+      it "can assign accessible stock locations to user" do
+        location1 = Spree::StockLocation.create(name: "accessible_location")
+        location2 = Spree::StockLocation.create(name: "not_accessible_location")
+        post :create, params: { user: { stock_location_ids: [location1.id, location2.id] } }
+        expect(user.stock_locations).to eq([location1])
+      end
     end
   end
 
@@ -341,11 +375,49 @@ describe Spree::Admin::UsersController, type: :controller do
       expect(user.reload.bill_address.city).to eq('New York')
     end
 
-    it "can set stock locations" do
-      location = Spree::StockLocation.create(name: "my_location")
-      location_2 = Spree::StockLocation.create(name: "my_location_2")
-      post :update, params: { id: user.id, user: { stock_location_ids: [location.id, location_2.id] } }
-      expect(user.stock_locations).to match_array([location, location_2])
+    context "when the user can manage stock locations" do
+      stub_authorization! do |_user|
+        can :manage, Spree.user_class
+        can :manage, Spree::StockLocation
+      end
+
+      it "can update user stock locations" do
+        location1 = Spree::StockLocation.create(name: "my_location")
+        location2 = Spree::StockLocation.create(name: "my_location2")
+        user.stock_locations = [location1]
+        put :update, params: { id: user.id, user: { stock_location_ids: [location2.id] } }
+        expect(user.reload.stock_locations).to eq([location2])
+      end
+    end
+
+    context "when the user cannot manage stock locations" do
+      stub_authorization! do |_user|
+        can :manage, Spree.user_class
+        cannot :manage, Spree::StockLocation
+      end
+
+      it "cannot update users stock locations" do
+        location1 = Spree::StockLocation.create(name: "my_location")
+        location2 = Spree::StockLocation.create(name: "my_location2")
+        user.stock_locations = [location1]
+        put :update, params: { id: user.id, user: { stock_location_ids: [location2.id] } }
+        expect(user.reload.stock_locations).to eq([location1])
+      end
+    end
+
+    context "when the user can manage only some stock locations" do
+      stub_authorization! do |_user|
+        can :manage, Spree.user_class
+        can :manage, Spree::StockLocation
+        cannot :manage, Spree::StockLocation, name: 'not_accessible_location'
+      end
+
+      it "can update accessible stock locations to user" do
+        location1 = Spree::StockLocation.create(name: "accessible_location")
+        location2 = Spree::StockLocation.create(name: "not_accessible_location")
+        put :update, params: { id: user.id, user: { stock_location_ids: [location1.id, location2.id] } }
+        expect(user.reload.stock_locations).to eq([location1])
+      end
     end
   end
 
