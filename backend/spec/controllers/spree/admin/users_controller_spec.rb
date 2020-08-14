@@ -142,6 +142,36 @@ describe Spree::Admin::UsersController, type: :controller do
         expect(assigns(:roles)).to eq [accessible_role]
       end
     end
+
+    context "when the user can manage all stock_locations" do
+      stub_authorization! do |_user|
+        can :manage, Spree.user_class
+        can :index, Spree::StockLocation
+      end
+
+      it "assigns a list of all stock_locations as @stock_locations" do
+        stock_location = create(:stock_location)
+
+        get :new, params: { id: user.id }
+        expect(assigns(:stock_locations)).to eq [stock_location]
+      end
+    end
+
+    context "when user cannot list some stock_locations" do
+      stub_authorization! do |_user|
+        can :manage, Spree.user_class
+        can :index, Spree::StockLocation
+        cannot :index, Spree::StockLocation, name: 'not_accessible_stock_location'
+      end
+
+      it "assigns a list of accessible stock_locations as @stock_locations" do
+        accessible_stock_location = create(:stock_location, name: 'accessible_stock_location')
+        create(:stock_location, name: 'not_accessible_stock_location')
+
+        get :new, params: { id: user.id }
+        expect(assigns(:stock_locations)).to eq [accessible_stock_location]
+      end
+    end
   end
 
   describe "#create" do

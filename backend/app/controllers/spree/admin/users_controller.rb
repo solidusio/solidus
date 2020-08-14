@@ -168,7 +168,7 @@ module Spree
       end
 
       def load_stock_locations
-        @stock_locations = Spree::StockLocation.all
+        @stock_locations = Spree::StockLocation.accessible_by(current_ability)
       end
 
       def set_roles
