@@ -176,8 +176,8 @@ module Spree
       end
 
       def set_roles
-        if user_params[:spree_role_ids] && can?(:manage, Spree::Role)
-          @user.spree_roles = Spree::Role.where(id: user_params[:spree_role_ids])
+        if user_params[:spree_role_ids]
+          @user.spree_roles = Spree::Role.accessible_by(current_ability).where(id: user_params[:spree_role_ids])
         end
       end
 

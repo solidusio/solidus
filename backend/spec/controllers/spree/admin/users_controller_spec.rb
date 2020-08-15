@@ -204,6 +204,11 @@ describe Spree::Admin::UsersController, type: :controller do
     end
 
     context "when the user cannot manage roles" do
+      stub_authorization! do |_user|
+        can :manage, Spree.user_class
+        cannot :manage, Spree::Role
+      end
+
       it "cannot assign users roles" do
         post :create, params: { user: { name: "Bob Bloggs", spree_role_ids: [dummy_role.id] } }
         expect(user.spree_roles).to eq([])
@@ -212,6 +217,21 @@ describe Spree::Admin::UsersController, type: :controller do
       it "can create user without roles" do
         post :create, params: { user: { name: "Bob Bloggs" } }
         expect(user.spree_roles).to eq([])
+      end
+    end
+
+    context "when the user can manage only some roles" do
+      stub_authorization! do |_user|
+        can :manage, Spree.user_class
+        can :manage, Spree::Role
+        cannot :manage, Spree::Role, name: "not_accessible_role"
+      end
+
+      it "can assign accessible roles to user" do
+        role1 = Spree::Role.create(name: "accessible_role")
+        role2 = Spree::Role.create(name: "not_accessible_role")
+        post :create, params: { user: { spree_role_ids: [role1.id, role2.id] } }
+        expect(user.spree_roles).to eq([role1])
       end
     end
 
@@ -255,7 +275,7 @@ describe Spree::Admin::UsersController, type: :controller do
       stub_authorization! do |_user|
         can :manage, Spree.user_class
         can :manage, Spree::StockLocation
-        cannot :manage, Spree::StockLocation, name: 'not_accessible_location'
+        cannot :manage, Spree::StockLocation, name: "not_accessible_location"
       end
 
       it "can assign accessible stock locations to user" do
@@ -315,6 +335,21 @@ describe Spree::Admin::UsersController, type: :controller do
         expect {
           put :update, params: { id: user.id, user: { name: "Bob Bloggs" } }
         }.not_to change { user.reload.spree_roles.to_a }
+      end
+    end
+
+    context "when the user can manage only some stock locations" do
+      stub_authorization! do |_user|
+        can :manage, Spree.user_class
+        can :manage, Spree::Role
+        cannot :manage, Spree::Role, name: "not_accessible_role"
+      end
+
+      it "can update accessible roles to user" do
+        role1 = Spree::Role.create(name: "accessible_role")
+        role2 = Spree::Role.create(name: "not_accessible_role")
+        put :update, params: { id: user.id, user: { spree_role_ids: [role1.id, role2.id] } }
+        expect(user.reload.spree_roles).to eq([role1])
       end
     end
 
@@ -409,7 +444,7 @@ describe Spree::Admin::UsersController, type: :controller do
       stub_authorization! do |_user|
         can :manage, Spree.user_class
         can :manage, Spree::StockLocation
-        cannot :manage, Spree::StockLocation, name: 'not_accessible_location'
+        cannot :manage, Spree::StockLocation, name: "not_accessible_location"
       end
 
       it "can update accessible stock locations to user" do
