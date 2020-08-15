@@ -172,7 +172,7 @@ module Spree
     #
     # @return [Boolean] true if this product is available
     def available?
-      !(available_on.nil? || available_on.future?) && !deleted?
+      !deleted? && available_on&.past?
     end
 
     # Groups variants by the specified option type.
