@@ -179,11 +179,11 @@ module Spree
     end
 
     def source_required?
-      payment_method.present? && payment_method.source_required?
+      !!payment_method&.source_required?
     end
 
     def profiles_supported?
-      payment_method.respond_to?(:payment_profiles_supported?) && payment_method.payment_profiles_supported?
+      !!payment_method.try(:payment_profiles_supported?)
     end
 
     def create_payment_profile
