@@ -44,6 +44,10 @@ module Spree
       super(normalize_action(action), *args)
     end
 
+    def model_adapter(model_class, action)
+      super(model_class, normalize_action(action))
+    end
+
     private
 
     def normalize_action(action)

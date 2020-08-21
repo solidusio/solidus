@@ -318,5 +318,12 @@ RSpec.describe Spree::Ability, type: :model do
       expect(Spree::Deprecation).to have_received(:warn)
         .with(/alias action display is deprecated/)
     end
+
+    it 'raises deprecation when called on models by accessible_by' do
+      Spree::Order.accessible_by(ability, :display)
+
+      expect(Spree::Deprecation).to have_received(:warn)
+        .with(/alias action display is deprecated/)
+    end
   end
 end
