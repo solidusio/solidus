@@ -62,7 +62,7 @@ module Spree
           @human
         ].compact
         options = { scope: [:activerecord, :models], count: 1, default: defaults }.merge!(options.except(:default))
-        I18n.translate(defaults.shift, options)
+        I18n.translate(defaults.shift, **options)
       end
     end
 

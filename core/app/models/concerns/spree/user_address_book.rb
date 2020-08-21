@@ -5,7 +5,7 @@ module Spree
     extend ActiveSupport::Concern
 
     included do
-      has_many :user_addresses, -> { active }, { foreign_key: "user_id", class_name: "Spree::UserAddress" } do
+      has_many :user_addresses, -> { active }, **{ foreign_key: "user_id", class_name: "Spree::UserAddress" } do
         def find_first_by_address_values(address_attrs)
           detect { |ua| ua.address == Spree::Address.new(address_attrs) }
         end

@@ -122,33 +122,33 @@ RSpec.describe Spree::Promotion, type: :model do
       @payload[:path] = 'content/cvv'
       expect(@action1).to receive(:perform).with(hash_including(@payload))
       expect(@action2).to receive(:perform).with(hash_including(@payload))
-      promotion.activate(@payload)
+      promotion.activate(**@payload)
     end
 
     it "does not perform actions against an order in a finalized state" do
       expect(@action1).not_to receive(:perform)
 
       @order.state = 'complete'
-      promotion.activate(@payload)
+      promotion.activate(**@payload)
 
       @order.state = 'awaiting_return'
-      promotion.activate(@payload)
+      promotion.activate(**@payload)
 
       @order.state = 'returned'
-      promotion.activate(@payload)
+      promotion.activate(**@payload)
     end
 
     it "does activate if newer then order" do
       expect(@action1).to receive(:perform).with(hash_including(@payload))
       promotion.created_at = Time.current + 2
-      expect(promotion.activate(@payload)).to be true
+      expect(promotion.activate(**@payload)).to be true
     end
 
     context "keeps track of the orders" do
       context "when activated" do
         it "assigns the order" do
           expect(promotion.orders).to be_empty
-          expect(promotion.activate(@payload)).to be true
+          expect(promotion.activate(**@payload)).to be true
           expect(promotion.orders.first).to eql @order
         end
 
@@ -165,7 +165,7 @@ RSpec.describe Spree::Promotion, type: :model do
           expect(@order.promotions.size).to eq(0)
 
           expect(
-            promotion.activate(@payload)
+            promotion.activate(**@payload)
           ).to eq(true)
 
           aggregate_failures do
@@ -180,19 +180,19 @@ RSpec.describe Spree::Promotion, type: :model do
         it "will not assign the order" do
           @order.state = 'complete'
           expect(promotion.orders).to be_empty
-          expect(promotion.activate(@payload)).to be_falsey
+          expect(promotion.activate(**@payload)).to be_falsey
           expect(promotion.orders).to be_empty
         end
       end
       context "when the order is already associated" do
         before do
           expect(promotion.orders).to be_empty
-          expect(promotion.activate(@payload)).to be true
+          expect(promotion.activate(**@payload)).to be true
           expect(promotion.orders.to_a).to eql [@order]
         end
 
         it "will not assign the order again" do
-          expect(promotion.activate(@payload)).to be true
+          expect(promotion.activate(**@payload)).to be true
           expect(promotion.orders.reload.to_a).to eql [@order]
         end
       end

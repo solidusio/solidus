@@ -27,7 +27,7 @@ RSpec.describe Spree::Tax::TaxLocation do
   end
 
   describe "initialization" do
-    subject { described_class.new(args) }
+    subject { described_class.new(**args) }
 
     context 'with a country object' do
       let(:args) { { country: country } }
@@ -40,7 +40,7 @@ RSpec.describe Spree::Tax::TaxLocation do
 
   describe "#country" do
     let(:country) { create(:country) }
-    subject { described_class.new(args).country }
+    subject { described_class.new(**args).country }
 
     context 'with a country object' do
       let(:args) { { country: country } }
@@ -56,7 +56,7 @@ RSpec.describe Spree::Tax::TaxLocation do
   end
 
   describe "#empty?" do
-    subject { described_class.new(args).empty? }
+    subject { described_class.new(**args).empty? }
 
     context 'with a country present' do
       let(:args) { { country: country } }
