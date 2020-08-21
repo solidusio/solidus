@@ -141,11 +141,13 @@ module Spree
 
       private
 
-      def convert_preference_value(value, type)
+      def convert_preference_value(value, type, preference_encryptor = nil)
         return nil if value.nil?
         case type
         when :string, :text
           value.to_s
+        when :encrypted_string
+          preference_encryptor.encrypt(value.to_s)
         when :password
           value.to_s
         when :decimal
