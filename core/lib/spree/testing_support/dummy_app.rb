@@ -60,9 +60,8 @@ module DummyApp
     config.active_support.deprecation = :stderr
     config.secret_key_base = 'SECRET_TOKEN'
 
-    unless RAILS_6_OR_ABOVE
-      config.active_record.sqlite3.represent_boolean_as_integer = true
-    end
+    config.action_mailer.delivery_job = "ActionMailer::MailDeliveryJob" if RAILS_6_OR_ABOVE
+    config.active_record.sqlite3.represent_boolean_as_integer = true unless RAILS_6_OR_ABOVE
 
     config.storage_path = Rails.root.join('tmp', 'storage')
 
