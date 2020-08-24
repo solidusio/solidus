@@ -19,7 +19,6 @@ module Solidus
     class_option :user_class, type: :string
     class_option :admin_email, type: :string
     class_option :admin_password, type: :string
-    class_option :lib_name, type: :string, default: 'spree'
     class_option :with_authentication, type: :boolean, default: true
     class_option :enforce_available_locales, type: :boolean, default: nil
     class_option :payment_method,
@@ -30,6 +29,7 @@ module Solidus
 
     # @deprecated
     class_option :auto_accept, type: :boolean, hide: true
+    class_option :lib_name, type: :string, hide: true
 
     def self.source_paths
       paths = superclass.source_paths
@@ -48,6 +48,10 @@ module Solidus
 
       # We need to make options mutable so they can be filled in interactively.
       self.options = options.dup if interactive?
+
+      if options[:lib_name]
+        warn "DEPRECATION: using --lib-name is deprecated, it wasn't doing anything and will be removed in a future version."
+      end
 
       @run_migrations = options[:migrate]
       @load_seed_data = options[:seed]
@@ -79,8 +83,6 @@ module Solidus
     end
 
     def setup_assets
-      @lib_name = 'spree'
-
       empty_directory 'app/assets/images'
 
       %w{javascripts stylesheets images}.each do |path|
