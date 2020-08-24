@@ -15,7 +15,7 @@ module Solidus
     class_option :migrate, type: :boolean, default: true, banner: 'Run Solidus migrations'
     class_option :seed, type: :boolean, default: true, banner: 'Load seed data (migrations must be run)'
     class_option :sample, type: :boolean, default: true, banner: 'Load sample data (migrations must be run)'
-    class_option :auto_accept, type: :boolean
+    class_option :interactive, type: :boolean, default: true, desc: 'Ask the user interactively how to install Solidus'
     class_option :user_class, type: :string
     class_option :admin_email, type: :string
     class_option :admin_password, type: :string
@@ -28,6 +28,9 @@ module Solidus
                  default: PAYMENT_METHODS.keys.first,
                  desc: "Indicates which payment method to install."
 
+    # @deprecated
+    class_option :auto_accept, type: :boolean, hide: true
+
     def self.source_paths
       paths = superclass.source_paths
       paths << File.expand_path('../templates', "../../#{__FILE__}")
@@ -37,6 +40,15 @@ module Solidus
     end
 
     def prepare_options
+      @interactive = options[:interactive]
+      if options[:auto_accept]
+        @interactive = false
+        warn "DEPRECATION: using --auto-accept is deprecated, please use --interactive or --no-interactive instead."
+      end
+
+      # We need to make options mutable so they can be filled in interactively.
+      self.options = options.dup if interactive?
+
       @run_migrations = options[:migrate]
       @load_seed_data = options[:seed]
       @load_sample_data = options[:sample]
@@ -112,29 +124,32 @@ module Solidus
     end
 
     def install_default_plugins
-      if options[:with_authentication] && (options[:auto_accept] || !no?("
-  Solidus has a default authentication extension that uses Devise.
-  You can find more info at https://github.com/solidusio/solidus_auth_devise.
+      if interactive?
+        question = <<~QUESTION
+          Solidus has a default authentication extension that uses Devise.
+          You can find more info at https://github.com/solidusio/solidus_auth_devise.
 
-  Would you like to install it? (y/n)"))
-
-        gem 'solidus_auth_devise'
+          Would you like to install it? [yes, no] (yes)
+        QUESTION
       end
+
+      options[:with_authentication] = !no?(question)
+
+      gem 'solidus_auth_devise' if options[:with_authentication]
     end
 
     def install_payment_method
-      name = options[:payment_method]
-
-      unless options[:auto_accept]
+      if interactive?
         available_names = PAYMENT_METHODS.keys
+        question = <<~QUESTION
+          You can select a payment method to be included in the installation process.
+          Please select a payment method name:
+        QUESTION
 
-        name = ask("
-  You can select a payment method to be included in the installation process.
-  Please select a payment method name:", limited_to: available_names, default: available_names.first)
+        options[:payment_method] = ask(question, limited_to: available_names, default: available_names.first)
       end
 
-      gem_name = PAYMENT_METHODS.fetch(name)
-
+      gem_name = PAYMENT_METHODS.fetch(options[:payment_method])
       gem gem_name if gem_name
     end
 
@@ -170,7 +185,7 @@ module Solidus
       if @load_seed_data
         say_status :loading,  "seed data"
         rake_options = []
-        rake_options << "AUTO_ACCEPT=1" if options[:auto_accept]
+        rake_options << "AUTO_ACCEPT=1" unless interactive?
         rake_options << "ADMIN_EMAIL=#{options[:admin_email]}" if options[:admin_email]
         rake_options << "ADMIN_PASSWORD=#{options[:admin_password]}" if options[:admin_password]
 
@@ -220,6 +235,12 @@ module Solidus
         puts " "
         puts "Enjoy!"
       end
+    end
+
+    private
+
+    def interactive?
+      @interactive
     end
   end
 end
