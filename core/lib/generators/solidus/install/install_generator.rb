@@ -66,7 +66,7 @@ module Solidus
     def additional_tweaks
       return unless File.exist? 'public/robots.txt'
 
-      append_file "public/robots.txt", <<-ROBOTS.strip_heredoc
+      append_file "public/robots.txt", <<~ROBOTS
         User-agent: *
         Disallow: /checkout
         Disallow: /cart
@@ -104,21 +104,21 @@ module Solidus
     end
 
     def configure_application
-      application <<-RUBY
-    # Load application's model / class decorators
-    initializer 'spree.decorators' do |app|
-      config.to_prepare do
-        Dir.glob(Rails.root.join('app/**/*_decorator*.rb')) do |path|
-          require_dependency(path)
+      application <<~RUBY
+        # Load application's model / class decorators
+        initializer 'spree.decorators' do |app|
+          config.to_prepare do
+            Dir.glob(Rails.root.join('app/**/*_decorator*.rb')) do |path|
+              require_dependency(path)
+            end
+          end
         end
-      end
-    end
       RUBY
 
       if !options[:enforce_available_locales].nil?
-        application <<-RUBY
-    # Prevent this deprecation message: https://github.com/svenfuchs/i18n/commit/3b6e56e
-    I18n.enforce_available_locales = #{options[:enforce_available_locales]}
+        application <<~RUBY
+          # Prevent this deprecation message: https://github.com/svenfuchs/i18n/commit/3b6e56e
+          I18n.enforce_available_locales = #{options[:enforce_available_locales]}
         RUBY
       end
     end
@@ -154,7 +154,7 @@ module Solidus
     end
 
     def include_seed_data
-      append_file "db/seeds.rb", <<-RUBY.strip_heredoc
+      append_file "db/seeds.rb", <<~RUBY
 
         Spree::Core::Engine.load_seed if defined?(Spree::Core)
         Spree::Auth::Engine.load_seed if defined?(Spree::Auth)
@@ -209,12 +209,12 @@ module Solidus
       unless File.read(routes_file_path).include? CORE_MOUNT_ROUTE
         insert_into_file routes_file_path, after: "Rails.application.routes.draw do\n" do
           <<-RUBY
-  # This line mounts Solidus's routes at the root of your application.
-  # This means, any requests to URLs such as /products, will go to Spree::ProductsController.
-  # If you would like to change where this engine is mounted, simply change the :at option to something different.
-  #
-  # We ask that you don't use the :as option here, as Solidus relies on it being the default of "spree"
-  #{CORE_MOUNT_ROUTE}, at: '/'
+            # This line mounts Solidus's routes at the root of your application.
+            # This means, any requests to URLs such as /products, will go to Spree::ProductsController.
+            # If you would like to change where this engine is mounted, simply change the :at option to something different.
+            #
+            # We ask that you don't use the :as option here, as Solidus relies on it being the default of "spree"
+            #{CORE_MOUNT_ROUTE}, at: '/'
 
           RUBY
         end
