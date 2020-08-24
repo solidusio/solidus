@@ -12,9 +12,9 @@ module Solidus
       'none' => nil,
     }
 
-    class_option :migrate, type: :boolean, default: true, banner: 'Run Solidus migrations'
-    class_option :seed, type: :boolean, default: true, banner: 'Load seed data (migrations must be run)'
-    class_option :sample, type: :boolean, default: true, banner: 'Load sample data (migrations must be run)'
+    class_option :migrate, type: :boolean, default: true, desc: 'Run Solidus migrations'
+    class_option :seed, type: :boolean, default: true, desc: 'Load seed data (migrations must be run)'
+    class_option :sample, type: :boolean, default: true, desc: 'Load sample data (migrations must be run)'
     class_option :interactive, type: :boolean, default: true, desc: 'Ask the user interactively how to install Solidus'
     class_option :user_class, type: :string
     class_option :admin_email, type: :string
