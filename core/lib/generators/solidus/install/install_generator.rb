@@ -16,7 +16,7 @@ module Solidus
     class_option :seed, type: :boolean, default: true, desc: 'Load seed data (migrations must be run)'
     class_option :sample, type: :boolean, default: true, desc: 'Load sample data (migrations must be run)'
     class_option :interactive, type: :boolean, default: true, desc: 'Ask the user interactively how to install Solidus'
-    class_option :user_class, type: :string
+    class_option :user_class, type: :string, desc: 'Specify a custom user class', default: "Spree::LegacyUser"
     class_option :admin_email, type: :string
     class_option :admin_password, type: :string
     class_option :with_authentication, type: :boolean, default: true
@@ -137,7 +137,10 @@ module Solidus
 
       options[:with_authentication] = !no?(question)
 
-      gem 'solidus_auth_devise' if options[:with_authentication]
+      if options[:with_authentication]
+        options[:user_class] = "Spree::User"
+        gem 'solidus_auth_devise'
+      end
     end
 
     def install_payment_method

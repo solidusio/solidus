@@ -112,7 +112,7 @@ Spree::Api::Config.configure do |config|
 end
 <% end -%>
 
-Spree.user_class = <%= (options[:user_class].blank? ? "Spree::LegacyUser" : options[:user_class]).inspect %>
+Spree.user_class = <%= options.fetch(:user_class).inspect %>
 
 # Rules for avoiding to store the current path into session for redirects
 # When at least one rule is matched, the request path will not be stored
