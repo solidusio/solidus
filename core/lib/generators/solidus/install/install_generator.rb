@@ -17,9 +17,9 @@ module Solidus
     class_option :sample, type: :boolean, default: true, desc: 'Load sample data (migrations must be run)'
     class_option :interactive, type: :boolean, default: true, desc: 'Ask the user interactively how to install Solidus'
     class_option :user_class, type: :string, desc: 'Specify a custom user class', default: "Spree::LegacyUser"
-    class_option :admin_email, type: :string
-    class_option :admin_password, type: :string
-    class_option :with_authentication, type: :boolean, default: true
+    class_option :admin_email, type: :string, desc: 'Sprecify an email for the default admin user', default: 'admin@example.com'
+    class_option :admin_password, type: :string, desc: 'Sprecify a password for the default admin user', default: 'test123'
+    class_option :with_authentication, type: :boolean, default: true, desc: 'Will setup user authentication with devise, changes the user-class to "Spree::User"'
     class_option :enforce_available_locales, type: :boolean, default: nil
     class_option :payment_method,
                  type: :string,
