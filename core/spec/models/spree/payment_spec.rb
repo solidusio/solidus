@@ -850,11 +850,11 @@ RSpec.describe Spree::Payment, type: :model do
     describe "invalidating payments updates in memory objects" do
       let(:payment_method) { create(:check_payment_method) }
       before do
-        Spree::PaymentCreate.new(order, amount: 1, payment_method_id: payment_method.id).build.save!
+        Spree::PaymentCreate.new(order, { amount: 1, payment_method_id: payment_method.id }).build.save!
         expect(order.payments.map(&:state)).to contain_exactly(
           'checkout'
         )
-        Spree::PaymentCreate.new(order, amount: 2, payment_method_id: payment_method.id).build.save!
+        Spree::PaymentCreate.new(order, { amount: 2, payment_method_id: payment_method.id }).build.save!
       end
 
       it 'should not have stale payments' do

@@ -31,7 +31,7 @@ module Spree
         Instead use I18n.t('spree.your_translation_key')
       WARN
       options[:scope] = [:spree, *options[:scope]]
-      TranslationHelperWrapper.new.translate(key, options)
+      TranslationHelperWrapper.new.translate(key, **options)
     end
 
     alias_method :t, :translate
