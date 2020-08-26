@@ -12,6 +12,8 @@ module Solidus
       'none' => nil,
     }
 
+    desc "Description:\n  Install Solidus on the current app."
+
     class_option :migrate, type: :boolean, default: true, desc: 'Run Solidus migrations'
     class_option :seed, type: :boolean, default: true, desc: 'Load seed data (migrations must be run)'
     class_option :sample, type: :boolean, default: true, desc: 'Load sample data (migrations must be run)'
