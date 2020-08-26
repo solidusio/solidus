@@ -1,7 +1,7 @@
 //= require solidus_admin/Sortable
 /* eslint no-unused-vars: "off" */
 
-Spree.ready(function() {
+Spree.refresh_sortable_tables = function() {
   var sortable_tables = document.querySelectorAll('table.sortable');
 
   _.each(sortable_tables, function(table) {
@@ -27,4 +27,6 @@ Spree.ready(function() {
       }
     });
   });
-});
+};
+
+Spree.ready(Spree.refresh_sortable_tables);
