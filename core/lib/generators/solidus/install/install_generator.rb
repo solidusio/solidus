@@ -125,7 +125,7 @@ module Solidus
       end
     end
 
-    def install_default_plugins
+    def install_auth
       if interactive?
         question = <<~QUESTION
           Solidus has a default authentication extension that uses Devise.
