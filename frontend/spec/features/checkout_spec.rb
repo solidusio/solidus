@@ -374,6 +374,14 @@ describe "Checkout", type: :feature, inaccessible: true do
       expect(page).to have_current_path(spree.order_path(Spree::Order.last))
       expect(page).to have_content('Ending in 1111')
     end
+
+    it "allows user to save a billing address associated to the credit card" do
+      choose "use_existing_card_no"
+      fill_in_credit_card
+
+      click_on "Save and Continue"
+      expect(Spree::CreditCard.last.address).to be_present
+    end
   end
 
   # regression for https://github.com/spree/spree/issues/2921
