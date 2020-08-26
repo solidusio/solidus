@@ -119,7 +119,7 @@ RUBY
 after_bundle do
   generate(
     "solidus:install",
-    "--auto-accept",
+    "--no-interactive",
     "--user_class=Spree::User",
     "--enforce_available_locales=true",
     "--with-authentication=false",
