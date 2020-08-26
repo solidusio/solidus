@@ -19,6 +19,7 @@ end
 
 gem 'solidus'
 gem 'solidus_auth_devise'
+gem 'solidus_paypal_commerce_platform'
 gem 'rails_12factor'
 
 gem_group :heroku do
@@ -123,9 +124,12 @@ after_bundle do
     "--user_class=Spree::User",
     "--enforce_available_locales=true",
     "--with-authentication=false",
+    "--payment-method=none",
   )
 
   generate('solidus_auth:install')
+  generate('solidus_paypal_commerce_platform:install')
+
   rails_command "db:create"
   rails_command "db:migrate"
 
