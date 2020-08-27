@@ -150,6 +150,7 @@ workflows:
       - mysql_rails52
       - postgres_rails_master_activestorage
       - stoplight/push:
+          context: "Solidus Core Team"
           project: solidus/solidus-api
           git_token: $STOPLIGHT_GIT_TOKEN
           source_dir: api/openapi
@@ -158,6 +159,7 @@ workflows:
           requires:
             - persist_version
       - stoplight/publish:
+          context: "Solidus Core Team"
           api_token: $STOPLIGHT_API_TOKEN
           domain: solidus.docs.stoplight.io
           requires:
