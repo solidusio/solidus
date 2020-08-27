@@ -62,7 +62,7 @@ RUBY
 unbundled bundle install --gemfile Gemfile
 unbundled bin/rails db:drop db:create
 unbundled bin/rails generate solidus:install \
-  --auto-accept \
+  --no-interactive \
   --user_class=Spree::User \
   --enforce_available_locales=true \
   --with_authentication=false \

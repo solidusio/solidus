@@ -12,21 +12,26 @@ module Solidus
       'none' => nil,
     }
 
-    class_option :migrate, type: :boolean, default: true, banner: 'Run Solidus migrations'
-    class_option :seed, type: :boolean, default: true, banner: 'Load seed data (migrations must be run)'
-    class_option :sample, type: :boolean, default: true, banner: 'Load sample data (migrations must be run)'
-    class_option :auto_accept, type: :boolean
-    class_option :user_class, type: :string
-    class_option :admin_email, type: :string
-    class_option :admin_password, type: :string
-    class_option :lib_name, type: :string, default: 'spree'
-    class_option :with_authentication, type: :boolean, default: true
+    desc "Description:\n  Install Solidus on the current app."
+
+    class_option :migrate, type: :boolean, default: true, desc: 'Run Solidus migrations'
+    class_option :seed, type: :boolean, default: true, desc: 'Load seed data (migrations must be run)'
+    class_option :sample, type: :boolean, default: true, desc: 'Load sample data (migrations must be run)'
+    class_option :interactive, type: :boolean, default: true, desc: 'Ask the user interactively how to install Solidus'
+    class_option :user_class, type: :string, desc: 'Specify a custom user class', default: "Spree::LegacyUser"
+    class_option :admin_email, type: :string, desc: 'Sprecify an email for the default admin user', default: 'admin@example.com'
+    class_option :admin_password, type: :string, desc: 'Sprecify a password for the default admin user', default: 'test123'
+    class_option :with_authentication, type: :boolean, default: true, desc: 'Will setup user authentication with devise, changes the user-class to "Spree::User"'
     class_option :enforce_available_locales, type: :boolean, default: nil
     class_option :payment_method,
                  type: :string,
                  enum: PAYMENT_METHODS.keys,
                  default: PAYMENT_METHODS.keys.first,
                  desc: "Indicates which payment method to install."
+
+    # @deprecated
+    class_option :auto_accept, type: :boolean, hide: true
+    class_option :lib_name, type: :string, hide: true
 
     def self.source_paths
       paths = superclass.source_paths
@@ -37,13 +42,26 @@ module Solidus
     end
 
     def prepare_options
+      @interactive = options[:interactive]
+      if options[:auto_accept]
+        @interactive = false
+        warn "DEPRECATION: using --auto-accept is deprecated, please use --interactive or --no-interactive instead."
+      end
+
+      # We need to make options mutable so they can be filled in interactively.
+      self.options = options.dup if interactive?
+
+      if options[:lib_name]
+        warn "DEPRECATION: using --lib-name is deprecated, it wasn't doing anything and will be removed in a future version."
+      end
+
       @run_migrations = options[:migrate]
       @load_seed_data = options[:seed]
       @load_sample_data = options[:sample]
 
       unless @run_migrations
-         @load_seed_data = false
-         @load_sample_data = false
+        @load_seed_data = false
+        @load_sample_data = false
       end
     end
 
@@ -54,7 +72,7 @@ module Solidus
     def additional_tweaks
       return unless File.exist? 'public/robots.txt'
 
-      append_file "public/robots.txt", <<-ROBOTS.strip_heredoc
+      append_file "public/robots.txt", <<~ROBOTS
         User-agent: *
         Disallow: /checkout
         Disallow: /cart
@@ -67,8 +85,6 @@ module Solidus
     end
 
     def setup_assets
-      @lib_name = 'spree'
-
       empty_directory 'app/assets/images'
 
       %w{javascripts stylesheets images}.each do |path|
@@ -92,54 +108,60 @@ module Solidus
     end
 
     def configure_application
-      application <<-RUBY
-    # Load application's model / class decorators
-    initializer 'spree.decorators' do |app|
-      config.to_prepare do
-        Dir.glob(Rails.root.join('app/**/*_decorator*.rb')) do |path|
-          require_dependency(path)
+      application <<~RUBY
+        # Load application's model / class decorators
+        initializer 'spree.decorators' do |app|
+          config.to_prepare do
+            Dir.glob(Rails.root.join('app/**/*_decorator*.rb')) do |path|
+              require_dependency(path)
+            end
+          end
         end
-      end
-    end
       RUBY
 
       if !options[:enforce_available_locales].nil?
-        application <<-RUBY
-    # Prevent this deprecation message: https://github.com/svenfuchs/i18n/commit/3b6e56e
-    I18n.enforce_available_locales = #{options[:enforce_available_locales]}
+        application <<~RUBY
+          # Prevent this deprecation message: https://github.com/svenfuchs/i18n/commit/3b6e56e
+          I18n.enforce_available_locales = #{options[:enforce_available_locales]}
         RUBY
       end
     end
 
-    def install_default_plugins
-      if options[:with_authentication] && (options[:auto_accept] || !no?("
-  Solidus has a default authentication extension that uses Devise.
-  You can find more info at https://github.com/solidusio/solidus_auth_devise.
+    def install_auth
+      if interactive?
+        question = <<~QUESTION
+          Solidus has a default authentication extension that uses Devise.
+          You can find more info at https://github.com/solidusio/solidus_auth_devise.
 
-  Would you like to install it? (y/n)"))
+          Would you like to install it? [yes, no] (yes)
+        QUESTION
+      end
 
+      options[:with_authentication] = !no?(question)
+
+      if options[:with_authentication]
+        options[:user_class] = "Spree::User"
         gem 'solidus_auth_devise'
       end
     end
 
     def install_payment_method
-      name = options[:payment_method]
-
-      unless options[:auto_accept]
+      if interactive?
         available_names = PAYMENT_METHODS.keys
+        question = <<~QUESTION
+          You can select a payment method to be included in the installation process.
+          Please select a payment method name:
+        QUESTION
 
-        name = ask("
-  You can select a payment method to be included in the installation process.
-  Please select a payment method name:", limited_to: available_names, default: available_names.first)
+        options[:payment_method] = ask(question, limited_to: available_names, default: available_names.first)
       end
 
-      gem_name = PAYMENT_METHODS.fetch(name)
-
+      gem_name = PAYMENT_METHODS.fetch(options[:payment_method])
       gem gem_name if gem_name
     end
 
     def include_seed_data
-      append_file "db/seeds.rb", <<-RUBY.strip_heredoc
+      append_file "db/seeds.rb", <<~RUBY
 
         Spree::Core::Engine.load_seed if defined?(Spree::Core)
         Spree::Auth::Engine.load_seed if defined?(Spree::Auth)
@@ -170,7 +192,7 @@ module Solidus
       if @load_seed_data
         say_status :loading,  "seed data"
         rake_options = []
-        rake_options << "AUTO_ACCEPT=1" if options[:auto_accept]
+        rake_options << "AUTO_ACCEPT=1" unless interactive?
         rake_options << "ADMIN_EMAIL=#{options[:admin_email]}" if options[:admin_email]
         rake_options << "ADMIN_PASSWORD=#{options[:admin_password]}" if options[:admin_password]
 
@@ -194,12 +216,12 @@ module Solidus
       unless File.read(routes_file_path).include? CORE_MOUNT_ROUTE
         insert_into_file routes_file_path, after: "Rails.application.routes.draw do\n" do
           <<-RUBY
-  # This line mounts Solidus's routes at the root of your application.
-  # This means, any requests to URLs such as /products, will go to Spree::ProductsController.
-  # If you would like to change where this engine is mounted, simply change the :at option to something different.
-  #
-  # We ask that you don't use the :as option here, as Solidus relies on it being the default of "spree"
-  #{CORE_MOUNT_ROUTE}, at: '/'
+            # This line mounts Solidus's routes at the root of your application.
+            # This means, any requests to URLs such as /products, will go to Spree::ProductsController.
+            # If you would like to change where this engine is mounted, simply change the :at option to something different.
+            #
+            # We ask that you don't use the :as option here, as Solidus relies on it being the default of "spree"
+            #{CORE_MOUNT_ROUTE}, at: '/'
 
           RUBY
         end
@@ -220,6 +242,12 @@ module Solidus
         puts " "
         puts "Enjoy!"
       end
+    end
+
+    private
+
+    def interactive?
+      @interactive
     end
   end
 end
