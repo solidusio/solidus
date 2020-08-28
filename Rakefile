@@ -5,7 +5,7 @@ require 'bundler'
 task default: :spec
 
 def print_title(gem_name = '')
-  title = ["Solidus", gem_name].join(' ').strip
+  title = ["Solidus", gem_name].join(' ')
   puts "\n#{'-' * title.size}\n#{title}\n#{'-' * title.size}"
 end
 
