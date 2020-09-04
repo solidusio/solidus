@@ -218,10 +218,13 @@ RSpec.describe Spree::ShippingMethod, type: :model do
   end
 
   describe "display_on=" do
+    before do
+      expect(Spree::Deprecation).to receive(:warn).
+        with(/^display_on= is deprecated and will be removed/, any_args)
+    end
+
     subject do
-      Spree::Deprecation.silence do
-        described_class.new(display_on: display_on).available_to_users
-      end
+      described_class.new(display_on: display_on).available_to_users
     end
 
     context "with 'back_end'" do
@@ -241,10 +244,13 @@ RSpec.describe Spree::ShippingMethod, type: :model do
   end
 
   describe "display_on" do
+    before do
+      expect(Spree::Deprecation).to receive(:warn).
+        with(/^display_on is deprecated and will be removed/, any_args)
+    end
+
     subject do
-      Spree::Deprecation.silence do
-        described_class.new(available_to_users: available_to_users).display_on
-      end
+      described_class.new(available_to_users: available_to_users).display_on
     end
 
     context "when available_to_users is true" do

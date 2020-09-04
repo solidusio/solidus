@@ -58,7 +58,8 @@ module Spree
 
       describe "#allocate_inventory" do
         it 'is deprecated' do
-          expect(Spree::Deprecation).to receive(:warn)
+          expect(Spree::Deprecation).to receive(:warn).
+            with(/^allocate_inventory is deprecated and will be removed/, any_args)
           subject.send :allocate_inventory, subject.instance_variable_get(:@availability).on_hand_by_stock_location_id
         end
       end

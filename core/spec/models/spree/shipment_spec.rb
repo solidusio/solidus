@@ -27,6 +27,11 @@ RSpec.describe Spree::Shipment, type: :model do
   let(:line_item) { mock_model(Spree::LineItem, variant: variant) }
 
   context '#transfer_to_location' do
+    before do
+      allow(Spree::Deprecation).to receive(:warn).
+        with(/^Please use the Spree::FulfilmentChanger class instead of Spree::Shipment#transfer_to_location/, any_args)
+    end
+
     it 'transfers unit to a new shipment with given location' do
       order = create(:completed_order_with_totals, line_items_count: 2)
       shipment = order.shipments.first
@@ -34,9 +39,7 @@ RSpec.describe Spree::Shipment, type: :model do
 
       aggregate_failures("verifying new shipment attributes") do
         expect do
-          Spree::Deprecation.silence do
-            shipment.transfer_to_location(variant, 1, stock_location)
-          end
+          shipment.transfer_to_location(variant, 1, stock_location)
         end.to change { Spree::Shipment.count }.by(1)
 
         new_shipment = order.shipments.order(:created_at).last
@@ -144,10 +147,12 @@ RSpec.describe Spree::Shipment, type: :model do
   end
 
   it "#discounted_cost" do
+    expect(Spree::Deprecation).to receive(:warn).
+      with(/^discounted_cost is deprecated and will be removed/, any_args)
     shipment = create(:shipment)
     shipment.cost = 10
     shipment.promo_total = -1
-    expect(Spree::Deprecation.silence { shipment.discounted_cost }).to eq(9)
+    expect(shipment.discounted_cost).to eq(9)
   end
 
   describe '#total_before_tax' do

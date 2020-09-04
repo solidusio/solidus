@@ -93,10 +93,13 @@ RSpec.describe Spree::LegacyUser, type: :model do
         create(:credit_card, user_id: user.id, payment_method: payment_method, gateway_customer_profile_id: "2342343")
       end
 
+      before do
+        expect(Spree::Deprecation).to receive(:warn).
+          with(/^user.payment_sources is deprecated/, any_args)
+      end
+
       it "has payment sources" do
-        Spree::Deprecation.silence do
-          expect(user.payment_sources.first.gateway_customer_profile_id).not_to be_empty
-        end
+        expect(user.payment_sources.first.gateway_customer_profile_id).not_to be_empty
       end
     end
   end
@@ -174,10 +177,10 @@ RSpec.describe Spree.user_class, type: :model do
   describe "#total_available_store_credit" do
     before do
       allow_any_instance_of(Spree::LegacyUser).to receive(:total_available_store_credit).and_wrap_original do |method, *args|
-        Spree::Deprecation.silence do
-          method.call(*args)
-        end
+        method.call(*args)
       end
+      expect(Spree::Deprecation).to receive(:warn).
+        with(/^total_available_store_credit is deprecated and will be removed/, any_args)
     end
 
     context "user does not have any associated store credits" do

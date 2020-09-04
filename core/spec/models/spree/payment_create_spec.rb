@@ -83,8 +83,9 @@ module Spree
         }
       end
 
-      around do |example|
-        Spree::Deprecation.silence { example.run }
+      before do
+        expect(Spree::Deprecation).to receive(:warn).
+          with(/^Passing existing_card_id to PaymentCreate is deprecated/, any_args)
       end
 
       it 'sets the existing card as the source for the new payment' do

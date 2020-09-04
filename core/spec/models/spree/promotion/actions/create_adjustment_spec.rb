@@ -120,7 +120,15 @@ RSpec.describe Spree::Promotion::Actions::CreateAdjustment, type: :model do
   end
 
   context "#paranoia_destroy" do
-    subject { Spree::Deprecation.silence { action.paranoia_destroy } }
+    before do
+      expect(Spree::Deprecation).to receive(:warn).
+        with(/^Calling #destroy \(or #paranoia_destroy\) on a .* currently/, any_args)
+      expect(Spree::Deprecation).to receive(:warn).
+        with(/^Calling #delete \(or #paranoia_delete\) on a .* currently/, any_args)
+    end
+
+    subject { action.paranoia_destroy }
+
     it_should_behave_like "destroying adjustments from incomplete orders"
   end
 end

@@ -307,10 +307,13 @@ module Spree
             }
           end
 
+          before do
+            expect(Spree::Deprecation).to receive(:warn).
+              with(/^Passing existing_card_id to PaymentCreate is deprecated/, any_args)
+          end
+
           it 'succeeds' do
-            Spree::Deprecation.silence do
-              put spree.api_checkout_path(order), params: params
-            end
+            put spree.api_checkout_path(order), params: params
 
             expect(response.status).to eq 200
             expect(order.credit_cards).to match_array [credit_card]

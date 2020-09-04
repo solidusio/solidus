@@ -6,13 +6,14 @@ RSpec.describe Spree::TestingSupport::Preferences do
   describe 'resetting the app configuration' do
     around do |example|
       with_unfrozen_spree_preference_store do
-        Spree::Deprecation.silence do
-          example.run
-        end
+        example.run
       end
     end
 
     before do
+      expect(Spree::Deprecation).to receive(:warn).
+        with(/^reset_spree_preferences is deprecated and will be removed/, any_args).
+        at_least(:once)
       reset_spree_preferences
       @original_spree_mails_from = Spree::Config.mails_from
       @original_spree_searcher_class = Spree::Config.searcher_class

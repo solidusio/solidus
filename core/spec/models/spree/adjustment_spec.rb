@@ -235,6 +235,13 @@ RSpec.describe Spree::Adjustment, type: :model do
         )
       end
 
+      def doesnt_expect_deprecation_warning
+        expect(Spree::Deprecation).not_to receive(:warn).with(
+          /Adjustment \d+ was not added to #{adjustable.class} #{adjustable.id}/,
+          any_args
+        )
+      end
+
       context 'when adding adjustments via the wrong association' do
         def create_adjustment
           adjustment_source.adjustments.create!(
@@ -256,7 +263,7 @@ RSpec.describe Spree::Adjustment, type: :model do
 
           context 'when the adjustment is destroyed before after_commit runs' do
             it 'does not repair' do
-              expect(Spree::Deprecation).not_to receive(:warn)
+              doesnt_expect_deprecation_warning
               Spree::Adjustment.transaction do
                 adjustment = create_adjustment
                 adjustment.destroy!
@@ -267,7 +274,7 @@ RSpec.describe Spree::Adjustment, type: :model do
 
         context 'when adjustable.adjustments is not loaded' do
           it 'does repair' do
-            expect(Spree::Deprecation).not_to receive(:warn)
+            doesnt_expect_deprecation_warning
             create_adjustment
           end
         end
@@ -287,14 +294,14 @@ RSpec.describe Spree::Adjustment, type: :model do
           before { adjustable.adjustments.to_a }
 
           it 'does not repair' do
-            expect(Spree::Deprecation).not_to receive(:warn)
+            doesnt_expect_deprecation_warning
             create_adjustment
           end
         end
 
         context 'when adjustable.adjustments is not loaded' do
           it 'does not repair' do
-            expect(Spree::Deprecation).not_to receive(:warn)
+            doesnt_expect_deprecation_warning
             create_adjustment
           end
         end
@@ -315,6 +322,13 @@ RSpec.describe Spree::Adjustment, type: :model do
         )
       end
 
+      def doesnt_expect_deprecation_warning
+        expect(Spree::Deprecation).not_to receive(:warn).with(
+          /Adjustment #{adjustment.id} was not removed from #{adjustable.class} #{adjustable.id}/,
+          any_args
+        )
+      end
+
       context 'when destroying adjustments not via association' do
         context 'when adjustable.adjustments is loaded' do
           before { adjustable.adjustments.to_a }
@@ -328,7 +342,7 @@ RSpec.describe Spree::Adjustment, type: :model do
 
         context 'when adjustable.adjustments is not loaded' do
           it 'does not repair' do
-            expect(Spree::Deprecation).not_to receive(:warn)
+            doesnt_expect_deprecation_warning
             adjustment.destroy!
           end
         end
@@ -339,14 +353,14 @@ RSpec.describe Spree::Adjustment, type: :model do
           before { adjustable.adjustments.to_a }
 
           it 'does not repair' do
-            expect(Spree::Deprecation).not_to receive(:warn)
+            doesnt_expect_deprecation_warning
             adjustable.adjustments.destroy(adjustment)
           end
         end
 
         context 'when adjustable.adjustments is not loaded' do
           it 'does not repair' do
-            expect(Spree::Deprecation).not_to receive(:warn)
+            doesnt_expect_deprecation_warning
             adjustable.adjustments.destroy(adjustment)
           end
         end
