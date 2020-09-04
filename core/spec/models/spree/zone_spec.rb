@@ -57,9 +57,7 @@ RSpec.describe Spree::Zone, type: :model do
       before { country_zone.members.create(zoneable: country) }
 
       it 'should return a list of countries' do
-        Spree::Deprecation.silence do
-          expect(country_zone.country_list).to eq([country])
-        end
+        expect(country_zone.country_list).to eq([country])
       end
     end
 
@@ -69,9 +67,7 @@ RSpec.describe Spree::Zone, type: :model do
       before { state_zone.members.create(zoneable: state) }
 
       it 'should return a list of countries' do
-        Spree::Deprecation.silence do
-          expect(state_zone.country_list).to eq([state.country])
-        end
+        expect(state_zone.country_list).to eq([state.country])
       end
     end
   end
