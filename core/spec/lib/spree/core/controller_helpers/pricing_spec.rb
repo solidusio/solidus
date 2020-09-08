@@ -13,23 +13,28 @@ RSpec.describe Spree::Core::ControllerHelpers::Pricing, type: :controller do
   end
 
   describe '#current_currency' do
+    before do
+      expect(Spree::Deprecation).to receive(:warn).
+        with(/^current_currency is deprecated and will be removed/, any_args)
+    end
+
     subject { controller.current_currency }
 
     context "when store default_currency is nil" do
       let(:store) { nil }
-      it { Spree::Deprecation.silence { is_expected.to eq('USD') } }
+      it { is_expected.to eq('USD') }
     end
 
     context "when the current store default_currency empty" do
       let(:store) { FactoryBot.create :store, default_currency: '' }
 
-      it { Spree::Deprecation.silence { is_expected.to eq('USD') } }
+      it { is_expected.to eq('USD') }
     end
 
     context "when the current store default_currency is a currency" do
       let(:store) { FactoryBot.create :store, default_currency: 'EUR' }
 
-      it { Spree::Deprecation.silence { is_expected.to eq('EUR') } }
+      it { is_expected.to eq('EUR') }
     end
   end
 

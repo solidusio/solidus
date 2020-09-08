@@ -216,11 +216,11 @@ RSpec.describe Spree::Order, type: :model do
     before { allow(order).to receive_messages shipments: [shipment] }
 
     it "update and persist totals" do
+      expect(Spree::Deprecation).to receive(:warn).
+        with(/^set_shipments_cost is deprecated and will be removed/, any_args)
       expect(order.updater).to receive :update
 
-      Spree::Deprecation.silence do
-        order.set_shipments_cost
-      end
+      order.set_shipments_cost
     end
   end
 
@@ -611,13 +611,16 @@ RSpec.describe Spree::Order, type: :model do
   context "#state_changed" do
     let(:order) { FactoryBot.create(:order) }
 
+    before do
+      expect(Spree::Deprecation).to receive(:warn).
+        with(/^state_changed is deprecated and will be removed/, any_args)
+    end
+
     it "logs state changes" do
       order.update_column(:payment_state, 'balance_due')
       order.payment_state = 'paid'
       expect(order.state_changes).to be_empty
-      Spree::Deprecation.silence do
-        order.state_changed('payment')
-      end
+      order.state_changed('payment')
       state_change = order.state_changes.find_by(name: 'payment')
       expect(state_change.previous_state).to eq('balance_due')
       expect(state_change.next_state).to eq('paid')
@@ -626,9 +629,7 @@ RSpec.describe Spree::Order, type: :model do
     it "does not do anything if state does not change" do
       order.update_column(:payment_state, 'balance_due')
       expect(order.state_changes).to be_empty
-      Spree::Deprecation.silence do
-        order.state_changed('payment')
-      end
+      order.state_changed('payment')
       expect(order.state_changes).to be_empty
     end
   end
@@ -851,7 +852,8 @@ RSpec.describe Spree::Order, type: :model do
 
     context "passing options" do
       it 'is deprecated' do
-        expect(Spree::Deprecation).to receive(:warn)
+        expect(Spree::Deprecation).to receive(:warn).
+          with(/^Passing options to Order\#generate_order_number is deprecated\./)
         order.generate_order_number(length: 2)
       end
     end

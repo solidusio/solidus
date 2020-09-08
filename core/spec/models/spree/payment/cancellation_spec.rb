@@ -69,15 +69,12 @@ RSpec.describe Spree::Payment::Cancellation do
         allow(payment_method).to receive(:respond_to?) { false }
         allow(payment_method).to receive(:cancel) { double }
         allow(payment).to receive(:handle_void_response)
+        expect(Spree::Deprecation).to receive(:warn).
+          with(/^Spree::PaymentMethod::.*#cancel is deprecated and will be removed/, any_args)
       end
 
       it 'calls cancel instead' do
         expect(payment_method).to receive(:cancel)
-        Spree::Deprecation.silence { subject }
-      end
-
-      it 'prints depcrecation warning' do
-        expect(Spree::Deprecation).to receive(:warn)
         subject
       end
     end

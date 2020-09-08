@@ -3,14 +3,20 @@
 require 'rails_helper'
 
 RSpec.describe Spree::Store, type: :model do
+  before do
+    allow(Spree::Deprecation).to receive(:warn).
+      with(/^by_url is deprecated and will be removed/, any_args)
+  end
+
   it { is_expected.to respond_to(:cart_tax_country_iso) }
 
   describe ".by_url (deprecated)" do
     let!(:store)    { create(:store, url: "website1.com\nwww.subdomain.com") }
     let!(:store_2)  { create(:store, url: 'freethewhales.com') }
 
-    around do |example|
-      Spree::Deprecation.silence { example.run }
+    before do
+      expect(Spree::Deprecation).to receive(:warn).
+        with(/^by_url is deprecated and will be removed/, any_args)
     end
 
     it "should find stores by url" do
@@ -27,11 +33,12 @@ RSpec.describe Spree::Store, type: :model do
     let!(:store_2) { create(:store, default: false, url: 'www.subdomain.com') }
     let!(:store_3) { create(:store, default: false, url: 'www.another.com', code: 'CODE') }
 
-    delegate :current, to: :described_class
-
-    around do |example|
-      Spree::Deprecation.silence { example.run }
+    before do
+      expect(Spree::Deprecation).to receive(:warn).
+        with(/^Spree::Store.current is DEPRECATED/, any_args)
     end
+
+    delegate :current, to: :described_class
 
     context "with no match" do
       it 'should return the default domain' do

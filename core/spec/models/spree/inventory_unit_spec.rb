@@ -134,13 +134,17 @@ RSpec.describe Spree::InventoryUnit, type: :model do
     let(:variant) { create(:variant) }
     let(:inventory_units) {
       [
-      create(:inventory_unit, variant: variant),
-      create(:inventory_unit, variant: variant)
-    ]
+        create(:inventory_unit, variant: variant),
+        create(:inventory_unit, variant: variant)
+      ]
     }
 
+    before do
+      expect(Spree::Deprecation).to receive(:warn).
+        with(/^inventory_units\.finalize_units!\(inventory_units\) is deprecated/, any_args)
+    end
+
     it "should create a stock movement" do
-      expect(Spree::Deprecation).to receive(:warn)
       Spree::InventoryUnit.finalize_units!(inventory_units)
       expect(inventory_units.any?(&:pending)).to be false
     end

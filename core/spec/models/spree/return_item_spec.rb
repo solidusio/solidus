@@ -44,10 +44,12 @@ RSpec.describe Spree::ReturnItem, type: :model do
     end
 
     context 'when the `skip_customer_return_processing` flag is set' do
-      before { Spree::Deprecation.silence { return_item.skip_customer_return_processing = false } }
-
       it 'shows a deprecation warning' do
-        expect(Spree::Deprecation).to receive(:warn)
+        expect(Spree::Deprecation).to receive(:warn).
+          with(/^From Solidus v2\.11 onwards, #skip_customer_return_processing does nothing/, any_args).
+          at_least(:once)
+
+        return_item.skip_customer_return_processing = false
         subject
       end
     end

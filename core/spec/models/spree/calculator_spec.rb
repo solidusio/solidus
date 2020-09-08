@@ -13,12 +13,15 @@ RSpec.describe Spree::Calculator, type: :model do
   end
 
   describe "#calculators" do
+    before do
+      expect(Spree::Deprecation).to receive(:warn).
+        with(/^Calling \.calculators is deprecated/, any_args)
+    end
+
     subject { Spree::Calculator.calculators }
 
     it 'returns the (deprecated) calculator step' do
-      Spree::Deprecation.silence do
-        expect(subject).to be_a Spree::Core::Environment::Calculators
-      end
+      expect(subject).to be_a Spree::Core::Environment::Calculators
     end
   end
 

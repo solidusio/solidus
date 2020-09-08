@@ -186,12 +186,17 @@ RSpec.describe Spree::Product, type: :model do
       let!(:high) { create(:variant, product: product) }
       let!(:low) { create(:variant, product: product) }
 
-      before { high.option_values.destroy_all }
+      before do
+        allow(Spree::Deprecation).to receive(:warn).
+          with(/`Variant.active\(currency\)` is deprecated/, any_args)
+        expect(Spree::Deprecation).to receive(:warn).
+          with(/^variants_and_option_values is deprecated and will be removed/, any_args)
+
+        high.option_values.destroy_all
+      end
 
       it "returns only variants with option values" do
-        Spree::Deprecation.silence do
-          expect(product.variants_and_option_values).to eq([low])
-        end
+        expect(product.variants_and_option_values).to eq([low])
       end
     end
 

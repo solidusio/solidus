@@ -110,32 +110,26 @@ RSpec.describe Spree::PaymentMethod, type: :model do
   end
 
   describe ".available" do
-    it "should have 4 total methods" do
+    before do
       expect(Spree::PaymentMethod.all.size).to eq(4)
+      expect(Spree::Deprecation).to receive(:warn).
+        with(/^Spree::PaymentMethod\.available is deprecated/, any_args)
     end
 
     it "should return all methods available to front-end/back-end when no parameter is passed" do
-      Spree::Deprecation.silence do
-        expect(Spree::PaymentMethod.available.size).to eq(2)
-      end
+      expect(Spree::PaymentMethod.available.size).to eq(2)
     end
 
     it "should return all methods available to front-end/back-end when passed :both" do
-      Spree::Deprecation.silence do
-        expect(Spree::PaymentMethod.available(:both).size).to eq(2)
-      end
+      expect(Spree::PaymentMethod.available(:both).size).to eq(2)
     end
 
     it "should return all methods available to front-end when passed :front_end" do
-      Spree::Deprecation.silence do
-        expect(Spree::PaymentMethod.available(:front_end).size).to eq(3)
-      end
+      expect(Spree::PaymentMethod.available(:front_end).size).to eq(3)
     end
 
     it "should return all methods available to back-end when passed :back_end" do
-      Spree::Deprecation.silence do
-        expect(Spree::PaymentMethod.available(:back_end).size).to eq(3)
-      end
+      expect(Spree::PaymentMethod.available(:back_end).size).to eq(3)
     end
 
     context 'with stores' do
@@ -161,33 +155,14 @@ RSpec.describe Spree::PaymentMethod, type: :model do
       context 'when the store is specified' do
         context 'when the store has payment methods' do
           it 'finds the payment methods for the store' do
-            Spree::Deprecation.silence do
-              expect(Spree::PaymentMethod.available(:both, store: store_1)).to match_array(
-                [payment_method_nil_display, payment_method_both_display]
-              )
-            end
+            expect(Spree::PaymentMethod.available(:both, store: store_1)).to match_array(
+              [payment_method_nil_display, payment_method_both_display]
+            )
           end
         end
 
         context "when store does not have payment_methods" do
           it "returns all matching payment methods regardless of store" do
-            Spree::Deprecation.silence do
-              expect(Spree::PaymentMethod.available(:both)).to match_array(
-                [
-                  payment_method_nil_display,
-                  payment_method_both_display,
-                  store_2_payment_method,
-                  no_store_payment_method
-                ]
-              )
-            end
-          end
-        end
-      end
-
-      context 'when the store is not specified' do
-        it "returns all matching payment methods regardless of store" do
-          Spree::Deprecation.silence do
             expect(Spree::PaymentMethod.available(:both)).to match_array(
               [
                 payment_method_nil_display,
@@ -197,6 +172,19 @@ RSpec.describe Spree::PaymentMethod, type: :model do
               ]
             )
           end
+        end
+      end
+
+      context 'when the store is not specified' do
+        it "returns all matching payment methods regardless of store" do
+          expect(Spree::PaymentMethod.available(:both)).to match_array(
+            [
+              payment_method_nil_display,
+              payment_method_both_display,
+              store_2_payment_method,
+              no_store_payment_method
+            ]
+          )
         end
       end
     end
@@ -261,12 +249,14 @@ RSpec.describe Spree::PaymentMethod, type: :model do
   end
 
   describe "display_on=" do
-    around do |example|
-      Spree::Deprecation.silence do
-        example.run
-      end
-    end
     let(:payment) { described_class.new(display_on: display_on) }
+
+    before do
+      allow(Spree::Deprecation).to receive(:warn).
+        with(/^Spree::PaymentMethod#display_on is deprecated/, any_args)
+      expect(Spree::Deprecation).to receive(:warn).
+        with(/^Spree::PaymentMethod#display_on= is deprecated/, any_args)
+    end
 
     context 'with empty string' do
       let(:display_on) { "" }

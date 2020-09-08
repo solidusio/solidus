@@ -9,7 +9,8 @@ RSpec.describe Spree::OrderCapturing do
     let(:order) { build(:completed_order_with_totals) }
 
     it 'is deprecated' do
-      expect(Spree::Deprecation).to(receive(:warn))
+      expect(Spree::Deprecation).to receive(:warn).
+        with(/^Spree::OrderCapturing is deprecated and will be removed/, any_args)
       subject
     end
   end

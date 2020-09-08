@@ -13,11 +13,14 @@ RSpec.describe Spree::RoleConfiguration do
   let(:instance) { Spree::RoleConfiguration.new }
 
   describe ".configure" do
-    around(:each) do |example|
-      Spree::Deprecation.silence { example.run }
+    before do
+      expect(Spree::Deprecation).to receive(:warn).
+        with(/^Spree::RoleConfiguration\.configure is deprecated/i, any_args)
     end
 
     it "yields with the instance" do
+      expect(Spree::Deprecation).to receive(:warn).
+        with(/^Spree::RoleConfiguration\.instance is deprecated/i, any_args)
       expect { |b| described_class.configure(&b) }.to yield_with_args(described_class.instance)
     end
 

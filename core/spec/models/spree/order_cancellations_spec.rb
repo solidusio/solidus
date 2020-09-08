@@ -35,7 +35,8 @@ RSpec.describe Spree::OrderCancellations do
       subject { order.cancellations.cancel_unit(inventory_unit, whodunnit: "some automated system") }
 
       it "sets the user on the UnitCancel and print a deprecation" do
-        expect(Spree::Deprecation).to receive(:warn)
+        expect(Spree::Deprecation).to receive(:warn).
+          with(/^Calling #cancel_unit on .* with whodunnit is deprecated/, any_args)
         expect(subject.created_by).to eq("some automated system")
       end
     end
@@ -165,8 +166,8 @@ RSpec.describe Spree::OrderCancellations do
       let(:user) { order.user }
 
       it "sets the user on the UnitCancel and raises a deprecation # WARNING: " do
-        expect(Spree::Deprecation).to receive(:warn)
-
+        expect(Spree::Deprecation).to receive(:warn).
+          with(/^Calling #short_ship on .* with whodunnit is deprecated/, any_args)
         expect { subject }.to change { Spree::UnitCancel.count }.by(1)
         expect(Spree::UnitCancel.last.created_by).to eq("some automated system")
       end

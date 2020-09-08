@@ -160,9 +160,12 @@ RSpec.describe Spree::Variant, type: :model do
         let!(:old_option_values_variant_ids) { variant.option_values_variants.pluck(:id) }
 
         before do
+          allow(Spree::Deprecation).to receive(:warn).
+            with(/^.*\.with_deleted has been deprecated/, any_args)
+
           # #really_destroy! will be replaced here with #destroy when Paranoia
           # will be removed in Solidus 3.0
-          Spree::Deprecation.silence { variant.really_destroy! }
+          variant.really_destroy!
         end
 
         it "leaves no stale records behind" do
@@ -353,11 +356,13 @@ RSpec.describe Spree::Variant, type: :model do
 
   describe '.price_in' do
     before do
+      expect(Spree::Deprecation).to receive(:warn).
+        with(/^price_in is deprecated and will be removed/, any_args)
       variant.prices << create(:price, variant: variant, currency: "EUR", amount: 33.33)
     end
 
     subject do
-      Spree::Deprecation.silence { variant.price_in(currency) }
+      variant.price_in(currency)
     end
 
     context "when currency is not specified" do
@@ -387,12 +392,16 @@ RSpec.describe Spree::Variant, type: :model do
 
   describe '.amount_in' do
     before do
+      allow(Spree::Deprecation).to receive(:warn).
+        with(/^price_in is deprecated and will be removed/, any_args)
+
+      expect(Spree::Deprecation).to receive(:warn).
+        with(/^amount_in is deprecated and will be removed/, any_args)
+
       variant.prices << create(:price, variant: variant, currency: "EUR", amount: 33.33)
     end
 
-    subject do
-      Spree::Deprecation.silence { variant.amount_in(currency) }
-    end
+    subject { variant.amount_in(currency) }
 
     context "when currency is not specified" do
       let(:currency) { nil }
