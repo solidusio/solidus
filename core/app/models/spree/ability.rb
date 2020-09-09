@@ -14,6 +14,13 @@ module Spree
 
     attr_reader :user
 
+    CUSTOM_ALIASES_MAP = {
+      destroy: :delete,
+      display: :read,
+      new_action: :create,
+      read: :show
+    }.freeze
+
     # Allows us to go beyond the standard cancan initialize method which makes it difficult for engines to
     # modify the default +Ability+ of an application.  The +ability+ argument must be a class that includes
     # the +CanCan::Ability+ module.  The registered ability should behave properly as a stand-alone class
@@ -29,23 +36,37 @@ module Spree
     def initialize(current_user)
       @user = current_user || Spree.user_class.new
 
-      alias_actions
       activate_permission_sets
       register_extension_abilities
     end
 
+    def can?(action, *args)
+      super(normalize_action(action), *args)
+    end
+
+    def model_adapter(model_class, action)
+      super(model_class, normalize_action(action))
+    end
+
     private
 
-    def alias_actions
-      clear_aliased_actions
+    def normalize_action(action)
+      return action unless Spree::Config.use_custom_cancancan_actions
 
-      # override cancan default aliasing (we don't want to differentiate between read and index)
-      alias_action :delete, to: :destroy
-      alias_action :edit, to: :update
-      alias_action :new, to: :create
-      alias_action :new_action, to: :create
-      alias_action :show, to: :read
-      alias_action :index, :read, to: :display
+      if action == :read
+        Spree::Deprecation.warn <<~WARN
+          The behavior of CanCanCan `:read` action alias will be changing in Solidus 3.0.
+          The current alias is: `:show, :to => :read`
+          The new alias will be compliant with CanCanCan default: `index, :show, :to => :read`
+        WARN
+      elsif action.in? CUSTOM_ALIASES_MAP.keys
+        Spree::Deprecation.warn <<~WARN
+          Calling CanCanCan alias action #{action} is deprecated.
+          In Solidus 3.0 non-standard CanCanCan action aliases will be replaced with default ones
+        WARN
+      end
+
+      CUSTOM_ALIASES_MAP.fetch(action, action)
     end
 
     # Before, this was the only way to extend this ability. Permission sets have been added since.

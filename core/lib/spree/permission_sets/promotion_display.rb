@@ -4,11 +4,11 @@ module Spree
   module PermissionSets
     class PromotionDisplay < PermissionSets::Base
       def activate!
-        can [:display, :admin, :edit], Spree::Promotion
-        can [:display, :admin], Spree::PromotionRule
-        can [:display, :admin], Spree::PromotionAction
-        can [:display, :admin], Spree::PromotionCategory
-        can [:display, :admin], Spree::PromotionCode
+        can [:read, :admin, :edit], Spree::Promotion
+        can [:read, :admin], Spree::PromotionRule
+        can [:read, :admin], Spree::PromotionAction
+        can [:read, :admin], Spree::PromotionCategory
+        can [:read, :admin], Spree::PromotionCode
       end
     end
   end

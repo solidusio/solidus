@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 RSpec.shared_examples_for 'access granted' do
-  it 'should allow read' do
-    expect(ability).to be_able_to(:read, resource, token) if token
-    expect(ability).to be_able_to(:read, resource) unless token
+  it 'should allow show' do
+    expect(ability).to be_able_to(:show, resource, token) if token
+    expect(ability).to be_able_to(:show, resource) unless token
   end
 
   it 'should allow create' do
@@ -18,8 +18,8 @@ RSpec.shared_examples_for 'access granted' do
 end
 
 RSpec.shared_examples_for 'access denied' do
-  it 'should not allow read' do
-    expect(ability).to_not be_able_to(:read, resource)
+  it 'should not allow show' do
+    expect(ability).to_not be_able_to(:show, resource)
   end
 
   it 'should not allow create' do
@@ -61,8 +61,8 @@ RSpec.shared_examples_for 'create only' do
     expect(ability).to be_able_to(:create, resource)
   end
 
-  it 'should not allow read' do
-    expect(ability).to_not be_able_to(:read, resource)
+  it 'should not allow show' do
+    expect(ability).to_not be_able_to(:show, resource)
   end
 
   it 'should not allow update' do
@@ -93,8 +93,8 @@ RSpec.shared_examples_for 'update only' do
     expect(ability).to_not be_able_to(:create, resource)
   end
 
-  it 'should not allow read' do
-    expect(ability).to_not be_able_to(:read, resource)
+  it 'should not allow show' do
+    expect(ability).to_not be_able_to(:show, resource)
   end
 
   it 'should allow update' do

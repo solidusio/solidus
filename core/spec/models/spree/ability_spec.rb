@@ -165,6 +165,7 @@ RSpec.describe Spree::Ability, type: :model do
 
       context 'requested by other user' do
         before(:each) { resource.user = Spree.user_class.new }
+        it { expect(ability).not_to be_able_to(:show, resource) }
         it_should_behave_like 'create only'
       end
 
@@ -178,6 +179,7 @@ RSpec.describe Spree::Ability, type: :model do
       context 'requested with inproper token' do
         let(:token) { 'FAIL' }
         before(:each) { allow(resource).to receive_messages guest_token: 'TOKEN123' }
+        it { expect(ability).not_to be_able_to(:show, resource, token) }
         it_should_behave_like 'create only'
       end
     end
@@ -274,6 +276,56 @@ RSpec.describe Spree::Ability, type: :model do
       context 'requested by any user' do
         it_should_behave_like 'read only'
       end
+    end
+  end
+
+  describe 'legacy aliases deprecation' do
+    before do
+      allow(Spree::Config).to receive(:use_custom_cancancan_actions)
+        .and_return(true)
+      allow(Spree::Deprecation).to receive(:warn)
+    end
+
+    it 'raises warning on read' do
+      ability.can?(:read, Object.new)
+
+      expect(Spree::Deprecation).to have_received(:warn)
+        .with(/`:read` action alias will be changing/)
+    end
+
+    it 'raises deprecation on display' do
+      ability.can?(:display, Object.new)
+
+      expect(Spree::Deprecation).to have_received(:warn)
+        .with(/alias action display is deprecated/)
+    end
+
+    it 'raises deprecation on destroy' do
+      ability.can?(:destroy, Object.new)
+
+      expect(Spree::Deprecation).to have_received(:warn)
+        .with(/alias action destroy is deprecated/)
+    end
+
+    it 'raises deprecation on :new_action' do
+      ability.can?(:new_action, Object.new)
+
+      expect(Spree::Deprecation).to have_received(:warn)
+        .with(/alias action new_action is deprecated/)
+    end
+
+    it 'raises deprecation on display' do
+      ability.can?(:display, Object.new)
+
+      expect(Spree::Deprecation).to have_received(:warn)
+        .with(/alias action display is deprecated/)
+    end
+
+    it 'raises deprecation when called on models by accessible_by' do
+      Spree::Order.accessible_by(ability, :display)
+
+      expect(Spree::Deprecation).to have_received(:warn)
+        .with(/alias action display is deprecated/)
     end
   end
 end

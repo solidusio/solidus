@@ -19,7 +19,7 @@
           <%= link_to t("spree.admin.user.items"), spree.items_admin_user_path(@user) %>
         </li>
       <% end %>
-      <% if can?(:display, @user.store_credits.new) %>
+      <% if can?(:read, @user.store_credits.new) %>
         <li<%== ' class="active"' if current == :store_credits %>>
           <%= link_to t("spree.admin.user.store_credit"), spree.admin_user_store_credits_path(@user) %>
         </li>

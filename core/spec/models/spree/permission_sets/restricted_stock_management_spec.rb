@@ -25,16 +25,16 @@ RSpec.describe Spree::PermissionSets::RestrictedStockManagement do
       described_class.new(ability).activate!
     end
 
-    it { is_expected.to be_able_to(:display, sl1) }
-    it { is_expected.to_not be_able_to(:display, sl2) }
+    it { is_expected.to be_able_to(:read, sl1) }
+    it { is_expected.to_not be_able_to(:read, sl2) }
 
     it { is_expected.to be_able_to(:manage, item1) }
     it { is_expected.to_not be_able_to(:manage, item2) }
   end
 
   context "when not activated" do
-    it { is_expected.to_not be_able_to(:display, sl1) }
-    it { is_expected.to_not be_able_to(:display, sl2) }
+    it { is_expected.to_not be_able_to(:read, sl1) }
+    it { is_expected.to_not be_able_to(:read, sl2) }
 
     it { is_expected.to_not be_able_to(:manage, item1) }
     it { is_expected.to_not be_able_to(:manage, item2) }

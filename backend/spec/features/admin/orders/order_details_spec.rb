@@ -596,7 +596,7 @@ describe "Order Details", type: :feature, js: true do
     end
 
     custom_authorization! do |_user|
-      can [:admin, :index, :read, :edit], Spree::Order
+      can [:admin, :index, :show, :edit], Spree::Order
     end
     it "should not display forbidden links" do
       visit spree.edit_admin_order_path(order)
@@ -619,9 +619,9 @@ describe "Order Details", type: :feature, js: true do
   context 'as Fakedispatch' do
     custom_authorization! do |_user|
       # allow dispatch to :admin, :index, and :edit on Spree::Order
-      can [:admin, :edit, :index, :read], Spree::Order
+      can [:admin, :edit, :index, :show], Spree::Order
       # allow dispatch to :index, :show, :create and :update shipments on the admin
-      can [:admin, :manage, :read, :ship], Spree::Shipment
+      can [:admin, :manage, :show, :ship], Spree::Shipment
     end
 
     before do

@@ -58,12 +58,12 @@ module Spree
       private
 
       def load_stock_location
-        @stock_location ||= Spree::StockLocation.accessible_by(current_ability).find(params.fetch(:stock_location_id))
+        @stock_location ||= Spree::StockLocation.accessible_by(current_ability, :show).find(params.fetch(:stock_location_id))
       end
 
       def scope
         includes = { variant: [{ option_values: :option_type }, :product] }
-        @stock_location.stock_items.accessible_by(current_ability, :read).includes(includes)
+        @stock_location.stock_items.accessible_by(current_ability).includes(includes)
       end
 
       def stock_item_params

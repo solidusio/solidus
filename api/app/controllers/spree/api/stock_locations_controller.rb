@@ -4,10 +4,10 @@ module Spree
   module Api
     class StockLocationsController < Spree::Api::BaseController
       def index
-        authorize! :read, StockLocation
+        authorize! :index, StockLocation
 
         @stock_locations = StockLocation.
-          accessible_by(current_ability, :read).
+          accessible_by(current_ability).
           order('name ASC').
           ransack(params[:q]).
           result
@@ -49,7 +49,7 @@ module Spree
       private
 
       def stock_location
-        @stock_location ||= Spree::StockLocation.accessible_by(current_ability, :read).find(params[:id])
+        @stock_location ||= Spree::StockLocation.accessible_by(current_ability, :show).find(params[:id])
       end
 
       def stock_location_params

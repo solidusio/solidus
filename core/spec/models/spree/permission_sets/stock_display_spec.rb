@@ -12,14 +12,14 @@ RSpec.describe Spree::PermissionSets::StockDisplay do
       described_class.new(ability).activate!
     end
 
-    it { is_expected.to be_able_to(:display, Spree::StockItem) }
+    it { is_expected.to be_able_to(:read, Spree::StockItem) }
     it { is_expected.to be_able_to(:admin, Spree::StockItem) }
-    it { is_expected.to be_able_to(:display, Spree::StockLocation) }
+    it { is_expected.to be_able_to(:read, Spree::StockLocation) }
   end
 
   context "when not activated" do
-    it { is_expected.not_to be_able_to(:display, Spree::StockItem) }
+    it { is_expected.not_to be_able_to(:read, Spree::StockItem) }
     it { is_expected.not_to be_able_to(:admin, Spree::StockItem) }
-    it { is_expected.not_to be_able_to(:display, Spree::StockLocation) }
+    it { is_expected.not_to be_able_to(:read, Spree::StockLocation) }
   end
 end

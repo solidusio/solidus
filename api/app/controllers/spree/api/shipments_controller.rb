@@ -132,7 +132,7 @@ module Spree
 
       def find_order_on_create
         @order = Spree::Order.find_by!(number: params[:shipment][:order_id])
-        authorize! :read, @order
+        authorize! :show, @order
       end
 
       def find_shipment

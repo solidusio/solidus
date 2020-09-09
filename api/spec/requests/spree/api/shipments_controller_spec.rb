@@ -458,7 +458,7 @@ describe Spree::Api::ShipmentsController, type: :request do
         let(:user) { create(:user, spree_api_key: 'abc123') }
 
         custom_authorization! do |_|
-          can :read, Spree::Shipment
+          can :show, Spree::Shipment
           cannot :update, Spree::Shipment
           can :create, Spree::Shipment
           can :destroy, Spree::Shipment
@@ -474,7 +474,7 @@ describe Spree::Api::ShipmentsController, type: :request do
         let(:user) { create(:user, spree_api_key: 'abc123') }
 
         custom_authorization! do |_|
-          can :read, Spree::Shipment
+          can :show, Spree::Shipment
           can :update, Spree::Shipment
           cannot :destroy, Spree::Shipment
           can :create, Spree::Shipment

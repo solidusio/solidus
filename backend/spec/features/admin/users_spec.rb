@@ -27,7 +27,7 @@ describe 'Users', type: :feature do
     context 'when the user cannot manage orders' do
       custom_authorization! do |_user|
         cannot :manage, Spree::Order
-        can [:display, :admin], Spree::Order
+        can [:read, :admin], Spree::Order
       end
 
       before { visit spree.items_admin_user_path(user_a) }
