@@ -14,7 +14,8 @@ class ActionView::Helpers::FormBuilder
 
   def field_hint(method, options = {})
     title = options[:title] || @object.class.human_attribute_name(method)
-    text = options[:text] || I18n.t(method, scope: [:spree, :hints, @object.class.model_name.i18n_key])
+    text_interpolation_args = options.fetch(:text_interpolation_args, {})
+    text = options[:text] || I18n.t(method, scope: [:spree, :hints, @object.class.model_name.i18n_key], **text_interpolation_args)
     @template.admin_hint(title, text)
   end
 end

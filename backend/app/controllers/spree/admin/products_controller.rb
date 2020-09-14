@@ -96,6 +96,7 @@ module Spree
 
       def load_data
         @tax_categories = Spree::TaxCategory.order(:name)
+        @default_tax_category = @tax_categories.default
         @shipping_categories = Spree::ShippingCategory.order(:name)
       end
 

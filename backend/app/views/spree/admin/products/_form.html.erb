@@ -146,8 +146,8 @@
       <div data-hook="admin_product_form_tax_category">
         <%= f.field_container :tax_category do %>
           <%= f.label :tax_category_id, Spree::TaxCategory.model_name.human %>
-          <%= f.field_hint :tax_category %>
-          <%= f.collection_select(:tax_category_id, @tax_categories, :id, :name, { include_blank: t('spree.match_choices.none') }, { class: 'custom-select' }) %>
+          <%= f.field_hint :tax_category, text_interpolation_args: { default_tax_category: @default_tax_category&.name } %>
+          <%= f.collection_select(:tax_category_id, @tax_categories, :id, :name, { include_blank: t('spree.match_choices.none'), selected: @default_tax_category&.id }, { class: 'custom-select' }) %>
           <%= f.error_message_on :tax_category %>
         <% end %>
       </div>

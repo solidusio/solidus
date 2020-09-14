@@ -1403,7 +1403,7 @@ en:
         shipping_category: 'This determines what kind of shipping this product requires.<br/>
           Default: Default'
         tax_category: 'This determines what kind of taxation is applied to this product.<br/>
-          Default: None'
+          Default: %{default_tax_category}'
       spree/promotion:
         expires_at: This determines when the promotion expires. <br/> If no value
           is specified, the promotion will never expire.
