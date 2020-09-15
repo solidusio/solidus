@@ -46,20 +46,20 @@ module Spree
       # Takes the amount in cents to capture.
       # Can be used to capture partial amounts of a payment, and will create
       # a new pending payment record for the remaining amount to capture later.
-      def capture!(amount = nil)
+      def capture!(capture_amount = nil)
         return true if completed?
-        return false unless self.amount.positive?
+        return false unless amount.positive?
 
-        amount ||= money.money.cents
+        capture_amount ||= money.money.cents
         started_processing!
         protect_from_connection_error do
           # Standard ActiveMerchant capture usage
           response = payment_method.capture(
-            amount,
+            capture_amount,
             response_code,
             gateway_options
           )
-          money = ::Money.new(amount, currency)
+          money = ::Money.new(capture_amount, currency)
           capture_events.create!(amount: money.to_d)
           update!(amount: captured_amount)
           handle_response(response, :complete, :failure)
