@@ -48,6 +48,8 @@ module Spree
       # a new pending payment record for the remaining amount to capture later.
       def capture!(amount = nil)
         return true if completed?
+        return false unless self.amount.positive?
+
         amount ||= money.money.cents
         started_processing!
         protect_from_connection_error do
@@ -66,6 +68,8 @@ module Spree
 
       def void_transaction!
         return true if void?
+        return false unless amount.positive?
+
         protect_from_connection_error do
           if payment_method.payment_profiles_supported?
             # Gateways supporting payment profiles will need access to credit card object because this stores the payment profile information

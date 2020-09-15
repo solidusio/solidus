@@ -156,7 +156,7 @@ module Spree
 
       describe '#fire' do
         describe 'authorization' do
-          let(:payment) { create(:payment, state: 'checkout') }
+          let(:payment) { create(:payment, state: 'checkout', amount: 10) }
           let(:order) { payment.order }
 
           context 'the user is authorized' do
