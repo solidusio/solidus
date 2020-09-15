@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require_relative '../core/lib/spree/core/version.rb'
+require_relative '../core/lib/solidus/version.rb'
 
 Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.name        = 'solidus_backend'
-  s.version     = Spree.solidus_version
+  s.version     = Solidus::VERSION
   s.summary     = 'Admin interface for the Solidus e-commerce framework.'
   s.description = s.summary
 
@@ -14,9 +14,11 @@ Gem::Specification.new do |s|
   s.homepage    = 'http://solidus.io'
   s.license     = 'BSD-3-Clause'
 
-  s.files = `git ls-files -z`.split("\x0").reject do |f|
-    f.match(%r{^(spec|script)/})
-  end
+  # Specify which files should be added to the gem when it is released.
+  # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
+  files = Dir.chdir(__dir__) { `git ls-files -z`.split("\x0") }
+
+  s.files = files.grep_v(%r{^(spec|script)/})
 
   s.required_ruby_version = '>= 2.5.0'
   s.required_rubygems_version = '>= 1.8.23'
