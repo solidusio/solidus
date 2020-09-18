@@ -421,22 +421,36 @@ RSpec.describe Spree::Payment, type: :model do
     describe "#capture!" do
       subject { payment.capture! }
 
+      before { payment.response_code = '12345' }
+
       context "when payment is pending" do
-        before do
-          payment.amount = 100
-          payment.state = 'pending'
-          payment.response_code = '12345'
+        before { payment.state = 'pending' }
+
+        context "when the amount is zero" do
+          before { payment.amount = 0 }
+
+          it { is_expected.to be_falsey }
         end
 
-        context "if successful" do
-          context 'for entire amount' do
-            before do
-              expect(payment.payment_method).to receive(:capture).with(payment.display_amount.money.cents, payment.response_code, anything).and_return(success_response)
-            end
+        context "when the amount is positive" do
+          before { payment.amount = 100 }
 
-            it "should make payment complete" do
-              expect(payment).to receive(:complete!)
-              subject
+          context "if successful" do
+            context 'for entire amount' do
+              before do
+                expect(payment.payment_method).to receive(:capture).with(payment.display_amount.money.cents, payment.response_code, anything).and_return(success_response)
+              end
+
+              it "should make payment complete" do
+                expect(payment).to receive(:complete!)
+                subject
+              end
+
+              it "logs capture events" do
+                subject
+                expect(payment.capture_events.count).to eq(1)
+                expect(payment.capture_events.first.amount).to eq(payment.amount)
+              end
             end
 
             it "logs capture events" do
@@ -446,43 +460,37 @@ RSpec.describe Spree::Payment, type: :model do
             end
           end
 
-          it "logs capture events" do
-            subject
-            expect(payment.capture_events.count).to eq(1)
-            expect(payment.capture_events.first.amount).to eq(payment.amount)
-          end
-        end
+          context "capturing a partial amount" do
+            it "logs capture events" do
+              payment.capture!(5000)
+              expect(payment.capture_events.count).to eq(1)
+              expect(payment.capture_events.first.amount).to eq(50)
+            end
 
-        context "capturing a partial amount" do
-          it "logs capture events" do
-            payment.capture!(5000)
-            expect(payment.capture_events.count).to eq(1)
-            expect(payment.capture_events.first.amount).to eq(50)
-          end
+            it "stores the captured amount on the payment" do
+              payment.capture!(6000)
+              expect(payment.captured_amount).to eq(60)
+            end
 
-          it "stores the captured amount on the payment" do
-            payment.capture!(6000)
-            expect(payment.captured_amount).to eq(60)
-          end
-
-          it "updates the amount of the payment" do
-            payment.capture!(6000)
-            expect(payment.reload.amount).to eq(60)
-          end
-        end
-
-        context "if unsuccessful" do
-          before do
-            allow(gateway).to receive_messages capture: failed_response
+            it "updates the amount of the payment" do
+              payment.capture!(6000)
+              expect(payment.reload.amount).to eq(60)
+            end
           end
 
-          it "should not make payment complete" do
-            expect(payment).to receive(:failure)
-            expect(payment).not_to receive(:complete)
-            expect { subject }.to raise_error(Spree::Core::GatewayError)
-          end
+          context "if unsuccessful" do
+            before do
+              allow(gateway).to receive_messages capture: failed_response
+            end
 
-          it_should_behave_like :gateway_error_logging
+            it "should not make payment complete" do
+              expect(payment).to receive(:failure)
+              expect(payment).not_to receive(:complete)
+              expect { subject }.to raise_error(Spree::Core::GatewayError)
+            end
+
+            it_should_behave_like :gateway_error_logging
+          end
         end
       end
 
@@ -546,59 +554,67 @@ RSpec.describe Spree::Payment, type: :model do
         payment.state = 'pending'
       end
 
-      context "when profiles are supported" do
-        it "should call payment_gateway.void with the payment's response_code" do
-          allow(gateway).to receive_messages payment_profiles_supported?: true
-          expect(gateway).to receive(:void).with('123', card, anything).and_return(success_response)
-          subject
-        end
+      context "when the payment amount is zero" do
+        before { payment.amount = 0 }
+
+        it { is_expected.to be_falsey }
       end
 
-      context "when profiles are not supported" do
-        it "should call payment_gateway.void with the payment's response_code" do
-          allow(gateway).to receive_messages payment_profiles_supported?: false
-          expect(gateway).to receive(:void).with('123', anything).and_return(success_response)
-          subject
-        end
-      end
-
-      it "should log the response" do
-        expect {
-          subject
-        }.to change { payment.log_entries.count }.by(1)
-      end
-
-      context "if successful" do
-        it "should update the response_code with the authorization from the gateway" do
-          # Change it to something different
-          payment.response_code = 'abc'
-          subject
-          expect(payment.response_code).to eq('12345')
-        end
-      end
-
-      context "if unsuccessful" do
-        before do
-          allow(gateway).to receive_messages void: failed_response
+      context "when the amount is positive" do
+        context "when profiles are supported" do
+          it "should call payment_gateway.void with the payment's response_code" do
+            allow(gateway).to receive_messages payment_profiles_supported?: true
+            expect(gateway).to receive(:void).with('123', card, anything).and_return(success_response)
+            subject
+          end
         end
 
-        it "should not void the payment" do
-          expect(payment).not_to receive(:void)
-          expect { subject }.to raise_error(Spree::Core::GatewayError)
+        context "when profiles are not supported" do
+          it "should call payment_gateway.void with the payment's response_code" do
+            allow(gateway).to receive_messages payment_profiles_supported?: false
+            expect(gateway).to receive(:void).with('123', anything).and_return(success_response)
+            subject
+          end
         end
 
-        it_should_behave_like :gateway_error_logging
-      end
-
-      # Regression test for https://github.com/spree/spree/issues/2119
-      context "if payment is already voided" do
-        before do
-          payment.state = 'void'
+        it "should log the response" do
+          expect {
+            subject
+          }.to change { payment.log_entries.count }.by(1)
         end
 
-        it "should not void the payment" do
-          expect(payment.payment_method).not_to receive(:void)
-          payment.void_transaction!
+        context "if successful" do
+          it "should update the response_code with the authorization from the gateway" do
+            # Change it to something different
+            payment.response_code = 'abc'
+            subject
+            expect(payment.response_code).to eq('12345')
+          end
+        end
+
+        context "if unsuccessful" do
+          before do
+            allow(gateway).to receive_messages void: failed_response
+          end
+
+          it "should not void the payment" do
+            expect(payment).not_to receive(:void)
+            expect { subject }.to raise_error(Spree::Core::GatewayError)
+          end
+
+          it_should_behave_like :gateway_error_logging
+        end
+
+        # Regression test for https://github.com/spree/spree/issues/2119
+        context "if payment is already voided" do
+          before do
+            payment.state = 'void'
+          end
+
+          it "should not void the payment" do
+            expect(payment.payment_method).not_to receive(:void)
+            payment.void_transaction!
+          end
         end
       end
     end
