@@ -396,13 +396,13 @@ describe Spree::Admin::OrdersController, type: :controller do
     end
   end
 
-  context "order number not given" do
+  context "existent order number not given" do
     stub_authorization!
 
-    it "raise active record not found" do
-      expect {
-        get :edit, params: { id: 0 }
-      }.to raise_error ActiveRecord::RecordNotFound
+    it "cannot find non-existent order" do
+      get :edit, params: { id: 0 }
+      expect(response).to redirect_to(spree.admin_orders_path)
+      expect(flash[:error]).to eql("Order is not found")
     end
   end
 end

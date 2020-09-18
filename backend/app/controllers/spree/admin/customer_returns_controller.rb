@@ -42,6 +42,8 @@ module Spree
 
       def collection
         parent # trigger loading the order
+        return unless @order
+
         @collection ||= Spree::ReturnItem
           .accessible_by(current_ability)
           .where(inventory_unit_id: @order.inventory_units.pluck(:id))

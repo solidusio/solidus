@@ -53,6 +53,13 @@ describe Spree::Admin::Orders::CustomerDetailsController, type: :controller do
           end
         end
       end
+      context "existent order id not given" do
+        it "redirects and flashes about the non-existent order" do
+          get :edit, params: { order_id: 'non-existent-order' }
+          expect(response).to redirect_to(spree.admin_orders_path)
+          expect(flash[:error]).to eql("Order is not found")
+        end
+      end
     end
 
     context "#update" do

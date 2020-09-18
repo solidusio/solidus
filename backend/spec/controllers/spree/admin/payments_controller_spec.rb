@@ -152,6 +152,14 @@ module Spree
             expect(response).to redirect_to(spree.edit_admin_order_customer_path(order))
           end
         end
+
+        context "existent order id not given" do
+          it "redirects and flashes about the non-existent order" do
+            get :index, params: { order_id: 'non-existent-order' }
+            expect(response).to redirect_to(spree.admin_orders_path)
+            expect(flash[:error]).to eql("Order is not found")
+          end
+        end
       end
 
       describe '#fire' do

@@ -4,7 +4,6 @@ module Spree
   module Admin
     class ImagesController < ResourceController
       before_action :load_data
-
       create.before :set_viewable
       update.before :set_viewable
 
@@ -24,6 +23,8 @@ module Spree
           [variant.sku_and_options_text, variant.id]
         end
         @variants.insert(0, [t('spree.all'), @product.master.id])
+      rescue ActiveRecord::RecordNotFound
+        resource_not_found(flash_class: Spree::Product, redirect_url: admin_products_path)
       end
 
       def set_viewable
