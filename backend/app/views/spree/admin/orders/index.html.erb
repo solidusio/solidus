@@ -184,8 +184,9 @@
           <% if order.user %>
             <%= link_to order.email, edit_admin_user_path(order.user) %>
           <% else %>
-            <%= mail_to order.email %>
+            <%= order.email %>
           <% end %>
+          <%= link_to_with_icon('email', t('spree.actions.send_email'), "mailto:#{order.email}", no_text: true) %>
         </td>
         <td class="align-right"><%= order.display_total.to_html %></td>
         <td class='actions align-center' data-hook="admin_orders_index_row_actions">
