@@ -9,7 +9,7 @@ module Spree
         @rates_for_order ||= Spree::TaxRate.for_address(item.order.tax_address)
 
         @rates_for_order.select do |rate|
-          rate.tax_categories.map(&:id).include?(item.tax_category_id)
+          rate.active? && rate.tax_categories.map(&:id).include?(item.tax_category_id)
         end
       end
     end
