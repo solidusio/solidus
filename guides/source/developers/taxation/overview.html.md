@@ -21,7 +21,7 @@ if a store sells internationally:
 
 Solidus uses the `Spree::TaxCategory` and `Spree::TaxRate` models to specify the
 rules for how tax adjustments are calculated. Tax adjustments are created for
-each line item in an order. 
+each line item in an order.
 
 See the [Order taxation](#order-taxation) section for an overview of the order
 taxation process.
@@ -36,7 +36,7 @@ either type.
 
 By default, new products do not have a set tax category. Administrators can set
 the tax category while creating the product or set it later while editing the
-product. 
+product.
 
 ## Tax rates
 
@@ -57,7 +57,7 @@ In Solidus, a tax rate consists of at least four values:
 Solidus calculates tax based on the matching tax rate(s) for the order's [tax
 address](#tax-addresses).
 
-[zone]: ../locations/zones.html
+[zone]: ../locations/zones.html.md
 
 ## Tax addresses
 
@@ -66,7 +66,7 @@ have configured would apply for all the line items and shipments in that zone
 that have a matching tax category.
 
 By default, the `tax_address` used for orders is the customer's shipping
-address. This is how most tax jurisdictions require taxes to be calculated. 
+address. This is how most tax jurisdictions require taxes to be calculated.
 However, you can configure your store to globally use customer billing
 addresses instead in any initializer file inside the `config/initializers/`
 directory:
@@ -108,7 +108,7 @@ shipment:
 	For more information about VAT, see [Value-added tax (VAT)][vat].
 
 [consumption-tax]: https://en.wikipedia.org/wiki/Consumption_tax
-[vat]: value-added-tax.html
+[vat]: value-added-tax.html.md
 
 ### Tax in the United States
 
@@ -152,7 +152,7 @@ outlined by the California State Board of Equalization][ca-tax-discounts].
    Solidus uses the `included_tax_total` column to store the sum of VAT-style
    taxes. Otherwise, it uses the `additional_tax_total` to store the sum of
    sales tax-style taxes.)
-5. The same process is executed on the order's `Spree::Shipments`.  
+5. The same process is executed on the order's `Spree::Shipments`.
 6. The sum of the `included_tax_total` and `additional_tax_total` on all line
    items and shipments a stored in the order's `included_tax_total` and
    `additional_tax_total` values.
