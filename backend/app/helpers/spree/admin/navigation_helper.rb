@@ -7,7 +7,7 @@ module Spree
         @admin_breadcrumbs ||= []
       end
 
-      # Add items to current page breadcrumb heirarchy
+      # Add items to current page breadcrumb hierarchy
       def admin_breadcrumb(*ancestors, &block)
         admin_breadcrumbs.concat(ancestors) if ancestors.present?
         admin_breadcrumbs.push(capture(&block)) if block_given?
