@@ -76,20 +76,31 @@ RSpec.describe Spree::Address, type: :model do
         expect(address.state_name).to be_nil
       end
 
-      context 'when the country does not match the state' do
-        context 'when the country requires states' do
-          it 'is invalid' do
-            address.state = state
-            address.country = Spree::Country.new(states_required: true)
-            address.valid?
-            expect(address.errors["state"]).to eq(['is invalid', 'does not match the country'])
+      context "when the country does not match the state's country" do
+        context 'and the country does not have states' do
+          before do
+            address.country = create(:country, iso: 'AI') # Anguilla
+            address.state = create(:state, country_iso: 'US', state_code: 'AL')
+          end
+
+          it 'is valid' do
+            expect(address.valid?).to eq(true)
+            expect(address.errors["state"]).to be_empty
+          end
+
+          it 'nullifies the provided state' do
+            expect { address.valid? }.to change(address, :state).to(nil)
           end
         end
 
-        context 'when the country does not require states' do
+        context 'and the country has states' do
+          before do
+            ita_state = create(:state, country_iso: 'IT')
+            address.country = ita_state.country
+            address.state = create(:state, country_iso: 'US', state_code: 'AL')
+          end
+
           it 'is invalid' do
-            address.state = state
-            address.country = Spree::Country.new(states_required: false)
             address.valid?
             expect(address.errors["state"]).to eq(['does not match the country'])
           end

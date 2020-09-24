@@ -253,6 +253,9 @@ module Spree
     end
 
     def validate_state_matches_country
+      return unless country
+
+      self.state = nil if country.states.empty?
       if state && state.country != country
         errors.add(:state, :does_not_match_country)
       end
