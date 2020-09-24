@@ -156,6 +156,7 @@ describe "Products", type: :feature do
     context "creating a new product" do
       before(:each) do
         @shipping_category = create(:shipping_category)
+        @tax_category = create(:tax_category, name: 'Alcohol taxes', is_default: true)
         click_nav "Products"
         click_on "New Product"
       end
@@ -238,6 +239,10 @@ describe "Products", type: :feature do
         expect(page).to have_content("successfully created!")
         click_button "Update"
         expect(page).to have_content("successfully updated!")
+      end
+
+      it "should show default tax category" do
+        expect(page).to have_select('product_tax_category_id', selected: 'Alcohol taxes')
       end
     end
 
