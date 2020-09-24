@@ -852,6 +852,11 @@ en:
           drag_and_drop: or drag and drop them here
           image_process_failed: Server failed to process the image
           upload_images: Upload Images
+      order:
+        events:
+          approve: Approve
+          cancel: Cancel
+          resume: Resume
       payments:
         source_forms:
           storecredit:
