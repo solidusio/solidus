@@ -1443,6 +1443,8 @@ en:
           (orders which don't yet have an address).<br/> Default: None."
         code: 'An identifier for your store. Developers may need this value if you operate
           multiple storefronts.'
+      spree/tax_category:
+        is_default: 'When checked, this tax category will be selected by default when creating new products or variants.'
       spree/tax_rate:
         validity_period: This determines the validity period within which the tax
           rate is valid and will be applied to eligible items. <br /> If no start

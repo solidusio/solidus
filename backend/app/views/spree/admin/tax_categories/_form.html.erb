@@ -18,6 +18,7 @@
       <label>
         <%= f.check_box :is_default %>
         <%= Spree::TaxCategory.human_attribute_name(:is_default) %>
+        <%= f.field_hint :is_default %>
       </label>
     <% end %>
   </div>
