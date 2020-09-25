@@ -1,4 +1,8 @@
-<td class="stock-location-name">{{stockLocationName}}</td>
+<td class="stock-location-name">
+  <a href="/admin/stock_locations/{{stockLocationId}}/stock_movements?q%5Bvariant_sku_eq%5D={{variantSku}}">
+    {{stockLocationName}}
+  </a>
+</td>
 <td class="align-center">
   <input id="backorderable-{{id}}"
          name="backorderable"
