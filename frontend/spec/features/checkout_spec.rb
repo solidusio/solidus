@@ -625,7 +625,7 @@ describe "Checkout", type: :feature, inaccessible: true do
         state_name_css = "order_bill_address_attributes_state_name"
 
         select "Canada", from: "order_bill_address_attributes_country_id"
-        fill_in 'Customer E-Mail', with: 'test@example.com'
+        fill_in 'Customer Email', with: 'test@example.com'
         fill_in state_name_css, with: xss_string
         fill_in "Zip", with: "H0H0H0"
 

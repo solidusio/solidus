@@ -140,7 +140,7 @@ describe "Customer Details", type: :feature, js: true do
         click_button "Update"
         expect(page).to have_content 'Customer Details Updated'
         click_link "Customer"
-        expect(page).to have_field 'Customer E-Mail', with: order.reload.email
+        expect(page).to have_field 'Customer Email', with: order.reload.email
         within '#order_user_link' do
           expect(page).to have_link user.email
         end
