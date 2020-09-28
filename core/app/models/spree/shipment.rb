@@ -76,9 +76,11 @@ module Spree
 
     def after_cancel
       manifest.each { |item| manifest_restock(item) }
+      cancel_inventory_units
     end
 
     def after_resume
+      resume_inventory_units
       manifest.each { |item| manifest_unstock(item) }
     end
 
@@ -384,6 +386,33 @@ module Spree
 
     def manifest_unstock(item)
       stock_location.unstock item.variant, item.quantity, self
+    end
+
+    def cancel_inventory_units
+      inventory_units.where.not(state: 'canceled').each(&:cancel!)
+    end
+
+    def resume_inventory_units
+      manifest.each do |item|
+        number_of_items_to_restore = item.states["on_hand"].to_i + item.states["backordered"].to_i
+
+        if item.variant.should_track_inventory?
+          units_available, units_to_back_order = stock_location.fill_status(item.variant, number_of_items_to_restore)
+
+          inventory_units.canceled.
+            where(line_item: item.line_item).
+            limit(units_available).
+            each(&:on_hand!)
+
+          inventory_units.canceled.
+            where(line_item: item.line_item).
+            limit(units_to_back_order).
+            each(&:backorder!)
+        else
+          inventory_units.canceled.limit(number_of_items_to_restore).each(&:on_hand!)
+        end
+      end
+      inventory_units.reload
     end
 
     def set_cost_zero_when_nil

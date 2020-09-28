@@ -432,6 +432,18 @@ RSpec.describe Spree::Shipment, type: :model do
       shipment.after_cancel
     end
 
+    it 'sets inventory unit to canceled' do
+      shipment.stock_location = mock_model(Spree::StockLocation)
+      allow(shipment.stock_location).to receive(:restock)
+      allow(shipment.stock_location).to receive(:fill_status)
+      inventory_unit = shipment.inventory_units.first
+
+      shipment.cancel!
+
+      inventory_unit.reload
+      expect(inventory_unit).to be_canceled
+    end
+
     context "with backordered inventory units" do
       let(:order) { create(:order) }
       let(:variant) { create(:variant) }
@@ -462,9 +474,7 @@ RSpec.describe Spree::Shipment, type: :model do
   end
 
   context "#resume" do
-    let(:inventory_unit) { create(:inventory_unit) }
-
-    before { shipment.state = 'canceled' }
+    before { shipment.cancel! }
 
     context "when order cannot ship" do
       before { allow(order).to receive_messages(can_ship?: false) }
@@ -476,17 +486,44 @@ RSpec.describe Spree::Shipment, type: :model do
 
     context "when order is not paid" do
       before { allow(order).to receive_messages(paid?: false) }
-      it "should result in a 'ready' state" do
+      it "should result in a 'pending' state" do
         shipment.resume!
         expect(shipment.state).to eq 'pending'
       end
     end
 
     context "when any inventory is backordered" do
-      before { allow_any_instance_of(Spree::InventoryUnit).to receive(:allow_ship?).and_return(false) }
-      it "should result in a 'ready' state" do
+      before { allow(shipment.stock_location).to receive(:fill_status).and_return([0, 1]) }
+      it "should result in a 'pending' state" do
         shipment.resume!
         expect(shipment.state).to eq 'pending'
+      end
+    end
+
+    context "when any inventory was already canceled" do
+      let(:canceled_inventory_unit) {
+        create(:inventory_unit,
+               state: 'canceled', order: order,
+               stock_location: stock_location, line_item: order.line_items.first)
+      }
+      let(:shipment_with_canceled_inventory_unit) do
+        order.shipments.create!(
+          state: 'pending',
+          cost: 1,
+          inventory_units: [canceled_inventory_unit],
+          shipping_rates: [shipping_rate],
+          stock_location: stock_location
+        )
+      end
+
+      before do
+        shipment_with_canceled_inventory_unit.cancel!
+      end
+
+      it "should not resume the inventory unit that was already canceled" do
+        shipment_with_canceled_inventory_unit.resume!
+        expect(shipment_with_canceled_inventory_unit.inventory_units.canceled.count).to eq 1
+        expect(shipment_with_canceled_inventory_unit.inventory_units.canceled.first).to eq canceled_inventory_unit
       end
     end
 
@@ -495,19 +532,32 @@ RSpec.describe Spree::Shipment, type: :model do
         allow(order).to receive_messages(can_ship?: true)
         allow(order).to receive_messages(paid?: true)
         allow_any_instance_of(Spree::InventoryUnit).to receive(:allow_ship?).and_return(true)
+        allow(shipment.stock_location).to receive(:fill_status).and_return([1, 0])
       end
 
       it "should result in a 'ready' state" do
         shipment.resume!
         expect(shipment.state).to eq 'ready'
       end
+
+      it 'sets inventory unit to be on_hand' do
+        inventory_unit = shipment.inventory_units.first
+
+        shipment.resume!
+
+        inventory_unit.reload
+        expect(inventory_unit).to be_on_hand
+      end
     end
 
-    it 'unstocks them items' do
+    it 'unstocks the items' do
       variant = shipment.inventory_units.first.variant
       shipment.stock_location = mock_model(Spree::StockLocation)
+      allow(shipment.stock_location).to receive(:fill_status)
+
       expect(shipment.stock_location).to receive(:unstock).with(variant, 1, shipment)
-      shipment.after_resume
+
+      shipment.resume!
     end
   end
 

@@ -38,10 +38,10 @@ module Spree
             after_transition to: :canceled, do: :after_cancel
 
             event :resume do
-              transition from: :canceled, to: :ready, if: :can_transition_from_canceled_to_ready?
               transition from: :canceled, to: :pending
             end
             after_transition from: :canceled, to: [:pending, :ready, :shipped], do: :after_resume
+            after_transition from: :canceled, to: :pending, do: :update_state
 
             after_transition do |shipment, transition|
               shipment.state_changes.create!(

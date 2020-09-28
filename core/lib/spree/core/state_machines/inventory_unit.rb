@@ -34,6 +34,14 @@ module Spree
             event :cancel do
               transition to: :canceled, from: ::Spree::InventoryUnit::CANCELABLE_STATES.map(&:to_sym)
             end
+
+            event :on_hand do
+              transition to: :on_hand, from: :canceled
+            end
+
+            event :backorder do
+              transition to: :backordered, from: :canceled
+            end
           end
         end
       end
