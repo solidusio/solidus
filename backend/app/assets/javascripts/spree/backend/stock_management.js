@@ -7,6 +7,8 @@ Spree.ready(function() {
     new Spree.Views.Stock.EditStockItemRow({
       el: $el,
       stockLocationName: $el.data('stock-location-name'),
+      stockLocationId: $el.data("stock-item").stock_location_id,
+      variantSku: $el.data("variant-sku"),
       model: model
     });
 

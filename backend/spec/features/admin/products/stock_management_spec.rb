@@ -41,6 +41,10 @@ describe "Product Stock", type: :feature do
       end
     end
 
+    it "contains a link to recent stock movements", js: true do
+      expect(page).to have_link(nil, href: "/admin/stock_locations/#{stock_location.id}/stock_movements?q%5Bvariant_sku_eq%5D=#{variant.sku}")
+    end
+
     it "can create a positive stock adjustment", js: true do
       adjust_count_on_hand('14')
       stock_item.reload
