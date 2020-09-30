@@ -73,6 +73,8 @@ describe "Homepage", type: :feature do
     custom_authorization! do |_user|
       can [:admin, :home], :dashboards
       can [:admin, :edit, :index, :show], Spree::Order
+      cannot [:show], Spree::StockLocation
+      cannot [:show], Spree::Zone
     end
 
     it 'should only display tabs fakedispatch has access to' do
