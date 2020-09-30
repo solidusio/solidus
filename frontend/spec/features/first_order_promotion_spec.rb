@@ -40,7 +40,7 @@ RSpec.feature "First Order promotion" do
     click_button "Apply Code"
     expect(page).to have_content("The coupon code was successfully applied to your order")
     click_on "Checkout"
-    fill_in "Customer E-Mail", with: "sam@tom.com"
+    fill_in "Customer Email", with: "sam@tom.com"
     fill_in_address
     click_on "Save and Continue"
     expect(page).to_not have_content("#summary-order-charges")

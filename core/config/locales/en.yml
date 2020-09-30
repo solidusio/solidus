@@ -116,7 +116,7 @@ en:
         considered_risky: Risky
         coupon_code: Coupon Code
         created_at: Order Date
-        email: Customer E-Mail
+        email: Customer Email
         included_tax_total: Tax (incl.)
         ip_address: IP Address
         item_total: Item Total
