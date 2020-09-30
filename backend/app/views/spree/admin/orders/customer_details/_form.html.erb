@@ -41,6 +41,19 @@
   </fieldset>
 
   <div class="row">
+    <% if Spree::Config[:order_bill_address_used] %>
+      <div class="col-6" data-hook="bill_address_wrapper">
+        <fieldset class="no-border-bottom">
+          <legend align="center"><%= t('spree.billing_address') %></legend>
+          <div class="js-billing-address">
+            <%= f.fields_for :bill_address do |ba_form| %>
+              <%= render partial: 'spree/admin/shared/address_form', locals: { f: ba_form, type: "billing" } %>
+            <% end %>
+          </div>
+        </fieldset>
+      </div>
+    <% end %>
+
     <div class="col-6" data-hook="ship_address_wrapper">
       <fieldset class="no-border-bottom">
         <legend align="center"><%= t('spree.shipping_address') %></legend>
@@ -62,19 +75,6 @@
         </div>
       </fieldset>
     </div>
-
-    <% if Spree::Config[:order_bill_address_used] %>
-      <div class="col-6" data-hook="bill_address_wrapper">
-        <fieldset class="no-border-bottom">
-          <legend align="center"><%= t('spree.billing_address') %></legend>
-          <div class="js-billing-address">
-            <%= f.fields_for :bill_address do |ba_form| %>
-              <%= render partial: 'spree/admin/shared/address_form', locals: { f: ba_form, type: "billing" } %>
-            <% end %>
-          </div>
-        </fieldset>
-      </div>
-    <% end %>
   </div>
 
   <div class="clear"></div>
