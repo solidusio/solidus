@@ -8,11 +8,15 @@ module Spree
         links = []
         @order_events.sort.each do |event|
           next unless @order.send("can_#{event}?")
-          links << button_to(t(event, scope: 'spree'), [event, :admin, @order],
-                             method: :put,
-                             data: { confirm: t('spree.order_sure_want_to', event: t(event, scope: 'spree')) })
+          translated_event = t(event, scope: [:spree, :admin, :order, :events])
+          links << button_to(
+            translated_event,
+            [event, :admin, @order],
+            method: :put,
+            data: { confirm: t(:order_sure_want_to, event: translated_event, scope: :spree) }
+          )
         end
-        safe_join(links, '&nbsp;'.html_safe)
+        safe_join(links, "&nbsp;".html_safe)
       end
 
       def line_item_shipment_price(line_item, quantity)
