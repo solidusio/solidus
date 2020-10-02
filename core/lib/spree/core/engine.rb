@@ -65,7 +65,7 @@ module Spree
             caller
           )
         end
-        if Spree::Config.consider_actionless_promotion_active != true
+        if Spree::Config.consider_actionless_promotion_active == true
           Spree::Deprecation.warn(
             'Spree::Config.consider_actionless_promotion_active set to true is ' \
             'deprecated. Please note that by switching this value, ' \
