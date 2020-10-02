@@ -52,6 +52,11 @@ module Spree
               Spree::Event.fire "shipment_transitioned_to_#{transition.to}", shipment: shipment
               shipment.logger.debug "Shipment #{shipment.number} transitioned from #{transition.from} to #{transition.to} via #{transition.event}"
             end
+
+            after_failure do |shipment, transition|
+              Spree::Event.fire "shipment_failed_transition_to_#{transition.to}", shipment: shipment
+              shipment.logger.debug "Shipment #{shipment.number} halted transition on event #{transition.event} state #{transition.from}: #{shipment.errors.full_messages.join}"
+            end
           end
         end
       end

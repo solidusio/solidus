@@ -133,6 +133,7 @@ module Spree
               end
 
               after_failure do |order, transition|
+                Spree::Event.fire "order_failed_transition_to_#{transition.to}", order: order
                 order.logger.debug "Order #{order.number} halted transition on event #{transition.event} state #{transition.from}: #{order.errors.full_messages.join}"
               end
             end

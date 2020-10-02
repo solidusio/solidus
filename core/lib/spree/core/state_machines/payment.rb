@@ -55,6 +55,11 @@ module Spree
               Spree::Event.fire "payment_transitioned_to_#{transition.to}", payment: payment
               payment.logger.debug "Payment #{payment.number} transitioned from #{transition.from} to #{transition.to} via #{transition.event}"
             end
+
+            after_failure do |payment, transition|
+              Spree::Event.fire "payment_failed_transition_to_#{transition.to}", payment: payment
+              payment.logger.debug "Payment #{payment.number} halted transition on event #{transition.event} state #{transition.from}: #{payment.errors.full_messages.join}"
+            end
           end
         end
       end
