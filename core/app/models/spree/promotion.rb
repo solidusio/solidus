@@ -48,9 +48,9 @@ module Spree
     scope :started_and_unexpired, -> do
       table = arel_table
       time = Time.current
-      joins(:promotion_actions).
-          where(table[:starts_at].eq(nil).or(table[:starts_at].lt(time))).
-          where(table[:expires_at].eq(nil).or(table[:expires_at].gt(time)))
+
+      where(table[:starts_at].eq(nil).or(table[:starts_at].lt(time))).
+        where(table[:expires_at].eq(nil).or(table[:expires_at].gt(time)))
     end
     scope :has_actions, -> do
       joins(:promotion_actions)
