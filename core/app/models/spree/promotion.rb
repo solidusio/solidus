@@ -39,11 +39,9 @@ module Spree
     scope :coupons, -> { joins(:codes).distinct }
     scope :advertised, -> { where(advertise: true) }
     scope :active, -> do
-      if Spree::Config.consider_actionless_promotion_active
-        started_and_unexpired
-      else
-        has_actions.started_and_unexpired
-      end
+      return started_and_unexpired if Spree::Config.consider_actionless_promotion_active == true
+
+      has_actions.started_and_unexpired
     end
     scope :started_and_unexpired, -> do
       table = arel_table

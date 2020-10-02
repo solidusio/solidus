@@ -62,6 +62,36 @@ RSpec.describe Spree::Promotion, type: :model do
     end
   end
 
+  describe '.active' do
+    subject { described_class.active }
+
+    let(:promotion) { create(:promotion, starts_at: Date.yesterday, name: "name1") }
+
+    before { promotion }
+
+    it "doesn't return promotion without actions" do
+      expect(subject).to be_empty
+    end
+
+    context 'when promotion has an action' do
+      let(:promotion) { create(:promotion, :with_action, starts_at: Date.yesterday, name: "name1") }
+
+      it 'returns promotion with action' do
+        expect(subject).to match [promotion]
+      end
+    end
+
+    context 'with consider_actionless_promotion_active true' do
+      before do
+        stub_spree_preferences(consider_actionless_promotion_active: true)
+      end
+
+      it "returns promotions without actions" do
+        expect(subject).to match [promotion]
+      end
+    end
+  end
+
   describe "#apply_automatically" do
     subject { build(:promotion) }
 
@@ -85,10 +115,9 @@ RSpec.describe Spree::Promotion, type: :model do
   end
 
   describe "#save" do
-    let(:promotion) { Spree::Promotion.create(name: "delete me") }
+    let(:promotion) { create(:promotion, :with_action, name: 'delete me') }
 
     before(:each) do
-      promotion.actions << Spree::Promotion::Actions::CreateAdjustment.new
       promotion.rules << Spree::Promotion::Rules::FirstOrder.new
       promotion.save!
     end
@@ -347,9 +376,7 @@ RSpec.describe Spree::Promotion, type: :model do
   end
 
   context "#inactive" do
-    before do
-      promotion.actions << Spree::Promotion::Actions::CreateAdjustment.new
-    end
+    let(:promotion) { create(:promotion, :with_action) }
 
     it "should not be exipired" do
       expect(promotion).not_to be_inactive
@@ -463,40 +490,92 @@ RSpec.describe Spree::Promotion, type: :model do
   end
 
   context "#active" do
-    it "should be active" do
-      expect(promotion.active?).to eq(true)
-    end
-
-    it "should not be active if it hasn't started yet" do
-      promotion.starts_at = Time.current + 1.day
+    it "shouldn't be active if it has started already" do
+      promotion.starts_at = Time.current - 1.day
       expect(promotion.active?).to eq(false)
     end
 
-    it "should not be active if it has already ended" do
-      promotion.expires_at = Time.current - 1.day
+    it "shouldn't be active if it has not ended yet" do
+      promotion.expires_at = Time.current + 1.day
       expect(promotion.active?).to eq(false)
     end
 
-    it "should be active if it has started already" do
-      promotion.starts_at = Time.current - 1.day
-      expect(promotion.active?).to eq(true)
-    end
-
-    it "should be active if it has not ended yet" do
-      promotion.expires_at = Time.current + 1.day
-      expect(promotion.active?).to eq(true)
-    end
-
-    it "should be active if current time is within starts_at and expires_at range" do
+    it "shouldn't be active if current time is within starts_at and expires_at range" do
       promotion.starts_at = Time.current - 1.day
       promotion.expires_at = Time.current + 1.day
-      expect(promotion.active?).to eq(true)
+      expect(promotion.active?).to eq(false)
     end
 
-    it "should be active if there are no start and end times set" do
+    it "shouldn't be active if there are no start and end times set" do
       promotion.starts_at = nil
       promotion.expires_at = nil
-      expect(promotion.active?).to eq(true)
+      expect(promotion.active?).to eq(false)
+    end
+
+    context 'when promotion has an action' do
+      let(:promotion) { create(:promotion, :with_action, name: "name1") }
+
+      it "should be active if it has started already" do
+        promotion.starts_at = Time.current - 1.day
+        expect(promotion.active?).to eq(true)
+      end
+
+      it "should be active if it has not ended yet" do
+        promotion.expires_at = Time.current + 1.day
+        expect(promotion.active?).to eq(true)
+      end
+
+      it "should be active if current time is within starts_at and expires_at range" do
+        promotion.starts_at = Time.current - 1.day
+        promotion.expires_at = Time.current + 1.day
+        expect(promotion.active?).to eq(true)
+      end
+
+      it "should be active if there are no start and end times set" do
+        promotion.starts_at = nil
+        promotion.expires_at = nil
+        expect(promotion.active?).to eq(true)
+      end
+    end
+
+    context 'with consider_actionless_promotion_active true' do
+      before { stub_spree_preferences(consider_actionless_promotion_active: true) }
+
+      it "should be active" do
+        expect(promotion.active?).to eq(true)
+      end
+
+      it "should not be active if it hasn't started yet" do
+        promotion.starts_at = Time.current + 1.day
+        expect(promotion.active?).to eq(false)
+      end
+
+      it "should not be active if it has already ended" do
+        promotion.expires_at = Time.current - 1.day
+        expect(promotion.active?).to eq(false)
+      end
+
+      it "should be active if it has started already" do
+        promotion.starts_at = Time.current - 1.day
+        expect(promotion.active?).to eq(true)
+      end
+
+      it "should be active if it has not ended yet" do
+        promotion.expires_at = Time.current + 1.day
+        expect(promotion.active?).to eq(true)
+      end
+
+      it "should be active if current time is within starts_at and expires_at range" do
+        promotion.starts_at = Time.current - 1.day
+        promotion.expires_at = Time.current + 1.day
+        expect(promotion.active?).to eq(true)
+      end
+
+      it "should be active if there are no start and end times set" do
+        promotion.starts_at = nil
+        promotion.expires_at = nil
+        expect(promotion.active?).to eq(true)
+      end
     end
   end
 
@@ -783,6 +862,7 @@ RSpec.describe Spree::Promotion, type: :model do
 
     before do
       promotion.promotion_rules = rules
+      promotion.promotion_actions = [Spree::PromotionAction.new]
       allow(promotion.rules).to receive(:for) { rules }
     end
 
