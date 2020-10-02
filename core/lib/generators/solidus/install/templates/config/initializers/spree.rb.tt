@@ -45,10 +45,10 @@ Spree.config do |config|
   # their previous location first.
   config.redirect_back_on_unauthorized = true
 
-  # Set this configuration to `false` to allow promotions
-  # with no associated actions to be active for use by customers.
-  # See https://github.com/solidusio/solidus/issues/2777 for more info.
-  config.actionless_promotion_inactive = true
+  # Set this configuration to `true` to allow promotions
+  # with no associated actions to be considered active for use by customers.
+  # See https://github.com/solidusio/solidus/pull/3749 for more info.
+  config.consider_actionless_promotion_active = false
 
   # Set this configuration to `false` to avoid running validations when
   # updating an order. Be careful since you can end up having inconsistent

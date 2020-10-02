@@ -218,8 +218,8 @@ module Spree
     preference :promotions_per_page, :integer, default: 15
 
     # @!attribute [rw] disable_actionless_promotion_validation
-    #   @return [Boolean] Promotions should have actions associated before activation (default: +true+)
-    preference :actionless_promotion_inactive, :boolean, default: false
+    #   @return [Boolean] Promotions should have actions associated before being considered active (default: +true+)
+    preference :consider_actionless_promotion_active, :boolean, default: true
 
     # @!attribute [rw] raise_with_invalid_currency
     #   Whether to raise an exception if trying to set a line item currency

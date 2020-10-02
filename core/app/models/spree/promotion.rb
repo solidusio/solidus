@@ -39,10 +39,10 @@ module Spree
     scope :coupons, -> { joins(:codes).distinct }
     scope :advertised, -> { where(advertise: true) }
     scope :active, -> do
-      if Spree::Config.actionless_promotion_inactive
-        has_actions.started_and_unexpired
-      else
+      if Spree::Config.consider_actionless_promotion_active
         started_and_unexpired
+      else
+        has_actions.started_and_unexpired
       end
     end
     scope :started_and_unexpired, -> do
@@ -95,7 +95,7 @@ module Spree
     end
 
     def active?
-      started? && not_expired? && (Spree::Config.actionless_promotion_inactive ? actions.present? : true)
+      started? && not_expired? && (Spree::Config.consider_actionless_promotion_active || actions.present?)
     end
 
     def inactive?
