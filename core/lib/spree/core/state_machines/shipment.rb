@@ -49,6 +49,8 @@ module Spree
                 next_state:     transition.to,
                 name:           'shipment'
               )
+              Spree::Event.fire "shipment_transitioned_to_#{transition.to}", shipment: shipment
+              shipment.logger.debug "Shipment #{shipment.number} transitioned from #{transition.from} to #{transition.to} via #{transition.event}"
             end
           end
         end

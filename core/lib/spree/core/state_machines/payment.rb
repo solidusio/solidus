@@ -52,6 +52,8 @@ module Spree
                 next_state:     transition.to,
                 name:           'payment'
               )
+              Spree::Event.fire "payment_transitioned_to_#{transition.to}", payment: payment
+              payment.logger.debug "Payment #{payment.number} transitioned from #{transition.from} to #{transition.to} via #{transition.event}"
             end
           end
         end
