@@ -149,13 +149,13 @@ module Spree
 
     # @todo Remove this from the public API if possible.
     # @return [true] whether or not the address requires a phone number to be
-    #   valid
+    #   present
     def require_phone?
-      true
+      Spree::Config[:address_requires_phone]
     end
 
     # @todo Remove this from the public API if possible.
-    # @return [true] whether or not the address requires a zipcode to be valid
+    # @return [true] whether or not the address requires a zipcode to be present
     def require_zipcode?
       true
     end
