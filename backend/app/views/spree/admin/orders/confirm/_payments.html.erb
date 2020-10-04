@@ -1,0 +1,41 @@
+<fieldset class="no-border-bottom">
+  <legend><%= plural_resource_name(Spree::Payment) %></legend>
+  <table class="index">
+    <thead>
+      <tr data-hook="payments_header">
+        <th><%= Spree::Payment.human_attribute_name(:number) %></th>
+        <th><%= Spree::Payment.human_attribute_name(:created_at) %></th>
+        <th><%= Spree::Payment.human_attribute_name(:amount) %></th>
+        <th><%= Spree::PaymentMethod.model_name.human %></th>
+        <th><%= Spree::Payment.human_attribute_name(:response_code) %></th>
+        <th><%= Spree::Payment.human_attribute_name(:state) %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% payments.each do |payment| %>
+        <tr>
+          <td>
+            <%= link_to payment.number, spree.admin_order_payment_path(@order, payment) %>
+          </td>
+          <td>
+            <%= pretty_time(payment.created_at) %>
+          </td>
+          <td class="amount">
+            <%= payment.display_amount.to_html %>
+          </td>
+          <td>
+            <%= payment.payment_method.name %>
+          </td>
+          <td>
+            <%= payment.transaction_id %>
+          </td>
+          <td>
+            <span class="pill pill-<%= payment.state %>">
+              <%= t(payment.state, scope: 'spree.payment_states') %>
+            </span>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</fieldset>

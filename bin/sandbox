@@ -1,0 +1,77 @@
+#!/usr/bin/env bash
+
+# Used in the sandbox rake task in Rakefile
+
+set -e
+
+case "$DB" in
+postgres|postgresql)
+  RAILSDB="postgresql"
+  ;;
+mysql)
+  RAILSDB="mysql"
+  ;;
+sqlite|'')
+  RAILSDB="sqlite3"
+  ;;
+*)
+  echo "Invalid DB specified: $DB"
+  exit 1
+  ;;
+esac
+
+# Stay away from the bundler env of the containing extension.
+# # The unbundled helper requires Bundler 2.1 or above
+function unbundled {
+  ruby -rbundler -e'
+    Gem::Version.new(Bundler::VERSION) < Gem::Version.new("2.1") ?
+      abort("The sandbox requires at least Bundler 2.1, please run bin/setup to update it.") :
+      Bundler.with_unbundled_env {system *ARGV}' -- $@
+}
+
+rm -rf ./sandbox
+unbundled bundle exec rails new sandbox --database="$RAILSDB" \
+  --skip-bundle \
+  --skip-git \
+  --skip-keeps \
+  --skip-rc \
+  --skip-spring \
+  --skip-test \
+  --skip-javascript
+
+if [ ! -d "sandbox" ]; then
+  echo 'sandbox rails application failed'
+  exit 1
+fi
+
+cd ./sandbox
+cat <<RUBY >> Gemfile
+
+gem 'solidus', path: '..'
+gem 'solidus_auth_devise', '>= 2.1.0'
+gem 'rails-i18n'
+gem 'solidus_i18n'
+
+group :test, :development do
+  platforms :mri do
+    gem 'pry-byebug'
+  end
+end
+RUBY
+
+unbundled bundle install --gemfile Gemfile
+unbundled bin/rails db:drop db:create
+unbundled bin/rails generate solidus:install \
+  --auto-accept \
+  --user_class=Spree::User \
+  --enforce_available_locales=true \
+  --with_authentication=false \
+  --payment-method=none
+  $@
+
+unbundled bin/rails generate solidus:auth:install
+
+echo "
+🚀 This app is intended for test purposes. If you're interested in running
+🚀 Solidus in production, visit:
+🚀 https://guides.solidus.io/developers/getting-started/first-time-installation"

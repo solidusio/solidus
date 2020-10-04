@@ -1,0 +1,76 @@
+<h3><%= t('spree.order_summary') %></h3>
+
+<table data-hook="order_summary">
+  <tbody>
+    <tr data-hook="item_total">
+      <td><strong><%= t('spree.item_total') %>:</strong></td>
+      <td><strong><%= order.display_item_total.to_html %></strong></td>
+    </tr>
+
+    <% if order.line_item_adjustments.nonzero.exists? %>
+      <tbody data-hook="order_details_promotion_adjustments">
+        <% order.line_item_adjustments.nonzero.promotion.eligible.group_by(&:label).each do |label, adjustments| %>
+          <tr class="total">
+            <td><%= label %></td>
+            <td><%= Spree::Money.new(adjustments.sum(&:amount), currency: order.currency).to_html %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    <% end %>
+
+    <tbody data-hook="order_details_tax_adjustments">
+      <% order.all_adjustments.nonzero.tax.eligible.group_by(&:label).each do |label, adjustments| %>
+        <tr class="total">
+          <td><%= label %></td>
+          <td><%= Spree::Money.new(adjustments.sum(&:amount), currency: order.currency).to_html %></td>
+        </tr>
+      <% end %>
+    </tbody>
+
+    <% if order.passed_checkout_step?("delivery") && order.shipments.any? %>
+      <tr data-hook="shipping_total">
+        <td><%= t('spree.shipping_total') %>:</td>
+        <td><%= Spree::Money.new(order.shipments.to_a.sum(&:cost), currency: order.currency).to_html %></td>
+      </tr>
+
+      <% if order.shipment_adjustments.nonzero.exists? %>
+        <tbody data-hook="order_details_shipment_promotion_adjustments">
+          <% order.shipment_adjustments.nonzero.promotion.eligible.group_by(&:label).each do |label, adjustments| %>
+            <tr class="total">
+              <td><%= label %>:</td>
+              <td><%= Spree::Money.new(adjustments.sum(&:amount), currency: order.currency).to_html %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      <% end %>
+    <% end %>
+
+    <% if order.adjustments.nonzero.eligible.exists? %>
+      <tbody id="summary-order-charges" data-hook>
+        <% order.adjustments.nonzero.eligible.each do |adjustment| %>
+        <% next if (adjustment.source_type == 'Spree::TaxRate') and (adjustment.amount == 0) %>
+          <tr class="total">
+            <td><%= adjustment.label %>:</td>
+            <td><%= adjustment.display_amount.to_html %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    <% end %>
+
+    <% if order.total_applicable_store_credit > 0.0 %>
+      <tr data-hook="checkout-summary-store-credit">
+        <td><%= t('spree.store_credit.store_credit') %>:</td>
+        <td><%= order.display_total_applicable_store_credit.to_html %></td>
+      </tr>
+    <% end %>
+
+    <tr data-hook="order_total">
+      <td><strong><%= t('spree.order_total') %>:</strong></td>
+      <td><strong><span id='summary-order-total'><%= order.display_order_total_after_store_credit.to_html %></span></strong></td>
+    </tr>
+  </tbody>
+</table>
+
+<% if order.state == 'payment' %>
+  <%= render 'coupon_code', order: order %>
+<% end %>

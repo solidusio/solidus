@@ -1,0 +1,62 @@
+<div data-hook="admin_tax_rate_form_fields">
+    <fieldset data-hook="tax_rates" class=" no-border-bottom">
+      <legend align="center"><%= t('spree.general_settings') %></legend>
+      <div class="row">
+
+        <div class="col-5">
+          <div data-hook="name" class="field">
+            <%= f.label :name %>
+            <%= f.text_field :name, class: 'fullwidth' %>
+          </div>
+          <div data-hook="rate" class="field">
+            <%= f.label :amount %>
+            <%= f.text_field :amount, class: 'fullwidth' %>
+            <br/><span class="info"><%= t('spree.tax_rate_amount_explanation') %></span>
+          </div>
+          <div data-hook="included" class="field">
+            <label>
+              <%= f.check_box :included_in_price %>
+              <%= t('spree.included_in_price') %>
+            </label>
+          </div>
+        </div>
+
+        <div class="col-5">
+          <div data-hook="zone" class="field">
+            <%= f.label :zone, Spree::Zone.model_name.human %>
+            <%= f.collection_select(:zone_id, @available_zones, :id, :name, {}, {class: 'custom-select fullwidth'}) %>
+          </div>
+          <div data-hook="category" class="field">
+            <%= f.label :tax_category_ids, Spree::TaxCategory.model_name.human %>
+            <%= f.collection_select(:tax_category_ids, @available_categories, :id, :name, {}, {class: 'select2 fullwidth', multiple: "multiple"}) %>
+          </div>
+          <div data-hook="show_rate" class="field">
+            <label>
+              <%= f.check_box :show_rate_in_label %>
+              <%= t('spree.show_rate_in_label') %>
+            </label>
+          </div>
+
+          <div class="date-range-filter field">
+            <%= label_tag :validity_period, t('spree.validity_period') %>
+            <%= admin_hint t('spree.validity_period'), t(:validity_period, scope: [:spree, :hints, "spree/tax_rate"]) %>
+            <div class="date-range-fields input-group">
+              <%= f.text_field :starts_at, class: 'datepicker form-control datepicker-from', value: datepicker_field_value(f.object.starts_at), placeholder: Spree::TaxRate.human_attribute_name(:starts_at) %>
+
+              <div class="input-group-prepend input-group-append">
+                <span class="input-group-text range-divider">
+                  <i class="fa fa-arrow-right"></i>
+                </span>
+              </div>
+
+              <%= f.text_field :expires_at, class: 'datepicker form-control datepicker-to', value: datepicker_field_value(f.object.expires_at), placeholder: Spree::TaxRate.human_attribute_name(:expires_at) %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+
+  <div class="clear"></div>
+
+  <%= render partial: 'spree/admin/shared/calculator_fields', locals: { f: f, hint: :tax_rates } %>
+</div>

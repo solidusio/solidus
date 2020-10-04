@@ -1,0 +1,19 @@
+<fieldset class="no-border-bottom">
+  <legend><%= title %></legend>
+  <table>
+    <thead>
+      <tr>
+        <th><%= Spree::Adjustment.human_attribute_name(:name)%></th>
+        <th><%= Spree::Adjustment.human_attribute_name(:amount)%></th>
+      </tr>
+    </thead>
+    <tbody data-hook="order_details_adjustments">
+      <% adjustments.eligible.group_by(&:label).each do |label, adjustments| %>
+        <tr class="total">
+          <td><%= label %>:</td>
+          <td class="total"><span><%= Spree::Money.new(adjustments.sum(&:amount), currency: adjustments.first.order.try(:currency)) %></span></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</fieldset>

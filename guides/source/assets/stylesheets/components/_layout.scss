@@ -1,0 +1,138 @@
+//Common layout blocks
+
+html {
+  position: relative;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-overflow-scrolling: touch;
+  min-width: $min-page-width;
+}
+
+html, body {
+  height: 100%;
+}
+
+body{
+  display: flex;
+  font-size: 16px;
+  flex-direction: column;
+  padding-top: 138px;
+  position: relative;
+
+  @include media-breakpoint-down(md){
+    background: #ffffff;
+
+    &.menu-open{ overflow: hidden; }
+  }
+
+  @include media-breakpoint-up(lg){ padding-top: $header-desktop-height; }
+
+  @include media-breakpoint-down(sm) { font-size: $font-size-md }
+
+  @media print { padding-top: 0 !important; }
+}
+
+//Sticky footer styles
+.site-header, .site-footer { flex: none; }
+
+//Site header
+.site-header{
+  background: #3c76f0;
+  transition: transform .3s ease-in-out;
+
+  @include media-breakpoint-down(md){
+    .menu-open &{ background-color: $gray-900; }
+  }
+
+  @include media-breakpoint-up(lg){ height: $header-desktop-height; }
+
+  @media print {
+    display: none !important;
+    overflow: hidden;
+  }
+}
+
+.site-header--fixed {
+  position: fixed;
+  z-index: $zindex-fixed;
+  right: 0;
+  left: 0;
+  top: 0;
+}
+
+@include media-breakpoint-down(md) {
+  .site-header--pinned { transform: translateY(0); }
+  .site-header--unpinned{ transform: translateY(-100%); }
+}
+
+//Page content
+.site-body{
+  flex: 1 0 auto;
+  justify-content: space-between;
+  padding-bottom: 50px;
+
+  @include media-breakpoint-down(md){
+    overflow: hidden;
+    position: relative;
+  }
+
+  @include media-breakpoint-up(lg){
+    display: flex;
+    padding-top: 2rem;
+  }
+}
+
+.site-content{
+  flex-shrink: 0;
+  @include media-breakpoint-up(lg){
+    width: $main-content-width;
+  }
+}
+
+.site-navbar{
+  flex: 1;
+  order: -1;
+  word-wrap: break-word;
+}
+
+
+//Page footer
+.site-footer{
+  bottom: 0;
+  flex-shrink: 0;
+  font-size: $font-size-xs;
+  left: 0;
+  padding: 24px 0;
+  text-align: center;
+  width: 100%;
+  z-index: 1;
+
+  .social-links{  margin-top: 1rem; }
+
+  .isvg-coffee-love{ margin-bottom: 0.5rem; }
+
+  @include media-breakpoint-up(lg) {
+    text-align: left;
+
+    .social-links{
+      margin-top: 0;
+      text-align: right;
+    }
+
+    .isvg-coffee-love{
+      margin-right: 0.5rem;
+      margin-bottom: 0;
+    }
+  }
+
+  @media print { display: none !important; }
+}
+
+.footer-menu{
+  font-size: $font-size-sm;
+  margin-bottom: 1.125rem;
+
+  @include media-breakpoint-up(lg) { margin-bottom: 0.5rem; }
+
+  ul{ margin-bottom: 0; }
+}

@@ -1,0 +1,166 @@
+version: 2.1
+
+orbs:
+  stoplight: nebulab/stoplight@6.0.0
+
+executors:
+  base:
+    working_directory: &workdir ~/solidus
+    environment: &environment
+      DEFAULT_MAX_WAIT_TIME: 10
+      SOLIDUS_RAISE_DEPRECATIONS: true
+      CIRCLE_TEST_REPORTS: /tmp/test-results
+      CIRCLE_ARTIFACTS: /tmp/test-artifacts
+    docker:
+      - image: &image circleci/ruby:2.5-node-browsers
+
+  postgres:
+    working_directory: *workdir
+    environment:
+      <<: *environment
+      DB: postgresql
+      DB_HOST: localhost
+    docker:
+      - image: *image
+      - image: jhawthorn/circleci-postgres-fast
+        environment:
+          POSTGRES_USER: root
+
+  mysql:
+    working_directory: *workdir
+    environment:
+      <<: *environment
+      DB: mysql
+      DB_HOST: 127.0.0.1
+    docker:
+      - image: *image
+      - image: circleci/mysql:5.7-ram
+
+commands:
+  setup:
+    steps:
+      - run: .circleci/bin/halt-for-doc-only-changes.sh && circleci step halt || true # skip Circle for guides
+      - checkout
+      - run: |
+          gem install bundler -v"~> 2.1" --conservative
+          bundle lock
+      - restore_cache:
+          keys:
+            - solidus-gems-v3-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+            - solidus-gems-v3-{{ .Branch }}
+            - solidus-gems-v3-master
+            - solidus-gems-v3
+
+      - run: |
+          bundle config set path 'vendor/bundle'
+          bundle check || bundle install
+          bundle clean
+
+      - save_cache:
+          key: solidus-gems-v3-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+          paths:
+            - vendor/bundle
+
+  test:
+    steps:
+      - run:
+          name: Run Tests
+          command: ./bin/build-ci test
+
+      - store_artifacts:
+          path: /tmp/test-artifacts
+          destination: test-artifacts
+
+      - store_artifacts:
+          path: /tmp/test-results
+          destination: raw-test-output
+
+      - store_test_results:
+          path: /tmp/test-results
+
+jobs:
+  persist_version:
+    executor: base
+    steps:
+      - setup
+
+      - run:
+          name: Persist Solidus version
+          command: |
+            mkdir -p workspace
+            bundle exec ruby -e "puts Spree.solidus_gem_version.segments[0..1].join('.')" > workspace/solidus-version
+
+      - persist_to_workspace:
+          root: workspace
+          paths:
+            - solidus-version
+
+  postgres:
+    executor: postgres
+    parallelism: &parallelism 3
+    steps:
+      - setup
+      - test
+
+  postgres_rails_master_activestorage:
+    executor: postgres
+    parallelism: *parallelism
+    environment:
+      RAILS_VERSION: 'master'
+      ENABLE_ACTIVE_STORAGE: true
+    steps:
+      - setup
+      - test
+
+  mysql:
+    executor: mysql
+    parallelism: *parallelism
+    steps:
+      - setup
+      - test
+
+  postgres_rails52:
+    executor: postgres
+    parallelism: *parallelism
+    environment:
+      RAILS_VERSION: '~> 5.2.0'
+    steps:
+      - setup
+      - test
+
+  mysql_rails52:
+    executor: mysql
+    parallelism: *parallelism
+    environment:
+      RAILS_VERSION: '~> 5.2.0'
+    steps:
+      - setup
+      - test
+
+workflows:
+  build:
+    jobs:
+      - persist_version:
+          filters:
+            branches:
+              only: /master|v\d\.\d+/
+      - postgres
+      - mysql
+      - postgres_rails52
+      - mysql_rails52
+      - postgres_rails_master_activestorage
+      - stoplight/push:
+          context: "Solidus Core Team"
+          project: solidus/solidus-api
+          git_token: $STOPLIGHT_GIT_TOKEN
+          source_dir: api/openapi
+          username: $STOPLIGHT_USERNAME
+          version: "`cat /tmp/workspace/solidus-version`"
+          requires:
+            - persist_version
+      - stoplight/publish:
+          context: "Solidus Core Team"
+          api_token: $STOPLIGHT_API_TOKEN
+          domain: solidus.docs.stoplight.io
+          requires:
+            - stoplight/push

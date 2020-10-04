@@ -1,0 +1,9 @@
+<% content_for :tabs do %>
+  <nav>
+    <ul class="tabs" data-hook="admin_settings_payments_tabs">
+      <% if can?(:read, Spree::PaymentMethod) %>
+        <%= settings_tab_item plural_resource_name(Spree::PaymentMethod), spree.admin_payment_methods_path %>
+      <% end %>
+    </ul>
+  </nav>
+<% end %>

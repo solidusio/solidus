@@ -1,0 +1,11 @@
+<%= render partial: 'spree/admin/shared/order_tabs', locals: {current: 'Confirm'} %>
+
+<% admin_breadcrumb(t('spree.confirm_order')) %>
+
+
+<div class="form-buttons filter-actions actions" data-hook="complete-order-button">
+  <div><%= t('spree.order_please_refresh') %></div><br/>
+  <%= button_to [:advance, :admin, @order], { class: 'button', method: 'put' } do %>
+    <%= t('spree.order_refresh_totals') %>
+  <% end %>
+</div>

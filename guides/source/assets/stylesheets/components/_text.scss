@@ -1,0 +1,29 @@
+b,
+strong {
+  font-weight: $font-weight-bold;
+}
+
+a{
+  transition: all ease 0.3s;
+  fill: $link-color;
+
+  .isvg .inherit-fill {
+    transition: all ease 0.3s;
+  }
+
+  @include hover {
+    .isvg .inherit-fill { fill: $link-hover-color; }
+  }
+}
+
+// list items separated by gray lines
+.list-underlined{
+  @extend .list-unstyled;
+  border-top: 2px solid $gray-200;
+  margin-bottom: 2rem;
+
+  > li{
+    padding: 1rem 0;
+    border-bottom: 2px solid $gray-200;
+  }
+}

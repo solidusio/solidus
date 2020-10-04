@@ -1,0 +1,26 @@
+@charset "UTF-8";
+
+/// Throws Sass warnings to announce backend deprecations. You can disable them
+/// by setting the `$output-solidus-deprecation-warnings` variable to `false`.
+///
+/// @access private
+
+$output-solidus-deprecation-warnings: true !default;
+
+@mixin bs-deprecated-variable($variable, $replacement) {
+  @if $output-solidus-deprecation-warnings == true {
+    @if global-variable-exists($variable) {
+      @warn "[Solidus] [Deprecation] `$#{$variable}` is deprecated and will be " +
+        "removed in 3.0.0. Please use Bootstraps $#{$replacement} instead";
+    }
+  }
+}
+
+@mixin solidus-deprecated-variable($variable, $replacement) {
+  @if $output-solidus-deprecation-warnings == true {
+    @if global-variable-exists($variable) {
+      @warn "[Solidus] [Deprecation] `$#{$variable}` is deprecated and will be " +
+        "removed in Solidus 3.0. Please use `$#{$replacement}` instead";
+    }
+  }
+}

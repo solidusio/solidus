@@ -1,0 +1,7 @@
+// Have all images be responsive by default
+img {
+  display: inline-block;
+  max-width: 100%;
+  height: auto;
+  -ms-interpolation-mode: bicubic;
+}

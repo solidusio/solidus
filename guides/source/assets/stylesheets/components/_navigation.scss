@@ -1,0 +1,265 @@
+.navbar{
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  flex-wrap: wrap;
+
+  .main-nav {
+    display: flex;
+    align-items: center;
+    width: 100%;
+
+    @include media-breakpoint-up(lg) {
+      flex-wrap: wrap;
+      width: 23%;
+    }
+
+    .site-logo {
+      margin-right: 20px;
+    }
+
+    .site-menu-toggler {
+      justify-content: flex-end;
+
+      @include media-breakpoint-up(lg) { display: none; }
+    }
+  }
+
+  .site-logo{
+    .isvg{
+      display: block;
+      margin: 0 0 auto;
+      .inherit-fill { fill: #ffffff !important; }
+    }
+  }
+
+  .search-box{
+    margin-top: 20px;
+    width: 100%;
+
+    @include media-breakpoint-up(lg){
+      margin-top: 0;
+      width: 77%;
+      max-width: $main-content-width;
+    }
+
+    .form-group{ margin-bottom: 0; }
+  }
+
+  .search-box label {
+    padding-right: 40px;
+  }
+
+  .site-menu-toggler{
+    width: 20px;
+    height: 20px;
+
+    &, .isvg{
+      display: block;
+      margin: 0 0 0 auto;
+    }
+
+    .isvg-close{
+      display: none;
+      .inherit-fill{ fill: #ffffff; }
+    }
+
+    .menu-open &{
+      .isvg-close{ display: block; }
+      .isvg-menu{ display: none; }
+    }
+
+    @include media-breakpoint-up(lg){ display: none; }
+  }
+
+  @include media-breakpoint-up(lg){
+    padding-bottom: 0;
+    padding-top: 0;
+  }
+
+  @include media-breakpoint-down(md){
+    max-width: none;
+  }
+}
+
+.guides-categories-nav {
+  .nav-item {
+    margin: 0;
+  }
+
+  .nav-link {
+    padding: 0.5rem 1rem 0 0;
+    font-size: 13px;
+    color: #ffffff;
+
+    &.active {
+      font-weight: bold;
+    }
+  }
+}
+
+.site-navbar{
+  top: 0;
+  right: 0;
+  bottom: 0;
+
+  @include media-breakpoint-down(md){
+    box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0);
+    background: #ffffff;
+    position: fixed;
+    transform: translate3d(300px, 0, 0);
+    transition: 300ms ease all;
+    z-index: $zindex-modal;
+    width: 300px;
+
+    .menu-open &{
+      box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.32);
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  @include media-breakpoint-up(lg){
+    padding-right: 25px;
+    width: auto;
+  }
+
+  @include media-breakpoint-up(xl){ padding-right: 50px; }
+
+  .navbar-header{
+    background: #3c76f0;
+    padding: 20px 25px;
+    margin: 0 0 27px;
+    overflow: hidden;
+    display: flex;
+    align-items: baseline;
+
+    @include media-breakpoint-up(lg){ display: none; }
+
+    .isvg{
+      display: block;
+      margin: 0;
+    }
+
+    .site-menu-toggler{
+      height: 20px;
+      width: 20px;
+      float: right;
+    }
+
+    .site-logo {
+      flex: 1;
+    }
+  }
+
+  .navbar-content {
+    padding: 0 25px;
+
+    @include media-breakpoint-down(md) {
+      height: calc(100% - 87px);
+      overflow-y: scroll;
+      padding-bottom: 25px;
+    }
+
+    @include media-breakpoint-up(lg) { padding: 0; }
+  }
+
+  h1 {
+    a {
+      color: $gray-072;
+      font-size: 0.7em;
+    }
+
+    @include media-breakpoint-up(md) { padding: 0.85em 0 0.4em; }
+  }
+
+  nav{
+    line-height: 1.5em;
+
+    ul{ margin: 0; }
+
+    li{
+      &.active, &.current{
+        > a{ font-weight: $font-weight-bold; }
+      }
+    }
+
+    li a{
+      padding: 4px 0;
+      display: block;
+      @extend .text-gray-700;
+
+      &:hover, &:active{ font-weight: $font-weight-bold; }
+    }
+
+    ul{
+      @extend .list-unstyled;
+
+      li{ margin-bottom: 0; }
+
+      ul{
+        li{
+          a{
+            padding-left: 10px;
+            padding-right: 10px;
+          }
+
+          &.active a, &.current a, a:hover, a:active{ background: rgba(60, 118, 240, 0.2); }
+        }
+      }
+    }
+  }
+
+  hr{
+    margin: 10px 0;
+    @include media-breakpoint-up(lg){ margin: 22px 0; }
+  }
+}
+
+.site-logo svg {
+  fill: white;
+  width: 100px;
+}
+
+.offset::before {
+  display: block;
+  content: " ";
+  visibility: hidden;
+  height: 150px;
+  margin-top: -150px;
+
+  @include media-breakpoint-up(lg) {
+    height: 110px;
+    margin-top: -110px;
+  }
+}
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(#ffffff, 0.5);
+  z-index: $zindex-modal - 1;
+  display: none;
+}
+
+.menu-open .backdrop {
+  display: block;
+}
+
+.site-navbar .slack {
+  background-color: $blue;
+  border-color: $blue;
+  color: white;
+
+  svg .inherit-fill { fill: white; }
+}
+.site-navbar ul li {
+  // IE/Edge
+  // Fix list styles showing on list items despite having list-style: none set
+  list-style-image: url(data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7);
+}

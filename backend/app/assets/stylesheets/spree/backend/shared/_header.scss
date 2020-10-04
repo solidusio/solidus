@@ -1,0 +1,36 @@
+.main-header {
+  display: flex;
+  align-items: center;
+  background-color: $color-header-bg;
+  padding: ($grid-gutter-width / 2) $grid-gutter-width;
+  border-bottom: 1px solid $color-border;
+  height: $main-header-height;
+
+  .admin-nav-hidden & {
+    margin-left: ($width-sidebar - $width-sidebar-collapsed);
+  }
+
+  @media print { display: none }
+}
+
+.page-title {
+  font-size: 20px;
+  margin: 0.67em 0;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  i {
+    color: $color-primary;
+  }
+}
+
+.header-actions {
+  flex-grow: 1;
+  text-align: right;
+  line-height: 38px;
+
+  form {
+    display: inline-block;
+  }
+}

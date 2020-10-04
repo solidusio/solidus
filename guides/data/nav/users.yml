@@ -1,0 +1,52 @@
+-
+  - title: "Orders"
+    dropdown:
+      - title: "Overview"
+        href: "/users/orders/overview.html"
+
+  - title: "Products"
+    dropdown:
+      - title: "Overview"
+        href: "/users/products/overview.html"
+      - title: "Product details"
+        href: "/users/products/product-details.html"
+      - title: "Variants"
+        href: "/users/products/variants.html"
+      - title: "Product Stock"
+        href: "/users/products/product-stock.html"
+      - title: "Product Properties"
+        href: "/users/products/product-properties.html"
+
+  - title: "Promotions"
+    dropdown:
+      - title: "Overview"
+        href: "/users/promotions/overview.html"
+      - title: "Promotion Rules"
+        href: "/users/promotions/promotion-rules.html"
+      - title: "Promotion Actions"
+        href: "/users/promotions/promotion-actions.html"
+      - title: "Promotion Calculators"
+        href: "/users/promotions/promotion-calculators.html"
+
+  - title: "Settings"
+    dropdown:
+      - title: "Overview"
+        href: "/users/settings/overview.html"
+      - title: "Taxes"
+        href: "/users/settings/taxes.html"
+      - title: "Zones"
+        href: "/users/settings/zones.html"
+      - title: "Shipping"
+        href: "/users/settings/shipping.html"
+      - title: "Stores"
+        href: "/users/settings/stores.html"
+
+  - title: "Stock"
+    dropdown:
+      - title: "Overview"
+        href: "/users/stock/overview.html"
+
+  - title: "Users"
+    dropdown:
+      - title: "Overview"
+        href: "/users/users/overview.html"

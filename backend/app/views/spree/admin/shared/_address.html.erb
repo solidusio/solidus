@@ -1,0 +1,8 @@
+<div data-hook="address">
+  <%= address.name %> <%= address.company unless address.company.blank? %><br>
+  <%= address.phone %><%= address.alternative_phone unless address.alternative_phone.blank? %><br>
+  <%= address.address1 %><br>
+  <% if address.address2.present? %><%= address.address2 %><br><% end %>
+  <%= "#{address.city}, #{address.state_text}, #{address.zipcode}" %><br>
+  <%= address.country.name %>
+</div>

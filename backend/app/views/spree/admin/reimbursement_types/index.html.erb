@@ -1,0 +1,27 @@
+<%= render 'spree/admin/shared/settings_checkout_tabs' %>
+
+<% admin_breadcrumb(t('spree.settings')) %>
+<% admin_breadcrumb(t('spree.admin.tab.checkout')) %>
+<% admin_breadcrumb(plural_resource_name(Spree::ReimbursementType)) %>
+
+
+<table class="index" id='listing_reimbursement_types' data-hook>
+  <thead>
+    <tr data-hook="reimbursement_types_header">
+      <th><%= Spree::ReimbursementType.human_attribute_name(:name) %></th>
+      <th><%= Spree::ReimbursementType.human_attribute_name(:type) %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @reimbursement_types.each do |reimbursement_type| %>
+      <tr id="<%= spree_dom_id reimbursement_type %>" data-hook="reimbursement_type_row">
+        <td>
+          <%= reimbursement_type.name.humanize %>
+        </td>
+        <td>
+          <%= reimbursement_type.type %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

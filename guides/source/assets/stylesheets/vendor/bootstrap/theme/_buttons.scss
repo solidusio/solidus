@@ -1,0 +1,61 @@
+.btn-primary {
+  @include button-variant($primary, $primary, #ffffff, $primary, $primary, #ffffff, $blue-darker, $blue-darker, #ffffff);
+}
+
+.btn-white{
+  @include button-variant(#ffffff, #ffffff, $blue, $active-background: #ffffff, $active-border: #ffffff, $hover-color: $blue, $active-color: $blue);
+  @include hover {
+    box-shadow: 0 0 4px 0 rgba(#ffffff, 0.4);
+  }
+}
+
+.btn-outline-primary{
+  @include button-outline-variant( $blue, $blue-darker, #ffffff, $blue-darker, $blue-darker);
+
+  border-color: $blue;
+}
+
+
+.btn-outline-secondary{
+  @include button-outline-variant( $blue, $blue-darker, #ffffff, $blue-darker, $blue-darker);
+
+  border-color: $blue;
+}
+
+.btn-w-icon{
+  padding-left: $btn-padding-x/2;
+  padding-right: $btn-padding-x/2;
+
+  .isvg{
+    &:first-child{ margin-right: $btn-padding-x/2; }
+    &:last-child{ margin-left: $btn-padding-x/2; }
+  }
+
+  .text{
+    display: inline-block;
+    &:first-child{ padding-left: $btn-padding-x/2; }
+    &:last-child{ padding-right: $btn-padding-x/2; }
+  }
+}
+
+.btn-block ~ .btn-block{
+  margin-top: 1rem;
+
+  @include media-breakpoint-up(md){
+    margin-top: 0;
+    margin-left: 1rem;
+  }
+}
+
+.btn-group{
+  .btn ~ .btn{
+    margin-top: 0;
+  }
+}
+
+
+.btn-link.disabled{
+  .isvg .inherit-fill{
+    fill: $btn-link-disabled-color !important;
+  }
+}

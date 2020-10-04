@@ -1,0 +1,101 @@
+<% admin_layout "full-width" %>
+
+<% admin_breadcrumb(plural_resource_name(Spree::Product)) %>
+
+<% content_for :page_actions do %>
+  <li>
+    <%= link_to t('spree.new_product'), new_object_url, class: 'btn btn-primary' %>
+  </li>
+<% end if can?(:create, Spree::Product) %>
+
+<% content_for :table_filter_title do %>
+  <%= t('spree.search') %>
+<% end %>
+
+<% content_for :table_filter do %>
+  <div data-hook="admin_products_sidebar">
+    <%= search_form_for [:admin, @search] do |f| %>
+        <%- locals = {f: f} %>
+        <div class="row" data-hook="admin_products_index_search" >
+          <div class="col-6">
+            <div class="field">
+              <%= f.label :name_cont, Spree::Product.human_attribute_name(:name) %>
+              <%= f.text_field :name_cont, size: 15 %>
+            </div>
+          </div>
+
+          <div class="col-4">
+            <div class="field">
+              <%= f.label :with_variant_sku_cont, Spree::Variant.human_attribute_name(:sku) %>
+              <%= f.text_field :with_variant_sku_cont, size: 15 %>
+            </div>
+          </div>
+
+          <div class="col-2">
+            <div class="field checkbox">
+              <label>
+                <%= f.check_box :with_discarded, { checked: params[:q][:with_discarded] == 'true' }, 'true', 'false' %>
+                <%= t('spree.show_deleted') %>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="actions filter-actions" data-hook="admin_products_index_search_buttons">
+          <%= button_tag t('spree.search'), class: 'btn btn-primary' %>
+        </div>
+    <% end %>
+  </div>
+<% end %>
+
+<div id="new_product_wrapper" data-hook></div>
+
+<%= paginate @collection, theme: "solidus_admin" %>
+
+<% if @collection.any? %>
+  <table class="index" id="listing_products">
+    <colgroup>
+       <col style="width: 15%;">
+       <col style="width: 5%;">
+       <col style="width: 50%;">
+       <col style="width: 15%;">
+       <col style="width: 15%;">
+    </colgroup>
+    <thead>
+      <tr data-hook="admin_products_index_headers">
+        <th><%= Spree::Variant.human_attribute_name(:sku) %></th>
+        <th></th>
+        <th><%= sort_link @search,:name, Spree::Product.human_attribute_name(:name), { default_order: "desc" }, {title: 'admin_products_listing_name_title'} %></th>
+        <th class="align-right"><%= sort_link @search,:master_default_price_amount, Spree::Product.human_attribute_name(:price), {}, {title: 'admin_products_listing_price_title'} %></th>
+        <th data-hook="admin_products_index_header_actions" class="actions"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @collection.each do |product| %>
+          <tr <%== "style='color: red;'" if product.deleted? %> id="<%= spree_dom_id product %>" data-hook="admin_products_index_rows">
+            <td><%= product.sku %></td>
+            <td class="align-center">
+              <%= render 'spree/admin/shared/image', image: product.gallery.images.first, size: :mini %>
+            </td>
+            <td><%= link_to product.try(:name), edit_admin_product_path(product) %></td>
+            <td class="align-right"><%= product.display_price.to_html %></td>
+            <td class="actions" data-hook="admin_products_index_row_actions">
+              <%= link_to_edit product, no_text: true, class: 'edit' if can?(:edit, product) && !product.deleted? %>
+              &nbsp;
+              <%= link_to_clone product, no_text: true, class: 'clone' if can?(:clone, product) %>
+              &nbsp;
+              <%= link_to_delete product, no_text: true if can?(:delete, product) && !product.deleted? %>
+            </td>
+          </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div class="no-objects-found">
+    <%= render 'spree/admin/shared/no_objects_found',
+                  resource: Spree::Product,
+                  new_resource_url: new_object_url %>
+  </div>
+<% end %>
+
+<%= paginate @collection, theme: "solidus_admin" %>

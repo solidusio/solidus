@@ -1,0 +1,17 @@
+// Floats left and right */
+.fl-l {float: left;}
+.fl-r {float: right;}
+
+// Text underlined */
+.underlined { text-decoration: underline; }
+
+//Valigner
+.valigner-table{
+  display: table;
+  width: 100%;
+
+  .valigner{
+    display: table-cell;
+    vertical-align: middle;
+  }
+}

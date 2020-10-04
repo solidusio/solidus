@@ -1,0 +1,22 @@
+<% if @promotion.apply_automatically? %>
+  <p>
+    <%= t('.auto') %>
+  </p>
+<% end %>
+
+<% if @promotion.codes.count == 1 %>
+  <p>
+    <%= t('.single_code_html', code: @promotion.codes.first.value) %>
+  </p>
+<% elsif @promotion.codes.count > 1 %>
+  <p>
+    <%= t('.multiple_codes_html', count: @promotion.codes.count) %>
+  </p>
+<% end %>
+
+<% if @promotion.path %>
+  <div class="field">
+    <%= f.label :path %>
+    <%= f.text_field :path, class: "fullwidth" %>
+  </div>
+<% end %>

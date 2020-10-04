@@ -1,0 +1,14 @@
+<div class="card progress-card">
+  <img src="{{ imgSrc }}" class="card-img-top img-fluid">
+
+  <div class="card-block">
+    <div class="progress">
+      <div class="progress-bar progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+
+    <div class="filename">{{ filename }}</div>
+    <div class="size">{{ size }}B</div>
+
+    <error class="text-danger {{#unless serverError}} hidden {{/unless}}">{{t 'admin.images.index.image_process_failed' }}</error>
+  </div>
+</div>

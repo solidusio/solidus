@@ -1,0 +1,21 @@
+<ul>
+  <li>Validate mandatory fields client-side to make sure content is present.</li>
+  <li>Display field labels in red when there is an error in their respective field.</li>
+  <li>Outline inputs in red when there is an error inside.</li>
+  <li>Display validation text in red and below the input it is referring to. It should be closer to that input than anything else on the page.</li>
+</ul>
+
+<div class="errorExplanation">
+  <h2>2 errors prohibited this record from being saved:</h2>
+  <p>There were problems with the following fields:</p>
+  <ul>
+    <li>Email can't be blank</li>
+    <li>Password can't be blank</li>
+  </ul>
+</div>
+
+<div class="field withError half">
+  <span class="field_with_errors"><label for="user_name">Name</label></span>
+    <span class="field_with_errors"><input class="fullwidth" type="text" name="user[name]" id="user_name"></span>
+  <span class="formError">can't be blank</span>
+</div>

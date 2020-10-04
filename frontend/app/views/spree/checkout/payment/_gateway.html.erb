@@ -1,0 +1,37 @@
+<%= image_tag 'credit_cards/credit_card.gif', id: 'credit-card-image' %>
+<% param_prefix = "payment_source[#{payment_method.id}]" %>
+
+<div class="field field-required card_name" data-hook="card_name">
+  <%= label_tag "name_on_card_#{payment_method.id}", t('spree.name_on_card') %>
+  <%= text_field_tag "#{param_prefix}[name]", @order.billing_name, { id: "name_on_card_#{payment_method.id}", autocomplete: "cc-name", class: 'cardName' } %>
+</div>
+
+<div class="field field-required card_number" data-hook="card_number">
+  <%= label_tag "card_number", t('spree.card_number') %>
+  <%= text_field_tag "#{param_prefix}[number]", '', {id: 'card_number', class: 'required cardNumber', size: 19, maxlength: 19, autocomplete: "cc-number", type: "tel" } %>
+
+  <span id="card_type" style="display:none;">
+    ( <span id="looks_like" ><%= t('spree.card_type_is') %> <span id="type"></span></span>
+      <span id="unrecognized"><%= t('spree.unrecognized_card_type') %></span>
+    )
+  </span>
+</div>
+
+<div class="field field-required card_expiration" data-hook="card_expiration">
+  <%= label_tag "card_expiry", t('spree.expiration') %>
+  <%= text_field_tag "#{param_prefix}[expiry]", '', id: 'card_expiry', class: "required cardExpiry", placeholder: "MM / YY", type: "tel" %>
+</div>
+
+<div class="field field-required card_code" data-hook="card_code">
+  <%= label_tag "card_code", t('spree.card_code') %>
+  <%= text_field_tag "#{param_prefix}[verification_value]", '', {id: 'card_code', class: 'required cardCode', size: 5, type: "tel", autocomplete: "off" } %>
+  <%= link_to "(#{t('spree.what_is_this')})", spree.cvv_path, target: '_blank', "data-hook" => "cvv_link", id: "cvv_link" %>
+</div>
+
+<% if @order.bill_address %>
+  <%= fields_for "#{param_prefix}[address_attributes]", @order.bill_address do |f| %>
+    <%= render partial: 'spree/address/form_hidden', locals: { form: f } %>
+  <% end %>
+<% end %>
+
+<%= hidden_field_tag "#{param_prefix}[cc_type]", '', id: "cc_type", class: 'ccType' %>

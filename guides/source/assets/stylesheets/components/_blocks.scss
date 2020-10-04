@@ -1,0 +1,39 @@
+.content-block{
+  border: none;
+  display: block;
+  padding: 30px 24px;
+  margin-left: -24px;
+  margin-right: -24px;
+  margin-bottom: 2rem;
+
+  &:last-child{ margin-bottom: 0; }
+
+  @include media-breakpoint-down(md){ box-shadow: none; }
+
+  @include media-breakpoint-up(lg){
+    padding: 30px;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  a {
+    opacity: 0.8;
+  }
+
+  ul li, ol li { margin: .25rem 0; }
+
+  .content-block{ padding: 24px; }
+}
+
+.content-block-gray-100{
+  background: $gray-100;
+}
+
+.content-block-gray-900{
+  background: $gray-900;
+  color: $white-08;
+
+  h1, h2, h3, h4, h5, h6, .title{
+    color: #ffffff;
+  }
+}

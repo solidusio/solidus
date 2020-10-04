@@ -1,0 +1,17 @@
+<% admin_breadcrumb(t('spree.settings')) %>
+<% admin_breadcrumb(link_to plural_resource_name(Spree::Zone), spree.admin_zones_path) %>
+<% admin_breadcrumb(t('spree.new_zone')) %>
+
+
+<% content_for :page_actions do %>
+<% end %>
+
+<%= render partial: 'spree/shared/error_messages', locals: { target: @zone } %>
+
+<%= form_for [:admin, @zone] do |zone_form| %>
+  <%= render partial: 'form', locals: { zone_form: zone_form } %>
+
+  <div class="clear"></div>
+
+  <%= render partial: 'spree/admin/shared/new_resource_links' %>
+<% end %>

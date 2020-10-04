@@ -1,0 +1,16 @@
+<% admin_breadcrumb(link_to plural_resource_name(Spree::Product), spree.admin_products_path) %>
+<% admin_breadcrumb(t('spree.admin.taxons.display_order')) %>
+
+<fieldset class="no-border-bottom">
+  <legend>
+    <%= t('spree.choose_a_taxon_to_sort_products_for') %>
+  </legend>
+
+  <div data-hook="admin_orders_index_search" class="col-4">
+    <input type='text' id='taxon_id' />
+  </div>
+</fieldset>
+
+<div class='col-12'>
+  <div id='taxon_products' class='list-group'></div>
+</div>

@@ -1,0 +1,75 @@
+<% admin_breadcrumb(link_to plural_resource_name(Spree::LegacyUser), spree.admin_users_path) %>
+<% admin_breadcrumb(link_to @user.email, edit_admin_user_url(@user)) %>
+<% admin_breadcrumb(Spree::StoreCredit.model_name.human) %>
+
+
+<%= render 'spree/admin/users/sidebar' %>
+<%= render 'spree/admin/users/tabs', current: :store_credits %>
+<% content_for :page_actions do %>
+  <% if can?(:create, @user.store_credits.new) %>
+    <li><%= link_to t('spree.admin.store_credits.add'), new_admin_user_store_credit_path(@user), class: 'button btn btn-primary' %></li>
+  <% end %>
+<% end %>
+
+<% if @store_credits.any? %>
+  <% @store_credits.group_by(&:currency).each do |currency, credits| %>
+    <fieldset class="sc-current-balance no-border-bottom">
+      <legend>
+        <%= t('spree.admin.store_credits.current_balance') %>
+        <% total = credits.sum(&:amount_remaining) %>
+        <%= Spree::Money.new(total, currency: currency) %>
+      </legend>
+
+      <table class="sc-table">
+        <thead>
+          <th><%= t('spree.admin.store_credits.amount_credited') %></th>
+          <th><%= t('spree.admin.store_credits.amount_used') %></th>
+          <th><%= t('spree.admin.store_credits.amount_authorized') %></th>
+          <th><%= t('spree.admin.store_credits.credit_type') %></th>
+          <th><%= t('spree.admin.store_credits.created_by') %></th>
+          <th><%= t('spree.admin.store_credits.created_at') %></th>
+          <th><%= t('spree.admin.store_credits.invalidated') %></th>
+          <th data-hook="admin_store_credits_index_header_actions" class="actions"></th>
+        </thead>
+        <tbody>
+          <% credits.each do |store_credit| %>
+            <tr>
+              <td>
+                <span><%= store_credit.display_amount.to_html %></span>
+              </td>
+              <td>
+                <span><%= store_credit.display_amount_used.to_html %></span>
+              </td>
+              <td>
+                <span><%= store_credit.display_amount_authorized.to_html %></span>
+              </td>
+              <td>
+                <span><%= store_credit.category_name %></span>
+              </td>
+              <td>
+                <span><%= store_credit.created_by_email %></span>
+              </td>
+              <td>
+                <span><%= l store_credit.created_at.to_date %></span>
+              </td>
+              <td>
+                <span><%= t store_credit.invalidated? ? 'spree.say_yes' : 'spree.say_no' %></span>
+              </td>
+              <td class="actions" data-hook="admin_store_credits_index_row_actions">
+                <% if can?(:show, store_credit) %>
+                  <%= link_to_edit_url admin_user_store_credit_path(@user, store_credit), { no_text: true, class: 'edit' } %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </fieldset>
+  <% end %>
+<% else %>
+  <div class="no-objects-found">
+    <%= render 'spree/admin/shared/no_objects_found',
+                 resource: Spree::StoreCredit,
+                 new_resource_url: new_object_url %>
+  </div>
+<% end %>

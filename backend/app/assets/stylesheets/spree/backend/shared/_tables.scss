@@ -1,0 +1,131 @@
+table {
+  // Extend all tables with Bootstrap's default table style
+  @extend .table;
+  border-spacing: 0;
+
+  &.sortable td,
+  tr.vertical-middle td,
+  tr.vertical-middle th {
+    vertical-align: middle;
+  }
+
+  th, td {
+    text-overflow: ellipsis;
+
+    .handle {
+      @extend .fa;
+      @extend .fa-bars;
+      cursor: move;
+      display: block !important;
+      text-align: center;
+      padding: 3px 0;
+    }
+
+    &.actions {
+      text-align: right;
+      padding-left: 1.25rem;
+
+      span.text {
+        font-size: $font-size-base;
+      }
+
+      .fa {
+        font-size: 120%;
+        display: inline-block;
+        padding: 2px 0;
+        text-align: center;
+        border-bottom: none;
+        vertical-align: middle;
+
+        &:before {
+          padding: 0;
+          width: 27px;
+          display: inline-block;
+          vertical-align: middle;
+        }
+      }
+
+      button[class*='fa-'] {
+        color: $link-color;
+        background: transparent;
+        border: 0 none;
+        padding: 0 !important;
+
+        &:hover {
+          background: transparent;
+        }
+      }
+
+      .fa-envelope-alt, .fa-eye-open {
+        color: $link-color;
+        padding-left: 0px;
+
+        &:hover {
+          color: $color-dark-light;
+        }
+      }
+
+      .fa-trash:hover, .fa-void:hover, .fa-failure:hover {
+        color: theme-color("danger");
+      }
+
+      .fa-cancel:hover {
+        color: theme-color("warning");
+      }
+
+      .fa-edit:hover, .fa-capture:hover, .fa-ok:hover, .fa-plus:hover,
+      .fa-save:hover, .fa-arrows-h:hover, .fa-check:hover {
+        color: theme-color("success");
+      }
+
+      .fa-copy:hover {
+        color: theme-color("warning");
+      }
+
+      .fa-thumbs-up:hover {
+        color: theme-color("success");
+      }
+
+      .fa-thumbs-down:hover {
+        color: theme-color("danger");
+      }
+    }
+
+    input[type="number"],
+    input[type="text"] {
+      width: 100%;
+    }
+  }
+
+  &.no-borders {
+    td, th {
+      border: none !important;
+    }
+  }
+
+  th:not(.wrap-text), td.actions, td.no-wrap, .state {
+    white-space: nowrap;
+  }
+
+  th a {
+    color: $color-dark;
+  }
+
+  tbody {
+    tr {
+      &.deleted td {
+        background-color: lighten(theme-color("danger"), 6);
+        border-color: lighten(theme-color("danger"), 15);
+      }
+    }
+
+    &.no-border-top tr:first-child td {
+      border-top: none;
+    }
+  }
+
+  pre {
+    font-size: 100%;
+    margin-bottom: 0;
+  }
+}

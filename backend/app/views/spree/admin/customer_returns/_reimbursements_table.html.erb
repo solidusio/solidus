@@ -1,0 +1,39 @@
+<table class="index customer-return-reimbursements">
+  <thead data-hook="customer_return_header">
+    <tr>
+      <th><%= Spree::Reimbursement.human_attribute_name(:number) %></th>
+      <th><%= Spree::Reimbursement.human_attribute_name(:total) %></th>
+      <th><%= Spree::Reimbursement.human_attribute_name(:reimbursement_status) %></th>
+      <th><%= Spree::Reimbursement.human_attribute_name(:created_at) %></th>
+      <th class="actions"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% reimbursements.each do |reimbursement| %>
+      <tr id="<%= spree_dom_id(reimbursement) %>" data-hook="reimbursement_row">
+        <td>
+          <% if reimbursement.reimbursed? %>
+            <%= link_to reimbursement.number, url_for([:admin, @order, reimbursement]) %>
+          <% else %>
+            <%= reimbursement.number %>
+          <% end %>
+        </td>
+        <td><%= reimbursement.display_total %></td>
+        <td>
+          <span class="pill pill-<%= reimbursement.reimbursement_status %>">
+            <%= t(
+              reimbursement.reimbursement_status,
+              scope: 'spree.reimbursement_states'
+            ) %>
+          </span>
+        </td>
+        <td><%= pretty_time(reimbursement.created_at) %></td>
+        <td class="actions">
+          <% if !reimbursement.reimbursed? %>
+            <%= link_to_edit_url url_for([:edit, :admin, @order, reimbursement]), title: "admin_edit_#{dom_id(reimbursement)}", no_text: true %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

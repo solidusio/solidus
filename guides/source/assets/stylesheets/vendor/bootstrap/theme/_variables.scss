@@ -1,0 +1,306 @@
+// Variables
+//
+// Variables should follow the `$component-state-property-size` formula for
+// consistent naming. Ex: $nav-link-disabled-color and $modal-content-box-shadow-xs.
+
+
+//
+// Color system
+//
+
+// stylelint-disable
+$white:    #fff !default;
+$gray-900: #24282f;
+
+$white-016: rgba($white, 0.16);
+$white-048: rgba($white, 0.48);
+$white-05: rgba($white, 0.5);
+$white-072: rgba($white, 0.72);
+$white-08: rgba($white, 0.8);
+$gray-024: rgba($gray-900, 0.24);
+$gray-048: rgba($gray-900, 0.48);
+$gray-072: rgba($gray-900, 0.72);
+$gray-08: rgba($gray-900, 0.8);
+
+$gray-100: #fafbfc;
+$gray-200: #ecedf1;
+$gray-300: #e7e7e8;
+$gray-400: #d3d4d5; //mockup white opacity 0.8
+$gray-500: $gray-048; //mockup text opacity 0.48
+$gray-600: #66696e; //mockup text opacity 0.7
+$gray-700: $gray-08; //mockup text opacity 0.8
+$gray-800: #474a50; //mockup text opacity 0.16
+
+
+$blue:    #3c76f0;
+$blue-darker: #3363cc;
+$blue-dark:    #264b99;
+
+$red:     #ff4848;
+
+$primary:       $blue;
+$secondary:     $gray-200;
+
+$info:          #f5f8fe;
+$danger:        rgba(208, 2, 27, 0.05);
+
+
+// Options
+//
+// Quickly modify global styling by enabling or disabling optional features.
+
+$enable-shadows:            false;
+
+
+// Components
+//
+// Define common padding and border radius sizes and more.
+
+$line-height-lg:              1.5;
+$line-height-sm:              1.3;
+
+$border-width:                1px;
+$border-color:                $gray-08;
+
+$border-radius:               2px;
+$border-radius-lg:            4px;
+$border-radius-sm:            2px;
+
+
+// Body
+//
+// Settings for the `<body>` element.
+$body-bg:                   $gray-100;
+$body-color:                $gray-08;
+
+
+// Links
+//
+// Style anchor elements.
+
+$link-hover-color:          $blue-dark;
+$link-hover-decoration:     none;
+
+
+// Spacing
+//
+// Control the default styling of most Bootstrap elements by modifying these
+// variables. Mostly focused on spacing.
+// You can add more entries to the $spacers map, should you need more variation.
+$spacer: 1rem;
+
+$spacers: ();
+$spacers: map-merge((
+    0: 0,
+    1: ($spacer * .5),
+    2: $spacer,
+    3: ($spacer * 1.5),
+    4: ($spacer * 2),
+    5: ($spacer * 2.5),
+    6: ($spacer * 3),
+    7: ($spacer * 3.5),
+    8: ($spacer * 4)
+), $spacers);
+
+
+// Paragraphs
+//
+// Style p element.
+
+$paragraph-margin-bottom:   1rem;
+
+
+// Grid breakpoints
+//
+// Define the minimum dimensions at which your layout will change,
+// adapting to different screen sizes, for use in media queries.
+
+$grid-breakpoints: (
+  xs: 0,
+  sm: 480px,
+  md: 768px,
+  lg: 1024px,
+  xl: 1280px
+);
+
+@include _assert-ascending($grid-breakpoints, "$grid-breakpoints");
+@include _assert-starts-at-zero($grid-breakpoints);
+
+
+// Grid containers
+//
+// Define the maximum width of `.container` for different screen sizes.
+
+$container-max-widths: (
+  sm: 660px,
+  md: 750px,
+  lg: 1000px,
+  xl: 1150px
+);
+
+@include _assert-ascending($container-max-widths, "$container-max-widths");
+
+
+// Grid columns
+//
+// Set the number of columns and specify the width of the gutters.
+
+$grid-columns:                12 !default;
+$grid-gutter-width:           30px;
+
+
+// Fonts
+//
+// Font, line-height, and color for body text, headings, and more.
+
+// stylelint-disable value-keyword-case
+$font-family-sans-serif:      "sofia-pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+// stylelint-enable value-keyword-case
+
+$font-size-base:              1rem; // Assumes the browser default, typically `16px`
+$font-size-lg:                ($font-size-base * 1.25); //20px
+$font-size-md:                ($font-size-base * 1.125); //18px
+$font-size-sm:                ($font-size-base * .875); //14px
+$font-size-xs:                ($font-size-base * .75); //12px
+
+$font-weight-light:           300;
+$font-weight-normal:          300;
+$font-weight-bolder:          400;
+$font-weight-bold:            500;
+
+$font-weight-base:            $font-weight-normal;
+$line-height-base:            1.5;
+
+$h1-font-size:                $font-size-base * 2.25;
+$h1-mobile-font-size:         $font-size-base * 2;
+$h2-font-size:                $font-size-base * 1.75;
+$h2-mobile-font-size:         $font-size-base * 1.5;
+$h3-font-size:                $font-size-base * 1.5;
+$h3-mobile-font-size:         $font-size-base * 1.25;
+$h4-font-size:                $font-size-base * 1.25;
+$h4-mobile-font-size:         $font-size-base * 1.2;
+$h5-font-size:                $font-size-base * 1.1;
+$h6-font-size:                $font-size-base * 1;
+
+$headings-margin-bottom:      1rem;
+$headings-font-family:        inherit !default;
+$headings-font-weight:        500 !default;
+$headings-line-height:        1.14;
+$headings-color:              $gray-900;
+
+$lead-font-size:              $font-size-base * 1.125;
+
+$blockquote-small-color:      $gray-900;
+$blockquote-font-size:        $font-size-base * 1.5;
+$blockquote-mobile-font-size: $font-size-base * 1.375;
+
+$list-inline-padding:         1rem;
+
+$hr-border-color:             $gray-200;
+
+
+// Tables
+//
+// Customizes the `.table` component with basic values, each used across all table variations.
+
+$table-cell-padding:          12px 1rem;
+
+$table-border-width:          1px;
+$table-border-color:          $gray-200;
+$table-head-border-color:          #dfe3e8;
+
+
+// Buttons
+//
+// For each of Bootstrap's buttons, define text, background, and border color.
+$btn-padding-y:               0.6875em;
+$btn-padding-x:               1.5em;
+
+$btn-padding-y-sm:            0.64286em;
+$btn-padding-x-sm:            1em;
+
+$btn-border-width:            2px;
+
+$btn-font-weight:             $font-weight-bold;
+$btn-box-shadow:              none;
+
+
+// Forms
+$input-padding-y-top:                   18px;
+$input-padding-y-bottom:                14px;
+$input-padding-x:                       1rem;
+$input-padding-y:                       1rem;
+$input-line-height:                     $line-height-base;
+
+$input-color:                           $gray-700;
+$input-border-color:                    $gray-200;
+$input-hover-border-color:              #cacbcc;
+$input-focus-border-color:              #7e7f80;
+$input-border-width:                    $border-width;
+$input-box-shadow:                      none;
+
+$input-placeholder-color:               $gray-500;
+
+$input-focus-border-color:              $gray-600;
+$input-focus-color:                     $input-color;
+$input-focus-width:                     1px;
+
+$form-group-margin-bottom:              10px;
+
+
+// Navs
+$nav-pills-border-radius:           0;
+$nav-pills-link-active-color:       $blue;
+$nav-pills-link-active-bg:          transparent;
+
+
+// Cards
+
+$card-spacer-y:                     1.5rem;
+$card-spacer-x:                     1.5rem;
+$card-border-radius:                $border-radius;
+$card-border-color:                 $gray-200;
+$card-bg:                           $white;
+
+
+// Tooltips
+$tooltip-max-width:                 480px;
+
+
+// Popovers
+
+$popover-font-size:                 $font-size-base;
+$popover-bg:                        #fbf5ff;
+$popover-max-width:                 480px;
+$popover-border-width:              1px;
+$popover-border-color:              #979797;
+$popover-border-radius:             $border-radius-lg;
+$popover-box-shadow:                0 0 8px rgba(0, 0, 0, 0.16);
+
+$popover-header-bg:                 darken($popover-bg, 3%) !default;
+$popover-header-color:              $headings-color !default;
+$popover-header-padding-y:          1.5rem;
+$popover-header-padding-x:          1.5rem;
+
+$popover-body-padding-y:            $popover-header-padding-y;
+$popover-body-padding-x:            $popover-header-padding-x;
+
+$popover-arrow-width:               1rem !default;
+$popover-arrow-height:              .5rem !default;
+
+
+// Code
+
+$code-font-size:                    $font-size-sm;
+$code-color:                        rgba(#d0021b, 0.8);
+$code-background:                   #fafbfc;
+$code-border:                   $gray-200;
+
+$kbd-padding-y:                     .2rem !default;
+$kbd-padding-x:                     .4rem !default;
+$kbd-font-size:                     $code-font-size !default;
+$kbd-color:                         $white !default;
+$kbd-bg:                            $gray-900 !default;
+
+$pre-color:                         $gray-900 !default;
+$pre-scrollable-max-height:         340px !default;

@@ -1,0 +1,133 @@
+<div data-hook="admin_shipping_method_form_fields" class="row">
+  <div data-hook="admin_shipping_method_form_name_field" class="col-5">
+    <%= f.field_container :name do %>
+      <%= f.label :name, class: 'required' %>
+      <%= f.text_field :name, class: 'fullwidth' %>
+      <%= error_message_on :shipping_method, :name %>
+    <% end %>
+  </div>
+
+  <div data-hook="admin_shipping_method_form_internal_name_field" class="col-5">
+    <%= f.field_container :admin_name do %>
+      <%= f.label :admin_name %>
+      <%= f.text_field :admin_name, class: 'fullwidth', label: false %>
+      <%= error_message_on :shipping_method, :admin_name %>
+    <% end %>
+  </div>
+
+  <div data-hook="admin_shipping_method_form_code" class="col-5">
+    <%= f.field_container :code do %>
+      <%= f.label :code %>
+      <%= f.text_field :code, class: 'fullwidth', label: false %>
+      <%= error_message_on :shipping_method, :code %>
+    <% end %>
+  </div>
+
+  <div class="col-5">
+    <%= f.field_container :carrier do %>
+      <%= f.label :carrier %>
+      <%= f.text_field :carrier, class: 'fullwidth', label: false %>
+      <%= error_message_on :shipping_method, :carrier %>
+    <% end %>
+  </div>
+
+  <div class="col-5">
+    <%= f.field_container :service_level do %>
+      <%= f.label :service_level %>
+      <%= f.text_field :service_level, class: 'fullwidth', label: false %>
+      <%= error_message_on :shipping_method, :service_level %>
+    <% end %>
+  </div>
+
+  <div class="col-5">
+    <%= f.field_container :store_ids do %>
+      <%= f.label :store_ids, plural_resource_name(Spree::Store) %>
+      <%= f.collection_select :store_ids, Spree::Store.all, :id, :name, {}, multiple: true, class: "select2 fullwidth" %>
+      <%= error_message_on :shipping_method, :store_ids %>
+    <% end %>
+  </div>
+
+  <div data-hook="admin_shipping_method_form_tracking_url_field" class="col-10">
+    <%= f.field_container :tracking_url do %>
+      <%= f.label :tracking_url %>
+      <%= f.text_field :tracking_url, class: 'fullwidth', placeholder: t('spree.tracking_url_placeholder') %>
+      <%= error_message_on :shipping_method, :tracking_url %>
+    <% end %>
+  </div>
+
+  <div class="col-5 label-block">
+    <%= f.field_container :stock_locations do %>
+      <label>
+        <%= f.check_box(:available_to_all) %>
+        <%= Spree::ShippingMethod.human_attribute_name :available_to_all %>
+        <%= f.field_hint :available_to_all %>
+        <%= error_message_on :shipping_method, :available_to_all %>
+      </label>
+      <%= f.collection_select :stock_location_ids,
+        Spree::StockLocation.order_default, :id, :name,
+        {},
+        class: 'fullwidth select2',
+        multiple: true,
+        placeholder: t('spree.admin.shipping_methods.form.stock_locations_placeholder') %>
+      <%= error_message_on :shipping_method, :stock_locations %>
+    <% end %>
+  </div>
+</div>
+
+<%= f.field_container :available_to_users, class: %w(checkbox) do %>
+  <label>
+    <%= f.check_box(:available_to_users) %>
+    <%= Spree::ShippingMethod.human_attribute_name :available_to_users %>
+  </label>
+  <%= error_message_on :shipping_method, :available_to_users %>
+<% end %>
+
+<div class="row">
+  <div class="col-5">
+    <div data-hook="admin_shipping_method_form_availability_fields">
+      <fieldset class="categories no-border-bottom">
+        <legend align="center"><%= plural_resource_name(Spree::ShippingCategory) %></legend>
+        <%= f.field_container :categories do %>
+          <% Spree::ShippingCategory.all.each do |category| %>
+            <label>
+              <%= check_box_tag('shipping_method[shipping_categories][]', category.id, @shipping_method.shipping_categories.include?(category)) %>
+              <%= category.name %><br>
+            </label>
+          <% end %>
+          <%= error_message_on :shipping_method, :shipping_category_id %>
+        <% end %>
+      </fieldset>
+    </div>
+
+    <div>
+      <fieldset class="no-border-bottom">
+        <legend align="center"><%= plural_resource_name(Spree::Zone) %></legend>
+        <%= f.field_container :zones do %>
+          <% shipping_method_zones = @shipping_method.zones.to_a %>
+          <% Spree::Zone.all.each do |zone| %>
+            <label>
+              <%= check_box_tag('shipping_method[zones][]', zone.id, shipping_method_zones.include?(zone)) %>
+              <%= zone.name %>
+            </label>
+            <br>
+          <% end %>
+          <%= error_message_on :shipping_method, :zone_id %>
+        <% end %>
+      </fieldset>
+    </div>
+  </div>
+  <div class="col-5">
+    <div data-hook="admin_shipping_method_form_calculator_fields">
+      <%= render partial: 'spree/admin/shared/calculator_fields', locals: { f: f, hint: :shipping_methods } %>
+    </div>
+    <div>
+      <fieldset class="tax_categories no-border-bottom">
+        <legend align="center"><%= Spree::TaxCategory.model_name.human %></legend>
+          <%= f.field_container :tax_categories do %>
+            <%= f.select :tax_category_id, @tax_categories.map { |tc| [tc.name, tc.id] }, {include_blank: true}, class: "custom-select fullwidth" %>
+            <%= error_message_on :shipping_method, :tax_category_id %>
+          <% end %>
+      </fieldset>
+    </div>
+  </div>
+</div>

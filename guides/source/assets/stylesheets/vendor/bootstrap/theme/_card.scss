@@ -1,0 +1,38 @@
+//
+// Base styles
+//
+
+.card {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: $card-bg;
+  background-clip: border-box;
+  border: $card-border-width solid $card-border-color;
+  @include border-radius($card-border-radius);
+  box-shadow: 0 2px 8px 0 rgba(#000000, .17);
+
+  .img-fluid{
+    display: block;
+    flex-grow: 0;
+  }
+}
+
+.card-shadow-none{
+  box-shadow: none;
+}
+
+
+.card-border-none{
+  border: none;
+}
+
+
+.card-body {
+  padding: 16px;
+  @include media-breakpoint-up(lg){
+    padding: $card-spacer-x;
+  }
+}
+

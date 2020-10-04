@@ -1,0 +1,76 @@
+<%= render 'spree/admin/shared/product_tabs', current: 'Prices' %>
+<% admin_breadcrumb(plural_resource_name(Spree::Price)) %>
+
+<% content_for :page_actions do %>
+  <li id="new_price_link">
+    <%= link_to t(".new_price"), new_object_url, class: 'btn btn-primary' %>
+  </li>
+<% end if can?(:create, Spree::Product) %>
+
+<% content_for :table_filter_title do %>
+  <%= t('spree.search') %>
+<% end %>
+
+<% content_for :table_filter do %>
+<div data-hook="admin_product_prices_index_search">
+  <%= search_form_for [:admin, :product, @search] do |f| %>
+
+  <div class="row">
+    <div class="col-4">
+      <div class="field" data-hook="sku-select">
+        <%= label_tag :q_variant_id_eq, Spree::Variant.model_name.human %>
+        <%= f.select :variant_id_eq,
+                    @product.variants_including_master.map { |v| [v.descriptive_name, v.id] },
+                    {include_blank: true},
+                    class: "custom-select fullwidth" %>
+      </div>
+    </div>
+
+    <div class="col-2">
+      <div class="field" data-hook="currency-select">
+        <%= label_tag :q_currency_eq, Spree::Price.human_attribute_name(:currency) %>
+        <%= f.select :currency_eq,
+                    @prices.map(&:currency).uniq,
+                    {include_blank: true},
+                    class: "custom-select fullwidth" %>
+      </div>
+    </div>
+
+    <div class="col-2">
+      <div class="field" data-hook="country-select">
+        <%= label_tag :q_country_iso_eq, Spree::Price.human_attribute_name(:country) %>
+        <%= f.select :country_iso_eq,
+                    @prices.map(&:country).compact.uniq.map { |c| [c.name, c.iso]},
+                    {include_blank: true},
+                    class: "custom-select fullwidth" %>
+      </div>
+    </div>
+
+    <div class="col-2">
+      <div class="field">
+        <%= label_tag :q_amount_gt, t(".amount_greater_than") %>
+        <%= f.text_field :amount_gt %>
+      </div>
+    </div>
+
+    <div class="col-2">
+      <div class="field">
+        <%= label_tag :q_amount_lt, t(".amount_less_than") %>
+        <%= f.text_field :amount_lt %>
+      </div>
+    </div>
+  </div>
+  <div class="clearfix"></div>
+
+  <div class="actions filter-actions">
+    <div data-hook="admin_orders_index_search_buttons">
+      <%= button_tag t('spree.filter_results'), class: 'btn btn-primary' %>
+    </div>
+  </div>
+
+  <% end %>
+</div>
+<% end %>
+
+<%= render 'master_variant_table', master_prices: @master_prices, variants: @product.variants.any? %>
+<%= render 'table', variant_prices: @variant_prices if @product.variants.any? %>

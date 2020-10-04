@@ -1,0 +1,24 @@
+// Numbered colors variables are deprecated and will be removed in Solidus v3.0
+@include solidus-deprecated-variable("color-1", "color-white");
+$color-1:    $color-white !default;
+
+@include solidus-deprecated-variable("color-2", "color-primary");
+$color-2:    $color-primary !default;
+
+@include solidus-deprecated-variable("color-3", "color-dark-light");
+$color-3:    $color-dark-light !default;
+
+@include solidus-deprecated-variable("color-4", "color-dark");
+$color-4:    $color-dark !default;
+
+@include solidus-deprecated-variable("color-5", "color-red");
+$color-5:    $color-red !default;
+
+@include solidus-deprecated-variable("color-6", "color-yellow");
+$color-6:    $color-yellow !default;
+
+@include solidus-deprecated-variable("color-7", "color-light");
+$color-7:    $color-light !default;
+
+@include solidus-deprecated-variable("color-8", "color-dark-light");
+$color-8:    $color-dark-light !default;

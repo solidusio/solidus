@@ -1,0 +1,18 @@
+<% admin_breadcrumb(link_to plural_resource_name(Spree::Product), spree.admin_products_path) %>
+<% admin_breadcrumb(link_to plural_resource_name(Spree::Taxonomy), spree.admin_taxonomies_path) %>
+<% admin_breadcrumb(t('spree.new_taxonomy')) %>
+
+
+<% content_for :page_actions do %>
+<% end %>
+
+<%= form_for [:admin, @taxonomy] do |f| %>
+
+  <%= render partial: 'form', locals: { f: f } %>
+  <fieldset class="no-border-top">
+    <br>
+    <div class="filter-actions actions" data-hook="buttons">
+      <%= f.submit t('spree.actions.create'), class: 'btn btn-primary' %>
+    </div>
+  </fieldset>
+<% end %>

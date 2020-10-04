@@ -1,0 +1,17 @@
+<%- snippet = capture do %>
+  <ul class="tabs">
+    <li class="active"><a href="#">Product Details</a></li>
+    <li><a href="#">Images</a></li>
+    <li><a href="#">Variants</a></li>
+    <li><a href="#">Product Properties</a></li>
+    <li><a href="#">Stock Management</a></li>
+  </ul>
+<%- end %>
+
+<div class="style-guide-result">
+  <%= snippet %>
+</div>
+
+<div class="style-guide-code">
+  <pre><code class="language-html"><%= escape_once snippet %></code></pre>
+</div>

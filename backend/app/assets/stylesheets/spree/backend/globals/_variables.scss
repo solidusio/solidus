@@ -1,0 +1,181 @@
+// -------------------------------------------------------------
+//   Variables used in all other files
+//--------------------------------------------------------------
+
+// Fonts
+//--------------------------------------------------------------
+$font-size-pill:      11px;
+$label-font-size:     12px;
+
+// Colors
+//--------------------------------------------------------------
+
+// Basic color palette for admin
+
+$color-dark:          #24282F !default;
+$color-dark-dark:     #5B6778 !default;
+$color-dark-light:    #808C9E !default;
+$color-dark-accent:   #C7CDD5 !default;
+
+$color-primary:       #3D76F1 !default;
+$color-primary-light: #E3EBFD !default;
+
+$color-light:         #F9FAFB !default;
+$color-light-dark:    #E5E7EB !default;
+$color-light-accent:  #D7DAE0 !default;
+
+$color-white:         #FFFFFF !default;
+
+$color-red:           #CE452A !default;
+$color-yellow:        #FFDD59 !default;
+$color-green:         #52B73B !default;
+
+// Basic accents for admin
+$box-shadow:          0 0 4px 0 rgba(0, 0, 0, .12) !default;
+
+// Body base colors
+$color-border:       $color-light-dark !default;
+$color-disabled:     $color-dark-light !default;
+
+// Basic navigation colors
+$color-header-bg:               $color-light !default;
+$color-sidebar-bg:              $color-light !default;
+$color-sidebar-border:          $color-border !default;
+$color-navbar:                  $color-dark !default;
+$color-navbar-bg:               $color-light !default;
+$color-navbar-active:           $color-white !default;
+$color-navbar-active-bg:        $color-primary !default;
+$color-navbar-submenu:          $color-dark-light !default;
+$color-navbar-submenu-bg:       $color-light !default;
+$color-navbar-submenu-active:   $color-primary !default;
+$color-navbar-footer:           $color-dark !default;
+$color-navbar-footer-bg:        $color-light !default;
+$color-navbar-footer-active:    $color-primary !default;
+$color-icon-navbar:             $color-dark-light !default;
+
+// Basic Tabs colors
+$color-tab:                     $color-dark-light !default;
+$color-tab-bg:                  $color-light !default;
+$color-tab-border:              $color-border !default;
+$color-tab-active:              $color-primary !default;
+$color-tab-active-bg:           $color-white !default;
+$color-tab-active-border:       $color-white !default;
+
+// Basic flash colors
+@include bs-deprecated-variable("color-success", "brand-success");
+$color-success:                 $color-green !default;
+@include bs-deprecated-variable("color-notice", "brand-warning");
+$color-notice:                  $color-yellow !default;
+@include bs-deprecated-variable("color-error", "brand-danger");
+$color-error:                   $color-red !default;
+
+// Breadcrumb custom variable
+
+$breadcrumb-color: $color-dark-light;
+
+// Color for spinner
+$color-spinner: $color-white;
+
+// Style Guide
+$color-style-guide-code:            darken($color-light, 10%);
+$color-style-guide-link:            darken($color-light, 65%);
+$color-style-guide-nav:             $color-light;
+$color-style-guide-nav-border:      darken($color-light, 5%);
+$color-style-guide-nav-link:        darken($color-light, 65%);
+$color-style-guide-nav-link-hover:  darken($color-light, 5%);
+$color-style-guide-section-border:  darken($color-light, 10%);
+$color-style-guide-swatch-border:   darken($color-light, 10%);
+$color-style-guide-table-border:    #CEE1F4;
+
+// Table colors
+$color-tbl-odd:                  $color-white !default;
+$color-tbl-even:                 $color-light !default;
+$color-tbl-thead:                $color-light !default;
+
+// Pill colors
+//
+// For now these are custom assigned colors just for this section. As we go
+// about updating other areas of the admin we will likely want to pull these
+// colors out into better named variables.
+$color-pill-text: #1f2933;
+$color-pill-neutral: #e6e6e6;
+$color-pill-neutral-text: $color-pill-text;
+$color-pill-complete: #c8d8e8;
+$color-pill-complete-text: $color-pill-text;
+$color-pill-active: #bbe5b3;
+$color-pill-active-text: $color-pill-text;
+$color-pill-inactive: $color-pill-neutral;
+$color-pill-inactive-text: lighten($color-pill-text, 30%);
+$color-pill-pending: #ffe87d;
+$color-pill-pending-text: $color-pill-text;
+$color-pill-warning: #f9b36d;
+$color-pill-warning-text: $color-pill-text;
+$color-pill-error: #ff967b;
+$color-pill-error-text: $color-pill-text;
+
+// Actions colors
+$color-action-edit-bg:           lighten($color-success, (5 * 5)  ) !default;
+$color-action-edit-brd:          lighten($color-success, (20 * 5) ) !default;
+$color-action-clone-bg:          lighten($color-notice,  (5 * 5)  ) !default;
+$color-action-clone-brd:         lighten($color-notice,  (15 * 5) ) !default;
+$color-action-remove-bg:         lighten($color-error,   (5 * 5)  ) !default;
+$color-action-remove-brd:        lighten($color-error,   (10 * 5) ) !default;
+$color-action-void-bg:           lighten($color-error,   (10 * 5) ) !default;
+$color-action-void-brd:          lighten($color-error,   (20 * 5) ) !default;
+$color-action-cancel-bg:         lighten($color-notice,  (10 * 5) ) !default;
+$color-action-cancel-brd:        lighten($color-notice,  (20 * 5) ) !default;
+$color-action-capture-bg:        lighten($color-success, (5 * 5)  ) !default;
+$color-action-capture-brd:       lighten($color-success, (20 * 5) ) !default;
+$color-action-save-bg:           lighten($color-success, (5 * 5)  ) !default;
+$color-action-save-brd:          lighten($color-success, (20 * 5) ) !default;
+$color-action-mail-bg:           lighten($color-success, (5 * 5)  ) !default;
+$color-action-mail-brd:          lighten($color-success, (20 * 5) ) !default;
+$color-action-failure-bg:        lighten($color-error,   (10 * 5) ) !default;
+$color-action-failure-brd:       lighten($color-error,   (20 * 5) ) !default;
+
+// Available states
+$states: (
+  active,
+  address,
+  awaiting_return,
+  backorder,
+  balance_due,
+  canceled,
+  cart,
+  checkout,
+  complete,
+  completed,
+  confirm,
+  credit_owed,
+  delivery,
+  error,
+  failed,
+  inactive,
+  paid,
+  payment,
+  pending,
+  ready,
+  returned,
+  shipped,
+  void
+) !default;
+
+// Available actions
+$actions: edit, clone, remove, void, capture, save, cancel, mail, failure !default;
+$actions-bg-colors: $color-action-edit-bg, $color-action-clone-bg, $color-action-remove-bg, $color-action-void-bg, $color-action-capture-bg, $color-action-save-bg, $color-action-cancel-bg, $color-action-mail-bg, $color-action-failure-bg !default;
+$actions-brd-colors: $color-action-edit-brd, $color-action-clone-brd, $color-action-remove-brd, $color-action-void-brd, $color-action-capture-brd, $color-action-save-brd, $color-action-cancel-brd, $color-action-mail-brd, $color-action-failure-brd !default;
+
+// Sidebar
+//--------------------------------------------------------------
+$width-sidebar:                  200px !default;
+$width-sidebar-flyout:           225px !default;
+$width-sidebar-collapsed:        52px !default;
+$sidebar-transition:             250ms ease-in !default;
+$border-sidebar:                 1px solid $color-sidebar-border !default;
+
+// Main
+//--------------------------------------------------------------
+$main-header-height:             75px !default;
+
+$content-wrapper-bg:             $color-white;
+$admin-body-bg:                  $color-white;

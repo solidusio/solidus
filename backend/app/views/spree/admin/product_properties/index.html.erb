@@ -1,0 +1,108 @@
+<%= render 'spree/admin/shared/product_tabs', current: 'Product Properties' %>
+<%= render 'spree/shared/error_messages', target: @product %>
+
+<% admin_breadcrumb(plural_resource_name(Spree::ProductProperty)) %>
+
+<% content_for :page_actions do %>
+  <% if can?(:create, Spree::ProductProperty) %>
+    <ul class="tollbar inline-menu">
+      <li>
+        <%= button_tag t('spree.add_product_properties'), type: 'button',
+              data: { target: 'tbody#product_properties' },
+              class: 'btn btn-primary spree_add_fields' %>
+      </li>
+    </ul>
+  <% end %>
+<% end %>
+
+<%= form_for @product, url: admin_product_url(@product), method: :put do |f| %>
+  <fieldset>
+    <legend align="center"><%= plural_resource_name(Spree::ProductProperty) %></legend>
+    <div class="add_product_properties" data-hook="add_product_properties"></div>
+
+    <table class="index sortable" data-hook data-sortable-link="<%= update_positions_admin_product_product_properties_url %>">
+      <thead>
+        <tr data-hook="product_properties_header">
+          <th></th>
+          <th><%= Spree::Property.model_name.human %></th>
+          <th><%= Spree::ProductProperty.human_attribute_name(:value) %></th>
+          <th class="actions"></th>
+        </tr>
+      </thead>
+      <tbody id="product_properties" data-hook>
+        <%= f.fields_for :product_properties do |pp_form| %>
+          <%= render 'product_property_fields', f: pp_form %>
+        <% end %>
+      </tbody>
+    </table>
+
+    <% if can?([:create, :update], Spree::ProductProperty) %>
+      <%= render 'spree/admin/shared/edit_resource_links' %>
+    <% end %>
+
+    <%= hidden_field_tag 'clear_product_properties', 'true' %>
+  </fieldset>
+<% end %>
+
+<%= form_tag admin_product_product_properties_path, method: :get, id: 'variant_option_value_selections' do %>
+  <fieldset class='no-border-bottom'>
+    <legend align="center"><%= t('spree.variant_properties') %></legend>
+    <fieldset class='no-border-top'>
+      <% @option_types.each do |option_type, option_values| %>
+        <div class="field">
+          <%= label :option_type_presentation, option_type.presentation %>
+          <%= select_tag "ovi[]", options_from_collection_for_select(option_values, :id, :presentation, params[:ovi]), class: 'custom-select fullwidth', include_blank: true, id: "#{option_type.name}_option_type_select" %>
+        </div>
+      <% end %>
+      <div class="form-buttons filter-actions actions">
+        <%= button_tag t('spree.filter_results'), class: 'btn btn-primary' %>
+        <% if @option_value_ids.present? %>
+          <%= button_tag t('spree.add_variant_properties'), type: 'button',
+                data: { target: 'tbody#variant_property_values' },
+                class: 'button spree_add_fields' %>
+        <% end %>
+      </div>
+    </fieldset>
+  </fieldset>
+<% end %>
+
+<%= form_for @product, url: admin_product_url(@product), method: :put do |f| %>
+  <%= f.fields_for :variant_property_rules, @variant_property_rule do |rule_form| %>
+    <%= rule_form.hidden_field 'id', value: @variant_property_rule.id %>
+    <%= rule_form.hidden_field 'option_value_ids', value: @option_value_ids.join(',') %>
+    <div class="col-12">
+      <div class="field checkbox">
+        <label>
+          <%= rule_form.check_box 'apply_to_all', value: @variant_property_rule.apply_to_all %>
+          <%= t('spree.applies_to_all_variant_properties') %>
+        </label>
+      </div>
+    </div>
+    <% if @option_value_ids.present? %>
+      <fieldset class='no-border-top'>
+        <table class="index sortable" data-hook data-sortable-link="<%= update_positions_admin_product_variant_property_rule_values_url %>">
+          <thead>
+            <tr data-hook="variant_property_values_header">
+              <th></th>
+              <th><%= Spree::Property.model_name.human %></th>
+              <th><%= Spree::ProductProperty.human_attribute_name(:value) %></th>
+              <th class="actions"></th>
+            </tr>
+          </thead>
+          <tbody id="variant_property_values" data-hook>
+            <%= rule_form.fields_for :values do |values_form| %>
+              <%= render 'product_property_fields', f: values_form %>
+            <% end %>
+          </tbody>
+        </table>
+        <% if can?([:create, :update], Spree::VariantPropertyRule) %>
+          <%= render 'spree/admin/shared/edit_resource_links' %>
+        <% end %>
+      </fieldset>
+    <% end %>
+  <% end %>
+<% end %>
+
+<datalist id="properties">
+  <%= safe_join @properties.map { |name| tag(:option, value: name) } %>
+</datalist>

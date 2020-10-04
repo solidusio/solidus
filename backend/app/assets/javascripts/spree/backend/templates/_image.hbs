@@ -1,0 +1,5 @@
+{{#if image }}
+  <img src='{{ lookup image (concat size "_url") }}' alt="{{ alt }}" />
+{{ else }}
+  <span class="image-placeholder {{ size }}"></span>
+{{/if}}

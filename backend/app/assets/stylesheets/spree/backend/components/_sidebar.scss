@@ -1,0 +1,17 @@
+.content-sidebar {
+  padding-top: 0.65rem;
+
+  .has-tabs & {
+    padding-top: 3.25rem;
+  }
+
+  ul {
+    padding-left: 0;
+  }
+}
+
+.sidebar-title {
+  @include line-through($color: $color-border);
+  color: $color-dark;
+  font-size: 14px;
+}

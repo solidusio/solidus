@@ -1,0 +1,14 @@
+<div data-hook="admin_order_form_fields" class="js-order-cart-page" data-order-number="<%= @order.number %>">
+  <% if @line_item.try(:errors).present? %>
+      <%= render partial: 'spree/shared/error_messages', locals: { target: @line_item } %>
+  <% end %>
+
+  <%= render partial: "spree/admin/orders/line_items", locals: { order: order } %>
+
+  <% if can?(:update, @order) && can?(:create, Spree::LineItem) %>
+    <button class="js-add-line-item btn btn-primary" disabled><%= t('spree.add_line_item') %></button>
+    <button class="js-empty-cart btn btn-primary" disabled><%= t('spree.empty_cart') %></button>
+  <% end %>
+
+  <%= render "spree/admin/orders/order_details", { order: order } %>
+</div>

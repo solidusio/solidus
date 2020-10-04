@@ -1,0 +1,37 @@
+#taxonomy_tree {
+  padding: 0 3em;
+
+  &,
+  ul {
+    list-style: none;
+  }
+
+  ul {
+    min-height: 0.5em;
+    margin-bottom: 1.5em;
+  }
+
+  .taxon {
+    background-color: $color-light;
+    border: 1px solid $color-border;
+    border-radius: $border-radius;
+    color: $body-color;
+    font-weight: $font-weight-bold;
+    margin: 5px 0;
+    padding: 0.5em;
+
+    &.sortable {
+      cursor: move;
+    }
+
+    i {
+      margin-right: 4px;
+      margin-bottom: 0;
+      margin-left: 6px;
+    }
+
+    .actions a {
+      margin-left: 8px;
+    }
+  }
+}

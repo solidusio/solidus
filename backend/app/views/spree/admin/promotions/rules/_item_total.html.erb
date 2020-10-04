@@ -1,0 +1,14 @@
+<div class="row">
+  <div class="col-6">
+    <div class="field">
+      <%= select_tag "#{param_prefix}[preferred_operator]", options_for_select(Spree::Promotion::Rules::ItemTotal::OPERATORS.map{|o| [t(o, scope: 'spree.item_total_rule.operators'),o]}, promotion_rule.preferred_operator), {class: 'custom-select select_item_total fullwidth'} %>
+    </div>
+  </div>
+  <div class="col-6">
+    <div class="field">
+      <%= fields_for param_prefix, promotion_rule do |f| %>
+        <%= render "spree/admin/shared/number_with_currency", f: f, amount_attr: :preferred_amount, currency_attr: :preferred_currency %>
+      <% end %>
+    </div>
+  </div>
+</div>

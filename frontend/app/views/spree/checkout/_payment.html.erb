@@ -1,0 +1,67 @@
+<fieldset id="payment" data-hook>
+  <legend align="center"><%= t('spree.payment_information') %></legend>
+  <div data-hook="checkout_payment_step">
+    <% if @wallet_payment_sources.present? %>
+      <div class="card_options">
+        <%= radio_button_tag 'use_existing_card', 'yes', true %>
+        <label for="use_existing_card_yes">
+          <%= t('spree.use_existing_cc') %>
+        </label>
+        <br/>
+        <%= radio_button_tag 'use_existing_card', 'no' %>
+        <label for="use_existing_card_no">
+          <%= t('spree.use_new_cc_or_payment_method') %>
+        </label>
+      </div>
+
+      <div id="existing_cards">
+        <div class="field" data-hook="existing_cards">
+          <table class="existing-credit-card-list">
+            <tbody>
+              <% @wallet_payment_sources.each do |wallet_payment_source| %>
+                <%=
+                  render(
+                    partial: "spree/checkout/existing_payment/#{wallet_payment_source.payment_source.payment_method.partial_name}",
+                    locals: {
+                      wallet_payment_source: wallet_payment_source,
+                      default: wallet_payment_source == @default_wallet_payment_source,
+                    }
+                  )
+                %>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    <% end %>
+
+    <div id="payment-method-fields" data-hook>
+      <% @order.available_payment_methods.each do |method| %>
+      <p>
+        <label>
+          <%= radio_button_tag "order[payments_attributes][][payment_method_id]", method.id, method == @order.available_payment_methods.first %>
+          <%= t(method.name, scope: 'spree.payment_methods', default: method.name) %>
+        </label>
+      </p>
+      <% end %>
+    </div>
+
+    <ul id="payment-methods" data-hook>
+      <% @order.available_payment_methods.each do |method| %>
+        <li id="payment_method_<%= method.id %>" class="<%= 'last' if method == @order.available_payment_methods.last %>" data-hook>
+          <fieldset>
+            <%= render partial: "spree/checkout/payment/#{method.partial_name}", locals: { payment_method: method } %>
+          </fieldset>
+        </li>
+      <% end %>
+    </ul>
+    <br style="clear:both;" />
+  </div>
+</fieldset>
+
+<br class="space" />
+
+<div class="form-buttons" data-hook="buttons">
+  <%= submit_tag t('spree.save_and_continue'), class: 'continue button primary' %>
+  <script>Spree.disableSaveOnClick();</script>
+</div>

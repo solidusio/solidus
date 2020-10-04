@@ -1,0 +1,26 @@
+<% content_for :page_actions do %>
+  <% if can?(:create, Spree::Product) %>
+    <li id="new_product_link">
+      <%= link_to t('spree.new_product'), new_object_url, id: 'admin_new_product', class: 'btn btn-primary' %>
+    </li>
+  <% end %>
+  <% if defined?(Spree::Frontend::Engine) %>
+    <li id="view_product_link">
+      <%= link_to t('spree.view_product'), spree.product_path(@product), id: 'admin_view_product', class: 'btn btn-default ml-2' %>
+    </li>
+  <% end %>
+<% end %>
+
+<%= render partial: 'spree/admin/shared/product_tabs', locals: { current: 'Product Details' } %>
+<%= render partial: 'spree/shared/error_messages', locals: { target: @product } %>
+
+<% admin_breadcrumb(t('spree.product_details')) %>
+
+<%= form_for [:admin, @product], html: { multipart: true } do |f| %>
+  <fieldset class="no-border-top">
+    <%= render partial: 'form', locals: { f: f } %>
+    <% if can?(:update, @product) %>
+      <%= render partial: 'spree/admin/shared/edit_resource_links' %>
+    <% end %>
+  </fieldset>
+<% end %>

@@ -1,0 +1,22 @@
+{{#each taxons}}
+  <li data-taxon-id="{{id}}" data-taxon-taxonomy-id="{{taxonomy_id}}">
+    {{#if (isRootTaxon) }}
+    <div class="taxon">
+    {{else}}
+    <div class="taxon sortable">
+      <i class="fa fa-arrows"></i>
+    {{/if}}
+      {{name}}
+      <div class="actions float-right">
+        <a href="#" class="js-taxon-add-child fa fa-plus icon_link no-text"></a>
+        <a href="{{admin_url}}/taxonomies/{{taxonomy_id}}/taxons/{{id}}/edit" class="fa fa-edit icon_link no-text"></a>
+        <a href="#" class="js-taxon-delete fa fa-trash icon_link no-text"></a>
+      </div>
+    </div>
+    {{#if taxons }}
+    <ul>
+      {{> taxons/_tree }}
+    </ul>
+    {{/if}}
+  </li>
+{{/each}}

@@ -1,0 +1,76 @@
+<%= render partial: 'spree/admin/shared/product_tabs', locals: {current: 'Images'} %>
+
+<% admin_breadcrumb(plural_resource_name(Spree::Image)) %>
+
+
+<% content_for :page_actions do %>
+  <% if can?(:create, Spree::Image) %>
+    <li><%= link_to_with_icon('plus', t('spree.new_image'), new_admin_product_image_url(@product), id: 'new_image_link', class: 'btn btn-primary') %></li>
+  <% end %>
+<% end %>
+
+<div id="new_image" class="hidden">
+  <%= render 'new', product: @product, image: Spree::Image.new(viewable: @product) %>
+</div>
+
+<% if can?(:create, Spree::Image) %>
+  <fieldset class="no-border-bottom">
+    <legend align="center"><%= t(".upload_images") %></legend>
+
+    <div id="upload-zone">
+      <%= form_for [:admin, @product, Spree::Image.new],
+          html: { multipart: true, id: 'upload-form' } do |f| %>
+        <label class="upload">
+          <i class="fa fa-5x fa-cloud-upload"></i>
+          <p>
+            <span class="button"><%= t(".choose_files") %></span>
+          </p>
+          <p>
+            <%= t(".drag_and_drop") %>
+          </p>
+
+          <%= f.file_field :attachment, multiple: '', class: 'hidden' %>
+          <%= f.hidden_field :viewable_id, value: @product.master.id %>
+        </label>
+      <% end %>
+    </div>
+
+    <div id="progress-zone" class="row"></div>
+  </fieldset>
+<% end %>
+
+<% no_images = @product.gallery.images.empty? %>
+
+<table class="index sortable inline-editable-table <%= 'hidden' if no_images %>" id="images-table" data-hook="images_table" data-sortable-link="<%= update_positions_admin_product_images_url(@product) %>">
+  <colgroup>
+    <col style="width: 5%">
+    <col style="width: 10%">
+    <% if @product.has_variants? %>
+      <col style="width: 40%">
+    <% end %>
+    <col style="width: 30%">
+    <col style="width: 15%">
+  </colgroup>
+
+  <thead>
+    <tr data-hook="images_header">
+      <th></th>
+      <th><%= t('spree.thumbnail') %></th>
+      <% if @product.has_variants? %>
+        <th><%= Spree::Variant.model_name.human %></th>
+      <% end %>
+      <th><%= Spree::Image.human_attribute_name(:alt) %></th>
+      <th class="actions"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <%= render partial: 'image_row', collection: @product.gallery.images, as: :image %>
+  </tbody>
+</table>
+
+<% if no_images %>
+  <div class="no-objects-found">
+    <%= t('spree.no_images_found') %>.
+  </div>
+<% end %>

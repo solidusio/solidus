@@ -1,0 +1,16 @@
+<% admin_breadcrumb(link_to plural_resource_name(Spree::LegacyUser), spree.admin_users_path) %>
+<% admin_breadcrumb(t('spree.new_user')) %>
+
+<div data-hook="admin_user_new_form_header">
+  <%= render partial: 'spree/shared/error_messages', locals: { target: @user } %>
+</div>
+
+<div data-hook="admin_user_new_form">
+  <%= form_for [:admin, @user], url: admin_users_url, method: :post do |f| %>
+    <%= render partial: 'form', locals: { f: f } %>
+
+    <div data-hook="admin_user_new_form_buttons">
+      <%= render partial: 'spree/admin/shared/new_resource_links' %>
+    </div>
+  <% end %>
+</div>

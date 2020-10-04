@@ -1,0 +1,17 @@
+<%= t('.dear_customer') %>
+
+<%= t('.instructions') %>
+
+============================================================
+<%= t('.refund_summary') %>
+============================================================
+<%= t('.total_refunded', total: @reimbursement.display_total) %>
+
+<% if @reimbursement.return_items.exchange_requested.present? %>
+============================================================
+<%= t('.exchange_summary') %>
+============================================================
+<% @reimbursement.return_items.exchange_requested.each do |return_item| %>
+<%= return_item.variant.sku %> <%= raw(return_item.variant.name) %> <%= "(#{raw(return_item.variant.options_text)})" if return_item.variant.options_text.present? %> -> <%= return_item.exchange_variant.sku %> <%= raw(return_item.exchange_variant.name) %> <%= "(#{raw(return_item.exchange_variant.options_text)})" if return_item.exchange_variant.options_text.present? %>
+<% end %>
+<% end %>

@@ -1,0 +1,101 @@
+<p>
+  Pills are useful for showing statuses as an admin can get a better idea of the
+  state of the object by the color alone. These are most effective in a table,
+  as displayed below, but can also be used in other areas of the system where
+  appropriate.
+</p>
+
+<%- snippet = capture do %>
+  <span class="pill pill-complete">Complete</span>
+  <span class="pill pill-active">Active</span>
+  <span class="pill pill-inactive">Inactive</span>
+  <span class="pill pill-pending">Pending</span>
+  <span class="pill pill-warning">Warning</span>
+  <span class="pill pill-error">Error</span>
+<%- end %>
+
+<div class="style-guide-result half">
+  <%= snippet %>
+</div>
+
+<div class="style-guide-code half">
+  <pre><code class="language-html"><%= escape_once snippet %></code></pre>
+</div>
+
+<div class="style-guide-result">
+  <h3>Orders</h3>
+
+  <table>
+    <thead>
+      <th>Date</th>
+      <th>Number</th>
+      <th>Payments</th>
+      <th>Shipments</th>
+      <th>Customer</th>
+      <th>Total</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>July 18, 2017</td>
+        <td>R1234</td>
+        <td><span class="pill pill-complete">Paid</span></td>
+        <td><span class="pill pill-complete">Shipped</span></td>
+        <td><a href="#">lauren@example.com</a></td>
+        <td>$75.00</td>
+      </tr>
+      <tr>
+        <td>July 17, 2017</td>
+        <td>R1234</td>
+        <td><span class="pill pill-pending">Balance Due</span></td>
+        <td><span class="pill pill-pending">Pending</span></td>
+        <td><a href="#">jessicajones@example.com</a></td>
+        <td>$105.00</td>
+      </tr>
+      <tr>
+        <td>July 15, 2017</td>
+        <td>R1234</td>
+        <td><span class="pill pill-warning">Credit Owed</span></td>
+        <td><span class="pill pill-pending">Ready</span></td>
+        <td><a href="#">john@example.com</a></td>
+        <td>$34.00</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="style-guide-result">
+  <h3>Promotions</h3>
+
+  <table>
+    <thead>
+      <th>Code</th>
+      <th>Status</th>
+      <th>Used</th>
+      <th>Start</th>
+      <th>End</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>FALL2017</td>
+        <td><span class="pill pill-inactive">Inactive</span></td>
+        <td>0</td>
+        <td>September 1, 2017</td>
+        <td>–</td>
+      </tr>
+      <tr>
+        <td>SAVE_20</td>
+        <td><span class="pill pill-active">Active</span></td>
+        <td>651</td>
+        <td>June 20, 2016</td>
+        <td>–</td>
+      </tr>
+      <tr>
+        <td>NEWSLETTER</td>
+        <td><span class="pill pill-inactive">Expired</span></td>
+        <td>358</td>
+        <td>January 1, 2016</td>
+        <td>March 30, 2016</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

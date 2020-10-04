@@ -1,0 +1,14 @@
+<div data-hook="admin_named_type_form_fields" class="row">
+  <div class="col-4">
+    <%= f.field_container :name do %>
+      <%= f.label :name, class: 'required' %><br />
+      <%= f.text_field :name, class: 'fullwidth' %>
+    <% end %>
+    <div class="checkbox">
+      <label>
+        <%= f.check_box :active %>
+        <%= f.object.class.human_attribute_name :active %>
+      </label>
+    </div>
+  </div>
+</div>

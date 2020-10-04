@@ -1,0 +1,29 @@
+<table class='index' id='listing_log_entries'>
+  <colgroup>
+    <col style="width: 30%" />
+    <col style="width: 60%" />
+    <col style="width: 10%" />
+  </colgroup>
+  <thead>
+    <tr>
+      <th><%= Spree::LogEntry.human_attribute_name(:created_at) %></th>
+      <th><%= Spree::LogEntry.human_attribute_name(:details) %></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+  <% log_entries.each do |entry| %>
+    <tr class="log_entry <%= entry.parsed_details.success? ? 'success' : 'fail' %>">
+      <td>
+        <%= pretty_time(entry.created_at) %>
+      </td>
+      <td>
+        <pre><%= entry.parsed_details.message %></pre>
+      </td>
+      <td class="text-right">
+        <i class='fa fa-<%= entry.parsed_details.success? ? 'check' : 'remove' %>'></i>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

@@ -1,0 +1,77 @@
+<%= render 'spree/admin/shared/taxes_tabs' %>
+
+<% admin_breadcrumb(t('spree.settings')) %>
+<% admin_breadcrumb(t('spree.admin.tab.taxes')) %>
+<% admin_breadcrumb(plural_resource_name(Spree::TaxRate)) %>
+
+
+<% content_for :page_actions do %>
+  <% if can?(:create, Spree::TaxRate) %>
+    <li>
+      <%= link_to t('spree.new_tax_rate'), new_object_url, class: 'btn btn-primary' %>
+    </li>
+  <% end %>
+<% end %>
+
+<% if @tax_rates.any? %>
+  <table class="index">
+    <colgroup>
+      <col style="width: 15%">
+      <col style="width: 15%">
+      <col style="width: 10%">
+      <col style="width: 10%">
+      <col style="width: 5%">
+      <col style="width: 5%">
+      <col style="width: 10%">
+      <col style="width: 15%">
+      <col style="width: 15%">
+    </colgroup>
+    <thead>
+      <tr data-hook="rate_header">
+        <th><%= Spree::TaxRate.human_attribute_name(:zone) %></th>
+        <th><%= Spree::TaxRate.human_attribute_name(:name) %></th>
+        <th><%= Spree::TaxRate.human_attribute_name(:tax_categories) %></th>
+        <th><%= Spree::TaxRate.human_attribute_name(:amount) %></th>
+        <th><%= Spree::TaxRate.human_attribute_name(:included_in_price) %></th>
+        <th><%= Spree::TaxRate.human_attribute_name(:show_rate_in_label) %></th>
+        <th><%= Spree::TaxRate.human_attribute_name(:expires_at) %></th>
+        <th><%= Spree::Calculator.model_name.human %></th>
+        <th class="actions"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @tax_rates.each do |tax_rate|%>
+      <tr id="<%= spree_dom_id tax_rate %>" data-hook="rate_row">
+        <td><%=tax_rate.zone.try(:name) || t('spree.not_available') %></td>
+        <td><%=tax_rate.name %></td>
+        <td>
+          <% if tax_rate.tax_categories.any? %>
+            <%= tax_rate.tax_categories.map(&:name).join(", ") %>
+          <% else %>
+            <%= t('spree.not_available') %>
+          <% end %>
+        </td>
+        <td><%=tax_rate.amount %></td>
+        <td><%=tax_rate.included_in_price? ? t('spree.say_yes') : t('spree.say_no') %></td>
+        <td><%=tax_rate.show_rate_in_label? ? t('spree.say_yes') : t('spree.say_no') %></td>
+        <td><%=tax_rate.expires_at.to_date.to_s(:short_date) if tax_rate.expires_at %></td>
+        <td><%=tax_rate.calculator.to_s %></td>
+        <td class="actions">
+          <% if can?(:update, tax_rate) %>
+            <%= link_to_edit tax_rate, no_text: true %>
+          <% end %>
+          <% if can?(:destroy, tax_rate) %>
+            <%= link_to_delete tax_rate, no_text: true %>
+          <% end %>
+        </td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div class="no-objects-found">
+    <%= render 'spree/admin/shared/no_objects_found',
+                 resource: Spree::TaxRate,
+                 new_resource_url: new_object_url %>
+  </div>
+<% end %>

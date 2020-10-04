@@ -1,0 +1,80 @@
+<%= render 'spree/admin/shared/shipping_tabs' %>
+
+<% admin_breadcrumb(t('spree.settings')) %>
+<% admin_breadcrumb(t('spree.admin.tab.shipping')) %>
+<% admin_breadcrumb(plural_resource_name(Spree::StockLocation)) %>
+
+
+<% content_for :page_actions do %>
+  <ul class="actions inline-menu">
+    <% if can?(:create, Spree::StockLocation) %>
+      <li>
+        <%= link_to t('spree.new_stock_location'), new_object_url, id: 'admin_new_stock_location', class: 'btn btn-primary' %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>
+
+<% if @stock_locations.any? %>
+  <%= paginate @stock_locations, theme: "solidus_admin" %>
+  <table class="index sortable" id='listing_stock_locations' data-hook data-sortable-link="<%= update_positions_admin_stock_locations_url %>">
+    <colgroup>
+      <col style="width: 10%">
+      <col style="width: 30%" />
+      <col style="width: 15%" />
+      <col style="width: 30%" />
+      <col style="width: 15%" />
+    </colgroup>
+    <thead>
+      <tr data-hook="stock_locations_header">
+        <th></th>
+        <th><%= Spree::StockLocation.human_attribute_name(:name) %></th>
+        <th><%= Spree::StockLocation.human_attribute_name(:state) %></th>
+        <th><%= plural_resource_name(Spree::StockMovement) %></th>
+        <th class="actions"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @stock_locations.each do |stock_location|
+           @edit_url = edit_admin_stock_location_path(stock_location)
+           @delete_url = admin_stock_location_path(stock_location)
+      %>
+        <tr id="<%= spree_dom_id stock_location %>" data-hook="stock_location_row">
+          <td>
+            <% if can?(:update_positions, Spree::StockLocation) %>
+              <span class="handle"></span>
+            <% end %>
+          </td>
+          <td><%= admin_stock_location_display_name(stock_location) %></td>
+          <td>
+            <span class="pill pill-<%= stock_location.active? ? 'active' : 'inactive' %>">
+              <%= t(stock_location.active? ? :active : :inactive, scope: 'spree') %>
+            </span>
+          </td>
+          <td>
+            <% if can?(:read, Spree::StockMovement) %>
+              <%= link_to plural_resource_name(Spree::StockMovement), admin_stock_location_stock_movements_path(stock_location.id) %>
+            <% else %>
+              Stock Movements
+            <% end %>
+          </td>
+          <td class="actions">
+            <% if can?(:update, stock_location) %>
+              <%= link_to_edit stock_location, no_text: true %>
+            <% end %>
+            <% if can?(:destroy, stock_location) %>
+              <%= link_to_delete stock_location, no_text: true %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <%= paginate @stock_locations, theme: "solidus_admin" %>
+<% else %>
+  <div class="no-objects-found">
+    <%= render 'spree/admin/shared/no_objects_found',
+                        resource: Spree::StockLocation,
+                        new_resource_url: new_object_url %>
+  </div>
+<% end %>

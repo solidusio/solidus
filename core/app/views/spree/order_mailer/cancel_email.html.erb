@@ -1,0 +1,45 @@
+<table>
+  <tr>
+    <td>
+      <p class="lede">
+        <%= t('.dear_customer') %>
+      </p>
+      <p>
+        <%= t('.instructions') %>
+      </p>
+      <p>
+        <%= t('.order_summary_canceled') %>
+      </p>
+      <table>
+        <% @order.line_items.each do |item| %>
+          <tr>
+            <td><%= item.variant.sku %></td>
+            <td>
+              <%= item.variant.product.name %>
+              <%= item.variant.options_text -%>
+            </td>
+            <td>(<%=item.quantity%>) @ <%= item.single_money %> = <%= item.display_amount %></td>
+          </tr>
+        <% end %>
+        <tr>
+          <td></td>
+          <td><%= t('.subtotal') %></td>
+          <td><%= @order.display_item_total %></td>
+        </tr>
+        <% @order.adjustments.eligible.each do |adjustment| %>
+          <tr>
+            <td></td>
+            <td><%= sanitize(adjustment.label) %></td>
+            <td><%= adjustment.display_amount %></td>
+          </tr>
+        <% end %>
+        <tr>
+          <td></td>
+          <td><%= t('.total') %></td>
+          <td><%= @order.display_total %></td>
+        </tr>
+      </table>
+    </td>
+    <td class="expander"></td>
+  </tr>
+</table>

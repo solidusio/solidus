@@ -1,0 +1,6 @@
+<% calculator.admin_form_preference_names.map do |name| %>
+  <%= render "spree/admin/shared/preference_fields/#{calculator.preference_type(name)}",
+    name: "#{prefix}[calculator_attributes][preferred_#{name}]",
+    value: calculator.get_preference(name),
+    label: t(name.to_s, scope: 'spree', default: name.to_s.humanize) %>
+<% end %>

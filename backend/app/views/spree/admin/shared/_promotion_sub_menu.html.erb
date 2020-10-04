@@ -1,0 +1,8 @@
+<ul class="admin-subnav" data-hook="admin_promotion_sub_tabs">
+  <% if can? :admin, Spree::Promotion %>
+    <%= tab :promotions %>
+  <% end %>
+  <% if can? :admin, Spree::PromotionCategory %>
+    <%= tab :promotion_categories %>
+  <% end %>
+</ul>

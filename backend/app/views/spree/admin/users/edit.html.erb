@@ -1,0 +1,56 @@
+<% admin_breadcrumb(link_to plural_resource_name(Spree::LegacyUser), spree.admin_users_path) %>
+<% admin_breadcrumb(@user.valid? ? @user.email : @user.email_was) %>
+
+<%= render 'spree/admin/users/sidebar' %>
+<%= render 'spree/admin/users/tabs', current: :account %>
+<%= render partial: 'spree/admin/users/user_page_actions' %>
+
+<fieldset data-hook="admin_user_edit_general_settings">
+  <legend><%= Spree.user_class.model_name.human %></legend>
+
+  <div data-hook="admin_user_edit_form_header">
+    <%= render partial: 'spree/shared/error_messages', locals: { target: @user } %>
+  </div>
+
+  <div data-hook="admin_user_edit_form">
+    <%= form_for [:admin, @user], as: :user, url: admin_user_url(@user), method: :put do |f| %>
+      <%= render partial: 'form', locals: { f: f } %>
+
+      <% if can?(:update, @user) %>
+        <div data-hook="admin_user_edit_form_button">
+          <%= render partial: 'spree/admin/shared/edit_resource_links', locals: { collection_url: admin_users_url } %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</fieldset>
+
+<% if can?(:update, @user) && can?(:manage, :api_key) %>
+  <fieldset data-hook="admin_user_api_key" id="admin_user_edit_api_key">
+    <legend><%= t('.api_access') %></legend>
+
+    <% if @user.spree_api_key.present? %>
+      <div id="current-api-key">
+        <strong><%= t('.key') %>: </strong>
+        <% if @user == try_spree_current_user %>
+          <%= @user.spree_api_key %>
+        <% else %>
+          <i>(<%= t('spree.hidden') %>)</i>
+        <% end %>
+
+      </div>
+      <div class="filter-actions actions">
+        <%= button_to t('.clear_key'), spree.admin_user_api_key_path(@user), method: :delete, data: { confirm: t('.confirm_clear_key') }, class: 'btn btn-default' %>
+        <%= button_to t('.regenerate_key'), spree.admin_user_api_key_path(@user), method: :post, data: { confirm: t('.confirm_regenerate_key') }, class: 'btn btn-default' %>
+      </div>
+
+    <% else %>
+
+      <div class="no-objects-found"><%= t('.no_key') %></div>
+
+      <div class="filter-actions actions">
+        <%= button_to t('.generate_key'), spree.admin_user_api_key_path(@user), method: :post, class: 'btn btn-primary' %>
+      </div>
+    <% end %>
+  </fieldset>
+<% end %>

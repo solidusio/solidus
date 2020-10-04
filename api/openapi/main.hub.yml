@@ -1,0 +1,65 @@
+title: Solidus API
+logo: 'https://next.stoplight.io/images/mark-light-bg.png'
+header:
+  nav:
+    left: []
+    right: []
+pages:
+  /:
+    title: Welcome
+    data:
+      blocks:
+        - type: text
+          data: >-
+            # Solidus API
+
+
+            Welcome! This is the documentation for the
+            [Solidus](https://solidus.io) REST API.
+
+
+            This documentation refers to a stock installation of Solidus.
+            However, every store may customize their API in any number of ways,
+            so make sure to ensure the store you are working with conforms to
+            this documentation or refer to the store's own documentation for
+            interacting with the API.
+
+
+            Endpoints are grouped by the logical resource they interact with.
+            Note that some of the endpoints are duplicated, since the same
+            resource may be accessed at the root level or as the child of
+            another resource (e.g. you may access all variants or the variants
+            that belong to a specific product).
+        - type: text
+          data: ''
+      children:
+        - title: Authentication
+          route:
+            path: /authentication
+          data:
+            $ref: ./authentication.md
+        - title: Pagination
+          route:
+            path: /pagination
+          data:
+            $ref: ./pagination.md
+        - title: Errors
+          route:
+            path: /errors
+          data:
+            $ref: ./errors.md
+        - title: Checkout Flow
+          route:
+            path: /checkout-flow
+          data:
+            $ref: ./checkout-flow.md
+          config:
+            sidebar:
+              token: ''
+        - title: API Reference
+          config:
+            includeDownloadLink: true
+          route:
+            path: /api-reference
+          data:
+            $ref: ./solidus-api.oas.yml

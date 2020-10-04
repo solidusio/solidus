@@ -1,0 +1,56 @@
+<%= render 'spree/admin/shared/settings_checkout_tabs' %>
+
+<% admin_breadcrumb(t('spree.settings')) %>
+<% admin_breadcrumb(t('spree.admin.tab.checkout')) %>
+<% admin_breadcrumb(plural_resource_name(Spree::StoreCreditReason)) %>
+
+<% content_for :page_actions do %>
+  <ul class='actions inline-menu'>
+    <li>
+      <%= link_to t('spree.new_store_credit_reason'), new_object_url, id: 'admin_new_named_type', class: 'btn btn-primary' %>
+    </li>
+  </ul>
+<% end %>
+
+<% if @collection.any? %>
+  <table class='index' id='listing_store_credit_reasons'>
+    <colgroup>
+      <col style='width: 65%' />
+      <col style='width: 20%' />
+      <col style='width: 15%' />
+    </colgroup>
+    <thead>
+      <tr data-hook='store_credit_reasons_header'>
+        <th><%= Spree::StoreCreditReason.human_attribute_name(:name) %></th>
+        <th><%= Spree::StoreCreditReason.human_attribute_name(:state) %></th>
+        <th class='actions'></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @collection.each do |store_credit_reason| %>
+        <tr id='<%= spree_dom_id store_credit_reason %>' data-hook='store_credit_reason_row'>
+          <td>
+            <%= store_credit_reason.name %>
+          </td>
+          <td>
+            <span class="pill pill-<%= store_credit_reason.active? ? 'active' : 'inactive' %>">
+              <%= t(store_credit_reason.active? ? :active : :inactive, scope: 'spree') %>
+            </span>
+          </td>
+          <td class='actions'>
+            <%= link_to_edit store_credit_reason, no_text: true %>
+            <% if can?(:destroy, store_credit_reason) %>
+              <%= link_to_delete store_credit_reason, no_text: true %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div class='no-objects-found'>
+    <%= render 'spree/admin/shared/no_objects_found',
+                 resource: Spree::StoreCreditReason,
+                 new_resource_url: new_object_url %>
+  </div>
+<% end %>

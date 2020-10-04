@@ -1,0 +1,72 @@
+//
+// Basic Bootstrap table
+//
+
+.table {
+  margin-bottom: 2rem;
+  line-height: 1.25;
+
+  &:last-child{ margin-bottom: 0; }
+
+  thead th, .mobile-table-header {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-bold;
+    letter-spacing: 0.2px;
+    text-transform: uppercase;
+    vertical-align: bottom;
+
+    code { text-transform: none; }
+  }
+
+  thead th{
+    border-bottom: $table-border-width solid $table-head-border-color;
+  }
+
+  th, td {
+    border-top: none;
+    border-bottom: $table-border-width solid $table-border-color;
+
+    &:first-child{ padding-left: 5px; }
+    &:last-child{ padding-right: 5px; }
+  }
+
+  .mobile-table-header { display: none; }
+}
+
+
+.table-responsive-collapse{
+  /*Mobile View*/
+  @include media-breakpoint-down(sm){
+    td, tr { display: block; }
+
+    thead tr { display: none; }
+
+    .mobile-table-header { 
+      display: inline-block;
+      line-height: 1.25 * 1rem;
+      width: 33%;
+      word-wrap: break-word;
+      padding-right: 10px;
+    }
+
+    tr {
+      padding: 10px 0;
+      border-top: 2px solid rgba(36, 40, 47, 0.7);
+      &:last-child{ border-bottom: 2px solid rgba(36, 40, 47, 0.7); }
+    }
+
+    td {
+      position: relative;
+      text-align: left;
+      vertical-align: top;
+      overflow: hidden;
+      &:last-child{ border-bottom: none; }
+      padding: 8px 0 !important; 
+    }
+
+    .td-inner { 
+      width: 66%;
+      float: right;
+    }
+  }
+}

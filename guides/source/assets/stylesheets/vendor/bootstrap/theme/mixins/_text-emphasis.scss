@@ -1,0 +1,19 @@
+// stylelint-disable declaration-no-important
+
+// Typography
+
+@mixin text-emphasis-variant($parent, $color, $hover-color: darken($color, 10%)) {
+  #{$parent} {
+    color: $color !important;
+    .isvg .inherit-fill {
+      fill: $color;
+    }
+  }
+  a#{$parent} {
+    @include hover-focus {
+      color: $hover-color !important;
+
+      .isvg .inherit-fill { fill: $hover-color; }
+    }
+  }
+}

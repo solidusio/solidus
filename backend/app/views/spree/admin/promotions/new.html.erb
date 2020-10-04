@@ -1,0 +1,9 @@
+<% admin_layout "full-width" %>
+
+<% admin_breadcrumb(link_to plural_resource_name(Spree::Promotion), spree.admin_promotions_path) %>
+<% admin_breadcrumb(t('spree.new_promotion')) %>
+
+<%= form_for @promotion, url: collection_url do |f| %>
+  <%= render partial: 'form', locals: { f: f } %>
+  <%= render partial: 'spree/admin/shared/new_resource_links' %>
+<% end %>

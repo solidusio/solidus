@@ -1,0 +1,19 @@
+<%= render 'spree/admin/shared/settings_checkout_tabs' %>
+
+<% admin_breadcrumb(root_tab) %>
+<% admin_breadcrumb(sub_tab) %>
+<% admin_breadcrumb(index_link) %>
+<% admin_breadcrumb(new_object) %>
+
+
+<% content_for :page_actions do %>
+<% end %>
+
+<%= render partial: 'spree/shared/error_messages', locals: { target: @object } %>
+
+<%= form_for [:admin, @object] do |f| %>
+  <fieldset class="no-border-top">
+    <%= render partial: 'spree/admin/shared/named_types/form', locals: { f: f } %>
+    <%= render partial: 'spree/admin/shared/new_resource_links' %>
+  </fieldset>
+<% end %>

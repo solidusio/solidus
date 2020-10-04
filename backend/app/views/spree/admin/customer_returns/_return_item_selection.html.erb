@@ -1,0 +1,62 @@
+<table class="index return-items-table selectable-table">
+  <thead>
+    <tr>
+      <th>
+      </th>
+      <th><%= Spree::Product.model_name.human %></th>
+      <th><%= Spree::Variant.human_attribute_name(:sku) %></th>
+      <th class="wrap-text"><%= Spree::ReturnItem.human_attribute_name(:amount) %></th>
+      <th class="wrap-text"><%= Spree::ReturnItem.human_attribute_name(:inventory_unit_state) %></th>
+      <th class="wrap-text"><%= Spree::ReturnItem.human_attribute_name(:exchange_variant) %></th>
+      <th><%= Spree::ReturnItem.human_attribute_name(:resellable) %></th>
+      <th class="wrap-text"><%= Spree::ReturnItem.human_attribute_name(:reception_status) %></th>
+      <th class="wrap-text"><%= Spree::ReturnItem.human_attribute_name(:return_reason) %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= f.fields_for :return_items, return_items do |item_fields| %>
+      <% return_item = item_fields.object %>
+
+      <tr>
+        <td class="inventory-unit-checkbox">
+          <div style="display:none">
+            <%= item_fields.hidden_field :inventory_unit_id %>
+            <%= item_fields.hidden_field :return_authorization_id %>
+            <%= item_fields.hidden_field :amount %>
+          </div>
+          <%= item_fields.check_box :returned, {checked: false, class: 'selectable add-item', "data-price" => return_item.amount}, '1', '0' %>
+        </td>
+        <td>
+          <div class="variant-name"><%= return_item.inventory_unit.variant.name %></div>
+          <div class="variant-options"><%= return_item.inventory_unit.variant.options_text %></div>
+        </td>
+        <td>
+          <%= return_item.inventory_unit.variant.sku %>
+        </td>
+        <td>
+          <%= return_item.display_amount %>
+        </td>
+        <td>
+          <span class="pill pill-<%= return_item.inventory_unit.state %>">
+            <%= t(
+              return_item.inventory_unit.state,
+              scope: 'spree.inventory_states'
+            ) %>
+          </span>
+        </td>
+        <td>
+          <%= return_item.exchange_variant.try(:exchange_name) %>
+        </td>
+        <td>
+          <%= item_fields.check_box :resellable, { checked: return_item.resellable } %>
+        </td>
+        <td>
+          <%= item_fields.select :reception_status_event, return_item.potential_reception_transitions, {include_blank: true}, {class: 'add-item custom-select fullwidth'} %>
+        </td>
+        <td>
+          <%= item_fields.select :return_reason_id, @reasons.collect{|r|[r.name, r.id]}, {include_blank: true}, {class: 'custom-select fullwidth'} %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

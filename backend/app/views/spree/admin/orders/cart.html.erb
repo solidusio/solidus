@@ -1,0 +1,27 @@
+<% content_for :page_actions do %>
+    <% if can?(:fire, @order) %>
+      <li><%= event_links %></li>
+    <% end %>
+    <% if can?(:resend, @order) && @order.completed? %>
+      <li><%= button_to t('spree.resend'), resend_admin_order_url(@order), method: :post %></li>
+    <% end %>
+<% end %>
+
+<%= render partial: 'spree/admin/shared/order_tabs', locals: { current: 'Cart' } %>
+
+<% admin_breadcrumb(t('spree.cart')) %>
+
+
+<div data-hook="admin_order_edit_header">
+  <%= render partial: 'spree/shared/error_messages', locals: { target: @order } %>
+</div>
+
+<% if @order.payments.exists? && @order.is_risky? %>
+    <%= render 'spree/admin/orders/risk_analysis', latest_payment: @order.payments.reorder("created_at DESC").first %>
+<% end %>
+
+<div data-hook="admin_order_edit_form">
+  <div id="order-form-wrapper">
+    <%= render partial: 'line_items_edit_form', locals: { order: @order } %>
+  </div>
+</div>

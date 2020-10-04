@@ -1,0 +1,27 @@
+<td colspan='2'>
+  Move {{variant.name}} to
+</td>
+<td colspan='2'>
+<select name="item_stock_location" style='width:100%;'>
+  <option></option>
+  <optgroup label="{{ t "existing_shipments" }}">
+    {{#each shipments}}
+    <option value='shipment:{{this.number}}'>{{this.stock_location.name}}({{this.number}})</option>
+    {{/each}}
+  </optgroup>
+  <optgroup label="{{ t "new_shipment_at_location" }}">
+    {{#each variant.stock_items}}
+      <option value='stock_location:{{this.stock_location_id}}'>{{this.stock_location_name}}&nbsp;({{this.count_on_hand}} on hand)</option>
+    {{/each}}
+  </optgroup>
+  </select>
+</td>
+<td>
+  <form>
+    <input class="quantity" id="item_quantity" type="number" min="1" value="1" max="{{max_quantity}}">
+  </form>
+</td>
+<td class='actions'>
+  <button class="save-split icon_link fa fa-ok no-text with-tip" data-action="save" title="{{ t "actions.save" }}"></button>
+  <button class="cancel-split icon_link fa fa-cancel no-text with-tip" data-action="cancel" title="{{ t "actions.cancel" }}"></button>
+</td>

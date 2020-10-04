@@ -1,0 +1,40 @@
+<!-- solidus_auth_devise replaces this partial with it's own login_nav.
+     But we provide a default implementation below that should work with
+     any typical `rails generate spree:custom_user` auth, if you need something
+     else you can override it like solidus_auth_devise does.
+-->
+<% if try_spree_current_user %>
+  <ul id="login-nav" class="admin-login-nav">
+    <li data-hook="user-account-link">
+      <% if can?(:admin, try_spree_current_user) %>
+        <%= link_to spree.edit_admin_user_path(try_spree_current_user) do %>
+          <i class='fa fa-user'></i>
+          <%= try_spree_current_user.email %>
+        <% end %>
+      <% else %>
+        <a>
+          <i class='fa fa-user'></i>
+          <%= try_spree_current_user.email %>
+        </a>
+      <% end %>
+    </li>
+
+    <% if respond_to? :spree_logout_path %>
+      <li data-hook="user-logout-link">
+        <%= link_to spree_logout_path do %>
+          <i class='fa fa-sign-out'></i>
+          <%= t('spree.logout') %>
+        <% end %>
+      </li>
+    <% end %>
+
+    <% if spree.respond_to? :root_path %>
+      <li data-hook="store-frontend-link">
+        <%= link_to spree.root_path, target: '_blank' do %>
+          <i class='fa fa-external-link'></i>
+          <%= t('spree.back_to_store') %>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>

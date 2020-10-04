@@ -1,0 +1,32 @@
+<div class="js-order-line-item-adjustments <%= "hidden" if order.line_item_adjustments.eligible.none? %>">
+  <%=
+    render "spree/admin/orders/adjustments", {
+      adjustments: order.line_item_adjustments,
+      order: order,
+      title: t('spree.line_item_adjustments')
+    }
+  %>
+</div>
+<div class="js-order-shipment-adjustments <%= "hidden" if order.shipment_adjustments.eligible.none? %>">
+  <%=
+    render "spree/admin/orders/adjustments", {
+      adjustments: order.shipment_adjustments,
+      order: order,
+      title: t('spree.shipment_adjustments')
+    }
+  %>
+</div>
+<div class="js-order-adjustments <%= "hidden" if order.adjustments.eligible.none? %>">
+  <%=
+    render "spree/admin/orders/adjustments", {
+      adjustments: order.adjustments,
+      order: order,
+      title: t('spree.order_adjustments')
+    }
+  %>
+</div>
+
+<fieldset class="no-border-bottom <%= "hidden" if order.line_items.none? %>" id="order-total" data-hook="order_details_total">
+  <legend><%= t('spree.order_total') %></legend>
+  <span class="order-total"><%= order.display_total %></span>
+</fieldset>

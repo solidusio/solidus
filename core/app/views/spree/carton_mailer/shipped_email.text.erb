@@ -1,0 +1,16 @@
+<%= t('spree.shipment_mailer.shipped_email.dear_customer') %>
+
+<%= t('spree.shipment_mailer.shipped_email.instructions') %>
+
+============================================================
+<%= t('spree.shipment_mailer.shipped_email.shipment_summary') %>
+============================================================
+<% @manifest.each do |item| %>
+  <%= item.variant.sku %> <%= item.variant.product.name %> <%= item.variant.options_text %>
+<% end %>
+============================================================
+
+<%= t('spree.shipment_mailer.shipped_email.track_information', tracking: @carton.tracking) if @carton.tracking %>
+<%= t('spree.shipment_mailer.shipped_email.track_link', url: @carton.tracking_url) if @carton.tracking_url %>
+
+<%= t('spree.shipment_mailer.shipped_email.thanks') %>

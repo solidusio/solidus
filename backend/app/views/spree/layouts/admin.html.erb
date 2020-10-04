@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="<%= I18n.locale %>">
+  <head data-hook="admin_inside_head">
+    <%= render 'spree/admin/shared/head' %>
+  </head>
+  <body class="admin <%= "admin-nav-hidden" if cookies[:admin_nav_hidden] == "true" %>">
+    <%= render "spree/admin/shared/navigation" %>
+    <%= render "spree/admin/shared/header" %>
+    <%= render "spree/admin/shared/flash" %>
+    <%= render "spree/admin/shared/spinner" %>
+
+    <div class="content-wrapper <%= @admin_layout.presence %> <%= 'has-sidebar' if content_for?(:sidebar) %> <%= 'has-tabs' if content_for?(:tabs) %>" id="wrapper" data-hook>
+      <div class="content row">
+        <div class="content-main col-<%= content_for?(:sidebar) ? '9' : '12' %>">
+          <%= yield :tabs %>
+          <%= render "spree/admin/shared/table_filter" %>
+          <%= yield %>
+        </div>
+
+        <%= render "spree/admin/shared/sidebar" %>
+      </div>
+    </div>
+
+    <div data-hook="admin_footer_scripts"></div>
+  </body>
+</html>

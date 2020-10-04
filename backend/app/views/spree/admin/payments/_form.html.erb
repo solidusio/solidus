@@ -1,0 +1,38 @@
+<div data-hook="admin_payment_form_fields">
+  <div class="row">
+    <div class="col-4">
+      <div class="field">
+        <%= f.label :amount %>
+        <%= render "spree/admin/shared/number_with_currency", f: f, amount_attr: :amount, currency: @order.currency %>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="field">
+      <label><%= Spree::PaymentMethod.model_name.human %></label>
+      <ul>
+        <% @payment_methods.each do |method| %>
+          <li>
+            <label data-hook="payment_method_field">
+              <%= radio_button_tag 'payment[payment_method_id]', method.id, method == @payment_method, { class: "payment_methods_radios" } %>
+              <%= method.name %>
+            </label>
+          </li>
+        <% end %>
+      </ul>
+
+      <div class="payment-method-settings">
+        <% @payment_methods.each do |method| %>
+
+          <div class="payment-methods" id="payment_method_<%= method.id %>" data-payment-method-id="<%= method.id %>">
+            <% if method.source_required? %>
+              <br />
+              <%= render partial: "spree/admin/payments/source_forms/#{method.partial_name}",
+                         locals: { payment_method: method, previous_cards: method.reusable_sources(@order) } %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

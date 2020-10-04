@@ -1,0 +1,45 @@
+.accordion{
+}
+
+.accordion-item{
+  border-bottom: 1px solid $gray-200;
+
+  &:first-child{
+    border-top: 1px solid $gray-200;
+  }
+
+  > .title{
+    margin-bottom: 0;
+
+    a{
+      color: $body-color;
+      display: block;
+      padding: 16px 32px 16px 0;
+      position: relative;
+
+      @include media-breakpoint-up(lg){ padding: 24px 0; }
+    }
+
+    .isvg-arrow{
+      transition-property: all;
+      transition-duration: 0.3s;
+      position: absolute;
+      right: 0;
+      top: 50%;
+      margin-top: -4px;
+
+      .inherit-fill{ fill: $link-color !important; }
+    }
+
+    a:not(.collapsed) .isvg-arrow{
+      transform: scale(1, -1);
+    }
+  }
+
+  .content{
+    > .row{
+      padding-top: 8px;
+      @include media-breakpoint-up(lg){ padding-top: 0; }
+    }
+  }
+}

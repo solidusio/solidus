@@ -1,0 +1,53 @@
+<%= render 'spree/admin/shared/settings_checkout_tabs' %>
+
+<% admin_breadcrumb(t('spree.settings')) %>
+<% admin_breadcrumb(t('spree.admin.tab.checkout')) %>
+<% admin_breadcrumb(plural_resource_name(Spree::AdjustmentReason)) %>
+
+<% content_for :page_actions do %>
+  <ul class="actions inline-menu">
+    <li>
+      <%= link_to t('spree.new_adjustment_reason'), new_object_url, id: 'admin_new_named_type', class: 'btn btn-primary' %>
+    </li>
+  </ul>
+<% end %>
+
+<% if @adjustment_reasons.any? %>
+  <table class="index" id='listing_adjustment_reasons'>
+    <colgroup>
+      <col style="width: 65%" />
+      <col style="width: 20%" />
+      <col style="width: 15%" />
+    </colgroup>
+    <thead>
+      <tr data-hook="adjustment_reasons_header">
+        <th><%= Spree::AdjustmentReason.human_attribute_name(:name) %></th>
+        <th><%= Spree::AdjustmentReason.human_attribute_name(:state) %></th>
+        <th class="actions"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @adjustment_reasons.each do |adjustment_reason| %>
+        <tr id="<%= spree_dom_id adjustment_reason %>" data-hook="adjustment_reason_row">
+          <td>
+            <%= adjustment_reason.name %>
+          </td>
+          <td>
+            <span class="pill pill-<%= adjustment_reason.active? ? 'active' : 'inactive' %>">
+              <%= t(adjustment_reason.active? ? :active : :inactive, scope: 'spree') %>
+            </span>
+          </td>
+          <td class="actions">
+            <%= link_to_edit adjustment_reason, no_text: true %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div class="no-objects-found">
+    <%= render 'spree/admin/shared/no_objects_found',
+                 resource: Spree::AdjustmentReason,
+                 new_resource_url: new_object_url %>
+  </div>
+<% end %>

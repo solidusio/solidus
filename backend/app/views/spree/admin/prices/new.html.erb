@@ -1,0 +1,11 @@
+<%= render 'spree/admin/shared/product_tabs', current: 'Prices' %>
+<% admin_breadcrumb(link_to(plural_resource_name(Spree::Price), spree.admin_product_prices_url(@product))) %>
+<% admin_breadcrumb(t('spree.actions.new')) %>
+
+<%= form_for [:admin, @product, @product.prices.build] do |f| %>
+  <fieldset data-hook="admin_product_price_new_form">
+    <legend><%= t('.new_price') %></legend>
+    <%= render partial: 'form', locals: { f: f } %>
+    <%= render partial: 'spree/admin/shared/new_resource_links' %>
+  </fieldset>
+<% end %>

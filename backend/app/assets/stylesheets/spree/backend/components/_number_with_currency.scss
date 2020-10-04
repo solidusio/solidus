@@ -1,0 +1,45 @@
+.number-with-currency {
+  $currency-width: 5.5rem;
+
+  &-symbol {
+    min-width: 2.5em;
+
+    /* bootstrap makes this a flexbox item */
+    justify-content: space-around;
+  }
+
+  &-amount {
+    min-width: 5rem;
+    text-align: right;
+  }
+
+  &-addon {
+    width: $currency-width;
+    text-align: left;
+  }
+
+  &-with-select {
+    .number-with-currency-amount {
+      border-right: 0;
+
+      &:focus + .number-with-currency-select {
+        border-left-color: $input-focus-border-color;
+      }
+    }
+
+    .number-with-currency-select {
+      @extend .custom-select;
+
+      cursor: pointer;
+      width: $currency-width;
+
+      @include border-radius($border-radius);
+      @include border-left-radius(0);
+
+      &::-ms-expand {
+        // Required to see full text of selected value on IE11
+        display: none;
+      }
+    }
+  }
+}

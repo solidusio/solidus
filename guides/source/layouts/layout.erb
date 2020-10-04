@@ -1,0 +1,42 @@
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link rel="apple-touch-icon" href='/assets/images/favicon/apple-touch-icon.png'>
+  <link rel="shortcut icon" type="image/x-icon" href='/assets/images/favicon/favicon.ico'>
+
+  <title><%= discover_title %></title>
+
+  <%= javascript_include_tag "modernizr" %>
+  <%= stylesheet_link_tag "site" %>
+</head>
+
+<body>
+<%= partial "partials/header" %>
+
+<div class="site-body container">
+  <main class="site-content">
+    <%= yield %>
+  </main>
+
+  <%= partial "partials/nav" %>
+</div>
+
+<div class="backdrop"></div>
+
+<% if content_for?(:footer) %>
+  <%= yield_content :footer %>
+<% else %>
+  <%= partial "partials/footer" %>
+<% end %>
+
+<%= javascript_include_tag "vendor" %>
+<%= javascript_include_tag "common" %>
+<%= javascript_include_tag "search" %>
+<%= yield_content :scripts %>
+</body>
+</html>

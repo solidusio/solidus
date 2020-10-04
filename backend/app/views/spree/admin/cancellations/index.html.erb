@@ -1,0 +1,57 @@
+<%= render partial: 'spree/admin/shared/order_tabs', locals: {current: 'Cancel Inventory'} %>
+
+<% admin_breadcrumb(t('spree.cancel_inventory')) %>
+
+<table class="stock-contents index">
+  <colgroup>
+    <col style="width: 10%;" />
+    <col style="width: 35%;" />
+    <col style="width: 10%;" />
+    <col style="width: 15%;" />
+    <col style="width: 20%;" />
+    <col style="width: 10%;" />
+  </colgroup>
+
+  <thead>
+    <th colspan="2"><%= Spree::LineItem.human_attribute_name(:description) %></th>
+    <th class="align-center"><%= Spree::OrderCancellations.human_attribute_name(:quantity) %></th>
+    <th><%= Spree::OrderCancellations.human_attribute_name(:state) %></th>
+    <th><%= Spree::OrderCancellations.human_attribute_name(:shipment) %></th>
+    <th class="align-right"><%= Spree::OrderCancellations.human_attribute_name(:cancel) %></th>
+  </thead>
+
+  <tbody>
+    <%= form_for :inventory_units, url: short_ship_admin_order_cancellations_path(@order) do |f| %>
+      <% @inventory_units.each do |inventory_unit| %>
+        <tr class="inventory-unit">
+          <td class="inventory-unit-image">
+            <%= render 'spree/admin/shared/image',
+              image: (inventory_unit.variant.gallery.images.first || inventory_unit.variant.product.gallery.images.first),
+              size: :mini %>
+          </td>
+          <td class="inventory-unit-name">
+            <%= inventory_unit.variant.product.name %><br><%= "(" + variant_options(inventory_unit.variant) + ")" unless inventory_unit.variant.option_values.empty? %>
+            <% if inventory_unit.variant.sku.present? %>
+              <strong><%= Spree::Variant.human_attribute_name(:sku) %>:</strong> <%= inventory_unit.variant.sku %>
+            <% end %>
+          </td>
+          <td class="inventory-unit-quantity align-center">1</td>
+          <td class="inventory-unit-state">
+            <span class="pill pill-<%= inventory_unit.state %>">
+              <%= t(inventory_unit.state, scope: 'spree.inventory_states') %>
+            </span>
+          </td>
+          <td class="inventory-unit-shipment"><%= inventory_unit.shipment.number %></td>
+          <td class="inventory-unit-cancel align-right">
+            <%= check_box_tag 'inventory_unit_ids[]', inventory_unit.id %>
+          </td>
+        </tr>
+      <% end %>
+      <tr class="submit-cancellation">
+        <td colspan="6" class="align-center">
+          <%= f.submit t('spree.cancel_inventory') %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

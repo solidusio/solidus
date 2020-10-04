@@ -1,0 +1,39 @@
+<table>
+  <tr>
+    <td>
+      <p class="lede">
+        <%= t('.dear_customer') %>
+      </p>
+      <p>
+        <%= t('.instructions') %>
+      </p>
+      <p>
+        <%= t('.refund_summary') %>
+      </p>
+      <p>
+        <%= t('.total_refunded', total: @reimbursement.display_total) %>
+      </p>
+      <% if @reimbursement.return_items.exchange_requested.present? %>
+        <p>
+          <%= t('.exchange_summary') %>
+        </p>
+        <table>
+          <% @reimbursement.return_items.exchange_requested.each do |return_item| %>
+            <tr>
+              <td>
+                <%= return_item.variant.sku %> <%= return_item.variant.name %> <%= "(#{return_item.variant.options_text})" if return_item.variant.options_text.present? %>
+              </td>
+              <td>
+                ->
+              </td>
+              <td>
+                <%= return_item.exchange_variant.sku %> <%= return_item.exchange_variant.name %> <%= "(#{return_item.exchange_variant.options_text})" if return_item.exchange_variant.options_text.present? %>
+              </td>
+            </tr>
+          <% end %>
+        </table>
+      <% end %>
+    </td>
+    <td class="expander"></td>
+  </tr>
+</table>

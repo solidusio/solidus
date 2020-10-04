@@ -1,0 +1,9 @@
+<div id="content-header" class="main-header" data-hook>
+  <%= render_admin_breadcrumbs %>
+
+  <% if content_for?(:page_actions) %>
+    <ul class="header-actions page-actions inline-menu" data-hook="toolbar">
+      <%= yield :page_actions %>
+    </ul>
+  <% end %>
+</div>

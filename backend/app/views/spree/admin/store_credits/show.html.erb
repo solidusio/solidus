@@ -1,0 +1,106 @@
+<% admin_breadcrumb(link_to plural_resource_name(Spree::LegacyUser), spree.admin_users_path) %>
+<% admin_breadcrumb(link_to @user.email, edit_admin_user_url(@user)) %>
+<% admin_breadcrumb(link_to Spree::StoreCredit.model_name.human, spree.admin_user_store_credits_path(@user)) %>
+<% admin_breadcrumb(@store_credit.display_amount.to_html) %>
+
+
+<%= render 'spree/admin/users/sidebar' %>
+<%= render 'spree/admin/users/tabs', current: :store_credits %>
+<% content_for :page_actions do %>
+  <% if @store_credit.editable? && can?(:edit, @store_credit) %>
+    <li><%= link_to t('spree.admin.store_credits.change_amount'), edit_amount_admin_user_store_credit_path(@user, @store_credit), class: 'button btn btn-primary' %></li>
+  <% end %>
+  <% if @store_credit.invalidateable? && can?(:invalidate, @store_credit) %>
+    <li><%= link_to t('spree.invalidate'), edit_validity_admin_user_store_credit_path(@user, @store_credit), class: 'button' %></li>
+  <% end %>
+<% end %>
+
+<table id='sc-detail-table'>
+  <colgroup>
+    <col style="width: 20%;" />
+    <col style="width: 65%;" />
+    <col style="width: 15%;" />
+  </colgroup>
+  <tr>
+    <td>
+      <strong><%= t('spree.admin.store_credits.amount_credited') %></strong>
+    </td>
+    <td><%= @store_credit.display_amount.to_html %></td>
+    <td class='actions'></td>
+  </tr>
+  <tr>
+    <td>
+      <strong><%= t('spree.admin.store_credits.created_by') %></strong>
+    </td>
+    <td><%= @store_credit.created_by_email %></td>
+    <td class='actions'></td>
+  </tr>
+  <tr>
+    <td>
+      <strong><%= t('spree.admin.store_credits.credit_type') %></strong>
+    </td>
+    <td><%= @store_credit.category_name %></td>
+    <td class='actions'></td>
+  </tr>
+  <tr class='store-credit-memo-row' data-original-value='<%= @store_credit.memo %>'>
+    <td>
+      <strong><%= t('spree.admin.store_credits.memo') %></strong>
+    </td>
+    <td>
+      <div class='store-credit-memo-text'>
+        <%= @store_credit.memo %>
+      </div>
+
+      <%= form_tag admin_user_store_credit_path(@user, @store_credit), method: :put, remote: true, class: 'store-credit-memo-form', id: 'store_credit_memo_form' do %>
+        <%= text_area_tag 'store_credit[memo]', @store_credit.memo, class: 'fullwidth' %>
+      <% end %>
+    </td>
+    <td class='actions'>
+      <% if can?(:update, @store_credit) %>
+        <%= button_tag '', class: "fa fa-check save-memo no-text with-tip", "data-action": "save", title: t('spree.actions.save'), type: 'submit', form: 'store_credit_memo_form' %>
+        <%= button_tag '', class: "fa fa-cancel cancel-memo no-text with-tip", "data-action": "cancel", title: t('spree.actions.cancel'), type: 'reset', form: 'store_credit_memo_form' %>
+        <%= button_tag '', class: "fa fa-edit edit-memo no-text with-tip", "data-action": "edit", title: t('spree.actions.edit') %>
+      <% end %>
+    </td>
+  </tr>
+</table>
+
+<fieldset class="no-border-bottom">
+  <legend align='center'><%= t('spree.admin.store_credits.history') %></legend>
+  <table>
+    <colgroup>
+      <col style="width: 20%;" />
+      <col style="width: 10%;" />
+      <col style="width: 10%;" />
+      <col style="width: 25%;" />
+      <col style="width: 10%;" />
+      <col style="width: 25%;" />
+    </colgroup>
+    <thead>
+      <tr>
+        <th><%= t('spree.date') %></th>
+        <th><%= Spree::StoreCreditEvent.human_attribute_name(:action) %></th>
+        <th><%= t('spree.admin.store_credits.amount_credited') %></th>
+        <th><%= t('spree.admin.store_credits.created_by') %></th>
+        <th><%= Spree::StoreCreditEvent.human_attribute_name(:user_total_amount) %></th>
+        <th><%= Spree::StoreCreditEvent.human_attribute_name(:amount_remaining) %></th>
+        <th><%= Spree::StoreCreditReason.human_attribute_name(:name) %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @store_credit_events.each do |event| %>
+        <tr>
+          <td data-hook="admin_show_store_credit_date_cell">
+            <%= pretty_time(event.created_at, :short) %>
+          </td>
+          <td><%= store_credit_event_admin_action_name(event) %></td>
+          <td><%= event.display_amount %></td>
+          <td><%= store_credit_event_originator_link(event) %></td>
+          <td><%= event.display_user_total_amount %></td>
+          <td><%= event.display_remaining_amount %></td>
+          <td><%= event.store_credit_reason.try!(:name) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</fieldset>

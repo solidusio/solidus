@@ -1,0 +1,29 @@
+<div class="calculator-fields js-calculator-fields row">
+  <div class="col-6">
+    <div class="field">
+      <% field_name = "#{param_prefix}[calculator_type]" %>
+      <%= label_tag field_name, t('spree.admin.promotions.actions.calculator_label') %>
+      <%= select_tag field_name,
+                    options_from_collection_for_select(calculators, :to_s, :description, promotion_action.calculator.type),
+                    class: 'type-select js-calculator-type custom-select fullwidth' %>
+    </div>
+  </div>
+  <div class="col-6">
+    <div class="settings">
+      <% calculators.each do |calculator_class| %>
+        <% calculator = promotion_action.calculator.class == calculator_class ? promotion_action.calculator : calculator_class.new %>
+        <div class="js-calculator-preferences" data-calculator-type="<%= calculator_class %>">
+          <% type_name = calculator.type.demodulize.underscore %>
+          <% if lookup_context.exists?("fields",
+              ["spree/admin/promotions/calculators/#{type_name}"], true) %>
+            <%= render "spree/admin/promotions/calculators/#{type_name}/fields",
+              calculator: calculator, prefix: param_prefix %>
+          <% else %>
+            <%= render "spree/admin/promotions/calculators/default_fields",
+              calculator: calculator, prefix: param_prefix %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

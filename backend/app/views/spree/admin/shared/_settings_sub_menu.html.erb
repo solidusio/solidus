@@ -1,0 +1,26 @@
+<ul class="admin-subnav" data-hook="admin_settings_sub_tabs">
+  <% if can?(:admin, Spree::Store) %>
+    <%= tab :stores, label: :stores, url: spree.admin_stores_path %>
+  <% end %>
+
+  <% if can?(:read, Spree::PaymentMethod) %>
+    <%= tab :payments, url: spree.admin_payment_methods_path %>
+  <% end %>
+
+  <% if can?(:read, Spree::TaxCategory) || can?(:read, Spree::TaxRate) %>
+    <%= tab :taxes, url: spree.admin_tax_categories_path, match_path: %r(tax_categories|tax_rates) %>
+  <% end %>
+
+  <% if can?(:read, Spree::RefundReason) || can?(:read, Spree::ReimbursementType) ||
+    can?(:show, Spree::ReturnReason) || can?(:read, Spree::AdjustmentReason) %>
+    <%= tab :checkout, url: spree.admin_refund_reasons_path, match_path: %r(refund_reasons|reimbursement_types|return_reasons|adjustment_reasons|store_credit_reasons) %>
+  <% end %>
+
+  <% if can?(:read, Spree::ShippingMethod) || can?(:read, Spree::ShippingCategory) || can?(:read, Spree::StockLocation) %>
+    <%= tab :shipping, url: spree.admin_shipping_methods_path, match_path: %r(shipping_methods|shipping_categories|stock_locations) %>
+  <% end %>
+
+  <% if can?(:read, Spree::Zone) %>
+    <%= tab :zones, url: spree.admin_zones_path %>
+  <% end %>
+</ul>

@@ -1,0 +1,6753 @@
+openapi: 3.0.3
+info:
+  title: Solidus API
+  version: "1.0"
+  description: The standard Solidus API.
+  contact:
+    name: Solidus
+    url: 'https://solidus.io'
+  license:
+    name: ''
+x-stoplight:
+  docs:
+    showModels: false
+paths:
+  /products:
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/pagination-data'
+                  - type: object
+                    properties:
+                      products:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/product'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+      summary: List products
+      description: Returns a list of available products.
+      operationId: list-products
+      tags:
+        - Products
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/per_page'
+      security:
+        - api-key: []
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/product'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Create product
+      description: Creates a product.
+      operationId: create-product
+      tags:
+        - Products
+      security:
+        - api-key: []
+      requestBody:
+        $ref: '#/components/requestBodies/product-input'
+  /orders/mine:
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/pagination-data'
+                  - type: object
+                    properties:
+                      orders:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/order-small'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+      summary: List user's orders
+      description: Lists the orders that belong to the current user.
+      operationId: list-user-orders
+      tags:
+        - Orders
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/per_page'
+      security:
+        - api-key: []
+  '/orders/{number}':
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/order-big'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+      summary: Get order
+      description: Retrieves an order.
+      operationId: get-order
+      tags:
+        - Orders
+      security:
+        - api-key: []
+        - order-token: []
+    parameters:
+      - name: number
+        in: path
+        required: true
+        schema:
+          type: string
+    patch:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/order-big'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Update order
+      description: Updates an order.
+      operationId: update-order
+      tags:
+        - Orders
+      security:
+        - api-key: []
+        - order-token: []
+      requestBody:
+        $ref: '#/components/requestBodies/order-input'
+  /orders/current:
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/order-big'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+      summary: Get current order
+      description: Retrieves the user's current order.
+      operationId: get-current-order
+      tags:
+        - Orders
+      security:
+        - api-key: []
+        - order-token: []
+  /countries:
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/pagination-data'
+                  - type: object
+                    properties:
+                      countries:
+                        items:
+                          $ref: '#/components/schemas/country'
+                        oneOf:
+                          - type: string
+                          - type: array
+                            items: {}
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+      summary: List countries
+      description: Lists all available countries.
+      operationId: list-countries
+      tags:
+        - Countries
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/per_page'
+  '/countries/{id}':
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/country'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+      summary: Get country
+      description: Retrieves a country.
+      operationId: get-country
+      tags:
+        - Countries
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+  '/countries/{country_id}/states':
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  states:
+                    items:
+                      $ref: '#/components/schemas/state'
+                    oneOf:
+                      - type: string
+                      - type: array
+                        items: {}
+                  states_required:
+                    type: boolean
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+      summary: List country states
+      operationId: list-country-states
+      tags:
+        - States
+      description: Retrieves a country's states.
+    parameters:
+      - name: country_id
+        in: path
+        required: true
+        schema:
+          type: string
+  '/countries/{country_id}/states/{id}':
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/state'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+      summary: Get country state
+      operationId: get-country-state
+      tags:
+        - States
+      description: Retrieves a country's state.
+    parameters:
+      - name: country_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+  '/products/{id}':
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/product'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+      summary: Get product
+      description: Retrieves a product.
+      operationId: get-product
+      tags:
+        - Products
+      security:
+        - api-key: []
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+    delete:
+      responses:
+        '204':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/product'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/delete-restriction'
+      summary: Delete product
+      description: Deletes a product.
+      operationId: delete-product
+      tags:
+        - Products
+      security:
+        - api-key: []
+    patch:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/product'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Update product
+      description: Updates a product.
+      operationId: update-product
+      tags:
+        - Products
+      security:
+        - api-key: []
+      requestBody:
+        $ref: '#/components/requestBodies/product-input'
+  '/products/{product_id}/images':
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  images:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/image'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+      summary: List product images
+      description: Retrieves a product's images.
+      operationId: list-product-images
+      tags:
+        - Images
+      security:
+        - api-key: []
+    parameters:
+      - name: product_id
+        in: path
+        required: true
+        schema:
+          type: string
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/image'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Create product image
+      description: Creates an image for a product.
+      operationId: create-product-image
+      tags:
+        - Images
+      security:
+        - api-key: []
+      requestBody:
+        $ref: '#/components/requestBodies/image-input'
+  '/products/{product_id}/variants':
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/pagination-data'
+                  - type: object
+                    properties:
+                      variants:
+                        type: array
+                        items: {}
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+      summary: List product variants
+      description: Retrieves a product's variants.
+      operationId: list-product-variants
+      tags:
+        - Variants
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/per_page'
+      security:
+        - api-key: []
+    parameters:
+      - name: product_id
+        in: path
+        required: true
+        schema:
+          type: string
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/variant'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Create product variant
+      description: Creates a variant for a product.
+      operationId: create-product-variant
+      tags:
+        - Variants
+      security:
+        - api-key: []
+      requestBody:
+        $ref: '#/components/requestBodies/variant-input'
+  '/products/{product_id}/images/{id}':
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/image'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+      summary: Get product image
+      description: Retrieves a product's image.
+      operationId: get-product-image
+      tags:
+        - Images
+      security:
+        - api-key: []
+    parameters:
+      - name: product_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+    delete:
+      responses:
+        '204':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/image'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/delete-restriction'
+      summary: Delete product image
+      description: Deletes a product's image.
+      operationId: delete-product-image
+      tags:
+        - Images
+      security:
+        - api-key: []
+    patch:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/image'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Update product image
+      description: Updates a product's image.
+      operationId: update-product-image
+      tags:
+        - Images
+      security:
+        - api-key: []
+      requestBody:
+        $ref: '#/components/requestBodies/image-input'
+  '/products/{product_id}/variants/{id}':
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/variant'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+      summary: Get product variant
+      description: Retrieves a product's variant.
+      operationId: get-product-variant
+      tags:
+        - Variants
+      security:
+        - api-key: []
+    parameters:
+      - name: product_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+    delete:
+      responses:
+        '204':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/variant'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/delete-restriction'
+      summary: Delete product variant
+      description: Deletes a product's variant.
+      operationId: delete-product-variant
+      tags:
+        - Variants
+      security:
+        - api-key: []
+    put:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/variant'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Update product variant
+      description: Updates a product's variant.
+      operationId: update-product-variant
+      tags:
+        - Variants
+      security:
+        - api-key: []
+      requestBody:
+        $ref: '#/components/requestBodies/variant-input'
+  /states:
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  states:
+                    $ref: '#/components/schemas/state'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+      summary: List states
+      operationId: list-states
+      tags:
+        - States
+      description: Lists all states in the system.
+  '/states/{id}':
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/state'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+      summary: Get state
+      description: Retrieves a state.
+      operationId: get-state
+      tags:
+        - States
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+  /variants:
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/pagination-data'
+                  - type: object
+                    properties:
+                      variants:
+                        $ref: '#/components/schemas/variant'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+      summary: List variants
+      description: List variants.
+      operationId: list-variants
+      tags:
+        - Variants
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/per_page'
+      security:
+        - api-key: []
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/variant'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Create variant
+      description: Creates a variant.
+      operationId: create-variant
+      tags:
+        - Variants
+      security:
+        - api-key: []
+      requestBody:
+        $ref: '#/components/requestBodies/variant-input'
+  '/variants/{id}':
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/variant'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+      summary: Get variant
+      description: Retrieves a variant.
+      operationId: get-variant
+      tags:
+        - Variants
+      security:
+        - api-key: []
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+    delete:
+      responses:
+        '204':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/variant'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/delete-restriction'
+      summary: Delete variant
+      description: Deletes a variant.
+      operationId: delete-variant
+      tags:
+        - Variants
+      security:
+        - api-key: []
+    patch:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/variant'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Update variant
+      description: Updates a variant.
+      operationId: update-variant
+      tags:
+        - Variants
+      security:
+        - api-key: []
+      requestBody:
+        $ref: '#/components/requestBodies/variant-input'
+  '/variants/{variant_id}/images':
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  images:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/image'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+      summary: List variant images
+      description: Lists a variant's images.
+      operationId: list-variant-images
+      tags:
+        - Images
+      security:
+        - api-key: []
+    parameters:
+      - name: variant_id
+        in: path
+        required: true
+        schema:
+          type: string
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/image'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Create variant image
+      description: Creates an image for a variant.
+      operationId: create-variant-image
+      tags:
+        - Images
+      security:
+        - api-key: []
+      requestBody:
+        $ref: '#/components/requestBodies/image-input'
+  '/variants/{variant_id}/images/{id}':
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/image'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+      summary: Get variant image
+      description: Retrieves a variant's image.
+      operationId: get-variant-image
+      tags:
+        - Images
+      security:
+        - api-key: []
+    parameters:
+      - name: variant_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+    delete:
+      responses:
+        '204':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/image'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/delete-restriction'
+      summary: Delete variant image
+      description: Deletes a variant's image.
+      operationId: delete-variant-image
+      tags:
+        - Images
+      security:
+        - api-key: []
+    patch:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/image'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Update variant image
+      description: Updates a variant's image.
+      operationId: update-variant-image
+      tags:
+        - Images
+      security:
+        - api-key: []
+      requestBody:
+        $ref: '#/components/requestBodies/image-input'
+  '/shipments/{shipment_number}/estimated_rates':
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  shipping_rates:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/shipping-rate'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+      summary: List shipment estimated rates
+      description: Lists a shipment's estimated rates.
+      operationId: list-shipment-estimated-rates
+      tags:
+        - Shipments
+      security:
+        - api-key: []
+        - order-token: []
+    parameters:
+      - name: shipment_number
+        in: path
+        required: true
+        schema:
+          type: string
+  /shipments/mine:
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/pagination-data'
+                  - type: object
+                    properties:
+                      shipments:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/shipment'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+      summary: List user's shipments
+      description: Lists the current user's shipments.
+      operationId: list-user-shipments
+      tags:
+        - Shipments
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/per_page'
+      security:
+        - api-key: []
+  '/users/{id}':
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+      summary: Get user
+      description: Retrieves a user.
+      operationId: get-user
+      tags:
+        - Users
+      security:
+        - api-key: []
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+    delete:
+      responses:
+        '204':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/delete-restriction'
+      summary: Delete user
+      description: Deletes a user.
+      operationId: delete-user
+      tags:
+        - Users
+      security:
+        - api-key: []
+    patch:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Update user
+      description: Updates a user.
+      operationId: update-user
+      tags:
+        - Users
+      security:
+        - api-key: []
+      requestBody:
+        $ref: '#/components/requestBodies/user-input'
+  '/users/{user_id}/address_book':
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/address-book'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+      summary: Get user address book
+      operationId: get-user-address-book
+      description: Retrieves a user's address book.
+      tags:
+        - Address books
+      security:
+        - api-key: []
+    parameters:
+      - name: user_id
+        in: path
+        required: true
+        schema:
+          type: string
+    delete:
+      responses:
+        '204':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/address-book'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/delete-restriction'
+      summary: Remove address from user address book
+      description: >-
+        Removes an address from a user's address book.
+
+
+        **Note:** Rather than delete a `Spree::UserAddress` record this action
+        set its `archived` attribute to `true`.
+      operationId: remove-address-from-user-address-book
+      tags:
+        - Address books
+      parameters:
+        - in: query
+          name: address_id
+          schema:
+            type: integer
+      security:
+        - api-key: []
+    patch:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/address-book'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Update user address book
+      operationId: update-user-address-book
+      tags:
+        - Address books
+      description: >-
+        Updates a user's address book.
+
+
+        **Note:** if the passed `id` matches an existing `address` a new
+        `Spree::Address` record will be created and the matched `address`
+        `archived` on `Spree::UserAddress`. For a similar logic, if the passed
+        `id` matches an existing `address` which is in `archived` state, the
+        `Spree::UserAddress#archived` record will be restored to `false`.
+
+        See `user_address_book.rb` for further information.
+      security:
+        - api-key: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/address-book-input'
+  '/users/{user_id}/credit_cards':
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/pagination-data'
+                  - type: object
+                    properties:
+                      credit_cards:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/credit-card'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+      summary: List user credit cards
+      description: Lists a user's credit cards.
+      operationId: list-user-credit-cards
+      tags:
+        - Credit cards
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/per_page'
+      security:
+        - api-key: []
+    parameters:
+      - name: user_id
+        in: path
+        required: true
+        schema:
+          type: string
+  '/checkouts/{checkout_id}/addresses/{id}':
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/address'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+      summary: Get checkout address
+      description: Retrieves a checkout's address.
+      operationId: get-checkout-address
+      tags:
+        - Addresses
+      security:
+        - api-key: []
+        - order-token: []
+    parameters:
+      - name: checkout_id
+        in: path
+        required: true
+        description: The order number
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+    patch:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/address'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Update checkout address
+      description: Updates a checkout's address.
+      operationId: update-checkout-address
+      tags:
+        - Addresses
+      security:
+        - api-key: []
+        - order-token: []
+      requestBody:
+        $ref: '#/components/requestBodies/address-input'
+  '/checkouts/{checkout_id}/payments':
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/pagination-data'
+                  - type: object
+                    properties:
+                      payments:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/payment'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+      summary: List checkout payments
+      description: Lists a checkout's payments.
+      operationId: list-checkout-payments
+      tags:
+        - Payments
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/per_page'
+      security:
+        - api-key: []
+    parameters:
+      - name: checkout_id
+        in: path
+        required: true
+        description: The order number
+        schema:
+          type: string
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/payment'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Create checkout payment
+      description: Creates a new payment for a checkout.
+      operationId: create-checkout-payment
+      tags:
+        - Payments
+      security:
+        - api-key: []
+        - order-token: []
+      requestBody:
+        $ref: '#/components/requestBodies/payment-input'
+  '/checkouts/{checkout_id}/payments/{id}':
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/payment'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+      summary: Get checkout payment
+      description: Gets a checkout's payment.
+      operationId: get-checkout-payment
+      tags:
+        - Payments
+      security:
+        - api-key: []
+        - order-token: []
+    parameters:
+      - name: checkout_id
+        in: path
+        required: true
+        description: The order number
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+    patch:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/payment'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Update checkout payment
+      description: Updates a checkout's payment.
+      operationId: update-checkout-payment
+      tags:
+        - Payments
+      security:
+        - api-key: []
+        - order-token: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                amount:
+                  type: number
+                payment_method_id:
+                  type: integer
+                payment_method:
+                  $ref: '#/components/schemas/payment-method'
+  '/checkouts/{checkout_id}/return_authorizations':
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/pagination-data'
+                  - type: object
+                    properties:
+                      return_authorizations:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/return-authorization'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+      summary: List checkout return authorizations
+      description: Lists a checkout's return authorizations.
+      operationId: list-checkout-return-authorization
+      tags:
+        - Return authorizations
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/per_page'
+      security:
+        - api-key: []
+    parameters:
+      - name: checkout_id
+        in: path
+        required: true
+        description: The order number
+        schema:
+          type: string
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/return-authorization'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Create checkout return authorization
+      description: Creates a return authorization for a checkout.
+      operationId: create-checkout-return-authorization
+      tags:
+        - Return authorizations
+      security:
+        - api-key: []
+      requestBody:
+        $ref: '#/components/requestBodies/return-authorization-input'
+  '/checkouts/{checkout_id}/return_authorizations/{id}':
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+      summary: Get checkout return authorization
+      description: Gets a checkout's return authorization.
+      operationId: get-checkout-return-authorization
+      tags:
+        - Return authorizations
+      security:
+        - api-key: []
+    parameters:
+      - name: checkout_id
+        in: path
+        required: true
+        description: The order number
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+    delete:
+      responses:
+        '204':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/return-authorization'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/delete-restriction'
+      summary: Delete checkout return authorization
+      description: Deletes a checkout's return authorization.
+      operationId: delete-checkout-return-authorization
+      tags:
+        - Return authorizations
+      security:
+        - api-key: []
+    patch:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/return-authorization'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Update checkout return authorization
+      description: Updates a checkout's return authorization.
+      operationId: update-checkout-return-authorization
+      tags:
+        - Return authorizations
+      security:
+        - api-key: []
+      requestBody:
+        $ref: '#/components/requestBodies/return-authorization-input'
+  '/orders/{order_id}/customer_returns/{id}':
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+      summary: Get order customer return
+      description: Gets an orders customer return.
+      operationId: get-order-customer-return
+      tags:
+        - Customer returns
+      security:
+        - api-key: []
+    parameters:
+      - name: order_id
+        in: path
+        required: true
+        description: The order number
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+    put:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/customer-return'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Update order customer return
+      description: "Updates an orders customer return."
+      operationId: update-order-customer-return
+      tags:
+        - Customer returns
+      requestBody:
+        $ref: '#/components/requestBodies/customer-return-input'
+      security:
+        - api-key: []
+  /orders:
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/pagination-data'
+                  - type: object
+                    properties:
+                      orders:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/order-small'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+      summary: List orders
+      description: Lists all orders.
+      operationId: list-orders
+      tags:
+        - Orders
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/per_page'
+      security:
+        - api-key: []
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/order-big'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Create order
+      description: Creates a new order.
+      operationId: create-order
+      tags:
+        - Orders
+      security:
+        - api-key: []
+      requestBody:
+        $ref: '#/components/requestBodies/order-input'
+  '/orders/{order_number}/addresses/{id}':
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/address'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+      summary: Get order address
+      description: Retrieves an order's address.
+      operationId: get-order-address
+      tags:
+        - Addresses
+      security:
+        - api-key: []
+        - order-token: []
+    parameters:
+      - name: order_number
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+    patch:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/address'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Update order address
+      description: Updates an order's address.
+      operationId: update-order-address
+      tags:
+        - Addresses
+      security:
+        - api-key: []
+        - order-token: []
+      requestBody:
+        $ref: '#/components/requestBodies/address-input'
+  '/orders/{order_number}/payments':
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/pagination-data'
+                  - type: object
+                    properties:
+                      payments:
+                        items:
+                          $ref: '#/components/schemas/payment'
+                        oneOf:
+                          - type: string
+                          - type: array
+                            items: {}
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+      summary: List order payments
+      description: Lists an order's payments.
+      operationId: list-order-payments
+      tags:
+        - Payments
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/per_page'
+      security:
+        - api-key: []
+        - order-token: []
+    parameters:
+      - name: order_number
+        in: path
+        required: true
+        schema:
+          type: string
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/payment'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Create order payment
+      description: Creates a payment for an order.
+      operationId: create-order-payment
+      tags:
+        - Payments
+      security:
+        - api-key: []
+        - order-token: []
+      requestBody:
+        $ref: '#/components/requestBodies/payment-input'
+  '/orders/{order_number}/payments/{id}':
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+      summary: Get order payment
+      description: Retrieves an orer's payment.
+      operationId: get-order-payment
+      tags:
+        - Payments
+      security:
+        - api-key: []
+        - order-token: []
+    parameters:
+      - name: order_number
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+    patch:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/payment'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Update order payment
+      description: Updates an order's payment.
+      operationId: update-order-payment
+      tags:
+        - Payments
+      security:
+        - api-key: []
+        - order-token: []
+      requestBody:
+        $ref: '#/components/requestBodies/payment-input'
+  '/orders/{order_number}/return_authorizations':
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/pagination-data'
+                  - type: object
+                    properties:
+                      return_authorizations:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/return-authorization'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+      summary: List order return authorizations
+      description: Lists an order's return authorizations.
+      operationId: list-order-return-authorizations
+      tags:
+        - Return authorizations
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/per_page'
+      security:
+        - api-key: []
+    parameters:
+      - name: order_number
+        in: path
+        required: true
+        schema:
+          type: string
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/return-authorization'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Create order return authorization
+      description: Creates a return authorization for an order.
+      operationId: create-order-return-authorization
+      tags:
+        - Return authorizations
+      security:
+        - api-key: []
+      requestBody:
+        $ref: '#/components/requestBodies/return-authorization-input'
+  '/orders/{order_number}/return_authorizations/{id}':
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/return-authorization'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+      summary: Get order return authorization
+      description: Retrieves an order's return authorization.
+      operationId: get-order-return-authorization
+      tags:
+        - Return authorizations
+      security:
+        - api-key: []
+    parameters:
+      - name: order_number
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+    delete:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/return-authorization'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/delete-restriction'
+      summary: Delete order return authorization
+      description: Deletes an order's return authorization.
+      operationId: delete-order-return-authorization
+      tags:
+        - Return authorizations
+      security:
+        - api-key: []
+    patch:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/return-authorization'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Update order return authorization
+      description: Updates an order's return authorization.
+      operationId: update-order-return-authorization
+      tags:
+        - Return authorizations
+      security:
+        - api-key: []
+      requestBody:
+        $ref: '#/components/requestBodies/return-authorization-input'
+  /config:
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  default_country_id:
+                    type: integer
+                  default_country_iso:
+                    type: string
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+      summary: Get system configuration
+      description: Retrieves the system's configuration.
+      operationId: get-config
+      tags:
+        - Configuration
+      security:
+        - api-key: []
+  /config/money:
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  symbol:
+                    type: string
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+      summary: Get money configuration
+      description: Gets the system's money configuration.
+      operationId: get-money-config
+      tags:
+        - Configuration
+      security:
+        - api-key: []
+  /option_types:
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/option-type'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+      summary: List option types
+      description: Lists the system's option types.
+      operationId: list-option-types
+      tags:
+        - Option types
+      security:
+        - api-key: []
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/option-type'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Create option type
+      description: Creates an option type.
+      operationId: create-option-type
+      tags:
+        - Option types
+      security:
+        - api-key: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/option-type-input'
+  '/option_types/{id}':
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/option-type'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+      summary: Get option type
+      description: Retrieve an option type.
+      operationId: get-option-type
+      tags:
+        - Option types
+      security:
+        - api-key: []
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/option-type'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Delete option type
+      description: Deletes an option type.
+      operationId: delete-option-type
+      tags:
+        - Option types
+      security:
+        - api-key: []
+    patch:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/option-type'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Update option type
+      description: Updates an option type.
+      operationId: update-option-type
+      tags:
+        - Option types
+      security:
+        - api-key: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/option-type'
+  /option_values:
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/option-value'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+      summary: List option values
+      description: Lists the system's option values.
+      operationId: list-option-values
+      tags:
+        - Option values
+      security:
+        - api-key: []
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/option-value'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Create option value
+      description: Creates an option value.
+      operationId: create-option-value
+      tags:
+        - Option values
+      security:
+        - api-key: []
+      requestBody:
+        $ref: '#/components/requestBodies/option-value-input'
+  '/option_values/{id}':
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/option-value'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+      summary: Get option value
+      description: Retrieves an option value.
+      operationId: get-option-value
+      tags:
+        - Option values
+      security:
+        - api-key: []
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+    delete:
+      responses:
+        '204':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/option-value'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/delete-restriction'
+      description: Deletes an option value.
+      summary: Delete option value
+      operationId: delete-option-value
+      tags:
+        - Option values
+      security:
+        - api-key: []
+    patch:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/option-value'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Update option value
+      description: Updates an option value.
+      operationId: update-option-value
+      tags:
+        - Option values
+      security:
+        - api-key: []
+      requestBody:
+        $ref: '#/components/requestBodies/option-value-input'
+  '/option_types/{option_type_id}/option_values':
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/option-value'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+      summary: List option type values
+      description: Retrieves an option type's option values.
+      operationId: list-option-type-values
+      tags:
+        - Option values
+      security:
+        - api-key: []
+    parameters:
+      - name: option_type_id
+        in: path
+        required: true
+        schema:
+          type: string
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/option-value'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Create option type value
+      description: Creates an option value for a type.
+      operationId: create-option-type-value
+      tags:
+        - Option values
+      security:
+        - api-key: []
+      requestBody:
+        $ref: '#/components/requestBodies/option-value-input'
+  '/option_types/{option_type_id}/option_values/{id}':
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+      summary: Get option type value
+      description: Retrieves an option type's value.
+      operationId: get-option-type-value
+      tags:
+        - Option values
+      security:
+        - api-key: []
+    parameters:
+      - name: option_type_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+    delete:
+      responses:
+        '204':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/option-value'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/delete-restriction'
+      summary: Delete option type value
+      description: Deletes an option type's value.
+      operationId: delete-option-type-value
+      tags:
+        - Option values
+      security:
+        - api-key: []
+    patch:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/option-value'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Update option type value
+      description: Updates an option type's value.
+      operationId: update-option-type-value
+      tags:
+        - Option values
+      security:
+        - api-key: []
+      requestBody:
+        $ref: '#/components/requestBodies/option-value-input'
+  '/products/{product_id}/product_properties':
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/pagination-data'
+                  - type: object
+                    properties:
+                      product_properties:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/product-property'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+      summary: List product properties
+      description: Lists a product's properties.
+      operationId: list-product-properties
+      tags:
+        - Product properties
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/per_page'
+      security:
+        - api-key: []
+    parameters:
+      - name: product_id
+        in: path
+        required: true
+        schema:
+          type: string
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/product-property'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Create product property
+      description: Creates a product property.
+      operationId: create-product-property
+      tags:
+        - Product properties
+      security:
+        - api-key: []
+      requestBody:
+        $ref: '#/components/requestBodies/product-property-input'
+  '/products/{product_id}/product_properties/{id}':
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/product-property'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+      summary: Get product property
+      description: Retrieves a product's property.
+      operationId: get-product-property
+      tags:
+        - Product properties
+      security:
+        - api-key: []
+    parameters:
+      - name: product_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+    delete:
+      responses:
+        '204':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/product-property'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/delete-restriction'
+      summary: Delete product property
+      description: Deletes a product's property.
+      operationId: delete-product-property
+      tags:
+        - Product properties
+      security:
+        - api-key: []
+    patch:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/product-property'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Update product property
+      description: Updates a product's property.
+      operationId: update-product-property
+      tags:
+        - Product properties
+      security:
+        - api-key: []
+      requestBody:
+        $ref: '#/components/requestBodies/product-property-input'
+  /properties:
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/pagination-data'
+                  - type: object
+                    properties:
+                      properties:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/property'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+      summary: List properties
+      description: Lists the defined properties.
+      operationId: list-properties
+      tags:
+        - Properties
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/per_page'
+      security:
+        - api-key: []
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/property'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Create property
+      description: Creates a property.
+      operationId: create-property
+      tags:
+        - Properties
+      security:
+        - api-key: []
+      requestBody:
+        $ref: '#/components/requestBodies/property-input'
+  '/properties/{id}':
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/property'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+      summary: Get property
+      description: Retrieves a property.
+      operationId: get-property
+      tags:
+        - Properties
+      security:
+        - api-key: []
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+    delete:
+      responses:
+        '204':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/property'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/delete-restriction'
+      summary: Delete property
+      description: Deletes a property.
+      operationId: delete-property
+      tags:
+        - Properties
+      security:
+        - api-key: []
+    patch:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/property'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Update property
+      description: Updates a property.
+      operationId: update-property
+      tags:
+        - Properties
+      security:
+        - api-key: []
+      requestBody:
+        $ref: '#/components/requestBodies/property-input'
+  '/inventory_units/{id}':
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+      summary: Get inventory unit
+      description: Retrieves an inventory unit.
+      operationId: get-inventory-unit
+      tags:
+        - Inventory units
+      security:
+        - api-key: []
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+    patch:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inventory-unit'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Update inventory unit
+      description: Updates an inventory unit.
+      operationId: update-inventory-unit
+      tags:
+        - Inventory units
+      security:
+        - api-key: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/inventory-unit-input'
+  /stock_locations:
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/pagination-data'
+                  - type: object
+                    properties:
+                      stock_locations:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/stock-location'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+      summary: List stock location
+      description: Lists the stock locations.
+      operationId: list-stock-locations
+      tags:
+        - Stock locations
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/per_page'
+      security:
+        - api-key: []
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/stock-location'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Create stock location
+      description: Creates a stock location.
+      operationId: create-stock-location
+      tags:
+        - Stock locations
+      security:
+        - api-key: []
+      requestBody:
+        $ref: '#/components/requestBodies/stock-location-input'
+  '/stock_locations/{id}':
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+      summary: Get stock location
+      description: Get a stock location.
+      operationId: get-stock-location
+      tags:
+        - Stock locations
+      security:
+        - api-key: []
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+    delete:
+      responses:
+        '204':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/stock-location'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/delete-restriction'
+      summary: Delete stock location
+      description: Deletes a stock location.
+      operationId: delete-stock-location
+      tags:
+        - Stock locations
+      security:
+        - api-key: []
+    patch:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/stock-location'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Update stock location
+      description: Updates a stock location.
+      operationId: update-stock-location
+      tags:
+        - Stock locations
+      security:
+        - api-key: []
+      requestBody:
+        $ref: '#/components/requestBodies/stock-location-input'
+  '/stock_locations/{stock_location_id}/stock_items':
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/pagination-data'
+                  - type: object
+                    properties:
+                      stock_items:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/stock-item'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+      summary: List stock location items
+      description: Lists a stock location's items.
+      operationId: list-stock-location-items
+      tags:
+        - Stock items
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/per_page'
+      security:
+        - api-key: []
+    parameters:
+      - name: stock_location_id
+        in: path
+        required: true
+        schema:
+          type: string
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/stock-item'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Create stock location item
+      description: Creates a stock item for a stock location.
+      operationId: create-stock-location-item
+      tags:
+        - Stock items
+      security:
+        - api-key: []
+      requestBody:
+        $ref: '#/components/requestBodies/stock-item-input'
+  '/stock_locations/{stock_location_id}/stock_items/{id}':
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+      summary: Get stock location item
+      description: Retrieves a stock location's item.
+      operationId: get-stock-location-item
+      tags:
+        - Stock items
+      security:
+        - api-key: []
+    parameters:
+      - name: stock_location_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+    delete:
+      responses:
+        '204':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/stock-item'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/delete-restriction'
+      summary: Delete stock location item
+      description: Deletes a stock location's item.
+      operationId: delete-stock-location-item
+      tags:
+        - Stock items
+      security:
+        - api-key: []
+    patch:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/stock-item'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Update stock location item
+      description: Updates a stock location's item.
+      operationId: update-stock-location-item
+      tags:
+        - Stock items
+      security:
+        - api-key: []
+      requestBody:
+        $ref: '#/components/requestBodies/stock-item-input'
+  '/stock_locations/{stock_location_id}/stock_movements':
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/pagination-data'
+                  - type: object
+                    properties:
+                      stock_movements:
+                        $ref: '#/components/schemas/stock-movement'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+      summary: List stock location movements
+      description: Lists a stock location's movements.
+      operationId: list-stock-location-movements
+      tags:
+        - Stock movements
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/per_page'
+      security:
+        - api-key: []
+    parameters:
+      - name: stock_location_id
+        in: path
+        required: true
+        schema:
+          type: string
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/stock-movement'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Create stock location movement
+      description: Creates a stock movement for a stock location.
+      operationId: create-stock-location-movement
+      tags:
+        - Stock movements
+      security:
+        - api-key: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/stock-movement-input'
+  '/stock_locations/{stock_location_id}/stock_movements/{id}':
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+      summary: Get stock location movement
+      description: Retrieves a stock location's movement.
+      operationId: get-stock-location-movement
+      tags:
+        - Stock movements
+      security:
+        - api-key: []
+    parameters:
+      - name: stock_location_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+  /stores:
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  stores:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/store'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+      summary: List stores
+      description: Lists all stores in the system.
+      operationId: list-stores
+      tags:
+        - Stores
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/per_page'
+      security:
+        - api-key: []
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/store'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Create store
+      description: Creates a store.
+      operationId: create-store
+      tags:
+        - Stores
+      security:
+        - api-key: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              allOf:
+                - type: object
+                  properties:
+                    code:
+                      type: string
+                - $ref: '#/components/schemas/store-input'
+  '/stores/{id}':
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+      summary: Get store
+      description: Retrieves a store.
+      operationId: get-store
+      tags:
+        - Stores
+      security:
+        - api-key: []
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+    delete:
+      responses:
+        '204':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/store'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/delete-restriction'
+      summary: Delete store
+      description: Deletes a store.
+      operationId: delete-store
+      tags:
+        - Stores
+      security:
+        - api-key: []
+    patch:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/store'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Update store
+      description: Updates a store.
+      operationId: update-store
+      tags:
+        - Stores
+      security:
+        - api-key: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/store-input'
+  /taxonomies:
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/pagination-data'
+                  - type: object
+                    properties:
+                      taxonomies:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/taxonomy'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+      summary: List taxonomies
+      description: Lists the taxonomies.
+      operationId: list-taxonomies
+      tags:
+        - Taxonomies
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/per_page'
+      security:
+        - api-key: []
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/taxonomy'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Create taxonomy
+      description: Creates a taxonomy.
+      operationId: create-taxonomy
+      tags:
+        - Taxonomies
+      security:
+        - api-key: []
+      requestBody:
+        $ref: '#/components/requestBodies/taxonomy-input'
+  '/taxonomies/{id}':
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+      summary: Get taxonomy
+      description: Retrieves a taxonomy.
+      operationId: get-taxonomy
+      tags:
+        - Taxonomies
+      security:
+        - api-key: []
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+    delete:
+      responses:
+        '204':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/taxonomy'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/delete-restriction'
+      summary: Delete taxonomy
+      description: Deletes a taxonomy.
+      operationId: delete-taxonomy
+      tags:
+        - Taxonomies
+      security:
+        - api-key: []
+    patch:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/taxonomy'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Update taxonomy
+      description: Updates a taxonomy.
+      operationId: update-taxonomy
+      tags:
+        - Taxonomies
+      security:
+        - api-key: []
+      requestBody:
+        $ref: '#/components/requestBodies/taxonomy-input'
+  '/taxonomies/{taxonomy_id}/taxons':
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/pagination-data'
+                  - type: object
+                    properties:
+                      taxons:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/taxon'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+      summary: List taxonomy taxons
+      description: Lists a taxonomy's taxons.
+      operationId: list-taxonomy-taxons
+      tags:
+        - Taxons
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/per_page'
+      security:
+        - api-key: []
+    parameters:
+      - name: taxonomy_id
+        in: path
+        required: true
+        schema:
+          type: string
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/taxon'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Create taxonomy taxon
+      description: Creates a taxon for a taxonomy.
+      operationId: create-taxonomy-taxon
+      tags:
+        - Taxons
+      security:
+        - api-key: []
+      requestBody:
+        $ref: '#/components/requestBodies/taxon-input'
+  '/taxonomies/{taxonomy_id}/taxons/{id}':
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+      summary: Get taxonomy taxon
+      description: Retrieves a taxonomy's taxon.
+      operationId: get-taxonomy-taxon
+      tags:
+        - Taxons
+      security:
+        - api-key: []
+    parameters:
+      - name: taxonomy_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+    delete:
+      responses:
+        '204':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/taxon'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/delete-restriction'
+      summary: Delete taxonomy taxon
+      description: Deletes a taxonomy's taxon.
+      operationId: delete-taxonomy-taxon
+      tags:
+        - Taxons
+      security:
+        - api-key: []
+    patch:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/taxon'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Update taxonomy taxon
+      description: Updates a taxonomy's taxon.
+      operationId: update-taxonomy-taxon
+      tags:
+        - Taxons
+      security:
+        - api-key: []
+      requestBody:
+        $ref: '#/components/requestBodies/taxon-input'
+  /taxons:
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/pagination-data'
+                  - type: object
+                    properties:
+                      taxons:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/taxon'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+      summary: List taxons
+      description: Lists all taxons.
+      operationId: list-taxons
+      tags:
+        - Taxons
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/per_page'
+      security:
+        - api-key: []
+  /users:
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/pagination-data'
+                  - type: object
+                    properties:
+                      users:
+                        type: array
+                        items: {}
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+      summary: List users
+      description: Lists all users.
+      operationId: list-users
+      tags:
+        - Users
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/per_page'
+      security:
+        - api-key: []
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Create user
+      description: Creates a user.
+      operationId: create-user
+      tags:
+        - Users
+      security:
+        - api-key: []
+      requestBody:
+        $ref: '#/components/requestBodies/user-input'
+  /zones:
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/pagination-data'
+                  - type: object
+                    properties:
+                      zones:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/zone'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+      summary: List zones
+      description: Lists all zones.
+      operationId: list-zones
+      tags:
+        - Zones
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/per_page'
+      security:
+        - api-key: []
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/zone'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Create zone
+      description: Creates a zone.
+      operationId: create-zone
+      tags:
+        - Zones
+      security:
+        - api-key: []
+      requestBody:
+        $ref: '#/components/requestBodies/zone-input'
+  '/zones/{id}':
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/zone'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+      summary: Get zone
+      description: Retrieves a zone.
+      operationId: get-zone
+      tags:
+        - Zones
+      security:
+        - api-key: []
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+    delete:
+      responses:
+        '204':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/zone'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/delete-restriction'
+      summary: Delete zone
+      description: Deletes a zone.
+      operationId: delete-zone
+      tags:
+        - Zones
+      security:
+        - api-key: []
+    patch:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/zone'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Update zone
+      description: Updates a zone.
+      operationId: update-zone
+      tags:
+        - Zones
+      security:
+        - api-key: []
+      requestBody:
+        $ref: '#/components/requestBodies/zone-input'
+  '/taxonomies/{taxonomy_id}/jstree':
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jstree'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+      summary: Get taxonomy jsTree
+      description: Builds a taxonomy's jsTree.
+      operationId: get-taxonomy-jstree
+      tags:
+        - Taxonomies
+      security:
+        - api-key: []
+    parameters:
+      - name: taxonomy_id
+        in: path
+        required: true
+        schema:
+          type: string
+  '/taxonomies/{taxonomy_id}/taxons/{taxon_id}/jstree':
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/jstree'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+      summary: Get taxon jsTree
+      description: Builds a taxon's jsTree.
+      operationId: get-taxon-jstree
+      tags:
+        - Taxons
+      security:
+        - api-key: []
+    parameters:
+      - name: taxonomy_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: taxon_id
+        in: path
+        required: true
+        schema:
+          type: string
+  '/promotions/{id}':
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/promotion'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+      summary: Get promotion
+      description: Retrieves a promotion.
+      operationId: get-promotion
+      tags:
+        - Promotions
+      security:
+        - api-key: []
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+  /store_credit_events/mine:
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/pagination-data'
+                  - type: object
+                    properties:
+                      store_credit_events:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/store-credit-event'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+      summary: List current user's store credit events
+      description: Lists the current user's store credit events.
+      operationId: list-current-user-store-credit-events
+      tags:
+        - Store credit events
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/per_page'
+      security:
+        - api-key: []
+  '/checkouts/{checkout_id}/line_items/{id}':
+    delete:
+      responses:
+        '204':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/line-item'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/delete-restriction'
+      summary: Delete checkout line item
+      description: Deletes a checkout's line item.
+      operationId: delete-checkout-line-item
+      tags:
+        - Line items
+      security:
+        - api-key: []
+        - order-token: []
+    parameters:
+      - name: checkout_id
+        in: path
+        required: true
+        description: The order number
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+    patch:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/line-item'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Update checkout line item
+      description: Updates a checkout's line item.
+      operationId: update-checkout-line-item
+      tags:
+        - Line items
+      security:
+        - api-key: []
+        - order-token: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                line_items_attributes:
+                  allOf:
+                    - properties:
+                        id:
+                          type: integer
+                  type: object
+  '/orders/{order_number}/coupon_codes/{id}':
+    delete:
+      responses:
+        '204':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/coupon-code-handler'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/delete-restriction'
+      summary: Delete order coupon code
+      description: Deletes an order's coupon code.
+      operationId: delete-order-coupon-code
+      tags:
+        - Coupon codes
+      security:
+        - api-key: []
+        - order-token: []
+    parameters:
+      - name: order_number
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        description: This is the coupon code
+        schema:
+          type: string
+  '/orders/{order_number}/line_items/{id}':
+    delete:
+      responses:
+        '204':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/line-item'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/delete-restriction'
+      summary: Delete order line item
+      description: Deletes an order's line item.
+      operationId: delete-order-line-item
+      tags:
+        - Line items
+      security:
+        - api-key: []
+        - order-token: []
+    parameters:
+      - name: order_number
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+    patch:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/line-item'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Update order line item
+      description: Updates an order's line item.
+      operationId: update-order-line-item
+      tags:
+        - Line items
+      security:
+        - api-key: []
+        - order-token: []
+      requestBody:
+        $ref: '#/components/requestBodies/line-item-input'
+  '/stock_items/{id}':
+    delete:
+      responses:
+        '204':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/stock-item'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/delete-restriction'
+      summary: Delete stock item
+      description: Deletes a stock item.
+      operationId: delete-stock-item
+      tags:
+        - Stock items
+      security:
+        - api-key: []
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+    patch:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/stock-item'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Update stock item
+      description: Updates a stock item.
+      operationId: update-stock-item
+      tags:
+        - Stock items
+      security:
+        - api-key: []
+      requestBody:
+        $ref: '#/components/requestBodies/stock-item-input'
+  '/checkouts/{id}':
+    patch:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/order-big'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Update checkout
+      description: >-
+        Updates a checkout.
+
+
+        **Note:** In addition to the order update, this action always attempts
+        to perform an order state machine transition which results in a `422`
+        response if it cannot be transitioned.
+      operationId: update-checkout
+      tags:
+        - Checkouts
+      security:
+        - api-key: []
+        - order-token: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/checkout-input'
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+  '/credit_cards/{id}':
+    patch:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/credit-card'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Update credit card
+      description: Updates a credit card.
+      operationId: update-credit-card
+      tags:
+        - Credit cards
+      security:
+        - api-key: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/credit-card-update-input'
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+  '/shipments/{number}':
+    patch:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/shipment'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Update shipment
+      description: Updates a shipment.
+      operationId: update-shipment
+      tags:
+        - Shipments
+      security:
+        - api-key: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/shipment-input'
+    parameters:
+      - name: number
+        in: path
+        required: true
+        schema:
+          type: string
+  '/checkouts/{checkout_id}/payments/{payment_id}/authorize':
+    put:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/payment'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Authorize checkout payment
+      description: Authorizes a checkout's payment.
+      operationId: authorize-checkout-payment
+      tags:
+        - Payments
+      security:
+        - api-key: []
+    parameters:
+      - name: checkout_id
+        in: path
+        required: true
+        description: The order number
+        schema:
+          type: string
+      - name: payment_id
+        in: path
+        required: true
+        schema:
+          type: string
+  '/checkouts/{checkout_id}/payments/{payment_id}/capture':
+    put:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/payment'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Capture checkout payment
+      description: Captures a checkout's payment.
+      operationId: capture-checkout-payment
+      tags:
+        - Payments
+      security:
+        - api-key: []
+    parameters:
+      - name: checkout_id
+        in: path
+        required: true
+        description: The order number
+        schema:
+          type: string
+      - name: payment_id
+        in: path
+        required: true
+        schema:
+          type: string
+  '/checkouts/{checkout_id}/payments/{payment_id}/credit':
+    put:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/payment'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Credit checkout payment
+      description: Credits a checkout's payment.
+      operationId: credit-checkout-payment
+      tags:
+        - Payments
+      security:
+        - api-key: []
+    parameters:
+      - name: checkout_id
+        in: path
+        required: true
+        description: The order number
+        schema:
+          type: string
+      - name: payment_id
+        in: path
+        required: true
+        schema:
+          type: string
+  '/checkouts/{checkout_id}/payments/{payment_id}/purchase':
+    put:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/payment'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Purchase checkout payment
+      description: Purchases a checkout's payment.
+      operationId: purchase-checkout-payment
+      tags:
+        - Payments
+      security:
+        - api-key: []
+    parameters:
+      - name: checkout_id
+        in: path
+        required: true
+        description: The order number
+        schema:
+          type: string
+      - name: payment_id
+        in: path
+        required: true
+        schema:
+          type: string
+  '/checkouts/{checkout_id}/payments/{payment_id}/void':
+    put:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/payment'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Void checkout payment
+      description: Voids a checkout's payment.
+      operationId: void-checkout-payment
+      tags:
+        - Payments
+      security:
+        - api-key: []
+    parameters:
+      - name: checkout_id
+        in: path
+        required: true
+        description: The order number
+        schema:
+          type: string
+      - name: payment_id
+        in: path
+        required: true
+        schema:
+          type: string
+  '/checkouts/{checkout_id}/return_authorizations/{return_authorization_id}/cancel':
+    put:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/return-authorization'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Cancel checkout return authorization
+      description: Cancels a checkout's return authorization.
+      operationId: cancel-checkout-return-authorization
+      tags:
+        - Return authorizations
+      security:
+        - api-key: []
+    parameters:
+      - name: checkout_id
+        in: path
+        required: true
+        description: The order number
+        schema:
+          type: string
+      - name: return_authorization_id
+        in: path
+        required: true
+        schema:
+          type: string
+  '/checkouts/{checkout_id}/advance':
+    put:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/order-big'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Advance checkout
+      description: Advances a checkout to the furthest possible state.
+      operationId: advance-checkout
+      tags:
+        - Checkouts
+      security:
+        - api-key: []
+        - order-token: []
+    parameters:
+      - name: checkout_id
+        in: path
+        required: true
+        description: The order number
+        schema:
+          type: string
+  '/checkouts/{checkout_id}/complete':
+    put:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/order-big'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Complete checkout
+      description: Completes a checkout.
+      operationId: complete-checkout
+      tags:
+        - Checkouts
+      security:
+        - api-key: []
+        - order-token: []
+      requestBody:
+        $ref: '#/components/requestBodies/complete-checkoutBody'
+    parameters:
+      - name: checkout_id
+        in: path
+        required: true
+        description: The order number
+        schema:
+          type: string
+  '/checkouts/{checkout_id}/next':
+    put:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/order-big'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Transition checkout
+      description: Transitions a checkout to the next state.
+      operationId: transition-checkout
+      tags:
+        - Checkouts
+      security:
+        - api-key: []
+        - order-token: []
+      requestBody:
+        $ref: '#/components/requestBodies/complete-checkoutBody'
+    parameters:
+      - name: checkout_id
+        in: path
+        required: true
+        description: The order number
+        schema:
+          type: string
+  /classifications:
+    put:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Update classification
+      description: |-
+        Updates a classification.
+
+        This method only updates the classification position.
+      operationId: update-classification
+      tags:
+        - Classifications
+      security:
+        - api-key: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                product_id:
+                  type: integer
+                taxon_id:
+                  type: integer
+                position:
+                  type: integer
+  '/orders/{order_number}/apply_coupon_code':
+    put:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/coupon-code-handler'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Apply order coupon code
+      deprecated: true
+      description: >-
+        **Deprecated:** This method is deprecated. Please use
+        `Spree::Api::CouponCodesController#create` endpoint instead.
+
+        Applies a coupon code on the order.
+      operationId: apply-order-coupon-code
+      tags:
+        - Coupon codes
+      security:
+        - api-key: []
+        - order-token: []
+      requestBody:
+        $ref: '#/components/requestBodies/coupon-code-input'
+    parameters:
+      - name: order_number
+        in: path
+        required: true
+        schema:
+          type: string
+  '/orders/{order_number}/cancel':
+    put:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/order-big'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Cancel order
+      description: Cancels an order.
+      operationId: cancel-order
+      tags:
+        - Orders
+      security:
+        - api-key: []
+        - order-token: []
+    parameters:
+      - name: order_number
+        in: path
+        required: true
+        schema:
+          type: string
+  '/orders/{order_number}/empty':
+    put:
+      responses:
+        '204':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Empty order
+      description: Empties an order's cart.
+      operationId: empty-order
+      tags:
+        - Orders
+      security:
+        - api-key: []
+        - order-token: []
+    parameters:
+      - name: order_number
+        in: path
+        required: true
+        schema:
+          type: string
+  '/orders/{order_number}/payments/{payment_id}/authorize':
+    put:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/payment'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Authorize order payment
+      description: Authorizes an order's payment.
+      operationId: authorize-order-payment
+      tags:
+        - Payments
+      security:
+        - api-key: []
+    parameters:
+      - name: order_number
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: payment_id
+        in: path
+        required: true
+        schema:
+          type: string
+  '/orders/{order_number}/payments/{payment_id}/capture':
+    put:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/payment'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Capture order payment
+      description: Captures an order's payment.
+      operationId: capture-order-payment
+      tags:
+        - Payments
+      security:
+        - api-key: []
+    parameters:
+      - name: order_number
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: payment_id
+        in: path
+        required: true
+        schema:
+          type: string
+  '/orders/{order_number}/payments/{payment_id}/credit':
+    put:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/payment'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Credit order payment
+      description: Credits an order's payment.
+      operationId: credit-order-payment
+      tags:
+        - Payments
+      security:
+        - api-key: []
+    parameters:
+      - name: order_number
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: payment_id
+        in: path
+        required: true
+        schema:
+          type: string
+  '/orders/{order_number}/payments/{payment_id}/purchase':
+    put:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/payment'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Purchase order payment
+      description: Purchases an order's payment.
+      operationId: purchase-order-payment
+      tags:
+        - Payments
+      security:
+        - api-key: []
+    parameters:
+      - name: order_number
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: payment_id
+        in: path
+        required: true
+        schema:
+          type: string
+  '/orders/{order_number}/payments/{payment_id}/void':
+    put:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/payment'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Void order payment
+      description: Voids an order's payment.
+      operationId: void-order-payment
+      tags:
+        - Payments
+      security:
+        - api-key: []
+    parameters:
+      - name: order_number
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: payment_id
+        in: path
+        required: true
+        schema:
+          type: string
+  '/orders/{order_number}/return_authorizations/{return_authorization_id}/cancel':
+    put:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/return-authorization'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Cancel order return authorization
+      description: Cancels an order's return authorization.
+      operationId: cancel-order-return-authorization
+      tags:
+        - Return authorizations
+      security:
+        - api-key: []
+    parameters:
+      - name: order_number
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: return_authorization_id
+        in: path
+        required: true
+        schema:
+          type: string
+  '/shipments/{shipment_number}/add':
+    put:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/shipment'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Add shipment item
+      description: Adds an item to a shipment.
+      operationId: add-shipment-item
+      tags:
+        - Shipments
+      security:
+        - api-key: []
+      requestBody:
+        $ref: '#/components/requestBodies/add-shipment-itemBody'
+    parameters:
+      - name: shipment_number
+        in: path
+        required: true
+        schema:
+          type: string
+  '/shipments/{shipment_number}/ready':
+    put:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/shipment'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Ready shipment
+      description: Readies a shipment for processing.
+      operationId: ready-shipment
+      tags:
+        - Shipments
+      security:
+        - api-key: []
+    parameters:
+      - name: shipment_number
+        in: path
+        required: true
+        schema:
+          type: string
+  '/shipments/{shipment_id}/remove':
+    put:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/shipment'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Remove shipment item
+      description: Removes an item from a shipment.
+      operationId: remove-shipment-id
+      tags:
+        - Shipments
+      security:
+        - api-key: []
+      requestBody:
+        $ref: '#/components/requestBodies/add-shipment-itemBody'
+    parameters:
+      - name: shipment_id
+        in: path
+        required: true
+        schema:
+          type: string
+  '/shipments/{shipment_number}/select_shipping_method':
+    put:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/shipment'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+      summary: Select shipment shipping method
+      description: Selects the shipping method for a shipment.
+      operationId: select-shipment-shipping-method
+      tags:
+        - Shipments
+      security:
+        - api-key: []
+        - order-token: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                shipping_method_id:
+                  type: integer
+    parameters:
+      - name: shipment_number
+        in: path
+        required: true
+        schema:
+          type: string
+  '/shipments/{shipment_number}/ship':
+    put:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/shipment'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Ship shipment
+      description: Ships a shipment.
+      operationId: ship-shipment
+      tags:
+        - Shipments
+      security:
+        - api-key: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                send_mailer:
+                  type: boolean
+    parameters:
+      - name: shipment_number
+        in: path
+        required: true
+        schema:
+          type: string
+  '/checkouts/{checkout_id}/line_items':
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/line-item'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Create checkout line item
+      description: Creates a new line item for a checkout.
+      operationId: create-checkout-line-item
+      tags:
+        - Line items
+      security:
+        - api-key: []
+        - order-token: []
+      requestBody:
+        $ref: '#/components/requestBodies/line-item-input'
+    parameters:
+      - name: checkout_id
+        in: path
+        required: true
+        description: The order number
+        schema:
+          type: string
+  '/orders/{order_number}/coupon_codes':
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/coupon-code-handler'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Create order coupon code
+      description: Creates a coupon code for an order.
+      operationId: create-order-coupon-code
+      tags:
+        - Coupon codes
+      security:
+        - api-key: []
+        - order-token: []
+      requestBody:
+        $ref: '#/components/requestBodies/coupon-code-input'
+    parameters:
+      - name: order_number
+        in: path
+        required: true
+        schema:
+          type: string
+  '/orders/{order_number}/line_items':
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/line-item'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Create order line item
+      description: Creates a line item for an order.
+      operationId: create-order-line-item
+      tags:
+        - Line items
+      security:
+        - api-key: []
+        - order-token: []
+      requestBody:
+        $ref: '#/components/requestBodies/line-item-input'
+    parameters:
+      - name: order_number
+        in: path
+        required: true
+        schema:
+          type: string
+  /shipments:
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/shipment'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Create shipment
+      description: Creates a shipment.
+      operationId: create-shipment
+      tags:
+        - Shipments
+      security:
+        - api-key: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                stock_location_id:
+                  type: integer
+                variant_id:
+                  type: integer
+                quantity:
+                  type: integer
+  /shipments/transfer_to_location:
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Transfer shipment item to location
+      description: Transfers a shipment's item to a different stock location.
+      operationId: transfer-shipment-item-to-location
+      tags:
+        - Shipments
+      security:
+        - api-key: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                original_shipment_number:
+                  type: string
+                target_shipment_number:
+                  type: string
+                stock_location_id:
+                  type: integer
+                variant_id:
+                  type: integer
+                quantity:
+                  type: integer
+  /shipments/transfer_to_shipment:
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Transfer shipment item to shipment
+      description: Transfer a shipment's item to another shipment.
+      operationId: transfer-shipment-item-to-shipment
+      tags:
+        - Shipments
+      security:
+        - api-key: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                original_shipment_number:
+                  type: string
+                target_shipment_number:
+                  type: string
+                variant_id:
+                  type: integer
+                quantity:
+                  type: integer
+  /taxons/products:
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/pagination-data'
+                  - type: object
+                    properties:
+                      products:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/product'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+      summary: List taxon products
+      description: Lists a taxon's products.
+      operationId: list-taxon-products
+      tags:
+        - Products
+      parameters:
+        - in: query
+          name: id
+          schema:
+            type: integer
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/per_page'
+        - in: query
+          name: simple
+          schema:
+            type: boolean
+      security:
+        - api-key: []
+  '/orders/{order_number}/customer_returns':
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/pagination-data'
+                  - type: object
+                    properties:
+                      customer_returns:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/customer-return'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+      summary: List order customer returns
+      description: "Lists an order's customer returns."
+      operationId: list-order-customer-returns
+      tags:
+        - Customer returns
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/per_page'
+      security:
+        - api-key: []
+    parameters:
+      - name: order_number
+        in: path
+        schema:
+          type: string
+        required: true
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/customer-return'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Create order customer return
+      description: Creates a customer return for an order.
+      operationId: create-order-customer-return
+      tags:
+        - Customer returns
+      requestBody:
+        $ref: '#/components/requestBodies/customer-return-input'
+      security:
+        - api-key: []
+tags:
+  - name: Address books
+  - name: Addresses
+  - name: Checkouts
+  - name: Classifications
+  - name: Configuration
+  - name: Countries
+  - name: Coupon codes
+  - name: Credit cards
+  - name: Images
+  - name: Inventory units
+  - name: Line items
+  - name: Option types
+  - name: Option values
+  - name: Orders
+  - name: Payments
+  - name: Product properties
+  - name: Products
+  - name: Promotions
+  - name: Properties
+  - name: Return authorizations
+  - name: Customer returns
+  - name: Shipments
+  - name: States
+  - name: Stock items
+  - name: Stock locations
+  - name: Stock movements
+  - name: Store credit events
+  - name: Stores
+  - name: Taxonomies
+  - name: Taxons
+  - name: Users
+  - name: Variants
+  - name: Zones
+servers:
+  - url: 'https://example.com/api'
+  - url: 'http://example.com/api'
+components:
+  parameters:
+    page:
+      name: page
+      in: query
+      schema:
+        type: integer
+        default: 1
+    per_page:
+      name: per_page
+      in: query
+      schema:
+        type: integer
+        default: 25
+  responses:
+    not-found:
+      description: ''
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+    unprocessable-entity:
+      description: ''
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              errors:
+                type: object
+    delete-restriction:
+      description: ''
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+    invalid-api-key:
+      description: ''
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+  requestBodies:
+    taxon-input:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/taxon-input'
+    line-item-input:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/line-item-input'
+    payment-input:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/payment-input'
+    zone-input:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/zone-input'
+    product-property-input:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/product-property-input'
+    stock-location-input:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/stock-location-input'
+    product-input:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/product-input'
+    property-input:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/property-input'
+    address-input:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/address-input'
+    order-input:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/order-input'
+    image-input:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/image-input'
+    variant-input:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/variant-input'
+    user-input:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/user-input'
+    return-authorization-input:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/return-authorization-input'
+    customer-return-input:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/customer-return-input'
+    option-value-input:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/option-value-input'
+    stock-item-input:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/stock-item-input'
+    taxonomy-input:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/taxonomy-input'
+    complete-checkoutBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              expected_total:
+                type: string
+    coupon-code-input:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/coupon-code-input'
+    add-shipment-itemBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              variant_id:
+                type: integer
+              quantity:
+                type: integer
+  securitySchemes:
+    api-key:
+      type: apiKey
+      name: Authorization
+      in: header
+    order-token:
+      type: apiKey
+      name: X-Spree-Order-Token
+      in: header
+  schemas:
+    product:
+      type: object
+      title: Product
+      properties:
+        available_on:
+          type: string
+        classifications:
+          type: array
+          items:
+            $ref: '#/components/schemas/classification'
+        description:
+          type: string
+        display_price:
+          type: string
+        has_variants:
+          type: boolean
+        id:
+          type: integer
+        master:
+          $ref: '#/components/schemas/variant'
+        meta_description:
+          type: string
+        meta_keywords:
+          type: string
+        meta_title:
+          type: string
+        name:
+          type: string
+        option_types:
+          type: array
+          items:
+            $ref: '#/components/schemas/option-type'
+        price:
+          type: string
+        product_properties:
+          type: array
+          items:
+            $ref: '#/components/schemas/product-property'
+        shipping_category_id:
+          type: integer
+        slug:
+          type: string
+        taxon_ids:
+          type: array
+          items:
+            type: integer
+        total_on_hand:
+          type: integer
+        variants:
+          type: array
+          items:
+            $ref: '#/components/schemas/variant'
+    pagination-data:
+      type: object
+      properties:
+        count:
+          type: integer
+        current_page:
+          type: integer
+        pages:
+          type: integer
+        per_page:
+          type: integer
+        total_count:
+          type: integer
+      title: Pagination data
+    image:
+      type: object
+      properties:
+        alt:
+          type: string
+        attachment_content_type:
+          type: string
+        attachment_file_name:
+          type: string
+        attachment_height:
+          type: integer
+        attachment_updated_at:
+          type: string
+        attachment_width:
+          type: integer
+        id:
+          type: integer
+        large_url:
+          type: string
+        mini_url:
+          type: string
+        position:
+          type: integer
+        product_url:
+          type: string
+        small_url:
+          type: string
+        type:
+          type: string
+        viewable_id:
+          type: integer
+        viewable_type:
+          type: string
+      title: Image
+    variant:
+      type: object
+      title: Variant
+      properties:
+        cost_price:
+          type: string
+        depth:
+          type: string
+        description:
+          type: string
+        display_price:
+          type: string
+        height:
+          type: string
+        id:
+          type: integer
+        images:
+          type: array
+          items:
+            $ref: '#/components/schemas/image'
+        in_stock:
+          type: boolean
+        is_backorderable:
+          type: boolean
+        is_destroyed:
+          type: boolean
+        is_master:
+          type: boolean
+        name:
+          type: string
+        option_values:
+          type: array
+          items:
+            $ref: '#/components/schemas/option-value'
+        options_text:
+          type: string
+        price:
+          type: string
+        sku:
+          type: string
+        slug:
+          type: string
+        total_on_hand:
+          type: integer
+        track_inventory:
+          type: boolean
+        weight:
+          type: string
+        width:
+          type: string
+    option-value:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        option_type_id:
+          type: integer
+        option_type_name:
+          type: string
+        option_type_presentation:
+          type: string
+        presentation:
+          type: string
+      title: Option value
+    product-property:
+      type: object
+      properties:
+        id:
+          type: integer
+        product_id:
+          type: integer
+        property_id:
+          type: integer
+        property_name:
+          type: string
+        value:
+          type: string
+      title: Product property
+    option-type:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        option_values:
+          type: array
+          items:
+            $ref: '#/components/schemas/option-value'
+        position:
+          type: integer
+        presentation:
+          type: string
+      title: Option type
+    classification:
+      type: object
+      title: Classification
+      properties:
+        position:
+          type: integer
+        taxon:
+          $ref: '#/components/schemas/taxon'
+        taxon_id:
+          type: integer
+    taxon:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        parent_id:
+          type: integer
+        permalink:
+          type: string
+        pretty_name:
+          type: string
+        taxonomy_id:
+          type: integer
+        taxons:
+          type: array
+          items:
+            $ref: '#/components/schemas/taxon'
+      title: Taxon
+    order-small:
+      type: object
+      properties:
+        additional_tax_total:
+          type: string
+        adjustment_total:
+          type: string
+        canceler_id:
+          type: integer
+        channel:
+          type: string
+        checkout_steps:
+          type: array
+          items:
+            type: string
+        completed_at:
+          type: string
+        covered_by_store_credit:
+          type: boolean
+        created_at:
+          type: string
+        currency:
+          type: string
+        display_additional_tax_total:
+          type: string
+        display_included_tax_total:
+          type: string
+        display_item_total:
+          type: string
+        display_order_total_after_store_credit:
+          type: string
+        display_ship_total:
+          type: string
+        display_store_credit_remaining_after_capture:
+          type: string
+        display_tax_total:
+          type: string
+        display_total:
+          type: string
+        display_total_applicable_store_credit:
+          type: string
+        display_total_available_store_credit:
+          type: string
+        email:
+          type: string
+        id:
+          type: integer
+        included_tax_total:
+          type: string
+        item_total:
+          type: string
+        number:
+          type: string
+        order_total_after_store_credit:
+          type: string
+        payment_state:
+          type: string
+        payment_total:
+          type: string
+        ship_total:
+          type: string
+        shipment_state:
+          type: string
+        special_instructions:
+          type: string
+        state:
+          type: string
+        tax_total:
+          type: string
+        token:
+          type: string
+        total:
+          type: string
+        total_applicable_store_credit:
+          type: string
+        total_quantity:
+          type: integer
+        updated_at:
+          type: string
+        user_id:
+          type: integer
+      title: Order (small)
+    order-big:
+      type: object
+      title: Order (big)
+      properties:
+        additional_tax_total:
+          type: string
+        adjustment_total:
+          type: string
+        adjustments:
+          type: array
+          items:
+            $ref: '#/components/schemas/adjustment'
+        bill_address:
+          $ref: '#/components/schemas/address'
+        canceler_id:
+          type: integer
+        channel:
+          type: string
+        checkout_steps:
+          type: array
+          items:
+            type: string
+        completed_at:
+          type: string
+        covered_by_store_credit:
+          type: boolean
+        created_at:
+          type: string
+        credit_cards:
+          type: array
+          items:
+            $ref: '#/components/schemas/credit-card'
+        currency:
+          type: string
+        display_additional_tax_total:
+          type: string
+        display_included_tax_total:
+          type: string
+        display_item_total:
+          type: string
+        display_order_total_after_store_credit:
+          type: string
+        display_ship_total:
+          type: string
+        display_store_credit_remaining_after_capture:
+          type: string
+        display_tax_total:
+          type: string
+        display_total:
+          type: string
+        display_total_applicable_store_credit:
+          type: string
+        display_total_available_store_credit:
+          type: string
+        email:
+          type: string
+        id:
+          type: integer
+        included_tax_total:
+          type: string
+        item_total:
+          type: string
+        line_items:
+          type: array
+          items:
+            $ref: '#/components/schemas/line-item'
+        number:
+          type: string
+        order_total_after_store_credit:
+          type: string
+        payment_methods:
+          type: array
+          items:
+            $ref: '#/components/schemas/payment-method'
+        payment_state:
+          type: string
+        payment_total:
+          type: string
+        payments:
+          type: array
+          items:
+            $ref: '#/components/schemas/payment'
+        permissions:
+          $ref: '#/components/schemas/order-permissions'
+        ship_address:
+          $ref: '#/components/schemas/address'
+        ship_total:
+          type: string
+        shipment_state:
+          type: string
+        shipments:
+          type: array
+          items:
+            $ref: '#/components/schemas/shipment'
+        special_instructions:
+          type: string
+        state:
+          type: string
+        tax_total:
+          type: string
+        token:
+          type: string
+        total:
+          type: string
+        total_applicable_store_credit:
+          type: string
+        total_quantity:
+          type: integer
+        updated_at:
+          type: string
+        user_id:
+          type: integer
+    address:
+      type: object
+      title: Address
+      properties:
+        address1:
+          type: string
+        address2:
+          type: string
+        alternative_phone:
+          type: string
+        city:
+          type: string
+        company:
+          type: string
+        country:
+          $ref: '#/components/schemas/country'
+        country_id:
+          type: integer
+        country_iso:
+          type: string
+        firstname:
+          type: string
+          deprecated: true
+          description: '*Deprecated: will be removed in Solidus 3.0, please use `name` property*'
+        full_name:
+          type: string
+          deprecated: true
+          description: '*Deprecated: will be removed in Solidus 3.0, please use `name` property*'
+        id:
+          type: integer
+        lastname:
+          type: string
+          deprecated: true
+          description: '*Deprecated: will be removed in Solidus 3.0, please use `name` property*'
+        name:
+          type: string
+        phone:
+          type: string
+        state:
+          $ref: '#/components/schemas/state'
+        state_id:
+          type: integer
+        state_name:
+          type: string
+        state_text:
+          type: string
+        zipcode:
+          type: string
+    country:
+      type: object
+      properties:
+        id:
+          type: integer
+        iso:
+          type: string
+        iso3:
+          type: string
+        iso_name:
+          type: string
+        name:
+          type: string
+        numcode:
+          type: integer
+      title: Country
+    state:
+      type: object
+      properties:
+        abbr:
+          type: string
+        country_id:
+          type: integer
+        id:
+          type: integer
+        name:
+          type: string
+      title: State
+    adjustment:
+      type: object
+      properties:
+        adjustable_id:
+          type: integer
+        adjustable_type:
+          type: string
+        amount:
+          type: string
+        created_at:
+          type: string
+        display_amount:
+          type: string
+        eligible:
+          type: boolean
+        finalized:
+          type: boolean
+        id:
+          type: integer
+        label:
+          type: string
+        promotion_code_id:
+          type: integer
+        source_id:
+          type: integer
+        source_type:
+          type: string
+        updated_at:
+          type: string
+      title: Adjustment
+    credit-card:
+      type: object
+      title: Credit card
+      properties:
+        address: {}
+        cc_type:
+          type: string
+        id:
+          type: integer
+        last_digits:
+          type: string
+        month:
+          type: string
+        name:
+          type: string
+        year:
+          type: string
+    line-item:
+      type: object
+      title: Line item
+      properties:
+        adjustments:
+          type: array
+          items:
+            $ref: '#/components/schemas/adjustment'
+        display_amount:
+          type: string
+        id:
+          type: integer
+        price:
+          type: string
+        quantity:
+          type: integer
+        single_display_amount:
+          type: string
+        total:
+          type: string
+        variant:
+          $ref: '#/components/schemas/variant'
+        variant_id:
+          type: integer
+    payment-method:
+      type: object
+      properties:
+        id:
+          type: integer
+        method_type:
+          type: string
+        name:
+          type: string
+        partial_name:
+          type: string
+      title: Payment method
+    payment:
+      type: object
+      title: Payment
+      properties:
+        amount:
+          type: string
+        avs_response:
+          type: string
+        created_at:
+          type: string
+        display_amount:
+          type: string
+        id:
+          type: integer
+        payment_method:
+          $ref: '#/components/schemas/payment-method'
+        payment_method_id:
+          type: integer
+        source:
+          $ref: '#/components/schemas/payment-source'
+        source_id:
+          type: integer
+        source_type:
+          type: integer
+        state:
+          type: string
+        updated_at:
+          type: string
+    payment-source:
+      type: object
+      properties:
+        cc_type:
+          type: string
+        gateway_customer_profile_id:
+          type: string
+        gateway_payment_profile_id:
+          type: string
+        id:
+          type: integer
+        last_digits:
+          type: string
+        month:
+          type: string
+        name:
+          type: string
+        year:
+          type: string
+      title: Payment source
+    order-permissions:
+      type: object
+      properties:
+        can_update:
+          type: boolean
+      title: Order permissions
+    shipment:
+      type: object
+      title: Shipment
+      properties:
+        adjustments:
+          type: array
+          items:
+            $ref: '#/components/schemas/adjustment'
+        cost:
+          type: string
+        id:
+          type: integer
+        manifest:
+          type: array
+          items:
+            $ref: '#/components/schemas/shipment-manifest'
+        number:
+          type: string
+        order_id:
+          type: string
+        selected_shipping_rate:
+          $ref: '#/components/schemas/shipping-rate'
+        shipped_at:
+          type: string
+        shipping_methods:
+          type: array
+          items:
+            $ref: '#/components/schemas/shipping-method'
+        shipping_rates:
+          type: array
+          items:
+            $ref: '#/components/schemas/shipping-rate'
+        state:
+          type: string
+        stock_location_name:
+          type: string
+        tracking:
+          type: string
+        tracking_url:
+          type: string
+    shipping-rate:
+      type: object
+      title: Shipping rate
+      properties:
+        cost:
+          type: string
+        display_cost:
+          type: string
+        id:
+          type: integer
+        name:
+          type: string
+        selected:
+          type: boolean
+        shipping_method_code:
+          type: string
+        shipping_method_id:
+          type: integer
+    shipping-method:
+      type: object
+      title: Shipping method
+      properties:
+        code:
+          type: string
+        id:
+          type: integer
+        name:
+          type: string
+        shipping_categories:
+          type: array
+          items:
+            $ref: '#/components/schemas/shipping-category'
+        zones:
+          type: array
+          items:
+            $ref: '#/components/schemas/zone'
+    shipment-manifest:
+      type: array
+      title: Shipment manifest
+      items:
+        type: object
+        properties:
+          quantity:
+            type: integer
+          states:
+            type: object
+            properties:
+              on_hand:
+                type: integer
+          variant_id:
+            type: integer
+    shipping-category:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+      title: Shipping category
+    zone:
+      type: object
+      properties:
+        description:
+          type: string
+        id:
+          type: integer
+        name:
+          type: string
+      title: Zone
+    user:
+      type: object
+      properties:
+        bill_address:
+          $ref: '#/components/schemas/address'
+        created_at:
+          type: string
+        email:
+          type: string
+        id:
+          type: integer
+        ship_address:
+          $ref: '#/components/schemas/address'
+        updated_at:
+          type: string
+      title: User
+    return-authorization:
+      type: object
+      properties: {}
+      title: Return authorization
+    property:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        presentation:
+          type: string
+      title: Property
+    inventory-unit:
+      type: object
+      properties:
+        id:
+          type: integer
+        shipment_id:
+          type: integer
+        state:
+          type: string
+        variant_id:
+          type: integer
+      title: Inventory unit
+    stock-location:
+      type: object
+      title: Stock location
+      properties:
+        active:
+          type: boolean
+        address1:
+          type: string
+        address2:
+          type: string
+        city:
+          type: string
+        country:
+          $ref: '#/components/schemas/country'
+        country_id:
+          type: integer
+        id:
+          type: integer
+        name:
+          type: string
+        phone:
+          type: string
+        state:
+          $ref: '#/components/schemas/state'
+        state_id:
+          type: integer
+        state_name:
+          type: string
+        zipcode:
+          type: string
+    stock-item:
+      type: object
+      properties:
+        backorderable:
+          type: boolean
+        count_on_hand:
+          type: integer
+        id:
+          type: integer
+        stock_location_id:
+          type: integer
+        variant:
+          $ref: '#/components/schemas/variant'
+        variant_id:
+          type: integer
+      title: Stock item
+    stock-movement:
+      type: object
+      title: Stock movement
+      properties:
+        id:
+          type: integer
+        quantity:
+          type: integer
+        stock_item:
+          $ref: '#/components/schemas/stock-item'
+        stock_item_id:
+          type: integer
+    store:
+      type: object
+      title: Store
+      properties:
+        available_locales:
+          type: array
+          items:
+            type: string
+        code:
+          type: string
+        default:
+          type: boolean
+        default_currency:
+          type: string
+        id:
+          type: integer
+        mail_from_address:
+          type: string
+        bcc_email:
+          type: string
+        meta_description:
+          type: string
+        meta_keywords:
+          type: string
+        name:
+          type: string
+        seo_title:
+          type: string
+        url:
+          type: string
+    taxonomy:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        root:
+          $ref: '#/components/schemas/taxon'
+      title: Taxonomy
+    jstree:
+      type: array
+      items:
+        type: object
+        properties:
+          attr:
+            type: object
+            properties:
+              id:
+                type: integer
+              name:
+                type: string
+          data:
+            type: string
+          state:
+            type: string
+      title: jsTree
+    promotion:
+      type: object
+      properties:
+        advertise:
+          type: boolean
+        description:
+          type: string
+        expires_at:
+          type: string
+        id:
+          type: integer
+        match_policy:
+          type: string
+        name:
+          type: string
+        path:
+          type: string
+        starts_at:
+          type: string
+        type:
+          type: string
+        usage_limit:
+          type: integer
+      title: Promotion
+    store-credit-event:
+      type: object
+      title: Store credit event
+      properties:
+        display_action:
+          type: string
+        display_amount:
+          type: string
+        display_event_date:
+          type: string
+        display_remaining_amount:
+          type: string
+        display_user_total_amount:
+          type: string
+        order_number:
+          type: string
+    coupon-code-handler:
+      type: object
+      title: Coupon code handler
+      properties:
+        success:
+          type: string
+        error:
+          type: string
+        successful:
+          type: boolean
+        status_code:
+          type: string
+    address-book:
+      type: array
+      title: Address book
+      items:
+        allOf:
+          - $ref: '#/components/schemas/address'
+          - type: object
+            properties:
+              default:
+                type: boolean
+    return-authorization-input:
+      type: object
+      title: Return Authorization Input
+      properties:
+        memo:
+          type: string
+        stock_location_id:
+          type: integer
+        return_reason_id:
+          type: integer
+        return_items_attributes:
+          type: array
+          items:
+            type: object
+            properties:
+              inventory_unit_id:
+                type: integer
+              exchange_variant_id:
+                type: integer
+              return_reason_id:
+                type: integer
+    address-input:
+      type: object
+      title: Address Input
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        firstname:
+          type: string
+          deprecated: true
+          description: '*Deprecated: will be removed in Solidus 3.0, please use `name` property*'
+        lastname:
+          type: string
+          deprecated: true
+          description: '*Deprecated: will be removed in Solidus 3.0, please use `name` property*'
+        address1:
+          type: string
+        address2:
+          type: string
+        city:
+          type: string
+        country_id:
+          type: integer
+        state_id:
+          type: integer
+        zipcode:
+          type: string
+        phone:
+          type: string
+        state_name:
+          type: string
+        country_iso:
+          type: string
+        alternative_phone:
+          type: string
+        company:
+          type: string
+        country:
+          type: object
+          properties:
+            iso:
+              type: string
+            name:
+              type: string
+            iso3:
+              type: string
+            iso_name:
+              type: string
+        state:
+          type: object
+          properties:
+            name:
+              type: string
+            abbr:
+              type: string
+    line-item-input:
+      type: object
+      title: Line item input
+      properties:
+        quantity:
+          type: integer
+          description: 'Passing `0`, the line item will be removed.'
+        options:
+          type: object
+          description: >-
+            This field can be used to pass custom line item attributes. When
+            used, it will force a new price calculation, unless `price` is one
+            of the options.
+        id:
+          type: integer
+          description: Required for existing line items only.
+        variant_id:
+          type: integer
+          description: Required for new line items only.
+    option-type-input:
+      type: object
+      title: Option type input
+      properties:
+        name:
+          type: string
+        presentation:
+          type: string
+        option_values_attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/option-value-input'
+    option-value-input:
+      type: object
+      title: Option value input
+      properties:
+        name:
+          type: string
+        presentation:
+          type: string
+    checkout-input:
+      type: object
+      title: Checkout input
+      properties:
+        coupon_code:
+          type: string
+        email:
+          type: string
+        special_instructions:
+          type: string
+        use_billing:
+          type: boolean
+        bill_address_attributes:
+          $ref: '#/components/schemas/address-input'
+        ship_address_attributes:
+          $ref: '#/components/schemas/address-input'
+        payments_attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/payment-input'
+        shipments_attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/shipment-input'
+    credit-card-update-input:
+      type: object
+      title: Credit card update input
+      properties:
+        month:
+          type: string
+        year:
+          type: string
+        expirty:
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        name:
+          type: string
+        address_attributes:
+          $ref: '#/components/schemas/address-input'
+    inventory-unit-input:
+      type: object
+      title: Inventory unit input
+      properties:
+        shipment:
+          type: string
+        variant_id:
+          type: integer
+    payment-input:
+      type: object
+      title: Payment input
+      properties:
+        amount:
+          type: string
+        payment_method_id:
+          type: integer
+        payment_method:
+          type: string
+        source_attributes:
+          type: object
+          properties:
+            number:
+              type: string
+            month:
+              type: integer
+            year:
+              type: integer
+            verification_value:
+              type: string
+            first_name:
+              type: string
+            last_name:
+              type: string
+            cc_type:
+              type: string
+            gateway_customer_profile_id:
+              type: string
+            gateway_payment_profile_id:
+              type: string
+            last_digits:
+              type: string
+            name:
+              type: string
+            encrypted_data:
+              type: string
+            existing_card_id:
+              type: integer
+            wallet_payment_source_id:
+              type: integer
+            address_attributes:
+              $ref: '#/components/schemas/address-input'
+    shipment-input:
+      type: object
+      title: Shipment input
+      properties:
+        special_instructions:
+          type: string
+        stock_location_id:
+          type: integer
+        id:
+          type: integer
+        tracking:
+          type: string
+        selected_shipping_rate_id:
+          type: integer
+    order-input:
+      title: Order input
+      allOf:
+        - $ref: '#/components/schemas/checkout-input'
+        - type: object
+          properties:
+            line_items_attributes:
+              type: array
+              items:
+                $ref: '#/components/schemas/line-item-input'
+    product-input:
+      type: object
+      title: Product input
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        available_on:
+          type: string
+        permalink:
+          type: string
+        meta_description:
+          type: string
+        meta_keywords:
+          type: string
+        price:
+          type: string
+        sku:
+          type: string
+        deleted_at:
+          type: string
+        option_values_hash:
+          type: object
+        weight:
+          type: string
+        height:
+          type: string
+        width:
+          type: string
+        depth:
+          type: string
+        shipping_category_id:
+          type: integer
+        tax_category_id:
+          type: integer
+        taxon_ids:
+          type: array
+          items:
+            type: integer
+        option_type_ids:
+          type: array
+          items:
+            type: integer
+        cost_currency:
+          type: string
+        cost_price:
+          type: string
+        product_properties_attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/product-property-input'
+    product-property-input:
+      type: object
+      title: Product property input
+      properties:
+        property_name:
+          type: string
+        value:
+          type: string
+        position:
+          type: integer
+    image-input:
+      type: object
+      title: Image input
+      properties:
+        alt:
+          type: string
+        attachment:
+          type: string
+        position:
+          type: integer
+        viewable_type:
+          type: string
+        viewable_id:
+          type: integer
+    variant-input:
+      type: object
+      title: Variant input
+      properties:
+        name:
+          type: string
+        presentation:
+          type: string
+        cost_price:
+          type: string
+        lock_version:
+          type: string
+        position:
+          type: integer
+        track_inventory:
+          type: boolean
+        product_id:
+          type: integer
+        product:
+          type: integer
+        option_values_attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/option-value-input'
+        price:
+          type: string
+        weight:
+          type: string
+        height:
+          type: string
+        width:
+          type: string
+        depth:
+          type: string
+        sku:
+          type: string
+        cost_currency:
+          type: string
+        option_value_ids:
+          type: array
+          items:
+            type: integer
+        options:
+          type: object
+          properties:
+            name:
+              type: string
+            value:
+              type: string
+    property-input:
+      type: object
+      title: Property input
+      properties:
+        name:
+          type: string
+        presentation:
+          type: string
+    stock-item-input:
+      type: object
+      title: Stock item input
+      properties:
+        variant:
+          type: integer
+        stock_location:
+          type: integer
+        backorderable:
+          type: boolean
+        variant_id:
+          type: integer
+    stock-location-input:
+      type: object
+      title: Stock location input
+      properties:
+        name:
+          type: string
+        active:
+          type: boolean
+        address1:
+          type: string
+        address2:
+          type: string
+        city:
+          type: string
+        zipcode:
+          type: string
+        backorderable_default:
+          type: boolean
+        state_name:
+          type: string
+        state_id:
+          type: integer
+        country_id:
+          type: integer
+        phone:
+          type: string
+        propagate_all_variants:
+          type: boolean
+    store-input:
+      type: object
+      title: Store input
+      properties:
+        name:
+          type: string
+        url:
+          type: string
+        seo_title:
+          type: string
+        meta_keywords:
+          type: string
+        meta_description:
+          type: string
+        default_currency:
+          type: string
+        mail_from_address:
+          type: string
+        bcc_email:
+          type: string
+        cart_tax_country_iso:
+          type: string
+    taxonomy-input:
+      type: object
+      title: Taxonomy input
+      properties:
+        name:
+          type: string
+    taxon-input:
+      type: object
+      title: Taxon input
+      properties:
+        name:
+          type: string
+        parent_id:
+          type: integer
+        position:
+          type: integer
+        icon:
+          type: string
+        description:
+          type: string
+        permalink:
+          type: string
+        taxonomy_id:
+          type: integer
+        meta_description:
+          type: string
+        meta_keywords:
+          type: string
+        meta_title:
+          type: string
+        child_index:
+          type: integer
+    user-input:
+      type: object
+      title: User input
+      properties:
+        password:
+          type: string
+        password_confirmation:
+          type: string
+        bill_address_attributes:
+          $ref: '#/components/schemas/address-input'
+        ship_address_attributes:
+          $ref: '#/components/schemas/address-input'
+    address-book-input:
+      title: Address book input
+      allOf:
+        - $ref: '#/components/schemas/address-input'
+        - type: object
+          properties:
+            default:
+              type: boolean
+    zone-input:
+      type: object
+      title: Zone input
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        zone_members_attributes:
+          type: array
+          items:
+            type: object
+            properties:
+              zoneable_type:
+                type: string
+              zoneable_id:
+                type: integer
+    coupon-code-input:
+      type: object
+      title: Coupon code input
+      properties:
+        coupon_code:
+          type: string
+    stock-movement-input:
+      type: object
+      title: Stock movement input
+      properties:
+        quantity:
+          type: integer
+        stock_item_id:
+          type: integer
+    customer-return-input:
+      type: object
+      title: Customer return
+      properties:
+        number:
+          type: string
+        stock_location_id:
+          type: integer
+        return_items_attributes:
+          type: array
+          items:
+            type: object
+            properties:
+              inventory_unit_id:
+                type: integer
+              reception_status_event:
+                type: string
+              return_authorization_id:
+                type: integer
+              exchange_variant_id:
+                type: integer
+              preferred_reimbursement_type_id:
+                type: integer
+              resellable:
+                type: boolean
+            required:
+              - inventory_unit_id
+      required:
+        - stock_location_id
+        - return_items_attributes
+      x-examples:
+        Create New Customer Return:
+          stock_location_id: 1
+          return_items_attributes:
+            - inventory_unit_id: 198
+              reception_status_event: receive
+    customer-return:
+      type: object
+      title: Customer return
+      properties:
+        number:
+          type: string
+        stock_location_id:
+          type: integer

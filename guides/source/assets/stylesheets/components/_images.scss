@@ -1,0 +1,22 @@
+.isvg{
+  display: inline-block;
+  vertical-align: middle;
+  margin-top: -0.125em;
+}
+
+.img-circled{
+  border-radius: 50%;
+}
+
+.img-captioned{
+  margin-bottom: 2rem;
+
+  img{ margin-bottom: 8px; }
+
+  .caption{
+    margin-bottom: 0;
+    text-align: center;
+    color: $gray-048;
+    font-size: $font-size-xs;
+  }
+}

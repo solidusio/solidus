@@ -1,0 +1,26 @@
+<div data-hook="admin_orders_index_search">
+  <%= form_for :variant_search, url: form_path, method: :get do |f| %>
+    <div class="row">
+      <div class="field-block col-3">
+        <div class="field">
+          <%= label_tag nil, Spree::StockLocation.model_name.human %>
+          <%= select_tag :stock_location_id, options_from_collection_for_select(stock_locations, :id, :name, params[:stock_location_id]), { include_blank: t('spree.all'), class: 'custom-select fullwidth', "data-placeholder" => t('spree.select_a_stock_location') } %>
+        </div>
+      </div>
+      <div class="<%= if content_for?(:sidebar) then 'col-6' else 'col-9' end %>">
+        <div data-hook="add_product_name" class="field">
+          <%= label_tag :add_variant_id, Spree::Variant.model_name.human %>
+          <%= text_field_tag :variant_search_term, params[:variant_search_term], class: "fullwidth", placeholder: t('spree.variant_search_placeholder') %>
+        </div>
+      </div>
+    </div>
+
+    <div class="clearfix"></div>
+
+    <div class="actions filter-actions">
+      <div data-hook="admin_orders_index_search_buttons">
+        <%= button_tag t('spree.filter_results'), class: 'btn btn-primary' %>
+      </div>
+    </div>
+  <% end %>
+</div>

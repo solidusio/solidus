@@ -1,0 +1,26 @@
+<table>
+  <tr>
+    <td>
+      <p class="lede">
+        <%= t('spree.order_mailer.inventory_cancellation.dear_customer') %>
+      </p>
+      <p>
+        <%= t('spree.order_mailer.inventory_cancellation.instructions') %>
+      </p>
+      <p>
+        <%= t('spree.order_mailer.inventory_cancellation.order_summary_canceled') %>
+      </p>
+      <table>
+        <% @inventory_units.each do |item| %>
+          <tr>
+            <td><%= item.variant.sku %></td>
+            <td><%= item.variant.product.name %></td>
+            <td><%= item.variant.options_text -%></td>
+          </tr>
+        <% end %>
+      </table>
+      <p>
+    </td>
+    <td class="expander"></td>
+  </tr>
+</table>

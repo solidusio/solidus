@@ -1,0 +1,92 @@
+.pill {
+  display: inline-block;
+  padding: 0.2em 0.9em;
+  border-radius: 10px;
+  font-size: $font-size-pill;
+  background: $color-pill-neutral;
+  color: $color-pill-neutral-text;
+  white-space: nowrap;
+
+  $pill-states: (
+    complete: (
+      background: $color-pill-complete,
+      color: $color-pill-complete-text
+    ),
+    active: (
+      background: $color-pill-active,
+      color: $color-pill-active-text
+    ),
+    inactive: (
+      background: $color-pill-inactive,
+      color: $color-pill-inactive-text
+    ),
+    pending: (
+      background: $color-pill-pending,
+      color: $color-pill-pending-text
+    ),
+    warning: (
+      background: $color-pill-warning,
+      color: $color-pill-warning-text
+    ),
+    error: (
+      background: $color-pill-error,
+      color: $color-pill-error-text
+    )
+  );
+
+  @each $name, $colors in $pill-states {
+    &-#{$name} {
+      background: map-get($colors, background);
+      color: map-get($colors, color);
+    }
+  }
+}
+
+// Extend pill states for custom order, payment, and shipment state names
+.pill-address,
+.pill-awaiting,
+.pill-awaiting_return,
+.pill-backorder,
+.pill-backordered,
+.pill-balance_due,
+.pill-cart,
+.pill-checkout,
+.pill-confirm,
+.pill-credit_owed,
+.pill-delivery,
+.pill-in_transit,
+.pill-on_hand,
+.pill-partial,
+.pill-payment,
+.pill-processing,
+.pill-ready,
+.pill-resumed {
+  @extend .pill-pending;
+}
+
+.pill-authorized,
+.pill-canceled,
+.pill-completed,
+.pill-expired,
+.pill-given_to_customer,
+.pill-lost_in_transit,
+.pill-paid,
+.pill-received,
+.pill-reimbursed,
+.pill-returned,
+.pill-shipped,
+.pill-shipped_wrong_item,
+.pill-short_shipped,
+.pill-unexchanged,
+.pill-void {
+  @extend .pill-complete;
+}
+
+.pill-failed {
+  @extend .pill-warning;
+}
+
+.pill-errored,
+.pill-invalid {
+  @extend .pill-error;
+}

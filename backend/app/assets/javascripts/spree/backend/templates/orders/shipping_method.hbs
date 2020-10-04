@@ -1,0 +1,34 @@
+<th>
+  {{ human_model_name "spree/shipping_method" }}
+</th>
+{{#if editing}}
+<td colspan="4">
+{{#if shipping_rates}}
+  <form>
+    <select class="custom-select fullwidth" name="selected_shipping_method_id">
+      {{#each shipping_rates}}
+      <option value="{{ shipping_method_id }}">{{name}} {{display_cost}}</option>
+      {{/each}}
+    </select>
+  </form>
+{{/if}}
+</td>
+{{else}}
+<td colspan="3">
+  {{ selected_shipping_rate.name }}
+</td>
+<td class="total">
+  {{ format_money selected_shipping_rate.cost order.currency }}
+</td>
+{{/if}}
+
+<td class="actions">
+  {{#if editing}}
+    {{#if shipping_rates}}
+    <button class="js-save fa fa-check no-text with-tip" data-action="save" title="{{ t "actions.save" }}"></button>
+    {{/if}}
+    <button class="js-cancel fa fa-cancel no-text with-tip" data-action="cancel" title="{{ t "actions.cancel" }}"></button>
+  {{else}}
+    <button class="js-edit fa fa-edit no-text with-tip" data-action="edit" title=""{{ t "actions.edit" }}"></button>
+  {{/if}}
+</td>

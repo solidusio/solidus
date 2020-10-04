@@ -1,0 +1,30 @@
+<%- snippet = capture do %>
+  <div id="progress">
+    <div class="wrapper">
+      <div id="spinner" class="spinner"></div>
+      <div class="progress-message"><%= t('spree.loading') %>...</div>
+    </div>
+  </div>
+<%- end %>
+
+<div class="style-guide-result">
+  <%= snippet %>
+</div>
+
+<button id="loading-test-button">Toggle Loading</button>
+
+<script>
+  function closeProgress() {
+    $("#progress").toggle()
+    $(document).off('mousedown', 'body', closeProgress)
+  }
+
+  $('#loading-test-button').on('click', function(){
+    $("#progress").toggle({
+      duration: 0,
+      complete: function(){
+        $(document).on('mousedown', 'body', closeProgress)
+      }
+    })
+  });
+</script>

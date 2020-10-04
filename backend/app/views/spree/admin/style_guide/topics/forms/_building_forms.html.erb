@@ -1,0 +1,81 @@
+<p>This content is related to the current Solidus layout and it's forms, and does not apply to building pages with Bootstrap. The "Building Forms" section will be removed once all new Bootstrap layouts have been implemented in Solidus core.</p>
+<%- snippet = capture do %>
+  <form id="table-filter">
+    <fieldset>
+      <legend align="center">Search</legend>
+      <div class="row">
+        <div class="field-block col-3">
+          <div class="field">
+            <label for="q_number_cont" class="required">Text Field</label>
+            <input class="required" type="text">
+          </div>
+        </div>
+
+        <div class="field-block col-3">
+          <div class="date-range-filter field">
+            <label for="q_created_at_gt">Date Range</label>
+            <div class="input-group date-range-fields">
+              <input class="form-control datepicker datepicker-from" placeholder="From">
+              <div class="input-group-prepend input-group-append">
+                <span class="input-group-text range-divider">
+                  <i class="fa fa-arrow-right"></i>
+                </span>
+              </div>
+              <input class="form-control datepicker datepicker-to" placeholder="To">
+            </div>
+          </div>
+        </div>
+
+        <div class="col-3">
+          <div class="field checkbox">
+            <label>Select Box
+              <select>
+                <option>Option</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="field">
+            <select class="custom-select">
+              <option>Option A</option>
+              <option>Option B</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="col-3">
+          <div class="field checkbox">
+            <label>
+              <input type="checkbox" checked="checked">
+              Checkbox
+            </label>
+          </div>
+
+          <div class='field'>
+            <label>
+              <input name='radio' type='radio'>
+              Option 1
+            </label>
+            <label>
+              <input name='radio' type='radio'>
+              Option 2
+            </label>
+            <label>
+              <input name='radio' type='radio'>
+              Option 3
+            </label>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+  </form>
+<%- end %>
+
+
+<div class="style-guide-result">
+  <%= snippet %>
+</div>
+
+<div class="style-guide-code">
+  <pre><code class="language-html"><%= escape_once snippet %></code></pre>
+</div>

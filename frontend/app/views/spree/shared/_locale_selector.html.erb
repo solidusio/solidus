@@ -1,0 +1,25 @@
+<% available_locales = current_store.available_locales %>
+<% if available_locales.many? %>
+  <li id="locale_selector" data-hook>
+    <%= form_tag spree.select_locale_path, class: 'navbar-form' do %>
+      <div class="form-group">
+        <label for="switch_to_locale" class="sr-only">
+          <%= I18n.t('spree.i18n.language') %>
+        </label>
+        <%=
+          select_tag(
+            :switch_to_locale,
+            options_for_select(
+              available_locales.map do |locale|
+                [I18n.t('spree.i18n.this_file_language', locale: locale, default: locale.to_s, fallback: false), locale]
+              end.sort,
+              selected: I18n.locale
+            ),
+            class: 'form-control'
+          )
+        %>
+        <noscript><%= submit_tag t("spree.select") %></noscript>
+      </div>
+    <% end %>
+  </li>
+<% end %>

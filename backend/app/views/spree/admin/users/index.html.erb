@@ -1,0 +1,101 @@
+<% admin_breadcrumb(plural_resource_name(Spree::LegacyUser)) %>
+
+<% content_for :page_actions do %>
+  <% if can?(:admin, Spree.user_class) && can?(:create, Spree.user_class) %>
+    <li>
+      <%= link_to t('spree.new_user'), new_admin_user_url, id: 'admin_new_user_link', class: 'btn btn-primary' %>
+    </li>
+  <% end %>
+<% end %>
+
+<% content_for :table_filter_title do %>
+  <%= t('spree.search') %>
+<% end %>
+
+<% content_for :table_filter do %>
+  <div data-hook="admin_users_index_search">
+    <%= search_form_for [:admin, @search], url: admin_users_url do |f| %>
+      <div class="row">
+        <div class="col-xs-12 col-md-5">
+          <div class="form-group">
+            <%= f.label :email_cont, t('spree.email') %>
+            <%= f.text_field :email_cont, class: "form-control" %>
+          </div>
+        </div>
+        <div class="col-xs-12 col-md-3">
+          <div class="form-group">
+            <%= f.label :spree_roles_id_in, Spree.user_class.human_attribute_name(:spree_roles) %>
+            <%= f.collection_select :spree_roles_id_in, @roles, :id, :name, {},
+              multiple: true, class: 'select2 fullwidth' %>
+          </div>
+        </div>
+        <div class="col-xs-12 col-md-4">
+          <div class="date-range-filter form-group">
+            <%= label_tag :q_created_at_gt, t('spree.member_since') %>
+            <div class="date-range-fields input-group">
+              <%= f.text_field :created_at_gt, class: 'datepicker form-control datepicker-from',
+                value: params[:q].try!("[]", :created_at_gt), placeholder: t('spree.start') %>
+
+              <div class="input-group-prepend input-group-append">
+                <span class="input-group-text range-divider">
+                  <i class="fa fa-arrow-right"></i>
+                </span>
+              </div>
+
+              <%= f.text_field :created_at_lt, class: 'datepicker form-control datepicker-to',
+                value: params[:q].try!("[]", :created_at_lt), placeholder: t('spree.stop') %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="actions filter-actions" data-hook="admin_users_index_search_buttons">
+        <%= button_tag t('spree.search'), class: 'btn btn-primary' %>
+      </div>
+    <% end %>
+  </div>
+<% end %>
+
+<%= paginate @users, theme: "solidus_admin" %>
+
+<table class="index" id="listing_users" data-hook>
+  <colgroup>
+    <col style="width: 40%">
+    <col style="width: 20%">
+    <col style="width: 10%">
+    <col style="width: 10%">
+    <col style="width: 10%">
+    <col style="width: 10%">
+  </colgroup>
+  <thead>
+    <tr data-hook="admin_users_index_headers">
+      <th><%= sort_link @search, :email, Spree.user_class.human_attribute_name(:email), {}, {title: 'users_email_title'} %></th>
+      <th><%= Spree.user_class.human_attribute_name(:spree_roles) %></th>
+      <th class="align-center"><%= t('spree.num_orders') %></th>
+      <th class="align-center"><%= Spree.user_class.human_attribute_name(:lifetime_value) %></th>
+      <th class="align-center"><%= sort_link @search, :created_at, t('spree.member_since') %></th>
+      <th data-hook="admin_users_index_header_actions" class="actions"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |user|%>
+      <tr id="<%= spree_dom_id user %>" data-hook="admin_users_index_rows">
+        <td class='user_email'><%=link_to user.email, edit_admin_user_url(user) %></td>
+        <td><%= user.spree_roles.map(&:name).to_sentence %></td>
+        <td class="align-center"><%= link_to user.order_count, spree.orders_admin_user_path(user) %></td>
+        <td class="align-center"><%= link_to user.display_lifetime_value, spree.items_admin_user_path(user) %></td>
+        <td class="align-center"><%= l user.created_at.to_date %></td>
+        <td data-hook="admin_users_index_row_actions" class="actions">
+          <% if can?(:edit, user) %>
+            <%= link_to_edit user, no_text: true %>
+          <% end %>
+          <% if can?(:destroy, user) && user.orders.count.zero? %>
+            <%= link_to_delete user, no_text: true %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= paginate @users, theme: "solidus_admin" %>

@@ -1,0 +1,61 @@
+<%- snippet = capture do %>
+  <a class="with-tip" title="This will be the tooltip text." href="#">Some Link With Tip</a>
+<%- end %>
+
+<p>
+  We are using bootstrap's tooltip library
+  with the class <code>.with-tip</code> as a trigger.
+</p>
+
+<p class="style-guide-result">
+  <%= snippet %>
+</p>
+
+<div class="style-guide-code">
+  <pre><code class="language-html"><%= escape_once snippet %></code></pre>
+</div>
+<br/>
+<%- info_tooltip = capture do %>
+  <a title="Some info." class="fa fa-info-circle with-tip"  href="#"></a>
+<%- end %>
+<table class="with-actions-borders">
+  <thead>
+    <tr>
+      <th> Type </th>
+      <th> Example </th>
+      <th> Code </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <b>Info tooltips</b>
+        These are used to add supplementary information to form labels.
+        The info icon is the coverable area for this tooltip and should be placed at the right side of the form label.
+      </td>
+      <td class="align-center">
+          <%= info_tooltip %>
+      </td>
+      <td>
+        <div class="style-guide-code">
+          <pre><code class="language-html"><%= escape_once info_tooltip %></code></pre>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <b>Adding icon tooltips</b>
+          These are used to add textual context to the action icons used with tabular data like edit, delete, and clone.
+          They are styled with a similar colour to the icon that they’re attached to.
+      </td>
+      <td class="align-center actions">
+        <%= link_to_edit_url('#', title: 'edit', no_text: true) %>
+      </td>
+      <td>
+        <div class="style-guide-code">
+          <pre><code class="language-html"><%= escape_once link_to_edit_url('#', title: 'edit', no_text: true) %></code></pre>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>

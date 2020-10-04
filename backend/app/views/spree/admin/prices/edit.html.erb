@@ -1,0 +1,14 @@
+<%= render 'spree/admin/shared/product_tabs', current: 'Prices' %>
+<% admin_breadcrumb(link_to(plural_resource_name(Spree::Price), spree.admin_product_prices_url(@product))) %>
+<% admin_breadcrumb(t('spree.actions.edit')) %>
+
+<%= form_for @price, url: spree.admin_product_price_path(@product, @price) do |f| %>
+  <fieldset>
+    <legend> <%= t('.edit_price') %> </legend>
+    <%= render 'form', f: f %>
+
+    <% if can?(:update, @product) %>
+      <%= render partial: 'spree/admin/shared/edit_resource_links' %>
+    <% end %>
+  </fieldset>
+<% end %>

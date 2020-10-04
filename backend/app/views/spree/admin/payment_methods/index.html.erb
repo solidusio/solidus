@@ -1,0 +1,69 @@
+<%= render 'spree/admin/shared/payments_tabs' %>
+
+<% admin_breadcrumb(t('spree.settings')) %>
+<% admin_breadcrumb(plural_resource_name(Spree::Payment)) %>
+<% admin_breadcrumb(plural_resource_name(Spree::PaymentMethod)) %>
+
+
+<% content_for :page_actions do %>
+  <% if can?(:create, Spree::PaymentMethod) %>
+    <li>
+      <%= link_to t('spree.new_payment_method'), new_object_url, id: 'admin_new_payment_methods_link', class: 'btn btn-primary' %>
+    </li>
+  <% end %>
+<% end %>
+
+<% if @payment_methods.any? %>
+  <table class="index sortable" id="listing_payment_methods" data-hook data-sortable-link="<%= update_positions_admin_payment_methods_url %>">
+    <colgroup>
+      <col style="width: 10%">
+      <col style="width: 13%">
+      <col style="width: 33%">
+      <col style="width: 16%">
+      <col style="width: 16%">
+      <col style="width: 19%">
+      <col style="width: 13%">
+    </colgroup>
+    <thead>
+      <tr data-hook="admin_payment_methods_index_headers">
+        <th></th>
+        <th><%= Spree::PaymentMethod.human_attribute_name(:name) %></th>
+        <th><%= Spree::PaymentMethod.human_attribute_name(:type) %></th>
+        <th><%= Spree::PaymentMethod.human_attribute_name(:available_to_users) %></th>
+        <th><%= Spree::PaymentMethod.human_attribute_name(:available_to_admin) %></th>
+        <th><%= Spree::PaymentMethod.human_attribute_name(:state) %></th>
+        <th data-hook="admin_payment_methods_index_header_actions" class="actions"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @payment_methods.each do |method|%>
+        <tr id="<%= spree_dom_id method %>" data-hook="admin_payment_methods_index_rows">
+          <td><span class="handle"></span></td>
+          <td><%= method.name %></td>
+          <td><%= method.model_name.human %></td>
+          <td class="align-center"><%= method.available_to_users ? t('spree.say_yes') : t('spree.say_no') %></td>
+          <td class="align-center"><%= method.available_to_admin ? t('spree.say_yes') : t('spree.say_no') %></td>
+          <td class="align-center">
+            <span class="pill pill-<%= method.active ? 'active' : 'inactive' %>">
+              <%= t(method.active? ? :active : :inactive, scope: 'spree') %>
+            </span>
+          </td>
+          <td data-hook="admin_payment_methods_index_row_actions" class="actions">
+            <% if can?(:update, method.becomes(Spree::PaymentMethod)) %>
+              <%= link_to_edit method.becomes(Spree::PaymentMethod), no_text: true %>
+            <% end %>
+            <% if can?(:destroy, method.becomes(Spree::PaymentMethod)) %>
+              <%= link_to_delete method.becomes(Spree::PaymentMethod), no_text: true  %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div class="no-objects-found">
+    <%= render 'spree/admin/shared/no_objects_found',
+                 resource: Spree::PaymentMethod,
+                 new_resource_url: new_object_url %>
+  </div>
+<% end %>

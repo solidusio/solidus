@@ -1,0 +1,69 @@
+.errorExplanation {
+  padding: 10px 15px;
+  border-top: 3px solid theme-color("danger");
+  background-color: lighten(theme-color("danger"), 40);
+  border-radius: 0 0 $border-radius $border-radius;
+  color: $body-color;
+  margin-bottom: 15px;
+
+  h2 {
+    font-size: 140%;
+    margin-bottom: 5px;
+  }
+
+  p {
+    padding: 10px 0;
+  }
+
+  ul {
+    list-style-position: inside;
+
+    li {
+      font-weight: $font-weight-bold;
+    }
+  }
+}
+
+.flash-wrapper {
+  position: fixed;
+  bottom: 0;
+  left: $width-sidebar;
+  right: 0;
+  z-index: 1000;
+
+  .admin-nav-hidden & {
+    left: $width-sidebar-collapsed;
+  }
+}
+
+.flash {
+  border-top: 3px solid;
+  padding: 16px;
+  text-align: center;
+  font-size: 120%;
+  color: $body-color;
+
+  &.notice {
+    background-color: rgba(lighten($color-notice, 15), .95);
+    border-top-color: $color-notice;
+  }
+  &.success {
+    background-color: rgba(lighten($color-success, 30), .95);
+    border-top-color: $color-success;
+  }
+  &.error {
+    background-color: rgba(lighten($color-error, 30), .95);
+    border-top-color: $color-error;
+  }
+}
+
+.alert {
+  position: relative;
+  font-weight: normal !important;
+
+  a {
+    text-decoration: underline;
+  }
+
+  &.error a { color: lighten(theme-color("danger"), 8); }
+}

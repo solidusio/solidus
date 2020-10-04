@@ -1,0 +1,65 @@
+<% admin_breadcrumb(link_to plural_resource_name(Spree::Promotion), spree.admin_promotions_path) %>
+<% admin_breadcrumb(link_to @promotion.name, spree.edit_admin_promotion_path(@promotion.id)) %>
+<% admin_breadcrumb(plural_resource_name(Spree::PromotionCodeBatch)) %>
+
+<% content_for :page_actions do %>
+  <li>
+    <% if can?(:create, Spree::PromotionCodeBatch) %>
+      <%= link_to t('spree.new_promotion_code_batch'), new_object_url, class: 'btn btn-primary' %>
+    <% end %>
+  </li>
+<% end %>
+
+<% if @promotion_code_batches.any? %>
+  <table>
+    <thead>
+      <tr>
+        <th><%= Spree::PromotionCodeBatch.human_attribute_name(:base_code) %></th>
+        <th><%= Spree::PromotionCodeBatch.human_attribute_name(:total_codes) %></th>
+        <th><%= Spree::PromotionCodeBatch.human_attribute_name(:status) %></th>
+        <th><%= Spree::PromotionCodeBatch.human_attribute_name(:email) %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @promotion_code_batches.each do |promotion_code_batch| %>
+        <tr>
+          <td><%= promotion_code_batch.base_code %></td>
+          <td><%= promotion_code_batch.number_of_codes %></td>
+          <td>
+            <% if promotion_code_batch.error.present? %>
+              <%= t(
+                "spree.promotion_code_batches.errored",
+                error: promotion_code_batch.error
+              ) %>
+            <% elsif promotion_code_batch.finished? %>
+              <%= t(
+                "spree.promotion_code_batches.finished",
+                number_of_codes: promotion_code_batch.number_of_codes
+              ) %>
+              <%= link_to(
+                t('spree.download_promotion_codes_list'),
+                admin_promotion_promotion_code_batch_download_path(
+                  promotion_code_batch_id: promotion_code_batch.id,
+                  format: :csv
+                )
+              ) %>
+            <% else %>
+              <%= t(
+                "spree.promotion_code_batches.processing",
+                number_of_codes: promotion_code_batch.number_of_codes,
+                number_of_codes_processed: promotion_code_batch.promotion_codes.count
+              ) %>
+            <% end %>
+          </td>
+          <td><%= promotion_code_batch.email %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div class="no-objects-found">
+    <%= render 'spree/admin/shared/no_objects_found',
+                 resource: Spree::PromotionCodeBatch,
+                 new_resource_url: new_object_url %>
+  </div>
+<% end %>

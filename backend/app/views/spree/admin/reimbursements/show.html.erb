@@ -1,0 +1,93 @@
+<%= render partial: 'spree/admin/shared/order_tabs', locals: { current: 'Customer Returns' } %>
+
+<% admin_breadcrumb("#{Spree::Reimbursement.model_name.human} #{@reimbursement.number}") %>
+
+
+<% content_for :page_actions do %>
+  <li><%= link_to t('spree.back_to_customer_return'), url_for([:edit, :admin, @order, @reimbursement.customer_return]), class: 'btn btn-primary' %></li>
+<% end %>
+
+<%= render partial: 'spree/shared/error_messages', locals: { target: @reimbursement } %>
+
+<fieldset class='no-border-bottom'>
+  <legend align='center'><%= t('spree.items_reimbursed') %></legend>
+  <table class="index reimbursement-reimbursement-items">
+    <thead>
+      <tr>
+        <th><%= Spree::Product.model_name.human %></th>
+        <th class="wrap-text"><%= Spree::ReturnItem.human_attribute_name(:preferred_reimbursement_type_id) %></th>
+        <th class="wrap-text"><%= Spree::ReturnItem.human_attribute_name(:override_reimbursement_type_id) %></th>
+        <th class="wrap-text"><%= Spree::ReturnItem.human_attribute_name(:exchange_variant) %></th>
+        <th class="wrap-text"><%= Spree::ReturnItem.human_attribute_name(:amount) %></th>
+        <th><%= Spree::ReturnItem.human_attribute_name(:total) %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @reimbursement.return_items.each do |return_item| %>
+
+        <tr>
+          <td>
+            <div class="variant-name"><%= return_item.inventory_unit.variant.name %></div>
+            <div class="variant-options"><%= return_item.inventory_unit.variant.options_text %></div>
+          </td>
+          <td>
+            <%= reimbursement_type_name(return_item.preferred_reimbursement_type) %>
+          </td>
+          <td>
+            <%= reimbursement_type_name(return_item.override_reimbursement_type) %>
+          </td>
+          <td>
+            <%= return_item.exchange_variant.try(:exchange_name) %>
+          </td>
+          <td>
+            <%= return_item.display_amount %>
+          </td>
+          <td>
+            <%= return_item.display_total %>
+          </td>
+        </tr>
+
+      <% end %>
+    </tbody>
+  </table>
+</fieldset>
+
+<fieldset class="no-border-bottom">
+  <legend align='center'><%= Spree::Refund.model_name.human %></legend>
+  <table class="index reimbursement-refunds">
+    <thead data-hook="customer_return_header">
+      <tr>
+        <th><%= Spree::Refund.human_attribute_name(:description) %></th>
+        <th><%= Spree::Refund.human_attribute_name(:amount) %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @reimbursement.refunds.each do |refund| %>
+        <tr id="<%= spree_dom_id(refund) %>" data-hook="reimbursement_refund_row" class="reimbursement-refund">
+          <td class="reimbursement-refund-description"><%= refund.description %></td>
+          <td class="reimbursement-refund-amount"><%= refund.display_amount %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</fieldset>
+
+<fieldset class="no-border-bottom">
+  <legend align='center'><%= t('spree.credits') %></legend>
+  <table class="index reimbursement-credits">
+    <thead data-hook="customer_return_header">
+      <tr>
+        <th><%= t('spree.description') %></th>
+        <th><%= Spree::Reimbursement::Credit.human_attribute_name(:amount) %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @reimbursement.credits.each do |credit| %>
+        <tr id="<%= spree_dom_id(credit) %>" data-hook="reimbursement_refund_row" class="reimbursement-credit">
+          <td class="reimbursement-credit-description"><%= credit.description %></td>
+          <td class="reimbursement-credit-amount"><%= credit.display_amount %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</fieldset>

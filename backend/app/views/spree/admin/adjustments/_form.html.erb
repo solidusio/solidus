@@ -1,0 +1,28 @@
+<div data-hook="admin_adjustment_form_fields">
+  <div class="row">
+
+    <div class="col-3">
+      <%= f.field_container :amount do %>
+        <%= f.label :amount, class: 'required' %>
+        <%= text_field :adjustment, :amount, class: 'fullwidth' %>
+        <%= f.error_message_on :amount %>
+      <% end %>
+    </div>
+
+    <div class="col-6">
+      <%= f.field_container :label do %>
+        <%= f.label :label, class: 'required' %>
+        <%= text_field :adjustment, :label, class: 'fullwidth' %>
+        <%= f.error_message_on :label %>
+      <% end %>
+    </div>
+
+    <div class="col-3">
+      <%= f.field_container :label do %>
+        <%= f.label :adjustment_reason_id %><br/>
+        <%= f.collection_select(:adjustment_reason_id, reasons_for(@adjustment), :id, :name, {include_blank: true}, {"data-placeholder" => t('spree.select_a_reason'), class: 'custom-select fullwidth'}) %>
+      <% end %>
+    </div>
+
+  </div>
+</div>

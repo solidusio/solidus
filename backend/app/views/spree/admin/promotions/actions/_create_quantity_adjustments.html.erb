@@ -1,0 +1,11 @@
+<div class="field">
+  <% field_name = "#{param_prefix}[preferred_group_size]" %>
+  <%= label_tag field_name, t('spree.group_size') %>
+  <%= number_field_tag field_name, promotion_action.preferred_group_size, class: "fullwidth", min: 1 %>
+</div>
+
+<%= render "spree/admin/promotions/actions/promotion_calculators_with_custom_fields",
+  calculators: Rails.application.config.spree.calculators.promotion_actions_create_quantity_adjustments,
+  promotion_action: promotion_action,
+  param_prefix: param_prefix
+%>

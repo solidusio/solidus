@@ -1,0 +1,365 @@
+$padding-x-navbar: 26px;
+$padding-y-navbar: 13px;
+$padding-y-navbar-submenu: 9px;
+
+#admin-nav-toggle {
+  border-bottom: $border-sidebar;
+  padding: ($padding-y-navbar/ 2) $padding-x-navbar;
+  width: 100%;
+  text-align: left;
+  color: $color-navbar;
+  font-weight: $font-weight-bold;
+  position: relative;
+  overflow: hidden;
+  display: block;
+  height: 39px;
+  z-index: 1;
+
+  span {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-bold;
+  }
+
+  &.btn {
+    background-color: transparent;
+  }
+
+  &.fa {
+    text-indent: 2em;
+
+    &:before {
+      color: $color-icon-navbar;
+      font-weight: $font-weight-normal;
+      position: absolute;
+      left: 1em;
+      top: 0;
+      line-height: 39px;
+      transform: translateX(-50%);
+      transition: transform .5s ease-in-out;
+    }
+
+    &:focus {
+      outline: 0;
+      box-shadow: none;
+    }
+  }
+}
+
+.admin-nav-hidden {
+  padding-left: $width-sidebar-collapsed;
+
+  .admin-nav,
+  .admin-nav-footer {
+    width: $width-sidebar-collapsed;
+  }
+
+  .text {
+    transform: translateX(-50px);
+    display: none;
+  }
+
+  .admin-login-nav a {
+    text-overflow: clip;
+  }
+
+  .brand-link {
+    overflow: hidden;
+
+    img {
+      max-width: 125px;
+    }
+  }
+
+  .admin-nav-menu {
+    li {
+      &.selected:not(:hover) > ul  {
+        visibility: hidden;
+      }
+
+      &.selected:not(:hover) .admin-subnav {
+        display: none;
+      }
+    }
+  }
+
+  .admin-nav-menu .selected li {
+    padding-left: 0;
+  }
+}
+
+nav.menu {
+  ul {
+    list-style: none;
+
+    li {
+      a {
+        padding: 10px 0;
+        display: block;
+        position: relative;
+        text-align: left;
+        border: 1px solid transparent;
+        font-weight: $font-weight-bold;
+      }
+
+      &.active a {
+        color: $color-primary;
+        border-left-width: 0;
+        border-bottom-color: $color-primary;
+      }
+    }
+  }
+}
+
+.admin-nav {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: $zindex-sticky;
+  width: $width-sidebar;
+  border-right: $border-sidebar;
+  background: $color-sidebar-bg;
+
+  @media print {
+    display: none
+  }
+}
+
+.admin-nav-header {
+  background-color: $color-white;
+  border-bottom: 1px solid $color-border;
+  border-right: 1px solid $color-border;
+  text-align: center;
+  padding: 0 1.25em;
+  width: $width-sidebar;
+  // Using line height for proper vertical centering.
+  // As line height does not take the border width into account we need to subtract it.
+  line-height: $main-header-height - 1px;
+}
+
+.admin-nav-menu {
+  ul {
+    padding: 0;
+    list-style: none;
+  }
+
+  li {
+    background: $color-navbar-bg;
+
+    &:hover {
+      background: $color-navbar-active-bg;
+
+      > a,
+      > a:before {
+        color: $color-navbar-active;
+      }
+    }
+
+    &.selected {
+      background: $color-navbar-active-bg;
+
+      > a,
+      > a:before {
+        color: $color-navbar-active;
+      }
+    }
+
+    &.selected li {
+      padding-left: 2em;
+    }
+
+    &:not(.selected):not(:hover) > ul {
+      visibility: hidden;
+    }
+  }
+
+  a {
+    display: block;
+    min-height: 39px;
+    padding: $padding-y-navbar $padding-x-navbar;
+    color: $color-navbar;
+    font-weight: $font-weight-bold;
+  }
+
+  .icon_link {
+    text-indent: 2em;
+
+    &:before {
+      color: $color-icon-navbar;
+      font-weight: $font-weight-normal;
+      position: absolute;
+      left: 1em;
+      transform: translateX(-50%);
+    }
+  }
+
+  // until .fa usage is corrected
+  .text {
+    font-family: $font-family-base;
+    -webkit-font-smoothing: auto;
+    -moz-osx-font-smoothing: auto;
+  }
+
+  .admin-subnav {
+    background: $color-navbar-submenu-bg;
+    margin: 0;
+    padding-top:    $padding-y-navbar - $padding-y-navbar-submenu;
+    padding-bottom: $padding-y-navbar - $padding-y-navbar-submenu;
+
+    li {
+      background: $color-navbar-submenu-bg;
+    }
+
+    a {
+      color: $color-navbar-submenu;
+      font-weight: $font-weight-normal;
+      padding-top:    $padding-y-navbar-submenu;
+      padding-bottom: $padding-y-navbar-submenu;
+
+      &:hover {
+        color: $color-navbar-submenu-active;
+      }
+    }
+
+    .selected {
+      a {
+        color: $color-navbar-submenu-active;
+        font-weight: $font-weight-bold;
+      }
+    }
+  }
+}
+
+.admin-nav-menu li:not(.selected),
+.admin-nav-hidden .admin-nav-menu li.selected:hover {
+  position: relative;
+
+  // flyout nav
+  > ul {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    width: $width-sidebar-flyout;
+    margin-left: 0;
+    background: $color-white;
+    box-shadow: 1px 0 4px 0 rgba(0, 0, 0, 0.1);
+    border-radius: 0 4px 4px 4px;
+    border: 1px solid $color-border;
+    @include caret($direction: left, $color-caret: $color-white);
+
+  &:before {
+    z-index: 1;
+    top: 1.5em;
+    pointer-events: none;
+  }
+
+  &:after {
+    content: '';
+    display: block;
+    position: absolute;
+    border-width: 1em 1em;
+    border-style: solid;
+    border-color: transparent;
+    border-right-color: $color-border;
+    left: -2.1em;
+    top: 1.5em;
+    margin-top: -1em;
+    pointer-events: none;
+  }
+
+  > li {
+    background: $color-white;
+
+    a {
+      font-weight: $font-weight-bold;
+    }
+  }
+ }
+}
+
+.admin-nav-footer {
+  width: $width-sidebar;
+  background-color: $color-navbar-footer-bg;
+  border-top: $border-sidebar;
+  border-right: $border-sidebar;
+
+  a {
+    color: $color-navbar-footer;
+
+    &:hover {
+      color: $color-navbar-footer-active;
+    }
+  }
+}
+
+.admin-locale-selection {
+  margin: 1em;
+  position: relative;
+
+  &::after {
+    content: "\f0ac";
+    font-family: "FontAwesome";
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: .5rem 0 .5rem .25rem;
+    z-index: -1;
+  }
+
+  .admin-nav-hidden & {
+    .js-locale-selection.custom-select {
+      background-color: transparent;
+      background-position: 1.5rem center;
+      background-size: 8px 9px;
+      border: 0;
+      opacity: .6;
+      position: relative;
+      overflow: hidden;
+      text-indent: 1rem;
+      z-index: 1;
+
+      &:focus {
+        box-shadow: none;
+      }
+    }
+  }
+}
+
+.admin-nav.fits .admin-nav-footer {
+  position: fixed;
+  bottom: 0;
+}
+
+.admin-login-nav {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0;
+
+  li {
+    padding: 0.3rem 1.2rem;
+  }
+
+  a {
+    display: inline-block;
+    font-weight: $font-weight-bold;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  i {
+    margin-right: 0.5rem;
+  }
+}
+
+.brand-link {
+  display: block;
+  height: $main-header-height - 1px;
+  overflow: hidden;
+
+  img {
+    max-height: 100%;
+    max-width: 100%;
+  }
+}

@@ -1,0 +1,113 @@
+.tabs {
+  display: flex;
+  margin: 1em 0;
+  border-bottom: 1px solid $color-tab-border;
+  white-space: nowrap;
+
+  &,
+  ul {
+    padding-left: 0;
+    list-style: none;
+  }
+
+  a {
+    padding: 1em;
+  }
+
+  @media print { display: none }
+}
+
+.tabs > li:not(.in-dropdown) {
+  flex-grow: 0;
+  flex-shrink: 0;
+
+  // Move down one pixel to sit on top of the ul's border-bottom
+  position: relative;
+  top: 2px;
+
+  > a {
+    color: $color-tab;
+    display: block;
+    border: 1px solid $color-tab-border;
+    border-radius: 4px 4px 0 0;
+    line-height: 1;
+  }
+
+  &:not(:first-child) > a {
+    border-left: none;
+  }
+
+  &:not(.active) > a {
+    background: $color-tab-bg;
+  }
+
+  &.active > a,
+  &.active:hover {
+    background: $color-tab-active-bg;
+    border-bottom-color: $color-tab-active-border;
+    color: $color-tab-active;
+    font-weight: $font-weight-bold;
+  }
+
+  &:not(.active):hover > a {
+    color: $color-tab-active;
+  }
+}
+
+.tabs-overflowed.tabs > li:not(.tabs-dropdown) {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+
+.tabs-dropdown {
+  flex-grow: 0;
+  flex-shrink: 0;
+  position: relative;
+
+  .tabs:not(.tabs-overflowed) & {
+    visibility: hidden;
+  }
+
+  > a {
+    position: relative;
+    background: $color-tab-active-bg;
+    z-index: 1;
+
+    &:before {
+      content: "\f107";
+      font-family: FontAwesome;
+      -webkit-font-smoothing: antialiased;
+    }
+  }
+
+  &:hover > a {
+    background: $color-tab-active-bg;
+  }
+
+  &:not(:hover) ul {
+    display: none;
+  }
+
+  ul {
+    position: absolute;
+    top: calc(100% - 1px);
+    right: 0;
+    z-index: 1;
+  }
+}
+
+.tabs li.in-dropdown {
+  a {
+    display: block;
+    border: 1px solid $color-tab-border;
+    background: white;
+  }
+
+  &:not(:first-child) a {
+    border-top: none;
+  }
+
+  &:last-child a {
+    border-radius: 0 0 3px 3px;
+  }
+}

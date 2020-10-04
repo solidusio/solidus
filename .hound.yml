@@ -1,0 +1,10 @@
+ruby:
+  config_file: .rubocop.yml
+  version: 0.75.0
+erb_lint:
+  enabled: true
+scss:
+  enabled: false
+eslint:
+  enabled: true
+  config_file: .eslintrc.json

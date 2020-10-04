@@ -1,0 +1,23 @@
+@mixin line-through($color: $color-primary, $background: $body-bg) {
+  position: relative;
+  text-align: center;
+
+  &:before {
+    content: "";
+    position: absolute;
+    top: calc(50% - 1px);
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: $color;
+    z-index: 0;
+  }
+
+  > * { // usually a <span> but we'll use an * just in case
+    padding-left: 1rem;
+    padding-right: 1rem;
+    position: relative;
+    background: $background;
+    z-index: 1;
+  }
+}

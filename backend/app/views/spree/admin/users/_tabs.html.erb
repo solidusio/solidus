@@ -1,0 +1,29 @@
+<% content_for :tabs do %>
+  <nav>
+    <ul class='tabs' data-hook="admin_user_tab_options">
+      <li<%== ' class="active"' if current == :account %>>
+        <%= link_to t("spree.admin.user.account"), spree.edit_admin_user_path(@user) %>
+      </li>
+      <% if can?(:addresses, @user) %>
+        <li<%== ' class="active"' if current == :address %>>
+          <%= link_to t("spree.admin.user.addresses"), spree.addresses_admin_user_path(@user) %>
+        </li>
+      <% end %>
+      <% if can?(:orders, @user) %>
+        <li<%== ' class="active"' if current == :orders %>>
+          <%= link_to t("spree.admin.user.order_history"), spree.orders_admin_user_path(@user) %>
+        </li>
+      <% end %>
+      <% if can?(:items, @user) %>
+        <li<%== ' class="active"' if current == :items %>>
+          <%= link_to t("spree.admin.user.items"), spree.items_admin_user_path(@user) %>
+        </li>
+      <% end %>
+      <% if can?(:read, @user.store_credits.new) %>
+        <li<%== ' class="active"' if current == :store_credits %>>
+          <%= link_to t("spree.admin.user.store_credit"), spree.admin_user_store_credits_path(@user) %>
+        </li>
+      <% end %>
+    </ul>
+  </nav>
+<% end %>

@@ -1,0 +1,21 @@
+<%= render partial: 'spree/admin/shared/product_tabs', locals: { current: 'Variants' } %>
+
+<% admin_breadcrumb(link_to plural_resource_name(Spree::Variant), admin_product_variants_path(@product)) %>
+<% admin_breadcrumb(@variant.options_text) %>
+
+
+<%= render partial: 'spree/shared/error_messages', locals: { target: @variant } %>
+
+
+<%= form_for [:admin, @product, @variant] do |f| %>
+  <fieldset>
+    <legend><%= t('.edit_variant') %></legend>
+    <div data-hook="admin_variant_edit_form">
+      <%= render partial: 'form', locals: { f: f } %>
+    </div>
+
+    <% if can?(:update, @variant) %>
+      <%= render partial: 'spree/admin/shared/edit_resource_links' %>
+    <% end %>
+  </fieldset>
+<% end %>

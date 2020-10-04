@@ -1,0 +1,13 @@
+<div class="promotion_action promotion-block <%= promotion_action.model_name.element %>" id="<%= dom_id promotion_action %>">
+  <h6 class="promotion-title"><%= promotion_action.class.human_attribute_name(:description) %></h6>
+  <% if can?(:destroy, promotion_action) %>
+    <%= link_to_with_icon 'trash', '', spree.admin_promotion_promotion_action_path(@promotion, promotion_action), remote: true, method: :delete, class: 'delete' %>
+  <% end %>
+
+  <% param_prefix = "promotion[promotion_actions_attributes][#{promotion_action.id}]" %>
+  <%= hidden_field_tag "#{param_prefix}[id]", promotion_action.id %>
+
+  <%= render partial: "spree/shared/error_messages", locals: { target: promotion_action } %>
+  <%= render partial: promotion_action.to_partial_path,
+             locals: { promotion_action: promotion_action, param_prefix: param_prefix } %>
+</div>

@@ -1,0 +1,52 @@
+<%= render partial: 'spree/admin/shared/order_tabs', locals: { current: 'Customer Returns' } %>
+
+<% content_for :page_actions do %>
+  <% if can? :create, Spree::CustomerReturn %>
+    <li>
+      <%= link_to t('spree.new_customer_return'), spree.new_admin_order_customer_return_path(@order), class: 'btn btn-primary' %>
+    </li>
+  <% end %>
+<% end %>
+
+<% admin_breadcrumb(plural_resource_name(Spree::CustomerReturn)) %>
+
+<% if @customer_returns.any? %>
+  <table class="index">
+    <thead data-hook="customer_return_header">
+      <tr>
+        <th><%= Spree::CustomerReturn.human_attribute_name(:number) %></th>
+        <th><%= Spree::CustomerReturn.human_attribute_name(:total_excluding_vat) %></th>
+        <th><%= Spree::CustomerReturn.human_attribute_name(:total) %></th>
+        <th><%= Spree::CustomerReturn.human_attribute_name(:created_at) %></th>
+        <th><%= Spree::CustomerReturn.human_attribute_name(:reimbursement_status) %></th>
+        <th class="actions"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @customer_returns.each do |customer_return| %>
+        <tr id="<%= spree_dom_id(customer_return) %>" data-hook="customer_return_row">
+          <td><%= link_to customer_return.number, edit_admin_order_customer_return_path(@order, customer_return) %></td>
+          <td><%= customer_return.display_total_excluding_vat.to_html %></td>
+          <td><%= customer_return.display_total.to_html %></td>
+          <td><%= pretty_time(customer_return.created_at) %></td>
+          <td>
+            <% if customer_return.fully_reimbursed? %>
+              <span class="pill pill-complete"><%= t('spree.reimbursed') %></span>
+            <% else %>
+              <span class="pill pill-pending"><%= t('spree.incomplete') %></span>
+            <% end %>
+          </td>
+          <td class='actions align-center' data-hook="admin_orders_customer_returns_index_row_actions">
+            <%= link_to_edit_url edit_admin_order_customer_return_path(@order, customer_return), title: "admin_edit_#{dom_id(customer_return)}", no_text: true %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div class="no-objects-found">
+    <%= render 'spree/admin/shared/no_objects_found',
+                 resource: Spree::CustomerReturn,
+                 new_resource_url: new_object_url %>
+  </div>
+<% end %>

@@ -1,0 +1,27 @@
+// Container widths
+//
+// Set the container width, and override it for fixed navbars in media queries.
+
+.container {
+  @include media-breakpoint-down(md){
+    max-width: none;
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+}
+
+.container-xs{
+  max-width: 400px + $grid-gutter-width;
+}
+
+.container-sm{
+  max-width: 640px + $grid-gutter-width;
+}
+
+.container-md{
+  max-width: 740px + $grid-gutter-width;
+}
+
+.container-lg{
+  max-width: 960px + $grid-gutter-width;
+}

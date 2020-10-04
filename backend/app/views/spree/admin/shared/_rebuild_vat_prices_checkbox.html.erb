@@ -1,0 +1,12 @@
+<div data-hook="admin_<%= model_name %>_form_generate_vat_prices" class="<%= local_assigns[:wrapper_class] %> checkbox">
+  <label>
+    <%= form.check_box :rebuild_vat_prices, checked: form.object.prices.size <= 1 %>
+    <%= Spree::Variant.human_attribute_name(:rebuild_vat_prices) %>
+  </label>
+</div>
+
+<script type="text/javascript">
+  $('#<%= model_name %>_price').on('change', function(e) {
+    $('#<%= model_name %>_rebuild_vat_prices').prop('checked', true);
+  });
+</script>

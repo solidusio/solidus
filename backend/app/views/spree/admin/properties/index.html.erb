@@ -1,0 +1,85 @@
+<% admin_breadcrumb(link_to plural_resource_name(Spree::Product), spree.admin_products_path) %>
+<% admin_breadcrumb(plural_resource_name(Spree::Property)) %>
+
+
+<% content_for :page_actions do %>
+  <% if can?(:create, Spree::Property) %>
+    <li id="new_property_link">
+      <%= link_to t('spree.new_property'), new_admin_property_url, remote: true, id: 'new_property_link', class: 'btn btn-primary' %>
+    </li>
+  <% end %>
+<% end %>
+
+<% content_for :table_filter_title do %>
+  <%= t('spree.search') %>
+<% end %>
+
+<% content_for :table_filter do %>
+  <div data-hook="admin_property_sidebar">
+
+    <%= search_form_for [:admin, @search] do |f| %>
+
+        <%- locals = {f: f} %>
+
+        <div data-hook="admin_property_index_search">
+          <div class="row">
+            <div class="col-6">
+              <div class="field">
+                <%= f.label :name_cont, t('spree.name') %>
+                <%= f.text_field :name_cont, size: 15 %>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="clear"></div>
+
+        <div class="form-buttons actions filter-actions" data-hook="admin_pproperties_index_search_buttons">
+          <%= button_tag t('spree.search'), class: 'btn btn-primary' %>
+        </div>
+    <% end %>
+  </div>
+<% end %>
+
+<div id="new_property_container"></div>
+
+<% if @properties.any? %>
+<table class="index" id='listing_properties' data-hook>
+  <colgroup>
+    <col style="width: 40%">
+    <col style="width: 45%">
+    <col style="width: 15%">
+  </colgroup>
+  <thead>
+    <tr data-hook="listing_properties_header">
+      <th><%= Spree::Property.human_attribute_name(:name) %></th>
+      <th><%= Spree::Property.human_attribute_name(:presentation) %></th>
+      <th class="actions"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @properties.each do |property| %>
+      <tr id="<%= spree_dom_id property %>" data-hook="listing_properties_row">
+        <td><%= property.name %></td>
+        <td><%= property.presentation %></td>
+        <td class="actions">
+          <% if can?(:update, property) %>
+            <%= link_to_edit(property, no_text: true) %>
+          <% end %>
+          <% if can?(:destroy, property) %>
+            <%= link_to_delete(property, no_text: true) %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<% else %>
+  <div class="no-objects-found">
+    <%= render 'spree/admin/shared/no_objects_found',
+                 resource: Spree::Property,
+                 new_resource_url: new_object_url %>
+  </div>
+<% end %>
+
+<%= paginate @collection, theme: "solidus_admin" %>

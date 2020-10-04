@@ -1,0 +1,48 @@
+<%= paginate variants, theme: "solidus_admin" %>
+
+<table class="index sortable" data-sortable-link="<%= update_positions_admin_product_variants_path(@product) %>">
+  <colgroup>
+    <col style="width: 5%" />
+    <col style="width: 25%" />
+    <col style="width: 20%" />
+    <col style="width: 20%" />
+    <col style="width: 15%" />
+    <col style="width: 15%" />
+  </colgroup>
+  <thead data-hook="variants_header">
+    <tr>
+      <th></th>
+      <th><%= t('spree.options') %></th>
+      <th><%= Spree::Variant.human_attribute_name(:price) %></th>
+      <th><%= Spree::Variant.human_attribute_name(:sku) %></th>
+      <th class="actions"></th>
+    </tr>
+  </thead>
+  <tbody>
+  <% variants.each do |variant| %>
+    <tr id="<%= spree_dom_id variant %>" data-hook="variants_row" class="<%= "deleted" if variant.deleted? %>">
+      <td>
+        <% if can? :update_positions, Spree::Variant %>
+          <span class="handle"></span>
+        <% end %>
+      </td>
+      <td><%= variant.options_text %></td>
+      <td><%= variant.display_price.to_html %></td>
+      <td><%= variant.sku %></td>
+      <td class="actions">
+        <% if can?(:update, variant) %>
+          <%= link_to_edit(variant, no_text: true) unless variant.deleted? %>
+        <% end %>
+        <% if can?(:destroy, variant) %>
+          &nbsp;
+          <%= link_to_delete(variant, no_text: true) unless variant.deleted? %>
+        <% end %>
+      </td>
+    </tr>
+    <% end %>
+    <% if variants.empty? %>
+      <tr><td colspan="4"><%= t('spree.none') %></td></tr>
+    <% end %>
+  </tbody>
+</table>
+<%= paginate variants, theme: "solidus_admin" %>

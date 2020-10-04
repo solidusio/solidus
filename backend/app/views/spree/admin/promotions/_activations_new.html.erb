@@ -1,0 +1,58 @@
+<% activation_type = params[:activation_type] || 'single_code' %>
+<div class="row" id="js_promotion_activation">
+  <div class="col-3">
+    <div class="form-check">
+      <label class="form-check-label">
+        <%= radio_button_tag('activation_type', 'auto', activation_type == 'auto') %>
+        <%= t('.auto') %> <%= f.field_hint :promo_code_will_be_disabled %>
+      </label>
+    </div>
+    <div class="form-check">
+      <label class="form-check-label">
+        <%= radio_button_tag('activation_type', 'single_code', activation_type == 'single_code') %>
+        <%= t('.single_code') %>
+      </label>
+    </div>
+    <div class="form-check">
+      <label class="form-check-label">
+        <%= radio_button_tag('activation_type', 'multiple_codes', activation_type == 'multiple_codes') %>
+        <%= t('.multiple_codes') %>
+      </label>
+    </div>
+  </div>
+  <div class="col-9">
+    <input name="promotion[apply_automatically]" type="hidden" value="0">
+    <div data-activation-type="auto">
+      <input name="promotion[apply_automatically]" type="hidden" value="1">
+    </div>
+
+    <div data-activation-type="single_code">
+      <div class="field">
+        <%= label_tag :single_code, Spree::PromotionCode.model_name.human, class: "required" %>
+        <%= text_field_tag :single_code, @promotion.codes.first.try!(:value), class: "fullwidth", required: true %>
+      </div>
+    </div>
+
+    <div data-activation-type="multiple_codes">
+      <%= fields_for :promotion_code_batch, @promotion_code_batch do |batch| %>
+        <div class="field">
+          <%= batch.label :base_code, class: "required" %>
+          <%= batch.text_field :base_code, class: "fullwidth", required: true %>
+        </div>
+        <div class="field">
+          <%= batch.label :number_of_codes, class: "required" %>
+          <%= batch.number_field :number_of_codes, class: "fullwidth", min: 1, required: true %>
+        </div>
+        <div class="field">
+          <%= batch.label :join_characters %>
+          <%= batch.text_field :join_characters, class: "fullwidth" %>
+        </div>
+        <div class="field">
+          <%= f.label :per_code_usage_limit %>
+          <%= f.text_field :per_code_usage_limit, class: "fullwidth" %>
+        </div>
+      <% end %>
+    </div>
+
+  </div>
+</div>

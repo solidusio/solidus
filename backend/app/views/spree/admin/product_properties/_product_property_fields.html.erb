@@ -1,0 +1,24 @@
+<tr class="product_property fields" id="spree_<%= dom_id(f.object) %>" data-hook="product_property">
+  <td>
+    <% if f.object.persisted? && can?(:update_positions, f.object) %>
+      <span class="handle"></span>
+      <%= f.hidden_field :id %>
+    <% end %>
+  </td>
+  <td class='property_name'>
+    <%= f.text_field :property_name, list: 'properties' %>
+  </td>
+  <td class='value'>
+    <%= f.text_field :value %>
+  </td>
+  <td class="actions">
+    <% if f.object.persisted? %>
+      <% if can?(:destroy, f.object) %>
+        <%= link_to_delete f.object, no_text: true %>
+      <% end %>
+    <% else %>
+      <%= link_to_with_icon('trash', 'remove', '#', no_text: true, class: "spree_remove_fields",
+            data: { action: 'remove' }, title: t('spree.actions.remove')) %>
+    <% end %>
+  </td>
+</tr>

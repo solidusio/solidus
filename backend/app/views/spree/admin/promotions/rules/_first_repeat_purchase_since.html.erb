@@ -1,0 +1,13 @@
+<div class="row">
+  <div class="col-6">
+    <div class="field">
+      <%= Spree::Promotion::Rules::FirstRepeatPurchaseSince.human_attribute_name(:form_text) %>
+    </div>
+  </div>
+
+  <div class="col-6">
+    <div class="field">
+      <%= number_field_tag "#{param_prefix}[preferred_days_ago]", promotion_rule.preferred_days_ago, class: 'fullwidth' %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,20 @@
+<%= render 'spree/admin/shared/taxes_tabs' %>
+
+<% admin_breadcrumb(t('spree.settings')) %>
+<% admin_breadcrumb(t('spree.admin.tab.taxes')) %>
+<% admin_breadcrumb(link_to plural_resource_name(Spree::TaxRate), spree.admin_tax_rates_path) %>
+<% admin_breadcrumb(@tax_rate.name) %>
+
+
+<% content_for :page_actions do %>
+<% end %>
+
+<%= render partial: 'spree/shared/error_messages', locals: { target: @tax_rate } %>
+
+<%= form_for [:admin, @tax_rate] do |f| %>
+  <fieldset class="no-border-top">
+    <%= render partial: 'form', locals: { f: f } %>
+    <div class="clear"></div>
+    <%= render partial: 'spree/admin/shared/edit_resource_links' %>
+  </fieldset>
+<% end %>

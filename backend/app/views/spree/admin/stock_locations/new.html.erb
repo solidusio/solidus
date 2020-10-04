@@ -1,0 +1,17 @@
+<%= render 'spree/admin/shared/shipping_tabs' %>
+
+<% admin_breadcrumb(t('spree.settings')) %>
+<% admin_breadcrumb(t('spree.admin.tab.shipping')) %>
+<% admin_breadcrumb(link_to plural_resource_name(Spree::StockLocation), spree.admin_stock_locations_path) %>
+<% admin_breadcrumb(t('spree.new_stock_location')) %>
+
+
+<% content_for :page_actions do %>
+<% end %>
+
+<%= render partial: 'spree/shared/error_messages', locals: { target: @stock_locations } %>
+
+<%= form_for [:admin, @stock_location] do |f| %>
+  <%= render :partial => 'form', :locals => { :f => f } %>
+  <%= render :partial => 'spree/admin/shared/new_resource_links' %>
+<% end %>

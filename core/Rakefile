@@ -1,0 +1,37 @@
+# frozen_string_literal: true
+
+require 'rubygems'
+require 'rake'
+require 'rake/testtask'
+require 'rspec/core/rake_task'
+require 'spree/testing_support/dummy_app/rake_tasks'
+
+RSpec::Core::RakeTask.new
+task default: :spec
+
+DummyApp::RakeTasks.new(
+  gem_root: File.dirname(__FILE__),
+  lib_name: 'solidus_core'
+)
+
+require 'yard'
+YARD::Rake::YardocTask.new
+
+namespace :spec do
+  task :isolated do
+    spec_files = Dir['spec/**/*_spec.rb']
+    failed_specs =
+      spec_files.reject do |file|
+        puts "rspec #{file}"
+        system('rspec', file)
+      end
+
+    if !failed_specs.empty?
+      puts "Failed specs:"
+      puts failed_specs
+      exit 1
+    end
+  end
+end
+
+task test_app: 'db:reset'

@@ -1,0 +1,119 @@
+//Headings
+h1, .h1 {
+  font-size: $h1-mobile-font-size;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+  letter-spacing: -0.8px;
+
+  @include media-breakpoint-up(lg){
+    font-size: $h1-font-size;
+    line-height: 1;
+  }
+}
+h2, .h2, h3, .h3, h4, .h4, h5, .h5{
+  margin-top: 1.75rem;
+  margin-bottom: 0.375rem;
+
+  &:first-child{  margin-top: 0; }
+
+  @include media-breakpoint-up(lg){
+    margin-bottom: 0.5rem;
+    &:first-child{  margin-top: 0; }
+  }
+}
+
+h2, .h2 {
+  font-size: $h2-mobile-font-size;
+  border-bottom: 1px solid #eaecef;
+  padding-bottom: 0.7rem;
+  margin-bottom: 1.5rem;
+
+  @include media-breakpoint-up(lg){ font-size: $h2-font-size; }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  code {
+    color: inherit;
+    font-size: inherit;
+    font: inherit;
+    background: none;
+    border: none;
+    padding: 0;
+  }
+}
+
+h3, .h3 {
+  font-size: $h3-mobile-font-size;
+
+  @include media-breakpoint-up(lg){ font-size: $h3-font-size; }
+}
+h4, .h4 {
+  font-size: $h4-mobile-font-size;
+
+  @include media-breakpoint-up(lg){ font-size: $h4-font-size; }
+}
+h5, .h5 { font-size: $h5-font-size; }
+h6, .h6 { font-size: $h6-font-size; }
+
+.lead {
+  line-height: 1.55;
+  font-size: $lead-font-size;
+
+  @include media-breakpoint-down(sm) { font-size: $font-size-lg }
+}
+
+
+// Blockquotes
+.blockquote {
+  color: $gray-500;
+  margin-bottom: 0;
+  font-size: $blockquote-mobile-font-size;
+
+  p{ margin-bottom: 1.5rem; }
+
+  @include media-breakpoint-up(md){
+    text-align: center;
+    font-size: $blockquote-font-size;
+  }
+}
+
+.blockquote-footer {
+  font-size: $font-size-sm;
+
+  &::before { content: ""; }
+
+  cite{
+    display: inline-block;
+    font-style: normal;
+    text-align: left;
+    max-width: 100%;
+    white-space: nowrap;
+
+    .img-circled, .text{
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    .text{
+      white-space: normal;
+      max-width: calc(100% - 64px);
+    }
+
+    .img-circled{ margin-right: $spacer; }
+  }
+}
+
+// Lists
+ol, ul{
+  padding-left: 30px;
+
+  li{
+    margin-bottom: 10px;
+
+    &:last-child{ margin-bottom: 0; }
+  }
+}
+
+.list-inline-item{
+  margin-bottom: 0;
+}

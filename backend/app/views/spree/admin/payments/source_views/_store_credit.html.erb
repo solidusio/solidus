@@ -1,0 +1,28 @@
+<fieldset data-hook="store-credit">
+  <legend align="center"><%= Spree::StoreCredit.model_name.human %></legend>
+
+  <div class="row">
+    <div class="col-4">
+      <dl>
+        <dt><%= Spree::StoreCreditCategory.model_name.human %>:</dt>
+        <dd><%= payment.source.category.name%></dd>
+
+        <dt><%= Spree::StoreCredit.human_attribute_name(:memo) %>:</dt>
+        <dd><%= payment.source.memo %></dd>
+
+        <dt><%= Spree::StoreCredit.human_attribute_name(:created_by) %>:</dt>
+        <dd><%= payment.source.created_by.email %></dd>
+
+        <dt><%= Spree::StoreCredit.human_attribute_name(:issued_on) %>:</dt>
+        <dd><%= l payment.source.created_at.to_date %></dd>
+      </dl>
+
+      <p>
+        <%= link_to(
+          t('spree.admin.store_credits.view'),
+          admin_user_store_credit_path(payment.source.user, payment.source)
+        ) %>
+      </p>
+    </div>
+  </div>
+</fieldset>

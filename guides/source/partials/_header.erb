@@ -1,0 +1,25 @@
+<header class="site-header site-header--fixed">
+  <div class="navbar container">
+    <div class="main-nav">
+      <a class="site-logo" href="/">
+        <%= inline_svg("logo.svg", class: "isvg") %>
+      </a>
+
+      <%= partial 'partials/nav_header', locals: { menu_items: data.nav.global.values } %>
+
+      <a class="site-menu-toggler" href="#">
+        <%= inline_svg("menu.svg", class: "isvg isvg-menu") %>
+      </a>
+    </div>
+
+    <form class="search-box" novalidate>
+      <div class="form-group form-group-submittable">
+        <div class="has-float-label">
+          <input type="text" class="form-control h-auto placeholder-shown" name="inputSearch" id="inputSearch" placeholder="Search Solidus Documentation" value="">
+          <label for="inputSearch">Search Solidus Documentation</label>
+          <button type="submit" class="btn btn-link"><%= inline_svg("icons/search.svg", class: "isvg") %></button>
+        </div>
+      </div>
+    </form>
+  </div>
+</header>

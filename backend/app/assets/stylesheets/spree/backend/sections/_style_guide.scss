@@ -1,0 +1,145 @@
+.style-guide {
+  padding-left: 0; // override regular admin layout
+  display: flex;
+
+  &-sidebar {
+    width: 225px;
+    background: $color-style-guide-nav;
+    padding: 1.5rem;
+
+    .brand-link {
+      margin-top: 2rem;
+
+      img {
+        display: block;
+        width: 100px;
+        margin: 0 auto;
+      }
+    }
+
+    ul {
+      list-style: none;
+      padding-left: 0;
+    }
+  }
+
+  &-main-content {
+    flex: 1;
+  }
+
+  ul.example,
+  ul.example ul {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  &-nav {
+    text-transform: capitalize;
+
+    > li {
+      margin-top: 0.5rem;
+      margin-bottom: 0.5rem;
+      padding-top: 0.75rem;
+      padding-bottom: 0.75rem;
+
+      &:not(:first-of-type) {
+        border-top: 1px solid $color-style-guide-nav-border;
+      }
+
+      > a {
+        font-size: 1.2rem;
+        font-weight: $font-weight-normal;
+      }
+    }
+
+    a {
+      display: block;
+      color: $color-style-guide-nav-link;
+      padding: 0.3rem 0.5rem;
+
+      &:hover {
+        background: $color-style-guide-nav-link-hover;
+      }
+    }
+  }
+
+  &-intro,
+  &-section {
+    margin: 4rem 0;
+  }
+
+  &-section-header {
+    margin: 7rem 0 3rem;
+
+    border-bottom: 1px solid $color-style-guide-section-border;
+    font-size: 1.5rem;
+    font-weight: bold;
+    line-height: 0.2;
+    text-align: center;
+    text-transform: capitalize;
+
+    span {
+      background: $body-bg;
+      padding-left: 0.5em;
+      padding-right: 0.5em;
+    }
+
+    a {
+      color: $color-style-guide-link;
+    }
+  }
+
+  .half {
+    display: inline-block;
+    width: 49%;
+    padding-right: 1rem;
+    vertical-align: top;
+
+    + .half {
+      display: inline-block;
+      padding-right: 0;
+      padding-left: 1rem;
+    }
+  }
+
+  &-code {
+    pre {
+      margin: 0;
+      border: 1px solid $color-style-guide-code;
+    }
+  }
+
+  table.with-actions-borders {
+    th, td {
+      &.actions {
+        border-right: 1px solid $color-style-guide-table-border !important;
+        border-bottom: 1px solid $color-style-guide-table-border !important;
+      }
+    }
+  }
+}
+
+.style-guide-code,
+.style-guide-result {
+  margin: 1rem 0;
+
+  img {
+    max-width: none;
+  }
+}
+
+.color-variables {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.color-variable {
+  flex-shrink: 0;
+  width: 240px;
+  padding: 1rem;
+
+  .color-swatch {
+    height: 50px;
+    border: 1px solid $color-style-guide-swatch-border;
+  }
+}

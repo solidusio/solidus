@@ -1,0 +1,29 @@
+#sc-detail-table {
+  tr {
+    &:hover {
+      td {
+        background-color: inherit;
+      }
+    }
+    td {
+      border: none;
+    }
+  }
+}
+
+.store-credit-memo-row {
+  &.editing {
+    .store-credit-memo-text,
+    .edit-memo {
+      display: none;
+    }
+  }
+
+  &:not(.editing) {
+    .store-credit-memo-form,
+    .save-memo,
+    .cancel-memo {
+      display: none;
+    }
+  }
+}

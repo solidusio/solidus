@@ -1,0 +1,59 @@
+// Some fixes for fontwesome stylesheets
+[class^="icon-"], [class*=" icon-"] {
+  &:before {
+    padding-right: 5px;
+  }
+
+  &.button, &.icon_link {
+    width: auto;
+
+    &:before {
+      padding-right: 5px;
+      padding-top: 3px;
+    }
+  }
+}
+
+.btn.fa {
+  font: normal normal $btn-font-weight #{$font-size-base}/#{$btn-line-height} "FontAwesome";
+}
+
+.fa-email     { @extend .fa-envelope }
+.fa-resume    { @extend .fa-refresh  }
+.fa-approve   { @extend .fa-check    }
+
+.fa-remove,
+.fa-cancel,
+.fa-void      { @extend .fa-times    }
+
+.fa-failure   { @extend .fa-thumbs-down }
+
+.fa-trash     { @extend .fa-trash-o  }
+
+.fa-capture   { @extend .fa-thumbs-up }
+.fa-credit    { @extend .fa-check    }
+.fa-approve   { @extend .fa-check    }
+.fa-icon-cogs { @extend .fa-cogs     }
+.fa-ok,
+.fa-icon-ok   { @extend .fa-check    }
+
+button, a {
+  &.fa:before {
+    padding-right: 5px;
+  }
+}
+
+// Admin navigation fixes
+.icon-user,
+.icon-signout,
+.icon-external-link {
+  @extend .fa;
+}
+.icon-user          { @extend .fa-user; }
+.icon-signout       { @extend .fa-sign-out; }
+.icon-external-link { @extend .fa-external-link; }
+
+// Avoid ugly default browser font (usually a serif) when an element has an icon AND text
+.fa {
+  font-family: "FontAwesome", $font-family-base !important;
+}

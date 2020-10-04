@@ -1,0 +1,44 @@
+{{#if isNew}}
+  <td class="line-item-select-variant" colspan="2">
+    <input type="hidden" name="variant_id" class="js-select-variant select-variant fullwidth">
+  </td>
+{{else}}
+  <td class="line-item-image">
+    {{> _image image=line_item.variant.images.[0] size="mini" }}
+  </td>
+  <td class="line-item-name">
+    {{ line_item.variant.name }}<br>
+    {{#if line_item.variant.options_text }}
+      {{ line_item.variant.options_text }}<br/>
+    {{/if}}
+    <strong>{{ t "sku" }}:</strong> {{ line_item.variant.sku }}
+  </td>
+{{/if}}
+<td class="line-item-price">
+  {{ line_item.single_display_amount }}
+</td>
+{{#if editing}}
+  <td class="line-item-qty-edit">
+    <form>
+      <input type="number" name="quantity" value="{{ line_item.quantity }}" min="1" class="line_item_quantity" size="5">
+    </form>
+  </td>
+{{else}}
+  <td class="line-item-qty-show">
+    {{ line_item.quantity }}
+  </td>
+{{/if}}
+<td class="line-item-total">
+  {{ line_item.display_amount }}
+</td>
+<td class="cart-line-item-delete actions" data-hook="cart_line_item_delete">
+  {{#if editing}}
+    <button class="save-line-item fa fa-ok no-text with-tip" data-action="save" title="{{ t "actions.save" }}"></button>
+    {{#unless noCancel}}
+      <button class="cancel-line-item fa fa-cancel no-text with-tip" data-action="cancel" title="{{ t "actions.cancel" }}"></button>
+    {{/unless}}
+  {{else}}
+    <button class="edit-line-item fa fa-edit no-text with-tip" data-action="edit" title="{{ t "actions.edit" }}"></button>
+    <button class="delete-line-item fa fa-trash no-text with-tip" data-action="remove" title="{{ t "actions.delete" }}"></button>
+  {{/if}}
+</td>

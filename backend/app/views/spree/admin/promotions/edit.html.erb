@@ -1,0 +1,35 @@
+<% admin_layout "full-width" %>
+
+<% admin_breadcrumb(link_to plural_resource_name(Spree::Promotion), spree.admin_promotions_path) %>
+<% admin_breadcrumb(@promotion.name) %>
+
+<% content_for :page_actions do %>
+  <li>
+    <% if can?(:read, Spree::PromotionCode) %>
+      <%= link_to t('spree.view_promotion_codes_list'), admin_promotion_promotion_codes_path(promotion_id: @promotion.id), class: 'btn btn-primary' %>
+
+      <%= link_to t('spree.download_promotion_codes_list'), admin_promotion_promotion_codes_path(promotion_id: @promotion.id, format: :csv), class: 'btn btn-primary' %>
+    <% end %>
+
+    <% if can?(:read, Spree::PromotionCodeBatch) %>
+      <%= link_to plural_resource_name(Spree::PromotionCodeBatch), admin_promotion_promotion_code_batches_path(promotion_id: @promotion.id), class: 'btn btn-primary' %>
+    <% end %>
+  </li>
+<% end %>
+
+<%= form_for @promotion, url: object_url, method: :put do |f| %>
+  <%= render partial: 'form', locals: { f: f } %>
+  <% if can?(:update, @promotion) %>
+    <%= render partial: 'spree/admin/shared/edit_resource_links' %>
+  <% end %>
+<% end %>
+
+<div id="promotion-filters" class="row">
+  <div id="rules_container" class="col-6">
+    <%= render partial: 'rules' %>
+  </div>
+
+  <div id="actions_container" class="col-6">
+    <%= render partial: 'actions' %>
+  </div>
+</div>

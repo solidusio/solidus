@@ -1,0 +1,37 @@
+<%= render partial: 'spree/admin/shared/order_tabs', locals: { current: 'Reimbursements' } %>
+
+<% admin_breadcrumb(plural_resource_name(Spree::Reimbursement)) %>
+
+<% content_for :page_actions do %>
+  <li><%= link_to t('spree.back_to_customer_return_list'), spree.admin_order_customer_returns_url(@order), class: 'btn btn-primary' %></li>
+<% end %>
+
+<%= render partial: 'spree/shared/error_messages', locals: { target: @customer_return } %>
+
+<table class="index">
+  <thead data-hook="customer_return_header">
+    <tr>
+      <th><%= t('spree.id') %></th>
+      <th><%= Spree::Reimbursement.human_attribute_name(:total) %></th>
+      <th><%= Spree::Reimbursement.human_attribute_name(:reimbursement_status) %></th>
+      <th><%= Spree::Reimbursement.human_attribute_name(:created_at) %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @reimbursements.each do |reimbursement| %>
+      <tr id="<%= spree_dom_id(reimbursement) %>" data-hook="reimbursement_row">
+        <td><%= reimbursement.id %></td>
+        <td><%= reimbursement.total %></td>
+        <td>
+          <span class="pill pill-<%= reimbursement.reimbursement_status %>">
+            <%= t(
+              reimbursement.reimbursement_status,
+              scope: 'spree.reimbursement_states'
+            ) %>
+          </span>
+        </td>
+        <td><%= pretty_time(reimbursement.created_at) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

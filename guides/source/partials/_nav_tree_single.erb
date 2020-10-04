@@ -1,0 +1,9 @@
+ <ul>
+  <% menu_items.each do |menu_item| %>
+    <li class="<%= 'active' if menu_item_matches_page?(menu_item.href) %>">
+      <a href="<%= menu_item.href %>">
+        <%= menu_item.title %>
+      </a>
+    </li>
+  <% end %>
+</ul>

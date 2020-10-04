@@ -1,0 +1,18 @@
+<% admin_breadcrumb(link_to plural_resource_name(Spree::LegacyUser), spree.admin_users_path) %>
+<% admin_breadcrumb(link_to @user.email, edit_admin_user_url(@user)) %>
+<% admin_breadcrumb(link_to Spree::StoreCredit.model_name.human, spree.admin_user_store_credits_path(@user)) %>
+<% admin_breadcrumb(t('spree.new_store_credit')) %>
+
+
+<%= render 'spree/admin/users/sidebar' %>
+<%= render 'spree/admin/users/tabs', current: :store_credits %>
+<% content_for :page_actions do %>
+<% end %>
+
+<%= form_for [:admin, @user, @store_credit] do |f| %>
+  <fieldset>
+    <legend align="center"><%= t('spree.admin.store_credits.new') %></legend>
+    <%= render partial: 'form', locals: { f: f } %>
+    <%= render partial: 'spree/admin/shared/new_resource_links', locals: { collection_url: admin_user_store_credits_path(@user) } %>
+  </fieldset>
+<% end %>

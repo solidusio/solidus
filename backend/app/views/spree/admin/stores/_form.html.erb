@@ -1,0 +1,84 @@
+<div class="row">
+  <div class="col-12 col-md-6">
+    <%= f.field_container :name do %>
+      <%= f.label :name, class: 'required' %>
+      <%= f.text_field :name, required: true, class: 'fullwidth' %>
+      <%= f.error_message_on :name %>
+    <% end %>
+
+    <%= f.field_container :code do %>
+      <%= f.label :code, class: 'required' %>
+      <%= f.field_hint :code %>
+      <%= f.text_field :code, required: true, class: 'fullwidth' %>
+      <%= f.error_message_on :code %>
+    <% end %>
+
+    <%= f.field_container :seo_title do %>
+      <%= f.label :seo_title %>
+      <%= f.text_field :seo_title, class: 'fullwidth'  %>
+      <%= f.error_message_on :seo_title %>
+    <% end %>
+
+    <%= f.field_container :meta_keywords do %>
+      <%= f.label :meta_keywords %>
+      <%= f.text_field :meta_keywords, class: 'fullwidth'  %>
+      <%= f.error_message_on :meta_keywords %>
+    <% end %>
+
+    <%= f.field_container :meta_description do %>
+      <%= f.label :meta_description %>
+      <%= f.text_area :meta_description, class: 'fullwidth'  %>
+      <%= f.error_message_on :meta_description %>
+    <% end %>
+  </div>
+  <div class="col-12 col-md-6">
+    <%= f.field_container :url do %>
+      <%= f.label :url, class: 'required' %>
+      <%= f.text_field :url, required: true, class: 'fullwidth'  %>
+      <%= f.error_message_on :url %>
+    <% end %>
+
+    <%= f.field_container :mail_from_address do %>
+      <%= f.label :mail_from_address, class: 'required' %>
+      <%= f.text_field :mail_from_address, required: true, class: 'fullwidth'  %>
+      <%= f.error_message_on :mail_from_address %>
+    <% end %>
+
+    <%= f.field_container :bcc_email do %>
+      <%= f.label :bcc_email %>
+      <%= f.text_field :bcc_email, class: 'fullwidth' %>
+      <%= f.error_message_on :bcc_email %>
+    <% end %>
+
+    <%= f.field_container :default_currency do %>
+      <%= f.label :default_currency %>
+      <%= f.select :default_currency,
+        Spree::Config.available_currencies.map(&:iso_code),
+        { include_blank: true },
+        { class: 'custom-select fullwidth' } %>
+      <%= f.error_message_on :default_currency %>
+    <% end %>
+
+    <%= f.field_container :cart_tax_country_iso do %>
+      <%= f.label :cart_tax_country_iso %>
+      <%= f.field_hint :cart_tax_country_iso %>
+      <%= f.select :cart_tax_country_iso,
+        Spree::Country.all.map { |c| [c.name, c.iso] },
+        { include_blank: t(".no_cart_tax_country") },
+        { class: "custom-select fullwidth" } %>
+      <%= f.error_message_on :cart_tax_country_iso %>
+    <% end %>
+
+    <%= f.field_container :available_locales do %>
+      <%= f.label :available_locales %>
+      <%= f.field_hint :available_locales %>
+      <%= f.select :available_locales,
+        Spree.i18n_available_locales.map { |locale|
+          [I18n.t('spree.i18n.this_file_language', locale: locale, default: locale.to_s, fallback: false), locale]
+        }.sort,
+        { },
+        { class: 'select2 fullwidth', multiple: true } %>
+      <%= f.error_message_on :default_currency %>
+    <% end %>
+  </div>
+</div>

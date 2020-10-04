@@ -1,0 +1,78 @@
+<% s_or_b = type.chars.first %>
+
+<div id="<%= type %>" data-hook="address_fields">
+  <% if Spree::Config.use_combined_first_and_last_name_in_address %>
+    <div class="field <%= "#{type}-row" %>">
+      <%= f.label :name %>
+      <%= f.text_field :name, class: 'fullwidth' %>
+    </div>
+  <% else %>
+    <div class="field <%= "#{type}-row" %>">
+      <%= f.label :firstname %>
+      <%= f.text_field :firstname, class: 'fullwidth' %>
+    </div>
+
+    <div class="field <%= "#{type}-row" %>">
+      <%= f.label :lastname %>
+      <%= f.text_field :lastname, class: 'fullwidth' %>
+    </div>
+  <% end %>
+
+  <% if Spree::Config[:company] %>
+    <div class="field <%= "#{type}-row" %>">
+      <%= f.label :company %>
+      <%= f.text_field :company, class: 'fullwidth' %>
+    </div>
+  <% end %>
+
+  <div class="field <%= "#{type}-row" %>">
+    <%= f.label :address1 %>
+    <%= f.text_field :address1, class: 'fullwidth' %>
+  </div>
+
+  <div class="field <%= "#{type}-row" %>">
+    <%= f.label :address2 %>
+    <%= f.text_field :address2, class: 'fullwidth' %>
+  </div>
+
+  <div class="field <%= "#{type}-row" %>">
+    <%= f.label :city %>
+    <%= f.text_field :city, class: 'fullwidth' %>
+  </div>
+
+  <div class="field <%= "#{type}-row" %>">
+    <%= f.label :zipcode %>
+    <%= f.text_field :zipcode, class: 'fullwidth' %>
+  </div>
+
+  <div class="field <%= "#{type}-row" %>">
+    <%= f.label :country_id, Spree::Country.model_name.human %>
+    <span id="<%= s_or_b %>country">
+      <%= f.collection_select :country_id, available_countries, :id, :name, {}, {class: 'custom-select fullwidth js-country_id'} %>
+    </span>
+  </div>
+
+  <div class="field <%= "#{type}-row" %>">
+    <%= f.label :state_id, Spree::State.model_name.human %>
+    <span id="<%= s_or_b %>state">
+      <%= f.hidden_field :state_name, value: nil %>
+      <% states = f.object.country.try(:states).nil? ? [] : f.object.country.states %>
+      <%= f.text_field :state_name,
+            style: "display: #{states.empty? ? 'block' : 'none' };",
+            disabled: !states.empty?, class: 'fullwidth state_name js-state_name' %>
+      <%= f.hidden_field :state_id, value: nil %>
+      <%= f.collection_select :state_id,
+            states.sort,
+            :id, :name,
+            { include_blank: true },
+            { class: 'custom-select fullwidth js-state_id',
+              style: "display: #{states.empty? ? 'none' : 'block' };",
+              disabled: states.empty? } %>
+    </span>
+  </div>
+
+  <div class="field <%= "#{type}-row" %>">
+    <%= f.label :phone %>
+    <%= f.phone_field :phone, class: 'fullwidth' %>
+  </div>
+</div>

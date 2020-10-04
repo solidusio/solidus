@@ -1,0 +1,28 @@
+<fieldset id="calculator_fields" class="js-calculator-fields no-border-bottom">
+  <legend align="center"><%= Spree::Calculator.model_name.human %></legend>
+
+  <div id="preference-settings">
+    <div class="field">
+      <%= f.label(:calculator_type, Spree::Calculator.model_name.human) %>
+
+      <% if local_assigns.has_key? :hint %>
+        <%= admin_hint t("spree.#{hint}"), t(hint, scope: [:spree, :hints, "spree/calculator"]) %>
+      <% end %>
+
+      <%= f.select(:calculator_type, @calculators.map { |c| [c.description, c.name] }, {}, {class: 'custom-select fullwidth js-calculator-type'}) %>
+    </div>
+
+    <% @calculators.each do |calculator_class| %>
+      <% calculator = f.object.calculator.class == calculator_class ? f.object.calculator : calculator_class.new %>
+      <div class="js-calculator-preferences" data-calculator-type="<%= calculator_class %>">
+        <%= f.fields_for :calculator, calculator do |calculator_form| %>
+          <% calculator.admin_form_preference_names.each do |name| %>
+            <%= render "spree/admin/shared/preference_fields/#{calculator.preference_type(name)}",
+              form: calculator_form, attribute: "preferred_#{name}",
+              label: t(name, scope: 'spree', default: name.to_s.humanize) %>
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</fieldset>

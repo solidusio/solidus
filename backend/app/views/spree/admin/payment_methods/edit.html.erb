@@ -1,0 +1,21 @@
+<%= render 'spree/admin/shared/payments_tabs' %>
+
+<% admin_breadcrumb(t('spree.settings')) %>
+<% admin_breadcrumb(plural_resource_name(Spree::Payment)) %>
+<% admin_breadcrumb(link_to plural_resource_name(Spree::PaymentMethod), spree.admin_payment_methods_path) %>
+<% admin_breadcrumb(@payment_method.name) %>
+
+<% content_for :page_actions do %>
+<% end %>
+
+<%= render partial: 'spree/shared/error_messages', locals: { target: @payment_method } %>
+
+<%= form_for @payment_method, as: :payment_method, url: admin_payment_method_path(@payment_method) do |f| %>
+  <fieldset class="no-border-top">
+    <%= render partial: 'form', locals: { f: f } %>
+    <div data-hook="buttons" class="filter-actions actions">
+      <%= button_tag t('spree.actions.update'), class: 'btn btn-primary' %>
+    </div>
+  </fieldset>
+
+<% end %>

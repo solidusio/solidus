@@ -1,0 +1,32 @@
+<% admin_breadcrumb link_to plural_resource_name(Spree::Promotion), spree.admin_promotions_path %>
+<% admin_breadcrumb link_to(@promotion.name, spree.edit_admin_promotion_path(@promotion)) %>
+<% admin_breadcrumb plural_resource_name(Spree::PromotionCode) %>
+
+<% content_for :page_actions do %>
+  <li>
+    <% if can?(:create, Spree::PromotionCode) && !@promotion.apply_automatically? %>
+      <%= link_to t('spree.create_promotion_code'), new_admin_promotion_promotion_code_path(promotion_id: @promotion.id), class: 'btn btn-primary' %>
+    <% end %>
+
+    <%= link_to t('spree.download_promotion_codes_list'), admin_promotion_promotion_codes_path(promotion_id: @promotion.id, format: :csv), class: 'btn btn-primary' %>
+  </li>
+<% end %>
+
+<div class="pagination-summary">
+  <%= page_entries_info(@promotion_codes) %>
+</div>
+
+<table>
+  <thead>
+    <th><%= Spree::PromotionCode.human_attribute_name :value %></th>
+  </thead>
+  <tbody>
+    <% @promotion_codes.each do |promotion_code| %>
+      <tr>
+        <td><%= promotion_code.value %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= paginate @promotion_codes, theme: "solidus_admin" %>

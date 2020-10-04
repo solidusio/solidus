@@ -1,0 +1,17 @@
+<div data-hook="admin_option_type_form_fields" class="align-center row">
+  <div class="col-6">
+    <%= f.field_container :name do %>
+      <%= f.label :name, class: 'required' %><br />
+      <%= f.text_field :name, class: "fullwidth" %>
+      <%= f.error_message_on :name %>
+    <% end %>
+  </div>
+
+  <div class="col-6">
+    <%= f.field_container :presentation do %>
+      <%= f.label :presentation, class: 'required' %><br />
+      <%= f.text_field :presentation, class: "fullwidth" %>
+      <%= f.error_message_on :presentation %>
+    <% end %>
+  </div>
+</div>

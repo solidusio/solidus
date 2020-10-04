@@ -1,0 +1,59 @@
+// Custom.scss
+// Option B: Include parts of Bootstrap
+
+// Required
+@import "node_modules/bootstrap/scss/functions";
+@import "theme/variables";
+@import "node_modules/bootstrap/scss/variables";
+@import "node_modules/bootstrap/scss/mixins";
+@import "theme/mixins";
+
+// Basic styles
+@import "node_modules/bootstrap/scss/root";
+@import "node_modules/bootstrap/scss/reboot";
+@import "theme/reboot";
+@import "node_modules/bootstrap/scss/type";
+@import "theme/type";
+
+
+// Components
+@import "theme/utilities";
+
+@import "node_modules/bootstrap/scss/images";
+@import "node_modules/bootstrap/scss/code";
+@import "theme/code";
+@import "node_modules/bootstrap/scss/grid";
+@import "theme/grid";
+
+@import "node_modules/bootstrap/scss/tables";
+@import "theme/tables";
+@import "node_modules/bootstrap/scss/forms";
+@import "theme/forms";
+@import "node_modules/bootstrap/scss/buttons";
+@import "theme/buttons";
+@import "node_modules/bootstrap/scss/transitions";
+//@import "dropdown";
+@import "node_modules/bootstrap/scss/button-group";
+//@import "input-group";
+//@import "custom-forms";
+@import "node_modules/bootstrap/scss/nav";
+@import "theme/nav";
+//@import "navbar";
+//@import "node_modules/bootstrap/scss/card";
+@import "theme/card";
+//@import "breadcrumb";
+//@import "pagination";
+//@import "badge";
+//@import "jumbotron";
+@import "node_modules/bootstrap/scss/alert";
+//@import "progress";
+@import "node_modules/bootstrap/scss/media";
+//@import "list-group";
+//@import "close";
+//@import "modal";
+@import "node_modules/bootstrap/scss/tooltip";
+@import "node_modules/bootstrap/scss/popover";
+@import "theme/popover";
+//@import "carousel";
+@import "node_modules/bootstrap/scss/utilities";
+//@import "print";

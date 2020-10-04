@@ -1,0 +1,16 @@
+<table class="index" id="capture_events">
+  <thead>
+    <tr data-hook="payments_header">
+      <th><%= Spree::PaymentCaptureEvent.human_attribute_name(:created_at) %></th>
+      <th class="text-right"><%= Spree::PaymentCaptureEvent.human_attribute_name(:amount) %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @payment.capture_events.each do |capture_event| %>
+      <tr id="<%= dom_id(capture_event) %>" data-hook="capture_events_row">
+        <td><%= pretty_time(capture_event.created_at) %></td>
+        <td class="text-right"><%= capture_event.display_amount %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -1,0 +1,26 @@
+<fieldset>
+  <table class="stock-levels" data-hook="stock-levels">
+    <colgroup>
+      <col style="width: 50%;" />
+      <col style="width: 50%;" />
+    </colgroup>
+    <thead>
+      <th>{{ t "name" }}</th>
+      <th><label for="variant_quantity">{{ t "quantity" }}</label></th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{variant.name}}</td>
+        <td>
+          <input class="quantity variant_quantity" id="variant_quantity" data-variant-id="{{../variant.id}}" type="number" min="0" value="0">
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <fieldset class="no-border-bottom">
+    <legend align="center" class="stock-location">
+      <button class="add_variant" title="{{ t "add" }}" data-action="add">{{ t "add" }}</button>
+    </legend>
+  </fieldset>
+</fieldset>

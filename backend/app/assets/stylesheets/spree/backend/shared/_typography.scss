@@ -1,0 +1,113 @@
+// Base
+//--------------------------------------------------------------
+
+html {
+  font-size: $font-size-root;
+}
+
+body {
+  padding: 0;
+  font-weight: $font-weight-normal;
+  text-rendering: optimizeLegibility;
+}
+
+hr {
+  border-top: 1px solid $color-border;
+  border-bottom: 1px solid $body-bg;
+  border-left: none;
+}
+
+strong,
+b {
+  font-weight: $font-weight-bold;
+}
+
+// Headings
+//--------------------------------------------------------------
+
+h1 { line-height: $h1-font-size + 6 }
+h2 { line-height: $h1-font-size + 4 }
+h3 { line-height: $h1-font-size + 2 }
+h4 { line-height: $h1-font-size }
+h5 { line-height: $h1-font-size }
+h6 { line-height: $h1-font-size }
+
+
+// Lists
+//--------------------------------------------------------------
+ul {
+  &.inline-menu {
+    margin: 0;
+
+    li {
+      display: inline-block;
+    }
+  }
+  &.fields {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+}
+
+ul.text_list {
+  border-top: none;
+  margin: 0;
+  list-style-type: none;
+  padding-left: 0;
+}
+
+dl {
+  width: 100%;
+  overflow: hidden;
+  margin: 5px 0;
+  color: lighten($body-color, 15);
+
+  dt, dd {
+    float: left;
+    line-height: 16px;
+    padding: 5px;
+  }
+
+  dt {
+    width: 40%;
+    font-weight: $font-weight-bold;
+    padding-left: 0;
+    clear: left;
+  }
+
+  dd {
+    width: 60%;
+    padding-right: 0;
+    margin-left: 0;
+  }
+}
+
+.dl-collapse {
+  dt, dd {
+    width: auto;
+  }
+}
+
+// Helpers
+.align-center  { text-align: center  }
+.align-right   { text-align: right   }
+.align-left    { text-align: left    }
+.align-justify { text-align: justify }
+
+.uppercase     { text-transform: uppercase }
+
+.green  { color: $color-green }
+.blue   { color: $color-primary }
+.red    { color: $color-red }
+.yellow { color: $color-yellow }
+
+.negative { color: $red }
+input[type="number"].negative { color: $red } // needed to override blue style that is more specific than '.negative'
+
+.no-objects-found {
+  text-align: center;
+  font-size: 120%;
+  padding: 40px 0px;
+  color: lighten($body-color, 15);
+}

@@ -1,0 +1,37 @@
+<fieldset id="action_fields" class="no-border-top">
+
+  <%= form_tag spree.admin_promotion_promotion_actions_path(@promotion), remote: true, id: 'new_promotion_action_form' do %>
+    <% options = options_for_select(  Rails.application.config.spree.promotions.actions.map {|action| [ action.model_name.human, action.name] } ) %>
+    <fieldset>
+      <legend align="center"><%= t('spree.promotion_actions') %></legend>
+      <% if can?(:update, @promotion) %>
+        <div class="field">
+          <%= label_tag :action_type, t('spree.adjustment_type')%>
+          <%= admin_hint t('spree.adjustment_type'), t(:promotions, scope: [:spree, :hints, "spree/calculator"]) %>
+          <%= select_tag 'action_type', options, include_blank: t(:choose_promotion_action, scope: 'spree'), class: 'custom-select fullwidth', required: true %>
+        </div>
+        <div class="filter-actions actions">
+          <%= button_tag t('spree.actions.add'), class: 'btn btn-primary' %>
+        </div>
+      <% end %>
+    </fieldset>
+  <% end %>
+
+  <%= form_for @promotion, url: spree.admin_promotion_path(@promotion), method: :put do |f| %>
+    <div id="actions" class="filter_list">
+      <% if @promotion.actions.any? %>
+        <%= render partial: 'promotion_action',  collection: @promotion.actions %>
+      <% else %>
+        <div class="no-objects-found">
+          <%= t('spree.no_actions_added') %>
+        </div>
+      <% end %>
+    </div>
+    <% if can?(:update, @promotion) %>
+      <div class="filter-actions actions promotion-update">
+        <%= button_tag t('spree.actions.update'), class: 'btn btn-primary' %>
+      </div>
+    <% end %>
+  <% end %>
+
+</fieldset>

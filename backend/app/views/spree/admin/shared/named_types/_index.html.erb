@@ -1,0 +1,58 @@
+<%= render 'spree/admin/shared/settings_checkout_tabs' %>
+
+<% admin_breadcrumb(root_tab) %>
+<% admin_breadcrumb(sub_tab) %>
+<% admin_breadcrumb(page_title) %>
+
+
+<% content_for :page_actions do %>
+  <ul class="actions inline-menu">
+    <% if can?(:create, Spree::ReturnReason) %>
+      <li>
+        <%= link_to new_button_text, new_object_url, id: 'admin_new_named_type', class: 'btn btn-primary' %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>
+
+<% if @collection.any? %>
+  <table class="index" id='listing_named_types' data-hook>
+    <colgroup>
+      <col style="width: 65%" />
+      <col style="width: 20%" />
+      <col style="width: 15%" />
+    </colgroup>
+    <thead>
+      <tr data-hook="named_types_header">
+        <th><%= t('spree.name') %></th>
+        <th><%= t('spree.state') %></th>
+        <th class="actions"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @collection.each do |named_type| %>
+        <tr id="<%= spree_dom_id named_type %>" data-hook="named_type_row">
+          <td>
+            <%= named_type.name %>
+          </td>
+          <td>
+            <span class="pill pill-<%= named_type.active? ? 'active' : 'inactive' %>">
+              <%= t(named_type.active? ? :active : :inactive, scope: 'spree') %>
+            </span>
+          </td>
+          <td class="actions">
+            <% if named_type.mutable? && can?(:update, named_type) %>
+              <%= link_to_edit named_type, no_text: true %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div class="no-objects-found">
+    <%= render 'spree/admin/shared/no_objects_found',
+                 resource: resource,
+                 new_resource_url: new_object_url %>
+  </div>
+<% end %>

@@ -1,0 +1,11 @@
+<% admin_breadcrumb(link_to plural_resource_name(Spree::Promotion), spree.admin_promotions_path) %>
+<% admin_breadcrumb(link_to plural_resource_name(Spree::PromotionCategory), spree.admin_promotion_categories_path) %>
+<% admin_breadcrumb(t('spree.new_promotion_category')) %>
+
+
+<%= form_for :promotion_category, url: collection_url do |f| %>
+  <fieldset class="no-border-top">
+    <%= render partial: 'form', locals: { f: f } %>
+    <%= render partial: 'spree/admin/shared/new_resource_links' %>
+  </fieldset>
+<% end %>

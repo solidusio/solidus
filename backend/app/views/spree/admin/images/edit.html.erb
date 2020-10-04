@@ -1,0 +1,33 @@
+<%= render partial: 'spree/admin/shared/product_tabs', locals: { current: 'Images' } %>
+
+<%= render partial: 'spree/shared/error_messages', locals: { target: @image } %>
+
+<% admin_breadcrumb(link_to plural_resource_name(Spree::Image), admin_product_images_path(@product)) %>
+<% admin_breadcrumb(@image.filename) %>
+
+
+<% content_for :page_actions do %>
+  <li><%= link_to t('spree.back_to_images_list'), admin_product_images_url(@product), class: 'btn btn-primary' %></li>
+<% end %>
+
+<%= form_for [:admin, @product, @image], html: { multipart: true } do |f| %>
+  <fieldset data-hook="edit_image">
+    <legend align="center"><%= @image.filename %></legend>
+
+    <div class="row">
+      <div data-hook="thumbnail" class="field col-2 align-center">
+        <%= f.label t('spree.thumbnail') %><br>
+        <%= link_to image_tag(@image.url(:small)), @image.url(:product) %>
+      </div>
+      <div class="col-10">
+        <%= render partial: 'form', locals: { f: f } %>
+      </div>
+      <div class="clear"></div>
+    </div>
+
+    <div class="form-buttons filter-actions actions" data-hook="buttons">
+      <%= button_tag t('spree.actions.update'), class: 'btn btn-primary' %>
+      <%= link_to t('spree.actions.cancel'), admin_product_images_url(@product), id: 'cancel_link', class: 'button' %>
+    </div>
+  </fieldset>
+<% end %>

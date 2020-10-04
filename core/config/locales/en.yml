@@ -1,0 +1,2281 @@
+---
+en:
+  activemodel:
+    attributes:
+      spree/order_cancellations:
+        cancel: Cancel
+        quantity: Quantity
+        shipment: Shipment
+        state: State
+    errors:
+      models:
+        spree/fulfilment_changer:
+          attributes:
+            current_shipment:
+              can_not_have_backordered_inventory_units: has backordered inventory
+                units
+              has_already_been_shipped: has already been shipped
+            desired_shipment:
+              can_not_transfer_within_same_shipment: can not be same as current shipment
+              not_enough_stock_at_desired_location: not enough stock in desired stock
+                location
+  activerecord:
+    attributes:
+      spree/address:
+        address1: Street Address
+        address2: Street Address (cont'd)
+        city: City
+        company: Company
+        firstname: First Name
+        lastname: Last Name
+        name: Name
+        phone: Phone
+        zipcode: Zip Code
+      spree/adjustment:
+        adjustable: Adjustable
+        adjustment_reason_id: Reason
+        amount: Amount
+        label: Label
+        name: Name
+        state: State
+      spree/adjustment_reason:
+        active: Active
+        code: Code
+        name: Name
+        state: State
+      spree/calculator/flat_rate:
+        preferred_amount: Amount
+      spree/calculator/tiered_flat_rate:
+        preferred_base_amount: Base Amount
+        preferred_currency: Currency
+        preferred_tiers: Tiers
+      spree/calculator/tiered_percent:
+        preferred_base_percent: Base Percent
+        preferred_currency: Currency
+        preferred_tiers: Tiers
+      spree/carton:
+        tracking: Tracking
+      spree/country:
+        iso: ISO
+        iso3: ISO3
+        iso_name: ISO Name
+        name: Name
+        numcode: ISO Code
+        states_required: States Required
+      spree/credit_card:
+        base: ''
+        card_code: Card Code
+        cc_type: Brand
+        expiration: Expiration
+        month: Month
+        name: Name
+        number: Card Number
+        verification_value: Verification Value
+        year: Year
+      spree/customer_return:
+        created_at: Date/Time
+        name: Name
+        number: Return Number
+        pre_tax_total: Pre-Tax Total
+        reimbursement_status: Reimbursement status
+        total: Total
+        total_excluding_vat: Pre-Tax Total
+      spree/image:
+        alt: Alternative Text
+        attachment: Filename
+      spree/inventory_unit:
+        state: State
+      spree/legacy_user:
+        email: Email
+        password: Password
+        password_confirmation: Password Confirmation
+        spree_roles: Roles
+      spree/line_item:
+        description: Item Description
+        name: Name
+        price: Price
+        quantity: Quantity
+        total: Total price
+      spree/log_entry:
+        details: Message
+        created_at: Date/Time
+      spree/option_type:
+        name: Name
+        presentation: Presentation
+      spree/option_value:
+        name: Name
+        presentation: Presentation
+      spree/order:
+        additional_tax_total: Tax
+        approved_at: Approved at
+        approver_id: Approver
+        canceled_at: Canceled at
+        canceler_id: Canceler
+        checkout_complete: Checkout Complete
+        completed_at: Completed at
+        considered_risky: Risky
+        coupon_code: Coupon Code
+        created_at: Order Date
+        email: Customer Email
+        included_tax_total: Tax (incl.)
+        ip_address: IP Address
+        item_total: Item Total
+        number: Number
+        payment_state: Payment State
+        shipment_state: Shipment State
+        shipment_total: Ship Total
+        special_instructions: Special Instructions
+        state: State
+        total: Total
+      spree/order/bill_address:
+        address1: Billing address street
+        city: Billing address city
+        firstname: Billing address first name
+        lastname: Billing address last name
+        name: Billing address name
+        phone: Billing address phone
+        state: Billing address state
+        zipcode: Billing address zipcode
+      spree/order/ship_address:
+        address1: Shipping address street
+        city: Shipping address city
+        firstname: Shipping address first name
+        lastname: Shipping address last name
+        name: Shipping address name
+        phone: Shipping address phone
+        state: Shipping address state
+        zipcode: Shipping address zipcode
+      spree/payment:
+        amount: Amount
+        created_at: Date/Time
+        number: Identifier
+        response_code: Transaction ID
+        state: State
+      spree/payment_capture_event:
+        created_at: Date/Time
+        amount: Amount
+      spree/payment_method:
+        active: Active
+        auto_capture: Auto Capture
+        available_to_admin: Available to Admin
+        available_to_users: Available to Users
+        description: Description
+        display_on: Display
+        name: Name
+        preference_source: Preference Source
+        type: Type
+      spree/price:
+        amount: Price
+        country: Country
+        currency: Currency
+        is_default: Currently Valid
+        price: Price
+        variant: Variant
+      spree/product:
+        available_on: Available On
+        cost_currency: Cost Currency
+        cost_price: Cost Price
+        depth: Depth
+        description: Description
+        height: Height
+        master_price: Master Price
+        meta_description: Meta Description
+        meta_keywords: Meta Keywords
+        meta_title: Meta Title
+        name: Name
+        on_hand: On Hand
+        price: Master Price
+        promotionable: Promotable
+        shipping_category: Shipping Category
+        slug: Slug
+        tax_category: Tax Category
+        weight: Weight
+        width: Width
+      spree/product_property:
+        value: Value
+      spree/promotion:
+        apply_automatically: Apply Automatically
+        code: Code
+        description: Description
+        event_name: Event Name
+        expires_at: End
+        name: Name
+        path: Path
+        per_code_usage_limit: Per code usage limit
+        promotion_uses: Promotion Uses
+        starts_at: Start
+        status: Status
+        usage_limit: Usage Limit
+        uses: Uses
+      spree/promotion/actions/create_adjustment:
+        description: Creates a promotion credit adjustment on the order
+      spree/promotion/actions/create_item_adjustments:
+        description: Creates a promotion credit adjustment on a line item
+      spree/promotion/actions/create_quantity_adjustments:
+        description: Creates an adjustment on a line item based on quantity
+      spree/promotion/actions/free_shipping:
+        description: Makes all shipments for the order free
+      spree/promotion/rules/first_order:
+        description: Must be the customer's first order
+      spree/promotion/rules/first_repeat_purchase_since:
+        description: Available only to user who have not purchased in a while
+        form_text: 'Apply this promotion to users whose last order was more than X
+          days ago: '
+      spree/promotion/rules/item_total:
+        description: Order total meets these criteria
+      spree/promotion/rules/landing_page:
+        description: Customer must have visited the specified page
+      spree/promotion/rules/nth_order:
+        description: Apply a promotion to every nth order a user has completed.
+        form_text: 'Apply this promotion on the users Nth order: '
+      spree/promotion/rules/one_use_per_user:
+        description: Only one use per user
+      spree/promotion/rules/option_value:
+        description: Order includes specified product(s) with matching option value(s)
+      spree/promotion/rules/product:
+        description: Order includes specified product(s)
+      spree/promotion/rules/store:
+        description: Available only to the specified stores
+      spree/promotion/rules/taxon:
+        description: Order includes products with specified taxon(s)
+      spree/promotion/rules/user:
+        description: Available only to the specified users
+      spree/promotion/rules/user_logged_in:
+        description: Available only to logged in users
+      spree/promotion/rules/user_role:
+        description: Order includes User with specified Role(s)
+      spree/promotion_category:
+        code: Code
+        name: Name
+      spree/promotion_code:
+        value: Value
+      spree/promotion_code_batch:
+        base_code: Base code
+        email: Email
+        join_characters: Join characters
+        number_of_codes: Number of codes
+        status: Status
+        total_codes: Total codes
+      spree/property:
+        name: Name
+        presentation: Presentation
+      spree/refund:
+        amount: Amount
+        description: Description
+        refund_reason_id: Reason
+      spree/refund_reason:
+        active: Active
+        code: Code
+        name: Name
+        state: State
+      spree/reimbursement:
+        created_at: Date/Time
+        number: Number
+        reimbursement_status: Status
+        total: Total
+      spree/reimbursement/credit:
+        amount: Amount
+      spree/reimbursement_type:
+        created_at: Date/Time
+        name: Name
+        type: Type
+      spree/return_authorization:
+        amount: Amount
+        pre_tax_total: Pre-Tax Total
+        total_excluding_vat: Pre-Tax Total
+      spree/return_item:
+        acceptance_status: Acceptance Status
+        acceptance_status_errors: Acceptance Errors
+        amount: Amount Before Sales Tax
+        charged: Charged
+        exchange_variant: Exchange For
+        inventory_unit_state: State
+        item_received?: Item Received?
+        override_reimbursement_type_id: Reimbursement Type Override
+        preferred_reimbursement_type_id: Preferred Reimbursement Type
+        reception_status: Reception Status
+        resellable: Resellable?
+        return_reason: Reason
+        total: Total
+      spree/return_reason:
+        active: Active
+        created_at: Date/Time
+        memo: Memo
+        name: Name
+        number: RMA Number
+        state: State
+      spree/role:
+        name: Name
+      spree/shipment:
+        tracking: Tracking Number
+      spree/shipping_category:
+        name: Name
+      spree/shipping_method:
+        admin_name: Internal Name
+        available_to_users: Available to users
+        carrier: Carrier
+        code: Code
+        display_on: Display
+        name: Name
+        service_level: Service Level
+        tracking_url: Tracking URL
+        stock_locations: Stock Locations
+        available_to_all: Available to all stock locations
+      spree/shipping_rate:
+        amount: Amount
+        label: Label
+        shipping_rate: Shipping Rate
+        tax_rate: Tax Rate
+      spree/state:
+        abbr: Abbreviation
+        name: Name
+      spree/stock_item:
+        count_on_hand: Count On Hand
+      spree/stock_location:
+        active: Active
+        address1: Street Address
+        address2: Street Address (cont'd)
+        admin_name: Internal Name
+        backorderable_default: Backorderable Default
+        check_stock_on_transfer: Check Stock on Transfer
+        city: City
+        code: Code
+        country_id: Country
+        default: Default
+        fulfillable: Fulfillable
+        name: Name
+        phone: Phone
+        propagate_all_variants: Propagate All Variants
+        restock_inventory: Restock Inventory
+        state: State
+        state_id: State
+        zipcode: Zip
+      spree/stock_movement:
+        originated_by: Originated By
+        quantity: Quantity
+        variant: Variant
+      spree/store:
+        available_locales: Locales Available in the Storefront
+        cart_tax_country_iso: Tax Country for Empty Carts
+        code: Slug
+        default: Default
+        default_currency: Default Currency
+        mail_from_address: Mail From Address
+        bcc_email: BCC Email
+        meta_description: Meta Description
+        meta_keywords: Meta Keywords
+        name: Site Name
+        seo_title: Seo Title
+        url: Site URL
+      spree/store_credit:
+        amount: Amount
+        amount_authorized: Amount Authorized
+        amount_credited: Amount Credited
+        amount_used: Amount Used
+        category_id: Credit Type
+        created_at: Issued On
+        created_by_id: Created By
+        invalidated_at: Invalidated
+        memo: Memo
+      spree/store_credit_event:
+        action: Action
+        amount_remaining: Total Unused
+        user_total_amount: Total Amount
+      spree/store_credit_reason:
+        name: Name
+        state: State
+      spree/store_credit_update_reason:
+        name: Name
+      spree/tax_category:
+        description: Description
+        is_default: Default
+        name: Name
+        tax_code: Tax Code
+      spree/tax_rate:
+        amount: Rate
+        expires_at: Expiration Date
+        included_in_price: Included in Price
+        name: Name
+        show_rate_in_label: Show Rate in Label
+        starts_at: Start Date
+        tax_categories: Tax Categories
+      spree/taxon:
+        description: Description
+        icon: Icon
+        meta_description: Meta Description
+        meta_keywords: Meta Keywords
+        meta_title: Meta Title
+        name: Name
+        permalink: Permalink
+        position: Position
+      spree/taxonomy:
+        name: Name
+      spree/tracker:
+        active: Active
+        analytics_id: Analytics ID
+      spree/user:
+        email: Email
+        lifetime_value: Total spent
+        password: Password
+        password_confirmation: Password Confirmation
+        spree_roles: Roles
+      spree/variant:
+        cost_currency: Cost Currency
+        cost_price: Cost Price
+        depth: Depth
+        height: Height
+        price: Price
+        sku: SKU
+        tax_category: Variant Tax Category
+        weight: Weight
+        width: Width
+      spree/zone:
+        description: Description
+        name: Name
+    errors:
+      models:
+        spree/address:
+          attributes:
+            state:
+              does_not_match_country: does not match the country
+        spree/calculator/tiered_flat_rate:
+          attributes:
+            base:
+              keys_should_be_positive_number: Tier keys should all be numbers larger
+                than 0
+            preferred_tiers:
+              should_be_hash: should be a hash
+        spree/calculator/tiered_percent:
+          attributes:
+            base:
+              keys_should_be_positive_number: Tier keys should all be numbers larger
+                than 0
+              values_should_be_percent: Tier values should all be percentages between
+                0% and 100%
+            preferred_tiers:
+              should_be_hash: should be a hash
+        spree/classification:
+          attributes:
+            taxon_id:
+              already_linked: is already linked to this product
+        spree/credit_card:
+          attributes:
+            base:
+              card_expired: Card has expired
+              expiry_invalid: Card expiration is invalid
+        spree/inventory_unit:
+          attributes:
+            base:
+              cannot_destroy_shipment_state: Cannot destroy an inventory unit for
+                a %{state} shipment
+            state:
+              cannot_destroy: Cannot destroy a %{state} inventory unit
+        spree/line_item:
+          attributes:
+            price:
+              not_a_number: is not valid
+              does_not_match_order_currency: Line item price currency must match order currency!
+        spree/price:
+          attributes:
+            currency:
+              invalid_code: is not a valid currency code
+        spree/promotion:
+          attributes:
+            apply_automatically:
+              disallowed_with_path: Disallowed for promotions with a path
+        spree/promotion_code:
+          attributes:
+            base:
+              disallowed_with_apply_automatically: Could not create promotion code on promotion that apply automatically
+        spree/refund:
+          attributes:
+            amount:
+              greater_than_allowed: is greater than the allowed amount.
+        spree/reimbursement:
+          attributes:
+            base:
+              return_items_order_id_does_not_match: One or more of the return items
+                specified do not belong to the same order as the reimbursement.
+        spree/return_item:
+          attributes:
+            inventory_unit:
+              other_completed_return_item_exists: "%{inventory_unit_id} has already
+                been taken by return item %{return_item_id}"
+            reimbursement:
+              cannot_be_associated_unless_accepted: cannot be associated to a return
+                item that is not accepted.
+        spree/shipment:
+          attributes:
+            base:
+              cannot_remove_items_shipment_state: Cannot remove items from a %{state}
+                shipment
+            state:
+              cannot_destroy: Cannot destroy a %{state} shipment
+        spree/store:
+          attributes:
+            base:
+              cannot_destroy_default_store: Cannot destroy the default Store.
+        spree/user_address:
+          attributes:
+            user_id:
+              default_address_exists: already has a default address
+        spree/wallet_payment_source:
+          attributes:
+            payment_source:
+              has_to_be_payment_source_class: is not a valid payment source
+              not_owned_by_user: does not belong to the user associated with the order
+            user_id:
+              payment_source_already_exists: already has this payment source in their wallet
+    models:
+      spree/address:
+        one: Address
+        other: Addresses
+      spree/adjustment:
+        one: Adjustment
+        other: Adjustments
+      spree/adjustment_reason:
+        one: Adjustment Reason
+        other: Adjustment Reasons
+      spree/calculator:
+        one: Base Calculator
+        other: Base Calculators
+      spree/calculator/default_tax:
+        one: Default Tax
+        other: Default Tax
+      spree/calculator/distributed_amount:
+        one: Distributed Amount
+        other: Distributed Amount
+      spree/calculator/flat_percent_item_total:
+        one: Flat Percent
+        other: Flat Percent
+      spree/calculator/flat_rate:
+        one: Flat Rate
+        other: Flat Rate
+      spree/calculator/flexi_rate:
+        one: Flexible Rate
+        other: Flexible Rate
+      spree/calculator/free_shipping:
+        one: Free Shipping
+        other: Free Shipping
+      spree/calculator/percent_on_line_item:
+        one: Percent Per Item
+        other: Percent Per Item
+      spree/calculator/percent_per_item:
+        one: Percent Per Item
+        other: Percent Per Item
+      spree/calculator/price_sack:
+        one: Price Sack
+        other: Price Sack
+      spree/calculator/returns/default_refund_amount:
+        one: Default Refund Amount
+        other: Default Refund Amount
+      spree/calculator/shipping/flat_percent_item_total:
+        one: Flat Percent
+        other: Flat Percent
+      spree/calculator/shipping/flat_rate:
+        one: Flat Rate
+        other: Flat Rate
+      spree/calculator/shipping/flexi_rate:
+        one: Flexible Rate per Package Item
+        other: Flexible Rate per Package Item
+      spree/calculator/shipping/per_item:
+        one: Flat Rate per Package Item
+        other: Flat Rate per Package Item
+      spree/calculator/shipping/price_sack:
+        one: Price Sack
+        other: Price Sack
+      spree/calculator/tiered_flat_rate:
+        one: Tiered Flat Rate
+        other: Tiered Flat Rate
+      spree/calculator/tiered_percent:
+        one: Tiered Percent
+        other: Tiered Percent
+      spree/country:
+        one: Country
+        other: Countries
+      spree/credit_card:
+        one: Credit Card
+        other: Credit Cards
+      spree/customer_return:
+        one: Customer Return
+        other: Customer Returns
+      spree/exchange:
+        one: Exchange
+        other: Exchanges
+      spree/image:
+        one: Image
+        other: Images
+      spree/inventory_unit:
+        one: Inventory Unit
+        other: Inventory Units
+      spree/legacy_user:
+        one: User
+        other: Users
+      spree/line_item:
+        one: Line Item
+        other: Line Items
+      spree/log_entry:
+        one: Log Entry
+        other: Log Entries
+      spree/option_type:
+        one: Option Type
+        other: Option Types
+      spree/option_value:
+        one: Option Value
+        other: Option Values
+      spree/order:
+        one: Order
+        other: Orders
+      spree/payment:
+        one: Payment
+        other: Payments
+      spree/payment_capture_event:
+        one: Capture Event
+        other: Capture Events
+      spree/payment_method:
+        one: Payment Method
+        other: Payment Methods
+      spree/payment_method/bogus_credit_card: Bogus Credit Card Payments
+      spree/payment_method/check: Check Payments
+      spree/payment_method/simple_bogus_credit_card: Simple Bogus Credit Card Payments
+      spree/payment_method/store_credit: Store Credit Payments
+      spree/price:
+        one: Price
+        other: Prices
+      spree/product:
+        one: Product
+        other: Products
+      spree/product_property:
+        one: Product Property
+        other: Product Properties
+      spree/promotion:
+        one: Promotion
+        other: Promotions
+      spree/promotion/actions/create_adjustment: Create whole-order adjustment
+      spree/promotion/actions/create_item_adjustments: Create per-line-item adjustment
+      spree/promotion/actions/create_quantity_adjustments: Create per-quantity adjustment
+      spree/promotion/actions/free_shipping: Free Shipping
+      spree/promotion/rules/first_order: First Order
+      spree/promotion/rules/first_repeat_purchase_since: First Repeat Purchase Since
+      spree/promotion/rules/item_total: Item Total
+      spree/promotion/rules/landing_page: Landing Page
+      spree/promotion/rules/nth_order: Nth Order
+      spree/promotion/rules/one_use_per_user: One Use Per User
+      spree/promotion/rules/option_value: Option Value(s)
+      spree/promotion/rules/product: Product(s)
+      spree/promotion/rules/taxon: Taxon(s)
+      spree/promotion/rules/user: User
+      spree/promotion/rules/user_logged_in: User Logged In
+      spree/promotion/rules/user_role: User Role(s)
+      spree/promotion_category:
+        one: Promotion Category
+        other: Promotion Categories
+      spree/promotion_code:
+        one: Promotion Code
+        other: Promotion Codes
+      spree/promotion_code_batch:
+        one: Promotion Code Batch
+        other: Promotion Code Batches
+      spree/property:
+        one: Property Type
+        other: Property Types
+      spree/refund:
+        one: Refund
+        other: Refunds
+      spree/refund_reason:
+        one: Refund Reason
+        other: Refund Reasons
+      spree/reimbursement:
+        one: Reimbursement
+        other: Reimbursements
+      spree/reimbursement_type:
+        one: Reimbursement Type
+        other: Reimbursement Types
+      spree/return_authorization:
+        one: Return Authorization
+        other: Return Authorizations
+      spree/return_reason:
+        one: RMA Reason
+        other: RMA Reasons
+      spree/role:
+        one: Roles
+        other: Roles
+      spree/shipment:
+        one: Shipment
+        other: Shipments
+      spree/shipping_category:
+        one: Shipping Category
+        other: Shipping Categories
+      spree/shipping_method:
+        one: Shipping Method
+        other: Shipping Methods
+      spree/state:
+        one: State
+        other: States
+      spree/stock: stock
+      spree/stock_item:
+        one: Stock Item
+        other: Stock Items
+      spree/stock_location:
+        one: Stock Location
+        other: Stock Locations
+      spree/stock_movement:
+        one: Stock Movement
+        other: Stock Movements
+      spree/store:
+        one: Store
+        other: Stores
+      spree/store_credit:
+        one: Store Credit
+        other: Store Credits
+      spree/store_credit_category:
+        one: Category
+        other: Categories
+      spree/store_credit_reason:
+        one: Store Credit Reason
+        other: Store Credit Reasons
+      spree/tax_category:
+        one: Tax Category
+        other: Tax Categories
+      spree/tax_rate:
+        one: Tax Rate
+        other: Tax Rates
+      spree/taxon:
+        one: Taxon
+        other: Taxons
+      spree/taxonomy:
+        one: Taxonomy
+        other: Taxonomies
+      spree/tracker:
+        one: Analytics Tracker
+        other: Analytics Trackers
+      spree/user:
+        one: User
+        other: Users
+      spree/variant:
+        one: Variant
+        other: Variants
+      spree/zone:
+        one: Zone
+        other: Zones
+      user:
+        one: User
+        other: Users
+  errors:
+    messages:
+      already_confirmed: was already confirmed
+      not_found: not found
+      not_locked: was not locked
+      not_saved:
+        one: '1 error prohibited this %{resource} from being saved:'
+        other: "%{count} errors prohibited this %{resource} from being saved:"
+  spree:
+    abbreviation: Abbreviation
+    accept: Accept
+    acceptance_errors: Acceptance errors
+    acceptance_status: Acceptance status
+    accepted: Accepted
+    account: Account
+    account_updated: Account updated
+    action: Action
+    actions:
+      add: Add
+      cancel: Cancel
+      continue: Continue
+      create: Create
+      delete: Delete
+      destroy: Destroy
+      edit: Edit
+      list: List
+      listing: Listing
+      new: New
+      receive: Receive
+      refund: Refund
+      remove: Remove
+      save: Save
+      send_email: Send Email
+      ship: Ship
+      split: Split
+      update: Update
+    activate: Activate
+    active: Active
+    add: Add
+    add_action_of_type: Add action of type
+    add_country: Add Country
+    add_coupon_code: Add Coupon Code
+    add_line_item: Add Item
+    add_new_header: Add New Header
+    add_new_style: Add New Style
+    add_one: Add One
+    add_option_value: Add Option Value
+    add_product: Add Product
+    add_product_properties: Add Product Properties
+    add_variant_properties: Add Variant Properties
+    applies_to_all_variant_properties: Applies to all Variant Properties above
+    add_rule_of_type: Add rule of type
+    add_state: Add State
+    add_stock: Add Stock
+    add_stock_management: Add Stock Management
+    add_taxon: Add taxon
+    add_to_cart: Add To Cart
+    add_to_stock_location: Select location to propagate stock
+    add_variant: Add Variant
+    add_variant_properties: Add Variant Properties
+    added: Added
+    adding_match: Adding match
+    additional_item: Additional Item
+    address1: Address
+    address2: Address (contd.)
+    adjustable: Adjustable
+    adjustment: Adjustment
+    adjustment_amount: Amount
+    adjustment_labels:
+      line_item: "%{promotion} (%{promotion_name})"
+      order: "%{promotion} (%{promotion_name})"
+      tax_rates:
+        sales_tax: "%{name}"
+        sales_tax_with_rate: "%{name} %{amount}"
+        vat: "%{name} (Included in Price)"
+        vat_with_rate: "%{name} %{amount} (Included in Price)"
+    adjustment_reasons: Adjustment Reasons
+    adjustment_successfully_closed: Adjustment has been successfully closed!
+    adjustment_successfully_opened: Adjustment has been successfully opened!
+    adjustment_total: Adjustment Total
+    adjustment_type: Adjustment type
+    adjustments: Adjustments
+    admin:
+      api:
+        key_cleared: Key cleared
+        key_generated: Key generated
+      images:
+        index:
+          choose_files: Choose files to upload
+          drag_and_drop: or drag and drop them here
+          image_process_failed: Server failed to process the image
+          upload_images: Upload Images
+      order:
+        events:
+          approve: Approve
+          cancel: Cancel
+          resume: Resume
+      payments:
+        source_forms:
+          storecredit:
+            not_supported: Creating store credit payments via the admin is not currently
+              supported.
+      prices:
+        any_country: Any Country
+        edit:
+          edit_price: Edit Price
+        index:
+          amount_greater_than: Amount greater than
+          amount_less_than: Amount less than
+          new_price: New Price
+        new:
+          new_price: New Price
+      promotions:
+        actions:
+          calculator_label: Calculated by
+        activations_edit:
+          auto: All orders will attempt to use this promotion
+          multiple_codes_html: This promotion uses %{count} promotion codes
+          single_code_html: 'This promotion uses the promotion code: <code>%{code}</code>'
+        activations_new:
+          auto: Apply to all orders
+          multiple_codes: Multiple promotion codes
+          single_code: Single promotion code
+        form:
+          activation: Activation
+          expires_at_placeholder: Never
+          general: General
+          starts_at_placeholder: Immediately
+      promotion_status:
+        active: Active
+        expired: Expired
+        inactive: Inactive
+        not_started: Not started
+      shipping_methods:
+        form:
+          stock_locations_placeholder: 'Choose stock locations'
+      stock_locations:
+        form:
+          address: Address
+          general: General
+          settings: Settings
+      store_credits:
+        add: Add store credit
+        amount_authorized: Authorized
+        amount_credited: Credited
+        amount_used: Used
+        back_to_edit: Back to edit
+        back_to_store_credit_list: Store credit list
+        back_to_user_list: Back to user list
+        change_amount: Change amount
+        created_at: Issued On
+        created_by: Created By
+        credit_type: Type
+        current_balance: 'Current balance:'
+        edit: Editing store credit
+        edit_amount: Editing store credit amount
+        errors:
+          amount_authorized_exceeds_total_credit: " exceeds the available credit"
+          amount_used_cannot_be_greater: cannot be greater than the credited amount
+          amount_used_not_zero: is greater than zero. Can not delete store credit
+          cannot_be_modified: cannot be modified
+          cannot_change_used_store_credit: Store credit that has been claimed cannot
+            be changed
+          update_reason_required: A reason for the change must be selected
+          store_credit_reason_required: A reason for the change must be selected
+        history: Store credit history
+        invalidate_store_credit: Invalidating store credit
+        invalidated: Invalidated
+        issued_on: Issued On
+        memo: Memo
+        new: New store credit
+        no_store_credit_selected: No store credit was selected
+        payment_originator: 'Payment - Order #%{order_number}'
+        reason_for_updating: Reason for updating
+        refund_originator: 'Refund - Order #%{order_number}'
+        resource_name: store credits
+        select_amount_store_credit_reason: Select a reason for updating the amount
+        select_amount_update_reason: Select a reason for updating the amount
+        select_reason: Select a reason for this store credit
+        total_unused: Total unused
+        type_html_header: Credit Type
+        unable_to_create: Unable to create store credit
+        unable_to_delete: Unable to delete store credit
+        unable_to_invalidate: Unable to invalidate store credit
+        unable_to_update: Unable to update store credit
+        user_originator: User - %{email}
+        view: View store credit
+      stores:
+        form:
+          no_cart_tax_country: No taxes on carts without address
+      tab:
+        checkout: Refunds and Returns
+        configuration: Configuration
+        display_order: Display Order
+        option_types: Option Types
+        orders: Orders
+        overview: Overview
+        payments: Payments
+        products: Products
+        promotion_categories: Promotion Categories
+        promotions: Promotions
+        properties: Property Types
+        rma: RMA
+        settings: Settings
+        shipping: Shipping
+        stock: Stock
+        stock_items: Store Stock
+        stores: Stores
+        taxes: Taxes
+        taxonomies: Taxonomies
+        taxons: Taxons
+        users: Users
+        zones: Zones
+      taxons:
+        display_order: Display Order
+      user:
+        account: Account
+        addresses: Addresses
+        items: Items
+        items_purchased: Items Purchased
+        order_history: Order History
+        order_num: 'Order #'
+        orders: Orders
+        store_credit: Store Credit
+        user_information: User Information
+      users:
+        edit:
+          api_access: API Access
+          clear_key: Clear key
+          confirm_clear_key: Are you sure you want to clear this user's API key? It
+            will invalidate the existing key.
+          confirm_regenerate_key: Are you sure you want to regenerate this user's
+            API key? It will invalidate the existing key.
+          generate_key: Generate API key
+          key: Key
+          no_key: No key
+          regenerate_key: Regenerate key
+        user_page_actions:
+          create_order: Create order for this user
+      variants:
+        edit:
+          edit_variant: Edit Variant
+        form:
+          dimensions: Dimensions
+          pricing: Pricing
+          pricing_hint: These values are populated from the product details page and
+            can be overridden below
+          use_product_tax_category: Use Product Tax Category
+        new:
+          new_variant: New Variant
+        table_filter:
+          show_deleted: Show Deleted Variants
+    administration: Administration
+    agree_to_privacy_policy: Agree to Privacy Policy
+    agree_to_terms_of_service: Agree to Terms of Service
+    all: All
+    all_adjustments_finalized: All adjustments successfully finalized!
+    all_adjustments_unfinalized: All adjustments successfully unfinalized!
+    all_departments: All departments
+    all_items_have_been_returned: All items have been returned
+    already_signed_up_for_analytics: You have already signed up for Spree Analytics
+    alt_text: Alternative Text
+    alternative_phone: Alternative Phone
+    amount: Amount
+    analytics_desc_header_1: Spree Analytics
+    analytics_desc_header_2: Live analytics integrated into your Spree dashboard
+    analytics_desc_list_1: Get live sales information as it happens
+    analytics_desc_list_2: Requires only a free Spree account to activate
+    analytics_desc_list_3: Absolutely no code to install
+    analytics_desc_list_4: It's completely free!
+    analytics_trackers: Analytics Trackers
+    and: and
+    apply_code: Apply Code
+    approve: Approve
+    approved_at: Approved at
+    approver: Approver
+    are_you_sure: Are you sure?
+    are_you_sure_delete: Are you sure you want to delete this record?
+    authorization_failure: Authorization Failure
+    authorized: Authorized
+    auto_capture: Auto Capture
+    auto_receive: Auto Receive
+    available_on: Available On
+    average_order_value: Average Order Value
+    avs_response: AVS Response
+    back: Back
+    back_end: Backend
+    back_to_adjustment_reason_list: Back To Adjustment Reason List
+    back_to_adjustments_list: Back To Adjustments List
+    back_to_countries_list: Back To Countries List
+    back_to_customer_return: Back To Customer Return
+    back_to_customer_return_list: Back To Customer Return List
+    back_to_images_list: Back To Images List
+    back_to_option_types_list: Back To Option Types List
+    back_to_orders_list: Back To Orders List
+    back_to_payment: Back To Payment
+    back_to_payment_methods_list: Back To Payment Methods List
+    back_to_payments_list: Back To Payments List
+    back_to_products_list: Back To Products List
+    back_to_promotion_categories_list: Back To Promotions Categories List
+    back_to_promotions_list: Back To Promotions List
+    back_to_properties_list: Back To Property Types List
+    back_to_refund_reason_list: Back To Refund Reason List
+    back_to_reimbursement_type_list: Back To Reimbursement Type List
+    back_to_reports_list: Back To Reports List
+    back_to_return_authorizations_list: Back To RMA List
+    back_to_rma_reason_list: Back To RMA Reason List
+    back_to_shipping_categories: Back To Shipping Categories
+    back_to_shipping_categories_list: Back To Shipping Categories List
+    back_to_shipping_methods_list: Back To Shipping Methods List
+    back_to_states_list: Back To States List
+    back_to_stock_locations_list: Back to Stock Locations List
+    back_to_stock_movements_list: Back to Stock Movements List
+    back_to_store: View store
+    back_to_tax_categories_list: Back To Tax Categories List
+    back_to_tax_rates_list: Back To Tax Rates List
+    back_to_taxonomies_list: Back To Taxonomies List
+    back_to_trackers_list: Back To Trackers List
+    back_to_users_list: Back To Users List
+    back_to_zones_list: Back To Zones List
+    backorderable: Backorderable
+    backorderable_default: Backorderable default
+    backorderable_header: Back Orderable
+    backordered: Backordered
+    backorders_allowed: backorders allowed
+    balance_due: Balance Due
+    base_amount: Base Amount
+    base_percent: Base Percent
+    bill_address: Bill Address
+    billing: Billing
+    billing_address: Billing Address
+    both: Both
+    calculated_reimbursements: Calculated Reimbursements
+    calculator: Calculator
+    calculator_settings_warning: If you are changing the calculator type or preference
+      source, you must save first before you can edit the calculator settings
+    cancel: Cancel
+    cancel_inventory: Cancel Items
+    canceled: Canceled
+    canceled_at: Canceled at
+    canceler: Canceler
+    cancellation: Cancellation
+    cannot_create_payment_link: Please define some payment methods first.
+    cannot_create_payment_without_payment_methods_html: You cannot create a payment
+      for an order without any payment methods defined. %{link}
+    cannot_create_returns: Cannot create returns as this order has no shipped units.
+    cannot_edit_orders: You may only edit your current shopping cart.
+    cannot_perform_operation: Cannot perform requested operation
+    cannot_rebuild_shipments_order_completed: Cannot rebuild shipments for a completed
+      order.
+    cannot_rebuild_shipments_shipments_not_pending: Cannot rebuild shipments for an
+      order with non-pending shipments.
+    cannot_set_shipping_method_without_address: Cannot set shipping method until customer
+      details are provided.
+    cannot_update_email: You do not have access to update this user's email address.
+      <br />Please contact a superuser if you need to perform this action.
+    capture: Capture
+    capture_events: Capture events
+    card_code: Card Code
+    card_number: Card Number
+    card_type: Brand
+    card_type_is: Card type is
+    cart: Cart
+    cart_subtotal:
+      one: Subtotal (1 item)
+      other: Subtotal (%{count} items)
+    carton_external_number: External Number
+    carton_orders: Other orders with Carton
+    categories: Categories
+    category: Category
+    character_limit: Limit of 255 characters
+    charged: Charged
+    check: Check
+    check_stock_on_transfer: Check stock on transfer
+    checkout: Checkout
+    choose_a_customer: Choose a Customer
+    choose_a_taxon_to_sort_products_for: Choose a taxon to sort products for
+    choose_currency: Choose Currency
+    choose_dashboard_locale: Choose Dashboard Locale
+    choose_location: Choose Location
+    choose_promotion_action: Choose Action
+    choose_promotion_rule: Choose Rule
+    choose_reason: Choose Reason
+    city: City
+    clear_cache: Clear Cache
+    clear_cache_ok: Cache was flushed
+    clear_cache_warning: Clearing cache will temporarily reduce the performance of
+      your store.
+    clone: Clone
+    close: Close
+    closed: Closed
+    code: Code
+    company: Company
+    complete: complete
+    complete_order: Complete Order
+    configuration: Configuration
+    configurations: Configurations
+    confirm: Confirm
+    confirm_delete: Confirm Deletion
+    confirm_order: Confirm Order
+    confirm_password: Password Confirmation
+    continue: Continue
+    continue_shopping: Continue shopping
+    cost_currency: Cost Currency
+    cost_price: Cost Price
+    could_not_connect_to_jirafe: Could not connect to Jirafe to sync data. This will
+      be automatically retried later.
+    could_not_create_customer_return: Could not create customer return
+    could_not_create_stock_movement: There was a problem saving this stock movement.
+      Please try again.
+    count_on_hand: Count On Hand
+    countries: Countries
+    country: Country
+    country_based: Country Based
+    country_name: Name
+    country_names:
+      CA: Canada
+      FRA: France
+      ITA: Italy
+      US: United States of America
+    coupon: Coupon
+    coupon_code: Coupon code
+    coupon_code_already_applied: The coupon code has already been applied to this
+      order
+    coupon_code_applied: The coupon code was successfully applied to your order.
+    coupon_code_better_exists: The previously applied coupon code results in a better
+      deal
+    coupon_code_expired: The coupon code is expired
+    coupon_code_max_usage: Coupon code usage limit exceeded
+    coupon_code_not_eligible: This coupon code is not eligible for this order
+    coupon_code_not_found: The coupon code you entered doesn't exist. Please try again.
+    coupon_code_not_present: The coupon code you are trying to remove is not present
+      on this order.
+    coupon_code_removed: The coupon code was successfully removed from this order.
+    coupon_code_unknown_error: This coupon code could not be applied to the cart at
+      this time.
+    create: Create
+    create_a_new_account: Create a new account
+    create_one: Create One.
+    create_promotion_code: Create promotion code
+    create_reimbursement: Create reimbursement
+    created_at: Created At
+    created_by: Created by
+    created_successfully: Created successfully
+    credit: Credit
+    credit_allowed: Credit Allowed
+    credit_card: Credit Card
+    credit_cards: Credit Cards
+    credit_owed: Credit Owed
+    credits: Credits
+    currency: Currency
+    currency_settings: Currency Settings
+    current: Current
+    current_promotion_usage: 'Current Usage: %{count}'
+    customer: Customer
+    customer_details: Customer Details
+    customer_details_updated: Customer Details Updated
+    customer_return: Customer Return
+    customer_returns: Customer Returns
+    customer_search: Customer Search
+    cut: Cut
+    cvv_response: CVV Response
+    dash:
+      jirafe:
+        app_id: App ID
+        app_token: App Token
+        currently_unavailable: Jirafe is currently unavailable. Spree will automatically
+          connect to Jirafe once it is available.
+        explanation: The fields below may already be populated if you chose to register
+          with Jirafe from the admin dashboard.
+        header: Jirafe Analytics Settings
+        site_id: Site ID
+        token: Token
+      jirafe_settings_updated: Jirafe Settings have been updated.
+    date: Date
+    date_completed: Date Completed
+    date_picker:
+      first_day: 0
+      format: "%Y/%m/%d"
+      js_format: yy/mm/dd
+    date_range: Date Range
+    default: Default
+    default_refund_amount: Default Refund Amount
+    delete: Delete
+    deleted_successfully: Deleted successfully
+    deleted_variants_present: Some line items in this order have products that are
+      no longer available.
+    delivery: Delivery
+    depth: Depth
+    description: Description
+    destination: Destination
+    destination_location: Destination location
+    destroy: Destroy
+    details: Details
+    discount_amount: Discount Amount
+    discount_rules: Discount Rules
+    dismiss_banner: No. Thanks! I'm not interested, do not display this message again
+    display: Display
+    download_promotion_codes_list: Download codes list
+    edit: Edit
+    edit_refund_reason: Edit Refund Reason
+    editing_adjustment_reason: Editing Adjustment Reason
+    editing_country: Editing Country
+    editing_option_type: Editing Option Type
+    editing_payment_method: Editing Payment Method
+    editing_product: Editing Product
+    editing_promotion: Editing Promotion
+    editing_promotion_category: Editing Promotion Category
+    editing_property: Editing Property Type
+    editing_refund: Editing Refund
+    editing_refund_reason: Editing Refund Reason
+    editing_reimbursement: Editing Reimbursement
+    editing_reimbursement_type: Editing Reimbursement Type
+    editing_rma_reason: Editing RMA Reason
+    editing_shipping_category: Editing Shipping Category
+    editing_shipping_method: Editing Shipping Method
+    editing_state: Editing State
+    editing_stock_location: Editing Stock Location
+    editing_stock_movement: Editing Stock Movement
+    editing_tax_category: Editing Tax Category
+    editing_tax_rate: Editing Tax Rate
+    editing_tracker: Editing Tracker
+    editing_user: Editing User
+    editing_zone: Editing Zone
+    eligibility_errors:
+      messages:
+        has_excluded_product: Your cart contains a product that prevents this coupon
+          code from being applied.
+        has_excluded_taxon: Your cart contains a product from an excluded category
+          that prevents this coupon code from being applied.
+        item_total_less_than: This coupon code can't be applied to orders less than
+          %{amount}.
+        item_total_less_than_or_equal: This coupon code can't be applied to orders
+          less than or equal to %{amount}.
+        limit_once_per_user: This coupon code can only be used once per user.
+        missing_product: This coupon code can't be applied because you don't have
+          all of the necessary products in your cart.
+        missing_taxon: You need to add a product from all applicable categories before
+          applying this coupon code.
+        no_applicable_products: You need to add an applicable product before applying
+          this coupon code.
+        no_matching_taxons: You need to add a product from an applicable category
+          before applying this coupon code.
+        no_user_or_email_specified: You need to login or provide your email before
+          applying this coupon code.
+        no_user_specified: You need to login before applying this coupon code.
+        not_first_order: This coupon code can only be applied to your first order.
+    email: Email
+    empty: Empty
+    empty_cart: Empty Cart
+    enable_mail_delivery: Enable Mail Delivery
+    end: End
+    ending_in: Ending in
+    error: error
+    errors:
+      messages:
+        cannot_delete_finalized_stock_location: Stock Location cannot be destroyed
+          if you have open stock transfers.
+        could_not_create_taxon: Could not create taxon
+        no_payment_methods_available: No payment methods are configured for this environment
+        no_shipping_methods_available: No shipping methods available for selected
+          location, please change your address and try again.
+    errors_prohibited_this_record_from_being_saved:
+      one: 1 error prohibited this record from being saved
+      other: "%{count} errors prohibited this record from being saved"
+    event: Event
+    events:
+      spree:
+        cart:
+          add: Add to cart
+        checkout:
+          coupon_code_added: Coupon code added
+        content:
+          visited: Visit static content page
+        order:
+          contents_changed: Order contents changed
+        page_view: Static page viewed
+        user:
+          signup: User signup
+    exceptions:
+      count_on_hand_setter: Cannot set count_on_hand manually, as it is set automatically
+        by the recalculate_count_on_hand callback. Please use `update_column(:count_on_hand,
+        value)` instead.
+    exchange_for: Exchange For
+    excl: excl.
+    existing_shipments: Existing shipments
+    expected: Expected
+    expected_items: Expected Items
+    expiration: Expiration
+    extension: Extension
+    failed_payment_attempts: Failed Payment Attempts
+    failure: Failure
+    filename: Filename
+    fill_in_customer_info: Please fill in customer info
+    filter: Filter
+    filter_results: Filter Results
+    finalize: Finalize
+    finalize_all_adjustments: Finalize All Adjustments
+    finalized: Finalized
+    finalized_at: Finalized at
+    finalized_by: Finalized by
+    find_a_taxon: Find a Taxon
+    first_item: First Item
+    first_name: First Name
+    first_name_begins_with: First Name Begins With
+    flat_percent: Flat Percent
+    flat_rate_per_order: Flat Rate
+    flexible_rate: Flexible Rate
+    forgot_password: Forgot Password?
+    free_shipping: Free Shipping
+    free_shipping_amount: "-"
+    from: From
+    front_end: Front End
+    gateway: Gateway
+    gateway_config_unavailable: Gateway unavailable for environment
+    gateway_error: Gateway Error
+    general: General
+    general_settings: Store
+    google_analytics: Google Analytics
+    google_analytics_id: Analytics ID
+    group_size: Group size
+    guest_checkout: Guest Checkout
+    guest_user_account: Checkout as a Guest
+    has_no_shipped_units: has no shipped units
+    height: Height
+    helpers:
+      products:
+        price_diff_add_html: "(Add: %{amount_html})"
+        price_diff_subtract_html: "(Subtract: %{amount_html})"
+    hidden: hidden
+    hide_out_of_stock: Hide out of stock
+    hints:
+      spree/calculator:
+        tax_rates: This is used to calculate both sales tax (United States-style taxes)
+          and value-added tax (VAT). Typically this calculator should be the only tax
+          calculator required by your store.
+        shipping_methods: This is used to calculate the shipping rates on a per order or
+          per package rate.
+        promotions: This is used to determine the promotional discount to be applied to an
+          order, an item, or shipping charges.
+      spree/price:
+        country: 'This determines in what country the price is valid.<br/>Default:
+          Any Country'
+        master_variant: Changing master variant prices will not change variant prices
+          below, but will be used to populate all new variants
+        options: These options are used to create variants in the variants table.
+          They can be changed in the variants tab
+      spree/product:
+        available_on: This sets the availability date for the product. If this value
+          is not set, or it is set to a date in the future, then the product is not
+          available on the storefront.
+        promotionable: 'This determines whether or not promotions can apply to this
+          product.<br/>Default: Checked'
+        shipping_category: 'This determines what kind of shipping this product requires.<br/>
+          Default: Default'
+        tax_category: 'This determines what kind of taxation is applied to this product.<br/>
+          Default: %{default_tax_category}'
+      spree/promotion:
+        expires_at: This determines when the promotion expires. <br/> If no value
+          is specified, the promotion will never expire.
+        starts_at: This determines when the promotion can be applied to orders. <br/>
+          If no value is specified, the promotion will be immediately available.
+        promo_code_will_be_disabled: Selecting this option, promo codes will be disabled for this promotion
+          because all its rules / actions will be applied automatically to all orders.
+      spree/shipping_method:
+        available_to_all: Uncheck to select specific stock locations this
+          shipping method will be available in.
+      spree/stock_location:
+        active: 'This determines whether stock from this location can be used when
+          building packages.<br/> Default: Checked'
+        backorderable_default: 'When checked, stock items in this location will default
+          to allowing backorders.<br/> Default: Unchecked'
+        check_stock_on_transfer: 'When checked, inventory levels will be checked when
+          performing stock transfers.<br/> Default: Checked'
+        fulfillable: 'When unchecked, this indicates that items in this location don''t
+          require actual fulfilment. Stock will not be checked when shipping and emails
+          will not be sent.<br/> Default: Checked'
+        propagate_all_variants: 'When checked, this will create a stock item for each variant
+          in this stock location.<br/> Default: Checked'
+        restock_inventory: 'When checked, returned inventory can be added back to
+          this location''s stock levels.<br/> Default: checked'
+      spree/store:
+        available_locales: This determines which locales are available for your customers
+          to choose from in the storefront.
+        cart_tax_country_iso: "This determines which country is used for taxes on carts
+          (orders which don't yet have an address).<br/> Default: None."
+        code: 'An identifier for your store. Developers may need this value if you operate
+          multiple storefronts.'
+      spree/tax_category:
+        is_default: 'When checked, this tax category will be selected by default when creating new products or variants.'
+      spree/tax_rate:
+        validity_period: This determines the validity period within which the tax
+          rate is valid and will be applied to eligible items. <br /> If no start
+          date value is specified, the tax rate will be immediately available. <br
+          /> If no expiration date value is specified, the tax rate will never expire
+      spree/variant:
+        deleted: Deleted Variant
+        deleted_explanation: This variant was deleted on %{date}.
+        deleted_explanation_with_replacement: This variant was deleted on %{date}.
+          It has since been replaced by another with the same SKU.
+        tax_category: 'This determines what kind of taxation is applied to this variant.<br/>
+          Default: Use tax category of the product associated with this variant'
+    home: Home
+    i18n:
+      available_locales: Available Locales
+      fields: Fields
+      language: Language
+      localization_settings: Localization Settings
+      only_complete: Only complete
+      only_incomplete: Only incomplete
+      select_locale: Select locale
+      show_only: Show only
+      supported_locales: Supported Locales
+      this_file_language: English (US)
+      translations: Translations
+    icon: Icon
+    id: ID
+    identifier: Identifier
+    image: Image
+    images: Images
+    implement_eligible_for_return: 'Must implement #eligible_for_return? for your
+      EligibilityValidator.'
+    implement_requires_manual_intervention: 'Must implement #requires_manual_intervention?
+      for your EligibilityValidator.'
+    inactive: Inactive
+    incl: incl.
+    included_in_price: Included in Price
+    included_price_validation: cannot be selected unless you have set a Default Tax
+      Zone
+    incomplete: Incomplete
+    info_number_of_skus_not_shown:
+      one: and one other
+      other: and %{count} others
+    info_product_has_multiple_skus: 'This product has %{count} variants:'
+    instructions_to_reset_password: Please enter your email on the form below
+    insufficient_stock: Insufficient stock available, only %{on_hand} remaining
+    insufficient_stock_for_order: Insufficient stock for order
+    insufficient_stock_lines_present: Some line items in this order have insufficient
+      quantity.
+    intercept_email_address: Intercept Email Address
+    intercept_email_instructions: Override email recipient and replace with this address.
+    invalid_exchange_variant: Invalid exchange variant.
+    invalid_payment_method_type: Invalid payment method type.
+    invalid_promotion_action: Invalid promotion action.
+    invalid_promotion_rule: Invalid promotion rule.
+    invalidate: Invalidate
+    inventory: Inventory
+    inventory_adjustment: Inventory Adjustment
+    inventory_canceled: Inventory canceled
+    inventory_error_flash_for_insufficient_quantity: "%{names} became unavailable."
+    inventory_error_flash_for_insufficient_shipment_quantity: "Quantity selected of %{unavailable_items} is not available. Still, items may be available from another stock location, please try again."
+    inventory_not_available: Inventory not available for %{item}.
+    inventory_state: Inventory State
+    inventory_states:
+      backordered: Backordered
+      canceled: Canceled
+      on_hand: On hand
+      returned: Returned
+      shipped: Shipped
+    is_not_available_to_shipment_address: is not available to shipment address
+    iso_name: Iso Name
+    item: Item
+    item_description: Item Description
+    items_selected:
+      all: All Items Selected
+      none: No Item Selected
+      one: One Item Selected
+      custom: Items Selected
+    item_total: Item Total
+    item_total_rule:
+      operators:
+        gt: greater than
+        gte: greater than or equal to
+    items_cannot_be_shipped: We are unable to calculate shipping rates for the selected
+      items.
+    items_in_rmas: Items in RMA's (Return Merchandise Authorizations)
+    items_reimbursed: Items reimbursed
+    items_to_be_reimbursed: Items to be reimbursed
+    jirafe: Jirafe
+    landing_page_rule:
+      path: Path
+    last_name: Last Name
+    last_name_begins_with: Last Name Begins With
+    learn_more: Learn More
+    lifetime_stats: Lifetime Stats
+    line_item_adjustments: Line item adjustments
+    list: List
+    listing_countries: Countries
+    listing_orders: Orders
+    listing_products: Products
+    listing_reports: Reports
+    listing_tax_categories: Tax Categories
+    listing_users: Users
+    loading: Loading
+    locale_changed: Locale Changed
+    location: Location
+    lock: Lock
+    log_entries: Log Entries
+    logged_in_as: Logged in as
+    logged_in_succesfully: Logged in successfully
+    logged_in_successfully: Logged in successfully
+    logged_out: You have been logged out.
+    login: Login
+    login_as_existing: Login as Existing Customer
+    login_failed: Login authentication failed.
+    login_name: Login
+    logout: Logout
+    logs: Logs
+    look_for_similar_items: Look for similar items
+    make_refund: Make refund
+    make_sure_the_above_reimbursement_amount_is_correct: Make sure the above reimbursement
+      amount is correct
+    manage_promotion_categories: Manage Promotion Categories
+    manage_stock: Store Stock
+    manage_variants: Manage Variants
+    manual_intervention_required: Manual intervention required
+    master_price: Master Price
+    master_sku: Master SKU
+    master_variant: Master Variant
+    match_choices:
+      all: All
+      none: None
+    max_items: Max Items
+    member_since: Member Since
+    memo: Memo
+    meta_description: Meta Description
+    meta_keywords: Meta Keywords
+    meta_title: Meta Title
+    metadata: Metadata
+    minimal_amount: Minimal Amount
+    minimize_menu: Minimize Menu
+    modify_stock_count: Modify (+/-)
+    month: Month
+    more: More
+    move_stock_between_locations: Move Stock Between Locations
+    my_account: My Account
+    my_orders: My Orders
+    name: Name
+    name_contains: Name Contains
+    name_on_card: Name on card
+    name_or_sku: Name or SKU (enter at least first 4 characters of product name)
+    negative_movement_absent_item: Cannot create negative movement for absent stock
+      item.
+    new: New
+    new_adjustment: New Adjustment
+    new_adjustment_reason: New Adjustment Reason
+    new_country: New Country
+    new_customer: New Customer
+    new_customer_return: New Customer Return
+    new_image: New Image
+    new_option_type: New Option Type
+    new_order: New Order
+    new_order_completed: New Order Completed
+    new_payment: New Payment
+    new_payment_method: New Payment Method
+    new_product: New Product
+    new_promotion: New Promotion
+    new_promotion_category: New Promotion Category
+    new_promotion_code_batch: New Promotion Code Batch
+    new_property: New Property Type
+    new_refund: New Refund
+    new_refund_reason: New Refund Reason
+    new_return_authorization: New RMA
+    new_rma_reason: New RMA Reason
+    new_shipment_at_location: New shipment at location
+    new_shipping_category: New Shipping Category
+    new_shipping_method: New Shipping Method
+    new_state: New State
+    new_stock_location: New Stock Location
+    new_stock_movement: New Stock Movement
+    new_store: New Store
+    new_store_credit: New Store Credit
+    new_store_credit_reason: New Store Credit Reason
+    new_tax_category: New Tax Category
+    new_tax_rate: New Tax Rate
+    new_taxon: New Taxon
+    new_taxonomy: New Taxonomy
+    new_tracker: New Analytics Tracker
+    new_user: New User
+    new_variant: New Variant
+    new_zone: New Zone
+    next: Next
+    no_actions_added: No actions added
+    no_images_found: No images found
+    no_inventory_selected: No inventory selected
+    no_option_values_on_product_html: This product has no associated option values.
+      Add some to it through Option Types in the %{link}.
+    no_orders_found: No orders found
+    no_payment_found: No payment found
+    no_payment_methods_found: No payment methods found
+    no_pending_payments: No pending payments
+    no_products_found: No products found
+    no_promotions_found: No promotions found
+    no_resource: No %{resource} found.
+    no_resource_found: No %{resource} found
+    no_resource_found_html: No %{resource} found, %{add_one_link}!
+    no_resource_found_link: Add One
+    no_results: No results
+    no_rules_added: No rules added
+    no_shipping_method_selected: No shipping method selected.
+    no_shipping_methods_found: No shipping methods found
+    no_stock_locations_found: No stock locations found
+    no_trackers_found: No Trackers Found
+    no_tracking_present: No tracking details provided.
+    no_variants_found: No variants found.
+    no_variants_found_try_again: No variants found. Try changing the search values.
+    none: None
+    none_selected: None Selected
+    normal_amount: Normal Amount
+    not: not
+    not_available: N/A
+    not_enough_stock: There is not enough inventory at the source location to complete
+      this transfer.
+    not_found: "%{resource} is not found"
+    note: Note
+    note_already_received_a_refund: 'Note: This order has already received a refund.  Make
+      sure the above reimbursement amount is correct.'
+    notice_messages:
+      product_cloned: Product has been cloned
+      product_deleted: Product has been deleted
+      product_not_cloned: Product could not be cloned
+      product_not_deleted: Product could not be deleted
+      variant_deleted: Variant has been deleted
+      variant_not_deleted: Variant could not be deleted
+    num_orders: "# Orders"
+    number: Number
+    number_of_codes: "%{count} codes"
+    on_hand: On Hand
+    open: Open
+    option_type: Option Type
+    option_type_placeholder: Choose an option type
+    option_types: Option Types
+    option_value: Option Value
+    option_values: Option Values
+    optional: Optional
+    options: Options
+    or: or
+    or_over_price: "%{price} or over"
+    order: Order
+    order_adjustments: Order adjustments
+    order_already_completed: Order is already completed
+    order_approved: Order approved
+    order_canceled: Order canceled
+    order_completed: Order completed
+    order_details: Order Details
+    order_email_resent: Order Email Resent
+    order_information: Order Information
+    order_mailer:
+      cancel_email:
+        dear_customer: Dear Customer,
+        instructions: Your order has been CANCELED.  Please retain this cancellation
+          information for your records.
+        order_summary_canceled: Order Summary [CANCELED]
+        subject: Cancellation of Order
+        subtotal: 'Subtotal:'
+        total: 'Order Total:'
+      confirm_email:
+        dear_customer: Dear Customer,
+        instructions: Please review and retain the following order information for
+          your records.
+        order_summary: Order Summary
+        subject: Order Confirmation
+        subtotal: 'Subtotal:'
+        thanks: Thank you for your business.
+        total: 'Order Total:'
+      inventory_cancellation:
+        dear_customer: Dear Customer,
+        instructions: Some items in your order have been CANCELED.  Please retain
+          this cancellation information for your records.
+        order_summary_canceled: Canceled Items
+        subject: Cancellation of Items
+    order_mutex_admin_error: Order is being modified by someone else. Please try again.
+    order_mutex_error: Something went wrong. Please try again.
+    order_not_found: We couldn't find your order. Please try that action again.
+    order_number: Order %{number}
+    order_please_refresh: Order is not ready to be completed. Please refresh totals.
+    order_processed_successfully: Your order has been processed successfully
+    order_ready_for_confirm: Order ready for confirmation
+    order_refresh_totals: Refresh Totals
+    order_resumed: Order resumed
+    order_state:
+      address: Address
+      awaiting_return: Awaiting return
+      canceled: Canceled
+      cart: Cart
+      complete: Complete
+      confirm: Confirm
+      delivery: Delivery
+      payment: Payment
+      resumed: Resumed
+      returned: Returned
+    order_summary: Order Summary
+    order_sure_want_to: Are you sure you want to %{event} this order?
+    order_total: Order Total
+    order_updated: Order Updated
+    orders: Orders
+    other_items_in_other: Other Items in Order
+    out_of_stock: Out of Stock
+    overview: Overview
+    package_from: package from
+    pagination:
+      next_page: next page &raquo;
+      previous_page: "&laquo; previous page"
+      truncate: "&hellip;"
+    password: Password
+    paste: Paste
+    path: Path
+    pay: pay
+    payment: Payment
+    payment_amount: Payment Amount
+    payment_could_not_be_created: Payment could not be created.
+    payment_identifier: Payment Identifier
+    payment_information: Payment Information
+    payment_method: Payment Method
+    payment_method_not_supported: That payment method is unsupported. Please choose
+      another one.
+    payment_method_settings_warning: If you are changing the payment method type,
+      you must save first before you can edit the payment method settings
+    payment_methods: Payment Methods
+    payment_processing_failed: Payment could not be processed, please check the details
+      you entered
+    payment_processor_choose_banner_text: If you need help choosing a payment processor,
+      please visit
+    payment_processor_choose_link: our payments page
+    payment_state: Payment State
+    payment_states:
+      balance_due: Balance due
+      checkout: Checkout
+      completed: Completed
+      credit_owed: Credit owed
+      failed: Failed
+      invalid: Invalid
+      paid: Paid
+      pending: Pending
+      processing: Processing
+      void: Void
+    payment_updated: Payment Updated
+    payments: Payments
+    payments_failed_count:
+      one: 1 Payment
+      other: "%{count} Payments"
+    pending: Pending
+    percent: Percent
+    percent_per_item: Percent Per Item
+    permalink: Permalink
+    phone: Phone
+    place_order: Place Order
+    please_define_payment_methods: Please define some payment methods first.
+    please_enter_reasonable_quantity: Please enter a reasonable quantity.
+    populate_get_error: Something went wrong. Please try adding the item again.
+    powered_by: Powered by
+    pre_tax_amount: Pre-Tax Amount
+    pre_tax_refund_amount: Pre-Tax Refund Amount
+    pre_tax_total: Pre-Tax Total
+    preference_source_none: "(custom)"
+    preference_source_using: Using static preferences "%{name}"
+    preferred_reimbursement_type: Preferred Reimbursement Type
+    presentation: Presentation
+    previous: Previous
+    price: Price
+    price_range: Price Range
+    price_sack: Price Sack
+    process: Process
+    product: Product
+    product_details: Product Details
+    product_has_no_description: This product has no description
+    product_not_available_in_this_currency: This product is not available in the selected
+      currency.
+    product_properties: Product Properties
+    product_rule:
+      choose_products: Choose products
+      label: Order must contain %{select} of these products
+      match_all: all
+      match_any: at least one
+      match_none: none
+      product_source:
+        group: From product group
+        manual: Manually choose
+    product_without_default_price_info: 'This Product has no price in the default currency (%{default_currency}).'
+    product_without_default_price_cta: 'Please, create a Master Price!'
+    products: Products
+    promotion: Promotion
+    promotion_action: Promotion Action
+    promotion_actions: Actions
+    promotion_code_batch_mailer:
+      promotion_code_batch_errored:
+        message: 'Promotion code batch errored (%{error}) for promotion: '
+        subject: Promotion code batch errored
+      promotion_code_batch_finished:
+        message: 'All %{number_of_codes} codes have been created for promotion: '
+        subject: Promotion code batch finished
+    promotion_code_batches:
+      errored: 'Errored: %{error}'
+      finished: All %{number_of_codes} codes have been created.
+      processing: 'Processing: %{number_of_codes_processed} / %{number_of_codes}'
+    promotion_form:
+      match_policies:
+        all: Match all of these rules
+        any: Match any of these rules
+    promotion_rule: Promotion Rule
+    promotion_successfully_created: Promotion has been successfully created!
+    promotion_total_changed_before_complete: One or more of the promotions on your
+      order have become ineligible and were removed. Please check the new order amounts
+      and try again.
+    promotion_uses: Promotion uses
+    promotionable: Promotable
+    promotions: Promotions
+    propagate_all_variants: Propagate all variants
+    properties: Property Types
+    property: Property Type
+    provider: Provider
+    qty: Qty
+    quantity: Quantity
+    quantity_returned: Quantity Returned
+    quantity_shipped: Quantity Shipped
+    rate: Rate
+    ready_to_ship: Ready to ship
+    reason: Reason
+    receive: receive
+    receive_stock: Receive Stock
+    received: Received
+    received_items: Received Items
+    received_successfully: Received Successfully
+    receiving: Receiving
+    receiving_match: Receiving Match
+    reception_states:
+      awaiting: Awaiting
+      cancelled: Canceled
+      expired: Expired
+      given_to_customer: Given to customer
+      in_transit: In transit
+      lost_in_transit: Lost in transit
+      received: Received
+      shipped_wrong_item: Wrong item
+      short_shipped: Short shipped
+      unexchanged: Unexchanged
+    reception_status: Reception Status
+    reference: Reference
+    refund: Refund
+    refund_amount_must_be_greater_than_zero: Refund amount must be greater than zero
+    refund_reasons: Refund Reasons
+    refunded_amount: Refunded Amount
+    refunds: Refunds
+    register: Register
+    registration: Registration
+    reimburse: Reimburse
+    reimbursed: Reimbursed
+    reimbursement: Reimbursement
+    reimbursement_mailer:
+      reimbursement_email:
+        days_to_send: You have %{days} days to send back any items awaiting exchange.
+        dear_customer: Dear Customer,
+        exchange_summary: Exchange Summary
+        for: for
+        instructions: Your reimbursement has been processed.
+        refund_summary: Refund Summary
+        subject: Reimbursement Notification
+        total_refunded: 'Total refunded: %{total}'
+    reimbursement_perform_failed: 'Reimbursement could not be performed.  Error: %{error}'
+    reimbursement_states:
+      errored: Errored
+      pending: Pending
+      reimbursed: Reimbursed
+    reimbursement_status: Reimbursement status
+    reimbursement_type: Reimbursement type
+    reimbursement_type_override: Reimbursement Type Override
+    reimbursement_types: Reimbursement Types
+    reimbursements: Reimbursements
+    reject: Reject
+    rejected: Rejected
+    remember_me: Remember me
+    remove: Remove
+    rename: Rename
+    resend: Resend
+    reset_password: Reset my password
+    response_code: Response Code
+    restock_inventory: Restock Inventory
+    resume: Resume
+    resumed: Resumed
+    return: return
+    return_authorization: Return Merchandise Authorization
+    return_authorization_fire_error: Cannot perform this action on return merchandise
+      authorization
+    return_authorization_states:
+      authorized: Authorized
+      canceled: Canceled
+    return_authorization_updated: Return merchandise authorization updated
+    return_authorizations: Return Merchandise Authorizations
+    return_item_inventory_unit_ineligible: Return item's inventory unit must be shipped
+    return_item_inventory_unit_reimbursed: Return item's inventory unit is already
+      reimbursed
+    return_item_order_not_completed: Return item's order must be completed
+    return_item_rma_ineligible: Return item requires an RMA
+    return_item_time_period_ineligible: Return item is outside the eligible time period
+    return_items: Return Items
+    return_items_cannot_be_associated_with_multiple_orders: Return items cannot be
+      associated with multiple orders.
+    return_items_cannot_be_created_for_inventory_units_that_are_already_awaiting_exchange: Return
+      items cannot be created for inventory units that are already awaiting exchange.
+    return_number: Return Number
+    return_quantity: Return Quantity
+    return_reasons: Return Reasons
+    returned: Returned
+    review: Review
+    risk: Risk
+    risk_analysis: Risk Analysis
+    risky: Risky
+    rma_credit: RMA Credit
+    rma_number: RMA Number
+    rma_value: RMA Value
+    roles: Roles
+    rules: Rules
+    sales_total: Sales Total
+    sales_total_description: Sales Total For All Orders
+    sales_totals: Sales Totals
+    save_and_continue: Save and Continue
+    save_my_address: Save my address
+    say_no: 'No'
+    say_yes: 'Yes'
+    scope: Scope
+    search: Search
+    search_results: Search results for '%{keywords}'
+    searching: Searching
+    secure_connection_type: Secure Connection Type
+    security_settings: Security Settings
+    select: Select
+    select_a_reason: Select a reason
+    select_a_stock_location: Select a stock location
+    selected_quantity_not_available: selected of %{item} is not available.
+    send_copy_of_all_mails_to: Send Copy of All Mails To
+    send_mailer: Send Shipment Email
+    send_mails_as: Send Mails As
+    server: Server
+    server_error: The server returned an error
+    settings: Settings
+    ship: ship
+    ship_address: Ship Address
+    ship_address_required: Valid shipping address required
+    bill_address_required: Valid billing address required
+    ship_total: Ship Total
+    shipment: Shipment
+    shipment_adjustments: Shipment adjustments
+    shipment_date: Shipment date
+    shipment_details: From %{stock_location} via %{shipping_method}
+    shipment_mailer:
+      shipped_email:
+        dear_customer: Dear Customer,
+        instructions: Your order has been shipped
+        shipment_summary: Shipment Summary
+        subject: Shipment Notification
+        thanks: Thank you for your business.
+        track_information: 'Tracking Information: %{tracking}'
+        track_link: 'Tracking Link: %{url}'
+    shipment_number: Shipment Number
+    shipment_numbers: Shipment numbers
+    shipment_state: Shipment State
+    shipment_states:
+      backorder: Backorder
+      canceled: Canceled
+      partial: Partial
+      pending: Pending
+      ready: Ready
+      shipped: Shipped
+    shipment_transfer_error: There was an error transferring variants
+    shipments: Shipments
+    shipped: Shipped
+    shipped_at: Shipped At
+    shipping: Shipping
+    shipping_address: Shipping Address
+    shipping_categories: Shipping Categories
+    shipping_category: Shipping Category
+    shipping_flat_rate_per_item: Flat Rate per Package Item
+    shipping_flat_rate_per_order: Flat Rate
+    shipping_flexible_rate: Flexible Rate per Package Item
+    shipping_instructions: Shipping Instructions
+    shipping_method: Shipping Method
+    shipping_methods: Shipping Methods
+    shipping_price_sack: Price sack
+    shipping_rate:
+      display_price:
+        display_price_with_explanations: "%{price} (%{explanations})"
+        tax_label_separator: ", "
+    shipping_rate_tax:
+      label:
+        sales_tax: "+ %{amount} %{tax_rate_name}"
+        vat: incl. %{amount} %{tax_rate_name}
+    shipping_total: Shipping total
+    shop_by_taxonomy: Shop by %{taxonomy}
+    shopping_cart: Shopping Cart
+    show: Show
+    show_active: Show Active
+    show_deleted: Show Deleted
+    show_only_complete_orders: Only show complete orders
+    show_only_considered_risky: Only show risky orders
+    show_only_open_transfers: Only show open transfers
+    show_rate_in_label: Show rate in label
+    sku: SKU
+    skus: SKUs
+    slug: Slug
+    source: Source
+    source_location: Source location
+    special_instructions: Special Instructions
+    split: Split
+    split_failed: Unable to complete split
+    spree_gateway_error_flash_for_checkout: There was a problem with your payment
+      information. Please check your information and try again.
+    ssl:
+      change_protocol: Please switch to using HTTP (rather than HTTPS) and retry this
+        request.
+    start: Start
+    state: State
+    state_based: State Based
+    states: States
+    states_count:
+      one: "%{count} State"
+      other: "%{count} States"
+    states_required: States Required
+    status: Status
+    stock: Stock
+    stock_location: Stock Location
+    stock_location_info: Stock location info
+    stock_locations: Stock Locations
+    stock_locations_need_a_default_country: You must create a default country before
+      creating a stock location.
+    stock_management: Product Stock
+    stock_management_requires_a_stock_location: Please create a stock location in
+      order to manage stock.
+    stock_movements: Stock Movements
+    stock_movements_for_stock_location: Stock Movements for %{stock_location_name}
+    stock_successfully_transferred: Stock was successfully transferred between locations.
+    stop: Stop
+    store: Store
+    store_credit:
+      actions:
+        invalidate: Invalidate
+      credit_allocation_memo: This is a credit from store credit ID %{id}
+      currency_mismatch: Store credit currency does not match order currency
+      display_action:
+        adjustment: Adjustment
+        admin:
+          authorize: Authorized
+          eligible: Eligibility Verified
+          void: Voided
+        allocation: Added
+        capture: Used
+        credit: Credit
+        invalidate: Invalidated
+        void: Credit
+      errors:
+        cannot_invalidate_uncaptured_authorization: Cannot invalidate a store credit
+          with an uncaptured authorization
+        unable_to_fund: Unable to pay for order using store credits
+      expiring: Expiring
+      insufficient_authorized_amount: Unable to capture more than authorized amount
+      insufficient_funds: Store credit amount remaining is not sufficient
+      non_expiring: Non-expiring
+      select_one_store_credit: Select store credit to go towards remaining balance
+      store_credit: Store Credit
+      successful_action: Successful store credit %{action}
+      unable_to_credit: 'Unable to credit code: %{auth_code}'
+      unable_to_find: Could not find store credit
+      unable_to_find_for_action: 'Could not find store credit for auth code: %{auth_code}
+        for action: %{action}'
+      unable_to_void: 'Unable to void code: %{auth_code}'
+      user_has_no_store_credits: User does not have any available store credit
+    store_credit_category:
+      default: Default
+    store_rule:
+      choose_stores: Choose Stores
+    street_address: Street Address
+    street_address_2: Street Address (cont'd)
+    subtotal: Subtotal
+    subtract: Subtract
+    success: Success
+    successfully_created: "%{resource} has been successfully created!"
+    successfully_refunded: "%{resource} has been successfully refunded!"
+    successfully_removed: "%{resource} has been successfully removed!"
+    successfully_signed_up_for_analytics: Successfully signed up for Spree Analytics
+    successfully_updated: "%{resource} has been successfully updated!"
+    tax: Tax
+    tax_categories: Tax Categories
+    tax_category: Tax Category
+    tax_code: Tax Code
+    tax_included: Tax (incl.)
+    tax_rate_amount_explanation: Tax rates are a decimal amount to aid in calculations,
+      (i.e. if the tax rate is 5% then enter 0.05)
+    tax_rates: Tax Rates
+    taxon: Taxon
+    taxon_attachment_removal_error: There was an error removing the attachment
+    taxon_edit: Edit Taxon
+    taxon_placeholder: Add a Taxon
+    taxon_rule:
+      choose_taxons: Choose taxons
+      label: Order must contain %{select} of these taxons
+      match_all: all
+      match_any: at least one
+      match_none: none
+    taxonomies: Taxonomies
+    taxonomy: Taxonomy
+    taxonomy_edit: Edit taxonomy
+    taxonomy_tree_error: The requested change has not been accepted and the tree has
+      been returned to its previous state, please try again.
+    taxonomy_tree_instruction: "* Right click a child in the tree to access the menu
+      for adding, deleting or sorting a child."
+    taxons: Taxons
+    test: Test
+    test_mailer:
+      test_email:
+        greeting: Congratulations!
+        message: If you have received this email, then your email settings are correct.
+        subject: Test Mail
+    test_mode: Test Mode
+    thank_you_for_your_order: Thank you for your business. Please print out a copy
+      of this confirmation page for your records.
+    there_are_no_items_for_this_order: There are no items for this order. Please add
+      an item to the order to continue.
+    there_were_problems_with_the_following_fields: There were problems with the following
+      fields
+    this_order_has_already_received_a_refund: This order has already received a refund
+    thumbnail: Thumbnail
+    tiered_flat_rate: Tiered Flat Rate
+    tiered_percent: Tiered Percent
+    tiers: Tiers
+    time: Time
+    to: to
+    to_add_variants_you_must_first_define: To add variants, you must first define
+    total: Total
+    total_excluding_vat: Pre-Tax Total
+    total_per_item: Total per Item
+    total_pre_tax_refund: Total Pre-Tax Refund
+    total_price: Total Price
+    total_sales: Total Sales
+    track_inventory: Track Inventory
+    tracking: Tracking
+    tracking_info: Tracking Info
+    tracking_number: Tracking Number
+    tracking_url: Tracking URL
+    tracking_url_placeholder: e.g. http://quickship.com/package?num=:tracking
+    transaction_id: Transaction ID
+    transfer_from_location: Transfer From
+    transfer_number: Transfer Number
+    transfer_stock: Transfer Stock
+    transfer_to_location: Transfer To
+    tree: Tree
+    try_changing_search_values: Try changing the search values.
+    type: Type
+    type_to_search: Type to search
+    unable_to_connect_to_gateway: Unable to connect to gateway.
+    unable_to_create_reimbursements: Unable to create reimbursements because there
+      are items pending manual intervention.
+    unable_to_find_all_inventory_units: Unable to find all specified inventory units
+    under_price: Under %{price}
+    unfinalize_all_adjustments: Unfinalize All Adjustments
+    unlock: Unlock
+    unrecognized_card_type: Unrecognized Card Type
+    unshippable_items: Unshippable Items
+    update: Update
+    updated_successfully: Updated Successfully
+    updating: Updating
+    usage_limit: Usage Limit
+    use_app_default: Use App Default
+    use_billing_address: Use Billing Address
+    use_existing_cc: Use an existing card on file
+    use_new_cc: Use a new card
+    use_new_cc_or_payment_method: Use a new card / payment method
+    user: User
+    user_role_rule:
+      choose_roles: Choose Roles
+      label: User must contain %{select} of these roles
+      match_all: all
+      match_any: at least one
+    user_rule:
+      choose_users: Choose Users
+    users: Users
+    validation:
+      cannot_be_less_than_shipped_units: cannot be less than the number of shipped
+        units.
+      cannot_destroy_line_item_as_inventory_units_have_shipped: Cannot destroy line
+        item as some inventory units have shipped.
+      exceeds_available_stock: exceeds available stock. Please ensure line items have
+        a valid quantity.
+      is_too_large: is too large -- stock on hand cannot cover requested quantity!
+      must_be_int: must be an integer
+      must_be_non_negative: must be a non-negative value
+      unpaid_amount_not_zero: 'Amount was not fully reimbursed. Still due: %{amount}'
+    validity_period: Validity Period
+    value: Value
+    variant: Variant
+    variant_placeholder: Choose a Variant
+    variant_pricing: Variant Pricing
+    variant_properties: Variant Properties
+    variant_search: Variant Search
+    variant_search_placeholder: SKU or Option Value
+    variant_to_add: Variant to add
+    variant_to_be_received: Variant to be received
+    variants: Variants
+    version: Version
+    view_product: View Product On Store
+    view_promotion_codes_list: View codes list
+    void: Void
+    weight: Weight
+    what_is_a_cvv: What is a (CVV) Credit Card Code?
+    what_is_this: What's This?
+    width: Width
+    year: Year
+    you_cannot_undo_action: You will not be able to undo this action
+    you_have_no_orders_yet: You have no orders yet
+    your_cart_is_empty: Your cart is empty
+    your_order_is_empty_add_product: Your order is empty. Please add products first.
+    zip: Zip
+    zipcode: Zip Code
+    zone: Zone
+    zones: Zones
+  time:
+    formats:
+      solidus:
+        long: "%B %d, %Y %-l:%M %p"
+        short: "%b %-d '%y %-l:%M%P"

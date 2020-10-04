@@ -1,0 +1,15 @@
+<% Spree::Backend::Config.menu_items.sort_by { |item| item.position || Float::INFINITY }.each do |menu_item| %>
+  <% if instance_exec(&menu_item.condition) %>
+    <%=
+      tab(
+        *menu_item.sections,
+        icon: menu_item.icon,
+        label: menu_item.label,
+        url: menu_item.url.is_a?(Symbol) ? spree.public_send(menu_item.url) : menu_item.url,
+        match_path: menu_item.match_path,
+      ) do
+    %>
+      <%- render partial: menu_item.partial if menu_item.partial %>
+    <%- end %>
+  <% end %>
+<% end %>

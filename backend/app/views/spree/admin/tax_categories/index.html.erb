@@ -1,0 +1,63 @@
+<%= render 'spree/admin/shared/taxes_tabs' %>
+
+<% admin_breadcrumb(t('spree.settings') ) %>
+<% admin_breadcrumb(t('spree.admin.tab.taxes')) %>
+<% admin_breadcrumb(plural_resource_name(Spree::TaxCategory)) %>
+
+
+<% content_for :page_actions do %>
+  <ul class="actions inline-menu">
+    <% if can?(:create, Spree::TaxCategory) %>
+      <li>
+        <%= link_to t('spree.new_tax_category'), new_object_url, id: 'admin_new_tax_categories_link', class: 'btn btn-primary' %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>
+
+<% if @tax_categories.any? %>
+<table class="index" id='listing_tax_categories' data-hook>
+  <colgroup>
+    <col style="width: 20%" />
+    <col style="width: 10%" />
+    <col style="width: 40%" />
+    <col style="width: 15%" />
+    <col style="width: 15%" />
+  </colgroup>
+  <thead>
+    <tr data-hook="tax_header">
+      <th><%= Spree::TaxCategory.human_attribute_name(:name) %></th>
+      <th><%= Spree::TaxCategory.human_attribute_name(:tax_code) %></th>
+      <th><%= Spree::TaxCategory.human_attribute_name(:description) %></th>
+      <th><%= Spree::TaxCategory.human_attribute_name(:is_default) %></th>
+      <th class="actions"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @tax_categories.each do |tax_category|
+         @edit_url = edit_admin_tax_category_path(tax_category)
+         @delete_url = admin_tax_category_path(tax_category)
+    %>
+      <tr id="<%= spree_dom_id tax_category %>" data-hook="tax_row">
+        <td><%= tax_category.name %></td>
+        <td><%= tax_category.tax_code %></td>
+        <td><%= tax_category.description %></td>
+        <td><%= tax_category.is_default? ? t('spree.say_yes') : t('spree.say_no') %></td>
+        <td class="actions">
+          <% if can?(:update, tax_category) %>
+            <%= link_to_edit tax_category, no_text: true %>
+          <% end %>
+          <% if can?(:destroy, tax_category) %>
+            <%= link_to_delete tax_category, no_text: true %>
+          <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<% else %>
+  <div class="no-objects-found">
+    <%= render 'spree/admin/shared/no_objects_found',
+                 resource: Spree::TaxCategory,
+                 new_resource_url: new_object_url %>
+  </div>
+<% end %>

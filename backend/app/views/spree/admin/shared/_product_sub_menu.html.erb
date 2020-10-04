@@ -1,0 +1,17 @@
+<ul class="admin-subnav" data-hook="admin_product_sub_tabs">
+  <% if can? :admin, Spree::Product %>
+    <%= tab :products, match_path: '/products' %>
+  <% end %>
+  <% if can? :admin, Spree::OptionType %>
+    <%= tab :option_types, match_path: '/option_types' %>
+  <% end %>
+  <% if can? :admin, Spree::Property %>
+    <%= tab :properties %>
+  <% end %>
+  <% if can? :admin, Spree::Taxonomy %>
+    <%= tab :taxonomies %>
+  <% end %>
+  <% if can? :admin, Spree::Taxon %>
+    <%= tab :taxons, label: :display_order, match_path: '/taxons' %>
+  <% end %>
+</ul>

@@ -1,0 +1,68 @@
+<%
+  manifest_items = Spree::ShippingManifest.new(
+    inventory_units: shipment.inventory_units.where(carton_id: nil),
+  ).items.sort_by { |item| item.line_item.created_at }
+%>
+
+<div id="<%= "shipment_#{shipment.id}" %>" class="js-shipment-edit" data-hook="admin_shipment_form">
+  <fieldset class="no-border-bottom">
+    <legend align="center" class="stock-location" data-hook="stock-location">
+      <span class="shipment-number"><%= shipment.number %></span>
+      -
+      <span class="shipment-state"><%= t(shipment.state, scope: "spree.shipment_states") %></span>
+      <%= t('spree.package_from') %>
+      <strong class="stock-location-name" data-hook="stock-location-name">'<%= shipment.stock_location.name %>'</strong>
+    </legend>
+
+    <% if shipment.ready? && can?(:ship, shipment) %>
+      <%= form_tag("#", class: "admin-ship-shipment") do %>
+        <label>
+          <%= check_box_tag :send_mailer, true, true %>
+          <%= t('spree.send_mailer') %>
+        </label>
+        <%= submit_tag t('spree.actions.ship'), class: "ship-shipment-button" %>
+      <% end %>
+    <% end %>
+  </fieldset>
+
+  <table class="stock-contents shipment index" data-hook="stock-contents">
+    <colgroup>
+      <col style="width: 17.5%;" />
+      <col style="width: 30%;" />
+      <col style="width: 12.5%;" />
+      <col style="width: 15%;" />
+      <col style="width: 15%;" />
+      <col style="width: 10%;" />
+    </colgroup>
+
+    <thead>
+      <tr>
+        <th colspan="2"><%= Spree::LineItem.human_attribute_name(:description) %></th>
+        <th><%= Spree::LineItem.human_attribute_name(:price) %></th>
+        <th><%= Spree::LineItem.human_attribute_name(:quantity) %></th>
+        <th><%= Spree::LineItem.human_attribute_name(:total) %></th>
+        <th class="orders-actions actions" data-hook="admin_order_form_line_items_header_actions"></th>
+      </tr>
+    </thead>
+
+    <tbody data-shipment-number="<%= shipment.number %>" data-order-number="<%= order.number %>">
+      <%= render 'spree/admin/orders/shipment_manifest', { shipment_number: shipment.number, shipment_manifest: manifest_items } %>
+
+      <% unless shipment.shipped? %>
+        <tr class="edit-shipping-method vertical-middle">
+        </tr>
+      <% end %>
+
+      <tr class="edit-tracking vertical-middle">
+      </tr>
+
+      <% if order.special_instructions.present? %>
+        <tr class='special_instructions'>
+          <td colspan="5">
+            <strong><%= t('spree.special_instructions') %>:&nbsp;</strong><%= order.special_instructions %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

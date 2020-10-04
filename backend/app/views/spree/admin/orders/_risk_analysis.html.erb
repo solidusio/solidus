@@ -1,0 +1,50 @@
+<fieldset class="no-border-bottom" id="risk_analysis">
+  <legend><%= "#{t('spree.risk_analysis')}: #{t('spree.not') unless @order.is_risky?} #{t('spree.risky')}" %></legend>
+  <table>
+    <thead>
+      <th><%= t('spree.risk')%></th>
+      <th><%= t('spree.status')%></th>
+    </thead>
+    <tbody id="risk-analysis" data-hook="order_details_adjustments"  class="with-border">
+      <tr class="">
+        <td><strong>
+          <%= t('spree.failed_payment_attempts') %>:
+        </strong></td>
+        <td>
+          <span class="pill pill-<%= @order.payments.failed.count > 0 ? 'warning' : 'complete' %>">
+            <%= t(
+              'spree.payments_failed_count',
+              count: @order.payments.failed.count
+            ) %>
+          </span>
+        </td>
+      </tr>
+
+      <tr>
+        <td><strong><%= t('spree.avs_response') %>:</strong></td>
+        <td>
+          <span class="pill pill-<%= latest_payment.is_avs_risky? ? 'warning' : 'complete' %>">
+            <% if latest_payment.is_avs_risky? %>
+              <%= avs_response_code[latest_payment.avs_response] %>
+            <% else %>
+              <%= t('spree.success') %>
+            <% end %>
+          </span>
+        </td>
+      </tr>
+
+      <tr>
+        <td><strong><%= t('spree.cvv_response') %>:</strong></td>
+        <td>
+          <span class="pill pill-<%= latest_payment.is_cvv_risky? ? 'warning' : 'complete' %>">
+            <% if latest_payment.is_cvv_risky? %>
+              <%= cvv_response_code[latest_payment.cvv_response_code] %>
+            <% else %>
+              <%= t('spree.success') %>
+            <% end %>
+          </span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</fieldset>

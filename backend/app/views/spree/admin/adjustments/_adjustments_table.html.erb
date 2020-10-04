@@ -1,0 +1,27 @@
+<table class="index adjustments" data-hook="adjustments">
+  <thead data-hook="adjustmment_head">
+    <tr>
+      <th><%= Spree::Adjustment.human_attribute_name(:adjustable) %></th>
+      <th><%= Spree::Adjustment.human_attribute_name(:label) %></th>
+      <th><%= Spree::Adjustment.human_attribute_name(:amount) %></th>
+      <th><%= Spree::Adjustment.human_attribute_name(:state) %></th>
+      <th class="actions"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= render partial: "adjustment", collection: @adjustments %>
+    <tr data-hook="adjustment_buttons">
+      <td class="align-right" colspan="2" style="width: 50%">
+        <% if can? :update, Spree::Adjustment %>
+          <%= button_to t('spree.unfinalize_all_adjustments'), adjustments_unfinalize_admin_order_path(@order), method: :get %>
+        <% end %>
+      </td>
+      <td colspan="2" style="width: 50%">
+        <% if can? :update, Spree::Adjustment %>
+          <%= button_to t('spree.finalize_all_adjustments'), adjustments_finalize_admin_order_path(@order), method: :get %>
+        <% end %>
+      </td>
+      <td class='actions'>&nbsp;</td>
+    </tr>
+  </tbody>
+</table>

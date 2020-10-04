@@ -1,0 +1,12 @@
+var $uploadEl = $('[data-upload-id="<%= params[:upload_id] %>"]');
+
+<% if @image.persisted? %>
+
+  $uploadEl.trigger('clear');
+  Spree.Views.Tables.EditableTable.append('<%= j render "image_row", image: @image %>');
+
+<% else %>
+
+  $uploadEl.find('error').removeClass('hidden').html('<%= j @image.errors.full_messages.join("<br>").html_safe %>');
+
+<% end %>

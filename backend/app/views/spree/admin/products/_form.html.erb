@@ -1,0 +1,206 @@
+<div data-hook="admin_product_form_fields">
+
+  <div class="row">
+
+    <div class="left col-9" data-hook="admin_product_form_left">
+      <div data-hook="admin_product_form_name">
+        <%= f.field_container :name do %>
+          <%= f.label :name, class: 'required' %>
+          <%= f.text_field :name, class: 'fullwidth title', required: true %>
+          <%= f.error_message_on :name %>
+        <% end %>
+      </div>
+
+      <div data-hook="admin_product_form_slug">
+        <%= f.field_container :slug do %>
+          <%= f.label :slug, class: ('required' if !f.object.new_record?) %>
+          <%= f.text_field :slug, class: 'fullwidth title', required: !f.object.new_record?, disabled: f.object.new_record? %>
+          <%= f.error_message_on :slug %>
+        <% end %>
+      </div>
+
+      <div data-hook="admin_product_form_description">
+        <%= f.field_container :description do %>
+          <%= f.label :description %>
+          <%= f.text_area :description, {rows: "#{unless @product.has_variants? then '22' else '15' end}", class: 'fullwidth'} %>
+          <%= f.error_message_on :description %>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="right col-3" data-hook="admin_product_form_right">
+      <div data-hook="admin_product_form_price">
+        <%= f.field_container :price do %>
+          <%= f.label :price, class: Spree::Config.require_master_price ? 'required' : '' %>
+
+          <% if f.object.new_record? || f.object.has_default_price? %>
+            <%= render "spree/admin/shared/number_with_currency",
+                       f: f,
+                       amount_attr: :price,
+                       required: Spree::Config.require_master_price,
+                       currency: Spree::Config.default_pricing_options.currency %>
+            <%= f.error_message_on :price %>
+          <% else %>
+            <span class="info">
+              <%= t('spree.product_without_default_price_info',
+                    default_currency: Spree::Config.default_pricing_options.currency) %>
+              <%= link_to t('spree.product_without_default_price_cta'),
+                          spree.admin_product_prices_url(@product) %>
+            </span>
+          <% end %>
+        <% end %>
+      </div>
+
+      <% if show_rebuild_vat_checkbox? %>
+        <%= render "spree/admin/shared/rebuild_vat_prices_checkbox", form: f, model_name: "product" %>
+        <div class="clearfix"></div>
+      <% end %>
+
+      <div class="row">
+
+        <div data-hook="admin_product_form_cost_price" class="col-12">
+          <%= f.field_container :cost_price do %>
+            <%= f.label :cost_price %>
+
+            <%= render "spree/admin/shared/number_with_currency", f: f, amount_attr: :cost_price, currency_attr: :cost_currency %>
+
+            <%= f.error_message_on :cost_price %>
+            <%= f.error_message_on :cost_currency %>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="clear"></div>
+
+      <div data-hook="admin_product_form_available_on">
+        <%= f.field_container :available_on do %>
+          <%= f.label :available_on %>
+          <%= f.field_hint :available_on %>
+
+          <%= render "spree/admin/shared/datepicker", f: f, date_attr: :available_on %>
+
+          <%= f.error_message_on :available_on %>
+        <% end %>
+      </div>
+
+      <div data-hook="admin_product_form_promotionable">
+        <%= f.field_container :promotionable do %>
+          <label>
+            <%= f.check_box :promotionable %>
+            <%= Spree::Product.human_attribute_name(:promotionable) %>
+          </label>
+          <%= f.field_hint :promotionable %>
+        <% end %>
+      </div>
+
+      <div data-hook="admin_product_form_sku">
+        <%= f.field_container :sku do %>
+          <%= f.label :sku, t('spree.master_sku') %>
+          <%= f.text_field :sku, size: 16 %>
+        <% end %>
+      </div>
+
+      <% if @product.has_variants? %>
+        <div data-hook="admin_product_form_multiple_variants">
+          <%= f.label :skus, t('spree.skus') %>
+          <span class="info">
+            <%= t('spree.info_product_has_multiple_skus', count: @product.variants.count) %>
+            <ul class="text_list">
+              <% @product.variants.first(5).each do |variant| %>
+                <li><%= link_to variant.sku, spree.edit_admin_product_variant_path(@product, variant) %></li>
+              <% end %>
+            </ul>
+            <% if @product.variants.count > 5 %>
+              <%= t('spree.info_number_of_skus_not_shown', count: @product.variants.count - 5) %>
+            <% end %>
+          </span>
+          <div class="info-actions">
+            <% if can?(:admin, Spree::Variant) %>
+              <%= link_to_with_icon 'th-large', t('spree.manage_variants'), admin_product_variants_url(@product) %>
+            <% end %>
+          </div>
+        </div>
+      <% else %>
+        <div id="shipping_specs" class="row">
+          <% [:height, :width, :depth, :weight].each_with_index do |field, index| %>
+            <div id="shipping_specs_<%= field %>_field" class="col-6">
+              <div class="field">
+                <%= f.label field %>
+                <%= f.text_field field, value: number_with_precision(@product.send(field), precision: 2) %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+
+      <% end %>
+
+      <div data-hook="admin_product_form_shipping_categories">
+        <%= f.field_container :shipping_categories do %>
+          <%= f.label :shipping_category_id, Spree::ShippingCategory.model_name.human, class: 'required' %>
+          <%= f.field_hint :shipping_category %>
+          <%= f.collection_select(:shipping_category_id, @shipping_categories, :id, :name, { include_blank: t('spree.match_choices.none') }, { class: 'custom-select' , required: true}) %>
+          <%= f.error_message_on :shipping_category %>
+        <% end %>
+      </div>
+
+      <div data-hook="admin_product_form_tax_category">
+        <%= f.field_container :tax_category do %>
+          <%= f.label :tax_category_id, Spree::TaxCategory.model_name.human %>
+          <%= f.field_hint :tax_category, default_tax_category: @default_tax_category&.name %>
+          <%= f.collection_select(:tax_category_id, @tax_categories, :id, :name, { include_blank: t('spree.match_choices.none'), selected: @default_tax_category&.id }, { class: 'custom-select' }) %>
+          <%= f.error_message_on :tax_category %>
+        <% end %>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="row">
+
+    <div class="col-9">
+      <div data-hook="admin_product_form_taxons">
+        <%= f.field_container :taxons do %>
+          <%= f.label :taxon_ids, plural_resource_name(Spree::Taxon) %><br />
+          <%= f.hidden_field :taxon_ids, value: @product.taxon_ids.join(',') %>
+        <% end %>
+      </div>
+
+      <div data-hook="admin_product_form_option_types">
+        <%= f.field_container :option_types do %>
+          <%= f.label :option_type_ids, plural_resource_name(Spree::OptionType) %>
+          <%= f.hidden_field :option_type_ids, value: @product.option_type_ids.join(',') %>
+        <% end %>
+      </div>
+
+      <div data-hook="admin_product_form_meta">
+        <div data-hook="admin_product_form_meta_title">
+          <%= f.field_container :meta_title do %>
+            <%= f.label :meta_title %>
+            <%= f.text_field :meta_title, class: 'fullwidth' %>
+          <% end %>
+        </div>
+
+        <div data-hook="admin_product_form_meta_keywords">
+          <%= f.field_container :meta_keywords do %>
+            <%= f.label :meta_keywords %>
+            <%= f.text_field :meta_keywords, class: 'fullwidth' %>
+          <% end %>
+        </div>
+
+        <div data-hook="admin_product_form_meta_description">
+          <%= f.field_container :meta_description do %>
+            <%= f.label :meta_description %>
+            <%= f.text_field :meta_description, class: 'fullwidth' %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="clear"></div>
+
+  <div data-hook="admin_product_form_additional_fields"></div>
+
+  <div class="clear"></div>
+</div>

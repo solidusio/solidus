@@ -1,0 +1,63 @@
+<nav>
+  <ul class="tabs" data-hook="admin_order_tabs">
+    <% if (@order.shipments.count == 0 || @order.shipped_shipments.count == 0) %>
+      <li class="<%= "active" if current == "Cart" %>" data-hook='admin_order_tabs_order_details'>
+        <%= link_to t('spree.cart'), spree.cart_admin_order_url(@order) %>
+      </li>
+    <% end %>
+
+    <% if checkout_steps.include?("address") %>
+      <li class="<%= "active" if (current == "Customer Details") %>" data-hook='admin_order_tabs_customer_details'>
+        <% if can?(:update, @order) %>
+          <%= link_to t('spree.customer'), spree.edit_admin_order_customer_url(@order) %>
+        <% else %>
+          <%= link_to t('spree.customer'), spree.admin_order_customer_url(@order) %>
+        <% end %>
+      </li>
+    <% end %>
+
+    <li class="<%= "active" if current == "Shipments" %>" data-hook='admin_order_tabs_order_details'>
+      <%= link_to plural_resource_name(Spree::Shipment), spree.edit_admin_order_url(@order) %>
+    </li>
+
+    <% if can? :read, Spree::Adjustment %>
+      <li class="<%= "active" if current == "Adjustments" %>" data-hook='admin_order_tabs_adjustments'>
+        <%= link_to plural_resource_name(Spree::Adjustment), spree.admin_order_adjustments_url(@order) %>
+      </li>
+    <% end %>
+
+    <% if can?(:read, Spree::Payment) %>
+      <li class="<%= "active" if current == "Payments" %>" data-hook='admin_order_tabs_payments'>
+        <%= link_to plural_resource_name(Spree::Payment), spree.admin_order_payments_url(@order) %>
+      </li>
+    <% end %>
+
+    <% if !@order.completed? && can?(:update, @order) %>
+      <li class="<%= "active" if current == "Confirm" %>" data-hook='admin_order_tabs_confirm'>
+        <%= link_to t('spree.confirm'), spree.confirm_admin_order_url(@order) %>
+      </li>
+    <% end %>
+
+    <% if can? :read, Spree::ReturnAuthorization %>
+      <% if @order.completed? %>
+        <li class="tab <%= "active" if current == "Return Authorizations" %>" data-hook='admin_order_tabs_return_authorizations'>
+          <%= link_to t('spree.admin.tab.rma'), spree.admin_order_return_authorizations_url(@order) %>
+        </li>
+      <% end %>
+    <% end %>
+
+    <% if can? :read, Spree::CustomerReturn %>
+      <% if @order.completed? %>
+        <li class="<%= "active" if current == "Customer Returns" %>" data-hook='admin_order_tabs_customer_returns'>
+          <%= link_to plural_resource_name(Spree::CustomerReturn), spree.admin_order_customer_returns_url(@order) %>
+        </li>
+      <% end %>
+    <% end %>
+
+    <% if can?(:manage, Spree::OrderCancellations) && @order.inventory_units.cancelable.present? %>
+      <li class="<%= "active" if current == "Cancel Inventory" %>" data-hook='admin_order_tabs_cancel_inventory'>
+        <%= link_to t('spree.cancel_inventory'), spree.admin_order_cancellations_path(@order) %>
+      </li>
+    <% end %>
+  </ul>
+</nav>

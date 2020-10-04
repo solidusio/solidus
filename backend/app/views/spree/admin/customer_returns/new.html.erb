@@ -1,0 +1,56 @@
+<%= render partial: 'spree/admin/shared/order_tabs', locals: { current: 'Customer Returns' } %>
+
+<% admin_breadcrumb(link_to plural_resource_name(Spree::CustomerReturn), spree.admin_order_customer_returns_url(@order)) %>
+<% admin_breadcrumb(t('spree.new_customer_return')) %>
+
+
+<% content_for :page_actions do %>
+<% end %>
+
+<% if @rma_return_items.any? || @new_return_items.any? %>
+
+  <%= render partial: 'spree/shared/error_messages', locals: { target: @customer_return } %>
+  <%= form_for [:admin, @order, @customer_return] do |f| %>
+    <fieldset class="no-border-top">
+      <div data-hook="admin_customer_return_form_fields">
+        <fieldset class='no-border-bottom'>
+          <legend align='center'><%= t('spree.items_in_rmas') %></legend>
+          <% if @rma_return_items.any? %>
+            <%= render partial: 'return_item_selection', locals: {f: f, return_items: @rma_return_items} %>
+          <% else %>
+            <div class="no-objects-found"><%= t('spree.none') %></div>
+          <% end %>
+        </fieldset>
+
+        <fieldset class='no-border-bottom'>
+          <legend align='center'><%= t('spree.other_items_in_other') %></legend>
+          <% if @new_return_items.any? %>
+            <%= render partial: 'return_item_selection', locals: {f: f, return_items: @new_return_items} %>
+          <% else %>
+            <div class="no-objects-found"><%= t('spree.none') %></div>
+          <% end %>
+        </fieldset>
+
+        <%= f.field_container :stock_location do %>
+          <%= f.label :stock_location_id, Spree::StockLocation.model_name.human %>
+          <%= f.select :stock_location_id, Spree::StockLocation.order_default.to_a.collect{|l|[l.name, l.id]}, {include_blank: true}, {class: 'custom-select fullwidth', "data-placeholder" => t('spree.select_a_stock_location')} %>
+          <%= f.error_message_on :stock_location_id %>
+        <% end %>
+
+      </div>
+
+      <div class="form-buttons filter-actions actions" data-hook="buttons">
+        <%= f.submit t('spree.actions.create'), class: 'btn btn-primary' %>
+        <%= link_to t('spree.actions.cancel'), admin_order_customer_returns_url(@order), class: 'btn btn-primary' %>
+      </div>
+    </fieldset>
+  <% end %>
+
+<% else %>
+
+  <div class="no-objects-found">
+    <%= t('spree.all_items_have_been_returned') %>,
+    <%= link_to t('spree.back_to_customer_return_list'), spree.admin_order_customer_returns_path(@order) %>.
+  </div>
+
+<% end %>

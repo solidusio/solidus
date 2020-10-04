@@ -1,0 +1,70 @@
+<table class="show return-items-table">
+  <thead>
+    <tr>
+      <th><%= Spree::Product.model_name.human %></th>
+      <th><%= Spree::Variant.human_attribute_name(:sku) %></th>
+      <th class="wrap-text"><%= Spree::ReturnItem.human_attribute_name(:amount) %></th>
+      <th class="wrap-text"><%= Spree::ReturnItem.human_attribute_name(:preferred_reimbursement_type) %></th>
+      <th class="wrap-text"><%= Spree::ReturnItem.human_attribute_name(:exchange_variant) %></th>
+      <th class="wrap-text"><%= Spree::ReturnItem.human_attribute_name(:acceptance_status_errors) %></th>
+      <th class="wrap-text"><%= Spree::ReturnItem.human_attribute_name(:reception_status) %></th>
+      <% unless return_items.all?(&:received?)%>
+        <th class="wrap-text"><%= Spree::ReturnItem.human_attribute_name(:item_received?) %></th>
+      <% end %>
+      <% if show_decision %>
+        <th class="actions"></th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <% return_items.each do |return_item| %>
+      <tr>
+        <td>
+          <div class="variant-name"><%= return_item.inventory_unit.variant.name %></div>
+          <div class="variant-options"><%= return_item.inventory_unit.variant.options_text %></div>
+        </td>
+        <td>
+          <%= return_item.inventory_unit.variant.sku %>
+        </td>
+        <td>
+          <%= return_item.display_amount %>
+        </td>
+        <td>
+          <%= reimbursement_type_name(return_item.preferred_reimbursement_type) %>
+        </td>
+        <td>
+          <%= return_item.exchange_variant.try(:exchange_name) %>
+        </td>
+        <td>
+          <%= return_item.acceptance_status_errors %>
+        </td>
+        <td>
+          <span class="pill pill-<%= return_item.reception_status %>">
+            <%= t(
+              return_item.reception_status,
+              scope: 'spree.reception_states'
+            ) %>
+          </span>
+        </td>
+        <% unless return_item.received? %>
+          <td>
+            <%= form_for [:admin, return_item] do |f| %>
+              <%= f.hidden_field 'reception_status_event', value: 'receive' %>
+              <%= f.button t('spree.actions.receive'), class: 'with-tip', "data-action" => 'save' %>
+            <% end %>
+          </td>
+        <% end %>
+        <% if show_decision %>
+          <td class='actions'>
+            <%= button_to [:admin, return_item], { class: 'fa fa-thumbs-up icon_link no-text with-tip', params: { "return_item[acceptance_status]" => 'accepted' }, "data-action" => 'save', title: t('spree.accept'), method: 'put' } do %>
+              <%= t('spree.accept') %>
+            <% end %>
+            <%= button_to [:admin, return_item], { class: 'fa fa-thumbs-down icon_link no-text with-tip', params: { "return_item[acceptance_status]" => 'rejected' }, "data-action" => 'remove', title: t('spree.reject'), method: 'put' } do %>
+              <%= t('spree.reject') %>
+            <% end %>
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

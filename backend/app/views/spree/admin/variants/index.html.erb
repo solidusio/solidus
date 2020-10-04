@@ -1,0 +1,43 @@
+<%= render 'spree/admin/shared/product_tabs', current: 'Variants' %>
+
+<% admin_breadcrumb(plural_resource_name(Spree::Variant)) %>
+
+<% content_for :page_actions do %>
+  <% if can?(:create, Spree::Variant) && !@product.empty_option_values? %>
+    <li id="new_var_link" data-hook>
+      <%= link_to(
+        t('spree.new_variant'),
+        new_admin_product_variant_url(@product),
+        class: 'btn btn-primary'
+      ) %>
+    </li>
+  <% end %>
+<% end %>
+
+<% if @variants.any? || @product.variants.discarded.any? %>
+  <%= render "table_filter", product: @product %>
+  <%= render "table", variants: @variants %>
+<% else %>
+  <% if !Spree::OptionType.any? %>
+    <p class='first_add_option_types no-objects-found' data-hook="first_add_option_types">
+      <%= t('spree.to_add_variants_you_must_first_define') %>
+      <% if can?(:show, Spree::OptionType) %>
+        <%= link_to plural_resource_name(Spree::OptionType), admin_option_types_path%>
+      <% else %>
+        <%= plural_resource_name(Spree::OptionType) %>
+      <% end %>
+    </p>
+  <% elsif @product.empty_option_values? %>
+    <div class="no-objects-found">
+      <%= t 'spree.no_option_values_on_product_html',
+            link: link_to(t('spree.product_details'), [:edit, :admin, @product]) %>
+    </div>
+  <% else %>
+    <div class="no-objects-found">
+      <%= t('spree.no_resource', resource: plural_resource_name(Spree::Variant)) %>
+      <% if can? :create, Spree::Variant %>
+        <%= link_to t('spree.create_one'), new_object_url %>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>

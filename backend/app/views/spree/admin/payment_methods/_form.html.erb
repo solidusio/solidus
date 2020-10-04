@@ -1,0 +1,79 @@
+<div data-hook="admin_payment_method_form_fields">
+
+  <div data-hook="payment_method">
+
+    <div class="row">
+      <div class="col-4">
+        <div id="preference-settings">
+          <div class="field">
+            <%= f.label :type %>
+            <%= f.select :type, @payment_method_types.map { |p| [p.model_name.human, p.to_s] }, {}, {class: 'custom-select fullwidth js-gateway-type'} %>
+          </div>
+
+          <div class="field js-preference-source-wrapper">
+            <%= f.label :preference_source %>
+            <%= f.select(:preference_source, [[t('spree.preference_source_none'), nil]] + @object.class.available_preference_sources, {}, class: 'custom-select fullwidth js-preference-source') %>
+          </div>
+
+          <div class="gateway-settings js-gateway-settings">
+            <% if @object.preference_source.present? %>
+              <%= t('spree.preference_source_using', name: @object.preference_source) %>
+            <% elsif !@object.new_record? %>
+              <% @object.admin_form_preference_names.each do |name| %>
+                <%= render "spree/admin/shared/preference_fields/#{@object.preference_type(name)}",
+                  form: f, attribute: "preferred_#{name}",
+                  label: t(name, scope: 'spree', default: name.to_s.humanize) %>
+              <% end %>
+            <% end %>
+          </div>
+
+          <div class="info warning js-gateway-settings-warning"><%= t('spree.payment_method_settings_warning') %></div>
+        </div>
+        <div data-hook="auto_capture" class="field">
+          <%= f.label :auto_capture %>
+          <%= f.select :auto_capture,
+            [["#{t('spree.use_app_default')} (#{Spree::Config[:auto_capture] ? t('spree.say_yes') : t('spree.say_no')})", ''],
+             [t('spree.say_yes'), true],
+             [t('spree.say_no'), false]],
+          {},
+          {class: 'custom-select fullwidth'} %>
+        </div>
+        <div data-hook="available_to_user" class="field">
+          <label>
+            <%= f.check_box :available_to_users %>
+            <%= Spree::PaymentMethod.human_attribute_name :available_to_users %>
+          </label>
+        </div>
+        <div data-hook="available_to_admin" class="field">
+          <label>
+            <%= f.check_box :available_to_admin %>
+            <%= Spree::PaymentMethod.human_attribute_name :available_to_admin %>
+          </label>
+        </div>
+        <div data-hook="active" class="field">
+          <label>
+            <%= f.check_box :active %>
+            <%= Spree::PaymentMethod.human_attribute_name :active %>
+          </label>
+        </div>
+      </div>
+
+      <div class="col-8">
+        <div data-hook="name" class="field">
+          <%= f.label :name %>
+          <%= f.text_field :name, class: 'fullwidth' %>
+        </div>
+        <div data-hook="description" class="field">
+          <%= f.label :description %>
+          <%= f.text_area :description, {cols: 60, rows: 6, class: 'fullwidth'} %>
+        </div>
+        <div data-hook="stores" class="field">
+          <%= f.label :store_ids, plural_resource_name(Spree::Store) %>
+          <%= f.collection_select :store_ids, Spree::Store.all, :id, :name, {}, multiple: true, class: "select2 fullwidth" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="clear"></div>

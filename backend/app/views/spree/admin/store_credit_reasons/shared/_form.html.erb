@@ -1,0 +1,15 @@
+<div data-hook='admin_named_type_form_fields' class='row'>
+  <div class='col-3'>
+    <%= f.field_container :name do %>
+      <%= f.label :name, class: 'required' %><br />
+      <%= f.text_field :name, class: 'fullwidth' %>
+    <% end %>
+
+    <div class='checkbox'>
+      <label>
+        <%= f.check_box :active %>
+        <%= t('spree.active') %>
+      </label>
+    </div>
+  </div>
+</div>

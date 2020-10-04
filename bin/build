@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+
+set -e
+
+# Target postgresql. Override with: `env DB=sqlite bin/build`
+export DB=${DB:-postgresql}
+
+bin/setup
+
+echo "***********************"
+echo "* Testing Solidus API *"
+echo "***********************"
+bin/rspec api/spec
+
+echo "***************************"
+echo "* Testing Solidus Backend *"
+echo "***************************"
+bin/rspec backend/spec
+bundle exec teaspoon --require=backend/spec/teaspoon_env.rb
+
+echo "************************"
+echo "* Testing Solidus Core *"
+echo "************************"
+bin/rspec core/spec
+
+echo "****************************"
+echo "* Testing Solidus Frontend *"
+echo "****************************"
+bin/rspec frontend/spec
+
+echo "**************************"
+echo "* Testing Solidus Sample *"
+echo "**************************"
+bin/rspec sample/spec

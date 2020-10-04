@@ -1,0 +1,107 @@
+<% admin_layout "full-width" %>
+
+<%= paginate @variants, theme: "solidus_admin" %>
+
+<table class="index stock-table" id="listing_product_stock">
+  <colgroup>
+    <col style="width: 30%">
+    <col style="width: 15%">
+    <col style="width: 14%">
+    <col style="width: 11%">
+    <col style="width: 11%">
+    <col style="width: 10%">
+    <col style="width: 9%">
+  </colgroup>
+  <thead>
+    <tr>
+      <th><%= t('spree.item') %></th>
+      <th><%= Spree::Variant.model_name.human %></th>
+      <th><%= Spree::StockLocation.model_name.human %></th>
+      <th class="align-center"><%= t('spree.backorderable_header') %></th>
+      <th class="align-center"><%= t('spree.count_on_hand') %></th>
+      <th><%= t('spree.modify_stock_count') %></th>
+      <th class="actions"></th>
+    </tr>
+  </thead>
+  <% variants.each do |variant| %>
+    <tbody class="variant-stock-items">
+      <tr id="<%= spree_dom_id variant %>">
+        <td>
+          <div class='variant-container'>
+            <div class='variant-image'>
+              <%= render 'spree/admin/shared/image',
+                image: variant.gallery.images.first,
+                size: :small %>
+            </div>
+            <div class='variant-details'>
+              <table class='stock-variant-field-table'>
+                <tbody>
+                  <% @variant_display_attributes.each do |display_attribute| %>
+                    <tr>
+                      <td><%= t(display_attribute[:translation_key], scope: 'spree') %></td>
+                      <td class="fullwidth">
+                        <%= variant.send(display_attribute[:attr_name]) %>
+                      </td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </td>
+        <td class="align-center">
+          <table class='stock-variant-field-table'>
+            <% variant.option_values.sort_by(&:option_type_name).each do |option_value| %>
+              <tr>
+                <td>
+                  <%= option_value.option_type_presentation %>
+                </td>
+                <td><%= option_value.presentation %></td>
+              </tr>
+            <% end %>
+          </table>
+        </td>
+        <td class="stock-location-items-cell" colspan="5">
+          <table class="stock-location-items-table">
+            <colgroup>
+              <col style="width: 25%" />
+              <col style="width: 20%" />
+              <col style="width: 20%" />
+              <col style="width: 20%" />
+              <col style="width: 15%" />
+            </colgroup>
+            <% variant.stock_items.each do |item| %>
+              <% if @stock_item_stock_locations.include?(item.stock_location) %>
+                <tr class="js-edit-stock-item stock-item-edit-row" data-variant-id="<%= variant.id %>" data-stock-item="<%= item.to_json %>" data-stock-location-name="<%= item.stock_location.name %>" data-track-inventory="<%= variant.should_track_inventory? %>" data-can-edit="<%= can?(:admin, Spree::StockItem) %>" data-variant-sku="<%= variant.sku %>">
+                  <%# This is rendered in JS %>
+                </tr>
+              <% end %>
+            <% end %>
+            <% locations_without_items = @stock_item_stock_locations - variant.stock_items.flat_map(&:stock_location) %>
+            <% if locations_without_items.any? && can?(:create, Spree::StockItem) %>
+              <tr class="js-add-stock-item stock-item-edit-row" data-variant-id="<%= variant.id %>">
+                <form>
+                  <td class='location-name-cell'>
+                    <%= select_tag :stock_location_id, options_from_collection_for_select(locations_without_items, :id, :name), class: 'custom-select', prompt: t('spree.add_to_stock_location'), id: "variant-stock-location-#{variant.id}" %>
+                  </td>
+                  <td class="align-center">
+                    <%= check_box_tag :backorderable, 'backorderable', false, id: "variant-backorderable-#{variant.id}" %>
+                  </td>
+                  <td>
+                    <%= number_field_tag :count_on_hand, "", class: 'fullwidth', id: "variant-count-on-hand-#{variant.id}" %>
+                  </td>
+                  <td></td>
+                  <td class="actions">
+                    <%= link_to_with_icon 'plus', t('spree.actions.create'), '#', no_text: true, data: { action: 'add' }, class: "submit" %>
+                  </td>
+                </form>
+              </tr>
+            <% end %>
+          </table>
+        </td>
+      </tr>
+    </tbody>
+  <% end %>
+</table>
+
+<%= paginate @variants, theme: "solidus_admin" %>

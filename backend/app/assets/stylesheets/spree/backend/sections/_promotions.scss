@@ -1,0 +1,149 @@
+#general_fields, #expiry_fields {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+#rules_container, #actions_container {
+  position: relative;
+
+  fieldset {
+    position: static !important;
+  }
+}
+
+#actions_container {
+  .edit_promotion {
+    margin-top: 73px;
+  }
+}
+
+#promotion-policy-select {
+  overflow: auto;
+  margin-bottom: 1.5rem;
+}
+
+.promotion-block {
+  padding: 0 1.25rem 0.5rem;
+  background-color: lighten($color-border, 5);
+  border: 1px solid $color-border;
+  border-radius: 3px;
+  margin-bottom: 15px;
+  position: relative;
+
+  .row {
+    margin-bottom: 0;
+  }
+
+  // Fix the padding added by the .fa icon rule
+  .fa:before {
+    padding-right: 0;
+  }
+
+  .promo-rule-option-value {
+    position: relative;
+    padding-bottom: 10px;
+
+    .remove {
+      cursor: pointer;
+      position: absolute;
+      right: 0;
+      top: 10px;
+
+      &:hover {
+        color: $color-red;
+      }
+    }
+  }
+
+  .tier {
+    position: relative;
+    padding-bottom: 10px;
+
+    > .row {
+      margin-left: 10px;
+    }
+
+    .remove {
+      position: absolute;
+      cursor: pointer;
+      left: 0;
+      top: 10px;
+
+      &:hover {
+        color: $color-red;
+      }
+    }
+  }
+
+  .right-align {
+    text-align: right;
+  }
+
+  .calculator-fields {
+    padding-bottom: 10px;
+  }
+
+  .field {
+    &.alpha {
+      margin-left: -1px;
+      padding-left: 11px;
+    }
+
+    &.omega {
+      margin-right: -1px;
+      padding-right: 11px;
+    }
+  }
+
+  &.action-remove {
+    background-color: lighten($color-red, 50);
+    border-color: lighten($color-red, 45);
+    text-decoration: line-through;
+
+    .promotion-title, input[type="text"], input[type="number"],
+    .token-input-list {
+      border-color: lighten($color-red, 45);
+    }
+  }
+
+  .add-line-item {
+    #add_quantity {
+      width: 50px;
+      margin-top: 15px;
+    }
+    button.add {
+      min-width: 80px;
+      margin-top: 30px;
+
+      &:before {
+        padding-right: 5px;
+      }
+    }
+  }
+
+  a.delete {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.25rem;
+    cursor: pointer;
+
+    &:hover {
+      color: theme-color("danger");
+    }
+  }
+}
+
+.promotion-title {
+  text-align: left;
+  font-size: 1rem;
+  border-bottom: 1px solid $color-border;
+  padding: 0.75rem 0;
+  margin-bottom: 0.75rem;
+
+  &.no-text {
+    border: none;
+    padding-bottom: 0;
+    margin-bottom: 0.25rem;
+  }
+}

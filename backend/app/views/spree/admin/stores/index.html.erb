@@ -1,0 +1,41 @@
+<%= render 'spree/admin/shared/general_tabs' %>
+
+<% content_for :page_title do %>
+  <%= plural_resource_name(Spree::Store) %>
+<% end %>
+
+<% content_for :page_actions do %>
+  <% if can?(:create, Spree::Store) %>
+    <li>
+      <%= link_to t('spree.new_store'), new_admin_store_url, class: 'button' %>
+    </li>
+  <% end %>
+<% end %>
+
+<table class="index">
+  <thead>
+    <tr>
+      <th><%= Spree::Store.human_attribute_name(:name) %></th>
+      <th><%= Spree::Store.human_attribute_name(:url) %></th>
+      <th class="actions"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @stores.each do |store| %>
+      <tr>
+        <td>
+          <%= store.name %>
+          <% if store.default? %>
+            <span class="label label-default"><%= Spree::Store.human_attribute_name(:default) %></span>
+          <% end %>
+        </td>
+        <td><%= store.url %></td>
+        <td class="actions">
+          <% if can?(:edit, store) %>
+            <%= link_to_edit store, no_text: true %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

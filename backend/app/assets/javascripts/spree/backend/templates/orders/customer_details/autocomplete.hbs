@@ -1,0 +1,17 @@
+<div class='customer-autocomplete-item'>
+  <div class='customer-details'>
+    <span class="customer-email">{{customer.email}}</span>
+    {{#if bill_address.name }}
+      <strong>{{t 'bill_address' }}</strong>
+      {{bill_address.name}}<br>
+      {{bill_address.address1}}, {{bill_address.address2}}<br>
+      {{bill_address.city}}<br>
+      {{#if bill_address.state_id }}
+        {{bill_address.state.name}}
+      {{else}}
+        {{bill_address.state_name}}
+      {{/if}}
+      {{bill_address.country.name}}
+    {{/if}}
+  </div>
+</div>

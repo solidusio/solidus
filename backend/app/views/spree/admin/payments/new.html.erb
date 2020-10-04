@@ -1,0 +1,25 @@
+<%= render partial: 'spree/admin/shared/order_tabs', locals: { current: 'Payments' } %>
+
+<% admin_breadcrumb(link_to plural_resource_name(Spree::Payment), spree.admin_order_payments_path(@order)) %>
+<% admin_breadcrumb(t('spree.new_payment')) %>
+
+
+<% content_for :page_actions do %>
+<% end %>
+
+<% if @payment_methods.any? %>
+  <%= render partial: 'spree/shared/error_messages', locals: { target: @payment } %>
+
+  <%= form_for @payment, url: admin_order_payments_path(@order) do |f| %>
+    <fieldset class="no-border-top">
+      <%= render partial: 'form', locals: { f: f } %>
+
+      <div class="filter-actions actions" data-hook="buttons">
+        <%= button_tag @order.cart? ? t('spree.actions.continue') : t('spree.actions.update'), class: 'btn btn-primary' %>
+      </div>
+    </fieldset>
+  <% end %>
+<% else %>
+  <%= t('spree.cannot_create_payment_without_payment_methods_html',
+              link: link_to(t('spree.cannot_create_payment_link'), admin_payment_methods_url)) %>
+<% end %>

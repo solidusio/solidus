@@ -1,0 +1,100 @@
+
+// Customize orders filter
+[data-hook="admin_orders_index_search"] {
+  select[data-placeholder="Status"] {
+    width: 100%;
+  }
+
+  .select2-container {
+    width: 100% !important;
+  }
+}
+
+// Order-total
+[data-hook="order_details_total"]{
+  text-align: center;
+
+  .order-total {
+    font-size: 35px;
+    font-weight: $font-weight-bold;
+    background: $color-primary-light;
+    padding: .1em .3em;
+    border-radius: 3px;
+  }
+}
+
+// Order-total
+[data-hook="customer_details_total"]{
+  text-align: center;
+
+  .customer {
+    font-size: 20px;
+    font-weight: $font-weight-bold;
+    background: $color-primary-light;
+    padding: .1em .3em;
+    border-radius: 3px;
+  }
+}
+
+[data-hook="admin_order_form_fields"] {
+  legend.stock-location {
+    color: $body-color;
+
+    .shipment-number {
+      color: $color-dark-dark;
+      background: $color-primary-light;
+      padding: .1em .3em;
+      border-radius: 3px;
+    }
+    .stock-location-name {
+      color: $color-dark-dark;
+      background: $color-primary-light;
+      padding: .1em .3em;
+      border-radius: 3px;
+      word-break: break-word;
+    }
+  }
+}
+
+[data-hook="adjustments_new_coupon_code"] {
+  margin-bottom: 18px;
+}
+
+[data-hook="complete-order-button"] {
+  margin-bottom: 15px;
+}
+
+label[for="order_bill_address_attributes_firstname"] {
+  margin-top: 53.5px;
+}
+
+label[for="order_bill_address_attributes_name"] {
+  margin-top: 53.5px;
+}
+
+#risk_analysis legend {
+  background-color: $color-red;
+  color: $color-white;
+  font-size: 2em;
+}
+
+form.admin-ship-shipment {
+  display: block;
+  text-align: center;
+  input[type='submit'] { margin-left: 5px; }
+}
+
+table.line-items {
+  input.error {
+    border-color: theme-color("danger");
+  }
+
+  .select2-container.error {
+    border-radius: 4px;
+    border: 1px solid theme-color("danger");
+  }
+
+  .line-item-select-variant .select2-chosen {
+    max-width: 400px;
+  }
+}

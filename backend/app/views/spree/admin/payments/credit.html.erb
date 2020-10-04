@@ -1,0 +1,18 @@
+<%= render partial: 'spree/admin/shared/order_tabs', locals: { current: 'Creditcards' } %>
+
+<% admin_breadcrumb(link_to plural_resource_name(Spree::Payment), spree.admin_order_payments_path(@order)) %>
+<% admin_breadcrumb(Spree::Refund.model_name.human) %>
+
+
+<%= form_tag do %>
+  <h3><%= Spree::Refund.model_name.human %></h3>
+  <fieldset data-hook="credit">
+    <p>
+      <%= label_tag :amount, Spree::Payment.human_attribute_name(:amount) %>
+      <%= text_field_tag :amount, @payment.amount %>
+    </p>
+    <p class="form-buttons">
+      <%= button_tag t('spree.make_refund'), class: 'btn btn-primary' %>
+    </p>
+  </fieldset>
+<% end %>

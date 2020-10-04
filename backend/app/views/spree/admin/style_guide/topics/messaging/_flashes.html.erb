@@ -1,0 +1,19 @@
+<button class="trigger-flash" data-flash-type="success">Success</button>
+<button class="trigger-flash" data-flash-type="notice">Warning</button>
+<button class="trigger-flash" data-flash-type="error">Error</button>
+
+<script>
+  $('.trigger-flash').on('click', function(){
+    type = $(this).data('flashType');
+
+    if (!$('.flash.' + type).is('*')) {
+      flash = $("<div class='flash'>")
+        .text(type)
+        .addClass(type)
+        .appendTo('.js-flash-wrapper')
+        .on('click', function() {
+          $(this).remove();
+        });
+    }
+  });
+</script>

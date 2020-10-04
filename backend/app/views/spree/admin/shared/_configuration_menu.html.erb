@@ -1,0 +1,12 @@
+<%# This file holds the tabs for the "General" settings area. It has this
+    filename to maintain compatibility with extensions which add their own menu
+    entires through deface. %>
+<% content_for :tabs do %>
+  <nav>
+    <ul class="tabs" data-hook="admin_configurations_sidebar_menu">
+      <% if can?(:edit, Spree::Store) %>
+        <%= settings_tab_item plural_resource_name(Spree::Store), admin_stores_path %>
+      <% end %>
+    </ul>
+  </nav>
+<% end %>

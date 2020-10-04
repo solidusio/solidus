@@ -1,0 +1,29 @@
+table tbody tr {
+  &.highlight {
+
+    @each $action in $actions {
+      &.action-#{$action} {
+        td, th {
+          background-color: get-value($actions, $actions-bg-colors, $action);
+          border-color: get-value($actions, $actions-brd-colors, $action);
+        }
+      }
+    }
+
+    &.action-remove, &.action-void, &.action-failure {
+      td, th {
+        text-decoration: line-through;
+      }
+
+      td.actions {
+        text-decoration: none;
+      }
+    }
+  }
+
+  td.actions {
+    button {
+      cursor: pointer;
+    }
+  }
+}

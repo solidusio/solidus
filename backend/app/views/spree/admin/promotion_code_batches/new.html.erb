@@ -1,0 +1,28 @@
+<% admin_breadcrumb(link_to plural_resource_name(Spree::Promotion), spree.admin_promotions_path) %>
+<% admin_breadcrumb(link_to @promotion.name, spree.admin_promotion_path(@promotion.id)) %>
+<% admin_breadcrumb(plural_resource_name(Spree::PromotionCodeBatch)) %>
+
+<%= form_for :promotion_code_batch, url: collection_url do |f| %>
+  <%= f.hidden_field :promotion_id, value: params[:promotion_id] %>
+
+  <%= f.field_container :base_code do %>
+    <%= f.label :base_code %>
+    <%= f.text_field :base_code, class: "fullwidth" %>
+  <% end %>
+
+  <%= f.field_container :join_characters do %>
+    <%= f.label :join_characters %>
+    <%= f.text_field :join_characters, class: "fullwidth" %>
+  <% end %>
+
+  <%= f.field_container :number_of_codes do %>
+    <%= f.label :number_of_codes %>
+    <%= f.text_field :number_of_codes, class: "fullwidth" %>
+  <% end %>
+
+  <%= f.field_container :email do %>
+    <%= f.label :email %>
+    <%= f.text_field :email, class: "fullwidth", value: spree_current_user.email %>
+  <% end %>
+  <%= f.submit t('spree.actions.create'), class: 'btn btn-primary' %>
+<% end %>

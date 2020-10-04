@@ -1,0 +1,56 @@
+<% admin_breadcrumb(t('spree.settings')) %>
+<% admin_breadcrumb(plural_resource_name(Spree::Zone)) %>
+
+<% content_for :page_actions do %>
+  <% if can?(:create, Spree::Zone) %>
+    <li>
+      <%= link_to t('spree.new_zone'), new_object_url, id: 'admin_new_zone_link', class: 'btn btn-primary' %>
+    </li>
+  <% end %>
+<% end %>
+
+<%= paginate @zones, theme: "solidus_admin" %>
+
+<% if @zones.any? %>
+  <table class="index" id='listing_zones' data-hook>
+    <colgroup>
+      <col style="width: 30%" />
+      <col style="width: 40%" />
+      <col style="width: 15%" />
+      <col style="width: 15%" />
+    </colgroup>
+    <thead>
+      <tr data-hook="zones_header">
+        <th><%= sort_link @search,:name, Spree::Zone.human_attribute_name(:name), title: 'zones_order_by_name_title' %></th>
+        <th>
+          <%= sort_link @search,:description, Spree::Zone.human_attribute_name(:description), {}, {title: 'zones_order_by_description_title'} %>
+        </th>
+        <th class="actions"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @zones.each do |zone| %>
+        <tr id="<%= spree_dom_id zone %>" data-hook="zones_row">
+          <td><%= zone.name %></td>
+          <td><%= zone.description %></td>
+          <td class="actions">
+            <% if can?(:update, zone) %>
+              <%= link_to_edit zone, no_text: true %>
+            <% end %>
+            <% if can?(:destroy, zone) %>
+              <%= link_to_delete zone, no_text: true %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div class="no-objects-found">
+    <%= render 'spree/admin/shared/no_objects_found',
+                 resource: Spree::Zone,
+                 new_resource_url: new_object_url %>
+  </div>
+<% end %>
+
+<%= paginate @zones, theme: "solidus_admin" %>

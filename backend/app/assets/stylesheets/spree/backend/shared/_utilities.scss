@@ -1,0 +1,47 @@
+.block-table {
+  display: table;
+  width: 100%;
+
+  .table-cell {
+    display: table-cell;
+    vertical-align: middle;
+    padding: 0 10px;
+
+    &:first-child {
+      padding-left: 0;
+    }
+    &:last-child {
+      padding-right: 0;
+    }
+  }
+}
+
+.hidden {
+  display: none;
+}
+
+/* hide and show elements based on editing */
+.editing .editing-hide {
+  display: none;
+}
+
+.editing .editing-show {
+  display: block;
+}
+
+.editing-show {
+  display: none;
+}
+
+// For block grids
+.frameless {
+  margin-left: -10px;
+  margin-right: -10px;
+}
+
+.container {
+  // Float container right instead of left.
+  .right {
+    float: right;
+  }
+}

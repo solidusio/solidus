@@ -1,0 +1,29 @@
+<% content_for :table_filter_title do %>
+  <%= t('spree.search') %>
+<% end %>
+
+<% content_for :table_filter do %>
+  <%= form_for :variant_search, url: spree.admin_product_variants_path(product), method: :get do |f| %>
+    <div class="col-10">
+      <div data-hook="admin_variants_index_search" class="field">
+        <%= f.label :variant_search_term, t('spree.variant_search_placeholder') %>
+        <%= text_field_tag :variant_search_term, params[:variant_search_term], class: "fullwidth", placeholder: t('spree.variant_search_placeholder') %>
+      </div>
+    </div>
+
+    <% if product.variants.discarded.any? %>
+      <div class="col-2">
+        <div class="field checkbox">
+          <label>
+            <%= check_box_tag :deleted, "on", params[:deleted] == "on" %>
+            <%= t('.show_deleted') %>
+          </label>
+        </div>
+      </div>
+    <% end %>
+
+    <div class="actions filter-actions">
+      <%= f.button :search %>
+    </div>
+  <% end %>
+<% end %>

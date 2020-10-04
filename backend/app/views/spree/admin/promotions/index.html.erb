@@ -1,0 +1,125 @@
+<% admin_breadcrumb(plural_resource_name(Spree::Promotion)) %>
+
+<% content_for :page_actions do %>
+  <% if can? :create, Spree::Promotion %>
+    <li>
+      <%= link_to t('spree.new_promotion'), spree.new_admin_promotion_path, class: 'btn btn-primary' %>
+    </li>
+  <% end %>
+<% end %>
+
+<% content_for :table_filter_title do %>
+  <%= t('spree.search') %>
+<% end %>
+
+<% content_for :table_filter do %>
+  <div data-hook="admin_promotions_index_search">
+    <%= search_form_for [:admin, @search] do |f| %>
+      <div class="row">
+        <div class="col-4">
+          <div class="field">
+            <%= label_tag :q_name_cont, Spree::Promotion.human_attribute_name(:name) %>
+            <%= f.text_field :name_cont, tabindex: 1 %>
+          </div>
+        </div>
+
+        <div class="col-2">
+          <div class="field">
+            <%= label_tag :q_codes_value_cont, Spree::Promotion.human_attribute_name(:code) %>
+            <%= f.text_field :codes_value_cont, tabindex: 1 %>
+          </div>
+        </div>
+
+        <div class="col-2">
+          <div class="field">
+            <%= label_tag :q_path_cont, Spree::Promotion.human_attribute_name(:path) %>
+            <%= f.text_field :path_cont, tabindex: 1 %>
+          </div>
+        </div>
+
+        <div class="col-2">
+          <div class="field">
+            <%= label_tag :q_promotion_category_id_eq, Spree::PromotionCategory.model_name.human %><br>
+            <%= f.collection_select(:promotion_category_id_eq, @promotion_categories, :id, :name, { include_blank: t('spree.match_choices.all') }, { class: 'custom-select fullwidth' }) %>
+          </div>
+        </div>
+
+        <div class="col-2">
+          <div class="field">
+            <%= label_tag :active, t('spree.active') %><br>
+            <%= f.check_box :active, label: false, as: :boolean, checked_value: true %>
+          </div>
+        </div>
+      </div>
+
+      <div class="clearfix"></div>
+
+      <div class="actions filter-actions">
+        <div data-hook="admin_promotions_index_search_buttons">
+          <%= button_tag t('spree.filter_results'), class: 'btn btn-primary' %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% end %>
+
+
+<%= paginate @promotions, theme: "solidus_admin" %>
+
+<% if @promotions.length > 0 %>
+  <table class="index">
+    <thead>
+      <tr>
+        <th><%= Spree::Promotion.human_attribute_name(:name) %></th>
+        <th><%= Spree::Promotion.human_attribute_name(:code) %></th>
+        <th><%= Spree::Promotion.human_attribute_name(:status) %></th>
+        <th><%= Spree::Promotion.human_attribute_name(:usage_limit) %></th>
+        <th><%= Spree::Promotion.human_attribute_name(:uses) %></th>
+        <th><%= Spree::Promotion.human_attribute_name(:starts_at) %></th>
+        <th><%= Spree::Promotion.human_attribute_name(:expires_at) %></th>
+        <th class="actions"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @promotions.each do |promotion| %>
+        <tr id="<%= spree_dom_id promotion %>">
+          <td><%= promotion.name %></td>
+          <td>
+            <%= (promotion.codes.size == 1) ? promotion.codes.pluck(:value).first : t('spree.number_of_codes', count: promotion.codes.size) %>
+          </td>
+          <td>
+            <span class="pill pill-<%= promotion.active? ? 'active' : 'inactive' %>">
+              <%= t(admin_promotion_status(promotion), scope: 'spree.admin.promotion_status') %>
+            </span>
+          </td>
+          <td>
+            <%= promotion.usage_limit.nil? ? "∞" : promotion.usage_limit %>
+          </td>
+          <td>
+            <%= promotion.usage_count %>
+          </td>
+          <td>
+            <%= promotion.starts_at.to_s(:long) if promotion.starts_at %>
+          </td>
+          <td>
+            <%= promotion.expires_at.to_s(:long) if promotion.expires_at %>
+          </td>
+          <td class="actions">
+            <% if can?(:edit, promotion) %>
+              <%= link_to_edit promotion, no_text: true %>
+            <% end %>
+            <% if can?(:destroy, promotion) %>
+              <%= link_to_delete promotion, no_text: true %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div class="no-objects-found">
+    <%= render 'spree/admin/shared/no_objects_found',
+                 resource: Spree::Promotion,
+                 new_resource_url: new_object_url %>
+  </div>
+<% end %>

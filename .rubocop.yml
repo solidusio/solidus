@@ -1,0 +1,336 @@
+# Relaxed.Ruby.Style
+
+require:
+  - rubocop-performance
+  - rubocop-rails
+
+AllCops:
+  Exclude:
+    - 'vendor/**/*'
+    - '**/vendor/**/*'
+    - '*/spec/dummy/**/*'
+    - 'sandbox/**/*'
+    - '**/templates/**/*'
+    - 'guides/node_modules/**/*'
+  TargetRubyVersion: 2.4
+
+# Sometimes I believe this reads better
+# This also causes spacing issues on multi-line fixes
+Style/BracesAroundHashParameters:
+  Enabled: false
+
+# We use class vars and will have to continue doing so for compatability
+Style/ClassVars:
+  Enabled: false
+
+# We need these names for backwards compatability
+Naming/PredicateName:
+  Enabled: false
+
+# We want to name rescued errors as error not simply e.
+Naming/RescuedExceptionsVariableName:
+  Enabled: false
+
+Naming/AccessorMethodName:
+  Enabled: false
+
+# This has been used for customization
+Style/MutableConstant:
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Style/EmptyElse:
+  Enabled: false
+
+Style/GuardClause:
+  Enabled: false
+
+Style/Next:
+  Enabled: false
+
+Style/NumericPredicate:
+  Enabled: false
+
+Style/WordArray:
+  Enabled: false
+
+Style/ConditionalAssignment:
+  Enabled: false
+
+Performance/Count:
+  Enabled: false
+
+Style/RaiseArgs:
+  Enabled: false
+
+Naming/BinaryOperatorParameterName:
+  Enabled: false
+
+# We can use good judgement here
+Style/RegexpLiteral:
+  Enabled: false
+
+# Unicode comments are useful
+Style/AsciiComments:
+  Enabled: false
+
+Layout/EndAlignment:
+  Enabled: false
+
+Layout/ElseAlignment:
+  Enabled: false
+
+Layout/IndentationWidth:
+  Enabled: false
+
+Layout/AlignParameters:
+  Enabled: false
+
+Layout/ClosingParenthesisIndentation:
+  Enabled: false
+
+Layout/MultilineMethodCallIndentation:
+  Enabled: false
+
+Layout/IndentFirstArrayElement:
+  Enabled: false
+
+Layout/IndentFirstHashElement:
+  Enabled: false
+
+Layout/AlignHash:
+  Enabled: false
+
+Style/TrailingCommaInArguments:
+  Enabled: false
+
+Style/TrailingCommaInArrayLiteral:
+  Enabled: false
+
+Style/TrailingCommaInHashLiteral:
+  Enabled: false
+
+# Symbol Arrays are ok and the %i syntax widely unknown
+Style/SymbolArray:
+  Enabled: false
+
+Rails/DynamicFindBy:
+  Whitelist:
+    - find_by_param
+    - find_by_param!
+
+# It's okay to skip model validations to setup a spec.
+Rails/SkipsModelValidations:
+  Exclude:
+    - '*/spec/**/*'
+
+# We use a lot of
+#
+#     expect {
+#       something
+#     }.to { happen }
+#
+# syntax in the specs files.
+Lint/AmbiguousBlockAssociation:
+  Exclude:
+    - '*/spec/**/*'
+    - 'spec/**/*' # For the benefit of apps that inherit from this config
+
+# We use eval to add common_spree_dependencies into the Gemfiles of each of our gems
+Security/Eval:
+  Exclude:
+    - 'Gemfile'
+    - 'common_spree_dependencies.rb'
+    - '*/Gemfile'
+
+Naming/VariableNumber:
+  Enabled: false
+
+# Write empty methods as you wish.
+Style/EmptyMethod:
+  Enabled: false
+
+# From http://relaxed.ruby.style/
+
+Style/Alias:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#stylealias
+
+Style/BeginBlock:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#stylebeginblock
+
+Style/BlockDelimiters:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#styleblockdelimiters
+
+Style/Documentation:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#styledocumentation
+
+Layout/DotPosition:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#styledotposition
+
+Style/DoubleNegation:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#styledoublenegation
+
+Style/EndBlock:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#styleendblock
+
+Style/FormatString:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#styleformatstring
+
+Style/IfUnlessModifier:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#styleifunlessmodifier
+
+Style/Lambda:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#stylelambda
+
+Style/ModuleFunction:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#stylemodulefunction
+
+Style/MultilineBlockChain:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#stylemultilineblockchain
+
+Style/NegatedIf:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#stylenegatedif
+
+Style/NegatedWhile:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#stylenegatedwhile
+
+Style/ParallelAssignment:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#styleparallelassignment
+
+Style/PercentLiteralDelimiters:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#stylepercentliteraldelimiters
+
+Style/PerlBackrefs:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#styleperlbackrefs
+
+Style/Semicolon:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#stylesemicolon
+
+Style/SignalException:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#stylesignalexception
+
+Style/SingleLineBlockParams:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#stylesinglelineblockparams
+
+Style/SingleLineMethods:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#stylesinglelinemethods
+
+Layout/SpaceBeforeBlockBraces:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#stylespacebeforeblockbraces
+
+Layout/SpaceInsideParens:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#stylespaceinsideparens
+
+Style/SpecialGlobalVars:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#stylespecialglobalvars
+
+Style/StringLiterals:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#stylestringliterals
+
+Style/SymbolProc:
+  Enabled: false
+
+Style/TernaryParentheses:
+  Enabled: false
+
+Style/WhileUntilModifier:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#stylewhileuntilmodifier
+
+Lint/AmbiguousRegexpLiteral:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#lintambiguousregexpliteral
+
+Lint/AssignmentInCondition:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#lintassignmentincondition
+
+Metrics/AbcSize:
+  Enabled: false
+
+Metrics/BlockNesting:
+  Enabled: false
+
+Metrics/ClassLength:
+  Enabled: false
+
+Metrics/ModuleLength:
+  Enabled: false
+
+Metrics/BlockLength:
+  Enabled: false
+
+Metrics/CyclomaticComplexity:
+  Enabled: false
+
+Metrics/LineLength:
+  Enabled: false
+
+Metrics/MethodLength:
+  Enabled: false
+
+Metrics/ParameterLists:
+  Enabled: false
+
+Metrics/PerceivedComplexity:
+  Enabled: false
+
+Bundler/OrderedGems:
+  Enabled: false
+
+Style/NumericLiterals:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: true
+  EnforcedStyle: always
+
+# json.() is idiomatic in jbuilder files
+Style/LambdaCall:
+  Enabled: false
+
+Naming/UncommunicativeMethodParamName:
+  AllowedNames:
+    - id
+    - to
+    - _
+
+# Rubocop doesn't understand side-effects
+Style/IdenticalConditionalBranches:
+  Enabled: false
+
+Naming/MemoizedInstanceVariableName:
+  Enabled: false
+
+Lint/UselessComparison:
+  Enabled: false
+
+Lint/HandleExceptions:
+  Enabled: false

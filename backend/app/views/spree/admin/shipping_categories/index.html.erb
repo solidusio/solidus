@@ -1,0 +1,51 @@
+<%= render 'spree/admin/shared/shipping_tabs' %>
+
+<% admin_breadcrumb(t('spree.settings')) %>
+<% admin_breadcrumb(t('spree.admin.tab.shipping')) %>
+<% admin_breadcrumb(plural_resource_name(Spree::ShippingCategory)) %>
+
+
+<% content_for :page_actions do %>
+  <% if can?(:create, Spree::ShippingCategory) %>
+    <li>
+      <%= link_to t('spree.new_shipping_category'), new_object_url, class: 'btn btn-primary' %>
+    </li>
+  <% end %>
+<% end %>
+
+<% if @shipping_categories.any? %>
+<table class="index">
+  <colgroup>
+    <col style="width: 85%">
+    <col style="width: 15%">
+  </colgroup>
+  <thead>
+    <tr data-hook="categories_header">
+      <th><%= Spree::ShippingCategory.human_attribute_name(:name) %></th>
+      <th class="actions"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @shipping_categories.each do |shipping_category|%>
+    <tr id="<%= spree_dom_id shipping_category %>" data-hook="category_row">
+      <td><%= shipping_category.name %></td>
+      <td class="actions">
+        <% if can?(:update, shipping_category) %>
+          <%= link_to_edit shipping_category, no_text: true %>
+        <% end %>
+
+        <% if can?(:destroy, shipping_category) %>
+          <%= link_to_delete shipping_category, no_text: true %>
+        <% end %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+<% else %>
+  <div class="no-objects-found">
+    <%= render 'spree/admin/shared/no_objects_found',
+                 resource: Spree::ShippingCategory,
+                 new_resource_url: new_object_url %>
+  </div>
+<% end %>

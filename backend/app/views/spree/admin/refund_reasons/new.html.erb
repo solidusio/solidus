@@ -1,0 +1,19 @@
+<%= render 'spree/admin/shared/settings_checkout_tabs' %>
+
+<% admin_breadcrumb(t('spree.settings')) %>
+<% admin_breadcrumb(t('spree.admin.tab.checkout')) %>
+<% admin_breadcrumb(link_to plural_resource_name(Spree::RefundReason), spree.admin_refund_reasons_path) %>
+<% admin_breadcrumb(t('spree.new_refund_reason')) %>
+
+
+<% content_for :page_actions do %>
+<% end %>
+
+<%= render partial: 'spree/shared/error_messages', locals: { target: @object } %>
+
+<%= form_for [:admin, @refund_reason] do |f| %>
+  <fieldset class="no-border-top">
+    <%= render partial: 'spree/admin/refund_reasons/shared/form', locals: { f: f } %>
+    <%= render partial: 'spree/admin/shared/new_resource_links' %>
+  </fieldset>
+<% end %>

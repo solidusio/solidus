@@ -1,0 +1,14 @@
+<% admin_breadcrumb link_to(plural_resource_name(Spree::Product), spree.admin_products_path) %>
+<% admin_breadcrumb t('spree.new_product') %>
+
+<%= render partial: 'spree/shared/error_messages', locals: { target: @product } %>
+
+<%= form_for [:admin, @product], method: :post, url: admin_products_path, html: { multipart: true } do |f| %>
+  <fieldset data-hook="new_product">
+    <legend align="center"><%= t('spree.new_product') %></legend>
+
+    <%= render partial: 'form', locals: { f: f } %>
+
+    <%= render partial: 'spree/admin/shared/new_resource_links' %>
+  </fieldset>
+<% end %>

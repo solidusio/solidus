@@ -1,0 +1,20 @@
+<% amount_attr ||= :amount %>
+<% currency_attr ||= :currency %>
+<% currency ||= nil %>
+<% required ||= nil %>
+
+<div class="input-group number-with-currency <%= "number-with-currency-with-select" unless currency %> js-number-with-currency">
+  <div class="input-group-prepend">
+    <span class="input-group-text number-with-currency-symbol"></span>
+  </div>
+  <%= f.text_field amount_attr, value: number_to_currency(f.object.public_send(amount_attr), unit: '', delimiter: ''), class: 'form-control number-with-currency-amount', required: required %>
+  <% if currency %>
+    <div class="input-group-append">
+      <span class="input-group-text number-with-currency-addon" data-currency="<%= currency %>">
+        <%= ::Money::Currency.find(currency).iso_code %>
+      </span>
+    </div>
+  <% else %>
+    <%= f.select currency_attr, Spree::Config.available_currencies.map(&:iso_code), {selected: Spree::Config.currency}, {required: required, class: 'number-with-currency-select'} %>
+  <% end %>
+</div>

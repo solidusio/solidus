@@ -1,0 +1,19 @@
+<% admin_breadcrumb(t('spree.taxon_edit')) %>
+
+
+<% content_for :page_actions do %>
+  <li>
+    <%= link_to t('spree.back_to_taxonomies_list'), spree.admin_taxonomies_path, class: 'btn btn-default' %>
+  </li>
+<% end %>
+
+<%# Because otherwise the form would attempt to use to_param of @taxon %>
+<% form_url = admin_taxonomy_taxon_path(@taxonomy.id, @taxon.id) %>
+<%= form_for [:admin, @taxonomy, @taxon], method: :put, url: form_url, html: { multipart: true } do |f| %>
+  <%= render 'form', f: f %>
+
+  <div class="form-buttons filter-actions" data-hook="buttons">
+    <%= button_tag t('spree.actions.update'), class: 'btn btn-primary' %>
+    <%= link_to t('spree.actions.cancel'), edit_admin_taxonomy_url(@taxonomy), class: 'btn btn-default' %>
+  </div>
+<% end %>

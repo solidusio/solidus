@@ -1,0 +1,36 @@
+.inline-editable-table tr:not(:hover):not(.editing)  {
+  input {
+    color: inherit;
+    background-color: transparent;
+  }
+
+  .select2-arrow {
+    display: none;
+  }
+
+  .select2-choice {
+    background-color: transparent;
+    border-color: transparent;
+    color: inherit;
+  }
+
+  .select2-chosen {
+    color: inherit;
+  }
+}
+
+.inline-editable-table tr {
+  .fa-check, .fa-cancel {
+    display: none !important;
+  }
+
+  &.editing {
+    .fa-check, .fa-cancel {
+      display: inline-block !important;
+    }
+
+    .fa {
+      display: none;
+    }
+  }
+}

@@ -1,0 +1,69 @@
+<header id="order_tab_summary" data-hook>
+  <dl class="additional-info">
+    <dt class="order-state" id="order_status" data-hook><%= t('spree.status') %>:</dt>
+    <dd class="order-state">
+      <span class="pill pill-<%= @order.state %>">
+        <%= t(@order.state, scope: 'spree.order_state') %>
+      </span>
+    </dd>
+
+    <% if @order.user.present? %>
+      <dt data-hook='admin_order_user_link'><%= t('spree.user') %>:</dt>
+      <dd id='order_user_link'><%= link_to @order.user.email, spree.edit_admin_user_path(@order.user) %></dd>
+    <% end %>
+
+    <dt data-hook='admin_order_tab_subtotal_title'><%= Spree::Order.human_attribute_name(:item_total) %>:</dt>
+    <dd id='item_total'><%= @order.display_item_total.to_html %></dd>
+
+    <% if checkout_steps.include?("delivery")  %>
+      <dt class="order-shipment_total <%= "hidden" if @order.ship_total.zero? %>" data-hook='admin_order_tab_ship_total_title'><%= Spree::Order.human_attribute_name(:shipment_total) %>:</dt>
+      <dd class="order-shipment_total <%= "hidden" if @order.ship_total.zero? %>" id='ship_total'><%= @order.display_ship_total.to_html %></dd>
+    <% end %>
+
+    <dt class="order-included_tax_total <%= "hidden" if @order.included_tax_total.zero? %>" data-hook='admin_order_tab_included_tax_title'><%= Spree::Order.human_attribute_name(:included_tax_total) %>:</dt>
+    <dd class="order-included_tax_total <%= "hidden" if @order.included_tax_total.zero? %>" id='included_tax_total'><%= @order.display_included_tax_total.to_html %></dd>
+
+    <dt class="order-additional_tax_total <%= "hidden" if @order.additional_tax_total.zero? %>" data-hook='admin_order_tab_additional_tax_title'><%= Spree::Order.human_attribute_name(:additional_tax_total) %>:</dt>
+    <dd class="order-additional_tax_total <%= "hidden" if @order.additional_tax_total.zero? %>" id='additional_tax_total'><%= @order.display_additional_tax_total.to_html %></dd>
+
+    <dt data-hook='admin_order_tab_total_title'><%= Spree::Order.human_attribute_name(:total) %>:</dt>
+    <dd id='order_total'><%= @order.display_total.to_html %></dd>
+
+    <% if @order.shipment_state %>
+      <dt class="order-shipment_state"><%= Spree::Shipment.model_name.human %>: </dt>
+      <dd class="order-shipment_state" id='shipment_status'>
+        <span class="pill pill-<%= @order.shipment_state %>">
+          <%= t(@order.shipment_state, scope: 'spree.shipment_states') %>
+        </span>
+      </dd>
+    <% end %>
+
+    <% if @order.payment_state %>
+      <dt class="order-payment_state"><%= Spree::Payment.model_name.human %>: </dt>
+      <dd class="order-payment_state" id='payment_status'>
+        <span class="pill pill-<%= @order.payment_state %>">
+          <%= t(@order.payment_state, scope: 'spree.payment_states') %>
+        </span>
+      </dd>
+    <% end %>
+
+    <% if @order.completed? %>
+      <dt data-hook='admin_order_tab_date_completed_title'><%= Spree::Order.human_attribute_name(:completed_at) %>:</dt>
+      <dd id='date_complete'><%= pretty_time(@order.completed_at) %></dd>
+    <% end %>
+
+    <% if @order.approved? %>
+      <dt><%= Spree::Order.human_attribute_name(:approver) %></dt>
+      <dd><%= @order.approver.try(:email) || @order.approver_name %></dd>
+      <dt><%= Spree::Order.human_attribute_name(:approved_at) %></dt>
+      <dd><%= pretty_time(@order.approved_at) %></dd>
+    <% end %>
+
+    <% if @order.canceled? && @order.canceler && @order.canceled_at %>
+      <dt><%= Spree::Order.human_attribute_name(:canceler) %></dt>
+      <dd><%= @order.canceler.email %></dd>
+      <dt><%= Spree::Order.human_attribute_name(:canceled_at) %></dt>
+      <dd><%= pretty_time(@order.canceled_at) %></dd>
+    <% end %>
+  </dl>
+</header>

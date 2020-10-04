@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="<%= I18n.locale %>">
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+    <title>Solidus Style Guide</title>
+
+    <%= stylesheet_link_tag "spree/backend/all", data: {turbolinks_track: 'reload'} %>
+    <%= javascript_include_tag "spree/backend/all", data: {turbolinks_track: 'reload'} %>
+    <%= render "spree/admin/shared/js_locale_data" %>
+  </head>
+
+  <body class="admin style-guide">
+
+    <div class="style-guide-sidebar">
+      <header>
+        <%= link_to spree.admin_path, class: 'brand-link' do %>
+          <%- image_tag('solidus-style-guide-logo.png') %>
+        <%- end %>
+      </header>
+      <ul class="style-guide-nav" data-sticky>
+        <%- @topics.each do |topic, subjects| %>
+          <li>
+            <%= link_to topic, "##{topic}" %>
+            <ul>
+              <%- subjects.each do |subject| %>
+                <li>
+                  <%= link_to subject.titleize, "##{subject}" %>
+                </li>
+              <%- end %>
+            </ul>
+          </li>
+        <%- end %>
+      </ul>
+    </div>
+
+    <div class="style-guide-main-content">
+      <div class="flash-wrapper js-flash-wrapper"></div>
+
+      <div class="container">
+        <div class="style-guide-intro">
+          <%= yield %>
+        </div>
+
+        <%- @topics.each do |topic, subjects| %>
+          <h2><%= link_to '', "#", id: "#{topic}" %></h2>
+          <%- subjects.each do |subject| %>
+            <section class="style-guide-section">
+              <h3 class="style-guide-section-header">
+                <span><%= link_to subject.titleize, "#", id: "#{subject}" %></span>
+              </h3>
+              <%= render partial: "spree/admin/style_guide/topics/#{topic}/#{subject}" %>
+            </section>
+          <%- end %>
+        <%- end %>
+      </div>
+    </div>
+  </body>
+</html>

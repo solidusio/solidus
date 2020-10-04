@@ -1,0 +1,26 @@
+<% admin_breadcrumb(link_to plural_resource_name(Spree::LegacyUser), spree.admin_users_path) %>
+<% admin_breadcrumb(link_to @user.email, edit_admin_user_url(@user)) %>
+<% admin_breadcrumb(link_to plural_resource_name(Spree::StoreCredit), spree.admin_user_store_credits_path(@user)) %>
+<% admin_breadcrumb(link_to Spree::StoreCredit.model_name.human, admin_user_store_credit_path(@user, @store_credit)) %>
+<% admin_breadcrumb(t('spree.edit')) %>
+
+
+<%= render 'spree/admin/users/sidebar' %>
+<%= render 'spree/admin/users/tabs', current: :store_credits %>
+<% content_for :page_actions do %>
+<% end %>
+
+<%= form_for [:admin, @user, @store_credit], url: invalidate_admin_user_store_credit_path, method: :put do |f| %>
+  <fieldset>
+    <legend align="center"><%= t('spree.admin.store_credits.invalidate_store_credit') %></legend>
+    <div data-hook="admin_store_credit_form_fields" class="row">
+      <div class="col-12">
+        <%= render partial: 'store_credit_reason_field', locals: { f: f } %>
+      </div>
+    </div>
+    <div class="form-buttons filter-actions actions" data-hook="buttons">
+      <%= button_tag t('spree.store_credit.actions.invalidate'), class: 'btn btn-primary' %>
+      <%= link_to t('spree.actions.cancel'), admin_user_store_credit_path(@user, @store_credit), class: 'btn btn-default' %>
+    </div>
+  </fieldset>
+<% end %>

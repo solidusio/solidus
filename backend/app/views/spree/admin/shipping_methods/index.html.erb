@@ -1,0 +1,60 @@
+<%= render 'spree/admin/shared/shipping_tabs' %>
+
+<% admin_breadcrumb(t('spree.settings')) %>
+<% admin_breadcrumb(t('spree.admin.tab.shipping')) %>
+<% admin_breadcrumb(plural_resource_name(Spree::ShippingMethod)) %>
+
+
+<% content_for :page_actions do %>
+  <% if can?(:create, Spree::ShippingMethod) %>
+    <li>
+      <%= link_to t('spree.new_shipping_method'), new_object_url, id: 'admin_new_shipping_method_link', class: 'btn btn-primary' %>
+    </li>
+  <% end %>
+<% end %>
+
+<% if @shipping_methods.any? %>
+  <table class="index" id='listing_shipping_methods'>
+    <colgroup>
+      <col style="width: 20%">
+      <col style="width: 15%">
+      <col style="width: 40%">
+      <col style="width: 10%">
+      <col style="width: 15%">
+    </colgroup>
+    <thead>
+      <tr data-hook="admin_shipping_methods_index_headers">
+        <th><%= Spree::ShippingMethod.human_attribute_name(:name) %></th>
+        <th><%= Spree::Zone.model_name.human %></th>
+        <th><%= Spree::Calculator.model_name.human %></th>
+        <th><%= Spree::ShippingMethod.human_attribute_name(:available_to_users) %></th>
+        <th data-hook="admin_shipping_methods_index_header_actions" class="actions"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @shipping_methods.includes(:zones, :calculator).each do |shipping_method|%>
+        <tr id="<%= spree_dom_id shipping_method %>" data-hook="admin_shipping_methods_index_rows">
+          <td><%= shipping_method.admin_name + ' / ' if shipping_method.admin_name.present? %><%= shipping_method.name %></td>
+          <td><%= shipping_method.zones.collect(&:name).join(", ") if shipping_method.zones %></td>
+          <td><%= shipping_method.calculator.description %></td>
+          <td><%= shipping_method.available_to_users? ? t('spree.say_yes') : t('spree.say_no') %></td>
+          <td data-hook="admin_shipping_methods_index_row_actions" class="actions">
+            <% if can?(:update, shipping_method) %>
+              <%= link_to_edit shipping_method, no_text: true %>
+            <% end %>
+
+            <% if can?(:destroy, shipping_method) %>
+              <%= link_to_delete shipping_method, no_text: true %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div class="no-objects-found">
+    <%= render 'spree/admin/shared/no_objects_found',
+                 resource: Spree::ShippingMethod,
+                 new_resource_url: new_object_url %>
+  </div>
+<% end %>

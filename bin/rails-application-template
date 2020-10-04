@@ -1,0 +1,140 @@
+#!/usr/bin/env ruby
+
+default_app_name = 'solidus-example-app'
+
+# This file can both be used as rails application template and as executable
+if $0 == __FILE__
+  require 'shellwords'
+  app_name = ARGV.shift || default_app_name
+  options = ARGV
+  options.unshift "--database=postgresql"
+  options.unshift "--force" if app_name == default_app_name
+  command = "rails", "new", app_name, "-m", __FILE__, *options
+  warn "This file is intended to be used as a Rails Application Template"
+  warn "Learn more at: https://guides.rubyonrails.org/rails_application_templates.html#generate-what-args"
+  warn "Falling back to automatic Rails app creation..."
+  warn "Executing: #{command.shelljoin}"
+  exec *command
+end
+
+gem 'solidus'
+gem 'solidus_auth_devise'
+gem 'rails_12factor'
+
+gem_group :heroku do
+  # https://elements.heroku.com/addons/cloudinary
+  gem "cloudinary", "~> 1.11" # https://github.com/cloudinary/cloudinary_gem/issues/322
+  gem "paperclip-cloudinary"
+end
+
+file "Procfile", <<-YAML
+  web: bundle exec puma -t 5:5 -p ${PORT:-3000} -e production
+YAML
+
+file "app.json", <<-JSON
+  {
+    "name": "Solidus Example App",
+    "description": "A demonstration store using Solidus with some test data.",
+    "website": "https://solidus.io/",
+    "repository": "https://github.com/solidusio/solidus-example-app",
+    "logo": "https://solidus.io/assets/images/favicon/favicon.ico",
+    "keywords": [
+      "solidus",
+      "example",
+      "rails",
+      "ecommerce",
+      "ruby",
+      "spree",
+      "cart",
+      "store"
+    ],
+    "addons": [
+      "heroku-postgresql:hobby-dev",
+      "memcachier:dev",
+      "cloudinary:starter"
+    ],
+    "scripts": {
+      "postdeploy": "bin/rails db:migrate && bin/rails db:seed spree_sample:load"
+    },
+    "env": {
+      "ADMIN_EMAIL": {
+        "description": "We will create an admin user with this email.",
+        "value": "admin@example.com"
+      },
+      "ADMIN_PASSWORD": {
+        "description": "We will create an admin user with this password.",
+        "value": "test123"
+      },
+      "DEVISE_SECRET_KEY": {
+        "description": "A secret key for salting user passwords.",
+        "generator": "secret"
+      },
+      "RAILS_LOG_TO_STDOUT": {
+        "value": "true"
+      },
+      "RAILS_SERVE_STATIC_FILES": {
+        "value": "true"
+      },
+      "SECRET_KEY_BASE": {
+        "generator": "secret"
+      }
+    }
+  }
+JSON
+
+file "README.md", <<-MD
+  # Solidus Example App
+
+  [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/solidusio/solidus-example-app)
+MD
+
+initializer "00_solidus_example.rb", <<-RUBY
+  # Needed so database isn't hit on install
+  Spree::Auth::Config.use_static_preferences!
+
+  # Required to work around sample data sending emails
+  Rails.application.config.action_mailer.raise_delivery_errors = false
+RUBY
+
+initializer "devise.rb", <<-RUBY
+  Devise.secret_key = ENV['DEVISE_SECRET_KEY'] || #{SecureRandom.hex(50).inspect}
+RUBY
+
+initializer "paperclip.rb", <<-RUBY
+  if ENV['CLOUDINARY_URL'] || ENV['HEROKU']
+    require 'paperclip/cloudinary'
+
+    Paperclip::Attachment.default_options[:storage] = :cloudinary
+
+    Spree::Image.attachment_definitions[:attachment].delete(:url)
+    Spree::Image.attachment_definitions[:attachment].delete(:path)
+    Spree::Image.attachment_definitions[:attachment].delete(:default_url)
+    Spree::Image.attachment_definitions[:attachment][:path] = 'spree/products/:id/:style/:filename'
+    Spree::Image.attachment_definitions[:attachment][:cloudinary_url_options] = {
+      default: { secure: true }
+    }
+  end
+RUBY
+
+after_bundle do
+  generate(
+    "solidus:install",
+    "--auto-accept",
+    "--user_class=Spree::User",
+    "--enforce_available_locales=true",
+    "--with-authentication=false",
+  )
+
+  generate('solidus_auth:install')
+  rails_command "db:create"
+  rails_command "db:migrate"
+
+  git :init
+  git add: "."
+  git commit: %{ -m 'Generate app with solidus-example-app template' }
+
+  if ENV['UPDATE_EXAMPLE_APP_REPO']
+    git remote: %{ add origin git@github.com:solidusio/solidus-example-app.git }
+    git push: %{ --force --set-upstream origin master }
+  end
+end

@@ -1,0 +1,80 @@
+<div data-hook="admin_user_form_fields" class="row">
+  <div class="col-6">
+    <%= f.field_container :email do %>
+      <%= f.label :email %>
+      <% if can?(:update_email, @user) %>
+        <%= f.email_field :email, class: 'fullwidth' %>
+      <% else %>
+        <span title="<%= t('spree.cannot_update_email') %>" class="fa fa-question-circle icon_link no-text with-tip"></span>
+        <%= f.email_field :email, class: 'fullwidth', disabled: true %>
+      <% end %>
+      <%= error_message_on :user, :email %>
+    <% end %>
+
+    <% if can? :read, Spree::Role %>
+      <div data-hook="admin_user_form_roles" class="field">
+        <%= label_tag nil, plural_resource_name(Spree::Role) %>
+        <ul>
+          <% if can? :manage, Spree::Role %>
+            <%= hidden_field_tag('user[spree_role_ids][]', nil) %>
+            <% @roles.each do |role| %>
+              <li>
+                <label>
+                  <%= check_box_tag 'user[spree_role_ids][]', role.id,
+                    @user_roles.include?(role), id: "user_spree_role_#{role.name}" %>
+                  <%= role.name %>
+                </label>
+              </li>
+            <% end %>
+          <% else %>
+            <% @user_roles.each do |role| %>
+              <%= role.name %>
+            <% end %>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <% if Spree::Config[:can_restrict_stock_management] && can?(:read, Spree::StockLocation) %>
+      <div data-hook="admin_user_form_stock_locations" class="field">
+        <%= label_tag nil, plural_resource_name(Spree::StockLocation) %>
+        <ul>
+          <% if can?(:manage, Spree::UserStockLocation) %>
+            <% @stock_locations.each do |stock_location| %>
+              <li>
+                <label>
+                  <%= check_box_tag 'user[stock_location_ids][]', stock_location.id, @user.stock_locations.include?(stock_location), id: "user_spree_stock_locations_#{stock_location.name}" %>
+                  <%= stock_location.name %>
+                </label>
+              </li>
+            <% end %>
+          <% else %>
+            <% @stock_locations.select{|sl| @user.stock_locations.include?(sl)}.each do |stock_location| %>
+              <%= stock_location.name %>
+            <% end %>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+  </div>
+
+  <div data-hook="admin_user_form_password_fields" class="col-6">
+    <% if can? :update_password, @user %>
+      <%= f.field_container :password do %>
+        <%= f.label :password %>
+        <%= f.password_field :password, class: 'fullwidth' %>
+        <%= f.error_message_on :password %>
+      <% end %>
+
+
+      <% if f.object.respond_to?(:password_confirmation) %>
+        <%= f.field_container :password do %>
+          <%= f.label :password_confirmation %>
+          <%= f.password_field :password_confirmation, class: 'fullwidth' %>
+          <%= f.error_message_on :password_confirmation %>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+</div>

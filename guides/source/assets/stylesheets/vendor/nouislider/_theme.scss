@@ -1,0 +1,51 @@
+.noUi-target{
+  background-color: $gray-200;
+  border: none;
+  box-shadow: none;
+}
+
+.noUi-connect{
+  background: #1c3770;
+}
+
+.noUi-handle{
+  border: none;
+  box-shadow: none;
+  background: none;
+
+  &:after{ display: none; }
+
+  &:before{
+    display: block;
+    background: $blue;
+    box-shadow: 0 0 8px 0 rgba(#000000, 0.14);
+    border-radius: 50%;
+    height: 16px;
+    width: 16px;
+    top: 50%;
+    left: 50%;
+    margin-top: -8px;
+    margin-left: -8px;
+  }
+
+  &:focus{ outline: none; }
+}
+
+.noUi-horizontal{
+  height: 4px;
+
+  .noUi-handle{
+    width: 48px;
+    height: 48px;
+    right: -24px !important;
+    top: -22px !important;
+    cursor: pointer;
+
+    @include media-breakpoint-up(lg){
+      width: 28px;
+      height: 28px;
+      right: -14px !important;
+      top: -12px !important;
+    }
+  }
+}

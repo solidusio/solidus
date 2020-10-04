@@ -1,0 +1,4 @@
+<%= t('spree.no_resource', resource: plural_resource_name(resource)) %>
+<% if can? :create, resource and local_assigns[:new_resource_url] %>
+  <%= link_to t('spree.create_one'), new_resource_url %>
+<% end %>

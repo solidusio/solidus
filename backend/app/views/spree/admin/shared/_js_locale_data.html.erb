@@ -1,0 +1,39 @@
+<script>
+  if (Spree === undefined) {
+    var Spree = {}
+  }
+  Spree.translations = <%==
+    JSON.dump(
+      I18n.t("spree").merge({
+        abbr_day_names:         I18n.t(:abbr_day_names, scope: :date),
+        month_names:            I18n.t(:month_names, scope: :date).reject(&:blank?),
+        currency_separator:     I18n.t('number.currency.format.separator'),
+        currency_delimiter:     I18n.t('number.currency.format.delimiter'),
+        activerecord:           I18n.t('activerecord')
+    }))
+%>;
+
+  Spree.currencyInfo = <%==
+    JSON.dump(
+      Spree::Config.available_currencies.map { |c|
+        format =
+          if c.symbol == "" || c.symbol_first
+            "%s%v"
+          else
+            "%v %s"
+          end
+        [c.id.to_s.upcase, [
+          c.symbol || "¤",
+          c.exponent,
+          format
+        ]]
+    }.to_h)
+%>;
+</script>
+<script data-hook='admin-custom-translations'>
+</script>
+
+<% if I18n.locale != :en %>
+  <%= javascript_include_tag "solidus_admin/select2_locales/select2_locale_#{I18n.locale}",
+    data: {turbolinks_track: 'reload'} %>
+<% end %>

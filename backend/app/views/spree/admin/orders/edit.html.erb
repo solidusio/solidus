@@ -1,0 +1,34 @@
+<% content_for :page_actions do %>
+  <% if can?(:fire, @order) %>
+    <li><%= event_links %></li>
+  <% end %>
+  <% if can?(:resend, @order) && @order.completed? %>
+    <li><%= button_to t('spree.resend'), resend_admin_order_url(@order), method: :post, class: 'btn btn-primary' %></li>
+  <% end %>
+<% end %>
+
+<%= render partial: 'spree/admin/shared/order_tabs', locals: { current: 'Shipments' } %>
+<% admin_breadcrumb(plural_resource_name(Spree::Shipment)) %>
+
+<div data-hook="admin_order_edit_header">
+  <%= render partial: 'spree/shared/error_messages', locals: { target: @order } %>
+</div>
+
+<% if @order.payments.exists? && @order.is_risky? %>
+  <%= render 'spree/admin/orders/risk_analysis', latest_payment: @order.payments.reorder("created_at DESC").first %>
+<% end %>
+
+<div data-hook="admin_order_edit_sub_header"></div>
+
+<% if @order.line_items.empty? %>
+  <div class="no-objects-found">
+    <p><%= t('spree.your_order_is_empty_add_product') %></p>
+    <%= link_to t('spree.cart'), spree.cart_admin_order_url(@order), class: 'btn btn-primary' %>
+  </div>
+<% end %>
+
+<div data-hook="admin_order_edit_form">
+  <div id="order-form-wrapper">
+    <%= render partial: 'form', locals: { order: @order } %>
+  </div>
+</div>

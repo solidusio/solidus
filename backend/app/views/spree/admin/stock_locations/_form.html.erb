@@ -1,0 +1,134 @@
+<div data-hook="admin_stock_locations_form_fields" class="js-addresses-form row">
+  <div class="col-md-6">
+    <fieldset class="no-border-bottom">
+      <legend><%= t('.general') %></legend>
+
+      <%= f.field_container :name do %>
+        <%= f.label :name, class: 'required' %><br />
+        <%= f.text_field :name, class: 'fullwidth', required: true %>
+      <% end %>
+
+      <%= f.field_container :code do %>
+        <%= f.label :code %>
+        <%= f.text_field :code, :class => 'fullwidth', :label => false %>
+      <% end %>
+
+      <%= f.field_container :admin_name do %>
+        <%= f.label :admin_name %>
+        <%= f.text_field :admin_name, class: 'fullwidth', label: false %>
+      <% end %>
+    </fieldset>
+  </div>
+
+  <div class="col-md-6">
+    <fieldset class="no-border-bottom">
+      <legend><%= t('.address') %></legend>
+
+      <%= f.field_container :check_stock_on_transfer do %>
+        <%= f.label :address1 %>
+        <%= f.text_field :address1, class: 'fullwidth' %>
+      <% end %>
+
+      <%= f.field_container :address2 do %>
+        <%= f.label :address2 %>
+        <%= f.text_field :address2, class: 'fullwidth' %>
+      <% end %>
+
+      <%= f.field_container :city do %>
+        <%= f.label :city %>
+        <%= f.text_field :city, class: 'fullwidth' %>
+      <% end %>
+
+      <%= f.field_container :zipcode do %>
+        <%= f.label :zipcode %>
+        <%= f.text_field :zipcode, class: 'fullwidth' %>
+      <% end %>
+
+      <%= f.field_container :phone do %>
+        <%= f.label :phone %>
+        <%= f.phone_field :phone, class: 'fullwidth' %>
+      <% end %>
+
+      <%= f.field_container :country_id do %>
+        <%= f.label :country_id %>
+        <span id="country"><%= f.collection_select :country_id, available_countries(restrict_to_zone: nil), :id, :name, { include_blank: true }, { class: 'custom-select js-country_id fullwidth' } %></span>
+      <% end %>
+
+      <%= f.field_container :state do %>
+        <% country = f.object.country %>
+        <%= f.label :state_id %>
+        <span id="state" class="region">
+          <%= f.text_field :state_name, style: "display: none", class: 'fullwidth state_name js-state_name' %>
+          <%= f.collection_select :state_id, country ? country.states.sort : [], :id, :name, { include_blank: true }, {class: 'custom-select fullwidth js-state_id', style: "display: none" } %>
+        </span>
+      <% end %>
+    </fieldset>
+  </div>
+
+  <div class="col-md-12">
+    <fieldset class="no-border-bottom">
+      <legend><%= t('.settings') %></legend>
+
+      <div class="row">
+        <div class="col-md-6">
+          <%= f.field_container :active do %>
+            <label>
+              <%= f.check_box :active %>
+              <%= Spree::StockLocation.human_attribute_name :active %>
+              <%= f.field_hint :active %>
+            </label>
+          <% end %>
+
+          <%= f.field_container :default do %>
+            <label>
+              <%= f.check_box :default %>
+              <%= Spree::StockLocation.human_attribute_name :default %>
+            </label>
+          <% end %>
+
+          <%= f.field_container :backorderable_default do %>
+            <label>
+              <%= f.check_box :backorderable_default %>
+              <%= Spree::StockLocation.human_attribute_name :backorderable_default %>
+              <%= f.field_hint :backorderable_default %>
+            </label>
+          <% end %>
+        </div>
+
+        <div class="col-md-6">
+          <%= f.field_container :propagate_all_variants do %>
+            <label>
+              <%= f.check_box :propagate_all_variants %>
+              <%= Spree::StockLocation.human_attribute_name :propagate_all_variants %>
+              <%= f.field_hint :propagate_all_variants %>
+            </label>
+          <% end %>
+
+          <%= f.field_container :restock_inventory do %>
+            <label>
+              <%= f.check_box :restock_inventory %>
+              <%= Spree::StockLocation.human_attribute_name :restock_inventory %>
+              <%= f.field_hint :restock_inventory %>
+            </label>
+          <% end %>
+
+          <%= f.field_container :fulfillable do %>
+            <label>
+              <%= f.check_box :fulfillable %>
+              <%= Spree::StockLocation.human_attribute_name :fulfillable %>
+              <%= f.field_hint :fulfillable %>
+            </label>
+          <% end %>
+
+          <%= f.field_container :check_stock_on_transfer do %>
+            <label>
+              <%= f.check_box :check_stock_on_transfer %>
+              <%= Spree::StockLocation.human_attribute_name :check_stock_on_transfer %>
+              <%= f.field_hint :check_stock_on_transfer %>
+            </label>
+          <% end %>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+</div>

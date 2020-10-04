@@ -1,0 +1,27 @@
+<% if @product %>
+  <%= render partial: 'spree/admin/shared/product_tabs', locals: { current: 'Stock Management' } %>
+  <%= render partial: 'spree/shared/error_messages', locals: { target: @product } %>
+  <% admin_breadcrumb(t('spree.manage_stock')) %>
+
+<% else %>
+
+  <% admin_breadcrumb(t('spree.stock')) %>
+
+<% end %>
+
+<% content_for :table_filter_title do %>
+  <%= t('spree.search') %>
+<% end %>
+
+<% content_for :table_filter do %>
+  <% form_path = @product ? admin_product_stock_path(product: @product) : admin_stock_items_path %>
+  <%= render partial: 'spree/admin/shared/variant_search', locals: { form_path: form_path, stock_locations: @stock_locations } %>
+<% end %>
+
+<% if @variants.any? %>
+  <%= render partial: 'stock_management', locals: { variants: @variants } %>
+<% else %>
+  <div class="fullwidth no-objects-found">
+    <%= t('spree.no_variants_found_try_again') %>
+  </div>
+<% end %>

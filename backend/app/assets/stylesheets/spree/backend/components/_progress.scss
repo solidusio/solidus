@@ -1,0 +1,58 @@
+.turbolinks-progress-bar {
+  background-color: $color-dark-light;
+}
+
+#progress {
+  display: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  opacity: 0.8;
+  width: calc(100% - #{$width-sidebar});
+
+  .wrapper {
+    border-radius: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 200px;
+    height: 100px;
+    margin-left: -100px;
+    margin-top: -50px;
+    padding: 11px 0;
+    background-color: $color-dark-light;
+    color: $color-white;
+    text-align: center;
+  }
+
+  #spinner {
+    margin: auto;
+  }
+
+  .progress-message {
+    font-size: 130%;
+    font-weight: $font-weight-bold;
+    margin-top: 20px;
+  }
+}
+
+.spinner {
+  position: relative;
+  width: 30px;
+  height: 30px;
+  border: 6px solid rgba($color-spinner, 0.2);
+  border-left-color: rgba($color-spinner, 1);
+  animation: spinner 1s infinite linear;
+  border-radius: 50%;
+}
+
+@keyframes spinner {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

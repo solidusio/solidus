@@ -1,0 +1,35 @@
+<%= render partial: 'spree/admin/shared/order_tabs', locals: { current: "Payments" } %>
+
+<% content_for :page_actions do %>
+  <% if @order.outstanding_balance? %>
+    <li id="new_payment_section">
+      <% if can? :create, Spree::Payment %>
+        <%= link_to t('spree.new_payment'), new_admin_order_payment_url(@order), class: 'btn btn-primary' %>
+      <% end %>
+    </li>
+  <% end %>
+<% end %>
+
+<% admin_breadcrumb(plural_resource_name(Spree::Payment)) %>
+
+<% if @order.outstanding_balance? %>
+  <h5 class="outstanding-balance"><%= @order.outstanding_balance < 0 ? t('spree.credit_owed') : t('spree.balance_due') %>: <strong><%= @order.display_outstanding_balance %></strong></h5>
+<% end %>
+
+<% if @payments.any? %>
+
+  <fieldset data-hook="payment_list" class="no-border-bottom">
+    <legend align="center"><%= plural_resource_name(Spree::Payment) %></legend>
+    <%= render partial: 'list', locals: { payments: @payments } %>
+  </fieldset>
+
+  <% if @refunds.any? %>
+    <fieldset data-hook="payment_list" class="no-border-bottom">
+      <legend align="center"><%= plural_resource_name(Spree::Refund) %></legend>
+      <%= render partial: 'spree/admin/shared/refunds', locals: { refunds: @refunds, show_actions: true } %>
+    </fieldset>
+  <% end %>
+
+<% else %>
+  <div class="no-objects-found"><%= t('spree.order_has_no_payments') %></div>
+<% end %>

@@ -1,0 +1,22 @@
+<div class="site-navbar">
+  <div class="navbar-header">
+    <div class="site-logo float-left">
+      <%= inline_svg("logo.svg", class: "isvg") %>
+    </div>
+
+    <a class="site-menu-toggler" href="#">
+      <%= inline_svg("close.svg", class: "isvg isvg-close") %>
+    </a>
+  </div>
+
+  <% if table_of_contents %>
+    <%= partial 'partials/nav_content', locals: { contents: table_of_contents } %>
+  <% end %>
+
+  <a class="btn btn-outline-secondary btn-w-icon slack"
+    href="http://slack.solidus.io/"
+    target="_blank">
+    <%= inline_svg("social-icons/slack.svg", class: "isvg") %>
+    <span class="text">Get Help on Slack</span>
+  </a>
+</div>

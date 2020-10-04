@@ -1,0 +1,11 @@
+// The state component has been deprecated in favour of Pills. This will be
+// removed in a future version of Solidus.
+.state {
+  @extend .pill;
+
+  @each $state in $states {
+    &.#{$state} {
+      @extend .pill-#{$state};
+    }
+  }
+}

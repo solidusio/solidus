@@ -1,0 +1,34 @@
+<%
+database_prefix = ENV['LIB_NAME'].presence || "solidus"
+%>
+<% case ENV['DB']
+when 'mysql' %>
+test:
+  adapter: mysql2
+  <% if ENV['CI'] %>
+  username: root
+  password:
+  <% end %>
+  database: <%= database_prefix %>_test
+  encoding: utf8
+  <% unless ENV['DB_HOST'].blank? %>
+  host: <%= ENV['DB_HOST'] %>
+  <% end %>
+<% when 'postgres', 'postgresql' %>
+<% db_host = ENV['DB_HOST'] %>
+test:
+  adapter: postgresql
+  database: <%= database_prefix %>_test
+  username: postgres
+  min_messages: warning
+<% unless db_host.blank? %>
+  host: <%= db_host %>
+<% end %>
+<% when 'sqlite', '', nil %>
+test:
+  adapter: sqlite3
+  database: db/<%= database_prefix %>_test.sqlite3
+  timeout: 10000
+<% else %>
+  <% raise "Invalid DB specified: #{ENV['DB']}" %>
+<% end %>

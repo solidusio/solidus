@@ -1,0 +1,55 @@
+<% admin_breadcrumb(link_to plural_resource_name(Spree::Product), spree.admin_products_path) %>
+<% admin_breadcrumb(plural_resource_name(Spree::OptionType)) %>
+
+
+<% content_for :page_actions do %>
+  <% if can?(:create, Spree::OptionType) %>
+    <li id="new_ot_link">
+      <%= link_to t('spree.new_option_type'), new_admin_option_type_url, remote: true, id: 'new_option_type_link', class: 'btn btn-primary' %>
+    </li>
+  <% end %>
+<% end %>
+
+<div id="new_option_type"></div>
+
+<% if @option_types.any? %>
+<table class="index sortable" id="listing_option_types" data-hook data-sortable-link="<%= update_positions_admin_option_types_url %>">
+  <colgroup>
+    <col style="width: 10%">
+    <col style="width: 35%">
+    <col style="width: 40%">
+    <col style="width: 15%">
+  </colgroup>
+  <thead>
+    <tr data-hook="option_header">
+      <th></th>
+      <th><%= Spree::OptionType.human_attribute_name(:name) %></th>
+      <th><%= Spree::OptionType.human_attribute_name(:presentation) %></th>
+      <th class="actions"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @option_types.each do |option_type| %>
+      <tr class="spree_option_type" id="<%= spree_dom_id option_type %>" data-hook="option_row">
+        <td><span class="handle"></span></td>
+        <td><%= option_type.name %></td>
+        <td class="presentation"><%= option_type.presentation %></td>
+        <td class="actions">
+          <% if can?(:update, option_type) %>
+            <%= link_to_edit(option_type, class: 'admin_edit_option_type', no_text: true) %>
+          <% end %>
+          <% if can?(:destroy, option_type) %>
+            <%= link_to_delete(option_type, no_text: true) %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<% else %>
+  <div class="no-objects-found">
+    <%= render 'spree/admin/shared/no_objects_found',
+                 resource: Spree::OptionType,
+                 new_resource_url: new_object_url %>
+  </div>
+<% end %>

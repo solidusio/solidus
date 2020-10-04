@@ -1,0 +1,15 @@
+<%= render 'spree/admin/shared/general_tabs' %>
+
+<% admin_breadcrumb(link_to(plural_resource_name(Spree::Store), admin_stores_path)) %>
+<% admin_breadcrumb(t('spree.new_store')) %>
+
+<% content_for :page_actions do %>
+<% end %>
+
+<%= form_for [:admin, @store] do |f| %>
+  <%= render 'form', f: f %>
+
+  <% if can? :create, @store %>
+    <%= render 'spree/admin/shared/new_resource_links' %>
+  <% end %>
+<% end %>

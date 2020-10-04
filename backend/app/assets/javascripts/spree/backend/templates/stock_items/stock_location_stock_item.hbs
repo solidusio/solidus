@@ -1,0 +1,39 @@
+<td class="stock-location-name">
+  <a href="/admin/stock_locations/{{stockLocationId}}/stock_movements?q%5Bvariant_sku_eq%5D={{variantSku}}">
+    {{stockLocationName}}
+  </a>
+</td>
+<td class="align-center">
+  <input id="backorderable-{{id}}"
+         name="backorderable"
+         type="checkbox"
+         value="backorderable"
+         {{#if backorderable}} checked="checked" {{/if}}
+   >
+</td>
+<td class="align-center">
+  <span
+    {{#if negative}}
+    class="negative count-on-hand-display"
+    {{else}}
+    class="count-on-hand-display"
+    {{/if}}
+    >{{count_on_hand}}</span>
+</td>
+<td>
+  <form>
+    <input
+    {{#if negative}}
+      class="fullwidth negative"
+    {{else}}
+      class="fullwidth"
+    {{/if}}
+    name="count_on_hand"
+    type="number"
+    value="0">
+  </form>
+</td>
+<td class="actions">
+  <a class="submit fa fa-check icon_link with-tip no-text" data-action="save" href="#"></a>
+  <a class="cancel fa fa-cancel icon_link with-tip no-text" data-action="cancel" href="#"></a>
+</td>

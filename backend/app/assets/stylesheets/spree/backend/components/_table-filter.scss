@@ -1,0 +1,20 @@
+#table-filter {
+
+  /* This is needed to avoid overriding the bootstrap's styles for
+   * .input-group, which sets the form-control's width to 1%.
+   * Without this, the date range overflows its container on firefox.
+   */
+  .field:not(.date-range-filter) {
+    input[type="text"], input[type="phone"],
+    input[type="email"], input[type="number"],
+    input[type="url"] {
+      width: 100%;
+    }
+  }
+
+  .actions {
+    text-align: center;
+  }
+
+  @media print { display: none }
+}

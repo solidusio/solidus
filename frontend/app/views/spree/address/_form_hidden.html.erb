@@ -1,0 +1,16 @@
+<% if Spree::Config.use_combined_first_and_last_name_in_address %>
+  <%= form.hidden_field :name %>
+<% else %>
+  <%= form.hidden_field :firstname %>
+  <%= form.hidden_field :lastname %>
+<% end %>
+<%= form.hidden_field :company %>
+<%= form.hidden_field :address1 %>
+<%= form.hidden_field :address2 %>
+<%= form.hidden_field :city %>
+<%= form.hidden_field :country_id %>
+<%= form.hidden_field :state_id %>
+<%= form.hidden_field :state_name %>
+<%= form.hidden_field :zipcode %>
+<%= form.hidden_field :phone %>
+<%= form.hidden_field :alternative_phone %>

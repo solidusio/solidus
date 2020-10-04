@@ -1,0 +1,48 @@
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+<meta name="turbolinks-cache-control" content="no-cache">
+
+<%= csrf_meta_tags %>
+
+<title><%= admin_page_title %></title>
+
+<%= favicon_link_tag 'favicon.ico' %>
+<%= stylesheet_link_tag 'spree/backend/all', media: 'all', data: {turbolinks_track: 'reload'} %>
+<%= javascript_include_tag 'spree/backend/all', data: {turbolinks_track: 'reload'} %>
+
+<%- if Rails.env.test? %>
+  <style>
+    /* A fixed position notification can intermittently be in the way of click targets.
+    Capybara uses `Element.scrollIntoView()` internally, but this only scrolls as far
+    as it must, which means a bottom of page notification will obstruct interactions.
+    */
+    .flash-wrapper { position: static; }
+
+    /* Capybara doesn't know how to use dropdowns */
+    .tabs-dropdown ul {
+      display: block !important;
+      position: static;
+    }
+  </style>
+<%- elsif Rails.env.development? %>
+  <style>
+    .translation_missing {
+      background: white;
+      color: #C60F13;
+    }
+  </style>
+
+  <%= javascript_tag do %>
+    Spree.ready(function(){
+      $('.translation_missing').tooltip();
+    });
+  <% end %>
+<%- end %>
+
+<%= render "spree/admin/shared/js_locale_data" %>
+
+<%= javascript_tag do -%>
+  Spree.api_key = "<%= try_spree_current_user.try(:spree_api_key) %>";
+  Spree.env = "<%= Rails.env %>";
+<% end %>
+
+<%= yield :head %>

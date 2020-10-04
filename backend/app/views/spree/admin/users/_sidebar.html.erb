@@ -1,0 +1,20 @@
+<% content_for :sidebar_title do %>
+  <%= t('spree.lifetime_stats') %>
+<% end %>
+
+<% content_for :sidebar do %>
+  <nav class="menu">
+    <fieldset class="no-border-top no-border-bottom" data-hook="admin_user_lifetime_stats">
+      <dl id="user-lifetime-stats">
+        <dt><%= t('spree.total_sales') %>:</dt>
+          <dd><%= @user.display_lifetime_value.to_html %></dd>
+        <dt><%= t('spree.num_orders') %>:</dt>
+          <dd><%= @user.order_count.to_i %></dd>
+        <dt><%= t('spree.average_order_value') %>:</dt>
+          <dd><%= @user.display_average_order_value.to_html %></dd>
+        <dt><%= t('spree.member_since') %>:</dt>
+          <dd><%= l @user.created_at.to_date %></dd>
+      </dl>
+    </fieldset>
+  </nav>
+<% end %>

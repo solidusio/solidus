@@ -1,0 +1,44 @@
+<div class="row js-zones-form">
+  <div class="col-5">
+
+    <div data-hook="admin_zone_form_fields">
+      <fieldset class="no-border-bottom">
+        <legend align="center"><%= t('spree.general_settings')%></legend>
+
+        <%= zone_form.field_container :name do %>
+          <%= zone_form.label :name %><br />
+          <%= zone_form.text_field :name, class: 'fullwidth' %>
+        <% end %>
+
+        <%= zone_form.field_container :description do %>
+          <%= zone_form.label :description %><br />
+          <%= zone_form.text_field :description, class: 'fullwidth' %>
+        <% end %>
+
+        <div data-hook="type" class="field">
+          <%= label_tag t('spree.type') %>
+          <ul>
+            <li>
+              <label>
+                <%= zone_form.radio_button('kind', 'country', { id: 'country_based' }) %>
+                <%= t('spree.country_based') %>
+              </label>
+            </li>
+            <li>
+              <label>
+                <%= zone_form.radio_button('kind', 'state', { id: 'state_based' }) %>
+                <%= t('spree.state_based') %>
+              </label>
+            </li>
+          </ul>
+        </div>
+      </fieldset>
+    </div>
+  </div>
+  <div class="col-5">
+
+    <%= render partial: 'state_members', locals: { zone_form: zone_form }%>
+    <%= render partial: 'country_members', locals: { zone_form: zone_form } %>
+  </div>
+
+</div>

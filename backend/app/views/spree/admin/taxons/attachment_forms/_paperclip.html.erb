@@ -1,0 +1,16 @@
+<% f.object.class.attachment_definitions.each do |attachment, definition| %>
+  <%= f.field_container attachment do %>
+    <%= f.label attachment %><br>
+    <%= f.file_field attachment %>
+    <% if f.object.send(attachment).exists? %>
+      <%= image_tag f.object.send(attachment, definition[:default_style]) %>
+      <%= link_to t('spree.actions.remove'),
+                  admin_taxonomy_taxon_attachment_path(@taxonomy,
+                                                       @taxon.id,
+                                                       attachment_definition: attachment,
+                                                       authenticity_token: form_authenticity_token),
+                  method: :delete,
+                  class: 'btn btn-sm btn-danger' %>
+    <% end %>
+  <% end %>
+<% end %>
