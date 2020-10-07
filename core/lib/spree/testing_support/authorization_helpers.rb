@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'cancan'
+require 'spree/auth_configuration'
 
 module Spree
   module TestingSupport
