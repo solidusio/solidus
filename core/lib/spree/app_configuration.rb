@@ -252,6 +252,14 @@ module Spree
     #   (default: +['admin']+)
     preference :roles_for_auto_api_key, :array, default: ['admin']
 
+    # @!attribute [rw] countries_that_use_nested_subregions
+    #   @return [Array] An array of countries that use nested subregions, instead
+    #   of the default subregions that come with Carmen. Will be used on store creation
+    #   to ensure the correct states are generated, and when running the states
+    #   regenerate rake task.
+    #   (default: +['IT']+)
+    preference :countries_that_use_nested_subregions, :array, default: ['IT']
+
     # @!attribute [rw] run_order_validations_on_order_updater
     #   @return [Boolean] Whether to run validation when updating an order with the OrderUpdater
     preference :run_order_validations_on_order_updater, :boolean, default: false
