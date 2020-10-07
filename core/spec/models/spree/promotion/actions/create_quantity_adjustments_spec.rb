@@ -25,6 +25,31 @@ module Spree::Promotion::Actions
     describe "#compute_amount" do
       subject { action.compute_amount(line_item) }
 
+      context "with a standard calculator" do
+        let(:calculator) { FactoryBot.create :standard_calculator }
+
+        context "with a line item as a nil" do
+          let(:line_item) { nil }
+
+          before do
+            expect(Spree::Deprecation).to_not receive(:warn).
+              with(/^Spree::Calculator::FlatRate#compute returned 0, it should return a BigDecimal/, any_args)
+          end
+
+          it "returns a 0" do
+            expect(action.compute_amount(line_item)).to eq 0
+          end
+        end
+
+        context "with a valid line item " do
+          let(:line_item) { order.line_items.first }
+
+          it "returns a big decimal" do
+            expect(action.compute_amount(line_item)).to eq BigDecimal(0)
+          end
+        end
+      end
+
       context "with a flat rate adjustment" do
         let(:calculator) { FactoryBot.create :flat_rate_calculator, preferred_amount: 5 }
 

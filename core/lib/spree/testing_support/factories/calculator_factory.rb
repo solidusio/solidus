@@ -5,6 +5,10 @@ FactoryBot.define do
     preferred_amount { 10.0 }
   end
 
+  factory :standard_calculator, class: 'Spree::Calculator::FlatRate' do
+    preferred_amount { nil }
+  end
+
   factory :no_amount_calculator, class: 'Spree::Calculator::FlatRate' do
     preferred_amount { 0 }
   end
