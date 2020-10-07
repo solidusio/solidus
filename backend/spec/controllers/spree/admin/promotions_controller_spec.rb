@@ -5,9 +5,11 @@ require 'spec_helper'
 describe Spree::Admin::PromotionsController, type: :controller do
   stub_authorization!
 
-  let!(:promotion1) { create(:promotion, name: "name1", code: "code1", path: "path1") }
-  let!(:promotion2) { create(:promotion, name: "name2", code: "code2", path: "path2") }
-  let!(:promotion3) { create(:promotion, name: "name2", code: "code3", path: "path3", expires_at: Date.yesterday) }
+  let!(:promotion1) { create(:promotion, :with_action, name: "name1", code: "code1", path: "path1") }
+  let!(:promotion2) { create(:promotion, :with_action, name: "name2", code: "code2", path: "path2") }
+  let!(:promotion3) do
+    create(:promotion, :with_action, name: "name2", code: "code3", path: "path3", expires_at: Date.yesterday)
+  end
   let!(:category) { create :promotion_category }
 
   describe "#show" do

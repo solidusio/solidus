@@ -461,9 +461,7 @@ RSpec.describe Spree::Product, type: :model do
 
     # Regression test for https://github.com/spree/spree/issues/4416
     context "#possible_promotions" do
-      let!(:promotion) do
-        create(:promotion, advertise: true, starts_at: 1.day.ago)
-      end
+      let!(:promotion) { create(:promotion, :with_action, advertise: true, starts_at: 1.day.ago) }
       let!(:rule) do
         Spree::Promotion::Rules::Product.create(
           promotion: promotion,

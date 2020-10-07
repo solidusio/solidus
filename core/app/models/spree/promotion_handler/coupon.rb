@@ -13,9 +13,9 @@ module Spree
 
       def apply
         if coupon_code.present?
-          if promotion.present? && promotion.actions.exists?
+          if promotion.present? && promotion.active? && promotion.actions.exists?
             handle_present_promotion(promotion)
-          elsif promotion_code && promotion_code.promotion.inactive?
+          elsif promotion_code&.promotion&.expired?
             set_error_code :coupon_code_expired
           else
             set_error_code :coupon_code_not_found

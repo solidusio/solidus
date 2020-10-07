@@ -16,6 +16,12 @@ FactoryBot.define do
       end
     end
 
+    trait :with_action do
+      after(:create) do |promotion, _evaluator|
+        promotion.actions << Spree::Promotion::Actions::CreateAdjustment.new
+      end
+    end
+
     trait :with_line_item_adjustment do
       transient do
         adjustment_rate { 10 }

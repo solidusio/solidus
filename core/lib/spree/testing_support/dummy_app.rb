@@ -121,6 +121,7 @@ Spree.config do |config|
   config.use_combined_first_and_last_name_in_address = true
   config.use_legacy_order_state_machine = false
   config.use_custom_cancancan_actions = false
+  config.consider_actionless_promotion_active = false
 
   if ENV['ENABLE_ACTIVE_STORAGE']
     config.image_attachment_module = 'Spree::Image::ActiveStorageAttachment'
