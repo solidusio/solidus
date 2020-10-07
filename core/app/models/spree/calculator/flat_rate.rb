@@ -8,10 +8,12 @@ module Spree
     preference :currency, :string, default: ->{ Spree::Config[:currency] }
 
     def compute(object = nil)
+      return BigDecimal(0) if object.nil?
+
       if object && preferred_currency.casecmp(object.currency).zero?
         preferred_amount
       else
-        0
+        BigDecimal(0)
       end
     end
   end
