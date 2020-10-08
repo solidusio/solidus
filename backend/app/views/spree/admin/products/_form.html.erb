@@ -83,6 +83,17 @@
         <% end %>
       </div>
 
+      <div data-hook="admin_product_form_discontinue_on">
+        <%= f.field_container :discontinue_on do %>
+          <%= f.label :discontinue_on %>
+          <%= f.field_hint :discontinue_on %>
+
+          <%= render "spree/admin/shared/datepicker", f: f, date_attr: :discontinue_on %>
+
+          <%= f.error_message_on :discontinue_on %>
+        <% end %>
+      </div>
+
       <div data-hook="admin_product_form_promotionable">
         <%= f.field_container :promotionable do %>
           <label>

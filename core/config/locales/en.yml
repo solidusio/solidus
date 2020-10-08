@@ -1413,6 +1413,9 @@ en:
         available_on: This sets the availability date for the product. If this value
           is not set, or it is set to a date in the future, then the product is not
           available on the storefront.
+        discontinue_on: This sets the discontinue date for the product. If this value
+          is set to a date, then the product is not available on the storefront from
+          that day on anymore.
         promotionable: 'This determines whether or not promotions can apply to this
           product.<br/>Default: Checked'
         shipping_category: 'This determines what kind of shipping this product requires.<br/>
