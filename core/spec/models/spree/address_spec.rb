@@ -24,102 +24,57 @@ RSpec.describe Spree::Address, type: :model do
 
   context "validation" do
     let(:country) { create :country, states_required: true }
-    let(:state) { Spree::State.new name: 'maryland', abbr: 'md', country: country }
+    let(:state) { create :state, name: 'maryland', abbr: 'md', country: country }
     let(:address) { build(:address, country: country) }
 
-    before do
-      allow(country.states).to receive_messages with_name_or_abbr: [state]
-    end
+    context 'state validation' do
+      let(:state_validator) { instance_spy(Spree::Address.state_validator_class) }
 
-    context 'address does not require state' do
       before do
-        stub_spree_preferences(address_requires_state: false)
+        stub_spree_preferences(use_legacy_address_state_validator: false)
       end
 
-      it "address_requires_state preference is false" do
+      it "calls the state validator" do
+        allow(Spree::Address.state_validator_class).
+          to receive(:new).with(address).
+          and_return(state_validator)
+        expect(state_validator).to receive(:perform)
+        address.valid?
+      end
+
+      # basic integration test with the validator
+      # See address/state_validator_spec for a full address state validation
+      # test suite
+      it "performs the state validation" do
+        address.country.states_required = true
         address.state = nil
         address.state_name = nil
-        expect(address).to be_valid
-      end
-    end
-
-    context 'address requires state' do
-      before do
-        stub_spree_preferences(address_requires_state: true)
+        expect(address.valid?).to eq(false)
+        expect(address.errors['state']).to eq(["can't be blank"])
       end
 
-      it "state_name is not nil and country does not have any states" do
-        address.state = nil
-        address.state_name = 'alabama'
-        expect(address).to be_valid
-      end
-
-      it "errors when state_name is nil" do
-        address.state_name = nil
-        address.state = nil
-        expect(address).not_to be_valid
-      end
-
-      it "full state name is in state_name and country does contain that state" do
-        address.state_name = 'alabama'
-        # called by state_validate to set up state_id.
-        # Perhaps this should be a before_validation instead?
-        expect(address).to be_valid
-        expect(address.state).not_to be_nil
-        expect(address.state_name).to be_nil
-      end
-
-      it "state abbr is in state_name and country does contain that state" do
-        address.state_name = state.abbr
-        expect(address).to be_valid
-        expect(address.state_id).not_to be_nil
-        expect(address.state_name).to be_nil
-      end
-
-      context "when the country does not match the state's country" do
-        context 'and the country does not have states' do
-          before do
-            address.country = create(:country, iso: 'AI') # Anguilla
-            address.state = create(:state, country_iso: 'US', state_code: 'AL')
-          end
-
-          it 'is valid' do
-            expect(address.valid?).to eq(true)
-            expect(address.errors["state"]).to be_empty
-          end
-
-          it 'nullifies the provided state' do
-            expect { address.valid? }.to change(address, :state).to(nil)
-          end
+      context 'legacy state validator' do
+        before do
+          stub_spree_preferences(use_legacy_address_state_validator: true)
         end
 
-        context 'and the country has states' do
-          before do
-            ita_state = create(:state, country_iso: 'IT')
-            address.country = ita_state.country
-            address.state = create(:state, country_iso: 'US', state_code: 'AL')
-          end
-
-          it 'is invalid' do
-            address.valid?
-            expect(address.errors["state"]).to eq(['does not match the country'])
-          end
+        it 'doesnt show deprecation warnings when calling #valid?' do
+          expect(Spree::Deprecation).to_not receive(:warn).
+            with(/^Spree::Address#state_validate private method has been deprecated/, any_args)
+          expect(Spree::Deprecation).to_not receive(:warn).
+            with(/^Spree::Address#validate_state_matches_country private method has been deprecated/, any_args)
+          address.valid?
         end
-      end
 
-      it "both state and state_name are entered but country does not contain the state" do
-        address.state = state
-        address.state_name = 'maryland'
-        address.country = create :country, states_required: true
-        expect(address).to be_valid
-        expect(address.state_id).to be_nil
-      end
+        it 'shows the deprecation warnings when calling validation methods directly' do
+          expect(Spree::Deprecation).to receive(:warn).
+            with(/^Spree::Address#state_validate private method has been deprecated/, any_args)
+          address.send(:state_validate)
 
-      it "both state and state_name are entered and country does contain the state" do
-        address.state = state
-        address.state_name = 'maryland'
-        expect(address).to be_valid
-        expect(address.state_name).to be_nil
+          expect(Spree::Deprecation).to receive(:warn).
+            with(/^Spree::Address#validate_state_matches_country private method has been deprecated/, any_args)
+          address.send(:validate_state_matches_country)
+        end
       end
     end
 

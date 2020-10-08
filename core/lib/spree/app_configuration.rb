@@ -34,6 +34,10 @@ module Spree
     #   @return [Boolean] should state/state_name be required (default: +true+)
     preference :address_requires_state, :boolean, default: true
 
+    # @!attribute [rw] legacy
+    #   @return [Boolean] use the legacy address' state validation logic (default: +true+)
+    preference :use_legacy_address_state_validator, :boolean, default: true
+
     # @!attribute [rw] admin_interface_logo
     #   @return [String] URL of logo used in admin (default: +'logo/solidus.svg'+)
     preference :admin_interface_logo, :string, default: 'logo/solidus.svg'

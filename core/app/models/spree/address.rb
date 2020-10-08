@@ -8,6 +8,9 @@ module Spree
   class Address < Spree::Base
     extend ActiveModel::ForbiddenAttributesProtection
 
+    mattr_accessor :state_validator_class
+    self.state_validator_class = Spree::Address::StateValidator
+
     belongs_to :country, class_name: "Spree::Country", optional: true
     belongs_to :state, class_name: "Spree::State", optional: true
 
@@ -16,8 +19,20 @@ module Spree
     validates :phone, presence: true, if: :require_phone?
 
     validate :validate_name
-    validate :state_validate
-    validate :validate_state_matches_country
+
+    validate do
+      if Spree::Config.use_legacy_address_state_validator
+        begin
+          @silence_state_deprecations = true
+          state_validate
+          validate_state_matches_country
+        ensure
+          @silence_state_deprecations = false
+        end
+      else
+        self.class.state_validator_class.new(self).perform
+      end
+    end
 
     alias_attribute :first_name, :firstname
     alias_attribute :last_name, :lastname
@@ -218,6 +233,14 @@ module Spree
     end
 
     def state_validate
+      unless @silence_state_deprecations
+        Spree::Deprecation.warn \
+          "#{self.class}#state_validate private method has been deprecated" \
+          " and will be removed in Solidus v3." \
+          " Check https://github.com/solidusio/solidus/pull/3129 for more details.",
+          caller
+      end
+
       # Skip state validation without country (also required)
       # or when disabled by preference
       return if country.blank? || !Spree::Config[:address_requires_state]
@@ -253,6 +276,14 @@ module Spree
     end
 
     def validate_state_matches_country
+      unless @silence_state_deprecations
+        Spree::Deprecation.warn \
+          "#{self.class}#validate_state_matches_country private method has been deprecated" \
+          " and will be removed in Solidus v3." \
+          " Check https://github.com/solidusio/solidus/pull/3129 for more details.",
+          caller
+      end
+
       return unless country
 
       self.state = nil if country.states.empty?
