@@ -177,6 +177,7 @@ en:
         cost_price: Cost Price
         depth: Depth
         description: Description
+        discontinue_on: Discontinue on
         height: Height
         master_price: Master Price
         meta_description: Meta Description

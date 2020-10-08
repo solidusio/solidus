@@ -168,11 +168,13 @@ module Spree
     end
 
     # Determines if product is available. A product is available if it has not
-    # been deleted and the available_on date is in the past.
+    # been deleted, the available_on date is in the past
+    # and the discontinue_on date is nil or in the future.
     #
     # @return [Boolean] true if this product is available
     def available?
-      !deleted? && available_on&.past?
+      !deleted? && available_on&.past? &&
+        (discontinue_on.nil? || discontinue_on.future?)
     end
 
     # Groups variants by the specified option type.

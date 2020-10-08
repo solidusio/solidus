@@ -162,23 +162,61 @@ RSpec.describe Spree::Product, type: :model do
       end
     end
 
-    context "#available?" do
-      it "should be available if date is in the past" do
-        product.available_on = 1.day.ago
-        expect(product).to be_available
+    describe "#available?" do
+      context "if available_on is in the past" do
+        let(:product) { build(:product, available_on: 1.day.ago) }
+
+        it "should be available" do
+          expect(product).to be_available
+        end
       end
 
-      it "should not be available if date is nil or in the future" do
-        product.available_on = nil
-        expect(product).not_to be_available
+      context "if available_on is nil" do
+        let(:product) { build(:product, available_on: nil) }
 
-        product.available_on = 1.day.from_now
-        expect(product).not_to be_available
+        it "should not be available" do
+          expect(product).not_to be_available
+        end
       end
 
-      it "should not be available if soft-destroyed" do
-        product.discard
-        expect(product).not_to be_available
+      context "if available_on is in the future" do
+        let(:product) { build(:product, available_on: 1.day.from_now) }
+
+        it "should not be available" do
+          expect(product).not_to be_available
+        end
+      end
+
+      context "if discontinue_on is in the past" do
+        let(:product) { build(:product, discontinue_on: 1.day.ago) }
+
+        it "should not be available" do
+          expect(product).not_to be_available
+        end
+      end
+
+      context "if discontinue_on is nil" do
+        let(:product) { build(:product, discontinue_on: nil) }
+
+        it "should be available" do
+          expect(product).to be_available
+        end
+      end
+
+      context "if discontinue_on is in the future" do
+        let(:product) { build(:product, discontinue_on: 1.day.from_now) }
+
+        it "should be available" do
+          expect(product).to be_available
+        end
+      end
+
+      context "if deleted" do
+        let(:product) { build(:product, deleted_at: 1.day.ago) }
+
+        it "should not be available" do
+          expect(product).not_to be_available
+        end
       end
     end
 
