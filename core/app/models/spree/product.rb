@@ -173,8 +173,17 @@ module Spree
     #
     # @return [Boolean] true if this product is available
     def available?
-      !deleted? && available_on&.past? &&
-        (discontinue_on.nil? || discontinue_on.future?)
+      !deleted? && available_on&.past? && !discontinued?
+    end
+
+    # Determines if product is discontinued.
+    #
+    # A product is discontinued if the discontinue_on date
+    # is not nil and in the past.
+    #
+    # @return [Boolean] true if this product is discontinued
+    def discontinued?
+      !!discontinue_on&.past?
     end
 
     # Groups variants by the specified option type.

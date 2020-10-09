@@ -220,6 +220,28 @@ RSpec.describe Spree::Product, type: :model do
       end
     end
 
+    describe "#discontinued?" do
+      subject { product.discontinued? }
+
+      context "if discontinue_on is in the past" do
+        let(:product) { build(:product, discontinue_on: 1.day.ago) }
+
+        it { is_expected.to be(true) }
+      end
+
+      context "if discontinue_on is nil" do
+        let(:product) { build(:product, discontinue_on: nil) }
+
+        it { is_expected.to be(false) }
+      end
+
+      context "if discontinue_on is in the future" do
+        let(:product) { build(:product, discontinue_on: 1.day.from_now) }
+
+        it { is_expected.to be(false) }
+      end
+    end
+
     context "variants_and_option_values" do
       let!(:high) { create(:variant, product: product) }
       let!(:low) { create(:variant, product: product) }

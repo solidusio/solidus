@@ -17,6 +17,11 @@ RSpec.describe Spree::Variant, type: :model do
       expect(product).to receive(:discontinue_on)
       variant.discontinue_on
     end
+
+    it 'discontinued? to product' do
+      expect(product).to receive(:discontinued?)
+      variant.discontinued?
+    end
   end
 
   context "validations" do
