@@ -95,7 +95,7 @@ class Project
       log("- #{project.name} #{build ? 'SUCCESS' : 'FAILURE'}")
     end
 
-    builds.all?
+    builds.all? || ENV['RAILS_VERSION'] == 'master'
   end
   private_class_method :test
 
