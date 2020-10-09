@@ -33,7 +33,7 @@ module Spree
     belongs_to :product, -> { with_discarded }, touch: true, class_name: 'Spree::Product', inverse_of: :variants, optional: false
     belongs_to :tax_category, class_name: 'Spree::TaxCategory', optional: true
 
-    delegate :name, :description, :slug, :available_on, :shipping_category_id,
+    delegate :name, :description, :slug, :available_on, :discontinue_on, :shipping_category_id,
              :meta_description, :meta_keywords, :shipping_category,
              to: :product
     delegate :tax_category, to: :product, prefix: true

@@ -9,6 +9,16 @@ RSpec.describe Spree::Variant, type: :model do
 
   it_behaves_like 'default_price'
 
+  describe 'delegates' do
+    let(:product) { build(:product) }
+    let(:variant) { build(:variant, product: product) }
+
+    it 'discontinue_on to product' do
+      expect(product).to receive(:discontinue_on)
+      variant.discontinue_on
+    end
+  end
+
   context "validations" do
     it "should validate price is greater than 0" do
       variant.price = -1
