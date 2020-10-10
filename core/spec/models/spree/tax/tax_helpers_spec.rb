@@ -16,7 +16,6 @@ RSpec.describe Spree::Tax::TaxHelpers do
 
   let(:item) { create(:line_item, tax_category: tax_category) }
   let(:tax_address) { item.order.tax_address }
-  
   let(:zone) { create(:zone, name: "Country Zone", countries: [tax_address.country]) }
 
   let!(:tax_rate) do
@@ -24,7 +23,6 @@ RSpec.describe Spree::Tax::TaxHelpers do
   end
 
   describe '#rates_for_item' do
-
     it 'returns tax rates that match the tax category of the given item' do
       expect(DummyClass.new.valid_rates(item)).to contain_exactly(tax_rate)
     end
@@ -37,7 +35,7 @@ RSpec.describe Spree::Tax::TaxHelpers do
         create(:tax_rate, tax_categories: [tax_category], zone: zone,
                starts_at: starts_at, expires_at: expires_at)
       end
-      
+
       it 'returns only active rates that match the tax category of given item' do
         expect(Spree::TaxRate.for_address(tax_address)).to contain_exactly(tax_rate, invalid_tax_rate)
 
