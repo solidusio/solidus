@@ -145,43 +145,43 @@ RSpec.describe Spree::TaxRate, type: :model do
     end
 
     context "when the start date is in the past" do
-      let!(:rate) { create(:tax_rate, starts_at: 1.day.ago )}
+      let!(:rate) { create(:tax_rate, starts_at: 1.day.ago ) }
 
       it { is_expected.to eq([rate]) }
     end
 
     context "when the start date is in the future" do
-      let!(:rate) { create(:tax_rate, starts_at: 1.day.from_now )}
+      let!(:rate) { create(:tax_rate, starts_at: 1.day.from_now ) }
 
       it { is_expected.to be_empty }
     end
 
     context "when the expiry date is in the future" do
-      let!(:rate) { create(:tax_rate, expires_at: 1.day.from_now )}
+      let!(:rate) { create(:tax_rate, expires_at: 1.day.from_now ) }
 
       it { is_expected.to eq([rate]) }
     end
 
     context "when the expiry date is in the past" do
-      let!(:rate) { create(:tax_rate, expires_at: 1.day.ago )}
+      let!(:rate) { create(:tax_rate, expires_at: 1.day.ago ) }
 
       it { is_expected.to be_empty }
     end
 
     context "when the start date in the past and expiry date is in the future" do
-      let!(:rate) { create(:tax_rate, starts_at: 1.day.ago, expires_at: 1.day.from_now )}
+      let!(:rate) { create(:tax_rate, starts_at: 1.day.ago, expires_at: 1.day.from_now ) }
 
       it { is_expected.to eq([rate]) }
     end
 
     context "when the start date and expiry date are in the past" do
-      let!(:rate) { create(:tax_rate, starts_at: 1.day.ago, expires_at: 1.day.ago )}
+      let!(:rate) { create(:tax_rate, starts_at: 1.day.ago, expires_at: 1.day.ago ) }
 
       it { is_expected.to be_empty }
     end
 
     context "when the start date and expiry date are in the future" do
-      let!(:rate) { create(:tax_rate, starts_at: 1.day.from_now, expires_at: 1.day.from_now )}
+      let!(:rate) { create(:tax_rate, starts_at: 1.day.from_now, expires_at: 1.day.from_now ) }
 
       it { is_expected.to be_empty }
     end
