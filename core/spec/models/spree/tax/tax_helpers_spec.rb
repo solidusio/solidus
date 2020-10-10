@@ -23,7 +23,7 @@ RSpec.describe Spree::Tax::TaxHelpers do
     create(:tax_rate, tax_categories: [tax_category], zone: zone)
   end
 
-  describe '#rates_for_item', :focus do
+  describe '#rates_for_item' do
 
     it 'returns tax rates that match the tax category of the given item' do
       expect(DummyClass.new.valid_rates(item)).to contain_exactly(tax_rate)
