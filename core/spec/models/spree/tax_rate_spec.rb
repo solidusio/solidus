@@ -135,6 +135,58 @@ RSpec.describe Spree::TaxRate, type: :model do
     end
   end
 
+  context ".active" do
+    subject(:active_tax_rates) { Spree::TaxRate.active }
+
+    context "when the tax rate has no start or expiry date" do
+      let!(:rate) { create(:tax_rate) }
+
+      it { is_expected.to eq([rate]) }
+    end
+
+    context "when the start date is in the past" do
+      let!(:rate) { create(:tax_rate, starts_at: 1.day.ago )}
+
+      it { is_expected.to eq([rate]) }
+    end
+
+    context "when the start date is in the future" do
+      let!(:rate) { create(:tax_rate, starts_at: 1.day.from_now )}
+
+      it { is_expected.to be_empty }
+    end
+
+    context "when the expiry date is in the future" do
+      let!(:rate) { create(:tax_rate, expires_at: 1.day.from_now )}
+
+      it { is_expected.to eq([rate]) }
+    end
+
+    context "when the expiry date is in the past" do
+      let!(:rate) { create(:tax_rate, expires_at: 1.day.ago )}
+
+      it { is_expected.to be_empty }
+    end
+
+    context "when the start date in the past and expiry date is in the future" do
+      let!(:rate) { create(:tax_rate, starts_at: 1.day.ago, expires_at: 1.day.from_now )}
+
+      it { is_expected.to eq([rate]) }
+    end
+
+    context "when the start date and expiry date are in the past" do
+      let!(:rate) { create(:tax_rate, starts_at: 1.day.ago, expires_at: 1.day.ago )}
+
+      it { is_expected.to be_empty }
+    end
+
+    context "when the start date and expiry date are in the future" do
+      let!(:rate) { create(:tax_rate, starts_at: 1.day.from_now, expires_at: 1.day.from_now )}
+
+      it { is_expected.to be_empty }
+    end
+  end
+
   describe "#adjust" do
     let(:taxable_address) { create(:address) }
     let(:order) { create(:order_with_line_items, ship_address: order_address) }

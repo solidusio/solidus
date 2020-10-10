@@ -31,6 +31,12 @@ module Spree
     scope :for_address, ->(address) { joins(:zone).merge(Spree::Zone.for_address(address)) }
     scope :for_country,
           ->(country) { for_address(Spree::Tax::TaxLocation.new(country: country)) }
+    scope :active, -> do
+      table = arel_table
+      time = Time.current
+      where(table[:starts_at].eq(nil).or(table[:starts_at].lt(time))).
+        where(table[:expires_at].eq(nil).or(table[:expires_at].gt(time)))
+    end
 
     # Finds geographically matching tax rates for a tax zone.
     # We do not know if they are/aren't applicable until we attempt to apply these rates to
