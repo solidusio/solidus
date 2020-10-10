@@ -138,18 +138,6 @@ RSpec.describe Spree::Calculator::DefaultTax, type: :model do
           end
         end
 
-        context 'when multiple other rates exist that are currently not valid' do
-          let!(:invalid_rate) do
-            create(:tax_rate, tax_categories: [tax_category], amount: 0.10,
-                   included_in_price: included_in_price, zone: zone,
-                   starts_at: 1.day.from_now, expires_at: 2.days.from_now)
-          end
-
-          it 'should be equal to the sum of item totals * valid rate and not consider invalid rates' do
-            expect(calculator.compute(item)).to eq(1.43)
-          end
-        end
-
         context "when line item is adjusted" do
           let(:adjustment_total) { -1 }
 
