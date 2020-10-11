@@ -3,7 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe Spree::Tax::TaxHelpers do
-
   before do
     stub_const('DummyClass', (Class.new do
       include Spree::Tax::TaxHelpers
