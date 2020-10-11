@@ -2,15 +2,18 @@
 
 require 'rails_helper'
 
-class DummyClass
-  include Spree::Tax::TaxHelpers
-
-  def valid_rates(item)
-    rates_for_item(item)
-  end
-end
-
 RSpec.describe Spree::Tax::TaxHelpers do
+
+  before do
+    stub_const('DummyClass', (Class.new do
+      include Spree::Tax::TaxHelpers
+
+      def valid_rates(item)
+        rates_for_item(item)
+      end
+    end))
+  end
+
   let(:tax_category) { create(:tax_category) }
   let(:irrelevant_tax_category) { create(:tax_category) }
 
