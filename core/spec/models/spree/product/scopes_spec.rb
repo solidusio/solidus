@@ -124,6 +124,28 @@ RSpec.describe "Product scopes", type: :model do
         expect(Spree::Product.available).to match_array([product])
       end
 
+      context "with no discontinue_on" do
+        it "includes the product" do
+          expect(Spree::Product.available).to match_array([product])
+        end
+      end
+
+      context "with future discontinue_on" do
+        before { product.update!(discontinue_on: 1.day.from_now) }
+
+        it "includes the product" do
+          expect(Spree::Product.available).to match_array([product])
+        end
+      end
+
+      context "with past discontinue_on" do
+        before { product.update!(discontinue_on: 1.day.ago) }
+
+        it "doesn't include the product" do
+          expect(Spree::Product.available).to match_array([])
+        end
+      end
+
       context "with no master price" do
         before { product.master.prices.delete_all }
 
