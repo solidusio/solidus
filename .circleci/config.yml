@@ -78,6 +78,23 @@ commands:
       - store_test_results:
           path: /tmp/test-results
 
+  test_without_failing:
+    steps:
+      - run:
+          name: Run Tests
+          command: ./bin/build-ci test || circleci-agent step halt
+
+      - store_artifacts:
+          path: /tmp/test-artifacts
+          destination: test-artifacts
+
+      - store_artifacts:
+          path: /tmp/test-results
+          destination: raw-test-output
+
+      - store_test_results:
+          path: /tmp/test-results
+
 jobs:
   persist_version:
     executor: base
@@ -110,7 +127,7 @@ jobs:
       ENABLE_ACTIVE_STORAGE: true
     steps:
       - setup
-      - test
+      - test_without_failing
 
   mysql:
     executor: mysql
