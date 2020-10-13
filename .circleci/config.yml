@@ -148,7 +148,7 @@ workflows:
       - mysql
       - postgres_rails52
       - mysql_rails52
-      - postgres_rails_master_activestorage
+      # - postgres_rails_master_activestorage
       - stoplight/push:
           context: "Solidus Core Team"
           project: solidus/solidus-api
