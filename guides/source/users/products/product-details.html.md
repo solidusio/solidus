@@ -18,8 +18,10 @@ would have the slug `summer-t-shirt`.
   sold for other price values.)
 - **Cost Price**: What the product costs you, the seller, to purchase or
   produce. You may change the currency associated with the cost price.
-- **Available On**: The date that this product is available to be sold. If this
+- [**Available On**](#available-on): The date that this product is available to be sold. If this
   date is not set, then the product is not shown to customers on the storefront.
+- [**Discontinue On**](#discontinue-on): The date this product is discontinued from being sold.
+  If this date is set, then the product is not available on the storefront from that day on anymore.
 - **Taxons**: This adds the product your store's taxons.
 - **Option Types**: Add option types to your product if you want to offer
   [multiple variants of the product](#). You need to define [option
@@ -29,6 +31,16 @@ would have the slug `summer-t-shirt`.
  Fill in (#) links to variants-related documentation.
 -->
 
+[^slug]: A slug is a part of a URL that identifies a page using human-readable
+  words. Most blogs and stores use slugs for SEO purposes. For example, in the
+  web address `https://example.com/store/summer-t-shirt`, the slug would be the
+  `summer-t-shirt` part.
+
+## Product Availability
+
+Products have time based availability. Products can be made available and
+unavailable by setting two dates.
+
 ### Available On
 
 Note that the **Available On** field should be filled if you want the product to
@@ -37,10 +49,10 @@ be displayed on the storefront.
 If the **Available On** value is a date in the future, then the product is only
 available after the date that has been set.
 
-[^slug]: A slug is a part of a URL that identifies a page using human-readable
-  words. Most blogs and stores use slugs for SEO purposes. For example, in the
-  web address `https://example.com/store/summer-t-shirt`, the slug would be the
-  `summer-t-shirt` part.
+### Discontinue On
+
+If the **Discontinue On** value is set, then the product is not available after
+the date anymore.
 
 ## Inventory information
 

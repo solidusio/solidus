@@ -12,6 +12,9 @@ Products have the following attributes:
 - `available_on`: The first date the product becomes available for sale online
   in your shop. If you don't set the `available_on` attribute, the product does
   not appear among your store's products for sale.
+- `discontinue_on`: The last date the product is still available for sale online
+  in your shop. If you don't set the `available_on` attribute, the product does
+  still appear among your store's products for sale.
 - `deleted_at`: The date the product is no longer available for sale in the
    store.
 - `meta_description`: A description targeted at search engines for search engine
@@ -46,4 +49,3 @@ A "Size" attribute would be used for many products and would be more useful as
 an [option type](variants.html#option-types) for variants. However, if you decide
 to sell a limited edition t-shirt you might want to add unique product
 properties for marketing purposes - like "Fit", "Material", and "Manufacturer".
-
