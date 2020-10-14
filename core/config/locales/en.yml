@@ -699,7 +699,7 @@ en:
         one: RMA Reason
         other: RMA Reasons
       spree/role:
-        one: Roles
+        one: Role
         other: Roles
       spree/shipment:
         one: Shipment
