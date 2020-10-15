@@ -221,4 +221,21 @@ describe Spree::Admin::WidgetsController, type: :controller do
       end
     end
   end
+
+  describe 'rescue_from ActveRecord::RecordNotFound' do
+    let(:widget) { Widget.create!(name: 'a widget') }
+
+    subject do
+      get :edit, params: { id: widget.to_param }
+    end
+
+    it 'shows an error message with a reference to the model that was not found and redirect to the collection' do
+      allow(controller).to receive(:edit) { Spree::Product.find(123) }
+
+      subject
+
+      expect(response).to redirect_to('/admin/widgets')
+      expect(flash[:error]).to eql('Product is not found')
+    end
+  end
 end

@@ -5,8 +5,8 @@ class Spree::Admin::ResourceController < Spree::Admin::BaseController
 
   helper_method :new_object_url, :edit_object_url, :object_url, :collection_url
   before_action :load_resource, except: :update_positions
-  rescue_from ActiveRecord::RecordNotFound do
-    resource_not_found
+  rescue_from ActiveRecord::RecordNotFound do |exception|
+    resource_not_found(flash_class: exception.model.constantize)
   end
   rescue_from ActiveRecord::RecordInvalid, with: :resource_invalid
 
