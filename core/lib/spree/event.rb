@@ -9,6 +9,8 @@ module Spree
   module Event
     extend self
 
+    delegate :activate_autoloadable_subscribers, :activate_all_subscribers, :deactivate_all_subscribers, to: :subscriber_registry
+
     # Allows to trigger events that can be subscribed using #subscribe. An
     # optional block can be passed that will be executed immediately. The
     # actual code implementation is delegated to the adapter.
