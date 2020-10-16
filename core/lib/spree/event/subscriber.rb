@@ -63,28 +63,34 @@ module Spree
         event_actions[method_name] = (event_name || method_name).to_s
       end
 
-      # Subscribes all declared event actions to their events. Only actions that are subscribed
+      # Activates all declared event actions to their events. Only actions that are activated
       # will be called when their event fires.
       #
-      # @example subscribe all event actions for module 'EmailSender'
-      #    EmailSender.subscribe!
-      def subscribe!
-        unsubscribe!
-        event_actions.each do |event_action, event_name|
-          send "#{event_action}_handler=", Spree::Event.subscribe(event_name) { |event|
-            send event_action, event
-          }
-        end
+      # @example activate all event actions for module 'EmailSender'
+      #    EmailSender.activate
+      def activate
+        Spree::Event.subscriber_registry.activate_subscriber(self)
       end
 
-      # Unsubscribes all declared event actions from their events. This means that when an event
-      # fires then none of its unsubscribed event actions will be called.
-      # @example unsubscribe all event actions for module 'EmailSender'
-      #    EmailSender.unsubscribe!
+      # Deactivates all declared event actions (or a single specific one) from their events.
+      # This means that when an event fires then none of its unsubscribed event actions will
+      # be called.
+      # @example deactivate all event actions for module 'EmailSender'
+      #    EmailSender.deactivate
+      # @example deactivate only order_finalized for module 'EmailSender'
+      #    EmailSender.deactivate(:order_finalized)
+      def deactivate(event_action_name = nil)
+        Spree::Event.subscriber_registry.deactivate_subscriber(self, event_action_name)
+      end
+
+      def subscribe!
+        Spree::Deprecation.warn("#{self}.subscribe! is deprecated. Please use `#{self}.activate`.", caller)
+        activate
+      end
+
       def unsubscribe!
-        event_actions.keys.each do |event_action|
-          Spree::Event.unsubscribe send("#{event_action}_handler")
-        end
+        Spree::Deprecation.warn("#{self}.unsubscribe! is deprecated. Please use `#{self}.deactivate`.", caller)
+        deactivate
       end
     end
   end
