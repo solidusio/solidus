@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'event/adapters/active_support_notifications'
+require_relative 'event/subscriber_registry'
 require_relative 'event/configuration'
 require_relative 'event/subscriber'
 
@@ -26,8 +27,8 @@ module Spree
       end
     end
 
-    # Loads all Solidus' core and application's event subscribers files.
-    # The latter are loaded automatically only when the preference
+    # @deprecated Loads all Solidus' core and application's event subscribers files.
+    # The latter are loaded automatically only when the preference
     # Spree::Config.events.autoload_subscribers is set to a truthy value.
     #
     # Files must be placed under the directory `app/subscribers` and their
@@ -36,18 +37,8 @@ module Spree
     # Loading the files has the side effect of adding their module to the
     # list in Spree::Event.subscribers.
     def require_subscriber_files
-      pattern = "app/subscribers/**/*_subscriber.rb"
-
-      # Load Solidus subscribers
-      # rubocop:disable Rails/DynamicFindBy
-      solidus_core_dir = Gem::Specification.find_by_name('solidus_core').gem_dir
-      # rubocop:enable Rails/DynamicFindBy
-      Dir.glob(File.join(solidus_core_dir, pattern)) { |c| require_dependency(c.to_s) }
-
-      # Load application subscribers, only when the flag is set to true:
-      if Spree::Config.events.autoload_subscribers
-        Rails.root.glob(pattern) { |c| require_dependency(c.to_s) }
-      end
+      Spree::Deprecation.warn("#{self}.require_subscriber_files is deprecated and will be removed in Solidus 3.0.", caller)
+      subscriber_registry.send(:require_subscriber_files)
     end
 
     # Subscribe to an event with the given name. The provided block is executed
@@ -130,10 +121,18 @@ module Spree
       Spree::Config.events.suffix
     end
 
+    # @deprecated
     # @!attribute [r] subscribers
     #   @return [Array<Spree::Event::Subscriber>] A list of subscribers used to support class reloading for Spree::Event::Subscriber instances
     def subscribers
+      Spree::Deprecation.warn("`#{self}.subscribers` is deprecated. Please use `#{self}.subscriber_registry` instead.", caller)
       Spree::Config.events.subscribers
+    end
+
+    # @!attribute [r] subscribers
+    #   @return <Spree::Event::SubscriberRegistry> The registry for supporting class reloading for Spree::Event::Subscriber instances
+    def subscriber_registry
+      Spree::Config.events.subscriber_registry
     end
 
     private
