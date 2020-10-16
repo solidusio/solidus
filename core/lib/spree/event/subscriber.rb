@@ -19,7 +19,12 @@ module Spree
     #     end
     #   end
     #
-    #  EmailSender.subscribe!
+    #  # Optional, required only when the subscriber needs to be loaded manually.
+    #  #
+    #  # If Spree::Config.events.autoload_subscribers is set to `true` and the module
+    #  # file matches the pattern `app/subscribers/**/*_subscriber.rb` then it will
+    #  # be loaded automatically at boot and this line can be removed:
+    #  EmailSender.activate
     module Subscriber
       def self.included(base)
         base.extend base
@@ -27,7 +32,7 @@ module Spree
         base.mattr_accessor :event_actions
         base.event_actions = {}
 
-        Spree::Event.subscribers << base.name
+        Spree::Event.subscriber_registry.register(base)
       end
 
       # Declares a method name in the including module that can be subscribed/unsubscribed
