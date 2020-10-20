@@ -290,42 +290,42 @@ RSpec.describe Spree::Ability, type: :model do
       ability.can?(:read, Object.new)
 
       expect(Spree::Deprecation).to have_received(:warn)
-        .with(/`:read` action alias will be changing/)
+        .with(a_string_matching(/`:read` action alias will be changing/), any_args)
     end
 
     it 'raises deprecation on display' do
       ability.can?(:display, Object.new)
 
       expect(Spree::Deprecation).to have_received(:warn)
-        .with(/alias action display is deprecated/)
+        .with(a_string_matching(/alias action :display is deprecated/), any_args)
     end
 
     it 'raises deprecation on destroy' do
       ability.can?(:destroy, Object.new)
 
       expect(Spree::Deprecation).to have_received(:warn)
-        .with(/alias action destroy is deprecated/)
+        .with(a_string_matching(/alias action :destroy is deprecated/), any_args)
     end
 
     it 'raises deprecation on :new_action' do
       ability.can?(:new_action, Object.new)
 
       expect(Spree::Deprecation).to have_received(:warn)
-        .with(/alias action new_action is deprecated/)
+        .with(a_string_matching(/alias action :new_action is deprecated/), any_args)
     end
 
     it 'raises deprecation on display' do
       ability.can?(:display, Object.new)
 
       expect(Spree::Deprecation).to have_received(:warn)
-        .with(/alias action display is deprecated/)
+        .with(a_string_matching(/alias action :display is deprecated/), any_args)
     end
 
     it 'raises deprecation when called on models by accessible_by' do
       Spree::Order.accessible_by(ability, :display)
 
       expect(Spree::Deprecation).to have_received(:warn)
-        .with(/alias action display is deprecated/)
+        .with(a_string_matching(/alias action :display is deprecated/), any_args)
     end
   end
 end

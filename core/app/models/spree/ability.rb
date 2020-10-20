@@ -53,20 +53,23 @@ module Spree
     def normalize_action(action)
       return action unless Spree::Config.use_custom_cancancan_actions
 
+      normalized_action = CUSTOM_ALIASES_MAP.fetch(action, action)
+
       if action == :read
         Spree::Deprecation.warn <<~WARN, caller(3)
           The behavior of CanCanCan `:read` action alias will be changing in Solidus 3.0.
-          The current alias is: `:show, :to => :read`
-          The new alias will be compliant with CanCanCan default: `:index, :show, :to => :read`
+          The current alias is: `:show, :to => :read`,
+          the new alias will be compliant with CanCanCan's default: `index, :show, :to => :read`
         WARN
-      elsif action.in? CUSTOM_ALIASES_MAP.keys
+      elsif CUSTOM_ALIASES_MAP.key? action
         Spree::Deprecation.warn <<~WARN, caller(3)
-          Calling CanCanCan alias action #{action} is deprecated.
-          In Solidus 3.0 non-standard CanCanCan action aliases will be replaced with default ones
+          Calling CanCanCan alias action #{action.inspect} is deprecated.
+          In Solidus 3.0 non-standard CanCanCan action aliases will be replaced with default ones,
+          please replace with #{normalized_action.inspect}.
         WARN
       end
 
-      CUSTOM_ALIASES_MAP.fetch(action, action)
+      normalized_action
     end
 
     # Before, this was the only way to extend this ability. Permission sets have been added since.
