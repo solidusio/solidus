@@ -5,13 +5,13 @@
 
 <% content_for :page_actions do %>
   <li>
-    <% if can?(:read, Spree::PromotionCode) %>
+    <% if can?(:show, Spree::PromotionCode) %>
       <%= link_to t('spree.view_promotion_codes_list'), admin_promotion_promotion_codes_path(promotion_id: @promotion.id), class: 'btn btn-primary' %>
 
       <%= link_to t('spree.download_promotion_codes_list'), admin_promotion_promotion_codes_path(promotion_id: @promotion.id, format: :csv), class: 'btn btn-primary' %>
     <% end %>
 
-    <% if can?(:read, Spree::PromotionCodeBatch) %>
+    <% if can?(:show, Spree::PromotionCodeBatch) %>
       <%= link_to plural_resource_name(Spree::PromotionCodeBatch), admin_promotion_promotion_code_batches_path(promotion_id: @promotion.id), class: 'btn btn-primary' %>
     <% end %>
   </li>
