@@ -54,13 +54,13 @@ module Spree
       return action unless Spree::Config.use_custom_cancancan_actions
 
       if action == :read
-        Spree::Deprecation.warn <<~WARN
+        Spree::Deprecation.warn <<~WARN, caller(3)
           The behavior of CanCanCan `:read` action alias will be changing in Solidus 3.0.
           The current alias is: `:show, :to => :read`
-          The new alias will be compliant with CanCanCan default: `index, :show, :to => :read`
+          The new alias will be compliant with CanCanCan default: `:index, :show, :to => :read`
         WARN
       elsif action.in? CUSTOM_ALIASES_MAP.keys
-        Spree::Deprecation.warn <<~WARN
+        Spree::Deprecation.warn <<~WARN, caller(3)
           Calling CanCanCan alias action #{action} is deprecated.
           In Solidus 3.0 non-standard CanCanCan action aliases will be replaced with default ones
         WARN
