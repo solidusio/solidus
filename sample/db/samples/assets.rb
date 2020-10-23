@@ -27,22 +27,6 @@ def image(name, type = "jpg")
 end
 
 images = {
-  products[:solidus_tshirt].master => [
-    {
-      attachment: image("solidus_tshirt")
-    },
-    {
-      attachment: image("solidus_tshirt_back")
-    }
-  ],
-  products[:solidus_long].master => [
-    {
-      attachment: image("solidus_long")
-    },
-    {
-      attachment: image("solidus_long_back")
-    }
-  ],
   products[:solidus_snapback_cap].master => [
     {
       attachment: image("solidus_snapback_cap")
@@ -89,11 +73,6 @@ images = {
   products[:ruby_tote].master => [
     {
       attachment: image("tote_bag_ruby")
-    }
-  ],
-  products[:solidus_girly].master => [
-    {
-      attachment: image("solidus_girly")
     }
   ]
 }
