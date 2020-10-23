@@ -24,25 +24,28 @@ describe 'products', type: :feature, caching: true do
   it "busts the cache when a product is updated" do
     product.update_column(:updated_at, 1.day.from_now)
     visit spree.root_path
-    expect(cache_writes.count).to eq(2)
+    expect(cache_writes.count).to eq(1)
   end
 
   it "busts the cache when all products are soft-deleted" do
     product.discard
     product2.discard
     visit spree.root_path
+    expect(render_collection_cache_hits_for('_product_tile')).to be_zero
     expect(cache_writes.count).to eq(1)
   end
 
   it "busts the cache when the newest product is soft-deleted" do
     product.discard
     visit spree.root_path
+    expect(render_collection_cache_hits_for('_product_tile')).to eq(1)
     expect(cache_writes.count).to eq(1)
   end
 
   it "busts the cache when an older product is soft-deleted" do
     product2.discard
     visit spree.root_path
+    expect(render_collection_cache_hits_for('_product_tile')).to eq(1)
     expect(cache_writes.count).to eq(1)
   end
 end
