@@ -13,7 +13,7 @@ module Spree
 
     let!(:primary_credit_type)    { create(:primary_credit_type) }
     let(:created_by_user) { create(:user, email: 'user@email.com') }
-    let!(:default_reimbursement_category) { create(:store_credit_category) }
+    let!(:default_reimbursement_category) { create(:store_credit_category, :reimbursement) }
 
     subject { Spree::ReimbursementType::StoreCredit.reimburse(reimbursement, [return_item, return_item2], simulate, created_by: created_by_user) }
 
