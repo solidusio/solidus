@@ -13,7 +13,7 @@ country_mapper = ->(country) do
   iso             = connection.quote country.alpha_2_code
   iso_name        = connection.quote country.name.upcase
   numcode         = connection.quote country.numeric_code
-  states_required = connection.quote country.subregions?
+  states_required = connection.quote(country.subregions.any? { |c| c.subregions.detect { |r| r.type == 'state' } })
 
   [name, iso3, iso, iso_name, numcode, states_required].join(", ")
 end
