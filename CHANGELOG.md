@@ -1,4 +1,6 @@
-## Solidus 2.11.0 (master, unreleased)
+## Solidus 3.0.0 (master, unreleased)
+
+## Solidus 2.11.0 (2020-10-23)
 
 ### Major Changes
 
@@ -137,7 +139,7 @@ Check the related guide for more details https://guides.solidus.io/developers/pr
 
 - Add new type encrypted_string for preferences [#3676](https://github.com/solidusio/solidus/pull/3676) ([stefano-sarioli](https://github.com/stefano-sarioli))
 
-**Add "discontinue on" attribute to products** 
+**Add "discontinue on" attribute to products**
 Adds a `discontinue_on` attribute to products. This accompanies the `available_on` attribute to complete the "Time Based Availability" feature. The `Product.available` scope and `Product#avaliable?` method take this new date field into account to calculate the availability of products.
 
 - Add discontinue on to products [#3793](https://github.com/solidusio/solidus/pull/3793) ([tvdeyen](https://github.com/tvdeyen))
