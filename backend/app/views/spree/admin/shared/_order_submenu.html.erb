@@ -20,13 +20,13 @@
       <%= link_to plural_resource_name(Spree::Shipment), spree.edit_admin_order_url(@order) %>
     </li>
 
-    <% if can? :read, Spree::Adjustment %>
+    <% if can? :show, Spree::Adjustment %>
       <li class="<%= "active" if current == "Adjustments" %>" data-hook='admin_order_tabs_adjustments'>
         <%= link_to plural_resource_name(Spree::Adjustment), spree.admin_order_adjustments_url(@order) %>
       </li>
     <% end %>
 
-    <% if can?(:read, Spree::Payment) %>
+    <% if can?(:show, Spree::Payment) %>
       <li class="<%= "active" if current == "Payments" %>" data-hook='admin_order_tabs_payments'>
         <%= link_to plural_resource_name(Spree::Payment), spree.admin_order_payments_url(@order) %>
       </li>
@@ -38,7 +38,7 @@
       </li>
     <% end %>
 
-    <% if can? :read, Spree::ReturnAuthorization %>
+    <% if can? :show, Spree::ReturnAuthorization %>
       <% if @order.completed? %>
         <li class="tab <%= "active" if current == "Return Authorizations" %>" data-hook='admin_order_tabs_return_authorizations'>
           <%= link_to t('spree.admin.tab.rma'), spree.admin_order_return_authorizations_url(@order) %>
@@ -46,7 +46,7 @@
       <% end %>
     <% end %>
 
-    <% if can? :read, Spree::CustomerReturn %>
+    <% if can? :show, Spree::CustomerReturn %>
       <% if @order.completed? %>
         <li class="<%= "active" if current == "Customer Returns" %>" data-hook='admin_order_tabs_customer_returns'>
           <%= link_to plural_resource_name(Spree::CustomerReturn), spree.admin_order_customer_returns_url(@order) %>

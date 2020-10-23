@@ -52,7 +52,7 @@
             </span>
           </td>
           <td>
-            <% if can?(:read, Spree::StockMovement) %>
+            <% if can?(:show, Spree::StockMovement) %>
               <%= link_to plural_resource_name(Spree::StockMovement), admin_stock_location_stock_movements_path(stock_location.id) %>
             <% else %>
               Stock Movements

@@ -1,6 +1,6 @@
 <% admin_breadcrumb(t('spree.settings')) %>
 <% admin_breadcrumb(t('spree.admin.tab.shipping')) %>
-<% if can?(:read, Spree::StockLocation) %>
+<% if can?(:show, Spree::StockLocation) %>
   <% admin_breadcrumb(link_to plural_resource_name(Spree::StockLocation), spree.admin_stock_locations_path) %>
 <% else %>
   <% admin_breadcrumb(plural_resource_name(Spree::StockLocation)) %>

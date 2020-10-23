@@ -1,16 +1,16 @@
 <% content_for :tabs do %>
   <nav>
     <ul class="tabs" data-hook="admin_settings_shipping_tabs">
-      <% if can?(:read, Spree::ShippingMethod) %>
+      <% if can?(:show, Spree::ShippingMethod) %>
         <%= settings_tab_item plural_resource_name(Spree::ShippingMethod), spree.admin_shipping_methods_path %>
       <% end %>
 
-      <% if can?(:read, Spree::ShippingCategory) %>
+      <% if can?(:show, Spree::ShippingCategory) %>
         <%= settings_tab_item plural_resource_name(Spree::ShippingCategory), spree.admin_shipping_categories_path %>
 
       <% end %>
 
-      <% if can?(:read, Spree::StockLocation) %>
+      <% if can?(:show, Spree::StockLocation) %>
         <%= settings_tab_item plural_resource_name(Spree::StockLocation), spree.admin_stock_locations_path %>
       <% end %>
     </ul>
