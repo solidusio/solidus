@@ -15,7 +15,7 @@ module Spree
     attr_reader :user
 
     CUSTOM_ALIASES_MAP = {
-      destroy: :delete,
+      delete: :destroy,
       display: :read,
       new_action: :create,
       read: :show

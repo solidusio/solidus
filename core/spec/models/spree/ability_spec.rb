@@ -301,10 +301,10 @@ RSpec.describe Spree::Ability, type: :model do
     end
 
     it 'raises deprecation on destroy' do
-      ability.can?(:destroy, Object.new)
+      ability.can?(:delete, Object.new)
 
       expect(Spree::Deprecation).to have_received(:warn)
-        .with(a_string_matching(/alias action :destroy is deprecated/), any_args)
+        .with(a_string_matching(/alias action :delete is deprecated/), any_args)
     end
 
     it 'raises deprecation on :new_action' do
