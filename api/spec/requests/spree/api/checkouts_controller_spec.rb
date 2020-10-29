@@ -289,36 +289,6 @@ module Spree
           expect(response.status).to eq 200
           expect(order.credit_cards).to match_array [credit_card]
         end
-
-        context 'with deprecated existing_card_id param' do
-          let(:params) do
-            {
-              order_token: order.guest_token,
-              order: {
-                payments_attributes: [
-                  {
-                    source_attributes: {
-                      existing_card_id: credit_card.id.to_param,
-                      verification_value: '456'
-                    }
-                  }
-                ]
-              }
-            }
-          end
-
-          before do
-            expect(Spree::Deprecation).to receive(:warn).
-              with(/^Passing existing_card_id to PaymentCreate is deprecated/, any_args)
-          end
-
-          it 'succeeds' do
-            put spree.api_checkout_path(order), params: params
-
-            expect(response.status).to eq 200
-            expect(order.credit_cards).to match_array [credit_card]
-          end
-        end
       end
 
       it "cannot update attributes of another step" do

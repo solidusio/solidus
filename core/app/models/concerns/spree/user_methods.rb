@@ -7,7 +7,6 @@ module Spree
     include Spree::UserApiAuthentication
     include Spree::UserReporting
     include Spree::UserAddressBook
-    include Spree::UserPaymentSource
 
     included do
       extend Spree::DisplayMoney
