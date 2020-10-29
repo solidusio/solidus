@@ -155,11 +155,6 @@ module Spree
       end
     end
 
-    def set_state_if_present
-      ensure_order_is_not_skipping_states
-    end
-    deprecate set_state_if_present: :prevent_order_from_skipping_states, deprecator: Spree::Deprecation
-
     def ensure_checkout_allowed
       unless @order.checkout_allowed?
         redirect_to spree.cart_path
