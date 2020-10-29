@@ -211,14 +211,6 @@ module Spree
         @wallet_payment_sources = try_spree_current_user.wallet.wallet_payment_sources
         @default_wallet_payment_source = @wallet_payment_sources.detect(&:default) ||
                                          @wallet_payment_sources.first
-
-        @payment_sources = Spree::DeprecatedInstanceVariableProxy.new(
-          self,
-          :deprecated_payment_sources,
-          :@payment_sources,
-          Spree::Deprecation,
-          "Please, do not use @payment_sources anymore, use @wallet_payment_sources instead."
-        )
       end
     end
 
@@ -247,23 +239,6 @@ module Spree
           redirect_to spree.checkout_state_path(@order.state)
         end
       end
-    end
-
-    # This method returns payment sources of the current user. It is no more
-    # used into our frontend. We used to assign the content of this method
-    # into an ivar (@payment_sources) into the checkout payment step. This
-    # method is here only to be able to deprecate this ivar and will be removed.
-    #
-    # DO NOT USE THIS METHOD!
-    #
-    # @return [Array<Spree::PaymentSource>] Payment sources connected to
-    #   current user wallet.
-    # @deprecated This method has been added to deprecate @payment_sources
-    #   ivar and will be removed. Use @wallet_payment_sources instead.
-    def deprecated_payment_sources
-      try_spree_current_user.wallet.wallet_payment_sources
-        .map(&:payment_source)
-        .select { |ps| ps.is_a?(Spree::CreditCard) }
     end
   end
 end
