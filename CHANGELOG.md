@@ -294,7 +294,7 @@ If you need to consider actionless promotions as active for any reason please im
 - Use a better name for CheckoutController#set_state_if_present [#3496](https://github.com/solidusio/solidus/pull/3496) ([elia](https://github.com/elia))
 - Replace with :all_adjustments.nonzero.any? [#3787](https://github.com/solidusio/solidus/pull/3787) ([duartemvix](https://github.com/duartemvix))
 
-### API
+### API
 
 - Return API Users with distinct result when using Ransack [#3674](https://github.com/solidusio/solidus/pull/3674) ([hefan](https://github.com/hefan))
 - Revert "API uploads images via URL" (#3573) [#3622](https://github.com/solidusio/solidus/pull/3622) ([kennyadsl](https://github.com/kennyadsl))
@@ -314,7 +314,7 @@ If you need to consider actionless promotions as active for any reason please im
 - Deprecate Spree::Address firstname, lastname and full_name [#3584](https://github.com/solidusio/solidus/pull/3584) ([filippoliverani](https://github.com/filippoliverani))
 - Deprecate reimbursement hooks [#3541](https://github.com/solidusio/solidus/pull/3541) ([spaghetticode](https://github.com/spaghetticode))
 
-### Misc
+### Misc
 
 - Explicit deprecation warning mocks [#3753](https://github.com/solidusio/solidus/pull/3753) ([cedum](https://github.com/cedum))
 - Set payment method to none [#3751](https://github.com/solidusio/solidus/pull/3751) ([peterberkenbosch](https://github.com/peterberkenbosch))
