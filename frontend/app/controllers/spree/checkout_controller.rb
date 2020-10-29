@@ -17,7 +17,6 @@ module Spree
 
     before_action :associate_user
     before_action :check_authorization
-    before_action :apply_coupon_code, only: [:update]
 
     before_action :setup_for_current_state, only: [:edit, :update]
 
@@ -182,24 +181,6 @@ module Spree
     # Provides a route to redirect after order completion
     def completion_route
       spree.order_path(@order)
-    end
-
-    def apply_coupon_code
-      if update_params[:coupon_code].present?
-        Spree::Deprecation.warn('This endpoint is deprecated. Please use `Spree::CouponCodesController#create` endpoint instead.')
-        @order.coupon_code = update_params[:coupon_code]
-
-        handler = PromotionHandler::Coupon.new(@order).apply
-
-        if handler.error.present?
-          flash.now[:error] = handler.error
-        elsif handler.success
-          flash[:success] = handler.success
-        end
-
-        setup_for_current_state
-        respond_with(@order) { |format| format.html { render :edit } } && return
-      end
     end
 
     def setup_for_current_state

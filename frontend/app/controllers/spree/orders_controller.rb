@@ -10,7 +10,6 @@ module Spree
     before_action :assign_order, only: :update
     # note: do not lock the #edit action because that's where we redirect when we fail to acquire a lock
     around_action :lock_order, only: :update
-    before_action :apply_coupon_code, only: :update
     skip_before_action :verify_authenticity_token, only: [:populate]
 
     def show
@@ -121,22 +120,6 @@ module Spree
       unless @order
         flash[:error] = t('spree.order_not_found')
         redirect_to(root_path) && return
-      end
-    end
-
-    def apply_coupon_code
-      if order_params[:coupon_code].present?
-        Spree::Deprecation.warn('This endpoint is deprecated. Please use `Spree::CouponCodesController#create` endpoint instead.')
-        @order.coupon_code = order_params[:coupon_code]
-
-        handler = PromotionHandler::Coupon.new(@order).apply
-
-        if handler.error.present?
-          flash.now[:error] = handler.error
-          respond_with(@order) { |format| format.html { render :edit } } && return
-        elsif handler.success
-          flash[:success] = handler.success
-        end
       end
     end
   end

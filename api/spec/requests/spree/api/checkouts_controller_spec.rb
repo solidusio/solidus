@@ -347,23 +347,6 @@ module Spree
         expect(json_response['email']).to eq("guest@solidus.io")
         expect(response.status).to eq(200)
       end
-
-      it "can apply a coupon code to an order" do
-        expect(Spree::Deprecation).to receive(:warn)
-        order.update_column(:state, "payment")
-        expect(PromotionHandler::Coupon).to receive(:new).with(order).and_call_original
-        expect_any_instance_of(PromotionHandler::Coupon).to receive(:apply).and_return({ coupon_applied?: true })
-        put spree.api_checkout_path(order.to_param), params: { order_token: order.guest_token, order: { coupon_code: "foobar" } }
-        expect(response.status).to eq(200)
-      end
-
-      it "renders error failing to apply coupon" do
-        expect(Spree::Deprecation).to receive(:warn)
-        order.update_column(:state, "payment")
-        put spree.api_checkout_path(order.to_param), params: { order_token: order.guest_token, order: { coupon_code: "foobar" } }
-        expect(response.status).to eq(422)
-        expect(json_response).to eq({ "error" => "The coupon code you entered doesn't exist. Please try again." })
-      end
     end
 
     context "PUT 'next'" do

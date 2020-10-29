@@ -153,57 +153,6 @@ describe Spree::OrdersController, type: :controller do
           put :update, params: { checkout: true }
           expect(response).to redirect_to checkout_state_path('address')
         end
-
-        context 'trying to apply a coupon code' do
-          let(:order) { create(:order_with_line_items, state: 'cart') }
-          let(:coupon_code) { "coupon_code" }
-
-          context "when coupon code is empty" do
-            let(:coupon_code) { "" }
-
-            it 'does not try to apply coupon code' do
-              expect(Spree::PromotionHandler::Coupon).not_to receive :new
-
-              put :update, params: { state: order.state, order: { coupon_code: coupon_code } }
-
-              expect(response).to redirect_to(spree.cart_path)
-            end
-          end
-
-          context "when coupon code is applied" do
-            let(:promotion_handler) { instance_double('Spree::PromotionHandler::Coupon', error: nil, success: 'Coupon Applied!') }
-
-            it "continues checkout flow normally" do
-              expect(Spree::Deprecation).to receive(:warn)
-
-              expect(Spree::PromotionHandler::Coupon)
-                .to receive_message_chain(:new, :apply)
-                .and_return(promotion_handler)
-
-              put :update, params: { state: order.state, order: { coupon_code: coupon_code } }
-
-              expect(response).to redirect_to(spree.cart_path)
-              expect(flash.now[:success]).to eq('Coupon Applied!')
-            end
-
-            context "when coupon code is not applied" do
-              let(:promotion_handler) { instance_double('Spree::PromotionHandler::Coupon', error: 'Some error', success: false) }
-
-              it "render cart with coupon error" do
-                expect(Spree::Deprecation).to receive(:warn)
-
-                expect(Spree::PromotionHandler::Coupon)
-                  .to receive_message_chain(:new, :apply)
-                  .and_return(promotion_handler)
-
-                put :update, params: { state: order.state, order: { coupon_code: coupon_code } }
-
-                expect(response).to render_template :edit
-                expect(flash.now[:error]).to eq('Some error')
-              end
-            end
-          end
-        end
       end
     end
 

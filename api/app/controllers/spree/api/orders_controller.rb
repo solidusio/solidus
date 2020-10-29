@@ -12,8 +12,6 @@ module Spree
       class_attribute :admin_payment_attributes
       self.admin_payment_attributes = [:payment_method, :amount, :state, source: {}]
 
-      skip_before_action :authenticate_user, only: :apply_coupon_code
-
       before_action :find_order, except: [:create, :mine, :current, :index]
       around_action :lock_order, except: [:create, :mine, :current, :index, :show]
 
@@ -101,20 +99,6 @@ module Spree
           @orders = paginate(@orders)
         else
           render "spree/api/errors/unauthorized", status: :unauthorized
-        end
-      end
-
-      def apply_coupon_code
-        Spree::Deprecation.warn('This method is deprecated. Please use `Spree::Api::CouponCodesController#create` endpoint instead.')
-
-        authorize! :update, @order, order_token
-        @order.coupon_code = params[:coupon_code]
-        @handler = PromotionHandler::Coupon.new(@order).apply
-        if @handler.successful?
-          render "spree/api/promotions/handler", status: 200
-        else
-          logger.error("apply_coupon_code_error=#{@handler.error.inspect}")
-          render "spree/api/promotions/handler", status: 422
         end
       end
 

@@ -4268,42 +4268,6 @@ paths:
                   type: integer
                 position:
                   type: integer
-  '/orders/{order_number}/apply_coupon_code':
-    put:
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/coupon-code-handler'
-        '401':
-          $ref: '#/components/responses/invalid-api-key'
-        '404':
-          $ref: '#/components/responses/not-found'
-        '422':
-          $ref: '#/components/responses/unprocessable-entity'
-      summary: Apply order coupon code
-      deprecated: true
-      description: >-
-        **Deprecated:** This method is deprecated. Please use
-        `Spree::Api::CouponCodesController#create` endpoint instead.
-
-        Applies a coupon code on the order.
-      operationId: apply-order-coupon-code
-      tags:
-        - Coupon codes
-      security:
-        - api-key: []
-        - order-token: []
-      requestBody:
-        $ref: '#/components/requestBodies/coupon-code-input'
-    parameters:
-      - name: order_number
-        in: path
-        required: true
-        schema:
-          type: string
   '/orders/{order_number}/cancel':
     put:
       responses:
