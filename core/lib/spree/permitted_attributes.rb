@@ -142,7 +142,6 @@ module Spree
     ]
 
     @@checkout_payment_attributes = [
-      :coupon_code,
       payments_attributes: payment_attributes + [
         source_attributes: source_attributes
       ]
