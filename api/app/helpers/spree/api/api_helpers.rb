@@ -126,18 +126,11 @@ module Spree
         :id, :number, :state, :order_id, :memo, :created_at, :updated_at
       ]
 
-      @@address_base_attributes = [
+      @@address_attributes = [
         :id, :name, :address1, :address2, :city, :zipcode, :phone, :company,
         :alternative_phone, :country_id, :country_iso, :state_id, :state_name,
         :state_text
       ]
-
-      @@address_attributes = if Spree::Config.use_combined_first_and_last_name_in_address
-                               @@address_base_attributes
-                             else
-                               @@address_base_attributes +
-                                 Spree::Address::LEGACY_NAME_ATTRS.map(&:to_sym)
-                             end
 
       @@country_attributes = [:id, :iso_name, :iso, :iso3, :name, :numcode]
 
