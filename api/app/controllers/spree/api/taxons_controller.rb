@@ -29,11 +29,6 @@ module Spree
         respond_with(@taxon)
       end
 
-      def jstree
-        Spree::Deprecation.warn("Please don't use `/api/taxonomies/:taxonomy_id/taxons/:taxon_id/jstree` endpoint. It is deprecated and will be removed in the next future.", caller)
-        show
-      end
-
       def create
         authorize! :create, Taxon
         @taxon = Spree::Taxon.new(taxon_params)
