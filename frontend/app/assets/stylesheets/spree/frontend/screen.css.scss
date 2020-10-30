@@ -1117,6 +1117,12 @@ table.order-summary {
             color: $link_text_color;
           }
         }
+
+        &.order-status,
+        &.order-payment-state,
+        &.order-shipment-state {
+          text-transform: capitalize;
+        }
       }
     }
   }
