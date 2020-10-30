@@ -86,7 +86,6 @@ RSpec.configure do |config|
   config.include Spree::TestingSupport::UrlHelpers
   config.include Spree::TestingSupport::ControllerRequests, type: :controller
   config.include Spree::TestingSupport::Flash
-  config.include Spree::TestingSupport::BlacklistUrls
 
   config.example_status_persistence_file_path = "./spec/examples.txt"
 

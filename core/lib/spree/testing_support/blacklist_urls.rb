@@ -13,6 +13,8 @@ module Spree
 end
 
 RSpec.configure do |config|
+  config.include Spree::TestingSupport::BlacklistUrls
+
   config.before(:each, type: :feature) do
     setup_url_blacklist(page.driver.browser)
   end
