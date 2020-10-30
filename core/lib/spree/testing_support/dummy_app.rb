@@ -121,7 +121,6 @@ Spree.config do |config|
   config.redirect_back_on_unauthorized = true
   config.run_order_validations_on_order_updater = true
   config.use_legacy_order_state_machine = false
-  config.use_custom_cancancan_actions = false
   config.consider_actionless_promotion_active = false
   config.use_legacy_store_credit_reimbursement_category_name = false
 
