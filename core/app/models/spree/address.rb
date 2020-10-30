@@ -14,34 +14,23 @@ module Spree
     belongs_to :country, class_name: "Spree::Country", optional: true
     belongs_to :state, class_name: "Spree::State", optional: true
 
-    validates :address1, :city, :country_id, presence: true
+    validates :address1, :city, :country_id, :name, presence: true
     validates :zipcode, presence: true, if: :require_zipcode?
     validates :phone, presence: true, if: :require_phone?
-
-    validate :validate_name
 
     validate do
       self.class.state_validator_class.new(self).perform
     end
 
-    alias_attribute :first_name, :firstname
-    alias_attribute :last_name, :lastname
-    alias_attribute :full_name, :name
-
     DB_ONLY_ATTRS = %w(id updated_at created_at)
     TAXATION_ATTRS = %w(state_id country_id zipcode)
-    LEGACY_NAME_ATTRS = %w(firstname lastname full_name)
+    LEGACY_NAME_ATTRS = %w(firstname lastname)
 
     self.whitelisted_ransackable_attributes = %w[firstname lastname]
 
     scope :with_values, ->(attributes) do
       where(value_attributes(attributes))
     end
-
-    Spree::Deprecation.deprecate_methods(
-      Spree::Address,
-      LEGACY_NAME_ATTRS.product([:name]).to_h
-    )
 
     # @return [Address] an address with default attributes
     def self.build_default(*args, &block)
@@ -74,17 +63,7 @@ module Spree
     # @return [Hash] hash of attributes contributing to value equality with optional merge
     def self.value_attributes(base_attributes, merge_attributes = {})
       base = base_attributes.stringify_keys.merge(merge_attributes.stringify_keys)
-
-      name_from_attributes = Spree::Address::Name.from_attributes(base)
-      if base['firstname'].presence || base['first_name'].presence
-        base['firstname'] = name_from_attributes.first_name
-      end
-      if base['lastname'].presence || base['last_name'].presence
-        base['lastname'] = name_from_attributes.last_name
-      end
-      excluded_attributes = DB_ONLY_ATTRS + %w(first_name last_name)
-
-      base.except(*excluded_attributes)
+      base.except(*DB_ONLY_ATTRS)
     end
 
     # @return [Hash] hash of attributes contributing to value equality
@@ -200,26 +179,10 @@ module Spree
     end
 
     def as_json(options = {})
-      if Spree::Config.use_combined_first_and_last_name_in_address
-        super(options.merge(except: LEGACY_NAME_ATTRS)).tap do |hash|
-          hash['name'] = name
-        end
-      else
-        super
+      super.tap do |hash|
+        hash.except!(*LEGACY_NAME_ATTRS)
+        hash['name'] = name
       end
-    end
-
-    private
-
-    def validate_name
-      return if name.present?
-
-      name_attribute = if Spree::Config.use_combined_first_and_last_name_in_address
-        :name
-      else
-        :firstname
-      end
-      errors.add(name_attribute, :blank)
     end
   end
 end

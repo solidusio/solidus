@@ -16,9 +16,6 @@ json.array!(@users) do |user|
     :country_id,
     :company
   ]
-  unless Spree::Config.use_combined_first_and_last_name_in_address
-    address_fields.push(:firstname, :lastname)
-  end
   json.ship_address do
     if user.ship_address
       json.(user.ship_address, *address_fields)
