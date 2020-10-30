@@ -15,6 +15,8 @@ module Spree
 end
 
 RSpec.configure do |config|
+  config.include Spree::TestingSupport::Translations
+
   config.after(:each, type: :feature) do |example|
     check_missing_translations(page, example)
   end
