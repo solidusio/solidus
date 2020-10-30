@@ -78,11 +78,13 @@ combine it with your own custom frontend, admin interface, and API.
 
 ## Demo
 
-Try out Solidus with one-click on Heroku:
+You can try the live Solidus demo [here.](http://demo.solidus.io/) The admin section can be accessed [here.](http://demo.solidus.io/admin)
+
+You can also try out Solidus with one-click on Heroku:
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/solidusio/solidus-example-app)
 
-Alternatively, you can use Docker to run a demo on your local machine. Run the
+Additionally, you can use Docker to run a demo on your local machine. Run the
 following command to download the image and run it at
 [http://localhost:3000](http://localhost:3000).
 
