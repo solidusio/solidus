@@ -5,7 +5,7 @@ RSpec.shared_examples 'an attachment' do
     before do
       subject.send(
         :"#{attachment_name}=",
-        File.open(File.join('spec', 'fixtures', 'thinking-cat.jpg'))
+        File.open(File.join('lib', 'fixtures', 'thinking-cat.jpg'))
       )
     end
 

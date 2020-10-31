@@ -10,7 +10,7 @@ RSpec.describe Spree::Image, type: :model do
   end
 
   describe 'attachment details' do
-    let(:image_file) { File.open(File.join('spec', 'fixtures', 'thinking-cat.jpg')) }
+    let(:image_file) { File.open(File.join('lib', 'fixtures', 'thinking-cat.jpg')) }
     subject { create(:image, attachment: image_file) }
 
     it 'returns if attachment is present' do
