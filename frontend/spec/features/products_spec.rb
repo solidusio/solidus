@@ -197,7 +197,7 @@ describe "Visiting Products", type: :feature, inaccessible: true do
 
     it "should not display no image available" do
       visit spree.root_path
-      expect(page).to have_xpath("//img[contains(@src,'thinking-cat')]")
+      expect(page).to have_xpath("//img[contains(@src,'blank')]")
     end
   end
 
