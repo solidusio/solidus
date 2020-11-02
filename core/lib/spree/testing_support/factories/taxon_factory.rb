@@ -9,7 +9,7 @@ FactoryBot.define do
     parent_id { nil }
 
     trait :with_icon do
-      icon { Spree::Core::Engine.root.join('lib', 'fixtures', 'thinking-cat.jpg').open }
+      icon { Spree::Core::Engine.root.join('lib', 'spree', 'testing_support', 'fixtures', 'blank.jpg').open }
     end
   end
 end
