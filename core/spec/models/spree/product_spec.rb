@@ -537,7 +537,7 @@ RSpec.describe Spree::Product, type: :model do
 
   context "#images" do
     let(:product) { create(:product) }
-    let(:image) { File.open(Spree::Core::Engine.root.join('lib', 'fixtures', 'thinking-cat.jpg')) }
+    let(:image) { File.open(Spree::Core::Engine.root.join('lib', 'spree', 'testing_support', 'fixtures', 'blank.jpg')) }
     let(:params) { { viewable_id: product.master.id, viewable_type: 'Spree::Variant', attachment: image, alt: "position 2", position: 2 } }
 
     before do

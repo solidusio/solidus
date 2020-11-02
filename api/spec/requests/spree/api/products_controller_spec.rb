@@ -125,9 +125,9 @@ module Spree
       end
 
       it "gets a single product" do
-        product.master.images.create!(attachment: image("thinking-cat.jpg"))
+        product.master.images.create!(attachment: image("blank.jpg"))
         product.variants.create!
-        product.variants.first.images.create!(attachment: image("thinking-cat.jpg"))
+        product.variants.first.images.create!(attachment: image("blank.jpg"))
         product.set_property("spree", "rocks")
         product.taxons << create(:taxon)
 
