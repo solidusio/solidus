@@ -109,6 +109,25 @@ created.
 ### Installing Solidus
 
 <details>
+  <summary>For Solidus v2.11 and above</summary>
+
+  Add the following to your Gemfile.
+
+  ```ruby
+  gem 'solidus'
+  ```
+
+  Run the `bundle` command to install.
+
+  After installing gems, you'll have to run the generator to create necessary
+  configuration files and migrations.
+
+  ```bash
+  bin/rails g solidus:install
+  ```
+</details>
+
+<details>
   <summary>For Solidus v2.10 and below</summary>
 
   Add the following to your Gemfile. Skip the `solidus_auth_devise` part
@@ -126,25 +145,6 @@ created.
 
   ```bash
   bin/rails g spree:install
-  ```
-</details>
-
-<details>
-  <summary>For Solidus v2.11 (still unreleased) and above</summary>
-
-  Add the following to your Gemfile.
-
-  ```ruby
-  gem 'solidus'
-  ```
-
-  Run the `bundle` command to install.
-
-  After installing gems, you'll have to run the generator to create necessary
-  configuration files and migrations.
-
-  ```bash
-  bin/rails g solidus:install
   ```
 </details>
 
