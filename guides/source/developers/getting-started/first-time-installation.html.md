@@ -112,7 +112,7 @@ After the gems have been successfully installed, you need to create the
 necessary configuration files and instructions for the database using generators
 provided by Solidus and Railties.
 
-#### For Solidus v2.11 (still unreleased) and above
+#### For Solidus v2.11 and above
 
 Run the `solidus:install` generator:
 
