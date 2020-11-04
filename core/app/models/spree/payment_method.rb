@@ -67,13 +67,6 @@ module Spree
     end
 
     class << self
-      # @deprecated Use Spree::Config.environment.payment_methods instead
-      def providers
-        Spree::Deprecation.warn 'Spree::PaymentMethod.providers is deprecated and will be deleted in Solidus 3.0. ' \
-          'Please use Rails.application.config.spree.payment_methods instead'
-        Spree::Config.environment.payment_methods
-      end
-
       # @deprecated Use {.active}, {.available_to_users}, and {.available_to_admin} scopes instead.
       def available(display_on = nil, store: nil)
         Spree::Deprecation.warn "Spree::PaymentMethod.available is deprecated."\
@@ -138,8 +131,6 @@ module Spree
 
       @gateway ||= gateway_class.new(gateway_options)
     end
-    alias_method :provider, :gateway
-    deprecate provider: :gateway, deprecator: Spree::Deprecation
 
     # Represents all preferences as a Hash
     #
@@ -274,14 +265,7 @@ module Spree
     # Represents the gateway class of this payment method
     #
     def gateway_class
-      if respond_to? :provider_class
-        Spree::Deprecation.warn \
-          "provider_class is deprecated and will be removed from Solidus 3.0 " \
-          "(use gateway_class instead)"
-        public_send :provider_class
-      else
-        raise ::NotImplementedError, "You must implement gateway_class method for #{self.class}."
-      end
+      raise ::NotImplementedError, "You must implement gateway_class method for #{self.class}."
     end
   end
 end
