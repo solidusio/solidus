@@ -14,7 +14,7 @@ module Spree
     end
 
     def partial_name
-      deprecated_method_type_override || 'gateway'
+      'gateway'
     end
 
     def supports?(source)
