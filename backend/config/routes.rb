@@ -102,7 +102,6 @@ Spree::Core::Engine.routes.draw do
           put :fire
         end
 
-        resources :log_entries
         resources :refunds, only: [:new, :create, :edit, :update]
       end
 
