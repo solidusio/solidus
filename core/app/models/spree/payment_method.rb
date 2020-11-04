@@ -18,19 +18,6 @@ module Spree
 
     acts_as_list
 
-    # @private
-    def self.const_missing(name)
-      if name == :DISPLAY
-        Spree::Deprecation.warn(
-          "#{self}::DISPLAY has been deprecated and will be removed in Solidus v3.",
-          caller
-        )
-        const_set(:DISPLAY, [:both, :front_end, :back_end])
-      else
-        super
-      end
-    end
-
     validates :name, :type, presence: true
 
     has_many :payments, class_name: "Spree::Payment", inverse_of: :payment_method
