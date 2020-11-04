@@ -54,29 +54,6 @@ module Spree
     end
 
     class << self
-      # @deprecated Use {.active}, {.available_to_users}, and {.available_to_admin} scopes instead.
-      def available(display_on = nil, store: nil)
-        Spree::Deprecation.warn "Spree::PaymentMethod.available is deprecated."\
-          "Please use .active, .available_to_users, and .available_to_admin scopes instead."\
-          "For payment methods associated with a specific store, use Spree::PaymentMethod.available_to_store(your_store)"\
-          " as the base applying any further filtering"
-
-        display_on = display_on.to_s
-
-        available_payment_methods =
-          case display_on
-          when 'front_end'
-            active.available_to_users
-          when 'back_end'
-            active.available_to_admin
-          else
-            active.available_to_users.available_to_admin
-          end
-        available_payment_methods.select do |payment|
-          store.nil? || store.payment_methods.empty? || store.payment_methods.include?(payment)
-        end
-      end
-
       def model_name
         ModelName.new(self, Spree)
       end
@@ -135,29 +112,6 @@ module Spree
     # Returning nil means the payment method doesn't support storing sources (e.g. Spree::PaymentMethod::Check)
     def payment_source_class
       raise ::NotImplementedError, "You must implement payment_source_class method for #{self.class}."
-    end
-
-    # @deprecated Use {Spree::PaymentMethod#available_to_users=} and {Spree::PaymentMethod#available_to_admin=} instead
-    def display_on=(value)
-      Spree::Deprecation.warn "Spree::PaymentMethod#display_on= is deprecated."\
-        "Please use #available_to_users= and #available_to_admin= instead."
-      self.available_to_users = value.blank? || value == 'front_end'
-      self.available_to_admin = value.blank? || value == 'back_end'
-    end
-
-    # @deprecated Use {Spree::PaymentMethod#available_to_users} and {Spree::PaymentMethod#available_to_admin} instead
-    def display_on
-      Spree::Deprecation.warn "Spree::PaymentMethod#display_on is deprecated."\
-        "Please use #available_to_users and #available_to_admin instead."
-      if available_to_users? && available_to_admin?
-        ''
-      elsif available_to_users?
-        'front_end'
-      elsif available_to_admin?
-        'back_end'
-      else
-        'none'
-      end
     end
 
     # Used as partial name for your payment method
