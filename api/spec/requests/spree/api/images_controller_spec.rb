@@ -22,7 +22,7 @@ module Spree
         expect do
           post spree.api_product_images_path(product.id), params: {
             image: {
-              attachment: upload_image('thinking-cat.jpg'),
+              attachment: upload_image('blank.jpg'),
               viewable_type: 'Spree::Variant',
               viewable_id: product.master.to_param
             },
@@ -33,7 +33,7 @@ module Spree
       end
 
       context "working with an existing product image" do
-        let!(:product_image) { product.master.images.create!(attachment: image('thinking-cat.jpg')) }
+        let!(:product_image) { product.master.images.create!(attachment: image('blank.jpg')) }
 
         it "can get a single product image" do
           get spree.api_product_image_path(product.id, product_image)
@@ -77,7 +77,7 @@ module Spree
       end
 
       context 'when image belongs to another product' do
-        let!(:product_image) { another_product.master.images.create!(attachment: image('thinking-cat.jpg')) }
+        let!(:product_image) { another_product.master.images.create!(attachment: image("blank.jpg")) }
         let(:another_product) { create(:product) }
 
         it "cannot get an image of another product" do
@@ -102,7 +102,7 @@ module Spree
     end
 
     context "as a non-admin" do
-      let(:product_image) { product.master.images.create!(attachment: image('thinking-cat.jpg')) }
+      let(:product_image) { product.master.images.create!(attachment: image("blank.jpg")) }
 
       it "cannot create an image" do
         post spree.api_product_images_path(product.id)

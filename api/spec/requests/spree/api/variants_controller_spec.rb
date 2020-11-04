@@ -55,7 +55,7 @@ module Spree
       end
 
       it "variants returned contain images data" do
-        variant.images.create!(attachment: image("thinking-cat.jpg"))
+        variant.images.create!(attachment: image("blank.jpg"))
 
         get spree.api_variants_path
 
@@ -210,7 +210,7 @@ module Spree
       end
 
       it "can see a single variant with images" do
-        variant.images.create!(attachment: image("thinking-cat.jpg"))
+        variant.images.create!(attachment: image("blank.jpg"))
 
         subject
 

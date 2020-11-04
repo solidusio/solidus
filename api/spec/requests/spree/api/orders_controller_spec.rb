@@ -646,7 +646,7 @@ module Spree
         end
 
         it "can list its line items with images" do
-          order.line_items.first.variant.images.create!(attachment: image("thinking-cat.jpg"))
+          order.line_items.first.variant.images.create!(attachment: image("blank.jpg"))
 
           get spree.api_order_path(order)
 
