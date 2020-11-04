@@ -283,11 +283,6 @@ module Spree
     preference :track_inventory_levels, :boolean, default: true
 
 
-    # @!attribute [rw] use_legacy_order_state_machine
-    #   @return [Boolean] Uses the legacy order state machine from Spree::Order::Checkout
-    #   (default: +false+)
-    preference :use_legacy_order_state_machine, :boolean, default: true
-
     # The legacy_store_credit_category_name allows to control whether the legacy
     # way of fetching the category should be used.
     #

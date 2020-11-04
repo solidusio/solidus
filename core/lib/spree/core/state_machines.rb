@@ -68,17 +68,8 @@ module Spree
 
       def order
         @order ||= begin
-          if Spree::Config.use_legacy_order_state_machine
-            Spree::Deprecation.warn(
-              "Spree::Order state machine defined in Spree::Order::Checkout is deprecated. " \
-              "Future versions of Solidus will use Spree::Core::StateMachines::Order}",
-              caller
-            )
-            'Spree::Order::Checkout'
-          else
-            require 'spree/core/state_machines/order'
-            'Spree::Core::StateMachines::Order'
-          end
+          require 'spree/core/state_machines/order'
+          'Spree::Core::StateMachines::Order'
         end
 
         @order.constantize

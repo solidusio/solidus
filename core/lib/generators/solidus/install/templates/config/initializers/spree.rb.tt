@@ -10,9 +10,6 @@ Spree.config do |config|
   # from address for transactional emails
   config.mails_from = "store@example.com"
 
-  # Use legacy Spree::Order state machine
-  config.use_legacy_order_state_machine = false
-
   # Uncomment to stop tracking inventory levels in the application
   # config.track_inventory_levels = false
 
