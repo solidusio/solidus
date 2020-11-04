@@ -58,12 +58,6 @@ module Spree
         ModelName.new(self, Spree)
       end
 
-      # @deprecated Use .active.any? instead
-      def active?
-        Spree::Deprecation.warn "#{self}.active? is deprecated. Use #{self}.active.any? instead"
-        where(type: to_s, active: true).count > 0
-      end
-
       # @deprecated Use .with_discarded.find instead
       def find_with_destroyed(*args)
         Spree::Deprecation.warn "#{self}.find_with_destroyed is deprecated. Use #{self}.with_discarded.find instead"
