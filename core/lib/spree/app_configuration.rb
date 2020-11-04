@@ -283,12 +283,6 @@ module Spree
     preference :track_inventory_levels, :boolean, default: true
 
 
-    # The legacy_store_credit_category_name allows to control whether the legacy
-    # way of fetching the category should be used.
-    #
-    # @param [Boolean] enable/disable the legacy way of fetching the store category name
-    preference :use_legacy_store_credit_reimbursement_category_name, :boolean, default: true
-
     # Other configurations
 
     # Allows restricting what currencies will be available.

@@ -168,15 +168,6 @@ module Spree
     #
     # @return [Spree::StoreCreditCategory]
     def store_credit_category
-      if Spree::Config.use_legacy_store_credit_reimbursement_category_name
-        Spree::Deprecation.warn("Using the legacy reimbursement_category_name is deprecated. "\
-          "Set Spree::Config.use_legacy_store_credit_reimbursement_category_name to false to use "\
-          "the new version instead.", caller)
-
-        name = Spree::StoreCreditCategory.reimbursement_category_name
-        return Spree::StoreCreditCategory.find_by(name: name) || Spree::StoreCreditCategory.first
-      end
-
       Spree::StoreCreditCategory.find_by(name: Spree::StoreCreditCategory::REIMBURSEMENT)
     end
 

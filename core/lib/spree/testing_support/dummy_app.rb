@@ -118,7 +118,6 @@ Spree.user_class = 'Spree::LegacyUser'
 Spree.config do |config|
   config.mails_from = "store@example.com"
   config.consider_actionless_promotion_active = false
-  config.use_legacy_store_credit_reimbursement_category_name = false
 
   if ENV['ENABLE_ACTIVE_STORAGE']
     config.image_attachment_module = 'Spree::Image::ActiveStorageAttachment'
