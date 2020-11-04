@@ -26,14 +26,6 @@ Spree.config do |config|
   config.taxon_attachment_module = 'Spree::Taxon::PaperclipAttachment'
 
   # Defaults
-
-  # Set this configuration to `true` to raise an exception when
-  # an order is populated with a line item with a mismatching
-  # currency. The `false` value will just add a validation error
-  # and will be the only behavior accepted in future versions.
-  # See https://github.com/solidusio/solidus/pull/3456 for more info.
-  config.raise_with_invalid_currency = false
-
   # Set this configuration to false to always redirect the user to
   # /unauthorized when needed, without trying to redirect them to
   # their previous location first.

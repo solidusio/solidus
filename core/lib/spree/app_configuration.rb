@@ -221,13 +221,6 @@ module Spree
     #   @return [Boolean] Promotions should have actions associated before being considered active (default: +true+)
     preference :consider_actionless_promotion_active, :boolean, default: true
 
-    # @!attribute [rw] raise_with_invalid_currency
-    #   Whether to raise an exception if trying to set a line item currency
-    #   different from the order currency. When false a validation error
-    #   is added to the instance instead.
-    #   @return [Boolean] (default: +true+)
-    preference :raise_with_invalid_currency, :boolean, default: true
-
     # @!attribute [rw] redirect_back_on_unauthorized
     #   Whether to try to redirect users back when they try to access
     #   unauthorized routes, before redirect them to /unauthorized.

@@ -56,14 +56,6 @@ module Spree
       end
 
       config.after_initialize do
-        if Spree::Config.raise_with_invalid_currency == true
-          Spree::Deprecation.warn(
-            'Spree::Config.raise_with_invalid_currency set to true is ' \
-            'deprecated. Please note that by switching this value, ' \
-            'Spree::LineItem::CurrencyMismatch will not be raised anymore.',
-            caller
-          )
-        end
         if Spree::Config.consider_actionless_promotion_active == true
           Spree::Deprecation.warn(
             'Spree::Config.consider_actionless_promotion_active set to true is ' \
