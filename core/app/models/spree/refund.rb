@@ -61,7 +61,13 @@ module Spree
       )
 
       log_entries.build(details: perform_response.to_yaml)
-      update!(transaction_id: perform_response.authorization)
+
+      self.transaction_id = perform_response.authorization
+      # This is needed otherwise set_perform_after_create_default callback
+      # will print a deprecation warning when save! creates a record.
+      self.perform_after_create = false unless persisted?
+      save!
+
       update_order
     end
 
