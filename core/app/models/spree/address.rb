@@ -92,31 +92,6 @@ module Spree
       value_attributes == other_address.value_attributes
     end
 
-    # @deprecated Do not use this. Use Address.== instead.
-    def same_as?(other_address)
-      Spree::Deprecation.warn("Address#same_as? is deprecated. It's equivalent to Address.==", caller)
-      self == other_address
-    end
-
-    # @deprecated Do not use this. Use Address.== instead.
-    def same_as(other_address)
-      Spree::Deprecation.warn("Address#same_as is deprecated. It's equivalent to Address.==", caller)
-      self == other_address
-    end
-
-    # @deprecated Do not use this
-    def empty?
-      Spree::Deprecation.warn("Address#empty? is deprecated.", caller)
-      attributes.except('id', 'created_at', 'updated_at', 'country_id').all? { |_, value| value.nil? }
-    end
-
-    # This exists because the default Object#blank?, checks empty? if it is
-    # defined, and we have defined empty.
-    # This should be removed once empty? is removed
-    def blank?
-      false
-    end
-
     # @return [Hash] an ActiveMerchant compatible address hash
     def active_merchant_hash
       {
