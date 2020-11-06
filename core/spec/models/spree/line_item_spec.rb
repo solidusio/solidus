@@ -63,34 +63,6 @@ RSpec.describe Spree::LineItem, type: :model do
         expect(line_item.tax_category).to eq(line_item.variant.tax_category)
       end
     end
-
-    # Specs for https://github.com/solidusio/solidus/pull/522#issuecomment-170668125
-    context "with `#copy_price` defined" do
-      before(:context) do
-        Spree::LineItem.class_eval do
-          def copy_price
-            self.cost_price = 10
-            self.price = 20
-          end
-        end
-      end
-
-      after(:context) do
-        Spree::LineItem.class_eval do
-          remove_method :copy_price
-        end
-      end
-
-      before do
-        expect(Spree::Deprecation).to receive(:warn).
-          with(/^You have overridden Spree::LineItem#copy_price/, any_args)
-      end
-
-      it 'should run the user-defined copy_price method' do
-        expect_any_instance_of(Spree::LineItem).to receive(:copy_price).and_call_original
-        Spree::LineItem.new(variant: variant, order: order)
-      end
-    end
   end
 
   # TODO: Remove this spec after the method has been removed.

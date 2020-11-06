@@ -166,23 +166,11 @@ module Spree
       set_pricing_attributes
     end
 
-    # Set price, cost_price and currency. This method used to be called #copy_price, but actually
-    # did more than just setting the price, hence renamed to #set_pricing_attributes
+    # Set price, cost_price and currency.
     def set_pricing_attributes
-      # If the legacy method #copy_price has been overridden, handle that gracefully
-      return handle_copy_price_override if respond_to?(:copy_price)
-
       self.cost_price ||= variant.cost_price
       self.money_price = variant.price_for(pricing_options) if price.nil?
       true
-    end
-
-    def handle_copy_price_override
-      copy_price
-      Spree::Deprecation.warn 'You have overridden Spree::LineItem#copy_price. ' \
-        'This method is now called Spree::LineItem#set_pricing_attributes. ' \
-        'Please adjust your override.',
-        caller
     end
 
     def update_inventory
