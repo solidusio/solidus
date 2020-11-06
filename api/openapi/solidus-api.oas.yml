@@ -1889,8 +1889,6 @@ paths:
               schema:
                 type: object
                 properties:
-                  default_country_id:
-                    type: integer
                   default_country_iso:
                     type: string
         '401':

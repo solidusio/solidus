@@ -150,11 +150,6 @@ module Spree
     #   @return [Integer] Customer returns to show per-page in the admin (default: +15+)
     preference :customer_returns_per_page, :integer, default: 15
 
-    # @!attribute [rw] default_country_id
-    #   @deprecated Use the default country ISO preference instead
-    #   @return [Integer,nil] id of {Spree::Country} to be selected by default in dropdowns (default: nil)
-    preference :default_country_id, :integer
-
     # @!attribute [rw] default_country_iso
     #   Default customer country ISO code
     #   @return [String] Two-letter ISO code of a {Spree::Country} to assumed as the country of an unidentified customer (default: "US")
