@@ -151,12 +151,6 @@ module Spree
       Spree::Config.pricing_options_class.from_line_item(self)
     end
 
-    def currency=(_currency)
-      Spree::Deprecation.warn 'Spree::LineItem#currency= is deprecated ' \
-        'and will take no effect.',
-        caller
-    end
-
     private
 
     # Sets the quantity to zero if it is nil or less than zero.
