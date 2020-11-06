@@ -53,8 +53,6 @@ RSpec.describe Spree::Shipment, type: :model do
 
   # Regression test for https://github.com/spree/spree/issues/4063
   context "number generation" do
-    before { allow(order).to receive :update! }
-
     it "generates a number containing a letter + 11 numbers" do
       shipment.save
       expect(shipment.number[0]).to eq("H")
@@ -415,8 +413,6 @@ RSpec.describe Spree::Shipment, type: :model do
 
   context "#cancel" do
     it 'cancels the shipment' do
-      allow(shipment.order).to receive(:update!)
-
       shipment.state = 'pending'
       without_partial_double_verification do
         expect(shipment).to receive(:after_cancel)
@@ -517,9 +513,6 @@ RSpec.describe Spree::Shipment, type: :model do
       let(:order){ create(:order_with_line_items, ship_address: address) }
       let(:shipment_with_inventory_units) { create(:shipment, order: order, state: 'canceled') }
       let(:subject) { shipment_with_inventory_units.ship! }
-      before do
-        allow(order).to receive(:update!)
-      end
 
       it 'unstocks them items' do
         expect(shipment_with_inventory_units.stock_location).to receive(:unstock).with(an_instance_of(Spree::Variant), 1, shipment_with_inventory_units)
@@ -530,7 +523,6 @@ RSpec.describe Spree::Shipment, type: :model do
     ['ready', 'canceled'].each do |state|
       context "from #{state}" do
         before do
-          allow(order).to receive(:update!)
           allow(shipment).to receive_messages(state: state)
         end
 

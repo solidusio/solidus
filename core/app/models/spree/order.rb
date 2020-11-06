@@ -279,15 +279,6 @@ module Spree
       updater.update
     end
 
-    def update!(*args)
-      if args.empty?
-        Spree::Deprecation.warn "Calling order.update! with no arguments as a way to invoke the OrderUpdater is deprecated, since it conflicts with AR::Base#update! Please use order.recalculate instead"
-        recalculate
-      else
-        super
-      end
-    end
-
     def assign_billing_to_shipping_address
       self.ship_address = bill_address if bill_address
       true

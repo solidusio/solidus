@@ -135,15 +135,6 @@ module Spree
       amount
     end
 
-    def update!(*args)
-      if args.empty?
-        Spree::Deprecation.warn "Calling adjustment.update! with no arguments to recalculate amounts and eligibility is deprecated, since it conflicts with AR::Base#update! Please use adjustment.recalculate instead"
-        recalculate
-      else
-        super
-      end
-    end
-
     # Calculates based on attached promotion (if this is a promotion
     # adjustment) whether this promotion is still eligible.
     # @api private
