@@ -22,9 +22,9 @@ module Spree
       self.class.state_validator_class.new(self).perform
     end
 
-    DB_ONLY_ATTRS = %w(id updated_at created_at)
-    TAXATION_ATTRS = %w(state_id country_id zipcode)
-    LEGACY_NAME_ATTRS = %w(firstname lastname)
+    DB_ONLY_ATTRS = %w(id updated_at created_at).freeze
+    TAXATION_ATTRS = %w(state_id country_id zipcode).freeze
+    LEGACY_NAME_ATTRS = %w(firstname lastname).freeze
 
     self.whitelisted_ransackable_attributes = %w[firstname lastname]
 
