@@ -233,4 +233,20 @@ RSpec.describe Spree::PaymentMethod, type: :model do
       end
     end
   end
+
+  describe "#find_sti_class" do
+    context "with an unexisting type" do
+      context "while retrieving records" do
+        let!(:unsupported_payment_method) { create(:payment_method, type: 'UnsupportedPaymentMethod') }
+
+        it "raises an UnsupportedPaymentMethod error" do
+          expect { Spree::PaymentMethod.all.to_json }
+            .to raise_error(
+              Spree::PaymentMethod::UnsupportedPaymentMethod,
+              /Found invalid payment type 'UnsupportedPaymentMethod'/
+            )
+        end
+      end
+    end
+  end
 end
