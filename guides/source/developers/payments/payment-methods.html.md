@@ -30,6 +30,10 @@ service providers][payment-service-providers] article.
 - `available_to_users`: Determines if the payment method is visible to users.
 - `available_to_admin`: Determines if the payment method is visible to
   administrators.
+- `type_before_removal`: Contains the previous real payment type, in case `type` has 
+  been removed after switching Payment Service Provider. Defaults to `nil`. For more 
+  information, see the [Payment service providers][payment-service-providers] 
+  article.
 
 [payment-method-base]: https://github.com/solidusio/solidus/blob/master/core/app/models/spree/payment_method.rb
 [payment-service-providers]: payment-service-providers.html
