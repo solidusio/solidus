@@ -4,11 +4,6 @@ Spree::Core::Engine.routes.draw do
   namespace :admin do
     resources :users do
       resource :api_key, controller: 'users/api_key', only: [:create, :destroy]
-
-      member do
-        put :generate_api_key # Deprecated
-        put :clear_api_key # Deprecated
-      end
     end
   end
 
