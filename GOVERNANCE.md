@@ -49,7 +49,7 @@ New Core Team members are appointed by the Core Team.
 
 To apply for the Core Team, you must be proposed by an existing member.
 
-If you don't know anyone, simply send a Slack DM to Jacob Herrington (@Jacob Herrington), explaining
+If you don't know anyone, simply send a Slack DM to Alberto Vena (@kennyadsl), explaining
 why you think you should be in the Core Team and what kind of contribution you expect to bring.
 
 ### Leaving the Core Team
