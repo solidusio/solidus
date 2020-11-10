@@ -17,10 +17,6 @@ describe 'Customer returns', type: :feature do
   end
 
   before do
-    allow(Spree::Deprecation).to receive(:warn) do |message|
-      expect(message).to match('#process_inventory_unit! will not call')
-    end
-
     visit spree.new_admin_order_customer_return_path(order)
   end
 

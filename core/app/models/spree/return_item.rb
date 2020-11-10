@@ -90,14 +90,6 @@ module Spree
       COMPLETED_RECEPTION_STATUSES.map(&:to_s).include?(reception_status.to_s)
     end
 
-    def skip_customer_return_processing=(value)
-      @skip_customer_return_processing = value
-      Deprecation.warn \
-        'From Solidus v2.11 onwards, #skip_customer_return_processing does ' \
-        'nothing, and #process_inventory_unit! will restore calling ' \
-        'customer_return#process_return!', caller(1)
-    end
-
     # @param inventory_unit [Spree::InventoryUnit] the inventory for which we
     #   want a return item
     # @return [Spree::ReturnItem] a valid return item for the given inventory
@@ -204,13 +196,6 @@ module Spree
 
       if should_restock?
         customer_return.stock_location.restock(inventory_unit.variant, 1, customer_return)
-      end
-
-      unless @skip_customer_return_processing.nil?
-        Deprecation.warn \
-          'From Solidus v2.11 onwards, #skip_customer_return_processing does ' \
-          'nothing, and #process_inventory_unit! will restore calling ' \
-          'customer_return#process_return!'
       end
 
       customer_return&.process_return!
