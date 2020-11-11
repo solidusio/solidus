@@ -65,38 +65,6 @@ RSpec.describe Spree::LineItem, type: :model do
     end
   end
 
-  # TODO: Remove this spec after the method has been removed.
-  describe '#discounted_amount' do
-    before do
-      expect(Spree::Deprecation).to receive(:warn).
-        with(/^discounted_amount is deprecated and will be removed/, any_args)
-    end
-
-    it "returns the amount minus any discounts" do
-      line_item.price = 10
-      line_item.quantity = 2
-      line_item.promo_total = -5
-      expect(line_item.discounted_amount).to eq(15)
-    end
-  end
-
-  # TODO: Remove this spec after the method has been removed.
-  describe "#discounted_money" do
-    before do
-      allow(Spree::Deprecation).to receive(:warn).
-        with(/^discounted_amount is deprecated and will be removed/, any_args)
-      allow(Spree::Deprecation).to receive(:warn).
-        with(/^display_discounted_amount is deprecated and will be removed/, any_args)
-      expect(Spree::Deprecation).to receive(:warn).
-        with(/^discounted_money is deprecated and will be removed/, any_args)
-    end
-
-    it "should return a money object with the discounted amount" do
-      expect(line_item.discounted_amount).to eq(10.00)
-      expect(line_item.discounted_money.to_s).to eq "$10.00"
-    end
-  end
-
   describe '#total_before_tax' do
     before do
       line_item.update!(price: 10, quantity: 2)

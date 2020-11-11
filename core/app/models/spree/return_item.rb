@@ -81,8 +81,7 @@ module Spree
     include ::Spree::Config.state_machines.return_item_acceptance
 
     extend DisplayMoney
-    money_methods :pre_tax_amount, :amount, :total, :total_excluding_vat
-    deprecate display_pre_tax_amount: :display_total_excluding_vat, deprecator: Spree::Deprecation
+    money_methods :amount, :total, :total_excluding_vat
 
     # @return [Boolean] true when this retur item is in a complete reception
     #   state
@@ -126,8 +125,6 @@ module Spree
     def total_excluding_vat
       amount - included_tax_total
     end
-    alias pre_tax_amount total_excluding_vat
-    deprecate pre_tax_amount: :total_excluding_vat, deprecator: Spree::Deprecation
 
     # @note This uses the exchange_variant_engine configured on the class.
     # @param stock_locations [Array<Spree::StockLocation>] the stock locations to check

@@ -19,8 +19,6 @@ module Spree
     delegate :code, to: :shipping_method, prefix: true
     alias_attribute :amount, :cost
 
-    alias_method :discounted_amount, :amount
-    deprecate discounted_amount: :total_before_tax, deprecator: Spree::Deprecation
     alias_method :total_before_tax, :amount
 
     extend DisplayMoney

@@ -54,19 +54,10 @@ module Spree
     alias subtotal amount
 
     # @return [BigDecimal] the amount of this line item, taking into
-    #   consideration line item promotions.
-    def discounted_amount
-      amount + promo_total
-    end
-    deprecate discounted_amount: :total_before_tax, deprecator: Spree::Deprecation
-
-    # @return [BigDecimal] the amount of this line item, taking into
     #   consideration all its adjustments.
     def total
       amount + adjustment_total
     end
-    alias final_amount total
-    deprecate final_amount: :total, deprecator: Spree::Deprecation
 
     # @return [BigDecimal] the amount of this item, taking into consideration
     #   all non-tax adjustments.
@@ -79,20 +70,11 @@ module Spree
     def total_excluding_vat
       total_before_tax - included_tax_total
     end
-    alias pre_tax_amount total_excluding_vat
-    deprecate pre_tax_amount: :total_excluding_vat, deprecator: Spree::Deprecation
 
     extend Spree::DisplayMoney
-    money_methods :amount, :discounted_amount, :price,
+    money_methods :amount, :price,
                   :included_tax_total, :additional_tax_total,
                   :total, :total_before_tax, :total_excluding_vat
-    deprecate display_discounted_amount: :display_total_before_tax, deprecator: Spree::Deprecation
-    alias display_final_amount display_total
-    deprecate display_final_amount: :display_total, deprecator: Spree::Deprecation
-    alias display_pre_tax_amount display_total_excluding_vat
-    deprecate display_pre_tax_amount: :display_total_excluding_vat, deprecator: Spree::Deprecation
-    alias discounted_money display_discounted_amount
-    deprecate discounted_money: :display_total_before_tax, deprecator: Spree::Deprecation
 
     # @return [Spree::Money] the price of this line item
     alias money_price display_price
@@ -101,8 +83,6 @@ module Spree
 
     # @return [Spree::Money] the amount of this line item
     alias money display_amount
-    alias display_total display_amount
-    deprecate display_total: :display_amount, deprecator: Spree::Deprecation
 
     # Sets price from a `Spree::Money` object
     #

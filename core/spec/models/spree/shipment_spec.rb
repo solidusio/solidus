@@ -144,15 +144,6 @@ RSpec.describe Spree::Shipment, type: :model do
     end
   end
 
-  it "#discounted_cost" do
-    expect(Spree::Deprecation).to receive(:warn).
-      with(/^discounted_cost is deprecated and will be removed/, any_args)
-    shipment = create(:shipment)
-    shipment.cost = 10
-    shipment.promo_total = -1
-    expect(shipment.discounted_cost).to eq(9)
-  end
-
   describe '#total_before_tax' do
     before do
       shipment.update!(cost: 10)

@@ -62,11 +62,9 @@ module Spree
 
     extend DisplayMoney
     money_methods(
-      :cost, :amount, :discounted_cost, :final_price, :item_cost,
+      :cost, :amount, :item_cost,
       :total, :total_before_tax,
     )
-    deprecate display_discounted_cost: :display_total_before_tax, deprecator: Spree::Deprecation
-    deprecate display_final_price: :display_total, deprecator: Spree::Deprecation
     alias_attribute :amount, :cost
 
     def add_shipping_method(shipping_method, selected = false)
@@ -90,20 +88,11 @@ module Spree
       order ? order.currency : Spree::Config[:currency]
     end
 
-    def discounted_cost
-      cost + promo_total
-    end
-    deprecate discounted_cost: :total_before_tax, deprecator: Spree::Deprecation
-    alias discounted_amount discounted_cost
-    deprecate discounted_amount: :total_before_tax, deprecator: Spree::Deprecation
-
     # @return [BigDecimal] the amount of this shipment, taking into
     #   consideration all its adjustments.
     def total
       cost + adjustment_total
     end
-    alias final_price total
-    deprecate final_price: :total, deprecator: Spree::Deprecation
 
     # @return [BigDecimal] the amount of this item, taking into consideration
     #   all non-tax adjustments.
@@ -116,14 +105,10 @@ module Spree
     def total_excluding_vat
       total_before_tax - included_tax_total
     end
-    alias pre_tax_amount total_excluding_vat
-    deprecate pre_tax_amount: :total_excluding_vat, deprecator: Spree::Deprecation
 
     def total_with_items
       total + item_cost
     end
-    alias final_price_with_items total_with_items
-    deprecate final_price_with_items: :total_with_items, deprecator: Spree::Deprecation
 
     def editable_by?(_user)
       !shipped?
