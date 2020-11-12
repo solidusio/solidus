@@ -84,7 +84,7 @@
               &nbsp;
               <%= link_to_clone product, no_text: true, class: 'clone' if can?(:clone, product) %>
               &nbsp;
-              <%= link_to_delete product, no_text: true if can?(:delete, product) && !product.deleted? %>
+              <%= link_to_delete product, no_text: true if can?(:destroy, product) && !product.deleted? %>
             </td>
           </tr>
       <% end %>
