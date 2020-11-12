@@ -11,8 +11,9 @@ module Spree
       rescue_from Spree::Core::GatewayError, with: :spree_core_gateway_error
 
       def create
-        @refund.attributes = refund_params.merge(perform_after_create: false)
-        if @refund.save && @refund.perform!
+        @refund.attributes = refund_params
+
+        if @refund.valid? && @refund.perform!
           flash[:success] = flash_message_for(@refund, :successfully_created)
           respond_with(@refund) do |format|
             format.html { redirect_to location_after_save }
