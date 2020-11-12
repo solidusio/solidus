@@ -133,17 +133,17 @@ module Spree
           'wrench',
           condition: -> {
             can?(:admin, Spree::Store) ||
-            can?(:show, Spree::AdjustmentReason) ||
-            can?(:show, Spree::PaymentMethod) ||
-            can?(:show, Spree::RefundReason) ||
-            can?(:show, Spree::ReimbursementType) ||
-            can?(:show, Spree::ShippingCategory) ||
-            can?(:show, Spree::ShippingMethod) ||
-            can?(:show, Spree::StockLocation) ||
-            can?(:show, Spree::TaxCategory) ||
-            can?(:show, Spree::TaxRate) ||
-            can?(:show, Spree::ReturnReason) ||
-            can?(:show, Spree::Zone)
+            can?(:admin, Spree::AdjustmentReason) ||
+            can?(:admin, Spree::PaymentMethod) ||
+            can?(:admin, Spree::RefundReason) ||
+            can?(:admin, Spree::ReimbursementType) ||
+            can?(:admin, Spree::ShippingCategory) ||
+            can?(:admin, Spree::ShippingMethod) ||
+            can?(:admin, Spree::StockLocation) ||
+            can?(:admin, Spree::TaxCategory) ||
+            can?(:admin, Spree::TaxRate) ||
+            can?(:admin, Spree::ReturnReason) ||
+            can?(:admin, Spree::Zone)
           },
           label: :settings,
           partial: 'spree/admin/shared/settings_sub_menu',
