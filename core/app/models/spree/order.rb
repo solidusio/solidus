@@ -406,29 +406,12 @@ module Spree
       touch :completed_at
 
       Spree::Event.fire 'order_finalized', order: self
-
-      if method(:deliver_order_confirmation_email).owner != self.class
-        Spree::Deprecation.warn \
-          "deliver_order_confirmation_email has been deprecated and moved to " \
-          "Spree::MailerSubscriber#order_finalized, please move there any customizations.",
-          caller(1)
-      end
     end
 
     def fulfill!
       shipments.each { |shipment| shipment.update_state if shipment.persisted? }
       updater.update_shipment_state
       save!
-    end
-
-    def deliver_order_confirmation_email
-      Spree::Deprecation.warn \
-        "deliver_order_confirmation_email has been deprecated and moved to " \
-        "Spree::MailerSubscriber#order_finalized.",
-        caller(1)
-
-      Spree::Config.order_mailer_class.confirm_email(order).deliver_later
-      order.update_column(:confirmation_delivered, true)
     end
 
     # Helper methods for checkout steps
