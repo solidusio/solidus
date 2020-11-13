@@ -9,10 +9,9 @@ module Spree
 
       rescue_from Spree::Order::InsufficientStock, with: :insufficient_stock_error
 
-      include Spree::Core::ControllerHelpers::Order
-
-      # TODO: Remove this after deprecated usage in #update is removed
       include Spree::Core::ControllerHelpers::PaymentParameters
+
+      include Spree::Core::ControllerHelpers::Order
 
       def next
         authorize! :update, @order, order_token
