@@ -603,11 +603,6 @@ module Spree
         payments.offset_payment.exists? # how old versions of spree stored refunds
     end
 
-    def token
-      Spree::Deprecation.warn("Spree::Order#token is DEPRECATED, please use #guest_token instead.", caller)
-      guest_token
-    end
-
     def tax_total
       additional_tax_total + included_tax_total
     end

@@ -399,7 +399,6 @@ module Spree
         end
 
         it "returns a sensible error when no payment method is specified" do
-          # put :complete, id: order.to_param, order_token: order.token, order: {}
           subject
           expect(json_response["errors"]["base"]).to include(I18n.t('spree.no_payment_found'))
         end
@@ -408,7 +407,6 @@ module Spree
           let(:params) { super().merge(expected_total: order.total + 1) }
 
           it "returns an error if expected_total is present and does not match actual total" do
-            # put :complete, id: order.to_param, order_token: order.token, expected_total: order.total + 1
             subject
             expect(response.status).to eq(400)
             expect(json_response['errors']['expected_total']).to include(I18n.t('spree.api.order.expected_total_mismatch'))
