@@ -49,12 +49,6 @@ module Spree
       end
     end
 
-    def self.current(store_key)
-      Spree::Deprecation.warn "Spree::Store.current is DEPRECATED"
-      current_store = Store.find_by(code: store_key) || Store.by_url(store_key).first if store_key
-      current_store || Store.default
-    end
-
     def self.default
       where(default: true).first || new
     end
