@@ -295,14 +295,7 @@ module Spree
       assign_attributes(attrs_to_set)
     end
 
-    def generate_order_number(options = nil)
-      if options
-        Spree::Deprecation.warn \
-          "Passing options to Order#generate_order_number is deprecated. " \
-          "Please add your own instance of the order number generator " \
-          "with your options (#{options.inspect}) and store it as " \
-          "Spree::Config.order_number_generator in your stores config."
-      end
+    def generate_order_number
       self.number ||= Spree::Config.order_number_generator.generate
     end
 

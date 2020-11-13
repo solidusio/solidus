@@ -833,14 +833,6 @@ RSpec.describe Spree::Order, type: :model do
         expect(order.number).to eq '123'
       end
     end
-
-    context "passing options" do
-      it 'is deprecated' do
-        expect(Spree::Deprecation).to receive(:warn).
-          with(/^Passing options to Order\#generate_order_number is deprecated\./)
-        order.generate_order_number(length: 2)
-      end
-    end
   end
 
   context "#associate_user!" do
