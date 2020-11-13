@@ -149,9 +149,6 @@ module Spree
     delegate :name, to: :bill_address, prefix: true, allow_nil: true
     alias_method :billing_name, :bill_address_name
 
-    class_attribute :update_hooks
-    self.update_hooks = Set.new
-
     class_attribute :line_item_comparison_hooks
     self.line_item_comparison_hooks = Set.new
 
@@ -185,15 +182,6 @@ module Spree
 
     def self.not_canceled
       where.not(state: 'canceled')
-    end
-
-    # Use this method in other gems that wish to register their own custom logic
-    # that should be called after Order#update
-    def self.register_update_hook(hook)
-      Spree::Deprecation.warn \
-        "Spree::Order::update_hooks are deprecated. Please remove them " \
-        "and subscribe to `order_recalculated` and/or `order_finalized` event instead", caller(1)
-      update_hooks.add(hook)
     end
 
     # Use this method in other gems that wish to register their own custom logic
@@ -430,7 +418,6 @@ module Spree
 
       updater.update_shipment_state
       save!
-      updater.run_hooks if update_hooks.any?
 
       touch :completed_at
 

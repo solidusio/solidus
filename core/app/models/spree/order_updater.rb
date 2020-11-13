@@ -3,7 +3,7 @@
 module Spree
   class OrderUpdater
     attr_reader :order
-    delegate :payments, :line_items, :adjustments, :all_adjustments, :shipments, :update_hooks, :quantity, to: :order
+    delegate :payments, :line_items, :adjustments, :all_adjustments, :shipments, :quantity, to: :order
 
     def initialize(order)
       @order = order
@@ -26,18 +26,9 @@ module Spree
           update_shipments
           update_shipment_state
         end
-        run_hooks if update_hooks.any?
         Spree::Event.fire 'order_recalculated', order: order
         persist_totals
       end
-    end
-
-    def run_hooks
-      Spree::Deprecation.warn \
-        "This method is deprecated. Please run your hooks by subscribing " \
-        "to `order_recalculated` and/or `order_finalized` events instead, depending " \
-        " on when OrderUpdater#run_hooks was called.", caller(1)
-      update_hooks.each { |hook| order.send hook }
     end
 
     # Updates the +shipment_state+ attribute according to the following logic:

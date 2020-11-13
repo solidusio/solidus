@@ -405,27 +405,6 @@ RSpec.describe Spree::Order, type: :model do
     end
   end
 
-  context ".register_update_hook", partial_double_verification: false do
-    let(:order) { create(:order) }
-
-    before do
-      allow(Spree::Deprecation).to receive(:warn)
-      Spree::Order.register_update_hook :foo
-    end
-
-    after { Spree::Order.update_hooks.clear }
-
-    it "calls hooks during #recalculate" do
-      expect(order).to receive :foo
-      order.recalculate
-    end
-
-    it "calls hook during #finalize!" do
-      expect(order).to receive :foo
-      order.finalize!
-    end
-  end
-
   context "ensure shipments will be updated" do
     subject(:order) { create :order }
     before do
