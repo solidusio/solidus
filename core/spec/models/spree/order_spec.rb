@@ -1618,16 +1618,6 @@ RSpec.describe Spree::Order, type: :model do
     end
   end
 
-  context 'update_params_payment_source' do
-    subject { described_class.new }
-
-    it 'is deprecated' do
-      subject.instance_variable_set('@updating_params', {})
-      expect(Spree::Deprecation).to receive(:warn)
-      subject.send(:update_params_payment_source)
-    end
-  end
-
   describe "#validate_payments_attributes" do
     let(:attributes) { [ActionController::Parameters.new(payment_method_id: payment_method.id)] }
     subject do
