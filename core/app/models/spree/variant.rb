@@ -121,17 +121,6 @@ module Spree
     self.whitelisted_ransackable_associations = %w[option_values product prices default_price]
     self.whitelisted_ransackable_attributes = %w[weight sku]
 
-    # Returns variants that are not deleted and have a price in the given
-    # currency.
-    #
-    # @deprecated Please use the .with_prices scope instead
-    # @param currency [String] the currency to filter by; defaults to Spree's default
-    # @return [ActiveRecord::Relation]
-    def self.active(currency = nil)
-      Spree::Deprecation.warn("`Variant.active(currency)` is deprecated. Please use `Variant.with_prices(pricing_options)` instead.", caller)
-      joins(:prices).where(deleted_at: nil).where('spree_prices.currency' => currency || Spree::Config[:currency]).where('spree_prices.amount IS NOT NULL')
-    end
-
     # Returns variants that have a price for the given pricing options
     # If you have modified the pricing options class, you might want to modify this scope too.
     #
