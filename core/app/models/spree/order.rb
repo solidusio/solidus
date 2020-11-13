@@ -229,11 +229,6 @@ module Spree
       total > 0
     end
 
-    def confirmation_required?
-      true
-    end
-    deprecate :confirmation_required?, deprecator: Spree::Deprecation
-
     def backordered?
       shipments.any?(&:backordered?)
     end
