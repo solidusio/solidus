@@ -11,18 +11,12 @@ module Spree
       # - #description
       # - #display_amount
       # so they can be displayed in the Admin UI appropriately.
-      def simulate(reimbursement, created_by: nil)
-        unless created_by
-          Spree::Deprecation.warn("Calling #simulate on #{self} without created_by is deprecated")
-        end
+      def simulate(reimbursement, created_by:)
         execute(reimbursement, true, created_by: created_by)
       end
 
       # Actually perform the reimbursement
-      def perform(reimbursement, created_by: nil)
-        unless created_by
-          Spree::Deprecation.warn("Calling #perform on #{self} without created_by is deprecated")
-        end
+      def perform(reimbursement, created_by:)
         execute(reimbursement, false, created_by: created_by)
       end
 

@@ -91,10 +91,7 @@ module Spree
       total - paid_amount
     end
 
-    def perform!(created_by: nil)
-      unless created_by
-        Spree::Deprecation.warn("Calling #perform on #{self} without created_by is deprecated")
-      end
+    def perform!(created_by:)
       reimbursement_tax_calculator.call(self)
       reload
       update!(total: calculated_total)
@@ -126,10 +123,7 @@ module Spree
       end
     end
 
-    def simulate(created_by: nil)
-      unless created_by
-        Spree::Deprecation.warn("Calling #simulate on #{self} without created_by is deprecated")
-      end
+    def simulate(created_by:)
       reimbursement_simulator_tax_calculator.call(self)
       reload
       update!(total: calculated_total)
@@ -154,10 +148,7 @@ module Spree
     # @api public
     # @param [Spree.user_class] created_by the user that is performing this action
     # @return [void]
-    def return_all(created_by: nil)
-      unless created_by
-        Spree::Deprecation.warn("Calling #return_all on #{self} without created_by is deprecated")
-      end
+    def return_all(created_by:)
       return_items.each(&:accept!)
       save!
       perform!(created_by: created_by)
