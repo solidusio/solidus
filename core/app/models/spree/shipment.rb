@@ -309,11 +309,6 @@ module Spree
       !stock_location || stock_location.fulfillable?
     end
 
-    def address
-      Spree::Deprecation.warn("Calling Shipment#address is deprecated. Use Order#ship_address instead", caller)
-      order.ship_address if order
-    end
-
     private
 
     def finalize_pending_inventory_units
