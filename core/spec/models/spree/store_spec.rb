@@ -3,29 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Spree::Store, type: :model do
-  before do
-    allow(Spree::Deprecation).to receive(:warn).
-      with(/^by_url is deprecated and will be removed/, any_args)
-  end
-
   it { is_expected.to respond_to(:cart_tax_country_iso) }
-
-  describe ".by_url (deprecated)" do
-    let!(:store)    { create(:store, url: "website1.com\nwww.subdomain.com") }
-    let!(:store_2)  { create(:store, url: 'freethewhales.com') }
-
-    before do
-      expect(Spree::Deprecation).to receive(:warn).
-        with(/^by_url is deprecated and will be removed/, any_args)
-    end
-
-    it "should find stores by url" do
-      by_domain = Spree::Store.by_url('www.subdomain.com')
-
-      expect(by_domain).to include(store)
-      expect(by_domain).not_to include(store_2)
-    end
-  end
 
   describe ".default" do
     it "should ensure saved store becomes default if one doesn't exist yet" do
