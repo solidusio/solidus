@@ -10,6 +10,10 @@ RSpec.describe Spree::PromotionAction, type: :model do
         order.adjustments.create!(amount: 1, order: order, source: self, label: 'foo')
         true
       end
+
+      def remove_from(_order)
+        'Implement your remove logic'
+      end
     end
 
     let(:action) { promotion.actions.first! }
@@ -19,26 +23,34 @@ RSpec.describe Spree::PromotionAction, type: :model do
     # this adjustment should not get removed
     let!(:other_adjustment) { create(:adjustment, order: order, source: nil) }
 
-    before do
+    it "generates its own partial path" do
       action.perform(order: order)
       @action_adjustment = order.adjustments.where(source: action).first!
-    end
 
-    it "generates its own partial path" do
       expect(action.to_partial_path).to eq 'spree/admin/promotions/actions/my_promotion_action'
     end
 
-    it 'removes the action adjustment' do
-      expect(order.adjustments).to match_array([other_adjustment, @action_adjustment])
+    it 'executes the remove logic' do
+      action.perform(order: order)
+      @action_adjustment = order.adjustments.where(source: action).first!
 
-      expect(Spree::Deprecation).to(
-        receive(:warn).
-        with(/"MyPromotionAction" does not define #remove_from/, anything)
-      )
+      expect(action.remove_from(order)).to eq('Implement your remove logic')
+    end
 
-      action.remove_from(order)
+    context "when PromotionAction doesn't implement perform method" do
+      before { MyPromotionAction.remove_method :perform }
 
-      expect(order.adjustments).to eq([other_adjustment])
+      it 'raises RuntimeError' do
+        expect { action.perform }.to raise_error(RuntimeError, 'perform should be implemented in a sub-class of PromotionAction')
+      end
+    end
+
+    context "when PromotionAction doesn't implement remove_from method" do
+      before { MyPromotionAction.remove_method :remove_from }
+
+      it 'raises RuntimeError' do
+        expect { action.remove_from(order) }.to raise_error(RuntimeError, 'remove_from should be implemented in a sub-class of PromotionAction')
+      end
     end
   end
 end
