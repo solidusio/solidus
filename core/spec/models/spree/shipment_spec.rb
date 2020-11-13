@@ -26,31 +26,6 @@ RSpec.describe Spree::Shipment, type: :model do
   let(:variant) { mock_model(Spree::Variant) }
   let(:line_item) { mock_model(Spree::LineItem, variant: variant) }
 
-  context '#transfer_to_location' do
-    before do
-      allow(Spree::Deprecation).to receive(:warn).
-        with(/^Please use the Spree::FulfilmentChanger class instead of Spree::Shipment#transfer_to_location/, any_args)
-    end
-
-    it 'transfers unit to a new shipment with given location' do
-      order = create(:completed_order_with_totals, line_items_count: 2)
-      shipment = order.shipments.first
-      variant = order.inventory_units.map(&:variant).first
-
-      aggregate_failures("verifying new shipment attributes") do
-        expect do
-          shipment.transfer_to_location(variant, 1, stock_location)
-        end.to change { Spree::Shipment.count }.by(1)
-
-        new_shipment = order.shipments.order(:created_at).last
-        expect(new_shipment.number).to_not eq(shipment.number)
-        expect(new_shipment.stock_location).to eq(stock_location)
-        expect(new_shipment.line_items.count).to eq(1)
-        expect(new_shipment.line_items.first.variant).to eq(variant)
-      end
-    end
-  end
-
   # Regression test for https://github.com/spree/spree/issues/4063
   context "number generation" do
     it "generates a number containing a letter + 11 numbers" do

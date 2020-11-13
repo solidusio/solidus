@@ -305,22 +305,6 @@ module Spree
       end
     end
 
-    def transfer_to_location(variant, quantity, stock_location)
-      Spree::Deprecation.warn("Please use the Spree::FulfilmentChanger class instead of Spree::Shipment#transfer_to_location", caller)
-      new_shipment = order.shipments.create!(stock_location: stock_location)
-      transfer_to_shipment(variant, quantity, new_shipment)
-    end
-
-    def transfer_to_shipment(variant, quantity, shipment_to_transfer_to)
-      Spree::Deprecation.warn("Please use the Spree::FulfilmentChanger class instead of Spree::Shipment#transfer_to_location", caller)
-      Spree::FulfilmentChanger.new(
-        current_shipment: self,
-        desired_shipment: shipment_to_transfer_to,
-        variant: variant,
-        quantity: quantity
-      ).run!
-    end
-
     def requires_shipment?
       !stock_location || stock_location.fulfillable?
     end
