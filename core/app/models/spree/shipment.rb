@@ -305,18 +305,6 @@ module Spree
       end
     end
 
-    def update!(order_or_attrs)
-      if order_or_attrs.is_a?(Spree::Order)
-        Spree::Deprecation.warn "Calling Shipment#update! with an order to update the shipments state is deprecated. Please use Shipment#update_state instead."
-        if order_or_attrs.object_id != order.object_id
-          Spree::Deprecation.warn "Additionally, update! is being passed an instance of order which isn't the same object as the shipment's order association"
-        end
-        update_state
-      else
-        super
-      end
-    end
-
     def transfer_to_location(variant, quantity, stock_location)
       Spree::Deprecation.warn("Please use the Spree::FulfilmentChanger class instead of Spree::Shipment#transfer_to_location", caller)
       new_shipment = order.shipments.create!(stock_location: stock_location)
