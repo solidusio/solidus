@@ -51,14 +51,6 @@ module Spree
     class_attribute :reimbursement_performer
     self.reimbursement_performer = ReimbursementPerformer
 
-    # These are called if the call to "reimburse!" succeeds.
-    class_attribute :reimbursement_success_hooks
-    self.reimbursement_success_hooks = []
-
-    # These are called if the call to "reimburse!" fails.
-    class_attribute :reimbursement_failure_hooks
-    self.reimbursement_failure_hooks = []
-
     include ::Spree::Config.state_machines.reimbursement
 
     class << self
@@ -101,21 +93,9 @@ module Spree
       if unpaid_amount_within_tolerance?
         reimbursed!
         Spree::Event.fire 'reimbursement_reimbursed', reimbursement: self
-        if reimbursement_success_hooks.any?
-          Spree::Deprecation.warn \
-            "reimbursement_success_hooks are deprecated. Please remove them " \
-            "and subscribe to `reimbursement_reimbursed` event instead", caller(1)
-        end
-        reimbursement_success_hooks.each { |hook| hook.call self }
       else
         errored!
         Spree::Event.fire 'reimbursement_errored', reimbursement: self
-        if reimbursement_failure_hooks.any?
-          Spree::Deprecation.warn \
-            "reimbursement_failure_hooks are deprecated. Please remove them " \
-            "and subscribe to `reimbursement_errored` event instead", caller(1)
-        end
-        reimbursement_failure_hooks.each { |hook| hook.call self }
       end
 
       if errored?
