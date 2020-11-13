@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'spree/testing_support/factories/store_credit_factory'
-require 'spree/testing_support/factories/store_credit_reason_factory'
+require 'spree/testing_support'
+Spree::TestingSupport.deprecate_cherry_picking_factory_bot_files
 
 FactoryBot.define do
   factory :store_credit_event, class: 'Spree::StoreCreditEvent' do

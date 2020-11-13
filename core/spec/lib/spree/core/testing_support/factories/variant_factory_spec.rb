@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
-require 'spree/testing_support/factories/variant_factory'
 
 RSpec.describe 'variant factory' do
   let(:factory_class) { Spree::Variant }

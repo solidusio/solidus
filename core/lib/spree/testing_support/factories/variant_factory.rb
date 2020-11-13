@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
-require 'spree/testing_support/sequences'
-require 'spree/testing_support/factories/option_value_factory'
-require 'spree/testing_support/factories/option_type_factory'
-require 'spree/testing_support/factories/product_factory'
+require 'spree/testing_support'
+Spree::TestingSupport.deprecate_cherry_picking_factory_bot_files
 
 FactoryBot.define do
   sequence(:random_float) { BigDecimal("#{rand(200)}.#{rand(99)}") }

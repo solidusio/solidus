@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
-require 'spree/testing_support/sequences'
-require 'spree/testing_support/factories/role_factory'
-require 'spree/testing_support/factories/address_factory'
+require 'spree/testing_support'
+Spree::TestingSupport.deprecate_cherry_picking_factory_bot_files
 
 FactoryBot.define do
   factory :user, class: Spree::UserClassHandle.new do

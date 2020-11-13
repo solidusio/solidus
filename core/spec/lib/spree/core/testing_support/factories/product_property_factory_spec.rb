@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
-require 'spree/testing_support/factories/product_property_factory'
 
 RSpec.describe 'product property factory' do
   let(:factory_class) { Spree::ProductProperty }

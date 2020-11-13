@@ -9,6 +9,16 @@ module Spree
       @paths ||= (SEQUENCES + FACTORIES).sort.map { |path| path.sub(/.rb\z/, '') }
     end
 
+    def self.deprecate_cherry_picking_factory_bot_files
+      # All good if the factory is being loaded by FactoryBot.
+      return if caller.find { |line| line.include? "/factory_bot/find_definitions.rb" }
+
+      Spree::Deprecation.warn(
+        "Please do not cherry-pick factories, this is not well supported by FactoryBot. " \
+        'Use `require "spree/testing_support/factories"` instead.', caller(2)
+      )
+    end
+
     def self.load_all_factories
       require 'factory_bot'
       require 'factory_bot/version'

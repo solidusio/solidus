@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
-require 'spree/testing_support/factories/product_factory'
-require 'spree/testing_support/factories/property_factory'
-require 'spree/testing_support/factories/option_value_factory'
+require 'spree/testing_support'
+Spree::TestingSupport.deprecate_cherry_picking_factory_bot_files
 
 FactoryBot.define do
   factory :variant_property_rule, class: 'Spree::VariantPropertyRule' do

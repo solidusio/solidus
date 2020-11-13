@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
-require 'spree/testing_support/factories/address_factory'
 
 RSpec.describe 'address factory' do
   let(:factory_class) { Spree::Address }

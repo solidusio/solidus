@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
-require 'spree/testing_support/factories/inventory_unit_factory'
 
 RSpec.describe 'inventory unit factory' do
   let(:factory_class) { Spree::InventoryUnit }

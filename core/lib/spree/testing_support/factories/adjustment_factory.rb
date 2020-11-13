@@ -1,10 +1,7 @@
 # frozen_string_literal: true
 
-require 'spree/testing_support/factories/line_item_factory'
-require 'spree/testing_support/factories/order_factory'
-require 'spree/testing_support/factories/tax_category_factory'
-require 'spree/testing_support/factories/tax_rate_factory'
-require 'spree/testing_support/factories/zone_factory'
+require 'spree/testing_support'
+Spree::TestingSupport.deprecate_cherry_picking_factory_bot_files
 
 FactoryBot.define do
   factory :adjustment, class: 'Spree::Adjustment' do
