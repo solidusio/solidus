@@ -296,16 +296,6 @@ module Spree
       end
     end
 
-    # Image that can be used for the product.
-    #
-    # Will first search for images on the product, then those belonging to the
-    # variants. If all else fails, will return a new image object.
-    # @return [Spree::Image] the image to display
-    def display_image
-      Spree::Deprecation.warn('Spree::Product#display_image is DEPRECATED. Choose an image from Spree::Product#gallery instead.')
-      images.first || variant_images.first || Spree::Image.new
-    end
-
     # Finds the variant property rule that matches the provided option value ids.
     #
     # @param option_value_ids [Array<Integer>] list of option value ids

@@ -367,19 +367,6 @@ module Spree
       track_inventory? && Spree::Config.track_inventory_levels
     end
 
-    # Image that can be used for the variant.
-    #
-    # Will first search for images on the variant. If it doesn't find any,
-    # it'll fallback to any variant image (unless +fallback+ is +false+) or to
-    # a new {Spree::Image}.
-    # @param fallback [Boolean] whether or not we should fallback to an image
-    #   not from this variant
-    # @return [Spree::Image] the image to display
-    def display_image(fallback: true)
-      Spree::Deprecation.warn('Spree::Variant#display_image is DEPRECATED. Choose an image from Spree::Variant#gallery instead')
-      images.first || (fallback && product.variant_images.first) || Spree::Image.new
-    end
-
     # Determines the variant's property values by verifying which of the product's
     # variant property rules apply to itself.
     #
