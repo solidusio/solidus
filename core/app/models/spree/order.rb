@@ -57,10 +57,6 @@ module Spree
     attr_accessor :temporary_address
 
     attr_accessor :temporary_payment_source
-    alias_method :temporary_credit_card, :temporary_payment_source
-    alias_method :temporary_credit_card=, :temporary_payment_source=
-    deprecate temporary_credit_card: :temporary_payment_source, deprecator: Spree::Deprecation
-    deprecate :temporary_credit_card= => :temporary_payment_source=, deprecator: Spree::Deprecation
 
     # Customer info
     belongs_to :user, class_name: Spree::UserClassHandle.new, optional: true
