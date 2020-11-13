@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
-require 'spree/testing_support/factories/shipping_method_factory'
 
 RSpec.describe 'shipping method factory' do
   let(:factory_class) { Spree::ShippingMethod }

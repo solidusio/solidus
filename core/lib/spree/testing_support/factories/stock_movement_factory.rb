@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
-require 'spree/testing_support/factories/stock_item_factory'
+require 'spree/testing_support'
+Spree::TestingSupport.deprecate_cherry_picking_factory_bot_files
 
 FactoryBot.define do
   factory :stock_movement, class: 'Spree::StockMovement' do

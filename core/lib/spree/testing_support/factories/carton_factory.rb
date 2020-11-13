@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'spree/testing_support/factories/shipment_factory'
-require 'spree/testing_support/factories/inventory_unit_factory'
+require 'spree/testing_support'
+Spree::TestingSupport.deprecate_cherry_picking_factory_bot_files
 
 FactoryBot.define do
   factory :carton, class: 'Spree::Carton' do

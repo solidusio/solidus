@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
-require 'spree/testing_support/factories/store_credit_event_factory'
 
 RSpec.describe 'store credit event factory' do
   let(:factory_class) { Spree::StoreCreditEvent }

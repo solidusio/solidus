@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
-require 'spree/testing_support/factories/payment_method_factory'
-require 'spree/testing_support/factories/credit_card_factory'
-require 'spree/testing_support/factories/order_factory'
-require 'spree/testing_support/factories/store_credit_factory'
+require 'spree/testing_support'
+Spree::TestingSupport.deprecate_cherry_picking_factory_bot_files
 
 FactoryBot.define do
   factory :payment, aliases: [:credit_card_payment], class: 'Spree::Payment' do

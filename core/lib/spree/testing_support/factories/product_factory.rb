@@ -1,10 +1,7 @@
 # frozen_string_literal: true
 
-require 'spree/testing_support/sequences'
-require 'spree/testing_support/factories/shipping_category_factory'
-require 'spree/testing_support/factories/stock_location_factory'
-require 'spree/testing_support/factories/tax_category_factory'
-require 'spree/testing_support/factories/product_option_type_factory'
+require 'spree/testing_support'
+Spree::TestingSupport.deprecate_cherry_picking_factory_bot_files
 
 FactoryBot.define do
   factory :base_product, class: 'Spree::Product' do
