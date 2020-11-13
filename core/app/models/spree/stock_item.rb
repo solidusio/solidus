@@ -110,13 +110,7 @@ module Spree
     end
 
     def inventory_cache_threshold
-      # only warn if store is setting binary_inventory_cache (default = false)
-      @cache_threshold ||= if Spree::Config.binary_inventory_cache
-        Spree::Deprecation.warn "Spree::Config.binary_inventory_cache=true is DEPRECATED. Instead use Spree::Config.inventory_cache_threshold=1"
-        1
-      else
-        Spree::Config.inventory_cache_threshold
-      end
+      @cache_threshold ||= Spree::Config.inventory_cache_threshold
     end
   end
 end

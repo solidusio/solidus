@@ -107,16 +107,6 @@ module Spree
     #   @return [Boolean]
     preference :billing_address_required, :boolean, default: false
 
-    # @!attribute [rw] binary_inventory_cache
-    #   Only invalidate product caches when they change from in stock to out of
-    #   stock. By default, caches are invalidated on any change of inventory
-    #   quantity. Setting this to true should make operations on inventory
-    #   faster.
-    #   (default: +false+)
-    #   @deprecated - use inventory_cache_threshold instead
-    #   @return [Boolean]
-    preference :binary_inventory_cache, :boolean, default: false
-
     # @!attribute [rw] can_restrict_stock_management
     #   @return [Boolean] Indicates if stock management can be restricted by location
     preference :can_restrict_stock_management, :boolean, default: false
