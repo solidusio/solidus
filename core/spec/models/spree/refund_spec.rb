@@ -66,15 +66,6 @@ RSpec.describe Spree::Refund, type: :model do
   describe "#perform!" do
     subject { refund.perform! }
 
-    it "deprecates usage of the instance variable @response" do
-      expect(Spree::Deprecation).to receive(:warn).once
-
-      subject
-
-      response = refund.instance_variable_get("@response")
-      response.to_s
-    end
-
     it "sets #perform_response with the gateway response from the payment provider" do
       expect { subject }.to change { refund.perform_response }.from(nil).to(gateway_response)
     end
