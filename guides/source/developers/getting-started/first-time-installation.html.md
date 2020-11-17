@@ -57,12 +57,13 @@ You can find more details on Solidus' dependencies in the
 First, we need a new Rails project:
 
 ```bash
-rails new your_solidus_project_name --skip_webpack_install
+rails new your_solidus_project_name --skip-javascript
 ```
 
 This command will create a new Rails application without installing
-[webpacker][webpacker], which is not required for a sample Solidus store. You
-are free to install and configure webpacker in your Solidus store though.
+the JavaScript compiler shipped with Rails by default ([webpacker][webpacker]),
+which is not required for a sample Solidus store.
+You are still free to install and configure it in your Solidus store though.
 
 Once the new project has finished being created, we can open the project's newly
 created `Gemfile` in a text editor and add the required Solidus gems as new
