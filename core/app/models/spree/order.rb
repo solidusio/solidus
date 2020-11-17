@@ -449,9 +449,6 @@ module Spree
       recalculate
     end
 
-    alias_method :has_step?, :has_checkout_step?
-    deprecate has_step?: :has_checkout_step?, deprecator: Spree::Deprecation
-
     def state_changed(name)
       state = "#{name}_state"
       if persisted?
