@@ -336,14 +336,6 @@ module Spree
       }
     end
 
-    # Creates new tax charges if there are any applicable rates. If prices already
-    # include taxes then price adjustments are created instead.
-    # @deprecated This now happens during #recalculate
-    def create_tax_charge!
-      recalculate
-    end
-    deprecate create_tax_charge!: :recalculate, deprecator: Spree::Deprecation
-
     def reimbursement_total
       reimbursements.sum(:total)
     end
