@@ -87,20 +87,6 @@ module Spree
         end
       end
 
-      def allocate_inventory(availability_by_location)
-        sorted_availability = sort_availability(availability_by_location)
-
-        sorted_availability.transform_values do |available|
-          # Find the desired inventory which is available at this location
-          packaged = available & @desired
-          # Remove found inventory from desired
-          @desired -= packaged
-          packaged
-        end
-      end
-      deprecate allocate_inventory: 'allocate_inventory is deprecated. Please write your own allocator defining' \
-        'a Spree::Stock::Allocator::Base subclass', deprecator: Spree::Deprecation
-
       def sort_availability(availability)
         sorted_availability = availability.sort_by do |stock_location_id, _|
           @stock_locations.find_index do |stock_location|
