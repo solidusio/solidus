@@ -67,11 +67,6 @@ module Spree
     )
     alias_attribute :amount, :cost
 
-    def add_shipping_method(shipping_method, selected = false)
-      shipping_rates.create(shipping_method: shipping_method, selected: selected, cost: cost)
-    end
-    deprecate :add_shipping_method, deprecator: Spree::Deprecation
-
     def after_cancel
       manifest.each { |item| manifest_restock(item) }
     end
