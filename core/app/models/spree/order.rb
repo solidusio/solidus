@@ -682,8 +682,6 @@ module Spree
         add_payment_sources_to_wallet_class.new(self).
         add_to_wallet
     end
-    alias_method :persist_user_credit_card, :add_payment_sources_to_wallet
-    deprecate persist_user_credit_card: :add_payment_sources_to_wallet, deprecator: Spree::Deprecation
 
     def add_default_payment_from_wallet
       builder = Spree::Config.default_payment_builder_class.new(self)
