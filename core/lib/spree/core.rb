@@ -55,9 +55,6 @@ module Spree
 
   module Core
     class GatewayError < RuntimeError; end
-
-    include ActiveSupport::Deprecation::DeprecatedConstantAccessor
-    deprecate_constant 'DestroyWithOrdersError', ActiveRecord::DeleteRestrictionError, deprecator: Spree::Deprecation
   end
 end
 
