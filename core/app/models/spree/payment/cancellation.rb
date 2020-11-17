@@ -26,16 +26,10 @@ module Spree
       # @param payment [Spree::Payment] - the payment that should be canceled
       #
       def cancel(payment)
-        # For payment methods already implemeting `try_void`
-        if try_void_available?(payment.payment_method)
-          if response = payment.payment_method.try_void(payment)
-            payment.handle_void_response(response)
-          else
-            payment.refunds.create!(amount: payment.credit_allowed, reason: refund_reason, perform_after_create: false).perform!
-          end
+        if response = payment.payment_method.try_void(payment)
+          payment.handle_void_response(response)
         else
-          # For payment methods not yet implemeting `try_void`
-          deprecated_behavior(payment)
+          payment.refunds.create!(amount: payment.credit_allowed, reason: refund_reason, perform_after_create: false).perform!
         end
       end
 
@@ -43,19 +37,6 @@ module Spree
 
       def refund_reason
         Spree::RefundReason.where(name: reason).first_or_create
-      end
-
-      def try_void_available?(payment_method)
-        payment_method.respond_to?(:try_void) &&
-          payment_method.method(:try_void).owner != Spree::PaymentMethod
-      end
-
-      def deprecated_behavior(payment)
-        Spree::Deprecation.warn "#{payment.payment_method.class.name}#cancel is deprecated and will be removed. " \
-          'Please implement a `try_void` method instead that returns a response object if void succeeds ' \
-          'or `false|nil` if not. Solidus will refund the payment then.'
-        response = payment.payment_method.cancel(payment.response_code)
-        payment.handle_void_response(response)
       end
     end
   end
