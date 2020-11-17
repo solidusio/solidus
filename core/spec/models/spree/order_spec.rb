@@ -215,20 +215,6 @@ RSpec.describe Spree::Order, type: :model do
     end
   end
 
-  context "creates shipments cost" do
-    let(:shipment) { double }
-
-    before { allow(order).to receive_messages shipments: [shipment] }
-
-    it "update and persist totals" do
-      expect(Spree::Deprecation).to receive(:warn).
-        with(/^set_shipments_cost is deprecated and will be removed/, any_args)
-      expect(order.updater).to receive :update
-
-      order.set_shipments_cost
-    end
-  end
-
   context "insufficient_stock_lines" do
     let(:line_item) { mock_model Spree::LineItem, insufficient_stock?: true }
 

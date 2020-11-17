@@ -537,12 +537,6 @@ module Spree
       bill_address == ship_address
     end
 
-    # @deprecated This now happens during #recalculate
-    def set_shipments_cost
-      recalculate
-    end
-    deprecate set_shipments_cost: :recalculate, deprecator: Spree::Deprecation
-
     def is_risky?
       payments.risky.count > 0
     end
