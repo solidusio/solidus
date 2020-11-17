@@ -150,15 +150,10 @@ RSpec.describe Spree::Promotion::Rules::Taxon, type: :model do
         rule.save!(validate: false)
       end
 
-      it 'logs a warning and uses "any" policy' do
-        expect(Spree::Deprecation).to(
-          receive(:warn).
-          with(/has unexpected match policy "invalid"/)
-        )
-
-        expect(
+      it 'raises' do
+        expect {
           rule.eligible?(order)
-        ).to be_truthy
+        }.to raise_error('unexpected match policy: "invalid"')
       end
     end
   end
@@ -176,15 +171,10 @@ RSpec.describe Spree::Promotion::Rules::Taxon, type: :model do
         rule.taxons << taxon
       end
 
-      it 'logs a warning and uses "any" policy' do
-        expect(Spree::Deprecation).to(
-          receive(:warn).
-          with(/has unexpected match policy "invalid"/)
-        )
-
-        expect(
-          rule.actionable?(line_item)
-        ).to be_truthy
+      it 'raises' do
+        expect {
+          rule.eligible?(order)
+        }.to raise_error('unexpected match policy: "invalid"')
       end
     end
 
