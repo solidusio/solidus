@@ -671,11 +671,6 @@ module Spree
       end
     end
 
-    alias_method :assign_default_user_addresses!, :assign_default_user_addresses
-    deprecate assign_default_user_addresses!: :assign_default_user_addresses, deprecator: Spree::Deprecation
-    alias_method :assign_default_addresses!, :assign_default_user_addresses
-    deprecate assign_default_addresses!: :assign_default_user_addresses, deprecator: Spree::Deprecation
-
     def persist_user_address!
       if !temporary_address && user && user.respond_to?(:persist_order_address) && bill_address_id
         user.persist_order_address(self)
