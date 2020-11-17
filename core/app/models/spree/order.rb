@@ -449,23 +449,6 @@ module Spree
       recalculate
     end
 
-    def state_changed(name)
-      state = "#{name}_state"
-      if persisted?
-        old_state = send("#{state}_was")
-        new_state = send(state)
-        unless old_state == new_state
-          state_changes.create(
-            previous_state: old_state,
-            next_state:     new_state,
-            name:           name,
-            user_id:        user_id
-          )
-        end
-      end
-    end
-    deprecate :state_changed, deprecator: Spree::Deprecation
-
     def coupon_code=(code)
       @coupon_code = begin
                        code.strip.downcase

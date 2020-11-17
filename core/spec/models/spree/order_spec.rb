@@ -591,33 +591,6 @@ RSpec.describe Spree::Order, type: :model do
     end
   end
 
-  # Regression tests for https://github.com/spree/spree/issues/4072
-  context "#state_changed" do
-    let(:order) { FactoryBot.create(:order) }
-
-    before do
-      expect(Spree::Deprecation).to receive(:warn).
-        with(/^state_changed is deprecated and will be removed/, any_args)
-    end
-
-    it "logs state changes" do
-      order.update_column(:payment_state, 'balance_due')
-      order.payment_state = 'paid'
-      expect(order.state_changes).to be_empty
-      order.state_changed('payment')
-      state_change = order.state_changes.find_by(name: 'payment')
-      expect(state_change.previous_state).to eq('balance_due')
-      expect(state_change.next_state).to eq('paid')
-    end
-
-    it "does not do anything if state does not change" do
-      order.update_column(:payment_state, 'balance_due')
-      expect(order.state_changes).to be_empty
-      order.state_changed('payment')
-      expect(order.state_changes).to be_empty
-    end
-  end
-
   # Regression test for https://github.com/spree/spree/issues/4199
   context "#available_payment_methods" do
     it "includes frontend payment methods" do
