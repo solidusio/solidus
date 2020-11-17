@@ -56,7 +56,7 @@
                 <span><%= t store_credit.invalidated? ? 'spree.say_yes' : 'spree.say_no' %></span>
               </td>
               <td class="actions" data-hook="admin_store_credits_index_row_actions">
-                <% if can?(:show, store_credit) %>
+                <% if can?(:edit, store_credit) %>
                   <%= link_to_edit_url admin_user_store_credit_path(@user, store_credit), { no_text: true, class: 'edit' } %>
                 <% end %>
               </td>
