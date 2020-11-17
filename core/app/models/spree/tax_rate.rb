@@ -106,16 +106,6 @@ module Spree
       )
     end
 
-    def tax_category=(category)
-      self.tax_categories = [category]
-    end
-
-    def tax_category
-      tax_categories[0]
-    end
-
-    deprecate :tax_category => :tax_categories, :tax_category= => :tax_categories=, deprecator: Spree::Deprecation
-
     private
 
     def amount_for_adjustment_label
