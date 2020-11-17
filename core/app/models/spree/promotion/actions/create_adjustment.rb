@@ -39,9 +39,6 @@ module Spree
         # item_total and ship_total
         def compute_amount(calculable)
           amount = calculator.compute(calculable)
-          if !amount.is_a?(BigDecimal)
-            Spree::Deprecation.warn "#{calculator.class.name}#compute returned #{amount.inspect}, it should return a BigDecimal"
-          end
           amount ||= BigDecimal(0)
           amount = amount.abs
           [(calculable.item_total + calculable.ship_total), amount].min * -1
