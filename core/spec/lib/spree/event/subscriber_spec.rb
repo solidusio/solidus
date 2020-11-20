@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'active_support/all'
 require 'spec_helper'
 require 'spree/event'
 
