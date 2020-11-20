@@ -72,14 +72,7 @@ module Spree
     def to_html(options = { html_wrap: true })
       output = format(options)
       # Maintain compatibility by checking html option renamed to html_wrap.
-      if options[:html] || options[:html] == false
-        Spree::Deprecation.warn <<-WARN.squish, caller
-          Spree::Money#to_html called with Spree::Money#to_html(html: #{options[:html].inspect}),
-          which will not be supported in the future.
-          Instead use :html_wrap e.g. Spree::Money#to_html(html_wrap: #{options[:html].inspect})
-        WARN
-      end
-      if options[:html_wrap] || options[:html]
+      if options[:html_wrap]
         output = output.html_safe
       end
       output
