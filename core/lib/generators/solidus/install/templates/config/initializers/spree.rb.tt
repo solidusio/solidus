@@ -23,11 +23,6 @@ Spree.config do |config|
   config.taxon_attachment_module = 'Spree::Taxon::PaperclipAttachment'
 
   # Defaults
-  # Set this configuration to `true` to allow promotions
-  # with no associated actions to be considered active for use by customers.
-  # See https://github.com/solidusio/solidus/pull/3749 for more info.
-  config.consider_actionless_promotion_active = false
-
   # Permission Sets:
 
   # Uncomment and customize the following line to add custom permission sets

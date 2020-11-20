@@ -56,15 +56,6 @@ module Spree
       end
 
       config.after_initialize do
-        if Spree::Config.consider_actionless_promotion_active == true
-          Spree::Deprecation.warn(
-            'Spree::Config.consider_actionless_promotion_active set to true is ' \
-            'deprecated. Please note that by switching this value, ' \
-            'promotions with no actions will be considered active.',
-            caller
-          )
-        end
-
         # Load in mailer previews for apps to use in development.
         # We need to make sure we call `Preview.all` before requiring our
         # previews, otherwise any previews the app attempts to add need to be
