@@ -37,39 +37,6 @@ RSpec.describe Spree::Money do
         it { should == "$10.00 USD" }
       end
 
-      context 'with deprecated amount format' do
-        before do
-          expect(Spree::Deprecation).to receive(:warn).
-            with(/^Spree::Money was initialized with ".*", which will not be supported in the future/, any_args)
-        end
-
-        context "with symbol" do
-          let(:amount){ '$10.00' }
-          it { should == "$10.00 USD" }
-        end
-
-        context "with extra currency" do
-          let(:amount){ '$10.00 USD' }
-          it { should == "$10.00 USD" }
-        end
-
-        context "with different currency" do
-          let(:currency){ 'USD' }
-          let(:amount){ '$10.00 CAD' }
-          it { should == "$10.00 CAD" }
-        end
-
-        context "with commas" do
-          let(:amount){ '1,000.00' }
-          it { should == "$1,000.00 USD" }
-        end
-
-        context "with comma for decimal point" do
-          let(:amount){ '10,00' }
-          it { should == "$10.00 USD" }
-        end
-      end
-
       context 'with fixnum' do
         let(:amount){ 10 }
         it { should == "$10.00 USD" }
