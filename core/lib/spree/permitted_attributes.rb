@@ -191,12 +191,12 @@ module Spree
 
     private
 
-    def inject_attributes_to_all_steps(attributes, method)
+    def inject_attributes_to_all_steps(attributes, method_name)
       attributes.each do |attribute|
-        PermittedAttributes.checkout_address_attributes.send(method, attribute)
-        PermittedAttributes.checkout_delivery_attributes.send(method, attribute)
-        PermittedAttributes.checkout_payment_attributes.send(method, attribute)
-        PermittedAttributes.checkout_confirm_attributes.send(method, attribute)
+        PermittedAttributes.checkout_address_attributes.send(method_name, attribute)
+        PermittedAttributes.checkout_delivery_attributes.send(method_name, attribute)
+        PermittedAttributes.checkout_payment_attributes.send(method_name, attribute)
+        PermittedAttributes.checkout_confirm_attributes.send(method_name, attribute)
       end
     end
   end
