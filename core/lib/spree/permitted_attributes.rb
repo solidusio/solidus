@@ -148,54 +148,5 @@ module Spree
     ]
 
     @@checkout_confirm_attributes = []
-
-    def self.checkout_attributes
-      Spree::Deprecation.warn <<-WARN.squish, caller
-        checkout_attributes is deprecated, please use the permitted
-        attributes set for the specific step that needs to be updated.
-
-        E.g. permitted_checkout_address_attributes
-      WARN
-
-      CheckoutAdditionalAttributes.new(
-        checkout_address_attributes +
-        checkout_delivery_attributes +
-        checkout_payment_attributes +
-        checkout_confirm_attributes
-      )
-    end
-  end
-
-  class CheckoutAdditionalAttributes < Array
-    def <<(*attributes)
-      super
-
-      inject_attributes_to_all_steps(attributes, :<<)
-    end
-
-    def push(*attributes)
-      super
-
-      inject_attributes_to_all_steps(attributes, :push)
-    end
-    alias append push
-
-    def prepend(*attributes)
-      super
-
-      inject_attributes_to_all_steps(attributes, :prepend)
-    end
-    alias unshift prepend
-
-    private
-
-    def inject_attributes_to_all_steps(attributes, method_name)
-      attributes.each do |attribute|
-        PermittedAttributes.checkout_address_attributes.send(method_name, attribute)
-        PermittedAttributes.checkout_delivery_attributes.send(method_name, attribute)
-        PermittedAttributes.checkout_payment_attributes.send(method_name, attribute)
-        PermittedAttributes.checkout_confirm_attributes.send(method_name, attribute)
-      end
-    end
   end
 end
