@@ -115,7 +115,6 @@ end
 
 Spree.user_class = 'Spree::LegacyUser'
 Spree.config do |config|
-  config.use_legacy_address_state_validator = false
   config.mails_from = "store@example.com"
   config.raise_with_invalid_currency = false
   config.redirect_back_on_unauthorized = true

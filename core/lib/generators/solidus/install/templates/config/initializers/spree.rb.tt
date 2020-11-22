@@ -16,9 +16,6 @@ Spree.config do |config|
   # Use legacy Spree::Order state machine
   config.use_legacy_order_state_machine = false
 
-  # Use the legacy address' state validation logic
-  config.use_legacy_address_state_validator = false
-
   # Uncomment to stop tracking inventory levels in the application
   # config.track_inventory_levels = false
 
