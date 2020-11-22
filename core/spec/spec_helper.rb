@@ -10,6 +10,7 @@ if ENV["COVERAGE"]
   SimpleCov.start('rails')
 end
 
+=begin
 require 'rspec/core'
 
 require 'spree/testing_support/partial_double_verification'
@@ -39,3 +40,4 @@ RSpec.configure do |config|
 
   Kernel.srand config.seed
 end
+=end
