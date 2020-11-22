@@ -108,3 +108,28 @@ task :sandbox do
   warn "Using `rake sandbox` is deprecated, please use bin/sandbox directly instead."
   sh("bin/sandbox")
 end
+
+desc "Reports coverage results for Solidus project"
+task :coverage do
+  require 'simplecov'
+  SimpleCov.merge_timeout 3600
+  SimpleCov.result.format!
+end
+
+namespace :coverage do
+  desc "Reports coverage results for Solidus project to codecov.io"
+  task :ci do
+    require 'simplecov'
+    SimpleCov.merge_timeout 3600
+    if ENV['COVERAGE_DIR']
+      SimpleCov.coverage_dir(ENV['COVERAGE_DIR'])
+    end
+    if ENV['CODECOV_TOKEN']
+      require 'codecov'
+      SimpleCov.formatter = SimpleCov::Formatter::Codecov
+    else
+      warn "Provide a CODECOV_TOKEN environment variable to enable Codecov uploads"
+    end
+    SimpleCov.result.format!
+  end
+end

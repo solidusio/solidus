@@ -40,6 +40,7 @@ group :backend, :frontend, :core, :api do
   gem 'rspec-activemodel-mocks', '~> 1.1', require: false
   gem 'rspec-rails', '~> 4.0.0.beta2', require: false
   gem 'simplecov', require: false
+  gem 'codecov', require: false
   gem 'with_model', require: false
   gem 'rails-controller-testing', require: false
   gem 'puma', require: false

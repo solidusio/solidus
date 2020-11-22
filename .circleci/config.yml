@@ -78,6 +78,28 @@ commands:
       - store_test_results:
           path: /tmp/test-results
 
+  test_with_coverage:
+    # This command setup coverage env variables, run test suites with coverage enabled and
+    # report it to codecov.io.
+    # Codecov automatically merge coverage data, so it is safe to upload coverage data
+    # multiples times for the same pipeline.
+    # See https://docs.codecov.io/docs/merging-reports.
+    description: Run Tests With Coverage Enabled
+    steps:
+      - run: 
+          name: Setup Coverage Env Vars
+          command: |
+              echo 'export COVERAGE=true' >> $BASH_ENV
+              echo 'export COVERAGE_DIR=/tmp/coverage' >> $BASH_ENV
+              source $BASH_ENV
+      - run: 
+          name: Setup Coverage Directory
+          command: mkdir -p $COVERAGE_DIR
+      - test
+      - run:
+          name: Report Coverage
+          command: bundle exec rake coverage:ci
+
 jobs:
   persist_version:
     executor: base
@@ -100,7 +122,7 @@ jobs:
     parallelism: &parallelism 3
     steps:
       - setup
-      - test
+      - test_with_coverage
 
   postgres_rails_master_activestorage:
     executor: postgres
