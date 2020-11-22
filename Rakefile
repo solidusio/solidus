@@ -102,3 +102,30 @@ namespace :gem do
     end
   end
 end
+
+namespace :solidus do
+  desc "Report code coverage results for all solidus gems"
+  task :coverage do
+    require 'simplecov'
+    SimpleCov.merge_timeout 3600
+    SimpleCov.result.format!
+  end
+
+  namespace :coverage do
+    desc "Report code coverage results for all solidus gems to codecov.io"
+    task :ci do
+      require 'simplecov'
+      SimpleCov.merge_timeout 3600
+      if ENV['COVERAGE_DIR']
+        SimpleCov.coverage_dir(ENV['COVERAGE_DIR'])
+      end
+      if ENV['CODECOV_TOKEN']
+        require 'codecov'
+        SimpleCov.formatter = SimpleCov::Formatter::Codecov
+      else
+        warn "Please, provide a CODECOV_TOKEN environment variable to enable Codecov uploads"
+      end
+      SimpleCov.result.format!
+    end
+  end
+end
