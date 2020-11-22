@@ -26,6 +26,7 @@ gem 'database_cleaner', '~> 1.3', require: false
 gem 'rspec-activemodel-mocks', '~> 1.1', require: false
 gem 'rspec-rails', '~> 4.0.1', require: false
 gem 'simplecov', require: false
+gem 'simplecov-cobertura', require: false
 gem 'rails-controller-testing', require: false
 gem 'puma', require: false
 gem 'i18n-tasks', '~> 0.9', require: false
