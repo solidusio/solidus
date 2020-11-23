@@ -120,7 +120,7 @@ module Spree
       end
 
       it 'can query the results through a paramter' do
-        expected_result = create(:user, email: 'brian@spreecommerce.com')
+        expected_result = create(:user, email: 'brian@solidus.io')
         get spree.api_users_path, params: { q: { email_cont: 'brian' } }
         expect(json_response['count']).to eq(1)
         expect(json_response['users'].first['email']).to eq expected_result.email
