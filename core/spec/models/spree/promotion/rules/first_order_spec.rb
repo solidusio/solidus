@@ -61,8 +61,8 @@ RSpec.describe Spree::Promotion::Rules::FirstOrder, type: :model do
     end
 
     context "for a guest user" do
-      let(:email) { 'user@spreecommerce.com' }
-      before { allow(order).to receive_messages email: 'user@spreecommerce.com' }
+      let(:email) { 'user@solidus.io' }
+      before { allow(order).to receive_messages email: 'user@solidus.io' }
 
       context "with no other orders" do
         it { expect(rule).to be_eligible(order) }

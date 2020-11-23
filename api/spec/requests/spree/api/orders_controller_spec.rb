@@ -439,9 +439,9 @@ module Spree
     end
 
     it "assigns email when creating a new order" do
-      post spree.api_orders_path, params: { order: { email: "guest@spreecommerce.com" } }
+      post spree.api_orders_path, params: { order: { email: "guest@solidus.io" } }
       expect(json_response['email']).not_to eq controller.current_api_user
-      expect(json_response['email']).to eq "guest@spreecommerce.com"
+      expect(json_response['email']).to eq "guest@solidus.io"
     end
 
     context "specifying additional parameters for a line items" do
@@ -817,13 +817,13 @@ module Spree
       context "search" do
         before do
           create(:order)
-          Spree::Order.last.update_attribute(:email, 'solidus@spreecommerce.com')
+          Spree::Order.last.update_attribute(:email, 'solidus@solidus.io')
         end
 
         let(:expected_result) { Spree::Order.last }
 
         it "can query the results through a parameter" do
-          get spree.api_orders_path, params: { q: { email_cont: 'spree' } }
+          get spree.api_orders_path, params: { q: { email_cont: 'solidus' } }
           expect(json_response["orders"].count).to eq(1)
           expect(json_response["orders"].first).to have_attributes(attributes)
           expect(json_response["orders"].first["email"]).to eq(expected_result.email)
