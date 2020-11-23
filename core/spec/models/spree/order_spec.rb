@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Spree::Order, type: :model do
   let(:store) { create(:store) }
-  let(:user) { create(:user, email: "spree@example.com") }
+  let(:user) { create(:user, email: "solidus@example.com") }
   let(:order) { create(:order, user: user, store: store) }
   let(:promotion) do
     FactoryBot.create(

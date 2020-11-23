@@ -9,7 +9,7 @@ store = Spree::Store.first!
 orders = []
 orders << Spree::Order.create!(
   number: "R123456789",
-  email: "spree@example.com",
+  email: "solidus@example.com",
   item_total: 150.95,
   adjustment_total: 150.95,
   total: 301.90,
@@ -19,7 +19,7 @@ orders << Spree::Order.create!(
 
 orders << Spree::Order.create!(
   number: "R987654321",
-  email: "spree@example.com",
+  email: "solidus@example.com",
   item_total: 15.95,
   adjustment_total: 15.95,
   total: 31.90,

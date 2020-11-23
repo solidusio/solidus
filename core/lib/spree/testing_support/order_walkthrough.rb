@@ -23,7 +23,7 @@ module Spree
         end
 
         order = Spree::Order.create!(
-          email: "spree@example.com",
+          email: "solidus@example.com",
           store: Spree::Store.first || FactoryBot.create(:store)
         )
         add_line_item!(order)

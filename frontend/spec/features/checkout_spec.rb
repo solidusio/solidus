@@ -89,7 +89,7 @@ describe "Checkout", type: :feature, inaccessible: true do
 
       let!(:order) do
         order = Spree::Order.create!(
-          email: "spree@example.com",
+          email: "solidus@example.com",
           store: Spree::Store.first || FactoryBot.create(:store)
         )
 
@@ -528,7 +528,7 @@ describe "Checkout", type: :feature, inaccessible: true do
         end
       end
 
-      allow_any_instance_of(Spree::Order).to receive_messages email: "spree@commerce.com"
+      allow_any_instance_of(Spree::Order).to receive_messages email: "solidus@commerce.com"
 
       add_mug_to_cart
       click_on "Checkout"
