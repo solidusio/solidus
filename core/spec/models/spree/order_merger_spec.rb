@@ -9,7 +9,7 @@ module Spree
     let!(:store) { create(:store, default: true) }
     let(:order_1) { Spree::Order.create }
     let(:order_2) { Spree::Order.create }
-    let(:user) { stub_model(Spree::LegacyUser, email: "spree@example.com") }
+    let(:user) { stub_model(Spree::LegacyUser, email: "solidus@example.com") }
     let(:subject) { Spree::OrderMerger.new(order_1) }
 
     it "destroys the other order" do

@@ -93,9 +93,9 @@ module Spree
             expect(Spree::StoreCredit.last.currency).to eq reimbursement.order.currency
           end
 
-          context 'without a user with email address "spree@example.com" in the database' do
+          context 'without a user with email address "solidus@example.com" in the database' do
             before do
-              default_user = Spree::LegacyUser.find_by(email: "spree@example.com")
+              default_user = Spree::LegacyUser.find_by(email: "solidus@example.com")
               default_user.destroy if default_user
             end
 

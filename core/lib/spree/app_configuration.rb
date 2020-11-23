@@ -190,7 +190,7 @@ module Spree
 
     # @!attribute [rw] mails_from
     #   @return [String] Email address used as +From:+ field in transactional emails.
-    preference :mails_from, :string, default: 'spree@example.com'
+    preference :mails_from, :string, default: 'solidus@example.com'
 
     # @!attribute [rw] max_level_in_taxons_menu
     #   @return [Integer] maximum nesting level in taxons menu (default: +1+)

@@ -20,7 +20,7 @@ module Spree
     let(:address_params) { { country_id: Country.first.id, state_id: State.first.id } }
 
     let(:current_api_user) do
-      user = Spree.user_class.new(email: "spree@example.com")
+      user = Spree.user_class.new(email: "solidus@example.com")
       user.generate_spree_api_key!
       user
     end
@@ -817,7 +817,7 @@ module Spree
       context "search" do
         before do
           create(:order)
-          Spree::Order.last.update_attribute(:email, 'spree@spreecommerce.com')
+          Spree::Order.last.update_attribute(:email, 'solidus@spreecommerce.com')
         end
 
         let(:expected_result) { Spree::Order.last }
@@ -917,7 +917,7 @@ module Spree
 
       context "can cancel an order" do
         before do
-          stub_spree_preferences(mails_from: "spree@example.com")
+          stub_spree_preferences(mails_from: "solidus@example.com")
 
           order.completed_at = Time.current
           order.state = 'complete'
