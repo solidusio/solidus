@@ -16,17 +16,6 @@ module Spree
           prepare(params)
         end
 
-        def current_currency=(currency)
-          self.pricing_options = Spree::Config.pricing_options_class.new(
-            pricing_options.desired_attributes.merge(currency: currency)
-          )
-        end
-
-        def current_currency
-          pricing_options.currency
-        end
-        deprecate :current_currency, :current_currency=, deprecator: Spree::Deprecation
-
         def retrieve_products
           @products = get_base_scope
           curr_page = @properties[:page] || 1
