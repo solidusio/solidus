@@ -35,7 +35,9 @@ module Spree
             subscription = Spree::Event.subscribe(event_name) { |event| subscriber.send(event_action, event) }
 
             # deprecated mappings, to be removed when Solidus 2.10 is not supported anymore:
-            subscriber.send("#{event_action}_handler=", subscription)
+            if subscriber.respond_to?("#{event_action}_handler=")
+              subscriber.send("#{event_action}_handler=", subscription)
+            end
 
             registry[subscriber.name][event_action] = subscription
           end
