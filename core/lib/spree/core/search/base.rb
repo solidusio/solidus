@@ -26,19 +26,6 @@ module Spree
           @products = @products.page(curr_page).per(@properties[:per_page])
         end
 
-        def method_missing(name)
-          if @properties.key?(name)
-            Spree::Deprecation.warn "Accessing Searcher's #{name} property using #{self.class.name}##{name} is deprecated without replacement"
-            @properties[name]
-          else
-            super
-          end
-        end
-
-        def respond_to_missing?(name)
-          @properties.key?(name) || super(name)
-        end
-
         protected
 
         def get_base_scope
