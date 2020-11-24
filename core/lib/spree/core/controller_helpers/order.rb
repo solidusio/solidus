@@ -84,16 +84,11 @@ module Spree
           current_order_params.merge(last_ip_address: ip_address)
         end
 
-        def find_order_by_token_or_user(options = {}, with_adjustments = false)
+        def find_order_by_token_or_user(options = {})
           should_lock = options[:lock] || false
 
           # Find any incomplete orders for the guest_token
-          if with_adjustments
-            Spree::Deprecation.warn "The second argument to find_order_by_token_or_user is deprecated, and will be removed in a future version."
-            order = Spree::Order.incomplete.includes(:adjustments).lock(should_lock).find_by(current_order_params)
-          else
-            order = Spree::Order.incomplete.lock(should_lock).find_by(current_order_params)
-          end
+          order = Spree::Order.incomplete.lock(should_lock).find_by(current_order_params)
 
           # Find any incomplete orders for the current user
           if order.nil? && try_spree_current_user
