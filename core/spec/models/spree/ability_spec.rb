@@ -9,20 +9,6 @@ Spree::Deprecation.silence do
   require 'spree/testing_support/bar_ability'
 end
 
-# Fake ability for testing registration of additional abilities
-class FooAbility
-  include CanCan::Ability
-
-  def initialize(_user)
-    # allow anyone to perform index on Order
-    can :index, Spree::Order
-    # allow anyone to update an Order with id of 1
-    can :update, Spree::Order do |order|
-      order.id == 1
-    end
-  end
-end
-
 RSpec.describe Spree::Ability, type: :model do
   let(:user) { build(:user) }
   let(:ability) { Spree::Ability.new(user) }
@@ -45,12 +31,31 @@ RSpec.describe Spree::Ability, type: :model do
 
   context 'register_ability' do
     it 'should add the ability to the list of abilties' do
-      Spree::Ability.register_ability(FooAbility)
+      foo_ability = Class.new do
+        include CanCan::Ability
+
+        def initialize(_user)
+          can :index, Spree::Order
+        end
+      end
+
+      Spree::Ability.register_ability(foo_ability)
       expect(Spree::Ability.new(user).abilities).not_to be_empty
     end
 
     it 'should apply the registered abilities permissions' do
-      Spree::Ability.register_ability(FooAbility)
+      foo_ability = Class.new do
+        include CanCan::Ability
+
+        def initialize(_user)
+          can :index, Spree::Order
+          can :update, Spree::Order do |order|
+            order.id == 1
+          end
+        end
+      end
+
+      Spree::Ability.register_ability(foo_ability)
       expect(Spree::Ability.new(user).can?(:update, mock_model(Spree::Order, user: nil, id: 1))).to be true
     end
   end
