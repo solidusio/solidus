@@ -98,7 +98,17 @@ RSpec.describe Spree::Ability, type: :model do
       it 'should be able to admin on the order and shipment pages' do
         user.spree_roles << Spree::Role.find_or_create_by(name: 'bar')
 
-        Spree::Ability.register_ability(BarAbility)
+        bar_ability = Class.new do
+          include CanCan::Ability
+
+          def initialize(user)
+            if user.has_spree_role? 'bar'
+              can [:admin, :index, :show], Spree::Order
+              can [:admin, :manage], Spree::Shipment
+            end
+          end
+        end
+        Spree::Ability.register_ability(bar_ability)
 
         expect(ability).not_to be_able_to :admin, resource
 
