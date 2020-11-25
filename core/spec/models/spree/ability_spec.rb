@@ -5,10 +5,6 @@ require 'cancan'
 require 'cancan/matchers'
 require 'spree/testing_support/ability_helpers'
 
-Spree::Deprecation.silence do
-  require 'spree/testing_support/bar_ability'
-end
-
 RSpec.describe Spree::Ability, type: :model do
   let(:user) { build(:user) }
   let(:ability) { Spree::Ability.new(user) }
