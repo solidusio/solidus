@@ -4,19 +4,17 @@ require 'rails_helper'
 
 RSpec.describe Spree::Country, type: :model do
   describe '.default' do
-    before do
-      create(:country, iso: "DE", id: 1)
-      create(:country, id: 2)
-      allow(Spree::Deprecation).to receive(:warn).
-        with(/^Setting your default country via its ID is deprecated/, any_args)
-    end
-
     subject(:default_country) { described_class.default }
 
     context 'with the configuration setting an existing ISO code' do
+      before do
+        create(:country, iso: "DE")
+        stub_spree_preferences(default_country_iso: "DE")
+      end
+
       it 'is a country with the configurations ISO code' do
         expect(default_country).to be_a(Spree::Country)
-        expect(default_country.iso).to eq('US')
+        expect(default_country.iso).to eq('DE')
       end
     end
 
