@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spree/deprecation'
-
 module Spree
   module Core
     module Search
