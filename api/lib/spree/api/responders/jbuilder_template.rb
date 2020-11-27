@@ -16,8 +16,6 @@ module Spree
           options[:default_template]
         end
       end
-
-      RablTemplate = ActiveSupport::Deprecation::DeprecatedConstantProxy.new('RablTemplate', 'JbuilderTemplate')
     end
   end
 end
