@@ -31,12 +31,12 @@ describe "Store", type: :feature, js: true do
   context "editing general store settings" do
     it "should be able to update the site name" do
       fill_in "store_name", with: "Spree Demo Site99"
-      fill_in "store_mail_from_address", with: "spree@example.org"
+      fill_in "store_mail_from_address", with: "solidus@example.org"
       click_button "Update"
 
       expect(page).to have_content "successfully updated"
       expect(page).to have_field("store_name", with: "Spree Demo Site99")
-      expect(page).to have_field("store_mail_from_address", with: "spree@example.org")
+      expect(page).to have_field("store_mail_from_address", with: "solidus@example.org")
     end
 
     it "should be able to update the default cart tax country" do

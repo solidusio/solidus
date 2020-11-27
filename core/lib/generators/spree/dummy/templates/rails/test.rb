@@ -24,7 +24,7 @@ Dummy::Application.configure do
   # The :test delivery method accumulates sent emails in the
   # ActionMailer::Base.deliveries array.
   config.action_mailer.delivery_method = :test
-  ActionMailer::Base.default from: "spree@example.com"
+  ActionMailer::Base.default from: "solidus@example.com"
 
   # Raise on deprecation warnings
   if ENV['SOLIDUS_RAISE_DEPRECATIONS'].present?
