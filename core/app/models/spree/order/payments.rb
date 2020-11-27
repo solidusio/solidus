@@ -37,14 +37,14 @@ module Spree
 
       private
 
-      def process_payments_with(method)
+      def process_payments_with(method_name)
         # Don't run if there is nothing to pay.
         return true if payment_total >= total
 
         unprocessed_payments.each do |payment|
           break if payment_total >= total
 
-          payment.public_send(method)
+          payment.public_send(method_name)
         end
       rescue Core::GatewayError => error
         result = !!Spree::Config[:allow_checkout_on_gateway_error]
