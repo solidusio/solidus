@@ -156,9 +156,6 @@ RSpec::Matchers.define :have_meta do |name, expected|
   end
 end
 
-# @private
-CapybaraExt = ActiveSupport::Deprecation::DeprecatedConstantProxy.new('CapybaraExt', 'Spree::TestingSupport::CapybaraExt')
-
 RSpec.configure do |c|
   c.include Spree::TestingSupport::CapybaraExt
 end
