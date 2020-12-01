@@ -1169,10 +1169,7 @@ paths:
         '422':
           $ref: '#/components/responses/delete-restriction'
       summary: Remove address from user address book
-      description: |-
-        Removes an address from a user's address book.
-
-        **Note:** Rather than delete a `Spree::UserAddress` record this action set its `archived` attribute to `true`.
+      description: Removes an address from a user's address book.
       operationId: remove-address-from-user-address-book
       tags:
         - Address books
@@ -1201,11 +1198,7 @@ paths:
       operationId: update-user-address-book
       tags:
         - Address books
-      description: |-
-        Updates a user's address book.
-
-        **Note:** if the passed `id` matches an existing `address` a new `Spree::Address` record will be created and the matched `address` `archived` on `Spree::UserAddress`. For a similar logic, if the passed `id` matches an existing `address` which is in `archived` state, the `Spree::UserAddress#archived` record will be restored to `false`.
-        See `user_address_book.rb` for further information.
+      description: Updates a user's address book.
       security:
         - api-key: []
       requestBody:
