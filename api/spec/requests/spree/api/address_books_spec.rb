@@ -59,7 +59,7 @@ module Spree
             put "/api/users/#{user.id}/address_book",
               params:  { address_book: harry_address_attributes.merge('id' => address.id) },
               headers: { Authorization: 'Bearer galleon' }
-          }.to change { UserAddress.count }.from(1).to(2)
+          }.not_to change { UserAddress.count }
 
           expect(response.status).to eq(200)
           expect(JSON.parse(response.body).first).to include(harry_address_attributes)
@@ -100,7 +100,7 @@ module Spree
           end
         end
 
-        it 'archives my address' do
+        it 'deletes my address' do
           address = create(:address)
           user = create(:user, spree_api_key: 'galleon')
           user.save_in_address_book(address.attributes, false)
@@ -149,13 +149,13 @@ module Spree
             put "/api/users/#{other_user.id}/address_book",
             params:  { address_book: updated_harry_address.merge('id' => address.id) },
             headers: { Authorization: 'Bearer galleon' }
-          }.to change { UserAddress.count }.from(1).to(2)
+          }.not_to change { UserAddress.count }
 
           expect(response.status).to eq(200)
           expect(JSON.parse(response.body).first).to include(updated_harry_address)
         end
 
-        it "archives another user's address" do
+        it "deletes another user's address" do
           address = create(:address)
           other_user = create(:user)
           other_user.save_in_address_book(address.attributes, false)

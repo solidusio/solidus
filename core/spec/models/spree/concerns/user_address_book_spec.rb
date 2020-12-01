@@ -225,78 +225,6 @@ module Spree
           end
         end
       end
-
-      context "resurrecting a previously saved (but now archived) address" do
-        let(:address) { create(:address) }
-        before do
-          user.save_in_address_book(address.attributes, true)
-          user.remove_from_address_book(address.id)
-        end
-        subject { user.save_in_address_book(address.attributes, true) }
-
-        it "returns the address" do
-          expect(subject).to eq address
-        end
-
-        context "when called with default address_type" do
-          it "sets the passed address as default shipping address" do
-            subject
-            expect(user.ship_address).to eq address
-          end
-        end
-
-        context "when called with address_type = :billing" do
-          subject { user.save_in_address_book(address.attributes, true, :billing) }
-
-          it "sets the passed address as default billing address" do
-            subject
-            expect(user.bill_address).to eq address
-          end
-        end
-
-        context "via an edit to another address" do
-          let(:address2) { create(:address, name: "Different") }
-          let(:edited_attributes) do
-            # conceptually edit address2 to match the values of address
-            edited_attributes = address.attributes
-            edited_attributes[:id] = address2.id
-            edited_attributes
-          end
-
-          before { user.save_in_address_book(address2.attributes, true) }
-
-          subject { user.save_in_address_book(edited_attributes) }
-
-          it "returns the address" do
-            expect(subject).to eq address
-          end
-
-          it "archives address2" do
-            subject
-            user_address_two = user.user_addresses.all_historical.find_by(address_id: address2.id)
-            expect(user_address_two.archived).to be true
-          end
-
-          context "via a new address that matches an archived one" do
-            let(:added_attributes) do
-              added_attributes = address.attributes
-              added_attributes.delete(:id)
-              added_attributes
-            end
-
-            subject { user.save_in_address_book(added_attributes) }
-
-            it "returns the address" do
-              expect(subject).to eq address
-            end
-
-            it "no longer has archived user_addresses" do
-              subject
-              expect(user.user_addresses.all_historical).to eq user.user_addresses
-            end
-          end
-        end
-      end
     end
 
     context "#remove_from_address_book" do
@@ -316,10 +244,9 @@ module Spree
         expect(user.user_addresses.find_first_by_address_values(address1.attributes)).to be_nil
       end
 
-      it "leaves user_address record in an archived state" do
+      it "deletes user_address record" do
         subject
-        archived_user_address = user.user_addresses.all_historical.find_first_by_address_values(address1.attributes)
-        expect(archived_user_address).to be_archived
+        expect(user.user_addresses.map(&:address)).to eq([address2])
       end
 
       it "returns false if the addresses is not there" do
