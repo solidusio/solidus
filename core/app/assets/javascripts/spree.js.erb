@@ -22,21 +22,6 @@ Spree.pathFor = function(path) {
   return locationOrigin + Spree.mountedAt() + path;
 };
 
-Spree.url = function(uri, query) {
-  if (console && console.warn) {
-    console.warn('Spree.url is deprecated, and will be removed from a future Solidus version.');
-  }
-  if (uri.path === undefined) {
-    uri = new Uri(uri);
-  }
-  if (query) {
-    $.each(query, function(key, value) {
-      return uri.addQueryParam(key, value);
-    });
-  }
-  return uri;
-};
-
 Spree.ajax = function(url, options) {
   if (typeof url === "object") {
     options = url;
