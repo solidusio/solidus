@@ -93,7 +93,6 @@
     "Sortable": "readonly",
     "Spree": "readonly",
     "Turbolinks": "readonly",
-    "update_state": "writable",
-    "Proxy": "readonly"
+    "update_state": "writable"
   }
 }
