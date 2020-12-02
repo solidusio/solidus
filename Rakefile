@@ -102,9 +102,3 @@ namespace :gem do
     end
   end
 end
-
-desc "Creates a sandbox application for simulating the Solidus code in a deployed Rails app"
-task :sandbox do
-  warn "Using `rake sandbox` is deprecated, please use bin/sandbox directly instead."
-  sh("bin/sandbox")
-end
