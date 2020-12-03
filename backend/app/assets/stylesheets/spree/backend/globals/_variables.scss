@@ -62,11 +62,11 @@ $color-tab-active-bg:           $color-white !default;
 $color-tab-active-border:       $color-white !default;
 
 // Basic flash colors
-@include bs-deprecated-variable("color-success", "brand-success");
+@include bs-deprecated-variable("color-success", "theme-color(success)");
 $color-success:                 $color-green !default;
-@include bs-deprecated-variable("color-notice", "brand-warning");
+@include bs-deprecated-variable("color-notice", "theme-color(warning)");
 $color-notice:                  $color-yellow !default;
-@include bs-deprecated-variable("color-error", "brand-danger");
+@include bs-deprecated-variable("color-error", "theme-color(danger)");
 $color-error:                   $color-red !default;
 
 // Breadcrumb custom variable
