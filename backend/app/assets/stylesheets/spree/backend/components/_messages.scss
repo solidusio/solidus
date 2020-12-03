@@ -44,16 +44,16 @@
   color: $body-color;
 
   &.notice {
-    background-color: rgba(lighten($color-notice, 15), .95);
-    border-top-color: $color-notice;
+    background-color: rgba(theme-color-level(warning, -8), .95);
+    border-top-color: theme-color(warning);
   }
   &.success {
-    background-color: rgba(lighten($color-success, 30), .95);
-    border-top-color: $color-success;
+    background-color: rgba(theme-color-level(success, -10), .95);
+    border-top-color: theme-color(success);
   }
   &.error {
-    background-color: rgba(lighten($color-error, 30), .95);
-    border-top-color: $color-error;
+    background-color: rgba(theme-color-level(danger, -8), .95);
+    border-top-color: theme-color(danger);
   }
 }
 
