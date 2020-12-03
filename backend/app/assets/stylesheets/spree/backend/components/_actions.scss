@@ -1,21 +1,28 @@
-$color-action-edit-bg: lighten(theme-color(success), 25) !default;
-$color-action-edit-brd: lighten(theme-color(success), 100) !default;
-$color-action-clone-bg: lighten(theme-color(warning), 25) !default;
-$color-action-clone-brd: lighten(theme-color(warning), 75) !default;
-$color-action-remove-bg: lighten(theme-color(danger), 25) !default;
-$color-action-remove-brd: lighten(theme-color(danger), 50) !default;
-$color-action-void-bg: lighten(theme-color(danger), 50) !default;
-$color-action-void-brd: lighten(theme-color(danger), 100) !default;
-$color-action-cancel-bg: lighten(theme-color(warning), 50) !default;
-$color-action-cancel-brd: lighten(theme-color(warning), 100) !default;
-$color-action-capture-bg: lighten(theme-color(success), 25) !default;
-$color-action-capture-brd: lighten(theme-color(success), 100) !default;
-$color-action-save-bg: lighten(theme-color(success), 25) !default;
-$color-action-save-brd: lighten(theme-color(success), 100) !default;
-$color-action-mail-bg: lighten(theme-color(success), 25) !default;
-$color-action-mail-brd: lighten(theme-color(success), 100) !default;
-$color-action-failure-bg: lighten(theme-color(danger), 50) !default;
-$color-action-failure-brd: lighten(theme-color(danger), 100) !default;
+$color-action-success-bg: theme-color-level(success, -10) !default;
+$color-action-success-brd: theme-color-level(success, -9) !default;
+$color-action-warning-bg: theme-color-level(warning, -10) !default;
+$color-action-warning-brd: theme-color-level(warning, -9) !default;
+$color-action-danger-bg: theme-color-level(danger, -10) !default;
+$color-action-danger-brd: theme-color-level(danger, -9) !default;
+
+$color-action-edit-bg: $color-action-success-bg !default;
+$color-action-edit-brd: $color-action-success-brd !default;
+$color-action-clone-bg: $color-action-warning-bg !default;
+$color-action-clone-brd: $color-action-warning-brd !default;
+$color-action-remove-bg: $color-action-danger-bg !default;
+$color-action-remove-brd: $color-action-danger-brd !default;
+$color-action-void-bg: $color-action-danger-bg !default;
+$color-action-void-brd: $color-action-danger-brd !default;
+$color-action-cancel-bg: $color-action-warning-bg !default;
+$color-action-cancel-brd: $color-action-warning-brd !default;
+$color-action-capture-bg: $color-action-success-bg !default;
+$color-action-capture-brd: $color-action-success-brd !default;
+$color-action-save-bg: $color-action-success-bg !default;
+$color-action-save-brd: $color-action-success-brd !default;
+$color-action-mail-bg: $color-action-success-bg !default;
+$color-action-mail-brd: $color-action-success-brd !default;
+$color-action-failure-bg: $color-action-danger-bg !default;
+$color-action-failure-brd: $color-action-danger-brd !default;
 
 $actions: (
   edit,
