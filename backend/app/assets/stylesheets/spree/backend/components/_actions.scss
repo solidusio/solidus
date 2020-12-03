@@ -1,3 +1,58 @@
+$color-action-edit-bg: lighten($color-success, (5 * 5)) !default;
+$color-action-edit-brd: lighten($color-success, (20 * 5)) !default;
+$color-action-clone-bg: lighten($color-notice, (5 * 5)) !default;
+$color-action-clone-brd: lighten($color-notice, (15 * 5)) !default;
+$color-action-remove-bg: lighten($color-error, (5 * 5)) !default;
+$color-action-remove-brd: lighten($color-error, (10 * 5)) !default;
+$color-action-void-bg: lighten($color-error, (10 * 5)) !default;
+$color-action-void-brd: lighten($color-error, (20 * 5)) !default;
+$color-action-cancel-bg: lighten($color-notice, (10 * 5)) !default;
+$color-action-cancel-brd: lighten($color-notice, (20 * 5)) !default;
+$color-action-capture-bg: lighten($color-success, (5 * 5)) !default;
+$color-action-capture-brd: lighten($color-success, (20 * 5)) !default;
+$color-action-save-bg: lighten($color-success, (5 * 5)) !default;
+$color-action-save-brd: lighten($color-success, (20 * 5)) !default;
+$color-action-mail-bg: lighten($color-success, (5 * 5)) !default;
+$color-action-mail-brd: lighten($color-success, (20 * 5)) !default;
+$color-action-failure-bg: lighten($color-error, (10 * 5)) !default;
+$color-action-failure-brd: lighten($color-error, (20 * 5)) !default;
+
+$actions: (
+  edit,
+  clone,
+  remove,
+  void,
+  capture,
+  save,
+  cancel,
+  mail,
+  failure
+) !default;
+
+$actions-bg-colors: (
+  $color-action-edit-bg,
+  $color-action-clone-bg,
+  $color-action-remove-bg,
+  $color-action-void-bg,
+  $color-action-capture-bg,
+  $color-action-save-bg,
+  $color-action-cancel-bg,
+  $color-action-mail-bg,
+  $color-action-failure-bg
+) !default;
+
+$actions-brd-colors: (
+  $color-action-edit-brd,
+  $color-action-clone-brd,
+  $color-action-remove-brd,
+  $color-action-void-brd,
+  $color-action-capture-brd,
+  $color-action-save-brd,
+  $color-action-cancel-brd,
+  $color-action-mail-brd,
+  $color-action-failure-brd
+) !default;
+
 table tbody tr {
   &.highlight {
 
