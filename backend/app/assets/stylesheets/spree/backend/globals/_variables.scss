@@ -113,6 +113,33 @@ $color-pill-warning-text: $color-pill-text;
 $color-pill-error: #ff967b;
 $color-pill-error-text: $color-pill-text;
 
+// Available states
+$states: (
+  active,
+  address,
+  awaiting_return,
+  backorder,
+  balance_due,
+  canceled,
+  cart,
+  checkout,
+  complete,
+  completed,
+  confirm,
+  credit_owed,
+  delivery,
+  error,
+  failed,
+  inactive,
+  paid,
+  payment,
+  pending,
+  ready,
+  returned,
+  shipped,
+  void
+) !default;
+
 // Sidebar
 //--------------------------------------------------------------
 $width-sidebar:                  200px !default;
