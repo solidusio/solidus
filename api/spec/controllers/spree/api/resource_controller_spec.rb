@@ -172,17 +172,18 @@ module Spree
 
     describe "#destroy" do
       let!(:widget) { Widget.create!(name: "a widget") }
+
       it "returns unauthorized" do
         delete :destroy, params: { id: widget.to_param, token: user.spree_api_key }, as: :json
         assert_not_found!
-        expect { widget.reload }.not_to raise_error
+        expect { Widget.find(widget.id) }.not_to raise_error
       end
 
       context "it is authorized to destroy widgets" do
-        it "can destroy a widget" do
+        it "hard-deletes the widget" do
           delete :destroy, params: { id: widget.to_param, token: admin_user.spree_api_key }, as: :json
           expect(response.status).to eq 204
-          expect { widget.reload }.to raise_error(ActiveRecord::RecordNotFound)
+          expect { Widget.find(widget.id) }.to raise_error(ActiveRecord::RecordNotFound)
         end
       end
     end
