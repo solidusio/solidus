@@ -7,9 +7,10 @@
 [![License](http://img.shields.io/badge/license-BSD-yellowgreen.svg)](LICENSE.md)
 [![Reviewed by Hound](https://img.shields.io/badge/Reviewed_by-Hound-8E64B0.svg)](https://houndci.com)
 
-[![Enthusiasts on Open Collective](https://opencollective.com/solidus/tiers/enthusiast/badge.svg?label=Enthusiasts&color=brightgree)](https://opencollective.com/solidus)
 [![Supporters on Open Collective](https://opencollective.com/solidus/tiers/supporter/badge.svg?label=Supporters&color=brightgree)](https://opencollective.com/solidus)
-[![Ambassadors on Open Collective](https://opencollective.com/solidus/tiers/ambassador/badge.svg?label=Ambassador&color=brightgree)](https://opencollective.com/solidus)
+[![Bronze Partners on Open Collective](https://opencollective.com/solidus/tiers/bronze/badge.svg?label=Bronze&nbsp;Partners&color=brightgree)](https://opencollective.com/solidus)
+[![Silver Partners on Open Collective](https://opencollective.com/solidus/tiers/silver/badge.svg?label=Silver&nbsp;Partners&color=brightgree)](https://opencollective.com/solidus)
+[![Gold Partners on Open Collective](https://opencollective.com/solidus/tiers/gold/badge.svg?label=Gold&nbsp;Partners&color=brightgree)](https://opencollective.com/solidus)
 [![Open Source Helpers](https://www.codetriage.com/solidusio/solidus/badges/users.svg)](https://www.codetriage.com/solidusio/solidus)
 [![Slack](http://slack.solidus.io/badge.svg)](http://slack.solidus.io)
 
@@ -77,11 +78,13 @@ combine it with your own custom frontend, admin interface, and API.
 
 ## Demo
 
-Try out Solidus with one-click on Heroku:
+You can try the live Solidus demo [here.](http://demo.solidus.io/) The admin section can be accessed [here.](http://demo.solidus.io/admin)
+
+You can also try out Solidus with one-click on Heroku:
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/solidusio/solidus-example-app)
 
-Alternatively, you can use Docker to run a demo on your local machine. Run the
+Additionally, you can use Docker to run a demo on your local machine. Run the
 following command to download the image and run it at
 [http://localhost:3000](http://localhost:3000).
 
@@ -106,6 +109,25 @@ created.
 ### Installing Solidus
 
 <details>
+  <summary>For Solidus v2.11 and above</summary>
+
+  Add the following to your Gemfile.
+
+  ```ruby
+  gem 'solidus'
+  ```
+
+  Run the `bundle` command to install.
+
+  After installing gems, you'll have to run the generator to create necessary
+  configuration files and migrations.
+
+  ```bash
+  bin/rails g solidus:install
+  ```
+</details>
+
+<details>
   <summary>For Solidus v2.10 and below</summary>
 
   Add the following to your Gemfile. Skip the `solidus_auth_devise` part
@@ -123,25 +145,6 @@ created.
 
   ```bash
   bin/rails g spree:install
-  ```
-</details>
-
-<details>
-  <summary>For Solidus v2.11 (still unreleased) and above</summary>
-
-  Add the following to your Gemfile.
-
-  ```ruby
-  gem 'solidus'
-  ```
-
-  Run the `bundle` command to install.
-
-  After installing gems, you'll have to run the generator to create necessary
-  configuration files and migrations.
-
-  ```bash
-  bin/rails g solidus:install
   ```
 </details>
 

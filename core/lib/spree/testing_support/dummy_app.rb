@@ -7,6 +7,7 @@ require 'rails'
 require 'active_record/railtie'
 require 'action_controller/railtie'
 require 'action_mailer/railtie'
+require 'active_storage/engine'
 
 Rails.env = 'test'
 
@@ -114,12 +115,16 @@ end
 
 Spree.user_class = 'Spree::LegacyUser'
 Spree.config do |config|
+  config.use_legacy_address_state_validator = false
   config.mails_from = "store@example.com"
   config.raise_with_invalid_currency = false
   config.redirect_back_on_unauthorized = true
   config.run_order_validations_on_order_updater = true
   config.use_combined_first_and_last_name_in_address = true
   config.use_legacy_order_state_machine = false
+  config.use_custom_cancancan_actions = false
+  config.consider_actionless_promotion_active = false
+  config.use_legacy_store_credit_reimbursement_category_name = false
 
   if ENV['ENABLE_ACTIVE_STORAGE']
     config.image_attachment_module = 'Spree::Image::ActiveStorageAttachment'

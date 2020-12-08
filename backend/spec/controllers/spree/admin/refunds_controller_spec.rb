@@ -42,7 +42,7 @@ describe Spree::Admin::RefundsController do
     context "a Spree::Core::GatewayError is raised" do
       before do
         expect_any_instance_of(Spree::Refund).
-          to receive(:perform!).
+          to receive(:process!).
           and_raise(Spree::Core::GatewayError.new('An error has occurred'))
       end
 

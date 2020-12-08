@@ -64,6 +64,21 @@ module Spree
               expect(assigns(:variant_property_rule)).to eq first_rule
             end
           end
+
+          context "existent product id not given" do
+            let(:parameters) do
+              {
+                product_id: 'non-existent-product'
+              }
+            end
+
+            before { subject }
+
+            it "cannot find non-existent product" do
+              expect(response).to redirect_to(spree.admin_products_path)
+              expect(flash[:error]).to eql("Product is not found")
+            end
+          end
         end
       end
     end

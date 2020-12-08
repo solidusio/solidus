@@ -369,7 +369,7 @@ RSpec.describe Spree::Order, type: :model do
       let(:default_credit_card) { create(:credit_card) }
 
       before do
-        user = create(:user, email: 'spree@example.org', bill_address: user_bill_address)
+        user = create(:user, email: 'solidus@example.org', bill_address: user_bill_address)
         default_credit_card.update(user: user)
         wallet_payment_source = user.wallet.add(default_credit_card)
         user.wallet.default_wallet_payment_source = wallet_payment_source
@@ -461,7 +461,7 @@ RSpec.describe Spree::Order, type: :model do
     context "out of stock" do
       before do
         order.user = FactoryBot.create(:user)
-        order.email = 'spree@example.org'
+        order.email = 'solidus@example.org'
         order.payments << FactoryBot.create(:payment)
         allow(order).to receive_messages(payment_required?: true)
         order.line_items << FactoryBot.create(:line_item)
@@ -488,7 +488,7 @@ RSpec.describe Spree::Order, type: :model do
     context "no inventory units" do
       before do
         order.user = FactoryBot.create(:user)
-        order.email = 'spree@example.com'
+        order.email = 'solidus@example.com'
         order.payments << FactoryBot.create(:payment)
         allow(order).to receive_messages(payment_required?: true)
         allow(order).to receive(:ensure_available_shipping_rates) { true }
@@ -521,7 +521,7 @@ RSpec.describe Spree::Order, type: :model do
 
     context "exchange order completion" do
       before do
-        order.email = 'spree@example.org'
+        order.email = 'solidus@example.org'
         order.payments << FactoryBot.create(:payment)
         order.shipments.create!
         allow(order).to receive_messages(payment_required?: true)
@@ -549,7 +549,7 @@ RSpec.describe Spree::Order, type: :model do
       before do
         order.user = FactoryBot.create(:user)
         order.store = FactoryBot.create(:store)
-        order.email = 'spree@example.org'
+        order.email = 'solidus@example.org'
         order.payments << FactoryBot.create(:payment, order: order)
 
         # make sure we will actually capture a payment
@@ -579,7 +579,7 @@ RSpec.describe Spree::Order, type: :model do
     context "a payment fails during processing", partial_double_verification: false do
       before do
         order.user = FactoryBot.create(:user)
-        order.email = 'spree@example.org'
+        order.email = 'solidus@example.org'
         payment = FactoryBot.create(:payment)
         allow(payment).to receive(:process!).and_raise(Spree::Core::GatewayError.new('processing failed'))
         order.line_items.each { |li| li.inventory_units.create! }

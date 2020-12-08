@@ -4,9 +4,9 @@ module Spree
   module PermissionSets
     class UserDisplay < PermissionSets::Base
       def activate!
-        can [:display, :admin, :edit, :addresses, :orders, :items], Spree.user_class
-        can [:display, :admin], Spree::StoreCredit
-        can :display, Spree::Role
+        can [:read, :admin, :edit, :addresses, :orders, :items], Spree.user_class
+        can [:read, :admin], Spree::StoreCredit
+        can :read, Spree::Role
       end
     end
   end

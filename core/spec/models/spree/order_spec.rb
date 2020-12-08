@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Spree::Order, type: :model do
   let(:store) { create(:store) }
-  let(:user) { create(:user, email: "spree@example.com") }
+  let(:user) { create(:user, email: "solidus@example.com") }
   let(:order) { create(:order, user: user, store: store) }
   let(:promotion) do
     FactoryBot.create(
@@ -28,15 +28,20 @@ RSpec.describe Spree::Order, type: :model do
         end.to change(order, :confirmation_delivered).to true
       end
 
+      it 'sends the email' do
+        expect(Spree::Config.order_mailer_class).to receive(:confirm_email).and_call_original
+        order.finalize!
+      end
+
       # These specs show how notifications can be removed, one at a time or
       # all the ones set by MailerSubscriber module
       context 'when removing the default email notification subscription' do
         before do
-          Spree::Event.unsubscribe Spree::MailerSubscriber.order_finalized_handler
+          Spree::MailerSubscriber.deactivate(:order_finalized)
         end
 
         after do
-          Spree::MailerSubscriber.subscribe!
+          Spree::MailerSubscriber.activate
         end
 
         it 'does not send the email' do
@@ -47,11 +52,11 @@ RSpec.describe Spree::Order, type: :model do
 
       context 'when removing all the email notification subscriptions' do
         before do
-          Spree::MailerSubscriber.unsubscribe!
+          Spree::MailerSubscriber.deactivate
         end
 
         after do
-          Spree::MailerSubscriber.subscribe!
+          Spree::MailerSubscriber.activate
         end
 
         it 'does not send the email' do

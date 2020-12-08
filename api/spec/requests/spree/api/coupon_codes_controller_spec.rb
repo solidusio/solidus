@@ -5,7 +5,7 @@ require 'spec_helper'
 module Spree
   describe Api::CouponCodesController, type: :request do
     let(:current_api_user) do
-      user = Spree.user_class.new(email: "spree@example.com")
+      user = Spree.user_class.new(email: "solidus@example.com")
       user.generate_spree_api_key!
       user
     end

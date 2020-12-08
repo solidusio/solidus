@@ -366,15 +366,15 @@ module Spree
         it "can assign a user to the order" do
           user = create(:user)
           # Need to pass email as well so that validations succeed
-          put spree.api_checkout_path(order.to_param), params: { order_token: order.guest_token, order: { user_id: user.id, email: "guest@spreecommerce.com" } }
+          put spree.api_checkout_path(order.to_param), params: { order_token: order.guest_token, order: { user_id: user.id, email: "guest@solidus.io" } }
           expect(response.status).to eq(200)
           expect(json_response['user_id']).to eq(user.id)
         end
       end
 
       it "can assign an email to the order" do
-        put spree.api_checkout_path(order.to_param), params: { order_token: order.guest_token, order: { email: "guest@spreecommerce.com" } }
-        expect(json_response['email']).to eq("guest@spreecommerce.com")
+        put spree.api_checkout_path(order.to_param), params: { order_token: order.guest_token, order: { email: "guest@solidus.io" } }
+        expect(json_response['email']).to eq("guest@solidus.io")
         expect(response.status).to eq(200)
       end
 
@@ -400,14 +400,14 @@ module Spree
       let!(:order) { create(:order_with_line_items) }
       it "cannot transition to address without a line item" do
         order.line_items.delete_all
-        order.update_column(:email, "spree@example.com")
+        order.update_column(:email, "solidus@example.com")
         put spree.next_api_checkout_path(order), params: { order_token: order.guest_token }
         expect(response.status).to eq(422)
         expect(json_response["errors"]["base"]).to include(I18n.t('spree.there_are_no_items_for_this_order'))
       end
 
       it "can transition an order to the next state" do
-        order.update_column(:email, "spree@example.com")
+        order.update_column(:email, "solidus@example.com")
 
         put spree.next_api_checkout_path(order), params: { order_token: order.guest_token }
         expect(response.status).to eq(200)

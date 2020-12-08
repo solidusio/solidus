@@ -26,9 +26,17 @@ module Spree
   class AppConfiguration < Preferences::Configuration
     # Preferences (alphabetized to more easily lookup particular preferences)
 
+    # @!attribute [rw] address_requires_phone
+    #   @return [Boolean] should phone number be required (default: +true+)
+    preference :address_requires_phone, :boolean, default: true
+
     # @!attribute [rw] address_requires_state
     #   @return [Boolean] should state/state_name be required (default: +true+)
     preference :address_requires_state, :boolean, default: true
+
+    # @!attribute [rw] legacy
+    #   @return [Boolean] use the legacy address' state validation logic (default: +true+)
+    preference :use_legacy_address_state_validator, :boolean, default: true
 
     # @!attribute [rw] admin_interface_logo
     #   @return [String] URL of logo used in admin (default: +'logo/solidus.svg'+)
@@ -156,6 +164,10 @@ module Spree
     #   @return [String] Two-letter ISO code of a {Spree::Country} to assumed as the country of an unidentified customer (default: "US")
     preference :default_country_iso, :string, default: 'US'
 
+    # @!attribute [rw] use_custom_cancancan_actions
+    #   @return [Boolean] Allow to use legacy Solidus custom CanCanCan action aliases (default: +true+)
+    preference :use_custom_cancancan_actions, :boolean, default: true
+
     # @!attribute [rw] generate_api_key_for_all_roles
     #   @return [Boolean] Allow generating api key automatically for user
     #   at role_user creation for all roles. (default: +false+)
@@ -178,7 +190,7 @@ module Spree
 
     # @!attribute [rw] mails_from
     #   @return [String] Email address used as +From:+ field in transactional emails.
-    preference :mails_from, :string, default: 'spree@example.com'
+    preference :mails_from, :string, default: 'solidus@example.com'
 
     # @!attribute [rw] max_level_in_taxons_menu
     #   @return [Integer] maximum nesting level in taxons menu (default: +1+)
@@ -213,6 +225,10 @@ module Spree
     #   @return [Integer] Promotions to show per-page in the admin (default: +15+)
     preference :promotions_per_page, :integer, default: 15
 
+    # @!attribute [rw] disable_actionless_promotion_validation
+    #   @return [Boolean] Promotions should have actions associated before being considered active (default: +true+)
+    preference :consider_actionless_promotion_active, :boolean, default: true
+
     # @!attribute [rw] raise_with_invalid_currency
     #   Whether to raise an exception if trying to set a line item currency
     #   different from the order currency. When false a validation error
@@ -243,6 +259,14 @@ module Spree
     #   at role_user creation is desired when user has one of these roles.
     #   (default: +['admin']+)
     preference :roles_for_auto_api_key, :array, default: ['admin']
+
+    # @!attribute [rw] countries_that_use_nested_subregions
+    #   @return [Array] An array of countries that use nested subregions, instead
+    #   of the default subregions that come with Carmen. Will be used on store creation
+    #   to ensure the correct states are generated, and when running the states
+    #   regenerate rake task.
+    #   (default: +['IT']+)
+    preference :countries_that_use_nested_subregions, :array, default: ['IT']
 
     # @!attribute [rw] run_order_validations_on_order_updater
     #   @return [Boolean] Whether to run validation when updating an order with the OrderUpdater
@@ -292,6 +316,12 @@ module Spree
     #   @return [Boolean] Uses the legacy order state machine from Spree::Order::Checkout
     #   (default: +false+)
     preference :use_legacy_order_state_machine, :boolean, default: true
+
+    # The legacy_store_credit_category_name allows to control whether the legacy
+    # way of fetching the category should be used.
+    #
+    # @param [Boolean] enable/disable the legacy way of fetching the store category name
+    preference :use_legacy_store_credit_reimbursement_category_name, :boolean, default: true
 
     # Other configurations
 

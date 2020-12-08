@@ -12,7 +12,7 @@ describe "ReturnAuthorizations", type: :feature do
   context "when the user cannot manage return authorizations" do
     custom_authorization! do |_user|
       cannot :manage, Spree::ReturnAuthorization
-      can [:display, :admin], Spree::ReturnAuthorization
+      can [:read, :admin], Spree::ReturnAuthorization
     end
 
     before do

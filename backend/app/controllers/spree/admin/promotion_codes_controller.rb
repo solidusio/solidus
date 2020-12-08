@@ -6,7 +6,7 @@ module Spree
   module Admin
     class PromotionCodesController < Spree::Admin::ResourceController
       def index
-        @promotion = Spree::Promotion.accessible_by(current_ability, :read).find(params[:promotion_id])
+        @promotion = Spree::Promotion.accessible_by(current_ability, :show).find(params[:promotion_id])
         @promotion_codes = @promotion.promotion_codes.order(:value)
 
         respond_to do |format|
@@ -22,7 +22,7 @@ module Spree
       end
 
       def new
-        @promotion = Spree::Promotion.accessible_by(current_ability, :read).find(params[:promotion_id])
+        @promotion = Spree::Promotion.accessible_by(current_ability, :show).find(params[:promotion_id])
         if @promotion.apply_automatically
           flash[:error] = t('activerecord.errors.models.spree/promotion_code.attributes.base.disallowed_with_apply_automatically')
           redirect_to admin_promotion_promotion_codes_url(@promotion)
@@ -32,7 +32,7 @@ module Spree
       end
 
       def create
-        @promotion = Spree::Promotion.accessible_by(current_ability, :read).find(params[:promotion_id])
+        @promotion = Spree::Promotion.accessible_by(current_ability, :show).find(params[:promotion_id])
         @promotion_code = @promotion.promotion_codes.build(value: params[:promotion_code][:value])
 
         if @promotion_code.save

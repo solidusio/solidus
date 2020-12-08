@@ -13,8 +13,11 @@ Spree.config do |config|
   # Use combined first and last name attribute in HTML views and API responses
   config.use_combined_first_and_last_name_in_address = true
 
-  # Use legacy Spree::Order state machine
+  # Use legacy Spree::Order state machine
   config.use_legacy_order_state_machine = false
+
+  # Use the legacy address' state validation logic
+  config.use_legacy_address_state_validator = false
 
   # Uncomment to stop tracking inventory levels in the application
   # config.track_inventory_levels = false
@@ -27,6 +30,9 @@ Spree.config do |config|
   # Enable Paperclip adapter for attachments on images and taxons
   config.image_attachment_module = 'Spree::Image::PaperclipAttachment'
   config.taxon_attachment_module = 'Spree::Taxon::PaperclipAttachment'
+
+  # Disable legacy Solidus custom CanCanCan actions aliases
+  config.use_custom_cancancan_actions = false
 
   # Defaults
 
@@ -41,6 +47,11 @@ Spree.config do |config|
   # /unauthorized when needed, without trying to redirect them to
   # their previous location first.
   config.redirect_back_on_unauthorized = true
+
+  # Set this configuration to `true` to allow promotions
+  # with no associated actions to be considered active for use by customers.
+  # See https://github.com/solidusio/solidus/pull/3749 for more info.
+  config.consider_actionless_promotion_active = false
 
   # Set this configuration to `false` to avoid running validations when
   # updating an order. Be careful since you can end up having inconsistent

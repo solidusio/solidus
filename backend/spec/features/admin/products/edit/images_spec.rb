@@ -6,7 +6,9 @@ describe "Product Images", type: :feature do
   stub_authorization!
 
   let(:file_path) { file_fixture("ror_ringer.jpeg") }
-  let(:product)   { create(:product) }
+  let!(:product)  { create(:product) }
+  let!(:variant1) { create(:variant, product: product) }
+  let!(:variant2) { create(:variant, product: product) }
 
   before do
     # Ensure attachment style keys are symbolized before running all tests
@@ -18,7 +20,6 @@ describe "Product Images", type: :feature do
   context "uploading, editing, and deleting an image", js: true do
     before do
       Spree::Image.attachment_definitions[:attachment].delete :storage
-      create(:product)
 
       visit spree.admin_path
       click_nav "Products"
@@ -66,6 +67,38 @@ describe "Product Images", type: :feature do
         click_icon :trash
       end
       expect(page).not_to have_field "image[alt]", with: "ruby on rails t-shirt"
+    end
+
+    context "with several variants" do
+      it "should allow an admin to re-assign an image to another variant" do
+        click_link "new_image_link"
+        within_fieldset 'New Image' do
+          # Select image
+          attach_file('image_attachment', file_path)
+          # Select specific variant
+          select variant1.sku_and_options_text, from: "Variant"
+        end
+        click_button "Update"
+        expect(page).to have_content("Image has been successfully created!")
+
+        find('tbody > tr').hover
+        within_row(1) do
+          # Select another variant
+          targetted_select2 variant2.sku_and_options_text, from: "#s2id_image_viewable_id"
+          # Click the checkmark which has appeared
+          within ".actions" do
+            click_icon :check
+          end
+        end
+
+        # Re-load the tab
+        click_link "Images"
+
+        # The new variant has been associated with the image
+        within_row(1) do
+          expect(page).to have_content(variant2.sku_and_options_text)
+        end
+      end
     end
   end
 

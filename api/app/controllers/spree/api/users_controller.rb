@@ -2,7 +2,7 @@
 
 class Spree::Api::UsersController < Spree::Api::ResourceController
   def index
-    user_scope = model_class.accessible_by(current_ability, :read)
+    user_scope = model_class.accessible_by(current_ability, :show)
     if params[:ids]
       ids = params[:ids].split(",").flatten
       @users = user_scope.where(id: ids)

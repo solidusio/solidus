@@ -5,24 +5,6 @@ require 'cancan'
 require 'cancan/matchers'
 require 'spree/testing_support/ability_helpers'
 
-Spree::Deprecation.silence do
-  require 'spree/testing_support/bar_ability'
-end
-
-# Fake ability for testing registration of additional abilities
-class FooAbility
-  include CanCan::Ability
-
-  def initialize(_user)
-    # allow anyone to perform index on Order
-    can :index, Spree::Order
-    # allow anyone to update an Order with id of 1
-    can :update, Spree::Order do |order|
-      order.id == 1
-    end
-  end
-end
-
 RSpec.describe Spree::Ability, type: :model do
   let(:user) { build(:user) }
   let(:ability) { Spree::Ability.new(user) }
@@ -45,12 +27,31 @@ RSpec.describe Spree::Ability, type: :model do
 
   context 'register_ability' do
     it 'should add the ability to the list of abilties' do
-      Spree::Ability.register_ability(FooAbility)
+      foo_ability = Class.new do
+        include CanCan::Ability
+
+        def initialize(_user)
+          can :index, Spree::Order
+        end
+      end
+
+      Spree::Ability.register_ability(foo_ability)
       expect(Spree::Ability.new(user).abilities).not_to be_empty
     end
 
     it 'should apply the registered abilities permissions' do
-      Spree::Ability.register_ability(FooAbility)
+      foo_ability = Class.new do
+        include CanCan::Ability
+
+        def initialize(_user)
+          can :index, Spree::Order
+          can :update, Spree::Order do |order|
+            order.id == 1
+          end
+        end
+      end
+
+      Spree::Ability.register_ability(foo_ability)
       expect(Spree::Ability.new(user).can?(:update, mock_model(Spree::Order, user: nil, id: 1))).to be true
     end
   end
@@ -93,7 +94,17 @@ RSpec.describe Spree::Ability, type: :model do
       it 'should be able to admin on the order and shipment pages' do
         user.spree_roles << Spree::Role.find_or_create_by(name: 'bar')
 
-        Spree::Ability.register_ability(BarAbility)
+        bar_ability = Class.new do
+          include CanCan::Ability
+
+          def initialize(user)
+            if user.has_spree_role? 'bar'
+              can [:admin, :index, :show], Spree::Order
+              can [:admin, :manage], Spree::Shipment
+            end
+          end
+        end
+        Spree::Ability.register_ability(bar_ability)
 
         expect(ability).not_to be_able_to :admin, resource
 
@@ -117,8 +128,6 @@ RSpec.describe Spree::Ability, type: :model do
         # It can create new users if is has access to the :admin, User!!
 
         # TODO: change the Ability class so only users and customers get the extra premissions?
-
-        Spree::Ability.remove_ability(BarAbility)
       end
     end
 
@@ -165,6 +174,7 @@ RSpec.describe Spree::Ability, type: :model do
 
       context 'requested by other user' do
         before(:each) { resource.user = Spree.user_class.new }
+        it { expect(ability).not_to be_able_to(:show, resource) }
         it_should_behave_like 'create only'
       end
 
@@ -178,6 +188,7 @@ RSpec.describe Spree::Ability, type: :model do
       context 'requested with inproper token' do
         let(:token) { 'FAIL' }
         before(:each) { allow(resource).to receive_messages guest_token: 'TOKEN123' }
+        it { expect(ability).not_to be_able_to(:show, resource, token) }
         it_should_behave_like 'create only'
       end
     end
@@ -274,6 +285,56 @@ RSpec.describe Spree::Ability, type: :model do
       context 'requested by any user' do
         it_should_behave_like 'read only'
       end
+    end
+  end
+
+  describe 'legacy aliases deprecation' do
+    before do
+      allow(Spree::Config).to receive(:use_custom_cancancan_actions)
+        .and_return(true)
+      allow(Spree::Deprecation).to receive(:warn)
+    end
+
+    it 'raises warning on read' do
+      ability.can?(:read, Object.new)
+
+      expect(Spree::Deprecation).to have_received(:warn)
+        .with(a_string_matching(/`:read` action alias will be changing/), any_args)
+    end
+
+    it 'raises deprecation on display' do
+      ability.can?(:display, Object.new)
+
+      expect(Spree::Deprecation).to have_received(:warn)
+        .with(a_string_matching(/alias action :display is deprecated/), any_args)
+    end
+
+    it 'raises deprecation on destroy' do
+      ability.can?(:delete, Object.new)
+
+      expect(Spree::Deprecation).to have_received(:warn)
+        .with(a_string_matching(/alias action :delete is deprecated/), any_args)
+    end
+
+    it 'raises deprecation on :new_action' do
+      ability.can?(:new_action, Object.new)
+
+      expect(Spree::Deprecation).to have_received(:warn)
+        .with(a_string_matching(/alias action :new_action is deprecated/), any_args)
+    end
+
+    it 'raises deprecation on display' do
+      ability.can?(:display, Object.new)
+
+      expect(Spree::Deprecation).to have_received(:warn)
+        .with(a_string_matching(/alias action :display is deprecated/), any_args)
+    end
+
+    it 'raises deprecation when called on models by accessible_by' do
+      Spree::Order.accessible_by(ability, :display)
+
+      expect(Spree::Deprecation).to have_received(:warn)
+        .with(a_string_matching(/alias action :display is deprecated/), any_args)
     end
   end
 end

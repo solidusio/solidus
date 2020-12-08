@@ -13,8 +13,8 @@ RSpec.describe Spree::PermissionSets::DefaultCustomer do
         it 'should not be allowed to read or update the order' do
           allow(resource).to receive_messages(guest_token: '')
 
-          expect(ability).to_not be_able_to(:read, resource, token)
-          expect(ability).to_not be_able_to(:update, resource, token)
+          expect(ability).to_not be_able_to(:show, resource, token)
+          expect(ability).to_not be_able_to(:show, resource, token)
         end
       end
     end

@@ -53,7 +53,7 @@ module Spree
       private
 
       def product
-        @product ||= Spree::Product.accessible_by(current_ability, :read).friendly.find(params[:product_id]) if params[:product_id]
+        @product ||= Spree::Product.accessible_by(current_ability, :show).friendly.find(params[:product_id]) if params[:product_id]
       end
 
       def scope
@@ -69,7 +69,7 @@ module Spree
 
         in_stock_only = ActiveRecord::Type::Boolean.new.cast(params[:in_stock_only])
         suppliable_only = ActiveRecord::Type::Boolean.new.cast(params[:suppliable_only])
-        variants = variants.accessible_by(current_ability, :read)
+        variants = variants.accessible_by(current_ability)
         if in_stock_only || cannot?(:view_out_of_stock, Spree::Variant)
           variants = variants.in_stock
         elsif suppliable_only

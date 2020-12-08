@@ -3,6 +3,8 @@ Spree.Views.Stock.EditStockItemRow = Backbone.View.extend({
 
   initialize: function(options) {
     this.stockLocationName = options.stockLocationName;
+    this.stockLocationId = options.stockLocationId;
+    this.variantSku = options.variantSku;
     this.negative = this.model.attributes.count_on_hand < 0;
     this.previousAttributes = _.clone(this.model.attributes);
     this.listenTo(this.model, 'sync', this.onSuccess);
@@ -22,6 +24,8 @@ Spree.Views.Stock.EditStockItemRow = Backbone.View.extend({
   render: function() {
     var renderAttr = {
       stockLocationName: this.stockLocationName,
+      stockLocationId: this.stockLocationId,
+      variantSku: this.variantSku,
       editing: this.editing,
       negative: this.negative
     };

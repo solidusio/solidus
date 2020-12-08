@@ -9,7 +9,7 @@ module Spree
       def index
         @product_properties = @product.
           product_properties.
-          accessible_by(current_ability, :read).
+          accessible_by(current_ability).
           ransack(params[:q]).
           result
 
@@ -54,14 +54,14 @@ module Spree
 
       def find_product
         @product = super(params[:product_id])
-        authorize! :read, @product
+        authorize! :show, @product
       end
 
       def product_property
         if @product
           @product_property ||= @product.product_properties.find_by(id: params[:id])
           @product_property ||= @product.product_properties.includes(:property).where(spree_properties: { name: params[:id] }).first!
-          authorize! :read, @product_property
+          authorize! :show, @product_property
         end
       end
 

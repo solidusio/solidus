@@ -308,4 +308,12 @@ describe Spree::Admin::StoreCreditsController do
       end
     end
   end
+  context 'User does not exist' do
+    let(:store_credit) { create(:store_credit, user: user, category: a_credit_category) }
+    it "cannot find a store-credit for non-existent user" do
+      get :index, params: { user_id: 'non-existent-user', id: store_credit.id }
+      expect(response).to redirect_to(spree.admin_users_path)
+      expect(flash[:error]).to eql("User is not found")
+    end
+  end
 end

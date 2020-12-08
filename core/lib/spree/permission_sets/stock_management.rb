@@ -5,7 +5,7 @@ module Spree
     class StockManagement < PermissionSets::Base
       def activate!
         can :manage, Spree::StockItem
-        can :display, Spree::StockLocation
+        can :read, Spree::StockLocation
       end
     end
   end

@@ -29,8 +29,8 @@ module Spree
       end
 
       context '#edit' do
-        it 'should check if user is authorized for :read' do
-          expect(controller).to receive(:authorize!).with(:read, order, token)
+        it 'should check if user is authorized for :edit' do
+          expect(controller).to receive(:authorize!).with(:edit, order, token)
           get :edit, params: { token: token }
         end
       end
@@ -54,7 +54,7 @@ module Spree
         let(:specified_order) { create(:order) }
 
         it "should check against the specified order" do
-          expect(controller).to receive(:authorize!).with(:read, specified_order, token)
+          expect(controller).to receive(:authorize!).with(:show, specified_order, token)
           get :show, params: { id: specified_order.number, token: token }
         end
       end

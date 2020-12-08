@@ -95,7 +95,7 @@ RSpec.describe Spree::Core::ControllerHelpers::Auth, type: :controller do
   describe '#unauthorized_redirect' do
     before do
       def controller.index
-        authorize!(:read, :something)
+        authorize!(:show, :something)
       end
     end
 

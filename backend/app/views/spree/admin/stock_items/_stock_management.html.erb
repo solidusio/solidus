@@ -72,7 +72,7 @@
             </colgroup>
             <% variant.stock_items.each do |item| %>
               <% if @stock_item_stock_locations.include?(item.stock_location) %>
-                <tr class="js-edit-stock-item stock-item-edit-row" data-variant-id="<%= variant.id %>" data-stock-item="<%= item.to_json %>" data-stock-location-name="<%= item.stock_location.name %>" data-track-inventory="<%= variant.should_track_inventory? %>" data-can-edit="<%= can?(:admin, Spree::StockItem) %>">
+                <tr class="js-edit-stock-item stock-item-edit-row" data-variant-id="<%= variant.id %>" data-stock-item="<%= item.to_json %>" data-stock-location-name="<%= item.stock_location.name %>" data-track-inventory="<%= variant.should_track_inventory? %>" data-can-edit="<%= can?(:admin, Spree::StockItem) %>" data-variant-sku="<%= variant.sku %>">
                   <%# This is rendered in JS %>
                 </tr>
               <% end %>

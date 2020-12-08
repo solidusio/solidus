@@ -162,23 +162,83 @@ RSpec.describe Spree::Product, type: :model do
       end
     end
 
-    context "#available?" do
-      it "should be available if date is in the past" do
-        product.available_on = 1.day.ago
-        expect(product).to be_available
+    describe "#available?" do
+      context "if available_on is in the past" do
+        let(:product) { build(:product, available_on: 1.day.ago) }
+
+        it "should be available" do
+          expect(product).to be_available
+        end
       end
 
-      it "should not be available if date is nil or in the future" do
-        product.available_on = nil
-        expect(product).not_to be_available
+      context "if available_on is nil" do
+        let(:product) { build(:product, available_on: nil) }
 
-        product.available_on = 1.day.from_now
-        expect(product).not_to be_available
+        it "should not be available" do
+          expect(product).not_to be_available
+        end
       end
 
-      it "should not be available if soft-destroyed" do
-        product.discard
-        expect(product).not_to be_available
+      context "if available_on is in the future" do
+        let(:product) { build(:product, available_on: 1.day.from_now) }
+
+        it "should not be available" do
+          expect(product).not_to be_available
+        end
+      end
+
+      context "if discontinue_on is in the past" do
+        let(:product) { build(:product, discontinue_on: 1.day.ago) }
+
+        it "should not be available" do
+          expect(product).not_to be_available
+        end
+      end
+
+      context "if discontinue_on is nil" do
+        let(:product) { build(:product, discontinue_on: nil) }
+
+        it "should be available" do
+          expect(product).to be_available
+        end
+      end
+
+      context "if discontinue_on is in the future" do
+        let(:product) { build(:product, discontinue_on: 1.day.from_now) }
+
+        it "should be available" do
+          expect(product).to be_available
+        end
+      end
+
+      context "if deleted" do
+        let(:product) { build(:product, deleted_at: 1.day.ago) }
+
+        it "should not be available" do
+          expect(product).not_to be_available
+        end
+      end
+    end
+
+    describe "#discontinued?" do
+      subject { product.discontinued? }
+
+      context "if discontinue_on is in the past" do
+        let(:product) { build(:product, discontinue_on: 1.day.ago) }
+
+        it { is_expected.to be(true) }
+      end
+
+      context "if discontinue_on is nil" do
+        let(:product) { build(:product, discontinue_on: nil) }
+
+        it { is_expected.to be(false) }
+      end
+
+      context "if discontinue_on is in the future" do
+        let(:product) { build(:product, discontinue_on: 1.day.from_now) }
+
+        it { is_expected.to be(false) }
       end
     end
 
@@ -461,9 +521,7 @@ RSpec.describe Spree::Product, type: :model do
 
     # Regression test for https://github.com/spree/spree/issues/4416
     context "#possible_promotions" do
-      let!(:promotion) do
-        create(:promotion, advertise: true, starts_at: 1.day.ago)
-      end
+      let!(:promotion) { create(:promotion, :with_action, advertise: true, starts_at: 1.day.ago) }
       let!(:rule) do
         Spree::Promotion::Rules::Product.create(
           promotion: promotion,
@@ -479,7 +537,7 @@ RSpec.describe Spree::Product, type: :model do
 
   context "#images" do
     let(:product) { create(:product) }
-    let(:image) { File.open(File.expand_path('../../fixtures/thinking-cat.jpg', __dir__)) }
+    let(:image) { File.open(Spree::Core::Engine.root.join('lib', 'spree', 'testing_support', 'fixtures', 'blank.jpg')) }
     let(:params) { { viewable_id: product.master.id, viewable_type: 'Spree::Variant', attachment: image, alt: "position 2", position: 2 } }
 
     before do

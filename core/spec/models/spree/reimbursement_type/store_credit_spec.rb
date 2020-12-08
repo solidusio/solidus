@@ -13,7 +13,7 @@ module Spree
 
     let!(:primary_credit_type)    { create(:primary_credit_type) }
     let(:created_by_user) { create(:user, email: 'user@email.com') }
-    let!(:default_reimbursement_category) { create(:store_credit_category) }
+    let!(:default_reimbursement_category) { create(:store_credit_category, :reimbursement) }
 
     subject { Spree::ReimbursementType::StoreCredit.reimburse(reimbursement, [return_item, return_item2], simulate, created_by: created_by_user) }
 
@@ -93,9 +93,9 @@ module Spree
             expect(Spree::StoreCredit.last.currency).to eq reimbursement.order.currency
           end
 
-          context 'without a user with email address "spree@example.com" in the database' do
+          context 'without a user with email address "solidus@example.com" in the database' do
             before do
-              default_user = Spree::LegacyUser.find_by(email: "spree@example.com")
+              default_user = Spree::LegacyUser.find_by(email: "solidus@example.com")
               default_user.destroy if default_user
             end
 

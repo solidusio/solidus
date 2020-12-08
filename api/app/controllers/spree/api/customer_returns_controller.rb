@@ -23,7 +23,7 @@ module Spree
 
         @customer_returns = @order.
           customer_returns.
-          accessible_by(current_ability, :read).
+          accessible_by(current_ability).
           ransack(params[:q]).
           result
 
@@ -38,7 +38,7 @@ module Spree
 
       def show
         authorize! :show, CustomerReturn
-        @customer_return = @order.customer_returns.accessible_by(current_ability, :read).find(params[:id])
+        @customer_return = @order.customer_returns.accessible_by(current_ability, :show).find(params[:id])
         respond_with(@customer_return)
       end
 
@@ -56,7 +56,7 @@ module Spree
 
       def load_order
         @order ||= Spree::Order.find_by!(number: order_id)
-        authorize! :read, @order
+        authorize! :show, @order
       end
 
       def customer_return_params

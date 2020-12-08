@@ -14,7 +14,7 @@ feature 'Promotions' do
     end
 
     context 'when promotion is active' do
-      given!(:promotion) { create :promotion }
+      given!(:promotion) { create :promotion, :with_action }
 
       scenario 'promotion status is active' do
         visit spree.admin_promotions_path

@@ -131,7 +131,20 @@ module Spree
         MenuItem.new(
           CONFIGURATION_TABS,
           'wrench',
-          condition: -> { can?(:admin, Spree::Store) },
+          condition: -> {
+            can?(:admin, Spree::Store) ||
+            can?(:admin, Spree::AdjustmentReason) ||
+            can?(:admin, Spree::PaymentMethod) ||
+            can?(:admin, Spree::RefundReason) ||
+            can?(:admin, Spree::ReimbursementType) ||
+            can?(:admin, Spree::ShippingCategory) ||
+            can?(:admin, Spree::ShippingMethod) ||
+            can?(:admin, Spree::StockLocation) ||
+            can?(:admin, Spree::TaxCategory) ||
+            can?(:admin, Spree::TaxRate) ||
+            can?(:admin, Spree::ReturnReason) ||
+            can?(:admin, Spree::Zone)
+          },
           label: :settings,
           partial: 'spree/admin/shared/settings_sub_menu',
           url: :admin_stores_path,

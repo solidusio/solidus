@@ -156,6 +156,7 @@ describe "Products", type: :feature do
     context "creating a new product" do
       before(:each) do
         @shipping_category = create(:shipping_category)
+        @tax_category = create(:tax_category, name: 'Alcohol taxes', is_default: true)
         click_nav "Products"
         click_on "New Product"
       end
@@ -239,6 +240,10 @@ describe "Products", type: :feature do
         click_button "Update"
         expect(page).to have_content("successfully updated!")
       end
+
+      it "should show default tax category" do
+        expect(page).to have_select('product_tax_category_id', selected: 'Alcohol taxes')
+      end
     end
 
     context "cloning a product", js: true do
@@ -282,6 +287,14 @@ describe "Products", type: :feature do
         expect(page).to have_content("successfully updated!")
         expect(Spree::Product.last.available_on).to eq('Tue, 25 Dec 2012 00:00:00 UTC +00:00')
       end
+
+      it 'should correctly update discontinue_on' do
+        visit spree.admin_product_path(product)
+        fill_in "product_discontinue_on", with: "2020/12/4"
+        click_button "Update"
+        expect(page).to have_content("successfully updated!")
+        expect(product.reload.discontinue_on.to_s).to eq('2020-12-04 00:00:00 UTC')
+      end
     end
 
     context 'deleting a product', js: true do
@@ -315,7 +328,7 @@ describe "Products", type: :feature do
     end
 
     custom_authorization! do |_user|
-      can [:admin, :update, :index, :read], Spree::Product
+      can [:admin, :update, :index, :show], Spree::Product
     end
     let!(:product) { create(:product) }
 

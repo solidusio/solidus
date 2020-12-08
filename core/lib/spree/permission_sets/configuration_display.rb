@@ -5,20 +5,20 @@ module Spree
     class ConfigurationDisplay < PermissionSets::Base
       def activate!
           can [:edit, :admin], :general_settings
-          can [:display, :admin], Spree::TaxCategory
-          can [:display, :admin], Spree::TaxRate
-          can [:display, :admin], Spree::Zone
-          can [:display, :admin], Spree::Country
-          can [:display, :admin], Spree::State
-          can [:display, :admin], Spree::PaymentMethod
-          can [:display, :admin], Spree::Taxonomy
-          can [:display, :admin], Spree::ShippingMethod
-          can [:display, :admin], Spree::ShippingCategory
-          can [:display, :admin], Spree::StockLocation
-          can [:display, :admin], Spree::StockMovement
-          can [:display, :admin], Spree::RefundReason
-          can [:display, :admin], Spree::ReimbursementType
-          can [:display, :admin], Spree::ReturnReason
+          can [:read, :admin], Spree::TaxCategory
+          can [:read, :admin], Spree::TaxRate
+          can [:read, :admin], Spree::Zone
+          can [:read, :admin], Spree::Country
+          can [:read, :admin], Spree::State
+          can [:read, :admin], Spree::PaymentMethod
+          can [:read, :admin], Spree::Taxonomy
+          can [:read, :admin], Spree::ShippingMethod
+          can [:read, :admin], Spree::ShippingCategory
+          can [:read, :admin], Spree::StockLocation
+          can [:read, :admin], Spree::StockMovement
+          can [:read, :admin], Spree::RefundReason
+          can [:read, :admin], Spree::ReimbursementType
+          can [:read, :admin], Spree::ReturnReason
       end
     end
   end

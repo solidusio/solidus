@@ -7,11 +7,13 @@ Spree.ready(function() {
     new Spree.Views.Stock.EditStockItemRow({
       el: $el,
       stockLocationName: $el.data('stock-location-name'),
+      stockLocationId: $el.data("stock-item").stock_location_id,
+      variantSku: $el.data("variant-sku"),
       model: model
     });
 
     if (trackInventory === false) {
-      $('.js-edit-stock-item input').attr({
+      $el.find('input').attr({
         disabled: true,
         class: 'with-tip',
         title: '"Track inventory" option disabled for this variant'
@@ -19,7 +21,7 @@ Spree.ready(function() {
     }
 
     if (canEdit == false) {
-      $('.js-edit-stock-item input').attr({
+      $el.find('input').attr({
         disabled: true,
         class: 'with-tip',
         title: 'You do not have permission to manage stock'

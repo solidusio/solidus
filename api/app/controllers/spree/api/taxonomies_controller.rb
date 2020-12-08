@@ -50,7 +50,7 @@ module Spree
 
       def taxonomies
         @taxonomies = Taxonomy.
-          accessible_by(current_ability, :read).
+          accessible_by(current_ability).
           order('name').
           includes(root: :children).
           ransack(params[:q]).
@@ -58,7 +58,7 @@ module Spree
       end
 
       def taxonomy
-        @taxonomy ||= Spree::Taxonomy.accessible_by(current_ability, :read).
+        @taxonomy ||= Spree::Taxonomy.accessible_by(current_ability, :show).
           includes(root: :children).
           find(params[:id])
       end
