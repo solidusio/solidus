@@ -26,9 +26,10 @@ RSpec.shared_examples "a payment source" do
   end
 
   describe "#can_void?" do
-    it "should be true if payment is not void" do
-      payment = mock_model(Spree::Payment, failed?: false, void?: false)
-      expect(payment_source.can_void?(payment)).to be true
+    it "should call payment#can_void?" do
+      payment = mock_model(Spree::Payment, can_void?: true)
+      expect(payment).to receive(:can_void?)
+      payment_source.can_void?(payment)
     end
   end
 
