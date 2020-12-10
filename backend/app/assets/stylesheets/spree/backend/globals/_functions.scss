@@ -1,20 +1,3 @@
-// Make color very close to white
-@function very-light($color, $adjust: 3){
-  @warn "The `very-light` function is deprecated. Please use the default sass `lighten` function, instead.";
-  
-  @if type-of($adjust) == 'number' and $adjust > 0 {
-    @for $i from 0 through 100 {
-      @if lighten($color, $i) == white and ($i - $adjust) > $adjust {
-        @return lighten($color, $i - $adjust);
-      }
-    }
-  }
-  @else {
-    @debug "Please correct $adjust value. It should be number and larger then 0. Currently it is '#{type-of($adjust)}' with value '#{$adjust}'"
-  }
-  @return $color;
-};
-
 // Quick fix for dynamic variables missing in SASS
 @function get-value($prop, $val, $search) {
   $n1: index($prop, $search);
