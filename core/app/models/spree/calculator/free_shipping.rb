@@ -8,6 +8,7 @@ module Spree
   #   now a Promotion Action which deals with these types of promotions instead.
   class Calculator::FreeShipping < Calculator
     def compute(object)
+      Spree::Deprecation.warn('This method is deprecated, because it is no longer used')
       if object.is_a?(Array)
         return if object.empty?
         order = object.first.order
