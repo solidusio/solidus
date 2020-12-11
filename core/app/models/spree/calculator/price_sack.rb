@@ -11,6 +11,7 @@ module Spree
 
     # as object we always get line items, as calculable we have Coupon, ShippingMethod
     def compute(object)
+      Spree::Deprecation.warn('This method is deprecated, please use adjustments at line item level')
       if object.is_a?(Array)
         base = object.sum { |element| element.respond_to?(:amount) ? element.amount : BigDecimal(element.to_s) }
       else
