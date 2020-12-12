@@ -122,6 +122,8 @@ module Spree
 end
 
 RSpec.configure do |config|
+  config.include Spree::TestingSupport::Preferences
+
   config.before :suite do
     %w[
       Spree::Config

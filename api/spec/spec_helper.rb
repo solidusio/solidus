@@ -54,7 +54,6 @@ RSpec.configure do |config|
   config.extend Spree::Api::TestingSupport::Setup, type: :request
   config.include Spree::Api::TestingSupport::Helpers, type: :controller
   config.extend Spree::Api::TestingSupport::Setup, type: :controller
-  config.include Spree::TestingSupport::Preferences
   config.include Spree::TestingSupport::JobHelpers
 
   config.extend WithModel

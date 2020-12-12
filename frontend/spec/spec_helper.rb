@@ -82,12 +82,9 @@ RSpec.configure do |config|
 
   config.include FactoryBot::Syntax::Methods
 
-  config.include Spree::TestingSupport::Preferences
   config.include Spree::TestingSupport::UrlHelpers
   config.include Spree::TestingSupport::ControllerRequests, type: :controller
   config.include Spree::TestingSupport::Flash
-  config.include Spree::TestingSupport::BlacklistUrls
-  config.include Spree::TestingSupport::Translations
 
   config.example_status_persistence_file_path = "./spec/examples.txt"
 
