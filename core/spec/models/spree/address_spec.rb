@@ -30,10 +30,6 @@ RSpec.describe Spree::Address, type: :model do
     context 'state validation' do
       let(:state_validator) { instance_spy(Spree::Address.state_validator_class) }
 
-      before do
-        stub_spree_preferences(use_legacy_address_state_validator: false)
-      end
-
       it "calls the state validator" do
         allow(Spree::Address.state_validator_class).
           to receive(:new).with(address).
@@ -51,30 +47,6 @@ RSpec.describe Spree::Address, type: :model do
         address.state_name = nil
         expect(address.valid?).to eq(false)
         expect(address.errors['state']).to eq(["can't be blank"])
-      end
-
-      context 'legacy state validator' do
-        before do
-          stub_spree_preferences(use_legacy_address_state_validator: true)
-        end
-
-        it 'doesnt show deprecation warnings when calling #valid?' do
-          expect(Spree::Deprecation).to_not receive(:warn).
-            with(/^Spree::Address#state_validate private method has been deprecated/, any_args)
-          expect(Spree::Deprecation).to_not receive(:warn).
-            with(/^Spree::Address#validate_state_matches_country private method has been deprecated/, any_args)
-          address.valid?
-        end
-
-        it 'shows the deprecation warnings when calling validation methods directly' do
-          expect(Spree::Deprecation).to receive(:warn).
-            with(/^Spree::Address#state_validate private method has been deprecated/, any_args)
-          address.send(:state_validate)
-
-          expect(Spree::Deprecation).to receive(:warn).
-            with(/^Spree::Address#validate_state_matches_country private method has been deprecated/, any_args)
-          address.send(:validate_state_matches_country)
-        end
       end
     end
 
