@@ -98,6 +98,7 @@ require 'spree/core/state_machines'
 require 'spree/core/stock_configuration'
 require 'spree/core/validators/email'
 require 'spree/permission_sets'
+require 'spree/user_class_handle'
 
 require 'spree/preferences/store'
 require 'spree/preferences/static_model_preferences'
