@@ -8,7 +8,7 @@ module Spree
       isolate_namespace Spree
       engine_name 'spree_api'
 
-      # Leave initializer empty for backwards-compatability. Other apps
+      # Leave initializer empty for backwards-compatibility. Other apps
       # might still rely on this event.
       initializer "spree.api.environment", before: :load_config_initializers do; end
     end
