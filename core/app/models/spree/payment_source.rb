@@ -23,9 +23,9 @@ module Spree
     end
 
     # @param payment [Spree::Payment] the payment we want to know if can be voided
-    # @return [Boolean] true when the payment is not failed or voided
+    # @return [Boolean] true when the payment is not failed, voided or invalid
     def can_void?(payment)
-      !payment.failed? && !payment.void?
+      payment.can_void?
     end
 
     # Indicates whether its possible to credit the payment.  Note that most
