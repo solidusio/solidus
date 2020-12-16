@@ -14,22 +14,28 @@ RSpec.describe Spree::Calculator::PriceSack, type: :model do
 
   it_behaves_like 'a calculator with a description'
 
-  let(:order) { stub_model(Spree::Order) }
-  let(:shipment) { stub_model(Spree::Shipment, amount: 10) }
+  describe '#compute' do
+    let(:order) { stub_model(Spree::Order) }
+    let(:shipment) { stub_model(Spree::Shipment, amount: 10) }
 
-  # Regression test for https://github.com/spree/spree/issues/714 and https://github.com/spree/spree/issues/739
-  it "computes with an order object" do
-    calculator.compute(order)
-  end
+    before do
+      expect(Spree::Deprecation).to receive(:warn).with(/method is deprecated/).at_least(1)
+    end
 
-  # Regression test for https://github.com/spree/spree/issues/1156
-  it "computes with a shipment object" do
-    calculator.compute(shipment)
-  end
+    # Regression test for https://github.com/spree/spree/issues/714 and https://github.com/spree/spree/issues/739
+    it "computes with an order object" do
+      calculator.compute(order)
+    end
 
-  # Regression test for https://github.com/spree/spree/issues/2055
-  it "computes the correct amount" do
-    expect(calculator.compute(2)).to eq(calculator.preferred_normal_amount)
-    expect(calculator.compute(6)).to eq(calculator.preferred_discount_amount)
+    # Regression test for https://github.com/spree/spree/issues/1156
+    it "computes with a shipment object" do
+      calculator.compute(shipment)
+    end
+
+    # Regression test for https://github.com/spree/spree/issues/2055
+    it "computes the correct amount" do
+      expect(calculator.compute(2)).to eq(calculator.preferred_normal_amount)
+      expect(calculator.compute(6)).to eq(calculator.preferred_discount_amount)
+    end
   end
 end
