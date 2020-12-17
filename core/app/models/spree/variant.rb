@@ -346,9 +346,12 @@ module Spree
     end
 
     # @param quantity [Fixnum] how many are desired
+    # @param stock_location [Spree::StockLocation] Optionally restrict stock
+    #   quantity check to a specific stock location. If unspecified it will
+    #   check inventory in all available StockLocations.
     # @return [Boolean] true if the desired quantity can be supplied
-    def can_supply?(quantity = 1)
-      Spree::Stock::Quantifier.new(self).can_supply?(quantity)
+    def can_supply?(quantity = 1, stock_location = nil)
+      Spree::Stock::Quantifier.new(self, stock_location).can_supply?(quantity)
     end
 
     # Fetches the on-hand quantity of the variant.
