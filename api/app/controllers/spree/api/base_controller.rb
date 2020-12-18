@@ -76,9 +76,10 @@ module Spree
       end
 
       def parameter_missing_error(exception)
+        message = exception.original_message || exception.message
         render json: {
-          exception: exception.message,
-          error: exception.message,
+          exception: message,
+          error: message,
           missing_param: exception.param
         }, status: :unprocessable_entity
       end
