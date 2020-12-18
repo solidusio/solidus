@@ -3,8 +3,6 @@
 class Spree::Base < ActiveRecord::Base
   include Spree::Preferences::Preferable
   include Spree::Core::Permalinks
-  serialize :preferences, Hash
-
   include Spree::RansackableAttributes
 
   def initialize_preference_defaults
@@ -18,6 +16,7 @@ class Spree::Base < ActiveRecord::Base
   def self.preference(*args)
     # after_initialize can be called multiple times with the same symbol, it
     # will only be called once on initialization.
+    serialize :preferences, Hash
     after_initialize :initialize_preference_defaults
     super
   end
