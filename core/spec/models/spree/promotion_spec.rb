@@ -826,7 +826,7 @@ RSpec.describe Spree::Promotion, type: :model do
       end
 
       it "should have eligible rules if any of the rules are eligible" do
-        true_rule = mock_model(Spree::PromotionRule, eligible?: true, applicable?: true)
+        true_rule = stub_model(Spree::PromotionRule, eligible?: true, applicable?: true)
         promotion.promotion_rules = [true_rule]
         allow(promotion.rules).to receive(:for) { promotion.rules }
         expect(promotion.eligible_rules(promotable)).to eq [true_rule]
@@ -856,8 +856,8 @@ RSpec.describe Spree::Promotion, type: :model do
   describe '#line_item_actionable?' do
     let(:order) { double Spree::Order }
     let(:line_item) { double Spree::LineItem }
-    let(:true_rule) { mock_model Spree::PromotionRule, eligible?: true, applicable?: true, actionable?: true }
-    let(:false_rule) { mock_model Spree::PromotionRule, eligible?: true, applicable?: true, actionable?: false }
+    let(:true_rule) { stub_model Spree::PromotionRule, eligible?: true, applicable?: true, actionable?: true }
+    let(:false_rule) { stub_model Spree::PromotionRule, eligible?: true, applicable?: true, actionable?: false }
     let(:rules) { [] }
 
     before do
