@@ -121,10 +121,9 @@ RSpec.describe Spree::BaseHelper, type: :helper do
 
   # Regression test for https://github.com/spree/spree/issues/2396
   context "meta_data_tags" do
+    let(:controller_name) { 'test' }
+
     it "truncates a product description to 160 characters" do
-      # Because the controller_name method returns "test"
-      # controller_name is used by this method to infer what it is supposed
-      # to be generating meta_data_tags for
       @test = Spree::Product.new(description: "a" * 200)
       tags = Nokogiri::HTML.parse(meta_data_tags)
       content = tags.css("meta[name=description]").first["content"]

@@ -3,6 +3,10 @@
 require 'spec_helper'
 
 describe Spree::Admin::NavigationHelper, type: :helper do
+  before do
+    allow(controller).to receive(:controller_name).and_return('test')
+  end
+
   describe "#tab" do
     context "creating an admin tab" do
       it "should capitalize the first letter of each word in the tab's label" do
