@@ -649,6 +649,22 @@ RSpec.describe Spree::Variant, type: :model do
       variant = build(:variant)
       expect(variant.total_on_hand).to eq(Spree::Stock::Quantifier.new(variant).total_on_hand)
     end
+
+    context "with a stock_location specified" do
+      subject { variant.total_on_hand(stock_location) }
+
+      let(:quantifier) { instance_double(Spree::Stock::Quantifier) }
+      let(:stock_location) { build_stubbed(:stock_location) }
+
+      it "initializes the quantifier with the stock location" do
+        expect(Spree::Stock::Quantifier).
+          to receive(:new).
+          with(variant, stock_location).
+          and_return(quantifier)
+        allow(quantifier).to receive(:total_on_hand)
+        subject
+      end
+    end
   end
 
   describe '#tax_category' do
