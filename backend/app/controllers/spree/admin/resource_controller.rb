@@ -78,8 +78,11 @@ class Spree::Admin::ResourceController < Spree::Admin::BaseController
 
   def update_positions
     ActiveRecord::Base.transaction do
-      params[:positions].each do |id, index|
-        model_class.find_by(id: id)&.set_list_position(index)
+      positions = params[:positions]
+      records = model_class.where(id: positions.keys).to_a
+
+      positions.each do |id, index|
+        records.find { |r| r.id == id.to_i }&.set_list_position(index)
       end
     end
 
