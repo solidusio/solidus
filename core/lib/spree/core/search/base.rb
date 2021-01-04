@@ -46,8 +46,8 @@ module Spree
           end
         end
 
-        def respond_to_missing?(name)
-          @properties.key?(name) || super(name)
+        def respond_to_missing?(name, include_private)
+          @properties.key?(name) || super
         end
 
         protected
