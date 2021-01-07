@@ -57,10 +57,6 @@ module Spree
           end
         end
 
-        def store_location
-          Spree::UserLastUrlStorer.new(self).store_location
-        end
-
         # proxy method to *possible* spree_current_user method
         # Authentication extensions (such as spree_auth_devise) are meant to provide spree_current_user
         def try_spree_current_user

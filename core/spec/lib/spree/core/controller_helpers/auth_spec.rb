@@ -48,14 +48,6 @@ RSpec.describe Spree::Core::ControllerHelpers::Auth, type: :controller do
     end
   end
 
-  describe '#store_location' do
-    it 'sets session return url' do
-      allow(controller).to receive_messages(request: double(fullpath: '/redirect'))
-      controller.store_location
-      expect(session[:spree_user_return_to]).to eq '/redirect'
-    end
-  end
-
   describe '#try_spree_current_user' do
     it 'calls spree_current_user when define spree_current_user method' do
       without_partial_double_verification do
