@@ -48,11 +48,6 @@ module Spree
           @current_ability ||= Spree::Ability.new(try_spree_current_user)
         end
 
-        def redirect_back_or_default(default)
-          redirect_to(session["spree_user_return_to"] || default)
-          session["spree_user_return_to"] = nil
-        end
-
         def set_guest_token
           unless cookies.signed[:guest_token].present?
             cookies.permanent.signed[:guest_token] = Spree::Config[:guest_token_cookie_options].merge(

@@ -14,24 +14,6 @@ RSpec.describe Spree::Core::ControllerHelpers::Auth, type: :controller do
     end
   end
 
-  describe '#redirect_back_or_default' do
-    before do
-      def controller.index
-        redirect_back_or_default('/')
-      end
-    end
-
-    it 'redirects to session url' do
-      session[:spree_user_return_to] = '/redirect'
-      get :index
-      expect(response).to redirect_to('/redirect')
-    end
-    it 'redirects to default page' do
-      get :index
-      expect(response).to redirect_to('/')
-    end
-  end
-
   describe '#set_guest_token' do
     before do
       def controller.index
