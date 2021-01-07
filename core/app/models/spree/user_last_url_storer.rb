@@ -28,15 +28,6 @@ module Spree
       @controller = controller
     end
 
-    # Stores into session[:spree_user_return_to] the request full path for
-    # future redirects (to be used after successful authentication). When
-    # there is a rule match then the request full path is not stored.
-    def store_location
-      return if self.class.rules.any? { |rule| rule.match? controller }
-
-      session[:spree_user_return_to] = request.fullpath.gsub('//', '/')
-    end
-
     private
 
     attr_reader :controller

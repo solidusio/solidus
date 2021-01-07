@@ -38,23 +38,4 @@ RSpec.describe Spree::UserLastUrlStorer do
       expect(described_class.rules).to include(CustomRule)
     end
   end
-
-  describe '#store_location' do
-    context 'when at least one rule matches' do
-      it 'does not set the path value into the session' do
-        described_class.rules << CustomRule
-        subject.store_location
-        expect(session[:spree_user_return_to]).to be_nil
-      end
-    end
-
-    context 'when no rule matches' do
-      it 'sets the path value into the session' do
-        described_class.rules << CustomRule
-        described_class.rules.delete('CustomRule')
-        subject.store_location
-        expect(session[:spree_user_return_to]).to eql fullpath
-      end
-    end
-  end
 end
