@@ -128,15 +128,6 @@ jobs:
       - setup
       - test
 
-  mysql_rails52:
-    executor: mysql
-    parallelism: *parallelism
-    environment:
-      RAILS_VERSION: '~> 5.2.0'
-    steps:
-      - setup
-      - test
-
 workflows:
   build:
     jobs:
@@ -147,7 +138,6 @@ workflows:
       - postgres
       - mysql
       - postgres_rails52
-      - mysql_rails52
       # - postgres_rails_master_activestorage
       - stoplight/push:
           context: "Solidus Core Team"
