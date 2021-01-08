@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
-require 'spree/testing_support/factories/return_item_factory'
 
 RSpec.describe 'return item factory' do
   let(:factory_class) { Spree::ReturnItem }

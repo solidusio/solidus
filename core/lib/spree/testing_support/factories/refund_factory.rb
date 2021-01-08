@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'spree/testing_support/factories/payment_factory'
-require 'spree/testing_support/factories/refund_reason_factory'
+require 'spree/testing_support'
+Spree::TestingSupport.deprecate_cherry_picking_factory_bot_files
 
 FactoryBot.define do
   sequence(:refund_transaction_id) { |n| "fake-refund-transaction-#{n}" }

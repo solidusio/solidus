@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
-require 'spree/testing_support/factories/state_factory'
 
 RSpec.describe 'state factory' do
   let(:factory_class) { Spree::State }

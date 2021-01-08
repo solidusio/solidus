@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
-require 'spree/testing_support/factories/calculator_factory'
-require 'spree/testing_support/factories/shipping_category_factory'
-require 'spree/testing_support/factories/zone_factory'
+require 'spree/testing_support'
+Spree::TestingSupport.deprecate_cherry_picking_factory_bot_files
 
 FactoryBot.define do
   factory(

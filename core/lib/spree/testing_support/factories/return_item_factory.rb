@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
-require 'spree/testing_support/factories/inventory_unit_factory'
-require 'spree/testing_support/factories/return_reason_factory'
-require 'spree/testing_support/factories/return_authorization_factory'
+require 'spree/testing_support'
+Spree::TestingSupport.deprecate_cherry_picking_factory_bot_files
 
 FactoryBot.define do
   factory :return_item, class: 'Spree::ReturnItem' do

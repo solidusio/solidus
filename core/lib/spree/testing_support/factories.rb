@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'factory_bot'
+require 'spree/testing_support'
 
-Dir["#{File.dirname(__FILE__)}/factories/**"].each do |f|
-  require File.expand_path(f)
-end
+Spree::TestingSupport.load_all_factories
