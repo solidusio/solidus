@@ -14,7 +14,7 @@ describe Spree::HomeController, type: :controller do
   context "layout" do
     it "renders default layout" do
       get :index
-      expect(response).to render_template(layout: 'spree/layouts/spree_application')
+      expect(response).to render_template(layout: 'spree/layouts/application')
     end
 
     context "different layout specified in config" do
@@ -23,6 +23,18 @@ describe Spree::HomeController, type: :controller do
       it "renders specified layout" do
         get :index
         expect(response).to render_template(layout: 'layouts/application')
+      end
+    end
+
+    context "layout conditions override the layout to render" do
+      before do
+        stub_spree_preferences(layout: 'layouts/application')
+        stub_spree_preferences(layout_conditions: { 'spree/home': 'layouts/custom_layout' })
+      end
+
+      it "renders specified layout" do
+        get :index
+        expect(response).to render_template(layout: 'layouts/custom_layout')
       end
     end
   end
