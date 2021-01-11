@@ -123,7 +123,7 @@ GEM
     rb-fsevent (0.10.3)
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
-    redcarpet (3.4.0)
+    redcarpet (3.5.1)
     ruby-ll (2.1.2)
       ansi
       ast
