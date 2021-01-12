@@ -14,10 +14,10 @@ describe Spree::HomeController, type: :controller do
   context "layout" do
     it "renders default layout" do
       get :index
-      expect(response).to render_template(layout: 'spree/layouts/application')
+      expect(response).to render_template(layout: 'spree/layouts/spree_application')
     end
 
-    context "different layout specified in config" do
+    context "different layout specified as a string in config" do
       before { stub_spree_preferences(layout: 'layouts/application') }
 
       it "renders specified layout" do
@@ -26,10 +26,16 @@ describe Spree::HomeController, type: :controller do
       end
     end
 
-    context "layout conditions override the layout to render" do
+    context "different layout specified as a proc in config" do
       before do
-        stub_spree_preferences(layout: 'layouts/application')
-        stub_spree_preferences(layout_conditions: { 'spree/home': 'layouts/custom_layout' })
+        layout_proc = proc do |instance|
+          if instance.controller_path == 'spree/home'
+            'layouts/custom_layout'
+          else
+            'spree/layouts/spree_application'
+          end
+        end
+        stub_spree_preferences(layout: layout_proc)
       end
 
       it "renders specified layout" do

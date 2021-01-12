@@ -1,4 +1,4 @@
-# Custom frontend
+# Custom frontend 
 
 As a Rails engine, Solidus allows you to build a custom application frontend
 from scratch. You can build out a frontend in the same way that you would for
@@ -92,7 +92,7 @@ initialize your own values for the following `Spree::Config` settings:
 
 - `:layout`: Specifies a view in your `/app/view` to be used as the base layout
   for your storefront. The default value is
-  `spree/layouts/application[.html.erb]`, which is a file included in the
+  `spree/layouts/spree_application[.html.erb]`, which is a file included in the
   `solidus_frontend` gem.
 - `:logo`: Specifies a file in your `/app/assets/images` to be used as the logo
   on the storefront.  You can access the logo from any view using the `<%= logo

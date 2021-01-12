@@ -6,7 +6,7 @@ been copied in the host application, as described in the [storefront
 customization guide][storefront-customization-guide].
 
 
-Copy/paste the following code at `app/views/layouts/application.html.rb`,
+Copy/paste the following code at `app/views/layouts/spree_application.html.rb`,
 immediately after the `<head>` tag.
 Replace `GA_MEASUREMENT_ID` with the ID of the Google Analytics property to which
 you want to send data.

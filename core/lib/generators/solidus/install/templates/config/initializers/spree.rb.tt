@@ -69,12 +69,9 @@ Spree.config do |config|
   # config.logo = "logo/solidus.svg"
 
   # Template to use when rendering layout
-  # config.layout = "spree/layouts/application"
+  # Accepts anything allowed by ActionView::Layouts::ClassMethods#layout
+  # config.layout = "spree/layouts/spree_application"
 
-  # You can use custom layouts for specific places of the store
-  # config.layout_conditions = {
-  #   'spree/checkout': 'custom_layout'
-  # }
 
   # Admin:
 
