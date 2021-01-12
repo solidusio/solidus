@@ -102,16 +102,6 @@ jobs:
       - setup
       - test
 
-  postgres_rails_master_activestorage:
-    executor: postgres
-    parallelism: *parallelism
-    environment:
-      RAILS_VERSION: 'master'
-      ENABLE_ACTIVE_STORAGE: true
-    steps:
-      - setup
-      - test
-
   mysql:
     executor: mysql
     parallelism: *parallelism
@@ -119,17 +109,17 @@ jobs:
       - setup
       - test
 
-  postgres_rails52:
+  postgres_rails60:
     executor: postgres
     parallelism: *parallelism
     environment:
-      RAILS_VERSION: '~> 5.2.0'
+      RAILS_VERSION: '~> 6.0.0'
     steps:
       - setup
       - test
 
-  mysql_rails52:
-    executor: mysql
+  postgres_rails52:
+    executor: postgres
     parallelism: *parallelism
     environment:
       RAILS_VERSION: '~> 5.2.0'
@@ -146,9 +136,8 @@ workflows:
               only: /master|v\d\.\d+/
       - postgres
       - mysql
+      - postgres_rails60
       - postgres_rails52
-      - mysql_rails52
-      # - postgres_rails_master_activestorage
       - stoplight/push:
           context: "Solidus Core Team"
           project: solidus/solidus-api
