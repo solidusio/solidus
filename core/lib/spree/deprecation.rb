@@ -33,9 +33,9 @@ module Spree
   #
   # Default deprecator is <tt>Spree::Deprecation</tt>.
   class DeprecatedInstanceVariableProxy < ActiveSupport::Deprecation::DeprecationProxy
-    def initialize(instance, method, var = "@#{method}", deprecator = Spree::Deprecation, message = nil)
+    def initialize(instance, method_or_var, var = "@#{method}", deprecator = Spree::Deprecation, message = nil)
       @instance = instance
-      @method = method
+      @method_or_var = method_or_var
       @var = var
       @deprecator = deprecator
       @message = message
@@ -44,12 +44,14 @@ module Spree
     private
 
     def target
-      @instance.__send__(@method)
+      return @instance.instance_variable_get(@method_or_var) if @instance.instance_variable_defined?(@method_or_var)
+
+      @instance.__send__(@method_or_var)
     end
 
     def warn(callstack, called, args)
-      message = @message || "#{@var} is deprecated! Call #{@method}.#{called} instead of #{@var}.#{called}."
-      message = [message, "Args: #{args.inspect}"].join(" ")
+      message = @message || "#{@var} is deprecated! Call #{@method_or_var}.#{called} instead of #{@var}.#{called}."
+      message = [message, "Args: #{args.inspect}"].join(" ") unless args.empty?
 
       @deprecator.warn(message, callstack)
     end

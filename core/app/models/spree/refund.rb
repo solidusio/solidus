@@ -54,7 +54,7 @@ module Spree
 
       @response = Spree::DeprecatedInstanceVariableProxy.new(
         self,
-        :perform_response,
+        :@perform_response,
         :@response,
         Spree::Deprecation,
         "Please, do not use Spree::Refund @response anymore, use Spree::Refund#perform_response"
