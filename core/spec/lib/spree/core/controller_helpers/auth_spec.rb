@@ -14,6 +14,24 @@ RSpec.describe Spree::Core::ControllerHelpers::Auth, type: :controller do
     end
   end
 
+  describe '#redirect_back_or_default' do
+    before do
+      def controller.index
+        redirect_back_or_default('/')
+      end
+    end
+
+    it 'redirects to session url' do
+      session[:spree_user_return_to] = '/redirect'
+      get :index
+      expect(response).to redirect_to('/redirect')
+    end
+    it 'redirects to default page' do
+      get :index
+      expect(response).to redirect_to('/')
+    end
+  end
+
   describe '#set_guest_token' do
     before do
       def controller.index
@@ -45,6 +63,14 @@ RSpec.describe Spree::Core::ControllerHelpers::Auth, type: :controller do
         get :index
         expect(response.headers["Set-Cookie"]).to match(/guest_token.*HttpOnly/)
       end
+    end
+  end
+
+  describe '#store_location' do
+    it 'sets session return url' do
+      allow(controller).to receive_messages(request: double(fullpath: '/redirect'))
+      controller.store_location
+      expect(session[:spree_user_return_to]).to eq '/redirect'
     end
   end
 
