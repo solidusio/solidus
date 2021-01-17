@@ -32,7 +32,7 @@ Spree.onCouponCodeApply = function(e) {
     handler = xhr.responseJSON;
     const errorMessages = $.map(
       handler["errors"],
-      function (err) {return err.error}
+      function (err) { return err.error }
     )
     couponStatus.addClass(errorClass).html(errorMessages.join('<br>'));
   });

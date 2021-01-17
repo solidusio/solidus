@@ -953,7 +953,7 @@ module Spree
           expect(order.reload.promotions).to eq [promo]
           expect(json_response).to eq({
             "success" => I18n.t('spree.coupon_code_applied'),
-            "error" => nil,
+            "errors" => [],
             "successful" => true,
             "status_code" => "coupon_code_applied"
           })
@@ -972,7 +972,12 @@ module Spree
           expect(order.reload.promotions).to eq []
           expect(json_response).to eq({
             "success" => nil,
-            "error" => I18n.t('spree.coupon_code_unknown_error'),
+            "errors" => [
+              {
+                "error" => I18n.t('spree.coupon_code_unknown_error'),
+                "error_code" => "coupon_code_unknown_error"
+              }
+            ],
             "successful" => false,
             "status_code" => "coupon_code_unknown_error"
           })

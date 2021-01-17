@@ -72,10 +72,12 @@ module Spree
         describe "#error fallback" do
           it "returns first error message" do
             coupon.errors.add :base, "Sample error", error_code: :sample
+            expect(Spree::Deprecation).to receive(:warn)
             expect(coupon.error).to eq("Sample error")
           end
 
           it "return nil if there are no errors" do
+            expect(Spree::Deprecation).to receive(:warn)
             expect(coupon.error).to be_nil
           end
         end

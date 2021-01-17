@@ -24,7 +24,7 @@ module Spree::Api
         expect(response.status).to eq(200)
         expect(order.reload.total).to eq(109.00)
         expect(json_response["success"]).to eq("The coupon code was successfully applied to your order.")
-        expect(json_response["error"]).to be_blank
+        expect(json_response["errors"]).to be_empty
         expect(json_response["successful"]).to be true
         expect(json_response["status_code"]).to eq("coupon_code_applied")
       end
@@ -40,7 +40,7 @@ module Spree::Api
           post spree.api_order_coupon_codes_path(order), params: { coupon_code: "10off", order_token: order.guest_token }
           expect(response.status).to eq(422)
           expect(json_response["success"]).to be_blank
-          expect(json_response["error"]).to eq("The coupon code is expired")
+          expect(json_response["errors"]).to eq([{ "error" => "The coupon code is expired", "error_code" => "coupon_code_expired" }])
           expect(json_response["successful"]).to be false
           expect(json_response["status_code"]).to eq("coupon_code_expired")
         end
