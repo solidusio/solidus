@@ -2,6 +2,8 @@
 
 module Spree
   class CouponCodesController < Spree::StoreController
+    include ActionView::Helpers::OutputSafetyHelper
+
     before_action :load_order, only: :create
     around_action :lock_order, only: :create
 
@@ -18,7 +20,7 @@ module Spree
               flash[:success] = handler.success
               redirect_to cart_path
             else
-              flash.now[:error] = handler.errors.full_messages.join(" <br/> ").html_safe
+              flash.now[:error] = safe_join(handler.errors.full_messages, " <br /> ".html_safe)
               render 'spree/coupon_codes/new'
             end
           end

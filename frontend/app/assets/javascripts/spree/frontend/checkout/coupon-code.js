@@ -30,10 +30,11 @@ Spree.onCouponCodeApply = function(e) {
     var handler;
     // handler = JSON.parse(xhr.responseText)
     handler = xhr.responseJSON;
-    const errorMessages = $.map(handler["errors"],
-      function(err) { return err.error })
-      .join('<br>')
-    couponStatus.addClass(errorClass).html(errorMessages);
+    const errorMessages = $.map(
+      handler["errors"],
+      function (err) {return err.error}
+    )
+    couponStatus.addClass(errorClass).html(errorMessages.join('<br>'));
   });
 };
 
