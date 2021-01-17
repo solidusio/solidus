@@ -6174,18 +6174,26 @@ components:
           type: string
         order_number:
           type: string
+    promotion-handler-error:
+      type: object
+      title: Promotion handler error
+      properties:
+        error:
+          type: string
+        error_code:
+          type: string
     coupon-code-handler:
       type: object
       title: Coupon code handler
       properties:
         success:
           type: string
-        error:
-          type: string
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/promotion-handler-error'
         successful:
           type: boolean
-        status_code:
-          type: string
     address-book:
       type: array
       title: Address book

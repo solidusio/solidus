@@ -15,7 +15,7 @@ module Spree
         if @handler.successful?
           render 'spree/api/promotions/handler', status: 200
         else
-          logger.error("apply_coupon_code_error=#{@handler.error.inspect}")
+          logger.error("apply_coupon_code_error=#{@handler.errors.full_messages.join(',')}")
           render 'spree/api/promotions/handler', status: 422
         end
       end

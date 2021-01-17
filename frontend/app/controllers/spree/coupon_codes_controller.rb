@@ -18,7 +18,7 @@ module Spree
               flash[:success] = handler.success
               redirect_to cart_path
             else
-              flash.now[:error] = handler.error
+              flash.now[:error] = handler.errors.full_messages.join(" <br/> ").html_safe
               render 'spree/coupon_codes/new'
             end
           end

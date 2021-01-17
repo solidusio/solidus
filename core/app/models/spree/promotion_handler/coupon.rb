@@ -3,12 +3,15 @@
 module Spree
   module PromotionHandler
     class Coupon
-      attr_reader :order, :coupon_code
-      attr_accessor :error, :success, :status_code
+      extend ActiveModel::Naming
+
+      attr_reader :order, :coupon_code, :errors
+      attr_accessor :success
 
       def initialize(order)
         @order = order
         @coupon_code = order.coupon_code && order.coupon_code.downcase
+        @errors = ActiveModel::Errors.new(self)
       end
 
       def apply
@@ -40,13 +43,13 @@ module Spree
       end
 
       def set_success_code(status_code)
-        @status_code = status_code
         @success = I18n.t(status_code, scope: 'spree')
+        @success_status_code = status_code
       end
 
       def set_error_code(status_code, options = {})
-        @status_code = status_code
-        @error = options[:error] || I18n.t(status_code, scope: 'spree')
+        @errors.clear
+        @errors.add(:base, options[:error] || I18n.t(status_code, scope: 'spree'), error_code: status_code)
       end
 
       def promotion
@@ -58,7 +61,16 @@ module Spree
       end
 
       def successful?
-        success.present? && error.blank?
+        success.present? && errors.empty?
+      end
+
+      def error
+        Spree::Deprecation.warn "#error is deprecated. Please start using #errors."
+        errors.full_messages.first
+      end
+
+      def status_code
+        errors.any? ? errors.details[:base].first[:error_code] : @success_status_code
       end
 
       private
@@ -72,8 +84,8 @@ module Spree
         return promotion_applied if promotion_exists_on_order?(order, promotion)
 
         unless promotion.eligible?(order, promotion_code: promotion_code)
-          set_promotion_eligibility_error_code(promotion)
-          return (error || ineligible_for_this_order)
+          @errors = promotion.eligibility_errors
+          return (errors.any? || ineligible_for_this_order)
         end
 
         # If any of the actions for the promotion return `true`,
@@ -85,15 +97,6 @@ module Spree
         else
           set_error_code :coupon_code_unknown_error
         end
-      end
-
-      def set_promotion_eligibility_error_code(promotion)
-        return unless eligibility_error_code_present?(promotion)
-
-        eligibility_error = promotion.eligibility_errors.details[:base].first
-
-        @status_code = eligibility_error[:error_code]
-        @error = eligibility_error[:error]
       end
 
       def promotion_usage_limit_exceeded
@@ -110,13 +113,6 @@ module Spree
 
       def promotion_exists_on_order?(order, promotion)
         order.promotions.include? promotion
-      end
-
-      def eligibility_error_code_present?(promotion)
-        promotion.eligibility_errors.present? &&
-          promotion.eligibility_errors.details.present? &&
-          promotion.eligibility_errors.details.key?(:base) &&
-          promotion.eligibility_errors.details[:base].first[:error_code].present?
       end
     end
   end

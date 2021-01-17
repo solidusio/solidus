@@ -154,6 +154,7 @@ module Spree
       # Promotions without rules are eligible by default.
       return [] if rules.none?
 
+      @eligibility_errors = ActiveModel::Errors.new(self)
       eligible = lambda { |rule| rule.eligible?(promotable, options) }
       specific_rules = rules.for(promotable)
       return [] if specific_rules.none?
@@ -161,14 +162,16 @@ module Spree
       if match_all?
         # If there are rules for this promotion, but no rules for this
         # particular promotable, then the promotion is ineligible by default.
-        unless specific_rules.all?(&eligible)
-          @eligibility_errors = specific_rules.map(&:eligibility_errors).detect(&:present?)
+        unless specific_rules.map(&eligible).all?
+          specific_rules.map(&:eligibility_errors).select(&:present?).each do |rule_error|
+            @eligibility_errors.merge! rule_error
+          end
           return nil
         end
         specific_rules
       else
         unless specific_rules.any?(&eligible)
-          @eligibility_errors = specific_rules.map(&:eligibility_errors).detect(&:present?)
+          @eligibility_errors = specific_rules.map(&:eligibility_errors).detect(&:present?) || @eligibility_errors
           return nil
         end
         specific_rules.select(&eligible)
