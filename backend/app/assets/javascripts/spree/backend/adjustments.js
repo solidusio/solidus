@@ -16,7 +16,7 @@ Spree.ready(function() {
       },
       error: function(msg) {
         if (msg.responseJSON["errors"]) {
-          show_flash('error', msg.responseJSON["errors"].map((error) => error.error).join(', '));
+          show_flash('error', msg.responseJSON["errors"].map(error => error.error).join(', '));
         } else {
           show_flash('error', "There was a problem adding this coupon code.");
         }
