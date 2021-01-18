@@ -48,11 +48,13 @@ module Spree
           @current_ability ||= Spree::Ability.new(try_spree_current_user)
         end
 
-        # @deprecated Use #redirect_back provided in Rails 5+
         def redirect_back_or_default(default)
           redirect_to(session["spree_user_return_to"] || default)
           session["spree_user_return_to"] = nil
         end
+
+        deprecate redirect_back_or_default: "Please use redirect_back provided in Rails 5+ instead",
+                  deprecator: Spree::Deprecation
 
         def set_guest_token
           unless cookies.signed[:guest_token].present?

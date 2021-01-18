@@ -4,8 +4,6 @@ module Spree
   # This service object is responsible for storing the current path into
   # into `session[:spree_user_return_to]` for redirects after successful
   # user/admin authentication.
-  #
-  # @deprecated Please use #redirect_back provided by Rails 5+
   class UserLastUrlStorer
     # Lists all the rules that will be evaluated before storing the
     # current path value into the session.
