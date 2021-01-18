@@ -19,9 +19,12 @@ module Spree
             if handler.successful?
               flash[:success] = handler.success
               redirect_to cart_path
-            else
-              flash.now[:error] = safe_join(handler.errors.full_messages, " <br /> ".html_safe)
+            elsif handler.errors.count == 1
+              flash.now[:error] = handler.errors.full_messages.first
               render 'spree/coupon_codes/new'
+            else
+              flash.now[:error] = t('spree.coupon_code_not_eligible')
+              render 'spree/coupon_codes/new', locals: { errors: handler.errors }
             end
           end
         end

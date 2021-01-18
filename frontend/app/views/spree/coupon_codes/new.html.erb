@@ -3,4 +3,11 @@
     <%= text_field_tag :coupon_code, nil, placeholder: t("spree.coupon_code"), size: 10 %>
     <%= submit_tag t("spree.apply_code") %>
   <% end %>
+  <% if local_assigns[:errors] && errors.any? %>
+    <div id="coupon_status" class="error">
+      <% for error in errors.full_messages %>
+        <%= error %><br/>
+      <% end %>
+    </div>
+  <% end %>
 </div>

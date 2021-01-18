@@ -152,7 +152,7 @@ describe "Coupon code promotions", type: :feature, js: true do
         expect(page).to have_content(I18n.t('spree.coupon_code_max_usage'))
       end
 
-      context "informs the user if the coupon code is not eligible" do
+      context "with single promotion rule unfulfilled" do
         before do
           rule = Spree::Promotion::Rules::ItemTotal.new
           rule.promotion = promotion
@@ -160,12 +160,42 @@ describe "Coupon code promotions", type: :feature, js: true do
           rule.save
         end
 
-        specify do
+        it "displays the error of the rule in the flash" do
           visit spree.cart_path
 
           fill_in "coupon_code", with: "onetwo"
           click_button "Apply Code"
-          expect(page).to have_content(I18n.t(:item_total_less_than_or_equal, scope: [:spree, :eligibility_errors, :messages], amount: "$100.00"))
+
+          expected_error = I18n.t(:item_total_less_than_or_equal, scope: [:spree, :eligibility_errors, :messages], amount: "$100.00")
+          expect(page).to have_css('.flash.error', text: expected_error)
+          expect(page).not_to have_css('#coupon_status')
+        end
+      end
+
+      context "with multiple promotion rules unsatisfied" do
+        before do
+          rule = Spree::Promotion::Rules::ItemTotal.new
+          rule.promotion = promotion
+          rule.preferred_amount = 100
+          rule.save
+
+          rule = Spree::Promotion::Rules::UserLoggedIn.new
+          rule.promotion = promotion
+          rule.save
+        end
+
+        it "displays generic message in the flash and details in coupon status" do
+          visit spree.cart_path
+
+          fill_in "coupon_code", with: "onetwo"
+          click_button "Apply Code"
+
+          expected_errors = [
+            I18n.t(:item_total_less_than_or_equal, scope: [:spree, :eligibility_errors, :messages], amount: "$100.00"),
+            I18n.t(:no_user_specified, scope: [:spree, :eligibility_errors, :messages])
+          ]
+          expect(page).to have_css('.flash.error', text: I18n.t('spree.coupon_code_not_eligible'))
+          expect(page).to have_css('#coupon_status.error', text: expected_errors.join("\n"))
         end
       end
 
