@@ -6,6 +6,7 @@ if ENV["COVERAGE"]
 end
 
 require 'rspec/core'
+
 require 'spree/testing_support/partial_double_verification'
 require 'spree/testing_support/preferences'
 require 'spree/config'

@@ -6188,12 +6188,18 @@ components:
       properties:
         success:
           type: string
+        error:
+          type: string
+          deprecated: true
         errors:
           type: array
           items:
             $ref: '#/components/schemas/promotion-handler-error'
         successful:
           type: boolean
+        status_code:
+          type: string
+          deprecated: true
     address-book:
       type: array
       title: Address book

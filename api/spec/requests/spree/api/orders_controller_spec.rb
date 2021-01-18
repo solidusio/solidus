@@ -945,7 +945,7 @@ module Spree
         let(:order) { create(:order_with_line_items) }
 
         it 'applies the coupon' do
-          expect(Spree::Deprecation).to receive(:warn)
+          expect(Spree::Deprecation).to receive(:warn).twice
 
           put spree.apply_coupon_code_api_order_path(order), params: { coupon_code: promo_code.value }
 
@@ -953,6 +953,7 @@ module Spree
           expect(order.reload.promotions).to eq [promo]
           expect(json_response).to eq({
             "success" => I18n.t('spree.coupon_code_applied'),
+            "error" => nil,
             "errors" => [],
             "successful" => true,
             "status_code" => "coupon_code_applied"
@@ -964,7 +965,7 @@ module Spree
         let(:order) { create(:order) } # no line items to apply the code to
 
         it 'returns an error' do
-          expect(Spree::Deprecation).to receive(:warn)
+          expect(Spree::Deprecation).to receive(:warn).twice
 
           put spree.apply_coupon_code_api_order_path(order), params: { coupon_code: promo_code.value }
 
@@ -972,6 +973,7 @@ module Spree
           expect(order.reload.promotions).to eq []
           expect(json_response).to eq({
             "success" => nil,
+            "error" => I18n.t('spree.coupon_code_unknown_error'),
             "errors" => [
               {
                 "error" => I18n.t('spree.coupon_code_unknown_error'),
