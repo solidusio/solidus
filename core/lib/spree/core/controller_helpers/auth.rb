@@ -53,7 +53,7 @@ module Spree
           session["spree_user_return_to"] = nil
         end
 
-        deprecate redirect_back_or_default: "Please use redirect_back provided in Rails 5+ instead",
+        deprecate redirect_back_or_default: 'Please use redirect_back provided in Rails 5+ instead',
                   deprecator: Spree::Deprecation
 
         def set_guest_token
