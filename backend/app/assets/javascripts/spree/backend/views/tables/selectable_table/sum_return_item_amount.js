@@ -15,8 +15,11 @@ Spree.Views.Tables.SelectableTable.SumReturnItemAmount = Backbone.View.extend({
   },
 
   totalSelectedReturnItemAmount: function () {
-    var totalAmount = 0.00;
+    var totalAmount = 0;
     var selectedItems = [];
+    var decimals = 0;
+    var separator = Spree.t('currency_separator');
+    var amount, decimalAmount;
 
     if(this.model.get('allSelected')) {
       selectedItems = $('.selectable');
@@ -24,9 +27,13 @@ Spree.Views.Tables.SelectableTable.SumReturnItemAmount = Backbone.View.extend({
       selectedItems = $(this.model.attributes.selectedItems);
     }
     selectedItems.each(function(_, selectedItem){
-      totalAmount += $(selectedItem).data('price');
+      amount = $(selectedItem).data('price');
+      decimalAmount = amount.toString().split(separator)[1] || '';
+      decimals = Math.max(decimals, decimalAmount.length);
+
+      totalAmount += parseFloat(amount);
     })
 
-    return totalAmount;
+    return accounting.formatNumber(totalAmount, decimals, Spree.t('currency_delimiter'), separator);
   },
 });
