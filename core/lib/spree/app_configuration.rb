@@ -303,10 +303,6 @@ module Spree
     #   @return [] Track on_hand values for variants / products. (default: true)
     preference :track_inventory_levels, :boolean, default: true
 
-    # @!attribute [rw] use_combined_first_and_last_name_in_address
-    #   @return [Boolean] Use Spree::Address combined first and last name in HTML views and
-    #   API responses. (default: +false+)
-    preference :use_combined_first_and_last_name_in_address, :boolean, default: false
 
     # @!attribute [rw] use_legacy_order_state_machine
     #   @return [Boolean] Uses the legacy order state machine from Spree::Order::Checkout

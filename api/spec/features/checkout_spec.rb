@@ -75,7 +75,7 @@ module Spree
       # It seems we are missing an order-scoped address api endpoint since we need
       # to use update here.
       expect {
-        update_order(order_params: { order: { address_type => address.attributes.except('id') } })
+        update_order(order_params: { order: { address_type => address.as_json.except('id') } })
       }.to change { @order.reload.public_send(address_type) }.to address
     end
 

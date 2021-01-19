@@ -5675,20 +5675,8 @@ components:
           type: integer
         country_iso:
           type: string
-        firstname:
-          type: string
-          deprecated: true
-          description: '*Deprecated: will be removed in Solidus 3.0, please use `name` property*'
-        full_name:
-          type: string
-          deprecated: true
-          description: '*Deprecated: will be removed in Solidus 3.0, please use `name` property*'
         id:
           type: integer
-        lastname:
-          type: string
-          deprecated: true
-          description: '*Deprecated: will be removed in Solidus 3.0, please use `name` property*'
         name:
           type: string
         phone:
@@ -6225,14 +6213,6 @@ components:
           type: integer
         name:
           type: string
-        firstname:
-          type: string
-          deprecated: true
-          description: '*Deprecated: will be removed in Solidus 3.0, please use `name` property*'
-        lastname:
-          type: string
-          deprecated: true
-          description: '*Deprecated: will be removed in Solidus 3.0, please use `name` property*'
         address1:
           type: string
         address2:
