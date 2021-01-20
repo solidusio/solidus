@@ -27,7 +27,7 @@ describe "ReturnAuthorizations", type: :feature do
   end
 
   context "when the user can manage return authorizations" do
-    describe "create" do
+    describe "create", :js do
       def create_return_authorization
         find("#select-all").click
         select "NY Warehouse", from: "Stock Location"
@@ -38,13 +38,19 @@ describe "ReturnAuthorizations", type: :feature do
         visit spree.new_admin_order_return_authorization_path(order)
       end
 
-      it "creates a return authorization", :js do
+      it "creates a return authorization" do
         create_return_authorization
 
         expect(page).to have_content "Return Authorization has been successfully created!"
       end
 
-      it "disables the button at submit", :js do
+      it "automatically checks edited rows" do
+        expect do
+          find(".refund-amount-input").native.send_keys [1, :tab]
+        end.to change { find(".add-item").checked? }.from(false).to(true)
+      end
+
+      it "disables the button at submit" do
         page.execute_script "$('form').submit(function(e) { e.preventDefault()})"
 
         create_return_authorization
