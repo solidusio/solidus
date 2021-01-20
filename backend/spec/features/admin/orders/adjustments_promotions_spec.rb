@@ -25,6 +25,7 @@ describe "Adjustments Promotions", type: :feature do
   context "admin adding a promotion" do
     context "successfully" do
       it "should create a new adjustment", js: true do
+        expect(Spree::Deprecation).to receive(:warn)
         fill_in "coupon_code", with: "10_off"
         click_button "Add Coupon Code"
         expect(page).to have_content("$10 off")
@@ -34,6 +35,7 @@ describe "Adjustments Promotions", type: :feature do
 
     context "for non-existing promotion" do
       it "should show an error message", js: true do
+        expect(Spree::Deprecation).to receive(:warn)
         fill_in "coupon_code", with: "does_not_exist"
         click_button "Add Coupon Code"
         expect(page).to have_content("doesn't exist.")
@@ -42,6 +44,7 @@ describe "Adjustments Promotions", type: :feature do
 
     context "for already applied promotion" do
       it "should show an error message", js: true do
+        expect(Spree::Deprecation).to receive(:warn).twice
         fill_in "coupon_code", with: "10_off"
         click_button "Add Coupon Code"
         expect(page).to have_content('-$10.00')

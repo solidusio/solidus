@@ -26,6 +26,7 @@ module Spree
         let(:order) { create(:order_with_line_items) }
 
         it 'applies the coupon' do
+          expect(Spree::Deprecation).to receive(:warn)
           post spree.api_order_coupon_codes_path(order), params: { coupon_code: promo_code.value }
 
           expect(response.status).to eq(200)
@@ -33,6 +34,7 @@ module Spree
           expect(json_response).to eq({
             "success" => I18n.t('spree.coupon_code_applied'),
             "error" => nil,
+            "errors" => [],
             "successful" => true,
             "status_code" => "coupon_code_applied"
           })
@@ -43,6 +45,7 @@ module Spree
         let(:order) { create(:order) }
 
         it 'returns an error' do
+          expect(Spree::Deprecation).to receive(:warn)
           post spree.api_order_coupon_codes_path(order), params: { coupon_code: promo_code.value }
 
           expect(response.status).to eq(422)
@@ -50,6 +53,12 @@ module Spree
           expect(json_response).to eq({
             "success" => nil,
             "error" => I18n.t('spree.coupon_code_unknown_error'),
+            "errors" => [
+              {
+                "error" => I18n.t('spree.coupon_code_unknown_error'),
+                "error_code" => "coupon_code_unknown_error"
+              }
+            ],
             "successful" => false,
             "status_code" => "coupon_code_unknown_error"
           })
@@ -69,6 +78,7 @@ module Spree
       let(:order) { create(:order_with_line_items, user: current_api_user) }
 
       before do
+        expect(Spree::Deprecation).to receive(:warn).twice
         post spree.api_order_coupon_codes_path(order), params: { coupon_code: promo_code.value }
         delete spree.api_order_coupon_code_path(order, promo_code.value)
       end
@@ -80,6 +90,7 @@ module Spree
           expect(json_response).to eq({
             "success" => I18n.t('spree.coupon_code_removed'),
             "error" => nil,
+            "errors" => [],
             "successful" => true,
             "status_code" => "coupon_code_removed"
           })
@@ -88,6 +99,7 @@ module Spree
 
       context 'when unsuccessful' do
         it 'returns an error' do
+          expect(Spree::Deprecation).to receive(:warn)
           delete spree.api_order_coupon_code_path(order, promo_code.value)
 
           expect(response.status).to eq(422)
@@ -95,6 +107,12 @@ module Spree
           expect(json_response).to eq({
             "success" => nil,
             "error" => I18n.t('spree.coupon_code_not_present'),
+            "errors" => [
+              {
+                "error" => I18n.t('spree.coupon_code_not_present'),
+                "error_code" => "coupon_code_not_present"
+              }
+            ],
             "successful" => false,
             "status_code" => "coupon_code_not_present"
           })

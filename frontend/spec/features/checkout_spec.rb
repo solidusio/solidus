@@ -493,6 +493,7 @@ describe "Checkout", type: :feature, inaccessible: true do
     end
 
     it "applies them & refreshes the page on user clicking the Apply Code button" do
+      expect(Spree::Deprecation).to receive(:warn)
       fill_in "Coupon Code", with: promotion.codes.first.value
       click_on "Apply Code"
 
@@ -502,6 +503,7 @@ describe "Checkout", type: :feature, inaccessible: true do
 
     context "with invalid coupon" do
       it "doesnt apply the promotion" do
+        expect(Spree::Deprecation).to receive(:warn)
         fill_in "Coupon Code", with: 'invalid'
         click_on "Apply Code"
 

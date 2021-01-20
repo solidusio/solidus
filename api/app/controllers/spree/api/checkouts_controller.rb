@@ -121,8 +121,8 @@ module Spree
           handler = PromotionHandler::Coupon.new(@order)
           handler.apply
 
-          if handler.error.present?
-            @coupon_message = handler.error
+          if handler.errors.any?
+            @coupon_message = handler.errors.full_messages.join(", ")
             respond_with(@order, default_template: 'spree/api/orders/could_not_apply_coupon', status: 422)
             return true
           end

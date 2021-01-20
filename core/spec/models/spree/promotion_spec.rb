@@ -777,6 +777,7 @@ RSpec.describe Spree::Promotion, type: :model do
     context "with 'all' match policy" do
       let(:rule1) { Spree::PromotionRule.create!(promotion: promotion) }
       let(:rule2) { Spree::PromotionRule.create!(promotion: promotion) }
+      let(:rule3) { Spree::PromotionRule.create!(promotion: promotion) }
 
       before { promotion.match_policy = 'all' }
 
@@ -794,26 +795,37 @@ RSpec.describe Spree::Promotion, type: :model do
         end
         it "does set anything to eligiblity errors" do
           promotion.eligible_rules(promotable)
-          expect(promotion.eligibility_errors).to be_nil
+          expect(promotion.eligibility_errors).to be_empty
         end
       end
 
       context "when any of the rules is not eligible" do
-        let(:errors) { double ActiveModel::Errors, empty?: false }
+        let(:errors_rule2) do
+          ActiveModel::Errors.new(rule2).tap do |err|
+            err.add(:base, 'sample error rule2')
+          end
+        end
+        let(:errors_rule3) do
+          ActiveModel::Errors.new(rule2).tap do |err|
+            err.add(:base, 'sample error rule3')
+          end
+        end
         before do
           allow(rule1).to receive_messages(eligible?: true, applicable?: true, eligibility_errors: nil)
-          allow(rule2).to receive_messages(eligible?: false, applicable?: true, eligibility_errors: errors)
+          allow(rule2).to receive_messages(eligible?: false, applicable?: true, eligibility_errors: errors_rule2)
+          allow(rule3).to receive_messages(eligible?: false, applicable?: true, eligibility_errors: errors_rule3)
 
-          promotion.promotion_rules = [rule1, rule2]
+          promotion.promotion_rules = [rule1, rule2, rule3]
           allow(promotion).to receive_message_chain(:rules, :none?).and_return(false)
           allow(promotion).to receive_message_chain(:rules, :for).and_return(promotion.promotion_rules)
         end
         it "returns nil" do
           expect(promotion.eligible_rules(promotable)).to be_nil
         end
-        it "sets eligibility errors to the first non-nil one" do
+        it "merges eligibility errors from all rules" do
           promotion.eligible_rules(promotable)
-          expect(promotion.eligibility_errors).to eq errors
+          merged_errors = errors_rule2.details[:base] + errors_rule3.details[:base]
+          expect(promotion.eligibility_errors.details[:base]).to eq merged_errors
         end
       end
     end
@@ -834,7 +846,7 @@ RSpec.describe Spree::Promotion, type: :model do
 
       context "when none of the rules are eligible" do
         let(:rule) { Spree::PromotionRule.create!(promotion: promotion) }
-        let(:errors) { double ActiveModel::Errors, empty?: false }
+        let(:errors) { double ActiveModel::Errors, empty?: false, errors: [] }
         before do
           allow(rule).to receive_messages(eligible?: false, applicable?: true, eligibility_errors: errors)
 
