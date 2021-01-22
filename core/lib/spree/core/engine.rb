@@ -85,8 +85,9 @@ module Spree
         # We need to make sure we call `Preview.all` before requiring our
         # previews, otherwise any previews the app attempts to add need to be
         # manually required.
-        if Rails.env.development?
+        if Rails.env.development? || Rails.env.test?
           ActionMailer::Preview.all
+
           Dir[root.join("lib/spree/mailer_previews/**/*_preview.rb")].each do |file|
             require_dependency file
           end
