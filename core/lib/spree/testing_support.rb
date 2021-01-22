@@ -19,8 +19,7 @@ module Spree
       )
     end
 
-    def self.load_all_factories
-      require 'factory_bot'
+    def self.check_factory_bot_version
       require 'factory_bot/version'
 
       requirement = Gem::Requirement.new("~> 4.8")
@@ -32,6 +31,10 @@ module Spree
           "using version #{version} could lead to factory loading issues.", caller(2)
         )
       end
+    end
+
+    def self.load_all_factories
+      require 'factory_bot'
 
       FactoryBot.definition_file_paths.concat(factory_bot_paths).uniq!
       FactoryBot.reload
