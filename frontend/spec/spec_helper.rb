@@ -26,10 +26,10 @@ Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
 
 require 'database_cleaner'
 
+require 'spree/testing_support'
 require 'spree/testing_support/partial_double_verification'
 require 'spree/testing_support/authorization_helpers'
 require 'spree/testing_support/capybara_ext'
-require 'spree/testing_support/factories'
 require 'spree/testing_support/preferences'
 require 'spree/testing_support/controller_requests'
 require 'spree/testing_support/flash'
@@ -48,6 +48,8 @@ require 'webdrivers'
 Capybara.javascript_driver = (ENV['CAPYBARA_DRIVER'] || :selenium_chrome_headless).to_sym
 
 ActiveJob::Base.queue_adapter = :test
+
+Spree::TestingSupport.load_all_factories
 
 RSpec.configure do |config|
   config.color = true

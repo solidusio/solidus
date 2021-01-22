@@ -27,9 +27,9 @@ Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
 require 'database_cleaner'
 require 'with_model'
 
+require 'spree/testing_support'
 require 'spree/testing_support/partial_double_verification'
 require 'spree/testing_support/authorization_helpers'
-require 'spree/testing_support/factories'
 require 'spree/testing_support/preferences'
 require 'spree/testing_support/controller_requests'
 require 'spree/testing_support/flash'
@@ -62,6 +62,8 @@ ActionView::Base.raise_on_missing_translations = true
 Capybara.default_max_wait_time = ENV['DEFAULT_MAX_WAIT_TIME'].to_f if ENV['DEFAULT_MAX_WAIT_TIME'].present?
 
 ActiveJob::Base.queue_adapter = :test
+
+Spree::TestingSupport.load_all_factories
 
 RSpec.configure do |config|
   config.color = true
