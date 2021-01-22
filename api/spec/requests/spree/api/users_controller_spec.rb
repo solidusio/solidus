@@ -153,7 +153,7 @@ module Spree
           q: {
             m: 'or',
             email_start: 'distinct_test',
-            firstname_or_lastname_start: 'distinct_test'
+            name_start: 'distinct_test'
           }
         }
         expect(json_response['count']).to eq(1)

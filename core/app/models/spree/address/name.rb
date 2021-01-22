@@ -2,8 +2,8 @@
 
 module Spree
   class Address
-    # Provides a value object to help transitioning from legacy
-    # firstname and lastname fields to a unified name field.
+    # Provides a value object to help splitting and joining
+    # name fields
     class Name
       attr_reader :first_name, :last_name, :value
 
