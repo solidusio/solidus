@@ -36,7 +36,7 @@ module Spree
     def self.load_all_factories
       require 'factory_bot'
 
-      FactoryBot.definition_file_paths.concat(factory_bot_paths).uniq!
+      FactoryBot.definition_file_paths.unshift(*factory_bot_paths).uniq!
       FactoryBot.reload
     end
   end
