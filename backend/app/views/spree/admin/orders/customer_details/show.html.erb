@@ -12,7 +12,7 @@
   <section>
     <%= content_tag :h4, t('spree.account') %>
     <%= t('spree.email') %>: <%= @order.email %><br>
-    <%= t('spree.guest_checkout') %>: <%= @order.user ? t('spree.yes') : t('spree.no') %>
+    <%= t('spree.guest_checkout') %>: <%= @order.user.nil? ? t('spree.yes') : t('spree.no') %>
   </section>
 
   <section>
