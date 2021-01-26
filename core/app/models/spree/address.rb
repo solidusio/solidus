@@ -22,6 +22,7 @@ module Spree
       self.class.state_validator_class.new(self).perform
     end
 
+    self.ignored_columns = %w(firstname lastname)
     DB_ONLY_ATTRS = %w(id updated_at created_at).freeze
     TAXATION_ATTRS = %w(state_id country_id zipcode).freeze
 
