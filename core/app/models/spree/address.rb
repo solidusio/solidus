@@ -22,11 +22,11 @@ module Spree
       self.class.state_validator_class.new(self).perform
     end
 
+    self.ignored_columns = %w(firstname lastname)
     DB_ONLY_ATTRS = %w(id updated_at created_at).freeze
     TAXATION_ATTRS = %w(state_id country_id zipcode).freeze
-    LEGACY_NAME_ATTRS = %w(firstname lastname).freeze
 
-    self.whitelisted_ransackable_attributes = %w[firstname lastname]
+    self.whitelisted_ransackable_attributes = %w[name]
 
     scope :with_values, ->(attributes) do
       where(value_attributes(attributes))
@@ -160,29 +160,6 @@ module Spree
 
     def country_iso
       country && country.iso
-    end
-
-    # @return [String] the full name on this address
-    def name
-      Spree::Address::Name.new(
-        read_attribute(:firstname),
-        read_attribute(:lastname)
-      ).value
-    end
-
-    def name=(value)
-      return if value.nil?
-
-      name_from_value = Spree::Address::Name.new(value)
-      write_attribute(:firstname, name_from_value.first_name)
-      write_attribute(:lastname, name_from_value.last_name)
-    end
-
-    def as_json(options = {})
-      super.tap do |hash|
-        hash.except!(*LEGACY_NAME_ATTRS)
-        hash['name'] = name
-      end
     end
   end
 end

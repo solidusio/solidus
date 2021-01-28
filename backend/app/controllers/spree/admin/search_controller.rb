@@ -16,7 +16,7 @@ module Spree
           @users = Spree.user_class.ransack({
             m: 'or',
             email_start: params[:q],
-            firstname_or_lastname_start: params[:q]
+            name_start: params[:q]
           }).result.limit(10)
         end
       end

@@ -266,6 +266,7 @@ RSpec.describe Spree::Address, type: :model do
       address = Spree::Address.new(name: 'Jane Von Doe')
 
       expect(address.as_json).to include('name' => 'Jane Von Doe')
+      expect(address.as_json.keys).not_to include('firstname', 'lastname')
     end
   end
 
