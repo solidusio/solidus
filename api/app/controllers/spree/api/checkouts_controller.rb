@@ -9,10 +9,9 @@ module Spree
 
       rescue_from Spree::Order::InsufficientStock, with: :insufficient_stock_error
 
-      include Spree::Core::ControllerHelpers::Order
-
-      # TODO: Remove this after deprecated usage in #update is removed
       include Spree::Core::ControllerHelpers::PaymentParameters
+
+      include Spree::Core::ControllerHelpers::Order
 
       def next
         authorize! :update, @order, order_token
@@ -116,17 +115,6 @@ module Spree
       end
 
       def after_update_attributes
-        if params[:order] && params[:order][:coupon_code].present?
-          Spree::Deprecation.warn('This method is deprecated. Please use `Spree::Api::CouponCodesController#create` endpoint instead.')
-          handler = PromotionHandler::Coupon.new(@order)
-          handler.apply
-
-          if handler.error.present?
-            @coupon_message = handler.error
-            respond_with(@order, default_template: 'spree/api/orders/could_not_apply_coupon', status: 422)
-            return true
-          end
-        end
         false
       end
 

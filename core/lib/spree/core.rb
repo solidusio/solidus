@@ -55,9 +55,6 @@ module Spree
 
   module Core
     class GatewayError < RuntimeError; end
-
-    include ActiveSupport::Deprecation::DeprecatedConstantAccessor
-    deprecate_constant 'DestroyWithOrdersError', ActiveRecord::DeleteRestrictionError, deprecator: Spree::Deprecation
   end
 end
 
@@ -69,7 +66,6 @@ require 'spree/core/environment_extension'
 require 'spree/core/environment/calculators'
 require 'spree/core/environment/promotions'
 require 'spree/core/environment'
-require 'spree/promo/environment'
 require 'spree/migrations'
 require 'spree/migration_helpers'
 require 'spree/event'
@@ -83,7 +79,6 @@ require 'spree/permitted_attributes'
 require 'spree/core/importer'
 require 'spree/core/permalinks'
 require 'spree/core/product_duplicator'
-require 'spree/core/current_store'
 require 'spree/core/controller_helpers/auth'
 require 'spree/core/controller_helpers/common'
 require 'spree/core/controller_helpers/current_host'

@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Solidus API
-  version: "1.0"
+  version: '1.0'
   description: The standard Solidus API.
   contact:
     name: Solidus
@@ -1067,12 +1067,10 @@ paths:
         '422':
           $ref: '#/components/responses/delete-restriction'
       summary: Remove address from user address book
-      description: >-
+      description: |-
         Removes an address from a user's address book.
 
-
-        **Note:** Rather than delete a `Spree::UserAddress` record this action
-        set its `archived` attribute to `true`.
+        **Note:** Rather than delete a `Spree::UserAddress` record this action set its `archived` attribute to `true`.
       operationId: remove-address-from-user-address-book
       tags:
         - Address books
@@ -1101,16 +1099,10 @@ paths:
       operationId: update-user-address-book
       tags:
         - Address books
-      description: >-
+      description: |-
         Updates a user's address book.
 
-
-        **Note:** if the passed `id` matches an existing `address` a new
-        `Spree::Address` record will be created and the matched `address`
-        `archived` on `Spree::UserAddress`. For a similar logic, if the passed
-        `id` matches an existing `address` which is in `archived` state, the
-        `Spree::UserAddress#archived` record will be restored to `false`.
-
+        **Note:** if the passed `id` matches an existing `address` a new `Spree::Address` record will be created and the matched `address` `archived` on `Spree::UserAddress`. For a similar logic, if the passed `id` matches an existing `address` which is in `archived` state, the `Spree::UserAddress#archived` record will be restored to `false`.
         See `user_address_book.rb` for further information.
       security:
         - api-key: []
@@ -1521,7 +1513,7 @@ paths:
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Update order customer return
-      description: "Updates an orders customer return."
+      description: Updates an orders customer return.
       operationId: update-order-customer-return
       tags:
         - Customer returns
@@ -1897,8 +1889,6 @@ paths:
               schema:
                 type: object
                 properties:
-                  default_country_id:
-                    type: integer
                   default_country_iso:
                     type: string
         '401':
@@ -3502,65 +3492,6 @@ paths:
         - api-key: []
       requestBody:
         $ref: '#/components/requestBodies/zone-input'
-  '/taxonomies/{taxonomy_id}/jstree':
-    get:
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/jstree'
-        '401':
-          $ref: '#/components/responses/invalid-api-key'
-        '404':
-          $ref: '#/components/responses/not-found'
-      summary: Get taxonomy jsTree
-      description: Builds a taxonomy's jsTree.
-      operationId: get-taxonomy-jstree
-      tags:
-        - Taxonomies
-      security:
-        - api-key: []
-    parameters:
-      - name: taxonomy_id
-        in: path
-        required: true
-        schema:
-          type: string
-  '/taxonomies/{taxonomy_id}/taxons/{taxon_id}/jstree':
-    get:
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/jstree'
-        '401':
-          $ref: '#/components/responses/invalid-api-key'
-        '404':
-          $ref: '#/components/responses/not-found'
-      summary: Get taxon jsTree
-      description: Builds a taxon's jsTree.
-      operationId: get-taxon-jstree
-      tags:
-        - Taxons
-      security:
-        - api-key: []
-    parameters:
-      - name: taxonomy_id
-        in: path
-        required: true
-        schema:
-          type: string
-      - name: taxon_id
-        in: path
-        required: true
-        schema:
-          type: string
   '/promotions/{id}':
     get:
       responses:
@@ -3844,13 +3775,10 @@ paths:
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Update checkout
-      description: >-
+      description: |-
         Updates a checkout.
 
-
-        **Note:** In addition to the order update, this action always attempts
-        to perform an order state machine transition which results in a `422`
-        response if it cannot be transitioned.
+        **Note:** In addition to the order update, this action always attempts to perform an order state machine transition which results in a `422` response if it cannot be transitioned.
       operationId: update-checkout
       tags:
         - Checkouts
@@ -4268,42 +4196,6 @@ paths:
                   type: integer
                 position:
                   type: integer
-  '/orders/{order_number}/apply_coupon_code':
-    put:
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/coupon-code-handler'
-        '401':
-          $ref: '#/components/responses/invalid-api-key'
-        '404':
-          $ref: '#/components/responses/not-found'
-        '422':
-          $ref: '#/components/responses/unprocessable-entity'
-      summary: Apply order coupon code
-      deprecated: true
-      description: >-
-        **Deprecated:** This method is deprecated. Please use
-        `Spree::Api::CouponCodesController#create` endpoint instead.
-
-        Applies a coupon code on the order.
-      operationId: apply-order-coupon-code
-      tags:
-        - Coupon codes
-      security:
-        - api-key: []
-        - order-token: []
-      requestBody:
-        $ref: '#/components/requestBodies/coupon-code-input'
-    parameters:
-      - name: order_number
-        in: path
-        required: true
-        schema:
-          type: string
   '/orders/{order_number}/cancel':
     put:
       responses:
@@ -4983,7 +4875,7 @@ paths:
         '404':
           $ref: '#/components/responses/not-found'
       summary: List order customer returns
-      description: "Lists an order's customer returns."
+      description: Lists an order's customer returns.
       operationId: list-order-customer-returns
       tags:
         - Customer returns
@@ -6105,23 +5997,6 @@ components:
         root:
           $ref: '#/components/schemas/taxon'
       title: Taxonomy
-    jstree:
-      type: array
-      items:
-        type: object
-        properties:
-          attr:
-            type: object
-            properties:
-              id:
-                type: integer
-              name:
-                type: string
-          data:
-            type: string
-          state:
-            type: string
-      title: jsTree
     promotion:
       type: object
       properties:
@@ -6262,10 +6137,7 @@ components:
           description: 'Passing `0`, the line item will be removed.'
         options:
           type: object
-          description: >-
-            This field can be used to pass custom line item attributes. When
-            used, it will force a new price calculation, unless `price` is one
-            of the options.
+          description: 'This field can be used to pass custom line item attributes. When used, it will force a new price calculation, unless `price` is one of the options.'
         id:
           type: integer
           description: Required for existing line items only.
@@ -6379,8 +6251,6 @@ components:
               type: string
             encrypted_data:
               type: string
-            existing_card_id:
-              type: integer
             wallet_payment_source_id:
               type: integer
             address_attributes:

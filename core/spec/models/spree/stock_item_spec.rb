@@ -238,34 +238,6 @@ RSpec.describe Spree::StockItem, type: :model do
         end
       end
     end
-
-    context "when deprecated binary_inventory_cache is used" do
-      before do
-        stub_spree_preferences(binary_inventory_cache: binary_inventory_cache)
-        allow(Spree::Deprecation).to receive(:warn)
-        subject.set_count_on_hand(9)
-      end
-
-      context "binary_inventory_cache is set to true" do
-        let(:binary_inventory_cache) { true }
-
-        it "logs a deprecation warning" do
-          expect(Spree::Deprecation).to have_received(:warn)
-        end
-      end
-
-      context "binary_inventory_cache is set to false" do
-        let(:binary_inventory_cache) { false }
-
-        it "inventory_cache_threshold remains nil" do
-          expect(Spree::Config.inventory_cache_threshold).to be_nil
-        end
-
-        it "does not log a deprecation warning" do
-          expect(Spree::Deprecation).not_to have_received(:warn)
-        end
-      end
-    end
   end
 
   describe "#after_touch" do

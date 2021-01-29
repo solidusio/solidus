@@ -108,15 +108,6 @@ module Spree
         expect(json_response['taxons'].count).to eq 1
       end
 
-      it "gets all taxons in JSTree form" do
-        expect(Spree::Deprecation).to(receive(:warn))
-        get spree.jstree_api_taxonomy_taxon_path(taxonomy, taxon.id)
-        response = json_response.first
-        expect(response["data"]).to eq(taxon2.name)
-        expect(response["attr"]).to eq({ "name" => taxon2.name, "id" => taxon2.id })
-        expect(response["state"]).to eq("closed")
-      end
-
       it "can learn how to create a new taxon" do
         get spree.new_api_taxonomy_taxon_path(taxonomy)
         expect(json_response["attributes"]).to eq(attributes.map(&:to_s))

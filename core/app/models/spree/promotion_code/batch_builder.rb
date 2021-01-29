@@ -10,20 +10,6 @@ class ::Spree::PromotionCode::BatchBuilder
     sample_characters: ('a'..'z').to_a + (2..9).to_a.map(&:to_s)
   }
 
-  [:random_code_length, :batch_size, :sample_characters].each do |attr|
-    define_singleton_method(attr) do
-      Spree::Deprecation.warn "#{name}.#{attr} is deprecated. Use #{name}::DEFAULT_OPTIONS[:#{attr}] instead"
-      DEFAULT_OPTIONS[attr]
-    end
-
-    define_singleton_method(:"#{attr}=") do |val|
-      Spree::Deprecation.warn "#{name}.#{attr}= is deprecated. Use #{name}::DEFAULT_OPTIONS[:#{attr}]= instead"
-      DEFAULT_OPTIONS[attr] = val
-    end
-
-    delegate attr, to: self
-  end
-
   def initialize(promotion_code_batch, options = {})
     @promotion_code_batch = promotion_code_batch
     options.assert_valid_keys(*DEFAULT_OPTIONS.keys)

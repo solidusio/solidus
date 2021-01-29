@@ -14,10 +14,6 @@ module Spree
         )
       )
     end
-    class << self
-      alias_method :find_all_by_name_or_abbr, :with_name_or_abbr
-      deprecate find_all_by_name_or_abbr: :with_name_or_abbr, deprecator: Spree::Deprecation
-    end
 
     self.whitelisted_ransackable_attributes = %w[name]
 

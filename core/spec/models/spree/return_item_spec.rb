@@ -43,17 +43,6 @@ RSpec.describe Spree::ReturnItem, type: :model do
       subject
     end
 
-    context 'when the `skip_customer_return_processing` flag is set' do
-      it 'shows a deprecation warning' do
-        expect(Spree::Deprecation).to receive(:warn).
-          with(/^From Solidus v2\.11 onwards, #skip_customer_return_processing does nothing/, any_args).
-          at_least(:once)
-
-        return_item.skip_customer_return_processing = false
-        subject
-      end
-    end
-
     context 'when there is a received return item with the same inventory unit' do
       let!(:return_item_with_dupe_inventory_unit) { create(:return_item, inventory_unit: inventory_unit, reception_status: 'received') }
 
@@ -810,18 +799,6 @@ RSpec.describe Spree::ReturnItem, type: :model do
             expect(subject).to be_valid
           end
         end
-      end
-    end
-  end
-
-  describe '#skip_customer_return_processing=' do
-    context 'when it receives a value' do
-      let(:return_item) { described_class.new }
-      subject { return_item.skip_customer_return_processing = :foo }
-
-      it 'shows a deprecation warning' do
-        expect(Spree::Deprecation).to receive(:warn)
-        subject
       end
     end
   end

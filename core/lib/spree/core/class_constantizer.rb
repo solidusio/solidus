@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'active_support/core_ext/module'
+
 module Spree
   module Core
     module ClassConstantizer

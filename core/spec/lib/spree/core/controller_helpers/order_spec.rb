@@ -20,26 +20,6 @@ RSpec.describe Spree::Core::ControllerHelpers::Order, type: :controller do
     allow(controller).to receive_messages(try_spree_current_user: user)
   end
 
-  describe '#simple_current_order' do
-    before do
-      expect(Spree::Deprecation).to receive(:warn).
-        with(/^simple_current_order is deprecated and will be removed/, any_args)
-    end
-
-    it "returns an empty order" do
-      expect(controller.simple_current_order.item_count).to eq 0
-    end
-
-    it 'returns Spree::Order instance' do
-      allow(controller).to receive_messages(cookies: double(signed: { guest_token: order.guest_token }))
-      expect(controller.simple_current_order).to eq order
-    end
-
-    it 'assigns the current_store id' do
-      expect(controller.simple_current_order.store_id).to eq store.id
-    end
-  end
-
   describe '#current_order' do
     context 'create_order_if_necessary option is false' do
       let!(:order) { create :order, user: user, store: store }

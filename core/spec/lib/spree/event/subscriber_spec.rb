@@ -19,24 +19,6 @@ RSpec.describe Spree::Event::Subscriber do
     end
   end
 
-  describe '::subscribe!' do
-    it 'is deprecated in favor of ::activate' do
-      allow(M).to receive(:activate)
-      expect(Spree::Deprecation).to receive(:warn)
-
-      M.subscribe!
-    end
-  end
-
-  describe '::unsubscribe!' do
-    it 'is deprecated in favor of ::unsubscribe' do
-      allow(M).to receive(:deactivate)
-      expect(Spree::Deprecation).to receive(:warn)
-
-      M.unsubscribe!
-    end
-  end
-
   describe '::activate' do
     before { M.deactivate }
 

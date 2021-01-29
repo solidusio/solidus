@@ -3,61 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Spree::Store, type: :model do
-  before do
-    allow(Spree::Deprecation).to receive(:warn).
-      with(/^by_url is deprecated and will be removed/, any_args)
-  end
-
   it { is_expected.to respond_to(:cart_tax_country_iso) }
-
-  describe ".by_url (deprecated)" do
-    let!(:store)    { create(:store, url: "website1.com\nwww.subdomain.com") }
-    let!(:store_2)  { create(:store, url: 'freethewhales.com') }
-
-    before do
-      expect(Spree::Deprecation).to receive(:warn).
-        with(/^by_url is deprecated and will be removed/, any_args)
-    end
-
-    it "should find stores by url" do
-      by_domain = Spree::Store.by_url('www.subdomain.com')
-
-      expect(by_domain).to include(store)
-      expect(by_domain).not_to include(store_2)
-    end
-  end
-
-  describe '.current (deprecated)' do
-    let!(:store_1) { create(:store) }
-    let!(:store_default) { create(:store, name: 'default', default: true) }
-    let!(:store_2) { create(:store, default: false, url: 'www.subdomain.com') }
-    let!(:store_3) { create(:store, default: false, url: 'www.another.com', code: 'CODE') }
-
-    before do
-      expect(Spree::Deprecation).to receive(:warn).
-        with(/^Spree::Store.current is DEPRECATED/, any_args)
-    end
-
-    delegate :current, to: :described_class
-
-    context "with no match" do
-      it 'should return the default domain' do
-        expect(current('foobar.com')).to eql(store_default)
-      end
-    end
-
-    context "with matching url" do
-      it 'should return matching store' do
-        expect(current('www.subdomain.com')).to eql(store_2)
-      end
-    end
-
-    context "with matching code" do
-      it 'should return matching store' do
-        expect(current('CODE')).to eql(store_3)
-      end
-    end
-  end
 
   describe ".default" do
     it "should ensure saved store becomes default if one doesn't exist yet" do

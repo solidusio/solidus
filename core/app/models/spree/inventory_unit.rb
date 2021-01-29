@@ -60,27 +60,6 @@ module Spree
 
     include ::Spree::Config.state_machines.inventory_unit
 
-    # Updates the given inventory units to not be pending.
-    #
-    # @deprecated do not use this, use
-    #   Spree::Stock::InventoryUnitsFinalizer.new(inventory_units).run!
-    # @param inventory_units [<Spree::InventoryUnit>] the inventory to be
-    #   finalized
-    def self.finalize_units!(inventory_units)
-      Spree::Deprecation.warn(
-        "inventory_units.finalize_units!(inventory_units) is deprecated. Please
-        use Spree::Stock::InventoryUnitsFinalizer.new(inventory_units).run!",
-        caller
-      )
-
-      inventory_units.map do |iu|
-        iu.update_columns(
-          pending: false,
-          updated_at: Time.current
-        )
-      end
-    end
-
     # @return [Spree::StockItem] the first stock item from this shipment's
     #   stock location that is associated with this inventory unit's variant
     def find_stock_item

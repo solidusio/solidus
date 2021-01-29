@@ -29,17 +29,6 @@ module Spree
 
     self.whitelisted_ransackable_attributes = %w[name]
 
-    # @note This method is meant to be overridden on a store by store basis.
-    # @return [Array] filters that should be used for a taxon
-    def applicable_filters
-      Spree::Deprecation.warn "Spree::Taxon#applicable_filters is deprecated, if you are using this functionality please move it into your own application."
-
-      fs = []
-      fs << Spree::Core::ProductFilters.price_filter if Spree::Core::ProductFilters.respond_to?(:price_filter)
-      fs << Spree::Core::ProductFilters.brand_filter if Spree::Core::ProductFilters.respond_to?(:brand_filter)
-      fs
-    end
-
     # @return [String] meta_title if set otherwise a string containing the
     #   root name and taxon name
     def seo_title

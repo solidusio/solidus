@@ -29,7 +29,7 @@ module Spree
         if response = payment.payment_method.try_void(payment)
           payment.handle_void_response(response)
         else
-          payment.refunds.create!(amount: payment.credit_allowed, reason: refund_reason, perform_after_create: false).perform!
+          payment.refunds.create!(amount: payment.credit_allowed, reason: refund_reason).perform!
         end
       end
 

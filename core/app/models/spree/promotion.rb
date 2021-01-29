@@ -38,11 +38,7 @@ module Spree
 
     scope :coupons, -> { joins(:codes).distinct }
     scope :advertised, -> { where(advertise: true) }
-    scope :active, -> do
-      return started_and_unexpired if Spree::Config.consider_actionless_promotion_active == true
-
-      has_actions.started_and_unexpired
-    end
+    scope :active, -> { has_actions.started_and_unexpired }
     scope :started_and_unexpired, -> do
       table = arel_table
       time = Time.current
@@ -93,7 +89,7 @@ module Spree
     end
 
     def active?
-      started? && not_expired? && (Spree::Config.consider_actionless_promotion_active || actions.present?)
+      started? && not_expired? && actions.present?
     end
 
     def inactive?

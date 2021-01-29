@@ -97,15 +97,15 @@ RSpec.describe Spree::Core::ControllerHelpers::PaymentParameters, type: :control
     end
   end
 
-  describe '#move_existing_card_into_payments_attributes' do
+  describe '#move_wallet_payment_source_id_into_payments_attributes' do
     subject do
-      controller.move_existing_card_into_payments_attributes(params)
+      controller.move_wallet_payment_source_id_into_payments_attributes(params)
     end
 
     let(:params) do
       ActionController::Parameters.new(
         order: {
-          existing_card: '123',
+          wallet_payment_source_id: '123',
           other_order_param: 1
         },
         cvc_confirm: '456',
@@ -119,7 +119,7 @@ RSpec.describe Spree::Core::ControllerHelpers::PaymentParameters, type: :control
           payments_attributes: [
             {
               source_attributes: {
-                existing_card_id: '123',
+                wallet_payment_source_id: '123',
                 verification_value: '456'
               }
             }
@@ -141,7 +141,7 @@ RSpec.describe Spree::Core::ControllerHelpers::PaymentParameters, type: :control
             payments_attributes: [
               {
                 source_attributes: {
-                  existing_card_id: '123',
+                  wallet_payment_source_id: '123',
                   verification_value: nil
                 }
               }
@@ -160,8 +160,8 @@ RSpec.describe Spree::Core::ControllerHelpers::PaymentParameters, type: :control
       it_behaves_like "unchanged params"
     end
 
-    context 'when existing_card is missing' do
-      before { params[:order].delete(:existing_card) }
+    context 'when wallet_payment_source_id is missing' do
+      before { params[:order].delete(:wallet_payment_source_id) }
       it_behaves_like "unchanged params"
     end
   end

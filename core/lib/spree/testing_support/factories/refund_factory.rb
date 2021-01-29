@@ -13,7 +13,6 @@ FactoryBot.define do
 
     amount { 100.00 }
     transaction_id { generate(:refund_transaction_id) }
-    perform_after_create { false }
     payment do
       association(:payment, state: 'completed', amount: payment_amount)
     end

@@ -28,11 +28,6 @@ module Spree
     validates :amount, numericality: true
     validates :promotion_code, presence: true, if: :require_promotion_code?
 
-    # We need to use `after_commit` here because otherwise it's too early to
-    # tell if any repair is needed.
-    after_commit :repair_adjustments_associations_on_create, on: [:create]
-    after_commit :repair_adjustments_associations_on_destroy, on: [:destroy]
-
     scope :not_finalized, -> { where(finalized: false) }
     scope :finalized, -> { where(finalized: true) }
     scope :cancellation, -> { where(source_type: 'Spree::UnitCancel') }
@@ -135,15 +130,6 @@ module Spree
       amount
     end
 
-    def update!(*args)
-      if args.empty?
-        Spree::Deprecation.warn "Calling adjustment.update! with no arguments to recalculate amounts and eligibility is deprecated, since it conflicts with AR::Base#update! Please use adjustment.recalculate instead"
-        recalculate
-      else
-        super
-      end
-    end
-
     # Calculates based on attached promotion (if this is a promotion
     # adjustment) whether this promotion is still eligible.
     # @api private
@@ -160,20 +146,6 @@ module Spree
 
     def require_promotion_code?
       promotion? && !source.promotion.apply_automatically && source.promotion.codes.any?
-    end
-
-    def repair_adjustments_associations_on_create
-      if adjustable.adjustments.loaded? && !adjustable.adjustments.include?(self) && !destroyed?
-        Spree::Deprecation.warn("Adjustment #{id} was not added to #{adjustable.class} #{adjustable.id}. Add adjustments via `adjustable.adjustments.create!`. Partial call stack: #{caller.select { |line| line =~ %r(/(app|spec)/) }}.", caller)
-        adjustable.adjustments.proxy_association.add_to_target(self)
-      end
-    end
-
-    def repair_adjustments_associations_on_destroy
-      if adjustable.adjustments.loaded? && adjustable.adjustments.include?(self)
-        Spree::Deprecation.warn("Adjustment #{id} was not removed from #{adjustable.class} #{adjustable.id}. Remove adjustments via `adjustable.adjustments.destroy`. Partial call stack: #{caller.select { |line| line =~ %r(/(app|spec)/) }}.", caller)
-        adjustable.adjustments.proxy_association.target.delete(self)
-      end
     end
   end
 end

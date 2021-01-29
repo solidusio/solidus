@@ -187,98 +187,6 @@ RSpec.describe Spree::TaxRate, type: :model do
     end
   end
 
-  describe "#adjust" do
-    let(:taxable_address) { create(:address) }
-    let(:order) { create(:order_with_line_items, ship_address: order_address) }
-    let(:tax_zone) { create(:zone, countries: [taxable_address.country]) }
-    let(:foreign_address) { create(:address, country_iso_code: "CA") }
-    let!(:foreign_zone) { create(:zone, countries: [foreign_address.country]) }
-    let(:tax_rate) do
-      create(:tax_rate,
-        included_in_price: included_in_price,
-        show_rate_in_label: show_rate_in_label,
-        amount: 0.125,
-        zone: tax_zone)
-    end
-
-    let(:item) { order.line_items.first }
-
-    before do
-      expect(Spree::Deprecation).to receive(:warn).
-        with(/^`Spree::TaxRate#adjust` is deprecated/, any_args)
-    end
-
-    describe 'adjustments' do
-      before do
-        tax_rate.adjust(nil, item)
-      end
-
-      let(:adjustment_label) { item.adjustments.tax.first.label }
-
-      context 'for included rates' do
-        let(:included_in_price) { true }
-        let(:order_address) { taxable_address }
-
-        context 'with show rate in label' do
-          let(:show_rate_in_label) { true }
-
-          it 'shows the rate in the label' do
-            expect(adjustment_label).to include("12.500%")
-          end
-
-          it 'adds a remark that the rate is included in the price' do
-            expect(adjustment_label).to include("Included in Price")
-          end
-        end
-
-        context 'with show rate in label turned off' do
-          let(:show_rate_in_label) { false }
-
-          it 'does not show the rate in the label' do
-            expect(adjustment_label).not_to include("12.500%")
-          end
-
-          it 'does not have two consecutive spaces' do
-            expect(adjustment_label).not_to include("  ")
-          end
-
-          it 'adds a remark that the rate is included in the price' do
-            expect(adjustment_label).to include("Included in Price")
-          end
-        end
-      end
-
-      context 'for additional rates' do
-        let(:included_in_price) { false }
-        let(:order_address) { taxable_address }
-
-        context 'with show rate in label' do
-          let(:show_rate_in_label) { true }
-
-          it 'shows the rate in the label' do
-            expect(adjustment_label).to include("12.500%")
-          end
-
-          it 'does not add a remark that the rate is included in the price' do
-            expect(adjustment_label).not_to include("Included in Price")
-          end
-        end
-
-        context 'with show rate in label turned off' do
-          let(:show_rate_in_label) { false }
-
-          it 'does not show the rate in the label' do
-            expect(adjustment_label).not_to include("12.500%")
-          end
-
-          it 'does not add a remark that the rate is included in the price' do
-            expect(adjustment_label).not_to include("Included in Price")
-          end
-        end
-      end
-    end
-  end
-
   describe "#active?" do
     subject(:rate) { create(:tax_rate, validity).active? }
 
@@ -346,36 +254,6 @@ RSpec.describe Spree::TaxRate, type: :model do
 
         it { is_expected.to eq(false) }
       end
-    end
-  end
-
-  describe '#tax_category (deprecated)' do
-    let(:tax_rate) { create(:tax_rate, tax_categories: [tax_category]) }
-    let(:tax_category) { create(:tax_category) }
-
-    before do
-      expect(Spree::Deprecation).to receive(:warn).
-        with(/^tax_category is deprecated and will be removed/, any_args)
-    end
-
-    it "returns the first tax category" do
-      tax_category = tax_rate.tax_category
-      expect(tax_category).to eq(tax_category)
-    end
-  end
-
-  describe '#tax_category= (deprecated)' do
-    let(:tax_rate) { Spree::TaxRate.new }
-    let(:tax_category) { create(:tax_category) }
-
-    before do
-      expect(Spree::Deprecation).to receive(:warn).
-        with(/^tax_category= is deprecated and will be removed/, any_args)
-    end
-
-    it "can assign the tax categories" do
-      tax_rate.tax_category = tax_category
-      expect(tax_rate.tax_categories).to eq([tax_category])
     end
   end
 end

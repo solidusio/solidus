@@ -59,14 +59,6 @@ module Spree
       #     end
       #   end
       def event_action(method_name, event_name: nil)
-        mattr_writer "#{method_name}_handler"
-
-        define_method "#{method_name}_handler" do
-          Spree::Deprecation.warn("#{name}.#{method_name}_handler and #{name}.#{method_name}_handler= from the old events mapping interface are deprecated. Please use the new mapping stored in Spree::Event.subscribers.", caller)
-
-          class_variable_get("@@#{method_name}_handler")
-        end
-
         event_actions[method_name] = (event_name || method_name).to_s
       end
 
@@ -88,16 +80,6 @@ module Spree
       #    EmailSender.deactivate(:order_finalized)
       def deactivate(event_action_name = nil)
         Spree::Event.subscriber_registry.deactivate_subscriber(self, event_action_name)
-      end
-
-      def subscribe!
-        Spree::Deprecation.warn("#{self}.subscribe! is deprecated. Please use `#{self}.activate`.", caller)
-        activate
-      end
-
-      def unsubscribe!
-        Spree::Deprecation.warn("#{self}.unsubscribe! is deprecated. Please use `#{self}.deactivate`.", caller)
-        deactivate
       end
     end
   end
