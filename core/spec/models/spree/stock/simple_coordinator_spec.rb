@@ -134,7 +134,7 @@ module Spree
 
         context 'with no stock locations' do
           let(:location_1_inventory) { 0 }
-          before { variant.stock_items.each(&:really_destroy!) }
+          before { variant.stock_items.destroy_all }
           it_behaves_like "an unfulfillable package"
         end
 

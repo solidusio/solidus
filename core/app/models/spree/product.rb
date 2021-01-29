@@ -5,10 +5,6 @@ module Spree
   # variations, called variants. Product properties include description,
   # permalink, availability, shipping category, etc. that do not change by
   # variant.
-  #
-  # @note this model uses {https://github.com/radar/paranoia paranoia}.
-  #   +#destroy+ will only soft-destroy records and the default scope hides
-  #   soft-destroyed records using +WHERE deleted_at IS NULL+.
   class Product < Spree::Base
     extend FriendlyId
     friendly_id :slug_candidates, use: :history

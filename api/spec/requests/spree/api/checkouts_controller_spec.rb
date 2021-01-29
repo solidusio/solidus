@@ -95,7 +95,7 @@ module Spree
 
         # Regression Spec for https://github.com/spree/spree/issues/5389 and https://github.com/spree/spree/issues/5880
         it "can update addresses but not transition to delivery w/o shipping setup" do
-          Spree::ShippingMethod.all.each(&:really_destroy!)
+          Spree::ShippingMethod.all.each(&:destroy)
           put spree.api_checkout_path(order),
             params: { order_token: order.guest_token, order: {
               bill_address_attributes: address,

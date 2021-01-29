@@ -83,7 +83,7 @@ module Spree
     after_save :clear_in_stock_cache
     after_touch :clear_in_stock_cache
 
-    after_real_destroy :destroy_option_values_variants
+    after_destroy :destroy_option_values_variants
 
     # Returns variants that are in stock. When stock locations are provided as
     # a parameter, the scope is limited to variants that are in stock in the

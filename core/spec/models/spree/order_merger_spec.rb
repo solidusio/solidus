@@ -150,7 +150,8 @@ module Spree
       end
 
       it "should create errors with invalid line items" do
-        allow(order_2.line_items.first).to receive(:variant) { nil }
+        order_2.line_items.first.variant.destroy
+        order_2.line_items.reload # so that it registers as invalid
         subject.merge!(order_2)
         expect(order_1.errors.full_messages).not_to be_empty
       end
