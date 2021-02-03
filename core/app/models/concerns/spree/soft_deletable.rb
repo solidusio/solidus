@@ -10,7 +10,7 @@ module Spree
       include Discard::Model
       self.discard_column = :deleted_at
 
-      default_scope { kept }
+      default_scope -> { kept }
     end
   end
 end

@@ -151,6 +151,29 @@ describe "Products", type: :feature do
         expect(page).not_to have_content("zomg shirt")
         expect(page).to have_css('#listing_products > tbody > tr', count: 1)
       end
+
+      it "should be able to search for deleted products by sku" do
+        create(:product, name: 'nginx cap ', sku: 'B201', deleted_at: "2021-01-02 18:21:13")
+        create(:product, name: 'solidus shirt', sku: 'GG201')
+
+        click_nav "Products"
+        expect(page).to have_content("solidus shirt")
+        expect(page).not_to have_content("nginx cap ")
+
+        # when show deleted is checked
+        fill_in 'SKU', with: "B2"
+        check 'Show Deleted'
+        click_button 'Search'
+        expect(find('input[name="q[with_discarded]"]')).to be_checked
+        expect(page).to have_content('nginx cap ')
+        expect(page).not_to have_content('solidus shirt')
+
+        fill_in 'SKU', with: 'GG'
+        click_button 'Search'
+        expect(find('input[name="q[with_discarded]"]')).to be_checked
+        expect(page).not_to have_content('nginx cap ')
+        expect(page).to have_content('solidus shirt')
+      end
     end
 
     context "creating a new product" do

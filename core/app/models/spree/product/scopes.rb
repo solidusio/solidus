@@ -197,7 +197,8 @@ module Spree
           def self.with_variant_sku_cont(sku)
             sku_match = "%#{sku}%"
             variant_table = Spree::Variant.arel_table
-            subquery = Spree::Variant.where(variant_table[:sku].matches(sku_match).and(variant_table[:product_id].eq(arel_table[:id])))
+            subquery = Spree::Variant.with_discarded
+                      .where(variant_table[:sku].matches(sku_match).and(variant_table[:product_id].eq(arel_table[:id])))
             where(subquery.arel.exists)
           end
 
