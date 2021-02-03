@@ -1,0 +1,8 @@
+{
+  "imports": {
+    <%= importmap_list_with_stimulus_from(
+      Spree::Backend::Engine.root.join("app/assets/javascripts/controllers"),
+      Spree::Backend::Engine.root.join("app/assets/javascripts/libraries"),
+    ) %>
+  }
+}
