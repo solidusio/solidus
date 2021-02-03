@@ -83,6 +83,7 @@ module Solidus
 
       if defined? Spree::Backend || Rails.env.test?
         template "vendor/assets/javascripts/spree/backend/all.js"
+        template "vendor/assets/javascripts/spree/backend/importmap.js.erb"
         template "vendor/assets/stylesheets/spree/backend/all.css"
       end
     end
