@@ -1,6 +1,5 @@
 //= require solidus_admin/bind-polyfill
 //= require handlebars
-//= require jquery.sticky-kit.min
 //= require solidus_admin/select2
 //= require solidus_admin/underscore
 //= require solidus_admin/backbone
@@ -41,7 +40,6 @@
 //= require spree/backend/images/index
 //= require spree/backend/images/upload
 //= require spree/backend/locale_selection
-//= require spree/backend/navigation
 //= require spree/backend/option_type_autocomplete
 //= require spree/backend/option_value_picker
 //= require spree/backend/orders
