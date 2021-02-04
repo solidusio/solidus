@@ -183,4 +183,28 @@ RSpec.describe "Product scopes", type: :model do
       end
     end
   end
+
+  describe '.with_variant_sku_cont' do
+    let!(:product) { create(:product, name: 'ring cap') }
+    let!(:variant_1) { create(:variant, product: product, sku: 'H100') }
+    let!(:variant_2) { create(:variant, product: product, sku: 'H290') }
+
+    context 'query products' do
+      it 'scope returns empty array' do
+        product.discard
+        expect(Spree::Product.with_variant_sku_cont('H1').to_a).to eq []
+      end
+
+      it 'scope returns product' do
+        product = Spree::Product.with_variant_sku_cont('H1').first
+        expect(product.name).to eq 'ring cap'
+      end
+
+      it 'returns product when with_discarded is passed on product' do
+        product.discard
+        product = Spree::Product.with_discarded.with_variant_sku_cont('H1').first
+        expect(product.name).to eq 'ring cap'
+      end
+    end
+  end
 end
