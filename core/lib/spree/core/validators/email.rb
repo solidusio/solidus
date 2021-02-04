@@ -15,7 +15,9 @@ module Spree
     EMAIL_REGEXP = /\A([^@\.]|[^@\.]([^@\s]*)[^@\.])@([^@\s]+\.)+[^@\s]+\z/
 
     def validate_each(record, attribute, value)
-      unless EMAIL_REGEXP.match? value
+      email_regexp = defined?(Devise) ? Devise.email_regexp : EMAIL_REGEXP
+
+      unless email_regexp.match? value
         record.errors.add(attribute, :invalid, { value: value }.merge!(options))
       end
     end
