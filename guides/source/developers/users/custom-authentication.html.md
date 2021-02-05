@@ -45,33 +45,6 @@ If you use the `solidus_auth_devise` gem, your `Spree.user_class` is set to
 Once you have set the `Spree.user_class`, you can start integrating with the
 features that are associated with the `user_class`.
 
-### Custom user generator
-
-After you have created your custom `User` model and its corresponding database
-table, you can use the `spree:custom_user` generator to generate Solidus's
-required `User` table columns and some authentication helpers:
-
-```bash
-bundle exec rails generate spree:custom_user MyStore::User
-```
-
-Then, you can migrate your database to add the Solidus-specific `User` table
-columns:
-
-```bash
-bundle exec rails db:migrate
-```
-
-If you use the `spree:custom_user` generator:
-
-- The `Spree.user_class` is updated to your specified class.
-- Authentication helpers are set up for the `solidus_frontend` and
-  `solidus_backend` views and are sent to the application controller, making it
-  available throughout your application.
-- The `spree_current_user` method is defined and is sent to the application
-  controller and the `Spree::Api::BaseController`, making it available
-  throughout your application.
-
 ### Minimum requirements
 
 Solidus requires that your `User` model's database table includes at least the
@@ -123,40 +96,6 @@ end
 This helper can be generated for you by the [`spree:custom_user`
 generator](#custom-user-generator).
 
-### Add authentication helpers
-
-If you use the stock `solidus_frontend` or `solidus_backend` gems, you need to
-provide authentication helpers so that users can sign up, log in, and log out.
-Because you likely need to reference the current user throughout your
-application, we recommend adding it to you `application_controller.rb`:
-
-```ruby
-# /app/controllers/application_controller.rb
-class ApplicationController < ActionController::Base
-
-  ...
-
-  helper_method :spree_login_path
-  helper_method :spree_signup_path
-  helper_method :spree_logout_path
-
-  def spree_login_path
-    login_path
-  end
-
-  def spree_signup_path
-    signup_path
-  end
-
-  def spree_logout_path
-    logout_path
-  end
-end
-```
-
-These helpers can be generated for you by the [`spree:custom_user`
-generator](#custom-user-generator).
-
 ### Add Solidus user methods
 
 The [`Spree::UserMethods` module][solidus-user-methods] provides extensive
@@ -166,10 +105,10 @@ other major models in Solidus like `Spree::Order`s and `Spree::StoreCredit`s.
 To add user methods to your `User` model, include `Spree::UserMethods` in it:
 
 ```ruby
-module MyStore
-  class User
-    include Spree::UserMethods
+class MyStore::User
+  include Spree::UserMethods
   ...
+end
 ```
 
 [solidus-user-methods]: https://github.com/solidusio/solidus/blob/master/core/app/models/concerns/spree/user_methods.rb
