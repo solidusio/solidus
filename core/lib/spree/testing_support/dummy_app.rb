@@ -18,6 +18,9 @@ RAILS_6_OR_ABOVE = Rails.gem_version >= Gem::Version.new('6.0')
 # @private
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
+
+  def spree_current_user
+  end
 end
 
 # @private
