@@ -9,7 +9,7 @@ describe "Cancelling + Resuming", type: :feature do
 
   before do
     allow(user).to receive(:has_spree_role?).and_return(true)
-    allow_any_instance_of(Spree::Admin::BaseController).to receive(:try_spree_current_user).and_return(user)
+    allow_any_instance_of(Spree::Admin::BaseController).to receive(:spree_current_user).and_return(user)
   end
 
   let(:order) do

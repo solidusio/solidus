@@ -32,7 +32,7 @@
     <% if @user.spree_api_key.present? %>
       <div id="current-api-key">
         <strong><%= t('.key') %>: </strong>
-        <% if @user == try_spree_current_user %>
+        <% if @user == spree_current_user %>
           <%= @user.spree_api_key %>
         <% else %>
           <i>(<%= t('spree.hidden') %>)</i>

@@ -10,7 +10,7 @@ describe Spree::CheckoutController, type: :controller do
   let(:user) { stub_model(Spree::LegacyUser) }
 
   before do
-    allow(controller).to receive_messages try_spree_current_user: user
+    allow(controller).to receive_messages spree_current_user: user
   end
 
   # Regression test for https://github.com/spree/spree/issues/3246

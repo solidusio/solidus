@@ -14,7 +14,7 @@ module Spree
       rescue_from Spree::Core::GatewayError, with: :spree_core_gateway_error
 
       def perform
-        @reimbursement.perform!(created_by: try_spree_current_user)
+        @reimbursement.perform!(created_by: spree_current_user)
         redirect_to location_after_save
       end
 
@@ -62,7 +62,7 @@ module Spree
       end
 
       def load_simulated_refunds
-        @reimbursement_objects = @reimbursement.simulate(created_by: try_spree_current_user)
+        @reimbursement_objects = @reimbursement.simulate(created_by: spree_current_user)
       end
 
       def spree_core_gateway_error(error)

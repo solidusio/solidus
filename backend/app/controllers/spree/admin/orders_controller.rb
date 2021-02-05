@@ -112,7 +112,7 @@ module Spree
       end
 
       def cancel
-        @order.canceled_by(try_spree_current_user)
+        @order.canceled_by(spree_current_user)
         flash[:success] = t('spree.order_canceled')
         redirect_to(spree.edit_admin_order_path(@order))
       end
@@ -124,7 +124,7 @@ module Spree
       end
 
       def approve
-        @order.contents.approve(user: try_spree_current_user)
+        @order.contents.approve(user: spree_current_user)
         flash[:success] = t('spree.order_approved')
         redirect_to(spree.edit_admin_order_path(@order))
       end
@@ -156,7 +156,7 @@ module Spree
 
       def order_params
         {
-          created_by_id: try_spree_current_user.try(:id),
+          created_by_id: spree_current_user.try(:id),
           frontend_viewable: false,
           store_id: current_store.try(:id)
         }.with_indifferent_access
