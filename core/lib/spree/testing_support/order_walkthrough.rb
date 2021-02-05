@@ -9,14 +9,14 @@ module Spree
 
       def up_to(state)
         # Need to create a valid zone too...
-        @zone = FactoryBot.create(:zone)
-        @country = FactoryBot.create(:country)
-        @state = FactoryBot.create(:state, country: @country)
+        @zone = ::FactoryBot.create(:zone)
+        @country = ::FactoryBot.create(:country)
+        @state = ::FactoryBot.create(:state, country: @country)
 
         @zone.members << Spree::ZoneMember.create(zoneable: @country)
 
         # A shipping method must exist for rates to be displayed on checkout page
-        FactoryBot.create(:shipping_method, zones: [@zone]).tap do |sm|
+        ::FactoryBot.create(:shipping_method, zones: [@zone]).tap do |sm|
           sm.calculator.preferred_amount = 10
           sm.calculator.preferred_currency = Spree::Config[:currency]
           sm.calculator.save
@@ -24,7 +24,7 @@ module Spree
 
         order = Spree::Order.create!(
           email: "solidus@example.com",
-          store: Spree::Store.first || FactoryBot.create(:store)
+          store: Spree::Store.first || ::FactoryBot.create(:store)
         )
         add_line_item!(order)
         order.next!
@@ -46,13 +46,13 @@ module Spree
       private
 
       def add_line_item!(order)
-        FactoryBot.create(:line_item, order: order)
+        ::FactoryBot.create(:line_item, order: order)
         order.reload
       end
 
       def address(order)
-        order.bill_address = FactoryBot.create(:address, country: @country, state: @state)
-        order.ship_address = FactoryBot.create(:address, country: @country, state: @state)
+        order.bill_address = ::FactoryBot.create(:address, country: @country, state: @state)
+        order.ship_address = ::FactoryBot.create(:address, country: @country, state: @state)
         order.next!
       end
 
@@ -61,7 +61,7 @@ module Spree
       end
 
       def payment(order)
-        credit_card = FactoryBot.create(:credit_card)
+        credit_card = ::FactoryBot.create(:credit_card)
         order.payments.create!(payment_method: credit_card.payment_method, amount: order.total, source: credit_card)
         # TODO: maybe look at some way of making this payment_state change automatic
         order.payment_state = 'paid'
