@@ -13,7 +13,7 @@ describe Spree::OrdersController, type: :controller do
     let(:variant) { create(:variant) }
 
     before do
-      allow(controller).to receive_messages(try_spree_current_user: user)
+      allow(controller).to receive_messages(spree_current_user: user)
     end
 
     context "#populate" do
@@ -206,7 +206,7 @@ describe Spree::OrdersController, type: :controller do
     let(:user) { build :user }
 
     it "builds a new valid order with complete meta-data" do
-      allow(controller).to receive_messages(try_spree_current_user: user)
+      allow(controller).to receive_messages(spree_current_user: user)
 
       subject
 

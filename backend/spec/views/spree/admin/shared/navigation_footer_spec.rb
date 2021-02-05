@@ -6,7 +6,7 @@ describe "spree/admin/shared/_navigation_footer", type: :view, partial_double_ve
   let(:user) { FactoryBot.build_stubbed(:admin_user) }
   let(:ability) { Object.new.extend(CanCan::Ability) }
   before do
-    allow(view).to receive(:try_spree_current_user).and_return(user)
+    allow(view).to receive(:spree_current_user).and_return(user)
     allow(controller).to receive(:current_ability).and_return(ability)
   end
 

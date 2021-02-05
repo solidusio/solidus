@@ -30,7 +30,7 @@ module Spree
       private
 
       def created_by
-        try_spree_current_user.try(:email)
+        spree_current_user.try(:email)
       end
 
       def load_order

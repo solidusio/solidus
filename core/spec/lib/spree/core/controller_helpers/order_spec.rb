@@ -17,7 +17,7 @@ RSpec.describe Spree::Core::ControllerHelpers::Order, type: :controller do
   before do
     allow(controller).to receive_messages(current_store: store)
     allow(controller).to receive_messages(current_pricing_options: Spree::Config.pricing_options_class.new(currency: Spree::Config.currency))
-    allow(controller).to receive_messages(try_spree_current_user: user)
+    allow(controller).to receive_messages(spree_current_user: user)
   end
 
   describe '#current_order' do
