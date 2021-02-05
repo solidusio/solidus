@@ -64,6 +64,7 @@ module DummyApp
 
     config.action_mailer.delivery_job = "ActionMailer::MailDeliveryJob" if RAILS_6_OR_ABOVE
     config.action_mailer.preview_path = File.expand_path('dummy_app/mailer_previews', __dir__)
+    config.action_mailer.show_previews = true
     config.active_record.sqlite3.represent_boolean_as_integer = true unless RAILS_6_OR_ABOVE
 
     config.storage_path = Rails.root.join('tmp', 'storage')
