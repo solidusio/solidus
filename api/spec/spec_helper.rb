@@ -26,7 +26,7 @@ require 'with_model'
 # in spec/support/ and its subdirectories.
 Dir[File.dirname(__FILE__) + "/support/**/*.rb"].each { |f| require f }
 
-require 'spree/testing_support'
+require 'spree/testing_support/factory_bot'
 require 'spree/testing_support/partial_double_verification'
 require 'spree/testing_support/preferences'
 require 'spree/testing_support/authorization_helpers'
@@ -38,7 +38,7 @@ require 'spree/api/testing_support/setup'
 
 ActiveJob::Base.queue_adapter = :test
 
-Spree::TestingSupport.load_all_factories
+Spree::TestingSupport::FactoryBot.add_paths_and_load!
 
 RSpec.configure do |config|
   config.backtrace_exclusion_patterns = [/gems\/activesupport/, /gems\/actionpack/, /gems\/rspec/]

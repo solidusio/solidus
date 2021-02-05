@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'spree/testing_support'
-Spree::TestingSupport.deprecate_cherry_picking_factory_bot_files
+require 'spree/testing_support/factory_bot'
+Spree::TestingSupport::FactoryBot.deprecate_cherry_picking
 
 FactoryBot.define do
   factory :refund_reason, class: 'Spree::RefundReason' do

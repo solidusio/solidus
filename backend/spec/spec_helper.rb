@@ -27,7 +27,7 @@ Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
 require 'database_cleaner'
 require 'with_model'
 
-require 'spree/testing_support'
+require 'spree/testing_support/factory_bot'
 require 'spree/testing_support/partial_double_verification'
 require 'spree/testing_support/authorization_helpers'
 require 'spree/testing_support/preferences'
@@ -63,7 +63,7 @@ Capybara.default_max_wait_time = ENV['DEFAULT_MAX_WAIT_TIME'].to_f if ENV['DEFAU
 
 ActiveJob::Base.queue_adapter = :test
 
-Spree::TestingSupport.load_all_factories
+Spree::TestingSupport::FactoryBot.add_paths_and_load!
 
 RSpec.configure do |config|
   config.color = true
