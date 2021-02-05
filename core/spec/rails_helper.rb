@@ -16,7 +16,7 @@ require 'database_cleaner'
 
 Dir["./spec/support/**/*.rb"].sort.each { |f| require f }
 
-require 'spree/testing_support'
+require 'spree/testing_support/factory_bot'
 require 'spree/testing_support/preferences'
 require 'spree/testing_support/rake'
 require 'spree/testing_support/job_helpers'
@@ -24,7 +24,7 @@ require 'cancan/matchers'
 
 ActiveJob::Base.queue_adapter = :test
 
-Spree::TestingSupport.load_all_factories
+Spree::TestingSupport::FactoryBot.add_paths_and_load!
 
 RSpec.configure do |config|
   config.fixture_path = File.join(__dir__, "fixtures")
