@@ -129,7 +129,7 @@ module Spree
     before_create :link_by_email
 
     validates :email, presence: true, if: :require_email
-    validates :email, 'spree/email' => true, allow_blank: true
+    validates :email, 'spree/user_email' => true, allow_blank: true
     validates :guest_token, presence: { allow_nil: true }
     validates :number, presence: true, uniqueness: { allow_blank: true, case_sensitive: true }
     validates :store_id, presence: true
