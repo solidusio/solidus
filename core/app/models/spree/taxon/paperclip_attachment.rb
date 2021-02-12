@@ -20,6 +20,7 @@ module Spree::Taxon::PaperclipAttachment
   end
 
   def attachment_partial_name
+    Spree::Deprecation.warn("calling #attachment_partial_name on Spree::Taxon is deprecated without replacement.")
     'paperclip'
   end
 

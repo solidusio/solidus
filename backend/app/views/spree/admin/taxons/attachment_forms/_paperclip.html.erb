@@ -1,3 +1,10 @@
+<%
+Spree::Deprecation.warn(
+  "This partial with its support for multiple Spree::Taxon attachments is deprecated and will be removed in a future " \
+  "version of Solidus, please overwrite the standard view if you need to support custom attachments."
+)
+%>
+
 <% f.object.class.attachment_definitions.each do |attachment, definition| %>
   <%= f.field_container attachment do %>
     <%= f.label attachment %><br>
