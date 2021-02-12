@@ -2,7 +2,7 @@
   <%= f.field_container attachment do %>
     <%= f.label attachment %><br>
     <%= f.file_field attachment %>
-    <% if f.object.send(attachment).present? %>
+    <% if f.object.send(:"#{attachment}_present?") %>
       <%= image_tag f.object.send(attachment, definition[:default_style]) %>
       <%= link_to t('spree.actions.remove'),
                   admin_taxonomy_taxon_attachment_path(@taxonomy,
