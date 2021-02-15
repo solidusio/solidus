@@ -10,6 +10,7 @@ module Spree
       helper_method :clone_object_url
       before_action :split_params, only: [:create, :update]
       before_action :normalize_variant_property_rules, only: [:update]
+      before_action :set_default_tax_category, only: [:new, :edit]
 
       def show
         redirect_to action: :edit
@@ -45,6 +46,10 @@ module Spree
       end
 
       private
+
+      def set_default_tax_category
+        @product.tax_category_id ||= @default_tax_category&.id
+      end
 
       def split_params
         if params[:product][:taxon_ids].present?
