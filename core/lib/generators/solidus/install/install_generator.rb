@@ -174,7 +174,7 @@ module Solidus
       run "spring stop"
 
       @plugin_generators_to_run.each do |plugin_generator_name|
-        generate "#{plugin_generator_name} --skip_migrations=false"
+        generate "#{plugin_generator_name} --skip_migrations=true"
       end
     end
 
