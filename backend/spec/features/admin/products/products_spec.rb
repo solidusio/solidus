@@ -277,10 +277,10 @@ describe "Products", type: :feature do
       end
     end
 
-    context 'updating a product', js: true do
+    context 'updating a product' do
       let(:product) { create(:product) }
 
-      it 'should parse correctly available_on' do
+      it 'should parse correctly available_on', :js do
         visit spree.admin_product_path(product)
         fill_in "product_available_on", with: "2012/12/25"
         click_button "Update"
@@ -288,12 +288,34 @@ describe "Products", type: :feature do
         expect(Spree::Product.last.available_on).to eq('Tue, 25 Dec 2012 00:00:00 UTC +00:00')
       end
 
-      it 'should correctly update discontinue_on' do
+      it 'should correctly update discontinue_on', :js do
         visit spree.admin_product_path(product)
         fill_in "product_discontinue_on", with: "2020/12/4"
         click_button "Update"
         expect(page).to have_content("successfully updated!")
         expect(product.reload.discontinue_on.to_s).to eq('2020-12-04 00:00:00 UTC')
+      end
+
+      context "when there is a default tax category" do
+        let!(:default_category) { create(:tax_category, name: 'Alcohol taxes', is_default: true) }
+
+        context "when the product does not have a tax category" do
+          it "pre-selects the default tax category" do
+            visit spree.admin_product_path(product)
+            expect(page).to have_select('product_tax_category_id', selected: default_category.name)
+          end
+        end
+
+        context "when the product already has a tax category" do
+          let(:clothing) { create(:tax_category, name: 'Clothing', is_default: false) }
+
+          before { product.update!(tax_category: clothing) }
+
+          it "pre-selects the product tax category" do
+            visit spree.admin_product_path(product)
+            expect(page).to have_select('product_tax_category_id', selected: clothing.name)
+          end
+        end
       end
     end
 
