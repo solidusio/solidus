@@ -1,7 +1,12 @@
 # frozen_string_literal: true
 
 require 'spree/testing_support/factory_bot'
-Spree::TestingSupport::FactoryBot.deprecate_cherry_picking
+Spree::TestingSupport::FactoryBot.when_cherry_picked do
+  Spree::TestingSupport::FactoryBot.deprecate_cherry_picking
+
+  require 'spree/testing_support/sequences'
+end
+
 
 FactoryBot.define do
   factory :tax_category, class: 'Spree::TaxCategory' do
