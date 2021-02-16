@@ -1,7 +1,14 @@
 # frozen_string_literal: true
 
 require 'spree/testing_support/factory_bot'
-Spree::TestingSupport::FactoryBot.deprecate_cherry_picking
+Spree::TestingSupport::FactoryBot.when_cherry_picked do
+  Spree::TestingSupport::FactoryBot.deprecate_cherry_picking
+
+  require 'spree/testing_support/factories/order_factory'
+  require 'spree/testing_support/factories/stock_location_factory'
+  require 'spree/testing_support/factories/shipping_method_factory'
+end
+
 
 FactoryBot.define do
   factory :shipment, class: 'Spree::Shipment' do
