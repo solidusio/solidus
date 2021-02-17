@@ -76,7 +76,8 @@ module Spree
       end
 
       def parameter_missing_error(exception)
-        message = exception.original_message || exception.message
+        # use original_message to remove DidYouMean suggestions, if defined
+        message = exception.try(:original_message) || exception.message
         render json: {
           exception: message,
           error: message,
