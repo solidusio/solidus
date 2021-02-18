@@ -32,6 +32,8 @@ production:
   encoding: utf8
 <% when 'postgres', 'postgresql' %>
 <% db_host = ENV['DB_HOST'] -%>
+<% db_username = ENV['DB_USERNAME'] -%>
+<% db_password = ENV['DB_PASSWORD'] -%>
 development:
   adapter: postgresql
   database: <%= database_prefix %><%= options[:lib_name] %>_solidus_development
@@ -43,7 +45,10 @@ development:
 test:
   adapter: postgresql
   database: <%= database_prefix %><%= options[:lib_name] %>_solidus_test
-  username: postgres
+  username: <%= db_username || 'postgres' %>
+<% unless db_password.blank? %>
+  password: <%= db_password %>
+<% end %>
   min_messages: warning
 <% unless db_host.blank? %>
   host: <%= db_host %>
