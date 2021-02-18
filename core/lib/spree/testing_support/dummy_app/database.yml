@@ -1,34 +1,54 @@
-<%
-database_prefix = ENV['LIB_NAME'].presence || "solidus"
-%>
-<% case ENV['DB']
+<% db = case ENV['DB']
+        when 'mysql'
+          'mysql'
+        when 'postgres', 'postgresql'
+          'postgres'
+        when 'sqlite', '', nil
+          'sqlite'
+        else
+          raise "Invalid DB specified: #{ENV['DB']}"
+        end %>
+<% db_host = case db
+             when 'mysql'
+               ENV['DB_MYSQL_HOST'] || ENV['DB_HOST']
+             when 'postgres'
+               ENV['DB_POSTGRES_HOST'] || ENV['DB_HOST']
+             else
+               ENV['DB_HOST']
+             end %>
+<% db_prefix = ENV['LIB_NAME'].presence || "solidus" %>
+<% db_username = ENV['DB_USERNAME'] %>
+<% db_password = ENV['DB_PASSWORD'] %>
+<% case db
 when 'mysql' %>
 test:
   adapter: mysql2
-  <% if ENV['CI'] %>
-  username: root
-  password:
+  database: <%= db_prefix %>_test
+  <% unless db_username.blank? %>
+  username: <%= db_username %>
   <% end %>
-  database: <%= database_prefix %>_test
+  <% unless db_password.blank? %>
+  password: <%= db_password %>
+  <% end %>
+  <% unless db_host.blank? %>
+  host: <%= db_host %>
+  <% end %>
   encoding: utf8
-  <% unless ENV['DB_HOST'].blank? %>
-  host: <%= ENV['DB_HOST'] %>
-  <% end %>
-<% when 'postgres', 'postgresql' %>
-<% db_host = ENV['DB_HOST'] %>
+<% when 'postgres' %>
 test:
   adapter: postgresql
-  database: <%= database_prefix %>_test
-  username: postgres
-  min_messages: warning
-<% unless db_host.blank? %>
+  database: <%= db_prefix %>_test
+  username: <%= db_username.presence || "postgres" %>
+  <% unless db_password.blank? %>
+  password: <%= db_password %>
+  <% end %>
+  <% unless db_host.blank? %>
   host: <%= db_host %>
-<% end %>
-<% when 'sqlite', '', nil %>
+  <% end %>
+  min_messages: warning
+<% when 'sqlite' %>
 test:
   adapter: sqlite3
-  database: db/<%= database_prefix %>_test.sqlite3
+  database: db/<%= db_prefix %>_test.sqlite3
   timeout: 10000
-<% else %>
-  <% raise "Invalid DB specified: #{ENV['DB']}" %>
 <% end %>

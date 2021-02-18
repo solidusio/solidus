@@ -19,12 +19,13 @@ group :backend, :frontend, :core, :api do
   gem 'sprockets', '~> 3'
 
   platforms :ruby do
-    case ENV['DB']
-    when /mysql/
+    if /mysql/.match?(ENV['DB']) || ENV['DB_ALL']
       gem 'mysql2', '~> 0.5.0', require: false
-    when /postgres/
+    end
+    if /postgres/.match?(ENV['DB']) || ENV['DB_ALL']
       gem 'pg', '~> 1.0', require: false
-    else
+    end
+    if ENV['DB_ALL'] || !/mysql|postgres/.match?(ENV['DB'])
       gem 'sqlite3', require: false
       gem 'fast_sqlite', require: false
     end
