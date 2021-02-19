@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
+require 'pry'
 
 describe "Taxonomies and taxons", type: :feature do
   stub_authorization!
@@ -32,7 +33,7 @@ describe "Taxonomies and taxons", type: :feature do
     # Without this line we have a flaky spec probably due to select2 not
     # closing its fixed overlay correctly. Clicking anywhere in the page
     # before submit apparently solves the issue.
-    find('.edit_product', visible: true, obscured: false).click
+    find('.edit_taxonomy', visible: true, obscured: false).click
 
     click_on('Add taxon')
     expect(page).to have_content('New node')
