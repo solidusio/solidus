@@ -13,11 +13,37 @@ describe Spree::Api::BaseController, type: :controller do
     def index
       render json: { "products" => [] }
     end
+
+    def create
+      params.require(:order).permit(:number)
+      render json: { "order" => {} }
+    end
   end
 
   before do
     @routes = ActionDispatch::Routing::RouteSet.new.tap do |r|
-      r.draw { get 'index', to: 'spree/api/base#index' }
+      r.draw do
+        get 'index', to: 'spree/api/base#index'
+        post 'create', to: 'spree/api/base#create'
+      end
+    end
+  end
+
+  context "when validating presence of params" do
+    let!(:user) { create(:user, spree_api_key: "fake_key") }
+
+    context "if params are missing" do
+      it "returns an unprocessable_entity" do
+        post :create, params: { token: "fake_key" }
+        expect(response.status).to eq(422)
+      end
+    end
+
+    context "if params are not missing" do
+      it "does not return an unprocessable_entity" do
+        post :create, params: { token: "fake_key", order: { number: "R12345" } }
+        expect(response.status).to eq(200)
+      end
     end
   end
 

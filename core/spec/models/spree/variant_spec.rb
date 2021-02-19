@@ -174,14 +174,7 @@ RSpec.describe Spree::Variant, type: :model do
       context "and a variant is really deleted" do
         let!(:old_option_values_variant_ids) { variant.option_values_variants.pluck(:id) }
 
-        before do
-          allow(Spree::Deprecation).to receive(:warn).
-            with(/^.*\.with_deleted has been deprecated/, any_args)
-
-          # #really_destroy! will be replaced here with #destroy when Paranoia
-          # will be removed in Solidus 3.0
-          variant.really_destroy!
-        end
+        before { variant.destroy }
 
         it "leaves no stale records behind" do
           expect(old_option_values_variant_ids).to be_present
@@ -366,80 +359,6 @@ RSpec.describe Spree::Variant, type: :model do
       subject { variant.price_same_as_master? }
 
       it { is_expected.to be_falsey }
-    end
-  end
-
-  describe '.price_in' do
-    before do
-      expect(Spree::Deprecation).to receive(:warn).
-        with(/^price_in is deprecated and will be removed/, any_args)
-      variant.prices << create(:price, variant: variant, currency: "EUR", amount: 33.33)
-    end
-
-    subject do
-      variant.price_in(currency)
-    end
-
-    context "when currency is not specified" do
-      let(:currency) { nil }
-
-      it "returns nil" do
-        expect(subject).to be_nil
-      end
-    end
-
-    context "when currency is EUR" do
-      let(:currency) { 'EUR' }
-
-      it "returns the value in the EUR" do
-        expect(subject.display_price.to_s).to eql "€33.33"
-      end
-    end
-
-    context "when currency is USD" do
-      let(:currency) { 'USD' }
-
-      it "returns the value in the USD" do
-        expect(subject.display_price.to_s).to eql "$19.99"
-      end
-    end
-  end
-
-  describe '.amount_in' do
-    before do
-      allow(Spree::Deprecation).to receive(:warn).
-        with(/^price_in is deprecated and will be removed/, any_args)
-
-      expect(Spree::Deprecation).to receive(:warn).
-        with(/^amount_in is deprecated and will be removed/, any_args)
-
-      variant.prices << create(:price, variant: variant, currency: "EUR", amount: 33.33)
-    end
-
-    subject { variant.amount_in(currency) }
-
-    context "when currency is not specified" do
-      let(:currency) { nil }
-
-      it "returns the amount in the default currency" do
-        expect(subject).to be_nil
-      end
-    end
-
-    context "when currency is EUR" do
-      let(:currency) { 'EUR' }
-
-      it "returns the value in the EUR" do
-        expect(subject).to eql 33.33
-      end
-    end
-
-    context "when currency is USD" do
-      let(:currency) { 'USD' }
-
-      it "returns the value in the USD" do
-        expect(subject).to eql 19.99
-      end
     end
   end
 

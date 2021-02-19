@@ -38,11 +38,7 @@ module Spree
               eligibility_errors.add(:base, eligibility_error_message(:has_excluded_taxon), error_code: :has_excluded_taxon)
             end
           else
-            # Change this to an exception in a future version of Solidus
-            warn_invalid_match_policy(assume: 'any')
-            unless order_taxons.where(id: rule_taxon_ids_with_children).exists?
-              eligibility_errors.add(:base, eligibility_error_message(:no_matching_taxons), error_code: :no_matching_taxons)
-            end
+            raise "unexpected match policy: #{preferred_match_policy.inspect}"
           end
 
           eligibility_errors.empty?
@@ -60,9 +56,7 @@ module Spree
           when 'none'
             !found
           else
-            # Change this to an exception in a future version of Solidus
-            warn_invalid_match_policy(assume: 'any')
-            found
+            raise "unexpected match policy: #{preferred_match_policy.inspect}"
           end
         end
 
@@ -76,13 +70,6 @@ module Spree
         end
 
         private
-
-        def warn_invalid_match_policy(assume:)
-          Spree::Deprecation.warn(
-            "#{self.class.name} id=#{id} has unexpected match policy #{preferred_match_policy.inspect}. "\
-            "Interpreting it as '#{assume}'."
-          )
-        end
 
         # All taxons in an order
         def taxons_in_order(order)

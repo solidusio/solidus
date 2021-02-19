@@ -6,13 +6,8 @@ module Spree
       class Base
         attr_reader :stock_location, :next_splitter
 
-        def initialize(stock_location_or_packer, next_splitter = nil)
-          if stock_location_or_packer.is_a?(Spree::StockLocation)
-            @stock_location = stock_location_or_packer
-          else
-            Spree::Deprecation.warn("Initializing Splitters with a Packer is DEPRECATED. Pass a StockLocation instead.")
-            @stock_location = stock_location_or_packer.stock_location
-          end
+        def initialize(stock_location, next_splitter = nil)
+          @stock_location = stock_location
           @next_splitter = next_splitter
         end
 

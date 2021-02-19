@@ -86,22 +86,6 @@ RSpec.describe Spree::LegacyUser, type: :model do
         expect(user.user_addresses.find_first_by_address_values(order.ship_address.attributes)).to_not be_nil
       end
     end
-
-    context "payment source" do
-      let(:payment_method) { create(:credit_card_payment_method) }
-      let!(:cc) do
-        create(:credit_card, user_id: user.id, payment_method: payment_method, gateway_customer_profile_id: "2342343")
-      end
-
-      before do
-        expect(Spree::Deprecation).to receive(:warn).
-          with(/^user.payment_sources is deprecated/, any_args)
-      end
-
-      it "has payment sources" do
-        expect(user.payment_sources.first.gateway_customer_profile_id).not_to be_empty
-      end
-    end
   end
 end
 
@@ -169,81 +153,6 @@ RSpec.describe Spree.user_class, type: :model do
         value = BigDecimal("500.05")
         allow(subject).to receive(:average_order_value).and_return(value)
         expect(subject.display_average_order_value).to eq Spree::Money.new(value)
-      end
-    end
-  end
-
-  # TODO: Remove this after the method has been fully removed
-  describe "#total_available_store_credit" do
-    before do
-      allow_any_instance_of(Spree::LegacyUser).to receive(:total_available_store_credit).and_wrap_original do |method, *args|
-        method.call(*args)
-      end
-      expect(Spree::Deprecation).to receive(:warn).
-        with(/^total_available_store_credit is deprecated and will be removed/, any_args)
-    end
-
-    context "user does not have any associated store credits" do
-      subject { create(:user) }
-
-      it "returns 0" do
-        expect(subject.total_available_store_credit).to be_zero
-      end
-    end
-
-    context "user has several associated store credits" do
-      let(:user)                     { create(:user) }
-      let(:amount)                   { 120.25 }
-      let(:additional_amount)        { 55.75 }
-      let(:store_credit)             { create(:store_credit, user: user, amount: amount, amount_used: 0.0) }
-      let!(:additional_store_credit) { create(:store_credit, user: user, amount: additional_amount, amount_used: 0.0) }
-
-      subject { store_credit.user }
-
-      context "part of the store credit has been used" do
-        let(:amount_used) { 35.00 }
-
-        before { store_credit.update(amount_used: amount_used) }
-
-        context "part of the store credit has been authorized" do
-          let(:authorized_amount) { 10 }
-
-          before { additional_store_credit.update(amount_authorized: authorized_amount) }
-
-          it "returns sum of amounts minus used amount and authorized amount" do
-            expect(subject.total_available_store_credit.to_f).to eq(amount + additional_amount - amount_used - authorized_amount)
-          end
-        end
-
-        context "there are no authorized amounts on any of the store credits" do
-          it "returns sum of amounts minus used amount" do
-            expect(subject.total_available_store_credit.to_f).to eq(amount + additional_amount - amount_used)
-          end
-        end
-      end
-
-      context "store credits have never been used" do
-        context "part of the store credit has been authorized" do
-          let(:authorized_amount) { 10 }
-
-          before { additional_store_credit.update(amount_authorized: authorized_amount) }
-
-          it "returns sum of amounts minus authorized amount" do
-            expect(subject.total_available_store_credit.to_f).to eq(amount + additional_amount - authorized_amount)
-          end
-        end
-
-        context "there are no authorized amounts on any of the store credits" do
-          it "returns sum of amounts" do
-            expect(subject.total_available_store_credit.to_f).to eq(amount + additional_amount)
-          end
-        end
-      end
-
-      context "all store credits have never been used or authorized" do
-        it "returns sum of amounts" do
-          expect(subject.total_available_store_credit.to_f).to eq(amount + additional_amount)
-        end
       end
     end
   end

@@ -98,6 +98,8 @@ jobs:
   postgres:
     executor: postgres
     parallelism: &parallelism 3
+    environment:
+      ENABLE_ACTIVE_STORAGE: true
     steps:
       - setup
       - test
@@ -105,6 +107,8 @@ jobs:
   mysql:
     executor: mysql
     parallelism: *parallelism
+    environment:
+      ENABLE_ACTIVE_STORAGE: true
     steps:
       - setup
       - test

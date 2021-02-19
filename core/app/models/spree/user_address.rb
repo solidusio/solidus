@@ -19,11 +19,6 @@ module Spree
     scope :default_billing, -> { where(default_billing: true) }
     scope :active, -> { where(archived: false) }
 
-    scope :default, -> do
-      Spree::Deprecation.warn "This scope is deprecated. Please start using ::default_shipping."
-      default_shipping
-    end
-
     default_scope -> { order([default: :desc, updated_at: :desc]) }
   end
 end

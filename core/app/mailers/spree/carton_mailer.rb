@@ -11,11 +11,7 @@ module Spree
     # @option options resend [Boolean] indicates whether the email is a 'resend' (e.g.
     #   triggered by the admin "resend" button)
     # @return [Mail::Message]
-    #
-    # Note: The signature of this method has changed. The new (non-deprecated)
-    # signature is:
-    #   def shipped_email(carton:, order:, resend: false)
-    def shipped_email(options, _deprecated_options = {})
+    def shipped_email(options)
       @order = options.fetch(:order)
       @carton = options.fetch(:carton)
       @manifest = @carton.manifest_for_order(@order)

@@ -4,11 +4,6 @@ Spree::Core::Engine.routes.draw do
   namespace :admin do
     resources :users do
       resource :api_key, controller: 'users/api_key', only: [:create, :destroy]
-
-      member do
-        put :generate_api_key # Deprecated
-        put :clear_api_key # Deprecated
-      end
     end
   end
 
@@ -68,7 +63,6 @@ Spree::Core::Engine.routes.draw do
       member do
         put :cancel
         put :empty
-        put :apply_coupon_code
       end
 
       resources :coupon_codes, only: [:create, :destroy]
@@ -99,14 +93,7 @@ Spree::Core::Engine.routes.draw do
     resources :states, only: [:index, :show]
 
     resources :taxonomies do
-      member do
-        get :jstree
-      end
-      resources :taxons do
-        member do
-          get :jstree
-        end
-      end
+      resources :taxons
     end
 
     resources :taxons, only: [:index]

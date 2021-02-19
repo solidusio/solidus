@@ -62,17 +62,10 @@ module Spree
 
     extend DisplayMoney
     money_methods(
-      :cost, :amount, :discounted_cost, :final_price, :item_cost,
+      :cost, :amount, :item_cost,
       :total, :total_before_tax,
     )
-    deprecate display_discounted_cost: :display_total_before_tax, deprecator: Spree::Deprecation
-    deprecate display_final_price: :display_total, deprecator: Spree::Deprecation
     alias_attribute :amount, :cost
-
-    def add_shipping_method(shipping_method, selected = false)
-      shipping_rates.create(shipping_method: shipping_method, selected: selected, cost: cost)
-    end
-    deprecate :add_shipping_method, deprecator: Spree::Deprecation
 
     def after_cancel
       manifest.each { |item| manifest_restock(item) }
@@ -90,20 +83,11 @@ module Spree
       order ? order.currency : Spree::Config[:currency]
     end
 
-    def discounted_cost
-      cost + promo_total
-    end
-    deprecate discounted_cost: :total_before_tax, deprecator: Spree::Deprecation
-    alias discounted_amount discounted_cost
-    deprecate discounted_amount: :total_before_tax, deprecator: Spree::Deprecation
-
     # @return [BigDecimal] the amount of this shipment, taking into
     #   consideration all its adjustments.
     def total
       cost + adjustment_total
     end
-    alias final_price total
-    deprecate final_price: :total, deprecator: Spree::Deprecation
 
     # @return [BigDecimal] the amount of this item, taking into consideration
     #   all non-tax adjustments.
@@ -116,14 +100,10 @@ module Spree
     def total_excluding_vat
       total_before_tax - included_tax_total
     end
-    alias pre_tax_amount total_excluding_vat
-    deprecate pre_tax_amount: :total_excluding_vat, deprecator: Spree::Deprecation
 
     def total_with_items
       total + item_cost
     end
-    alias final_price_with_items total_with_items
-    deprecate final_price_with_items: :total_with_items, deprecator: Spree::Deprecation
 
     def editable_by?(_user)
       !shipped?
@@ -320,41 +300,8 @@ module Spree
       end
     end
 
-    def update!(order_or_attrs)
-      if order_or_attrs.is_a?(Spree::Order)
-        Spree::Deprecation.warn "Calling Shipment#update! with an order to update the shipments state is deprecated. Please use Shipment#update_state instead."
-        if order_or_attrs.object_id != order.object_id
-          Spree::Deprecation.warn "Additionally, update! is being passed an instance of order which isn't the same object as the shipment's order association"
-        end
-        update_state
-      else
-        super
-      end
-    end
-
-    def transfer_to_location(variant, quantity, stock_location)
-      Spree::Deprecation.warn("Please use the Spree::FulfilmentChanger class instead of Spree::Shipment#transfer_to_location", caller)
-      new_shipment = order.shipments.create!(stock_location: stock_location)
-      transfer_to_shipment(variant, quantity, new_shipment)
-    end
-
-    def transfer_to_shipment(variant, quantity, shipment_to_transfer_to)
-      Spree::Deprecation.warn("Please use the Spree::FulfilmentChanger class instead of Spree::Shipment#transfer_to_location", caller)
-      Spree::FulfilmentChanger.new(
-        current_shipment: self,
-        desired_shipment: shipment_to_transfer_to,
-        variant: variant,
-        quantity: quantity
-      ).run!
-    end
-
     def requires_shipment?
       !stock_location || stock_location.fulfillable?
-    end
-
-    def address
-      Spree::Deprecation.warn("Calling Shipment#address is deprecated. Use Order#ship_address instead", caller)
-      order.ship_address if order
     end
 
     private

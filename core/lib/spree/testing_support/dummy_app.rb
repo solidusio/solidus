@@ -17,6 +17,7 @@ RAILS_6_OR_ABOVE = Rails.gem_version >= Gem::Version.new('6.0')
 
 # @private
 class ApplicationController < ActionController::Base
+  protect_from_forgery with: :exception
 end
 
 # @private
@@ -52,8 +53,8 @@ module DummyApp
     config.public_file_server.headers = { 'Cache-Control' => 'public, max-age=3600' }
     config.whiny_nils = true
     config.consider_all_requests_local = true
-    config.action_controller.allow_forgery_protection = true
-    config.action_controller.default_protect_from_forgery = true
+    config.action_controller.allow_forgery_protection = false
+    config.action_controller.default_protect_from_forgery = false
     config.action_controller.perform_caching = false
     config.action_dispatch.show_exceptions = false
     config.active_support.deprecation = :stderr
@@ -117,13 +118,6 @@ end
 Spree.user_class = 'Spree::LegacyUser'
 Spree.config do |config|
   config.mails_from = "store@example.com"
-  config.raise_with_invalid_currency = false
-  config.redirect_back_on_unauthorized = true
-  config.run_order_validations_on_order_updater = true
-  config.use_legacy_order_state_machine = false
-  config.use_custom_cancancan_actions = false
-  config.consider_actionless_promotion_active = false
-  config.use_legacy_store_credit_reimbursement_category_name = false
 
   if ENV['ENABLE_ACTIVE_STORAGE']
     config.image_attachment_module = 'Spree::Image::ActiveStorageAttachment'

@@ -29,20 +29,6 @@ module Spree
       end
     end
 
-    # @deprecated Loads all Solidus' core and application's event subscribers files.
-    # The latter are loaded automatically only when the preference
-    # Spree::Config.events.autoload_subscribers is set to a truthy value.
-    #
-    # Files must be placed under the directory `app/subscribers` and their
-    # name must end with `_subscriber.rb`.
-    #
-    # Loading the files has the side effect of adding their module to the
-    # list in Spree::Event.subscribers.
-    def require_subscriber_files
-      Spree::Deprecation.warn("#{self}.require_subscriber_files is deprecated and will be removed in Solidus 3.0.", caller)
-      subscriber_registry.send(:require_subscriber_files)
-    end
-
     # Subscribe to an event with the given name. The provided block is executed
     # every time the subscribed event is fired.
     #
@@ -112,23 +98,6 @@ module Spree
     # @see Spree::AppConfiguration
     def adapter
       Spree::Config.events.adapter
-    end
-
-    # The suffix used for namespacing Solidus events, defaults to
-    # `.spree`
-    #
-    # @see Spree::Event::Configuration#suffix
-    def suffix
-      Spree::Deprecation.warn "This method is deprecated and will be removed. Please use Event::Adapters::ActiveSupportNotifications#suffix"
-      Spree::Config.events.suffix
-    end
-
-    # @deprecated
-    # @!attribute [r] subscribers
-    #   @return [Array<Spree::Event::Subscriber>] A list of subscribers used to support class reloading for Spree::Event::Subscriber instances
-    def subscribers
-      Spree::Deprecation.warn("`#{self}.subscribers` is deprecated. Please use `#{self}.subscriber_registry` instead.", caller)
-      Spree::Config.events.subscribers
     end
 
     # @!attribute [r] subscribers

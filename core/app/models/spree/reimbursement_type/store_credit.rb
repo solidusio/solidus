@@ -4,10 +4,7 @@ class Spree::ReimbursementType::StoreCredit < Spree::ReimbursementType
   extend Spree::ReimbursementType::ReimbursementHelpers
 
   class << self
-    def reimburse(reimbursement, return_items, simulate, created_by: nil)
-      unless created_by
-        Spree::Deprecation.warn("Calling #reimburse on #{self} without created_by is deprecated")
-      end
+    def reimburse(reimbursement, return_items, simulate, created_by:)
       unpaid_amount = return_items.sum(&:total).to_d.round(2, :down)
       payments = store_credit_payments(reimbursement)
       reimbursement_list = []

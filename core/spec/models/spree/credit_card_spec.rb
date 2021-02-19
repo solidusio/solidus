@@ -36,8 +36,6 @@ RSpec.describe Spree::CreditCard, type: :model do
       credit: @success_response)
 
     allow(@payment).to receive_messages payment_method: @payment_gateway
-    allow(Spree::Deprecation).to receive(:warn).
-      with(/^CreditCard#default=? is deprecated/, any_args)
   end
 
   describe "#valid?" do
@@ -276,84 +274,6 @@ RSpec.describe Spree::CreditCard, type: :model do
       expect(am_card.first_name).to eq("Ludwig")
       expect(am_card.last_name).to eq("van Beethoven")
       expect(am_card.verification_value).to eq("123")
-    end
-  end
-
-  # TODO: Remove these specs once default is removed
-  describe 'default' do
-    context 'with a user' do
-      let(:user) { create(:user) }
-      let(:credit_card) { create(:credit_card, user: user) }
-
-      it 'uses the wallet information' do
-        wallet_payment_source = user.wallet.add(credit_card)
-        user.wallet.default_wallet_payment_source = wallet_payment_source
-
-        expect(credit_card.default).to be_truthy
-      end
-    end
-
-    context 'without a user' do
-      let(:credit_card) { create(:credit_card) }
-
-      it 'returns false' do
-        expect(credit_card.default).to eq(false)
-      end
-    end
-  end
-
-  # TODO: Remove these specs once default= is removed
-  describe 'default=' do
-    context 'with a user' do
-      let(:user) { create(:user) }
-      let(:credit_card) { create(:credit_card, user: user) }
-
-      it 'updates the wallet information' do
-        credit_card.default = true
-        expect(user.wallet.default_wallet_payment_source.payment_source).to eq(credit_card)
-      end
-    end
-
-    context 'with multiple cards for one user' do
-      let(:user) { create(:user) }
-      let(:first_card) { create(:credit_card, user: user) }
-      let(:second_card) { create(:credit_card, user: user) }
-
-      it 'ensures only one default' do
-        first_card.default = true
-        second_card.default = true
-
-        expect(first_card.default).to be_falsey
-        expect(second_card.default).to be_truthy
-
-        first_card.default = true
-
-        expect(first_card.default).to be_truthy
-        expect(second_card.default).to be_falsey
-      end
-    end
-
-    context 'with multiple cards for different users' do
-      let(:first_card) { create(:credit_card, user: create(:user)) }
-      let(:second_card) { create(:credit_card, user: create(:user)) }
-
-      it 'allows multiple defaults' do
-        first_card.default = true
-        second_card.default = true
-
-        expect(first_card.default).to be_truthy
-        expect(second_card.default).to be_truthy
-      end
-    end
-
-    context 'without a user' do
-      let(:credit_card) { create(:credit_card) }
-
-      it 'raises' do
-        expect {
-          credit_card.default = true
-        }.to raise_error("Cannot set 'default' on a credit card without a user")
-      end
     end
   end
 end

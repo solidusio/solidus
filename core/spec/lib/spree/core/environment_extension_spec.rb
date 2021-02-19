@@ -32,15 +32,4 @@ RSpec.describe Spree::Core::EnvironmentExtension do
       end
     end
   end
-
-  describe '#add_class' do
-    it 'is deprecated' do
-      expect(Spree::Deprecation).to receive(:warn) do |message, _caller|
-        expect(message).to include('ExampleClass.add_class_set(:foo)')
-      end
-      expect(base).to receive(:add_class_set).with(:foo)
-
-      base.new.add_class(:foo)
-    end
-  end
 end

@@ -35,8 +35,6 @@ describe Spree::Admin::ReturnItemsController, type: :controller do
       let(:reception_status_event) { 'receive' }
 
       before do
-        allow(Spree::Deprecation).to receive(:warn).with(a_string_matching('#process_inventory_unit! will not call'))
-
         return_item.update! reception_status: 'in_transit'
       end
 

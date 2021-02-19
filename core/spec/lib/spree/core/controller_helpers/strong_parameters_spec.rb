@@ -19,14 +19,6 @@ RSpec.describe Spree::Core::ControllerHelpers::StrongParameters, type: :controll
     end
   end
 
-  describe '#permitted_checkout_attributes' do
-    it 'returns Array class' do
-      expect(Spree::Deprecation).to receive(:warn).
-        with(/^checkout_attributes is deprecated/, any_args)
-      expect(controller.permitted_checkout_attributes.class).to eq Spree::CheckoutAdditionalAttributes
-    end
-  end
-
   describe '#permitted_order_attributes' do
     it 'returns Array class' do
       expect(controller.permitted_order_attributes.class).to eq Array

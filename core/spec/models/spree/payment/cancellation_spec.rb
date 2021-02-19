@@ -50,7 +50,6 @@ RSpec.describe Spree::Payment::Cancellation do
           payment.refunds.create!(
             amount: credit_amount,
             reason: Spree::RefundReason.where(name: 'test').first_or_create,
-            perform_after_create: false
           ).perform!
         end
 

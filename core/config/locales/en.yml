@@ -74,7 +74,6 @@ en:
         created_at: Date/Time
         name: Name
         number: Return Number
-        pre_tax_total: Pre-Tax Total
         reimbursement_status: Reimbursement status
         total: Total
         total_excluding_vat: Pre-Tax Total
@@ -276,7 +275,6 @@ en:
         type: Type
       spree/return_authorization:
         amount: Amount
-        pre_tax_total: Pre-Tax Total
         total_excluding_vat: Pre-Tax Total
       spree/return_item:
         acceptance_status: Acceptance Status

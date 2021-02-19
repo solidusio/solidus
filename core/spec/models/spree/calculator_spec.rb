@@ -12,19 +12,6 @@ RSpec.describe Spree::Calculator, type: :model do
   class SimpleComputable
   end
 
-  describe "#calculators" do
-    before do
-      expect(Spree::Deprecation).to receive(:warn).
-        with(/^Calling \.calculators is deprecated/, any_args)
-    end
-
-    subject { Spree::Calculator.calculators }
-
-    it 'returns the (deprecated) calculator step' do
-      expect(subject).to be_a Spree::Core::Environment::Calculators
-    end
-  end
-
   context "with computable" do
     let(:calculator) { SimpleCalculator.new }
     let(:computable) { SimpleComputable.new }

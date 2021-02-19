@@ -124,39 +124,6 @@ module Spree
         icon_name ? content_tag(:i, '', class: icon_name) : ''
       end
 
-      alias_method :icon, :solidus_icon
-      deprecate icon: :solidus_icon, deprecator: Spree::Deprecation
-
-      def button(text, icon_name = nil, button_type = 'submit', options = {})
-        Spree::Deprecation.warn "button helper is deprecated. Instead use button_tag"
-        class_names = "button"
-        if icon_name
-          Spree::Deprecation.warn "Using icon_name arg is deprecated. Icons could not be visible in future versions.", caller
-          class_names = "fa fa-#{icon_name} #{class_names}"
-        end
-        button_tag(text, options.merge(type: button_type, class: class_names))
-      end
-
-      def button_link_to(text, url, html_options = {})
-        Spree::Deprecation.warn "Passing button_link_to is deprecated. Use either link_to or button_to instead.", caller
-        html_options = { class: '' }.merge(html_options)
-        if html_options[:method] &&
-           !html_options[:method].to_s.casecmp('get').zero? &&
-           !html_options[:remote]
-          form_tag(url, method: html_options.delete(:method)) do
-            html_options.delete(:icon)
-            button_tag(text, html_options)
-          end
-        else
-          html_options[:class] += ' button'
-
-          if html_options[:icon]
-            html_options[:class] += " fa fa-#{html_options[:icon]}"
-          end
-          link_to(text, url, html_options)
-        end
-      end
-
       def configurations_menu_item(link_text, url, description = '')
         %(<tr>
           <td>#{link_to(link_text, url)}</td>

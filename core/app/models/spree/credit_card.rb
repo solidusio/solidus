@@ -21,11 +21,6 @@ module Spree
 
     scope :with_payment_profile, -> { where('gateway_customer_profile_id IS NOT NULL') }
 
-    def self.default
-      Spree::Deprecation.warn("CreditCard.default is deprecated. Please use Spree::Wallet instead.")
-      joins(:wallet_payment_sources).where(spree_wallet_payment_sources: { default: true })
-    end
-
     # needed for some of the ActiveMerchant gateways (eg. SagePay)
     alias_attribute :brand, :cc_type
 
@@ -45,28 +40,6 @@ module Spree
       'forbrugsforeningen' => /^600722\d{10}$/,
       'laser'              => /^(6304|6706|6709|6771(?!89))\d{8}(\d{4}|\d{6,7})?$/
     }.freeze
-
-    def default
-      Spree::Deprecation.warn("CreditCard#default is deprecated. Please use user.wallet.default_wallet_payment_source instead.", caller)
-      return false if user.nil?
-      user.wallet.default_wallet_payment_source.try!(:payment_source) == self
-    end
-
-    def default=(set_as_default)
-      Spree::Deprecation.warn("CreditCard#default= is deprecated. Please use user.wallet.default_wallet_payment_source= instead.", caller)
-      if user.nil?
-        raise "Cannot set 'default' on a credit card without a user"
-      elsif set_as_default # setting this card as default
-        wallet_payment_source = user.wallet.add(self)
-        user.wallet.default_wallet_payment_source = wallet_payment_source
-        true
-      else # removing this card as default
-        if user.wallet.default_wallet_payment_source.try!(:payment_source) == self
-          user.wallet.default_wallet_payment_source = nil
-        end
-        false
-      end
-    end
 
     def address_attributes=(attributes)
       self.address = Spree::Address.immutable_merge(address, attributes)
