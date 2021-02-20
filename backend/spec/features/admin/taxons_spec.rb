@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-require 'pry'
 
 describe "Taxonomies and taxons", type: :feature do
   stub_authorization!
