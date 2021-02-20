@@ -30,11 +30,6 @@ describe "Taxonomies and taxons", type: :feature do
     visit spree.edit_admin_taxonomy_path(taxonomy)
     expect(page).to have_content('Brand')
 
-    # Without this line we have a flaky spec probably due to select2 not
-    # closing its fixed overlay correctly. Clicking anywhere in the page
-    # before submit apparently solves the issue.
-    find('.edit_taxonomy', visible: true, obscured: false).click
-
     click_on('Add taxon')
     expect(page).to have_content('New node')
 

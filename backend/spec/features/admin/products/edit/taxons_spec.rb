@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
+require 'pry'
 
 describe "Product Display Order", type: :feature do
   stub_authorization!
@@ -28,6 +29,11 @@ describe "Product Display Order", type: :feature do
       assert_selected_taxons([taxon_1])
       select2_search "Clothing", from: "Taxon"
       assert_selected_taxons([taxon_1, taxon_2])
+
+      # Without this line we have a flaky spec probably due to select2 not
+      # closing its fixed overlay correctly. Clicking anywhere in the page
+      # before submit apparently solves the issue.
+      find('.edit_product', visible: true, obscured: false).click
 
       click_button "Update"
 
