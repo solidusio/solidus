@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-require 'pry'
 
 describe "Product Display Order", type: :feature do
   stub_authorization!
