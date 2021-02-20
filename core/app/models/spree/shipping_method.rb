@@ -119,7 +119,7 @@ module Spree
 
     def at_least_one_shipping_category
       if shipping_categories.empty?
-        errors[:base] << "You need to select at least one shipping category"
+        errors.add(:base, "You need to select at least one shipping category")
       end
     end
   end

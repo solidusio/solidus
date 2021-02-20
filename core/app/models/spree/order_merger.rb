@@ -128,7 +128,7 @@ module Spree
     # @param [Spree::LineItem] line_item The line item which could not be saved
     # @return [void]
     def handle_error(line_item)
-      order.errors[:base] << line_item.errors.full_messages
+      order.errors.add(:base, line_item.errors.full_messages)
     end
 
     # Save the order totals after merge

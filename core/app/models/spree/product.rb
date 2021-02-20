@@ -366,8 +366,14 @@ module Spree
     # If the master is invalid, the Product object will be assigned its errors
     def validate_master
       unless master.valid?
-        master.errors.each do |att, error|
-          errors.add(att, error)
+        if Gem::Requirement.new(">= 6.1").satisfied_by?(Rails.gem_version)
+          master.errors.each do |error|
+            errors.add(error.attribute, error.message)
+          end
+        else
+          master.errors.each do |att, error|
+            errors.add(att, error)
+          end
         end
       end
     end
