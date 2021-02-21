@@ -73,7 +73,7 @@ module Spree
               end
 
               event :complete do
-                transition to: :complete, from: :confirm
+                transition to: :complete, from: klass.checkout_steps.keys.last
               end
 
               if states[:payment]
