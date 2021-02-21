@@ -47,7 +47,7 @@ module Spree::Preferences
         # This avoids hitting the db with subsequent queries.
         @cache.write(key, val)
 
-        return val
+        val
       else
         yield
       end

@@ -26,7 +26,7 @@ RSpec.describe Spree::Preferences::ScopedStore, type: :model do
 
       it "can fetch" do
         expect(store).to receive(:fetch).with('my_class/attr')
-        scoped_store.fetch('attr'){ 'default' }
+        scoped_store.fetch('attr', 'default')
       end
 
       it "can assign" do
@@ -44,7 +44,7 @@ RSpec.describe Spree::Preferences::ScopedStore, type: :model do
 
         it "can fetch" do
           expect(store).to receive(:fetch).with('my_class/attr/123')
-          scoped_store.fetch('attr'){ 'default' }
+          scoped_store.fetch('attr', 'default')
         end
 
         it "can assign" do

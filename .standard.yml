@@ -1,0 +1,57 @@
+parallel: true
+format: progress
+
+ignore:
+  - './**/*':
+    - Layout/ArrayAlignment
+    - Layout/ArgumentAlignment
+    - Layout/ClosingParenthesisIndentation
+    - Layout/DotPosition
+    - Layout/BeginEndAlignment
+    - Layout/ElseAlignment
+    - Layout/EndAlignment
+    - Layout/ExtraSpacing
+    - Layout/FirstHashElementIndentation
+    - Layout/FirstArrayElementIndentation
+    - Layout/HashAlignment
+    - Layout/IndentationWidth
+    - Layout/MultilineOperationIndentation
+    - Layout/MultilineMethodCallIndentation
+    - Layout/SpaceBeforeBlockBraces
+    - Layout/SpaceInsideHashLiteralBraces
+    - Layout/SpaceAroundOperators
+    - Layout/SpaceInsideParens
+    - Layout/RescueEnsureAlignment
+    - Lint/AmbiguousRegexpLiteral
+    - Lint/AssignmentInCondition
+    - Lint/ConstantDefinitionInBlock
+    - Performance/RegexpMatch
+    - Performance/BigDecimalWithNumericArgument
+    - Performance/ConstantRegexp
+    - Performance/BlockGivenWithExplicitBlock
+    - Performance/DeletePrefix
+    - Standard/SemanticBlocks
+    - Style/ArgumentsForwarding
+    - Style/ConditionalAssignment
+    - Style/HashSyntax
+    - Style/NegatedIf
+    - Style/NegatedWhile
+    - Style/SafeNavigation
+    - Style/Alias
+    - Style/Alias
+    - Style/PercentLiteralDelimiters
+    - Style/RedundantAssignment
+    - Style/StringLiterals
+    - Style/StringLiteralsInInterpolation
+    - Style/TrailingCommaInArguments
+    - Style/TrailingCommaInArrayLiteral
+    - Style/TrailingCommaInHashLiteral
+    - Style/RedundantRegexpEscape
+  - './**/*_spec.rb':
+    - Layout/EmptyLineBetweenDefs
+    - Lint/ConstantDefinitionInBlock
+    - Style/EmptyMethod
+    - Style/SingleLineMethods
+    - Style/Semicolon
+  - './**/*.jbuilder':
+    - Style/LambdaCall

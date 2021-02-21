@@ -35,6 +35,7 @@ module Spree
         super message
       end
     end
+
     class CannotRebuildShipments < StandardError; end
 
     extend Spree::DisplayMoney
@@ -452,7 +453,7 @@ module Spree
     def coupon_code=(code)
       @coupon_code = begin
                        code.strip.downcase
-                     rescue StandardError
+                     rescue
                        nil
                      end
     end

@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-
 Spree::PaymentMethod.create_with(
   name: "Store Credit",
   description: "Store credit",

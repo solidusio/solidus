@@ -14,12 +14,11 @@ module Spree
       def update
         authorize! :update, @order, order_token
         find_address
+        @address = @order.send(@order_source)
 
         if @order.update({ "#{@order_source}_attributes" => address_params })
-          @address = @order.send(@order_source)
           respond_with(@address, default_template: :show)
         else
-          @address = @order.send(@order_source)
           invalid_resource!(@address)
         end
       end

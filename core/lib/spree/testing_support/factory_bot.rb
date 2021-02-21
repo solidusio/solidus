@@ -37,7 +37,7 @@ module Spree
         Spree::Deprecation.warn(
           "Please do not cherry-pick factories, this is not well supported by FactoryBot, " \
           'follow the changelog instructions on how to migrate your current setup.',
-          callsites[index..-1]
+          callsites[index..]
         )
       end
 

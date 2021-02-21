@@ -7,7 +7,7 @@ class CustomMarkdownRenderer < Redcarpet::Render::HTML
 
   def block_code(code, language)
     path = code.lines.first[/^#\s(\S*)$/, 1]
-    code = code.lines[1..-1].join if path
+    code = code.lines[1..].join if path
     code = code.gsub('<', '&lt').gsub('>', '&gt')
     template = File.read('source/partials/_code_block.erb')
     ERB.new(template).result(binding)

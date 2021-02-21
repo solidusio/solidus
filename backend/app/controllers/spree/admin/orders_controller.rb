@@ -28,7 +28,7 @@ module Spree
         if params[:q][:created_at_gt].present?
           params[:q][:created_at_gt] = begin
                                          Time.zone.parse(params[:q][:created_at_gt]).beginning_of_day
-                                       rescue StandardError
+                                       rescue
                                          ""
                                        end
         end
@@ -36,7 +36,7 @@ module Spree
         if params[:q][:created_at_lt].present?
           params[:q][:created_at_lt] = begin
                                          Time.zone.parse(params[:q][:created_at_lt]).end_of_day
-                                       rescue StandardError
+                                       rescue
                                          ""
                                        end
         end

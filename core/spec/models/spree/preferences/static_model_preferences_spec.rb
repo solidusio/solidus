@@ -57,7 +57,7 @@ module Spree
         let(:definition){ definitions['no_preference'] }
 
         it "uses fallback value" do
-          expect(definition.fetch(:color){ 'red' }).to eq 'red'
+          expect(definition.fetch(:color, 'red')).to eq 'red'
         end
 
         it "can be converted to hash" do
@@ -66,7 +66,7 @@ module Spree
 
         it "ignores assignment" do
           definition[:color] = 'maroon'
-          expect(definition.fetch(:color){ 'red' }).to eq 'red'
+          expect(definition.fetch(:color, 'red')).to eq 'red'
           expect(definition.to_hash).to eq({})
         end
       end

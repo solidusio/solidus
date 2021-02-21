@@ -281,7 +281,6 @@ RSpec.describe Spree::Order, type: :model do
     end
 
     context "from delivery", partial_double_verification: false do
-
       before do
         order.state = 'delivery'
         allow(order).to receive(:apply_shipping_promotions)

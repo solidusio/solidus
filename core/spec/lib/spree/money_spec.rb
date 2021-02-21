@@ -246,9 +246,11 @@ RSpec.describe Spree::Money do
     let(:usd_30) { Spree::Money.new(30, currency: "USD") }
 
     it "compares the two amounts" do
+      # rubocop:disable Lint/BinaryOperatorWithIdenticalOperands
       expect(usd_20 <=> usd_20).to eq 0
       expect(usd_20 <=> usd_10).to be > 0
       expect(usd_20 <=> usd_30).to be < 0
+      # rubocop:enable Lint/BinaryOperatorWithIdenticalOperands
     end
 
     context "with a non Spree::Money object" do

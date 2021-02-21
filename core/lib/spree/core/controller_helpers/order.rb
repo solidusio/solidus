@@ -32,7 +32,7 @@ module Spree
 
           if @current_order
             @current_order.record_ip_address(ip_address)
-            return @current_order
+            @current_order
           end
         end
 

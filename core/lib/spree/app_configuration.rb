@@ -263,7 +263,6 @@ module Spree
     #   @return [] Track on_hand values for variants / products. (default: true)
     preference :track_inventory_levels, :boolean, default: true
 
-
     # Other configurations
 
     # Allows restricting what currencies will be available.

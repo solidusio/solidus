@@ -24,7 +24,7 @@ require 'with_model'
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
-Dir[File.dirname(__FILE__) + "/support/**/*.rb"].each { |f| require f }
+Dir[File.dirname(__FILE__) + "/support/**/*.rb"].sort.each { |f| require f }
 
 require 'spree/testing_support/factory_bot'
 require 'spree/testing_support/partial_double_verification'
