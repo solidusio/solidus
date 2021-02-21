@@ -61,6 +61,12 @@ commands:
           paths:
             - vendor/bundle
 
+  lint:
+    steps:
+      - run:
+          name: Standard Lint
+          command: bundle exec standardrb
+
   test:
     steps:
       - run:
@@ -94,6 +100,11 @@ jobs:
           root: workspace
           paths:
             - solidus-version
+
+  lint:
+    executor: base
+    steps:
+      - lint
 
   postgres:
     executor: postgres
@@ -138,6 +149,7 @@ workflows:
           filters:
             branches:
               only: /master|v\d\.\d+/
+      - lint
       - postgres
       - mysql
       - postgres_rails60
