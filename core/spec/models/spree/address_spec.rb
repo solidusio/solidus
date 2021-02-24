@@ -3,8 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe Spree::Address, type: :model do
-  subject { Spree::Address }
-
   context "aliased attributes" do
     before do
       allow(Spree::Deprecation).to receive(:warn).and_call_original
@@ -164,7 +162,7 @@ RSpec.describe Spree::Address, type: :model do
       let(:country) { create(:country, iso: 'ZW') }
 
       it 'uses the setters' do
-        expect(subject.factory(address_attributes).country_id).to eq(country.id)
+        expect(described_class.factory(address_attributes).country_id).to eq(country.id)
       end
     end
   end
