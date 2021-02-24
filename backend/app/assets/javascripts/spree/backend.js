@@ -1,6 +1,5 @@
 //= require solidus_admin/bind-polyfill
 //= require handlebars
-//= require jquery.sticky-kit.min
 //= require solidus_admin/select2
 //= require solidus_admin/underscore
 //= require solidus_admin/backbone
@@ -41,7 +40,6 @@
 //= require spree/backend/images/index
 //= require spree/backend/images/upload
 //= require spree/backend/locale_selection
-//= require spree/backend/navigation
 //= require spree/backend/option_type_autocomplete
 //= require spree/backend/option_value_picker
 //= require spree/backend/orders
@@ -55,11 +53,9 @@
 //= require spree/backend/spree-select2
 //= require spree/backend/stock_management
 //= require spree/backend/store_credits
-//= require spree/backend/style_guide
 //= require spree/backend/taxon_autocomplete
 //= require spree/backend/taxonomy
 //= require spree/backend/taxons
 //= require spree/backend/user_picker
 //= require spree/backend/variant_autocomplete
 //= require spree/backend/zone
-//= require spree/backend/shipping_methods/stock_locations_picker

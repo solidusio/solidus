@@ -12,6 +12,7 @@ require 'autoprefixer-rails'
 require 'jbuilder'
 require 'kaminari'
 require 'responders'
+require 'stimulus-rails'
 
 require 'spree/backend/action_callbacks'
 require 'spree/backend/callbacks'

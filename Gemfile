@@ -18,6 +18,8 @@ group :backend, :frontend, :core, :api do
   # and https://github.com/rails/sprockets-rails/issues/369
   gem 'sprockets', '~> 3'
 
+  gem 'stimulus-rails', github: 'kennyadsl/stimulus-rails', branch: 'kennyadsl/configure-importmap-import'
+
   # Temporary locking money to 6.13.8.
   # See https://github.com/solidusio/solidus/issues/3903
   gem 'money', '<= 6.13.8'

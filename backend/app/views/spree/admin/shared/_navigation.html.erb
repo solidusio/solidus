@@ -1,11 +1,18 @@
-<div class="admin-nav">
-  <%= render partial: 'spree/admin/shared/navigation_header' %>
-  <div class="admin-nav-sticky">
-    <%= render partial: 'spree/admin/shared/menu' %>
-    <div class="admin-nav-footer">
+<div class="admin-nav" data-controller="spree--backend--navigation" data-action="resize@window->spree--backend--navigation#resize">
+  <header class="admin-nav-header" data-spree--backend--navigation-target="header">
+    <%= render partial: 'spree/admin/shared/navigation_header' %>
+  </header>
+
+  <div class="admin-nav-sticky" data-spree--backend--navigation-target="sticky">
+    <nav class="admin-nav-menu" data-spree--backend--navigation-target="menu">
+      <%= render partial: 'spree/admin/shared/menu' %>
+    </nav>
+
+    <div class="admin-nav-footer" data-spree--backend--navigation-target="footer">
       <%= button_tag class: 'btn fa fa-chevron-circle-left', id: 'admin-nav-toggle', type: :button do %>
         <span class="text"><%= t('spree.minimize_menu') %></span>
       <% end %>
+
       <%= render partial: 'spree/admin/shared/locale_selection' %>
       <%= render partial: 'spree/admin/shared/navigation_footer' %>
     </div>
