@@ -30,7 +30,6 @@ FactoryBot.define do
       after(:build) do |order, evaluator|
         order.line_items << build(
           :line_item,
-          order: order,
           price: evaluator.line_items_price
         )
       end
