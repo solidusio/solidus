@@ -459,11 +459,11 @@ module Spree
     #
     # @!attribute [rw] order_number_generator
     # @return [Class] a class instance with the same public interfaces as
-    #   Spree::Order::NumberGenerator
+    #   Spree::Core::NumberGenerator
     # @api experimental
     attr_writer :order_number_generator
     def order_number_generator
-      @order_number_generator ||= Spree::Order::NumberGenerator.new
+      @order_number_generator ||= Spree::Core::NumberGenerator.new
     end
 
     def state_machines
