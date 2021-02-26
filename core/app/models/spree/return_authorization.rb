@@ -62,10 +62,11 @@ module Spree
     end
 
     def generate_number
-      self.number ||= loop do
-        random = "RA#{Array.new(9){ rand(9) }.join}"
-        break random unless self.class.exists?(number: random)
-      end
+      self.number ||= Spree::Core::NumberGenerator.new(
+        prefix: 'RA',
+        lenght: 9,
+        class_name: 'Spree::ReturnAuthorization'
+      ).generate
     end
 
     def no_previously_exchanged_inventory_units

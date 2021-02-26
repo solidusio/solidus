@@ -58,10 +58,11 @@ module Spree
     private
 
     def generate_number
-      self.number ||= loop do
-        random = "CR#{Array.new(9){ rand(9) }.join}"
-        break random unless self.class.exists?(number: random)
-      end
+      self.number ||= Spree::Core::NumberGenerator.new(
+        prefix: 'CR',
+        lenght: 9,
+        class_name: 'Spree::CustomerReturn'
+      ).generate
     end
 
     def return_items_belong_to_same_order
