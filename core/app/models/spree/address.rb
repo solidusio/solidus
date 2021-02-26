@@ -195,15 +195,18 @@ module Spree
 
     # @return [String] the full name on this address
     def name
-      Spree::Address::Name.new(
-        read_attribute(:firstname),
-        read_attribute(:lastname)
-      ).value
+      self[:name] || begin
+        Spree::Address::Name.new(
+          read_attribute(:firstname),
+          read_attribute(:lastname)
+        ).value
+      end
     end
 
     def name=(value)
       return if value.nil?
 
+      write_attribute(:name, value)
       name_from_value = Spree::Address::Name.new(value)
       write_attribute(:firstname, name_from_value.first_name)
       write_attribute(:lastname, name_from_value.last_name)
