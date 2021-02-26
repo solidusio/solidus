@@ -193,6 +193,16 @@ module Spree
       country && country.iso
     end
 
+    before_save :set_name_from_firstname_and_lastname
+
+    def set_name_from_firstname_and_lastname
+      name_from_firstname_and_lastname = Spree::Address::Name.from_attributes(attributes.except(:name, 'name'))
+
+      if read_attribute(:name).blank? && name_from_firstname_and_lastname.present?
+        write_attribute(:name, name_from_firstname_and_lastname)
+      end
+    end
+
     # @return [String] the full name on this address
     def name
       self[:name] || begin

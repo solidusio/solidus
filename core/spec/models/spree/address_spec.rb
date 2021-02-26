@@ -109,6 +109,16 @@ RSpec.describe Spree::Address, type: :model do
     end
   end
 
+  context "when saving a record" do
+    context "when the `name` field is not explicitly set" do
+      subject { build :address, name: nil, firstname: 'John', lastname: 'Doe' }
+
+      it "sets `name` from `firstname` and `lastname`" do
+        expect { subject.save }.to change { subject.read_attribute(:name) }.from(nil).to('John Doe')
+      end
+    end
+  end
+
   context ".build_default" do
     context "no user given" do
       let!(:default_country) { create(:country) }
