@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   # [Deprecated] Generates order numbers
   #
@@ -15,7 +17,5 @@ module Spree
   #
 
   Order::NumberGenerator = ActiveSupport::Deprecation::DeprecatedConstantProxy
-    .new('Spree::Order::NumberGenerator',
-         'Spree::Core::NumberGenerator',
-          Spree::Deprecation)
+    .new('Spree::Order::NumberGenerator', 'Spree::Core::NumberGenerator', Spree::Deprecation)
 end
