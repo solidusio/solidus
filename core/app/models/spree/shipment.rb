@@ -25,7 +25,7 @@ module Spree
 
     accepts_nested_attributes_for :inventory_units
 
-    make_permalink field: :number, length: 11, prefix: 'H'
+    make_permalink field: :number, length: 11, prefix: 'H', class_name: 'Spree::Shipment'
 
     scope :pending, -> { with_state('pending') }
     scope :ready,   -> { with_state('ready') }

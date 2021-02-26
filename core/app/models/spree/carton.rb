@@ -15,7 +15,7 @@ class Spree::Carton < Spree::Base
   validates :inventory_units, presence: true
   validates :shipped_at, presence: true
 
-  make_permalink field: :number, length: 11, prefix: 'C'
+  make_permalink field: :number, length: 11, prefix: 'C', class_name: self.name
 
   scope :trackable, -> { where("tracking IS NOT NULL AND tracking != ''") }
   # sort by most recent shipped_at, falling back to created_at. add "id desc" to make specs that involve this scope more deterministic.
