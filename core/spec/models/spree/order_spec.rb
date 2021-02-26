@@ -756,7 +756,7 @@ RSpec.describe Spree::Order, type: :model do
 
     context "with default app configuration" do
       it 'calls the default order number generator' do
-        expect_any_instance_of(Spree::Order::NumberGenerator).to receive(:generate)
+        expect_any_instance_of(Spree::Core::NumberGenerator).to receive(:generate)
         order.generate_order_number
       end
     end
