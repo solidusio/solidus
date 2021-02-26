@@ -92,6 +92,12 @@ module Spree
       if base['lastname'].presence || base['last_name'].presence
         base['lastname'] = name_from_attributes.last_name
       end
+
+      virtual_name = name_from_attributes.value
+      if base['name'].blank? && virtual_name.present?
+        base['name'] = virtual_name
+      end
+
       excluded_attributes = DB_ONLY_ATTRS + %w(first_name last_name)
 
       base.except(*excluded_attributes)
@@ -120,7 +126,11 @@ module Spree
     # @return [Boolean] true if the two addresses have the same address fields
     def ==(other_address)
       return false unless other_address && other_address.respond_to?(:value_attributes)
-      value_attributes == other_address.value_attributes
+      if Spree::Config.use_combined_first_and_last_name_in_address
+        value_attributes.except(*LEGACY_NAME_ATTRS) == other_address.value_attributes.except(*LEGACY_NAME_ATTRS)
+      else
+        value_attributes == other_address.value_attributes
+      end
     end
 
     # @deprecated Do not use this. Use Address.== instead.

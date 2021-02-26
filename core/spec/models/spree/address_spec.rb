@@ -442,4 +442,31 @@ RSpec.describe Spree::Address, type: :model do
       address.full_name
     end
   end
+
+  describe '==' do
+    context 'when first address has same name (virtual or not) as the second' do
+      let(:first_address) { build(:address, name: 'Mary Jane Watson') }
+      let(:second_address) { build(:address, name: nil, firstname: 'Mary Jane', lastname: 'Watson', zipcode: first_address.zipcode) }
+
+      context 'when firstname and lastname do not match' do
+        context 'when the preference `use_combined_first_and_last_name_in_address` is true' do
+          it 'they are still considered equals' do
+            expect(first_address.name).to eq(second_address.name)
+            expect(first_address).to eq(second_address)
+          end
+        end
+
+        context 'when the preference `use_combined_first_and_last_name_in_address` is false' do
+          before { stub_spree_preferences(use_combined_first_and_last_name_in_address: false) }
+
+          # This seems to be the most sensible behavior, as if we're not combining attributes,
+          # firstname and lastname should be accounted for when checking equality.
+          it 'they are not considered equals' do
+            expect(first_address.name).to eq(second_address.name)
+            expect(first_address).not_to eq(second_address)
+          end
+        end
+      end
+    end
+  end
 end
