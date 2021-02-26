@@ -29,6 +29,14 @@ module Spree
           permalink_options[:field]
         end
 
+        def permalink_letters
+          permalink_options[:letters]
+        end
+
+        def permalink_model
+          permalink_options[:model]
+        end
+
         def permalink_prefix
           permalink_options[:prefix] || ""
         end
@@ -41,10 +49,19 @@ module Spree
           order = permalink_options[:order]
           "#{order} ASC," if order
         end
+
+        def number_generator
+          Spree::Core::NumberGenerator.new(
+            prefix: permalink_prefix,
+            length: permalink_length,
+            letters: permalink_letters,
+            model: permalink_model
+          )
+        end
       end
 
       def generate_permalink
-        "#{self.class.permalink_prefix}#{Array.new(self.class.permalink_length){ rand(9) }.join}"
+        self.class.number_generator.generate
       end
 
       def save_permalink(permalink_value = to_param)
