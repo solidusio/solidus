@@ -39,7 +39,7 @@ module Spree
 
         def build_query(params)
           params.map { |key, value|
-            if value.class == Array
+            if value.class.instance_of?(Array)
               build_query(value.map { |parameter| ["#{key}[]", parameter] })
             else
               key + "=" + Rack::Utils.escape(value)

@@ -31,8 +31,7 @@ module Spree
           base_scope = base_scope.in_taxon(@properties[:taxon]) unless @properties[:taxon].blank?
           base_scope = get_products_conditions_for(base_scope, @properties[:keywords])
           base_scope = add_search_scopes(base_scope)
-          base_scope = add_eagerload_scopes(base_scope)
-          base_scope
+          add_eagerload_scopes(base_scope)
         end
 
         def add_eagerload_scopes(scope)
@@ -86,7 +85,7 @@ module Spree
 
           per_page = params[:per_page].to_i
           @properties[:per_page] = per_page > 0 ? per_page : Spree::Config[:products_per_page]
-          @properties[:page] = (params[:page].to_i <= 0) ? 1 : params[:page].to_i
+          @properties[:page] = params[:page].to_i <= 0 ? 1 : params[:page].to_i
         end
       end
     end

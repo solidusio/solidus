@@ -244,7 +244,7 @@ class Spree::Admin::ResourceController < Spree::Admin::BaseController
   end
 
   def object_url(object = nil, options = {})
-    target = object ? object : @object
+    target = object || @object
 
     if parent?
       spree.polymorphic_url([:admin, parent, target], options)

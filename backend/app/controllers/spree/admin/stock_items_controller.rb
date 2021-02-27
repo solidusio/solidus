@@ -52,8 +52,7 @@ module Spree
       def variant_scope
         scope = Spree::Variant.accessible_by(current_ability)
         scope = scope.where(product: @product) if @product
-        scope = scope.order(:sku)
-        scope
+        scope.order(:sku)
       end
 
       def collection

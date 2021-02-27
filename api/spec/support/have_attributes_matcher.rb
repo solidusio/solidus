@@ -1,4 +1,3 @@
-
 # frozen_string_literal: true
 
 RSpec::Matchers.define :have_attributes do |expected_attributes|

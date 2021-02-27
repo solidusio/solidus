@@ -1,4 +1,3 @@
-
 # frozen_string_literal: true
 
 json.widgets(@collection) do |widget|
