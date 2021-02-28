@@ -87,16 +87,6 @@ module Spree
         end
       end
 
-      def sort_availability(availability)
-        sorted_availability = availability.sort_by do |stock_location_id, _|
-          @stock_locations.find_index do |stock_location|
-            stock_location.id == stock_location_id
-          end
-        end
-
-        Hash[sorted_availability]
-      end
-
       def get_units(quantities)
         # Change our raw quantities back into inventory units
         quantities.flat_map do |variant, quantity|

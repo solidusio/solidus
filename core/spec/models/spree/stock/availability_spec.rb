@@ -20,6 +20,24 @@ module Spree::Stock
         let!(:variant) { create(:master_variant) }
         let(:stock_item) { variant.stock_items[0] }
 
+        it "maintains the StockLocation order with which it is initialised" do
+          stock_location2 = create(:stock_location)
+          stock_location3 = create(:stock_location)
+          sorted_availability = described_class.new(variants: variants, stock_locations: [
+            stock_location3,
+            stock_location1,
+            stock_location2
+          ])
+
+          sorted_subject_ids = sorted_availability.on_hand_by_stock_location_id.keys
+
+          expect(sorted_subject_ids).to eq([
+            stock_location3.id,
+            stock_location1.id,
+            stock_location2.id,
+          ])
+        end
+
         context 'with count_on_hand positive' do
           before { stock_item.set_count_on_hand(2) }
 
@@ -92,6 +110,24 @@ module Spree::Stock
       context 'with a single variant' do
         let!(:variant) { create(:master_variant) }
         let(:stock_item) { variant.stock_items[0] }
+
+        it "maintains the StockLocation order with which it is initialised" do
+          stock_location2 = create(:stock_location)
+          stock_location3 = create(:stock_location)
+          sorted_availability = described_class.new(variants: variants, stock_locations: [
+            stock_location3,
+            stock_location1,
+            stock_location2
+          ])
+
+          sorted_subject_ids = sorted_availability.on_hand_by_stock_location_id.keys
+
+          expect(sorted_subject_ids).to eq([
+            stock_location3.id,
+            stock_location1.id,
+            stock_location2.id,
+          ])
+        end
 
         context 'with backorderable false' do
           before { stock_item.update!(backorderable: false) }
