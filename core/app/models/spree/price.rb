@@ -46,7 +46,7 @@ module Spree
     end
 
     def net_amount
-      amount / (1 + sum_of_vat_amounts)
+      amount / (sum_of_vat_amounts + 1)
     end
 
     def for_any_country?

@@ -15,7 +15,9 @@ RSpec.describe Spree::Order::NumberGenerator do
     it { expect(subject.length).to eq default_length }
 
     context "when length option is 5" do
-      let(:option_length) { 5 + Spree::Order::ORDER_NUMBER_PREFIX.length }
+      let(:option_length) { (const
+  (const
+    (const nil :Spree) :Order) :ORDER_NUMBER_PREFIX) + 5 }
 
       subject { described_class.new(length: 5).generate }
 

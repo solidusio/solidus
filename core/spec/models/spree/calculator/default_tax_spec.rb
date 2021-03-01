@@ -248,7 +248,7 @@ RSpec.describe Spree::Calculator::DefaultTax, type: :model do
       # adjusted here.
       build_stubbed(
         :shipping_rate,
-        cost: 30 + adjustment_total,
+        cost: adjustment_total + 30,
         selected: true,
         shipping_method: shipping_method,
         shipment: shipment

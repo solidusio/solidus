@@ -345,7 +345,7 @@ module Spree
       # See: https://github.com/spree/spree/issues/6229
 
       if state == 'canceled'
-        -1 * payment_total
+        payment_total * -1
       else
         total - reimbursement_total - payment_total
       end

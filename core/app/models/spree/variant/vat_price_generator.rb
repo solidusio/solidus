@@ -32,7 +32,7 @@ module Spree
 
           foreign_price = find_or_initialize_price_by(country_iso, variant.default_price.currency)
 
-          foreign_price.amount = variant.default_price.net_amount * (1 + vat_for_country_iso(country_iso))
+          foreign_price.amount = variant.default_price.net_amount * (vat_for_country_iso + 1)
         end
       end
 
