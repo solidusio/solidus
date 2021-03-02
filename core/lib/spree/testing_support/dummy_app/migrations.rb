@@ -27,7 +27,7 @@ module DummyApp
         ActiveRecord::Base.remove_connection
 
         sh 'rake db:reset VERBOSE=false'
-        if ENV['ENABLE_ACTIVE_STORAGE']
+        unless ENV['DISABLE_ACTIVE_STORAGE']
           sh 'rake active_storage:install db:migrate VERBOSE=false'
         end
 
