@@ -19,11 +19,6 @@ module Spree::Taxon::PaperclipAttachment
     icon.present?
   end
 
-  def attachment_partial_name
-    Spree::Deprecation.warn("calling #attachment_partial_name on Spree::Taxon is deprecated without replacement.")
-    'paperclip'
-  end
-
   def destroy_attachment(definition)
     return false unless respond_to?(definition)
 
