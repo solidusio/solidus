@@ -92,6 +92,12 @@ module Spree
       if base['lastname'].presence || base['last_name'].presence
         base['lastname'] = name_from_attributes.last_name
       end
+
+      virtual_name = name_from_attributes.value
+      if base['name'].blank? && virtual_name.present?
+        base['name'] = virtual_name
+      end
+
       excluded_attributes = DB_ONLY_ATTRS + %w(first_name last_name)
 
       base.except(*excluded_attributes)
@@ -120,7 +126,11 @@ module Spree
     # @return [Boolean] true if the two addresses have the same address fields
     def ==(other_address)
       return false unless other_address && other_address.respond_to?(:value_attributes)
-      value_attributes == other_address.value_attributes
+      if Spree::Config.use_combined_first_and_last_name_in_address
+        value_attributes.except(*LEGACY_NAME_ATTRS) == other_address.value_attributes.except(*LEGACY_NAME_ATTRS)
+      else
+        value_attributes == other_address.value_attributes
+      end
     end
 
     # @deprecated Do not use this. Use Address.== instead.
@@ -193,17 +203,30 @@ module Spree
       country && country.iso
     end
 
+    before_save :set_name_from_firstname_and_lastname
+
+    def set_name_from_firstname_and_lastname
+      name_from_firstname_and_lastname = Spree::Address::Name.from_attributes(attributes.except(:name, 'name'))
+
+      if read_attribute(:name).blank? && name_from_firstname_and_lastname.present?
+        write_attribute(:name, name_from_firstname_and_lastname)
+      end
+    end
+
     # @return [String] the full name on this address
     def name
-      Spree::Address::Name.new(
-        read_attribute(:firstname),
-        read_attribute(:lastname)
-      ).value
+      self[:name] || begin
+        Spree::Address::Name.new(
+          read_attribute(:firstname),
+          read_attribute(:lastname)
+        ).value
+      end
     end
 
     def name=(value)
       return if value.nil?
 
+      write_attribute(:name, value)
       name_from_value = Spree::Address::Name.new(value)
       write_attribute(:firstname, name_from_value.first_name)
       write_attribute(:lastname, name_from_value.last_name)

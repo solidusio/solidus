@@ -3,8 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe Spree::Address, type: :model do
-  subject { Spree::Address }
-
   context "aliased attributes" do
     before do
       allow(Spree::Deprecation).to receive(:warn).and_call_original
@@ -111,6 +109,16 @@ RSpec.describe Spree::Address, type: :model do
     end
   end
 
+  context "when saving a record" do
+    context "when the `name` field is not explicitly set" do
+      subject { build :address, name: nil, firstname: 'John', lastname: 'Doe' }
+
+      it "sets `name` from `firstname` and `lastname`" do
+        expect { subject.save }.to change { subject.read_attribute(:name) }.from(nil).to('John Doe')
+      end
+    end
+  end
+
   context ".build_default" do
     context "no user given" do
       let!(:default_country) { create(:country) }
@@ -164,7 +172,7 @@ RSpec.describe Spree::Address, type: :model do
       let(:country) { create(:country, iso: 'ZW') }
 
       it 'uses the setters' do
-        expect(subject.factory(address_attributes).country_id).to eq(country.id)
+        expect(described_class.factory(address_attributes).country_id).to eq(country.id)
       end
     end
   end
@@ -272,7 +280,7 @@ RSpec.describe Spree::Address, type: :model do
       let(:merge_attributes) { { 'last_name' => 'Brough' } }
 
       it 'renames them to the normalized value' do
-        expect(subject).to eq('firstname' => 'Jordan', 'lastname' => 'Brough')
+        expect(subject).to eq('firstname' => 'Jordan', 'lastname' => 'Brough', 'name' => 'Jordan Brough')
       end
 
       it 'does not modify the original hashes' do
@@ -322,34 +330,49 @@ RSpec.describe Spree::Address, type: :model do
   end
 
   context '#name' do
-    it 'concatenates firstname and lastname' do
-      address = Spree::Address.new(firstname: 'Michael J.', lastname: 'Jackson')
+    shared_examples 'name attribute' do
+      it 'concatenates firstname and lastname' do
+        address = described_class.new(firstname: 'Michael J.', lastname: 'Jackson')
 
-      expect(address.name).to eq('Michael J. Jackson')
+        expect(address.name).to eq('Michael J. Jackson')
+      end
+
+      it 'returns lastname when firstname is blank' do
+        address = described_class.new(firstname: nil, lastname: 'Jackson')
+
+        expect(address.name).to eq('Jackson')
+      end
+
+      it 'returns firstanme when lastname is blank' do
+        address = described_class.new(firstname: 'Michael J.', lastname: nil)
+
+        expect(address.name).to eq('Michael J.')
+      end
+
+      it 'returns empty string when firstname and lastname are blank' do
+        address = described_class.new(firstname: nil, lastname: nil)
+
+        expect(address.name).to eq('')
+      end
+
+      it 'is included in json representation' do
+        address = described_class.new(name: 'Jane Von Doe')
+
+        expect(address.as_json).to include('name' => 'Jane Von Doe')
+      end
     end
 
-    it 'returns lastname when firstname is blank' do
-      address = Spree::Address.new(firstname: nil, lastname: 'Jackson')
-
-      expect(address.name).to eq('Jackson')
+    context 'when preference `use_combined_first_and_last_name_in_address` is true' do
+      it_behaves_like 'name attribute'
     end
 
-    it 'returns firstanme when lastname is blank' do
-      address = Spree::Address.new(firstname: 'Michael J.', lastname: nil)
+    context 'when preference `use_combined_first_and_last_name_in_address` is false' do
+      before do
+        stub_spree_preferences(use_combined_first_and_last_name_in_address: false)
+        allow(Spree::Deprecation).to receive(:warn).with(/firstname|lastname/, any_args)
+      end
 
-      expect(address.name).to eq('Michael J.')
-    end
-
-    it 'returns empty string when firstname and lastname are blank' do
-      address = Spree::Address.new(firstname: nil, lastname: nil)
-
-      expect(address.name).to eq('')
-    end
-
-    it 'is included in json representation' do
-      address = Spree::Address.new(name: 'Jane Von Doe')
-
-      expect(address.as_json).to include('name' => 'Jane Von Doe')
+      it_behaves_like 'name attribute'
     end
   end
 
@@ -381,8 +404,24 @@ RSpec.describe Spree::Address, type: :model do
   context 'deprecations' do
     let(:address) { described_class.new }
 
-    specify 'json representation does not contain deprecated fields' do
-      expect(address.as_json).not_to include('firstname', 'lastname')
+    describe 'json representation' do
+      context 'when preference `use_combined_first_and_last_name_in_address` is true' do
+        it 'contains `name` but does not contain deprecated fields' do
+          expect(address.as_json).not_to include('firstname', 'lastname')
+          expect(address.as_json).to include('name')
+        end
+      end
+
+      context 'when preference `use_combined_first_and_last_name_in_address` is false' do
+        before do
+          stub_spree_preferences(use_combined_first_and_last_name_in_address: false)
+          allow(Spree::Deprecation).to receive(:warn).with(/firstname|lastname/, any_args)
+        end
+
+        it 'contains both deprecated fields and `name`' do
+          expect(address.as_json).to include('firstname', 'lastname', 'name')
+        end
+      end
     end
 
     specify 'firstname is deprecated' do
@@ -401,6 +440,33 @@ RSpec.describe Spree::Address, type: :model do
       expect(Spree::Deprecation).to receive(:warn).with(/full_name/, any_args)
 
       address.full_name
+    end
+  end
+
+  describe '==' do
+    context 'when first address has same name (virtual or not) as the second' do
+      let(:first_address) { build(:address, name: 'Mary Jane Watson') }
+      let(:second_address) { build(:address, name: nil, firstname: 'Mary Jane', lastname: 'Watson', zipcode: first_address.zipcode) }
+
+      context 'when firstname and lastname do not match' do
+        context 'when the preference `use_combined_first_and_last_name_in_address` is true' do
+          it 'they are still considered equals' do
+            expect(first_address.name).to eq(second_address.name)
+            expect(first_address).to eq(second_address)
+          end
+        end
+
+        context 'when the preference `use_combined_first_and_last_name_in_address` is false' do
+          before { stub_spree_preferences(use_combined_first_and_last_name_in_address: false) }
+
+          # This seems to be the most sensible behavior, as if we're not combining attributes,
+          # firstname and lastname should be accounted for when checking equality.
+          it 'they are not considered equals' do
+            expect(first_address.name).to eq(second_address.name)
+            expect(first_address).not_to eq(second_address)
+          end
+        end
+      end
     end
   end
 end
