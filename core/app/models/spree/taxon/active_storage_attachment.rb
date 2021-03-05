@@ -10,9 +10,4 @@ module Spree::Taxon::ActiveStorageAttachment
                    default_style: :mini
     validate :icon_is_an_image
   end
-
-  def attachment_partial_name
-    Spree::Deprecation.warn("calling #attachment_partial_name on Spree::Taxon is deprecated without replacement.")
-    'paperclip'
-  end
 end

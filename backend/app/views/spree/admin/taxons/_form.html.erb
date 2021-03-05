@@ -20,22 +20,18 @@
       </div>
     <% end %>
 
-    <% if f.object.class.attachment_definitions.size > 1 %>
-      <%= render "spree/admin/taxons/attachment_forms/#{f.object.attachment_partial_name}", f: f %>
-    <% else %>
-      <%= f.field_container :icon do %>
-        <%= f.label :icon %><br>
-        <%= f.file_field :icon %>
-        <% if f.object.icon_present? %>
-          <%= image_tag f.object.icon(:mini) %>
-          <%= link_to t('spree.actions.remove'),
-                      admin_taxonomy_taxon_attachment_path(@taxonomy,
-                                                           @taxon.id,
-                                                           attachment_definition: :icon,
-                                                           authenticity_token: form_authenticity_token),
-                      method: :delete,
-                      class: 'btn btn-sm btn-danger' %>
-        <% end %>
+    <%= f.field_container :icon do %>
+      <%= f.label :icon %><br>
+      <%= f.file_field :icon %>
+      <% if f.object.icon_present? %>
+        <%= image_tag f.object.icon(:mini) %>
+        <%= link_to t('spree.actions.remove'),
+                    admin_taxonomy_taxon_attachment_path(@taxonomy,
+                                                          @taxon.id,
+                                                          attachment_definition: :icon,
+                                                          authenticity_token: form_authenticity_token),
+                    method: :delete,
+                    class: 'btn btn-sm btn-danger' %>
       <% end %>
     <% end %>
   </div>
