@@ -120,6 +120,21 @@ module Solidus
     I18n.enforce_available_locales = #{options[:enforce_available_locales]}
         RUBY
       end
+
+      if options[:active_storage]
+        application <<-RUBY
+          initializer 'solidus.active_storage' do
+            config.storage_path = Rails.root.join('tmp', 'storage')
+            config.active_storage.service_configurations = {
+              test: {
+                service: 'Disk',
+                root: config.storage_path
+              }
+            }
+            config.active_storage.service = :test
+          end
+        RUBY
+      end
     end
 
     def plugin_install_preparation
