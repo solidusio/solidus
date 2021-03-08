@@ -68,7 +68,7 @@ module DummyApp
 
     config.storage_path = Rails.root.join('tmp', 'storage')
 
-    if ENV['ENABLE_ACTIVE_STORAGE']
+    unless ENV['DISABLE_ACTIVE_STORAGE']
       initializer 'solidus.active_storage' do
         config.active_storage.service_configurations = {
           test: {
@@ -119,9 +119,9 @@ Spree.user_class = 'Spree::LegacyUser'
 Spree.config do |config|
   config.mails_from = "store@example.com"
 
-  if ENV['ENABLE_ACTIVE_STORAGE']
-    config.image_attachment_module = 'Spree::Image::ActiveStorageAttachment'
-    config.taxon_attachment_module = 'Spree::Taxon::ActiveStorageAttachment'
+  if ENV['DISABLE_ACTIVE_STORAGE']
+    config.image_attachment_module = 'Spree::Image::PaperclipAttachment'
+    config.taxon_attachment_module = 'Spree::Taxon::PaperclipAttachment'
   end
 end
 
