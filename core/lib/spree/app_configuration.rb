@@ -437,23 +437,23 @@ module Spree
 
     # Allows switching attachment library for Image
     #
-    # `Spree::Image::PaperclipAttachment`
-    # is the default and provides the classic Paperclip implementation.
+    # `Spree::Image::ActiveStorageAttachment`
+    # is the default and provides the Active Storage implementation.
     #
     # @!attribute [rw] image_attachment_module
     # @return [Module] a module that can be included into Spree::Image to allow attachments
     # Enumerable of images adhering to the present_image_class interface
-    class_name_attribute :image_attachment_module, default: 'Spree::Image::PaperclipAttachment'
+    class_name_attribute :image_attachment_module, default: 'Spree::Image::ActiveStorageAttachment'
 
     # Allows switching attachment library for Taxon
     #
-    # `Spree::Taxon::PaperclipAttachment`
-    # is the default and provides the classic Paperclip implementation.
+    # `Spree::Taxon::ActiveStorageAttachment`
+    # is the default and provides the Active Storage implementation.
     #
     # @!attribute [rw] taxon_attachment_module
     # @return [Module] a module that can be included into Spree::Taxon to allow attachments
     # Enumerable of taxons adhering to the present_taxon_class interface
-    class_name_attribute :taxon_attachment_module, default: 'Spree::Taxon::PaperclipAttachment'
+    class_name_attribute :taxon_attachment_module, default: 'Spree::Taxon::ActiveStorageAttachment'
 
     # Allows providing your own class instance for generating order numbers.
     #

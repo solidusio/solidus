@@ -1,0 +1,3 @@
+test:
+  service: Disk
+  root: <%= File.expand_path("#{dummy_path}/tmp/storage", destination_root) %>

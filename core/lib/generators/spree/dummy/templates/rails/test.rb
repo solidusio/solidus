@@ -29,6 +29,8 @@ Dummy::Application.configure do
   config.action_mailer.delivery_method = :test
   ActionMailer::Base.default from: "solidus@example.com"
 
+  config.active_storage.service = :test
+
   # Raise on deprecation warnings
   if ENV['SOLIDUS_RAISE_DEPRECATIONS'].present?
     Spree::Deprecation.behavior = :raise
