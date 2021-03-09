@@ -10,8 +10,16 @@ RSpec.describe 'solidus:migrations:migrate_address_names' do
     Spree::Address.ignored_columns = []
     Spree::Address.reset_column_information
 
+    original_stderr = $stderr
+    original_stdout = $stdout
+    $stderr = File.open(File::NULL, "w")
+    $stdout = File.open(File::NULL, "w")
+
     example.run
   ensure
+    $stderr = original_stderr
+    $stdout = original_stdout
+
     Spree::Address.ignored_columns = ignored_columns
     Spree::Address.reset_column_information
   end
@@ -26,7 +34,7 @@ RSpec.describe 'solidus:migrations:migrate_address_names' do
     context "when there are no records to migrate" do
       it "simply exits" do
         expect { task.invoke }.to output(
-          "Your DB contains 0 addresses that may be affected by this task.\n"
+          "Combining addresses' firstname and lastname into name ... \n  Your DB contains 0 addresses that may be affected by this task.\n"
         ).to_stdout
       end
     end
@@ -52,13 +60,13 @@ RSpec.describe 'solidus:migrations:migrate_address_names' do
       context "when the DB adapter is supported" do
         before do
           allow_any_instance_of(Thor::Shell::Basic).to receive(:ask).with(
-            'do you want to proceed?',
+            '  Do you want to proceed?',
             limited_to: ['Y', 'N'],
             case_insensitive: true
           ).and_return('Y')
 
           allow_any_instance_of(Thor::Shell::Basic).to receive(:ask).with(
-            'Please enter a different batch size, or press return to confirm the default'
+            '  Please enter a different batch size, or press return to confirm the default: '
           ).and_return(size)
         end
 
