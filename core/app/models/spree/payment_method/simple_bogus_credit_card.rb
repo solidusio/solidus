@@ -9,17 +9,17 @@ module Spree
 
     def authorize(_money, credit_card, _options = {})
       if VALID_CCS.include? credit_card.number
-        ActiveMerchant::Billing::Response.new(true, 'Bogus Gateway: Forced success', {}, test: true, authorization: '12345', avs_result: { code: 'A' })
+        ActiveMerchant::Billing::Response.new(true, SUCCESS_MESSAGE, {}, test: true, authorization: AUTHORIZATION_CODE, avs_result: { code: 'A' })
       else
-        ActiveMerchant::Billing::Response.new(false, 'Bogus Gateway: Forced failure', { message: 'Bogus Gateway: Forced failure' }, test: true)
+        ActiveMerchant::Billing::Response.new(false, FAILURE_MESSAGE, { message: FAILURE_MESSAGE }, test: true)
       end
     end
 
     def purchase(_money, credit_card, _options = {})
       if VALID_CCS.include? credit_card.number
-        ActiveMerchant::Billing::Response.new(true, 'Bogus Gateway: Forced success', {}, test: true, authorization: '12345', avs_result: { code: 'A' })
+        ActiveMerchant::Billing::Response.new(true, SUCCESS_MESSAGE, {}, test: true, authorization: AUTHORIZATION_CODE, avs_result: { code: 'A' })
       else
-        ActiveMerchant::Billing::Response.new(false, 'Bogus Gateway: Forced failure', message: 'Bogus Gateway: Forced failure', test: true)
+        ActiveMerchant::Billing::Response.new(false, FAILURE_MESSAGE, message: FAILURE_MESSAGE, test: true)
       end
     end
   end
