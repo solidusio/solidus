@@ -122,6 +122,34 @@ RSpec.describe Spree::Refund, type: :model do
 
         expect { subject }.not_to change(Spree::LogEntry, :count)
       end
+
+      context "when the refund record is not persisted yet" do
+        context "when refunding a payment made with store credits" do
+          context "when the preference `credit_to_new_allocation` is true" do
+            before { stub_spree_preferences(credit_to_new_allocation: true) }
+
+            let(:credit) { create(:store_credit, amount: 10) }
+            let(:payment) { create(:payment, payment_method: create(:store_credit_payment_method), source: credit, amount: 8) }
+            let(:reason) { create(:refund_reason) }
+            let(:refund) { described_class.new(payment: payment, amount: 5, reason: reason) }
+
+            let!(:credit_event) do
+              create(
+                :store_credit_event,
+                store_credit: credit,
+                amount: payment.amount,
+                action: Spree::StoreCredit::CAPTURE_ACTION,
+                amount_remaining: credit.amount - payment.amount,
+                authorization_code: payment.transaction_id
+              )
+            end
+
+            it "creates a new store credit record for the given amount" do
+              expect { refund.perform! }.to change { Spree::StoreCredit.count }.by(1)
+            end
+          end
+        end
+      end
     end
 
     context "when transaction_id exists" do
