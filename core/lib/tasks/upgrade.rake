@@ -9,5 +9,12 @@ namespace :solidus do
       ] do
       puts "Your Solidus install is ready for Solidus 2.11"
     end
+
+    desc "Upgrade Solidus to version 3.0"
+    task three_point_zero: [
+        'solidus:migrations:delete_prices_with_nul_amount:up',
+      ] do
+      puts "Your Solidus install is ready for Solidus 3.0"
+    end
   end
 end

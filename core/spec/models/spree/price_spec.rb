@@ -16,7 +16,7 @@ RSpec.describe Spree::Price, type: :model do
 
     context 'when the amount is nil' do
       let(:amount) { nil }
-      it { is_expected.to be_valid }
+      it { is_expected.not_to be_valid }
     end
 
     context 'when the amount is less than 0' do
