@@ -6,26 +6,11 @@ RSpec.describe Spree::Refund, type: :model do
   let(:amount) { 100.0 }
   let(:amount_in_cents) { amount * 100 }
 
-  let(:authorization) { generate(:refund_transaction_id) }
-
   let(:payment) { create(:payment, amount: payment_amount, payment_method: payment_method) }
   let(:payment_amount) { amount * 2 }
   let(:payment_method) { create(:credit_card_payment_method) }
 
   let(:refund_reason) { create(:refund_reason) }
-
-  let(:gateway_response) {
-    ActiveMerchant::Billing::Response.new(
-      gateway_response_success,
-      gateway_response_message,
-      gateway_response_params,
-      gateway_response_options
-    )
-  }
-  let(:gateway_response_success) { true }
-  let(:gateway_response_message) { "" }
-  let(:gateway_response_params) { {} }
-  let(:gateway_response_options) { { authorization: authorization } }
 
   let(:transaction_id) { nil }
   let(:perform_after_create) { false }
@@ -39,13 +24,6 @@ RSpec.describe Spree::Refund, type: :model do
       transaction_id: transaction_id,
       perform_after_create: perform_after_create
     )
-  end
-
-  before do
-    allow(payment.payment_method)
-      .to receive(:credit)
-      .with(amount_in_cents, payment.source, payment.transaction_id, { originator: an_instance_of(Spree::Refund) })
-      .and_return(gateway_response)
   end
 
   describe 'create' do
@@ -109,10 +87,11 @@ RSpec.describe Spree::Refund, type: :model do
       it "sets #perform_response with the gateway response from the payment provider" do
         expect(Spree::Deprecation).to receive(:warn)
 
-        expect(refund.perform_response).to eq gateway_response
+        expect(refund.perform_response).to be_a(ActiveMerchant::Billing::Response)
+        expect(refund.perform_response.message).to eq(Spree::PaymentMethod::BogusCreditCard::SUCCESS_MESSAGE)
       end
 
-      it "does nothing, perform! already happened after create" do
+      it "does nothing, perform! already happened after create", :aggregate_failures do
         expect(Spree::Deprecation).to receive(:warn)
         refund
         expect(refund.transaction_id).not_to be_nil
@@ -168,8 +147,7 @@ RSpec.describe Spree::Refund, type: :model do
         end
 
         it 'saves the returned authorization value' do
-          subject
-          expect(refund.reload.transaction_id).to eq authorization
+          expect { subject }.to change { refund.reload.transaction_id }.from(nil).to(Spree::PaymentMethod::BogusCreditCard::AUTHORIZATION_CODE)
         end
 
         it 'saves the passed amount as the refund amount' do
@@ -183,7 +161,7 @@ RSpec.describe Spree::Refund, type: :model do
         end
 
         it "attempts to process a transaction" do
-          expect(payment.payment_method).to receive(:credit).once
+          expect(payment.payment_method).to receive(:credit).once.and_call_original
           subject
         end
 
@@ -193,13 +171,29 @@ RSpec.describe Spree::Refund, type: :model do
         end
       end
 
-      context "processing fails" do
-        let(:gateway_response_success) { false }
-        let(:gateway_response_message) { "failure message" }
+      context "when processing fails" do
+        let(:failure_message) { Spree::PaymentMethod::BogusCreditCard::FAILURE_MESSAGE }
+        let(:gateway_response) {
+          ActiveMerchant::Billing::Response.new(
+            false,
+            failure_message,
+            {},
+            test: true,
+            authorization: Spree::PaymentMethod::BogusCreditCard::AUTHORIZATION_CODE
+          )
+        }
+
+        before do
+          allow(payment.payment_method)
+            .to receive(:credit)
+            .with(amount_in_cents, payment.source, payment.transaction_id, { originator: an_instance_of(Spree::Refund) })
+            .and_return(gateway_response)
+        end
+
 
         context 'without performing after create' do
           it 'raises a GatewayError' do
-            expect { subject }.to raise_error(Spree::Core::GatewayError, gateway_response_message)
+            expect { subject }.to raise_error(Spree::Core::GatewayError, failure_message)
           end
         end
 
@@ -210,7 +204,7 @@ RSpec.describe Spree::Refund, type: :model do
             expect(Spree::Deprecation).to receive(:warn)
 
             expect do
-              expect { subject }.to raise_error(Spree::Core::GatewayError, gateway_response_message)
+              expect { subject }.to raise_error(Spree::Core::GatewayError, failure_message)
             end.not_to change(Spree::Refund, :count)
           end
         end
@@ -225,7 +219,7 @@ RSpec.describe Spree::Refund, type: :model do
           expect(payment.payment_method)
             .to receive(:credit)
             .with(amount * 100, payment.transaction_id, { originator: an_instance_of(Spree::Refund) })
-            .and_return(gateway_response)
+            .and_call_original
 
           subject
         end
@@ -240,7 +234,7 @@ RSpec.describe Spree::Refund, type: :model do
           expect(payment.payment_method)
             .to receive(:credit)
             .with(amount_in_cents, payment.source, payment.transaction_id, { originator: an_instance_of(Spree::Refund) })
-            .and_return(gateway_response)
+            .and_call_original
 
           subject
         end
