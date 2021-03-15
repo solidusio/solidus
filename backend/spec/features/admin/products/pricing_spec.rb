@@ -70,6 +70,7 @@ describe 'Pricing' do
       let!(:other_price) { product.master.prices.create(amount: 34.56, currency: "EUR") }
 
       it 'has a working edit page' do
+        product.reload
         within "#spree_price_#{product.master.prices.first.id}" do
           click_icon :edit
         end

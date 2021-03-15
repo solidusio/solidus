@@ -49,7 +49,7 @@ RSpec.describe Spree::Variant, type: :model do
 
     it "propagate to stock items" do
       expect_any_instance_of(Spree::StockLocation).to receive(:propagate_variant)
-      product.variants.create!
+      product.variants.create!(price: 10)
     end
 
     context "stock location has disable propagate all variants" do
@@ -57,7 +57,7 @@ RSpec.describe Spree::Variant, type: :model do
 
       it "propagate to stock items" do
         expect_any_instance_of(Spree::StockLocation).not_to receive(:propagate_variant)
-        product.variants.create!
+        product.variants.create!(price: 10)
       end
     end
 
@@ -71,7 +71,7 @@ RSpec.describe Spree::Variant, type: :model do
 
       context 'when a variant is created' do
         before(:each) do
-          product.variants.create!
+          product.variants.create!(price: 10)
         end
 
         it { expect(product.master).to_not be_in_stock }
@@ -608,6 +608,7 @@ RSpec.describe Spree::Variant, type: :model do
   describe "#discard" do
     it "discards related associations" do
       variant.images = [create(:image)]
+      variant.reload
 
       expect(variant.stock_items).not_to be_empty
       expect(variant.prices).not_to be_empty
@@ -803,6 +804,76 @@ RSpec.describe Spree::Variant, type: :model do
 
           expect(variant.gallery.images).to eq Spree::Image.none
         end
+      end
+    end
+  end
+
+  describe '#inherit_prices' do
+    it 'copies prices from master' do
+      product = create(:product, price: 10)
+      create(:price, variant: product.master, amount: 20, currency: 'EUR')
+      product.master.prices.reload
+      variant = build(:variant, product: product)
+
+      variant.inherit_prices
+
+      expect(variant.prices.size).to be(2)
+      expect(
+        variant.prices.map { |price| [price.amount, price.currency] }
+      ).to match_array([[10, 'USD'], [20, 'EUR']])
+    end
+
+    it "subsequent changes to copied prices attributes don't modify the original" do
+      product = create(:product, price: 10)
+      product.master.prices.reload
+      variant = build(:variant, product: product)
+
+      variant.inherit_prices
+      variant.prices[0].amount = 20
+      variant.save!
+
+      expect(
+        product.prices[0].reload.amount
+      ).to eq(10)
+    end
+
+    it 'raises on persisted variants' do
+      variant = create(:variant)
+
+      expect { variant.inherit_prices }.to raise_error(RuntimeError)
+    end
+  end
+
+  describe '#any_price?' do
+    context 'when prices have been added into prices association' do
+      it 'returns true' do
+        variant = described_class.new(prices: [build(:price)])
+
+        expect(variant.any_price?).to be(true)
+      end
+    end
+
+    context 'when prices have been added into currently_valid_prices association' do
+      it 'returns true' do
+        variant = described_class.new(currently_valid_prices: [build(:price)])
+
+        expect(variant.any_price?).to be(true)
+      end
+    end
+
+    context 'when a price has been set as default price' do
+      it 'returns true' do
+        variant = described_class.new(default_price: build(:price))
+
+        expect(variant.any_price?).to be(true)
+      end
+    end
+
+    context 'when no prices are present' do
+      it 'returns false' do
+        variant = described_class.new
+
+        expect(variant.any_price?).to be(false)
       end
     end
   end

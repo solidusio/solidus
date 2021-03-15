@@ -58,6 +58,13 @@ module Spree
       inverse_of: :variant,
       autosave: true
 
+    # TODO: Treat as a regular scope to avoid in-memory inconsistencies with
+    # `prices`. e.g.:
+    #
+    # ```
+    # Variant.new.tap { |v| v.currently_valid_prices << Price.new }.prices.any?
+    # # => false
+    # ```
     has_many :currently_valid_prices,
       -> { currently_valid },
       class_name: 'Spree::Price',
@@ -66,7 +73,6 @@ module Spree
       autosave: true
 
     before_validation :set_cost_currency
-    before_validation :set_price, if: -> { product && product.master }
     before_validation :build_vat_prices, if: -> { rebuild_vat_prices? || new_record? && product }
 
     validates :product, presence: true
@@ -84,6 +90,8 @@ module Spree
     after_touch :clear_in_stock_cache
 
     after_destroy :destroy_option_values_variants
+
+    accepts_nested_attributes_for :prices
 
     # Returns variants that are in stock. When stock locations are provided as
     # a parameter, the scope is limited to variants that are in stock in the
@@ -354,6 +362,30 @@ module Spree
       @gallery ||= Spree::Config.variant_gallery_class.new(self)
     end
 
+    # Creates a shallow copy of every price from the master variant of the
+    # product, and sets them as the variant's prices
+    #
+    # @return [Array<Spree::Price>]
+    # @raise [RuntimeError] if self has already been persisted to the DB
+    def inherit_prices
+      raise 'Prices from master can only be copied over non-persisted variants' if persisted?
+
+      self.prices = product.master.prices.map(&:dup)
+    end
+
+    # TODO: Treat {Spree::Variant.default_price} as a method, and
+    # {currently_valid_prices} as a scope and remove this method.
+    #
+    # Returns whether self is associated to {Spree::Price} through any of their
+    # associations.
+    #
+    # @return [Boolean]
+    def any_price?
+      prices.any? ||
+        currently_valid_prices.any? ||
+        default_price.present?
+    end
+
     private
 
     def rebuild_vat_prices?
@@ -365,11 +397,6 @@ module Spree
         product.master.stock_items.update_all(backorderable: false)
         product.master.stock_items.each(&:reduce_count_on_hand_to_zero)
       end
-    end
-
-    # Ensures a new variant takes the product master price when price is not supplied
-    def set_price
-      self.price = product.master.price if price.nil? && Spree::Config[:require_master_price] && !is_master?
     end
 
     def check_price

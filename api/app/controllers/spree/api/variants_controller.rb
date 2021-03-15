@@ -8,6 +8,7 @@ module Spree
       def create
         authorize! :create, Variant
         @variant = scope.new(variant_params)
+        @variant.inherit_prices unless @variant.any_price?
         if @variant.save
           respond_with(@variant, status: 201, default_template: :show)
         else

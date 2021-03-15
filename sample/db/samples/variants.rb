@@ -211,7 +211,11 @@ masters = {
   }
 }
 
-Spree::Variant.create!(variants)
+variants.each do |attributes|
+  variant = Spree::Variant.new(attributes)
+  variant.inherit_prices
+  variant.save!
+end
 
 masters.each do |product, variant_attrs|
   product.master.update!(variant_attrs)

@@ -12,13 +12,15 @@ describe "Variants", type: :feature do
       product.options.each do |option|
         create(:option_value, option_type: option.option_type)
       end
+      create(:price, amount: 1.75, currency: 'EUR', variant: product.master)
 
       visit spree.admin_path
       click_nav "Products"
       within_row(1) { click_icon :edit }
       click_link "Variants"
       click_on "New Variant"
-      expect(page).to have_field('variant_price', with: "1.99")
+      expect(page).to have_selector('input[value="1.99"][aria-label="Price in USD"]')
+      expect(page).to have_selector('input[value="1.75"][aria-label="Price in EUR"]')
       expect(page).to have_field('variant_cost_price', with: "1.00")
       expect(page).to have_field('variant_weight', with: "2.50")
       expect(page).to have_field('variant_height', with: "3.00")

@@ -18,7 +18,9 @@ module Spree
           if product.save
             variants_attrs.each do |variant_attribute|
               # make sure the product is assigned before the options=
-              product.variants.create({ product: product }.merge(variant_attribute))
+              variant = product.variants.new({ product: product }.merge(variant_attribute))
+              variant.inherit_prices unless variant.prices.any? || variant.persisted?
+              variant.save
             end
 
             set_up_options
