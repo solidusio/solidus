@@ -2,6 +2,9 @@
 
 module Spree
   class Calculator < Spree::Base
+    serialize :preferences, Hash
+    after_initialize :initialize_preference_defaults
+
     belongs_to :calculable, polymorphic: true, optional: true
 
     # This method calls a compute_<computable> method. must be overriden in concrete calculator.

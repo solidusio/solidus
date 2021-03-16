@@ -327,6 +327,8 @@ RSpec.describe Spree::Preferences::Preferable, type: :model do
       CreatePrefTest.migrate(:up)
 
       class PrefTest < Spree::Base
+        serialize :preferences, Hash
+        after_initialize :initialize_preference_defaults
         preference :pref_test_pref, :string, default: 'abc'
         preference :pref_test_any, :any, default: []
         preference :pref_test_encrypted_string, :encrypted_string, encryption_key: 'VkYp3s6v9y$B?E(H+MbQeThWmZq4t7w!'

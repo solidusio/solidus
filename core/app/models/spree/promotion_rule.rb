@@ -3,6 +3,9 @@
 module Spree
   # Base class for all promotion rules
   class PromotionRule < Spree::Base
+    serialize :preferences, Hash
+    after_initialize :initialize_preference_defaults
+
     belongs_to :promotion, class_name: 'Spree::Promotion', inverse_of: :promotion_rules, optional: true
 
     scope :of_type, ->(type) { where(type: type) }

@@ -6,6 +6,9 @@ module Spree
   # PromotionActions perform the necessary tasks when a promotion is activated
   # by an event and determined to be eligible.
   class PromotionAction < Spree::Base
+    serialize :preferences, Hash
+    after_initialize :initialize_preference_defaults
+
     include Spree::SoftDeletable
 
     belongs_to :promotion, class_name: 'Spree::Promotion', inverse_of: :promotion_actions, optional: true

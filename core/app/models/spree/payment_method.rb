@@ -11,6 +11,9 @@ module Spree
   # This class is not meant to be instantiated. Please create instances of concrete payment methods.
   #
   class PaymentMethod < Spree::Base
+    serialize :preferences, Hash
+    after_initialize :initialize_preference_defaults
+
     preference :server, :string, default: 'test'
     preference :test_mode, :boolean, default: true
 

@@ -6,23 +6,36 @@ class Spree::Base < ActiveRecord::Base
   include Spree::RansackableAttributes
 
   def preferences
-    read_attribute(:preferences) || self.class.preferences_coder_class.new
+    value = read_attribute(:preferences)
+    if !value.is_a?(Hash)
+      Spree::Deprecation.warn <<~WARN
+        #{self.class.name} has a `preferences` column, but does not explicitly (de)serialize this column.
+        In order to make #{self.class.name} work with future versions of Solidus (and Rails), please add the
+        following to lines to your class:
+        ```
+        class #{self.class.name}
+          serialize :preferences, Hash
+          after_initialize :initialize_preference_defaults
+          ...
+        end
+        ```
+      WARN
+      self.class.serialize :preferences, Hash
+      self.class.after_initialize :initialize_preference_defaults
+
+      ActiveRecord::Type::Serialized.new(
+        ActiveRecord::Type::Text.new,
+        ActiveRecord::Coders::YAMLColumn.new(:preferences, Hash)
+      ).deserialize(value)
+    else
+      value
+    end
   end
 
   def initialize_preference_defaults
     if has_attribute?(:preferences)
       self.preferences = default_preferences.merge(preferences)
     end
-  end
-
-  # Only run preference initialization on models which requires it. Improves
-  # performance of record initialization slightly.
-  def self.preference(*args)
-    # after_initialize can be called multiple times with the same symbol, it
-    # will only be called once on initialization.
-    serialize :preferences, preferences_coder_class
-    after_initialize :initialize_preference_defaults
-    super
   end
 
   if Kaminari.config.page_method_name != :page
@@ -33,10 +46,6 @@ class Spree::Base < ActiveRecord::Base
 
       send Kaminari.config.page_method_name, num
     end
-  end
-
-  def self.preferences_coder_class
-    Hash
   end
 
   self.abstract_class = true
