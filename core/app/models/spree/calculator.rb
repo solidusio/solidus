@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 
+require 'spree/preferences/persistable'
+
 module Spree
   class Calculator < Spree::Base
+    include Spree::Preferences::Persistable
+
     belongs_to :calculable, polymorphic: true, optional: true
 
     # This method calls a compute_<computable> method. must be overriden in concrete calculator.

@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'spree/preferences/persistable'
 require 'spree/preferences/statically_configurable'
 
 module Spree
@@ -11,6 +12,8 @@ module Spree
   # This class is not meant to be instantiated. Please create instances of concrete payment methods.
   #
   class PaymentMethod < Spree::Base
+    include Spree::Preferences::Persistable
+
     preference :server, :string, default: 'test'
     preference :test_mode, :boolean, default: true
 

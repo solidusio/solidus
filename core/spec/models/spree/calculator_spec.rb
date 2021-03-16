@@ -12,6 +12,19 @@ RSpec.describe Spree::Calculator, type: :model do
   class SimpleComputable
   end
 
+  describe "preferences" do
+    subject { SimpleCalculator.new.preferences }
+
+    it { is_expected.to eq({}) }
+
+    context "with preferences stored" do
+      let(:calculator) { SimpleCalculator.create(preferences: { a: "1" }) }
+      subject { calculator.reload.preferences }
+
+      it { is_expected.to eq({ a: "1" }) }
+    end
+  end
+
   context "with computable" do
     let(:calculator) { SimpleCalculator.new }
     let(:computable) { SimpleComputable.new }
