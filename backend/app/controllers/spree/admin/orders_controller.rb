@@ -86,7 +86,7 @@ module Spree
           if @order.can_complete?
             flash[:success] = t('spree.order_ready_for_confirm')
           else
-            flash[:error] = @order.errors.full_messages
+            flash[:error] = @order.errors.full_messages.join(', ')
           end
           redirect_to confirm_admin_order_url(@order)
         end

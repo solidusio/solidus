@@ -183,12 +183,12 @@ describe Spree::Admin::OrdersController, type: :controller do
         context 'when unsuccessful' do
           before do
             allow(order).to receive(:can_complete?).and_return(false)
-            allow(order).to receive(:errors).and_return(double(full_messages: ['failed']))
+            allow(order).to receive(:errors).and_return(double(full_messages: ['invalid address', 'invalid email']))
           end
 
           it 'messages and redirects' do
             subject
-            expect(flash[:error]).to eq order.errors.full_messages
+            expect(flash[:error]).to eq 'invalid address, invalid email'
             expect(response).to redirect_to(spree.confirm_admin_order_path(order))
           end
         end
