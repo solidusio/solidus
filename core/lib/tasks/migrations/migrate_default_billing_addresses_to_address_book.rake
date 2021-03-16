@@ -6,7 +6,7 @@ namespace :solidus do
       task up: :environment do
         print "Migrating default billing addresses to address book ... "
         if Spree::UserAddress.where(default_billing: true).any?
-          Spree::LegacyUser.joins(:bill_address).update_all(bill_address_id: nil) # rubocop:disable Rails/SkipsModelValidations
+          Spree.user_class.joins(:bill_address).update_all(bill_address_id: nil) # rubocop:disable Rails/SkipsModelValidations
         end
         adapter_type = Spree::Base.connection.adapter_name.downcase.to_sym
         if adapter_type == :mysql2
