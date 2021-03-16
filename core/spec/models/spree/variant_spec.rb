@@ -612,14 +612,12 @@ RSpec.describe Spree::Variant, type: :model do
 
       expect(variant.stock_items).not_to be_empty
       expect(variant.prices).not_to be_empty
-      expect(variant.currently_valid_prices).not_to be_empty
 
       variant.discard
 
       expect(variant.images).to be_empty
       expect(variant.stock_items).to be_empty
       expect(variant.prices).to be_empty
-      expect(variant.currently_valid_prices).to be_empty
     end
 
     describe 'default_price' do
@@ -848,14 +846,6 @@ RSpec.describe Spree::Variant, type: :model do
     context 'when prices have been added into prices association' do
       it 'returns true' do
         variant = described_class.new(prices: [build(:price)])
-
-        expect(variant.any_price?).to be(true)
-      end
-    end
-
-    context 'when prices have been added into currently_valid_prices association' do
-      it 'returns true' do
-        variant = described_class.new(currently_valid_prices: [build(:price)])
 
         expect(variant.any_price?).to be(true)
       end

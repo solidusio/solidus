@@ -23,6 +23,13 @@ module Spree
       end
     end
 
+    # Returns `#prices` prioritized for being considered as default price
+    #
+    # @return [Array<Spree::Price>]
+    def currently_valid_prices
+      prices.currently_valid
+    end
+
     def find_or_build_default_price
       default_price ||
         default_price_from_memory ||

@@ -24,7 +24,6 @@ module Spree
       stock_items.discard_all
       images.destroy_all
       prices.discard_all
-      currently_valid_prices.discard_all
     end
 
     attr_writer :rebuild_vat_prices
@@ -53,20 +52,6 @@ module Spree
     has_many :images, -> { order(:position) }, as: :viewable, dependent: :destroy, class_name: "Spree::Image"
 
     has_many :prices,
-      class_name: 'Spree::Price',
-      dependent: :destroy,
-      inverse_of: :variant,
-      autosave: true
-
-    # TODO: Treat as a regular scope to avoid in-memory inconsistencies with
-    # `prices`. e.g.:
-    #
-    # ```
-    # Variant.new.tap { |v| v.currently_valid_prices << Price.new }.prices.any?
-    # # => false
-    # ```
-    has_many :currently_valid_prices,
-      -> { currently_valid },
       class_name: 'Spree::Price',
       dependent: :destroy,
       inverse_of: :variant,
@@ -373,8 +358,7 @@ module Spree
       self.prices = product.master.prices.map(&:dup)
     end
 
-    # TODO: Treat {Spree::Variant.default_price} as a method, and
-    # {currently_valid_prices} as a scope and remove this method.
+    # TODO: Treat {Spree::Variant.default_price} as a method
     #
     # Returns whether self is associated to {Spree::Price} through any of their
     # associations.
@@ -382,7 +366,6 @@ module Spree
     # @return [Boolean]
     def any_price?
       prices.any? ||
-        currently_valid_prices.any? ||
         default_price.present?
     end
 
