@@ -25,7 +25,7 @@ module Spree
       factory_bot_paths: "Spree::TestingSupport::FactoryBot.definition_file_paths",
       check_factory_bot_version: "Spree::TestingSupport::FactoryBot.check_version",
       load_all_factories: "Spree::TestingSupport::FactoryBot.add_paths_and_load!",
-      deprecator: Spree::Deprecator
+      deprecator: Spree::Deprecation
     )
   end
 end
