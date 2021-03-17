@@ -78,7 +78,7 @@
               <%= render 'spree/admin/shared/image', image: product.gallery.images.first, size: :mini %>
             </td>
             <td><%= link_to product.try(:name), edit_admin_product_path(product) %></td>
-            <td class="align-right"><%= product.display_price.to_html %></td>
+            <td class="align-right"><%= product.display_price&.to_html %></td>
             <td class="actions" data-hook="admin_products_index_row_actions">
               <%= link_to_edit product, no_text: true, class: 'edit' if can?(:edit, product) && !product.deleted? %>
               &nbsp;

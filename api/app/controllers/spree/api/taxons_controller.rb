@@ -69,7 +69,7 @@ module Spree
         # Products#index does not do the sorting.
         taxon = Spree::Taxon.find(params[:id])
         @products = paginate(taxon.products.ransack(params[:q]).result)
-        @products = @products.includes(master: :default_price)
+        @products = @products.includes(master: :prices)
 
         if params[:simple]
           @exclude_data = {
