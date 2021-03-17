@@ -171,7 +171,7 @@ module Solidus
       end
 
       bundle_cleanly{ run "bundle install" } if @plugins_to_be_installed.any?
-      run "spring stop"
+      run "spring stop" if defined?(Spring)
 
       @plugin_generators_to_run.each do |plugin_generator_name|
         generate "#{plugin_generator_name} --skip_migrations=false"
