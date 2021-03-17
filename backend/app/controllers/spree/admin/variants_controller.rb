@@ -34,7 +34,7 @@ module Spree
       end
 
       def variant_includes
-        [{ option_values: :option_type }, :default_price]
+        [{ option_values: :option_type }, :prices]
       end
 
       def redirect_on_empty_option_values

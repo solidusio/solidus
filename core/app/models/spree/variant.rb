@@ -358,17 +358,6 @@ module Spree
       self.prices = product.master.prices.map(&:dup)
     end
 
-    # TODO: Treat {Spree::Variant.default_price} as a method
-    #
-    # Returns whether self is associated to {Spree::Price} through any of their
-    # associations.
-    #
-    # @return [Boolean]
-    def any_price?
-      prices.any? ||
-        default_price.present?
-    end
-
     private
 
     def rebuild_vat_prices?

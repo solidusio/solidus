@@ -8,7 +8,7 @@ module Spree
       def create
         authorize! :create, Variant
         @variant = scope.new(variant_params)
-        @variant.inherit_prices unless @variant.any_price?
+        @variant.inherit_prices unless @variant.prices.any?
         if @variant.save
           respond_with(@variant, status: 201, default_template: :show)
         else
@@ -84,7 +84,7 @@ module Spree
       end
 
       def include_list
-        [{ option_values: :option_type }, :product, :default_price, :images, { stock_items: :stock_location }]
+        [{ option_values: :option_type }, :product, :prices, :images, { stock_items: :stock_location }]
       end
     end
   end
