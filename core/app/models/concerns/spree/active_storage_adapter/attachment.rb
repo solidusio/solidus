@@ -19,11 +19,11 @@ module Spree
       end
 
       def filename
-        blob.filename.to_s
+        blob&.filename.to_s
       end
 
       def url(style = nil)
-        variant(style).url
+        variant(style)&.url
       end
 
       def variant(style = nil)
