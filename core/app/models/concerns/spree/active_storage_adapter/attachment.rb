@@ -9,11 +9,9 @@ module Spree
     class Attachment
       delegate_missing_to :@attachment
 
-      DEFAULT_SIZE = '100%'
-
       def initialize(attachment, styles: {})
         @attachment = attachment
-        @styles = styles
+        @styles = normalize_styles(styles)
       end
 
       def exists?
@@ -29,12 +27,10 @@ module Spree
       end
 
       def variant(style = nil)
-        size = style_to_size(style&.to_sym)
+        size = style_to_size(style)
         @attachment.variant(
-          resize: size,
-          strip: true,
-          'auto-orient': true,
-          colorspace: 'sRGB',
+          resize_to_limit: size,
+          strip: true
         ).processed
       end
 
@@ -61,8 +57,12 @@ module Spree
         @attachment.metadata
       end
 
+      def normalize_styles(styles)
+        styles.transform_values { |v| v.split('x') }
+      end
+
       def style_to_size(style)
-        @styles.fetch(style) { DEFAULT_SIZE }
+        @styles.fetch(style&.to_sym) { [width, height] }
       end
     end
   end
