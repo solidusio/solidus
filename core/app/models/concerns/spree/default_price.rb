@@ -38,7 +38,7 @@ module Spree
     # A price is a candidate to be considered as the default when it meets
     # {Spree::Variant.default_pricing} criteria. When more than one candidate is
     # found, non-persisted records take preference. When more than one persisted
-    # candidate exists, the one most recently updated is taken or, in case of
+    # candidate exists, the one most recently created is taken or, in case of
     # race condition, the one with higher id.
     #
     # @return [Spree::Price, nil]
@@ -54,7 +54,7 @@ module Spree
       end.min do |a, b|
         [b, a].map do |i|
           [
-            i.updated_at || Time.zone.now,
+            i.created_at || Time.zone.now,
             i.id || Float::INFINITY
           ]
         end.reduce { |x, y| x <=> y }

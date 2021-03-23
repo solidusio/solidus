@@ -238,11 +238,10 @@ RSpec.describe Spree::Variant, type: :model do
       end
     end
 
-    it 'prioritizes prices recently updated' do
+    it 'prioritizes prices recently created' do
       variant = create(:variant)
-      price = create(:price, variant: variant, currency: 'USD')
       create(:price, variant: variant, currency: 'USD')
-      price.touch
+      price = create(:price, variant: variant, currency: 'USD')
       variant.prices.reload
 
       expect(variant.default_price).to eq(price)

@@ -100,7 +100,7 @@ RSpec.describe Spree::Price, type: :model do
     describe '.currently_valid' do
       it 'prioritizes first those associated to a country' do
         price_1 = create(:price, country: create(:country))
-        price_2 = create(:price, country: nil) { |price| price.touch }
+        price_2 = create(:price, country: nil)
 
         result = described_class.currently_valid
 
@@ -110,15 +110,14 @@ RSpec.describe Spree::Price, type: :model do
       end
 
       context 'when country data is the same' do
-        it 'prioritizes first those recently updated' do
+        it 'prioritizes first those recently created' do
           price_1 = create(:price, country: nil)
           price_2 = create(:price, country: nil)
-          price_1.touch
 
           result = described_class.currently_valid
 
           expect(
-            result.index(price_1) < result.index(price_2)
+            result.index(price_2) < result.index(price_1)
           ).to be(true)
         end
       end
