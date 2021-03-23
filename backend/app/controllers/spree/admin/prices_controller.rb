@@ -10,12 +10,12 @@ module Spree
 
         @search = @product.prices.accessible_by(current_ability, :index).ransack(params[:q])
         @master_prices = @search.result
-          .currently_valid
+          .prioritized_for_default
           .for_master
           .order(:variant_id, :country_iso, :currency)
           .page(params[:page]).per(Spree::Config.admin_variants_per_page)
         @variant_prices = @search.result
-          .currently_valid
+          .prioritized_for_default
           .for_variant
           .order(:variant_id, :country_iso, :currency)
           .page(params[:page]).per(Spree::Config.admin_variants_per_page)
