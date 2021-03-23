@@ -44,7 +44,7 @@ module Spree
     # @return [Spree::Price, nil]
     # @see Spree::Price.default_pricing
     def default_price
-      candidates = (prices + prices.with_discarded).to_a.uniq
+      candidates = discarded? ? (prices + prices.with_discarded).to_a.uniq : prices.to_a
       candidates.select do |price|
         price.
           attributes.

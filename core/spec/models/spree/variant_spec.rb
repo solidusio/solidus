@@ -257,10 +257,10 @@ RSpec.describe Spree::Variant, type: :model do
       expect(variant.default_price.attributes).to eq(price.attributes)
     end
 
-    it 'includes discarded prices' do
+    it 'includes discarded prices when the variant is discarded' do
       variant = create(:variant)
       price = create(:price, variant: variant, currency: 'USD')
-      price.discard
+      variant.discard
 
       expect(variant.default_price).to eq(price)
     end
