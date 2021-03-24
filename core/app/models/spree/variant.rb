@@ -276,8 +276,9 @@ module Spree
     end
 
     # Chooses an appropriate price for the given pricing options
+    # This has been deprecated in favor of #price_for_options.
     #
-    # @see Spree::Variant::PriceSelector#price_for
+    # @see Spree::Variant::PriceSelector#price_for_options
     delegate :price_for, to: :price_selector
 
     # Returns the difference in price from the master variant
@@ -291,6 +292,17 @@ module Spree
     def price_same_as_master?(pricing_options = Spree::Config.default_pricing_options)
       diff = price_difference_from_master(pricing_options)
       diff && diff.zero?
+    end
+
+    def price_for_options(price_options)
+      if price_selector.respond_to?(:price_for_options)
+        price_selector.price_for_options(price_options)
+      else
+        money = price_for(price_options)
+        return if money.nil?
+
+        Spree::Price.new(amount: money.to_d, variant: self, currency: price_options.currency)
+      end
     end
 
     # Generates a friendly name and sku string.
