@@ -133,6 +133,65 @@ module Spree
         end
       end
 
+      context "when referencing existing return items" do
+        subject do
+          post(
+            spree.api_order_customer_returns_path(order),
+            params: {
+              order_id: order.number,
+              customer_return: customer_return_params
+            }
+          )
+        end
+
+        let(:stock_location) { create(:stock_location) }
+        let(:inventory_unit) { create(:inventory_unit, state: "shipped") }
+        let(:order) { inventory_unit.order }
+        let(:return_item) do
+          create(:return_item, inventory_unit: inventory_unit)
+        end
+
+        let(:customer_return_params) do
+          {
+            stock_location_id: stock_location.id,
+            return_items_attributes: [return_item.attributes]
+          }
+        end
+
+        it "can create a new customer return" do
+          pending("fix for referrencing existing return items")
+          expect { subject }.to change { Spree::CustomerReturn.count }.
+            from(0).to(1)
+
+          expect(response).to have_http_status(:success)
+          expect(json_response).to have_attributes(attributes)
+        end
+
+        it "does not change the reception status of the return item" do
+          expect { subject }.
+            to_not change { return_item.reload.reception_status }.
+            from("awaiting")
+        end
+
+        context "and return items attributes passed in as a hash of hashes" do
+          let(:customer_return_params) do
+            {
+              stock_location_id: stock_location.id,
+              return_items_attributes: {
+                "0" => return_item.attributes
+              }
+            }
+          end
+
+          it "can create a new customer return" do
+            pending("fix for referrencing existing return items")
+            expect { subject }.to change { Spree::CustomerReturn.count }.
+              from(0).to(1)
+
+            expect(response).to have_http_status(:success)
+            expect(json_response).to have_attributes(attributes)
+          end
+        end
       end
     end
   end
