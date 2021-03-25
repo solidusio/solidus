@@ -114,6 +114,29 @@ module Spree
             end
           end
 
+          context 'with a custom shipping calculator with preference' do
+            class Spree::Calculator::Shipping::WithUnknownPreferences < Spree::ShippingCalculator
+              def compute_package(_package)
+                # no op
+              end
+            end
+
+            let!(:shipping_methods) do
+              [
+                create(
+                  :shipping_method,
+                  calculator: Spree::Calculator::Shipping::WithUnknownPreferences.new(
+                    preferences: { a: "b" }
+                  )
+                )
+              ]
+            end
+
+            it 'does not raise an error' do
+              expect { subject.shipping_rates(package) }.not_to raise_error
+            end
+          end
+
           context 'with two shipping methods of different cost' do
             let!(:shipping_methods) do
               [
