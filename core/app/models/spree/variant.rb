@@ -283,10 +283,10 @@ module Spree
 
     # Returns the difference in price from the master variant
     def price_difference_from_master(pricing_options = Spree::Config.default_pricing_options)
-      master_price = product.master.price_for(pricing_options)
-      variant_price = price_for(pricing_options)
+      master_price = product.master.price_for_options(pricing_options)
+      variant_price = price_for_options(pricing_options)
       return unless master_price && variant_price
-      variant_price - master_price
+      Spree::Money.new(variant_price.amount - master_price.amount, currency: pricing_options.currency)
     end
 
     def price_same_as_master?(pricing_options = Spree::Config.default_pricing_options)

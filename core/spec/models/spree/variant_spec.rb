@@ -236,8 +236,8 @@ RSpec.describe Spree::Variant, type: :model do
       end
 
       it "displays default price" do
-        expect(variant.price_for(pricing_options_united_states).to_s).to eq("$19.99")
-        expect(variant.price_for(pricing_options_germany).to_s).to eq("€29.99")
+        expect(variant.price_for_options(pricing_options_united_states).money.to_s).to eq("$19.99")
+        expect(variant.price_for_options(pricing_options_germany).money.to_s).to eq("€29.99")
       end
     end
 
@@ -333,7 +333,7 @@ RSpec.describe Spree::Variant, type: :model do
       let(:variant) { create(:variant, product: product, price: 35) }
 
       before do
-        allow(product.master).to receive(:price_for).and_return(nil)
+        allow(product.master).to receive(:price_for_options).and_return(nil)
       end
 
       it { is_expected.to be_nil }
@@ -344,7 +344,7 @@ RSpec.describe Spree::Variant, type: :model do
       let(:variant) { create(:variant, product: product, price: 35) }
 
       before do
-        allow(variant).to receive(:price_for).and_return(nil)
+        allow(variant).to receive(:price_for_options).and_return(nil)
       end
 
       it { is_expected.to be_nil }
@@ -375,7 +375,7 @@ RSpec.describe Spree::Variant, type: :model do
       let(:variant) { create(:variant, price: 10, product: master.product) }
 
       before do
-        allow(master).to receive(:price_for).and_return(nil)
+        allow(master).to receive(:price_for_options).and_return(nil)
       end
 
       subject { variant.price_same_as_master? }
@@ -388,7 +388,7 @@ RSpec.describe Spree::Variant, type: :model do
       let(:variant) { create(:variant, price: 10, product: master.product) }
 
       before do
-        allow(variant).to receive(:price_for).and_return(nil)
+        allow(variant).to receive(:price_for_options).and_return(nil)
       end
 
       subject { variant.price_same_as_master? }
