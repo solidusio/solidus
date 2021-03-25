@@ -112,23 +112,27 @@ module Spree
         expect(json_response["stock_location_id"]).to eq final_stock_location.id
       end
 
-      it "can create a new customer return" do
-        stock_location = FactoryBot.create(:stock_location)
-        unit = FactoryBot.create(:inventory_unit, state: "shipped")
-        cr_params = { stock_location_id: stock_location.id,
-                       return_items_attributes: [{
-                         inventory_unit_id: unit.id,
-                         reception_status_event: "receive",
-                       }] }
+      context "when creating new return items" do
+        it "can create a new customer return" do
+          stock_location = FactoryBot.create(:stock_location)
+          unit = FactoryBot.create(:inventory_unit, state: "shipped")
+          cr_params = { stock_location_id: stock_location.id,
+                         return_items_attributes: [{
+                           inventory_unit_id: unit.id,
+                           reception_status_event: "receive",
+                         }] }
 
-        post spree.api_order_customer_returns_path(order), params: { order_id: order.number, customer_return: cr_params }
+          post spree.api_order_customer_returns_path(order), params: { order_id: order.number, customer_return: cr_params }
 
-        expect(response.status).to eq(201)
-        expect(json_response).to have_attributes(attributes)
+          expect(response.status).to eq(201)
+          expect(json_response).to have_attributes(attributes)
 
-        customer_return = Spree::CustomerReturn.last
+          customer_return = Spree::CustomerReturn.last
 
-        expect(customer_return.return_items.first.reception_status).to eql "received"
+          expect(customer_return.return_items.first.reception_status).to eql "received"
+        end
+      end
+
       end
     end
   end
