@@ -10,7 +10,8 @@ module Spree
         include ControllerHelpers::Pricing
 
         included do
-          helper_method :current_order
+          helper_method :current_order,
+                        :current_order_in_progress?
         end
 
         # The current incomplete order from the guest_token for use in cart and during checkout
@@ -34,6 +35,13 @@ module Spree
             @current_order.record_ip_address(ip_address)
             return @current_order
           end
+        end
+
+        # Whether some items have been added to the current order
+        #
+        # @return [Boolean]
+        def current_order_in_progress?
+          current_order.present? && current_order.items?
         end
 
         def associate_user

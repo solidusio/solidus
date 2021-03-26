@@ -724,6 +724,15 @@ module Spree
       end
     end
 
+    # Returns whether have been added some {#line_items}
+    #
+    # It considers both persisted and in-memory line items.
+    #
+    # @return [Boolean]
+    def items?
+      line_items.any?
+    end
+
     private
 
     def process_payments_before_complete

@@ -53,10 +53,19 @@
     <%= f.field_container :default_currency do %>
       <%= f.label :default_currency %>
       <%= f.select :default_currency,
-        Spree::Config.available_currencies.map(&:iso_code),
+        available_currencies,
         { include_blank: true },
         { class: 'custom-select fullwidth' } %>
       <%= f.error_message_on :default_currency %>
+    <% end %>
+
+    <%= f.field_container :currencies do %>
+      <%= f.label :currencies %>
+      <%= f.select :currencies,
+        available_currencies,
+        { include_hidden: false },
+        { class: 'select2 fullwidth', multiple: true } %>
+      <%= f.error_message_on :currencies %>
     <% end %>
 
     <%= f.field_container :cart_tax_country_iso do %>

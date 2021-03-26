@@ -101,6 +101,10 @@ module Spree
       end
     end
 
+    def current_order_has_items
+      render json: { result: current_order_in_progress? }
+    end
+
     private
 
     def store_guest_token

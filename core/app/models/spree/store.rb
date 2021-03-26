@@ -9,6 +9,8 @@ module Spree
   # hosted by a single Solidus implementation can be built.
   #
   class Store < Spree::Base
+    serialize :currencies, Set
+
     has_many :store_payment_methods, inverse_of: :store
     has_many :payment_methods, through: :store_payment_methods
 
@@ -41,6 +43,36 @@ module Spree
       else
         super(locales.map(&:to_s).join(","))
       end
+    end
+
+    # Currency in the absence of a user preference
+    #
+    # @return [String]
+    # @example
+    #   'USD'
+    def main_currency
+      default_currency.presence || Spree::Config.currency
+    end
+
+    # All currencies from which a user can choose
+    #
+    # These are {#main_currency} plus {#currencies}.
+    #
+    # @return [Set<String>]
+    # @see #currencies
+    # @see #main_currency
+    # @example
+    #   Set['BOB', 'EUR']
+    def supported_currencies
+      currencies + Set[main_currency]
+    end
+
+    # Whether the store has more than one supported currency
+    #
+    # @return [Boolean]
+    # @see #supported_currencies
+    def multicurrency?
+      supported_currencies.size > 1
     end
 
     def self.default
