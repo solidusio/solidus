@@ -13,7 +13,8 @@ Currently, we only provide two sorters, which you should use unless you need cus
 - [Unsorted](https://github.com/solidusio/solidus/blob/master/core/app/models/spree/stock/location_sorter/unsorted.rb),
   which allocates inventory from stock locations as they are returned from the DB.
 - [Default first](https://github.com/solidusio/solidus/blob/master/core/app/models/spree/stock/location_sorter/default_first.rb),
-  which allocates inventory from the default stock location first.
+  which allocates inventory from the default stock location first and then selects the next stock location
+  based on the position column (can be edited in the Admin UI).
 
 ## Custom sorter API
 

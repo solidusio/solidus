@@ -26,7 +26,7 @@ module Spree
     validates_uniqueness_of :code, allow_blank: true, case_sensitive: false
 
     scope :active, -> { where(active: true) }
-    scope :order_default, -> { order(default: :desc, name: :asc) }
+    scope :order_default, -> { order(default: :desc, position: :asc) }
 
     after_create :create_stock_items, if: :propagate_all_variants?
     after_save :ensure_one_default
