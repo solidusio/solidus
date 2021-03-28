@@ -109,6 +109,16 @@ jobs:
       - setup
       - test
 
+  postgres_rails61:
+    executor: postgres
+    parallelism: *parallelism
+    environment:
+      RAILS_VERSION: '~> 6.1.0'
+      DISABLE_ACTIVE_STORAGE: true
+    steps:
+      - setup
+      - test
+
   postgres_rails60:
     executor: postgres
     parallelism: *parallelism
@@ -140,6 +150,7 @@ workflows:
       - mysql
       - postgres_rails60
       - postgres_rails52
+      - postgres_rails61
       - stoplight/push:
           context: "Solidus Core Team"
           project: solidus/solidus-api
