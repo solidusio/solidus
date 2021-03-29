@@ -159,7 +159,6 @@ module Spree
         end
 
         it "can create a new customer return" do
-          pending("fix for referrencing existing return items")
           expect { subject }.to change { Spree::CustomerReturn.count }.
             from(0).to(1)
 
@@ -184,12 +183,28 @@ module Spree
           end
 
           it "can create a new customer return" do
-            pending("fix for referrencing existing return items")
             expect { subject }.to change { Spree::CustomerReturn.count }.
               from(0).to(1)
 
             expect(response).to have_http_status(:success)
             expect(json_response).to have_attributes(attributes)
+          end
+        end
+
+        context "with reception_status_event provided for return item" do
+          let(:customer_return_params) do
+            {
+              stock_location_id: stock_location.id,
+              return_items_attributes: [
+                return_item.attributes.merge(reception_status_event: "receive")
+              ]
+            }
+          end
+
+          it "updates the reception status of the return item" do
+            expect { subject }.
+              to change { return_item.reload.reception_status }.
+              from("awaiting").to("received")
           end
         end
       end
