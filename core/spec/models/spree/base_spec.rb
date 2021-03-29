@@ -45,13 +45,18 @@ RSpec.describe Spree::Base do
 
     it "returns a Hash nevertheless" do
       instance = PrefTestWithoutSerialization.new
-      expect(instance.preferences).to eq({})
+      expect(instance.preferences).to be_a(Hash)
     end
 
     it "returns a Hash when there's already values in the table" do
       ActiveRecord::Base.connection.execute("INSERT INTO pref_tests (col, preferences) VALUES ('test', '---\n:percent: 20')")
       instance = PrefTestWithoutSerialization.first
-      expect(instance.preferences).to eq(percent: 20)
+      expect(instance.preferences).to include(percent: 20)
+    end
+
+    it "includes the persistable module when calling #preference and sets the preference default" do
+      PrefTestWithoutSerialization.preference :percentage, :number, default: 5
+      expect(PrefTestWithoutSerialization.new.preferences).to eq(percentage: 5)
     end
   end
 end

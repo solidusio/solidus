@@ -6,6 +6,22 @@ class Spree::Base < ActiveRecord::Base
   include Spree::Core::Permalinks
   include Spree::RansackableAttributes
 
+  def self.preference(*args)
+    Spree::Deprecation.warn <<~WARN
+      #{name} has a `preferences` column, but does not explicitly (de)serialize this column.
+      In order to make #{name} work with future versions of Solidus (and Rails), please add the
+      following line to your class:
+      ```
+      class #{name}
+        include Spree::Preferences::Persistable
+        ...
+      end
+      ```
+    WARN
+    include Spree::Preferences::Persistable
+    preference(*args)
+  end
+
   def preferences
     value = read_attribute(:preferences)
     if !value.is_a?(Hash)
