@@ -183,11 +183,21 @@ module Spree
           end
 
           it "can create a new customer return" do
+            expect(Spree::Deprecation).to receive(:warn)
             expect { subject }.to change { Spree::CustomerReturn.count }.
               from(0).to(1)
 
             expect(response).to have_http_status(:success)
             expect(json_response).to have_attributes(attributes)
+          end
+
+          it "logs a deprecation warning" do
+            expect(Spree::Deprecation).
+              to receive(:warn).
+              with(
+                /Passing `return_items_attributes` as a hash of hashes is deprecated/
+              )
+            subject
           end
         end
 
