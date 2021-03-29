@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
+require 'spree/preferences/persistable'
+
 module Spree
   class Calculator < Spree::Base
-    serialize :preferences, Hash
-    after_initialize :initialize_preference_defaults
+    include Spree::Preferences::Persistable
 
     belongs_to :calculable, polymorphic: true, optional: true
 

@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'spree/preferences/persistable'
+
 class Spree::Base < ActiveRecord::Base
   include Spree::Preferences::Preferable
   include Spree::Core::Permalinks
@@ -11,17 +13,15 @@ class Spree::Base < ActiveRecord::Base
       Spree::Deprecation.warn <<~WARN
         #{self.class.name} has a `preferences` column, but does not explicitly (de)serialize this column.
         In order to make #{self.class.name} work with future versions of Solidus (and Rails), please add the
-        following to lines to your class:
+        following lines to your class:
         ```
         class #{self.class.name}
-          serialize :preferences, Hash
-          after_initialize :initialize_preference_defaults
+          include Spree::Preferences::Persistable
           ...
         end
         ```
       WARN
-      self.class.serialize :preferences, Hash
-      self.class.after_initialize :initialize_preference_defaults
+      self.class.include Spree::Preferences::Persistable
 
       ActiveRecord::Type::Serialized.new(
         ActiveRecord::Type::Text.new,
@@ -29,12 +29,6 @@ class Spree::Base < ActiveRecord::Base
       ).deserialize(value)
     else
       value
-    end
-  end
-
-  def initialize_preference_defaults
-    if has_attribute?(:preferences)
-      self.preferences = default_preferences.merge(preferences)
     end
   end
 
