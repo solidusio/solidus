@@ -6,6 +6,7 @@ module Spree
       extend ActiveSupport::Concern
 
       included do
+        include Spree::Preferences::Preferable
         serialize :preferences, Hash
         after_initialize :initialize_preference_defaults
       end

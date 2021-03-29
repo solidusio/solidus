@@ -3,7 +3,6 @@
 require 'spree/preferences/persistable'
 
 class Spree::Base < ActiveRecord::Base
-  include Spree::Preferences::Preferable
   include Spree::Core::Permalinks
   include Spree::RansackableAttributes
 
