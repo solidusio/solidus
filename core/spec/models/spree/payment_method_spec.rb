@@ -32,6 +32,12 @@ RSpec.describe Spree::PaymentMethod, type: :model do
     })
   end
 
+  describe "preferences" do
+    subject { described_class.new.preferences }
+
+    it { is_expected.to be_a(Hash) }
+  end
+
   describe "available_to_[<users>, <admin>, <store>]" do
     context "when searching for payment methods available to users and admins" do
       subject { Spree::PaymentMethod.available_to_users.available_to_admin }

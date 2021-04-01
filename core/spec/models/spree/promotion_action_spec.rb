@@ -3,6 +3,12 @@
 require 'rails_helper'
 
 RSpec.describe Spree::PromotionAction, type: :model do
+  describe "preferences" do
+    subject { described_class.new.preferences }
+
+    it { is_expected.to eq({}) }
+  end
+
   describe '#remove_from' do
     class MyPromotionAction < Spree::PromotionAction
       def perform(options = {})
