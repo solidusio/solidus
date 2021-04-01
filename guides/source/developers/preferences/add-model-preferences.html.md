@@ -4,7 +4,13 @@ Solidus comes with many model-specific preferences. They are configured to have
 default values that are appropriate for typical stores. Additional preferences
 can be added by your application or included extensions.
 
-Preferences can be set on any model that inherits from [`Spree::Base`][spree-base].
+Preferences can be set on any model that includes `Spree::Preferences::Persistable`.
+In core Solidus, these are all classes inheriting from:
+
+  - `Spree::Calculator`
+  - `Spree::PromotionAction`
+  - `Spree::PaymentMethod`
+  - `Spree::PromotionRule`
 
 Note that model preferences apply only to the current model. To learn more about
 application-wide preferences, see the [App configuration][app-configuration]
@@ -21,6 +27,7 @@ You can define preferences for a model within the model itself:
 ```ruby
 module MyStore
   class User < Spree::Base
+    include Spree::Preferences::Persistable
     preference :hot_salsa, :boolean
     preference :dark_chocolate, :boolean, default: true
     preference :color, :string
@@ -30,7 +37,7 @@ module MyStore
 end
 ```
 
-This will work because User is a subclass of Spree::Base. If found,
+This will work because User includes [`Spree::Preferences::Persistable`][spree-persistable]. If found,
 the preferences attribute gets serialized into a Hash and merged with the default values.
 
 <!-- TODO:
@@ -178,4 +185,4 @@ user.preferred_color_type # => :string
 ```
 
 [app-configuration]: app-configuration.html
-[spree-base]: https://github.com/solidusio/solidus/blob/master/core/app/models/spree/base.rb
+[spree-persistable]: https://github.com/solidusio/solidus/blob/master/core/lib/spree/preferences/persistable.rb
