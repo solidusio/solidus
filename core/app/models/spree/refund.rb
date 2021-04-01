@@ -48,6 +48,10 @@ module Spree
       return true if perform_after_create == false
       return true if transaction_id.present?
 
+      # This is needed otherwise set_perform_after_create_default callback
+      # will print a deprecation warning when save! creates a record
+      self.perform_after_create = false unless persisted?
+
       credit_cents = money.cents
 
       @perform_response = process!(credit_cents)
@@ -63,9 +67,7 @@ module Spree
       log_entries.build(details: perform_response.to_yaml)
 
       self.transaction_id = perform_response.authorization
-      # This is needed otherwise set_perform_after_create_default callback
-      # will print a deprecation warning when save! creates a record.
-      self.perform_after_create = false unless persisted?
+
       save!
 
       update_order
