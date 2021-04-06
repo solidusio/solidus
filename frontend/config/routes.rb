@@ -17,7 +17,6 @@ Spree::Core::Engine.routes.draw do
 
   get '/orders/populate', to: 'orders#populate_redirect'
   get '/orders/:id/token/:token' => 'orders#show', as: :token_order
-  get '/orders/current_order_has_items' => 'orders#current_order_has_items', format: :json
 
   resources :orders, except: [:index, :new, :create, :destroy] do
     post :populate, on: :collection

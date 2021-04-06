@@ -1,6 +1,13 @@
 <% if multicurrency? %>
   <li id="currency_selector" data-hook>
-    <%= form_tag spree.select_currency_path, class: 'navbar-form', method: :put, data: { current_currency: current_currency, confirm_text: I18n.t('spree.currency_switch_confirm') } do %>
+    <%= form_tag spree.select_currency_path,
+      class: 'navbar-form',
+      method: :put,
+      data: {
+        current_currency: current_currency,
+        confirm_text: I18n.t('spree.currency_switch_confirm'),
+        needs_confirm: current_order_in_progress?
+      } do %>
       <div class="form-group">
         <label for="switch_currency" class="sr-only">
           <%= I18n.t('spree.currency') %>
