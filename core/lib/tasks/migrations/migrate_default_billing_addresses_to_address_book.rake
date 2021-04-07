@@ -8,24 +8,12 @@ namespace :solidus do
         if Spree::UserAddress.where(default_billing: true).any?
           Spree.user_class.joins(:bill_address).update_all(bill_address_id: nil) # rubocop:disable Rails/SkipsModelValidations
         end
-        adapter_type = Spree::Base.connection.adapter_name.downcase.to_sym
-        if adapter_type == :mysql2
-          sql = <<~SQL
-            UPDATE spree_user_addresses
+        Spree::UserAddress.joins(
+          <<~SQL
             JOIN spree_users ON spree_user_addresses.user_id = spree_users.id
-              AND spree_user_addresses.address_id = spree_users.bill_address_id
-            SET spree_user_addresses.default_billing = true
+                             AND spree_user_addresses.address_id = spree_users.bill_address_id
           SQL
-        else
-          sql = <<~SQL
-            UPDATE spree_user_addresses
-            SET default_billing = true
-            FROM spree_users
-            WHERE spree_user_addresses.address_id = spree_users.bill_address_id
-              AND spree_user_addresses.user_id = spree_users.id;
-          SQL
-        end
-        Spree::Base.connection.execute sql
+        ).update_all(default_billing: true)
         puts "Success"
       end
 
