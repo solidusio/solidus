@@ -37,6 +37,14 @@ executors:
       - image: *image
       - image: cimg/mysql:5.7
 
+  sqlite:
+    working_directory: *workdir
+    environment:
+      <<: *environment
+      DB: sqlite
+    docker:
+      - image: *image
+
 commands:
   setup:
     steps:
@@ -139,6 +147,14 @@ jobs:
       - setup
       - test
 
+  sqlite:
+    executor: sqlite
+    parallelism: *parallelism
+    steps:
+      - setup
+      - libvips
+      - test
+
   postgres_rails60:
     executor: postgres
     parallelism: *parallelism
@@ -168,6 +184,7 @@ workflows:
               only: /master|v\d\.\d+/
       - postgres
       - mysql
+      - sqlite
       - postgres_rails61
       - postgres_rails60
       - postgres_rails52
