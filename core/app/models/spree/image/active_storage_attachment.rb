@@ -7,6 +7,10 @@ module Spree::Image::ActiveStorageAttachment
   delegate :width, :height, to: :attachment, prefix: true
 
   included do
+    validates :attachment, presence: true
+    validate :attachment_is_an_image
+    validate :supported_content_type
+
     has_attachment :attachment,
                    styles: {
                    mini: '48x48>',
@@ -15,7 +19,11 @@ module Spree::Image::ActiveStorageAttachment
                    large: '1200x1200>'
                  },
                  default_style: :product
-    validates :attachment, presence: true
-    validate :attachment_is_an_image
+
+    def supported_content_type
+      unless attachment.content_type.in?(Spree::Config.allowed_image_mime_types)
+        errors.add(:attachment, :content_type_not_supported)
+      end
+    end
   end
 end

@@ -504,6 +504,14 @@ module Spree
     # Enumerable of images adhering to the present_image_class interface
     class_name_attribute :image_attachment_module, default: 'Spree::Image::PaperclipAttachment'
 
+    # @!attribute [rw] allowed_image_mime_types
+    #
+    # Defines which MIME types are allowed for images
+    # `%w(image/jpeg image/jpg image/png image/gif).freeze` is the default.
+    #
+    # @return [Array]
+    class_name_attribute :allowed_image_mime_types, default: %w(image/jpeg image/jpg image/png image/gif).freeze
+
     # Allows switching attachment library for Taxon
     #
     # `Spree::Taxon::PaperclipAttachment`
