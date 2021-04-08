@@ -9,6 +9,18 @@ RSpec.describe Spree::Image, type: :model do
     let(:default_style) { :product }
   end
 
+  it 'is valid when attachment has allowed content type' do
+    image = build(:image,
+                  attachment: File.open(File.join('lib', 'spree', 'testing_support', 'fixtures', 'blank.jpg')))
+    expect(image).to be_valid
+  end
+
+  it 'is not valid when attachment has restricted content type' do
+    image = build(:image,
+                  attachment: File.open(File.join('lib', 'spree', 'testing_support', 'fixtures', 'file.txt')))
+    expect(image).to_not be_valid
+  end
+
   describe 'attachment details' do
     let(:image_file) { File.open(File.join('lib', 'spree', 'testing_support', 'fixtures', 'blank.jpg')) }
     subject { create(:image, attachment: image_file) }
