@@ -150,6 +150,10 @@ module Spree
     #   @return [String] Two-letter ISO code of a {Spree::Country} to assumed as the country of an unidentified customer (default: "US")
     preference :default_country_iso, :string, default: 'US'
 
+    # @!attribute [rw] default_email_regexp
+    #   @return [Regexp] Regex to be used in email validations, for example in Spree::EmailValidator
+    preference :default_email_regexp, :regexp, default: URI::MailTo::EMAIL_REGEXP
+
     # @!attribute [rw] generate_api_key_for_all_roles
     #   @return [Boolean] Allow generating api key automatically for user
     #   at role_user creation for all roles. (default: +false+)
