@@ -69,6 +69,21 @@ describe "Product Images", type: :feature do
       expect(page).not_to have_field "image[alt]", with: "ruby on rails t-shirt"
     end
 
+    context 'Using Active Storage',
+            if: Spree::Config.image_attachment_module == Spree::Image::ActiveStorageAttachment do
+      it "should show a no image placeholder when images fail to download" do
+        click_link "new_image_link"
+        within_fieldset 'New Image' do
+          attach_file('image_attachment', file_path)
+        end
+
+        click_button "Update"
+        Spree::Image.first.attachment.blob.update(key: 11)
+        visit current_path
+        expect(page).to have_xpath("//img[contains(@src, 'assets/noimage/mini')]")
+      end
+    end
+
     context "with several variants" do
       it "should allow an admin to re-assign an image to another variant" do
         click_link "new_image_link"
