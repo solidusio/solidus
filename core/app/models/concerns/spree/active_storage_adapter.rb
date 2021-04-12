@@ -107,6 +107,8 @@ module Spree
 
     def url(style = default_style)
       attachment.url(style)
+    rescue ActiveStorage::FileNotFoundError
+      "noimage/#{style}.png"
     end
 
     def destroy_attachment(_name)
