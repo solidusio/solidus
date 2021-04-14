@@ -134,7 +134,7 @@ module Solidus
 
         Would you like to install it? (y/n)"))
 
-        @plugins_to_be_installed << 'solidus_auth_devise'
+        @plugins_to_be_installed << 'solidus_auth_devise' unless File.open('Gemfile').grep(/gem 'solidus_auth_devise'/)
         @plugin_generators_to_run << 'solidus:auth:install'
       end
     end
