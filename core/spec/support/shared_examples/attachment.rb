@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
 RSpec.shared_examples 'an attachment' do
+  include ImageSpecHelper
   context 'valid attachment' do
     before do
       subject.send(
         :"#{attachment_name}=",
-        File.open(File.join('lib', 'spree', 'testing_support', 'fixtures', 'blank.jpg'))
+        open_image('blank.jpg')
       )
     end
 
