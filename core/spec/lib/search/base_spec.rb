@@ -4,6 +4,7 @@ require 'rails_helper'
 require 'spree/core/product_filters'
 
 RSpec.describe Spree::Core::Search::Base do
+  include ImageSpecHelper
   before do
     include Spree::Core::ProductFilters
     @taxon = create(:taxon, name: "Ruby on Rails")
@@ -22,11 +23,12 @@ RSpec.describe Spree::Core::Search::Base do
 
   context "when include_images is included in the initialization params" do
     let(:params) { { include_images: true, keyword: @product1.name, taxon: @taxon.id } }
+    let(:image_file) { open_image('blank.jpg') }
     subject { described_class.new(params).retrieve_products }
 
     before do
-      @product1.master.images.create(attachment_file_name: "Test", position: 2)
-      @product1.master.images.create(attachment_file_name: "Test1", position: 1)
+      @product1.master.images.create(attachment_file_name: 'test', attachment: image_file, position: 2)
+      @product1.master.images.create(attachment_file_name: 'test1', attachment: image_file, position: 1)
       @product1.reload
     end
 
