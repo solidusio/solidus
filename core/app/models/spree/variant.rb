@@ -183,7 +183,7 @@ module Spree
     # @return [String] a sentence-ified string of option values.
     def options_text
       values = option_values.includes(:option_type).sort_by do |option_value|
-        option_value.option_type.position unless option_value.option_type.nil?
+        option_value.option_type&.position
       end
 
       values.to_a.map! do |ov|
