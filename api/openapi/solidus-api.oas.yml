@@ -6289,8 +6289,6 @@ components:
           type: string
         available_on:
           type: string
-        permalink:
-          type: string
         meta_description:
           type: string
         meta_keywords:
