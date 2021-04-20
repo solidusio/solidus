@@ -46,6 +46,12 @@ module DummyApp
   end
 
   class Application < ::Rails::Application
+    config.load_defaults("#{Rails::VERSION::MAJOR}.#{Rails::VERSION::MINOR}")
+    # TODO: Remove the three following settings once the codebase has been adapted
+    # to load_defaults
+    config.active_record.has_many_inversing = nil
+    config.active_storage.track_variants = nil
+    config.active_record.belongs_to_required_by_default = false
     config.eager_load = false
     config.cache_classes = true
     config.cache_store = :memory_store
