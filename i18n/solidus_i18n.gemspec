@@ -5,7 +5,7 @@ require 'solidus_i18n/version'
 
 Gem::Specification.new do |s|
   s.name        = 'solidus_i18n'
-  s.version     = SolidusI18n.version
+  s.version     = SolidusI18n::VERSION
   s.summary     = 'Provides locale information for use in Solidus.'
   s.description = 'A collection of translations for Solidus.'
 
