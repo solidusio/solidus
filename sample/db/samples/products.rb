@@ -44,7 +44,7 @@ products = [
     depth: 5
   },
   {
-    name: "Solidus Girly",
+    name: "Solidus Women's T-Shirt",
     tax_category: tax_category,
     shipping_category: shipping_category,
     price: 19.99,

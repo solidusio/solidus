@@ -18,7 +18,7 @@ products = {
   ruby_polo: "Ruby Polo",
   solidus_mug: "Solidus Mug",
   ruby_mug: "Ruby Mug",
-  solidus_girly: "Solidus Girly"
+  solidus_womens_tshirt: "Solidus Women's T-Shirt"
 }
 
 products.each do |key, name|
@@ -73,7 +73,7 @@ taxons = [
     products: [
       products[:solidus_long],
       products[:ruby_polo],
-      products[:solidus_girly]
+      products[:solidus_womens_tshirt]
     ]
   },
   {
@@ -111,7 +111,7 @@ taxons = [
       products[:solidus_hoodie],
       products[:solidus_mug],
       products[:solidus_tote],
-      products[:solidus_girly]
+      products[:solidus_womens_tshirt]
     ]
   },
   {

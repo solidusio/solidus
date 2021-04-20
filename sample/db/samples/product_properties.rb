@@ -96,7 +96,7 @@ products =
       "Type" => "Mug",
       "Size" => %{4.5" tall, 3.25" dia.}
     },
-    "Solidus Girly" =>
+    "Solidus Women's T-Shirt" =>
     {
       "Manufacturer" => "Jerseys",
       "Brand" => "Conditioned",

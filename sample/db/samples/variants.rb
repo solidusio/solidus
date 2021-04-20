@@ -14,7 +14,7 @@ solidus_mug = Spree::Product.find_by!(name: "Solidus Mug")
 ruby_mug = Spree::Product.find_by!(name: "Ruby Mug")
 solidus_tote = Spree::Product.find_by!(name: "Solidus Tote")
 ruby_tote = Spree::Product.find_by!(name: "Ruby Tote")
-solidus_girly = Spree::Product.find_by!(name: "Solidus Girly")
+solidus_womens_tshirt = Spree::Product.find_by!(name: "Solidus Women's T-Shirt")
 
 small = Spree::OptionValue.find_by!(name: "Small")
 medium = Spree::OptionValue.find_by!(name: "Medium")
@@ -123,37 +123,37 @@ variants = [
     cost_price: 17
   },
   {
-    product: solidus_girly,
+    product: solidus_womens_tshirt,
     option_values: [small, black],
     sku: "SOL-WM001",
     cost_price: 17
   },
   {
-    product: solidus_girly,
+    product: solidus_womens_tshirt,
     option_values: [small, blue],
     sku: "SOL-WM002",
     cost_price: 17
   },
   {
-    product: solidus_girly,
+    product: solidus_womens_tshirt,
     option_values: [small, white],
     sku: "SOL-WM003",
     cost_price: 17
   },
   {
-    product: solidus_girly,
+    product: solidus_womens_tshirt,
     option_values: [medium, blue],
     sku: "SOL-WM004",
     cost_price: 17
   },
   {
-    product: solidus_girly,
+    product: solidus_womens_tshirt,
     option_values: [medium, white],
     sku: "SOL-WM005",
     cost_price: 17
   },
   {
-    product: solidus_girly,
+    product: solidus_womens_tshirt,
     option_values: [medium, black],
     sku: "SOL-WM006",
     cost_price: 17
@@ -205,7 +205,7 @@ masters = {
     sku: "RUB-MG01",
     cost_price: 7
   },
-  solidus_girly => {
+  solidus_womens_tshirt => {
     sku: "SOL-WM00",
     cost_price: 17
   }
