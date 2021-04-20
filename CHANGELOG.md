@@ -1,4 +1,202 @@
-## Solidus 3.0.0 (master, unreleased)
+## Solidus 3.0.0 (v3.0, 2021-04-20)
+
+### Major Changes
+
+**Removal of all code deprecated during the 2.x series**
+
+The main change in this major version is the removal of all deprecated code that
+we introduced during the 2.x series. This means that if any code that was deprecated
+is still being used, the application will break. Following the deprecation messages
+in the application logs, it should be quite easy to spot what code needs to be changed.
+
+The main things that could break a Solidus application are:
+
+***Paranoia gem has been replaced by Discard gem***
+
+All references to methods added to models by Paranoia will raise a NoMethodError exception now.
+Some of those methods are:
+
+- `paranoia_destroy`
+- `paranoia_delete`
+- `with_deleted`
+- `only_deleted`
+- `really_destroy!`
+- `after_real_destroy`
+
+Pull Requests:
+
+- Discard Paranoia [#3488](https://github.com/solidusio/solidus/pull/3488) ([cedum](https://github.com/cedum))
+
+***Removed core support to first_name and last_name in Spree::Address***
+
+In Solidus v2.11, we added a `name` attribute to `Spree::Address`, which is being populated combining
+`first_name` and `last_name` values every time a new address is added to the system. We also provided
+a rake tasks to update all existing records in order to get applications ready for Solidus 3.0.
+
+With this major version, `name` is the only supported attributes. `first_name` and `last_name` fields are already in the database
+so if needed, a store can revert this change implementing their own logic.
+
+See [3234](https://github.com/solidusio/solidus/issues/3234) for the rationale behind this change.
+
+Pull Requests:
+
+- Move Spree::Address#name attribute to the db [#3908](https://github.com/solidusio/solidus/pull/3908) ([filippoliverani](https://github.com/filippoliverani))
+- Remove deprecated name-related Address fields [#3820](https://github.com/solidusio/solidus/pull/3820) ([filippoliverani](https://github.com/filippoliverani))
+
+***All the other deprecations removal***
+
+For a complete reference to rest of the code removed, these PRs can be taken as reference:
+
+- Remove deprecated attachment_partial_name [#3974](https://github.com/solidusio/solidus/pull/3974) ([kennyadsl](https://github.com/kennyadsl))
+- Remove legacy address state validation logic [#3847](https://github.com/solidusio/solidus/pull/3847) ([cedum](https://github.com/cedum))
+- Raise canceling a payment when try_void is not implemented [#3844](https://github.com/solidusio/solidus/pull/3844) ([kennyadsl](https://
+- Remove all code deprecated in Solidus v2.x [#3818](https://github.com/solidusio/solidus/pull/3818) ([kennyadsl](https://github.com/kennyadsl))
+
+***Removal without deprecations***
+
+We also removed some code that didn't need a deprecation warning. Be sure that your
+codebase doesn't use any of the following:
+
+- `Spree::LineItem::CurrencyMismatch` exception: we are not using it anymore since the behavior we had with `Spree::Config.raise_with_invalid_currency = true` has been removed.
+- `Spree::Order::Checkout` is not used anymore. `Spree::Core::StateMachines::Order` is identical.
+- `Spree::Admin::PaymentsHelper` module is empty after removing all deprecated methods inside it.
+- `UserPaymentSource` is empty after removing all deprecated methods inside it.
+- `Spree::Refund#perform_after_create` attribute, it was into a deprecated path. If you are still using it, please stop, it does nothing now.
+- `Spree::TaxCalculator#ShippingRate`: it is always `nil` now.
+- `Spree::Money::RUBY_NUMERIC_STRING`: was only used in a deprecated code path.
+
+We also removed the following preferences without deprecations. They were just controlling a deprecated
+flow and have no effect so, assuming you already switched to the only accepted value, you can safely
+remove them from your initializer. You'll probably notice that because your app won't start.
+
+- `Spree::Config.raise_with_invalid_currency`
+- `Spree::Config.redirect_back_on_unauthorized preference`
+- `Spree::Config.run_order_validations_on_order_updater preference `
+- `Spree::Config.use_legacy_order_state_machine`
+- `Spree::Config.use_legacy_store_credit_reimbursement_category_name`
+- `Spree::Config.consider_actionless_promotion_active`
+- `Spree::Config.use_legacy_address_state_validator`
+- `Spree::Config.use_combined_first_and_last_name_in_address`
+
+**By default, do not require the whole Rails framework**
+
+This shouldn't give any issue in host applications, but if that happens,
+it can be easily fixable opening `config/application.rb` and add `require 'rails/all'` or
+the specific part of Rails needed by the application.
+
+- Only require the necessary Rails frameworks [#3478](https://github.com/solidusio/solidus/pull/3478) ([elia](https://github.com/elia))
+
+**Switch Paperclip dependency to its maintained version**
+
+We recently added support for Active Support, which will be the default in Solidus 3.0.
+Paperclip will still be around and supported for a while because we don't want to force
+existing stores to accomplish the assets migration. While we support it, we want to use
+the maintained fork.
+
+- Switch to maintained Paperclip fork [#3913](https://github.com/solidusio/solidus/pull/3913) ([filippoliverani](https://github.com/filippoliverani))
+
+### Misc
+
+- Bump removal horizon for 3.x deprecations [#4025](https://github.com/solidusio/solidus/pull/4025) ([kennyadsl](https://github.com/kennyadsl))
+- Add Post-Install message to Solidus 3.0 [#3985](https://github.com/solidusio/solidus/pull/3985) ([kennyadsl](https://github.com/kennyadsl))
+- Add Active Storage in Dummy App for extensions [#3969](https://github.com/solidusio/solidus/pull/3969) ([kennyadsl](https://github.com/kennyadsl))
+- Improve Active Storage configuration for in-memory Dummy App [#3970](https://github.com/solidusio/solidus/pull/3970) ([kennyadsl](https://github.com/kennyadsl))
+- Allow users to create blank issues in GitHub [#3943](https://github.com/solidusio/solidus/pull/3943) ([kennyadsl](https://github.com/kennyadsl))
+- Install Active Storage by default on new stores [#3938](https://github.com/solidusio/solidus/pull/3938) ([kennyadsl](https://github.com/kennyadsl))
+- Avoid too many prompts during solidus:install generator [#3937](https://github.com/solidusio/solidus/pull/3937) ([kennyadsl](https://github.com/kennyadsl))
+- Align Rubocop ruby version to gemspec [#3935](https://github.com/solidusio/solidus/pull/3935) ([spaghetticode](https://github.com/spaghetticode))
+- Skip adding webpacker gem when generating dummyapp [#3922](https://github.com/solidusio/solidus/pull/3922) ([SamuelMartini](https://github.com/SamuelMartini))
+- allow customize database credentials for test app [#3921](https://github.com/solidusio/solidus/pull/3921) ([ccarruitero](https://github.com/ccarruitero))
+- Bump redcarpet from 3.4.0 to 3.5.1 in /guides [#3890](https://github.com/solidusio/solidus/pull/3890) ([dependabot](https://github.com/apps/dependabot))
+- Adjust CircleCI config to reflect Rails versions that we support [#3885](https://github.com/solidusio/solidus/pull/3885) ([kennyadsl](https://github.com/kennyadsl))
+- Bump axios from 0.18.1 to 0.21.1 in /guides [#3881](https://github.com/solidusio/solidus/pull/3881) ([dependabot](https://github.com/apps/dependabot))
+- Bump ini from 1.3.5 to 1.3.7 in /guides [#3861](https://github.com/solidusio/solidus/pull/3861) ([dependabot](https://github.com/apps/dependabot))
+- Drive community to GitHub Discussions when opening issues [#3857](https://github.com/solidusio/solidus/pull/3857) ([kennyadsl](https://github.com/kennyadsl))
+github.com/kennyadsl))
+- Update governance with latest changes to the organization [#3836](https://github.com/solidusio/solidus/pull/3836) ([kennyadsl](https://github.com/kennyadsl))
+- Fix install instructions in Solidus Guides [#3833](https://github.com/solidusio/solidus/pull/3833) ([ikraamg](https://github.com/ikraamg))
+- Update install instructions after 2.11 release [#3825](https://github.com/solidusio/solidus/pull/3825) ([kennyadsl](https://github.com/kennyadsl))
+- Move "thinking cat" fixture to lib folder [#3824](https://github.com/solidusio/solidus/pull/3824) ([mamhoff](https://github.com/mamhoff))
+- Update readme with Solidus demo URL [#3822](https://github.com/solidusio/solidus/pull/3822) ([seand7565](https://github.com/seand7565))
+- Fix headers in changelog [#3812](https://github.com/solidusio/solidus/pull/3812) ([jarednorman](https://github.com/jarednorman))
+- Fixed typo with misspell [#3811](https://github.com/solidusio/solidus/pull/3811) ([hsbt](https://github.com/hsbt))
+
+## Solidus 2.11.9 (v2.11, 2021-04-20)
+
+- Rescue FileNotFoundError exception on failed image downloads [#4026](https://github.com/solidusio/solidus/pull/4026) ([cpfergus1](https://github.com/cpfergus1))
+- Image attachment content type validation fix for ActiveStorage [#4021](https://github.com/solidusio/solidus/pull/4021) ([cpfergus1](https://github.com/cpfergus1))
+- Switch to the correct ActiveStorage variant syntax [#4003](https://github.com/solidusio/solidus/pull/4003) ([filippoliverani](https://github.com/filippoliverani))
+- Only run spring stop in install generator if spring is available [#3999](https://github.com/solidusio/solidus/pull/3999) ([Noah-Silvera](https://github.com/Noah-Silvera))
+- Fix double store credits creation when performing refunds [#3989](https://github.com/solidusio/solidus/pull/3989) ([spaghetticode](https://github.com/spaghetticode))
+- Fix default billing address migration on sqlite [#4020](https://github.com/solidusio/solidus/pull/4020) ([waiting-for-dev](https://github.com/waiting-for-dev))
+
+## Solidus 2.11.8 (v2.11, 2021-04-01)
+
+- Deprecate calling preferences without serialization [#4013](https://github.com/solidusio/solidus/pull/4013) ([mamhoff](https://github.com/mamhoff))
+
+## Solidus 2.11.7 (v2.11, 2021-03-18)
+
+- Use Spree.user_class instead of Spree::LegacyUser in production code [#3995](https://github.com/solidusio/solidus/pull/3995) ([mamhoff](https://github.com/mamhoff))
+## Solidus 2.11.6 (v2.11, 2021-03-18)
+
+- Allow accessing preferences on models that do not have any set [#3998](https://github.com/solidusio/solidus/pull/3998) ([kennyadsl](https://github.com/kennyadsl))
+- Fix for incorrect deprecation class [#3991](https://github.com/solidusio/solidus/pull/3991) ([tmtrademarked](https://github.com/tmtrademarked))
+## Solidus 2.11.5 (v2.11, 2021-03-09)
+
+- Improve address name migration task output [#3982](https://github.com/solidusio/solidus/pull/3982) ([kennyadsl](https://github.com/kennyadsl))
+- Add Address name data migration rake task [#3933](https://github.com/solidusio/solidus/pull/3933) ([spaghetticode](https://github.com/spaghetticode))
+- Add and start populating `spree_addresses.name` field [#3962](https://github.com/solidusio/solidus/pull/3962) ([spaghetticode](https://github.com/spaghetticode))
+- Fix circular reference in factory [#3959](https://github.com/solidusio/solidus/pull/3959) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Remove Deprecation Warning in ActiveModel Errors [#3946](https://github.com/solidusio/solidus/pull/3946) ([Azeem838](https://github.com/Azeem838))
+- Only use #original_message in Api::BaseController#parameter_missing_error if defined [#3940](https://github.com/solidusio/solidus/pull/3940) ([dividedharmony](https://github.com/dividedharmony))
+- Pre-select current tax category on product form [#3936](https://github.com/solidusio/solidus/pull/3936) ([spaghetticode](https://github.com/spaghetticode))
+- Inline the attachment form for taxon icons [#3932](https://github.com/solidusio/solidus/pull/3932) ([elia](https://github.com/elia))
+- Show 'guest' correctly in order customer details [#3910](https://github.com/solidusio/solidus/pull/3910) ([nirebu](https://github.com/nirebu))
+- Relax Money dependency in development [#3958](https://github.com/solidusio/solidus/pull/3958) ([kennyadsl](https://github.com/kennyadsl))
+- Lock money gem in development until next release [#3909](https://github.com/solidusio/solidus/pull/3909) ([kennyadsl](https://github.com/kennyadsl))
+- Fix factory loading [#3907](https://github.com/solidusio/solidus/pull/3907) ([elia](https://github.com/elia))
+- [Admin] Automatically check edited return items in RMA form [#3904](https://github.com/solidusio/solidus/pull/3904) ([spaghetticode](https://github.com/spaghetticode))
+- Fix ActionMailer preview loading [#3901](https://github.com/solidusio/solidus/pull/3901) ([aldesantis](https://github.com/aldesantis))
+- Convert jQuery data attribute to number [#3899](https://github.com/solidusio/solidus/pull/3899) ([spaghetticode](https://github.com/spaghetticode))
+- Add English variants to select2_local directory [#3895](https://github.com/solidusio/solidus/pull/3895) ([michaelmichael](https://github.com/michaelmichael))
+- Remove awesome_nested_set override for Rails 6.1 compatibility [#3893](https://github.com/solidusio/solidus/pull/3893) ([kennyadsl](https://github.com/kennyadsl))
+- Set dummy app forgery protection to false [#3887](https://github.com/solidusio/solidus/pull/3887) ([FrancescoAiello01](https://github.com/FrancescoAiello01))
+- Enable ActiveStorage specs against Rails 6.1 [#3886](https://github.com/solidusio/solidus/pull/3886) ([kennyadsl](https://github.com/kennyadsl))
+- Migrate default billing addresses to address book [#3838](https://github.com/solidusio/solidus/pull/3838) ([mamhoff](https://github.com/mamhoff))
+
+## Solidus 2.11.4 (2021-01-19)
+
+- Update taxon icon to use present instead of exists [#3869](https://github.com/solidusio/solidus/pull/3869) ([seand7565](https://github.com/seand7565))
+- Update canonical-rails syntax for latest version [#3865](https://github.com/solidusio/solidus/pull/3865) ([brchristian](https://github.com/brchristian))
+- Add Rails 6.1 support [#3862](https://github.com/solidusio/solidus/pull/3862) ([filippoliverani](https://github.com/filippoliverani))
+- Deprecate unused calculators [#3863](https://github.com/solidusio/solidus/pull/3863) ([DanielePalombo](https://github.com/DanielePalombo))
+- Remove ability to void invalid payments [#3858](https://github.com/solidusio/solidus/pull/3858) ([vl3](https://github.com/vl3))
+- Add soft-delete support for Api::ResourceController [#3854](https://github.com/solidusio/solidus/pull/3854) ([cedum](https://github.com/cedum))
+- Remove deprecated sass color-#{state} variables usage [#3853](https://github.com/solidusio/solidus/pull/3853) ([kennyadsl](https://github.com/kennyadsl))
+- Remove the gray border inside a product image [#3851](https://github.com/solidusio/solidus/pull/3851) ([mfrecchiami](https://github.com/mfrecchiami))
+- Remove all usage of FooAbility and BarAbility when testing abilities [#3850](https://github.com/solidusio/solidus/pull/3850) ([kennyadsl](https://github.com/kennyadsl))
+- Rename all occurrences of emails with spree username to solidus [#3849](https://github.com/solidusio/solidus/pull/3849) https://github.com/rubenochiavone
+- Avoid `#method` shadowing [#3846](https://github.com/solidusio/solidus/pull/3846) ([spaghetticode](https://github.com/spaghetticode))
+- Move UserClassHandle to lib/ [#3813](https://github.com/solidusio/solidus/pull/3813) ([elia](https://github.com/elia))
+- Fix use_legacy_address_state_validator deprecation message [#3845](https://github.com/solidusio/solidus/pull/3845) ([kennyadsl](https://github.com/kennyadsl))
+- Fix the factories loading mechanism [#3814](https://github.com/solidusio/solidus/pull/3814) ([elia](https://github.com/elia))
+
+## Solidus 2.11.3 (2020-11-18)
+
+- Fix reassign image to another variant in admin [#3810](https://github.com/solidusio/solidus/pull/3810) ([felixyz](https://github.com/felixyz))
+- Remove seeds for images associated to master variant [#3805](https://github.com/solidusio/solidus/pull/3805) ([aleph1ow](https://github.com/aleph1ow))
+- Check for edit permission when showing store credit edit link [#3843](https://github.com/solidusio/solidus/pull/3843) ([spaghetticode](https://github.com/spaghetticode))
+- Use the right method in the AddApplyToAllToVariantPropertyRule migration [#3815](https://github.com/solidusio/solidus/pull/3815) ([ok32](https://github.com/ok32))
+- Fix permissions to see admin menu items [#3840](https://github.com/solidusio/solidus/pull/3840) ([kennyadsl](https://github.com/kennyadsl))
+- Avoid asking user to run migration creating the sandbox [#3839](https://github.com/solidusio/solidus/pull/3839) ([kennyadsl](https://github.com/kennyadsl))
+
+## Solidus 2.11.2 (2020-11-12)
+
+- Fix ability to perform refunds after a first failed attempt [#3831](https://github.com/solidusio/solidus/pull/3831) ([kennyadsl](https://github.com/kennyadsl))
+
+## Solidus 2.11.1 (2020-11-6)
+
+- Lock Rails version to < 6.1.x [#3832](https://github.com/solidusio/solidus/pull/3832) ([kennyadsl](https://github.com/kennyadsl))
 
 ## Solidus 2.11.0 (2020-10-23)
 
