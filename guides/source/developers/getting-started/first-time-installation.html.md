@@ -65,15 +65,17 @@ the JavaScript compiler shipped with Rails by default ([webpacker][webpacker]),
 which is not required for a sample Solidus store.
 You are still free to install and configure it in your Solidus store though.
 
-Once the new project has finished being created, we can open the project's newly
-created `Gemfile` in a text editor and add the required Solidus gems as new
-lines:
+Once the new project is created, you can run:
 
-```ruby
-gem 'solidus'
+```bash
+cd /path/to/your-solidus-project-name
+bundle add solidus
 ```
 
-By requiring [`solidus`][solidus-repo] in your `Gemfile`, you are actually
+This command will add `gem 'solidus'` in the newly created application and
+install all the dependencies.
+
+By adding [`solidus`][solidus-repo] in your `Gemfile`, you are actually
 requiring all five of the core Solidus gems:
 
 - [`solidus_core`][solidus-core]
@@ -88,14 +90,10 @@ site][solidus-gem-documentation].
 
 For a first-time installation, we recommend requiring `solidus` as it provides a
 fully-functioning online store. However, you may wish to only use a subset of
-the gems and create a more custom store.
-
-Once you have saved the `Gemfile`, ensure you are in your Rails project
-directory, and then install the project's dependencies using Bundler.
+the gems and create a more custom store. For example:
 
 ```bash
-cd /path/to/your-solidus-project-name
-bundle install
+bundle add solidus_core solidus_api
 ```
 
 [solidus-repo]: https://github.com/solidusio/solidus
@@ -113,8 +111,6 @@ After the gems have been successfully installed, you need to create the
 necessary configuration files and instructions for the database using generators
 provided by Solidus and Railties.
 
-#### For Solidus v2.11 and above
-
 Run the `solidus:install` generator:
 
 ```bash
@@ -122,34 +118,12 @@ bin/rails generate solidus:install
 ```
 
 This may take a few minutes to complete, and it requires some user confirmation.
-
-#### For Solidus v2.10 and below
-
-If you are using Solidus 2.10 or below, this step is quite different.
-
-First of all, if you want to install the default authentication system provided
-by Solidus ([`solidus_auth_devise`][solidus-auth-devise]), your `Gemfile` should
-look like:
-
-```
-gem 'solidus'
-gem 'solidus_auth_devise'
-```
-
-Once you have run `bundle install`, you can install Solidus with the command:
-
-```bash
-bin/rails generate spree:install
-```
-
-[solidus-auth-devise]: https://github.com/solidusio/solidus_auth_devise
-
 ### Set the administrator username and password
 
-The `solidus:install` generator prompts you to configure the Solidus administrator
-username and password values.
+The `solidus:install` generator prompts you to configure the default authentication solution,
+default payment service, and the Solidus administrator.
 
-The default values are as follows:
+The default values of the administrator user are as follows:
 
 - Username: `admin@example.com`
 - Password: `test123`
