@@ -215,20 +215,6 @@ RSpec.describe Spree::Order, type: :model do
     end
   end
 
-  context "creates shipments cost" do
-    let(:shipment) { double }
-
-    before { allow(order).to receive_messages shipments: [shipment] }
-
-    it "update and persist totals" do
-      expect(Spree::Deprecation).to receive(:warn).
-        with(/^set_shipments_cost is deprecated and will be removed/, any_args)
-      expect(order.updater).to receive :update
-
-      order.set_shipments_cost
-    end
-  end
-
   context "insufficient_stock_lines" do
     let(:line_item) { mock_model Spree::LineItem, insufficient_stock?: true }
 
@@ -402,27 +388,6 @@ RSpec.describe Spree::Order, type: :model do
       it 'uses the configured order merger' do
         expect(order1.merge!(order2, user)).to eq([order1, order2, user])
       end
-    end
-  end
-
-  context ".register_update_hook", partial_double_verification: false do
-    let(:order) { create(:order) }
-
-    before do
-      allow(Spree::Deprecation).to receive(:warn)
-      Spree::Order.register_update_hook :foo
-    end
-
-    after { Spree::Order.update_hooks.clear }
-
-    it "calls hooks during #recalculate" do
-      expect(order).to receive :foo
-      order.recalculate
-    end
-
-    it "calls hook during #finalize!" do
-      expect(order).to receive :foo
-      order.finalize!
     end
   end
 
@@ -609,33 +574,6 @@ RSpec.describe Spree::Order, type: :model do
         order = create(:order, state: "delivery")
         expect{ order.restart_checkout_flow }.to change{ order.state }.from("delivery").to("cart")
       end
-    end
-  end
-
-  # Regression tests for https://github.com/spree/spree/issues/4072
-  context "#state_changed" do
-    let(:order) { FactoryBot.create(:order) }
-
-    before do
-      expect(Spree::Deprecation).to receive(:warn).
-        with(/^state_changed is deprecated and will be removed/, any_args)
-    end
-
-    it "logs state changes" do
-      order.update_column(:payment_state, 'balance_due')
-      order.payment_state = 'paid'
-      expect(order.state_changes).to be_empty
-      order.state_changed('payment')
-      state_change = order.state_changes.find_by(name: 'payment')
-      expect(state_change.previous_state).to eq('balance_due')
-      expect(state_change.next_state).to eq('paid')
-    end
-
-    it "does not do anything if state does not change" do
-      order.update_column(:payment_state, 'balance_due')
-      expect(order.state_changes).to be_empty
-      order.state_changed('payment')
-      expect(order.state_changes).to be_empty
     end
   end
 
@@ -852,14 +790,6 @@ RSpec.describe Spree::Order, type: :model do
       it 'does not generate new number' do
         order.generate_order_number
         expect(order.number).to eq '123'
-      end
-    end
-
-    context "passing options" do
-      it 'is deprecated' do
-        expect(Spree::Deprecation).to receive(:warn).
-          with(/^Passing options to Order\#generate_order_number is deprecated\./)
-        order.generate_order_number(length: 2)
       end
     end
   end
@@ -1644,16 +1574,6 @@ RSpec.describe Spree::Order, type: :model do
         amount_remaining = total_available_store_credit - total_applicable_store_credit
         expect(subject.display_store_credit_remaining_after_capture.money.cents).to eq(amount_remaining * 100.0)
       end
-    end
-  end
-
-  context 'update_params_payment_source' do
-    subject { described_class.new }
-
-    it 'is deprecated' do
-      subject.instance_variable_set('@updating_params', {})
-      expect(Spree::Deprecation).to receive(:warn)
-      subject.send(:update_params_payment_source)
     end
   end
 

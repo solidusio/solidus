@@ -39,8 +39,7 @@ module Spree
     mattr_reader(*ATTRIBUTES)
 
     @@address_attributes = [
-      :id, :name, :firstname, :lastname, :first_name, :last_name,
-      :address1, :address2, :city, :country_id, :state_id,
+      :id, :name, :address1, :address2, :city, :country_id, :state_id,
       :zipcode, :phone, :state_name, :country_iso, :alternative_phone, :company,
       country: [:iso, :name, :iso3, :iso_name],
       state: [:name, :abbr]
@@ -90,7 +89,7 @@ module Spree
       :number, :month, :year, :expiry, :verification_value,
       :first_name, :last_name, :cc_type, :gateway_customer_profile_id,
       :gateway_payment_profile_id, :last_digits, :name, :encrypted_data,
-      :existing_card_id, :wallet_payment_source_id, address_attributes: address_attributes
+      :wallet_payment_source_id, address_attributes: address_attributes
     ]
 
     @@stock_item_attributes = [:variant, :stock_location, :backorderable, :variant_id]
@@ -143,61 +142,11 @@ module Spree
     ]
 
     @@checkout_payment_attributes = [
-      :coupon_code,
       payments_attributes: payment_attributes + [
         source_attributes: source_attributes
       ]
     ]
 
     @@checkout_confirm_attributes = []
-
-    def self.checkout_attributes
-      Spree::Deprecation.warn <<-WARN.squish, caller
-        checkout_attributes is deprecated, please use the permitted
-        attributes set for the specific step that needs to be updated.
-
-        E.g. permitted_checkout_address_attributes
-      WARN
-
-      CheckoutAdditionalAttributes.new(
-        checkout_address_attributes +
-        checkout_delivery_attributes +
-        checkout_payment_attributes +
-        checkout_confirm_attributes
-      )
-    end
-  end
-
-  class CheckoutAdditionalAttributes < Array
-    def <<(*attributes)
-      super
-
-      inject_attributes_to_all_steps(attributes, :<<)
-    end
-
-    def push(*attributes)
-      super
-
-      inject_attributes_to_all_steps(attributes, :push)
-    end
-    alias append push
-
-    def prepend(*attributes)
-      super
-
-      inject_attributes_to_all_steps(attributes, :prepend)
-    end
-    alias unshift prepend
-
-    private
-
-    def inject_attributes_to_all_steps(attributes, method_name)
-      attributes.each do |attribute|
-        PermittedAttributes.checkout_address_attributes.send(method_name, attribute)
-        PermittedAttributes.checkout_delivery_attributes.send(method_name, attribute)
-        PermittedAttributes.checkout_payment_attributes.send(method_name, attribute)
-        PermittedAttributes.checkout_confirm_attributes.send(method_name, attribute)
-      end
-    end
   end
 end

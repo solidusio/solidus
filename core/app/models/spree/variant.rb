@@ -83,7 +83,7 @@ module Spree
     after_save :clear_in_stock_cache
     after_touch :clear_in_stock_cache
 
-    after_real_destroy :destroy_option_values_variants
+    after_destroy :destroy_option_values_variants
 
     # Returns variants that are in stock. When stock locations are provided as
     # a parameter, the scope is limited to variants that are in stock in the
@@ -120,17 +120,6 @@ module Spree
 
     self.whitelisted_ransackable_associations = %w[option_values product prices default_price]
     self.whitelisted_ransackable_attributes = %w[weight sku]
-
-    # Returns variants that are not deleted and have a price in the given
-    # currency.
-    #
-    # @deprecated Please use the .with_prices scope instead
-    # @param currency [String] the currency to filter by; defaults to Spree's default
-    # @return [ActiveRecord::Relation]
-    def self.active(currency = nil)
-      Spree::Deprecation.warn("`Variant.active(currency)` is deprecated. Please use `Variant.with_prices(pricing_options)` instead.", caller)
-      joins(:prices).where(deleted_at: nil).where('spree_prices.currency' => currency || Spree::Config[:currency]).where('spree_prices.amount IS NOT NULL')
-    end
 
     # Returns variants that have a price for the given pricing options
     # If you have modified the pricing options class, you might want to modify this scope too.
@@ -304,26 +293,6 @@ module Spree
       diff && diff.zero?
     end
 
-    # Converts the variant's price to the given currency.
-    #
-    # @deprecated Please use #price_for(pricing_options) instead
-    # @param currency [String] the desired currency
-    # @return [Spree::Price] the price in the desired currency
-    def price_in(currency)
-      prices.currently_valid.find_by(currency: currency)
-    end
-    deprecate price_in: :price_for, deprecator: Spree::Deprecation
-
-    # Fetches the price amount in the specified currency.
-    #
-    # @deprecated Please use #price_for instead and use a money object rathern than a BigDecimal.
-    # @param currency (see #price)
-    # @return [Float] the amount in the specified currency.
-    def amount_in(currency)
-      price_in(currency).try(:amount)
-    end
-    deprecate amount_in: :price_for, deprecator: Spree::Deprecation
-
     # Generates a friendly name and sku string.
     #
     # @return [String]
@@ -365,19 +334,6 @@ module Spree
     # @return [Boolean] true if inventory tracking is enabled
     def should_track_inventory?
       track_inventory? && Spree::Config.track_inventory_levels
-    end
-
-    # Image that can be used for the variant.
-    #
-    # Will first search for images on the variant. If it doesn't find any,
-    # it'll fallback to any variant image (unless +fallback+ is +false+) or to
-    # a new {Spree::Image}.
-    # @param fallback [Boolean] whether or not we should fallback to an image
-    #   not from this variant
-    # @return [Spree::Image] the image to display
-    def display_image(fallback: true)
-      Spree::Deprecation.warn('Spree::Variant#display_image is DEPRECATED. Choose an image from Spree::Variant#gallery instead')
-      images.first || (fallback && product.variant_images.first) || Spree::Image.new
     end
 
     # Determines the variant's property values by verifying which of the product's

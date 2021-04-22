@@ -80,16 +80,6 @@ RSpec.describe Spree::Promotion, type: :model do
         expect(subject).to match [promotion]
       end
     end
-
-    context 'with consider_actionless_promotion_active true' do
-      before do
-        stub_spree_preferences(consider_actionless_promotion_active: true)
-      end
-
-      it "returns promotions without actions" do
-        expect(subject).to match [promotion]
-      end
-    end
   end
 
   describe "#apply_automatically" do
@@ -537,46 +527,6 @@ RSpec.describe Spree::Promotion, type: :model do
         expect(promotion.active?).to eq(true)
       end
     end
-
-    context 'with consider_actionless_promotion_active true' do
-      before { stub_spree_preferences(consider_actionless_promotion_active: true) }
-
-      it "should be active" do
-        expect(promotion.active?).to eq(true)
-      end
-
-      it "should not be active if it hasn't started yet" do
-        promotion.starts_at = Time.current + 1.day
-        expect(promotion.active?).to eq(false)
-      end
-
-      it "should not be active if it has already ended" do
-        promotion.expires_at = Time.current - 1.day
-        expect(promotion.active?).to eq(false)
-      end
-
-      it "should be active if it has started already" do
-        promotion.starts_at = Time.current - 1.day
-        expect(promotion.active?).to eq(true)
-      end
-
-      it "should be active if it has not ended yet" do
-        promotion.expires_at = Time.current + 1.day
-        expect(promotion.active?).to eq(true)
-      end
-
-      it "should be active if current time is within starts_at and expires_at range" do
-        promotion.starts_at = Time.current - 1.day
-        promotion.expires_at = Time.current + 1.day
-        expect(promotion.active?).to eq(true)
-      end
-
-      it "should be active if there are no start and end times set" do
-        promotion.starts_at = nil
-        promotion.expires_at = nil
-        expect(promotion.active?).to eq(true)
-      end
-    end
   end
 
   context "#usage_count" do
@@ -826,7 +776,7 @@ RSpec.describe Spree::Promotion, type: :model do
       end
 
       it "should have eligible rules if any of the rules are eligible" do
-        true_rule = mock_model(Spree::PromotionRule, eligible?: true, applicable?: true)
+        true_rule = stub_model(Spree::PromotionRule, eligible?: true, applicable?: true)
         promotion.promotion_rules = [true_rule]
         allow(promotion.rules).to receive(:for) { promotion.rules }
         expect(promotion.eligible_rules(promotable)).to eq [true_rule]
@@ -856,8 +806,8 @@ RSpec.describe Spree::Promotion, type: :model do
   describe '#line_item_actionable?' do
     let(:order) { double Spree::Order }
     let(:line_item) { double Spree::LineItem }
-    let(:true_rule) { mock_model Spree::PromotionRule, eligible?: true, applicable?: true, actionable?: true }
-    let(:false_rule) { mock_model Spree::PromotionRule, eligible?: true, applicable?: true, actionable?: false }
+    let(:true_rule) { stub_model Spree::PromotionRule, eligible?: true, applicable?: true, actionable?: true }
+    let(:false_rule) { stub_model Spree::PromotionRule, eligible?: true, applicable?: true, actionable?: false }
     let(:rules) { [] }
 
     before do

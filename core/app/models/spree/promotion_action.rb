@@ -1,11 +1,14 @@
 # frozen_string_literal: true
 
+require 'spree/preferences/persistable'
+
 module Spree
   # Base class for all types of promotion action.
   #
   # PromotionActions perform the necessary tasks when a promotion is activated
   # by an event and determined to be eligible.
   class PromotionAction < Spree::Base
+    include Spree::Preferences::Persistable
     include Spree::SoftDeletable
 
     belongs_to :promotion, class_name: 'Spree::Promotion', inverse_of: :promotion_actions, optional: true
@@ -29,15 +32,8 @@ module Spree
     #
     # @param order [Spree::Order] the order to remove the action from
     # @return [void]
-    def remove_from(order)
-      Spree::Deprecation.warn("#{self.class.name.inspect} does not define #remove_from. The default behavior may be incorrect and will be removed in a future version of Solidus.", caller)
-      [order, *order.line_items, *order.shipments].each do |item|
-        item.adjustments.each do |adjustment|
-          if adjustment.source == self
-            item.adjustments.destroy(adjustment)
-          end
-        end
-      end
+    def remove_from(_order)
+      raise 'remove_from should be implemented in a sub-class of PromotionAction'
     end
 
     def to_partial_path

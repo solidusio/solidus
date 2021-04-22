@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
-require 'spree/testing_support/factories/role_factory'
 
 RSpec.describe 'role factory' do
   let(:factory_class) { Spree::Role }

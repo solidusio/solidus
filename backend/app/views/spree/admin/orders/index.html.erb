@@ -65,21 +65,10 @@
             </div>
 
             <div class="col-12 col-xl-6">
-              <% if Spree::Config.use_combined_first_and_last_name_in_address %>
-                <div class="field">
-                  <%= label_tag :q_bill_address_firstname_or_lastname_start, t('spree.name_contains') %>
-                  <%= f.text_field :bill_address_firstname_or_lastname_start, size: 25 %>
-                </div>
-              <% else %>
-                <div class="field">
-                  <%= label_tag :q_bill_address_firstname_start, t('spree.first_name_begins_with') %>
-                  <%= f.text_field :bill_address_firstname_start, size: 25 %>
-                </div>
-                <div class="field">
-                  <%= label_tag :q_bill_address_lastname_start, t('spree.last_name_begins_with') %>
-                  <%= f.text_field :bill_address_lastname_start, size: 25 %>
-                </div>
-              <% end %>
+              <div class="field">
+                <%= label_tag :q_bill_address_name_start, t('spree.name_contains') %>
+                <%= f.text_field :bill_address_name_start, size: 25 %>
+              </div>
             </div>
 
             <div class="col-12 col-xl-6">

@@ -50,20 +50,8 @@ module Spree
         super.ordered_by_position
       end
 
-      def load_providers
-        Spree::Deprecation.warn('load_providers is deprecated. Please use load_payment_method_types instead.', caller)
-        load_payment_method_types
-      end
-
       def load_payment_method_types
         @payment_method_types = Rails.application.config.spree.payment_methods.sort_by(&:name)
-        # TODO: Remove `@providers` instance var once `load_providers` gets removed.
-        @providers = @payment_method_types
-      end
-
-      def validate_payment_provider
-        Spree::Deprecation.warn('validate_payment_provider is deprecated. Please use validate_payment_method_type instead.', caller)
-        validate_payment_method_type
       end
 
       def validate_payment_method_type

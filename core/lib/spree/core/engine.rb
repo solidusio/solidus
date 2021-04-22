@@ -56,49 +56,13 @@ module Spree
       end
 
       config.after_initialize do
-        if Spree::Config.raise_with_invalid_currency == true
-          Spree::Deprecation.warn(
-            'Spree::Config.raise_with_invalid_currency set to true is ' \
-            'deprecated. Please note that by switching this value, ' \
-            'Spree::LineItem::CurrencyMismatch will not be raised anymore.',
-            caller
-          )
-        end
-        if Spree::Config.consider_actionless_promotion_active == true
-          Spree::Deprecation.warn(
-            'Spree::Config.consider_actionless_promotion_active set to true is ' \
-            'deprecated. Please note that by switching this value, ' \
-            'promotions with no actions will be considered active.',
-            caller
-          )
-        end
-        if Spree::Config.run_order_validations_on_order_updater != true
-          Spree::Deprecation.warn(
-            'Spree::Config.run_order_validations_on_order_updater set to false is ' \
-            'deprecated and will not be possibile in Solidus 3.0. Please switch this ' \
-            'value to true and check that everything works as expected.',
-            caller
-          )
-        end
-
-        if Spree::Config.use_legacy_address_state_validator != false
-          Spree::Deprecation.warn(<<~DEPRECATION.squish, caller)
-            Spree::Config.use_legacy_address_state_validator set to true has been
-            deprecated and will be removed in Solidus 3.0. The Spree::Address state
-            validation has been extracted into a configurable external class.
-            Switch Spree::Config.use_legacy_address_state_validator to false to start
-            using the external validation class.
-          DEPRECATION
-        end
-      end
-
-      # Load in mailer previews for apps to use in development.
-      # We need to make sure we call `Preview.all` before requiring our
-      # previews, otherwise any previews the app attempts to add need to be
-      # manually required.
-      if Rails.env.development?
-        initializer "spree.mailer_previews" do
+        # Load in mailer previews for apps to use in development.
+        # We need to make sure we call `Preview.all` before requiring our
+        # previews, otherwise any previews the app attempts to add need to be
+        # manually required.
+        if Rails.env.development? || Rails.env.test?
           ActionMailer::Preview.all
+
           Dir[root.join("lib/spree/mailer_previews/**/*_preview.rb")].each do |file|
             require_dependency file
           end

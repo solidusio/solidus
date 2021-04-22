@@ -25,12 +25,12 @@ Gem::Specification.new do |s|
     actionmailer actionpack actionview activejob activemodel activerecord
     activesupport railties
   ].each do |rails_dep|
-    s.add_dependency rails_dep, ['>= 5.2', '< 6.1.x']
+    s.add_dependency rails_dep, ['>= 5.2', '< 6.2.x']
   end
 
   s.add_dependency 'activemerchant', '~> 1.66'
   s.add_dependency 'acts_as_list', '< 2.0'
-  s.add_dependency 'awesome_nested_set', '~> 3.2'
+  s.add_dependency 'awesome_nested_set', '~> 3.3'
   s.add_dependency 'cancancan', ['>= 2.2', '< 4.0']
   s.add_dependency 'carmen', '~> 1.1.0'
   s.add_dependency 'discard', '~> 1.0'
@@ -39,8 +39,27 @@ Gem::Specification.new do |s|
   s.add_dependency 'kaminari-activerecord', '~> 1.1'
   s.add_dependency 'mini_magick', '~> 4.10'
   s.add_dependency 'monetize', '~> 1.8'
-  s.add_dependency 'paperclip', '>= 4.2'
-  s.add_dependency 'paranoia', '~> 2.4'
+  s.add_dependency 'kt-paperclip', '~> 6.3'
   s.add_dependency 'ransack', '~> 2.0'
   s.add_dependency 'state_machines-activerecord', '~> 0.6'
+
+  s.post_install_message = <<-MSG
+-------------------------------------------------------------
+                Thank you for using Solidus
+-------------------------------------------------------------
+If this is a fresh install, don't forget to run the Solidus
+installer with the following command:
+
+$ bin/rails g solidus:install
+
+If you are updating Solidus from an older version, please run
+the following commands to complete the update:
+
+$ bin/rails solidus:upgrade
+
+Please report any issues at:
+- https://github.com/solidusio/solidus/issues
+- http://slack.solidus.io/
+-------------------------------------------------------------
+MSG
 end

@@ -34,10 +34,6 @@ module Spree
     #   @return [Boolean] should state/state_name be required (default: +true+)
     preference :address_requires_state, :boolean, default: true
 
-    # @!attribute [rw] legacy
-    #   @return [Boolean] use the legacy address' state validation logic (default: +true+)
-    preference :use_legacy_address_state_validator, :boolean, default: true
-
     # @!attribute [rw] admin_interface_logo
     #   @return [String] URL of logo used in admin (default: +'logo/solidus.svg'+)
     preference :admin_interface_logo, :string, default: 'logo/solidus.svg'
@@ -111,16 +107,6 @@ module Spree
     #   @return [Boolean]
     preference :billing_address_required, :boolean, default: false
 
-    # @!attribute [rw] binary_inventory_cache
-    #   Only invalidate product caches when they change from in stock to out of
-    #   stock. By default, caches are invalidated on any change of inventory
-    #   quantity. Setting this to true should make operations on inventory
-    #   faster.
-    #   (default: +false+)
-    #   @deprecated - use inventory_cache_threshold instead
-    #   @return [Boolean]
-    preference :binary_inventory_cache, :boolean, default: false
-
     # @!attribute [rw] can_restrict_stock_management
     #   @return [Boolean] Indicates if stock management can be restricted by location
     preference :can_restrict_stock_management, :boolean, default: false
@@ -154,19 +140,10 @@ module Spree
     #   @return [Integer] Customer returns to show per-page in the admin (default: +15+)
     preference :customer_returns_per_page, :integer, default: 15
 
-    # @!attribute [rw] default_country_id
-    #   @deprecated Use the default country ISO preference instead
-    #   @return [Integer,nil] id of {Spree::Country} to be selected by default in dropdowns (default: nil)
-    preference :default_country_id, :integer
-
     # @!attribute [rw] default_country_iso
     #   Default customer country ISO code
     #   @return [String] Two-letter ISO code of a {Spree::Country} to assumed as the country of an unidentified customer (default: "US")
     preference :default_country_iso, :string, default: 'US'
-
-    # @!attribute [rw] use_custom_cancancan_actions
-    #   @return [Boolean] Allow to use legacy Solidus custom CanCanCan action aliases (default: +true+)
-    preference :use_custom_cancancan_actions, :boolean, default: true
 
     # @!attribute [rw] generate_api_key_for_all_roles
     #   @return [Boolean] Allow generating api key automatically for user
@@ -225,23 +202,6 @@ module Spree
     #   @return [Integer] Promotions to show per-page in the admin (default: +15+)
     preference :promotions_per_page, :integer, default: 15
 
-    # @!attribute [rw] disable_actionless_promotion_validation
-    #   @return [Boolean] Promotions should have actions associated before being considered active (default: +true+)
-    preference :consider_actionless_promotion_active, :boolean, default: true
-
-    # @!attribute [rw] raise_with_invalid_currency
-    #   Whether to raise an exception if trying to set a line item currency
-    #   different from the order currency. When false a validation error
-    #   is added to the instance instead.
-    #   @return [Boolean] (default: +true+)
-    preference :raise_with_invalid_currency, :boolean, default: true
-
-    # @!attribute [rw] redirect_back_on_unauthorized
-    #   Whether to try to redirect users back when they try to access
-    #   unauthorized routes, before redirect them to /unauthorized.
-    #   @return [Boolean] (default: +false+)
-    preference :redirect_back_on_unauthorized, :boolean, default: false
-
     # @!attribute [rw] require_master_price
     #   @return [Boolean] Require a price on the master variant of a product (default: +true+)
     preference :require_master_price, :boolean, default: true
@@ -267,10 +227,6 @@ module Spree
     #   regenerate rake task.
     #   (default: +['IT']+)
     preference :countries_that_use_nested_subregions, :array, default: ['IT']
-
-    # @!attribute [rw] run_order_validations_on_order_updater
-    #   @return [Boolean] Whether to run validation when updating an order with the OrderUpdater
-    preference :run_order_validations_on_order_updater, :boolean, default: false
 
     # @!attribute [rw] send_core_emails
     #   @return [Boolean] Whether to send transactional emails (default: true)
@@ -307,21 +263,6 @@ module Spree
     #   @return [] Track on_hand values for variants / products. (default: true)
     preference :track_inventory_levels, :boolean, default: true
 
-    # @!attribute [rw] use_combined_first_and_last_name_in_address
-    #   @return [Boolean] Use Spree::Address combined first and last name in HTML views and
-    #   API responses. (default: +false+)
-    preference :use_combined_first_and_last_name_in_address, :boolean, default: false
-
-    # @!attribute [rw] use_legacy_order_state_machine
-    #   @return [Boolean] Uses the legacy order state machine from Spree::Order::Checkout
-    #   (default: +false+)
-    preference :use_legacy_order_state_machine, :boolean, default: true
-
-    # The legacy_store_credit_category_name allows to control whether the legacy
-    # way of fetching the category should be used.
-    #
-    # @param [Boolean] enable/disable the legacy way of fetching the store category name
-    preference :use_legacy_store_credit_reimbursement_category_name, :boolean, default: true
 
     # Other configurations
 
@@ -496,23 +437,31 @@ module Spree
 
     # Allows switching attachment library for Image
     #
-    # `Spree::Image::PaperclipAttachment`
-    # is the default and provides the classic Paperclip implementation.
+    # `Spree::Image::ActiveStorageAttachment`
+    # is the default and provides the Active Storage implementation.
     #
     # @!attribute [rw] image_attachment_module
     # @return [Module] a module that can be included into Spree::Image to allow attachments
     # Enumerable of images adhering to the present_image_class interface
-    class_name_attribute :image_attachment_module, default: 'Spree::Image::PaperclipAttachment'
+    class_name_attribute :image_attachment_module, default: 'Spree::Image::ActiveStorageAttachment'
+
+    # @!attribute [rw] allowed_image_mime_types
+    #
+    # Defines which MIME types are allowed for images
+    # `%w(image/jpeg image/jpg image/png image/gif).freeze` is the default.
+    #
+    # @return [Array]
+    class_name_attribute :allowed_image_mime_types, default: %w(image/jpeg image/jpg image/png image/gif).freeze
 
     # Allows switching attachment library for Taxon
     #
-    # `Spree::Taxon::PaperclipAttachment`
-    # is the default and provides the classic Paperclip implementation.
+    # `Spree::Taxon::ActiveStorageAttachment`
+    # is the default and provides the Active Storage implementation.
     #
     # @!attribute [rw] taxon_attachment_module
     # @return [Module] a module that can be included into Spree::Taxon to allow attachments
     # Enumerable of taxons adhering to the present_taxon_class interface
-    class_name_attribute :taxon_attachment_module, default: 'Spree::Taxon::PaperclipAttachment'
+    class_name_attribute :taxon_attachment_module, default: 'Spree::Taxon::ActiveStorageAttachment'
 
     # Allows providing your own class instance for generating order numbers.
     #

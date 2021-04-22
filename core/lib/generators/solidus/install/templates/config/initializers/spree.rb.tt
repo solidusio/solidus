@@ -10,15 +10,6 @@ Spree.config do |config|
   # from address for transactional emails
   config.mails_from = "store@example.com"
 
-  # Use combined first and last name attribute in HTML views and API responses
-  config.use_combined_first_and_last_name_in_address = true
-
-  # Use legacy Spree::Order state machine
-  config.use_legacy_order_state_machine = false
-
-  # Use the legacy address' state validation logic
-  config.use_legacy_address_state_validator = false
-
   # Uncomment to stop tracking inventory levels in the application
   # config.track_inventory_levels = false
 
@@ -27,38 +18,11 @@ Spree.config do |config|
   # any inventory changes.
   # config.inventory_cache_threshold = 3
 
-  # Enable Paperclip adapter for attachments on images and taxons
-  config.image_attachment_module = 'Spree::Image::PaperclipAttachment'
-  config.taxon_attachment_module = 'Spree::Taxon::PaperclipAttachment'
-
-  # Disable legacy Solidus custom CanCanCan actions aliases
-  config.use_custom_cancancan_actions = false
+  # Configure adapter for attachments on products and taxons (use ActiveStorageAttachment or PaperclipAttachment)
+  config.image_attachment_module = 'Spree::Image::ActiveStorageAttachment'
+  config.taxon_attachment_module = 'Spree::Taxon::ActiveStorageAttachment'
 
   # Defaults
-
-  # Set this configuration to `true` to raise an exception when
-  # an order is populated with a line item with a mismatching
-  # currency. The `false` value will just add a validation error
-  # and will be the only behavior accepted in future versions.
-  # See https://github.com/solidusio/solidus/pull/3456 for more info.
-  config.raise_with_invalid_currency = false
-
-  # Set this configuration to false to always redirect the user to
-  # /unauthorized when needed, without trying to redirect them to
-  # their previous location first.
-  config.redirect_back_on_unauthorized = true
-
-  # Set this configuration to `true` to allow promotions
-  # with no associated actions to be considered active for use by customers.
-  # See https://github.com/solidusio/solidus/pull/3749 for more info.
-  config.consider_actionless_promotion_active = false
-
-  # Set this configuration to `false` to avoid running validations when
-  # updating an order. Be careful since you can end up having inconsistent
-  # data in your database turning it on.
-  # See https://github.com/solidusio/solidus/pull/3645 for more info.
-  config.run_order_validations_on_order_updater = true
-
   # Permission Sets:
 
   # Uncomment and customize the following line to add custom permission sets

@@ -85,7 +85,7 @@ module Spree
         end
 
         it "sorts shipping rates by cost" do
-          ShippingMethod.all.each(&:really_destroy!)
+          ShippingMethod.all.each(&:destroy)
           create(:shipping_method, cost: 5)
           create(:shipping_method, cost: 3)
           create(:shipping_method, cost: 4)
@@ -94,7 +94,48 @@ module Spree
         end
 
         context "general shipping methods" do
-          before { Spree::ShippingMethod.all.each(&:really_destroy!) }
+          before { Spree::ShippingMethod.all.each(&:destroy) }
+
+          context 'with a custom shipping calculator with no preference' do
+            class Spree::Calculator::Shipping::NoPreferences < Spree::ShippingCalculator
+              def compute_package(_package)
+                # no op
+              end
+            end
+
+            let!(:shipping_methods) do
+              [
+                create(:shipping_method, calculator: Spree::Calculator::Shipping::NoPreferences.new)
+              ]
+            end
+
+            it 'does not raise an error' do
+              expect { subject.shipping_rates(package) }.not_to raise_error
+            end
+          end
+
+          context 'with a custom shipping calculator with preference' do
+            class Spree::Calculator::Shipping::WithUnknownPreferences < Spree::ShippingCalculator
+              def compute_package(_package)
+                # no op
+              end
+            end
+
+            let!(:shipping_methods) do
+              [
+                create(
+                  :shipping_method,
+                  calculator: Spree::Calculator::Shipping::WithUnknownPreferences.new(
+                    preferences: { a: "b" }
+                  )
+                )
+              ]
+            end
+
+            it 'does not raise an error' do
+              expect { subject.shipping_rates(package) }.not_to raise_error
+            end
+          end
 
           context 'with two shipping methods of different cost' do
             let!(:shipping_methods) do
@@ -127,7 +168,7 @@ module Spree
         end
 
         context "involves backend only shipping methods" do
-          before{ Spree::ShippingMethod.all.each(&:really_destroy!) }
+          before{ Spree::ShippingMethod.all.each(&:destroy) }
           let!(:backend_method) { create(:shipping_method, available_to_users: false, cost: 0.00) }
           let!(:generic_method) { create(:shipping_method, cost: 5.00) }
 
@@ -142,7 +183,7 @@ module Spree
         end
 
         context "excludes shipping methods from other stores" do
-          before{ Spree::ShippingMethod.all.each(&:really_destroy!) }
+          before{ Spree::ShippingMethod.all.each(&:destroy) }
 
           let!(:other_method) do
             create(

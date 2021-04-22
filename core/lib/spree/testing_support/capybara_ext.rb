@@ -35,18 +35,6 @@ module Spree
         find("td:nth-of-type(#{num})").text
       end
 
-      def fill_in_quantity(table_column, selector, quantity)
-        Spree::Deprecation.warn <<-WARN.strip_heredoc
-          fill_in_quantity is deprecated. Instead use:
-            within(#{table_column.inspect}) do
-              fill_in #{selector.inspect}, with: #{quantity.inspect}
-            end
-        WARN
-        within(table_column) do
-          fill_in selector, with: quantity
-        end
-      end
-
       def select2_search(value, options)
         options = {
           search: value, # by default search for the value
@@ -122,21 +110,6 @@ module Spree
         # find the original.
         find('label:not(.select2-offscreen)', text: /#{Regexp.escape(text)}/i, match: :one)
       end
-
-      def wait_for_ajax
-        Spree::Deprecation.warn <<-WARN.squish, caller
-          wait_for_ajax has been deprecated.
-          Please refer to the capybara documentation on how to properly wait for asyncronous behavior:
-          https://github.com/teamcapybara/capybara#asynchronous-javascript-ajax-and-friends
-        WARN
-
-        counter = 0
-        while page.evaluate_script("typeof($) === 'undefined' || $.active > 0")
-          counter += 1
-          sleep(0.1)
-          raise "AJAX request took longer than 5 seconds." if counter >= 50
-        end
-      end
     end
   end
 end
@@ -155,9 +128,6 @@ RSpec::Matchers.define :have_meta do |name, expected|
     end
   end
 end
-
-# @private
-CapybaraExt = ActiveSupport::Deprecation::DeprecatedConstantProxy.new('CapybaraExt', 'Spree::TestingSupport::CapybaraExt')
 
 RSpec.configure do |c|
   c.include Spree::TestingSupport::CapybaraExt

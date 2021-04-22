@@ -30,7 +30,7 @@
     "webpack-merge": "^4.1.2"
   },
   "dependencies": {
-    "axios": "^0.18.1",
+    "axios": "^0.21.1",
     "debug": "^2.6.9",
     "docsearch.js": "^2.6.3",
     "headroom.js": "0.9.4",

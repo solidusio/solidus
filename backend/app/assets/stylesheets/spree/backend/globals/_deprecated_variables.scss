@@ -1,24 +1,7 @@
-// Numbered colors variables are deprecated and will be removed in Solidus v3.0
-@include solidus-deprecated-variable("color-1", "color-white");
-$color-1:    $color-white !default;
-
-@include solidus-deprecated-variable("color-2", "color-primary");
-$color-2:    $color-primary !default;
-
-@include solidus-deprecated-variable("color-3", "color-dark-light");
-$color-3:    $color-dark-light !default;
-
-@include solidus-deprecated-variable("color-4", "color-dark");
-$color-4:    $color-dark !default;
-
-@include solidus-deprecated-variable("color-5", "color-red");
-$color-5:    $color-red !default;
-
-@include solidus-deprecated-variable("color-6", "color-yellow");
-$color-6:    $color-yellow !default;
-
-@include solidus-deprecated-variable("color-7", "color-light");
-$color-7:    $color-light !default;
-
-@include solidus-deprecated-variable("color-8", "color-dark-light");
-$color-8:    $color-dark-light !default;
+// This is a good place where we can deprecate scss variables.
+// The deprecation will be shown when scss is precompiled
+// only if deprecated variables are redefined in a custom
+// variables_override.scss file of the host application.
+// E.g.
+//
+// @include solidus-deprecated-variable("deprecated-variable", "new-variable");

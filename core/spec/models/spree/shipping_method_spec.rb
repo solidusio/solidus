@@ -217,53 +217,6 @@ RSpec.describe Spree::ShippingMethod, type: :model do
     end
   end
 
-  describe "display_on=" do
-    before do
-      expect(Spree::Deprecation).to receive(:warn).
-        with(/^display_on= is deprecated and will be removed/, any_args)
-    end
-
-    subject do
-      described_class.new(display_on: display_on).available_to_users
-    end
-
-    context "with 'back_end'" do
-      let(:display_on) { 'back_end' }
-      it { should be false }
-    end
-
-    context "with 'both'" do
-      let(:display_on) { 'both' }
-      it { should be true }
-    end
-
-    context "with 'front_end'" do
-      let(:display_on) { 'front_end' }
-      it { should be true }
-    end
-  end
-
-  describe "display_on" do
-    before do
-      expect(Spree::Deprecation).to receive(:warn).
-        with(/^display_on is deprecated and will be removed/, any_args)
-    end
-
-    subject do
-      described_class.new(available_to_users: available_to_users).display_on
-    end
-
-    context "when available_to_users is true" do
-      let(:available_to_users) { true }
-      it { should == 'both' }
-    end
-
-    context "when available_to_users is false" do
-      let(:available_to_users) { false }
-      it { should == 'back_end' }
-    end
-  end
-
   describe '.available_to_store' do
     let(:store) { create(:store) }
     let(:first_shipping_method) { create(:shipping_method, stores: [store]) }

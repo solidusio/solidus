@@ -12,7 +12,7 @@ AllCops:
     - 'sandbox/**/*'
     - '**/templates/**/*'
     - 'guides/node_modules/**/*'
-  TargetRubyVersion: 2.4
+  TargetRubyVersion: 2.5
 
 # Sometimes I believe this reads better
 # This also causes spacing issues on multi-line fixes

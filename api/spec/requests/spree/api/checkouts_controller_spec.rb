@@ -95,7 +95,7 @@ module Spree
 
         # Regression Spec for https://github.com/spree/spree/issues/5389 and https://github.com/spree/spree/issues/5880
         it "can update addresses but not transition to delivery w/o shipping setup" do
-          Spree::ShippingMethod.all.each(&:really_destroy!)
+          Spree::ShippingMethod.all.each(&:destroy)
           put spree.api_checkout_path(order),
             params: { order_token: order.guest_token, order: {
               bill_address_attributes: address,
@@ -289,36 +289,6 @@ module Spree
           expect(response.status).to eq 200
           expect(order.credit_cards).to match_array [credit_card]
         end
-
-        context 'with deprecated existing_card_id param' do
-          let(:params) do
-            {
-              order_token: order.guest_token,
-              order: {
-                payments_attributes: [
-                  {
-                    source_attributes: {
-                      existing_card_id: credit_card.id.to_param,
-                      verification_value: '456'
-                    }
-                  }
-                ]
-              }
-            }
-          end
-
-          before do
-            expect(Spree::Deprecation).to receive(:warn).
-              with(/^Passing existing_card_id to PaymentCreate is deprecated/, any_args)
-          end
-
-          it 'succeeds' do
-            put spree.api_checkout_path(order), params: params
-
-            expect(response.status).to eq 200
-            expect(order.credit_cards).to match_array [credit_card]
-          end
-        end
       end
 
       it "cannot update attributes of another step" do
@@ -377,23 +347,6 @@ module Spree
         expect(json_response['email']).to eq("guest@solidus.io")
         expect(response.status).to eq(200)
       end
-
-      it "can apply a coupon code to an order" do
-        expect(Spree::Deprecation).to receive(:warn)
-        order.update_column(:state, "payment")
-        expect(PromotionHandler::Coupon).to receive(:new).with(order).and_call_original
-        expect_any_instance_of(PromotionHandler::Coupon).to receive(:apply).and_return({ coupon_applied?: true })
-        put spree.api_checkout_path(order.to_param), params: { order_token: order.guest_token, order: { coupon_code: "foobar" } }
-        expect(response.status).to eq(200)
-      end
-
-      it "renders error failing to apply coupon" do
-        expect(Spree::Deprecation).to receive(:warn)
-        order.update_column(:state, "payment")
-        put spree.api_checkout_path(order.to_param), params: { order_token: order.guest_token, order: { coupon_code: "foobar" } }
-        expect(response.status).to eq(422)
-        expect(json_response).to eq({ "error" => "The coupon code you entered doesn't exist. Please try again." })
-      end
     end
 
     context "PUT 'next'" do
@@ -446,7 +399,6 @@ module Spree
         end
 
         it "returns a sensible error when no payment method is specified" do
-          # put :complete, id: order.to_param, order_token: order.token, order: {}
           subject
           expect(json_response["errors"]["base"]).to include(I18n.t('spree.no_payment_found'))
         end
@@ -455,7 +407,6 @@ module Spree
           let(:params) { super().merge(expected_total: order.total + 1) }
 
           it "returns an error if expected_total is present and does not match actual total" do
-            # put :complete, id: order.to_param, order_token: order.token, expected_total: order.total + 1
             subject
             expect(response.status).to eq(400)
             expect(json_response['errors']['expected_total']).to include(I18n.t('spree.api.order.expected_total_mismatch'))

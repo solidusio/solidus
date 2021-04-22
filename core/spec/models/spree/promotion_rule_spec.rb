@@ -12,6 +12,12 @@ module Spree
       end
     end
 
+    describe "preferences" do
+      subject { described_class.new.preferences }
+
+      it { is_expected.to be_a(Hash) }
+    end
+
     it "forces developer to implement eligible? method" do
       expect { BadTestRule.new.eligible?("promotable") }.to raise_error NotImplementedError
     end

@@ -153,46 +153,6 @@ module Spree
           labels: brands.sort.map { |key| [key, key] }
         }
       end
-
-      # Provide filtering on the immediate children of a taxon
-      #
-      # This doesn't fit the pattern of the examples above, so there's a few changes.
-      # Firstly, it uses an existing scope which was not built for filtering - and so
-      # has no need of a conditions mapping, and secondly, it has a mapping of name
-      # to the argument type expected by the other scope.
-      #
-      # This technique is useful for filtering on objects (by passing ids) or with a
-      # scope that can be used directly (eg. testing only ever on a single property).
-      #
-      # This scope selects products in any of the active taxons or their children.
-      #
-      def self.taxons_below(taxon)
-        Spree::Deprecation.warn "taxons_below is deprecated in solidus_core. Please add it to your own application to continue using it."
-        return Spree::Core::ProductFilters.all_taxons if taxon.nil?
-        {
-          name:   'Taxons under ' + taxon.name,
-          scope:  :taxons_id_in_tree_any,
-          labels: taxon.children.sort_by(&:position).map { |element| [element.name, element.id] },
-          conds:  nil
-        }
-      end
-
-      # Filtering by the list of all taxons
-      #
-      # Similar idea as above, but we don't want the descendants' products, hence
-      # it uses one of the auto-generated scopes from Ransack.
-      #
-      # idea: expand the format to allow nesting of labels?
-      def self.all_taxons
-        Spree::Deprecation.warn "all_taxons is deprecated in solidus_core. Please add it to your own application to continue using it."
-        taxons = Spree::Taxonomy.all.flat_map { |element| [element.root] + element.root.descendants }
-        {
-          name:   'All taxons',
-          scope:  :taxons_id_equals_any,
-          labels: taxons.sort_by(&:name).map { |element| [element.name, element.id] },
-          conds:  nil # not needed
-        }
-      end
     end
   end
 end

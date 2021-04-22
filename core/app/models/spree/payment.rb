@@ -8,9 +8,6 @@ module Spree
   class Payment < Spree::Base
     include Spree::Payment::Processing
 
-    alias_attribute :identifier, :number
-    deprecate :identifier, :identifier=, deprecator: Spree::Deprecation
-
     IDENTIFIER_CHARS    = (('A'..'Z').to_a + ('0'..'9').to_a - %w(0 1 I O)).freeze
     NON_RISKY_AVS_CODES = ['B', 'D', 'H', 'J', 'M', 'Q', 'T', 'V', 'X', 'Y'].freeze
     RISKY_AVS_CODES     = ['A', 'C', 'E', 'F', 'G', 'I', 'K', 'L', 'N', 'O', 'P', 'R', 'S', 'U', 'W', 'Z'].freeze
@@ -168,9 +165,16 @@ module Spree
 
     def validate_source
       if source && !source.valid?
-        source.errors.each do |field, error|
-          field_name = I18n.t("activerecord.attributes.#{source.class.to_s.underscore}.#{field}")
-          errors.add(I18n.t(source.class.to_s.demodulize.underscore, scope: 'spree'), "#{field_name} #{error}")
+        if Gem::Requirement.new(">= 6.1").satisfied_by?(Rails.gem_version)
+          source.errors.each do |error|
+            field_name = I18n.t("activerecord.attributes.#{source.class.to_s.underscore}.#{error.attribute}")
+            errors.add(I18n.t(source.class.to_s.demodulize.underscore, scope: 'spree'), "#{field_name} #{error.message}")
+          end
+        else
+          source.errors.each do |field, error|
+            field_name = I18n.t("activerecord.attributes.#{source.class.to_s.underscore}.#{field}")
+            errors.add(I18n.t(source.class.to_s.demodulize.underscore, scope: 'spree'), "#{field_name} #{error}")
+          end
         end
       end
       if errors.any?

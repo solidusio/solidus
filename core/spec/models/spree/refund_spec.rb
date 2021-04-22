@@ -6,29 +6,13 @@ RSpec.describe Spree::Refund, type: :model do
   let(:amount) { 100.0 }
   let(:amount_in_cents) { amount * 100 }
 
-  let(:authorization) { generate(:refund_transaction_id) }
-
   let(:payment) { create(:payment, amount: payment_amount, payment_method: payment_method) }
   let(:payment_amount) { amount * 2 }
   let(:payment_method) { create(:credit_card_payment_method) }
 
   let(:refund_reason) { create(:refund_reason) }
 
-  let(:gateway_response) {
-    ActiveMerchant::Billing::Response.new(
-      gateway_response_success,
-      gateway_response_message,
-      gateway_response_params,
-      gateway_response_options
-    )
-  }
-  let(:gateway_response_success) { true }
-  let(:gateway_response_message) { "" }
-  let(:gateway_response_params) { {} }
-  let(:gateway_response_options) { { authorization: authorization } }
-
   let(:transaction_id) { nil }
-  let(:perform_after_create) { false }
 
   let(:refund) do
     create(
@@ -36,16 +20,8 @@ RSpec.describe Spree::Refund, type: :model do
       payment: payment,
       amount: amount,
       reason: refund_reason,
-      transaction_id: transaction_id,
-      perform_after_create: perform_after_create
+      transaction_id: transaction_id
     )
-  end
-
-  before do
-    allow(payment.payment_method)
-      .to receive(:credit)
-      .with(amount_in_cents, payment.source, payment.transaction_id, { originator: an_instance_of(Spree::Refund) })
-      .and_return(gateway_response)
   end
 
   describe 'create' do
@@ -63,94 +39,31 @@ RSpec.describe Spree::Refund, type: :model do
     it "does not attempt to process a transaction" do
       expect(subject.transaction_id).to be_nil
     end
-
-    context "passing perform_after_create" do
-      context "when it is false" do
-        let(:perform_after_create) { false }
-
-        it "does not print deprecation warnings, does not run perform! and reset the perform_after_create value" do
-          expect(Spree::Deprecation).not_to receive(:warn)
-
-          expect { subject }.not_to change(Spree::LogEntry, :count)
-          expect(subject.transaction_id).to be_nil
-
-          expect(refund.perform_after_create).to be_nil
-        end
-      end
-
-      context "when it is true" do
-        let(:perform_after_create) { true }
-
-        it "prints a deprecation warning, runs perform! and reset the perform_after_create value" do
-          expect(Spree::Deprecation).to receive(:warn)
-
-          expect { subject }.to change(Spree::LogEntry, :count)
-          expect(subject.transaction_id).not_to be_nil
-
-          expect(refund.perform_after_create).to be_nil
-        end
-      end
-    end
   end
 
   describe "#perform!" do
     subject { refund.perform! }
 
-    context "with perform_after_create: true" do
-      let(:perform_after_create) { true }
+    it "sets #perform_response with the gateway response from the payment provider" do
+      expect { subject }.to change { refund.perform_response }.from(nil)
 
-      it "deprecates usage of the instance variable @response" do
-        expect(Spree::Deprecation).to receive(:warn).twice
-
-        response = refund.instance_variable_get("@response")
-        response.to_s
-      end
-
-      it "sets #perform_response with the gateway response from the payment provider" do
-        expect(Spree::Deprecation).to receive(:warn)
-
-        expect(refund.perform_response).to eq gateway_response
-      end
-
-      it "does nothing, perform! already happened after create" do
-        expect(Spree::Deprecation).to receive(:warn)
-        refund
-        expect(refund.transaction_id).not_to be_nil
-
-        expect { subject }.not_to change(Spree::LogEntry, :count)
-      end
+      expect(refund.perform_response).to be_a(ActiveMerchant::Billing::Response)
+      expect(refund.perform_response.message).to eq(Spree::PaymentMethod::BogusCreditCard::SUCCESS_MESSAGE)
     end
 
-    context "with perform_after_create: false" do
-      let(:perform_after_create) { false }
-
-      it "runs perform! without deprecation warnings" do
-        expect(Spree::Deprecation).not_to receive(:warn)
-        refund
-        expect(refund.transaction_id).to be_nil
-
-        expect { subject }.to change(Spree::LogEntry, :count)
-      end
+    it "sets a transaction_id" do
+      expect { subject }.to change { refund.transaction_id }.from(nil)
     end
 
-    context "without perform_after_create" do
-      let(:perform_after_create) { nil }
-
-      it "does nothing, perform! already happened after create" do
-        expect(Spree::Deprecation).to receive(:warn)
-        refund
-        expect(refund.transaction_id).not_to be_nil
-
-        expect { subject }.not_to change(Spree::LogEntry, :count)
-      end
+    it "adds a Spree::LogEntry" do
+      expect { subject }.to change(Spree::LogEntry, :count)
     end
 
     context "when transaction_id exists" do
       let(:transaction_id) { "12kfjas0" }
 
       it "maintains the transaction id" do
-        subject
-        expect(refund.reload.transaction_id).to eq transaction_id
+        expect { subject }.not_to change { refund.transaction_id }
       end
 
       it "does not attempt to process a transaction" do
@@ -168,8 +81,7 @@ RSpec.describe Spree::Refund, type: :model do
         end
 
         it 'saves the returned authorization value' do
-          subject
-          expect(refund.reload.transaction_id).to eq authorization
+          expect { subject }.to change { refund.reload.transaction_id }.from(nil).to(Spree::PaymentMethod::BogusCreditCard::AUTHORIZATION_CODE)
         end
 
         it 'saves the passed amount as the refund amount' do
@@ -183,7 +95,7 @@ RSpec.describe Spree::Refund, type: :model do
         end
 
         it "attempts to process a transaction" do
-          expect(payment.payment_method).to receive(:credit).once
+          expect(payment.payment_method).to receive(:credit).once.and_call_original
           subject
         end
 
@@ -193,25 +105,29 @@ RSpec.describe Spree::Refund, type: :model do
         end
       end
 
-      context "processing fails" do
-        let(:gateway_response_success) { false }
-        let(:gateway_response_message) { "failure message" }
+      context "when processing fails" do
+        let(:failure_message) { Spree::PaymentMethod::BogusCreditCard::FAILURE_MESSAGE }
+        let(:gateway_response) {
+          ActiveMerchant::Billing::Response.new(
+            false,
+            failure_message,
+            {},
+            test: true,
+            authorization: Spree::PaymentMethod::BogusCreditCard::AUTHORIZATION_CODE
+          )
+        }
+
+        before do
+          allow(payment.payment_method)
+            .to receive(:credit)
+            .with(amount_in_cents, payment.source, payment.transaction_id, { originator: an_instance_of(Spree::Refund) })
+            .and_return(gateway_response)
+        end
+
 
         context 'without performing after create' do
           it 'raises a GatewayError' do
-            expect { subject }.to raise_error(Spree::Core::GatewayError, gateway_response_message)
-          end
-        end
-
-        context 'calling perform! with after_create' do
-          let(:perform_after_create) { true }
-
-          it 'raises a GatewayError and does not create a refund' do
-            expect(Spree::Deprecation).to receive(:warn)
-
-            expect do
-              expect { subject }.to raise_error(Spree::Core::GatewayError, gateway_response_message)
-            end.not_to change(Spree::Refund, :count)
+            expect { subject }.to raise_error(Spree::Core::GatewayError, failure_message)
           end
         end
       end
@@ -225,7 +141,7 @@ RSpec.describe Spree::Refund, type: :model do
           expect(payment.payment_method)
             .to receive(:credit)
             .with(amount * 100, payment.transaction_id, { originator: an_instance_of(Spree::Refund) })
-            .and_return(gateway_response)
+            .and_call_original
 
           subject
         end
@@ -240,7 +156,7 @@ RSpec.describe Spree::Refund, type: :model do
           expect(payment.payment_method)
             .to receive(:credit)
             .with(amount_in_cents, payment.source, payment.transaction_id, { originator: an_instance_of(Spree::Refund) })
-            .and_return(gateway_response)
+            .and_call_original
 
           subject
         end

@@ -7,12 +7,10 @@ module Spree
     extend ActiveSupport::Concern
 
     included do
-      acts_as_paranoid
-      include Spree::ParanoiaDeprecations::InstanceMethods
-      extend Spree::ParanoiaDeprecations::ClassMethods
-
       include Discard::Model
       self.discard_column = :deleted_at
+
+      default_scope { kept }
     end
   end
 end

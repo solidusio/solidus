@@ -19,10 +19,6 @@ module Spree::Taxon::PaperclipAttachment
     icon.present?
   end
 
-  def attachment_partial_name
-    'paperclip'
-  end
-
   def destroy_attachment(definition)
     return false unless respond_to?(definition)
 

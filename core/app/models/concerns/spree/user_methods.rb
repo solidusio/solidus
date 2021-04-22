@@ -7,7 +7,6 @@ module Spree
     include Spree::UserApiAuthentication
     include Spree::UserReporting
     include Spree::UserAddressBook
-    include Spree::UserPaymentSource
 
     included do
       extend Spree::DisplayMoney
@@ -24,9 +23,6 @@ module Spree
       has_many :store_credits, -> { includes(:credit_type) }, foreign_key: "user_id", class_name: "Spree::StoreCredit"
       has_many :store_credit_events, through: :store_credits
 
-      money_methods :total_available_store_credit
-      deprecate display_total_available_store_credit: :display_available_store_credit_total, deprecator: Spree::Deprecation
-
       has_many :credit_cards, class_name: "Spree::CreditCard", foreign_key: :user_id
       has_many :wallet_payment_sources, foreign_key: 'user_id', class_name: 'Spree::WalletPaymentSource', inverse_of: :user
 
@@ -34,9 +30,9 @@ module Spree
 
       include Spree::RansackableAttributes unless included_modules.include?(Spree::RansackableAttributes)
 
-      ransack_alias :firstname_or_lastname, :addresses_firstname_or_addresses_lastname
+      ransack_alias :name, :addresses_name
       self.whitelisted_ransackable_associations = %w[addresses spree_roles]
-      self.whitelisted_ransackable_attributes = %w[firstname_or_lastname id email created_at]
+      self.whitelisted_ransackable_attributes = %w[name id email created_at]
     end
 
     def wallet
@@ -67,11 +63,6 @@ module Spree
       last_order = self_orders.order(:created_at).last
       last_order unless last_order.try!(:completed?)
     end
-
-    def total_available_store_credit
-      store_credits.reload.to_a.sum(&:amount_remaining)
-    end
-    deprecate total_available_store_credit: :available_store_credit_total, deprecator: Spree::Deprecation
 
     def available_store_credit_total(currency:)
       store_credits.to_a.

@@ -23,16 +23,10 @@ class Spree::OrderCancellations
   # @api public
   #
   # @param [Array<InventoryUnit>] inventory_units the inventory units to be short shipped
-  # @param [Spree.user_class] whodunnit (deprecated) the system or person that is short shipping the inventory unit
   # @param [Spree.user_class] created_by the system or person that is short shipping the inventory unit
   #
   # @return [Array<UnitCancel>] the units that have been canceled due to short shipping
-  def short_ship(inventory_units, whodunnit: nil, created_by: nil)
-    if whodunnit
-      created_by ||= whodunnit
-      Spree::Deprecation.warn("Calling #short_ship on #{self} with whodunnit is deprecated, use created_by instead")
-    end
-
+  def short_ship(inventory_units, created_by: nil)
     if inventory_units.map(&:order_id).uniq != [@order.id]
       raise ArgumentError, "Not all inventory units belong to this order"
     end
@@ -65,16 +59,10 @@ class Spree::OrderCancellations
   #
   # @param [InventoryUnit] inventory_unit the inventory unit to be canceled
   # @param [String] reason the reason that you are canceling the inventory unit
-  # @param [Spree.user_class] whodunnit (deprecated) the system or person that is canceling the inventory unit
   # @param [Spree.user_class] created_by the system or person that is canceling the inventory unit
   #
   # @return [UnitCancel] the unit that has been canceled
-  def cancel_unit(inventory_unit, reason: Spree::UnitCancel::DEFAULT_REASON, whodunnit: nil, created_by: nil)
-    if whodunnit
-      created_by ||= whodunnit
-      Spree::Deprecation.warn("Calling #cancel_unit on #{self} with whodunnit is deprecated, use created_by instead")
-    end
-
+  def cancel_unit(inventory_unit, reason: Spree::UnitCancel::DEFAULT_REASON, created_by: nil)
     unit_cancel = nil
 
     Spree::OrderMutex.with_lock!(@order) do
@@ -96,10 +84,7 @@ class Spree::OrderCancellations
   # @param [Array<InventoryUnit>] inventory_units the inventory units to be reimbursed
   # @param [Spree.user_class] created_by the user that is performing this action
   # @return [Reimbursement] the reimbursement for inventory being canceled
-  def reimburse_units(inventory_units, created_by: nil)
-    unless created_by
-      Spree::Deprecation.warn("Calling #reimburse_units on #{self} without created_by is deprecated")
-    end
+  def reimburse_units(inventory_units, created_by:)
     reimbursement = nil
 
     Spree::OrderMutex.with_lock!(@order) do
@@ -113,12 +98,7 @@ class Spree::OrderCancellations
 
   private
 
-  def short_ship_unit(inventory_unit, whodunnit: nil, created_by: nil)
-    if whodunnit
-      created_by ||= whodunnit
-      Spree::Deprecation.warn("Calling #short_ship_unit on #{self} with whodunnit is deprecated, use created_by instead")
-    end
-
+  def short_ship_unit(inventory_unit, created_by: nil)
     unit_cancel = Spree::UnitCancel.create!(
       inventory_unit: inventory_unit,
       reason: Spree::UnitCancel::SHORT_SHIP,

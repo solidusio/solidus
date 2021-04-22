@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 
-require 'factory_bot'
+require 'spree/testing_support/factory_bot'
 
-Dir["#{File.dirname(__FILE__)}/factories/**"].each do |f|
-  require File.expand_path(f)
-end
+Spree::Deprecation.warn(
+  "Please do not try to load factories directly. " \
+  'Use factory_bot_rails and rely on the default configuration instead.', caller(1)
+)
+
+Spree::TestingSupport::FactoryBot.check_version
+Spree::TestingSupport::FactoryBot::PATHS.each { |path| require path }

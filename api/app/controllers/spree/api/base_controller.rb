@@ -76,9 +76,11 @@ module Spree
       end
 
       def parameter_missing_error(exception)
+        # use original_message to remove DidYouMean suggestions, if defined
+        message = exception.try(:original_message) || exception.message
         render json: {
-          exception: exception.message,
-          error: exception.message,
+          exception: message,
+          error: message,
           missing_param: exception.param
         }, status: :unprocessable_entity
       end
@@ -102,7 +104,7 @@ module Spree
       end
 
       def api_key
-        bearer_token || spree_token || params[:token]
+        bearer_token || params[:token]
       end
       helper_method :api_key
 
@@ -110,17 +112,6 @@ module Spree
         pattern = /^Bearer /
         header = request.headers["Authorization"]
         header.gsub(pattern, '') if header.present? && header.match(pattern)
-      end
-
-      def spree_token
-        token = request.headers["X-Spree-Token"]
-        return if token.blank?
-
-        Spree::Deprecation.warn(
-          'The custom X-Spree-Token request header is deprecated and will be removed in the next release.' \
-          ' Please use bearer token authorization header instead.'
-        )
-        token
       end
 
       def order_token

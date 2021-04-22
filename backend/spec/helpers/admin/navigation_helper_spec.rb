@@ -3,6 +3,10 @@
 require 'spec_helper'
 
 describe Spree::Admin::NavigationHelper, type: :helper do
+  before do
+    allow(controller).to receive(:controller_name).and_return('test')
+  end
+
   describe "#tab" do
     context "creating an admin tab" do
       it "should capitalize the first letter of each word in the tab's label" do
@@ -125,15 +129,6 @@ describe Spree::Admin::NavigationHelper, type: :helper do
       subject(:solidus_icon) { helper.solidus_icon(nil) }
 
       it { is_expected.to eq "" }
-    end
-  end
-
-  describe "#icon" do
-    subject(:icon) { helper.icon('icon-name') }
-
-    it "is a deprecated way to use #solidus_icon" do
-      expect(Spree::Deprecation).to receive(:warn).with("icon is deprecated and will be removed from Solidus 3.0 (use solidus_icon instead)", instance_of(Array))
-      expect(subject).to eq helper.solidus_icon('icon-name')
     end
   end
 end

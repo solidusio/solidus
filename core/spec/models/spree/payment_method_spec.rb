@@ -32,6 +32,12 @@ RSpec.describe Spree::PaymentMethod, type: :model do
     })
   end
 
+  describe "preferences" do
+    subject { described_class.new.preferences }
+
+    it { is_expected.to be_a(Hash) }
+  end
+
   describe "available_to_[<users>, <admin>, <store>]" do
     context "when searching for payment methods available to users and admins" do
       subject { Spree::PaymentMethod.available_to_users.available_to_admin }
@@ -109,87 +115,6 @@ RSpec.describe Spree::PaymentMethod, type: :model do
     end
   end
 
-  describe ".available" do
-    before do
-      expect(Spree::PaymentMethod.all.size).to eq(4)
-      expect(Spree::Deprecation).to receive(:warn).
-        with(/^Spree::PaymentMethod\.available is deprecated/, any_args)
-    end
-
-    it "should return all methods available to front-end/back-end when no parameter is passed" do
-      expect(Spree::PaymentMethod.available.size).to eq(2)
-    end
-
-    it "should return all methods available to front-end/back-end when passed :both" do
-      expect(Spree::PaymentMethod.available(:both).size).to eq(2)
-    end
-
-    it "should return all methods available to front-end when passed :front_end" do
-      expect(Spree::PaymentMethod.available(:front_end).size).to eq(3)
-    end
-
-    it "should return all methods available to back-end when passed :back_end" do
-      expect(Spree::PaymentMethod.available(:back_end).size).to eq(3)
-    end
-
-    context 'with stores' do
-      let!(:store_1) do
-        create(:store,
-          payment_methods: [
-            payment_method_nil_display,
-            payment_method_both_display,
-            payment_method_front_display,
-            payment_method_back_display
-          ])
-      end
-
-      let!(:store_2) do
-        create(:store, payment_methods: [store_2_payment_method])
-      end
-
-      let!(:store_3) { create(:store) }
-
-      let!(:store_2_payment_method) { create(:payment_method, active: true) }
-      let!(:no_store_payment_method) { create(:payment_method, active: true) }
-
-      context 'when the store is specified' do
-        context 'when the store has payment methods' do
-          it 'finds the payment methods for the store' do
-            expect(Spree::PaymentMethod.available(:both, store: store_1)).to match_array(
-              [payment_method_nil_display, payment_method_both_display]
-            )
-          end
-        end
-
-        context "when store does not have payment_methods" do
-          it "returns all matching payment methods regardless of store" do
-            expect(Spree::PaymentMethod.available(:both)).to match_array(
-              [
-                payment_method_nil_display,
-                payment_method_both_display,
-                store_2_payment_method,
-                no_store_payment_method
-              ]
-            )
-          end
-        end
-      end
-
-      context 'when the store is not specified' do
-        it "returns all matching payment methods regardless of store" do
-          expect(Spree::PaymentMethod.available(:both)).to match_array(
-            [
-              payment_method_nil_display,
-              payment_method_both_display,
-              store_2_payment_method,
-              no_store_payment_method
-            ]
-          )
-        end
-      end
-    end
-  end
-
   describe '#auto_capture?' do
     class TestGateway < Spree::PaymentMethod::CreditCard
       def gateway_class
@@ -244,81 +169,6 @@ RSpec.describe Spree::PaymentMethod, type: :model do
         it 'should be true' do
           expect(subject).to be false
         end
-      end
-    end
-  end
-
-  describe "display_on=" do
-    let(:payment) { described_class.new(display_on: display_on) }
-
-    before do
-      allow(Spree::Deprecation).to receive(:warn).
-        with(/^Spree::PaymentMethod#display_on is deprecated/, any_args)
-      expect(Spree::Deprecation).to receive(:warn).
-        with(/^Spree::PaymentMethod#display_on= is deprecated/, any_args)
-    end
-
-    context 'with empty string' do
-      let(:display_on) { "" }
-
-      it "should be available to admins" do
-        expect(payment.available_to_admin).to be true
-      end
-
-      it "should be available to users" do
-        expect(payment.available_to_users).to be true
-      end
-
-      it "should have the same value for display_on" do
-        expect(payment.display_on).to eq ""
-      end
-    end
-
-    context 'with "back_end"' do
-      let(:display_on) { "back_end" }
-
-      it "should be available to admins" do
-        expect(payment.available_to_admin).to be true
-      end
-
-      it "should not be available to users" do
-        expect(payment.available_to_users).to be false
-      end
-
-      it "should have the same value for display_on" do
-        expect(payment.display_on).to eq "back_end"
-      end
-    end
-
-    context 'with "front_end"' do
-      let(:display_on) { "front_end" }
-
-      it "should be available to admins" do
-        expect(payment.available_to_admin).to be false
-      end
-
-      it "should not be available to users" do
-        expect(payment.available_to_users).to be true
-      end
-
-      it "should have the same value for display_on" do
-        expect(payment.display_on).to eq "front_end"
-      end
-    end
-
-    context 'with any other string' do
-      let(:display_on) { "foobar" }
-
-      it "should be available to admins" do
-        expect(payment.available_to_admin).to be false
-      end
-
-      it "should not be available to users" do
-        expect(payment.available_to_users).to be false
-      end
-
-      it "should have none for display_on" do
-        expect(payment.display_on).to eq "none"
       end
     end
   end
@@ -381,18 +231,6 @@ RSpec.describe Spree::PaymentMethod, type: :model do
       it "returns default humanized value" do
         expect(klass.model_name.human).to eq('Some class')
       end
-    end
-  end
-
-  describe "::DISPLAY" do
-    it "returns [:both, :front_end, :back_end]" do
-      expect(Spree::Deprecation).to receive(:warn).
-        with(/^Spree::PaymentMethod::DISPLAY has been deprecated and will be removed/, any_args).once
-
-      # Emits deprecation warning on first reference
-      expect(described_class::DISPLAY).to eq([:both, :front_end, :back_end])
-      # but not subsequent
-      expect(described_class::DISPLAY).to eq([:both, :front_end, :back_end])
     end
   end
 end

@@ -1,7 +1,7 @@
 # State Machines
 
 Solidus uses the [`state_machines`][state-machines-gem] gem internally for
-defining the state-related logic.  
+defining the state-related logic.
 While most of the e-commerces don't need to customize the default state
 machines, Solidus allows providing a custom implementation for the following
 models' attributes:
@@ -82,6 +82,9 @@ Spree.config do |config|
 
   # Inventory Unit status
   # config.state_machines.inventory_unit = '<your-custom-module-name>'
+
+  # Checkout status
+  # config.state_machines.order = '<your-custom-module-name>'
 end
 
 ```

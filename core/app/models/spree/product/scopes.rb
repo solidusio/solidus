@@ -70,7 +70,6 @@ module Spree
           add_search_scope :in_taxon do |taxon|
             includes(:classifications)
               .where('spree_products_taxons.taxon_id' => taxon.self_and_descendants.pluck(:id))
-              .select(Spree::Classification.arel_table[:position])
               .order(Spree::Classification.arel_table[:position].asc)
           end
 
@@ -200,33 +199,6 @@ module Spree
             variant_table = Spree::Variant.arel_table
             subquery = Spree::Variant.where(variant_table[:sku].matches(sku_match).and(variant_table[:product_id].eq(arel_table[:id])))
             where(subquery.arel.exists)
-          end
-
-          def self.distinct_by_product_ids(sort_order = nil)
-            Spree::Deprecation.warn "Product.distinct_by_product_ids is deprecated and should not be used"
-
-            sort_column = sort_order.split(" ").first
-
-            # Postgres will complain when using ordering by expressions not present in
-            # SELECT DISTINCT. e.g.
-            #
-            #   PG::InvalidColumnReference: ERROR:  for SELECT DISTINCT, ORDER BY
-            #   expressions must appear in select list. e.g.
-            #
-            #   SELECT  DISTINCT "spree_products".* FROM "spree_products" LEFT OUTER JOIN
-            #   "spree_variants" ON "spree_variants"."product_id" = "spree_products"."id" AND "spree_variants"."is_master" = 't'
-            #   AND "spree_variants"."deleted_at" IS NULL LEFT OUTER JOIN "spree_prices" ON
-            #   "spree_prices"."variant_id" = "spree_variants"."id" AND "spree_prices"."currency" = 'USD'
-            #   AND "spree_prices"."deleted_at" IS NULL WHERE "spree_products"."deleted_at" IS NULL AND ('t'='t')
-            #   ORDER BY "spree_prices"."amount" ASC LIMIT 10 OFFSET 0
-            #
-            # Don't allow sort_column, a variable coming from params,
-            # to be anything but a column in the database
-            if ActiveRecord::Base.connection.adapter_name == 'PostgreSQL' && !column_names.include?(sort_column)
-              all
-            else
-              distinct
-            end
           end
 
           class << self

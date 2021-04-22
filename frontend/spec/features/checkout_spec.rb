@@ -336,7 +336,7 @@ describe "Checkout", type: :feature, inaccessible: true do
   end
 
   context "user has payment sources", js: true do
-    before { Spree::PaymentMethod.all.each(&:really_destroy!) }
+    before { Spree::PaymentMethod.all.each(&:destroy) }
     let!(:bogus) { create(:credit_card_payment_method) }
     let(:user) { create(:user) }
 

@@ -13,11 +13,6 @@ RSpec.describe Spree::SoftDeletable do
     end
   end
 
-  it 'includes Paranoia' do
-    expect(Post).to respond_to(:with_deleted)
-    expect(Post.new).to respond_to(:deleted?)
-  end
-
   it 'includes Discard' do
     expect(Post).to respond_to(:with_discarded)
     expect(Post.new).to respond_to(:discarded?)

@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spree/deprecation'
-
 module Spree
   module Core
     module Search
@@ -16,17 +14,6 @@ module Spree
           prepare(params)
         end
 
-        def current_currency=(currency)
-          self.pricing_options = Spree::Config.pricing_options_class.new(
-            pricing_options.desired_attributes.merge(currency: currency)
-          )
-        end
-
-        def current_currency
-          pricing_options.currency
-        end
-        deprecate :current_currency, :current_currency=, deprecator: Spree::Deprecation
-
         def retrieve_products
           @products = get_base_scope
           curr_page = @properties[:page] || 1
@@ -35,19 +22,6 @@ module Spree
             @products = @products.joins(:prices).merge(Spree::Price.where(pricing_options.search_arguments)).distinct
           end
           @products = @products.page(curr_page).per(@properties[:per_page])
-        end
-
-        def method_missing(name)
-          if @properties.key?(name)
-            Spree::Deprecation.warn "Accessing Searcher's #{name} property using #{self.class.name}##{name} is deprecated without replacement"
-            @properties[name]
-          else
-            super
-          end
-        end
-
-        def respond_to_missing?(name)
-          @properties.key?(name) || super(name)
         end
 
         protected

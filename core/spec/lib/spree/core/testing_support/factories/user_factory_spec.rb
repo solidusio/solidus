@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
-require 'spree/testing_support/factories/user_factory'
 
 RSpec.describe 'user factory' do
   let(:factory_class) { Spree.user_class }

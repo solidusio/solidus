@@ -43,7 +43,7 @@ module Spree
       opts[:skip_test] = true
       opts[:skip_yarn] = true
       opts[:skip_bootsnap] = true
-      opts[:skip_webpack_install] = true
+      opts[:skip_javascript] = true
 
       puts "Generating dummy Rails application..."
       invoke Rails::Generators::AppGenerator,
@@ -55,6 +55,7 @@ module Spree
       @database = options[:database]
 
       template "rails/database.yml", "#{dummy_path}/config/database.yml", force: true
+      template "rails/storage.yml", "#{dummy_path}/config/storage/test.yml", force: true
       template "rails/boot.rb", "#{dummy_path}/config/boot.rb", force: true
       template "rails/application.rb.tt", "#{dummy_path}/config/application.rb", force: true
       template "rails/routes.rb", "#{dummy_path}/config/routes.rb", force: true

@@ -6,11 +6,6 @@ module Spree
   class ShippingMethod < Spree::Base
     include Spree::SoftDeletable
     include Spree::CalculatedAdjustments
-    DISPLAY = ActiveSupport::Deprecation::DeprecatedObjectProxy.new(
-      [:both, :front_end, :back_end],
-      "Spree::ShippingMethod::DISPLAY is deprecated",
-      Spree::Deprecation
-    )
 
     has_many :shipping_method_categories, dependent: :destroy
     has_many :shipping_categories, through: :shipping_method_categories
@@ -95,31 +90,11 @@ module Spree
       tracking_url.gsub(/:tracking/, ERB::Util.url_encode(tracking)) # :url_encode exists in 1.8.7 through 2.1.0
     end
 
-    def display_on
-      if available_to_users?
-        "both"
-      else
-        "back_end"
-      end
-    end
-    deprecate display_on: :available_to_users?, deprecator: Spree::Deprecation
-
-    def display_on=(value)
-      self.available_to_users = (value != "back_end")
-    end
-    deprecate 'display_on=': :available_to_users=, deprecator: Spree::Deprecation
-
-    # Some shipping methods are only meant to be set via backend
-    def frontend?
-      available_to_users?
-    end
-    deprecate frontend?: :available_to_users?, deprecator: Spree::Deprecation
-
     private
 
     def at_least_one_shipping_category
       if shipping_categories.empty?
-        errors[:base] << "You need to select at least one shipping category"
+        errors.add(:base, "You need to select at least one shipping category")
       end
     end
   end

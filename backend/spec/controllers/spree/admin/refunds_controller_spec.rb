@@ -34,7 +34,7 @@ describe Spree::Admin::RefundsController do
 
       it "calls #perform!" do
         subject
-        # transaction_id comes from Spree::Gateway::Bogus.credit
+        # transaction_id comes from Spree::PaymentMethod::BogusCreditCard.credit
         expect(Spree::Refund.last.transaction_id).to eq("12345")
       end
     end

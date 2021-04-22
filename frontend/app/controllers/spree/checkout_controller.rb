@@ -17,7 +17,6 @@ module Spree
 
     before_action :associate_user
     before_action :check_authorization
-    before_action :apply_coupon_code, only: [:update]
 
     before_action :setup_for_current_state, only: [:edit, :update]
 
@@ -111,10 +110,6 @@ module Spree
       massaged_params = params.deep_dup
 
       move_payment_source_into_payments_attributes(massaged_params)
-      if massaged_params[:order] && massaged_params[:order][:existing_card].present?
-        Spree::Deprecation.warn("Passing order[:existing_card] is deprecated. Send order[:wallet_payment_source_id] instead.", caller)
-        move_existing_card_into_payments_attributes(massaged_params) # deprecated
-      end
       move_wallet_payment_source_id_into_payments_attributes(massaged_params)
       set_payment_parameters_amount(massaged_params, @order)
 
@@ -160,11 +155,6 @@ module Spree
       end
     end
 
-    def set_state_if_present
-      ensure_order_is_not_skipping_states
-    end
-    deprecate set_state_if_present: :prevent_order_from_skipping_states, deprecator: Spree::Deprecation
-
     def ensure_checkout_allowed
       unless @order.checkout_allowed?
         redirect_to spree.cart_path
@@ -186,24 +176,6 @@ module Spree
     # Provides a route to redirect after order completion
     def completion_route
       spree.order_path(@order)
-    end
-
-    def apply_coupon_code
-      if update_params[:coupon_code].present?
-        Spree::Deprecation.warn('This endpoint is deprecated. Please use `Spree::CouponCodesController#create` endpoint instead.')
-        @order.coupon_code = update_params[:coupon_code]
-
-        handler = PromotionHandler::Coupon.new(@order).apply
-
-        if handler.error.present?
-          flash.now[:error] = handler.error
-        elsif handler.success
-          flash[:success] = handler.success
-        end
-
-        setup_for_current_state
-        respond_with(@order) { |format| format.html { render :edit } } && return
-      end
     end
 
     def setup_for_current_state
@@ -239,14 +211,6 @@ module Spree
         @wallet_payment_sources = try_spree_current_user.wallet.wallet_payment_sources
         @default_wallet_payment_source = @wallet_payment_sources.detect(&:default) ||
                                          @wallet_payment_sources.first
-
-        @payment_sources = Spree::DeprecatedInstanceVariableProxy.new(
-          self,
-          :deprecated_payment_sources,
-          :@payment_sources,
-          Spree::Deprecation,
-          "Please, do not use @payment_sources anymore, use @wallet_payment_sources instead."
-        )
       end
     end
 
@@ -275,23 +239,6 @@ module Spree
           redirect_to spree.checkout_state_path(@order.state)
         end
       end
-    end
-
-    # This method returns payment sources of the current user. It is no more
-    # used into our frontend. We used to assign the content of this method
-    # into an ivar (@payment_sources) into the checkout payment step. This
-    # method is here only to be able to deprecate this ivar and will be removed.
-    #
-    # DO NOT USE THIS METHOD!
-    #
-    # @return [Array<Spree::PaymentSource>] Payment sources connected to
-    #   current user wallet.
-    # @deprecated This method has been added to deprecate @payment_sources
-    #   ivar and will be removed. Use @wallet_payment_sources instead.
-    def deprecated_payment_sources
-      try_spree_current_user.wallet.wallet_payment_sources
-        .map(&:payment_source)
-        .select { |ps| ps.is_a?(Spree::CreditCard) }
     end
   end
 end

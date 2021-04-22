@@ -9,11 +9,6 @@ module Spree
     preference :max_items,       :integer, default: 0
     preference :currency,        :string,  default: ->{ Spree::Config[:currency] }
 
-    def self.available?(_object)
-      Spree::Deprecation.warn('Spree::Calculator::FlexiRate::available is DEPRECATED. Use the instance method instead.')
-      true
-    end
-
     def compute(object)
       items_count = object.quantity
       items_count = [items_count, preferred_max_items].min unless preferred_max_items.zero?

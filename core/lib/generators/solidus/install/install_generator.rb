@@ -15,6 +15,7 @@ module Solidus
     class_option :migrate, type: :boolean, default: true, banner: 'Run Solidus migrations'
     class_option :seed, type: :boolean, default: true, banner: 'Load seed data (migrations must be run)'
     class_option :sample, type: :boolean, default: true, banner: 'Load sample data (migrations must be run)'
+    class_option :active_storage, type: :boolean, default: true, banner: 'Install ActiveStorage as image attachments handler for products and taxons'
     class_option :auto_accept, type: :boolean
     class_option :user_class, type: :string
     class_option :admin_email, type: :string
@@ -49,6 +50,16 @@ module Solidus
 
     def add_files
       template 'config/initializers/spree.rb.tt', 'config/initializers/spree.rb'
+    end
+
+    def install_file_attachment
+      if options[:active_storage]
+        say "Installing Active Storage", :green
+        rake 'active_storage:install'
+      else
+        say "Installing Paperclip", :green
+        gsub_file 'config/initializers/spree.rb', "ActiveStorageAttachment", "PaperclipAttachment"
+      end
     end
 
     def additional_tweaks
@@ -171,10 +182,10 @@ module Solidus
       end
 
       bundle_cleanly{ run "bundle install" } if @plugins_to_be_installed.any?
-      run "spring stop"
+      run "spring stop" if defined?(Spring)
 
       @plugin_generators_to_run.each do |plugin_generator_name|
-        generate "#{plugin_generator_name} --skip_migrations=false"
+        generate "#{plugin_generator_name} --skip_migrations=true"
       end
     end
 

@@ -31,22 +31,6 @@ RSpec.describe Spree::OrderCancellations do
       end
     end
 
-    context "when a whodunnit is specified" do
-      subject { order.cancellations.cancel_unit(inventory_unit, whodunnit: "some automated system") }
-
-      it "sets the user on the UnitCancel and print a deprecation" do
-        expect(Spree::Deprecation).to receive(:warn).
-          with(/^Calling #cancel_unit on .* with whodunnit is deprecated/, any_args)
-        expect(subject.created_by).to eq("some automated system")
-      end
-    end
-
-    context "when a whodunnit is not specified" do
-      it "does not set created_by on the UnitCancel" do
-        expect(subject.created_by).to be_nil
-      end
-    end
-
     context "when a created_by is specified" do
       subject { order.cancellations.cancel_unit(inventory_unit, created_by: "some automated system") }
 
@@ -155,19 +139,6 @@ RSpec.describe Spree::OrderCancellations do
       let(:user) { order.user }
 
       it "sets the user on the UnitCancel" do
-        expect { subject }.to change { Spree::UnitCancel.count }.by(1)
-        expect(Spree::UnitCancel.last.created_by).to eq("some automated system")
-      end
-    end
-
-    context "when a whodunnit is specified" do
-      subject { order.cancellations.short_ship([inventory_unit], whodunnit: 'some automated system') }
-
-      let(:user) { order.user }
-
-      it "sets the user on the UnitCancel and raises a deprecation # WARNING: " do
-        expect(Spree::Deprecation).to receive(:warn).
-          with(/^Calling #short_ship on .* with whodunnit is deprecated/, any_args)
         expect { subject }.to change { Spree::UnitCancel.count }.by(1)
         expect(Spree::UnitCancel.last.created_by).to eq("some automated system")
       end
