@@ -78,7 +78,7 @@ describe "Product Images", type: :feature do
         end
 
         click_button "Update"
-        Spree::Image.first.attachment.blob.update(key: 11)
+        invalidate_attachment(Spree::Image.first.attachment)
         visit current_path
         expect(page).to have_xpath("//img[contains(@src, 'assets/noimage/mini')]")
       end
@@ -135,5 +135,13 @@ describe "Product Images", type: :feature do
       # ensure correct cell count
       expect(page).to have_css("thead th", count: 4)
     end
+  end
+
+  def invalidate_attachment(attachment)
+    blob = attachment.blob
+    blob.variant_records.each do |variant_record|
+      variant_record.update(variation_digest: SecureRandom.uuid)
+    end
+    blob.update(key: SecureRandom.uuid)
   end
 end
