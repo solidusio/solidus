@@ -4,9 +4,9 @@ require 'spec_helper'
 
 describe "viewing products", type: :feature, inaccessible: true do
   let!(:taxonomy) { create(:taxonomy, name: "Category") }
-  let!(:super_clothing) { taxonomy.root.children.create(name: "Super Clothing") }
-  let!(:t_shirts) { super_clothing.children.create(name: "T-Shirts") }
-  let!(:xxl) { t_shirts.children.create(name: "XXL") }
+  let!(:super_clothing) { taxonomy.root.children.create!(name: "Super Clothing", taxonomy: taxonomy) }
+  let!(:t_shirts) { super_clothing.children.create!(name: "T-Shirts", taxonomy: taxonomy) }
+  let!(:xxl) { t_shirts.children.create!(name: "XXL", taxonomy: taxonomy) }
   let!(:product) do
     product = create(:product, name: "Superman T-Shirt")
     product.taxons << t_shirts
