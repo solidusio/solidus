@@ -12,10 +12,11 @@ confirmation emails when an order is finalized, or again to send emails
 when an order is refunded successfully.
 
 Currently, the events fired by default in Solidus are:
-* `order_finalized`
-* `order_recalculated`
-* `reimbursement_reimbursed`
-* `reimbursement_errored`
+
+  * `order_finalized`
+  * `order_recalculated`
+  * `reimbursement_reimbursed`
+  * `reimbursement_errored`
 
 Events make extending Solidus with custom behavior easy. For example,
 if besides the standard email you also want to send a SMS text message to
@@ -58,12 +59,12 @@ Spree::Event.subscribe /.*\.spree$/ do |event|
 end
 ```
 
-Please note that, unless you add explicitly the `.spree` suffix namespace,
-you will register to all ActiveSupportNotifications, including Rails internal
-ones.
+Please note that, when using a regexp, unless you add explicitly the `.spree`
+suffix namespace you will register to all ActiveSupportNotifications, including
+Rails internal ones.
 
-Another way to subscribe to events is creating a "subscriber" module that
-includes the `Spree::Event::Subscriber` module. For example:
+You can also subscribe to events by creating a "subscriber" module that includes
+the `Spree::Event::Subscriber` module. For example:
 
 ```ruby
 # app/subscribers/spree/sms_subscriber.rb
