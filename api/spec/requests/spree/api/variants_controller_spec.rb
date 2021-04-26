@@ -11,7 +11,7 @@ module Spree
       variant
     end
 
-    let!(:base_attributes) { Api::ApiHelpers.variant_attributes }
+    let!(:base_attributes) { Spree::Api::Config.variant_attributes }
     let!(:show_attributes) { base_attributes.dup.push(:in_stock, :display_price, :variant_properties) }
     let!(:new_attributes) { base_attributes }
 
