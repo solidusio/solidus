@@ -308,6 +308,33 @@ module Spree
         expect(variant.product.variants.count).to eq(1)
       end
 
+      it "inherites prices from master" do
+        product = create(:product, price: 50)
+
+        post spree.api_product_variants_path(product), params: { variant: { sku: "12345" } }
+
+        variant = Spree::Variant.find(json_response["id"])
+        expect(variant.price).to eq(50)
+      end
+
+      it "can override prices inherited from master through nested attributes" do
+        product = create(:product, price: 50)
+
+        post spree.api_product_variants_path(product), params: { variant: { sku: "12345", prices_attributes: [amount: 25, currency: 'USD'] } }
+
+        variant = Spree::Variant.find(json_response["id"])
+        expect(variant.price).to eq(25)
+      end
+
+      it "can override prices inherited from master through default price attribute" do
+        product = create(:product, price: 50)
+
+        post spree.api_product_variants_path(product), params: { variant: { sku: "12345", price: 25 } }
+
+        variant = Spree::Variant.find(json_response["id"])
+        expect(variant.price).to eq(25)
+      end
+
       it "creates new variants with nested option values" do
         option_values = create_list(:option_value, 2)
         expect do

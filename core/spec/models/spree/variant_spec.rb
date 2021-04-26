@@ -7,8 +7,6 @@ RSpec.describe Spree::Variant, type: :model do
 
   let!(:variant) { create(:variant) }
 
-  it_behaves_like 'default_price'
-
   describe 'delegates' do
     let(:product) { build(:product) }
     let(:variant) { build(:variant, product: product) }
@@ -26,7 +24,7 @@ RSpec.describe Spree::Variant, type: :model do
 
   context "validations" do
     it "should validate price is greater than 0" do
-      variant.price = -1
+      variant = build(:variant, price: -1)
       expect(variant).to be_invalid
     end
 
@@ -49,7 +47,7 @@ RSpec.describe Spree::Variant, type: :model do
 
     it "propagate to stock items" do
       expect_any_instance_of(Spree::StockLocation).to receive(:propagate_variant)
-      product.variants.create!
+      product.variants.create!(price: 10)
     end
 
     context "stock location has disable propagate all variants" do
@@ -57,7 +55,7 @@ RSpec.describe Spree::Variant, type: :model do
 
       it "propagate to stock items" do
         expect_any_instance_of(Spree::StockLocation).not_to receive(:propagate_variant)
-        product.variants.create!
+        product.variants.create!(price: 10)
       end
     end
 
@@ -71,7 +69,7 @@ RSpec.describe Spree::Variant, type: :model do
 
       context 'when a variant is created' do
         before(:each) do
-          product.variants.create!
+          product.variants.create!(price: 10)
         end
 
         it { expect(product.master).to_not be_in_stock }
@@ -212,40 +210,122 @@ RSpec.describe Spree::Variant, type: :model do
     end
   end
 
+  describe '#default_price' do
+    context "when multiple prices are present in addition to a default price" do
+      let(:pricing_options_germany) { Spree::Config.pricing_options_class.new(currency: "EUR") }
+      let(:pricing_options_united_states) { Spree::Config.pricing_options_class.new(currency: "USD") }
+
+      before do
+        variant.prices.create(currency: "EUR", amount: 29.99)
+        variant.reload
+      end
+
+      it 'the default stays the same' do
+        expect(variant.default_price.amount).to eq(19.99)
+      end
+
+      it 'displays default price' do
+        expect(variant.price_for(pricing_options_united_states).to_s).to eq("$19.99")
+        expect(variant.price_for(pricing_options_germany).to_s).to eq("€29.99")
+      end
+    end
+
+    context 'when adding multiple prices' do
+      it 'it can reassign a default price' do
+        expect(variant.default_price.amount).to eq(19.99)
+        variant.prices.create(currency: "USD", amount: 12.12)
+        expect(variant.reload.default_price.amount).to eq(12.12)
+      end
+    end
+
+    it 'prioritizes prices recently created' do
+      variant = create(:variant)
+      create(:price, variant: variant, currency: 'USD')
+      price = create(:price, variant: variant, currency: 'USD')
+      variant.prices.reload
+
+      expect(variant.default_price).to eq(price)
+    end
+
+    it 'prioritizes non-persisted prices' do
+      variant = create(:variant)
+      price = build(:price, currency: 'USD', amount: 1, variant_id: variant.id)
+      variant.prices.build(price.attributes)
+      create(:price, variant: variant, currency: 'USD', amount: 2)
+
+      expect(variant.default_price.attributes).to eq(price.attributes)
+    end
+
+    it 'includes discarded prices when the variant is discarded' do
+      variant = create(:variant)
+      price = create(:price, variant: variant, currency: 'USD')
+      variant.discard
+
+      expect(variant.default_price).to eq(price)
+    end
+  end
+
+  describe '#default_price_or_build' do
+    context 'when default price exists' do
+      it 'returns it' do
+        price = build(:price, currency: 'USD')
+        variant = build(:variant, prices: [price])
+
+        expect(variant.default_price_or_build).to eq(price)
+      end
+    end
+
+    context 'when default price does not exist' do
+      it 'builds and returns it' do
+        variant = build(:variant, prices: [], price: nil)
+
+        expect(
+          variant.default_price_or_build.attributes.values_at(*described_class.default_pricing.keys.map(&:to_s))
+        ).to eq(described_class.default_pricing.values)
+      end
+    end
+  end
+
+  describe '#has_default_price?' do
+    context 'when default price is present and not discarded' do
+      it 'returns true' do
+        variant = create(:variant, price: 20)
+
+        expect(variant.has_default_price?).to be(true)
+      end
+    end
+
+    context 'when default price is discarded' do
+      it 'returns false' do
+        variant = create(:variant, price: 20)
+
+        variant.default_price.discard
+
+        expect(variant.has_default_price?).to be(false)
+      end
+    end
+  end
+
+  describe '#prioritized_for_default_prices' do
+    it 'returns prioritized prices' do
+      price_1 = create(:price, country: create(:country))
+      price_2 = create(:price, country: nil)
+      variant = create(:variant, prices: [price_1, price_2])
+
+      result = variant.prioritized_for_default_prices
+
+      expect(
+        result.index(price_1) < result.index(price_2)
+      ).to be(true)
+    end
+  end
+
   context "#cost_currency" do
     context "when cost currency is nil" do
       before { variant.cost_currency = nil }
       it "populates cost currency with the default value on save" do
         variant.save!
         expect(variant.cost_currency).to eql "USD"
-      end
-    end
-  end
-
-  context "#default_price" do
-    context "when multiple prices are present in addition to a default price" do
-      let(:pricing_options_germany) { Spree::Config.pricing_options_class.new(currency: "EUR") }
-      let(:pricing_options_united_states) { Spree::Config.pricing_options_class.new(currency: "USD") }
-      before do
-        variant.prices.create(currency: "EUR", amount: 29.99)
-        variant.reload
-      end
-
-      it "the default stays the same" do
-        expect(variant.default_price.amount).to eq(19.99)
-      end
-
-      it "displays default price" do
-        expect(variant.price_for(pricing_options_united_states).to_s).to eq("$19.99")
-        expect(variant.price_for(pricing_options_germany).to_s).to eq("€29.99")
-      end
-    end
-
-    context "when adding multiple prices" do
-      it "it can reassign a default price" do
-        expect(variant.default_price.amount).to eq(19.99)
-        variant.prices.create(currency: "USD", amount: 12.12)
-        expect(variant.reload.default_price.amount).to eq(12.12)
       end
     end
   end
@@ -608,39 +688,38 @@ RSpec.describe Spree::Variant, type: :model do
   describe "#discard" do
     it "discards related associations" do
       variant.images = [create(:image)]
+      variant.reload
 
       expect(variant.stock_items).not_to be_empty
       expect(variant.prices).not_to be_empty
-      expect(variant.currently_valid_prices).not_to be_empty
 
       variant.discard
 
       expect(variant.images).to be_empty
       expect(variant.stock_items).to be_empty
       expect(variant.prices).to be_empty
-      expect(variant.currently_valid_prices).to be_empty
     end
 
     describe 'default_price' do
-      let!(:previous_variant_price) { variant.display_price }
+      let!(:previous_variant_price) { variant.default_price }
 
       it "should discard default_price" do
         variant.discard
         variant.reload
-        expect(variant.default_price).to be_discarded
+        expect(previous_variant_price.reload).to be_discarded
       end
 
       it "should keep its price if deleted" do
         variant.discard
         variant.reload
-        expect(variant.display_price).to eq(previous_variant_price)
+        expect(variant.default_price).to eq(previous_variant_price)
       end
 
       context 'when loading with pre-fetching of default_price' do
         it 'also keeps the previous price' do
           variant.discard
-          reloaded_variant = Spree::Variant.with_discarded.includes(:default_price).find_by(id: variant.id)
-          expect(reloaded_variant.display_price).to eq(previous_variant_price)
+          reloaded_variant = Spree::Variant.with_discarded.find_by(id: variant.id)
+          expect(reloaded_variant.default_price).to eq(previous_variant_price)
         end
       end
     end
@@ -804,6 +883,42 @@ RSpec.describe Spree::Variant, type: :model do
           expect(variant.gallery.images).to eq Spree::Image.none
         end
       end
+    end
+  end
+
+  describe '#inherit_prices' do
+    it 'copies prices from master' do
+      product = create(:product, price: 10)
+      create(:price, variant: product.master, amount: 20, currency: 'EUR')
+      product.master.prices.reload
+      variant = build(:variant, product: product)
+
+      variant.inherit_prices
+
+      expect(variant.prices.size).to be(2)
+      expect(
+        variant.prices.map { |price| [price.amount, price.currency] }
+      ).to match_array([[10, 'USD'], [20, 'EUR']])
+    end
+
+    it "subsequent changes to copied prices attributes don't modify the original" do
+      product = create(:product, price: 10)
+      product.master.prices.reload
+      variant = build(:variant, product: product)
+
+      variant.inherit_prices
+      variant.prices[0].amount = 20
+      variant.save!
+
+      expect(
+        product.prices[0].reload.amount
+      ).to eq(10)
+    end
+
+    it 'raises on persisted variants' do
+      variant = create(:variant)
+
+      expect { variant.inherit_prices }.to raise_error(RuntimeError)
     end
   end
 end

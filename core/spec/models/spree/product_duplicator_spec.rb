@@ -79,9 +79,13 @@ module Spree
       let!(:variant1) { create(:variant, product: product, option_values: [option_value1]) }
       let!(:variant2) { create(:variant, product: product, option_values: [option_value2]) }
 
+      # will change the count by 3, since there will be a master variant as well
       it "will duplciate the variants" do
-        # will change the count by 3, since there will be a master variant as well
         expect{ duplicator.duplicate }.to change{ Spree::Variant.count }.by(3)
+      end
+
+      it "will duplciate the prices" do
+        expect{ duplicator.duplicate }.to change{ Spree::Price.count }.by(3)
       end
 
       it "will not duplicate the option values" do

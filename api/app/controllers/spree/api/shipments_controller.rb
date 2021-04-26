@@ -186,7 +186,7 @@ module Spree
             },
             variant: {
               product: {},
-              default_price: {},
+              prices: {},
               option_values: {
                 option_type: {}
               }

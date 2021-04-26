@@ -2,12 +2,13 @@
 <% currency_attr ||= :currency %>
 <% currency ||= nil %>
 <% required ||= nil %>
+<% extra_attrs ||= {} %>
 
 <div class="input-group number-with-currency <%= "number-with-currency-with-select" unless currency %> js-number-with-currency">
   <div class="input-group-prepend">
     <span class="input-group-text number-with-currency-symbol"></span>
   </div>
-  <%= f.text_field amount_attr, value: number_to_currency(f.object.public_send(amount_attr), unit: '', delimiter: ''), class: 'form-control number-with-currency-amount', required: required %>
+  <%= f.text_field amount_attr, extra_attrs.merge(value: number_to_currency(f.object.public_send(amount_attr), unit: '', delimiter: ''), class: 'form-control number-with-currency-amount', required: required) %>
   <% if currency %>
     <div class="input-group-append">
       <span class="input-group-text number-with-currency-addon" data-currency="<%= currency %>">

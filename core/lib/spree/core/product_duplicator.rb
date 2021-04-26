@@ -54,6 +54,7 @@ module Spree
       new_variant.sku = "COPY OF #{new_variant.sku}"
       new_variant.deleted_at = nil
       new_variant.option_values = variant.option_values.map { |option_value| option_value }
+      new_variant.prices = variant.prices.map(&:dup)
       new_variant
     end
 

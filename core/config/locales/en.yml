@@ -1383,6 +1383,9 @@ en:
       products:
         price_diff_add_html: "(Add: %{amount_html})"
         price_diff_subtract_html: "(Subtract: %{amount_html})"
+      prices:
+        legend: Prices
+        amount_in: "Price in %{currency}"
     hidden: hidden
     hide_out_of_stock: Hide out of stock
     hints:

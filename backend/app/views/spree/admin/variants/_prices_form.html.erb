@@ -1,0 +1,4 @@
+<div class="mb-3">
+  <%= render "spree/admin/shared/number_with_currency", f: f, amount_attr: :amount, currency: currency, extra_attrs: { "aria-label" => t("spree.helpers.prices.amount_in", currency: currency) } %>
+  <%= f.hidden_field :currency, value: currency %>
+</div>

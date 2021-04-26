@@ -126,7 +126,8 @@ module Spree
       :name, :presentation, :cost_price, :lock_version,
       :position, :track_inventory,
       :product_id, :product, :option_values_attributes, :price,
-      :weight, :height, :width, :depth, :sku, :cost_currency, option_value_ids: [], options: [:name, :value]
+      :weight, :height, :width, :depth, :sku, :cost_currency, option_value_ids: [], options: [:name, :value],
+      prices_attributes: [:id, :amount, :currency]
     ]
 
     @@checkout_address_attributes = [

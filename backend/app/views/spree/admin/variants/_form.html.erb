@@ -63,9 +63,13 @@
 
     <div class="row">
       <div class="col-3">
-        <div class="field" data-hook="price">
-          <%= f.label :price %>
-          <%= render "spree/admin/shared/number_with_currency", f: f, amount_attr: :price, currency: @variant.find_or_build_default_price.currency %>
+        <div class="field">
+          <fieldset>
+            <legend><%= t("spree.helpers.prices.legend") %></legend>
+            <%= f.fields_for :prices do |p_form| %>
+              <%= render "prices_form", f: p_form, currency: p_form.object.currency %>
+            <% end %>
+          </fieldset>
         </div>
       </div>
 

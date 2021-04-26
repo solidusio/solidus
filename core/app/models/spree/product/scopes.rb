@@ -29,25 +29,25 @@ module Spree
           scope :descend_by_name, -> { order(name: :desc) }
 
           add_search_scope :ascend_by_master_price do
-            joins(master: :default_price).select('spree_products.* , spree_prices.amount')
+            joins(master: :prices).select('spree_products.* , spree_prices.amount')
                                          .order(Spree::Price.arel_table[:amount].asc)
           end
 
           add_search_scope :descend_by_master_price do
-            joins(master: :default_price).select('spree_products.* , spree_prices.amount')
+            joins(master: :prices).select('spree_products.* , spree_prices.amount')
                                          .order(Spree::Price.arel_table[:amount].desc)
           end
 
           add_search_scope :price_between do |low, high|
-            joins(master: :default_price).where(Price.table_name => { amount: low..high })
+            joins(master: :prices).where(Price.table_name => { amount: low..high })
           end
 
           add_search_scope :master_price_lte do |price|
-            joins(master: :default_price).where("#{price_table_name}.amount <= ?", price)
+            joins(master: :prices).where("#{price_table_name}.amount <= ?", price)
           end
 
           add_search_scope :master_price_gte do |price|
-            joins(master: :default_price).where("#{price_table_name}.amount >= ?", price)
+            joins(master: :prices).where("#{price_table_name}.amount >= ?", price)
           end
 
           # This scope selects products in taxon AND all its descendants

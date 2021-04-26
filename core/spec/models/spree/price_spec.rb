@@ -96,6 +96,32 @@ RSpec.describe Spree::Price, type: :model do
         expect(price.country).to eq(country)
       end
     end
+
+    describe '.prioritized_for_default' do
+      it 'prioritizes first those associated to a country' do
+        price_1 = create(:price, country: create(:country))
+        price_2 = create(:price, country: nil)
+
+        result = described_class.prioritized_for_default
+
+        expect(
+          result.index(price_1) < result.index(price_2)
+        ).to be(true)
+      end
+
+      context 'when country data is the same' do
+        it 'prioritizes first those recently created' do
+          price_1 = create(:price, country: nil)
+          price_2 = create(:price, country: nil)
+
+          result = described_class.prioritized_for_default
+
+          expect(
+            result.index(price_2) < result.index(price_1)
+          ).to be(true)
+        end
+      end
+    end
   end
 
   describe "#currency" do
