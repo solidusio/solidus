@@ -97,6 +97,7 @@ module DummyApp
     config.action_controller.include_all_helpers = false
 
     if config.respond_to?(:assets)
+      config.assets.config_manifest = File.expand_path('dummy_app/assets/config/manifest.js', __dir__)
       config.assets.paths << File.expand_path('dummy_app/assets/javascripts', __dir__)
       config.assets.paths << File.expand_path('dummy_app/assets/stylesheets', __dir__)
     end
