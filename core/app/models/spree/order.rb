@@ -584,7 +584,7 @@ module Spree
         raise CannotRebuildShipments.new(I18n.t('spree.cannot_rebuild_shipments_shipments_not_pending'))
       else
         shipments.destroy_all
-        self.shipments = Spree::Config.stock.coordinator_class.new(self).shipments
+        shipments.push(*Spree::Config.stock.coordinator_class.new(self).shipments)
       end
     end
 

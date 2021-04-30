@@ -45,6 +45,7 @@ module DummyApp
   end
 
   class Application < ::Rails::Application
+    config.has_many_inverse = true
     config.eager_load = false
     config.cache_classes = true
     config.cache_store = :memory_store
