@@ -112,23 +112,111 @@ module Spree
         expect(json_response["stock_location_id"]).to eq final_stock_location.id
       end
 
-      it "can create a new customer return" do
-        stock_location = FactoryBot.create(:stock_location)
-        unit = FactoryBot.create(:inventory_unit, state: "shipped")
-        cr_params = { stock_location_id: stock_location.id,
-                       return_items_attributes: [{
-                         inventory_unit_id: unit.id,
-                         reception_status_event: "receive",
-                       }] }
+      context "when creating new return items" do
+        it "can create a new customer return" do
+          stock_location = FactoryBot.create(:stock_location)
+          unit = FactoryBot.create(:inventory_unit, state: "shipped")
+          cr_params = { stock_location_id: stock_location.id,
+                         return_items_attributes: [{
+                           inventory_unit_id: unit.id,
+                           reception_status_event: "receive",
+                         }] }
 
-        post spree.api_order_customer_returns_path(order), params: { order_id: order.number, customer_return: cr_params }
+          post spree.api_order_customer_returns_path(order), params: { order_id: order.number, customer_return: cr_params }
 
-        expect(response.status).to eq(201)
-        expect(json_response).to have_attributes(attributes)
+          expect(response.status).to eq(201)
+          expect(json_response).to have_attributes(attributes)
 
-        customer_return = Spree::CustomerReturn.last
+          customer_return = Spree::CustomerReturn.last
 
-        expect(customer_return.return_items.first.reception_status).to eql "received"
+          expect(customer_return.return_items.first.reception_status).to eql "received"
+        end
+      end
+
+      context "when referencing existing return items" do
+        subject do
+          post(
+            spree.api_order_customer_returns_path(order),
+            params: {
+              order_id: order.number,
+              customer_return: customer_return_params
+            }
+          )
+        end
+
+        let(:stock_location) { create(:stock_location) }
+        let(:inventory_unit) { create(:inventory_unit, state: "shipped") }
+        let(:order) { inventory_unit.order }
+        let(:return_item) do
+          create(:return_item, inventory_unit: inventory_unit)
+        end
+
+        let(:customer_return_params) do
+          {
+            stock_location_id: stock_location.id,
+            return_items_attributes: [return_item.attributes]
+          }
+        end
+
+        it "can create a new customer return" do
+          expect { subject }.to change { Spree::CustomerReturn.count }.
+            from(0).to(1)
+
+          expect(response).to have_http_status(:success)
+          expect(json_response).to have_attributes(attributes)
+        end
+
+        it "does not change the reception status of the return item" do
+          expect { subject }.
+            to_not change { return_item.reload.reception_status }.
+            from("awaiting")
+        end
+
+        context "and return items attributes passed in as a hash of hashes" do
+          let(:customer_return_params) do
+            {
+              stock_location_id: stock_location.id,
+              return_items_attributes: {
+                "0" => return_item.attributes
+              }
+            }
+          end
+
+          it "can create a new customer return" do
+            expect(Spree::Deprecation).to receive(:warn)
+            expect { subject }.to change { Spree::CustomerReturn.count }.
+              from(0).to(1)
+
+            expect(response).to have_http_status(:success)
+            expect(json_response).to have_attributes(attributes)
+          end
+
+          it "logs a deprecation warning" do
+            expect(Spree::Deprecation).
+              to receive(:warn).
+              with(
+                /Passing `return_items_attributes` as a hash of hashes is deprecated/
+              )
+            subject
+          end
+        end
+
+        context "with reception_status_event provided for return item" do
+          let(:customer_return_params) do
+            {
+              stock_location_id: stock_location.id,
+              return_items_attributes: [
+                return_item.attributes.merge(reception_status_event: "receive")
+              ]
+            }
+          end
+
+          it "updates the reception status of the return item" do
+            expect { subject }.
+              to change { return_item.reload.reception_status }.
+              from("awaiting").to("received")
+          end
+        end
       end
     end
   end
