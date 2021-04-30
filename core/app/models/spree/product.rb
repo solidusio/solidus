@@ -45,7 +45,6 @@ module Spree
 
     has_many :variants,
       -> { where(is_master: false).order(:position) },
-      inverse_of: :product,
       class_name: 'Spree::Variant'
 
     has_many :variants_including_master,
