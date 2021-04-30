@@ -534,6 +534,22 @@ RSpec.describe Spree::Variant, type: :model do
         expect(quantifier).to receive(:can_supply?).with(10)
         variant.can_supply?(10)
       end
+
+      context "with a stock_location specified" do
+        subject { variant.can_supply?(10, stock_location) }
+
+        let(:quantifier) { instance_double(Spree::Stock::Quantifier) }
+        let(:stock_location) { build_stubbed(:stock_location) }
+
+        it "initializes the quantifier with the stock location" do
+          expect(Spree::Stock::Quantifier).
+            to receive(:new).
+            with(variant, stock_location).
+            and_return(quantifier)
+          allow(quantifier).to receive(:can_supply?).with(10)
+          subject
+        end
+      end
     end
 
     context 'when stock_items are backorderable' do
@@ -586,6 +602,22 @@ RSpec.describe Spree::Variant, type: :model do
     it 'should match quantifier total_on_hand' do
       variant = build(:variant)
       expect(variant.total_on_hand).to eq(Spree::Stock::Quantifier.new(variant).total_on_hand)
+    end
+
+    context "with a stock_location specified" do
+      subject { variant.total_on_hand(stock_location) }
+
+      let(:quantifier) { instance_double(Spree::Stock::Quantifier) }
+      let(:stock_location) { build_stubbed(:stock_location) }
+
+      it "initializes the quantifier with the stock location" do
+        expect(Spree::Stock::Quantifier).
+          to receive(:new).
+          with(variant, stock_location).
+          and_return(quantifier)
+        allow(quantifier).to receive(:total_on_hand)
+        subject
+      end
     end
   end
 
