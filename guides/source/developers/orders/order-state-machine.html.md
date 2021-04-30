@@ -25,6 +25,30 @@ The `complete` state is triggered in one of two ways:
 2. Payment is required on the order, and at least the order total has been
    received as payment.
 
+## Customizing the checkout flow
+The central steps in the checkout flow – `address`, `delivery`, `payment` and
+`confirm`, are customizable. For example, you might decide you want skip the
+`confirm` step and proceed directly from `payment` to `complete`. To modify your
+checkout flow, create a decorator similar to the following:
+
+```ruby
+# /app/models/mystore/order_decorator.rb
+
+module MyStore::OrderDecorator
+  def self.prepended(base)
+    base.checkout_flow do
+      go_to_state :address
+      go_to_state :delivery
+      go_to_state :payment, if: ->(order) { order.payment_required? }
+      # NOTE: confirm state is commented and will NOT be part of the flow
+      # go_to_state :confirm
+    end
+  end
+
+  Spree::Order.prepend self
+end
+```
+
 ## State criteria
 
 Each order state has criteria that must be met before the state can change. For

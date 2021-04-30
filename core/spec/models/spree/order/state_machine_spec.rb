@@ -119,4 +119,42 @@ RSpec.describe Spree::Order, type: :model do
       end
     end
   end
+
+  describe "#complete" do
+    context "when the confirm step has been taken out of the checkout flow" do
+      let!(:payment) { create(:payment, state: 'checkout', order: order) }
+
+      before :all do
+        class Spree::Order
+          checkout_flow do
+            go_to_state :address
+            go_to_state :delivery
+            go_to_state :payment, if: ->(order) { order.payment_required? }
+            # confirm step has been removed. Payment is the last step now
+          end
+        end
+      end
+
+      after :all do
+        # restore the standard checkout flow to avoid leaking into other tests
+        class Spree::Order
+          checkout_flow do
+            go_to_state :address
+            go_to_state :delivery
+            go_to_state :payment, if: ->(order) { order.payment_required? }
+            go_to_state :confirm
+          end
+        end
+      end
+
+      before do
+        order.update!(state: 'payment')
+      end
+
+      it 'will properly transition from the last checkout flow state to complete' do
+        order.complete!
+        expect(order.state).to eq 'complete'
+      end
+    end
+  end
 end
