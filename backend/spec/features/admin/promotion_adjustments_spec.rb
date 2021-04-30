@@ -195,6 +195,8 @@ describe "Promotion Adjustments", type: :feature, js: true do
       fill_in "Base code", with: "testing"
       fill_in "Number of codes", with: "10"
 
+      expect(page).to have_field("promotion_code_batch_email")
+
       perform_enqueued_jobs {
         click_button "Create"
         expect(page).to have_title("SAVE SAVE SAVE - Promotions")

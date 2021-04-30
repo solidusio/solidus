@@ -20,6 +20,10 @@ feature "Promotion Code Batches", partial_double_verification: false do
       click_button "Create"
     end
 
+    it "renders partial without 'Per code usage limit' " do
+      expect(page).to_not have_field("promotion_per_code_usage_limit")
+    end
+
     it "creates a new promotion code batch and disables the submit button", :js do
       create_code_batch
 
