@@ -55,18 +55,13 @@ module Spree
         end
       end
 
-      config.after_initialize do
-        # Load in mailer previews for apps to use in development.
-        # We need to make sure we call `Preview.all` before requiring our
-        # previews, otherwise any previews the app attempts to add need to be
-        # manually required.
-        if Rails.env.development? || Rails.env.test?
-          ActionMailer::Preview.all
+      # Load in mailer previews for apps to use in development.
+      initializer "spree.core.action_mailer.set_preview_path", after: "action_mailer.set_configs" do |app|
+        original_preview_path = app.config.action_mailer.preview_path
+        solidus_preview_path = Spree::Core::Engine.root.join 'lib/spree/mailer_previews'
 
-          Dir[root.join("lib/spree/mailer_previews/**/*_preview.rb")].each do |file|
-            require_dependency file
-          end
-        end
+        app.config.action_mailer.preview_path = "{#{original_preview_path},#{solidus_preview_path}}"
+        ActionMailer::Base.preview_path = app.config.action_mailer.preview_path
       end
     end
   end
