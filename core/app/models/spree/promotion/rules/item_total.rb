@@ -5,6 +5,9 @@ module Spree
     module Rules
       # A rule to apply to an order greater than (or greater than or equal to)
       # a specific amount
+      #
+      # To add extra operators please override `self.operators_map` or any other helper method.
+      # To customize the error message you can also override `ineligible_message`.
       class ItemTotal < PromotionRule
         include ActiveSupport::Deprecation::DeprecatedConstantAccessor
 
@@ -71,10 +74,13 @@ module Spree
         end
 
         def ineligible_message
-          if preferred_operator.to_s == 'gte'
+          case preferred_operator.to_s
+          when 'gte'
             eligibility_error_message(:item_total_less_than, amount: formatted_amount)
-          else
+          when 'gt'
             eligibility_error_message(:item_total_less_than_or_equal, amount: formatted_amount)
+          else
+            eligibility_error_message(:item_total_doesnt_match_with_operator, amount: formatted_amount, operator: preferred_operator)
           end
         end
 
