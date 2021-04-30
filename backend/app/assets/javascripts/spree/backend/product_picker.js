@@ -15,7 +15,8 @@ $.fn.productAutocomplete = function (options) {
     initSelection: function (element, callback) {
       $.get(Spree.pathFor('admin/search/products'), {
         ids: element.val().split(','),
-        token: Spree.api_key
+        token: Spree.api_key,
+        show_all: true
       }, function (data) {
         callback(multiple ? data.products : data.products[0]);
       });
