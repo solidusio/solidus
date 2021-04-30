@@ -236,8 +236,8 @@ RSpec.describe Spree::Variant, type: :model do
       end
 
       it "displays default price" do
-        expect(variant.price_for(pricing_options_united_states).to_s).to eq("$19.99")
-        expect(variant.price_for(pricing_options_germany).to_s).to eq("€29.99")
+        expect(variant.price_for_options(pricing_options_united_states).money.to_s).to eq("$19.99")
+        expect(variant.price_for_options(pricing_options_germany).money.to_s).to eq("€29.99")
       end
     end
 
@@ -269,6 +269,41 @@ RSpec.describe Spree::Variant, type: :model do
       expect(variant.price_selector).to receive(:price_for).with(price_options)
       variant.price_for(price_options)
     end
+
+    it "returns a Spree::Money object with a deprecation warning", :aggregate_failures do
+      expect(Spree::Deprecation).to receive(:warn).
+        with(/^price_for is deprecated and will be removed/, any_args)
+      expect(variant.price_for(price_options)).to eq Spree::Money.new(19.99)
+    end
+  end
+
+  context "#price_for_options(price_options)" do
+    subject { variant.price_for_options(price_options) }
+
+    let(:price_options) { Spree::Config.variant_price_selector_class.pricing_options_class.new }
+
+    it "delegates to the price_selector" do
+      expect(variant.price_selector).to receive(:price_for_options).with(price_options)
+      subject
+    end
+
+    it "returns a Spree::Price object for the given pricing_options", :aggregate_failures do
+      expect(subject).to be_a Spree::Price
+      expect(subject.amount).to eq 19.99
+    end
+
+    context "when the price_selector does not implement #price_for_options" do
+      before do
+        allow(variant.price_selector).to receive(:respond_to?).with(:price_for_options).and_return false
+      end
+
+      it "returns an unpersisted Spree::Price", :aggregate_failures do
+        expect(Spree::Deprecation).to receive(:warn).
+          with(/^price_for is deprecated and will be removed/, any_args)
+        expect(subject).to be_a Spree::Price
+        expect(subject.amount).to eq 19.99
+      end
+    end
   end
 
   context "#price_difference_from_master" do
@@ -298,7 +333,7 @@ RSpec.describe Spree::Variant, type: :model do
       let(:variant) { create(:variant, product: product, price: 35) }
 
       before do
-        allow(product.master).to receive(:price_for).and_return(nil)
+        allow(product.master).to receive(:price_for_options).and_return(nil)
       end
 
       it { is_expected.to be_nil }
@@ -309,7 +344,7 @@ RSpec.describe Spree::Variant, type: :model do
       let(:variant) { create(:variant, product: product, price: 35) }
 
       before do
-        allow(variant).to receive(:price_for).and_return(nil)
+        allow(variant).to receive(:price_for_options).and_return(nil)
       end
 
       it { is_expected.to be_nil }
@@ -340,7 +375,7 @@ RSpec.describe Spree::Variant, type: :model do
       let(:variant) { create(:variant, price: 10, product: master.product) }
 
       before do
-        allow(master).to receive(:price_for).and_return(nil)
+        allow(master).to receive(:price_for_options).and_return(nil)
       end
 
       subject { variant.price_same_as_master? }
@@ -353,7 +388,7 @@ RSpec.describe Spree::Variant, type: :model do
       let(:variant) { create(:variant, price: 10, product: master.product) }
 
       before do
-        allow(variant).to receive(:price_for).and_return(nil)
+        allow(variant).to receive(:price_for_options).and_return(nil)
       end
 
       subject { variant.price_same_as_master? }

@@ -32,7 +32,7 @@
           </div>
           <%= link_to truncate(product.name, length: 50), url, class: 'info', itemprop: "name", title: product.name %>
           <span itemprop="offers" itemscope itemtype="http://schema.org/Offer">
-            <% if price = product.price_for(current_pricing_options) %>
+            <% if price = product.price_for_options(current_pricing_options)&.money %>
               <span class="price selling" itemprop="price" content="<%= price.to_d %>">
                 <%= price.to_html %>
               </span>

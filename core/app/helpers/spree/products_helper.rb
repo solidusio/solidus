@@ -38,7 +38,7 @@ module Spree
                   .with_prices(current_pricing_options)
                   .all? { |variant_with_prices| variant_with_prices.price_same_as_master?(current_pricing_options) }
 
-      variant.price_for(current_pricing_options).to_html
+      variant.price_for_options(current_pricing_options)&.money&.to_html
     end
 
     # Converts line breaks in product description into <p> tags.

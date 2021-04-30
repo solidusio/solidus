@@ -104,10 +104,10 @@ RSpec.describe Spree::LineItem, type: :model do
     let(:variant) { Spree::Variant.new(product: Spree::Product.new) }
     let(:line_item) { Spree::LineItem.new(order: order, variant: variant) }
 
-    before { expect(variant).to receive(:price_for).at_least(:once).and_return(price) }
+    before { expect(variant).to receive(:price_for_options).at_least(:once).and_return(price) }
 
     context "when a price exists in order currency" do
-      let(:price) { Spree::Money.new(99.00, currency: "RUB") }
+      let(:price) { Spree::Price.new(amount: 99.00, currency: "RUB") }
 
       it "is a valid line item" do
         expect(line_item.valid?).to be_truthy
@@ -140,8 +140,8 @@ RSpec.describe Spree::LineItem, type: :model do
 
       it "sets price anyway, retrieving it from line item options" do
         expect(line_item.variant)
-          .to receive(:price_for)
-          .and_return(Spree::Money.new(123, currency: "USD"))
+          .to receive(:price_for_options)
+          .and_return(Spree::Price.new(amount: 123, currency: "USD"))
 
         line_item.options = options
 
