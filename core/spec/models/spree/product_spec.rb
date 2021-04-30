@@ -129,7 +129,7 @@ RSpec.describe Spree::Product, type: :model do
         it "should set deleted_at value" do
           product.discard
           expect(product.deleted_at).not_to be_nil
-          expect(product.variants_including_master).to all(be_discarded)
+          expect(product.variants_including_master.reload).to all(be_discarded)
         end
       end
     end

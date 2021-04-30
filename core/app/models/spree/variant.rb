@@ -30,7 +30,7 @@ module Spree
     attr_writer :rebuild_vat_prices
     include Spree::DefaultPrice
 
-    belongs_to :product, -> { with_discarded }, touch: true, class_name: 'Spree::Product', inverse_of: :variants, optional: false
+    belongs_to :product, -> { with_discarded }, touch: true, class_name: 'Spree::Product', inverse_of: :variants_including_master, optional: false
     belongs_to :tax_category, class_name: 'Spree::TaxCategory', optional: true
 
     delegate :name, :description, :slug, :available_on, :discontinue_on, :discontinued?,
