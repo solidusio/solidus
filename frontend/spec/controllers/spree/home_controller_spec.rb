@@ -17,12 +17,30 @@ describe Spree::HomeController, type: :controller do
       expect(response).to render_template(layout: 'spree/layouts/spree_application')
     end
 
-    context "different layout specified in config" do
+    context "different layout specified as a string in config" do
       before { stub_spree_preferences(layout: 'layouts/application') }
 
       it "renders specified layout" do
         get :index
         expect(response).to render_template(layout: 'layouts/application')
+      end
+    end
+
+    context "different layout specified as a proc in config" do
+      before do
+        layout_proc = proc do |instance|
+          if instance.controller_path == 'spree/home'
+            'layouts/custom_layout'
+          else
+            'spree/layouts/spree_application'
+          end
+        end
+        stub_spree_preferences(layout: layout_proc)
+      end
+
+      it "renders specified layout" do
+        get :index
+        expect(response).to render_template(layout: 'layouts/custom_layout')
       end
     end
   end

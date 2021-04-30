@@ -73,8 +73,22 @@ module Spree
         #
         # Default layout is: +app/views/spree/layouts/spree_application+
         #
+
         def get_layout
-          Spree::Config[:layout]
+          layout = Spree::Config.layout
+
+          case layout
+          when String
+            layout
+          when Symbol
+            send(layout)
+          when Proc
+            Spree::Config.layout.call(self)
+          when true
+            raise ArgumentError, 'Layouts must be specified as a String, Symbol, Proc, false, or nil'
+          when nil
+            'spree/layouts/spree_application'
+          end
         end
       end
     end

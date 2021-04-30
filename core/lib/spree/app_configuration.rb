@@ -158,8 +158,12 @@ module Spree
     preference :inventory_cache_threshold, :integer
 
     # @!attribute [rw] layout
-    #   @return [String] template to use for layout on the frontend (default: +"spree/layouts/spree_application"+)
-    preference :layout, :string, default: 'spree/layouts/spree_application'
+    #   @return layout to use on the frontend (default: +"spree/layouts/spree_application"+)
+    #   Accepts anything allowed by ActionView::Layouts::ClassMethods#layout
+    attr_writer :layout
+    def layout
+      @layout ||= 'spree/layouts/spree_application'
+    end
 
     # @!attribute [rw] logo
     #   @return [String] URL of logo used on frontend (default: +'logo/solidus.svg'+)
