@@ -128,7 +128,7 @@ module Spree
     before_create :create_token
     before_create :link_by_email
 
-    validates :email, presence: true, if: :require_email
+    validates :email, presence: true, if: :email_required?
     validates :email, 'spree/email' => true, allow_blank: true
     validates :guest_token, presence: { allow_nil: true }
     validates :number, presence: true, uniqueness: { allow_blank: true, case_sensitive: true }
@@ -750,8 +750,13 @@ module Spree
     end
 
     # Determine if email is required (we don't want validation errors before we hit the checkout)
-    def require_email
+    def email_required?
       true unless new_record? || ['cart', 'address'].include?(state)
+    end
+
+    def require_email
+      Spree::Deprecation.warn "Use email_required? instead", caller(1)
+      email_required?
     end
 
     def ensure_inventory_units
