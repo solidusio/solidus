@@ -73,11 +73,12 @@ field.
 
 ## Allowing Custom Attributes to be Saved
 
-If you try to submit the form with the new attribute field, you will notice
-it will not save to the database. This is due to every model having a list of
-permitted attributes.
+If you try to submit the form with the new attribute field, you may notice
+it will not save to the database. This is due to many models having a list of
+permitted attributes. Models with a defined list of permitted attributes are 
+defined in https://github.com/solidusio/solidus/blob/master/core/lib/spree/permitted_attributes.rb.
 
-To extend this list, we can add the following line to an initializer, for
+To extend the list for a model, we can add the following line to an initializer, for
 example in `config/initializers/spree.rb`:
 
 ```ruby
