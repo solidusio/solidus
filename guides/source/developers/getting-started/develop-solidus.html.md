@@ -17,6 +17,8 @@ cd solidus
 bundle install
 ```
 
+Alternatively, you can use the [docker setup](#develop-with-docker).
+
 ## Create a sandbox application
 
 Solidus is meant to be run within a Rails application. You can create a sandbox
@@ -137,3 +139,68 @@ start creating a new Solidus extension. Check out the doc on
 [extensions]: http://extensions.solidus.io
 [writing-extensions]: https://guides.solidus.io/developers/extensions/writing-extensions.html
 [solidus_dev_support]: https://github.com/solidusio/solidus_dev_support
+
+## Develop with docker
+
+If you have docker and docker-compose, you can leverage them to get a
+development environment ready to go in a snap:
+
+```bash
+docker-compose up -d
+```
+
+The `app` service is the one sharing the repository source code. Once the image
+has been built, you have to wait for all the dependencies to be installed. This
+won't happen in subsequent invocations. You can check progress through the
+service's logs:
+
+```bash
+docker-compose logs -f app
+```
+
+The image can be built with other ruby versions through the `RUBY_VERSION` build argument:
+
+```bash
+docker-compose build --build-arg RUBY_VERSION=2.6 app
+docker-compose up -d
+```
+
+In addition, the rails version can also be set on container initialization
+through the `RAILS_VERSION` environment variable:
+
+```bash
+RAILS_VERSION='~> 5.0' docker-compose up -d
+```
+
+You can use either postgres, mysql or sqlite to run the test suite:
+
+```bash
+# sqlite
+docker-compose exec app bin/rspec
+# postgres
+docker-compose exec app env DB=postgres bin/rspec
+# mysql
+docker-compose exec app env DB=mysql bin/rspec
+```
+
+Database engine clients are also available:
+
+```bash
+# sqlite
+docker-compose exec app sqlite3 /path/to/db
+# postgres
+docker-compose exec app env PGPASSWORD=password psql -U root -h postgres
+# mysql
+docker-compose exec app mysql -u root -h mysql -ppassword
+```
+
+In order to be able to access the [sandbox
+application](#create-a-sandbox-application), just make sure to provide the
+appropriate `--binding` option to `rails server`. By default, port `3000` is
+exposed, but you can change it through `SANDBOX_PORT` environment variable:
+
+```bash
+SANDBOX_PORT=4000 docker-compose up -d
+docker-compose exec app bin/sandbox
+docker-compose exec app bin/rails server --binding 0.0.0.0 --port 4000
+```

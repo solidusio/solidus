@@ -32,6 +32,7 @@ executors:
       <<: *environment
       DB: mysql
       DB_HOST: 127.0.0.1
+      DB_USERNAME: root
     docker:
       - image: *image
       - image: circleci/mysql:5.7-ram
