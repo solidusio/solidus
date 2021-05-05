@@ -47,35 +47,47 @@ module DummyApp
 
   class Application < ::Rails::Application
     config.load_defaults("#{Rails::VERSION::MAJOR}.#{Rails::VERSION::MINOR}")
-    config.eager_load = false
+    # Make the test environment more production-like:
     config.cache_classes = true
-    config.cache_store = :memory_store
-    config.serve_static_assets = true
-    config.public_file_server.headers = { 'Cache-Control' => 'public, max-age=3600' }
-    config.whiny_nils = true
-    config.consider_all_requests_local = true
     config.action_controller.allow_forgery_protection = false
     config.action_controller.default_protect_from_forgery = false
-    config.action_controller.perform_caching = false
+    config.action_controller.perform_caching = true
+    config.action_mailer.perform_caching = false
+    config.i18n.fallbacks = true
+
+    # Make debugging easier:
+    config.consider_all_requests_local = true
     config.action_dispatch.show_exceptions = false
     config.active_support.deprecation = :stderr
+    config.log_level = :debug
+
+    # Improve test suite performance:
+    config.eager_load = false
+    config.public_file_server.headers = { 'Cache-Control' => 'public, max-age=3600' }
+    config.cache_store = :memory_store
+
+    # We don't use a web server, so we let Rails serve assets.
+    config.public_file_server.enabled = true
+
+    # We don't want to send email in the test environment.
     config.action_mailer.delivery_method = :test
-    config.active_support.deprecation = :stderr
+
+    # No need to use credentials file in a test environment.
     config.secret_key_base = 'SECRET_TOKEN'
 
-    config.action_mailer.delivery_job = "ActionMailer::MailDeliveryJob" if RAILS_6_OR_ABOVE
+    # Set the preview path within the dummy app:
     config.action_mailer.preview_path = File.expand_path('dummy_app/mailer_previews', __dir__)
-    config.action_mailer.show_previews = true
+
     config.active_record.sqlite3.represent_boolean_as_integer = true unless RAILS_6_OR_ABOVE
+    config.active_record.dump_schema_after_migration = false
 
-    config.storage_path = Rails.root.join('tmp', 'storage')
-
+    # Configure active storage to use storage within tmp folder
     unless ENV['DISABLE_ACTIVE_STORAGE']
       initializer 'solidus.active_storage' do
         config.active_storage.service_configurations = {
           test: {
             service: 'Disk',
-            root: config.storage_path
+            root: Rails.root.join('tmp', 'storage')
           }
         }
         config.active_storage.service = :test
@@ -96,12 +108,8 @@ module DummyApp
     config.paths['db/migrate'] = migration_dirs
     ActiveRecord::Migrator.migrations_paths = migration_dirs
 
-    config.action_controller.include_all_helpers = false
-
-    if config.respond_to?(:assets)
-      config.assets.paths << File.expand_path('dummy_app/assets/javascripts', __dir__)
-      config.assets.paths << File.expand_path('dummy_app/assets/stylesheets', __dir__)
-    end
+    config.assets.paths << File.expand_path('dummy_app/assets/javascripts', __dir__)
+    config.assets.paths << File.expand_path('dummy_app/assets/stylesheets', __dir__)
 
     config.paths["config/database"] = File.expand_path('dummy_app/database.yml', __dir__)
     config.paths['app/views'] = File.expand_path('dummy_app/views', __dir__)
