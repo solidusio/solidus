@@ -73,11 +73,16 @@ module Spree
         packages = split_packages(packages)
 
         # Turn the Stock::Packages into a Shipment with rates
-        packages.map do |package|
+        shipments = packages.map do |package|
           shipment = package.shipment = package.to_shipment
           shipment.shipping_rates = Spree::Config.stock.estimator_class.new.shipping_rates(package)
           shipment
         end
+
+        # Make sure we don't add the proposed shipments to the order
+        order.shipments = order.shipments - shipments
+
+        shipments
       end
 
       def split_packages(initial_packages)

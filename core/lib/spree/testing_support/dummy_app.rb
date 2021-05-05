@@ -46,6 +46,7 @@ module DummyApp
   end
 
   class Application < ::Rails::Application
+    config.load_defaults("#{Rails::VERSION::MAJOR}.#{Rails::VERSION::MINOR}")
     config.eager_load = false
     config.cache_classes = true
     config.cache_store = :memory_store

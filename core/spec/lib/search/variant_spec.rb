@@ -59,6 +59,7 @@ module Spree
           described_class.new(variant.sku, scope: Spree::Variant.in_stock).results
         ).to include variant
 
+        variant.stock_items.reload # See https://github.com/rails/rails/issues/42094
         variant.stock_items.each { |si| si.set_count_on_hand(0) }
         expect(
           described_class.new(variant.sku, scope: Spree::Variant.in_stock).results

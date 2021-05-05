@@ -683,7 +683,7 @@ RSpec.describe Spree::Variant, type: :model do
       variant.discard
 
       expect(variant.images).to be_empty
-      expect(variant.stock_items).to be_empty
+      expect(variant.stock_items.reload).to be_empty
       expect(variant.prices).to be_empty
       expect(variant.currently_valid_prices).to be_empty
     end

@@ -25,7 +25,7 @@ RSpec.describe Spree::OrderContents, type: :model do
 
       it "ensure shipment calls update_amounts instead of order calling ensure_updated_shipments" do
         expect(subject.order).to_not receive(:ensure_updated_shipments)
-        expect(shipment).to receive(:update_amounts)
+        expect(shipment).to receive(:update_amounts).at_least(:once)
         subject.add(variant, 1, shipment: shipment)
       end
 
