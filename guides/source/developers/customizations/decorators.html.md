@@ -1,14 +1,14 @@
 # Decorators
 
-Solidus autoloads any file in the `/app` directory that has the suffix
-`_decorator.rb`, just like any other Rails models or controllers. This allows
-you to [monkey patch][monkey-patch] Solidus functionality for your store.
+Solidus auto-loads any file in the `/app/decorators` directory, just like any
+other Rails models or controllers. This allows you to [monkey patch][monkey-patch]
+Solidus functionality for your store.
 
 For example, if you want to add a method to the `Spree::Order` model, you could
-create `/app/models/mystore/order_decorator.rb` with the following contents:
+create `/app/decorators/mystore/order.rb` with the following contents:
 
 ```ruby
-module MyStore::OrderDecorator
+module MyStore::Order
   def total
     super + BigDecimal(10.0)
   end
@@ -17,7 +17,7 @@ module MyStore::OrderDecorator
 end
 ```
 
-This creates a new module called `MyStore::OrderDecorator` that prepends its
+This creates a new module called `MyStore::Order` that prepends its
 methods early in the method lookup chain. So, for method calls on `Spree::Order`
 objects, the decorator's `total` method would override the original `total`
 method.
@@ -33,7 +33,7 @@ You'll need to define a special method in order to access some class-level
 methods
 
 ```ruby
-module MyStore::ProductDecorator
+module MyStore::Product
 
   # This is the place to define custom associations, delegations, scopes and
   # other ActiveRecord stuff
