@@ -11,7 +11,7 @@ module Spree
           translated_event = t(event, scope: [:spree, :admin, :order, :events])
           links << button_to(
             translated_event,
-            [event, :admin, @order],
+            [event.to_sym, :admin, @order],
             method: :put,
             data: { confirm: t(:order_sure_want_to, event: translated_event, scope: :spree) }
           )
