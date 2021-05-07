@@ -201,7 +201,7 @@ class Spree::Admin::ResourceController < Spree::Admin::BaseController
       nil
     end
   rescue ActiveRecord::RecordNotFound => e
-    resource_not_found(flash_class: e.model.constantize, redirect_url: spree.polymorphic_url([:admin, parent_model_name.pluralize]))
+    resource_not_found(flash_class: e.model.constantize, redirect_url: spree.polymorphic_url([:admin, parent_model_name.pluralize.to_sym]))
   end
 
   def parent?
