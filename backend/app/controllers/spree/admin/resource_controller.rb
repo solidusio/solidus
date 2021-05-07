@@ -187,7 +187,7 @@ class Spree::Admin::ResourceController < Spree::Admin::BaseController
                   .find_by!(self.class.parent_data[:find_by] => params["#{parent_model_name}_id"])
     instance_variable_set("@#{parent_model_name}", @parent)
   rescue ActiveRecord::RecordNotFound => e
-    resource_not_found(flash_class: e.model.constantize, redirect_url: spree.polymorphic_url([:admin, parent_model_name.pluralize]))
+    resource_not_found(flash_class: e.model.constantize, redirect_url: spree.polymorphic_url([:admin, parent_model_name.pluralize.to_sym]))
   end
 
   def parent?
