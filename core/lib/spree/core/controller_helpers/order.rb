@@ -41,7 +41,7 @@ module Spree
         #
         # @return [Boolean]
         def current_order_in_progress?
-          current_order.present? && current_order.items?
+          current_order.present? && current_order.line_items.any?
         end
 
         def associate_user

@@ -1655,22 +1655,4 @@ RSpec.describe Spree::Order, type: :model do
       expect(subject).to eq 40
     end
   end
-
-  describe '#items?' do
-    context 'when order has some line items' do
-      it 'returns true' do
-        order = build(:order, line_items: [build(:line_item)])
-
-        expect(order.items?).to be(true)
-      end
-    end
-
-    context 'when order has no line items' do
-      it 'returns false' do
-        order = build(:order, line_items: [])
-
-        expect(order.items?).to be(false)
-      end
-    end
-  end
 end
