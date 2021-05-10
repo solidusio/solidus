@@ -1,4 +1,7 @@
 ## Solidus 3.1.0 (master, unreleased)
+## Solidus 3.0.1 (v3.0, 2021-05-10)
+
+- Use symbols in polymorphic path for event_links [#4048](https://github.com/solidusio/solidus/pull/4048) ([tvdeyen](https://github.com/tvdeyen))
 ## Solidus 3.0.0 (v3.0, 2021-04-20)
 
 ### Major Changes
@@ -122,6 +125,9 @@ github.com/kennyadsl))
 - Fix headers in changelog [#3812](https://github.com/solidusio/solidus/pull/3812) ([jarednorman](https://github.com/jarednorman))
 - Fixed typo with misspell [#3811](https://github.com/solidusio/solidus/pull/3811) ([hsbt](https://github.com/hsbt))
 
+## Solidus 2.11.10 (v2.11, 2021-05-10)
+
+- Use symbols in polymorphic path for event_links [#4048](https://github.com/solidusio/solidus/pull/4048) ([tvdeyen](https://github.com/tvdeyen))
 ## Solidus 2.11.9 (v2.11, 2021-04-20)
 
 - Rescue FileNotFoundError exception on failed image downloads [#4026](https://github.com/solidusio/solidus/pull/4026) ([cpfergus1](https://github.com/cpfergus1))
@@ -575,6 +581,10 @@ If you need to consider actionless promotions as active for any reason please im
 - Update custom search sample query [#3396](https://github.com/solidusio/solidus/pull/3396) ([peterberkenbosch](https://github.com/peterberkenbosch))
 - Guides (API): Some additional API token info [#3368](https://github.com/solidusio/solidus/pull/3368) ([felixyz](https://github.com/felixyz))
 - Add discontinue on to products guides [#3795](https://github.com/solidusio/solidus/pull/3795) ([tvdeyen](https://github.com/tvdeyen))
+
+## Solidus 2.10.5 (v2.10, 2021-05-10)
+
+- Use symbols in polymorphic path for event_links [#4048](https://github.com/solidusio/solidus/pull/4048) ([tvdeyen](https://github.com/tvdeyen))
 
 ## Solidus 2.10.1 (2020-05-14)
 
