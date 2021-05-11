@@ -53,7 +53,7 @@ For a complete reference to rest of the code removed, these PRs can be taken as 
 
 - Remove deprecated attachment_partial_name [#3974](https://github.com/solidusio/solidus/pull/3974) ([kennyadsl](https://github.com/kennyadsl))
 - Remove legacy address state validation logic [#3847](https://github.com/solidusio/solidus/pull/3847) ([cedum](https://github.com/cedum))
-- Raise canceling a payment when try_void is not implemented [#3844](https://github.com/solidusio/solidus/pull/3844) ([kennyadsl](https://
+- Raise canceling a payment when try_void is not implemented [#3844](https://github.com/solidusio/solidus/pull/3844) ([kennyadsl](https://github.com/kennyadsl))
 - Remove all code deprecated in Solidus v2.x [#3818](https://github.com/solidusio/solidus/pull/3818) ([kennyadsl](https://github.com/kennyadsl))
 
 ***Removal without deprecations***
@@ -116,7 +116,6 @@ the maintained fork.
 - Bump axios from 0.18.1 to 0.21.1 in /guides [#3881](https://github.com/solidusio/solidus/pull/3881) ([dependabot](https://github.com/apps/dependabot))
 - Bump ini from 1.3.5 to 1.3.7 in /guides [#3861](https://github.com/solidusio/solidus/pull/3861) ([dependabot](https://github.com/apps/dependabot))
 - Drive community to GitHub Discussions when opening issues [#3857](https://github.com/solidusio/solidus/pull/3857) ([kennyadsl](https://github.com/kennyadsl))
-github.com/kennyadsl))
 - Update governance with latest changes to the organization [#3836](https://github.com/solidusio/solidus/pull/3836) ([kennyadsl](https://github.com/kennyadsl))
 - Fix install instructions in Solidus Guides [#3833](https://github.com/solidusio/solidus/pull/3833) ([ikraamg](https://github.com/ikraamg))
 - Update install instructions after 2.11 release [#3825](https://github.com/solidusio/solidus/pull/3825) ([kennyadsl](https://github.com/kennyadsl))
