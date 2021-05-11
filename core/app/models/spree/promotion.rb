@@ -47,7 +47,7 @@ module Spree
         where(table[:expires_at].eq(nil).or(table[:expires_at].gt(time)))
     end
     scope :has_actions, -> do
-      joins(:promotion_actions)
+      joins(:promotion_actions).distinct
     end
     scope :applied, -> { joins(:order_promotions).distinct }
 

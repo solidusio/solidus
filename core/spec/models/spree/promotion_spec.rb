@@ -82,6 +82,30 @@ RSpec.describe Spree::Promotion, type: :model do
     end
   end
 
+  describe '.has_actions' do
+    subject { described_class.has_actions }
+
+    let(:promotion) { create(:promotion, starts_at: Date.yesterday, name: "name1") }
+
+    before { promotion }
+
+    it "doesn't return promotion without actions" do
+      expect(subject).to be_empty
+    end
+
+    context 'when promotion has two actions' do
+      let(:promotion) { create(:promotion, :with_action, starts_at: Date.yesterday, name: "name1") }
+
+      before do
+        promotion.actions << Spree::Promotion::Actions::CreateAdjustment.new
+      end
+
+      it 'returns distinct promotion' do
+        expect(subject).to match [promotion]
+      end
+    end
+  end
+
   describe "#apply_automatically" do
     subject { build(:promotion) }
 
