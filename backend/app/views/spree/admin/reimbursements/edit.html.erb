@@ -100,7 +100,7 @@
       <%= button_to [:perform, :admin, @order, @reimbursement], { class: 'button btn btn-primary', method: 'post' } do %>
         <%= t('spree.reimburse') %>
       <% end %>
-      <%= link_to t('spree.actions.cancel'), url_for([:admin, @order, @reimbursement.customer_return]), class: 'btn btn-default' %>
+      <%= link_to t('spree.actions.cancel'), url_for([:edit, :admin, @order, @reimbursement.customer_return]), class: 'btn btn-default' %>
     <% end %>
   </div>
 </fieldset>
