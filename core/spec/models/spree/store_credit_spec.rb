@@ -897,4 +897,12 @@ RSpec.describe Spree::StoreCredit do
       end
     end
   end
+
+  describe "#generate_authorization_code" do
+    it "doesn't rely on time for uniqueness" do
+      freeze_time do
+        expect(subject.generate_authorization_code).not_to eq(subject.generate_authorization_code)
+      end
+    end
+  end
 end
