@@ -1254,7 +1254,7 @@ paths:
         '404':
           $ref: '#/components/responses/not-found'
       summary: List checkout payments
-      description: Lists a checkout's payments.
+      description: 'Lists a checkout''s payments. The list of payments is only visible by the checkout''s owner and by users authorized to see the order, eg. users with admin role. '
       operationId: list-checkout-payments
       tags:
         - Payments
@@ -1285,7 +1285,7 @@ paths:
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Create checkout payment
-      description: Creates a new payment for a checkout.
+      description: Creates a new payment for a checkout. Only the checkout's owner and users that can create a payment (eg. users with admin role) are allowed to perform this action.
       operationId: create-checkout-payment
       tags:
         - Payments
@@ -1293,7 +1293,30 @@ paths:
         - api-key: []
         - order-token: []
       requestBody:
-        $ref: '#/components/requestBodies/payment-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                payment:
+                  $ref: '#/components/schemas/payment-input'
+            examples:
+              Example without a payment source:
+                value:
+                  payment:
+                    amount: '42.42'
+                    payment_method_id: 1
+              Example with a payment source:
+                value:
+                  payment:
+                    amount: '42.42'
+                    payment_method_id: 1
+                    source_attributes:
+                      gateway_payment_profile_id: super-secret-token-2131m3n13bv3hv1vasda
+        description: |-
+          This requests only accepts available Payment Methods in the `payment_method_id` field.
+
+          The Payment Methods available to users for creating a new payment are the ones with both attributes `available_to_users` and `active` set to `true`.
   '/checkouts/{checkout_id}/payments/{id}':
     get:
       responses:
@@ -1325,6 +1348,7 @@ paths:
       - name: id
         in: path
         required: true
+        description: The payment id
         schema:
           type: string
     patch:
@@ -1337,12 +1361,21 @@ paths:
                 $ref: '#/components/schemas/payment'
         '401':
           $ref: '#/components/responses/invalid-api-key'
+        '403':
+          description: 'Forbidden  '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
         '404':
           $ref: '#/components/responses/not-found'
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Update checkout payment
-      description: Updates a checkout's payment.
+      description: 'Updates a checkout''s payment. Please note that this action can be done by users with the admin permissions on Payments (eg. users with the admin role). Only pending payment can be updated. '
       operationId: update-checkout-payment
       tags:
         - Payments
@@ -1355,12 +1388,13 @@ paths:
             schema:
               type: object
               properties:
-                amount:
-                  type: number
-                payment_method_id:
-                  type: integer
-                payment_method:
-                  $ref: '#/components/schemas/payment-method'
+                payment:
+                  $ref: '#/components/schemas/payment-input'
+            examples:
+              Example:
+                value:
+                  payment:
+                    amount: '12.10'
   '/checkouts/{checkout_id}/return_authorizations':
     get:
       responses:
@@ -1725,6 +1759,7 @@ paths:
       - name: order_number
         in: path
         required: true
+        description: The order number
         schema:
           type: string
     post:
@@ -1742,7 +1777,7 @@ paths:
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Create order payment
-      description: Creates a payment for an order.
+      description: Creates a new payment for a checkout. Only the order's owner and users that can create a payment (eg. users with admin role) are allowed to perform this action.
       operationId: create-order-payment
       tags:
         - Payments
@@ -1750,7 +1785,30 @@ paths:
         - api-key: []
         - order-token: []
       requestBody:
-        $ref: '#/components/requestBodies/payment-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                payment:
+                  $ref: '#/components/schemas/payment-input'
+            examples:
+              Example without a payment source:
+                value:
+                  payment:
+                    amount: '42.42'
+                    payment_method_id: 1
+              Example with a payment source:
+                value:
+                  payment:
+                    amount: '42.42'
+                    payment_method_id: 1
+                    source_attributes:
+                      gateway_payment_profile_id: super-secret-token-2131m3n13bv3hv1vasda
+        description: |-
+          This requests only accepts available Payment Methods in the `payment_method_id` field.
+
+          The Payment Methods available to users for creating a new payment are the ones with both attributes `available_to_users` and `active` set to `true`.
   '/orders/{order_number}/payments/{id}':
     get:
       responses:
@@ -1792,12 +1850,21 @@ paths:
                 $ref: '#/components/schemas/payment'
         '401':
           $ref: '#/components/responses/invalid-api-key'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
         '404':
           $ref: '#/components/responses/not-found'
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Update order payment
-      description: Updates an order's payment.
+      description: 'Updates a checkout''s payment. Please note that this action can be done by users with the admin permissions on Payments (eg. users with the admin role). Only pending payment can be updated. '
       operationId: update-order-payment
       tags:
         - Payments
@@ -1805,7 +1872,18 @@ paths:
         - api-key: []
         - order-token: []
       requestBody:
-        $ref: '#/components/requestBodies/payment-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                payment:
+                  $ref: '#/components/schemas/payment-input'
+            examples:
+              Example:
+                value:
+                  payment:
+                    amount: '12.10'
   '/orders/{order_number}/return_authorizations':
     get:
       responses:
@@ -5075,11 +5153,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/line-item-input'
-    payment-input:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/payment-input'
     zone-input:
       content:
         application/json:
@@ -6279,10 +6352,9 @@ components:
           type: string
         payment_method_id:
           type: integer
-        payment_method:
-          type: string
         source_attributes:
           type: object
+          description: This field is required for Payment Method that has source_required? returning true.
           properties:
             number:
               type: string
