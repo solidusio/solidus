@@ -1203,7 +1203,36 @@ paths:
         - api-key: []
         - order-token: []
       requestBody:
-        $ref: '#/components/requestBodies/address-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                address:
+                  $ref: '#/components/schemas/address-input'
+            examples:
+              Example with state_id:
+                value:
+                  address:
+                    name: Jane Doe
+                    address1: 2191  Calico Drive
+                    city: Phoenix
+                    country_id: 22
+                    state_id: 31
+                    zipcode: '85022'
+                    phone: 509-644-9988
+                    company: Acme Inc.
+              Example with state_name:
+                value:
+                  address:
+                    name: Jane Doe
+                    address1: 2191  Calico Drive
+                    city: Phoenix
+                    country_id: 22
+                    state_name: AZ
+                    zipcode: '85022'
+                    phone: 509-644-9988
+                    company: Acme Inc.
   '/checkouts/{checkout_id}/payments':
     get:
       responses:
@@ -1496,6 +1525,7 @@ paths:
       - name: id
         in: path
         required: true
+        description: The id of the checkout's address that we want to retrieve
         schema:
           type: string
     put:
@@ -1595,11 +1625,13 @@ paths:
       - name: order_number
         in: path
         required: true
+        description: The order number
         schema:
           type: string
       - name: id
         in: path
         required: true
+        description: The id of the order's address that we want to retrieve
         schema:
           type: string
     patch:
@@ -1625,7 +1657,36 @@ paths:
         - api-key: []
         - order-token: []
       requestBody:
-        $ref: '#/components/requestBodies/address-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                address:
+                  $ref: '#/components/schemas/address-input'
+            examples:
+              Example with state_id:
+                value:
+                  address:
+                    name: Jane Doe
+                    address1: 2191  Calico Drive
+                    city: Phoenix
+                    country_id: 22
+                    state_id: 31
+                    zipcode: '85022'
+                    phone: 509-644-9988
+                    company: Acme Inc.
+              Example with state_name:
+                value:
+                  address:
+                    name: Jane Doe
+                    address1: 2191  Calico Drive
+                    city: Phoenix
+                    country_id: 22
+                    state_name: AZ
+                    zipcode: '85022'
+                    phone: 509-644-9988
+                    company: Acme Inc.
   '/orders/{order_number}/payments':
     get:
       responses:
@@ -5044,11 +5105,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/property-input'
-    address-input:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/address-input'
     order-input:
       content:
         application/json:
@@ -6128,6 +6184,7 @@ components:
               type: string
             abbr:
               type: string
+      description: ''
     line-item-input:
       type: object
       title: Line item input
