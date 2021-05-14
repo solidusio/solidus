@@ -60,7 +60,37 @@ paths:
       security:
         - api-key: []
       requestBody:
-        $ref: '#/components/requestBodies/product-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                product:
+                  $ref: '#/components/schemas/product-input'
+            examples:
+              Example:
+                value:
+                  product:
+                    name: The Majestic Product
+                    price: '19.99'
+                    shipping_category_id: 8
+                    product_properties_attributes:
+                      - property_name: fabric
+                        value: cotton
+                    option_types:
+                      - size
+                      - color
+                    taxon_ids: '2,4'
+                    variants:
+                      - price: 19.99
+                        cost_price: 17
+                        sku: SKU-3
+                        track_inventory: true
+                        options:
+                          - name: size
+                            value: small
+                          - name: color
+                            value: black
   /orders/mine:
     get:
       responses:
@@ -344,7 +374,19 @@ paths:
       security:
         - api-key: []
       requestBody:
-        $ref: '#/components/requestBodies/product-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                product:
+                  $ref: '#/components/schemas/product-input'
+            examples:
+              Example:
+                value:
+                  product:
+                    name: The Majestic Product
+                    price: '22.22'
   '/products/{product_id}/images':
     get:
       responses:
@@ -5168,11 +5210,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/stock-location-input'
-    product-input:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/product-input'
     property-input:
       content:
         application/json:
@@ -6445,13 +6482,11 @@ components:
         tax_category_id:
           type: integer
         taxon_ids:
-          type: array
-          items:
-            type: integer
+          type: string
+          description: 'Comma separated list of taxon ids. Eg. "1,2"'
         option_type_ids:
-          type: array
-          items:
-            type: integer
+          description: 'Comma separated list of option type ids ids. Eg. "1,2"'
+          type: string
         cost_currency:
           type: string
         cost_price:
