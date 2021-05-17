@@ -3,6 +3,10 @@
 module Spree
   module TestingSupport
     module EventHelpers
+      def self.fired_events
+        @fired_events ||= []
+      end
+
       def perform_subscribers(only: nil, except: nil)
         if only && except
           raise ArgumentError, <<~ERROR.strip
@@ -57,12 +61,36 @@ module Spree
           registry.activate_subscriber(subscriber.constantize)
         end
       end
+
+      module Matchers
+        extend RSpec::Matchers::DSL
+
+        matcher :have_been_fired do
+          match do |expected_event|
+            Spree::TestingSupport::EventHelpers.fired_events.any? do |fired_event|
+              values_match?(fired_event.name, Spree::Config.events.adapter.normalize_name(expected_event)) &&
+                (@expected_payload.nil? || values_match?(@expected_payload, fired_event.payload))
+            end
+          end
+
+          chain :with do |expected_payload|
+            @expected_payload = expected_payload
+          end
+        end
+      end
     end
   end
 end
 
 RSpec.configure do |config|
   config.include Spree::TestingSupport::EventHelpers
+  config.include Spree::TestingSupport::EventHelpers::Matchers
+
+  config.before(:all) do
+    Spree::Event.subscribe(/.*#{Regexp.escape(Spree::Config.events.suffix)}$/) do |event|
+      Spree::TestingSupport::EventHelpers.fired_events << event
+    end
+  end
 
   config.before do
     Spree::TestingSupport::EventHelpers.fired_events.clear

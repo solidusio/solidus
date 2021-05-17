@@ -5,6 +5,7 @@ require 'spree/testing_support/event_helpers'
 
 RSpec.describe Spree::TestingSupport::EventHelpers do
   include described_class
+  include ActiveSupport::Testing::TimeHelpers
 
   around do |example|
     module TestSubscriber1
@@ -67,6 +68,26 @@ RSpec.describe Spree::TestingSupport::EventHelpers do
         expect(TestSubscriber1.event_handled).to eq(true)
         expect(TestSubscriber2.event_handled).to eq(true)
       end
+    end
+  end
+
+  describe '#have_been_fired' do
+    it 'matches fired events' do
+      Spree::Event.fire 'test_event'
+
+      expect('test_event').to have_been_fired
+    end
+
+    it 'accepts a .with modifier' do
+      Spree::Event.fire(
+        'user_created',
+        email: 'jdoe@example.com',
+        name: 'John Doe',
+      )
+
+      expect('user_created').to have_been_fired.with(
+        a_hash_including(email: 'jdoe@example.com'),
+      )
     end
   end
 end
