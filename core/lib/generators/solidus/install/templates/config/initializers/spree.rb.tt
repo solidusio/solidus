@@ -4,6 +4,9 @@
 Spree.config do |config|
   # Core:
 
+  # Solidus version defaults for preferences that are not overridden
+  config.load_defaults '<%= Spree.solidus_version %>'
+
   # Default currency for new sites
   config.currency = "USD"
 
@@ -62,12 +65,14 @@ end
 
 <% if defined?(Spree::Frontend::Engine) -%>
 Spree::Frontend::Config.configure do |config|
+  config.load_defaults '<%= Spree.solidus_version %>'
   config.locale = 'en'
 end
 <% end -%>
 
 <% if defined?(Spree::Backend::Engine) -%>
 Spree::Backend::Config.configure do |config|
+  config.load_defaults '<%= Spree.solidus_version %>'
   config.locale = 'en'
 
   # Uncomment and change the following configuration if you want to add
@@ -83,6 +88,7 @@ end
 
 <% if defined?(Spree::Api::Engine) -%>
 Spree::Api::Config.configure do |config|
+  config.load_defaults '<%= Spree.solidus_version %>'
   config.requires_authentication = true
 end
 <% end -%>

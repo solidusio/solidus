@@ -11,6 +11,10 @@ module Spree
     # A class including Preferable must implement #preferences which should return
     # an object responding to .fetch(key), []=(key, val), and .delete(key).
     #
+    # It may also define a `#context_for_default` method. It should return an
+    # array with the arguments to be provided to a proc used as the `default:`
+    # keyword for a preference.
+    #
     # The generated writer method performs typecasting before assignment into the
     # preferences object.
     #
@@ -175,6 +179,10 @@ module Spree
         else
           value
         end
+      end
+
+      def context_for_default
+        [].freeze
       end
     end
   end

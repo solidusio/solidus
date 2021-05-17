@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'spree/core/versioned_value'
 require 'spree/preferences/preferable'
 
 module Spree::Preferences
@@ -28,6 +29,26 @@ module Spree::Preferences
   #
   class Configuration
     include Spree::Preferences::Preferable
+
+    # @!attribute [r] loaded_defaults
+    #   @return [String]
+    #     Some configuration defaults can be added or changed when a new Solidus
+    #     version is released. Setting this to an older Solidus version allows keeping
+    #     backward compatibility until the application code is updated to the new
+    #     defaults. Set via {#load_defaults}
+    attr_reader :loaded_defaults
+
+    def initialize
+      @loaded_defaults = Spree.solidus_version
+    end
+
+    # @param [String] Solidus version from which take defaults when not
+    # overriden.
+    # @see #load_defaults
+    def load_defaults(version)
+      @loaded_defaults = version
+      reset
+    end
 
     # @yield [config] Yields this configuration object to a block
     def configure
@@ -79,6 +100,23 @@ module Spree::Preferences
       end
     end
 
+    # Generates a different preference default depending on {#version_defaults}
+    #
+    # This method is meant to be used in the `default:` keyword argument for
+    # {.preference}. For instance, in the example, `foo`'s default was `true`
+    # until version 3.0.0.alpha, when it became `false`:
+    #
+    # @example
+    #   preference :foo, :boolean, default: by_version(true, "3.0.0.alpha" => false)
+    #
+    # @see #loaded_defaults
+    # @see Spree::Core::VersionedValue
+    def self.by_version(*args)
+      proc do |loaded_defaults|
+        Spree::Core::VersionedValue.new(*args).call(loaded_defaults)
+      end
+    end
+
     def self.preference(name, type, options = {})
       super
       alias_method name.to_s, "preferred_#{name}"
@@ -102,6 +140,12 @@ module Spree::Preferences
         class_name = class_name.constantize if class_name.is_a?(String)
         class_name
       end
+    end
+
+    private
+
+    def context_for_default
+      [loaded_defaults]
     end
   end
 end
