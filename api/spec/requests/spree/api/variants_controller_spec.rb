@@ -320,6 +320,20 @@ module Spree
         end.to change { Spree::OptionValuesVariant.count }.by(2)
       end
 
+      it "create new variants with options" do
+        expect do
+          post spree.api_product_variants_path(product), params: {
+            variant: {
+              sku: "12345",
+              options: [{
+                name: 'Color',
+                value: 'White'
+              }]
+            }
+          }
+        end.to change { Spree::OptionValuesVariant.count }.by(1)
+      end
+
       it "can update a variant" do
         put spree.api_variant_path(variant), params: { variant: { sku: "12345" } }
         expect(response.status).to eq(200)

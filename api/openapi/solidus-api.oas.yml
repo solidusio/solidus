@@ -498,7 +498,38 @@ paths:
       security:
         - api-key: []
       requestBody:
-        $ref: '#/components/requestBodies/variant-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                variant:
+                  $ref: '#/components/schemas/variant-input'
+            examples:
+              Example with Option Value Ids:
+                value:
+                  variant:
+                    price: '11.22'
+                    cost_price: '9'
+                    position: 1
+                    track_inventory: true
+                    sku: AWSOME-1122
+                    cost_currency: USD
+                    option_value_ids:
+                      - 1
+                      - 2
+              Example with Option Value Text:
+                value:
+                  variant:
+                    price: '11.22'
+                    cost_price: '9'
+                    position: 1
+                    track_inventory: true
+                    sku: AWSOME-1122
+                    cost_currency: USD
+                    options:
+                      name: Color
+                      value: White
   '/products/{product_id}/images/{id}':
     get:
       responses:
@@ -648,7 +679,38 @@ paths:
       security:
         - api-key: []
       requestBody:
-        $ref: '#/components/requestBodies/variant-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                variant:
+                  $ref: '#/components/schemas/variant-input'
+            examples:
+              Example with Option Value Ids:
+                value:
+                  variant:
+                    price: '11.22'
+                    cost_price: '9'
+                    position: 1
+                    track_inventory: true
+                    sku: AWSOME-1122
+                    cost_currency: USD
+                    option_value_ids:
+                      - 1
+                      - 2
+              Example with Option Value Text:
+                value:
+                  variant:
+                    price: '11.22'
+                    cost_price: '9'
+                    position: 1
+                    track_inventory: true
+                    sku: AWSOME-1122
+                    cost_currency: USD
+                    options:
+                      name: Color
+                      value: White
   /states:
     get:
       responses:
@@ -731,14 +793,49 @@ paths:
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Create variant
-      description: Creates a variant.
+      description: 'Creates a variant. Only users with `can :create, Variant` permissions can perform this action.'
       operationId: create-variant
       tags:
         - Variants
       security:
         - api-key: []
       requestBody:
-        $ref: '#/components/requestBodies/variant-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                product_id:
+                  type: integer
+                variant:
+                  $ref: '#/components/schemas/variant-input'
+            examples:
+              Example with Option Value Ids:
+                value:
+                  product_id: 1
+                  variant:
+                    price: '11.22'
+                    cost_price: '9'
+                    position: 1
+                    track_inventory: true
+                    sku: AWSOME-1122
+                    cost_currency: USD
+                    option_value_ids:
+                      - 1
+                      - 2
+              Example with Option Value Text:
+                value:
+                  product_id: 1
+                  variant:
+                    price: '11.22'
+                    cost_price: '9'
+                    position: 1
+                    track_inventory: true
+                    sku: AWSOME-1122
+                    cost_currency: USD
+                    options:
+                      name: Color
+                      value: White
   '/variants/{id}':
     get:
       responses:
@@ -808,7 +905,38 @@ paths:
       security:
         - api-key: []
       requestBody:
-        $ref: '#/components/requestBodies/variant-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                variant:
+                  $ref: '#/components/schemas/variant-input'
+            examples:
+              Example with Option Value Ids:
+                value:
+                  variant:
+                    price: '11.22'
+                    cost_price: '9'
+                    position: 1
+                    track_inventory: true
+                    sku: AWSOME-1122
+                    cost_currency: USD
+                    option_value_ids:
+                      - 1
+                      - 2
+              Example with Option Value Text:
+                value:
+                  variant:
+                    price: '11.22'
+                    cost_price: '9'
+                    position: 1
+                    track_inventory: true
+                    sku: AWSOME-1122
+                    cost_currency: USD
+                    options:
+                      name: Color
+                      value: White
   '/variants/{variant_id}/images':
     get:
       responses:
@@ -5225,11 +5353,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/image-input'
-    variant-input:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/variant-input'
     user-input:
       content:
         application/json:
@@ -6523,13 +6646,9 @@ components:
       type: object
       title: Variant input
       properties:
-        name:
-          type: string
-        presentation:
+        price:
           type: string
         cost_price:
-          type: string
-        lock_version:
           type: string
         position:
           type: integer
@@ -6537,14 +6656,6 @@ components:
           type: boolean
         product_id:
           type: integer
-        product:
-          type: integer
-        option_values_attributes:
-          type: array
-          items:
-            $ref: '#/components/schemas/option-value-input'
-        price:
-          type: string
         weight:
           type: string
         height:
@@ -6561,13 +6672,20 @@ components:
           type: array
           items:
             type: integer
+        option_values_attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/option-value-input'
         options:
           type: object
+          description: '`Name` will be the name/presentation of the option type and `Value` will be the name/presentation of the option value. They will be created if not exist.'
           properties:
             name:
               type: string
             value:
               type: string
+      required:
+        - price
     property-input:
       type: object
       title: Property input
