@@ -271,6 +271,26 @@ describe "Order Details", type: :feature, js: true do
     end
 
     context 'Shipment edit page' do
+      context 'when inventory levels are not being tracked' do
+        before do
+          stub_spree_preferences(track_inventory_levels: false)
+          order.inventory_units.update_all(state: :on_hand)
+        end
+
+        # Regression for https://github.com/solidusio/solidus/issues/2817
+        it "should allow me to ship an order's items" do
+          visit spree.edit_admin_order_path(order)
+
+          within('tr', text: line_item.sku) { click_icon 'arrows-h' }
+          complete_split_to(stock_location2)
+
+          expect(page).to have_css('.shipment', count: 2)
+          expect(order.shipments.count).to eq(2)
+          expect(page).not_to have_content('Backordered')
+          expect(page).to have_content('On hand', count: 2)
+        end
+      end
+
       let!(:stock_location2) { create(:stock_location_with_items, name: 'Clarksville') }
 
       before do

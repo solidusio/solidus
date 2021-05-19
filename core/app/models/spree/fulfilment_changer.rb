@@ -77,7 +77,7 @@ module Spree
           where(variant: variant).
           order(state: :asc).
           limit(quantity - new_on_hand_quantity).
-          update_all(shipment_id: desired_shipment.id, state: :backordered)
+          update_all(shipment_id: desired_shipment.id, state: out_of_stock_state)
       end
 
       # We modified the inventory units at the database level for speed reasons.
@@ -112,6 +112,10 @@ module Spree
     # unstocking and restocking will not be necessary.
     def handle_stock_counts?
       current_shipment.order.completed? && current_stock_location != desired_stock_location
+    end
+
+    def out_of_stock_state
+      Spree::Config.track_inventory_levels ? :backordered : :on_hand
     end
 
     def default_on_hand_quantity
