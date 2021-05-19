@@ -36,9 +36,14 @@ module Spree
       end
 
       def add(klass, name, preferences)
+        constantized_klass = klass.try(:constantize) || klass
+
         # We use class name instead of class to allow reloading in dev
-        raise "Static model preference '#{name}' on #{klass} is already defined" if @store[klass.to_s][name]
-        @store[klass.to_s][name] = Definition.new(klass, preferences)
+        if @store[constantized_klass.to_s][name]
+          raise "Static model preference '#{name}' on #{constantized_klass} is already defined"
+        end
+
+        @store[constantized_klass.to_s][name] = Definition.new(constantized_klass, preferences)
       end
 
       def for_class(klass)

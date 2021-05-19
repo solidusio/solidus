@@ -5,7 +5,7 @@ require 'rails_helper'
 module Spree
   RSpec.describe Preferences::StaticModelPreferences do
     let(:preference_class) do
-      Class.new do
+      MyFakeStaticModelPreferencesClass ||= Class.new do
         include Preferences::Preferable
         preference :color, :string
       end
@@ -20,6 +20,11 @@ module Spree
     it "can store preferences" do
       subject.add(preference_class, 'my_definition', {})
       # just testing that it was added here
+      expect(definitions).to have_key('my_definition')
+    end
+
+    it "can add with string class name" do
+      subject.add(preference_class.to_s, 'my_definition', {})
       expect(definitions).to have_key('my_definition')
     end
 
