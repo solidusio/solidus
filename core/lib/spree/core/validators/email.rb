@@ -16,7 +16,7 @@ module Spree
 
     def validate_each(record, attribute, value)
       unless EMAIL_REGEXP.match? value
-        record.errors.add(attribute, :invalid, { value: value }.merge!(options))
+        record.errors.add(attribute, :invalid, **{ value: value }.merge!(options))
       end
     end
   end

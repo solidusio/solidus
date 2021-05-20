@@ -290,7 +290,13 @@ RSpec.describe Spree::StoreCredit do
 
       subject { store_credit.validate_authorization(store_credit_attrs[:amount], store_credit.currency) }
 
-      it { is_expected.to be_truthy }
+      if RUBY_VERSION >= "3"
+        pending "https://github.com/rails/rails/issues/42098" do
+          it { is_expected.to be_truthy }
+        end
+      else
+        it { is_expected.to be_truthy }
+      end
     end
   end
 
