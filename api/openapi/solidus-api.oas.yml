@@ -3855,75 +3855,6 @@ paths:
         - $ref: '#/components/parameters/per_page'
       security:
         - api-key: []
-  '/checkouts/{checkout_id}/line_items/{id}':
-    delete:
-      responses:
-        '204':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/line-item'
-        '401':
-          $ref: '#/components/responses/invalid-api-key'
-        '404':
-          $ref: '#/components/responses/not-found'
-        '422':
-          $ref: '#/components/responses/delete-restriction'
-      summary: Delete checkout line item
-      description: Deletes a checkout's line item.
-      operationId: delete-checkout-line-item
-      tags:
-        - Line items
-      security:
-        - api-key: []
-        - order-token: []
-    parameters:
-      - name: checkout_id
-        in: path
-        required: true
-        description: The order number
-        schema:
-          type: string
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: string
-    patch:
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/line-item'
-        '401':
-          $ref: '#/components/responses/invalid-api-key'
-        '404':
-          $ref: '#/components/responses/not-found'
-        '422':
-          $ref: '#/components/responses/unprocessable-entity'
-      summary: Update checkout line item
-      description: Updates a checkout's line item.
-      operationId: update-checkout-line-item
-      tags:
-        - Line items
-      security:
-        - api-key: []
-        - order-token: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                line_items_attributes:
-                  allOf:
-                    - properties:
-                        id:
-                          type: integer
-                  type: object
   '/orders/{order_number}/coupon_codes/{id}':
     delete:
       responses:
@@ -3959,6 +3890,53 @@ paths:
         description: This is the coupon code
         schema:
           type: string
+  '/orders/{order_number}/line_items':
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/line-item'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Create order line item
+      description: |-
+        Create a line item in an order not yet completed.
+
+        To perform this operation the request should be made as the order owner or with the order token in case of unauthenitcated checkouts (es. guest checkout).
+      operationId: create-order-line-item
+      tags:
+        - Line items
+      security:
+        - api-key: []
+        - order-token: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                line_item:
+                  $ref: '#/components/schemas/line-item-input'
+            examples:
+              Example:
+                value:
+                  line_item:
+                    quantity: 1
+                    variant_id: 22
+        description: ''
+    parameters:
+      - name: order_number
+        in: path
+        required: true
+        schema:
+          type: string
   '/orders/{order_number}/line_items/{id}':
     delete:
       responses:
@@ -3988,11 +3966,13 @@ paths:
         required: true
         schema:
           type: string
+        description: The order number
       - name: id
         in: path
         required: true
         schema:
           type: string
+        description: The id of the line item to update
     patch:
       responses:
         '200':
@@ -4008,7 +3988,10 @@ paths:
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Update order line item
-      description: Updates an order's line item.
+      description: |-
+        Update line item's information in an order not yet completed.
+
+        To perform this operation the request should be made as the order owner or with the order token in case of unauthenitcated checkouts (es. guest checkout).
       operationId: update-order-line-item
       tags:
         - Line items
@@ -4016,7 +3999,18 @@ paths:
         - api-key: []
         - order-token: []
       requestBody:
-        $ref: '#/components/requestBodies/line-item-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                line_item:
+                  $ref: '#/components/schemas/line-item-input'
+            examples:
+              example-1:
+                value:
+                  line_item:
+                    quantity: 1
   '/stock_items/{id}':
     delete:
       responses:
@@ -4469,6 +4463,131 @@ paths:
         description: The order number
         schema:
           type: string
+  '/checkouts/{checkout_id}/line_items':
+    post:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/line-item'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Create checkout line item
+      description: |-
+        Create a line item in an checkout not yet completed.
+
+        To perform this operation the request should be made as the order owner or with the order token in case of unauthenitcated checkouts (es. guest checkout).
+
+        It is not possible to add a line item to a completed order.
+      operationId: create-checkout-line-item
+      tags:
+        - Line items
+      security:
+        - api-key: []
+        - order-token: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                line_item:
+                  $ref: '#/components/schemas/line-item-input'
+            examples:
+              Example:
+                value:
+                  line_item:
+                    quantity: 1
+                    variant_id: 22
+    parameters:
+      - name: checkout_id
+        in: path
+        required: true
+        description: The order number
+        schema:
+          type: string
+  '/checkouts/{checkout_id}/line_items/{id}':
+    delete:
+      responses:
+        '204':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/line-item'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/delete-restriction'
+      summary: Delete checkout line item
+      description: Deletes a checkout's line item.
+      operationId: delete-checkout-line-item
+      tags:
+        - Line items
+      security:
+        - api-key: []
+        - order-token: []
+    parameters:
+      - name: checkout_id
+        in: path
+        required: true
+        description: The order number
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The id of the line item to update
+    patch:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/line-item'
+        '401':
+          $ref: '#/components/responses/invalid-api-key'
+        '404':
+          $ref: '#/components/responses/not-found'
+        '422':
+          $ref: '#/components/responses/unprocessable-entity'
+      summary: Update checkout line item
+      description: |-
+        Update line item's information in an checkout not yet completed.
+
+        To perform this operation the request should be made as the order owner or with the order token in case of unauthenitcated checkouts (es. guest checkout).
+
+        It is not possible to add a line item to a completed order.
+      operationId: update-checkout-line-item
+      tags:
+        - Line items
+      security:
+        - api-key: []
+        - order-token: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                line_item:
+                  $ref: '#/components/schemas/line-item-input'
+            examples:
+              Example:
+                value:
+                  line_item:
+                    quantity: 2
   /classifications:
     put:
       responses:
@@ -4921,38 +5040,6 @@ paths:
         required: true
         schema:
           type: string
-  '/checkouts/{checkout_id}/line_items':
-    post:
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/line-item'
-        '401':
-          $ref: '#/components/responses/invalid-api-key'
-        '404':
-          $ref: '#/components/responses/not-found'
-        '422':
-          $ref: '#/components/responses/unprocessable-entity'
-      summary: Create checkout line item
-      description: Creates a new line item for a checkout.
-      operationId: create-checkout-line-item
-      tags:
-        - Line items
-      security:
-        - api-key: []
-        - order-token: []
-      requestBody:
-        $ref: '#/components/requestBodies/line-item-input'
-    parameters:
-      - name: checkout_id
-        in: path
-        required: true
-        description: The order number
-        schema:
-          type: string
   '/orders/{order_number}/coupon_codes':
     post:
       responses:
@@ -4978,37 +5065,6 @@ paths:
         - order-token: []
       requestBody:
         $ref: '#/components/requestBodies/coupon-code-input'
-    parameters:
-      - name: order_number
-        in: path
-        required: true
-        schema:
-          type: string
-  '/orders/{order_number}/line_items':
-    post:
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/line-item'
-        '401':
-          $ref: '#/components/responses/invalid-api-key'
-        '404':
-          $ref: '#/components/responses/not-found'
-        '422':
-          $ref: '#/components/responses/unprocessable-entity'
-      summary: Create order line item
-      description: Creates a line item for an order.
-      operationId: create-order-line-item
-      tags:
-        - Line items
-      security:
-        - api-key: []
-        - order-token: []
-      requestBody:
-        $ref: '#/components/requestBodies/line-item-input'
     parameters:
       - name: order_number
         in: path
@@ -5318,11 +5374,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/taxon-input'
-    line-item-input:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/line-item-input'
     zone-input:
       content:
         application/json:
@@ -6424,13 +6475,13 @@ components:
       properties:
         quantity:
           type: integer
-          description: 'Passing `0`, the line item will be removed.'
+          description: 'Passing `0`, the line item will be removed. When omitted creating a line item, quantity will be `1`.'
         options:
           type: object
           description: 'This field can be used to pass custom line item attributes. When used, it will force a new price calculation, unless `price` is one of the options.'
         id:
           type: integer
-          description: Required for existing line items only.
+          description: 'Required when updating existing line items, only when not already present in the Path Parameters.'
         variant_id:
           type: integer
           description: Required for new line items only.
