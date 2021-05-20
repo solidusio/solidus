@@ -6642,8 +6642,6 @@ components:
     order-input:
       title: Order input
       properties:
-        coupon_code:
-          type: string
         email:
           type: string
         special_instructions:
