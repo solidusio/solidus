@@ -146,6 +146,7 @@ paths:
         required: true
         schema:
           type: string
+        description: The order number
     patch:
       responses:
         '200':
@@ -161,7 +162,10 @@ paths:
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Update order
-      description: Updates an order.
+      description: |-
+        Updates an order.
+
+        To perform this operation the request should be made as the order's owner or with the order token in case of unauthenitcated checkouts (es. guest checkout).
       operationId: update-order
       tags:
         - Orders
@@ -169,7 +173,42 @@ paths:
         - api-key: []
         - order-token: []
       requestBody:
-        $ref: '#/components/requestBodies/order-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                order:
+                  $ref: '#/components/schemas/order-input'
+            examples:
+              Updating Billing Address:
+                value:
+                  order:
+                    use_billing: true
+                    ship_address_attributes:
+                      name: Jane Doe
+                      address1: 2191  Calico Drive
+                      city: Phoenix
+                      country_id: 22
+                      state_id: 31
+                      zipcode: '85022'
+                      phone: 509-644-9988
+                      company: Acme Inc.
+              Select a Shipment's Shipping Rate:
+                value:
+                  order:
+                    shipments_attributes:
+                      - id: 2
+                        selected_shipping_rate_id: 23
+              Updating Payment:
+                value:
+                  order:
+                    payments_attributes:
+                      - amount: '42.42'
+                        payment_method_id: 1
+                        source_attributes:
+                          gateway_payment_profile_id: super-secret-token-2131m3n13bv3hv1vasda
+        description: ''
   /orders/current:
     get:
       responses:
@@ -1803,7 +1842,21 @@ paths:
       security:
         - api-key: []
       requestBody:
-        $ref: '#/components/requestBodies/order-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                order:
+                  $ref: '#/components/schemas/order-input'
+            examples:
+              Example:
+                value:
+                  order:
+                    email: string
+                    line_items_attributes:
+                      - quantity: 1
+                        variant_id: 22
   '/orders/{order_number}/addresses/{id}':
     get:
       responses:
@@ -4079,7 +4132,9 @@ paths:
           $ref: '#/components/responses/unprocessable-entity'
       summary: Update checkout
       description: |-
-        Updates a checkout.
+        Updates a checkout and moves the order to the next checkout step. A request with an empty body is legit and only tries to move the order to the next step.
+
+        To perform this operation the request should be made as the order owner or with the order token in case of unauthenitcated checkouts (es. guest checkout).
 
         **Note:** In addition to the order update, this action always attempts to perform an order state machine transition which results in a `422` response if it cannot be transitioned.
       operationId: update-checkout
@@ -4092,13 +4147,17 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/checkout-input'
+              type: object
+              properties:
+                order:
+                  $ref: '#/components/schemas/order-input'
     parameters:
       - name: id
         in: path
         required: true
         schema:
           type: string
+        description: The order number
   '/credit_cards/{id}':
     patch:
       responses:
@@ -5394,11 +5453,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/property-input'
-    order-input:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/order-input'
     image-input:
       content:
         application/json:
@@ -6505,30 +6559,6 @@ components:
           type: string
         presentation:
           type: string
-    checkout-input:
-      type: object
-      title: Checkout input
-      properties:
-        coupon_code:
-          type: string
-        email:
-          type: string
-        special_instructions:
-          type: string
-        use_billing:
-          type: boolean
-        bill_address_attributes:
-          $ref: '#/components/schemas/address-input'
-        ship_address_attributes:
-          $ref: '#/components/schemas/address-input'
-        payments_attributes:
-          type: array
-          items:
-            $ref: '#/components/schemas/payment-input'
-        shipments_attributes:
-          type: array
-          items:
-            $ref: '#/components/schemas/shipment-input'
     credit-card-update-input:
       type: object
       title: Credit card update input
@@ -6611,14 +6641,31 @@ components:
           type: integer
     order-input:
       title: Order input
-      allOf:
-        - $ref: '#/components/schemas/checkout-input'
-        - type: object
-          properties:
-            line_items_attributes:
-              type: array
-              items:
-                $ref: '#/components/schemas/line-item-input'
+      properties:
+        coupon_code:
+          type: string
+        email:
+          type: string
+        special_instructions:
+          type: string
+        use_billing:
+          type: boolean
+        bill_address_attributes:
+          $ref: '#/components/schemas/address-input'
+        ship_address_attributes:
+          $ref: '#/components/schemas/address-input'
+        payments_attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/payment-input'
+        shipments_attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/shipment-input'
+        line_items_attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/line-item-input'
     product-input:
       type: object
       title: Product input
