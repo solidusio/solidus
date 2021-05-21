@@ -3621,6 +3621,7 @@ paths:
         required: true
         schema:
           type: string
+        description: The id of the taxonomy for which the new taxon will be added
     post:
       responses:
         '200':
@@ -3636,14 +3637,29 @@ paths:
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Create taxonomy taxon
-      description: Creates a taxon for a taxonomy.
+      description: |-
+        Creates a taxon for a taxonomy.
+
+        Only users with the `create` permission on `Spree::Taxon` can perform this action.
       operationId: create-taxonomy-taxon
       tags:
         - Taxons
       security:
         - api-key: []
       requestBody:
-        $ref: '#/components/requestBodies/taxon-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                taxon:
+                  $ref: '#/components/schemas/taxon-input'
+            examples:
+              Example:
+                value:
+                  taxon:
+                    name: Colors
+                    parent_id: 22
   '/taxonomies/{taxonomy_id}/taxons/{id}':
     get:
       responses:
@@ -3669,11 +3685,13 @@ paths:
         required: true
         schema:
           type: string
+        description: The id of the taxon's taxonomy
       - name: id
         in: path
         required: true
         schema:
           type: string
+        description: The id of the taxon
     delete:
       responses:
         '204':
@@ -3710,14 +3728,28 @@ paths:
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Update taxonomy taxon
-      description: Updates a taxonomy's taxon.
+      description: |-
+        Updates a taxonomy's taxon.
+
+        Only users with the `update` permission on the taxon can perform this action.
       operationId: update-taxonomy-taxon
       tags:
         - Taxons
       security:
         - api-key: []
       requestBody:
-        $ref: '#/components/requestBodies/taxon-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                taxon:
+                  $ref: '#/components/schemas/taxon-input'
+            examples:
+              Example:
+                value:
+                  taxon:
+                    name: Colours
   /taxons:
     get:
       responses:
@@ -5563,11 +5595,6 @@ components:
               message:
                 type: string
   requestBodies:
-    taxon-input:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/taxon-input'
     property-input:
       content:
         application/json:
