@@ -150,7 +150,12 @@ class Spree::StoreCredit < Spree::PaymentSource
   end
 
   def generate_authorization_code
-    "#{id}-SC-#{Time.current.utc.strftime('%Y%m%d%H%M%S%6N')}"
+    [
+      id,
+      'SC',
+      Time.current.utc.strftime('%Y%m%d%H%M%S%6N'),
+      SecureRandom.uuid
+    ].join('-')
   end
 
   def editable?
