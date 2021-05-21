@@ -3922,9 +3922,16 @@ paths:
         '404':
           $ref: '#/components/responses/not-found'
         '422':
-          $ref: '#/components/responses/delete-restriction'
+          description: Unprocessable Entity (WebDAV)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/coupon-code-handler'
       summary: Delete order coupon code
-      description: Deletes an order's coupon code.
+      description: |-
+        Deletes an order's coupon code.
+
+        To perform this operation the request should be made as the order's owner or with the order token in case of unauthenitcated checkouts (es. guest checkout).
       operationId: delete-order-coupon-code
       tags:
         - Coupon codes
@@ -3937,6 +3944,7 @@ paths:
         required: true
         schema:
           type: string
+        description: The order number
       - name: id
         in: path
         required: true
@@ -5113,9 +5121,16 @@ paths:
         '404':
           $ref: '#/components/responses/not-found'
         '422':
-          $ref: '#/components/responses/unprocessable-entity'
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/coupon-code-handler'
       summary: Create order coupon code
-      description: Creates a coupon code for an order.
+      description: |-
+        Creates a coupon code for an order.
+
+        To perform this operation the request should be made as the order's owner or with the order token in case of unauthenitcated checkouts (es. guest checkout).
       operationId: create-order-coupon-code
       tags:
         - Coupon codes
@@ -5123,13 +5138,21 @@ paths:
         - api-key: []
         - order-token: []
       requestBody:
-        $ref: '#/components/requestBodies/coupon-code-input'
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/coupon-code-input'
+            examples:
+              Example:
+                value:
+                  coupon_code: off-20
     parameters:
       - name: order_number
         in: path
         required: true
         schema:
           type: string
+        description: The order number
   /shipments:
     post:
       responses:
@@ -5496,11 +5519,6 @@ components:
             properties:
               expected_total:
                 type: string
-    coupon-code-input:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/coupon-code-input'
     add-shipment-itemBody:
       content:
         application/json:
@@ -6437,12 +6455,18 @@ components:
       properties:
         success:
           type: string
+          description: Message returned if the coupon has been applied.
         error:
           type: string
+          description: Message returned if there are errors applying the coupon.
         successful:
           type: boolean
         status_code:
           type: string
+          description: |-
+            When applying a coupon code, it can be: `coupon_code_applied`, `coupon_code_unknown_error`, `coupon_code_max_usage`, `coupon_code_not_eligible`, `coupon_code_already_applied`, `coupon_code_expired` or `coupon_code_not_found`.
+
+            When removing a coupon code, it can be: `coupon_code_removed`, `coupon_code_not_present`, `coupon_code_not_found`.
     address-book:
       type: array
       title: Address book
