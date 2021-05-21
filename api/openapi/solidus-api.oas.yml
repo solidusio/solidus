@@ -4215,7 +4215,10 @@ paths:
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Update shipment
-      description: Updates a shipment.
+      description: |-
+        Updates a shipment.
+
+        Please note that this request can be only performed by users with the `update` permission on the shipment.
       operationId: update-shipment
       tags:
         - Shipments
@@ -4225,7 +4228,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/shipment-input'
+              type: object
+              properties:
+                shipment:
+                  $ref: '#/components/schemas/shipment-input'
+            examples:
+              Example:
+                value:
+                  shipment:
+                    tracking: tracking-identifier-provided-by-shipping-provider
     parameters:
       - name: number
         in: path
@@ -5167,7 +5178,10 @@ paths:
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Create shipment
-      description: Creates a shipment.
+      description: |-
+        Creates a shipment.
+
+        Please note that this request can be only performed by users with the `create` permission on the shipment.
       operationId: create-shipment
       tags:
         - Shipments
@@ -5185,6 +5199,12 @@ paths:
                   type: integer
                 quantity:
                   type: integer
+            examples:
+              Example:
+                value:
+                  stock_location_id: 1
+                  variant_id: 23
+                  quantity: 1
   /shipments/transfer_to_location:
     post:
       responses:
