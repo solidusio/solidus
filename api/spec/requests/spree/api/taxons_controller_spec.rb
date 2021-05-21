@@ -120,12 +120,12 @@ module Spree
         assert_unauthorized!
       end
 
-      it "cannot update a taxon" do
+      it "cannot update a taxon if not an admin" do
         put spree.api_taxonomy_taxon_path(taxonomy, taxon.id), params: { taxon: { name: "I hacked your store!" } }
         assert_unauthorized!
       end
 
-      it "cannot delete a taxon" do
+      it "cannot delete a taxon if not an admin" do
         delete spree.api_taxonomy_taxon_path(taxonomy, taxon.id)
         assert_unauthorized!
       end
