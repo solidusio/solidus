@@ -2687,14 +2687,29 @@ paths:
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Create product property
-      description: Creates a product property.
+      description: |-
+        Creates a product property.
+
+        Only users with the `create` permission on `Spree::ProductProperty` can perform this action.
       operationId: create-product-property
       tags:
         - Product properties
       security:
         - api-key: []
       requestBody:
-        $ref: '#/components/requestBodies/product-property-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                product_property:
+                  $ref: '#/components/schemas/product-property-input'
+            examples:
+              Example:
+                value:
+                  product_property:
+                    property_name: Fit
+                    value: Loose
   '/products/{product_id}/product_properties/{id}':
     get:
       responses:
@@ -2762,14 +2777,28 @@ paths:
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Update product property
-      description: Updates a product's property.
+      description: |-
+        Updates a product's property.
+
+        Only users with the `update` permission on the product property can perform this action.
       operationId: update-product-property
       tags:
         - Product properties
       security:
         - api-key: []
       requestBody:
-        $ref: '#/components/requestBodies/product-property-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                product_property:
+                  $ref: '#/components/schemas/product-property-input'
+            examples:
+              Example:
+                value:
+                  product_property:
+                    value: Regular
   /properties:
     get:
       responses:
@@ -5509,11 +5538,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/taxon-input'
-    product-property-input:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/product-property-input'
     stock-location-input:
       content:
         application/json:
