@@ -3776,14 +3776,32 @@ paths:
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Create zone
-      description: Creates a zone.
+      description: |-
+        Creates a zone.
+
+        Only users with the `create` permission on `Spree::Zone` can perform this action.
       operationId: create-zone
       tags:
         - Zones
       security:
         - api-key: []
       requestBody:
-        $ref: '#/components/requestBodies/zone-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                zone:
+                  $ref: '#/components/schemas/zone-input'
+            examples:
+              Example:
+                value:
+                  zone:
+                    name: North Pole
+                    description: The coldest one.
+                    zone_members_attributes:
+                      - zoneable_type: 'Spree::Country'
+                        zoneable_id: 1
   '/zones/{id}':
     get:
       responses:
@@ -3810,6 +3828,7 @@ paths:
         required: true
         schema:
           type: string
+        description: The ID of the zone we want to update
     delete:
       responses:
         '204':
@@ -3846,14 +3865,28 @@ paths:
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Update zone
-      description: Updates a zone.
+      description: |-
+        Updates a zone.
+
+        Only users with the `update` permission on the zone can perform this action.
       operationId: update-zone
       tags:
         - Zones
       security:
         - api-key: []
       requestBody:
-        $ref: '#/components/requestBodies/zone-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                zone:
+                  $ref: '#/components/schemas/zone-input'
+            examples:
+              Example:
+                value:
+                  zone:
+                    description: Brrr. The coldest one.
   '/promotions/{id}':
     get:
       responses:
@@ -5202,9 +5235,9 @@ paths:
             examples:
               Example:
                 value:
-                  stock_location_id: 1
-                  variant_id: 23
-                  quantity: 1
+                  stock_location_id: 0
+                  variant_id: 0
+                  quantity: 0
   /shipments/transfer_to_location:
     post:
       responses:
@@ -5476,11 +5509,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/taxon-input'
-    zone-input:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/zone-input'
     product-property-input:
       content:
         application/json:
