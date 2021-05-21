@@ -3010,14 +3010,29 @@ paths:
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Create stock location
-      description: Creates a stock location.
+      description: |-
+        Creates a stock location.
+
+        Only users with the `create` permission on `Spree::StockLocation` can perform this action.
       operationId: create-stock-location
       tags:
         - Stock locations
       security:
         - api-key: []
       requestBody:
-        $ref: '#/components/requestBodies/stock-location-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                stock_location:
+                  $ref: '#/components/schemas/stock-location-input'
+            examples:
+              Example:
+                value:
+                  stock_location:
+                    name: North Pole
+                    active: true
   '/stock_locations/{id}':
     get:
       responses:
@@ -3043,6 +3058,7 @@ paths:
         required: true
         schema:
           type: string
+        description: The id of the stock location
     delete:
       responses:
         '204':
@@ -3079,14 +3095,28 @@ paths:
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Update stock location
-      description: Updates a stock location.
+      description: |-
+        Updates a stock location.
+
+        Only users with the `update` permission on the stock location can perform this action.
       operationId: update-stock-location
       tags:
         - Stock locations
       security:
         - api-key: []
       requestBody:
-        $ref: '#/components/requestBodies/stock-location-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                stock_location:
+                  $ref: '#/components/schemas/stock-location-input'
+            examples:
+              Example:
+                value:
+                  stock_location:
+                    active: false
   '/stock_locations/{stock_location_id}/stock_items':
     get:
       responses:
@@ -5538,11 +5568,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/taxon-input'
-    stock-location-input:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/stock-location-input'
     property-input:
       content:
         application/json:
