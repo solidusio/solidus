@@ -3508,14 +3508,30 @@ paths:
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Create taxonomy
-      description: Creates a taxonomy.
+      description: |-
+        Creates a taxonomy.
+
+        Only users with the `create` permission on `Spree::Taxonomy` can perform this action.
+
+        Creating a taxonomy, its root taxon with the same name will be automatically created. The root taxon's information will be available in the response.
       operationId: create-taxonomy
       tags:
         - Taxonomies
       security:
         - api-key: []
       requestBody:
-        $ref: '#/components/requestBodies/taxonomy-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                taxonomy:
+                  $ref: '#/components/schemas/taxonomy-input'
+            examples:
+              Example:
+                value:
+                  taxonomy:
+                    name: Colors
   '/taxonomies/{id}':
     get:
       responses:
@@ -3541,6 +3557,7 @@ paths:
         required: true
         schema:
           type: string
+        description: The id of the taxonomy
     delete:
       responses:
         '204':
@@ -3577,14 +3594,28 @@ paths:
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Update taxonomy
-      description: Updates a taxonomy.
+      description: |-
+        Updates a taxonomy.
+
+        Only users with the `update` permission on the taxonomy can perform this action.
       operationId: update-taxonomy
       tags:
         - Taxonomies
       security:
         - api-key: []
       requestBody:
-        $ref: '#/components/requestBodies/taxonomy-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                taxonomy:
+                  $ref: '#/components/schemas/taxonomy-input'
+            examples:
+              Example:
+                value:
+                  taxonomy:
+                    name: Colours
   '/taxonomies/{taxonomy_id}/taxons':
     get:
       responses:
@@ -5630,11 +5661,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/stock-item-input'
-    taxonomy-input:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/taxonomy-input'
     complete-checkoutBody:
       content:
         application/json:
@@ -7006,6 +7032,8 @@ components:
       properties:
         name:
           type: string
+      required:
+        - name
     taxon-input:
       type: object
       title: Taxon input
