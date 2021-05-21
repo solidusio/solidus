@@ -40,7 +40,8 @@ module Spree
     # Temporarily tie a customer_return to one order
     def order
       return nil if return_items.blank?
-      return_items.first.inventory_unit.order
+
+      return_items.first.inventory_unit&.order
     end
 
     def fully_reimbursed?
@@ -65,7 +66,7 @@ module Spree
     end
 
     def return_items_belong_to_same_order
-      if return_items.reject{ |return_item| return_item.inventory_unit.order_id == order_id }.any?
+      if return_items.reject{ |return_item| return_item.inventory_unit&.order_id == order_id }.any?
         errors.add(:base, I18n.t('spree.return_items_cannot_be_associated_with_multiple_orders'))
       end
     end

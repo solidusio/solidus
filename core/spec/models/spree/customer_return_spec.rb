@@ -50,6 +50,18 @@ RSpec.describe Spree::CustomerReturn, type: :model do
           expect(subject).to eq true
         end
       end
+
+      context "inventory is not present" do
+        before do
+          customer_return.return_items.clear
+
+          customer_return.return_items << Spree::ReturnItem.new
+        end
+
+        it "is invalid" do
+          expect(subject).to eq false
+        end
+      end
     end
   end
 
