@@ -5,7 +5,7 @@ require 'solidus_i18n/version'
 
 Gem::Specification.new do |s|
   s.name        = 'solidus_i18n'
-  s.version     = SolidusI18n.version
+  s.version     = SolidusI18n::VERSION
   s.summary     = 'Provides locale information for use in Solidus.'
   s.description = 'A collection of translations for Solidus.'
 
@@ -29,7 +29,7 @@ Gem::Specification.new do |s|
     s.metadata["source_code_uri"] = s.homepage if s.homepage
   end
 
-  s.add_runtime_dependency 'solidus_core', ['>= 1.1', '< 3']
+  s.add_runtime_dependency 'solidus_core', ['>= 1.1', '< 4']
   s.add_runtime_dependency 'solidus_support', '~> 0.4'
 
   s.add_development_dependency 'solidus_dev_support'
