@@ -80,7 +80,7 @@ RSpec.feature "Quantity Promotions", js: true do
     # Add a different product to our cart with quantity of 2.
     visit spree.root_path
     click_link "E-11"
-    fill_in "quantity", with: "2"
+    fill_in "variants[][quantity]", with: "2"
     click_button "Add To Cart"
 
     # We now have 5 items total, so discount should increase.

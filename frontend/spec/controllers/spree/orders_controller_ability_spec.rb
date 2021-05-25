@@ -24,7 +24,7 @@ module Spree
       context '#populate' do
         it 'should check if user is authorized for :update' do
           expect(controller).to receive(:authorize!).with(:update, order, token)
-          post :populate, params: { variant_id: variant.id, token: token }
+          post :populate, params: { variants: [variant_id: variant.id], token: token }
         end
       end
 

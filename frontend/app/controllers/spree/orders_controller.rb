@@ -52,17 +52,43 @@ module Spree
       @order = current_order(create_order_if_necessary: true)
       authorize! :update, @order, cookies.signed[:guest_token]
 
-      variant  = Spree::Variant.find(params[:variant_id])
-      quantity = params[:quantity].present? ? params[:quantity].to_i : 1
+      variants = []
+
+      # allow old parameters but raise deprecation warning
+      if params[:variant_id].present?
+        variants << { variant_id: params[:variant_id], quantity: params[:quantity] }
+
+        Spree::Deprecation.warn(
+          "\nYou have a custom front-end _cart_form partial which
+          uses deprecated parameters: :variant_id, :quantity.
+          These will be removed in future versions of Solidus.
+          Please update your parameters according to:
+          https://github.com/solidusio/solidus/pull/4081\n"
+        )
+      end
+
+      # check needed for those who have custom front-end that uses old parameters
+      variants.push(*params[:variants]) if params[:variants].present?
 
       # 2,147,483,647 is crazy. See issue https://github.com/spree/spree/issues/2695.
-      if !quantity.between?(1, 2_147_483_647)
+      variants_has_bad_quantity = variants.any? do |variant|
+        variant[:quantity].present? && !variant[:quantity].to_i.between?(1, 2_147_483_647)
+      end
+
+      if variants_has_bad_quantity
         @order.errors.add(:base, t('spree.please_enter_reasonable_quantity'))
       else
-        begin
-          @line_item = @order.contents.add(variant, quantity)
-        rescue ActiveRecord::RecordInvalid => error
-          @order.errors.add(:base, error.record.errors.full_messages.join(", "))
+        variants.each do |variant|
+          next unless variant.key?(:variant_id)
+
+          v = Spree::Variant.find(variant[:variant_id])
+          q = variant[:quantity].present? ? variant[:quantity].to_i : 1
+
+          begin
+            @line_item = @order.contents.add(v, q)
+          rescue ActiveRecord::RecordInvalid => error
+            @order.errors.add(:base, error.record.errors.full_messages.join(", "))
+          end
         end
       end
 

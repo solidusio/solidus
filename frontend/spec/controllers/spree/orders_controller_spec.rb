@@ -11,6 +11,7 @@ describe Spree::OrdersController, type: :controller do
       Spree::Order.create!
     end
     let(:variant) { create(:variant) }
+    let(:second_variant) { create(:variant) }
 
     before do
       allow(controller).to receive_messages(try_spree_current_user: user)
@@ -18,6 +19,7 @@ describe Spree::OrdersController, type: :controller do
 
     context "#populate" do
       it "should create a new order when none specified" do
+        expect(Spree::Deprecation).to receive(:warn)
         post :populate, params: { variant_id: variant.id }
         expect(response).to be_redirect
         expect(cookies.signed[:guest_token]).not_to be_blank
@@ -29,8 +31,9 @@ describe Spree::OrdersController, type: :controller do
         expect(assigned_order).to be_persisted
       end
 
-      context "with Variant" do
+      context "with Variant (deprecated :variant_id and :quantity parameters)" do
         it "should handle population" do
+          expect(Spree::Deprecation).to receive(:warn)
           expect do
             post :populate, params: { variant_id: variant.id, quantity: 5 }
           end.to change { user.orders.count }.by(1)
@@ -42,7 +45,16 @@ describe Spree::OrdersController, type: :controller do
           expect(line_item.quantity).to eq(5)
         end
 
+        it "shows deprecation warning" do
+          expect(Spree::Deprecation).to receive(:warn).
+            with(/deprecated parameters: :variant_id, :quantity./, any_args)
+          expect do
+            post :populate, params: { variant_id: variant.id, quantity: 2 }
+          end.to change { user.orders.count }.by(1)
+        end
+
         it "shows an error when population fails" do
+          expect(Spree::Deprecation).to receive(:warn)
           request.env["HTTP_REFERER"] = spree.root_path
           allow_any_instance_of(Spree::LineItem).to(
             receive(:valid?).and_return(false)
@@ -59,6 +71,7 @@ describe Spree::OrdersController, type: :controller do
         end
 
         it "shows an error when quantity is invalid" do
+          expect(Spree::Deprecation).to receive(:warn)
           request.env["HTTP_REFERER"] = spree.root_path
 
           post(
@@ -74,6 +87,7 @@ describe Spree::OrdersController, type: :controller do
 
         context "when quantity is empty string" do
           it "should populate order with 1 of given variant" do
+            expect(Spree::Deprecation).to receive(:warn)
             expect do
               post :populate, params: { variant_id: variant.id, quantity: '' }
             end.to change { Spree::Order.count }.by(1)
@@ -88,12 +102,155 @@ describe Spree::OrdersController, type: :controller do
 
         context "when quantity is nil" do
           it "should populate order with 1 of given variant" do
+            expect(Spree::Deprecation).to receive(:warn)
             expect do
               post :populate, params: { variant_id: variant.id, quantity: nil }
             end.to change { Spree::Order.count }.by(1)
             order = Spree::Order.last
             expect(response).to redirect_to spree.cart_path
             expect(order.line_items.size).to eq(1)
+            line_item = order.line_items.first
+            expect(line_item.variant_id).to eq(variant.id)
+            expect(line_item.quantity).to eq(1)
+          end
+        end
+      end
+
+      context "with Variants (new :variants parameter)" do
+        context "should handle population" do
+          it "with one variant" do
+            expect do
+              post :populate,
+                   params: {
+                            variants: [
+                                        { variant_id: variant.id, quantity: 4 }
+                                      ]
+                            }
+            end.to change { user.orders.count }.by(1)
+
+            order = user.orders.last
+            expect(response).to redirect_to spree.cart_path
+            expect(order.line_items.size).to eq(1)
+
+            line_item = order.line_items.first
+            expect(line_item.variant_id).to eq(variant.id)
+            expect(line_item.quantity).to eq(4)
+          end
+        end
+
+        it "with multiple variants" do
+          expect do
+            post :populate,
+                 params: {
+                          variants: [
+                                      { variant_id: variant.id, quantity: 3 },
+                                      { variant_id: second_variant.id, quantity: 6 }
+                                    ]
+                          }
+          end.to change { user.orders.count }.by(1)
+
+          order = user.orders.last
+          expect(response).to redirect_to spree.cart_path
+          expect(order.line_items.size).to eq(2)
+
+          line_item = order.line_items.first
+          expect(line_item.variant_id).to eq(variant.id)
+          expect(line_item.quantity).to eq(3)
+
+          second_line_item = order.line_items.last
+          expect(second_line_item.variant_id).to eq(second_variant.id)
+          expect(second_line_item.quantity).to eq(6)
+        end
+
+        it "skip if quantity is given but variant_id is not" do
+          expect do
+            post :populate,
+                 params: {
+                          variants: [
+                                      { variant_id: variant.id, quantity: 2 },
+                                      { quantity: 6 }
+                                    ]
+                          }
+          end.to change { user.orders.count }.by(1)
+
+          order = user.orders.last
+          expect(response).to redirect_to spree.cart_path
+          expect(order.line_items.size).to eq(1)
+
+          line_item = order.line_items.first
+          expect(line_item.variant_id).to eq(variant.id)
+          expect(line_item.quantity).to eq(2)
+        end
+
+        it "shows an error when population fails" do
+          request.env["HTTP_REFERER"] = spree.root_path
+          allow_any_instance_of(Spree::LineItem).to(
+            receive(:valid?).and_return(false)
+          )
+          allow_any_instance_of(Spree::LineItem).to(
+            receive_message_chain(:errors, :full_messages).
+              and_return(["Order population failed"])
+          )
+
+          post :populate, params: { variants: [variant_id: variant.id, quantity: 5] }
+
+          expect(response).to redirect_to(spree.root_path)
+          expect(flash[:error]).to eq("Order population failed")
+        end
+
+        it "shows an error when quantity is invalid" do
+          request.env["HTTP_REFERER"] = spree.root_path
+
+          post :populate, params: { variants: [variant_id: variant.id, quantity: -1] }
+
+          expect(response).to redirect_to(spree.root_path)
+          expect(flash[:error]).to eq(
+            I18n.t('spree.please_enter_reasonable_quantity')
+          )
+        end
+
+        context "when quantity is not present" do
+          it "should populate order with 1 of given variant" do
+            expect do
+              post :populate, params: { variants: [{ variant_id: variant.id }] }
+            end.to change { Spree::Order.count }.by(1)
+
+            order = Spree::Order.last
+            expect(response).to redirect_to spree.cart_path
+            expect(order.line_items.size).to eq(1)
+
+            line_item = order.line_items.first
+            expect(line_item.variant_id).to eq(variant.id)
+            expect(line_item.quantity).to eq(1)
+          end
+        end
+
+        context "when quantity is nil" do
+          it "should populate order with 1 of given variant" do
+            expect do
+              post :populate, params: { variants: [{ variant_id: variant.id, quantity: nil }] }
+            end.to change { Spree::Order.count }.by(1)
+
+            order = Spree::Order.last
+            expect(response).to redirect_to spree.cart_path
+            expect(order.line_items.size).to eq(1)
+
+            line_item = order.line_items.first
+            expect(line_item.variant_id).to eq(variant.id)
+            expect(line_item.quantity).to eq(1)
+          end
+        end
+
+        context "when quantity is an empty string" do
+          it "should populate order with 1 of given variant" do
+            expect do
+              post :populate, params: { variants: [{ variant_id: variant.id, quantity: '' }] }
+            end.to change { Spree::Order.count }.by(1)
+
+            order = Spree::Order.last
+            expect(response).to redirect_to spree.cart_path
+            expect(order.line_items.size).to eq(1)
+
             line_item = order.line_items.first
             expect(line_item.variant_id).to eq(variant.id)
             expect(line_item.quantity).to eq(1)

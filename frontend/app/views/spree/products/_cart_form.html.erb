@@ -7,7 +7,7 @@
         <ul>
           <% @product.variants_and_option_values_for(current_pricing_options).each_with_index do |variant, index| %>
             <li>
-              <%= radio_button_tag "variant_id", variant.id, index == 0, 'data-price' => variant.price_for_options(current_pricing_options)&.money %>
+              <%= radio_button_tag "variants[][variant_id]", variant.id, index == 0, 'data-price' => variant.price_for_options(current_pricing_options)&.money %>
               <%= label_tag "variant_id_#{ variant.id }" do %>
                 <span class="variant-description">
                   <%= variant_options variant %>
@@ -25,7 +25,7 @@
         </ul>
       </div>
     <% else %>
-      <%= hidden_field_tag "variant_id", @product.master.id %>
+      <%= hidden_field_tag "variants[][variant_id]", @product.master.id %>
     <% end %>
 
     <% if @product.price_for_options(current_pricing_options) and !@product.price.nil? %>
@@ -49,7 +49,7 @@
         </div>
 
         <div class="add-to-cart">
-          <%= number_field_tag :quantity, 1, class: 'title', min: 1 %>
+          <%= number_field_tag "variants[][quantity]", 1, class: 'title', min: 1 %>
           <%= button_tag class: 'large primary', id: 'add-to-cart-button', type: :submit do %>
             <%= t('spree.add_to_cart') %>
           <% end %>
