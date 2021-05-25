@@ -42,7 +42,7 @@ As a community-driven project, Solidus relies on funds and time donated by devel
 ### Main Contributor & Director
 At present, Nebulab is the main code contributor and director of Solidus, providing technical guidance and coordinating community efforts and activities.
 
-[![Nebulab](https://nebulab.it/assets/images/public/logo.svg)](https://nebulab.it/)
+[![Nebulab](https://nebulab.com/assets/img/logo-nebulab_black.svg)](https://nebulab.com/)
 
 ### Ambassadors
 Support this project by becoming a Solidus Ambassador. Your logo will show up here with a link to your website. [Become an Ambassador](https://opencollective.com/solidus).
