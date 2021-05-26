@@ -34,9 +34,10 @@ end
 
 # @private
 module DummyApp
-  def self.setup(gem_root:, lib_name:, auto_migrate: true)
+  def self.setup(gem_root:, lib_name:, auto_migrate: true, &block)
     ENV["LIB_NAME"] = lib_name
     DummyApp::Application.config.root = File.join(gem_root, 'spec', 'dummy')
+    block.call if block_given?
 
     DummyApp::Application.initialize!
 
@@ -132,6 +133,7 @@ end
 
 Spree.user_class = 'Spree::LegacyUser'
 Spree.config do |config|
+  config.load_defaults(Spree.solidus_version)
   config.mails_from = "store@example.com"
 
   if ENV['DISABLE_ACTIVE_STORAGE']
