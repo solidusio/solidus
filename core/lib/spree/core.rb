@@ -52,6 +52,13 @@ module Spree
   end
 
   module Core
+    def self.solidus_installed?
+      (Rails.env.test? && Rails.application.class.name == 'DummyApp::Application') ||
+        Rails.application.paths['config/initializers'].paths.any? do |path|
+          File.exist?(path.join('spree.rb'))
+        end
+    end
+
     class GatewayError < RuntimeError; end
   end
 end
