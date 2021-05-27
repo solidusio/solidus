@@ -2840,14 +2840,23 @@ paths:
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Create property
-      description: Creates a property.
+      description: |-
+        Creates a property.
+
+        Only users with the `create` permission on `Spree::Propery` can perform this action.
       operationId: create-property
       tags:
         - Properties
       security:
         - api-key: []
       requestBody:
-        $ref: '#/components/requestBodies/property-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                property:
+                  $ref: '#/components/schemas/property-input'
   '/properties/{id}':
     get:
       responses:
@@ -2874,6 +2883,7 @@ paths:
         required: true
         schema:
           type: string
+        description: 'The id of the Spree::Property'
     delete:
       responses:
         '204':
@@ -2910,14 +2920,23 @@ paths:
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Update property
-      description: Updates a property.
+      description: |-
+        Updates a property.
+
+        Only users with the `update` permission on the property can perform this action.
       operationId: update-property
       tags:
         - Properties
       security:
         - api-key: []
       requestBody:
-        $ref: '#/components/requestBodies/property-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                property:
+                  $ref: '#/components/schemas/property-input'
   '/inventory_units/{id}':
     get:
       responses:
@@ -5626,11 +5645,6 @@ components:
               message:
                 type: string
   requestBodies:
-    property-input:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/property-input'
     image-input:
       content:
         application/json:
