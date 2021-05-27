@@ -472,14 +472,23 @@ paths:
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Create product image
-      description: Creates an image for a product.
+      description: |-
+        Creates an image for a product.
+
+        Only users with the `create` permission on `Spree::Image` can perform this action.
       operationId: create-product-image
       tags:
         - Images
       security:
         - api-key: []
       requestBody:
-        $ref: '#/components/requestBodies/image-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                image:
+                  $ref: '#/components/schemas/image-input'
   '/products/{product_id}/variants':
     get:
       responses:
@@ -595,11 +604,13 @@ paths:
         required: true
         schema:
           type: string
+        description: 'The id of the Spree::Product'
       - name: id
         in: path
         required: true
         schema:
           type: string
+        description: 'The id of the Spree::Image'
     delete:
       responses:
         '204':
@@ -636,14 +647,23 @@ paths:
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Update product image
-      description: Updates a product's image.
+      description: |-
+        Updates a product's image.
+
+        Only users with the `update` permission on the image can perform this action.
       operationId: update-product-image
       tags:
         - Images
       security:
         - api-key: []
       requestBody:
-        $ref: '#/components/requestBodies/image-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                image:
+                  $ref: '#/components/schemas/image-input'
   '/products/{product_id}/variants/{id}':
     get:
       responses:
@@ -1022,14 +1042,23 @@ paths:
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Create variant image
-      description: Creates an image for a variant.
+      description: |-
+        Creates an image for a variant.
+
+        Only users with the `create` permission on `Spree::Image` can perform this action.
       operationId: create-variant-image
       tags:
         - Images
       security:
         - api-key: []
       requestBody:
-        $ref: '#/components/requestBodies/image-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                image:
+                  $ref: '#/components/schemas/image-input'
   '/variants/{variant_id}/images/{id}':
     get:
       responses:
@@ -1056,11 +1085,13 @@ paths:
         required: true
         schema:
           type: string
+        description: 'The id of the Spree::Variant'
       - name: id
         in: path
         required: true
         schema:
           type: string
+        description: 'The id of the Spree::Image'
     delete:
       responses:
         '204':
@@ -1097,14 +1128,23 @@ paths:
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Update variant image
-      description: Updates a variant's image.
+      description: |-
+        Updates a variant's image.
+
+        Only users with the `update` permission on the image can perform this action.
       operationId: update-variant-image
       tags:
         - Images
       security:
         - api-key: []
       requestBody:
-        $ref: '#/components/requestBodies/image-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                image:
+                  $ref: '#/components/schemas/image-input'
   '/shipments/{shipment_number}/estimated_rates':
     get:
       responses:
@@ -5645,11 +5685,6 @@ components:
               message:
                 type: string
   requestBodies:
-    image-input:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/image-input'
     user-input:
       content:
         application/json:
