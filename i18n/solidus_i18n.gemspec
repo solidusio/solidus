@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.summary     = 'Provides locale information for use in Solidus.'
   s.description = 'A collection of translations for Solidus.'
 
-  s.required_ruby_version = '~> 2.4'
+  s.required_ruby_version = '>= 2.5.0'
 
   s.author   = 'Thomas von Deyen'
   s.email    = 'tvd@magiclabs.de'
