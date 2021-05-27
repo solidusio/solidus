@@ -1706,14 +1706,23 @@ paths:
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Create checkout return authorization
-      description: Creates a return authorization for a checkout.
+      description: |-
+        Creates a return authorization for a checkout.
+
+        Only users with the `create` permission on `Spree::RetrunAuthorization` can perform this action.
       operationId: create-checkout-return-authorization
       tags:
         - Return authorizations
       security:
         - api-key: []
       requestBody:
-        $ref: '#/components/requestBodies/return-authorization-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                return_authorization:
+                  $ref: '#/components/schemas/return-authorization-input'
   '/checkouts/{checkout_id}/return_authorizations/{id}':
     get:
       responses:
@@ -1745,6 +1754,7 @@ paths:
         required: true
         schema:
           type: string
+        description: 'The ID of the Spree::ReturnAuthorization'
     delete:
       responses:
         '204':
@@ -1781,14 +1791,23 @@ paths:
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Update checkout return authorization
-      description: Updates a checkout's return authorization.
+      description: |-
+        Updates a checkout's return authorization.
+
+        Only users with the `update` permission on the return authorization can perform this action.
       operationId: update-checkout-return-authorization
       tags:
         - Return authorizations
       security:
         - api-key: []
       requestBody:
-        $ref: '#/components/requestBodies/return-authorization-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                return_authorization:
+                  $ref: '#/components/schemas/return-authorization-input'
   '/orders/{order_id}/customer_returns/{id}':
     get:
       responses:
@@ -2208,14 +2227,23 @@ paths:
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Create order return authorization
-      description: Creates a return authorization for an order.
+      description: |-
+        Creates a return authorization for an order.
+
+        Only users with the `create` permission on `Spree::ReturnAuthorization` can perform this action.
       operationId: create-order-return-authorization
       tags:
         - Return authorizations
       security:
         - api-key: []
       requestBody:
-        $ref: '#/components/requestBodies/return-authorization-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                return_authorization:
+                  $ref: '#/components/schemas/return-authorization-input'
   '/orders/{order_number}/return_authorizations/{id}':
     get:
       responses:
@@ -2242,11 +2270,13 @@ paths:
         required: true
         schema:
           type: string
+        description: The Order number
       - name: id
         in: path
         required: true
         schema:
           type: string
+        description: 'The ID of the Spree::ReturnAuthorization'
     delete:
       responses:
         '200':
@@ -2283,14 +2313,23 @@ paths:
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Update order return authorization
-      description: Updates an order's return authorization.
+      description: |-
+        Updates an order's return authorization.
+
+        Only users with the `update` permission on the return authorization can perform this action.
       operationId: update-order-return-authorization
       tags:
         - Return authorizations
       security:
         - api-key: []
       requestBody:
-        $ref: '#/components/requestBodies/return-authorization-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                return_authorization:
+                  $ref: '#/components/schemas/return-authorization-input'
   /config:
     get:
       responses:
@@ -5705,11 +5744,6 @@ components:
               message:
                 type: string
   requestBodies:
-    return-authorization-input:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/return-authorization-input'
     customer-return-input:
       content:
         application/json:
