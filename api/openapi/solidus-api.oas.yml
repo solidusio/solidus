@@ -1231,6 +1231,7 @@ paths:
         required: true
         schema:
           type: string
+        description: 'The ID of the Spree::User'
     delete:
       responses:
         '204':
@@ -1267,14 +1268,23 @@ paths:
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Update user
-      description: Updates a user.
+      description: |-
+        Updates a user.
+
+        Only users with the `update` permission on the user can perform this action.
       operationId: update-user
       tags:
         - Users
       security:
         - api-key: []
       requestBody:
-        $ref: '#/components/requestBodies/user-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  $ref: '#/components/schemas/user-input'
   '/users/{user_id}/address_book':
     get:
       responses:
@@ -3908,14 +3918,24 @@ paths:
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Create user
-      description: Creates a user.
+      description: |
+        Creates a user.
+
+        Only users with the `create` permission on `Spree::User` can perform this action.
       operationId: create-user
       tags:
         - Users
       security:
         - api-key: []
       requestBody:
-        $ref: '#/components/requestBodies/user-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  $ref: '#/components/schemas/user-input'
+        description: ''
   /zones:
     get:
       responses:
@@ -5685,11 +5705,6 @@ components:
               message:
                 type: string
   requestBodies:
-    user-input:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/user-input'
     return-authorization-input:
       content:
         application/json:
