@@ -1837,7 +1837,7 @@ paths:
       - name: id
         in: path
         required: true
-        description: The id of the checkout's address that we want to retrieve
+        description: The id of the customer return
         schema:
           type: string
     put:
@@ -1855,12 +1855,21 @@ paths:
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Update order customer return
-      description: Updates an orders customer return.
+      description: |-
+        Updates an orders customer return.
+
+        Only users with the `update` permission on the customer return can perform this action.
       operationId: update-order-customer-return
       tags:
         - Customer returns
       requestBody:
-        $ref: '#/components/requestBodies/customer-return-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                customer_return:
+                  $ref: '#/components/schemas/customer-return-input'
       security:
         - api-key: []
   /orders:
@@ -5630,6 +5639,7 @@ paths:
         schema:
           type: string
         required: true
+        description: The order number
     post:
       responses:
         '200':
@@ -5645,12 +5655,21 @@ paths:
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Create order customer return
-      description: Creates a customer return for an order.
+      description: |-
+        Creates a customer return for an order.
+
+        Only users with the `create` permission on `Spree::CustomerReturn` can perform this action.
       operationId: create-order-customer-return
       tags:
         - Customer returns
       requestBody:
-        $ref: '#/components/requestBodies/customer-return-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                customer_return:
+                  $ref: '#/components/schemas/customer-return-input'
       security:
         - api-key: []
 tags:
@@ -5744,11 +5763,6 @@ components:
               message:
                 type: string
   requestBodies:
-    customer-return-input:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/customer-return-input'
     option-value-input:
       content:
         application/json:
