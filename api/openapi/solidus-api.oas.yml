@@ -3326,14 +3326,23 @@ paths:
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Create stock location item
-      description: Creates a stock item for a stock location.
+      description: |-
+        Creates a stock item for a stock location.
+
+        Only users with the `create` permission on `Spree::StockItem` can perform this action.
       operationId: create-stock-location-item
       tags:
         - Stock items
       security:
         - api-key: []
       requestBody:
-        $ref: '#/components/requestBodies/stock-item-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                stock_item:
+                  $ref: '#/components/schemas/stock-item-input'
   '/stock_locations/{stock_location_id}/stock_items/{id}':
     get:
       responses:
@@ -3359,11 +3368,13 @@ paths:
         required: true
         schema:
           type: string
+        description: 'The ID of the Spree::StockLocation'
       - name: id
         in: path
         required: true
         schema:
           type: string
+        description: 'The ID of the Spree::StockItem'
     delete:
       responses:
         '204':
@@ -3400,14 +3411,23 @@ paths:
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Update stock location item
-      description: Updates a stock location's item.
+      description: |-
+        Updates a stock location's item.
+
+        Only users with the `update` permission on the stock item can perform this action.
       operationId: update-stock-location-item
       tags:
         - Stock items
       security:
         - api-key: []
       requestBody:
-        $ref: '#/components/requestBodies/stock-item-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                stock_item:
+                  $ref: '#/components/schemas/stock-item-input'
   '/stock_locations/{stock_location_id}/stock_movements':
     get:
       responses:
@@ -4423,6 +4443,7 @@ paths:
         required: true
         schema:
           type: string
+        description: 'The ID of the Stock::Item'
     patch:
       responses:
         '200':
@@ -4438,14 +4459,23 @@ paths:
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Update stock item
-      description: Updates a stock item.
+      description: |-
+        Updates a stock item.
+
+        Only users with the `update` permission on the stock item can perform this action.
       operationId: update-stock-item
       tags:
         - Stock items
       security:
         - api-key: []
       requestBody:
-        $ref: '#/components/requestBodies/stock-item-input'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                stock_item:
+                  $ref: '#/components/schemas/stock-item-input'
   '/checkouts/{id}':
     patch:
       responses:
@@ -5804,11 +5834,6 @@ components:
               message:
                 type: string
   requestBodies:
-    stock-item-input:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/stock-item-input'
     complete-checkoutBody:
       content:
         application/json:
