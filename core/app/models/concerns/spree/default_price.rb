@@ -13,6 +13,13 @@ module Spree
         autosave: true
     end
 
+    # Returns `#prices` prioritized for being considered as default price
+    #
+    # @return [ActiveRecord::Relation<Spree::Price>]
+    def currently_valid_prices
+      prices.currently_valid
+    end
+
     def find_or_build_default_price
       default_price || build_default_price(Spree::Config.default_pricing_options.desired_attributes)
     end
