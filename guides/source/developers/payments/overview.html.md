@@ -11,8 +11,8 @@ The payments system has many moving parts. The following lists summarize the
 essential parts of the payments system:
 
 1. **Payment service providers**. Before your store can have a functional
-   payments system, you need create an account with a payment service provider
-   Braintree or Stripe.
+   payments system, you need to create an account with a payment service provider 
+   like Braintree or Stripe.
 2. **Payment methods**. A store may have multiple `Spree::PaymentMethod`s
    configured. Payment methods send payment information to a payment service
    provider.
