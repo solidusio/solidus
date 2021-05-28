@@ -132,6 +132,12 @@ module Spree
         expect(response.status).to eq(201)
       end
 
+      it "can update" do
+        post spree.api_users_path, params: { user: { email: "existing@example.com" } }
+        expect(json_response).to have_attributes(attributes)
+        expect(response.status).to eq(201)
+      end
+
       it "can destroy user without orders" do
         user.orders.destroy_all
         delete spree.api_user_path(user)
