@@ -52,6 +52,7 @@ module Spree
     def duplicate_variant(variant)
       new_variant = variant.dup
       new_variant.sku = "COPY OF #{new_variant.sku}"
+      new_variant.price = variant.price
       new_variant.deleted_at = nil
       new_variant.option_values = variant.option_values.map { |option_value| option_value }
       new_variant

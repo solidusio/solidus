@@ -126,7 +126,7 @@ module Spree
 
       it "gets a single product" do
         product.master.images.create!(attachment: image("blank.jpg"))
-        product.variants.create!
+        product.variants.create!(price: 50)
         product.variants.first.images.create!(attachment: image("blank.jpg"))
         product.set_property("spree", "rocks")
         product.taxons << create(:taxon)

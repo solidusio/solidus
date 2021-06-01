@@ -44,12 +44,25 @@ RSpec.describe Spree::Variant, type: :model do
     end
   end
 
+  context 'before validation' do
+    it 'deprecates having price inherited from the master variant' do
+      product = build(:product, price: 25)
+      variant = build(:variant, is_master: false, price: nil, product: product)
+
+      expect(Spree::Deprecation).to receive(:warn).with(/provide the amount for the price manually/)
+
+      variant.valid?
+
+      expect(variant.price).to eq(25)
+    end
+  end
+
   context "after create" do
     let!(:product) { create(:product) }
 
     it "propagate to stock items" do
       expect_any_instance_of(Spree::StockLocation).to receive(:propagate_variant)
-      product.variants.create!
+      product.variants.create!(price: 10)
     end
 
     context "stock location has disable propagate all variants" do
@@ -57,7 +70,7 @@ RSpec.describe Spree::Variant, type: :model do
 
       it "propagate to stock items" do
         expect_any_instance_of(Spree::StockLocation).not_to receive(:propagate_variant)
-        product.variants.create!
+        product.variants.create!(price: 10)
       end
     end
 
@@ -71,7 +84,7 @@ RSpec.describe Spree::Variant, type: :model do
 
       context 'when a variant is created' do
         before(:each) do
-          product.variants.create!
+          product.variants.create!(price: 10)
         end
 
         it { expect(product.master).to_not be_in_stock }
