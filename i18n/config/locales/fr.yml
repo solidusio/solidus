@@ -1878,6 +1878,8 @@ fr:
     stock_transfers: Transferts de Stock
     stop: Fin
     store: Enregistrer
+    store_credit:
+      store_credit: Crédit de la boutique
     street_address: Adresse
     street_address_2: Adresse (suite)
     subtotal: Sous-total
@@ -1956,7 +1958,9 @@ fr:
     usage_limit: Limite d'utilisation
     use_app_default:
     use_billing_address: Utiliser l'adresse de facturation
+    use_existing_cc: Utiliser une carte existante
     use_new_cc: Utiliser une nouvelle carte
+    use_new_cc_or_payment_method: Utiliser une nouvelle carte / Méthode de paiement
     use_s3: Utiliser Amazon S3 pour les Images
     user: Utilisateur
     user_rule:

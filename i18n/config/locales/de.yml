@@ -669,6 +669,9 @@ de:
         unable_to_update: Guthaben konnte nicht aktualisiert werden
         user_originator: Benutzer - %{email}
         view: Guthaben anschauen
+      stores:
+        form:
+          no_cart_tax_country: Keine Steuern auf Einkaufswagen ohne Adresse
       order:
         events:
           admin:
@@ -1724,6 +1727,7 @@ de:
         credit: Guthaben
         invalidate: ungültig gemacht
         void: Guthaben
+      store_credit: Guthaben
     store_credit_category:
       default: Standard
     street_address: Straße
