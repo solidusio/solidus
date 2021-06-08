@@ -48,6 +48,10 @@
             <%= f.text_field :shipments_number_start %>
           </div>
 
+          <div class="field">
+            <%= label_tag :q_shipment_state, t('spree.shipment_state') %>
+            <%= f.select :shipment_state_eq, %i[backorder canceled partial pending ready shipped].map { |state| [t("spree.shipment_states.#{state}"), state] }, { include_blank: true }, { class: "custom-select fullwidth" } %>
+          </div>
         </div>
 
         <div class="col-12 col-md-6 col-lg-4 col-xl-6">
