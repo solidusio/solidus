@@ -22,7 +22,7 @@ module Spree
         # We select a store which either matches our server name, or is default.
         # We sort by `default ASC` so that a store matching SERVER_NAME will come
         # first, and we will find that instead of the default.
-        store = Spree::Store.where(url: server_name).or(Store.where(default: true)).order(default: :asc).first
+        store = Spree::Store.by_url(server_name).or(Store.where(default: true)).order(default: :asc).first
 
         # Provide a fallback, mostly for legacy/testing purposes
         store || Spree::Store.new

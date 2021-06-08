@@ -23,6 +23,16 @@ RSpec.describe Spree::StoreSelector::ByServerName do
           expect(subject).to eq(store_2)
         end
       end
+
+      context "with two domains match one" do
+        let(:request) { double(headers: {}, env: { "SERVER_NAME" => 'server-name.org' } ) }
+        let(:url) { "server-name.org other-name.org" }
+        let!(:store_3) { create :store, default: false, url: url }
+
+        it "returns the store with the matching domain" do
+          expect(subject).to eq(store_3)
+        end
+      end
     end
   end
 end
