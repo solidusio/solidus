@@ -6,6 +6,7 @@ RSpec.describe Spree::Preferences::Configuration, type: :model do
   before :all do
     class AppConfig < Spree::Preferences::Configuration
       preference :color, :string, default: :blue
+      preference :foo, :boolean, default: by_version(true, "3.0" => false)
     end
     @config = AppConfig.new
   end
@@ -23,5 +24,31 @@ RSpec.describe Spree::Preferences::Configuration, type: :model do
   it "uses set/get to access preferences" do
     @config.set(color: 'green')
     expect(@config.get(:color)).to eq 'green'
+  end
+
+  it "allows defining different defaults depending on the Solidus version" do
+    @config.load_defaults 2.1
+
+    expect(@config.get(:foo)).to be(true)
+
+    @config.load_defaults 3.1
+
+    expect(@config.get(:foo)).to be(false)
+  end
+
+  describe '#load_defaults' do
+    it 'changes loaded_defaults' do
+      @config.load_defaults '2.1'
+
+      expect(@config.loaded_defaults).to eq('2.1')
+
+      @config.load_defaults '3.1'
+
+      expect(@config.loaded_defaults).to eq('3.1')
+    end
+
+    it 'returns updated preferences' do
+      expect(@config.load_defaults('2.1')).to eq(foo: true, color: :blue)
+    end
   end
 end
