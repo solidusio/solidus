@@ -490,9 +490,6 @@ module Spree
         raise CannotRebuildShipments.new(I18n.t('spree.cannot_rebuild_shipments_shipments_not_pending'))
       else
         shipments.destroy_all
-        # TODO: We can use `self.shipments#=` instead of `#push` when
-        # https://github.com/rails/rails/issues/42102 is fixed and we deprecate
-        # Rails versions with the bug
         shipments.push(*Spree::Config.stock.coordinator_class.new(self).shipments)
       end
     end
