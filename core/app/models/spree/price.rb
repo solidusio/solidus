@@ -13,7 +13,7 @@ module Spree
     delegate :tax_rates, to: :variant
 
     validate :check_price
-    validates :amount, allow_nil: true, numericality: {
+    validates :amount, numericality: {
       greater_than_or_equal_to: 0,
       less_than_or_equal_to: MAXIMUM_AMOUNT
     }
