@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Spree::Adjustment, type: :model do
   let!(:store) { create :store }
-  let(:order) { Spree::Order.new }
+  let(:order) { create :order }
   let(:line_item) { create :line_item, order: order }
 
   let(:adjustment) { Spree::Adjustment.create!(label: 'Adjustment', adjustable: order, order: order, amount: 5) }
@@ -43,7 +43,7 @@ RSpec.describe Spree::Adjustment, type: :model do
   end
 
   context '#currency' do
-    let(:order) { Spree::Order.new currency: 'JPY' }
+    let(:order) { create :order, currency: 'JPY' }
 
     it 'returns the adjustables currency' do
       expect(adjustment.currency).to eq 'JPY'
@@ -67,7 +67,7 @@ RSpec.describe Spree::Adjustment, type: :model do
     end
 
     context "with currency set to JPY" do
-      let(:order) { Spree::Order.new currency: 'JPY' }
+      let(:order) { create :order, currency: 'JPY' }
 
       context "when adjustable is set to an order" do
         it "displays in JPY" do
