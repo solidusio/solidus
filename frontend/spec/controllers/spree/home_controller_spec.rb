@@ -14,7 +14,7 @@ describe Spree::HomeController, type: :controller do
   context "layout" do
     it "renders default layout" do
       get :index
-      expect(response).to render_template(layout: 'spree/layouts/spree_application')
+      expect(response).to render_template(layout: 'spree/layouts/application')
     end
 
     context "different layout specified in config" do
