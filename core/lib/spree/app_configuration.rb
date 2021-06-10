@@ -453,6 +453,46 @@ module Spree
     # @return [Array]
     class_name_attribute :allowed_image_mime_types, default: %w(image/jpeg image/jpg image/png image/gif).freeze
 
+    # @!attribute [rw] product_image_style_default
+    #
+    # Defines which style to default to when style is not provided
+    # :product is the default.
+    #
+    # @return [Symbol]
+    class_name_attribute :product_image_style_default, default: :product
+
+    # @!attribute [rw] product_image_styles
+    #
+    # Defines image styles/sizes hash for styles
+    # `{ mini: '48x48>',
+    #    small: '400x400>',
+    #    product: '680x680>',
+    #    large: '1200x1200>' } is the default.
+    #
+    # @return [Hash]
+    class_name_attribute :product_image_styles, default: { mini: '48x48>',
+                                                          small: '400x400>',
+                                                          product: '680x680>',
+                                                          large: '1200x1200>' }
+    # @!attribute [rw] taxon_image_style_default
+    #
+    # Defines which style to default to when style is not provided
+    # :mini is the default.
+    #
+    # @return [Symbol]
+    class_name_attribute :taxon_image_style_default, default: :mini
+
+    # @!attribute [rw] taxon_styles
+    #
+    # Defines taxon styles/sizes hash for styles
+    # `{ mini: '48x48>',
+    #    small: '400x400>',
+    #    product: '680x680>',
+    #    large: '1200x1200>' } is the default.
+    #
+    # @return [Hash]
+    class_name_attribute :taxon_image_styles, default: { mini: '32x32>', normal: '128x128>' }
+
     # Allows switching attachment library for Taxon
     #
     # `Spree::Taxon::ActiveStorageAttachment`
