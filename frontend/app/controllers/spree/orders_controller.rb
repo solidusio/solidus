@@ -78,6 +78,8 @@ module Spree
         end
       end
     end
+    deprecate populate: 'please use OrdersContentController#create instead',
+              deprecator: Spree::Deprecation
 
     def populate_redirect
       flash[:error] = t('spree.populate_get_error')
