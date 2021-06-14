@@ -132,7 +132,7 @@ module Solidus
         Solidus has a default authentication extension that uses Devise.
         You can find more info at https://github.com/solidusio/solidus_auth_devise.
 
-        Would you like to install it? (y/n)"))
+        Would you like to install it? (Y/n)"))
 
         @plugins_to_be_installed << 'solidus_auth_devise'
         @plugin_generators_to_run << 'solidus:auth:install'
