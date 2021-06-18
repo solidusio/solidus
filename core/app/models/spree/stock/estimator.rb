@@ -27,7 +27,7 @@ module Spree
         elsif package.shipment.order && order.nil?
           @order = package.shipment.order
         end
-        
+
         rates = calculate_shipping_rates(package)
         rates.select! { |rate| rate.shipping_method.available_to_users? } if frontend_only
         choose_default_shipping_rate(rates)

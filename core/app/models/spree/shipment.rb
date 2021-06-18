@@ -144,7 +144,7 @@ module Spree
       # StockEstimator.new assigment below will replace the current shipping_method
       original_shipping_method_id = shipping_method.try!(:id)
 
-      new_rates = Spree::Config.stock.estimator_class.new.shipping_rates(to_package)
+      new_rates = Spree::Config.stock.estimator_class.new(order).shipping_rates(to_package)
 
       # If one of the new rates matches the previously selected shipping
       # method, select that instead of the default provided by the estimator.
@@ -163,7 +163,7 @@ module Spree
     end
 
     def select_shipping_method(shipping_method)
-      estimator = Spree::Config.stock.estimator_class.new
+      estimator = Spree::Config.stock.estimator_class.new(order)
       rates = estimator.shipping_rates(to_package, false)
       rate = rates.detect { |detected| detected.shipping_method_id == shipping_method.id }
       rate.selected = true
