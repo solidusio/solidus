@@ -71,24 +71,38 @@ RSpec.describe Spree::Variant::PricingOptions do
   end
 
   context ".from_context" do
-    let(:view_context) { double(ApplicationController, current_store: store) }
-    subject { described_class.from_context(view_context) }
+    context 'currency' do
+      context "when it's stored in the session" do
+        it 'fetches from it' do
+          store = create :store
+          view_context = double(ApplicationController, current_store: store, currency_in_session: 'BOB')
 
-    context "if the store has not defined default_currency" do
-      let(:store) { FactoryBot.create :store, default_currency: nil, cart_tax_country_iso: nil }
+          pricing_options = described_class.from_context(view_context)
 
-      it "fallbacks to Spree::Config.currency" do
-        expect(Spree::Variant::PricingOptions).to receive(:new).with(currency: Spree::Config.currency, country_iso: nil)
-        expect(subject).to be_nil
+          expect(pricing_options.currency).to eq('BOB')
+        end
+      end
+
+      context "when it's not in the session" do
+        it "takes store's main currency" do
+          store = create :store, default_currency: 'BOB'
+          view_context = double(ApplicationController, current_store: store, currency_in_session: nil)
+
+          pricing_options = described_class.from_context(view_context)
+
+          expect(pricing_options.currency).to eq('BOB')
+        end
       end
     end
 
-    context 'if the store has default_currency and cart_tax_country_iso' do
-      let(:store) { FactoryBot.create :store, default_currency: 'MXN' }
+    context 'country_iso' do
+      it "takes it from store's cart_tax_country_iso" do
+        store = create :store, cart_tax_country_iso: 'MXC'
+        view_context = double(ApplicationController, current_store: store, currency_in_session: nil)
 
-      it "uses current_store information" do
-        expect(Spree::Variant::PricingOptions).to receive(:new).with(currency: store.default_currency, country_iso: store.cart_tax_country_iso)
-        expect(subject).to be_nil
+        pricing_options = described_class.from_context(view_context)
+
+        expect(pricing_options.country_iso).to eq('MXC')
       end
     end
   end

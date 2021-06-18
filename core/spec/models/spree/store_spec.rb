@@ -106,4 +106,56 @@ RSpec.describe Spree::Store, type: :model do
       end
     end
   end
+
+  describe '#main_currency' do
+    context 'when default_currency is set' do
+      it 'returns it' do
+        store = build(:store, default_currency: 'BOB')
+
+        expect(store.main_currency).to eq('BOB')
+      end
+    end
+
+    context 'when default_currency is not set' do
+      it 'returns the one from the configuration' do
+        store = build(:store, default_currency: nil)
+
+        expect(store.main_currency).to eq('USD')
+      end
+    end
+
+    context 'when default_currency is the empty string' do
+      it 'returns the one from the configuration' do
+        store = build(:store, default_currency: '')
+
+        expect(store.main_currency).to eq('USD')
+      end
+    end
+  end
+
+  context '#supported_currencies' do
+    it 'returns set with main currency and other supported currencies' do
+      store = build(:store, default_currency: 'USD', currencies: Set['EUR', 'BOB'])
+
+      expect(store.supported_currencies).to eq(Set['USD', 'EUR', 'BOB'])
+    end
+  end
+
+  context '#multicurrency?' do
+    context 'when there is more than one supported currency' do
+      it 'returns true' do
+        store = build(:store, default_currency: 'USD', currencies: Set['BOB'])
+
+        expect(store.multicurrency?).to be(true)
+      end
+    end
+
+    context 'when there is only one supported currency' do
+      it 'returns false' do
+        store = build(:store, default_currency: 'USD', currencies: Set[])
+
+        expect(store.multicurrency?).to be(false)
+      end
+    end
+  end
 end

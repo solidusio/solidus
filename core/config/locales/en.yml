@@ -1205,6 +1205,7 @@ en:
     credit_owed: Credit Owed
     credits: Credits
     currency: Currency
+    currency_switch_confirm: If you switch currency your cart will be emptied. Are you sure you want to continue?
     currency_settings: Currency Settings
     current: Current
     current_promotion_usage: 'Current Usage: %{count}'

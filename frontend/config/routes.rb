@@ -8,6 +8,8 @@ Spree::Core::Engine.routes.draw do
   get '/locale/set', to: 'locale#set'
   post '/locale/set', to: 'locale#set', as: :select_locale
 
+  put '/currencies/set', to: 'currencies#set', as: :select_currency
+
   # non-restful checkout stuff
   patch '/checkout/update/:state', to: 'checkout#update', as: :update_checkout
   get '/checkout/:state', to: 'checkout#edit', as: :checkout_state

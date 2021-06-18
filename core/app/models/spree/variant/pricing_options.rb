@@ -49,13 +49,24 @@ module Spree
         new(currency: price.currency, country_iso: price.country_iso)
       end
 
-      # This creates the correct pricing options for a price, so the store owners can easily customize how to
-      # find the pricing based on the view context, having available current_store, current_spree_user, request.host_name, etc.
-      # @return [Spree::Variant::PricingOptions] pricing options for pricing a line item
+      # This creates the correct pricing options for a price, so the store
+      # owners can easily customize how to find the pricing based on the view
+      # context, having available current_store, current_spree_user,
+      # request.host_name, etc.
+      #
+      # Currency is fetched from the session when set, otherwise it falls back
+      # to {Store#main_currency}. The country iso is copied from
+      # {Store#cart_tax_cart_tax_country_iso}.
+      #
+      #
+      # @return [Spree::Variant::PricingOptions] pricing options for pricing a
+      # line item
       def self.from_context(context)
+        store = context.current_store
+
         new(
-          currency: context.current_store.try!(:default_currency).presence || Spree::Config[:currency],
-          country_iso: context.current_store.try!(:cart_tax_country_iso).presence
+          currency: context.currency_in_session || store.main_currency,
+          country_iso: store.cart_tax_country_iso
         )
       end
 

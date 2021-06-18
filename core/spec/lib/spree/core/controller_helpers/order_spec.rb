@@ -116,4 +116,18 @@ RSpec.describe Spree::Core::ControllerHelpers::Order, type: :controller do
       expect(controller.ip_address).to eq request.remote_ip
     end
   end
+
+  describe '#current_order_in_progress?' do
+    it 'returns whether current order contains items' do
+      create(:order, store: store, user: user, line_items: [build(:line_item)])
+
+      expect(controller.current_order_in_progress?).to be(true)
+    end
+
+    context 'when there is no current order' do
+      it 'returns false' do
+        expect(controller.current_order_in_progress?).to be(false)
+      end
+    end
+  end
 end

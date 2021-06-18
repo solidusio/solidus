@@ -8,11 +8,11 @@ RSpec.describe Spree::Core::ControllerHelpers::Pricing, type: :controller do
     include Spree::Core::ControllerHelpers::Pricing
   }
 
-  before do
-    allow(controller).to receive(:current_store).and_return(store)
-  end
-
   describe '#current_pricing_options' do
+    before do
+      allow(controller).to receive(:current_store).and_return(store)
+    end
+
     subject { controller.current_pricing_options }
 
     let(:store) { FactoryBot.create(:store, default_currency: nil) }
@@ -22,21 +22,9 @@ RSpec.describe Spree::Core::ControllerHelpers::Pricing, type: :controller do
     context "currency" do
       subject { controller.current_pricing_options.currency }
 
-      context "when store default_currency is nil" do
-        let(:store) { nil }
+      context "returns store currency from the context" do
+        let(:store) { create(:store, default_currency: 'USD') }
         it { is_expected.to eq('USD') }
-      end
-
-      context "when the current store default_currency empty" do
-        let(:store) { FactoryBot.create :store, default_currency: '' }
-
-        it { is_expected.to eq('USD') }
-      end
-
-      context "when the current store default_currency is a currency" do
-        let(:store) { FactoryBot.create :store, default_currency: 'EUR' }
-
-        it { is_expected.to eq('EUR') }
       end
     end
 
@@ -67,6 +55,22 @@ RSpec.describe Spree::Core::ControllerHelpers::Pricing, type: :controller do
           is_expected.to be_nil
         end
       end
+    end
+  end
+
+  describe '#currency_in_session' do
+    it 'returns currency value in the session' do
+      controller.session['currency'] = 'BOB'
+
+      expect(controller.currency_in_session).to eq('BOB')
+    end
+  end
+
+  describe '#switch_currency' do
+    it 'sets given currency to session' do
+      controller.switch_currency('BOB')
+
+      expect(controller.current_currency).to eq('BOB')
     end
   end
 end
