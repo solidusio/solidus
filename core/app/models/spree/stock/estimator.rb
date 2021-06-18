@@ -3,8 +3,13 @@
 module Spree
   module Stock
     class Estimator
+      attr_reader :order
       class ShipmentRequired < StandardError; end
       class OrderRequired < StandardError; end
+
+      def initialize(order = nil)
+        @order = order
+      end
 
       # Estimate the shipping rates for a package.
       #
@@ -15,8 +20,14 @@ module Spree
       #   descending cost, with the least costly marked "selected"
       def shipping_rates(package, frontend_only = true)
         raise ShipmentRequired if package.shipment.nil?
-        raise OrderRequired if package.shipment.order.nil?
+        raise OrderRequired if package.shipment.order.nil? && @order.nil?
 
+        if order && package.shipment.order.nil?
+          package.shipment.order = order
+        elsif package.shipment.order && order.nil?
+          @order = package.shipment.order
+        end
+        
         rates = calculate_shipping_rates(package)
         rates.select! { |rate| rate.shipping_method.available_to_users? } if frontend_only
         choose_default_shipping_rate(rates)
@@ -34,7 +45,7 @@ module Spree
 
       def calculate_shipping_rates(package)
         tax_calculator_class = Spree::Config.shipping_rate_tax_calculator_class
-        tax_calculator = tax_calculator_class.new(package.shipment.order)
+        tax_calculator = tax_calculator_class.new(order)
         shipping_methods(package).map do |shipping_method|
           cost = shipping_method.calculator.compute(package)
           if cost
@@ -55,15 +66,15 @@ module Spree
 
       def shipping_methods(package)
         package.shipping_methods
-          .available_to_store(package.shipment.order.store)
-          .available_for_address(package.shipment.order.ship_address)
+          .available_to_store(order.store)
+          .available_for_address(order.ship_address)
           .includes(:calculator)
           .to_a
           .select do |ship_method|
           calculator = ship_method.calculator
           calculator.available?(package) &&
             (calculator.preferences[:currency].blank? ||
-             calculator.preferences[:currency] == package.shipment.order.currency)
+             calculator.preferences[:currency] == order.currency)
         end
       end
     end

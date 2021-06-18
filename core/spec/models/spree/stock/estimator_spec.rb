@@ -33,6 +33,15 @@ module Spree
           end
         end
 
+        context 'initialized with an order' do
+          subject { Estimator.new(order) }
+          before { package.shipment.order = nil }  
+
+          it 'uses the order from the initializer' do
+            expect(subject.shipping_rates(package).first.cost).to eq 4
+          end
+        end
+
         context 'without an order' do
           before { package.shipment.order = nil }
           it 'raises an error' do
