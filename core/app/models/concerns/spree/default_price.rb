@@ -33,7 +33,7 @@ module Spree
     # Select from {#prices} the one to be considered as the default
     #
     # This method works with the in-memory association, so non-persisted prices
-    # are taken into account. Discarded prices are also considered.
+    # are taken into account.
     #
     # A price is a candidate to be considered as the default when it meets
     # {Spree::Variant.default_price_attributes} criteria. When more than one candidate is
@@ -46,7 +46,7 @@ module Spree
     def default_price
       prioritized_default(
         prices_meeting_criteria_to_be_default(
-          (prices + prices.with_discarded).uniq
+          prices
         )
       )
     end

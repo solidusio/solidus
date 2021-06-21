@@ -269,14 +269,6 @@ RSpec.describe Spree::Variant, type: :model do
 
       expect(variant.default_price.attributes).to eq(price.attributes)
     end
-
-    it 'includes discarded prices' do
-      variant = create(:variant)
-      price = create(:price, variant: variant, currency: 'USD')
-      price.discard
-
-      expect(variant.default_price).to eq(price)
-    end
   end
 
   describe '#default_price_or_build' do
@@ -779,30 +771,6 @@ RSpec.describe Spree::Variant, type: :model do
       expect(variant.images).to be_empty
       expect(variant.stock_items.reload).to be_empty
       expect(variant.prices).to be_empty
-    end
-
-    describe 'default_price' do
-      let!(:previous_variant_price) { variant.default_price }
-
-      it "should discard default_price" do
-        variant.discard
-        variant.reload
-        expect(previous_variant_price.reload).to be_discarded
-      end
-
-      it "should keep its price if deleted" do
-        variant.discard
-        variant.reload
-        expect(variant.default_price).to eq(previous_variant_price)
-      end
-
-      context 'when loading with pre-fetching of default_price' do
-        it 'also keeps the previous price' do
-          variant.discard
-          reloaded_variant = Spree::Variant.with_discarded.find_by(id: variant.id)
-          expect(reloaded_variant.default_price).to eq(previous_variant_price)
-        end
-      end
     end
   end
 
