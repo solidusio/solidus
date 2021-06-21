@@ -17,8 +17,8 @@ module Spree
     # Returns `#prices` prioritized for being considered as default price
     #
     # @return [ActiveRecord::Relation<Spree::Price>]
-    def currently_valid_prices
-      prices.currently_valid
+    def prioritized_for_default_prices
+      prices.prioritized_for_default
     end
 
     # Returns {#default_price} or builds it from {Spree::Variant.default_price_attributes}
