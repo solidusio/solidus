@@ -68,7 +68,7 @@ Customer adds the product to their cart.
   - The `tax_category_id` for each item is set according to the [tax
     category][tax-categories] of each item in the cart.
 
-[spree-order]: overview.html
+[spree-order]: ../orders/overview.html
 [spree-variant]: ../products-and-variants/variants.html
 [tax-categories]: ../taxation/overview.html#tax-categories
 
