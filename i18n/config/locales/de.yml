@@ -1518,7 +1518,7 @@ de:
         instructions: Anweisungen
         refund_summary: Kurzfassung Gutschrift
         subject: Betreff
-        total_refunded: Gesamtwert Gutschriften
+        total_refunded: Gesamtwert Gutschriften %{total}
     reimbursement_perform_failed: Vergütung fehlgeschlagen
     reimbursement_status: Vergütungsstatus
     reimbursement_type: Vergütungstyp
