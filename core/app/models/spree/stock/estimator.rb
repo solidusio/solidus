@@ -8,6 +8,9 @@ module Spree
       class OrderRequired < StandardError; end
 
       def initialize(order = nil)
+        Spree::Deprecation.warn('A Spree::Order is required as an argument,
+          please initialize with Spree::Stock::Estimator.new(order),
+          Spree::Stock::Estimator.new will throw an ArgumentError after deprecation')
         @order = order
       end
 
@@ -20,7 +23,7 @@ module Spree
       #   descending cost, with the least costly marked "selected"
       def shipping_rates(package, frontend_only = true)
         raise ShipmentRequired if package.shipment.nil?
-        raise OrderRequired if package.shipment.order.nil? && @order.nil?
+        raise OrderRequired if package.shipment.order.nil? && order.nil?
 
         if order && package.shipment.order.nil?
           package.shipment.order = order
