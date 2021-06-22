@@ -15,6 +15,13 @@ module Spree
           subject.shipments
         end
 
+        it 'allows estimator class be initialized without an order' do
+          expect(Spree::Config.stock.estimator_class).to receive(:new).with(order).and_raise(ArgumentError)
+          expect(Spree::Config.stock).to receive(:estimator_class).exactly(3).and_call_original
+          expect(Spree::Config.stock.estimator_class).to receive(:new).with(no_args).and_call_original
+          subject.shipments
+        end
+
         it 'uses the configured stock location filter' do
           expect(Spree::Config.stock).to receive(:location_filter_class).and_call_original
           subject.shipments
@@ -262,4 +269,11 @@ module Spree
       end
     end
   end
+end
+
+class CustomEstimator
+  def shipping_rates(package) 
+    [] 
+  end
+  def shipments;end
 end

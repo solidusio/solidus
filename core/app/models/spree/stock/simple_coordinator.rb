@@ -75,7 +75,7 @@ module Spree
         # Turn the Stock::Packages into a Shipment with rates
         shipments = packages.map do |package|
           shipment = package.shipment = package.to_shipment
-          shipment.shipping_rates = Spree::Config.stock.estimator_class.new(order).shipping_rates(package)
+          shipment.shipping_rates = Spree::Config.stock.estimator(order).shipping_rates(package)
           shipment
         end
 
