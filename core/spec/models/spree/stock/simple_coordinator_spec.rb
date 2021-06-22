@@ -270,10 +270,3 @@ module Spree
     end
   end
 end
-
-class CustomEstimator
-  def shipping_rates(package) 
-    [] 
-  end
-  def shipments;end
-end
