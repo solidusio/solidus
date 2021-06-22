@@ -20,14 +20,12 @@ module Spree
       end
 
       def estimator(order = nil)
-        begin
           estimator_class.new(order)
-        rescue ArgumentError => e
+        rescue ArgumentError
           Spree::Deprecation.warn('A Spree::Order is required as an argument
             to the estimator class, please initialize with Spree::Stock::Estimator.new(order),
             Spree::Stock::Estimator.new will throw an ArgumentError after deprecation')
           estimator_class.new
-        end
       end
 
       def location_filter_class
