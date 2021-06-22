@@ -11,6 +11,7 @@ RSpec.describe Solidus::UpdateGenerator do
     lambda do |from, to|
       Rails::Generators.invoke('solidus:update', [
         "--initializer_directory=#{Rails.root.join('tmp')}",
+        "--previous_version_prompt=false",
         "--from=#{from}",
         "--to=#{to}",
         "--quiet"

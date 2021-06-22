@@ -4,19 +4,28 @@ require 'spree/core/preference_changes_between_solidus_versions'
 require 'rails/generators'
 
 module Solidus
+  # @private
   class UpdateGenerator < ::Rails::Generators::Base
+    FROM = Spree.previous_solidus_minor_version
+
     desc 'Generates a new initializer to preview the new defaults for current Solidus version'
 
     source_root File.expand_path('templates', __dir__)
-
-    class_option :from,
-                 type: :string,
-                 banner: 'The version your are updating from. E.g. 2.11.10'
 
     class_option :initializer_basename,
                  type: :string,
                  default: 'new_solidus_defaults',
                  banner: 'The name for the new initializer'
+
+    class_option :previous_version_prompt,
+                 type: :boolean,
+                 default: true,
+                 banner: 'Prompt to warn about only previous version support'
+
+    class_option :from,
+                 type: :string,
+                 default: FROM,
+                 hide: true
 
     class_option :to,
                  type: :string,
@@ -29,6 +38,12 @@ module Solidus
                  hide: true
 
     def create_new_defaults_initializer
+      previous_version_prompt = options[:previous_version_prompt]
+      return if previous_version_prompt && !yes?(<<~MSG, :red)
+        The update process is only supported if you are coming from version #{FROM}. If this is not the case, please, skip it and update your application to use Solidus #{FROM} before retrying.
+        Are you sure you want to continue? (y/N)
+      MSG
+
       from = options[:from]
       to = options[:to]
       @from = from
