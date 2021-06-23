@@ -9,11 +9,8 @@ describe "Visiting Products", type: :feature, inaccessible: true do
     ((first_store = Spree::Store.first) && first_store.name).to_s
   end
 
-  before(:each) do
-    visit spree.root_path
-  end
-
   it "should be able to show the shopping cart after adding a product to it" do
+    visit spree.root_path
     click_link "Ruby on Rails Ringer T-Shirt"
     expect(page).to have_content("$19.99")
 
@@ -31,8 +28,8 @@ describe "Visiting Products", type: :feature, inaccessible: true do
     end
 
     it "should use *_path helper to generate the product links" do
-     visit spree.root_path
-     expect(page).to have_xpath(".//a[@href='#{spree.product_path(product)}']")
+      visit spree.root_path
+      expect(page).to have_xpath(".//a[@href='#{spree.product_path(product)}']")
     end
   end
 
@@ -41,6 +38,7 @@ describe "Visiting Products", type: :feature, inaccessible: true do
     let(:metas) { { meta_description: 'Brand new Ruby on Rails Jersey', meta_title: 'Ruby on Rails Baseball Jersey Buy High Quality Geek Apparel', meta_keywords: 'ror, jersey, ruby' } }
 
     it 'should return the correct title when displaying a single product' do
+      visit spree.root_path
       click_link jersey.name
       expect(page).to have_title('Ruby on Rails Baseball Jersey - ' + store_name)
       within('div#product-description') do
@@ -51,6 +49,7 @@ describe "Visiting Products", type: :feature, inaccessible: true do
     end
 
     it 'displays metas' do
+      visit spree.root_path
       jersey.update metas
       click_link jersey.name
       expect(page).to have_meta(:description, 'Brand new Ruby on Rails Jersey')
@@ -58,12 +57,14 @@ describe "Visiting Products", type: :feature, inaccessible: true do
     end
 
     it 'displays title if set' do
+      visit spree.root_path
       jersey.update metas
       click_link jersey.name
       expect(page).to have_title('Ruby on Rails Baseball Jersey Buy High Quality Geek Apparel')
     end
 
     it "doesn't use meta_title as heading on page" do
+      visit spree.root_path
       jersey.update metas
       click_link jersey.name
       within("h1") do
@@ -73,6 +74,7 @@ describe "Visiting Products", type: :feature, inaccessible: true do
     end
 
     it 'uses product name in title when meta_title set to empty string' do
+      visit spree.root_path
       jersey.update meta_title: ''
       click_link jersey.name
       expect(page).to have_title('Ruby on Rails Baseball Jersey - ' + store_name)
@@ -83,6 +85,7 @@ describe "Visiting Products", type: :feature, inaccessible: true do
     let(:product) { Spree::Product.available.first }
 
     it 'has correct schema.org/Offer attributes' do
+      visit spree.root_path
       expect(page).to have_css("#product_#{product.id} [itemprop='price'][content='19.99']")
       expect(page).to have_css("#product_#{product.id} [itemprop='priceCurrency'][content='USD']")
       click_link product.name
@@ -105,7 +108,7 @@ describe "Visiting Products", type: :feature, inaccessible: true do
     # Regression tests for https://github.com/spree/spree/issues/2737
     context "uses руб as the currency symbol" do
       it "on products page" do
-        visit spree.root_path
+        visit spree.root_path        
         within("#product_#{product.id}") do
           within(".price") do
             expect(page).to have_content("19.99 ₽")
@@ -141,6 +144,7 @@ describe "Visiting Products", type: :feature, inaccessible: true do
   end
 
   it "should be able to search for a product" do
+    visit spree.root_path
     fill_in "keywords", with: "shirt"
     click_button "Search"
 
@@ -165,6 +169,7 @@ describe "Visiting Products", type: :feature, inaccessible: true do
     end
 
     it "displays price of first variant listed", js: true do
+      visit spree.root_path
       click_link product.name
       within("#product-price") do
         expect(page).to have_content variant.price
@@ -173,6 +178,7 @@ describe "Visiting Products", type: :feature, inaccessible: true do
     end
 
     it "doesn't display out of stock for master product" do
+      visit spree.root_path
       product.master.stock_items.update_all count_on_hand: 0, backorderable: false
 
       click_link product.name
@@ -202,14 +208,16 @@ describe "Visiting Products", type: :feature, inaccessible: true do
   end
 
   it "should be able to hide products without price" do
+    visit spree.root_path    
     expect(page.all('ul.product-listing li').size).to eq(9)
     stub_spree_preferences(show_products_without_price: false)
     stub_spree_preferences(currency: "CAN")
-    visit spree.root_path
+    visit spree.root_path    
     expect(page.all('ul.product-listing li').size).to eq(0)
   end
 
   it "should be able to display products priced under 10 dollars" do
+    visit spree.root_path
     within(:css, '#taxonomies') { click_link "Ruby on Rails" }
     check "Price_Range_Under_$10.00"
     within(:css, '#sidebar_products_search') { click_button "Search" }
@@ -217,6 +225,7 @@ describe "Visiting Products", type: :feature, inaccessible: true do
   end
 
   it "should be able to display products priced between 15 and 18 dollars" do
+    visit spree.root_path
     within(:css, '#taxonomies') { click_link "Ruby on Rails" }
     check "Price_Range_$15.00_-_$18.00"
     within(:css, '#sidebar_products_search') { click_button "Search" }
@@ -228,6 +237,7 @@ describe "Visiting Products", type: :feature, inaccessible: true do
   end
 
   it "should be able to display products priced between 15 and 18 dollars across multiple pages" do
+    visit spree.root_path
     stub_spree_preferences(products_per_page: 2)
     within(:css, '#taxonomies') { click_link "Ruby on Rails" }
     check "Price_Range_$15.00_-_$18.00"
@@ -243,6 +253,7 @@ describe "Visiting Products", type: :feature, inaccessible: true do
   end
 
   it "should be able to display products priced 18 dollars and above" do
+    visit spree.root_path
     within(:css, '#taxonomies') { click_link "Ruby on Rails" }
     check "Price_Range_$18.00_-_$20.00"
     check "Price_Range_$20.00_or_over"
@@ -283,6 +294,7 @@ describe "Visiting Products", type: :feature, inaccessible: true do
   end
 
   it "should return the correct title when displaying a single product" do
+    visit spree.root_path
     product = Spree::Product.find_by(name: "Ruby on Rails Baseball Jersey")
     click_link product.name
 
