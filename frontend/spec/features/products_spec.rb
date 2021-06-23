@@ -188,22 +188,24 @@ describe "Visiting Products", type: :feature, inaccessible: true do
     end
   end
 
-  context "a product with variants, images only for the variants" do
-    let(:product) { Spree::Product.find_by(name: "Ruby on Rails Baseball Jersey") }
+  100.times do |i|
+    context "a product with variants, images only for the variants" do
+      let(:product) { Spree::Product.find_by(name: "Ruby on Rails Baseball Jersey") }
 
-    before do
-      image = File.open(
-        File.join(Spree::Core::Engine.root, "lib", "spree", "testing_support", "fixtures", "blank.jpg")
-      )
-      v1 = product.variants.create!(price: 9.99)
-      v2 = product.variants.create!(price: 10.99)
-      v1.images.create!(attachment: image)
-      v2.images.create!(attachment: image)
-    end
+      before do
+        image = File.open(
+          File.join(Spree::Core::Engine.root, "lib", "spree", "testing_support", "fixtures", "blank.jpg")
+        )
+        v1 = product.variants.create!(price: 9.99)
+        v2 = product.variants.create!(price: 10.99)
+        v1.images.create!(attachment: image)
+        v2.images.create!(attachment: image)
+      end
 
-    it "should not display no image available" do
-      visit spree.root_path
-      expect(page).to have_xpath("//img[contains(@src,'blank')]")
+      it "should not display no image available #{i}" do
+        visit spree.root_path
+        expect(page).to have_xpath("//img[contains(@src,'blank')]")
+      end
     end
   end
 
