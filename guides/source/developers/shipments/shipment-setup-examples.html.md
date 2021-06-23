@@ -106,7 +106,7 @@ additional FedEx shipping method specifically for oversized items.
 
 ### Shipping categories
 
-Your store's products can be classified into three shipping categories:
+Your store's products can be classified into two shipping categories:
 
 - **Default**: For any product that can be shipped using your regular shipping
   methods.
