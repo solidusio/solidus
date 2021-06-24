@@ -102,10 +102,6 @@ describe "Visiting Products", type: :feature, inaccessible: true do
   end
 
   context "using Russian Rubles as a currency" do
-    before(:each) do
-      visit spree.root_path
-    end
-
     before do
       stub_spree_preferences(currency: "RUB")
     end
