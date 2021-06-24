@@ -160,10 +160,6 @@ describe "Visiting Products", type: :feature, inaccessible: true do
   end
 
   context "a product with variants" do
-    before(:each) do
-      visit spree.root_path
-    end
-
     let(:product) { Spree::Product.find_by(name: "Ruby on Rails Baseball Jersey") }
     let(:option_value) { create(:option_value) }
     let!(:variant) { product.variants.create!(price: 5.59) }
@@ -181,6 +177,8 @@ describe "Visiting Products", type: :feature, inaccessible: true do
     end
 
     it "displays price of first variant listed", js: true do
+      visit spree.root_path
+
       click_link product.name
       within("#product-price") do
         expect(page).to have_content variant.price
@@ -189,6 +187,8 @@ describe "Visiting Products", type: :feature, inaccessible: true do
     end
 
     it "doesn't display out of stock for master product" do
+      visit spree.root_path
+
       product.master.stock_items.update_all count_on_hand: 0, backorderable: false
 
       click_link product.name
