@@ -31,8 +31,8 @@ describe "Visiting Products", type: :feature, inaccessible: true do
     end
 
     it "should use *_path helper to generate the product links" do
-     visit spree.root_path
-     expect(page).to have_xpath(".//a[@href='#{spree.product_path(product)}']")
+      visit spree.root_path
+      expect(page).to have_xpath(".//a[@href='#{spree.product_path(product)}']")
     end
   end
 
