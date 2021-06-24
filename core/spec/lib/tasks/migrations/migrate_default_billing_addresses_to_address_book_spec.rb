@@ -33,7 +33,7 @@ RSpec.describe 'solidus:migrations:migrate_default_billing_addresses_to_address_
 
       it 'runs' do
         expect { task.invoke }.to output(
-          "Migrating default billing addresses to address book ... Success\n"
+          "Migrating default billing addresses to address book in batches of 100000 ... Success\n"
         ).to_stdout
       end
 
@@ -63,7 +63,7 @@ RSpec.describe 'solidus:migrations:migrate_default_billing_addresses_to_address_
 
       it 'runs' do
         expect { task.invoke }.to output(
-          "Migrating default billing addresses to address book ... Success\n"
+          "Migrating default billing addresses to address book in batches of 100000 ... Success\n"
         ).to_stdout
       end
 
