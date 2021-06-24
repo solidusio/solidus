@@ -209,10 +209,6 @@ describe "Visiting Products", type: :feature, inaccessible: true do
   context "a product with variants, images only for the variants" do
     let(:product) { Spree::Product.find_by(name: "Ruby on Rails Baseball Jersey") }
 
-    before(:each) do
-      visit spree.root_path
-    end
-
     before do
       image = File.open(
         File.join(Spree::Core::Engine.root, "lib", "spree", "testing_support", "fixtures", "blank.jpg")
