@@ -14,10 +14,7 @@ require 'spree/testing_support/dummy_app'
 DummyApp.setup(
   gem_root: File.expand_path('..', __dir__),
   lib_name: 'solidus_frontend'
-) do
-  Spree::Api::Config.load_defaults(Spree.solidus_version)
-  Spree::Frontend::Config.load_defaults(Spree.solidus_version)
-end
+)
 
 require 'rails-controller-testing'
 require 'rspec/rails'

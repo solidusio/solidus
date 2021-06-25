@@ -4,7 +4,7 @@ module DummyApp
   class RakeTasks
     include Rake::DSL
 
-    def initialize(gem_root:, lib_name:, &block)
+    def initialize(gem_root:, lib_name:)
       task :dummy_environment do
         ENV['RAILS_ENV'] = 'test'
         require lib_name
@@ -12,8 +12,7 @@ module DummyApp
         DummyApp.setup(
           gem_root: gem_root,
           lib_name: lib_name,
-          auto_migrate: false,
-          &block
+          auto_migrate: false
         )
       end
     end

@@ -48,8 +48,5 @@ else
     gem_root: File.expand_path('..', __dir__),
     lib_name: 'solidus_backend',
     auto_migrate: false
-  ) do
-    Spree::Backend::Config.load_defaults(Spree.solidus_version)
-    Spree::Api::Config.load_defaults(Spree.solidus_version)
-  end
+  )
 end

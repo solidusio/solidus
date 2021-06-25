@@ -37,6 +37,16 @@ module Spree
     end
   end
 
+  # Load the same version defaults for all available Solidus components
+  #
+  # @see Spree::Preferences::Configuration#load_defaults
+  def self.load_defaults(version)
+    Spree::Config.load_defaults(version)
+    Spree::Frontend::Config.load_defaults(version) if defined?(Spree::Frontend::Config)
+    Spree::Backend::Config.load_defaults(version) if defined?(Spree::Backend::Config)
+    Spree::Api::Config.load_defaults(version) if defined?(Spree::Api::Config)
+  end
+
   # Used to configure Spree.
   #
   # Example:

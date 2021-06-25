@@ -13,7 +13,7 @@ require 'spree/testing_support/dummy_app'
 DummyApp.setup(
   gem_root: File.expand_path('..', __dir__),
   lib_name: 'solidus_api'
-) { Spree::Api::Config.load_defaults(Spree.solidus_version) }
+)
 
 require 'rails-controller-testing'
 require 'rspec/rails'
