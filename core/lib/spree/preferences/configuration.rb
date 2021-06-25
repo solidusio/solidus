@@ -55,7 +55,7 @@ module Spree::Preferences
     end
 
     def check_load_defaults_called(instance_constant_name = nil)
-      return if load_defaults_called || !Spree::Core.solidus_installed?
+      return if load_defaults_called || !Spree::Core.has_install_generator_been_run?
 
       target_name = instance_constant_name || "#{self.class.name}.new"
       Spree::Deprecation.warn <<~MSG
