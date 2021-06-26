@@ -57,7 +57,18 @@ RSpec.describe Spree::CustomerReturn, type: :model do
 
           customer_return.return_items << Spree::ReturnItem.new
         end
+        
+        it "is valid" do
+          expect(subject).to eq true
+        end
+      end
 
+      context "return items that are invalid" do
+        before do
+          customer_return.return_items.clear
+          customer_return.return_items << Spree::ReturnItem.new(inventory_unit_id: -1)
+        end
+        
         it "is invalid" do
           expect(subject).to eq false
         end
