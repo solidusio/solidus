@@ -57,7 +57,6 @@ RSpec.describe Spree::CustomerReturn, type: :model do
 
           customer_return.return_items << Spree::ReturnItem.new
         end
-        
         it "is valid" do
           expect(subject).to eq true
         end
