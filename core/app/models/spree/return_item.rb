@@ -42,7 +42,7 @@ module Spree
     validate :eligible_exchange_variant
     validate :belongs_to_same_customer_order
     validate :validate_acceptance_status_for_reimbursement
-    validates :inventory_unit, presence: true, if: -> (return_item) { return_item.inventory_unit_id.present? }
+    validates :inventory_unit, presence: true, if: ->(return_item) { return_item.inventory_unit_id.present? }
     validate :validate_no_other_completed_return_items
 
     after_create :cancel_others, unless: :cancelled?
