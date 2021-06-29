@@ -96,6 +96,31 @@ jobs:
           paths:
             - solidus-version
 
+  i18n_tasks:
+    executor: base
+    steps:
+      - setup
+
+      - run:
+          name: "i18n-tasks gem: Install default configuration"
+          command: |
+            mkdir -p config
+            cp $(bundle exec i18n-tasks gem-path)/templates/config/i18n-tasks.yml config/
+
+      - run:
+          name: "i18n-tasks gem: Add RSpec tests for missing and unused keys"
+          command: |
+            mkdir -p spec
+            cp $(bundle exec i18n-tasks gem-path)/templates/rspec/i18n_spec.rb api/spec/support
+
+      - run:
+          name: "i18n-tasks gem: Remove un-used keys"
+          command: bundle exec i18n-tasks remove-unused
+          
+      - run:
+          name: "i18n-tasks gem: Normalize translation data"
+          command: bundle exec i18n-tasks normalize
+
   postgres:
     executor: postgres
     parallelism: &parallelism 3
@@ -137,6 +162,7 @@ workflows:
           filters:
             branches:
               only: /master|v\d\.\d+/
+      - i18n_tasks
       - postgres
       - mysql
       - postgres_rails60
