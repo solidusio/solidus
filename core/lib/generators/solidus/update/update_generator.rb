@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spree/core/preference_changes_between_solidus_versions'
+require 'spree/preferences/preference_differentiator'
 require 'rails/generators'
 
 module Solidus
@@ -81,7 +81,7 @@ module Solidus
     end
 
     def changes_template_for(klass, from, to)
-      changes = Spree::Core::PreferenceChangesBetweenSolidusVersions.new(klass).call(from: from, to: to)
+      changes = Spree::Preferences::PreferenceDifferentiator.new(klass).call(from: from, to: to)
       return '# No changes' if changes.empty?
 
       [

@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-require 'spree/core/preference_changes_between_solidus_versions'
+require 'spree/preferences/preference_differentiator'
 require 'spree/preferences/configuration'
 
-RSpec.describe Spree::Core::PreferenceChangesBetweenSolidusVersions do
+RSpec.describe Spree::Preferences::PreferenceDifferentiator do
   it 'includes defaults that have changed' do
     config_class = Class.new(Spree::Preferences::Configuration) do
       preference :foo, :boolean, default: by_version(true, '3.0' => false)
