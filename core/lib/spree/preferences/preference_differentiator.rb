@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module Spree
-  module Core
-    class PreferenceChangesBetweenSolidusVersions
+  module Preferences
+    class PreferenceDifferentiator
       attr_reader :config_class
 
       def initialize(config_class)
