@@ -25,7 +25,7 @@ module Solidus
     class_option :from,
                  type: :string,
                  default: FROM,
-                 hide: true
+                 banner: 'Solidus version from which you are upgrading'
 
     class_option :to,
                  type: :string,
@@ -41,6 +41,7 @@ module Solidus
       previous_version_prompt = options[:previous_version_prompt]
       return if previous_version_prompt && !yes?(<<~MSG, :red)
         The update process is only supported if you are coming from version #{FROM}. If this is not the case, please, skip it and update your application to use Solidus #{FROM} before retrying.
+        If you are confident you want to upgrade from a previous version, you must rerun the generator with the "--from={OLD_VERSION}" argument.
         Are you sure you want to continue? (y/N)
       MSG
 
