@@ -51,9 +51,14 @@ module DummyApp
     config.cache_classes = true
     config.action_controller.allow_forgery_protection = false
     config.action_controller.default_protect_from_forgery = false
-    config.action_controller.perform_caching = true
     config.action_mailer.perform_caching = false
     config.i18n.fallbacks = true
+
+    # In the test environment, we use the `caching: true` RSpec metadata to
+    # enable caching on select specs. See
+    # core/lib/spree/testing_support/caching.rb. See also
+    # https://github.com/solidusio/solidus/issues/4110
+    config.action_controller.perform_caching = false
 
     # Make debugging easier:
     config.consider_all_requests_local = true
