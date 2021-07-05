@@ -5696,6 +5696,7 @@ paths:
           name: simple
           schema:
             type: boolean
+          description: Returns a simplified version of the JSON
       security:
         - api-key: []
   '/orders/{order_number}/customer_returns':
