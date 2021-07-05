@@ -38,6 +38,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/per_page'
+        - $ref: '#/components/parameters/q'
       security:
         - api-key: []
     post:
@@ -117,6 +118,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/per_page'
+        - $ref: '#/components/parameters/q'
       security:
         - api-key: []
   '/orders/{number}':
@@ -257,6 +259,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/per_page'
+        - $ref: '#/components/parameters/q'
   '/countries/{id}':
     get:
       responses:
@@ -516,6 +519,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/per_page'
+        - $ref: '#/components/parameters/q'
       security:
         - api-key: []
     parameters:
@@ -837,6 +841,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/per_page'
+        - $ref: '#/components/parameters/q'
       security:
         - api-key: []
     post:
@@ -1203,6 +1208,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/per_page'
+        - $ref: '#/components/parameters/q'
       security:
         - api-key: []
   '/users/{id}':
@@ -1398,6 +1404,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/per_page'
+        - $ref: '#/components/parameters/q'
       security:
         - api-key: []
     parameters:
@@ -1520,6 +1527,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/per_page'
+        - $ref: '#/components/parameters/q'
       security:
         - api-key: []
     parameters:
@@ -1682,6 +1690,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/per_page'
+        - $ref: '#/components/parameters/q'
       security:
         - api-key: []
     parameters:
@@ -1898,6 +1907,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/per_page'
+        - $ref: '#/components/parameters/q'
       security:
         - api-key: []
     post:
@@ -2053,6 +2063,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/per_page'
+        - $ref: '#/components/parameters/q'
       security:
         - api-key: []
         - order-token: []
@@ -2213,6 +2224,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/per_page'
+        - $ref: '#/components/parameters/q'
       security:
         - api-key: []
     parameters:
@@ -2803,6 +2815,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/per_page'
+        - $ref: '#/components/parameters/q'
       security:
         - api-key: []
     parameters:
@@ -2964,6 +2977,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/per_page'
+        - $ref: '#/components/parameters/q'
       security:
         - api-key: []
     post:
@@ -3153,6 +3167,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/per_page'
+        - $ref: '#/components/parameters/q'
       security:
         - api-key: []
     post:
@@ -3303,6 +3318,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/per_page'
+        - $ref: '#/components/parameters/q'
       security:
         - api-key: []
     parameters:
@@ -3454,6 +3470,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/per_page'
+        - $ref: '#/components/parameters/q'
       security:
         - api-key: []
     parameters:
@@ -3671,6 +3688,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/per_page'
+        - $ref: '#/components/parameters/q'
       security:
         - api-key: []
     post:
@@ -3822,6 +3840,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/per_page'
+        - $ref: '#/components/parameters/q'
       security:
         - api-key: []
     parameters:
@@ -3985,6 +4004,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/per_page'
+        - $ref: '#/components/parameters/q'
       security:
         - api-key: []
   /users:
@@ -4012,6 +4032,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/per_page'
+        - $ref: '#/components/parameters/q'
       security:
         - api-key: []
     post:
@@ -4071,6 +4092,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/per_page'
+        - $ref: '#/components/parameters/q'
       security:
         - api-key: []
     post:
@@ -5666,8 +5688,10 @@ paths:
           name: id
           schema:
             type: integer
+          description: The id of the Taxon
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/per_page'
+        - $ref: '#/components/parameters/q'
         - in: query
           name: simple
           schema:
@@ -5702,6 +5726,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/per_page'
+        - $ref: '#/components/parameters/q'
       security:
         - api-key: []
     parameters:
@@ -5794,6 +5819,12 @@ components:
       schema:
         type: integer
         default: 25
+    q:
+      name: q
+      in: query
+      schema:
+        example: '?q[attribute_eq]=value'
+      description: 'Allows to query results based on search filters provided by Ransack (https://github.com/activerecord-hackery/ransack/).'
   responses:
     not-found:
       description: ''
