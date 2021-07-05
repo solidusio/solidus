@@ -71,6 +71,27 @@ module Spree
           expect(json_response["credit_cards"].length).to eq(1)
           expect(json_response["credit_cards"].first["id"]).to eq(normal_user_card.id)
         end
+
+        context "when user has multiple credit cards" do
+          let!(:another_normal_user_card) do
+            create(:credit_card, user_id: normal_user.id, gateway_customer_profile_id: "another-normal-user-random")
+          end
+
+          it 'can control the page size through a parameter' do
+            get spree.api_user_credit_cards_path(current_api_user.id), params: { per_page: 1 }
+            expect(json_response['count']).to eq(1)
+            expect(json_response['current_page']).to eq(1)
+            expect(json_response['pages']).to eq(2)
+          end
+
+          it "can query the results through a parameter" do
+            get spree.api_user_credit_cards_path(current_api_user.id), params: { q: { id_eq: normal_user_card.id } }
+            expect(json_response["credit_cards"].count).to eq(1)
+            expect(json_response["count"]).to eq(1)
+            expect(json_response["current_page"]).to eq(1)
+            expect(json_response["pages"]).to eq(1)
+          end
+        end
       end
     end
 
