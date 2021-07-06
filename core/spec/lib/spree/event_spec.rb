@@ -1,20 +1,177 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+require 'spree/event/adapters/default'
+require 'spree/event/adapters/active_support_notifications'
 
 RSpec.describe Spree::Event do
-  let(:subscription_name) { 'foo_bar' }
-  let(:item) { spy('object') }
-  let(:notifier) { ActiveSupport::Notifications.notifier }
-
   subject { described_class }
 
-  it 'has default adapter' do
-    expect(subject.adapter).to eql Spree::Event::Adapters::ActiveSupportNotifications
+  def build_bus
+    Spree::Event::Adapters::Default.new
+  end
+
+  describe '.default_adapter' do
+    it 'returns configured adapter' do
+      expect(subject.default_adapter).to be_an_instance_of Spree::Event::Adapters::Default
+    end
+  end
+
+  describe '.fire' do
+    it 'forwards to adapter' do
+      bus = build_bus
+      dummy = Class.new do
+        attr_reader :run
+
+        def initialize
+          @run = false
+        end
+
+        def toggle
+          @run = true
+        end
+      end.new
+      subject.subscribe('foo', adapter: bus) { dummy.toggle }
+
+      subject.fire 'foo', adapter: bus
+
+      expect(dummy.run).to be(true)
+    end
+
+    it 'coerces event names given as symbols' do
+      bus = build_bus
+      dummy = Class.new do
+        attr_reader :run
+
+        def initialize
+          @run = false
+        end
+
+        def toggle
+          @run = true
+        end
+      end.new
+      subject.subscribe('foo', adapter: bus) { dummy.toggle }
+
+      subject.fire :foo, adapter: bus
+
+      expect(dummy.run).to be(true)
+    end
+
+    it 'raises error if a block is given and the adapter is not ActiveSupportNotifications' do
+      expect do
+        subject.fire :foo, adapter: build_bus do
+          1 + 1
+        end
+      end.to raise_error(ArgumentError, /Blocks.*are ignored/)
+    end
+
+    it 'renders a deprecation warning if a block is given and the adapter is ActiveSupportNotifications but still executes it' do
+      dummy = Class.new do
+        attr_reader :run
+
+        def initialize
+          @run = false
+        end
+
+        def toggle
+          @run = true
+        end
+      end.new
+
+      expect(Spree::Deprecation).to receive(:warn).with(/Blocks.*are ignored/)
+
+      subject.fire(:foo, adapter: Spree::Event::Adapters::ActiveSupportNotifications) { dummy.toggle }
+
+      expect(dummy.run).to be(true)
+    end
+  end
+
+  describe '.subscribe' do
+    it 'forwards to adapter' do
+      bus = build_bus
+
+      listener = subject.subscribe('foo', adapter: bus) {}
+
+      expect(subject.listeners(adapter: bus)['foo'].first).to be(listener)
+    end
+
+    it 'coerces event names given as symbols' do
+      bus = build_bus
+
+      listener = subject.subscribe(:foo, adapter: bus) {}
+
+      expect(subject.listeners(adapter: bus)['foo'].first).to be(listener)
+    end
+  end
+
+  describe '#unsubscribe' do
+    it 'delegates to the adapter' do
+      bus = build_bus
+      dummy = Class.new do
+        attr_reader :run
+
+        def initialize
+          @run = false
+        end
+
+        def toggle
+          @run = true
+        end
+      end.new
+      listener = subject.subscribe('foo', adapter: bus) { dummy.toggle }
+
+      subject.unsubscribe listener, adapter: bus
+      subject.fire 'foo', adapter: bus
+
+      expect(dummy.run).to be(false)
+    end
+
+    it 'coerces event names given as symbols' do
+      bus = build_bus
+      dummy = Class.new do
+        attr_reader :run
+
+        def initialize
+          @run = false
+        end
+
+        def toggle
+          @run = true
+        end
+      end.new
+      subject.subscribe('foo', adapter: bus) { dummy.toggle }
+
+      subject.unsubscribe :foo, adapter: bus
+      subject.fire 'foo', adapter: bus
+
+      expect(dummy.run).to be(false)
+    end
+  end
+
+  describe '#listeners' do
+    it 'returns mapping of all listeners by event name' do
+      bus = build_bus
+      listener_foo = subject.subscribe('foo', adapter: bus) {}
+      listener_bar = subject.subscribe('bar', adapter: bus) {}
+
+      listeners = subject.listeners(adapter: bus)
+
+      expect(listeners).to match(
+        "foo" => [listener_foo],
+        "bar" => [listener_bar]
+      )
+    end
   end
 
   context 'with the default adapter' do
+    let(:item) { spy('object') }
+    let(:subscription_name) { 'foo_bar' }
+    let(:notifier) { ActiveSupport::Notifications.notifier }
+
     before do
+      @adapter = Spree::Config.events.adapter
+      Spree::Config.events.adapter = Spree::Event::Adapters::ActiveSupportNotifications
       # ActiveSupport::Notifications does not provide an interface to clean all
       # subscribers at once, so some low level brittle code is required
       if Rails.gem_version >= Gem::Version.new('6.0.0')
@@ -38,6 +195,7 @@ RSpec.describe Spree::Event do
         notifier.instance_variable_set '@subscribers', @old_subscribers
       end
       notifier.instance_variable_set '@listeners_for', @old_listeners
+      Spree::Config.events.adapter = @adapter
     end
 
     describe '#listeners' do

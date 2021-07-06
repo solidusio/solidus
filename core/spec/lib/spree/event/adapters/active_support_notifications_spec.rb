@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-require 'spree/event'
+require 'spree/event/adapters/active_support_notifications'
 
 module Spree
   module Event
