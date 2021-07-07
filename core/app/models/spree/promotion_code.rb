@@ -30,7 +30,7 @@ class Spree::PromotionCode < Spree::Base
   def usage_count(excluded_orders: [])
     adjustments.
     eligible.
-    in_completed_orders(excluded_orders: excluded_orders).
+    in_completed_orders(excluded_orders: excluded_orders, exclude_canceled: true).
     count(:order_id)
   end
 
