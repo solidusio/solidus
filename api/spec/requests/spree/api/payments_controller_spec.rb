@@ -132,6 +132,14 @@ module Spree
           expect(json_response['current_page']).to eq(1)
           expect(json_response['pages']).to eq(2)
         end
+
+        it "can query the results through a parameter" do
+          get spree.api_order_payments_path(order), params: { q: { id_eq: @payment.id } }
+          expect(json_response["payments"].count).to eq(1)
+          expect(json_response["count"]).to eq(1)
+          expect(json_response["current_page"]).to eq(1)
+          expect(json_response["pages"]).to eq(1)
+        end
       end
 
       context "for a given payment" do

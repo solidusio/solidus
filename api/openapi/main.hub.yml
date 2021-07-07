@@ -38,11 +38,11 @@ pages:
             path: /authentication
           data:
             $ref: ./authentication.md
-        - title: Pagination
+        - title: Pagination and Filtering
           route:
-            path: /pagination
+            path: /pagination-and-filtering
           data:
-            $ref: ./pagination.md
+            $ref: ./pagination-and-filtering.md
         - title: Errors
           route:
             path: /errors

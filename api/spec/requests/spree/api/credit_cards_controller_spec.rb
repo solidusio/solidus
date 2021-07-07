@@ -13,7 +13,7 @@ module Spree
         create(:user, :with_api_key)
       end
 
-      let!(:card) { create(:credit_card, user_id: admin_user.id, gateway_customer_profile_id: "random") }
+      let!(:admin_user_card) { create(:credit_card, user_id: admin_user.id, gateway_customer_profile_id: "admin-user-random") }
 
       before do
         stub_authentication!
@@ -37,13 +37,15 @@ module Spree
         end
 
         it "can view all credit cards for user" do
-          get spree.api_user_credit_cards_path(current_api_user.id)
+          normal_user_card = create(:credit_card, user_id: normal_user.id, gateway_customer_profile_id: "normal-user-random")
+
+          get spree.api_user_credit_cards_path(normal_user.id)
 
           expect(response.status).to eq(200)
           expect(json_response["pages"]).to eq(1)
           expect(json_response["current_page"]).to eq(1)
           expect(json_response["credit_cards"].length).to eq(1)
-          expect(json_response["credit_cards"].first["id"]).to eq(card.id)
+          expect(json_response["credit_cards"].first["id"]).to eq(normal_user_card.id)
         end
       end
 
@@ -52,9 +54,9 @@ module Spree
           normal_user
         end
 
-        let!(:card) { create(:credit_card, user_id: normal_user.id, gateway_customer_profile_id: "random") }
+        let!(:normal_user_card) { create(:credit_card, user_id: normal_user.id, gateway_customer_profile_id: "normal-user-random") }
 
-        it "can not view user" do
+        it "can not view admin user cards" do
           get spree.api_user_credit_cards_path(admin_user.id)
 
           expect(response.status).to eq(404)
@@ -67,7 +69,28 @@ module Spree
           expect(json_response["pages"]).to eq(1)
           expect(json_response["current_page"]).to eq(1)
           expect(json_response["credit_cards"].length).to eq(1)
-          expect(json_response["credit_cards"].first["id"]).to eq(card.id)
+          expect(json_response["credit_cards"].first["id"]).to eq(normal_user_card.id)
+        end
+
+        context "when user has multiple credit cards" do
+          let!(:another_normal_user_card) do
+            create(:credit_card, user_id: normal_user.id, gateway_customer_profile_id: "another-normal-user-random")
+          end
+
+          it 'can control the page size through a parameter' do
+            get spree.api_user_credit_cards_path(current_api_user.id), params: { per_page: 1 }
+            expect(json_response['count']).to eq(1)
+            expect(json_response['current_page']).to eq(1)
+            expect(json_response['pages']).to eq(2)
+          end
+
+          it "can query the results through a parameter" do
+            get spree.api_user_credit_cards_path(current_api_user.id), params: { q: { id_eq: normal_user_card.id } }
+            expect(json_response["credit_cards"].count).to eq(1)
+            expect(json_response["count"]).to eq(1)
+            expect(json_response["current_page"]).to eq(1)
+            expect(json_response["pages"]).to eq(1)
+          end
         end
       end
     end

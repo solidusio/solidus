@@ -130,28 +130,58 @@ module Spree
         assert_unauthorized!
       end
 
-      context "with caching enabled" do
-        let!(:product) { create(:product, taxons: [taxon]) }
-
+      context "getting all products into a taxon" do
         before do
-          ActionController::Base.perform_caching = true
+          create_list(:product, 2, taxons: [taxon])
         end
 
-        it "handles exclude_data correctly" do
-          get spree.api_taxon_products_path, params: { id: taxon.id, simple: true }
-          expect(response).to be_successful
-          simple_response = json_response
-
+        it "returns all the products with detailed information" do
           get spree.api_taxon_products_path, params: { id: taxon.id }
           expect(response).to be_successful
-          full_response = json_response
 
-          expect(simple_response["products"][0]["description"]).to be_nil
-          expect(full_response["products"][0]["description"]).not_to be_nil
+          expect(json_response["products"].size).to eq(2)
+          expect(json_response["products"][0]["description"]).not_to be_nil
         end
 
-        after do
-          ActionController::Base.perform_caching = false
+        it "returns a simplified json response when simple: true is passed" do
+          get spree.api_taxon_products_path, params: { id: taxon.id, simple: true }
+          expect(response).to be_successful
+
+          expect(json_response["products"].size).to eq(2)
+          expect(json_response["products"][0]["description"]).to be_nil
+        end
+
+        it "can query the resulting products through a parameter" do
+          create(:product, name: 'Watch', taxons: [taxon])
+
+          get spree.api_taxon_products_path, params: { id: taxon.id, q: { name_eq: 'Watch' } }
+          expect(response).to be_successful
+
+          expect(json_response["products"].size).to eq(1)
+          expect(json_response["products"][0]["name"]).to eq "Watch"
+        end
+
+        context "with caching enabled" do
+          before do
+            ActionController::Base.perform_caching = true
+          end
+
+          it "handles exclude_data correctly" do
+            get spree.api_taxon_products_path, params: { id: taxon.id, simple: true }
+            expect(response).to be_successful
+            simple_response = json_response
+
+            get spree.api_taxon_products_path, params: { id: taxon.id }
+            expect(response).to be_successful
+            full_response = json_response
+
+            expect(simple_response["products"][0]["description"]).to be_nil
+            expect(full_response["products"][0]["description"]).not_to be_nil
+          end
+
+          after do
+            ActionController::Base.perform_caching = false
+          end
         end
       end
     end
