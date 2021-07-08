@@ -31,4 +31,6 @@ Spree::Core::Engine.routes.draw do
   get '/unauthorized', to: 'home#unauthorized', as: :unauthorized
   get '/content/cvv', to: 'content#cvv', as: :cvv
   get '/cart_link', to: 'store#cart_link', as: :cart_link
+
+  resource :account, controller: 'users', only: [:show, :edit]
 end
