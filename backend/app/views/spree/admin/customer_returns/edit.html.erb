@@ -39,9 +39,7 @@
     <% if @customer_return.completely_decided? %>
       <%= form_for [:admin, @order, Spree::Reimbursement.new] do |f| %>
         <%= hidden_field_tag :build_from_customer_return_id, @customer_return.id %>
-        <%= f.button class: 'button' do %>
-          <%= t('spree.create_reimbursement') %>
-        <% end %>
+        <%= f.submit t('spree.create_reimbursement'), class: 'btn btn-primary' %>
       <% end %>
     <% else %>
       <div class="no-objects-found">

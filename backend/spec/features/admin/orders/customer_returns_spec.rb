@@ -42,6 +42,18 @@ describe 'Customer returns', type: :feature do
     end
 
     context 'when creating a return with state "In Transit" and then marking it as "Received"' do
+      it 'disables the "Receive" button at submit', :js do
+        create_customer_return('in_transit')
+
+        page.execute_script "$('form').submit(function(e) { e.preventDefault()})"
+
+        within('[data-hook="rejected_return_items"] tbody tr:nth-child(1)') do
+          click_button('Receive')
+
+          expect(page).to have_button("Receive", disabled: true)
+        end
+      end
+
       it 'marks the order as returned', :js do
         create_customer_return('in_transit')
         expect(page).to have_content 'Customer Return has been successfully created'

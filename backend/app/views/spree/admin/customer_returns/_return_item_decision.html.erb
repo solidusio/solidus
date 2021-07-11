@@ -50,7 +50,7 @@
           <td>
             <%= form_for [:admin, return_item] do |f| %>
               <%= f.hidden_field 'reception_status_event', value: 'receive' %>
-              <%= f.button t('spree.actions.receive'), class: 'with-tip', "data-action" => 'save' %>
+              <%= f.submit t('spree.actions.receive'), class: 'btn btn-primary' %>
             <% end %>
           </td>
         <% end %>
