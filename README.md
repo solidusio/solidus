@@ -3,6 +3,7 @@
 # Solidus
 
 [![Circle CI](https://circleci.com/gh/solidusio/solidus/tree/master.svg?style=shield)](https://circleci.com/gh/solidusio/solidus/tree/master)
+[![codecov](https://codecov.io/gh/solidusio/solidus/branch/master/graph/badge.svg)](https://codecov.io/gh/solidusio/solidus/branch/master)
 [![Gem](https://img.shields.io/gem/v/solidus.svg)](https://rubygems.org/gems/solidus)
 [![License](http://img.shields.io/badge/license-BSD-yellowgreen.svg)](LICENSE.md)
 [![Reviewed by Hound](https://img.shields.io/badge/Reviewed_by-Hound-8E64B0.svg)](https://houndci.com)
