@@ -4012,6 +4012,11 @@ paths:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/per_page'
         - $ref: '#/components/parameters/q'
+        - schema:
+            type: boolean
+          in: query
+          name: without_children
+          description: 'When set to `true`, it won''t recursively return all the taxons'' children.'
       security:
         - api-key: []
   /users:
