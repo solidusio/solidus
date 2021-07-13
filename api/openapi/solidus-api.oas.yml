@@ -3747,6 +3747,13 @@ paths:
         - Taxonomies
       security:
         - api-key: []
+      parameters:
+        - schema:
+            type: string
+            default: nested
+          in: query
+          name: set
+          description: When `set=nested` it will recoursively return all the taxons of that taxonomy
     parameters:
       - name: id
         in: path
