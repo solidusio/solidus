@@ -384,6 +384,24 @@ describe "Checkout", type: :feature, inaccessible: true do
     end
   end
 
+  context "from payment stage" do
+    before do
+      user = create(:user)
+      order = Spree::TestingSupport::OrderWalkthrough.up_to(:payment)
+      allow_any_instance_of(Spree::CheckoutController).to receive_messages(current_order: order)
+      allow_any_instance_of(Spree::CheckoutController).to receive_messages(try_spree_current_user: user)
+    end
+
+    it "user opens new information window about card cvvs" do
+      visit spree.checkout_state_path(:payment)
+
+      find('label', text: /Credit Card/).click
+      click_link "What's This?"
+
+      expect(page).to have_css('h1', text: 'What is a (CVV) Credit Card Code?')
+    end
+  end
+
   # regression for https://github.com/spree/spree/issues/2921
   context "goes back from payment to add another item", js: true do
     let!(:store) { FactoryBot.create(:store) }

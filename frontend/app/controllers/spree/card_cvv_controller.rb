@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 module Spree
-  class ContentController < Spree::StoreController
+  class CardCvvController < Spree::StoreController
     respond_to :html
 
-    def cvv
+    def index
       render layout: false
     end
   end
