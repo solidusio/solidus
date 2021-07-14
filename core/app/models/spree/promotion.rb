@@ -192,7 +192,7 @@ module Spree
     def usage_count(excluded_orders: [])
       Spree::Adjustment.promotion.
         eligible.
-        in_completed_orders(excluded_orders: excluded_orders).
+        in_completed_orders(excluded_orders: excluded_orders, exclude_canceled: true).
         where(source_id: actions).
         count(:order_id)
     end

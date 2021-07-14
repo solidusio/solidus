@@ -386,6 +386,11 @@ RSpec.describe Spree::Promotion, type: :model do
         before { order.adjustments.promotion.update_all(eligible: false) }
         it { is_expected.to eq 0 }
       end
+      context "and the order is canceled" do
+        before { order.cancel! }
+        it { is_expected.to eq 0 }
+        it { expect(order.state).to eq 'canceled' }
+      end
     end
   end
 
