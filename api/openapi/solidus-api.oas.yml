@@ -3747,6 +3747,13 @@ paths:
         - Taxonomies
       security:
         - api-key: []
+      parameters:
+        - schema:
+            type: string
+            default: nested
+          in: query
+          name: set
+          description: When `set=nested` it will recoursively return all the taxons of that taxonomy
     parameters:
       - name: id
         in: path
@@ -4005,6 +4012,11 @@ paths:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/per_page'
         - $ref: '#/components/parameters/q'
+        - schema:
+            type: boolean
+          in: query
+          name: without_children
+          description: 'When set to `true`, it won''t recursively return all the taxons'' children.'
       security:
         - api-key: []
   /users:
