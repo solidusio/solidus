@@ -42,13 +42,13 @@ RSpec.shared_examples_for "default_price" do
     end
   end
 
-  describe '#currently_valid_prices' do
+  describe '#prioritized_for_default_prices' do
     it 'returns prioritized prices' do
       price_1 = create(:price, country: create(:country))
       price_2 = create(:price, country: nil)
       variant = create(:variant, prices: [price_1, price_2])
 
-      result = variant.currently_valid_prices
+      result = variant.prioritized_for_default_prices
 
       expect(
         result.index(price_1) < result.index(price_2)
