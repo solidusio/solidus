@@ -300,7 +300,7 @@ module Spree
       end
 
       it "can create a new variant" do
-        post spree.api_product_variants_path(product), params: { variant: { sku: "12345", price: "10" } }
+        post spree.api_product_variants_path(product), params: { variant: { sku: "12345" } }
         expect(json_response).to have_attributes(new_attributes)
         expect(response.status).to eq(201)
         expect(json_response["sku"]).to eq("12345")
@@ -314,8 +314,7 @@ module Spree
           post spree.api_product_variants_path(product), params: {
             variant: {
               sku: "12345",
-              option_value_ids: option_values.map(&:id),
-              price: "10"
+              option_value_ids: option_values.map(&:id)
             }
           }
         end.to change { Spree::OptionValuesVariant.count }.by(2)
@@ -326,7 +325,6 @@ module Spree
           post spree.api_product_variants_path(product), params: {
             variant: {
               sku: "12345",
-              price: 25,
               options: [{
                 name: 'Color',
                 value: 'White'
