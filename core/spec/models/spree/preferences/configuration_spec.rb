@@ -72,13 +72,13 @@ RSpec.describe Spree::Preferences::Configuration, type: :model do
 
     context 'when load_defaults_called is false' do
       it 'emits a warning' do
-        expect(Spree::Deprecation).to receive(:warn).with(/load_defaults.*must be called/)
+        expect(Spree::Deprecation).to receive(:warn).with(/adding.*load_defaults/m)
 
         config.check_load_defaults_called
       end
 
       it 'includes constant name in the message when given' do
-        expect(Spree::Deprecation).to receive(:warn).with(/Spree::Config.load_defaults/, any_args)
+        expect(Spree::Deprecation).to receive(:warn).with(/Spree::Config/, any_args)
 
         config.check_load_defaults_called('Spree::Config')
       end

@@ -59,8 +59,9 @@ module Spree::Preferences
 
       target_name = instance_constant_name || "#{self.class.name}.new"
       Spree::Deprecation.warn <<~MSG
-        Please, indicate wich Solidus version defaults the application must use.
-        The method `#{target_name}.load_defaults` must be called from the Solidus initializer. E.g.:
+        It's recommended that you explicitly load the default configuration for
+        your current Solidus version. You can do it by adding the following call
+        to your Solidus initializer within the #{target_name} block:
 
           config.load_defaults('#{Spree.solidus_version}')
 
