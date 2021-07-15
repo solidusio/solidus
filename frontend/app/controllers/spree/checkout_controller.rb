@@ -207,8 +207,8 @@ module Spree
         end
       end
 
-      if try_spree_current_user && try_spree_current_user.respond_to?(:wallet)
-        @wallet_payment_sources = try_spree_current_user.wallet.wallet_payment_sources
+      if spree_current_user&.respond_to?(:wallet)
+        @wallet_payment_sources = spree_current_user.wallet.wallet_payment_sources
         @default_wallet_payment_source = @wallet_payment_sources.detect(&:default) ||
                                          @wallet_payment_sources.first
       end

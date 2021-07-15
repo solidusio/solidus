@@ -18,6 +18,7 @@ module Spree
         included do
           before_action :set_guest_token
           helper_method :try_spree_current_user
+          helper_method :spree_current_user
 
           class_attribute :unauthorized_redirect
           self.unauthorized_redirect = -> do
@@ -32,7 +33,7 @@ module Spree
 
         # Needs to be overriden so that we use Spree's Ability rather than anyone else's.
         def current_ability
-          @current_ability ||= Spree::Ability.new(try_spree_current_user)
+          @current_ability ||= Spree::Ability.new(spree_current_user)
         end
 
         def redirect_back_or_default(default)
@@ -65,6 +66,8 @@ module Spree
             current_spree_user
           end
         end
+
+        deprecate try_spree_current_user: :spree_current_user, deprecator: Spree::Deprecation
       end
     end
   end
