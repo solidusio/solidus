@@ -58,9 +58,7 @@ module Spree
       autosave: true
 
     before_validation :set_cost_currency
-    before_validation :set_price, if: (proc do
-      Spree::Config[:require_master_price] && !is_master? && price.nil? && product && product.master
-    end)
+    before_validation :set_price, if: -> { product && product.master }
     before_validation :build_vat_prices, if: -> { rebuild_vat_prices? || new_record? && product }
 
     validates :product, presence: true
@@ -381,14 +379,7 @@ module Spree
 
     # Ensures a new variant takes the product master price when price is not supplied
     def set_price
-      Spree::Deprecation.warn(
-        "The creation of the default price for a variant through the automatic
-        inheritance from its master variant's default price is deprecated.
-        Please, provide the amount for the price manually. E.g., use
-        `product.variants.create(price: 50)` instead of
-        `product.variants.create'"
-      )
-      self.price = product.master.price
+      self.price = product.master.price if price.nil? && Spree::Config[:require_master_price] && !is_master?
     end
 
     def check_price
