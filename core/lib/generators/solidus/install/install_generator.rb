@@ -102,16 +102,20 @@ module Solidus
       empty_directory "app/overrides"
     end
 
+    def create_decorators_directory
+      empty_directory "app/decorators"
+    end
+
     def configure_application
       application <<-RUBY
-    # Load application's model / class decorators
-    initializer 'spree.decorators' do |app|
-      config.to_prepare do
-        Dir.glob(Rails.root.join('app/**/*_decorator*.rb')) do |path|
-          require_dependency(path)
+      # Load application's model / class decorators
+      initializer 'spree.decorators' do |app|
+        config.to_prepare do
+          Dir.glob(Rails.root.join('app/decorators/**/*.rb')) do |path|
+            require_dependency(path)
+          end
         end
       end
-    end
       RUBY
 
       if !options[:enforce_available_locales].nil?
