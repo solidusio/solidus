@@ -17,6 +17,11 @@ describe Spree::OrdersController, type: :controller do
     end
 
     context "#populate" do
+      before do
+        expect(Spree::Deprecation).to receive(:warn).
+          with(/please use OrdersContentController#create instead/, any_args)
+      end
+
       it "should create a new order when none specified" do
         post :populate, params: { variant_id: variant.id }
         expect(response).to be_redirect

@@ -23,6 +23,9 @@ module Spree
 
       context '#populate' do
         it 'should check if user is authorized for :update' do
+          expect(Spree::Deprecation).to receive(:warn).
+            with(/please use OrdersContentController#create instead/, any_args)
+
           expect(controller).to receive(:authorize!).with(:update, order, token)
           post :populate, params: { variant_id: variant.id, token: token }
         end
