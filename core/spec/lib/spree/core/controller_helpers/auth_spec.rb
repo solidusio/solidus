@@ -26,9 +26,15 @@ RSpec.describe Spree::Core::ControllerHelpers::Auth, type: :controller do
       get :index
       expect(response).to redirect_to('/redirect')
     end
+
     it 'redirects to default page' do
       get :index
       expect(response).to redirect_to('/')
+    end
+
+    it 'is deprecated' do
+      expect(Spree::Deprecation).to receive(:warn)
+      get :index
     end
   end
 
