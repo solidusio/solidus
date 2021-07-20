@@ -33,9 +33,10 @@ module Spree
 
         # @api private
         def fire(event_name, opts = {})
-          event = Event.new(payload: opts)
-          listeners_for_event(event_name).each do |listener|
-            listener.call(event)
+          Event.new(payload: opts).tap do |event|
+            listeners_for_event(event_name).each do |listener|
+              listener.call(event)
+            end
           end
         end
 

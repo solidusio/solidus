@@ -56,6 +56,8 @@ module Spree
     # instead.
     # @option opts [Any] :adapter Reserved to indicate the adapter to use as
     # event bus. Defaults to {#default_adapter}
+    # @return [Spree::Event::Event] an event object, unless the adapter is
+    # {Spree::Event::Adapters::ActiveSupportNotifications}
     #
     # @example Trigger an event named 'order_finalized'
     #   Spree::Event.fire 'order_finalized', order: @order do
