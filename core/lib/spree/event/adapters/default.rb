@@ -27,7 +27,6 @@ module Spree
         # @api private
         attr_reader :listeners
 
-        # @api private
         def initialize
           @listeners = []
         end
