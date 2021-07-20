@@ -197,7 +197,7 @@ RSpec.describe Spree::Shipment, type: :model do
       before { allow(shipment).to receive(:can_get_rates?){ true } }
 
       it 'should request new rates, and maintain shipping_method selection' do
-        expect(Spree::Stock::Estimator).to receive(:new).with(no_args).and_return(mock_estimator)
+        expect(Spree::Stock::Estimator).to receive(:new).with(shipment.order).and_return(mock_estimator)
         allow(shipment).to receive_messages(shipping_method: shipping_method2)
 
         expect(shipment.refresh_rates).to eq(shipping_rates)
@@ -205,7 +205,7 @@ RSpec.describe Spree::Shipment, type: :model do
       end
 
       it 'should handle no shipping_method selection' do
-        expect(Spree::Stock::Estimator).to receive(:new).with(no_args).and_return(mock_estimator)
+        expect(Spree::Stock::Estimator).to receive(:new).with(shipment.order).and_return(mock_estimator)
         allow(shipment).to receive_messages(shipping_method: nil)
         expect(shipment.refresh_rates).to eq(shipping_rates)
         expect(shipment.reload.selected_shipping_rate).not_to be_nil

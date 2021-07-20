@@ -19,6 +19,15 @@ module Spree
         @estimator_class.constantize
       end
 
+      def estimator(order = nil)
+          estimator_class.new(order)
+        rescue ArgumentError
+          Spree::Deprecation.warn('A Spree::Order is required as an argument
+            to the estimator class, please initialize with Spree::Stock::Estimator.new(order),
+            Spree::Stock::Estimator.new will throw an ArgumentError after deprecation')
+          estimator_class.new
+      end
+
       def location_filter_class
         @location_filter_class ||= '::Spree::Stock::LocationFilter::Active'
         @location_filter_class.constantize
