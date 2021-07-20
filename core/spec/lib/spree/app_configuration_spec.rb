@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
-require 'spree/event/adapters/event_bus'
+require 'spree/event/adapters/default'
 
 RSpec.describe Spree::AppConfiguration do
   let(:prefs) { Spree::Config }
@@ -136,6 +136,6 @@ RSpec.describe Spree::AppConfiguration do
   end
 
   it 'can access event adapter' do
-    expect(prefs.events.adapter).to be_an_instance_of(Spree::Event::Adapters::EventBus)
+    expect(prefs.events.adapter).to be_an_instance_of(Spree::Event::Adapters::Default)
   end
 end

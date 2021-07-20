@@ -10,7 +10,7 @@ module Spree
   #
   # This module serves as the interface to access the Event Bus system in
   # Solidus. You can use different underlying adapters to provide the core
-  # logic. It's recommended that you use {Spree::Event::Adapters::EventBus}.
+  # logic. It's recommended that you use {Spree::Event::Adapters::Default}.
   #
   # You use the {#fire} method to trigger an event:
   #
@@ -217,7 +217,7 @@ module Spree
       if legacy_adapter?(adapter)
         Spree::Deprecation.warn <<~MSG
           Blocks on `Spree::Event.fire` are ignored in the new adapter
-          `Spree::Event::Adapters::EventBus`, and your current adapter
+          `Spree::Event::Adapters::Default`, and your current adapter
           (`Spree::Event::Adapters::ActiveSupportNotifications`) is deprecated.
           For an easier transition is recommendable to update your code.
 

@@ -2,7 +2,7 @@
 
 require 'spree/core/versioned_value'
 require 'spree/event/adapters/active_support_notifications'
-require 'spree/event/adapters/event_bus'
+require 'spree/event/adapters/default'
 
 module Spree
   module Event
@@ -20,7 +20,7 @@ module Spree
       def adapter
         @adapter ||= Spree::Core::VersionedValue.new(
           Spree::Event::Adapters::ActiveSupportNotifications,
-          "4.0.0.alpha" => Spree::Event::Adapters::EventBus.new
+          "4.0.0.alpha" => Spree::Event::Adapters::Default.new
         ).call.tap do |value|
           deprecate_if_legacy_adapter(value)
         end
@@ -37,13 +37,13 @@ module Spree
         Spree::Deprecation.warn <<~MSG if adapter == Spree::Event::Adapters::ActiveSupportNotifications
           `Spree::Event::Adapters::ActiveSupportNotifications` adapter is
           deprecated. Please, take your time to update it to an instance of
-          `Spree::Event::Adapters::EventBus`. I.e., in your `spree.rb`:
+          `Spree::Event::Adapters::Default`. I.e., in your `spree.rb`:
 
-          require 'spree/event/adapters/event_bus'
+          require 'spree/event/adapters/default'
 
           Spree.config do |config|
             # ...
-            config.events.adapter = Spree::Event::Adapters.EventBus.new
+            config.events.adapter = Spree::Event::Adapters.Default.new
             # ...
           end
 

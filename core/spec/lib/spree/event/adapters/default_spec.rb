@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-require 'spree/event/adapters/event_bus'
+require 'spree/event/adapters/default'
 
 module Spree
   module Event
     module Adapters
-      RSpec.describe EventBus do
+      RSpec.describe Default do
         describe '#fire' do
           it 'executes listeners subscribed as a string to the event name' do
             bus = described_class.new

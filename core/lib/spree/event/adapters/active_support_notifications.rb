@@ -5,7 +5,7 @@ module Spree
     module Adapters
       # Deprecated adapter for the event bus system.
       #
-      # Please, upgrade to {Spree::Event::Adapters::EventBus}.
+      # Please, upgrade to {Spree::Event::Adapters::Default}.
       #
       # This adapter normalizes the event name so that it includes
       # {Spree::Event::Configuration#suffix}.

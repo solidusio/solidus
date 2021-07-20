@@ -1,19 +1,19 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
-require 'spree/event/adapters/event_bus'
+require 'spree/event/adapters/default'
 require 'spree/event/adapters/active_support_notifications'
 
 RSpec.describe Spree::Event do
   subject { described_class }
 
   def build_bus
-    Spree::Event::Adapters::EventBus.new
+    Spree::Event::Adapters::Default.new
   end
 
   describe '.default_adapter' do
     it 'returns configured adapter' do
-      expect(subject.default_adapter).to be_an_instance_of Spree::Event::Adapters::EventBus
+      expect(subject.default_adapter).to be_an_instance_of Spree::Event::Adapters::Default
     end
   end
 

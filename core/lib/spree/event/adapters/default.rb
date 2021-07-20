@@ -13,17 +13,17 @@ module Spree
       # `spree.rb` initializer:
       #
       # @example
-      #   require "spree/event/adapters/event_bus"
+      #   require "spree/event/adapters/default"
       #
       #   Spree.config do |config|
       #     # ...
-      #     config.events.adapter = EventBus.new
+      #     config.events.adapter = Spree::Event::Adapters::Default.new
       #     # ...
       #   end
       #
       # You won't need to do that from Solidus version 4.0 as this adapter will
       # be the default one.
-      class EventBus
+      class Default
         # @api private
         attr_reader :listeners
 
