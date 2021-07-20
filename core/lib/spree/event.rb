@@ -219,7 +219,7 @@ module Spree
           Blocks on `Spree::Event.fire` are ignored in the new adapter
           `Spree::Event::Adapters::Default`, and your current adapter
           (`Spree::Event::Adapters::ActiveSupportNotifications`) is deprecated.
-          For an easier transition is recommendable to update your code.
+          For an easier transition it's recommendable to update your code.
 
           #{example}
 
