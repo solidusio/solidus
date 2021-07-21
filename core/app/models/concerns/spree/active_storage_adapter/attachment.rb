@@ -53,8 +53,9 @@ module Spree
 
       def metadata
         analyze unless analyzed?
-
         @attachment.metadata
+      rescue ActiveStorage::FileNotFoundError
+        { identified: nil, width: nil, height: nil, analyzed: false }
       end
 
       def normalize_styles(styles)
