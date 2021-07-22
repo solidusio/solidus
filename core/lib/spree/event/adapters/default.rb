@@ -2,6 +2,7 @@
 
 require 'spree/event/event'
 require 'spree/event/listener'
+require 'spree/event/firing'
 
 module Spree
   module Event
@@ -32,12 +33,12 @@ module Spree
         end
 
         # @api private
-        def fire(event_name, opts = {})
-          Event.new(payload: opts).tap do |event|
-            listeners_for_event(event_name).each do |listener|
-              listener.call(event)
-            end
+        def fire(event_name, caller_location: caller_locations(1)[0], **payload)
+          event = Event.new(payload: payload, caller_location: caller_location)
+          executions = listeners_for_event(event_name).map do |listener|
+            listener.call(event)
           end
+          Firing.new(event: event, executions: executions)
         end
 
         # @api private

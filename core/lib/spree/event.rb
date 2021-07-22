@@ -57,7 +57,8 @@ module Spree
     # instead.
     # @option opts [Any] :adapter Reserved to indicate the adapter to use as
     # event bus. Defaults to {#default_adapter}
-    # @return [Spree::Event::Event] an event object, unless the adapter is
+    # @return [Spree::Event::Firing] A firing object encapsulating metadata for
+    # the event and the originated listener executions, unless the adapter is
     # {Spree::Event::Adapters::ActiveSupportNotifications}
     #
     # @example Trigger an event named 'order_finalized'
@@ -71,7 +72,11 @@ module Spree
     def fire(event_name, opts = {}, &block)
       adapter = opts.delete(:adapter) || default_adapter
       handle_block_on_fire(block, opts, adapter) if block_given?
-      adapter.fire normalize_name(event_name), opts
+      if deprecation_handler.legacy_adapter?(adapter)
+        adapter.fire(normalize_name(event_name), opts)
+      else
+        adapter.fire(normalize_name(event_name), caller_location: caller_locations(1)[0], **opts)
+      end
     end
 
     # Subscribe to events matching the given name.

@@ -1,13 +1,38 @@
 # frozen_string_literal: true
 
 require 'spree/event/listener'
+require 'spree/event/execution'
 
 RSpec.describe Spree::Event::Listener do
   describe '#call' do
-    it 'returns the result of calling block with given event' do
-      listener = described_class.new(pattern: 'foo', block: ->(event) { event[:bar] })
+    it 'returns an execution instance' do
+      listener = described_class.new(pattern: 'foo', block: proc {})
 
-      expect(listener.call(bar: 'bar')).to eq('bar')
+      expect(listener.call(:event)).to be_a(Spree::Event::Execution)
+    end
+
+    it "binds the event and sets execution's result" do
+      listener = described_class.new(pattern: 'foo', block: ->(event) { event[:foo] })
+
+      execution = listener.call(foo: :bar)
+
+      expect(execution.result).to eq(:bar)
+    end
+
+    it 'sets itself as the execution listener' do
+      listener = described_class.new(pattern: 'foo', block: proc { 'foo' })
+
+      execution = listener.call(:event)
+
+      expect(execution.listener).to be(listener)
+    end
+
+    it "sets the execution's benchmark" do
+      listener = described_class.new(pattern: 'foo', block: proc { 'foo' })
+
+      execution = listener.call(:event)
+
+      expect(execution.benchmark).to be_a(Benchmark::Tms)
     end
   end
 
