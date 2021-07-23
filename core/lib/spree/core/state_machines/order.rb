@@ -128,10 +128,12 @@ module Spree
               end
 
               after_transition do |order, transition|
+                Spree::Event.fire "order_transitioned_to_#{transition.to}", order: order
                 order.logger.debug "Order #{order.number} transitioned from #{transition.from} to #{transition.to} via #{transition.event}"
               end
 
               after_failure do |order, transition|
+                Spree::Event.fire "order_failed_transition_to_#{transition.to}", order: order
                 order.logger.debug "Order #{order.number} halted transition on event #{transition.event} state #{transition.from}: #{order.errors.full_messages.join}"
               end
             end
