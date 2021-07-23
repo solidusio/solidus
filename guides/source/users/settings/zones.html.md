@@ -26,7 +26,7 @@ that only consists of the United States) or many members (a zone that consists
 of all of the non-contiguous United States: Hawaii and Alaska).
 
 Zones allow you to set shipping rules and tax rates for specific places. They
-also allow you group states or countries in a non-geographic way: for example,
+also allow you to group states or countries in a non-geographic way: for example,
 if you ship to all of the United States but use different carriers when shipping
 to Alaska and Hawaii.
 

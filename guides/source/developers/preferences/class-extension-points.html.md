@@ -72,7 +72,7 @@ Spree.config do |config|
 end
 ```
 
-Now, when search is built it uses your extended `MyStore::ProductSearch`
+Now, when the search is built it uses your extended `MyStore::ProductSearch`
 functionality instead of the default functionality.
 
 [search-base]: https://github.com/solidusio/solidus/blob/v2.4/core/lib/spree/core/search/base.rb

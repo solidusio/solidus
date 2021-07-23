@@ -20,7 +20,7 @@ Currently, the events fired by default in Solidus are:
 
 Events make extending Solidus with custom behavior easy. For example,
 if besides the standard email you also want to send a SMS text message to
-the customer when a order is finalized, this pseudo-code may do the trick:
+the customer when an order is completed, this pseudo-code may do the trick:
 
 ```ruby
 Spree::Event.subscribe 'order_finalized' do |event|
@@ -31,7 +31,7 @@ end
 
 ## Changing the adapter
 
-The adapter can be changed using this code, for example in a initializer:
+The adapter can be changed using this code, for example in an initializer:
 
 ```ruby
 Spree::Config.events.adapter = "Spree::EventBus.new"
@@ -39,7 +39,7 @@ Spree::Config.events.adapter = "Spree::EventBus.new"
 
 ## Subscribing to events
 
-`Spree::Event.subscribe` allows to subscribe to a certain event. The event
+`Spree::Event.subscribe` allows you to subscribe to a certain event. The event
 name is mandatory, the optional block will be executed every time the event
 is fired:
 

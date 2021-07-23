@@ -12,6 +12,7 @@ Note that you can also [view stock in a product context][product-stock].
 <!-- TODO: Add screenshot of the stock UI, emphasizing the edit buttons -->
 
 [product-stock]: ../products/product-stock.html
+[products]: ../products.html
 
 ## Stock information
 
@@ -30,6 +31,8 @@ items:
 - **Count On Hand**: The number of items that a stock location has of the
     current item. See [Count on hand](#count-on-hand) for more information.
 
+[variants]: ../products/variants.html
+
 ## Filter and search
 
 You can search for specific stock items. This makes locating stock information
@@ -44,9 +47,11 @@ following values:
     "Yellow" to find all of the variants with a "Yellow" option value.
 
 Note that the **Variant** filter searches for option **Name** values
-as well as their **Presentation** values. For example, you may an option value
+as well as their **Presentation** values. For example, you may have an option value
 with the name "Extra Large" that is presented as "XL" on your storefront. This
 means that you can search for either term and find the same results.
+
+[option-values]: ../products/option-types.html
 
 ## Stock locations
 

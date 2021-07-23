@@ -30,7 +30,7 @@ A `Spree::ReturnItem` has the following attributes:
 - `exchange_inventory_unit_id`: If the `Spree::ReimbursementType` is an
   exchange, this attribute's value is the ID of the `Spree::InventoryUnit` that
   that is going to be exchanged.
-- `acceptance_status_errors`: A hash that lists reasons why the return item does
+- `acceptance_status_errors`: A hash that lists reasons why the return item
   is not acceptable.
 - `preferred_reimbursement_type_id`: The ID for the reimbursement type that was
   originally set for the return item.

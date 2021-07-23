@@ -45,7 +45,7 @@ the preferences attribute gets serialized into a Hash and merged with the defaul
   kind of object would a store want multiple custom preferences on?
 -->
 
-## Supported type for preferences
+## Supported types for preferences
 
 For each preference you define, a data type should be provided. The available
 types are:
@@ -98,7 +98,7 @@ class AddPreferencesToSubscriptionRules < ActiveRecord::Migration[5.0]
 end
 ```
 
-Your new `preferences` column should be the type `text`.
+Your new `preferences` column should have the type `text`.
 
 Then, you can run the migration:
 
