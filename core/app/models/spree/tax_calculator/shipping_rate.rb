@@ -9,7 +9,7 @@ module Spree
     # looking to provide their own calculator should adhere to the API of this
     # class.
     #
-    # @see Spree::Tax::ShippingRateTaxer
+    # @see Spree::Stock::Estimator
     class ShippingRate
       include Spree::Tax::TaxHelpers
 
