@@ -189,6 +189,25 @@ module Spree
             expect(dummy2.count).to be(1)
           end
         end
+
+        describe '#with_listeners' do
+          it 'returns a new instance with given listeners', :aggregate_failures do
+            bus = described_class.new
+            dummy1, dummy2, dummy3 = Array.new(3) { counter.new }
+            listener1 = bus.subscribe('foo') { dummy1.inc }
+            listener2 = bus.subscribe('foo') { dummy2.inc }
+            listener3 = bus.subscribe('foo') { dummy3.inc }
+
+            new_bus = bus.with_listeners([listener1, listener2])
+            new_bus.fire('foo')
+
+            expect(new_bus).not_to eq(bus)
+            expect(new_bus.listeners).to match_array([listener1, listener2])
+            expect(dummy1.count).to be(1)
+            expect(dummy2.count).to be(1)
+            expect(dummy3.count).to be(0)
+          end
+        end
       end
     end
   end

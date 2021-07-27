@@ -12,7 +12,7 @@ module Spree
 
         CI_LEGACY_ADAPTER_ENV_KEY = 'CI_LEGACY_EVENT_BUS_ADAPTER'
 
-        def self.legacy_adapter?(adapter)
+        def self.legacy_adapter?(adapter = Spree::Config.events.adapter)
           adapter == LEGACY_ADAPTER
         end
 
@@ -20,7 +20,7 @@ module Spree
           return LEGACY_ADAPTER if ENV[CI_LEGACY_ADAPTER_ENV_KEY].present?
         end
 
-        def self.render_deprecation_message?(adapter)
+        def self.render_deprecation_message?(adapter = Spree::Config.events.adapter)
           legacy_adapter?(adapter) && legacy_adapter_set_by_env.nil?
         end
       end

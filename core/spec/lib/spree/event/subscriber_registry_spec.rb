@@ -1,7 +1,10 @@
 # frozen_string_literal: true
+require 'rails_helper'
 require 'active_support/all'
 require 'spec_helper'
 require 'spree/event'
+require 'spree/event/adapters/deprecation_handler'
+require 'spree/event/listener'
 
 RSpec.describe Spree::Event::SubscriberRegistry do
   module N
@@ -109,6 +112,46 @@ RSpec.describe Spree::Event::SubscriberRegistry do
             end
           end
         end
+      end
+    end
+  end
+
+  describe '#listeners' do
+    if Spree::Event::Adapters::DeprecationHandler.legacy_adapter?
+      it 'raises error' do
+        expect { subject.listeners(N) }.to raise_error /only available with the new adapter/
+      end
+    else
+      before do
+        subject.register(N)
+        subject.activate_subscriber(N)
+      end
+      after { subject.deactivate_subscriber(N) }
+
+      it 'returns all listeners that the subscriber generates', :aggregate_failures do
+        listeners = subject.listeners(N)
+
+        expect(listeners.count).to be(2)
+        expect(listeners).to all be_a(Spree::Event::Listener)
+      end
+
+      it 'can restrict by event names', :aggregate_failures do
+        listeners = subject.listeners(N, event_names: ['event_name'])
+
+        expect(listeners.count).to be(1)
+        expect(listeners.first.pattern).to eq('event_name')
+
+        listeners = subject.listeners(N, event_names: ['event_name', 'other_event'])
+
+        expect(listeners.count).to be(2)
+        expect(listeners.map(&:pattern)).to match(['event_name', 'other_event'])
+      end
+
+      it 'can event names as symbols', :aggregate_failures do
+        listeners = subject.listeners(N, event_names: [:event_name])
+
+        expect(listeners.count).to be(1)
+        expect(listeners.first.pattern).to eq('event_name')
       end
     end
   end
