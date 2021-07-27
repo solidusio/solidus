@@ -51,7 +51,7 @@ module Spree
     end
 
     self.whitelisted_ransackable_associations = %w[shipments user order_promotions promotions bill_address ship_address line_items]
-    self.whitelisted_ransackable_attributes = %w[bill_address_name completed_at created_at email number state payment_state shipment_state total store_id]
+    self.whitelisted_ransackable_attributes = %w[completed_at created_at email number state payment_state shipment_state total store_id]
 
     attr_reader :coupon_code
     attr_accessor :temporary_address
