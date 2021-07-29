@@ -5,6 +5,7 @@ require_relative 'event/configuration'
 require_relative 'event/listener'
 require_relative 'event/subscriber_registry'
 require_relative 'event/subscriber'
+require 'spree/deprecation'
 
 module Spree
   # Event bus for Solidus.
@@ -12,6 +13,12 @@ module Spree
   # This module serves as the interface to access the Event Bus system in
   # Solidus. You can use different underlying adapters to provide the core
   # logic. It's recommended that you use {Spree::Event::Adapters::Default}.
+  #
+  # Before firing, subscribing, or unsubscribing an event, you need to
+  # {#register} it:
+  #
+  # @example
+  #   Spree::Event.register 'order_finalized'
   #
   # You use the {#fire} method to trigger an event:
   #
@@ -42,6 +49,33 @@ module Spree
     extend self
 
     delegate :activate_autoloadable_subscribers, :activate_all_subscribers, :deactivate_all_subscribers, to: :subscriber_registry
+
+    # Registers an event
+    #
+    # This step is needed before firing, subscribing or unsubscribing an
+    # event. It helps to prevent typos and naming collision.
+    #
+    # This method is not available in the legacy adapter.
+    #
+    # @example
+    #   Spree::Event.register('foo')
+    #
+    # @param [String, Symbol] event_name
+    # @param [Any] adapter the event bus adapter to use.
+    def register(event_name, adapter: default_adapter)
+      warn_registration_on_legacy_adapter if deprecation_handler.render_deprecation_message?(adapter)
+      return if deprecation_handler.legacy_adapter?(adapter)
+
+      adapter.register(normalize_name(event_name), caller_location: caller_locations(1)[0])
+    end
+
+    # @api private
+    def registry(adapter: default_adapter)
+      warn_registration_on_legacy_adapter if deprecation_handler.render_deprecation_message?(adapter)
+      return if deprecation_handler.legacy_adapter?(adapter)
+
+      adapter.registry
+    end
 
     # Allows to trigger events that can be subscribed using {#subscribe}.
     #
@@ -251,6 +285,13 @@ module Spree
 
         MSG
       end
+    end
+
+    def warn_registration_on_legacy_adapter
+      Spree::Deprecation.warn <<~MSG
+        Event registration works only on the new adapter
+        `Spree::Event::Adapters::Default`. Please, update to it.
+      MSG
     end
 
     def deprecation_handler
