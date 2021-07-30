@@ -269,7 +269,7 @@ module Spree
     end
 
     def contents
-      @contents ||= Spree::OrderContents.new(self)
+      @contents ||= Spree::Config.order_contents_class.new(self)
     end
 
     def shipping

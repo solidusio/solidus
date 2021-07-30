@@ -372,6 +372,13 @@ module Spree
     #   Spree::Wallet::DefaultPaymentBuilder.
     class_name_attribute :default_payment_builder_class, default: 'Spree::Wallet::DefaultPaymentBuilder'
 
+    # Allows providing your own class for managing the contents of an order.
+    #
+    # @!attribute [rw] order_contents_class
+    # @return [Class] a class with the same public interfaces as
+    #   Spree::OrderContents.
+    class_name_attribute :order_contents_class, default: 'Spree::OrderContents'
+
     # Allows providing your own class for canceling payments.
     #
     # @!attribute [rw] payment_canceller
