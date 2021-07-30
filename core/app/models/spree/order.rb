@@ -277,7 +277,7 @@ module Spree
     end
 
     def cancellations
-      @cancellations ||= Spree::OrderCancellations.new(self)
+      @cancellations ||= Spree::Config.order_cancellations_class.new(self)
     end
 
     # Associates the specified user with the order.

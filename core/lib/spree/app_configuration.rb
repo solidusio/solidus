@@ -386,6 +386,14 @@ module Spree
     #   Spree::OrderShipping.
     class_name_attribute :order_shipping_class, default: 'Spree::OrderShipping'
 
+    # Allows providing your own class for managing the inventory units of a
+    # completed order.
+    #
+    # @!attribute [rw] order_cancellations_class
+    # @return [Class] a class with the same public interfaces as
+    #   Spree::OrderCancellations.
+    class_name_attribute :order_cancellations_class, default: 'Spree::OrderCancellations'
+
     # Allows providing your own class for canceling payments.
     #
     # @!attribute [rw] payment_canceller
