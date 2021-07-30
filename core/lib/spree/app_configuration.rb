@@ -379,6 +379,13 @@ module Spree
     #   Spree::OrderContents.
     class_name_attribute :order_contents_class, default: 'Spree::OrderContents'
 
+    # Allows providing your own class for shipping an order.
+    #
+    # @!attribute [rw] order_shipping_class
+    # @return [Class] a class with the same public interfaces as
+    #   Spree::OrderShipping.
+    class_name_attribute :order_shipping_class, default: 'Spree::OrderShipping'
+
     # Allows providing your own class for canceling payments.
     #
     # @!attribute [rw] payment_canceller

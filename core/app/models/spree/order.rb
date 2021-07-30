@@ -273,7 +273,7 @@ module Spree
     end
 
     def shipping
-      @shipping ||= Spree::OrderShipping.new(self)
+      @shipping ||= Spree::Config.order_shipping_class.new(self)
     end
 
     def cancellations
