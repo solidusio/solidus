@@ -4,7 +4,7 @@ The **Settings > Stores** page allows you to manage some of the global settings
 across all of your stores. These settings are useful if you manage multiple
 stores and need distinct settings for some of your stores.
 
-The following settings are available for each for your stores:
+The following settings are available for each of your stores:
 
 - **Site Name**: The customer-facing name of the current store.
 - **Code**: An identifier for your store. Developers may need it if you operate
@@ -12,7 +12,7 @@ The following settings are available for each for your stores:
   your store's developers.
 - **SEO Title**: The content for the homepage's HTML `<title>` tag, which is
   used by search engines.
-- **Meta Keywords**: A list of keywords that should be added to this product's
+- **Meta Keywords**: A list of keywords that should be added to this store's
   metadata. These meta keywords are used by search engines.[^meta-keywords]
 - **Meta Description**: The summary text that accompanies your homepage in
   search engine results.[^meta-descriptions]
