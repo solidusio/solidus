@@ -63,8 +63,27 @@ module Spree
             end.new
             bus.subscribe('bar') { dummy.toggle }
 
+            bus.fire 'foo'
+
+            expect(dummy.run).to be(false)
+          end
+
+          it "doesn't execute listeners partially matching as a string" do
+            bus = described_class.new
+            dummy = Class.new do
+              attr_reader :run
+
+              def initialize
+                @run = false
+              end
+
+              def toggle
+                @run = true
+              end
+            end.new
+            bus.subscribe('bar') { dummy.toggle }
+
             bus.fire 'barr'
-            bus.fire /arr/
 
             expect(dummy.run).to be(false)
           end
