@@ -269,15 +269,15 @@ module Spree
     end
 
     def contents
-      @contents ||= Spree::OrderContents.new(self)
+      @contents ||= Spree::Config.order_contents_class.new(self)
     end
 
     def shipping
-      @shipping ||= Spree::OrderShipping.new(self)
+      @shipping ||= Spree::Config.order_shipping_class.new(self)
     end
 
     def cancellations
-      @cancellations ||= Spree::OrderCancellations.new(self)
+      @cancellations ||= Spree::Config.order_cancellations_class.new(self)
     end
 
     # Associates the specified user with the order.
