@@ -63,6 +63,10 @@ module Spree
         app.config.action_mailer.preview_path = "{#{original_preview_path},#{solidus_preview_path}}"
         ActionMailer::Base.preview_path = app.config.action_mailer.preview_path
       end
+
+      config.after_initialize do
+        Spree::Config.check_load_defaults_called('Spree::Config')
+      end
     end
   end
 end

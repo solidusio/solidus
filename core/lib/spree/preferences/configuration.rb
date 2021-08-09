@@ -38,8 +38,11 @@ module Spree::Preferences
     #     defaults. Set via {#load_defaults}
     attr_reader :loaded_defaults
 
+    attr_reader :load_defaults_called
+
     def initialize
       @loaded_defaults = Spree.solidus_version
+      @load_defaults_called = false
     end
 
     # @param [String] Solidus version from which take defaults when not
@@ -47,7 +50,22 @@ module Spree::Preferences
     # @see #load_defaults
     def load_defaults(version)
       @loaded_defaults = version
+      @load_defaults_called = true
       reset
+    end
+
+    def check_load_defaults_called(instance_constant_name = nil)
+      return if load_defaults_called || !Spree::Core.has_install_generator_been_run?
+
+      target_name = instance_constant_name || "#{self.class.name}.new"
+      Spree::Deprecation.warn <<~MSG
+        It's recommended that you explicitly load the default configuration for
+        your current Solidus version. You can do it by adding the following call
+        to your Solidus initializer within the #{target_name} block:
+
+          config.load_defaults('#{Spree.solidus_version}')
+
+      MSG
     end
 
     # @yield [config] Yields this configuration object to a block

@@ -131,6 +131,7 @@ ActiveSupport.on_load(:action_controller) do
 end
 
 Spree.user_class = 'Spree::LegacyUser'
+Spree.load_defaults(Spree.solidus_version)
 Spree.config do |config|
   config.mails_from = "store@example.com"
 
