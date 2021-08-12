@@ -174,6 +174,14 @@ module Spree
       Spree::Config.events.adapter
     end
 
+    def adapter
+      Spree::Deprecation.warn <<~MSG
+        `Spree::Event.adapter` is deprecated. Please, use
+        `Spree::Event.default_adapter` instead.
+      MSG
+      default_adapter
+    end
+
     # @!attribute [r] subscribers
     #   @return <Spree::Event::SubscriberRegistry> The registry for supporting class reloading for Spree::Event::Subscriber instances
     def subscriber_registry

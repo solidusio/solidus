@@ -17,6 +17,14 @@ RSpec.describe Spree::Event do
     end
   end
 
+  describe '.adapter' do
+    it 'deprecates and forwards to default_adapter' do
+      expect(Spree::Deprecation).to receive(:warn).with(/deprecated.*default_adapter/m)
+
+      expect(subject.adapter).to be(subject.default_adapter)
+    end
+  end
+
   describe '.fire' do
     it 'forwards to adapter' do
       bus = build_bus
