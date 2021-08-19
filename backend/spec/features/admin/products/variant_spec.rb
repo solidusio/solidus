@@ -48,6 +48,28 @@ describe "Variants", type: :feature do
         end
       end
     end
+
+    context 'displaying discarded variants' do
+      let!(:existing_variant) { create(:variant, sku: 'existing_variant_sku', product: product) }
+      let!(:discarded_variant) { create(:variant, sku: 'discarded_variant_sku', product: product) }
+
+      before { discarded_variant.discard! }
+
+      it 'does not display deleted variants by default' do
+        visit spree.admin_product_variants_path(product)
+
+        expect(page).to have_content(existing_variant.sku)
+        expect(page).not_to have_content(discarded_variant.sku)
+      end
+
+      it 'allows to display deleted variants with a filter' do
+        visit spree.admin_product_variants_path(product)
+        check 'Show Deleted Variants'
+        click_button 'search'
+
+        expect(page).to have_content(discarded_variant.sku)
+      end
+    end
   end
 
   context "editing existent variant" do
