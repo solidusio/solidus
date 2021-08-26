@@ -51,7 +51,12 @@ module Spree
 
       def variant_scope
         scope = Spree::Variant.accessible_by(current_ability)
-        scope = scope.where(product: @product) if @product
+        if @product
+          scope = scope.where(
+            product: @product,
+            is_master: !@product.has_variants?
+          )
+        end
         scope = scope.order(:sku)
         scope
       end
