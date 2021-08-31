@@ -145,7 +145,7 @@ describe Spree::Api::BaseController, type: :controller do
       get :index
     end
 
-    context "with @order defined" do
+    context "with @order not defined" do
       controller(Spree::Api::BaseController) do
         def index
           raise Spree::Core::GatewayError, "Insufficient Funds"
@@ -167,7 +167,7 @@ describe Spree::Api::BaseController, type: :controller do
       end
     end
 
-    context "with @order not defined" do
+    context "with @order defined" do
       controller(Spree::Api::BaseController) do
         def index
           @order = Spree::Order.new
