@@ -2,9 +2,6 @@
 
 require 'spec_helper'
 
-class FakesController < Spree::Api::BaseController
-end
-
 describe Spree::Api::BaseController, type: :controller do
   render_views
   controller(Spree::Api::BaseController) do
