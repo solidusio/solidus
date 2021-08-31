@@ -138,4 +138,58 @@ describe Spree::Api::BaseController, type: :controller do
       end
     end
   end
+
+  describe "#gateway_error" do
+    before do
+      request.headers["Accept"] = "application/json"
+      get :index
+    end
+
+    context "with @order defined" do
+      controller(Spree::Api::BaseController) do
+        def index
+          raise Spree::Core::GatewayError, "Insufficient Funds"
+        end
+
+        def requires_authentication?
+          false
+        end
+      end
+
+      it "returns a 422 status" do
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+
+      it "serializes the errors" do
+        expect(JSON.parse(response.body)["errors"]).to(
+          match(hash_including({ "base" => ["Insufficient Funds"] }))
+        )
+      end
+    end
+
+    context "with @order not defined" do
+      controller(Spree::Api::BaseController) do
+        def index
+          @order = Spree::Order.new
+          @order.errors.add(:email, "isn't cool enough")
+          raise Spree::Core::GatewayError, "Insufficient Funds"
+        end
+
+        def requires_authentication?
+          false
+        end
+      end
+
+      it "returns a 422 status" do
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+
+      it "serializes the gateway errors with existing order errors" do
+        expect(JSON.parse(response.body)["errors"]).to eq({
+          "base" => ["Insufficient Funds"],
+          "email" => ["isn't cool enough"],
+        })
+      end
+    end
+  end
 end
