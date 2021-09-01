@@ -14,7 +14,7 @@
   <% end %>
 <% end %>
 
-<% if @variants.any? || @product.variants.discarded.any? %>
+<% if @product.variants.with_discarded.any? %>
   <%= render "table_filter", product: @product %>
   <%= render "table", variants: @variants %>
 <% else %>
