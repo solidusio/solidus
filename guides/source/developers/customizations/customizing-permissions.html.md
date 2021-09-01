@@ -73,7 +73,7 @@ in one of the following ways:
   `Spree::Role.create(name: 'role_name')` in the Rails console
 - Add the line
   `Spree::Role.find_or_create_by(name: 'role_name')` in one of the configuration
-  files (`config/intializers/spree.rb`, `config/application.rb`,
+  files (`config/initializers/spree.rb`, `config/application.rb`,
   `db/migrations`, `db/seeds`) for each role you wish to create
 
 Now that the new role has been created you can simply assign a new list of
