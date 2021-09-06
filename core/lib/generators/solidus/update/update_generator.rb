@@ -57,6 +57,22 @@ module Solidus
                File.join(options[:initializer_directory], "#{options[:initializer_basename]}.rb")
     end
 
+    def print_message
+      say <<~MSG
+
+        ***********************************************************************
+
+        Other tasks may be needed to update to the new Solidus version. Please,
+        check https://github.com/solidusio/solidus/blob/v#{options[:to]}/CHANGELOG.md
+        for details.
+
+        Thanks for using Solidus!
+
+        ***********************************************************************
+
+      MSG
+    end
+
     private
 
     def core_changes_template(from, to)

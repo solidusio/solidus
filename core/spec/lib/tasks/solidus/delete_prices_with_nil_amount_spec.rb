@@ -2,14 +2,14 @@
 
 require 'rails_helper'
 
-path = Spree::Core::Engine.root.join('lib/tasks/migrations/delete_prices_with_nil_amount.rake')
+path = Spree::Core::Engine.root.join('lib/tasks/solidus/delete_prices_with_nil_amount.rake')
 
-RSpec.describe 'solidus:migrations:delete_prices_with_nil_amount' do
-  describe 'up' do
+RSpec.describe 'solidus' do
+  describe 'delete_prices_with_nil_amount' do
     include_context(
       'rake',
       task_path: path,
-      task_name: 'solidus:migrations:delete_prices_with_nil_amount:up'
+      task_name: 'solidus:delete_prices_with_nil_amount'
     )
 
     it 'removes all prices which amount column is NULL' do
