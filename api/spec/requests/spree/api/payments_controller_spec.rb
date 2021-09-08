@@ -157,6 +157,7 @@ module Spree
               put spree.api_order_payment_path(order, payment), params: { payment: { amount: 'invalid' } }
               expect(response.status).to eq(422)
               expect(json_response["error"]).to eq("Invalid resource. Please fix errors and try again.")
+              expect(payment.reload.state).to eq("pending")
             end
 
             it "returns a 403 status when the payment is not pending" do
@@ -186,10 +187,6 @@ module Spree
               expect(response.status).to eq(422)
               expect(json_response["error"]).to eq "Invalid resource. Please fix errors and try again."
               expect(json_response["errors"]["base"][0]).to eq "Could not authorize card"
-            end
-
-            it "does not raise a stack level error" do
-              skip "Investigate why a payment.reload after the request raises 'stack level too deep'"
               expect(payment.reload.state).to eq("failed")
             end
           end
@@ -213,6 +210,7 @@ module Spree
               expect(response.status).to eq(422)
               expect(json_response["error"]).to eq "Invalid resource. Please fix errors and try again."
               expect(json_response["errors"]["base"][0]).to eq "Insufficient funds"
+              expect(payment.reload.state).to eq("failed")
             end
           end
         end
@@ -235,6 +233,7 @@ module Spree
               expect(response.status).to eq(422)
               expect(json_response["error"]).to eq "Invalid resource. Please fix errors and try again."
               expect(json_response["errors"]["base"][0]).to eq "Insufficient funds"
+              expect(payment.reload.state).to eq("failed")
             end
           end
         end
