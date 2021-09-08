@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-module Spree
+module Spree::Api
   describe 'Inventory units', type: :request do
     let!(:inventory_unit) { create(:inventory_unit) }
 

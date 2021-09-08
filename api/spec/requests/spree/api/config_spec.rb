@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-module Spree
+module Spree::Api
   describe 'Configuration', type: :request do
     let!(:default_country) { create :country, iso: "US" }
 

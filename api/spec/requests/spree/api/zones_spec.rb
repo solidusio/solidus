@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-module Spree
+module Spree::Api
   describe 'Zones', type: :request do
     let!(:attributes) { [:id, :name, :zone_members] }
     let!(:zone) { create(:zone, name: 'Europe') }

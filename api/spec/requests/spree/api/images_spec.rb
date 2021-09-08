@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-module Spree
+module Spree::Api
   describe 'Images', type: :request do
     let!(:product) { create(:product) }
     let!(:attributes) {
@@ -29,7 +29,7 @@ module Spree
           }
           expect(response.status).to eq(201)
           expect(json_response).to have_attributes(attributes)
-        end.to change(Image, :count).by(1)
+        end.to change(Spree::Image, :count).by(1)
       end
 
       context "working with an existing product image" do

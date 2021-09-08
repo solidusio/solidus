@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-module Spree
+module Spree::Api
   describe 'Return authorizations', type: :request do
     let!(:order) { create(:shipped_order) }
 
@@ -37,7 +37,7 @@ module Spree
 
     context "as the order owner" do
       before do
-        allow_any_instance_of(Order).to receive_messages user: current_api_user
+        allow_any_instance_of(Spree::Order).to receive_messages user: current_api_user
       end
 
       it "cannot see any return authorizations" do
@@ -70,7 +70,7 @@ module Spree
 
     context "as another non-admin user that's not the order's owner" do
       before do
-        allow_any_instance_of(Order).to receive_messages user: create(:user)
+        allow_any_instance_of(Spree::Order).to receive_messages user: create(:user)
       end
 
       it "cannot create a new return authorization" do

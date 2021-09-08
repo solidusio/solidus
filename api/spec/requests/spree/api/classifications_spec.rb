@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-module Spree
+module Spree::Api
   describe 'Classifications', type: :request do
     let(:taxon) do
       taxon = create(:taxon)

@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-module Spree
+module Spree::Api
   describe 'Customer returns', type: :request do
     let!(:order) { create(:shipped_order) }
     let(:attributes) { [:id, :number, :stock_location_id] }
@@ -13,7 +13,7 @@ module Spree
 
     context "as a non admin" do
       before do
-        allow_any_instance_of(Order).to receive_messages user: create(:user)
+        allow_any_instance_of(Spree::Order).to receive_messages user: create(:user)
       end
 
       it "cannot see any customer returns" do

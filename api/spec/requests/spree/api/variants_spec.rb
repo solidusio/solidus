@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-module Spree
+module Spree::Api
   describe 'Variants', type: :request do
     let!(:product) { create(:product) }
     let!(:variant) do

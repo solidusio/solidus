@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-module Spree
+module Spree::Api
   describe 'Stock items', type: :request do
     let!(:stock_location) { create(:stock_location_with_items) }
     let!(:stock_item) { stock_location.stock_items.order(:id).first }
@@ -114,7 +114,7 @@ module Spree
           variant = create(:variant)
           # Creating a variant also creates stock items.
           # We don't want any to exist (as they would conflict with what we're about to create)
-          StockItem.delete_all
+          Spree::StockItem.delete_all
           variant
         end
         let(:count_on_hand) { '20' }

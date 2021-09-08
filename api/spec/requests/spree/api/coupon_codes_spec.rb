@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-module Spree
+module Spree::Api
   describe 'Coupon codes', type: :request do
     let(:current_api_user) do
       user = Spree.user_class.new(email: "solidus@example.com")
@@ -19,7 +19,7 @@ module Spree
       let(:promo_code) { promo.codes.first }
 
       before do
-        allow_any_instance_of(Order).to receive_messages user: current_api_user
+        allow_any_instance_of(Spree::Order).to receive_messages user: current_api_user
       end
 
       context 'when successful' do

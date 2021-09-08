@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-module Spree
+module Spree::Api
   describe 'Taxons', type: :request do
     let!(:taxonomy) { create(:taxonomy) }
     let!(:taxon) { create(:taxon, name: "Ruby", parent: taxonomy.root, taxonomy: taxonomy) }

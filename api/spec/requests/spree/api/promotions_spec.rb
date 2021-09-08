@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-module Spree
+module Spree::Api
   describe 'Promotions', type: :request do
     shared_examples "a JSON response" do
       it 'should be ok' do

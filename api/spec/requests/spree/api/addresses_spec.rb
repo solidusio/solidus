@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-module Spree
+module Spree::Api
   describe 'Addresses', type: :request do
     before do
       stub_authentication!
@@ -12,7 +12,7 @@ module Spree
 
     context "with order" do
       before do
-        allow_any_instance_of(Order).to receive_messages user: current_api_user
+        allow_any_instance_of(Spree::Order).to receive_messages user: current_api_user
       end
 
       context "with their own address" do
@@ -23,7 +23,7 @@ module Spree
 
         it "update replaces the readonly Address associated to the Order" do
           put spree.api_order_address_path(@order, @address.id), params: { address: { address1: "123 Test Lane" } }
-          expect(Order.find(@order.id).bill_address_id).not_to eq @address.id
+          expect(Spree::Order.find(@order.id).bill_address_id).not_to eq @address.id
           expect(json_response['address1']).to eq '123 Test Lane'
         end
 

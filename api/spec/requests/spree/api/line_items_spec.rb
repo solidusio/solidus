@@ -2,13 +2,13 @@
 
 require 'spec_helper'
 
-module Spree
-  PermittedAttributes.module_eval do
+module Spree::Api
+  Spree::PermittedAttributes.module_eval do
     mattr_writer :line_item_attributes
   end
 
-  unless PermittedAttributes.line_item_attributes.include? :options
-    PermittedAttributes.line_item_attributes << { options: [:some_option] }
+  unless Spree::PermittedAttributes.line_item_attributes.include? :options
+    Spree::PermittedAttributes.line_item_attributes << { options: [:some_option] }
   end
 
   describe 'Line items', type: :request do
@@ -49,7 +49,7 @@ module Spree
 
     context "as the order owner" do
       before do
-        allow_any_instance_of(Order).to receive_messages user: current_api_user
+        allow_any_instance_of(Spree::Order).to receive_messages user: current_api_user
       end
 
       context "dealing with a completed order" do
@@ -82,7 +82,7 @@ module Spree
 
       it "can add a new line item to an existing order with options" do
         without_partial_double_verification do
-          expect_any_instance_of(LineItem).to receive(:some_option=).with("foobar")
+          expect_any_instance_of(Spree::LineItem).to receive(:some_option=).with("foobar")
         end
         post spree.api_order_line_items_path(order),
                  params: {
@@ -124,7 +124,7 @@ module Spree
 
       it "can update a line item's options on the order" do
         without_partial_double_verification do
-          expect_any_instance_of(LineItem).to receive(:some_option=).with("foobar")
+          expect_any_instance_of(Spree::LineItem).to receive(:some_option=).with("foobar")
         end
         line_item = order.line_items.first
         put spree.api_order_line_item_path(order, line_item),
@@ -145,7 +145,7 @@ module Spree
 
       context "order contents changed after shipments were created" do
         let!(:store) { create(:store) }
-        let!(:order) { Order.create(store: store) }
+        let!(:order) { Spree::Order.create(store: store) }
         let!(:line_item) { order.contents.add(product.master) }
 
         before { order.create_proposed_shipments }
@@ -171,7 +171,7 @@ module Spree
         context "order is completed" do
           before do
             allow(order).to receive_messages completed?: true
-            allow(Order).to receive_message_chain :includes, find_by!: order
+            allow(Spree::Order).to receive_message_chain :includes, find_by!: order
           end
 
           it "doesn't destroy shipments or restart checkout flow" do

@@ -3,7 +3,7 @@
 require 'spec_helper'
 require 'shared_examples/protect_product_actions'
 
-module Spree
+module Spree::Api
   describe 'Product properties', type: :request do
     let!(:product) { create(:product) }
     let!(:property_1) { product.product_properties.create(property_name: "My Property 1", value: "my value 1", position: 0) }

@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-module Spree
+module Spree::Api
   describe 'States', type: :request do
     let!(:state) { create(:state, name: "Victoria") }
     let(:attributes) { [:id, :name, :abbr, :country_id] }

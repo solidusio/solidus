@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-module Spree
+
+module Spree::Api
   describe 'Properties', type: :request do
-    let!(:property_1) { Property.create!(name: "foo", presentation: "Foo") }
-    let!(:property_2) { Property.create!(name: "bar", presentation: "Bar") }
+    let!(:property_1) { Spree::Property.create!(name: "foo", presentation: "Foo") }
+    let!(:property_2) { Spree::Property.create!(name: "bar", presentation: "Bar") }
 
     let(:attributes) { [:id, :name, :presentation] }
 

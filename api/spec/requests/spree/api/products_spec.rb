@@ -3,7 +3,7 @@
 require 'spec_helper'
 require 'shared_examples/protect_product_actions'
 
-module Spree
+module Spree::Api
   describe 'Products', type: :request do
     let!(:product) { create(:product) }
     let!(:inactive_product) { create(:product, available_on: Time.current.tomorrow, name: "inactive") }
@@ -289,7 +289,7 @@ module Spree
           post spree.api_products_path, params: { product: hash }
           expect(response.status).to eq 201
 
-          shipping_id = ShippingCategory.find_by(name: "Free Ships").id
+          shipping_id = Spree::ShippingCategory.find_by(name: "Free Ships").id
           expect(json_response['shipping_category_id']).to eq shipping_id
         end
 

@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-module Spree
+module Spree::Api
   describe 'Payments', type: :request do
     let!(:order) { create(:order_with_line_items) }
     let!(:payment) { create(:payment, order: order, amount: order.amount) }
@@ -19,7 +19,7 @@ module Spree
     context "as a user" do
       context "when the order belongs to the user" do
         before do
-          allow_any_instance_of(Order).to receive_messages user: current_api_user
+          allow_any_instance_of(Spree::Order).to receive_messages user: current_api_user
         end
 
         it "can view the payments for their order" do
@@ -40,17 +40,17 @@ module Spree
           end
 
           it "can create a new payment" do
-            post spree.api_order_payments_path(order), params: { payment: { payment_method_id: PaymentMethod.first.id, amount: 50 } }
+            post spree.api_order_payments_path(order), params: { payment: { payment_method_id: Spree::PaymentMethod.first.id, amount: 50 } }
             expect(response.status).to eq(201)
             expect(json_response).to have_attributes(attributes)
           end
 
           context "disallowed payment method" do
             it "does not create a new payment" do
-              PaymentMethod.first.update!(available_to_users: false)
+              Spree::PaymentMethod.first.update!(available_to_users: false)
 
               expect {
-                post spree.api_order_payments_path(order), params: { payment: { payment_method_id: PaymentMethod.first.id, amount: 50 } }
+                post spree.api_order_payments_path(order), params: { payment: { payment_method_id: Spree::PaymentMethod.first.id, amount: 50 } }
               }.not_to change { Spree::Payment.count }
               expect(response.status).to eq(404)
             end
@@ -60,7 +60,7 @@ module Spree
         context "payment source is required" do
           context "no source is provided" do
             it "returns errors" do
-              post spree.api_order_payments_path(order), params: { payment: { payment_method_id: PaymentMethod.first.id, amount: 50 } }
+              post spree.api_order_payments_path(order), params: { payment: { payment_method_id: Spree::PaymentMethod.first.id, amount: 50 } }
               expect(response.status).to eq(422)
               expect(json_response['error']).to eq("Invalid resource. Please fix errors and try again.")
               expect(json_response['errors']['source']).to eq(["can't be blank"])
@@ -69,7 +69,7 @@ module Spree
 
           context "source is provided" do
             it "can create a new payment" do
-              post spree.api_order_payments_path(order), params: { payment: { payment_method_id: PaymentMethod.first.id, amount: 50, source_attributes: { gateway_payment_profile_id: 1 } } }
+              post spree.api_order_payments_path(order), params: { payment: { payment_method_id: Spree::PaymentMethod.first.id, amount: 50, source_attributes: { gateway_payment_profile_id: 1 } } }
               expect(response.status).to eq(201)
               expect(json_response).to have_attributes(attributes)
             end
@@ -94,7 +94,7 @@ module Spree
 
       context "when the order does not belong to the user" do
         before do
-          allow_any_instance_of(Order).to receive_messages user: stub_model(LegacyUser)
+          allow_any_instance_of(Spree::Order).to receive_messages user: stub_model(Spree::LegacyUser)
         end
 
         it "cannot view payments for somebody else's order" do

@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-module Spree
+module Spree::Api
   describe 'Checkouts', type: :request do
     before(:each) do
       stub_authentication!
@@ -27,7 +27,7 @@ module Spree
       end
 
       before(:each) do
-        allow_any_instance_of(Order).to receive_messages(payment_required?: true)
+        allow_any_instance_of(Spree::Order).to receive_messages(payment_required?: true)
       end
 
       it "should transition a recently created order from cart to address" do

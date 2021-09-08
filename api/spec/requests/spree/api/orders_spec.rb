@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-module Spree
+module Spree::Api
   describe 'Orders', type: :request do
     let!(:order) { create(:order) }
     let(:variant) { create(:variant) }
@@ -86,7 +86,7 @@ module Spree
 
           it "activates the promotion" do
             post spree.api_orders_path, params: { order: { line_items: { "0" => { variant_id: variant.to_param, quantity: 1 } } } }
-            order = Order.last
+            order = Spree::Order.last
             line_item = order.line_items.first
             expect(order.total).to eq(line_item.price - discount)
           end
@@ -111,13 +111,13 @@ module Spree
 
       context 'when the line items have custom attributes' do
         it "can create an order with line items that have custom permitted attributes" do
-          PermittedAttributes.line_item_attributes << { options: [:some_option] }
+          Spree::PermittedAttributes.line_item_attributes << { options: [:some_option] }
           without_partial_double_verification do
             expect_any_instance_of(Spree::LineItem).to receive(:some_option=).once.with('4')
           end
           post spree.api_orders_path, params: { order: { line_items: { "0" => { variant_id: variant.to_param, quantity: 5, options: { some_option: 4 } } } } }
           expect(response.status).to eq(201)
-          order = Order.last
+          order = Spree::Order.last
           expect(order.line_items.count).to eq(1)
         end
       end
@@ -271,11 +271,11 @@ module Spree
       it "returns orders in reverse chronological order by completed_at" do
         order.update_columns completed_at: Time.current, created_at: 3.days.ago
 
-        order_two = Order.create user: order.user, completed_at: Time.current - 1.day, created_at: 2.days.ago, store: store
+        order_two = Spree::Order.create user: order.user, completed_at: Time.current - 1.day, created_at: 2.days.ago, store: store
         expect(order_two.created_at).to be > order.created_at
-        order_three = Order.create user: order.user, completed_at: nil, created_at: 1.day.ago, store: store
+        order_three = Spree::Order.create user: order.user, completed_at: nil, created_at: 1.day.ago, store: store
         expect(order_three.created_at).to be > order_two.created_at
-        order_four = Order.create user: order.user, completed_at: nil, created_at: 0.days.ago, store: store
+        order_four = Spree::Order.create user: order.user, completed_at: nil, created_at: 0.days.ago, store: store
         expect(order_four.created_at).to be > order_three.created_at
 
         get spree.api_my_orders_path, headers: { 'SERVER_NAME' => store.url }
@@ -300,7 +300,7 @@ module Spree
     end
 
     it "can view their own order" do
-      allow_any_instance_of(Order).to receive_messages user: current_api_user
+      allow_any_instance_of(Spree::Order).to receive_messages user: current_api_user
       get spree.api_order_path(order)
       expect(response.status).to eq(200)
       expect(json_response).to have_attributes(attributes)
@@ -314,7 +314,7 @@ module Spree
       subject { get spree.api_order_path(order) }
 
       before do
-        allow_any_instance_of(Order).to receive_messages user: current_api_user
+        allow_any_instance_of(Spree::Order).to receive_messages user: current_api_user
       end
 
       context 'when inventory information is present' do
@@ -392,14 +392,14 @@ module Spree
     end
 
     it "orders contain the basic checkout steps" do
-      allow_any_instance_of(Order).to receive_messages user: current_api_user
+      allow_any_instance_of(Spree::Order).to receive_messages user: current_api_user
       get spree.api_order_path(order)
       expect(response.status).to eq(200)
       expect(json_response["checkout_steps"]).to eq(%w[address delivery confirm complete])
     end
 
     it "can not view someone else's order" do
-      allow_any_instance_of(Order).to receive_messages user: stub_model(Spree::LegacyUser)
+      allow_any_instance_of(Spree::Order).to receive_messages user: stub_model(Spree::LegacyUser)
       get spree.api_order_path(order)
       assert_unauthorized!
     end
@@ -425,7 +425,7 @@ module Spree
       post spree.api_orders_path, params: { order: { line_items: { "0" => { variant_id: variant.to_param, quantity: 5 } } } }
       expect(response.status).to eq(201)
 
-      order = Order.last
+      order = Spree::Order.last
       expect(order.line_items.count).to eq(1)
       expect(order.line_items.first.variant).to eq(variant)
       expect(order.line_items.first.quantity).to eq(5)
@@ -495,7 +495,7 @@ module Spree
       }
 
       expect(response.status).to eq 201
-      expect(Order.last.line_items.first.price.to_f).to eq(variant.price)
+      expect(Spree::Order.last.line_items.first.price.to_f).to eq(variant.price)
     end
 
     context "admin user imports order" do
@@ -532,7 +532,7 @@ module Spree
       }
       let(:country) { create(:country, { name: "Brazil", iso_name: "BRAZIL", iso: "BR", iso3: "BRA", numcode: 76 }) }
 
-      before { allow_any_instance_of(Order).to receive_messages user: current_api_user }
+      before { allow_any_instance_of(Spree::Order).to receive_messages user: current_api_user }
 
       it "updates quantities of existing line items" do
         put spree.api_order_path(order), params: { order: {
@@ -764,7 +764,7 @@ module Spree
       context "caching enabled" do
         before do
           ActionController::Base.perform_caching = true
-          3.times { Order.create }
+          3.times { Spree::Order.create }
         end
 
         it "returns unique orders" do
@@ -772,7 +772,7 @@ module Spree
 
           orders = json_response[:orders]
           expect(orders.count).to be >= 3
-          expect(orders.map { |order| order[:id] }).to match_array Order.pluck(:id)
+          expect(orders.map { |order| order[:id] }).to match_array Spree::Order.pluck(:id)
         end
 
         after { ActionController::Base.perform_caching = false }
@@ -851,7 +851,7 @@ module Spree
             }
           }
           expect(response.status).to eq 201
-          expect(Order.last.line_items.first.price.to_f).to eq(33.0)
+          expect(Spree::Order.last.line_items.first.price.to_f).to eq(33.0)
         end
 
         it "can set the user_id for the order" do
