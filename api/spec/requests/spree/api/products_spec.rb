@@ -4,7 +4,7 @@ require 'spec_helper'
 require 'shared_examples/protect_product_actions'
 
 module Spree
-  describe Spree::Api::ProductsController, type: :request do
+  describe 'Products', type: :request do
     let!(:product) { create(:product) }
     let!(:inactive_product) { create(:product, available_on: Time.current.tomorrow, name: "inactive") }
     let(:base_attributes) { Spree::Api::Config.product_attributes }

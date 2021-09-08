@@ -3,7 +3,7 @@
 require "spec_helper"
 
 module Spree
-  describe Api::StoresController, type: :request do
+  describe 'Stores', type: :request do
     let!(:store) do
       create(:store, name: "My Spree Store", url: "spreestore.example.com")
     end

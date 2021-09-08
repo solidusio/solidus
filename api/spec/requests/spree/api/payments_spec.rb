@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 module Spree
-  describe Spree::Api::PaymentsController, type: :request do
+  describe 'Payments', type: :request do
     let!(:order) { create(:order_with_line_items) }
     let!(:payment) { create(:payment, order: order, amount: order.amount) }
     let!(:attributes) {

@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 module Spree
-  describe Api::CountriesController, type: :request do
+  describe 'Countries', type: :request do
     before do
       stub_authentication!
       @state = create(:state)

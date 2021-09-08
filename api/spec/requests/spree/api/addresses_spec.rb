@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 module Spree
-  describe Api::AddressesController, type: :request do
+  describe 'Addresses', type: :request do
     before do
       stub_authentication!
       @address = create(:address)

@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 module Spree
-  describe Api::UsersController, type: :request do
+  describe 'Users', type: :request do
     let(:user) { create(:user, spree_api_key: SecureRandom.hex) }
     let(:stranger) { create(:user, email: 'stranger@example.com') }
     let(:attributes) { [:id, :email, :created_at, :updated_at] }

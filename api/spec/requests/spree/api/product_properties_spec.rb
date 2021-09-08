@@ -4,7 +4,7 @@ require 'spec_helper'
 require 'shared_examples/protect_product_actions'
 
 module Spree
-  describe Spree::Api::ProductPropertiesController, type: :request do
+  describe 'Product properties', type: :request do
     let!(:product) { create(:product) }
     let!(:property_1) { product.product_properties.create(property_name: "My Property 1", value: "my value 1", position: 0) }
     let!(:property_2) { product.product_properties.create(property_name: "My Property 2", value: "my value 2", position: 1) }

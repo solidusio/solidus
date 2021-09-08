@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe Spree::Api::ShipmentsController, type: :request do
+describe 'Shipments', type: :request do
   include ActiveSupport::Testing::TimeHelpers
 
   let!(:shipment) { create(:shipment, inventory_units: [build(:inventory_unit, shipment: nil)]) }

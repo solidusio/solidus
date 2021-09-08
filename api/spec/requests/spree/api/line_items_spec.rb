@@ -11,7 +11,7 @@ module Spree
     PermittedAttributes.line_item_attributes << { options: [:some_option] }
   end
 
-  describe Api::LineItemsController, type: :request do
+  describe 'Line items', type: :request do
     let!(:order) { create(:order_with_line_items, line_items_count: 1) }
 
     let(:product) { create(:product) }

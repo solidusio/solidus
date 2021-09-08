@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 module Spree::Api
-  describe OrdersController, type: :request do
+  describe 'Promotion application', type: :request do
     before do
       stub_authentication!
     end

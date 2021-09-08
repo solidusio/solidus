@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 module Spree
-  describe Api::CheckoutsController, type: :request do
+  describe 'Checkouts', type: :request do
     before(:each) do
       stub_authentication!
       stub_spree_preferences(track_inventory_levels: false)

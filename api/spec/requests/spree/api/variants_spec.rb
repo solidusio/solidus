@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 module Spree
-  describe Api::VariantsController, type: :request do
+  describe 'Variants', type: :request do
     let!(:product) { create(:product) }
     let!(:variant) do
       variant = product.master

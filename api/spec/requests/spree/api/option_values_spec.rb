@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 module Spree
-  describe Api::OptionValuesController, type: :request do
+  describe 'Option values', type: :request do
     let(:attributes) { [:id, :name, :presentation, :option_type_name, :option_type_name] }
     let!(:option_value) { create(:option_value) }
     let!(:option_type) { option_value.option_type }

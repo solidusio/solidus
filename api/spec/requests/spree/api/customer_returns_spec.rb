@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 module Spree
-  describe Api::CustomerReturnsController, type: :request do
+  describe 'Customer returns', type: :request do
     let!(:order) { create(:shipped_order) }
     let(:attributes) { [:id, :number, :stock_location_id] }
 

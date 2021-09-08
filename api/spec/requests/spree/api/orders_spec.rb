@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 module Spree
-  describe Api::OrdersController, type: :request do
+  describe 'Orders', type: :request do
     let!(:order) { create(:order) }
     let(:variant) { create(:variant) }
     let(:line_item) { create(:line_item) }
