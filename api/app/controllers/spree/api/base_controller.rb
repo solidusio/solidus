@@ -71,8 +71,11 @@ module Spree
       end
 
       def gateway_error(exception)
-        @order.errors.add(:base, exception.message)
-        invalid_resource!(@order)
+        # Fall back to a blank order if one isn't set, as we only need this for
+        # its errors interface.
+        model = @order || Spree::Order.new
+        model.errors.add(:base, exception.message)
+        invalid_resource!(model)
       end
 
       def parameter_missing_error(exception)

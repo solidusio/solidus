@@ -2,9 +2,6 @@
 
 require 'spec_helper'
 
-class FakesController < Spree::Api::BaseController
-end
-
 describe Spree::Api::BaseController, type: :controller do
   render_views
   controller(Spree::Api::BaseController) do
@@ -138,6 +135,60 @@ describe Spree::Api::BaseController, type: :controller do
       it 'returns a 409 conflict' do
         get :index, params: { order_token: order.guest_token, order_id: order.number }
         expect(response.status).to eq(409)
+      end
+    end
+  end
+
+  describe "#gateway_error" do
+    before do
+      request.headers["Accept"] = "application/json"
+      get :index
+    end
+
+    context "with @order not defined" do
+      controller(Spree::Api::BaseController) do
+        def index
+          raise Spree::Core::GatewayError, "Insufficient Funds"
+        end
+
+        def requires_authentication?
+          false
+        end
+      end
+
+      it "returns a 422 status" do
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+
+      it "serializes the errors" do
+        expect(JSON.parse(response.body)["errors"]).to(
+          match(hash_including({ "base" => ["Insufficient Funds"] }))
+        )
+      end
+    end
+
+    context "with @order defined" do
+      controller(Spree::Api::BaseController) do
+        def index
+          @order = Spree::Order.new
+          @order.errors.add(:email, "isn't cool enough")
+          raise Spree::Core::GatewayError, "Insufficient Funds"
+        end
+
+        def requires_authentication?
+          false
+        end
+      end
+
+      it "returns a 422 status" do
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+
+      it "serializes the gateway errors with existing order errors" do
+        expect(JSON.parse(response.body)["errors"]).to eq({
+          "base" => ["Insufficient Funds"],
+          "email" => ["isn't cool enough"],
+        })
       end
     end
   end
