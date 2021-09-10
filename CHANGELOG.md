@@ -1,4 +1,173 @@
 ## Solidus 3.1.0 (master, unreleased)
+
+### Major changes
+
+**`Spree.load_defaults`: preference defaults depending on the Solidus version**
+
+Solidus 3.1 brings a new feature where preference defaults can take different
+values depending on a specified Solidus version. It makes it possible to stop
+deprecating old defaults every time we introduce a change in the recommended
+value for a setting. After all, they're just that; recommendations. Instead,
+now users can explicitly ask for a given Solidus version defaults and, as
+before, override the preferences they want.
+
+When upgrading to 3.1, you have to take action to adopt the new behavior.
+You'll need to add `Spree.load_defaults('3.1')` on the very top of your
+`spree.rb` initializer. As we're not changing any preference default on this
+release, nothing will break. A warning will be emitted on boot-up until you do
+it!
+
+However, bumping the version given to `load_defaults` straight away for future
+upgrades will not be a safe option. Instead, you'll have to go through the new
+update process detailed below.
+
+- Allow using different preference defaults depending on a Solidus version [#4064](https://github.com/solidusio/solidus/pull/4064) ([waiting-for-dev](https://github.com/waiting-for-dev))
+
+**New update process**
+
+As aforementioned, preference defaults can change after a Solidus release. Once
+you have your defaults locked to the current Solidus version, a new upgrade
+won't break your application because of them. However, it's a good idea to
+adapt your application to the updated recommended settings. To help with this
+process, Solidus comes with a generator that you can execute like this:
+
+```bash
+bin/rails g solidus:update
+```
+
+That generator will create a new initializer called `new_solidus_defaults.rb`,
+which will preview all the defaults that have changed between versions, each on
+a commented line. From that point, you can activate the new defaults one by one
+and adapt your application incrementally. Once you're done with all of them,
+you can bump the version given to `Spree.load_defaults` in the `spree.rb`
+initializer and remove the `new_solidus_defaults.rb` initializer altogether.
+
+You can read in more detail about [this process on our
+guides](https://edgeguides.solidus.io/getting-started/upgrading-solidus#updating-preferences).
+
+- Introduce Solidus update process [#4087](https://github.com/solidusio/solidus/pull/4087) ([waiting-for-dev](https://github.com/waiting-for-dev))
+
+**Other important changes**
+
+`Spree::Price#amount` field can no longer be `nil`. Besides adding the
+validation at the model layer, we ship with a task that will remove records
+where the amount is `NULL` in the database. You should run the task before
+executing the new migrations:
+
+```ruby
+bin/rails solidus:delete_prices_with_nil_amount
+bin/rails railties:install:migrations
+bin/rails db:migrate
+```
+
+If you're running migrations automatically on deploy, you should run the task
+before rolling out the new code. In that case, you first should make sure that
+you have affected records:
+
+```ruby
+Spree::Price.where(amount: nil).any?
+```
+
+If the above code returns `false`, you don't need to do anything else.
+Otherwise, copy [the
+task](https://github.com/solidusio/solidus/blob/master/core/lib/tasks/solidus/delete_prices_with_nil_amount.rake)
+into your code, and deploy & execute it. Another option is to execute it
+manually in your console in production. However, be extremely careful when
+doing that!! :warning: :warning: :warning: 
+
+```ruby
+Spree::Price.where(amount: nil).delete_all
+```
+
+- Do not allow prices with nil amount [#3987](https://github.com/solidusio/solidus/pull/3987) ([waiting-for-dev](https://github.com/waiting-for-dev))
+
+### Core
+
+- Remove the upgrade task and point to additional steps from the update generator [#4157](https://github.com/solidusio/solidus/pull/4157) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Make order-related service objects configurable [#4138](https://github.com/solidusio/solidus/pull/4138) ([aldesantis](https://github.com/aldesantis))
+- Remove unused `ShippingRateTaxer` service object [#4136](https://github.com/solidusio/solidus/pull/4136) ([aldesantis](https://github.com/aldesantis))
+- Fix Ransack error when searching for orders by customer name [#4135](https://github.com/solidusio/solidus/pull/4135) ([aldesantis](https://github.com/aldesantis))
+- Exclude canceled orders in the #usage_count of promotions and promotion codes [#4123](https://github.com/solidusio/solidus/pull/4123) ([ikraamg](https://github.com/ikraamg))
+- Make clearer default answer in prompt [#4101](https://github.com/solidusio/solidus/pull/4101) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Permit return_items_attributes return_reason_id [#4080](https://github.com/solidusio/solidus/pull/4080) ([spaghetticode](https://github.com/spaghetticode))
+- Simplify `Variant#default_price` logic [#4076](https://github.com/solidusio/solidus/pull/4076) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Move currently_valid_prices to a method [#4073](https://github.com/solidusio/solidus/pull/4073) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Support Ruby 3 [#4072](https://github.com/solidusio/solidus/pull/4072) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Fix customer return validation for return items without inventory units [#4068](https://github.com/solidusio/solidus/pull/4068) ([willianveiga](https://github.com/willianveiga))
+- Add preferences to configure product and taxon images style [#4062](https://github.com/solidusio/solidus/pull/4062) ([cpfergus1](https://github.com/cpfergus1))
+- Add UUID to StoreCredit#generate_authorization_code [#4060](https://github.com/solidusio/solidus/pull/4060) ([spaghetticode](https://github.com/spaghetticode))
+- Fix Spree::Promotion.has_actions scope [#4056](https://github.com/solidusio/solidus/pull/4056) ([mamhoff](https://github.com/mamhoff))
+- Update defaults in dummy application [#4047](https://github.com/solidusio/solidus/pull/4047) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Load defaults for the latest Rails minor version in the dummy app [#4035](https://github.com/solidusio/solidus/pull/4035) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Handle permalink attribute on product create [#4024](https://github.com/solidusio/solidus/pull/4024) ([nandita2010](https://github.com/nandita2010))
+- Don't hack into ActionMailer to add our mail previews path [#3961](https://github.com/solidusio/solidus/pull/3961) ([elia](https://github.com/elia))
+- Fix solidus stock locations sorting [#3954](https://github.com/solidusio/solidus/pull/3954) ([ikraamg](https://github.com/ikraamg))
+- Fix order checkout flow completion with custom steps [#3950](https://github.com/solidusio/solidus/pull/3950) ([nerfologist](https://github.com/nerfologist))
+- Add docker-compose development environment [#3947](https://github.com/solidusio/solidus/pull/3947) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Allow Variant to check stock by stock_location [#3884](https://github.com/solidusio/solidus/pull/3884) ([MadelineCollier](https://github.com/MadelineCollier))
+- Normalize email required checks [#3879](https://github.com/solidusio/solidus/pull/3879) ([elia](https://github.com/elia))
+- Improve the extensibility of Rules::ItemTotal [#3431](https://github.com/solidusio/solidus/pull/3431) ([elia](https://github.com/elia))
+
+### API
+
+- Remove Pending Request Spec: Api Admin update payment state expectations. [#4149](https://github.com/solidusio/solidus/pull/4149) ([jcowhigjr](https://github.com/jcowhigjr))
+- Fix gateway_error when no order is defined [#4156](https://github.com/solidusio/solidus/pull/4156) ([alexblackie](https://github.com/alexblackie))
+- Moving API attribute helpers to API config [#4039](https://github.com/solidusio/solidus/pull/4039) ([snada](https://github.com/snada))
+- Allow customer returns to reference existing `ReturnItem`s on create through API [#4007](https://github.com/solidusio/solidus/pull/4007) ([forkata](https://github.com/forkata))
+- Let the PriceSelector return a Spree::Price [#3925](https://github.com/solidusio/solidus/pull/3925) ([swively](https://github.com/swively))
+
+### Admin
+
+- Fix displaying of discarded variants in admin [#4148](https://github.com/solidusio/solidus/pull/4148) ([luca-landa](https://github.com/luca-landa))
+- Hide the master variants from stock management [#4155](https://github.com/solidusio/solidus/pull/4155) ([tmtrademarked](https://github.com/tmtrademarked))
+- Refactor frontend and backend locale_controllers [#4126](https://github.com/solidusio/solidus/pull/4126) ([RyanofWoods](https://github.com/RyanofWoods))
+- Fix admin portugues locale [#4107](https://github.com/solidusio/solidus/pull/4107) ([ruipbarata](https://github.com/ruipbarata))
+- Add an HTML select element to filter orders by the shipment state [#4089](https://github.com/solidusio/solidus/pull/4089) ([willianveiga](https://github.com/willianveiga))
+- Fix detecting exec js version by adding minimal requirement for autoprefixer-rails [#4077](https://github.com/solidusio/solidus/pull/4077) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Unhardcode admin base url in 'stock_location_stock_item' template [#4063](https://github.com/solidusio/solidus/pull/4063) ([ok32](https://github.com/ok32))
+- Fix "Cancel" URL link on reimbursement edit page [#4061](https://github.com/solidusio/solidus/pull/4061) ([spaghetticode](https://github.com/spaghetticode))
+- [ADMIN] Properly format flash error message [#3996](https://github.com/solidusio/solidus/pull/3996) ([spaghetticode](https://github.com/spaghetticode))
+- Consolidation of promotion code batch form fields into partial. [#3957](https://github.com/solidusio/solidus/pull/3957) ([cpfergus1](https://github.com/cpfergus1))
+- Promotion rule product limit improvements [#3934](https://github.com/solidusio/solidus/pull/3934) ([nirnaeth](https://github.com/nirnaeth))
+- eager load records instead of n+1 for update_positions [#3875](https://github.com/solidusio/solidus/pull/3875) ([BenMorganIO](https://github.com/BenMorganIO))
+- Update order_tabs Order number format [#3835](https://github.com/solidusio/solidus/pull/3835) ([brchristian](https://github.com/brchristian))
+
+### Frontend
+
+- Move frontend locale_controller_spec to correct directory [#4127](https://github.com/solidusio/solidus/pull/4127) ([RyanofWoods](https://github.com/RyanofWoods))
+- Refactor frontend and backend locale_controllers [#4126](https://github.com/solidusio/solidus/pull/4126) ([RyanofWoods](https://github.com/RyanofWoods))
+- Fix flaky product feature spec [#4118](https://github.com/solidusio/solidus/pull/4118) ([gsmendoza](https://github.com/gsmendoza))
+- Use symbols in polymorphic path for event_links [#4048](https://github.com/solidusio/solidus/pull/4048) ([tvdeyen](https://github.com/tvdeyen))
+
+### Docs & Guides
+
+- Fix small typo in the 'customizing permissions' guide [#4147](https://github.com/solidusio/solidus/pull/4147) ([nerfologist](https://github.com/nerfologist))
+- Bump tar from 2.2.1 to 2.2.2 in /guides [#4142](https://github.com/solidusio/solidus/pull/4142) ([dependabot](https://github.com/apps/dependabot))
+- Document REST API params to control nested taxons [#4131](https://github.com/solidusio/solidus/pull/4131) ([kennyadsl](https://github.com/kennyadsl))
+- Bump addressable from 2.5.2 to 2.8.0 in /guides [#4129](https://github.com/solidusio/solidus/pull/4129) ([dependabot](https://github.com/apps/dependabot))
+- Document REST API filtering with Ransack [#4128](https://github.com/solidusio/solidus/pull/4128) ([kennyadsl](https://github.com/kennyadsl))
+- Guides typo corrections [#4120](https://github.com/solidusio/solidus/pull/4120) ([cesartalves](https://github.com/cesartalves))
+- Shipment Setup Examples documentation - small correction to the amount of shipping categories needed [#4115](https://github.com/solidusio/solidus/pull/4115) ([cesartalves](https://github.com/cesartalves))
+- Fix broken URL in customer-flow guide [#4096](https://github.com/solidusio/solidus/pull/4096) ([RyanofWoods](https://github.com/RyanofWoods))
+- Fix the dark mode issue with the logo on README.md [#4093](https://github.com/solidusio/solidus/pull/4093) ([mfrecchiami](https://github.com/mfrecchiami))
+- Small English correction on Payments overview PSP doc [#4088](https://github.com/solidusio/solidus/pull/4088) ([cesartalves](https://github.com/cesartalves))
+- Update the Nebulab's logo on README.md [#4079](https://github.com/solidusio/solidus/pull/4079) ([mfrecchiami](https://github.com/mfrecchiami))
+- Fix Request Bodies in API Documentation [#4066](https://github.com/solidusio/solidus/pull/4066) ([kennyadsl](https://github.com/kennyadsl))
+- Fix links in CHANGELOG.md [#4057](https://github.com/solidusio/solidus/pull/4057) ([bogdanvlviv](https://github.com/bogdanvlviv))
+- Bump hosted-git-info from 2.7.1 to 2.8.9 in /guides [#4053](https://github.com/solidusio/solidus/pull/4053) ([dependabot](https://github.com/apps/dependabot))
+- Bump lodash from 4.17.19 to 4.17.21 in /guides [#4051](https://github.com/solidusio/solidus/pull/4051) ([dependabot](https://github.com/apps/dependabot))
+- Review install instructions in README and Guides [#4034](https://github.com/solidusio/solidus/pull/4034) ([kennyadsl](https://github.com/kennyadsl))
+- Use more appropriate language for woman's t-shirt in sample data [#4031](https://github.com/solidusio/solidus/pull/4031) ([Noah-Silvera](https://github.com/Noah-Silvera))
+- Improve Customizing Attributes documentation [#3979](https://github.com/solidusio/solidus/pull/3979) ([dhughesbc](https://github.com/dhughesbc))
+- Improve Solidus events documentation [#3819](https://github.com/solidusio/solidus/pull/3819) ([spaghetticode](https://github.com/spaghetticode))
+
+## Solidus 3.0.2 (v3.0, 2021-09-10)
+
+- Permit return_items_attributes return_reason_id [#4091](https://github.com/solidusio/solidus/pull/4091) ([spaghetticode](https://github.com/spaghetticode))
+- Fix app and tests to work with ActiveRecord.has_many_inverse [#4098](https://github.com/solidusio/solidus/pull/4098) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Support Ruby 3 [#4072](https://github.com/solidusio/solidus/pull/4072) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Fix detecting exec js version by adding minimal requirement for autoprefixer-rails [#4077](https://github.com/solidusio/solidus/pull/4077) ([waiting-for-dev](https://github.com/waiting-for-dev))
+
 ## Solidus 3.0.1 (v3.0, 2021-05-10)
 
 - Use symbols in polymorphic path for event_links [#4048](https://github.com/solidusio/solidus/pull/4048) ([tvdeyen](https://github.com/tvdeyen))
@@ -123,6 +292,13 @@ the maintained fork.
 - Update readme with Solidus demo URL [#3822](https://github.com/solidusio/solidus/pull/3822) ([seand7565](https://github.com/seand7565))
 - Fix headers in changelog [#3812](https://github.com/solidusio/solidus/pull/3812) ([jarednorman](https://github.com/jarednorman))
 - Fixed typo with misspell [#3811](https://github.com/solidusio/solidus/pull/3811) ([hsbt](https://github.com/hsbt))
+
+## Solidus 2.11.11 (v2.11, 2021-09-10)
+
+- Revert "Raise canceling a payment when try_void" [#4134](https://github.com/solidusio/solidus/pull/4134) ([senemsoy](https://github.com/senemsoy))
+- Fix app and tests to work with ActiveRecord.has_many_inverse [#4099](https://github.com/solidusio/solidus/pull/4099) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Update billing address migration tasks with batch limit [#4104](https://github.com/solidusio/solidus/pull/4104) ([spaghetticode](https://github.com/spaghetticode))
+- Permit return_items_attributes return_reason_id [#4090](https://github.com/solidusio/solidus/pull/4090) ([spaghetticode](https://github.com/spaghetticode))
 
 ## Solidus 2.11.10 (v2.11, 2021-05-10)
 
