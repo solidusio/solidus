@@ -161,6 +161,13 @@ Spree::Price.where(amount: nil).delete_all
 - Improve Customizing Attributes documentation [#3979](https://github.com/solidusio/solidus/pull/3979) ([dhughesbc](https://github.com/dhughesbc))
 - Improve Solidus events documentation [#3819](https://github.com/solidusio/solidus/pull/3819) ([spaghetticode](https://github.com/spaghetticode))
 
+## Solidus 3.0.2 (v3.0, 2021-09-10)
+
+- Permit return_items_attributes return_reason_id [#4091](https://github.com/solidusio/solidus/pull/4091) ([spaghetticode](https://github.com/spaghetticode))
+- Fix app and tests to work with ActiveRecord.has_many_inverse [#4098](https://github.com/solidusio/solidus/pull/4098) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Support Ruby 3 [#4072](https://github.com/solidusio/solidus/pull/4072) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Fix detecting exec js version by adding minimal requirement for autoprefixer-rails [#4077](https://github.com/solidusio/solidus/pull/4077) ([waiting-for-dev](https://github.com/waiting-for-dev))
+
 ## Solidus 3.0.1 (v3.0, 2021-05-10)
 
 - Use symbols in polymorphic path for event_links [#4048](https://github.com/solidusio/solidus/pull/4048) ([tvdeyen](https://github.com/tvdeyen))
@@ -285,6 +292,13 @@ the maintained fork.
 - Update readme with Solidus demo URL [#3822](https://github.com/solidusio/solidus/pull/3822) ([seand7565](https://github.com/seand7565))
 - Fix headers in changelog [#3812](https://github.com/solidusio/solidus/pull/3812) ([jarednorman](https://github.com/jarednorman))
 - Fixed typo with misspell [#3811](https://github.com/solidusio/solidus/pull/3811) ([hsbt](https://github.com/hsbt))
+
+## Solidus 2.11.11 (v2.11, 2021-09-10)
+
+- Revert "Raise canceling a payment when try_void" [#4134](https://github.com/solidusio/solidus/pull/4134) ([senemsoy](https://github.com/senemsoy))
+- Fix app and tests to work with ActiveRecord.has_many_inverse [#4099](https://github.com/solidusio/solidus/pull/4099) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Update billing address migration tasks with batch limit [#4104](https://github.com/solidusio/solidus/pull/4104) ([spaghetticode](https://github.com/spaghetticode))
+- Permit return_items_attributes return_reason_id [#4090](https://github.com/solidusio/solidus/pull/4090) ([spaghetticode](https://github.com/spaghetticode))
 
 ## Solidus 2.11.10 (v2.11, 2021-05-10)
 
