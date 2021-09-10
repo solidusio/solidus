@@ -1,4 +1,6 @@
-## Solidus 3.1.0 (master, unreleased)
+## Solidus 3.2.0.alpha (master, unreleased)
+
+## Solidus 3.1.0 (v3.1, 2021-09-10)
 
 ### Major changes
 
