@@ -26,15 +26,21 @@
 
           <div class="col-4">
             <div class="field">
-              <%= f.label :with_variant_sku_cont, Spree::Variant.human_attribute_name(:sku) %>
-              <%= f.text_field :with_variant_sku_cont, size: 15 %>
+              <div class="js-kept-variant-sku-input">
+                <%= f.label :with_kept_variant_sku_cont, Spree::Variant.human_attribute_name(:sku) %>
+                <%= f.text_field :with_kept_variant_sku_cont, size: 15 %>
+              </div>
+              <div class="js-all-variant-sku-input">
+                <%= f.label :with_all_variant_sku_cont, Spree::Variant.human_attribute_name(:sku) %>
+                <%= f.text_field :with_all_variant_sku_cont, size: 15 %>
+              </div>
             </div>
           </div>
 
           <div class="col-2">
             <div class="field checkbox">
               <label>
-                <%= f.check_box :with_discarded, { checked: params[:q][:with_discarded] == 'true' }, 'true', 'false' %>
+                <%= f.check_box :with_discarded, { checked: params[:q][:with_discarded] == 'true', class: 'js-with-discarded-input' }, 'true', 'false' %>
                 <%= t('spree.show_deleted') %>
               </label>
             </div>
