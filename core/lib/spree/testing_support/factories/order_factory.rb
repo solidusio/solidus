@@ -68,6 +68,7 @@ FactoryBot.define do
 
       factory :completed_order_with_promotion do
         transient do
+          completed_at { Time.current }
           promotion { nil }
         end
 
@@ -79,7 +80,7 @@ FactoryBot.define do
           order.order_promotions.create!(promotion: promotion, promotion_code: promotion_code)
 
           # Complete the order after the promotion has been activated
-          order.update_column(:completed_at, Time.current)
+          order.update_column(:completed_at, evaluator.completed_at)
           order.update_column(:state, "complete")
         end
       end
@@ -104,13 +105,16 @@ FactoryBot.define do
       end
 
       factory :completed_order_with_totals do
+        transient do
+          completed_at { Time.current }
+        end
         state { 'complete' }
 
-        after(:create) do |order|
+        after(:create) do |order, evaluator|
           order.shipments.each do |shipment|
             shipment.inventory_units.update_all state: 'on_hand', pending: false
           end
-          order.update_column(:completed_at, Time.current)
+          order.update_column(:completed_at, evaluator.completed_at)
         end
 
         factory :completed_order_with_pending_payment do
