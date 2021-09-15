@@ -102,7 +102,7 @@ you that your Solidus backend include jQuery and any other files that you create
 in this `spree/backend` directory:
 
 ```javascript
-//= require jquery
+//= require jquery3
 //= require rails-ujs
 //= require spree/backend
 //= require_tree .
