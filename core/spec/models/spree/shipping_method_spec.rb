@@ -244,7 +244,7 @@ RSpec.describe Spree::ShippingMethod, type: :model do
 
       it 'returns the associated records' do
         expect(store.shipping_methods).to eq(subject)
-        expect(described_class.available_to_store(store)).to eq(subject)
+        expect(described_class.available_to_store(store)).to match_array(subject)
       end
     end
   end
