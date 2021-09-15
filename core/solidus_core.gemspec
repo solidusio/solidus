@@ -55,7 +55,12 @@ $ bin/rails g solidus:install
 If you are updating Solidus from an older version, please run
 the following commands to complete the update:
 
-$ bin/rails solidus:upgrade
+$ bin/rails g solidus:update
+
+Please, don't forget to look at the CHANGELOG to see what has changed and
+whether you need to perform other tasks.
+
+https://github.com/solidusio/solidus/blob/master/CHANGELOG.md
 
 Please report any issues at:
 - https://github.com/solidusio/solidus/issues
