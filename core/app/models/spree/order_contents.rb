@@ -42,8 +42,8 @@ module Spree
           # If we do not update first, then the item total will be wrong and ItemTotal
           # promotion rules would not be triggered.
           reload_totals
-          PromotionHandler::Cart.new(order).activate
           order.ensure_updated_shipments
+          PromotionHandler::Cart.new(order).activate
         end
         reload_totals
         true
