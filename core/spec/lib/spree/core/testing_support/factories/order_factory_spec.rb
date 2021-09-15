@@ -137,7 +137,7 @@ RSpec.shared_examples 'supplied completed_at is respected' do
     let(:order) { create(factory) }
 
     it 'defaults to the current time' do
-      expect(order.completed_at).to be_within(5.seconds).of(Time.current)
+      expect(order.completed_at).to be_within(2.seconds).of(Time.current)
     end
   end
 end
