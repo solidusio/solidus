@@ -42,7 +42,7 @@ module Spree
           # If we do not update first, then the item total will be wrong and ItemTotal
           # promotion rules would not be triggered.
           reload_totals
-          order.ensure_updated_shipments
+          order.check_shipments_and_restart_checkout
           PromotionHandler::Cart.new(order).activate
         end
         reload_totals
@@ -73,7 +73,7 @@ module Spree
     def after_add_or_remove(line_item, options = {})
       reload_totals
       shipment = options[:shipment]
-      shipment.present? ? shipment.update_amounts : order.ensure_updated_shipments
+      shipment.present? ? shipment.update_amounts : order.check_shipments_and_restart_checkout
       PromotionHandler::Cart.new(order, line_item).activate
       reload_totals
       line_item
