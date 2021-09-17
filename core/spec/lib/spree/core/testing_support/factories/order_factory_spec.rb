@@ -122,6 +122,26 @@ RSpec.shared_examples "an order with line items factory" do |expected_order_stat
     end
   end
 end
+
+RSpec.shared_examples 'supplied completed_at is respected' do
+  context 'when passed a completed_at timestamp' do
+    let(:completed_at) { 2.days.ago }
+    let(:order) { create(factory, completed_at: completed_at) }
+
+    it 'respects the timestamp' do
+      expect(order.completed_at).to be_within(5.seconds).of(completed_at)
+    end
+  end
+
+  context 'when no completed_at timestamp is passed' do
+    let(:order) { create(factory) }
+
+    it 'defaults to the current time' do
+      expect(order.completed_at).to be_within(2.seconds).of(Time.current)
+    end
+  end
+end
+
 RSpec.describe 'order factory' do
   let(:factory_class) { Spree::Order }
 
@@ -200,6 +220,7 @@ RSpec.describe 'order factory' do
     it_behaves_like 'a working factory'
     it_behaves_like 'an order with line items factory', "complete", "on_hand"
     it_behaves_like 'shipping methods are assigned'
+    it_behaves_like 'supplied completed_at is respected'
 
     it "has the expected attributes" do
       order = create(factory)
@@ -255,6 +276,7 @@ RSpec.describe 'order factory' do
     it_behaves_like 'a working factory'
     it_behaves_like 'an order with line items factory', "complete", "on_hand"
     it_behaves_like 'shipping methods are assigned'
+    it_behaves_like 'supplied completed_at is respected'
 
     it "has the expected attributes" do
       order = create(factory)
@@ -278,6 +300,7 @@ RSpec.describe 'order factory' do
     it_behaves_like 'a working factory'
     it_behaves_like 'an order with line items factory', "complete", "on_hand"
     it_behaves_like 'shipping methods are assigned'
+    it_behaves_like 'supplied completed_at is respected'
 
     it "has the expected attributes" do
       order = create(factory)
@@ -304,6 +327,7 @@ RSpec.describe 'order factory' do
     it_behaves_like 'a working factory'
     it_behaves_like 'an order with line items factory', "complete", "on_hand"
     it_behaves_like 'shipping methods are assigned'
+    it_behaves_like 'supplied completed_at is respected'
 
     it "has the expected attributes" do
       order = create(factory)
@@ -345,6 +369,7 @@ RSpec.describe 'order factory' do
     it_behaves_like 'a working factory'
     it_behaves_like 'an order with line items factory', "complete", "shipped"
     it_behaves_like 'shipping methods are assigned'
+    it_behaves_like 'supplied completed_at is respected'
 
     it "has the expected attributes" do
       order = create(factory)
