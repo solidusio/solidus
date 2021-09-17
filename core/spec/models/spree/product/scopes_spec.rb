@@ -183,4 +183,58 @@ RSpec.describe "Product scopes", type: :model do
       end
     end
   end
+
+  describe ".with_all_variant_sku_cont" do
+    let!(:product) { create(:product, sku: sku) }
+    let(:sku) { "SEARCH-SKU-1" }
+
+    subject { Spree::Product.with_all_variant_sku_cont("SEARCH") }
+
+    it "returns the product" do
+      expect(subject).to contain_exactly(product)
+    end
+
+    context "when the variant has been discarded" do
+      before { product.master.discard }
+
+      it "returns the product" do
+        expect(subject).to contain_exactly(product)
+      end
+    end
+
+    context "when the SKU doesn't match" do
+      let(:sku) { "NON-MATCHING-SKU" }
+
+      it "does not include the product" do
+        expect(subject).to be_empty
+      end
+    end
+  end
+
+  describe ".with_kept_variant_sku_cont" do
+    let!(:product) { create(:product, sku: sku) }
+    let(:sku) { "SEARCH-SKU-1" }
+
+    subject { Spree::Product.with_kept_variant_sku_cont("SEARCH") }
+
+    it "returns the product" do
+      expect(subject).to contain_exactly(product)
+    end
+
+    context "when the variant has been discarded" do
+      before { product.master.discard }
+
+      it "does not include the product" do
+        expect(subject).to be_empty
+      end
+    end
+
+    context "when the SKU doesn't match" do
+      let(:sku) { "NON-MATCHING-SKU" }
+
+      it "does not include the product" do
+        expect(subject).to be_empty
+      end
+    end
+  end
 end

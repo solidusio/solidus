@@ -194,11 +194,29 @@ module Spree
             group("spree_products.id").joins(:taxons).where(Spree::Taxon.arel_table[:name].eq(name))
           end
 
-          def self.with_variant_sku_cont(sku)
-            sku_match = "%#{sku}%"
+          def self.with_all_variant_sku_cont(sku)
             variant_table = Spree::Variant.arel_table
-            subquery = Spree::Variant.where(variant_table[:sku].matches(sku_match).and(variant_table[:product_id].eq(arel_table[:id])))
+            subquery = Spree::Variant.with_discarded.where(
+              variant_table[:sku].matches("%#{sku}%").and(
+                variant_table[:product_id].eq(arel_table[:id])
+              )
+            )
             where(subquery.arel.exists)
+          end
+
+          def self.with_kept_variant_sku_cont(sku)
+            variant_table = Spree::Variant.arel_table
+            subquery = Spree::Variant.where(
+              variant_table[:sku].matches("%#{sku}%").and(
+                variant_table[:product_id].eq(arel_table[:id])
+              )
+            )
+            where(subquery.arel.exists)
+          end
+
+          def self.with_variant_sku_cont(sku)
+            Spree::Deprecation.warn("use .with_kept_variant_sku_cont instead")
+            with_kept_variant_sku_cont(sku)
           end
 
           class << self
