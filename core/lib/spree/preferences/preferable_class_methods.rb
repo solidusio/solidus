@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'spree/deprecation'
 require 'spree/encryptor'
 
 module Spree::Preferences
@@ -26,8 +27,38 @@ module Spree::Preferences
         options[:default] = preference_encryptor.encrypt(options[:default])
       end
 
-      default = options[:default]
-      default = proc { options[:default] } unless default.is_a?(Proc)
+      default = begin
+                  given = options[:default]
+                  if ancestors.include?(Spree::Preferences::Configuration) &&
+                     given.is_a?(Proc) &&
+                     given.lambda? &&
+                     given.arity.zero?
+                    Spree::Deprecation.warn <<~MSG
+                      The arity of a proc given as the default for a preference
+                      has changed from 0 to 1 on Solidus 3.1. The Solidus
+                      version for the loaded preference defaults is given as the
+                      proc's argument from this point on.
+
+                      If you don't need to return a different default value
+                      depending on the loaded Solidus version, you can change
+                      the proc so that it doesn't have lambda semantics (lambdas
+                      raise when extra arguments are supplied, while raw procs
+                      don't). E.g.:
+
+                      preference :foo, :string, default: proc { true }
+
+                      If you want to branch on the provided Solidus version, you can do like the following:
+
+                      preference :foo, :string, default: by_version(true, "3.2.0" => false)
+
+                    MSG
+                    ->(_default_context) { given.call }
+                  elsif given.is_a?(Proc)
+                    given
+                  else
+                    proc { given }
+                  end
+                end
 
       # The defined preferences on a class are all those defined directly on
       # that class as well as those defined on ancestors.
