@@ -1,5 +1,10 @@
 ## Solidus 3.2.0.alpha (master, unreleased)
 
+## Solidus 3.1.1 (v3.1, 2021-09-20)
+
+- Add deprecation path for arity-zero preference defaults [#4170](https://github.com/solidusio/solidus/pull/4170) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Fix staled upgrade instructions on the Gemfile's post-install message [#4166](https://github.com/solidusio/solidus/pull/4166) ([waiting-for-dev](https://github.com/waiting-for-dev))
+
 ## Solidus 3.1.0 (v3.1, 2021-09-10)
 
 ### Major changes
@@ -75,7 +80,7 @@ Otherwise, copy [the
 task](https://github.com/solidusio/solidus/blob/master/core/lib/tasks/solidus/delete_prices_with_nil_amount.rake)
 into your code, and deploy & execute it. Another option is to execute it
 manually in your console in production. However, be extremely careful when
-doing that!! :warning: :warning: :warning: 
+doing that!! :warning: :warning: :warning:
 
 ```ruby
 Spree::Price.where(amount: nil).delete_all
