@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+require 'spree/event/adapters/default'
 
 RSpec.describe Spree::AppConfiguration do
   let(:prefs) { Spree::Config }
@@ -134,7 +135,7 @@ RSpec.describe Spree::AppConfiguration do
     expect(prefs.admin_vat_location.country_id).to eq(nil)
   end
 
-  it 'has default Event adapter' do
-    expect(prefs.events.adapter).to eq Spree::Event::Adapters::ActiveSupportNotifications
+  it 'can access event adapter' do
+    expect(prefs.events.adapter).to be_an_instance_of(Spree::Event::Adapters::Default)
   end
 end
