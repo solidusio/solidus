@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
-require_relative 'event/adapters/active_support_notifications'
-require_relative 'event/subscriber_registry'
+require_relative 'event/adapters/deprecation_handler'
 require_relative 'event/configuration'
+require_relative 'event/listener'
+require_relative 'event/subscriber_registry'
 require_relative 'event/subscriber'
 
 module Spree
@@ -99,7 +100,7 @@ module Spree
     def subscribe(event_name, adapter: default_adapter, &block)
       event_name = normalize_name(event_name)
       adapter.subscribe(event_name, &block).tap do
-        if legacy_adapter?(adapter)
+        if deprecation_handler.legacy_adapter?(adapter)
           listener_names << adapter.normalize_name(event_name)
         end
       end
@@ -154,7 +155,7 @@ module Spree
     #    # => {"order_finalized"=> [#<Spree::Event::Listener...>],
     #         "reimbursement_reimbursed"=> [#<Spree::Event::Listener...>]}
     def listeners(adapter: default_adapter)
-      if legacy_adapter?(adapter)
+      if deprecation_handler.legacy_adapter?(adapter)
         adapter.listeners_for(listener_names)
       else
         init = Hash.new { |h, k| h[k] = [] }
@@ -224,8 +225,8 @@ module Spree
           order.do_something
           Spree::Event.fire 'event_name', order: order
       MSG
-      if legacy_adapter?(adapter)
-        Spree::Deprecation.warn <<~MSG
+      if deprecation_handler.legacy_adapter?(adapter)
+        Spree::Deprecation.warn <<~MSG if deprecation_handler.render_deprecation_message?(adapter)
           Blocks on `Spree::Event.fire` are ignored in the new adapter
           `Spree::Event::Adapters::Default`, and your current adapter
           (`Spree::Event::Adapters::ActiveSupportNotifications`) is deprecated.
@@ -247,8 +248,8 @@ module Spree
       end
     end
 
-    def legacy_adapter?(adapter)
-      adapter == Adapters::ActiveSupportNotifications
+    def deprecation_handler
+      Adapters::DeprecationHandler
     end
   end
 end

@@ -130,6 +130,15 @@ jobs:
       - setup
       - test
 
+  event_bus_legacy_adapter:
+    executor: postgres
+    parallelism: *parallelism
+    environment:
+      CI_LEGACY_EVENT_BUS_ADAPTER: '1'
+    steps:
+      - setup
+      - test
+
 workflows:
   build:
     jobs:
@@ -141,6 +150,7 @@ workflows:
       - mysql
       - postgres_rails60
       - postgres_rails52
+      - event_bus_legacy_adapter
       - stoplight/push:
           context: "Solidus Core Team"
           project: solidus/solidus-api
