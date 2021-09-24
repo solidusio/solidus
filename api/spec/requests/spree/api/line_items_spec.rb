@@ -95,6 +95,12 @@ module Spree::Api
         expect(response.status).to eq(201)
       end
 
+      it '#create calls #invalid_resource! if adding a line item fails validation' do
+        allow_any_instance_of(Spree::LineItem).to receive(:valid?).and_return(false)
+        expect_any_instance_of(Spree::Api::BaseController).to receive(:invalid_resource!).once
+        post spree.api_order_line_items_path(order), params: { line_item: { variant_id: product.master.to_param, quantity: 1 } }
+      end
+
       it "default quantity to 1 if none is given" do
         post spree.api_order_line_items_path(order), params: { line_item: { variant_id: product.master.to_param } }
         expect(response.status).to eq(201)
