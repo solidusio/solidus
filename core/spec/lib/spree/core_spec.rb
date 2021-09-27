@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require 'rails_helper'
 require 'spree/core'
 
 RSpec.describe Spree::Core do
@@ -33,6 +33,45 @@ RSpec.describe Spree::Core do
       expect(api).to receive(:load_defaults).with(Spree.solidus_version)
 
       Spree.load_defaults(Spree.solidus_version)
+    end
+  end
+
+  describe '.has_install_generator_been_run?' do
+    let(:rails_paths) do
+      Rails::Paths::Root.new('/').tap do |paths|
+        paths.add('config/initializers')
+        paths['config/initializers'] << File.dirname(__FILE__)
+      end
+    end
+
+    context 'when spree initializer exists' do
+      it 'returns true' do
+        initializer_name = File.basename(__FILE__)
+
+        expect(
+          Spree::Core.has_install_generator_been_run?(rails_paths: rails_paths, initializer_name: initializer_name, dummy_app_name: 'Foo')
+        ).to be(true)
+      end
+    end
+
+    context "when initializer doesn't exist in initializers directory" do
+      it 'returns false' do
+        initializer_name = 'xxxxxxxxxxxxxxxxxxxxxx'
+
+        expect(
+          Spree::Core.has_install_generator_been_run?(rails_paths: rails_paths, initializer_name: initializer_name, dummy_app_name: 'Foo')
+        ).to be(false)
+      end
+    end
+
+    context 'when running test suite with the dummy application loaded' do
+      it 'returns true' do
+        initializer_name = 'xxxxxxxxxxxxxxxxxxxxxx'
+
+        expect(
+          Spree::Core.has_install_generator_been_run?(rails_paths: rails_paths, initializer_name: initializer_name)
+        ).to be(true)
+      end
     end
   end
 end
