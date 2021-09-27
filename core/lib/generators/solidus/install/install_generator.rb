@@ -28,6 +28,7 @@ module Solidus
                  enum: PAYMENT_METHODS.keys,
                  default: PAYMENT_METHODS.keys.first,
                  desc: "Indicates which payment method to install."
+    class_option :with_frontend, type: :string, default: 'spree/frontend'
 
     def self.source_paths
       paths = superclass.source_paths
@@ -246,6 +247,14 @@ module Solidus
       end
     end
 
+    def install_solidus_starter_frontend
+      return unless install_solidus_starter_frontend?
+
+      say_status :install, "Solidus Starter Frontend"
+      ENV['LOCATION'] ||= 'https://raw.githubusercontent.com/nebulab/solidus_starter_frontend/master/template.rb'
+      run 'bin/rails app:template'
+    end
+
     def complete
       unless options[:quiet]
         puts "*" * 50
@@ -256,6 +265,10 @@ module Solidus
     end
 
     private
+
+    def install_solidus_starter_frontend?
+      options[:with_frontend] == 'solidus_starter_frontend'
+    end
 
     def bundle_cleanly(&block)
       Bundler.respond_to?(:with_unbundled_env) ? Bundler.with_unbundled_env(&block) : Bundler.with_clean_env(&block)
