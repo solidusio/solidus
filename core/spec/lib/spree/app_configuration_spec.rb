@@ -135,7 +135,7 @@ RSpec.describe Spree::AppConfiguration do
     expect(prefs.admin_vat_location.country_id).to eq(nil)
   end
 
-  it 'can access event adapter' do
-    expect(prefs.events.adapter).to be_an_instance_of(Spree::Event::Adapters::Default)
+  it 'can access event configuration' do
+    expect(prefs.events).to be_an_instance_of(Spree::Event::Configuration)
   end
 end

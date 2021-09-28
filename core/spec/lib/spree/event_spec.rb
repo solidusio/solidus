@@ -2,6 +2,7 @@
 
 require 'rails_helper'
 require 'spree/event/adapters/default'
+require 'spree/event/adapters/deprecation_handler'
 require 'spree/event/adapters/active_support_notifications'
 
 RSpec.describe Spree::Event do
@@ -13,7 +14,7 @@ RSpec.describe Spree::Event do
 
   describe '.default_adapter' do
     it 'returns configured adapter' do
-      expect(subject.default_adapter).to be_an_instance_of Spree::Event::Adapters::Default
+      expect(subject.default_adapter).to be(Spree::Config.events.adapter)
     end
   end
 
@@ -74,7 +75,7 @@ RSpec.describe Spree::Event do
       end.to raise_error(ArgumentError, /Blocks.*are ignored/)
     end
 
-    it 'renders a deprecation warning if a block is given and the adapter is ActiveSupportNotifications but still executes it' do
+    it 'executes a block when given and the adapter is ActiveSupportNotifications' do
       dummy = Class.new do
         attr_reader :run
 
@@ -87,7 +88,11 @@ RSpec.describe Spree::Event do
         end
       end.new
 
-      expect(Spree::Deprecation).to receive(:warn).with(/Blocks.*are ignored/)
+      if Spree::Event::Adapters::DeprecationHandler.legacy_adapter_set_by_env
+        allow(Spree::Deprecation).to receive(:warn).with(/Blocks.*are ignored/)
+      else
+        expect(Spree::Deprecation).to receive(:warn).with(/Blocks.*are ignored/)
+      end
 
       subject.fire(:foo, adapter: Spree::Event::Adapters::ActiveSupportNotifications) { dummy.toggle }
 
