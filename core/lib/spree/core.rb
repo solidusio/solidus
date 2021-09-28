@@ -62,12 +62,23 @@ module Spree
   end
 
   module Core
-    def self.has_install_generator_been_run?
-      (Rails.env.test? && Rails.application.class.name == 'DummyApp::Application') ||
-        Rails.application.paths['config/initializers'].paths.any? do |path|
-          File.exist?(path.join('spree.rb'))
-        end
+    # @api private
+    def self.has_install_generator_been_run?(rails_paths: Rails.application.paths, initializer_name: 'spree.rb', dummy_app_name: 'DummyApp::Application')
+      does_spree_initializer_exist?(rails_paths, initializer_name) ||
+        running_solidus_test_suite_with_dummy_app?(dummy_app_name)
     end
+
+    def self.running_solidus_test_suite_with_dummy_app?(dummy_app_name)
+      Rails.env.test? && Rails.application.class.name == dummy_app_name
+    end
+    private_class_method :running_solidus_test_suite_with_dummy_app?
+
+    def self.does_spree_initializer_exist?(rails_paths, initializer_name)
+      rails_paths['config/initializers'].any? do |path|
+        File.exist?(Pathname.new(path).join(initializer_name))
+      end
+    end
+    private_class_method :does_spree_initializer_exist?
 
     class GatewayError < RuntimeError; end
   end
