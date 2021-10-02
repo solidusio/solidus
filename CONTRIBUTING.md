@@ -69,7 +69,7 @@ Though in some cases the Core Team may choose not to merge a PR that meets these
 people are reviewing your pull request
 * Good commit messages are also encouraged. Here are some resources on writing
 good commit messages:
-  * [Notes from Linus](https://github.com/torvalds/subsurface/commit/b6590150d68df528efd40c889ba6eea476b39873)
+  * [Notes from Linus](https://github.com/subsurface/subsurface/commit/b6590150d68df528efd40c889ba6eea476b39873)
   * [Erlang's guide](https://github.com/erlang/otp/wiki/Writing-good-commit-messages)
   * [An often-cited post](http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html)
 
