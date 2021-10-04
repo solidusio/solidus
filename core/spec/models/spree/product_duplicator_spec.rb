@@ -87,6 +87,11 @@ module Spree
       it "will not duplicate the option values" do
         expect{ duplicator.duplicate }.to change{ Spree::OptionValue.count }.by(0)
       end
+
+      it "will duplicate the variants after initial duplicate is discarded" do
+        duplicator.duplicate.discard
+        expect { duplicator.duplicate }.to change { Spree::Variant.count }.by(3)
+      end
     end
   end
 end
