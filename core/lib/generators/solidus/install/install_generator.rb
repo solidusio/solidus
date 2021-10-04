@@ -181,7 +181,7 @@ module Solidus
         gem plugin_name
       end
 
-      bundle_cleanly{ run "bundle install" } if @plugins_to_be_installed.any?
+      Bundler.with_original_env{ run "bundle install" } if @plugins_to_be_installed.any?
       run "spring stop" if defined?(Spring)
 
       @plugin_generators_to_run.each do |plugin_generator_name|
@@ -253,12 +253,6 @@ module Solidus
         puts " "
         puts "Enjoy!"
       end
-    end
-
-    private
-
-    def bundle_cleanly(&block)
-      Bundler.respond_to?(:with_unbundled_env) ? Bundler.with_unbundled_env(&block) : Bundler.with_clean_env(&block)
     end
   end
 end
