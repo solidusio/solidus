@@ -129,6 +129,26 @@ RSpec.describe Spree::AppConfiguration do
     end
   end
 
+  describe "#migration_path" do
+    subject { config_instance.migration_path }
+
+    let(:config_instance) { described_class.new }
+
+    it "has a default value" do
+      expect(subject.to_s).to end_with "db/migrate"
+    end
+
+    context "with a custom value" do
+      before do
+        config_instance.migration_path = "db/secondary_database"
+      end
+
+      it "returns the configured value" do
+        expect(subject).to eq "db/secondary_database"
+      end
+    end
+  end
+
   it 'has a default admin VAT location with nil values by default' do
     expect(prefs.admin_vat_location).to eq(Spree::Tax::TaxLocation.new)
     expect(prefs.admin_vat_location.state_id).to eq(nil)

@@ -40,7 +40,7 @@ module Spree
         ]
       end
 
-      initializer "spree.core.checking_migrations", before: :load_config_initializers do |_app|
+      initializer "spree.core.checking_migrations", after: :load_config_initializers do |_app|
         Migrations.new(config, engine_name).check
       end
 

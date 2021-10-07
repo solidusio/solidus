@@ -66,7 +66,7 @@ module Spree
     end
 
     def app_dir
-      "#{Rails.root}/db/migrate"
+      Spree::Config.migration_path
     end
 
     def engine_dir
