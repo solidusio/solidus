@@ -56,6 +56,7 @@ module Spree
         # adjustment. +adjustment_amount * 3+ or $15.
         #
         def compute_amount(line_item)
+          return BigDecimal(0) if line_item.is_a?(NilClass)
           adjustment_amount = calculator.compute(PartialLineItem.new(line_item))
           adjustment_amount ||= BigDecimal(0)
           adjustment_amount = adjustment_amount.abs
