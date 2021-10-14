@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "rails_helper"
+require 'byebug'
 
 module Spree::Promotion::Actions
   RSpec.describe CreateQuantityAdjustments do
@@ -228,6 +229,11 @@ module Spree::Promotion::Actions
 
       it "doesn't reload the line_items association" do
         expect(order.line_items.first.promo_total).to eq(-11)
+      end
+
+      it '#bigDecimal line empty' do
+        line_item =  nil
+        expect(action.compute_amount(line_item)).to eq(BigDecimal(0))
       end
     end
 
