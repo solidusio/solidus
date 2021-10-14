@@ -1,5 +1,9 @@
 ## Solidus 3.2.0.alpha (master, unreleased)
 
+### Core
+
+- Add configuration option for `migration_path` [#4190](https://github.com/solidusio/solidus/pull/4190) ([SuperGoodSoft](https://github.com/supergoodsoft/))
+
 ## Solidus 3.1.1 (v3.1, 2021-09-20)
 
 - Add deprecation path for arity-zero preference defaults [#4170](https://github.com/solidusio/solidus/pull/4170) ([waiting-for-dev](https://github.com/waiting-for-dev))
