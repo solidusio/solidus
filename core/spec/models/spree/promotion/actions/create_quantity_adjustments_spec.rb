@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require "rails_helper"
-require 'byebug'
 
 module Spree::Promotion::Actions
   RSpec.describe CreateQuantityAdjustments do
