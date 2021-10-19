@@ -9,7 +9,7 @@ module Spree
           @products = product_scope.where(id: ids)
         else
           products_includes = [
-            :variants,
+            #:variants,
             :option_types,
             :product_properties,
             { classifications: :taxon }
