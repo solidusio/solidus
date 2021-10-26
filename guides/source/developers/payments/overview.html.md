@@ -36,7 +36,7 @@ The rest of this article summarizes these parts of the system.
 In order for you to successfully process payments, your  `Spree::PaymentMethod`s
 need to send information to a [payment service provider][psp] (PSP).
 
-The Solidus community has created a number of Solidus extensions to connect you
+The Solidus community has created a number of Solidus extensions to connect
 popular PSPs like Braintree, Adyen, Affirm, and Paybright.
 
 Typically, PSP integrations use the `Spree::PaymentMethod` base class to build
