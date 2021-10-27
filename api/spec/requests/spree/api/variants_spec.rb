@@ -38,7 +38,14 @@ module Spree::Api
         expect(json_response['pages']).to eq(3)
       end
 
-      it 'can query the results through a paramter' do
+      it 'can query the results through the search class' do
+        expected_result = create(:variant, sku: 'FOOBAR')
+        get spree.api_variants_path, params: { variant_search_term: 'FOO' }
+        expect(json_response['count']).to eq(1)
+        expect(json_response['variants'].first['sku']).to eq expected_result.sku
+      end
+
+      it 'can query the results through ransack' do
         expected_result = create(:variant, sku: 'FOOBAR')
         get spree.api_variants_path, params: { q: { sku_cont: 'FOO' } }
         expect(json_response['count']).to eq(1)
