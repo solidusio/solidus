@@ -31,9 +31,7 @@
         },
         data: function(term, page) {
           var searchData = {
-            q: {
-              product_name_or_sku_cont: term
-            },
+            variant_search_term: term,
             token: Spree.api_key
           };
           return _.extend(searchData, searchOptions);
