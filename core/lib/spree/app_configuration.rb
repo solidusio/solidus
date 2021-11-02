@@ -263,7 +263,6 @@ module Spree
     #   @return [] Track on_hand values for variants / products. (default: true)
     preference :track_inventory_levels, :boolean, default: true
 
-
     # Other configurations
 
     # Allows restricting what currencies will be available.
@@ -524,6 +523,17 @@ module Spree
     # @return [Module] a module that can be included into Spree::Taxon to allow attachments
     # Enumerable of taxons adhering to the present_taxon_class interface
     class_name_attribute :taxon_attachment_module, default: 'Spree::Taxon::ActiveStorageAttachment'
+
+    # Configures the absolute path that contains the Solidus engine
+    # migrations. This will be checked at app boot to confirm that all Solidus
+    # migrations are installed.
+    #
+    # @!attribute [rw] migration_path
+    # @return [Pathname] the configured path. (default: `Rails.root.join('db', 'migrate')`)
+    attr_writer :migration_path
+    def migration_path
+      @migration_path ||= ::Rails.root.join('db', 'migrate')
+    end
 
     # Allows providing your own class instance for generating order numbers.
     #
