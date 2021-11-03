@@ -169,6 +169,10 @@ module Spree
     #   @return [String] Email address used as +From:+ field in transactional emails.
     preference :mails_from, :string, default: 'solidus@example.com'
 
+    # @!attribute [rw] associate_user_in_authentication_extension
+    #   @return [Boolean] manually call associate_user instead of relying on current_order
+    preference :associate_user_in_authentication_extension, :boolean, default: false
+
     # @!attribute [rw] max_level_in_taxons_menu
     #   @return [Integer] maximum nesting level in taxons menu (default: +1+)
     preference :max_level_in_taxons_menu, :integer, default: 1
