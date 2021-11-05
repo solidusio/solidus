@@ -65,6 +65,13 @@ module Spree
       end
 
       config.after_initialize do
+        if Spree::Config.associate_user_in_authentication_extension
+          Spree::Deprecation.warn(
+            "Order#associate_user is deprecated and will be removed in 2.11",
+            caller
+          )
+        end
+
         Spree::Config.check_load_defaults_called('Spree::Config')
       end
     end
