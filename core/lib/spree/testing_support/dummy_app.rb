@@ -145,7 +145,7 @@ Spree.config do |config|
     config.image_attachment_module = 'Spree::Image::PaperclipAttachment'
     config.taxon_attachment_module = 'Spree::Taxon::PaperclipAttachment'
   end
-  config.associate_user_in_authentication_extension = true
+  config.associate_user_in_authentication_extension = false
 end
 
 # Raise on deprecation warnings
