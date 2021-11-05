@@ -39,6 +39,7 @@ module Spree
         def associate_user
           return if Spree::Config.associate_user_in_authentication_extension
 
+          Spree::Deprecation.warn("Order#associate_user is deprecated and will be removed in 2.11")
           @order ||= current_order
           if try_spree_current_user && @order
             @order.associate_user!(try_spree_current_user) if @order.user.blank? || @order.email.blank?

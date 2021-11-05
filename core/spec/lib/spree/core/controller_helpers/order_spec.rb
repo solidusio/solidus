@@ -85,9 +85,14 @@ RSpec.describe Spree::Core::ControllerHelpers::Order, type: :controller do
       end
     end
     context "configuration associate_user_in_authentication_extension is false" do
-      it "warns about deprecation" do
+      before do
         stub_spree_preferences(associate_user_in_authentication_extension: false)
-        expect(Spree::Deprecation).to receive(:warn)
+      end
+
+      it "warns about deprecation" do
+        expect(Spree::Deprecation).to receive(:warn).
+          with(/^Order#associate_user is deprecated/, any_args)
+
         controller.associate_user
       end
     end
