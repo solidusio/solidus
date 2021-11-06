@@ -38,7 +38,6 @@ module Spree
 
         def associate_user
           return if Spree::Config.associate_user_in_authentication_extension
-          Spree::Deprecation.behavior = :stderr
           Spree::Deprecation.warn(
             "Order#associate_user is deprecated and will be removed in 2.11",
             caller(1)
