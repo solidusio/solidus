@@ -4,7 +4,7 @@ require 'active_support/deprecation'
 
 module Spree
   Deprecation = ActiveSupport::Deprecation.new('4.0', 'Solidus')
-
+  Deprecation.behavior = :stderr
   # This DeprecatedInstanceVariableProxy transforms instance variable to
   # deprecated instance variable.
   #
