@@ -56,7 +56,6 @@ Capybara.register_driver :selenium_chrome_headless_docker_friendly do |app|
   Capybara::Selenium::Driver.new(app, browser: :chrome, options: browser_options)
 end
 Capybara.javascript_driver = (ENV['CAPYBARA_DRIVER'] || :selenium_chrome_headless).to_sym
-#Capybara.default_driver = :selenium_chrome
 
 ActiveJob::Base.queue_adapter = :test
 
