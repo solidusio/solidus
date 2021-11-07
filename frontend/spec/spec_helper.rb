@@ -38,6 +38,7 @@ require 'spree/testing_support/order_walkthrough'
 require 'spree/testing_support/caching'
 require 'spree/testing_support/blacklist_urls'
 require 'spree/testing_support/translations'
+require 'pry'
 
 require 'capybara-screenshot/rspec'
 Capybara.save_path = ENV['CIRCLE_ARTIFACTS'] if ENV['CIRCLE_ARTIFACTS']
@@ -55,6 +56,7 @@ Capybara.register_driver :selenium_chrome_headless_docker_friendly do |app|
   Capybara::Selenium::Driver.new(app, browser: :chrome, options: browser_options)
 end
 Capybara.javascript_driver = (ENV['CAPYBARA_DRIVER'] || :selenium_chrome_headless).to_sym
+#Capybara.default_driver = :selenium_chrome
 
 ActiveJob::Base.queue_adapter = :test
 

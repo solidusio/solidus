@@ -40,6 +40,8 @@ Spree.config do |config|
   # Template to use when rendering layout
   # config.layout = "spree/layouts/spree_application"
 
+  # manually call associate_user instead of relying on current_order
+  # config.associate_user_in_authentication_extension = false
 
   # Admin:
 

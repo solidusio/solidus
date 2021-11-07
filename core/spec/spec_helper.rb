@@ -11,6 +11,7 @@ require 'spree/testing_support/partial_double_verification'
 require 'spree/testing_support/preferences'
 require 'spree/config'
 require 'with_model'
+require 'pry'
 
 RSpec.configure do |config|
   config.disable_monkey_patching!
