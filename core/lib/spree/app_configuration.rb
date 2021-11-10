@@ -171,7 +171,7 @@ module Spree
 
     # @!attribute [rw] associate_user_in_authentication_extension
     #   @return [Boolean] manually call associate_user instead of relying on current_order
-    preference :associate_user_in_authentication_extension, :boolean, default: false
+    preference :associate_user_in_authentication_extension, :boolean, default: by_version(false, "3.2.0.alpha" => true)
 
     # @!attribute [rw] max_level_in_taxons_menu
     #   @return [Integer] maximum nesting level in taxons menu (default: +1+)
