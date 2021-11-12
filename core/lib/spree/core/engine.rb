@@ -103,6 +103,14 @@ module Spree
           end
         end
       end
+
+      config.after_initialize do
+        if defined?(Spree::Auth::Engine) &&
+            Gem::Version.new(Spree::Auth::VERSION) < Gem::Version.new('2.5.4') &&
+            defined?(Spree::UsersController)
+          Spree::UsersController.protect_from_forgery with: :exception
+        end
+      end
     end
   end
 end
