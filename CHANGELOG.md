@@ -1,8 +1,14 @@
 ## Solidus 3.2.0.alpha (master, unreleased)
 
+- Monkey patch Authentication Bypass by CSRF Weakness vulnerability on solidus_auth_devise for extra security [GHSA-5629-8855-gf4g](https://github.com/solidusio/solidus/security/advisories/GHSA-5629-8855-gf4g)
+
 ### Core
 
 - Add configuration option for `migration_path` [#4190](https://github.com/solidusio/solidus/pull/4190) ([SuperGoodSoft](https://github.com/supergoodsoft/))
+
+## Solidus 3.1.3 (v3.1, 2021-11-17)
+
+- Monkey patch Authentication Bypass by CSRF Weakness vulnerability on solidus_auth_devise for extra security [GHSA-5629-8855-gf4g](https://github.com/solidusio/solidus/security/advisories/GHSA-5629-8855-gf4g)
 
 ## Solidus 3.1.1 (v3.1, 2021-09-20)
 
@@ -172,6 +178,10 @@ Spree::Price.where(amount: nil).delete_all
 - Improve Customizing Attributes documentation [#3979](https://github.com/solidusio/solidus/pull/3979) ([dhughesbc](https://github.com/dhughesbc))
 - Improve Solidus events documentation [#3819](https://github.com/solidusio/solidus/pull/3819) ([spaghetticode](https://github.com/spaghetticode))
 
+## Solidus 3.0.3 (v3.0, 2021-11-17)
+
+- Monkey patch Authentication Bypass by CSRF Weakness vulnerability on solidus_auth_devise for extra security [GHSA-5629-8855-gf4g](https://github.com/solidusio/solidus/security/advisories/GHSA-5629-8855-gf4g)
+
 ## Solidus 3.0.2 (v3.0, 2021-09-10)
 
 - Permit return_items_attributes return_reason_id [#4091](https://github.com/solidusio/solidus/pull/4091) ([spaghetticode](https://github.com/spaghetticode))
@@ -303,6 +313,10 @@ the maintained fork.
 - Update readme with Solidus demo URL [#3822](https://github.com/solidusio/solidus/pull/3822) ([seand7565](https://github.com/seand7565))
 - Fix headers in changelog [#3812](https://github.com/solidusio/solidus/pull/3812) ([jarednorman](https://github.com/jarednorman))
 - Fixed typo with misspell [#3811](https://github.com/solidusio/solidus/pull/3811) ([hsbt](https://github.com/hsbt))
+
+## Solidus 2.11.12 (v2.11, 2021-11-17)
+
+- Monkey patch Authentication Bypass by CSRF Weakness vulnerability on solidus_auth_devise for extra security [GHSA-5629-8855-gf4g](https://github.com/solidusio/solidus/security/advisories/GHSA-5629-8855-gf4g)
 
 ## Solidus 2.11.11 (v2.11, 2021-09-10)
 
