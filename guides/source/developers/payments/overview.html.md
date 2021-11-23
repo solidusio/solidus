@@ -7,11 +7,11 @@ The logic for processing payments is decoupled from Solidus's orders system.
 This allows you to easily define your own payment methods with custom
 processing logic.
 
-The payments system has many moving parts. The following lists summarize the
+The payments system has many moving parts. The following list summarizes the
 essential parts of the payments system:
 
 1. **Payment service providers**. Before your store can have a functional
-   payments system, you need to create an account with a payment service provider 
+   payments system, you need to create an account with a payment service provider
    like Braintree or Stripe.
 2. **Payment methods**. A store may have multiple `Spree::PaymentMethod`s
    configured. Payment methods send payment information to a payment service
@@ -33,7 +33,7 @@ The rest of this article summarizes these parts of the system.
 
 ## Payment service providers (PSPs)
 
-In order for you to successfully process payments, your  `Spree::PaymentMethod`s
+In order for you to successfully process payments, your `Spree::PaymentMethod`s
 need to send information to a [payment service provider][psp] (PSP).
 
 The Solidus community has created a number of Solidus extensions to connect

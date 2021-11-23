@@ -2,9 +2,9 @@
 
 Solidus is not built to process payments by itself, and it does not include any
 integrations for popular [payment service providers (PSPs)][psp]. You must
-install a Solidus extension or create your own integration. 
+install a Solidus extension or create your own integration.
 
-[psp]: https://en.wikipedia.org/wiki/Payment_service_provider 
+[psp]: https://en.wikipedia.org/wiki/Payment_service_provider
 
 ## Solidus extensions for payment processing
 
@@ -29,17 +29,19 @@ service providers:
 [solidus-paypal-braintree]: https://github.com/solidusio/solidus_paypal_braintree
 [solidus-payu-latam]: https://github.com/ccarruitero/solidus_payu_latam
 
-## Sending payments to PSPs 
+## Sending payments to PSPs
 
 In order for you to successfully process payments, your payment methods need to
 send information to a payment service provider. You can use the
-`Spree::PaymentMethod` and `Spree::PaymentMethod::CreditCard` classes if you
-need to build out your own integrations with a PSP.
+`Spree::PaymentMethod` and `Spree::PaymentMethod::CreditCard` classes as a
+reference for building out your own PSP integrations.
 
 ### The Spree::PaymentMethod base class
 
 Typically, PSP integrations use the `Spree::PaymentMethod` base class to build
-out to the PSP's specifications and API.
+out to the PSP's specifications and API. When you model out payment methods
+using `Spree::PaymentMethod` as a base class, you can get Solidus admin panel
+functionality with very little effort.
 
 Note that the `Spree::PaymentMethod` base class also has a similar interface to
 the [`active_merchant`][active-merchant] gem.

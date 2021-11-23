@@ -75,7 +75,7 @@ ways:
 
 - If the `Spree::PaymentMethod`'s `auto_capture` attribute is set to `true`,
   `purchase!` is called, meaning the payment is authorized and captured. This
-occurs even if the payment's state is already `completed`.
+  occurs even if the payment's state is already `completed`.
 - If the `Spree::PaymentMethod`'s `auto_capture` attribute is set to `false`,
   then the payment is authorized but not captured. This occurs even if the
   payment's state is already `completed`.
@@ -141,7 +141,7 @@ This section goes into more detail of the steps taken to process a payment.
 
 [payment-states]: ../orders/payment-states.html
 
-## The authorize! and  purchase! methods
+## The authorize! and purchase! methods
 
 The `Spree::Payment::Processing` model has an `authorize!` and a `purchase!`
 method that are used to interact with the payment service provider that is

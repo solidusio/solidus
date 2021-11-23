@@ -67,10 +67,10 @@ defaults to the value of your store's `Spree::Config[:auto_capture]` preference.
 
 ## Set a payment source class
 
-The `Spree::PaymentMethod` base class has a method called
-`payment_source_class`. It sets the payment source that should be associated
-with your payment method. When you are creating your own payment method, you
-need to define a `payment_source_class` (even if it is `nil`).
+The `Spree::PaymentMethod` base class has a method: `#payment_source_class`.
+It sets the payment source that should be associated with your payment method.
+When you are creating your own payment method, you need to define a
+`payment_source_class` (even if it is `nil`).
 
 Solidus provides payment sources such as `Spree::CreditCard` and
 `Spree::StoreCredit`. However, payment methods included in Solidus extensions
@@ -89,7 +89,8 @@ integration with a payment service provider.
 
 These payment methods are provided by Solidus:
 
-- `Spree::PaymentMethod::Check`: A class for processing payments from checks.
+- `Spree::PaymentMethod::Check`: A class for processing payments from checks
+  (also spelled: cheques).
 - `Spree::PaymentMethod::StoreCredit`: A class for processing payments from
   a user's existing `Spree::StoreCredit`.
 - `Spree::PaymentMethod::CreditCard`: A base class for other typical credit
