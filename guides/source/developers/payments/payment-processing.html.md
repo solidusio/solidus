@@ -9,10 +9,6 @@ While the `Spree::Payment` model executes much of the processing logic and
 manages the state of the payment (before and after processing), note that it
 includes the [`Spree::Payment::Processing` class][spree-payment-processing].
 
-<!-- TODO:
-  Add links to payment service providers article in this introduction once it is
-  merged.
--->
 
 [payment-methods]: payment-methods.html
 [payment-service-providers]: payment-service-providers.html

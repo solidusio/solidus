@@ -46,16 +46,10 @@ Solidus is not built to process payments by itself, and it does not include any
 integrations for popular PSPs. You must install an extension or create your own
 integration.
 
-<!-- TODO:
-  # Once an article about payment service providers is merged, uncomment this
-  link.
+For more information about payment service providers in Solidus, see the
+[Payment service providers][payment-service-providers] article.
 
-  For more information about payment service providers in Solidus, see the
-  [Payment service providers][payment-service-providers] article.
-
-  [payment-service-providers]: payment-service-providers.html
--->
-
+[payment-service-providers]: payment-service-providers.html
 [psp]: https://en.wikipedia.org/wiki/Payment_service_provider
 
 ## Payment methods
@@ -90,12 +84,7 @@ successfully. The `Spree::Payment` model has a state machine that tracks the
 status of a payment. Once the payment is processed by your payment service
 provider, the state could become `complete`, `failed`, `void`, and so on.
 
-
-<!-- TODO:
-  # Once a Spree::Payments article is merged, uncomment this link.
-
-  For more information about payments, see the [Payments][payments] article.
--->
+For more information about payments, see the [Payments][payments] article.
 
 [payments]: payments.html
 
@@ -115,12 +104,8 @@ payments made using your Braintree payment methods have the payment source
 class has a `payment_type` method that could have a value of `ApplePay`,
 `CreditCard` or `PayPalAccount`.
 
-<!-- TODO:
-  # Once an article about payment sources is merged, uncomment this link.
-
-  For more information about payment sources, see the [Payment
-  methods][payment-sources] article.
--->
+For more information about payment sources, see the [Payment
+methods][payment-sources] article.
 
 [payment-sources]: payment-sources.html
 [solidus-paypal-braintree]: https://github.com/solidusio/solidus_paypal_braintree

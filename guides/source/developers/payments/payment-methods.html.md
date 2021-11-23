@@ -5,9 +5,9 @@ chooses to accept payments. For example, you may want to set up separate payment
 methods for PayPal payments and credit card payments.
 
 You can inherit the [`Spree::PaymentMethod` base class][payment-method-base]
-when you build your own integration for a payment service provider. <!-- For
-more information about Solidus and payment service providers, see the [Payment
-service providers][payment-service-providers] article. -->
+when you build your own integration for a payment service provider. For more
+information about Solidus and payment service providers, see the [Payment
+service providers][payment-service-providers] article.
 
 `Spree::PaymentMethod` objects have the following attributes:
 
@@ -30,10 +30,6 @@ service providers][payment-service-providers] article. -->
 - `available_to_users`: Determines if the payment method is visible to users.
 - `available_to_admin`: Determines if the payment method is visible to
   administrators.
-
-<!-- TODO:
-  Uncomment the link to the payment service providers article once it is merged.
--->
 
 [payment-method-base]: https://github.com/solidusio/solidus/blob/master/core/app/models/spree/payment_method.rb
 [payment-service-providers]: payment-service-providers.html
