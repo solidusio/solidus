@@ -48,11 +48,25 @@ The base `Spree::PaymentMethod` class has just two preferences:
 
 ## Auto-capture
 
-All `Spree::Payment` objects need to be captured before they are sent to the
-payment service provider for [processing][payment-processing]. If the
-`auto_capture` attribute for a payment method is set to `false`, the
-administrator must manually capture payments. However, you can set any payment
-method to auto-capture payments.
+Auto-capture refers to whether the current payment method should attempt to
+auto-capture the payment immediately. Auto-capture can be enabled or disabled
+with the boolean attribute `#auto_capture` on the `Spree::PaymentMethod`.
+
+When a customer's payment has successfully been [processed][payment-processing],
+and your store has received the payment, the relevant `Spree::Payment` object's
+`#state` should be "`captured`".
+
+### Behaviour when enabled
+
+When auto-capture is enabled, Solidus executes its payment capture flow as soon
+as the order is completed.
+
+### Behaviour when disabled
+
+When disabled, the payment remains uncaptured until a Solidus administrator (or
+your custom payment method code) manually executes the payment capture flow
+after some other condition is met. For example, it is conventional to only
+capture a payment after an order's shipment has been marked as "`shipped`".
 
 [payment-processing]: payment-processing.html
 
