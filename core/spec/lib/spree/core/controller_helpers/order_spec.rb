@@ -71,23 +71,25 @@ RSpec.describe Spree::Core::ControllerHelpers::Order, type: :controller do
 
   describe '#associate_user' do
     before { allow(controller).to receive_messages(current_order: order) }
-    context "user's email is blank" do
-      let(:user) { create(:user, email: '') }
-      it 'calls Spree::Order#associate_user! method' do
-        expect_any_instance_of(Spree::Order).to receive(:associate_user!)
-        controller.associate_user
-      end
-    end
-    context "user isn't blank" do
-      it 'does not calls Spree::Order#associate_user! method' do
-        expect_any_instance_of(Spree::Order).not_to receive(:associate_user!)
-        controller.associate_user
-      end
-    end
 
     context "configuration associate_user_in_authentication_extension is false" do
       before do
         stub_spree_preferences(associate_user_in_authentication_extension: false)
+      end
+
+      context "user's email is blank" do
+        let(:user) { create(:user, email: '') }
+        it 'calls Spree::Order#associate_user! method' do
+          expect_any_instance_of(Spree::Order).to receive(:associate_user!)
+          controller.associate_user
+        end
+      end
+
+      context "user isn't blank" do
+        it 'does not calls Spree::Order#associate_user! method' do
+          expect_any_instance_of(Spree::Order).not_to receive(:associate_user!)
+          controller.associate_user
+        end
       end
 
       it "warns about deprecation" do
