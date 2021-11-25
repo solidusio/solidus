@@ -27,7 +27,7 @@
         <% end %>
       </td>
       <td><%= variant.options_text %></td>
-      <td><%= variant.display_price.to_html %></td>
+      <td><%= variant.display_price&.to_html %></td>
       <td><%= variant.sku %></td>
       <td class="actions">
         <% if can?(:update, variant) %>
