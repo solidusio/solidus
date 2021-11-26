@@ -14,6 +14,8 @@ Gem::Specification.new do |s|
   s.homepage    = 'http://solidus.io'
   s.license     = 'BSD-3-Clause'
 
+  s.metadata['rubygems_mfa_required'] = 'true'
+
   s.files = Dir['README.md', 'lib/**/*']
 
   s.required_ruby_version = '>= 2.5.0'
