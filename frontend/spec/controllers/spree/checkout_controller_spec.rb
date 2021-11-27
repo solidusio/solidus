@@ -54,6 +54,7 @@ describe Spree::CheckoutController, type: :controller do
         # The first step for checkout controller is address
         # Transitioning into this state first is required
         order.update_column(:state, "address")
+        stub_spree_preferences(associate_user_in_authentication_extension: false)
       end
 
       it "should associate the order with a user" do
