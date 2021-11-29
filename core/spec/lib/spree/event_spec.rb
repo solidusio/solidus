@@ -8,6 +8,20 @@ require 'spree/event/adapters/active_support_notifications'
 RSpec.describe Spree::Event do
   subject { described_class }
 
+  let(:counter) do
+    Class.new do
+      attr_reader :count
+
+      def initialize
+        @count = 0
+      end
+
+      def inc
+        @count += 1
+      end
+    end
+  end
+
   def build_bus
     Spree::Event::Adapters::Default.new
   end
@@ -19,7 +33,7 @@ RSpec.describe Spree::Event do
   end
 
   describe '.adapter' do
-    it 'deprecates and forwards to default_adapter' do
+    it 'deprecates and forwards to default_adapter', :aggregate_failures do
       expect(Spree::Deprecation).to receive(:warn).with(/deprecated.*default_adapter/m)
 
       expect(subject.adapter).to be(subject.default_adapter)
@@ -27,44 +41,25 @@ RSpec.describe Spree::Event do
   end
 
   describe '.fire' do
-    it 'forwards to adapter' do
+    it 'forwards to adapter', :aggregate_failures do
       bus = build_bus
-      dummy = Class.new do
-        attr_reader :run
+      dummy = counter.new
+      subject.subscribe('foo', adapter: bus) { dummy.inc }
 
-        def initialize
-          @run = false
-        end
+      firing = subject.fire 'foo', adapter: bus
 
-        def toggle
-          @run = true
-        end
-      end.new
-      subject.subscribe('foo', adapter: bus) { dummy.toggle }
-
-      subject.fire 'foo', adapter: bus
-
-      expect(dummy.run).to be(true)
+      expect(dummy.count).to be(1)
+      expect(firing.executions.first.result).to be(1)
     end
 
     it 'coerces event names given as symbols' do
       bus = build_bus
-      dummy = Class.new do
-        attr_reader :run
-
-        def initialize
-          @run = false
-        end
-
-        def toggle
-          @run = true
-        end
-      end.new
-      subject.subscribe('foo', adapter: bus) { dummy.toggle }
+      dummy = counter.new
+      subject.subscribe('foo', adapter: bus) { dummy.inc }
 
       subject.fire :foo, adapter: bus
 
-      expect(dummy.run).to be(true)
+      expect(dummy.count).to be(1)
     end
 
     it 'raises error if a block is given and the adapter is not ActiveSupportNotifications' do
@@ -76,17 +71,7 @@ RSpec.describe Spree::Event do
     end
 
     it 'executes a block when given and the adapter is ActiveSupportNotifications' do
-      dummy = Class.new do
-        attr_reader :run
-
-        def initialize
-          @run = false
-        end
-
-        def toggle
-          @run = true
-        end
-      end.new
+      dummy = counter.new
 
       if Spree::Event::Adapters::DeprecationHandler.legacy_adapter_set_by_env
         allow(Spree::Deprecation).to receive(:warn).with(/Blocks.*are ignored/)
@@ -94,9 +79,18 @@ RSpec.describe Spree::Event do
         expect(Spree::Deprecation).to receive(:warn).with(/Blocks.*are ignored/)
       end
 
-      subject.fire(:foo, adapter: Spree::Event::Adapters::ActiveSupportNotifications) { dummy.toggle }
+      subject.fire(:foo, adapter: Spree::Event::Adapters::ActiveSupportNotifications) { dummy.inc }
 
-      expect(dummy.run).to be(true)
+      expect(dummy.count).to be(1)
+    end
+
+    it "provides caller location to the event" do
+      bus = build_bus
+      subject.subscribe('foo', adapter: bus) { :work }
+
+      firing = subject.fire 'foo', adapter: bus
+
+      expect(firing.event.caller_location.to_s).to include(__FILE__)
     end
   end
 
@@ -121,44 +115,24 @@ RSpec.describe Spree::Event do
   describe '#unsubscribe' do
     it 'delegates to the adapter' do
       bus = build_bus
-      dummy = Class.new do
-        attr_reader :run
-
-        def initialize
-          @run = false
-        end
-
-        def toggle
-          @run = true
-        end
-      end.new
-      listener = subject.subscribe('foo', adapter: bus) { dummy.toggle }
+      dummy = counter.new
+      listener = subject.subscribe('foo', adapter: bus) { dummy.inc }
 
       subject.unsubscribe listener, adapter: bus
       subject.fire 'foo', adapter: bus
 
-      expect(dummy.run).to be(false)
+      expect(dummy.count).to be(0)
     end
 
     it 'coerces event names given as symbols' do
       bus = build_bus
-      dummy = Class.new do
-        attr_reader :run
-
-        def initialize
-          @run = false
-        end
-
-        def toggle
-          @run = true
-        end
-      end.new
-      subject.subscribe('foo', adapter: bus) { dummy.toggle }
+      dummy = counter.new
+      subject.subscribe('foo', adapter: bus) { dummy.inc }
 
       subject.unsubscribe :foo, adapter: bus
       subject.fire 'foo', adapter: bus
 
-      expect(dummy.run).to be(false)
+      expect(dummy.count).to be(0)
     end
   end
 

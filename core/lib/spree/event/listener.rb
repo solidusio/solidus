@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require 'benchmark'
+require 'spree/event/execution'
+
 module Spree
   module Event
     # Subscription to an event
@@ -25,7 +28,12 @@ module Spree
 
       # @api private
       def call(event)
-        @block.call(event)
+        result = nil
+        benchmark = Benchmark.measure do
+          result = @block.call(event)
+        end
+
+        Execution.new(listener: self, result: result, benchmark: benchmark)
       end
 
       # @api private

@@ -14,6 +14,8 @@ Gem::Specification.new do |s|
   s.homepage    = 'http://solidus.io'
   s.license     = 'BSD-3-Clause'
 
+  s.metadata['rubygems_mfa_required'] = 'true'
+
   s.files = `git ls-files -z`.split("\x0").reject do |f|
     f.match(%r{^(spec|script)/})
   end
