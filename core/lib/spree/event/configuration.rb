@@ -28,7 +28,7 @@ module Spree
 
             Spree.config do |config|
               # ...
-              config.events.adapter = Spree::Event::Adapters.Default.new
+              config.events.adapter = Spree::Event::Adapters::Default.new
               # ...
             end
 
