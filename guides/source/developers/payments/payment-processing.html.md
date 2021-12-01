@@ -1,30 +1,27 @@
 # Payment processing
 
 Solidus does not process payments. Instead, it relies on [payment service
-providers][psp] like Stripe or Braintree. So, in order to process payments, your
-[payment methods][payment-methods] should first integrate with, and send
-payment data to, your payment service provider.
+providers][psp] (or PSPs) like Stripe or Braintree. So, in order to process
+payments, your [payment methods][payment-methods] should first integrate with,
+and send payment data to, your payment service provider.
 
-While the `Spree::Payment` model executes much of the processing logic and
-manages the state of the payment (before and after processing), note that it
-includes the [`Spree::Payment::Processing` class][spree-payment-processing].
+The `Spree::Payment` record contains most of the logic that depends on an
+integration with a PSP. (Note that the critical functionality has been isolated
+in the [`Spree::Payment::Processing` module][spree-payment-processing].)
 
-<!-- TODO:
-  Add links to payment service providers article in this introduction once it is
-  merged.
--->
+The `Spree::Payment#state` is used to document the state of the payment, and
+whether the payment has been captured, voided, cancelled, etc. by the PSP.
 
 [payment-methods]: payment-methods.html
 [payment-service-providers]: payment-service-providers.html
 [psp]: https://en.wikipedia.org/wiki/Payment_service_provider
-[spree-payment-processing]: https://github.com/solidusio/solidus/blob/master/core/app/models/spree/payment/processing.rb
 
 ## Interfacing with a payment service provider
 
 When you set up your own payment methods, you need it to integrate with a payment
 service provider. While you can create an integration in any way that you want,
 you may want to note the following conventions set up by Solidus's
-`Spree::PaymentMethod` and `Spree::Payment::Processing` classes:
+`Spree::PaymentMethod` model and the `Spree::Payment::Processing` module:
 
 - `Spree::PaymentMethod` has a similar interface to API provided by the
   [active_merchant][active-merchant] gem.
@@ -63,8 +60,9 @@ For every gateway action, a list of gateway options are passed through:
 
 ## The process! method
 
-Payment processing depends on the `process!` method included in the
-`Spree::Payment::Processing` class.
+Payment processing depends on the logic of the `Spree::Payment#process!`, which
+is defined in the [`Spree::Payment::Processing`
+module][spree-payment-processing] and included on the `Spree::Payment` class.
 
 Note that the `process!` method has many conditionals and different outcomes
 depending on the status of the current `Spree::Payment`, the payment source, and
@@ -75,7 +73,7 @@ ways:
 
 - If the `Spree::PaymentMethod`'s `auto_capture` attribute is set to `true`,
   `purchase!` is called, meaning the payment is authorized and captured. This
-occurs even if the payment's state is already `completed`.
+  occurs even if the payment's state is already `completed`.
 - If the `Spree::PaymentMethod`'s `auto_capture` attribute is set to `false`,
   then the payment is authorized but not captured. This occurs even if the
   payment's state is already `completed`.
@@ -97,13 +95,9 @@ Payments cannot be processed using the `process!` method in a few circumstances:
 The `process!` method cannot continue and raises an exception in the following
 cases:
 
-- The payment source is missing or invalid.
+- The [payment source][payment-sources] is missing or invalid.
 - The current payment is in a state that cannot transition to `processing`. (For
   example, its state is already `failed`, `void`, or `invalid`.)
-
-<!-- TODO:
-  Add links to payment sources article in this section once it is merged.
--->
 
 [payment-sources]: payment-sources.html
 
@@ -111,7 +105,7 @@ cases:
 
 This section goes into more detail of the steps taken to process a payment.
 
-1. If a completed `Spree::Order`'s `payment_required?` method returns `true`,
+1. If a completed `Spree::Order`'s `#payment_required?` method returns `true`,
    the `process!` method is called and Solidus attempts to fulfill the payment.
 2. If the payment's associated `Spree::PaymentMethod` requires a payment source,
    and the payment's `source_type` and `source_id` attributes reference a valid
@@ -141,7 +135,7 @@ This section goes into more detail of the steps taken to process a payment.
 
 [payment-states]: ../orders/payment-states.html
 
-## The authorize! and  purchase! methods
+## The authorize! and purchase! methods
 
 The `Spree::Payment::Processing` model has an `authorize!` and a `purchase!`
 method that are used to interact with the payment service provider that is
@@ -164,3 +158,5 @@ as the `purchase` method above:
 ```ruby
 payment_method.authorize(<amount>, <source>, <gateway options>)
 ```
+
+[spree-payment-processing]: https://github.com/solidusio/solidus/blob/master/core/app/models/spree/payment/processing.rb

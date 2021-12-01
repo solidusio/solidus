@@ -5,9 +5,9 @@ chooses to accept payments. For example, you may want to set up separate payment
 methods for PayPal payments and credit card payments.
 
 You can inherit the [`Spree::PaymentMethod` base class][payment-method-base]
-when you build your own integration for a payment service provider. <!-- For
-more information about Solidus and payment service providers, see the [Payment
-service providers][payment-service-providers] article. -->
+when you build your own integration for a payment service provider. For more
+information about Solidus and payment service providers, see the [Payment
+service providers][payment-service-providers] article.
 
 `Spree::PaymentMethod` objects have the following attributes:
 
@@ -31,10 +31,6 @@ service providers][payment-service-providers] article. -->
 - `available_to_admin`: Determines if the payment method is visible to
   administrators.
 
-<!-- TODO:
-  Uncomment the link to the payment service providers article once it is merged.
--->
-
 [payment-method-base]: https://github.com/solidusio/solidus/blob/master/core/app/models/spree/payment_method.rb
 [payment-service-providers]: payment-service-providers.html
 
@@ -52,11 +48,25 @@ The base `Spree::PaymentMethod` class has just two preferences:
 
 ## Auto-capture
 
-All `Spree::Payment` objects need to be captured before they are sent to the
-payment service provider for [processing][payment-processing]. If the
-`auto_capture` attribute for a payment method is set to `false`, the
-administrator must manually capture payments. However, you can set any payment
-method to auto-capture payments.
+Auto-capture refers to whether the current payment method should attempt to
+auto-capture the payment immediately. Auto-capture can be enabled or disabled
+with the boolean attribute `#auto_capture` on the `Spree::PaymentMethod`.
+
+When a customer's payment has successfully been [processed][payment-processing],
+and your store has received the payment, the relevant `Spree::Payment` object's
+`#state` should be "`captured`".
+
+### Behaviour when enabled
+
+When auto-capture is enabled, Solidus executes its payment capture flow as soon
+as the order is completed.
+
+### Behaviour when disabled
+
+When disabled, the payment remains uncaptured until a Solidus administrator (or
+your custom payment method code) manually executes the payment capture flow
+after some other condition is met. For example, it is conventional to only
+capture a payment after an order's shipment has been marked as "`shipped`".
 
 [payment-processing]: payment-processing.html
 
@@ -67,10 +77,10 @@ defaults to the value of your store's `Spree::Config[:auto_capture]` preference.
 
 ## Set a payment source class
 
-The `Spree::PaymentMethod` base class has a method called
-`payment_source_class`. It sets the payment source that should be associated
-with your payment method. When you are creating your own payment method, you
-need to define a `payment_source_class` (even if it is `nil`).
+The `Spree::PaymentMethod` base class has a method: `#payment_source_class`.
+It sets the payment source that should be associated with your payment method.
+When you are creating your own payment method, you need to define a
+`payment_source_class` (even if it is `nil`).
 
 Solidus provides payment sources such as `Spree::CreditCard` and
 `Spree::StoreCredit`. However, payment methods included in Solidus extensions
@@ -89,7 +99,8 @@ integration with a payment service provider.
 
 These payment methods are provided by Solidus:
 
-- `Spree::PaymentMethod::Check`: A class for processing payments from checks.
+- `Spree::PaymentMethod::Check`: A class for processing payments from checks
+  (also spelled: cheques).
 - `Spree::PaymentMethod::StoreCredit`: A class for processing payments from
   a user's existing `Spree::StoreCredit`.
 - `Spree::PaymentMethod::CreditCard`: A base class for other typical credit
