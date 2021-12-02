@@ -36,6 +36,7 @@ require 'spree/testing_support/flash'
 require 'spree/testing_support/url_helpers'
 require 'spree/testing_support/order_walkthrough'
 require 'spree/testing_support/capybara_ext'
+require 'spree/testing_support/blacklist_urls'
 
 require 'capybara-screenshot/rspec'
 Capybara.save_path = ENV['CIRCLE_ARTIFACTS'] if ENV['CIRCLE_ARTIFACTS']
@@ -90,9 +91,6 @@ RSpec.configure do |config|
 
   config.before do
     Rails.cache.clear
-    if RSpec.current_example.metadata[:js] && page.driver.browser.respond_to?(:url_blacklist)
-      page.driver.browser.url_blacklist = ['http://fonts.googleapis.com']
-    end
   end
 
   config.include BaseFeatureHelper, type: :feature
@@ -112,6 +110,7 @@ RSpec.configure do |config|
   config.include Spree::TestingSupport::UrlHelpers
   config.include Spree::TestingSupport::ControllerRequests, type: :controller
   config.include Spree::TestingSupport::Flash
+  config.include Spree::TestingSupport::BlacklistUrls
 
   config.extend WithModel
 
