@@ -70,6 +70,19 @@ describe "Variants", type: :feature do
         expect(page).to have_content(discarded_variant.sku)
       end
     end
+
+    context 'displaying variants with unconfigured prices' do
+      let!(:variant) { create(:variant, sku: 'priceless_variant', product: product) }
+
+      before { variant.prices.delete_all }
+
+      it 'renders the listing correctly' do
+        visit spree.admin_product_variants_path(product)
+
+        expect(page.status_code).to be(200)
+        expect(page).to have_content('priceless_variant')
+      end
+    end
   end
 
   context "editing existent variant" do
