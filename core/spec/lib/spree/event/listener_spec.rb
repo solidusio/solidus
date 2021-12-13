@@ -88,4 +88,12 @@ RSpec.describe Spree::Event::Listener do
       end
     end
   end
+
+  describe '#listeners' do
+    it 'returns a list containing only itself' do
+      listener = described_class.new(pattern: 'foo', block: -> {})
+
+      expect(listener.listeners).to eq([listener])
+    end
+  end
 end
