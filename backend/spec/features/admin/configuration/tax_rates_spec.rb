@@ -28,4 +28,37 @@ describe "Tax Rates", type: :feature do
     click_button "Create"
     expect(page).to have_content("Tax Rate has been successfully created!")
   end
+
+  describe "listing" do
+    let!(:tax_rate_1) { create(:tax_rate, name: "Tax Rate 1") }
+    let!(:tax_rate_2) { create(:tax_rate, name: "Tax Rate 2") }
+
+    it "shows all tax rates if no filter is applied" do
+      visit spree.admin_tax_rates_path
+      within "table" do
+        expect(page).to have_content tax_rate_1.name
+        expect(page).to have_content tax_rate_2.name
+      end
+    end
+
+    it "it is possible to filter by zone" do
+      visit spree.admin_tax_rates_path
+      select tax_rate_1.zone.name, from: "Zone"
+      click_on "Filter Results"
+      within "table" do
+        expect(page).to have_content tax_rate_1.name
+        expect(page).to_not have_content tax_rate_2.name
+      end
+    end
+
+    it "it is possible to filter by tax category" do
+      visit spree.admin_tax_rates_path
+      select tax_rate_2.tax_categories.first.name, from: "Tax Category"
+      click_on "Filter Results"
+      within "table" do
+        expect(page).to have_content tax_rate_2.name
+        expect(page).to_not have_content tax_rate_1.name
+      end
+    end
+  end
 end
