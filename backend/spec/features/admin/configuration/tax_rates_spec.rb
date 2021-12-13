@@ -30,8 +30,9 @@ describe "Tax Rates", type: :feature do
   end
 
   describe "listing" do
-    let!(:tax_rate_1) { create(:tax_rate, name: "Tax Rate 1") }
-    let!(:tax_rate_2) { create(:tax_rate, name: "Tax Rate 2") }
+    let(:calculator) { create(:default_tax_calculator) }
+    let!(:tax_rate_1) { create(:tax_rate, name: "Tax Rate 1", calculator: calculator) }
+    let!(:tax_rate_2) { create(:tax_rate, name: "Tax Rate 2", calculator: calculator) }
 
     it "shows all tax rates if no filter is applied" do
       visit spree.admin_tax_rates_path
@@ -58,6 +59,13 @@ describe "Tax Rates", type: :feature do
       within "table" do
         expect(page).to have_content tax_rate_2.name
         expect(page).to_not have_content tax_rate_1.name
+      end
+    end
+
+    it "it displays the translated calculator name" do
+      visit spree.admin_tax_rates_path
+      within "table" do
+        expect(page).to have_content calculator.class.model_name.human
       end
     end
   end
