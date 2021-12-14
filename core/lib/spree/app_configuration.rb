@@ -263,6 +263,11 @@ module Spree
     #   @return [] Track on_hand values for variants / products. (default: true)
     preference :track_inventory_levels, :boolean, default: true
 
+    # @!attribute [rw] disable_adding_default_payment_to_order
+    #   @return [Boolean] Disable Spree::Order#add_default_payment_from_wallet transition (default: +false+)
+    preference :disable_adding_default_payment_to_order, :boolean, default: false
+
+
     # Other configurations
 
     # Allows restricting what currencies will be available.
