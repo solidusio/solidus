@@ -374,7 +374,12 @@ module Spree
     # @!attribute [rw] default_payment_builder_class
     # @return [Class] a class with the same public interfaces as
     #   Spree::Wallet::DefaultPaymentBuilder.
-    class_name_attribute :default_payment_builder_class, default: 'Spree::Wallet::DefaultPaymentBuilder'
+    attr_writer :default_payment_builder_class
+    def default_payment_builder_class
+      Spree::Deprecation.warn("`Spree::Config.default_payment_builder_class` is deprecated and will be removed.")
+
+      @default_payment_builder_class ||= Spree::Wallet::DefaultPaymentBuilder
+    end
 
     # Allows providing your own class for managing the contents of an order.
     #
