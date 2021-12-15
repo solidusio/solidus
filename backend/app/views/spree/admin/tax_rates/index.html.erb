@@ -13,7 +13,35 @@
   <% end %>
 <% end %>
 
+<% content_for :table_filter_title do %>
+  <%= t("spree.filter") %>
+<% end %>
+
+<% content_for :table_filter do %>
+  <%= search_form_for [:admin, @search], url: spree.admin_tax_rates_path do |f| %>
+    <div class= "row">
+      <div class="col-md-6">
+        <div class="field">
+          <%= f.label :zone_id_eq, Spree::Zone.model_name.human %>
+          <%= f.collection_select :zone_id_eq, @available_zones, :id, :name, { include_blank: t("spree.all") }, class: 'select2 fullwidth' %>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="field">
+          <%= f.label :tax_categories_id_eq, Spree::TaxCategory.model_name.human %>
+          <%= f.collection_select :tax_categories_id_eq, @available_categories, :id, :name, { include_blank: t("spree.all") }, class: 'select2 fullwidth' %>
+        </div>
+      </div>
+    </div>
+    <div class="filter-actions">
+      <%= button_tag t("spree.filter_results"), class: "btn btn-primary" %>
+    </div>
+  <% end %>
+<% end %>
+
 <% if @tax_rates.any? %>
+  <%= paginate @tax_rates, scope: spree, theme: "solidus_admin" %>
+
   <table class="index">
     <colgroup>
       <col style="width: 15%">
@@ -55,7 +83,7 @@
         <td><%=tax_rate.included_in_price? ? t('spree.say_yes') : t('spree.say_no') %></td>
         <td><%=tax_rate.show_rate_in_label? ? t('spree.say_yes') : t('spree.say_no') %></td>
         <td><%=tax_rate.expires_at.to_date.to_s(:short_date) if tax_rate.expires_at %></td>
-        <td><%=tax_rate.calculator.to_s %></td>
+        <td><%=tax_rate.calculator && tax_rate.calculator.class.model_name.human %></td>
         <td class="actions">
           <% if can?(:update, tax_rate) %>
             <%= link_to_edit tax_rate, no_text: true %>
@@ -68,6 +96,8 @@
       <% end %>
     </tbody>
   </table>
+
+  <%= paginate @tax_rates, scope: spree, theme: "solidus_admin" %>
 <% else %>
   <div class="no-objects-found">
     <%= render 'spree/admin/shared/no_objects_found',
