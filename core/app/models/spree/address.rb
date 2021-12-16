@@ -84,6 +84,7 @@ module Spree
     # @return [Hash] hash of attributes contributing to value equality with optional merge
     def self.value_attributes(base_attributes, merge_attributes = {})
       base = base_attributes.stringify_keys.merge(merge_attributes.stringify_keys)
+      base.delete("name") unless Spree::Config.use_combined_first_and_last_name_in_address
 
       name_from_attributes = Spree::Address::Name.from_attributes(base)
       if base['firstname'].presence || base['first_name'].presence
