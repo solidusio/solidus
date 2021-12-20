@@ -11,7 +11,6 @@ module Spree
     # note: do not lock the #edit action because that's where we redirect when we fail to acquire a lock
     around_action :lock_order, only: :update
     before_action :apply_coupon_code, only: :update
-    skip_before_action :verify_authenticity_token, only: [:populate]
 
     def show
       @order = Spree::Order.find_by!(number: params[:id])
