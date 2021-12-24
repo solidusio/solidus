@@ -8,22 +8,54 @@ RSpec.describe Spree::PromotionCode do
 
     describe '#normalize_code' do
       let(:promotion) { create(:promotion, code: code) }
-      let(:promotion_code) { promotion.codes.first }
 
       before { subject }
 
-      context 'with mixed case' do
-        let(:code) { 'NewCoDe' }
+      context 'when no other code with the same value exists' do
+        let(:promotion_code) { promotion.codes.first }
 
-        it 'downcases the value before saving' do
-          expect(promotion_code.value).to eq('newcode')
+        context 'with mixed case' do
+          let(:code) { 'NewCoDe' }
+
+          it 'downcases the value before saving' do
+            expect(promotion_code.value).to eq('newcode')
+          end
+        end
+
+        context 'with extra spacing' do
+          let(:code) { ' new code ' }
+
+          it 'removes surrounding whitespace' do
+            expect(promotion_code.value).to eq 'new code'
+          end
         end
       end
 
-      context 'with extra spacing' do
-        let(:code) { ' new code ' }
-        it 'removes surrounding whitespace' do
-          expect(promotion_code.value).to eq 'new code'
+      context 'when another code with the same value exists' do
+        let(:promotion_code) { promotion.codes.build(value: code) }
+
+        context 'with mixed case' do
+          let(:code) { 'NewCoDe' }
+
+          it 'does not save the record and marks it as invalid' do
+            expect(promotion_code.valid?).to eq false
+
+            expect(promotion_code.errors.messages[:value]).to contain_exactly(
+              'has already been taken'
+            )
+          end
+        end
+
+        context 'with extra spacing' do
+          let(:code) { ' new code ' }
+
+          it 'does not save the record and marks it as invalid' do
+            expect(promotion_code.valid?).to eq false
+
+            expect(promotion_code.errors.messages[:value]).to contain_exactly(
+              'has already been taken'
+            )
+          end
         end
       end
     end

@@ -5,11 +5,11 @@ class Spree::PromotionCode < Spree::Base
   belongs_to :promotion_code_batch, class_name: "Spree::PromotionCodeBatch", optional: true
   has_many :adjustments
 
+  before_validation :normalize_code
+
   validates :value, presence: true, uniqueness: { allow_blank: true, case_sensitive: true }
   validates :promotion, presence: true
   validate :promotion_not_apply_automatically, on: :create
-
-  before_save :normalize_code
 
   self.whitelisted_ransackable_attributes = ['value']
 
