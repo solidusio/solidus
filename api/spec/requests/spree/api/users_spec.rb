@@ -70,6 +70,37 @@ module Spree::Api
         expect(json_response['ship_address']).to_not be_nil
       end
 
+      it "can update own details in JSON with unwrapped parameters (Rails default)" do
+        country = create(:country)
+        put spree.api_user_path(user.id),
+          headers: { "CONTENT_TYPE": "application/json" },
+          params: {
+            token: user.spree_api_key,
+            email: "mine@example.com",
+            bill_address_attributes: {
+              name: 'First Last',
+              address1: '1 Test Rd',
+              city: 'City',
+              country_id: country.id,
+              state_id: 1,
+              zipcode: '55555',
+              phone: '5555555555'
+            },
+            ship_address_attributes: {
+              name: 'First Last',
+              address1: '1 Test Rd',
+              city: 'City',
+              country_id: country.id,
+              state_id: 1,
+              zipcode: '55555',
+              phone: '5555555555'
+            }
+          }.to_json
+        expect(json_response['email']).to eq 'mine@example.com'
+        expect(json_response['bill_address']).to_not be_nil
+        expect(json_response['ship_address']).to_not be_nil
+      end
+
       it "cannot update other users details" do
         put spree.api_user_path(stranger.id), params: { token: user.spree_api_key, user: { email: "mine@example.com" } }
         assert_not_found!
