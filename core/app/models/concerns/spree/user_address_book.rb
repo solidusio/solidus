@@ -37,6 +37,9 @@ module Spree
 
       has_one :default_user_ship_address, ->{ default_shipping }, class_name: 'Spree::UserAddress', foreign_key: 'user_id'
       has_one :ship_address, through: :default_user_ship_address, source: :address
+
+      accepts_nested_attributes_for :ship_address
+      accepts_nested_attributes_for :bill_address
     end
 
     # saves address in address book
