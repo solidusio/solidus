@@ -36,7 +36,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'rails', '~> 5.0'
   s.add_dependency 'ransack', '~> 1.8'
   s.add_dependency 'responders'
-  s.add_dependency 'state_machines-activerecord', '~> 0.4'
+  s.add_dependency 'state_machines-activerecord', '~> 0.5'
   s.add_dependency 'stringex', '~> 1.5.1'
   s.add_dependency 'truncate_html', '~> 0.9', '>= 0.9.2'
   s.add_dependency 'twitter_cldr', '~> 3.0'
