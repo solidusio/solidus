@@ -87,10 +87,10 @@
         <td class="align-center"><%= l user.created_at.to_date %></td>
         <td data-hook="admin_users_index_row_actions" class="actions">
           <% if can?(:edit, user) %>
-            <%= link_to_edit user, no_text: true %>
+            <%= link_to_edit user, no_text: true, url: spree.admin_user_path(user) %>
           <% end %>
           <% if can?(:destroy, user) && user.orders.count.zero? %>
-            <%= link_to_delete user, no_text: true %>
+            <%= link_to_delete user, no_text: true, url: spree.admin_user_path(user) %>
           <% end %>
         </td>
       </tr>
