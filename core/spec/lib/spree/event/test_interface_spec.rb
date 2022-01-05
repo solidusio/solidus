@@ -37,6 +37,7 @@ RSpec.describe Spree::Event::TestInterface do
   unless Spree::Event::Adapters::DeprecationHandler.legacy_adapter?
     it 'can be accessed directly from TestInterface' do
       dummy = counter.new
+      Spree::Event.register('foo')
       listener = Spree::Event.subscribe('foo') { dummy.inc }
 
       described_class.performing_only(listener) do
@@ -44,6 +45,8 @@ RSpec.describe Spree::Event::TestInterface do
       end
 
       expect(dummy.count).to be(1)
+    ensure
+      Spree::Event.unregister('foo')
     end
 
     describe '#performing_only' do
@@ -51,6 +54,7 @@ RSpec.describe Spree::Event::TestInterface do
 
       it 'only performs given listeners for the duration of the block', :aggregate_failures do
         dummy1, dummy2, dummy3 = Array.new(3) { counter.new }
+        Spree::Event.register('foo')
         listener1 = Spree::Event.subscribe('foo') { dummy1.inc }
         listener2 = Spree::Event.subscribe('foo') { dummy2.inc }
         listener3 = Spree::Event.subscribe('foo') { dummy3.inc }
@@ -62,10 +66,13 @@ RSpec.describe Spree::Event::TestInterface do
         expect(dummy1.count).to be(1)
         expect(dummy2.count).to be(1)
         expect(dummy3.count).to be(0)
+      ensure
+        Spree::Event.unregister('foo')
       end
 
       it 'performs again all the listeners once the block is done', :aggregate_failures do
         dummy1, dummy2 = Array.new(2) { counter.new }
+        Spree::Event.register('foo')
         listener1 = Spree::Event.subscribe('foo') { dummy1.inc }
         listener2 = Spree::Event.subscribe('foo') { dummy2.inc }
 
@@ -79,10 +86,13 @@ RSpec.describe Spree::Event::TestInterface do
         Spree::Event.fire('foo')
 
         expect(dummy2.count).to be(1)
+      ensure
+        Spree::Event.unregister('foo')
       end
 
       it 'can extract listeners from a subscriber module', :aggregate_failures do
         dummy1, dummy2 = Array.new(2) { counter.new }
+        Spree::Event.register('foo')
         Subscriber1 = Module.new do
           include Spree::Event::Subscriber
 
@@ -112,12 +122,14 @@ RSpec.describe Spree::Event::TestInterface do
         expect(dummy1.count).to be(1)
         expect(dummy2.count).to be(0)
       ensure
+        Spree::Event.unregister('foo')
         Spree::Event.subscriber_registry.deactivate_subscriber(Subscriber1)
         Spree::Event.subscriber_registry.deactivate_subscriber(Subscriber2)
       end
 
       it 'can mix listeners and array of listeners', :aggregate_failures do
         dummy1, dummy2 = Array.new(2) { counter.new }
+        Spree::Event.register('foo')
         listener = Spree::Event.subscribe('foo') { dummy1.inc }
         Subscriber = Module.new do
           include Spree::Event::Subscriber
@@ -138,11 +150,13 @@ RSpec.describe Spree::Event::TestInterface do
         expect(dummy1.count).to be(1)
         expect(dummy2.count).to be(1)
       ensure
+        Spree::Event.unregister('foo')
         Spree::Event.subscriber_registry.deactivate_subscriber(Subscriber)
       end
 
       it 'can perform no listener at all' do
         dummy = counter.new
+        Spree::Event.register('foo')
         listener = Spree::Event.subscribe('foo') { dummy.inc }
 
         Spree::Event.performing_only do
@@ -150,10 +164,13 @@ RSpec.describe Spree::Event::TestInterface do
         end
 
         expect(dummy.count).to be(0)
+      ensure
+        Spree::Event.unregister('foo')
       end
 
       it 'can override through an inner call' do
         dummy = counter.new
+        Spree::Event.register('foo')
         listener = Spree::Event.subscribe('foo') { dummy.inc }
 
         Spree::Event.performing_only do
@@ -163,6 +180,8 @@ RSpec.describe Spree::Event::TestInterface do
         end
 
         expect(dummy.count).to be(1)
+      ensure
+        Spree::Event.unregister('foo')
       end
     end
 
@@ -171,6 +190,7 @@ RSpec.describe Spree::Event::TestInterface do
 
       it 'performs no listener for the duration of the block' do
         dummy = counter.new
+        Spree::Event.register('foo')
         listener = Spree::Event.subscribe('foo') { dummy.inc }
 
         Spree::Event.performing_nothing do
@@ -178,6 +198,32 @@ RSpec.describe Spree::Event::TestInterface do
         end
 
         expect(dummy.count).to be(0)
+      ensure
+        Spree::Event.unregister('foo')
+      end
+    end
+
+    describe '#unregister_event' do
+      before { Spree::Event.enable_test_interface }
+
+      it 'unregisters an event from the registry' do
+        Spree::Event.register('foo')
+
+        Spree::Event.unregister('foo')
+
+        expect {
+          Spree::Event.fire('foo')
+        }.to raise_error(/not registered/)
+      end
+
+      it 'coercers names given as symbol' do
+        Spree::Event.register('foo')
+
+        Spree::Event.unregister(:foo)
+
+        expect {
+          Spree::Event.fire('foo')
+        }.to raise_error(/not registered/)
       end
     end
   end

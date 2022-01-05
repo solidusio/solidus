@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 require 'spree/config'
+require 'spree/event'
+require 'spree/event/adapters/deprecation_handler'
 
 module Spree
   module Core
@@ -42,6 +44,18 @@ module Spree
 
       initializer "spree.core.checking_migrations", after: :load_config_initializers do |_app|
         Migrations.new(config, engine_name).check
+      end
+
+      # Register core events
+      initializer 'spree.core.register_events' do
+        unless Spree::Event::Adapters::DeprecationHandler.legacy_adapter?
+          %w[
+            order_finalized
+            order_recalculated
+            reimbursement_reimbursed
+            reimbursement_errored
+          ].each { |event_name| Spree::Event.register(event_name) }
+        end
       end
 
       # Setup Event Subscribers
