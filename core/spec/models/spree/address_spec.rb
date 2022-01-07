@@ -109,12 +109,56 @@ RSpec.describe Spree::Address, type: :model do
     end
   end
 
-  context "when saving a record" do
+  context "when creating a record" do
     context "when the `name` field is not explicitly set" do
       subject { build :address, name: nil, firstname: 'John', lastname: 'Doe' }
 
       it "sets `name` from `firstname` and `lastname`" do
         expect { subject.save }.to change { subject.read_attribute(:name) }.from(nil).to('John Doe')
+      end
+    end
+  end
+
+  context "when updating a record" do
+    let(:address) { create(:address, firstname: "John", lastname: "Doe") }
+
+    context "if use_combined_first_and_last_name_in_address is set to false (default)" do
+      before do
+        allow(Spree::Config).to receive(:use_combined_first_and_last_name_in_address) { false }
+      end
+
+      context "and the `name` attribute is not in changeset" do
+        it "sets `name` from `firstname` and `lastname`" do
+          new_address = described_class.immutable_merge(address, firstname: "Jane", lastname: "Fonda")
+          expect(new_address.read_attribute(:name)).to eq("Jane Fonda")
+        end
+      end
+
+      context "and the `name` attribute is in changeset" do
+        it "does not update name" do
+          new_address = described_class.immutable_merge(address, name: "Jane Fonda")
+          expect(new_address.read_attribute(:name)).to eq("John Von Doe")
+        end
+      end
+    end
+
+    context "if use_combined_first_and_last_name_in_address is set to true" do
+      before do
+        allow(Spree::Config).to receive(:use_combined_first_and_last_name_in_address) { true }
+      end
+
+      context "and the `name` attribute is not in changeset" do
+        it "keeps old name" do
+          new_address = described_class.immutable_merge(address, firstname: "Jane", lastname: "Fonda")
+          expect(new_address.read_attribute(:name)).to eq("John Von Doe")
+        end
+      end
+
+      context "and the `name` attribute is in changeset" do
+        it "updates name" do
+          new_address = described_class.immutable_merge(address, name: "Jane Fonda")
+          expect(new_address.read_attribute(:name)).to eq("Jane Fonda")
+        end
       end
     end
   end
