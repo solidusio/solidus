@@ -2,8 +2,8 @@ require 'spree/testing_support/sequences'
 require 'spree/testing_support/factories/country_factory'
 
 FactoryBot.define do
-  factory :global_zone, class: Spree::Zone do
-    name 'GlobalZone'
+  factory :global_zone, class: 'Spree::Zone' do
+    name { 'GlobalZone' }
     description { generate(:random_string) }
     zone_members do |proxy|
       zone = proxy.instance_eval { @instance }

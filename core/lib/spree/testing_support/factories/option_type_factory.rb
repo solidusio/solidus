@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :option_type, class: Spree::OptionType do
     sequence(:name) { |n| "foo-size-#{n}" }
-    presentation 'Size'
+    presentation { 'Size' }
   end
 end

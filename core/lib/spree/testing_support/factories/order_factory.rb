@@ -10,7 +10,7 @@ FactoryBot.define do
     user
     bill_address
     ship_address
-    completed_at nil
+    completed_at { nil }
     email { user.try(:email) }
     store
 
@@ -30,10 +30,10 @@ FactoryBot.define do
       ship_address
 
       transient do
-        line_items_count 1
+        line_items_count { 1 }
         line_items_attributes { [{}] * line_items_count }
-        shipment_cost 100
-        shipping_method nil
+        shipment_cost { 100 }
+        shipping_method { nil }
         stock_location { create(:stock_location) }
       end
 
@@ -53,11 +53,11 @@ FactoryBot.define do
       end
 
       factory :order_ready_to_complete do
-        state 'confirm'
-        payment_state 'checkout'
+        state { 'confirm' }
+        payment_state { 'checkout' }
 
         transient do
-          payment_type :credit_card_payment
+          payment_type { :credit_card_payment }
         end
 
         after(:create) do |order, evaluator|
@@ -72,7 +72,7 @@ FactoryBot.define do
       end
 
       factory :completed_order_with_totals do
-        state 'complete'
+        state { 'complete' }
 
         after(:create) do |order|
           order.refresh_shipment_rates
@@ -86,11 +86,11 @@ FactoryBot.define do
         end
 
         factory :order_ready_to_ship do
-          payment_state 'paid'
-          shipment_state 'ready'
+          payment_state { 'paid' }
+          shipment_state { 'ready' }
 
           transient do
-            payment_type :credit_card_payment
+            payment_type { :credit_card_payment }
           end
 
           after(:create) do |order, evaluator|
@@ -104,7 +104,7 @@ FactoryBot.define do
 
           factory :shipped_order do
             transient do
-              with_cartons true
+              with_cartons { true }
             end
             after(:create) do |order, evaluator|
               order.shipments.each do |shipment|

@@ -4,15 +4,15 @@ require 'spree/testing_support/factories/shipping_method_factory'
 require 'spree/testing_support/factories/stock_location_factory'
 
 FactoryBot.define do
-  factory :shipment, class: Spree::Shipment do
-    tracking 'U10000'
-    cost 100.00
-    state 'pending'
+  factory :shipment, class: 'Spree::Shipment' do
+    tracking { 'U10000' }
+    cost { 100.00 }
+    state { 'pending' }
     order
     stock_location
 
     transient do
-      shipping_method nil
+      shipping_method { nil }
     end
 
     after(:create) do |shipment, evalulator|

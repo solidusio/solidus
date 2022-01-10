@@ -6,10 +6,10 @@ FactoryBot.define do
 
   factory :refund, class: Spree::Refund do
     transient do
-      payment_amount 100
+      payment_amount { 100 }
     end
 
-    amount 100.00
+    amount { 100.00 }
     transaction_id { generate(:refund_transaction_id) }
     payment do
       association(:payment, state: 'completed', amount: payment_amount)

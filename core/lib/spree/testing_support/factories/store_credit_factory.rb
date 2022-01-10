@@ -7,8 +7,8 @@ FactoryBot.define do
     user
     association :created_by, factory: :user
     association :category, factory: :store_credit_category
-    amount 150.00
-    currency "USD"
+    amount { 150.00 }
+    currency { "USD" }
     association :credit_type, factory: :primary_credit_type
   end
 end

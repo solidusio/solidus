@@ -7,20 +7,20 @@ require 'spree/testing_support/factories/product_option_type_factory'
 FactoryBot.define do
   factory :base_product, class: Spree::Product do
     sequence(:name) { |n| "Product ##{n} - #{Kernel.rand(9999)}" }
-    description "As seen on TV!"
-    price 19.99
-    cost_price 17.00
+    description { "As seen on TV!" }
+    price { 19.99 }
+    cost_price { 17.00 }
     sku { generate(:sku) }
     available_on { 1.year.ago }
-    deleted_at nil
+    deleted_at { nil }
     shipping_category { |r| Spree::ShippingCategory.first || r.association(:shipping_category) }
 
     # ensure stock item will be created for this products master
     before(:create) { create(:stock_location) if Spree::StockLocation.count == 0 }
 
     factory :custom_product do
-      name 'Custom Product'
-      price 17.99
+      name { 'Custom Product' }
+      price { 17.99 }
 
       tax_category { |r| Spree::TaxCategory.first || r.association(:tax_category) }
     end
