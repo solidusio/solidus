@@ -31,7 +31,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'kaminari', '~> 0.15', '>= 0.15.1'
   s.add_dependency 'monetize', '~> 1.1'
   s.add_dependency 'paperclip', '~> 4.2'
-  s.add_dependency 'paranoia', '~> 2'
+  s.add_dependency 'paranoia', '~> 2.2.0'
   s.add_dependency 'premailer-rails'
   s.add_dependency 'rails', '~> 5.0'
   s.add_dependency 'ransack', '~> 1.8'
