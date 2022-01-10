@@ -108,7 +108,7 @@ describe Spree::Order, type: :model do
 
       context "with a line item" do
         before do
-          order.line_items << FactoryGirl.create(:line_item)
+          order.line_items << FactoryBot.create(:line_item)
         end
 
         it "transitions to address" do
@@ -123,7 +123,7 @@ describe Spree::Order, type: :model do
         end
 
         context "with default addresses" do
-          let(:default_address) { FactoryGirl.create(:address) }
+          let(:default_address) { FactoryBot.create(:address) }
 
           shared_examples "it references the user's the default address" do
             it do
@@ -137,7 +137,7 @@ describe Spree::Order, type: :model do
           it_behaves_like "it references the user's the default address" do
             let(:address_kind) { :ship }
             before do
-              order.user = FactoryGirl.create(:user)
+              order.user = FactoryBot.create(:user)
               order.user.default_address = default_address
               order.next!
               order.reload
@@ -147,7 +147,7 @@ describe Spree::Order, type: :model do
           it_behaves_like "it references the user's the default address" do
             let(:address_kind) { :bill }
             before do
-              order.user = FactoryGirl.create(:user, bill_address: default_address)
+              order.user = FactoryBot.create(:user, bill_address: default_address)
               order.next!
               order.reload
             end
@@ -201,7 +201,7 @@ describe Spree::Order, type: :model do
       end
 
       it "does not call persist_order_address if there is no address on the order" do
-        order.user = FactoryGirl.create(:user)
+        order.user = FactoryBot.create(:user)
         order.save!
 
         expect(order.user).to_not receive(:persist_order_address).with(order)
@@ -209,9 +209,9 @@ describe Spree::Order, type: :model do
       end
 
       it "calls persist_order_address on the order's user" do
-        order.user = FactoryGirl.create(:user)
-        order.ship_address = FactoryGirl.create(:address)
-        order.bill_address = FactoryGirl.create(:address)
+        order.user = FactoryBot.create(:user)
+        order.ship_address = FactoryBot.create(:address)
+        order.bill_address = FactoryBot.create(:address)
         order.save!
 
         expect(order.user).to receive(:persist_order_address).with(order)
@@ -219,7 +219,7 @@ describe Spree::Order, type: :model do
       end
 
       it "does not call persist_order_address on the order's user for a temporary address" do
-        order.user = FactoryGirl.create(:user)
+        order.user = FactoryBot.create(:user)
         order.temporary_address = true
         order.save!
 
@@ -229,7 +229,7 @@ describe Spree::Order, type: :model do
     end
 
     context "to delivery" do
-      let(:ship_address) { FactoryGirl.create(:ship_address) }
+      let(:ship_address) { FactoryBot.create(:ship_address) }
 
       before do
         order.ship_address = ship_address
@@ -280,7 +280,7 @@ describe Spree::Order, type: :model do
     end
 
     context "from delivery" do
-      let(:ship_address) { FactoryGirl.create(:ship_address) }
+      let(:ship_address) { FactoryBot.create(:ship_address) }
 
       before do
         order.ship_address = ship_address
@@ -320,7 +320,7 @@ describe Spree::Order, type: :model do
 
       context "correctly determining payment required based on shipping information" do
         let(:shipment) do
-          FactoryGirl.create(:shipment)
+          FactoryBot.create(:shipment)
         end
 
         before do
@@ -451,11 +451,11 @@ describe Spree::Order, type: :model do
 
     context "out of stock" do
       before do
-        order.user = FactoryGirl.create(:user)
+        order.user = FactoryBot.create(:user)
         order.email = 'spree@example.org'
-        order.payments << FactoryGirl.create(:payment)
+        order.payments << FactoryBot.create(:payment)
         allow(order).to receive_messages(payment_required?: true)
-        order.line_items << FactoryGirl.create(:line_item)
+        order.line_items << FactoryBot.create(:line_item)
         order.line_items.first.variant.stock_items.each do |si|
           si.set_count_on_hand(0)
           si.update_attributes(backorderable: false)
@@ -478,12 +478,12 @@ describe Spree::Order, type: :model do
 
     context "no inventory units" do
       before do
-        order.user = FactoryGirl.create(:user)
+        order.user = FactoryBot.create(:user)
         order.email = 'spree@example.com'
-        order.payments << FactoryGirl.create(:payment)
+        order.payments << FactoryBot.create(:payment)
         allow(order).to receive_messages(payment_required?: true)
         allow(order).to receive(:ensure_available_shipping_rates) { true }
-        order.line_items << FactoryGirl.create(:line_item)
+        order.line_items << FactoryBot.create(:line_item)
 
         Spree::OrderUpdater.new(order).update
         order.save!
@@ -518,7 +518,7 @@ describe Spree::Order, type: :model do
     context "exchange order completion" do
       before do
         order.email = 'spree@example.org'
-        order.payments << FactoryGirl.create(:payment)
+        order.payments << FactoryBot.create(:payment)
         order.shipments.create!
         allow(order).to receive_messages(payment_required?: true)
         allow(order).to receive(:ensure_available_shipping_rates).and_return(true)
@@ -526,8 +526,8 @@ describe Spree::Order, type: :model do
 
       context 'when the line items are not available' do
         before do
-          order.line_items << FactoryGirl.create(:line_item)
-          order.store = FactoryGirl.build(:store)
+          order.line_items << FactoryBot.create(:line_item)
+          order.store = FactoryBot.build(:store)
           Spree::OrderUpdater.new(order).update
 
           order.save!
@@ -557,16 +557,16 @@ describe Spree::Order, type: :model do
 
     context "default credit card" do
       before do
-        order.user = FactoryGirl.create(:user)
-        order.store = FactoryGirl.create(:store)
+        order.user = FactoryBot.create(:user)
+        order.store = FactoryBot.create(:store)
         order.email = 'spree@example.org'
-        order.payments << FactoryGirl.create(:payment)
+        order.payments << FactoryBot.create(:payment)
 
         # make sure we will actually capture a payment
         allow(order).to receive_messages(payment_required?: true)
         allow(order).to receive_messages(ensure_available_shipping_rates: true)
         allow(order).to receive_messages(validate_line_item_availability: true)
-        order.line_items << FactoryGirl.create(:line_item)
+        order.line_items << FactoryBot.create(:line_item)
         order.create_proposed_shipments
         Spree::OrderUpdater.new(order).update
 
@@ -588,9 +588,9 @@ describe Spree::Order, type: :model do
 
     context "a payment fails during processing" do
       before do
-        order.user = FactoryGirl.create(:user)
+        order.user = FactoryBot.create(:user)
         order.email = 'spree@example.org'
-        payment = FactoryGirl.create(:payment)
+        payment = FactoryBot.create(:payment)
         allow(payment).to receive(:process!).and_raise(Spree::Core::GatewayError.new('processing failed'))
         order.line_items.each { |li| li.inventory_units.create! }
         order.payments << payment
@@ -599,7 +599,7 @@ describe Spree::Order, type: :model do
         allow(order).to receive_messages(payment_required?: true)
         allow(order).to receive_messages(ensure_available_shipping_rates: true)
         allow(order).to receive_messages(validate_line_item_availability: true)
-        order.line_items << FactoryGirl.create(:line_item)
+        order.line_items << FactoryBot.create(:line_item)
         order.create_proposed_shipments
         Spree::OrderUpdater.new(order).update
       end

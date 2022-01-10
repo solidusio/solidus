@@ -230,7 +230,7 @@ describe "Checkout", type: :feature, inaccessible: true do
 
   # regression for https://github.com/spree/spree/issues/2921
   context "goes back from payment to add another item", js: true do
-    let!(:store) { FactoryGirl.create(:store) }
+    let!(:store) { FactoryBot.create(:store) }
     let!(:bag) { create(:product, name: "RoR Bag") }
 
     it "transit nicely through checkout steps again" do

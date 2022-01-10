@@ -49,7 +49,7 @@ RSpec.configure do |config|
     c.syntax = :expect
   end
 
-  config.include FactoryGirl::Syntax::Methods
+  config.include FactoryBot::Syntax::Methods
   config.include Spree::Api::TestingSupport::Helpers, type: :controller
   config.extend Spree::Api::TestingSupport::Setup, type: :controller
   config.include Spree::TestingSupport::Preferences

@@ -10,7 +10,7 @@ describe "Products", type: :feature do
     end
 
     def build_option_type_with_values(name, values)
-      ot = FactoryGirl.create(:option_type, name: name)
+      ot = FactoryBot.create(:option_type, name: name)
       values.each do |val|
         ot.option_values.create(name: val.downcase, presentation: val)
       end

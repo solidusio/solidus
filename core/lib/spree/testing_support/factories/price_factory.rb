@@ -1,6 +1,6 @@
 require 'spree/testing_support/factories/variant_factory'
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :price, class: Spree::Price do
     variant
     amount 19.99

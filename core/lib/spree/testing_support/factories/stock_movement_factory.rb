@@ -1,6 +1,6 @@
 require 'spree/testing_support/factories/stock_item_factory'
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :stock_movement, class: Spree::StockMovement do
     quantity 1
     action 'sold'

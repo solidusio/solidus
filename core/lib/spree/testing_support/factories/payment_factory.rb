@@ -3,7 +3,7 @@ require 'spree/testing_support/factories/credit_card_factory'
 require 'spree/testing_support/factories/order_factory'
 require 'spree/testing_support/factories/store_credit_factory'
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :payment, aliases: [:credit_card_payment], class: Spree::Payment do
     association(:payment_method, factory: :credit_card_payment_method)
     source { create(:credit_card, user: order.user) }

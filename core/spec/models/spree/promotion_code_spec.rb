@@ -28,7 +28,7 @@ RSpec.describe Spree::PromotionCode do
           let(:usage_limit) { 1 }
           context "on a different order" do
             before do
-              FactoryGirl.create(
+              FactoryBot.create(
                 :completed_order_with_promotion,
                 promotion: promotion
               )
@@ -51,7 +51,7 @@ RSpec.describe Spree::PromotionCode do
 
     context "with an order-level adjustment" do
       let(:promotion) do
-        FactoryGirl.create(
+        FactoryBot.create(
           :promotion,
           :with_order_adjustment,
           code: "discount",
@@ -59,7 +59,7 @@ RSpec.describe Spree::PromotionCode do
         )
       end
       let(:promotable) do
-        FactoryGirl.create(
+        FactoryBot.create(
           :completed_order_with_promotion,
           promotion: promotion
         )
@@ -69,7 +69,7 @@ RSpec.describe Spree::PromotionCode do
 
     context "with an item-level adjustment" do
       let(:promotion) do
-        FactoryGirl.create(
+        FactoryBot.create(
           :promotion,
           :with_line_item_adjustment,
           code: "discount",
@@ -84,7 +84,7 @@ RSpec.describe Spree::PromotionCode do
         })
       end
       context "when there are multiple line items" do
-        let(:order) { FactoryGirl.create(:order_with_line_items, line_items_count: 2) }
+        let(:order) { FactoryBot.create(:order_with_line_items, line_items_count: 2) }
         describe "the first item" do
           let(:promotable) { order.line_items.first }
           it_behaves_like "it should"
@@ -95,7 +95,7 @@ RSpec.describe Spree::PromotionCode do
         end
       end
       context "when there is a single line item" do
-        let(:order) { FactoryGirl.create(:order_with_line_items) }
+        let(:order) { FactoryBot.create(:order_with_line_items) }
         let(:promotable) { order.line_items.first }
         it_behaves_like "it should"
       end
@@ -104,7 +104,7 @@ RSpec.describe Spree::PromotionCode do
 
   describe "#usage_count" do
     let(:promotion) do
-      FactoryGirl.create(
+      FactoryBot.create(
         :promotion,
         :with_order_adjustment,
         code: "discount"
@@ -115,13 +115,13 @@ RSpec.describe Spree::PromotionCode do
     subject { code.usage_count }
 
     context "when the code is applied to a non-complete order" do
-      let(:order) { FactoryGirl.create(:order_with_line_items) }
+      let(:order) { FactoryBot.create(:order_with_line_items) }
       before { promotion.activate(order: order, promotion_code: code) }
       it { is_expected.to eq 0 }
     end
     context "when the code is applied to a complete order" do
       let!(:order) do
-        FactoryGirl.create(
+        FactoryBot.create(
           :completed_order_with_promotion,
           promotion: promotion
         )
@@ -138,7 +138,7 @@ RSpec.describe Spree::PromotionCode do
 
   describe "completing multiple orders with the same code", slow: true do
     let(:promotion) do
-      FactoryGirl.create(
+      FactoryBot.create(
         :promotion,
         :with_order_adjustment,
         code: "discount",
@@ -148,8 +148,8 @@ RSpec.describe Spree::PromotionCode do
     end
     let(:code) { promotion.codes.first }
     let(:order) do
-      FactoryGirl.create(:order_with_line_items, line_items_price: 40, shipment_cost: 0).tap do |order|
-        FactoryGirl.create(:payment, amount: 30, order: order)
+      FactoryBot.create(:order_with_line_items, line_items_price: 40, shipment_cost: 0).tap do |order|
+        FactoryBot.create(:payment, amount: 30, order: order)
         promotion.activate(order: order, promotion_code: code)
       end
     end
@@ -157,8 +157,8 @@ RSpec.describe Spree::PromotionCode do
     before do
       order.next! until order.confirm?
 
-      FactoryGirl.create(:order_with_line_items, line_items_price: 40, shipment_cost: 0).tap do |order|
-        FactoryGirl.create(:payment, amount: 30, order: order)
+      FactoryBot.create(:order_with_line_items, line_items_price: 40, shipment_cost: 0).tap do |order|
+        FactoryBot.create(:payment, amount: 30, order: order)
         promotion.activate(order: order, promotion_code: code)
         order.next! until order.confirm?
         order.complete!

@@ -230,7 +230,7 @@ module Spree
             end
 
             context "when the promotion exceeds its usage limit" do
-              let!(:second_order) { FactoryGirl.create(:completed_order_with_promotion, promotion: promotion) }
+              let!(:second_order) { FactoryBot.create(:completed_order_with_promotion, promotion: promotion) }
 
               before do
                 promotion.update!(usage_limit: 1)

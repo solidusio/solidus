@@ -4,14 +4,14 @@ require 'spec_helper'
 
 describe Spree::Taxon, type: :model do
   describe '#to_param' do
-    let(:taxon) { FactoryGirl.build(:taxon, name: "Ruby on Rails") }
+    let(:taxon) { FactoryBot.build(:taxon, name: "Ruby on Rails") }
 
     subject { super().to_param }
     it { is_expected.to eql taxon.permalink }
   end
 
   context "set_permalink" do
-    let(:taxon) { FactoryGirl.build(:taxon, name: "Ruby on Rails") }
+    let(:taxon) { FactoryBot.build(:taxon, name: "Ruby on Rails") }
 
     it "should set permalink correctly when no parent present" do
       taxon.set_permalink
@@ -25,7 +25,7 @@ describe Spree::Taxon, type: :model do
     end
 
     context "with parent taxon" do
-      let(:parent) { FactoryGirl.build(:taxon, permalink: "brands") }
+      let(:parent) { FactoryBot.build(:taxon, permalink: "brands") }
       before       { allow(taxon).to receive_messages parent: parent }
 
       it "should set permalink correctly when taxon has parent" do

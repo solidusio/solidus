@@ -22,7 +22,7 @@ module Spree
 
       it "correctly calls the transition callback" do
         expect(order.did_transition).to be_nil
-        order.line_items << FactoryGirl.create(:line_item)
+        order.line_items << FactoryBot.create(:line_item)
         put :update, params: { checkout: "checkout" }, session: { order_id: 1 }
         expect(order.did_transition).to be true
       end

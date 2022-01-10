@@ -1,6 +1,6 @@
 require 'carmen'
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :country, class: Spree::Country do
     iso 'US'
 

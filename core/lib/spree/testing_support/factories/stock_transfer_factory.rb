@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :stock_transfer, class: Spree::StockTransfer do
     source_location { Spree::StockLocation.create!(name: "Source Location", code: "SRC", admin_name: "Source") }
 

@@ -3,16 +3,16 @@ require 'spec_helper'
 module Spree
   describe 'Api Feature Specs', type: :request do
     before { Spree::Api::Config[:requires_authentication] = false }
-    let!(:promotion) { FactoryGirl.create(:promotion, :with_order_adjustment, code: 'foo', weighted_order_adjustment_amount: 10) }
+    let!(:promotion) { FactoryBot.create(:promotion, :with_order_adjustment, code: 'foo', weighted_order_adjustment_amount: 10) }
     let(:promotion_code) { promotion.codes.first }
-    let!(:store) { FactoryGirl.create(:store) }
-    let(:bill_address) { FactoryGirl.create(:address) }
-    let(:ship_address) { FactoryGirl.create(:address) }
-    let(:variant_1) { FactoryGirl.create(:variant, price: 100.00) }
-    let(:variant_2) { FactoryGirl.create(:variant, price: 200.00) }
-    let(:payment_method) { FactoryGirl.create(:check_payment_method) }
+    let!(:store) { FactoryBot.create(:store) }
+    let(:bill_address) { FactoryBot.create(:address) }
+    let(:ship_address) { FactoryBot.create(:address) }
+    let(:variant_1) { FactoryBot.create(:variant, price: 100.00) }
+    let(:variant_2) { FactoryBot.create(:variant, price: 200.00) }
+    let(:payment_method) { FactoryBot.create(:check_payment_method) }
     let!(:shipping_method) do
-      FactoryGirl.create(:shipping_method).tap do |shipping_method|
+      FactoryBot.create(:shipping_method).tap do |shipping_method|
         shipping_method.zones.first.zone_members.create!(zoneable: ship_address.country)
         shipping_method.calculator.set_preference(:amount, 10.0)
       end

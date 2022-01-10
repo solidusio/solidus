@@ -2,7 +2,7 @@ require 'spree/testing_support/sequences'
 require 'spree/testing_support/factories/role_factory'
 require 'spree/testing_support/factories/address_factory'
 
-FactoryGirl.define do
+FactoryBot.define do
   sequence :user_authentication_token do |n|
     "xxxx#{Time.current.to_i}#{rand(1000)}#{n}xxxxxxxxxxxxx"
   end

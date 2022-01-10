@@ -484,7 +484,7 @@ describe Spree::Order, type: :model do
 
   # Regression tests for https://github.com/spree/spree/issues/4072
   context "#state_changed" do
-    let(:order) { FactoryGirl.create(:order) }
+    let(:order) { FactoryBot.create(:order) }
 
     it "logs state changes" do
       order.update_column(:payment_state, 'balance_due')
@@ -540,9 +540,9 @@ describe Spree::Order, type: :model do
     context "with more than one payment method" do
       subject { order.available_payment_methods }
 
-      let!(:first_method) { FactoryGirl.create(:payment_method, available_to_users: true,
+      let!(:first_method) { FactoryBot.create(:payment_method, available_to_users: true,
                                                available_to_admin: true) }
-      let!(:second_method) { FactoryGirl.create(:payment_method, available_to_users: true,
+      let!(:second_method) { FactoryBot.create(:payment_method, available_to_users: true,
                                                available_to_admin: true) }
 
       before do
@@ -704,10 +704,10 @@ describe Spree::Order, type: :model do
   end
 
   context "#associate_user!" do
-    let!(:user) { FactoryGirl.create(:user) }
+    let!(:user) { FactoryBot.create(:user) }
 
     it "should associate a user with a persisted order" do
-      order = FactoryGirl.create(:order_with_line_items, created_by: nil)
+      order = FactoryBot.create(:order_with_line_items, created_by: nil)
       order.user = nil
       order.email = nil
       order.associate_user!(user)
@@ -724,7 +724,7 @@ describe Spree::Order, type: :model do
 
     it "should not overwrite the created_by if it already is set" do
       creator = create(:user)
-      order = FactoryGirl.create(:order_with_line_items, created_by: creator)
+      order = FactoryBot.create(:order_with_line_items, created_by: creator)
 
       order.user = nil
       order.email = nil

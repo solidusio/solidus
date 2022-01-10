@@ -1,6 +1,6 @@
 require 'spree/testing_support/sequences'
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :tax_category, class: Spree::TaxCategory do
     name { "TaxCategory - #{rand(999_999)}" }
     tax_code { "TaxCode - #{rand(999_999)}" }

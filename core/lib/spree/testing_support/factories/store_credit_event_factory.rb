@@ -1,7 +1,7 @@
 require 'spree/testing_support/factories/store_credit_factory'
 require 'spree/testing_support/factories/store_credit_update_reason_factory'
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :store_credit_event, class: Spree::StoreCreditEvent do
     store_credit
     amount             { 100.00 }

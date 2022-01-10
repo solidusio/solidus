@@ -2,7 +2,7 @@ require 'spree/testing_support/factories/inventory_unit_factory'
 require 'spree/testing_support/factories/return_reason_factory'
 require 'spree/testing_support/factories/return_authorization_factory'
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :return_item, class: Spree::ReturnItem do
     association(:inventory_unit, factory: :inventory_unit, state: :shipped)
     association(:return_reason, factory: :return_reason)

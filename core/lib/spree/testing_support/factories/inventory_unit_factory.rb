@@ -3,7 +3,7 @@ require 'spree/testing_support/factories/variant_factory'
 require 'spree/testing_support/factories/order_factory'
 require 'spree/testing_support/factories/shipment_factory'
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :inventory_unit, class: Spree::InventoryUnit do
     variant
     order

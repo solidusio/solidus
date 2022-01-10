@@ -3,7 +3,7 @@ require 'spree/testing_support/factories/option_value_factory'
 require 'spree/testing_support/factories/option_type_factory'
 require 'spree/testing_support/factories/product_factory'
 
-FactoryGirl.define do
+FactoryBot.define do
   sequence(:random_float) { BigDecimal.new("#{rand(200)}.#{rand(99)}") }
 
   factory :base_variant, class: Spree::Variant do

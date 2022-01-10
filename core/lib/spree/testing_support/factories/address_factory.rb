@@ -1,7 +1,7 @@
 require 'spree/testing_support/factories/state_factory'
 require 'spree/testing_support/factories/country_factory'
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :address, class: Spree::Address do
     transient do
       # There's `Spree::Address#country_iso=`, prohibiting me from using `country_iso` here

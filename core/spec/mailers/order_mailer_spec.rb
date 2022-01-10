@@ -10,7 +10,7 @@ describe Spree::OrderMailer, type: :mailer do
     product = stub_model(Spree::Product, name: %{The "BEST" product})
     variant = stub_model(Spree::Variant, product: product)
     price = stub_model(Spree::Price, variant: variant, amount: 5.00)
-    store = FactoryGirl.build :store, mail_from_address: "store@example.com"
+    store = FactoryBot.build :store, mail_from_address: "store@example.com"
     line_item = stub_model(Spree::LineItem, variant: variant, order: order, quantity: 1, price: 4.99)
     allow(variant).to receive_messages(default_price: price)
     allow(order).to receive_messages(line_items: [line_item])

@@ -1,7 +1,7 @@
 require 'spree/testing_support/factories/payment_factory'
 require 'spree/testing_support/factories/refund_reason_factory'
 
-FactoryGirl.define do
+FactoryBot.define do
   sequence(:refund_transaction_id) { |n| "fake-refund-transaction-#{n}" }
 
   factory :refund, class: Spree::Refund do

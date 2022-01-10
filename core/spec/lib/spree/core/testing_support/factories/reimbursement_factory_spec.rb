@@ -11,7 +11,7 @@ RSpec.describe 'reimbursement factory' do
   end
 
   describe 'total' do
-    subject { FactoryGirl.create(:reimbursement).total }
+    subject { FactoryBot.create(:reimbursement).total }
 
     it { is_expected.to be_present }
   end

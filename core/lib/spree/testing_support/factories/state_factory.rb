@@ -1,6 +1,6 @@
 require 'spree/testing_support/factories/country_factory'
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :state, class: Spree::State do
     transient do
       country_iso 'US'

@@ -4,7 +4,7 @@ require 'spree/testing_support/factories/stock_location_factory'
 require 'spree/testing_support/factories/tax_category_factory'
 require 'spree/testing_support/factories/product_option_type_factory'
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :base_product, class: Spree::Product do
     sequence(:name) { |n| "Product ##{n} - #{Kernel.rand(9999)}" }
     description "As seen on TV!"

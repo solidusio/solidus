@@ -46,11 +46,11 @@ describe "Orders Listing", type: :feature, js: true do
 
   context "searching orders" do
     context "when there are multiple stores" do
-      let(:stores) { FactoryGirl.create_pair(:store) }
+      let(:stores) { FactoryBot.create_pair(:store) }
 
       before do
         stores.each do |store|
-          FactoryGirl.create(:completed_order_with_totals, number: "R#{store.id}999", store: store)
+          FactoryBot.create(:completed_order_with_totals, number: "R#{store.id}999", store: store)
         end
       end
 
