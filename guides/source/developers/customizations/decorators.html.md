@@ -1,5 +1,8 @@
 # Decorators
 
+> Automatic autoloading will only work for Solidus versions minor than 3.2.
+> Take a look at [monkey patches][monkey-patches] for the current recommended approach.
+
 Solidus autoloads any file in the `/app` directory that has the suffix
 `_decorator.rb`, just like any other Rails models or controllers. This allows
 you to [monkey patch][monkey-patch] Solidus functionality for your store.
@@ -25,6 +28,7 @@ method.
 With the code above live on your server, every call to `Spree::Order.total` will
 return the original total plus $10 (or whatever your currency is).
 
+[monkey-patches]: monkey_patches.html
 [monkey-patch]: https://en.wikipedia.org/wiki/Monkey_patch
 
 ## Using class-level methods in decorators

@@ -103,17 +103,6 @@ module Solidus
     end
 
     def configure_application
-      application <<-RUBY
-    # Load application's model / class decorators
-    initializer 'spree.decorators' do |app|
-      config.to_prepare do
-        Dir.glob(Rails.root.join('app/**/*_decorator*.rb')) do |path|
-          require_dependency(path)
-        end
-      end
-    end
-      RUBY
-
       if !options[:enforce_available_locales].nil?
         application <<-RUBY
     # Prevent this deprecation message: https://github.com/svenfuchs/i18n/commit/3b6e56e

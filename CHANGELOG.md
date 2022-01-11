@@ -5,6 +5,44 @@
 
 - Fix CSRF forgery protection bypass for Spree::OrdersController#populate [GHSA-h3fg-h5v3-vf8m](https://github.com/solidusio/solidus/security/advisories/GHSA-h3fg-h5v3-vf8m)
 
+**Other important changes**
+
+New Solidus applications won't autoload files matching `app/**/*_decorator*.rb`
+pattern anymore. For previous Solidus applications, it's something that will
+keep working as the responsible code was added to your `config/application.rb`
+when Solidus was installed. That code is intended to work with Rails' classic
+autoloader, deprecated on Rails 6 and removed on Rails 7. It keeps working
+because of a [compatibility
+layer](https://github.com/rails/rails/blob/296ef7a17221e81881e38b51aa2b014d7a28bac5/activesupport/lib/active_support/dependencies/require_dependency.rb)
+which is also deprecated. However, it may be eventually removed, so you're
+better off updating your `application.rb`  file. You should substitute:
+
+```ruby
+config.to_prepare do
+  Dir.glob(Rails.root.join('app/**/*_decorator*.rb')) do |path|
+    require_dependency(path)
+  end
+end
+```
+
+With:
+
+```ruby
+overrides = "#{Rails.root}/app/overrides" # use your actual directory here
+Rails.autoloaders.main.ignore(overrides)
+config.to_prepare do
+  Dir.glob("#{overrides}/**/*_decorator*.rb").each do |override|
+    load override
+  end
+end
+```
+
+You may also want to stop using the `decorator` naming, as it's no longer part
+of Solidus recommendations (that files are monkey patches; they don't use the
+[decorator pattern](https://en.wikipedia.org/wiki/Decorator_pattern)). E.g.,
+you can place those files in `app/overrides/` and remove the `decorator`
+suffix.
+
 ### Core
 
 - Add configuration option for `migration_path` [#4190](https://github.com/solidusio/solidus/pull/4190) ([SuperGoodSoft](https://github.com/supergoodsoft/))
