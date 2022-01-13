@@ -16,7 +16,7 @@ There is also a series of curated extensions available under the
 
 ## Developing a Solidus extension locally
 
-### Install the solidus_dev_support gem
+### Install the solidus\_dev\_support gem
 A Solidus extension is just a Rails engine, you can build the extension in
 exactly the same way you'd build any other Rails engine.
 
