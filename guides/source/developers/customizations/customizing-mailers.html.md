@@ -91,7 +91,7 @@ Solidus initializer:
 # config/initializers/spree.rb
 
 Spree.config do |config|
-  config.order_mailer_class = 'c'
+  config.order_mailer_class = 'Spree::CustomOrderMailer'
 end
 ```
 
