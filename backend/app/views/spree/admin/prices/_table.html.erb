@@ -1,5 +1,5 @@
 <fieldset class="no-border-bottom" data-hook="variant_prices_table">
-  <legend align="center"><%= I18n.t(:variant_pricing, scope: :spree) %></legend>
+  <legend align="center"><%= t(".variant_pricing") %></legend>
 
   <%= paginate variant_prices, theme: "solidus_admin", param_name: :variants_page %>
   <table class="index prices">
