@@ -33,5 +33,9 @@ RSpec.describe Spree::Product do
       expect(product.taxons.count).to eq(50)
       expect { subject }.to_not raise_error
     end
+
+    it "is fast" do
+      puts Benchmark.measure { subject }
+    end
   end
 end
