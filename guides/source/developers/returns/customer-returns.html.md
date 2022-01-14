@@ -36,7 +36,7 @@ Once a store administrator has created a customer return in the
 [reimbursements][reimbursements] can be made.
 
 For example, you can specify whether return items are resellable, whether your
-stock location has received each item, and what they reason for the return is.
+stock location has received each item, and what the reason for the return is.
 All of this information is stored in a `Spree::ReturnItem` object's attributes.
 
 Once an item is marked as "Received", you can create a `Spree::Reimbursement`

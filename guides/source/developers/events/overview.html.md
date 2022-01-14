@@ -97,7 +97,7 @@ happens in the system. If the `event_name` argument is not specified,
 the event name and the method name should match.
 
 These subscriber modules are loaded with the rest of your application, you
-don't need to manually subscribe them when:
+don't need to manually subscribe to them when:
 
 * `Spree::Config.events.autoload_subscribers` returns a truthy value (default);
 * you put them in the directory (or any subdirectory of) `app/subscribers`;

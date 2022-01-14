@@ -44,6 +44,8 @@ While some payment service providers may not require a payment identifier, other
 services may require or recommend them. In the past, some services have
 erroneously reported duplicate payments when not recording a payment identifier.
 
+[payment-service-providers]: payment-service-providers.html
+
 ## Response codes
 
 `Spree::Payment`s store AVS and CVV2 response codes that are sent back from the

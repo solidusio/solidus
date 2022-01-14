@@ -68,7 +68,7 @@ We encourage the usage of environment variables for keeping your secrets,
 but in case when this is not possible you can use a preference of type
 `encrypted_string`.
 
-A preference of type `encrypted_string` accept an option named `encryption_key`,
+A preference of type `encrypted_string` accepts an option named `encryption_key`,
 the value of the option will be used as key for the encryption of the preference.
 
 If no `encryption_key` is passed the application would use the value of the
