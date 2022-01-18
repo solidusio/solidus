@@ -115,7 +115,7 @@ RSpec.describe Spree::Event::Registry do
 
       expect {
         registry.check_event_name_registered('foo')
-      }.to raise_error(/bar.*baz/)
+      }.to raise_error(/'bar', 'baz'/)
     end
 
     it 'hints on the event name on the error message' do
