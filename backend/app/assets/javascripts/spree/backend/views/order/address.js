@@ -1,5 +1,5 @@
 Spree.Views.Order.Address = Backbone.View.extend({
-  initialize: function(options) {
+  initialize: function() {
     // read initial values from page
     this.onChange();
 
