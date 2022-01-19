@@ -43,6 +43,26 @@ describe 'Pricing' do
       end
     end
 
+    context "when the user can edit prices" do
+      custom_authorization! do |_user|
+        can :edit, Spree::Price
+      end
+
+      it "shows edit links" do
+        expect(page).to have_selector('a[data-action="edit"]')
+      end
+    end
+
+    context "when the user cannot edit prices" do
+      custom_authorization! do |_user|
+        cannot :edit, Spree::Price
+      end
+
+      it "doesn't show edit links" do
+        expect(page).not_to have_selector('a[data-action="edit"]')
+      end
+    end
+
     context "searching" do
       let(:variant) { create(:variant, price: 20) }
       let(:product) { variant.product }

@@ -25,7 +25,7 @@
         <td><%= price.currency %></td>
         <td><%= price.money.to_html %></td>
         <td class="actions">
-          <% if can?(:update, price) %>
+          <% if can?(:edit, price) %>
             <%= link_to_edit(price, no_text: true) unless price.discarded? %>
           <% end %>
           <% if can?(:destroy, price) %>

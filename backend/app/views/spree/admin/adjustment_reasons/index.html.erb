@@ -38,7 +38,9 @@
             </span>
           </td>
           <td class="actions">
-            <%= link_to_edit adjustment_reason, no_text: true %>
+            <% if can? :edit, adjustment_reason %>
+              <%= link_to_edit adjustment_reason, no_text: true %>
+            <% end %>
           </td>
         </tr>
       <% end %>
