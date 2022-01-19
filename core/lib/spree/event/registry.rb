@@ -69,10 +69,9 @@ module Spree
 
             All known events are:
 
-              '#{event_names.join(" ")}'
+              '#{event_names.join("', '")}'
 
-            You can register the new events at the end of the `spree.rb`
-            initializer:
+            You can register the new events at the end of the `spree.rb` initializer:
 
               Spree::Event.register('#{event_name}')
         MSG
