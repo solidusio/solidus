@@ -866,6 +866,10 @@ en:
           new_price: New Price
         new:
           new_price: New Price
+        master_variant_table:
+          master_variant: Master Variant Prices
+        table:
+          variant_pricing: Variant Prices
       promotions:
         actions:
           calculator_label: Calculated by
@@ -2248,7 +2252,6 @@ en:
     value: Value
     variant: Variant
     variant_placeholder: Choose a Variant
-    variant_pricing: Variant Pricing
     variant_properties: Variant Properties
     variant_search: Variant Search
     variant_search_placeholder: SKU or Option Value

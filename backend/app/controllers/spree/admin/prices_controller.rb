@@ -18,7 +18,7 @@ module Spree
           .currently_valid
           .for_variant
           .order(:variant_id, :country_iso, :currency)
-          .page(params[:page]).per(Spree::Config.admin_variants_per_page)
+          .page(params[:variants_page]).per(Spree::Config.admin_variants_per_page)
       end
 
       def edit
