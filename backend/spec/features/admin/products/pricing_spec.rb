@@ -49,6 +49,8 @@ describe 'Pricing' do
       end
 
       it "shows edit links" do
+        subject
+
         expect(page).to have_selector('a[data-action="edit"]')
       end
     end
@@ -59,6 +61,8 @@ describe 'Pricing' do
       end
 
       it "doesn't show edit links" do
+        subject
+
         expect(page).not_to have_selector('a[data-action="edit"]')
       end
     end
