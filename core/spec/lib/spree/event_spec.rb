@@ -94,6 +94,25 @@ RSpec.describe Spree::Event do
     end
   end
 
+  describe '#registered_events' do
+    it "forwards to adapter's registry" do
+      bus = build_bus
+
+      subject.register(:foo, adapter: bus)
+      subject.register(:bar, adapter: bus)
+
+      expect(subject.registered_events(adapter: bus)).to eq(['foo', 'bar'])
+    end
+
+    unless Spree::Event::Adapters::DeprecationHandler.legacy_adapter_set_by_env
+      it 'warns when the adapter is ActiveSupportNotifications' do
+        expect(Spree::Deprecation).to receive(:warn).with(/only on the new adapter/)
+
+        subject.registered_events(adapter: Spree::Event::Adapters::ActiveSupportNotifications)
+      end
+    end
+  end
+
   describe '.fire' do
     it 'forwards to adapter', :aggregate_failures do
       bus = build_bus
