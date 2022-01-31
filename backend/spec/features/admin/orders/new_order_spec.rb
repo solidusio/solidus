@@ -225,7 +225,7 @@ describe "New Order", type: :feature do
       user.wallet.add(credit_card)
     end
 
-    it "transitions to delivery not to complete" do
+    it "transitions to confirm not to complete" do
       add_line_item product.name
 
       expect(page).to have_css('.line-item')
@@ -233,7 +233,7 @@ describe "New Order", type: :feature do
       click_link "Customer"
       targetted_select2 user.email, from: "#s2id_customer_search"
       click_button "Update"
-      expect(page).to have_css('.order-state', text: 'Delivery')
+      expect(page).to have_css('.order-state', text: 'Confirm')
     end
   end
 
