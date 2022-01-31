@@ -31,7 +31,7 @@ module Spree
             end
 
             unless @order.completed?
-              @order.next
+              @order.contents.advance
               @order.refresh_shipment_rates
             end
 

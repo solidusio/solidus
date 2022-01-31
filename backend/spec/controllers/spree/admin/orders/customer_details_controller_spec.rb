@@ -67,9 +67,9 @@ describe Spree::Admin::Orders::CustomerDetailsController, type: :controller do
 
       before { allow(Spree::Order).to receive_message_chain(:includes, :find_by!) { order } }
 
-      it "updates + progresses the order" do
-        expect(order).to receive(:update) { true }
-        expect(order).to receive(:next) { false }
+      it "updates + advances the order" do
+        expect(order).to receive_message_chain(:contents, :update_cart) { true }
+        expect(order).to receive_message_chain(:contents, :advance) { false }
         attributes = { order_id: order.number, order: { email: "" } }
         put :update, params: attributes
       end
