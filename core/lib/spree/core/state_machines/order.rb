@@ -41,7 +41,7 @@ module Spree
             # To avoid multiple occurrences of the same transition being defined
             # On first definition, state_machines will not be defined
             state_machines.clear if respond_to?(:state_machines)
-            state_machine :state, initial: :cart, use_transactions: false do
+            state_machine :state, initial: :cart do
               klass.next_event_transitions.each { |state| transition(state.merge(on: :next)) }
 
               # Persist the state on the order

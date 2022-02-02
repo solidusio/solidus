@@ -726,8 +726,10 @@ module Spree
         true
       else
         saved_errors = errors[:base]
-        payment_failed!
-        saved_errors.each { |error| errors.add(:base, error) }
+        after_rollback do
+          payment_failed!
+          saved_errors.each { |error| errors.add(:base, error) }
+        end
         false
       end
     end
@@ -785,11 +787,15 @@ module Spree
         !adjustment.calculate_eligibility
       end
       if adjustment_changed
-        restart_checkout_flow
-        recalculate
-        errors.add(:base, I18n.t('spree.promotion_total_changed_before_complete'))
+        after_rollback do
+          restart_checkout_flow
+          recalculate
+          errors.add(:base, I18n.t('spree.promotion_total_changed_before_complete'))
+        end
+        false
+      else
+        true
       end
-      errors.empty?
     end
 
     def validate_line_item_availability
@@ -857,6 +863,51 @@ module Spree
         random_token = SecureRandom.urlsafe_base64(nil, false)
         break random_token unless self.class.exists?(guest_token: random_token)
       end
+    end
+
+    # TODO: This dreadful hack is needed to work around a limitation on the
+    # order state machine. Defined transitions run within a database
+    # transaction, including all transition callbacks, like `on_failure` (see
+    # https://www.rubydoc.info/github/state-machines/state_machines-activerecord/StateMachines/Integrations/ActiveRecord#label-Failure+callbacks).
+    #
+    # However, sometimes we need to make a persistent change on a record when a
+    # transition fails. For instance, when we go from `confirm` to `complete`,
+    # we need to roll back and update the state field back to `payment` if
+    # payment can't be processed.
+    #
+    # This hack allows us to add a per-instance `after_rollback` callback. We're
+    # creating an object that will quack like a record for that purpose, adding
+    # it to the current transaction.
+    #
+    # We prefer to leave the class definition inline to avoid giving first-class
+    # citizenship to the hack. The sound solution will imply breaking up data
+    # and persistence responsibilities, taking complete control of the
+    # transition with something like a service object.
+    #
+    # @see https://github.com/rails/rails/blob/18707ab17fa492eb25ad2e8f9818a320dc20b823/activerecord/lib/active_record/transactions.rb
+    def after_rollback(&block)
+      callback_record = Class.new do
+        attr_reader :order, :block
+
+        def initialize(order, block)
+          @order = order
+          @block = block
+        end
+
+        def trigger_transactional_callbacks?
+          false
+        end
+
+        def rolledback!(*)
+          order.instance_eval(&block)
+        end
+
+        def committed!(*); end
+
+        def after_committed!(*); end
+      end.new(self, block)
+
+      ActiveRecord::Base.connection.add_transaction_record(callback_record)
     end
   end
 end
