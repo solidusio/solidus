@@ -5,7 +5,56 @@ module Spree
     class StateMachines
       module Order
         def self.included(klass)
+          klass.prepend AfterTransactionOverrides
           klass.extend ClassMethods
+        end
+
+        # Overrides to allow executing code after transitions' db transactions.
+        #
+        # This is needed to work around a limitation on the order state machine.
+        # Defined transitions run within a database transaction (when enabled),
+        # including all transition callbacks, like `on_failure` (see
+        # https://github.com/state-machines/state_machines-activerecord/blob/94662c61eeea4783b9d0b2899693c43610246900/lib/state_machines/integrations/active_record.rb#L261).
+        #
+        # However, sometimes we need to make a persistent change on a record when a
+        # transition fails. For instance, when we go from `confirm` to `complete`,
+        # we need to roll back and update the state field back to `payment` if
+        # payment can't be processed.
+        #
+        # A more solid solution will imply breaking up data and persistence
+        # responsibilities, taking complete control of the transition with
+        # something like a service object.
+        module AfterTransactionOverrides
+          def self.prepended(klass)
+            # @api private
+            klass.attr_reader :transition_failure
+          end
+
+          def complete
+            super.tap do
+              manage_transition_failure(transition_failure) if transition_failure
+            end
+          end
+
+          private
+
+          def manage_transition_failure(transition_failure)
+            case transition_failure.reason
+            when :payment_processing
+              payment_failed!
+            when :promotion_eligibility
+              transaction do
+                restart_checkout_flow
+                recalculate
+              end
+            end
+            transition_failure.errors.each { |error| errors.add(:base, error) }
+            @transition_failure = nil
+          end
+
+          def fail_transition(reason, errors)
+            @transition_failure = Struct.new(:reason, :errors).new(reason, errors)
+          end
         end
 
         module ClassMethods
@@ -41,7 +90,7 @@ module Spree
             # To avoid multiple occurrences of the same transition being defined
             # On first definition, state_machines will not be defined
             state_machines.clear if respond_to?(:state_machines)
-            state_machine :state, initial: :cart, use_transactions: false do
+            state_machine :state, initial: :cart do
               klass.next_event_transitions.each { |state| transition(state.merge(on: :next)) }
 
               # Persist the state on the order

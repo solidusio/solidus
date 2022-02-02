@@ -735,8 +735,7 @@ module Spree
         true
       else
         saved_errors = errors[:base]
-        payment_failed!
-        saved_errors.each { |error| errors.add(:base, error) }
+        fail_transition(:payment_processing, saved_errors)
         false
       end
     end
@@ -773,11 +772,12 @@ module Spree
         !adjustment.calculate_eligibility
       end
       if adjustment_changed
-        restart_checkout_flow
-        recalculate
-        errors.add(:base, I18n.t('spree.promotion_total_changed_before_complete'))
+        errors = [I18n.t('spree.promotion_total_changed_before_complete')]
+        fail_transition(:promotion_eligibility, errors)
+        false
+      else
+        true
       end
-      errors.empty?
     end
 
     def validate_line_item_availability
