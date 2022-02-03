@@ -69,6 +69,24 @@ module Spree
       adapter.register(normalize_name(event_name), caller_location: caller_locations(1)[0])
     end
 
+    # Returns the list of registered events
+    #
+    # This method is not available in the legacy adapter.
+    #
+    # @example
+    #   Spree::Event.register('foo')
+    #   Spree::Event.register('bar')
+    #   Spree::Event.registered_events # => ['foo', 'bar']
+    #
+    # @param adapter [Any] the event bus adapter to use.
+    # @return [Array<String>]
+    def registered_events(adapter: default_adapter)
+      warn_registration_on_legacy_adapter if deprecation_handler.render_deprecation_message?(adapter)
+      return if deprecation_handler.legacy_adapter?(adapter)
+
+      registry(adapter: adapter).event_names
+    end
+
     # @api private
     def registry(adapter: default_adapter)
       warn_registration_on_legacy_adapter if deprecation_handler.render_deprecation_message?(adapter)

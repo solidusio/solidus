@@ -4,7 +4,7 @@ module Spree
   module Event
     # Registry of known events
     #
-    # @api privte
+    # @api private
     class Registry
       class Registration
         attr_reader :event_name, :caller_location
