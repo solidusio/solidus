@@ -16,6 +16,7 @@ Homebrew][ruby-homebrew] if you need to upgrade from your system's Ruby.
 We also recommend configuring your development environment so that you can
 [install RubyGems without `sudo`][gem-install-without-sudo].
 
+[brew]: https://brew.sh
 [ruby-homebrew]: https://www.ruby-lang.org/en/documentation/installation/#homebrew
 [gem-install-without-sudo]: https://www.michaelehead.com/2016/02/06/installing-gems-without-sudo.html
 
