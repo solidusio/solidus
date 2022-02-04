@@ -159,11 +159,10 @@ RSpec.describe Spree::ReturnItem, type: :model do
   end
 
   describe "amount calculations on create" do
-    let(:inventory_unit) { build(:inventory_unit) }
-    before { subject.save! }
+    let(:inventory_unit) { create(:inventory_unit) }
 
     context "amount is not specified" do
-      subject { build(:return_item, inventory_unit: inventory_unit) }
+      subject { create(:return_item, inventory_unit: inventory_unit) }
 
       context "not an exchange" do
         it { expect(subject.amount).to eq Spree::Calculator::Returns::DefaultRefundAmount.new.compute(subject) }
@@ -184,7 +183,7 @@ RSpec.describe Spree::ReturnItem, type: :model do
   end
 
   describe ".from_inventory_unit" do
-    let(:inventory_unit) { build(:inventory_unit) }
+    let(:inventory_unit) { create(:inventory_unit) }
 
     subject { Spree::ReturnItem.from_inventory_unit(inventory_unit) }
 
@@ -732,8 +731,6 @@ RSpec.describe Spree::ReturnItem, type: :model do
   describe "valid exchange variant" do
     subject { return_item }
 
-    before  { subject.save }
-
     context "return item doesn't have an exchange variant" do
       let(:return_item) { create(:return_item) }
 
@@ -756,7 +753,7 @@ RSpec.describe Spree::ReturnItem, type: :model do
 
       context "the exchange variant is not eligible" do
         context "new return item" do
-          let(:return_item)      { build(:return_item) }
+          let(:return_item)      { create(:return_item) }
           let(:exchange_variant) { create(:variant, product: return_item.inventory_unit.variant.product) }
 
           before { return_item.exchange_variant = exchange_variant }

@@ -372,7 +372,7 @@ module Spree
 
     context "#persist_order_address" do
       context "when automatic_default_address preference is at a default of true" do
-        let(:order) { build :order }
+        let(:order) { create :order }
 
         it 'will save both bill/ship_address references' do
           user.persist_order_address(order)
@@ -387,7 +387,7 @@ module Spree
       end
 
       context "when automatic_default_address preference is false" do
-        let(:order) { build :order }
+        let(:order) { create :order }
 
         before do
           stub_spree_preferences(automatic_default_address: false)
