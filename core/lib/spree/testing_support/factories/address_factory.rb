@@ -26,14 +26,19 @@ FactoryBot.define do
 
     state do |address|
       Spree::State.joins(:country).where('spree_countries.iso = (?)', country_iso_code).find_by(abbr: state_code) ||
-        address.association(:state, country_iso: country_iso_code, state_code: state_code)
+        address.association(
+          :state,
+          strategy: :create,
+          country_iso: country_iso_code,
+          state_code: state_code
+        )
     end
 
     country do |address|
       if address.state
         address.state.country
       else
-        address.association(:country, iso: country_iso_code)
+        address.association(:country, strategy: :create, iso: country_iso_code)
       end
     end
   end

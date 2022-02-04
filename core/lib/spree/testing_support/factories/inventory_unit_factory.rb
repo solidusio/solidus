@@ -17,7 +17,7 @@ FactoryBot.define do
       stock_location { nil }
     end
 
-    variant
+    association :variant, strategy: :create
     line_item do
       if order
         build(:line_item, variant: variant, order: order)

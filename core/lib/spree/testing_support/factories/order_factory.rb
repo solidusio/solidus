@@ -19,7 +19,7 @@ FactoryBot.define do
     ship_address
     completed_at { nil }
     email { user.try(:email) }
-    store
+    association :store, strategy: :create
 
     transient do
       line_items_price { BigDecimal(10) }
