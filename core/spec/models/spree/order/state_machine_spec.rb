@@ -30,7 +30,7 @@ RSpec.describe Spree::Order, type: :model do
 
           it "should not complete the order" do
             expect(order.complete).to be false
-            expect(order.state).to eq("confirm")
+            expect(order.reload.state).to eq("payment")
           end
         end
       end
