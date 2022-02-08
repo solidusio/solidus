@@ -15,58 +15,6 @@ RSpec.describe Spree::Order, type: :model do
   end
   let(:code) { promotion.codes.first }
 
-  describe '#finalize!' do
-    context 'with event notifications' do
-      it 'sends an email' do
-        expect(Spree::Config.order_mailer_class).to receive(:confirm_email).and_call_original
-        order.finalize!
-      end
-
-      it 'marks the order as confirmation_delivered' do
-        expect do
-          order.finalize!
-        end.to change(order, :confirmation_delivered).to true
-      end
-
-      it 'sends the email' do
-        expect(Spree::Config.order_mailer_class).to receive(:confirm_email).and_call_original
-        order.finalize!
-      end
-
-      # These specs show how notifications can be removed, one at a time or
-      # all the ones set by MailerSubscriber module
-      context 'when removing the default email notification subscription' do
-        before do
-          Spree::MailerSubscriber.deactivate(:order_finalized)
-        end
-
-        after do
-          Spree::MailerSubscriber.activate
-        end
-
-        it 'does not send the email' do
-          expect(Spree::Config.order_mailer_class).not_to receive(:confirm_email)
-          order.finalize!
-        end
-      end
-
-      context 'when removing all the email notification subscriptions' do
-        before do
-          Spree::MailerSubscriber.deactivate
-        end
-
-        after do
-          Spree::MailerSubscriber.activate
-        end
-
-        it 'does not send the email' do
-          expect(Spree::Config.order_mailer_class).not_to receive(:confirm_email)
-          order.finalize!
-        end
-      end
-    end
-  end
-
   context '#store' do
     it { is_expected.to respond_to(:store) }
 

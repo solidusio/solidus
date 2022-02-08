@@ -119,7 +119,7 @@ module Spree
                 before_transition to: :complete, do: :process_payments_before_complete
               end
 
-              after_transition to: :complete, do: :finalize!
+              after_transition to: :complete, do: :finalize
               after_transition to: :resumed,  do: :after_resume
               after_transition to: :canceled, do: :after_cancel
 

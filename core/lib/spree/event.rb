@@ -97,7 +97,7 @@ module Spree
     #
     # @example Trigger an event named 'order_finalized'
     #   Spree::Event.fire 'order_finalized', order: @order do
-    #     @order.finalize!
+    #     @order.complete!
     #   end
     #
     # TODO: Change signature so that `opts` are keyword arguments, and include

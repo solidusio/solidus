@@ -379,25 +379,16 @@ module Spree
       Spree::CreditCard.where(id: credit_card_ids)
     end
 
-    # Finalizes an in progress order after checkout is complete.
-    # Called after transition to complete state when payments will have been processed
+    # TODO: Remove on Solidus 4.0
+    # @api private
     def finalize!
-      # lock all adjustments (coupon promotions, etc.)
-      all_adjustments.each(&:finalize!)
-
-      # update payment and shipment(s) states, and save
-      updater.update_payment_state
-      shipments.each do |shipment|
-        shipment.update_state
-        shipment.finalize!
-      end
-
-      updater.update_shipment_state
-      save!
-
-      touch :completed_at
-
-      Spree::Event.fire 'order_finalized', order: self
+      Spree::Deprecation.warn <<~MSG
+        Calling `Spree::Order#finalize!` is discouraged. Instead, use
+        `Spree::Order#complete!`, which goes through all the needed safety
+        checks before finalizing an order. This method will be removed
+        altogether on Solidus 4.0.
+      MSG
+      finalize
     end
 
     def fulfill!
@@ -739,6 +730,27 @@ module Spree
         saved_errors.each { |error| errors.add(:base, error) }
         false
       end
+    end
+
+    # Finalizes an in progress order after checkout is complete.
+    # Called after transition to complete state when payments will have been processed
+    def finalize
+      # lock all adjustments (coupon promotions, etc.)
+      all_adjustments.each(&:finalize!)
+
+      # update payment and shipment(s) states, and save
+      updater.update_payment_state
+      shipments.each do |shipment|
+        shipment.update_state
+        shipment.finalize!
+      end
+
+      updater.update_shipment_state
+      save!
+
+      touch :completed_at
+
+      Spree::Event.fire 'order_finalized', order: self
     end
 
     def associate_store
