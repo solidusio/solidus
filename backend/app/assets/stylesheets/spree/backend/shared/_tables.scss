@@ -43,7 +43,7 @@ table {
 
       [class*='fa-'].no-text {
         font-size: 120%;
-        background-color: very-light($color-3);
+        background-color: lighten($color-3);
         border: 1px solid $color-border;
         border-radius: 15px;
         width: 29px;
@@ -149,12 +149,12 @@ table {
         background-color: $color-tbl-even;
 
         img {
-          border: 1px solid very-light($color-3, 6);
+          border: 1px solid lighten($color-3, 6);
         }
       }
 
       &:hover td {
-        background-color: very-light($color-3, 5);
+        background-color: lighten($color-3, 5);
 
         img {
           border: 1px solid $color-border;
@@ -162,8 +162,8 @@ table {
       }
 
       &.deleted td {
-        background-color: very-light($color-error, 6);
-        border-color: very-light($color-error, 15);
+        background-color: lighten($color-error, 6);
+        border-color: lighten($color-error, 15);
       }
 
       &.ui-sortable-placeholder td {

@@ -30,7 +30,7 @@ $color-link-hover:               $color-2 !default;
 $color-link-active:              $color-2 !default;
 $color-link-focus:               $color-2 !default;
 $color-link-visited:             $color-3 !default;
-$color-border:                   very-light($color-3, 12) !default;
+$color-border:                   lighten($color-3, 12) !default;
 
 // Basic navigation colors
 $color-sidebar-bg:              $color-body-bg !default;
@@ -40,7 +40,7 @@ $color-navbar-bg:               $color-3 !default;
 $color-navbar-active:           $color-1 !default;
 $color-navbar-active-bg:        $color-2 !default;
 $color-navbar-submenu:          $color-3 !default;
-$color-navbar-submenu-bg:       very-light($color-navbar-bg, 4) !default;
+$color-navbar-submenu-bg:       lighten($color-navbar-bg, 4) !default;
 $color-navbar-submenu-active:   $color-2 !default;
 $color-navbar-submenu-active-bg: $color-navbar-submenu-bg !default;
 $color-navbar-footer:           $color-3 !default;
@@ -57,8 +57,8 @@ $color-spinner: #fff;
 
 // Table colors
 $color-tbl-odd:                  $color-1 !default;
-$color-tbl-even:                 very-light($color-3, 4) !default;
-$color-tbl-thead:                very-light($color-3, 4) !default;
+$color-tbl-even:                 lighten($color-3, 4) !default;
+$color-tbl-thead:                lighten($color-3, 4) !default;
 
 // Button colors
 $color-btn-bg:                   $color-3 !default;
@@ -67,24 +67,24 @@ $color-btn-hover-bg:             $color-2 !default;
 $color-btn-hover-text:           $color-1 !default;
 
 // Actions colors
-$color-action-edit-bg:           very-light($color-success, 5  ) !default;
-$color-action-edit-brd:          very-light($color-success, 20 ) !default;
-$color-action-clone-bg:          very-light($color-notice,  5  ) !default;
-$color-action-clone-brd:         very-light($color-notice,  15 ) !default;
-$color-action-remove-bg:         very-light($color-error,   5  ) !default;
-$color-action-remove-brd:        very-light($color-error,   10 ) !default;
-$color-action-void-bg:           very-light($color-error,   10 ) !default;
-$color-action-void-brd:          very-light($color-error,   20 ) !default;
-$color-action-cancel-bg:         very-light($color-notice,  10 ) !default;
-$color-action-cancel-brd:        very-light($color-notice,  20 ) !default;
-$color-action-capture-bg:        very-light($color-success, 5  ) !default;
-$color-action-capture-brd:       very-light($color-success, 20 ) !default;
-$color-action-save-bg:           very-light($color-success, 5  ) !default;
-$color-action-save-brd:          very-light($color-success, 20 ) !default;
-$color-action-mail-bg:           very-light($color-success, 5  ) !default;
-$color-action-mail-brd:          very-light($color-success, 20 ) !default;
-$color-action-failure-bg:        very-light($color-error,   10 ) !default;
-$color-action-failure-brd:       very-light($color-error,   20 ) !default;
+$color-action-edit-bg:           lighten($color-success, 5  ) !default;
+$color-action-edit-brd:          lighten($color-success, 20 ) !default;
+$color-action-clone-bg:          lighten($color-notice,  5  ) !default;
+$color-action-clone-brd:         lighten($color-notice,  15 ) !default;
+$color-action-remove-bg:         lighten($color-error,   5  ) !default;
+$color-action-remove-brd:        lighten($color-error,   10 ) !default;
+$color-action-void-bg:           lighten($color-error,   10 ) !default;
+$color-action-void-brd:          lighten($color-error,   20 ) !default;
+$color-action-cancel-bg:         lighten($color-notice,  10 ) !default;
+$color-action-cancel-brd:        lighten($color-notice,  20 ) !default;
+$color-action-capture-bg:        lighten($color-success, 5  ) !default;
+$color-action-capture-brd:       lighten($color-success, 20 ) !default;
+$color-action-save-bg:           lighten($color-success, 5  ) !default;
+$color-action-save-brd:          lighten($color-success, 20 ) !default;
+$color-action-mail-bg:           lighten($color-success, 5  ) !default;
+$color-action-mail-brd:          lighten($color-success, 20 ) !default;
+$color-action-failure-bg:        lighten($color-error,   10 ) !default;
+$color-action-failure-brd:       lighten($color-error,   20 ) !default;
 
 // Select2 select field colors
 $color-sel-bg:                   $color-3 !default;

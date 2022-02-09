@@ -2,7 +2,7 @@
   @include display(flex);
   @include align-items(center);
   padding: 15px $grid-gutter-width;
-  background-color: very-light($color-3, 4);
+  background-color: lighten($color-3, 4);
   border-bottom: 1px solid $color-border;
 
   body:not(.new-layout) & {

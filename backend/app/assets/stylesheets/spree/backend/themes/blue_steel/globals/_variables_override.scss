@@ -9,7 +9,7 @@ $black:                          hsl(220, 19, 13);
 $color-primary:                  $cerulean;
 
 $color-sidebar-bg:              $gray;
-$color-sidebar-border:          very-light(#5498DA, 12); // $color-border
+$color-sidebar-border:          lighten(#5498DA, 12); // $color-border
 $color-navbar:                  $gray-light;
 $color-navbar-bg:               $gray;
 $color-navbar-active:           $white;

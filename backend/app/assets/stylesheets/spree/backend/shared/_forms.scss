@@ -179,21 +179,21 @@ span.info {
   &.withError {
     .field_with_errors {
       label {
-        color: very-light($color-error, 30);
+        color: lighten($color-error, 30);
       }
 
       input {
-        border-color: very-light($color-error, 15);
+        border-color: lighten($color-error, 15);
       }
     }
     .formError {
-      color: very-light($color-error, 30);
+      color: lighten($color-error, 30);
       font-style: italic;
       font-size: 85%;
     }
     .select2-container {
       border-radius: 4px;
-      border: 1px solid very-light($color-error, 15);
+      border: 1px solid lighten($color-error, 15);
     }
   }
 }

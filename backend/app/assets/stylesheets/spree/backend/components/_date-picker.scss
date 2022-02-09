@@ -57,7 +57,7 @@
         margin-left: -5px;
 
         &:hover {
-          color: very-light($color-2, 25);
+          color: lighten($color-2, 25);
         }
       }
     }
