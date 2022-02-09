@@ -44,8 +44,8 @@ group :backend, :frontend, :core, :api do
   gem 'rails-controller-testing', require: false
   gem 'puma', require: false
 
-  # Ensure the requirement is also updated in core/lib/spree/testing_support.rb
-  gem 'factory_bot_rails', '~> 4.8', require: false
+  # Ensure the requirement is also updated in core/lib/spree/testing_support/factory_bot.rb
+  gem 'factory_bot_rails', '>= 4.8', require: false
 end
 
 group :backend, :frontend do

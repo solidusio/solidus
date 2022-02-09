@@ -1630,14 +1630,13 @@ RSpec.describe Spree::Order, type: :model do
   end
 
   describe '#create_shipments_for_line_item' do
-    subject { create :order_with_line_items }
+    subject { order.create_shipments_for_line_item(line_item) }
 
-    let(:line_item) { build(:line_item) }
+    let(:order) { create :order_with_line_items }
+    let(:line_item) { build(:line_item, order: order) }
 
     it 'creates at least one new shipment for the order' do
-      expect do
-        subject.create_shipments_for_line_item(line_item)
-      end.to change { subject.shipments.count }.by 1
+      expect { subject }.to change { order.shipments.count }.by 1
     end
   end
 

@@ -20,7 +20,10 @@ FactoryBot.define do
     sku { generate(:sku) }
     available_on { 1.year.ago }
     deleted_at { nil }
-    shipping_category { |r| Spree::ShippingCategory.first || r.association(:shipping_category) }
+    shipping_category do |r|
+      Spree::ShippingCategory.first ||
+        r.association(:shipping_category, strategy: :create)
+    end
 
     # ensure stock item will be created for this products master
     before(:create) { create(:stock_location) if Spree::StockLocation.count == 0 }

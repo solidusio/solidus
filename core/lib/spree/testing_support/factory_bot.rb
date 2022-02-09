@@ -44,7 +44,7 @@ module Spree
       def self.check_version
         require "factory_bot/version"
 
-        requirement = Gem::Requirement.new("~> 4.8")
+        requirement = Gem::Requirement.new(">= 4.8")
         version = Gem::Version.new(::FactoryBot::VERSION)
 
         unless requirement.satisfied_by? version
