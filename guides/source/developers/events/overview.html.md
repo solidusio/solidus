@@ -123,7 +123,7 @@ and an optional code block can be passed:
 
 ```ruby
 Spree::Event.fire 'order_finalized', order: @order do
-  @order.finalize!
+  @order.complete!
 end
 ```
 
@@ -131,7 +131,7 @@ This is an alternative way to basically have the same functionality but
 without the block:
 
 ```ruby
-@order.finalize!
+@order.complete!
 Spree::Event.fire 'order_finalized', order: @order
 ```
 
