@@ -44,6 +44,8 @@ module Spree::Api
 
       it "can update own details" do
         country = create(:country)
+        state = create(:state)
+
         put spree.api_user_path(user.id), params: { token: user.spree_api_key, user: {
           email: "mine@example.com",
           bill_address_attributes: {
@@ -51,7 +53,7 @@ module Spree::Api
             address1: '1 Test Rd',
             city: 'City',
             country_id: country.id,
-            state_id: 1,
+            state_id: state.id,
             zipcode: '55555',
             phone: '5555555555'
           },
@@ -60,7 +62,7 @@ module Spree::Api
             address1: '1 Test Rd',
             city: 'City',
             country_id: country.id,
-            state_id: 1,
+            state_id: state.id,
             zipcode: '55555',
             phone: '5555555555'
           }
@@ -72,6 +74,8 @@ module Spree::Api
 
       it "can update own details in JSON with unwrapped parameters (Rails default)" do
         country = create(:country)
+        state = create(:state)
+
         put spree.api_user_path(user.id),
           headers: { "CONTENT_TYPE": "application/json" },
           params: {
@@ -82,7 +86,7 @@ module Spree::Api
               address1: '1 Test Rd',
               city: 'City',
               country_id: country.id,
-              state_id: 1,
+              state_id: state.id,
               zipcode: '55555',
               phone: '5555555555'
             },
@@ -91,7 +95,7 @@ module Spree::Api
               address1: '1 Test Rd',
               city: 'City',
               country_id: country.id,
-              state_id: 1,
+              state_id: state.id,
               zipcode: '55555',
               phone: '5555555555'
             }
