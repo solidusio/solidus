@@ -10,6 +10,26 @@ describe "Adjustment reasons", type: :feature do
 
     before { visit spree.admin_adjustment_reasons_path }
 
+    context "when the user cannot create adjustment reasons" do
+      custom_authorization! do |_user|
+        cannot :create, Spree::AdjustmentReason
+      end
+
+      it "doesn't show the `New Adjustment Reason` button" do
+        expect(page).not_to have_content "New Adjustment Reason"
+      end
+    end
+
+    context "when the user can create adjustment reasons" do
+      custom_authorization! do |_user|
+        can :create, Spree::AdjustmentReason
+      end
+
+      it "shows the 'New Adjustment Reason' button" do
+        expect(page).to have_content "New Adjustment Reason"
+      end
+    end
+
     context "when the user cannot edit adjustment reasons" do
       custom_authorization! do |_user|
         cannot :edit, Spree::AdjustmentReason
