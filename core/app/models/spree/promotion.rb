@@ -251,7 +251,7 @@ module Spree
     def blacklisted?(promotable)
       case promotable
       when Spree::LineItem
-        !promotable.product.promotionable?
+        !promotable.variant.product.promotionable?
       when Spree::Order
         promotable.line_items.joins(:product).where(spree_products: { promotionable: false }).exists?
       end
