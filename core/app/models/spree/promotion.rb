@@ -253,7 +253,7 @@ module Spree
       when Spree::LineItem
         !promotable.variant.product.promotionable?
       when Spree::Order
-        promotable.line_items.joins(:product).where(spree_products: { promotionable: false }).exists?
+        promotable.line_items.any? { |line_item| !line_item.variant.product.promotionable? }
       end
     end
 
