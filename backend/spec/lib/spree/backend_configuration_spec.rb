@@ -40,4 +40,43 @@ RSpec.describe Spree::BackendConfiguration do
       end
     end
   end
+
+  describe '#frontend_product_path' do
+    let(:configuration) { described_class.new }
+    let(:spree_routes) { double('spree_routes') }
+    let(:template_context) { double('template_context', spree: spree_routes) }
+    let(:product) { instance_double('Spree::Product', id: 1) }
+
+    subject(:frontend_product_path) do
+      configuration.frontend_product_path.call(template_context, product)
+    end
+
+    context 'by default' do
+      context 'when there is no product path route' do
+        before do
+          expect(:spree_routes).to_not respond_to(:product_path)
+        end
+
+        it { is_expected.to be_nil }
+      end
+
+      context 'when there is a product path route' do
+        let(:expected_path) { "/products/#{product.id}" }
+
+        let(:spree_routes_class) do
+          Class.new do
+            def product_path(product)
+              "/products/#{product.id}"
+            end
+          end
+        end
+
+        let(:spree_routes) { spree_routes_class.new }
+
+        it 'returns the product path' do
+          expect(frontend_product_path).to eq("/products/#{product.id}")
+        end
+      end
+    end
+  end
 end
