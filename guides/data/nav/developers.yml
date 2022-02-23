@@ -17,7 +17,7 @@
   - title: "API"
     dropdown:
       - title: "Reference"
-        href: "https://solidus.docs.stoplight.io"
+        href: "https://solidus.stoplight.io"
 
 -
   - title: "Adjustments"
