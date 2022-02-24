@@ -33,7 +33,16 @@ module Spree
       private
 
       def promotions
-        connected_order_promotions | sale_promotions
+        promos = connected_order_promotions | sale_promotions
+        preloader = ActiveRecord::Associations::Preloader.new
+        promos.map do |promotion|
+          preloader.preload(promotion.rules.select { |r| r.type == "Spree::Promotion::Rules::Product" }, :products)
+          preloader.preload(promotion.rules.select { |r| r.type == "Spree::Promotion::Rules::Store" }, :stores)
+          preloader.preload(promotion.rules.select { |r| r.type == "Spree::Promotion::Rules::Taxon" }, :taxons)
+          preloader.preload(promotion.rules.select { |r| r.type == "Spree::Promotion::Rules::User" }, :users)
+          preloader.preload(promotion.actions.select { |a| a.respond_to?(:calculator) }, :calculator)
+          promotion
+        end
       end
 
       def connected_order_promotions
