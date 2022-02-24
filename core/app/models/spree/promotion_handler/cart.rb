@@ -37,18 +37,23 @@ module Spree
       end
 
       def connected_order_promotions
-        Spree::Promotion.active.includes(:promotion_rules).
-          joins(:order_promotions).
-          where(spree_orders_promotions: { order_id: order.id }).readonly(false).to_a
+        order.promotions.active.includes(promotion_includes)
       end
 
       def sale_promotions
-        Spree::Promotion.where(apply_automatically: true).active.includes(:promotion_rules)
+        Spree::Promotion.where(apply_automatically: true).active.includes(promotion_includes)
       end
 
       def promotion_code(promotion)
         order_promotion = Spree::OrderPromotion.where(order: order, promotion: promotion).first
         order_promotion.present? ? order_promotion.promotion_code : nil
+      end
+
+      def promotion_includes
+        [
+          :promotion_rules,
+          :promotion_actions,
+        ]
       end
     end
   end
