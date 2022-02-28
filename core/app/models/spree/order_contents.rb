@@ -89,6 +89,7 @@ module Spree
       line_item ||= order.line_items.new(
         quantity: 0,
         variant: variant,
+        adjustments: [],
       )
 
       line_item.quantity += quantity.to_i
