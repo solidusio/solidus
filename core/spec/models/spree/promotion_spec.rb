@@ -683,17 +683,19 @@ RSpec.describe Spree::Promotion, type: :model do
 
     context "when promotable is a Spree::Order" do
       let(:promotion) { create(:promotion, :with_order_adjustment) }
-      let(:promotable) { create :order }
+      let(:promotable) { create :order, line_items: line_items }
+      let(:line_items) { [] }
 
       it_behaves_like "a promotable"
 
       context "when it contains items" do
-        let!(:line_item) { create(:line_item, order: promotable) }
-        let!(:line_item2) { create(:line_item, order: promotable) }
+        let(:line_items) { [line_item, line_item2] }
+        let!(:line_item) { create(:line_item) }
+        let!(:line_item2) { create(:line_item) }
 
         context "and at least one item is non-promotionable" do
           before do
-            line_item.product.update_column(:promotionable, false)
+            line_item.variant.product.promotionable = false
           end
 
           it { is_expected.to be false }
@@ -701,8 +703,8 @@ RSpec.describe Spree::Promotion, type: :model do
 
         context "and the items are all non-promotionable" do
           before do
-            line_item.product.update_column(:promotionable, false)
-            line_item2.product.update_column(:promotionable, false)
+            line_item.variant.product.promotionable = false
+            line_item2.variant.product.promotionable = false
           end
 
           it { is_expected.to be false }
@@ -721,13 +723,13 @@ RSpec.describe Spree::Promotion, type: :model do
       it_behaves_like "a promotable"
 
       context "and product is promotionable" do
-        before { promotable.product.promotionable = true }
+        before { promotable.variant.product.promotionable = true }
 
         it { is_expected.to be true }
       end
 
       context "and product is not promotionable" do
-        before { promotable.product.promotionable = false }
+        before { promotable.variant.product.promotionable = false }
 
         it { is_expected.to be false }
       end
@@ -883,7 +885,7 @@ RSpec.describe Spree::Promotion, type: :model do
 
         context 'when the line item has an non-promotionable product' do
           let(:rules) { [true_rule] }
-          let(:line_item) { build(:line_item) { |li| li.product.promotionable = false } }
+          let(:line_item) { build(:line_item) { |li| li.variant.product.promotionable = false } }
           it { is_expected.not_to be }
         end
       end
