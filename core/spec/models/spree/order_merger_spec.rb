@@ -141,6 +141,20 @@ module Spree
         expect(order_1.line_items.pluck(:quantity)).to match_array([1, 1])
         expect(order_1.line_items.pluck(:variant_id)).to match_array([variant.id, variant_2.id])
       end
+
+      context "with line item promotion applied to order 2" do
+        let!(:promotion) { create(:promotion, :with_line_item_adjustment, apply_automatically: true) }
+
+        before do
+          Spree::PromotionHandler::Cart.new(order_2).activate
+          expect(order_2.line_items.flat_map(&:adjustments)).not_to be_empty
+        end
+
+        it "does not carry a line item adjustments with the wrong order ID over" do
+          subject.merge!(order_2)
+          expect(order_1.line_items.flat_map(&:adjustments)).to be_empty
+        end
+      end
     end
 
     context "merging together orders with invalid line items" do
