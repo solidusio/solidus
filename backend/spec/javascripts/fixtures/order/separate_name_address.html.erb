@@ -1,0 +1,13 @@
+<% type = 'billing' %>
+<%= fields_for :bill_address do |f| %>
+    <div id="<%= type %>" data-hook="address_fields">
+        <div class="field <%= "#{type}-row" %>">
+            <%= f.label :firstname %>
+            <%= f.text_field :firstname, class: 'fullwidth' %>
+        </div>
+        <div class="field <%= "#{type}-row" %>">
+            <%= f.label :lastname %>
+            <%= f.text_field :lastname, class: 'fullwidth' %>
+        </div>
+    </div>
+<% end %>

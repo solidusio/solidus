@@ -1,5 +1,5 @@
 Spree.Views.Order.Address = Backbone.View.extend({
-  initialize: function(options) {
+  initialize: function() {
     // read initial values from page
     this.onChange();
 
@@ -23,8 +23,9 @@ Spree.Views.Order.Address = Backbone.View.extend({
 
   eachField: function(callback){
     var view = this;
-    var fields = ["name", "company", "address1", "address2",
-      "city", "zipcode", "phone", "country_id", "state_name"];
+    var fields = ["name", "firstname", "lastname", "company", "address1",
+                  "address2", "city", "zipcode", "phone", "country_id",
+                  "state_name"];
     _.each(fields, function(field) {
       var el = view.$('[name$="[' + field + ']"]');
       if (el.length) callback(field, el);

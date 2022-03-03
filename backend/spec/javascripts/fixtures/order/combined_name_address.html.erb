@@ -1,0 +1,36 @@
+<% type = 'billing' %>
+<%= fields_for :bill_address do |f| %>
+    <% s_or_b = type.chars.first %>
+
+    <div id="<%= type %>" data-hook="address_fields">
+        <div class="field <%= "#{type}-row" %>">
+            <%= f.label :name %>
+            <%= f.text_field :name, class: 'fullwidth' %>
+        </div>
+
+        <div class="field <%= "#{type}-row" %>">
+            <%= f.label :address1 %>
+            <%= f.text_field :address1, class: 'fullwidth' %>
+        </div>
+
+        <div class="field <%= "#{type}-row" %>">
+            <%= f.label :address2 %>
+            <%= f.text_field :address2, class: 'fullwidth' %>
+        </div>
+
+        <div class="field <%= "#{type}-row" %>">
+            <%= f.label :city %>
+            <%= f.text_field :city, class: 'fullwidth' %>
+        </div>
+
+        <div class="field <%= "#{type}-row" %>">
+            <%= f.label :zipcode %>
+            <%= f.text_field :zipcode, class: 'fullwidth' %>
+        </div>
+
+        <div class="field <%= "#{type}-row" %>">
+            <%= f.label :phone %>
+            <%= f.phone_field :phone, class: 'fullwidth' %>
+        </div>
+    </div>
+<% end %>
