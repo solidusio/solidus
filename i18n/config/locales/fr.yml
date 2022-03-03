@@ -886,6 +886,7 @@ fr:
         option_types: Types d'option
         orders: Commandes
         overview: Vue d'ensemble
+        payments: Paiements
         products: Produits
         promotions: Promotions
         promotion_categories: Catégories de réductions
@@ -1403,12 +1404,14 @@ fr:
     meta_title: Titre du site
     metadata: Données (Meta)
     minimal_amount: Montant minimal
+    minimize_menu: Réduire Menu
     month: Mois
     more: Plus
     move_stock_between_locations: Déplacer le Stock entre sites
     my_account: Mon compte
     my_orders: Mes commandes
     name: Nom
+    name_contains: Nom contenant
     name_on_card: Nom sur la carte
     name_or_sku: Nom ou référence
     new: Nouveau
@@ -1805,6 +1808,7 @@ fr:
     shipping_flat_rate_per_order: Taux fixe
     shipping_flexible_rate: Taux variable par article
     shipping_instructions: Instructions de livraison
+    shipment_number: Numéro de livraison
     shipping_method: Méthode de livraison
     shipping_methods: Méthodes de livraison
     shipping_price_sack: Prix groupé
