@@ -7,7 +7,14 @@ module Spree
         can :read, Country
         can :read, OptionType
         can :read, OptionValue
-        can :create, Order
+        can :create, Order do |order, token|
+          # same user, or both nil
+          order.user == user ||
+          # guest checkout order
+          order.email.present? ||
+          # via API, just like with show and update
+          (order.guest_token.present? && token == order.guest_token)
+        end
         can [:show, :update], Order, Order.where(user: user) do |order, token|
           order.user == user || (order.guest_token.present? && token == order.guest_token)
         end
