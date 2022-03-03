@@ -6,14 +6,18 @@ module Spree
       attr_reader :stock_items
 
       # @param [Variant] variant The variant to check inventory for.
-      # @param [StockLocation, Integer] stock_location The stock_location to check inventory in. If unspecified it will check inventory in all available StockLocations
-      def initialize(variant, stock_location = nil)
+      # @param [StockLocation, Integer] stock_location_or_id
+      #        The stock_location or stock location ID to check inventory in.
+      #        If unspecified it will check inventory in all available StockLocations
+      def initialize(variant, stock_location_or_id = nil)
         @variant = variant
-        @stock_items = Spree::StockItem.where(variant_id: variant)
-        if stock_location
-          @stock_items.where!(stock_location: stock_location)
-        else
-          @stock_items.joins!(:stock_location).merge!(Spree::StockLocation.active)
+        @stock_items = variant.stock_items.select do |stock_item|
+          if stock_location_or_id
+            stock_item.stock_location == stock_location_or_id ||
+              stock_item.stock_location_id == stock_location_or_id
+          else
+            stock_item.stock_location.active?
+          end
         end
       end
 
@@ -23,7 +27,7 @@ module Spree
       #   inventory is not tracked on the variant.
       def total_on_hand
         if @variant.should_track_inventory?
-          stock_items.sum(:count_on_hand)
+          stock_items.sum(&:count_on_hand)
         else
           Float::INFINITY
         end
