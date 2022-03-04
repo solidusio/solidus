@@ -51,11 +51,14 @@ module Spree
 
     # Returns an instance of StockItem for the variant id.
     #
-    # @param variant_id [String] The id of a variant.
+    # @param variant_or_id [String] The id of a variant.
     #
     # @return [StockItem] Corresponding StockItem for the StockLocation's variant.
-    def stock_item(variant_id)
-      stock_items.where(variant_id: variant_id).order(:id).first
+    def stock_item(variant_or_id)
+      stock_items.detect do |stock_item|
+        stock_item.variant_id == variant_or_id ||
+          stock_item.variant == variant_or_id
+      end
     end
 
     # Attempts to look up StockItem for the variant, and creates one if not found.
