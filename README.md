@@ -338,7 +338,7 @@ You can see the build statuses at
 
 #### Run all tests
 
-[ChromeDriver](https://sites.google.com/a/chromium.org/chromedriver/home) is
+[ChromeDriver](https://chromedriver.chromium.org/downloads) is
 required to run the frontend and backend test suites.
 
 To execute all of the test specs, run the `bin/build` script at the root of the Solidus project:
