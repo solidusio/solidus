@@ -563,8 +563,8 @@ describe "Order Details", type: :feature, js: true do
       end
 
       describe 'line item sort order' do
-        let(:product2) { create(:product) }
-        let(:product3) { create(:product) }
+        let!(:product2) { create(:product) }
+        let!(:product3) { create(:product) }
 
         before do
           # grab this one first and then create others that should end up before
