@@ -38,15 +38,13 @@ module Spree
     end
 
     # Wrapper for creating a new stock item respecting the backorderable config
-    def propagate_variant(variant)
-      stock_items.create!(variant: variant, backorderable: backorderable_default)
-    end
-
-    # Return either an existing stock item or create a new one. Useful in
-    # scenarios where the user might not know whether there is already a stock
-    # item for a given variant
-    def set_up_stock_item(variant)
-      stock_item(variant) || propagate_variant(variant)
+    def propagate_variant(variant_or_id)
+      vid = if variant_or_id.is_a?(Variant)
+        variant_or_id.id
+      else
+        variant_or_id
+      end
+      stock_items.create!(variant_id: vid, backorderable: backorderable_default)
     end
 
     # Returns an instance of StockItem for the variant id.
@@ -67,14 +65,15 @@ module Spree
     # but controller actions can pass just the variant id as a parameter.
     #
     # @return [StockItem] Corresponding StockItem for the StockLocation's variant.
-    def stock_item_or_create(variant)
-      vid = if variant.is_a?(Variant)
-        variant.id
+    def stock_item_or_create(variant_or_id)
+      vid = if variant_or_id.is_a?(Variant)
+        variant_or_id.id
       else
-        variant
+        variant_or_id
       end
-      stock_item(vid) || stock_items.create(variant_id: vid)
+      stock_item(vid) || propagate_variant(vid)
     end
+    alias_method :set_up_stock_item, :stock_item_or_create
 
     def count_on_hand(variant)
       stock_item(variant).try(:count_on_hand)
