@@ -104,10 +104,7 @@ RSpec.describe Spree::FulfilmentChanger do
     context "when transferring to another stock location" do
       let(:desired_stock_location) { create(:stock_location) }
       let!(:stock_item) do
-        variant.stock_items.find_or_create_by!(
-          stock_location: desired_stock_location,
-          variant: variant,
-        )
+        desired_stock_location.stock_item_or_create(variant)
       end
 
       before do
