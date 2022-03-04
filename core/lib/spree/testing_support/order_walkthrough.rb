@@ -3,11 +3,11 @@
 module Spree
   module TestingSupport
     class OrderWalkthrough
-      def self.up_to(state)
-        new.up_to(state)
+      def self.up_to(state, user: nil)
+        new.up_to(state, user: user)
       end
 
-      def up_to(state)
+      def up_to(state, user: nil)
         # Need to create a valid zone too...
         @zone = ::FactoryBot.create(:zone)
         @country = ::FactoryBot.create(:country)
@@ -23,6 +23,7 @@ module Spree
         end
 
         order = Spree::Order.create!(
+          user: user,
           email: "solidus@example.com",
           store: Spree::Store.first || ::FactoryBot.create(:store)
         )
@@ -61,7 +62,7 @@ module Spree
       end
 
       def payment(order)
-        credit_card = ::FactoryBot.create(:credit_card)
+        credit_card = ::FactoryBot.create(:credit_card, user: order.user)
         order.payments.create!(payment_method: credit_card.payment_method, amount: order.total, source: credit_card)
         # TODO: maybe look at some way of making this payment_state change automatic
         order.payment_state = 'paid'
