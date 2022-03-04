@@ -314,7 +314,8 @@ RSpec.describe Spree::OrderInventory, type: :model do
 
     before do
       new_line_item.inventory_units.destroy_all
-      new_line_item.variant.stock_items.discard_all
+      shipment.stock_location.stock_item(new_line_item.variant).discard
+      shipment.stock_location.stock_items.reset
       create :stock_location
       order.line_items.reload
     end
