@@ -767,8 +767,6 @@ RSpec.describe Spree::Promotion, type: :model do
           allow(rule2).to receive_messages(eligible?: true, applicable?: true)
 
           promotion.promotion_rules = [rule1, rule2]
-          allow(promotion).to receive_message_chain(:rules, :none?).and_return(false)
-          allow(promotion).to receive_message_chain(:rules, :for).and_return(promotion.promotion_rules)
         end
         it "returns the eligible rules" do
           expect(promotion.eligible_rules(promotable)).to eq [rule1, rule2]
@@ -786,8 +784,6 @@ RSpec.describe Spree::Promotion, type: :model do
           allow(rule2).to receive_messages(eligible?: false, applicable?: true, eligibility_errors: errors)
 
           promotion.promotion_rules = [rule1, rule2]
-          allow(promotion).to receive_message_chain(:rules, :none?).and_return(false)
-          allow(promotion).to receive_message_chain(:rules, :for).and_return(promotion.promotion_rules)
         end
         it "returns nil" do
           expect(promotion.eligible_rules(promotable)).to be_nil
@@ -809,7 +805,6 @@ RSpec.describe Spree::Promotion, type: :model do
       it "should have eligible rules if any of the rules are eligible" do
         true_rule = stub_model(Spree::PromotionRule, eligible?: true, applicable?: true)
         promotion.promotion_rules = [true_rule]
-        allow(promotion.rules).to receive(:for) { promotion.rules }
         expect(promotion.eligible_rules(promotable)).to eq [true_rule]
       end
 
@@ -820,8 +815,6 @@ RSpec.describe Spree::Promotion, type: :model do
           allow(rule).to receive_messages(eligible?: false, applicable?: true, eligibility_errors: errors)
 
           promotion.promotion_rules = [rule]
-          allow(promotion).to receive_message_chain(:rules, :for).and_return(promotion.promotion_rules)
-          allow(promotion).to receive_message_chain(:rules, :none?).and_return(false)
         end
         it "returns nil" do
           expect(promotion.eligible_rules(promotable)).to be_nil
@@ -844,7 +837,6 @@ RSpec.describe Spree::Promotion, type: :model do
     before do
       promotion.promotion_rules = rules
       promotion.promotion_actions = [Spree::PromotionAction.new]
-      allow(promotion.rules).to receive(:for) { rules }
     end
 
     subject { promotion.line_item_actionable? order, line_item }

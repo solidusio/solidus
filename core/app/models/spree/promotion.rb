@@ -151,7 +151,7 @@ module Spree
       return [] if rules.none?
 
       eligible = lambda { |rule| rule.eligible?(promotable, options) }
-      specific_rules = rules.for(promotable)
+      specific_rules = rules.select { |rule| rule.applicable?(promotable) }
       return [] if specific_rules.none?
 
       if match_all?
