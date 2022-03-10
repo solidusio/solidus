@@ -373,6 +373,14 @@ the maintained fork.
 - Fix headers in changelog [#3812](https://github.com/solidusio/solidus/pull/3812) ([jarednorman](https://github.com/jarednorman))
 - Fixed typo with misspell [#3811](https://github.com/solidusio/solidus/pull/3811) ([hsbt](https://github.com/hsbt))
 
+## Solidus 2.11.15 (v2.11, 2022-03-10)
+
+- V2.11 - Fix non auto populated customer info [#4247](https://github.com/solidusio/solidus/pull/4247) ([nbelzer](https://github.com/nbelzer))
+- [BACKPORT] Reintroduce inverse_of: :product for variants association [#4234](https://github.com/solidusio/solidus/pull/4234) ([spaghetticode](https://github.com/spaghetticode))
+- Backport #4228 to V2.11 [#4230](https://github.com/solidusio/solidus/pull/4230) ([jcsanti](https://github.com/jcsanti))
+- v2.11 fix(Address): Set name from firstname and lastname on update [#4224](https://github.com/solidusio/solidus/pull/4224) ([tvdeyen](https://github.com/tvdeyen))
+- Backport #3913 to V2.11 [#4174](https://github.com/solidusio/solidus/pull/4174) ([spaghetticode](https://github.com/spaghetticode))
+
 ## Solidus 2.11.14 (v2.11, 2021-12-20)
 
 - Fix CSRF forgery protection bypass for Spree::OrdersController#populate [GHSA-h3fg-h5v3-vf8m](https://github.com/solidusio/solidus/security/advisories/GHSA-h3fg-h5v3-vf8m)
