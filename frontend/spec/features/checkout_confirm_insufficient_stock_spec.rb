@@ -8,7 +8,7 @@ describe "Checkout confirm page submission", type: :feature do
   context "when the product from the order is not backorderable but has enough stock quantity" do
     let(:user) { create(:user) }
 
-    let(:order) { Spree::TestingSupport::OrderWalkthrough.up_to(:payment) }
+    let(:order) { Spree::TestingSupport::OrderWalkthrough.up_to(:payment, user: user) }
     let(:order_product) { order.products.first }
     let(:order_stock_item) { order_product.stock_items.first }
 
