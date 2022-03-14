@@ -84,6 +84,12 @@ Spree::Backend::Config.configure do |config|
   #   'icon-name',
   #   url: 'https://solidus.io/'
   # )
+
+  # Custom frontend product path
+  #
+  # config.frontend_product_path = ->(template_context, product) {
+  #   template_context.spree.product_path(product)
+  # }
 end
 <% end -%>
 
