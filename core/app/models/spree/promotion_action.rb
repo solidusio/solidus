@@ -14,6 +14,7 @@ module Spree
     belongs_to :promotion, class_name: 'Spree::Promotion', inverse_of: :promotion_actions, optional: true
 
     has_many :line_item_discounts, class_name: "Spree::LineItemDiscount", inverse_of: :promotion_action
+    has_many :shipment_discounts, class_name: "Spree::ShipmentDiscount", inverse_of: :promotion_action
 
     scope :of_type, ->(type) { where(type: Array.wrap(type).map(&:to_s)) }
     scope :shipping, -> { of_type(Spree::Config.environment.promotions.shipping_actions.to_a) }
