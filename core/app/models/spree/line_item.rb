@@ -16,6 +16,7 @@ module Spree
 
     has_one :product, through: :variant
 
+    has_many :discounts, class_name: "Spree::LineItemDiscount", inverse_of: :line_item, dependent: :destroy, autosave: true
     has_many :adjustments, as: :adjustable, inverse_of: :adjustable, dependent: :destroy
     has_many :inventory_units, inverse_of: :line_item
 
