@@ -110,8 +110,12 @@ module Spree
       # http://www.hmrc.gov.uk/vat/managing/charging/discounts-etc.htm#1
       # It also fits the criteria for sales tax as outlined here:
       # http://www.boe.ca.gov/formspubs/pub113/
-      update_item_promotions
-      update_order_promotions
+      if Spree::Config.promotion_system == :adjustments
+        update_item_promotions
+        update_order_promotions
+      elsif Spree::Promotion.order_activatable?(order)
+        Spree::Config.discounter_class.new(order).call
+      end
       update_taxes
       update_cancellations
       update_item_totals
@@ -246,7 +250,11 @@ module Spree
         item.adjustment_total = item.adjustments.
           select(&:eligible?).
           reject(&:included?).
-          sum(&:amount)
+          sum(&:amount) + item.discounts.sum(&:amount)
+        item.promo_total = item.adjustments.
+          select(&:promotion?).
+          select(&:eligible?).
+          sum(&:amount) + item.discounts.sum(&:amount)
 
         if item.changed?
           item.update_columns(
