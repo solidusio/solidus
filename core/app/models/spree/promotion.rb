@@ -228,6 +228,13 @@ module Spree
         deprecated_line_item_actionable?(line_item, promotion_code: promotion_code)
     end
 
+    def activatable?(order)
+      promotion_code = order.order_promotions.detect { |op| op.promotion_id == id }&.promotion_code
+      active? &&
+        !usage_limit_exceeded?(excluded_orders: [order]) &&
+        !promotion_code&.usage_limit_exceeded?(excluded_orders: [order])
+    end
+
     def used_by?(user, excluded_orders = [])
       discounted_orders.
         complete.

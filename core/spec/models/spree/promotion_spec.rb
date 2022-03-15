@@ -827,93 +827,58 @@ RSpec.describe Spree::Promotion, type: :model do
     end
   end
 
-  describe '#line_item_actionable?' do
-    let(:order) { line_item.order }
-    let(:line_item) { build(:line_item) }
-    let(:true_rule) { double eligible?: true, applicable?: true, actionable?: true }
-    let(:false_rule) { double eligible?: true, applicable?: true, actionable?: false }
-    let(:rules) { [] }
+  describe "activatable?" do
+    let(:order) { create(:order) }
+    let(:promotion) { create(:promotion, :with_order_adjustment) }
 
-    before do
-      allow(promotion).to receive(:rules) { rules }
-      allow(promotion).to receive(:actions) { [Spree::PromotionAction.new] }
+    subject { promotion.activatable?(order) }
+
+    context "when promotion is expired" do
+      before { promotion.expires_at = Time.current - 10.days }
+
+      it { is_expected.to be false }
     end
 
-    around do |example|
-      Spree::Deprecation.silence do
-        example.run
+    context "when promotion's usage limit is exceeded" do
+      before do
+        promotion.usage_limit = 1
+        create(:completed_order_with_promotion, promotion: promotion)
       end
+
+      it { is_expected.to be false }
     end
 
-    subject { promotion.line_item_actionable? order, line_item }
+    context "when promotion code's usage limit is exceeded" do
+      let(:promotion_code) { create(:promotion_code, promotion: promotion) }
 
-    context 'when the order is eligible for promotion' do
-      context 'when there are no rules' do
-        it { is_expected.to be }
+      before do
+        promotion.per_code_usage_limit = 1
+        order.order_promotions.create!(promotion: promotion, promotion_code: promotion_code)
+        create(:completed_order_with_promotion, promotion: promotion)
+        promotion.codes.first.adjustments.update_all(eligible: true)
       end
 
-      context 'when there are rules' do
-        context 'when the match policy is all' do
-          before { promotion.match_policy = 'all' }
-
-          context 'when all rules allow action on the line item' do
-            let(:rules) { [true_rule] }
-            it { is_expected.to be }
-          end
-
-          context 'when at least one rule does not allow action on the line item' do
-            let(:rules) { [true_rule, false_rule] }
-            it { is_expected.not_to be }
-          end
-        end
-
-        context 'when the match policy is any', :deprecated_examples do
-          before { promotion.match_policy = 'any' }
-
-          context 'when at least one rule allows action on the line item' do
-            let(:rules) { [true_rule, false_rule] }
-            it { is_expected.to be }
-          end
-
-          context 'when no rules allow action on the line item' do
-            let(:rules) { [false_rule] }
-            it { is_expected.not_to be }
-          end
-        end
-
-        context 'when the line item has an non-promotionable product' do
-          let(:rules) { [true_rule] }
-          let(:line_item) { build(:line_item) { |li| li.variant.product.promotionable = false } }
-          it { is_expected.not_to be }
-        end
-
-        context "if the promotion has ineligible line item rules" do
-          before do
-            expect(promotion).to receive(:line_item_eligible?) { false }
-          end
-
-          it { is_expected.to be false }
-        end
-      end
+      it { is_expected.to be false }
     end
 
-    context 'when the order is not eligible for the promotion' do
-      context "due to promotion expiration" do
-        before { promotion.starts_at = Time.current + 2.days }
-        it { is_expected.not_to be }
+    context "when promotion is at last usage on the same order" do
+      let(:order) { create(:completed_order_with_promotion, promotion: promotion) }
+
+      before do
+        promotion.usage_limit = 1
       end
 
-      context "due to promotion code not being eligible" do
-        let(:order) { create(:order) }
-        let(:promotion) { create(:promotion, per_code_usage_limit: 0) }
-        let(:promotion_code) { create(:promotion_code, promotion: promotion) }
+      it { is_expected.to be true }
+    end
 
-        subject { promotion.line_item_eligible? line_item, promotion_code: promotion_code }
+    context "when promotion code is at last usage on the same order" do
+      let(:order) { create(:completed_order_with_promotion, promotion: promotion) }
 
-        it "returns false" do
-          expect(subject).to eq false
-        end
+      before do
+        promotion.per_code_usage_limit = 1
       end
+
+      it { is_expected.to be true }
     end
   end
 
