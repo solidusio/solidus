@@ -38,11 +38,13 @@ module Spree
       if order.update(params)
         unless order.completed?
           order.line_items = order.line_items.select { |li| li.quantity > 0 }
-          # Update totals, then check if the order is eligible for any cart promotions.
-          # If we do not update first, then the item total will be wrong and ItemTotal
-          # promotion rules would not be triggered.
-          reload_totals
-          PromotionHandler::Cart.new(order).activate
+          if legacy_promotion_system?
+            # Update totals, then check if the order is eligible for any cart promotions.
+            # If we do not update first, then the item total will be wrong and ItemTotal
+            # promotion rules would not be triggered.
+            reload_totals
+            PromotionHandler::Cart.new(order).activate
+          end
           order.ensure_updated_shipments
         end
         reload_totals
@@ -71,12 +73,16 @@ module Spree
     private
 
     def after_add_or_remove(line_item, options = {})
-      reload_totals
+      reload_totals if legacy_promotion_system?
       shipment = options[:shipment]
       shipment.present? ? shipment.update_amounts : order.ensure_updated_shipments
-      PromotionHandler::Cart.new(order, line_item).activate
+      PromotionHandler::Cart.new(order, line_item).activate if legacy_promotion_system?
       reload_totals
       line_item
+    end
+
+    def legacy_promotion_system?
+      Spree::Config.promotion_system == :adjustments
     end
 
     def reload_totals

@@ -112,6 +112,38 @@ RSpec.describe Spree::OrderContents, type: :model do
 
         include_context "discount changes order total"
       end
+
+      context "with new discount-based promotion system", pending: "Waiting for implementation" do
+        around do |example|
+          with_unfrozen_spree_preference_store do
+            Spree::Config.promotion_system = :discounts
+            example.run
+            Spree::Config.promotion_system = :adjustments
+          end
+        end
+
+        context "one active order promotion" do
+          let!(:action) { Spree::Promotion::Actions::CreateAdjustment.create(promotion: promotion, calculator: calculator) }
+
+          it "creates valid discount on order" do
+            subject.add(variant, 1)
+            expect(subject.order.discounts.to_a.sum(&:amount)).not_to eq 0
+          end
+
+          include_context "discount changes order total"
+        end
+
+        context "one active line item promotion" do
+          let!(:action) { Spree::Promotion::Actions::CreateItemAdjustments.create(promotion: promotion, calculator: calculator) }
+
+          it "creates valid discount on order" do
+            subject.add(variant, 1)
+            expect(subject.order.line_items.flat_map(&:discounts).to_a.sum(&:amount)).not_to eq 0
+          end
+
+          include_context "discount changes order total"
+        end
+      end
     end
 
     describe 'tax calculations' do
