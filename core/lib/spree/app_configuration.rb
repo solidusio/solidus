@@ -207,6 +207,13 @@ module Spree
     #   @return [Integer] Promotions to show per-page in the admin (default: +15+)
     preference :promotions_per_page, :integer, default: 15
 
+    # @!attribute [rw] promotion_system
+    #
+    # Defines whether to use adjustment- or discount-based promotions.
+    #
+    # @return [Symbol] (can be :adjustments or :discounts)
+    preference :promotion_system, :symbol, default: :adjustments
+
     # @!attribute [rw] require_master_price
     #   @return [Boolean] Require a price on the master variant of a product (default: +true+)
     preference :require_master_price, :boolean, default: true

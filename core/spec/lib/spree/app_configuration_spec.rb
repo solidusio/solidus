@@ -54,6 +54,12 @@ RSpec.describe Spree::AppConfiguration do
     end
   end
 
+  describe '@promotion_system' do
+    it 'is `:adjustments` by default' do
+      expect(prefs[:promotion_system]).to eq(:adjustments)
+    end
+  end
+
   describe '#environment' do
     class DummyClass; end;
 
