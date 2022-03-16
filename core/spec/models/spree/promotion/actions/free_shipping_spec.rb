@@ -10,6 +10,34 @@ RSpec.describe Spree::Promotion::Actions::FreeShipping, type: :model do
   let(:payload) { { order: order, promotion_code: promotion_code } }
   let(:promotion_code) { promotion.codes.first! }
 
+  context "#discount" do
+    subject { action.discount(shipment) }
+
+    before do
+      expect(action).to receive(:compute_amount).and_return(10)
+      action.promotion = promotion
+    end
+
+    it "builds an unpersisted discount" do
+      expect(subject).to be_a(Spree::ShipmentDiscount)
+      expect(subject.amount).to eq(10)
+      expect(subject.label).to eq("Promotion (Promo)")
+    end
+
+    context "if the shipment already has a discount" do
+      before do
+        shipment.discounts << build(:shipment_discount, shipment: shipment, promotion_action: action)
+      end
+
+      it "changes the discounts label and price" do
+        expect(subject).to be_a(Spree::ShipmentDiscount)
+        expect(subject.amount).to eq(10)
+        expect(subject.label).to eq("Promotion (Promo)")
+        expect(subject).to be_persisted
+        expect(subject).to be_changed
+      end
+    end
+  end
   # From promotion spec:
   describe "#perform" do
     before do

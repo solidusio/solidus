@@ -4,6 +4,19 @@ module Spree
   class Promotion < Spree::Base
     module Actions
       class FreeShipping < Spree::PromotionAction
+        def can_discount?(klass)
+          klass == Spree::Shipment
+        end
+
+        def discount(shipment)
+          discount = shipment.discounts.detect do |discount|
+            discount.promotion_action == self
+          end || shipment.discounts.build(promotion_action: self)
+          discount.label = I18n.t('spree.adjustment_labels.shipment', promotion: Spree::Promotion.model_name.human, promotion_name: promotion.name)
+          discount.amount = compute_amount(shipment)
+          discount
+        end
+
         def perform(payload = {})
           order = payload[:order]
           promotion_code = payload[:promotion_code]
