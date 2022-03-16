@@ -22,9 +22,11 @@ namespace :common do
     sh "bin/rails db:drop db:create db:migrate VERBOSE=false RAILS_ENV=test"
 
     begin
-      require "generators/#{ENV['LIB_NAME']}/install/install_generator"
+      generator_namespace = "#{ENV['LIB_NAMESPACE']&.underscore || ENV['LIB_NAME']}"
+
+      require "generators/#{generator_namespace}/install/install_generator"
       puts 'Running extension installation generator...'
-      "#{ENV['LIB_NAMESPACE'] || ENV['LIB_NAME'].camelize}::Generators::InstallGenerator".constantize.start(["--auto-run-migrations"])
+      sh "bin/rails generate #{generator_namespace}:install --auto-run-migrations"
     rescue LoadError
       # No extension generator to run
     end
