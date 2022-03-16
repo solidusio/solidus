@@ -180,7 +180,7 @@ var ShipmentItemView = Backbone.View.extend({
     Spree.ajax({
       type: "GET",
       url: Spree.pathFor('api/variants/' + this.variant_id),
-    }).success(function(variant){
+    }).done(function(variant){
       var split = new ShipmentSplitItemView({
         shipmentItemView: _this,
         shipment_number: _this.shipment_number,
