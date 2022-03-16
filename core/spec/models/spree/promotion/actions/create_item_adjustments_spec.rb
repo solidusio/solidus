@@ -17,6 +17,36 @@ module Spree
       promotion.promotion_rules = rules
     end
 
+
+    context "#discount" do
+      subject { action.discount(line_item) }
+
+      before do
+        expect(action).to receive(:compute_amount).and_return(10)
+        action.promotion = promotion
+      end
+
+      it "builds an unpersisted discount" do
+        expect(subject).to be_a(Spree::LineItemDiscount)
+        expect(subject.amount).to eq(10)
+        expect(subject.label).to eq("Promotion (Promo)")
+      end
+
+      context "if the line item already has a discount" do
+        before do
+          line_item.discounts << build(:line_item_discount, line_item: line_item, promotion_action: action)
+        end
+
+        it "changes the discounts label and price" do
+          expect(subject).to be_a(Spree::LineItemDiscount)
+          expect(subject.amount).to eq(10)
+          expect(subject.label).to eq("Promotion (Promo)")
+          expect(subject).to be_persisted
+          expect(subject).to be_changed
+        end
+      end
+    end
+
     context "#perform" do
       # Regression test for https://github.com/spree/spree/issues/3966
       context "when calculator computes 0" do

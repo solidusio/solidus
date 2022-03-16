@@ -19,6 +19,19 @@ module Spree
           [:calculator]
         end
 
+        def can_discount?(klass)
+          klass == Spree::LineItem
+        end
+
+        def discount(line_item)
+          discount = line_item.discounts.detect do |discount|
+            discount.promotion_action == self
+          end || line_item.discounts.build(promotion_action: self)
+          discount.label = I18n.t('spree.adjustment_labels.line_item', promotion: Spree::Promotion.model_name.human, promotion_name: promotion.name)
+          discount.amount = compute_amount(line_item)
+          discount
+        end
+
         def perform(payload = {})
           order = payload[:order]
           promotion = payload[:promotion]
