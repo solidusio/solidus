@@ -49,6 +49,8 @@ Take note of the following promotion attributes:
 - `match_policy`: When set to `all`, all promotion rules must be met in order
   for the promotion to be eligible. When set to `any`, just one of the
   [promotion rules](#promotion-rules) must be met.
+  Using "any" is deprecated and will be removed in future Solidus versions.
+  You can create separate promotions for each rule you have in mind instead.
 - `path`: If the promotion is activated when the customer visits a URL, this
   value is the path for the URL.
 - `per_code_usage_limit`: Specifies how many times each code can be used before
@@ -86,8 +88,13 @@ By default, `Spree::Promotion`s have a `match_policy` value of `all`, meaning
 that all of the promotion rules on a promotion must be met before the promotion
 is eligible. However, this can be changed to `any`.
 
+Using "any" is deprecated and will be removed in future Solidus versions.
+You can create separate promotions for each rule you have in mind instead.
+
 An example of a typical promotion rule would be a minimum order total of $75
-USD or that a specific product is in the cart at checkout.
+USD or that a specific product is in the cart at checkout. In this case,
+create one promotion with the order total rule, and a separate one with the
+product rule.
 
 For a list of available rule types and more information, see the
 [Promotion rules][promotion-rules] article.

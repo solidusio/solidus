@@ -54,6 +54,9 @@ Administrators can change the match policy when adding or editing a promotion.
 By default, promotions use the "Match all of these rules" setting, but they can
 be changed to use "Match any of these rules".
 
+Using "any" is deprecated and will be removed in future Solidus versions.
+You can create separate promotions for each rule you have in mind instead.
+
 ## Register a custom promotion rule
 
 You can create a custom promotion rule by creating a new class that inherits
