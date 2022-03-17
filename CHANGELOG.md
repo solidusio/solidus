@@ -43,9 +43,31 @@ of Solidus recommendations (that files are monkey patches; they don't use the
 you can place those files in `app/overrides/` and remove the `decorator`
 suffix.
 
+### Changes to the promotion system
+
+Promotions with a `match_policy` of `any` are deprecated. If you have promotions
+with such a match policy, try running the following rake task:
+
+```bash
+bin/rake solidus:split_promotions_with_any_match_policy
+```
+
+This will create separate promotions for each of the rules of your promotions with `any`
+match policy, which should have the same outcome for customers.
+
+Creating new promotions with `any` match policy is turned off by default. If you still want
+to create promotions like that (knowing they will not be supported in the future), you can
+set a temporary flag in your `config/initializers/spree.rb` file:
+
+```ruby
+# Allow creating new promotions with an `any` match policy. Unsupported in the future.
+config.allow_promotions_any_match_policy = true
+```
+
 ### Core
 
 - Add configuration option for `migration_path` [#4190](https://github.com/solidusio/solidus/pull/4190) ([SuperGoodSoft](https://github.com/supergoodsoft/))
+- Deprecate Promotion `any` Match Policy [#4304](https://github.com/solidusio/solidus/pull/4304) ([mamhoff](https://www.github.com/mamhoff))
 
 ## Solidus 3.1.5 (v3.1, 2021-12-20)
 
