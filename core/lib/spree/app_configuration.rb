@@ -60,6 +60,11 @@ module Spree
     #   @return [Boolean] When false, customers must create an account to complete an order (default: +true+)
     preference :allow_guest_checkout, :boolean, default: true
 
+    # @!attribute [rw] allow_promotions_any_match_policy
+    #   @return [Boolean] When false, admins cannot create promotions with an "any" match policy (default: +false+)
+    #                     Create individual, separate promotions for each of your rules instead.
+    preference :allow_promotions_any_match_policy, :boolean, default: false
+
     # @!attribute [rw] guest_token_cookie_options
     #   @return [Hash] Add additional guest_token cookie options here (ie. domain or path)
     preference :guest_token_cookie_options, :hash, default: {}

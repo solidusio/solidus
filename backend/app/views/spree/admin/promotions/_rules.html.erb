@@ -19,13 +19,15 @@
 
     <%= form_for @promotion, url: object_url, method: :put do |f| %>
       <fieldset class="no-border-top">
-        <div id="promotion-policy-select" class="align-center row">
-          <% Spree::Promotion::MATCH_POLICIES.each do |policy| %>
-            <div class="col-6">
-              <label><%= f.radio_button :match_policy, policy %> <%= t "spree.promotion_form.match_policies.#{policy}" %></label>
-            </div>
-          <% end %>
-        </div>
+        <% if Spree::Config.allow_promotions_any_match_policy %>
+          <div id="promotion-policy-select" class="align-center row">
+            <% Spree::Promotion::MATCH_POLICIES.each do |policy| %>
+              <div class="col-6">
+                <label><%= f.radio_button :match_policy, policy %> <%= t "spree.promotion_form.match_policies.#{policy}" %></label>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
 
         <div id="rules" class="filter_list">
           <% if @promotion.rules.any? %>

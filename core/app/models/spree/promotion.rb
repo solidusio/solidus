@@ -3,6 +3,7 @@
 module Spree
   class Promotion < Spree::Base
     MATCH_POLICIES = %w(all any)
+
     UNACTIVATABLE_ORDER_STATES = ["complete", "awaiting_return", "returned"]
 
     attr_reader :eligibility_errors
@@ -176,6 +177,12 @@ module Spree
         end
         specific_rules
       else
+        Spree::Deprecation.warn(
+        <<~WARN
+          Your promotion "#{name}" with ID #{id} has a match_policy of 'any'.
+          This is deprecated, please split the promotion into separate promotions for each rule.
+        WARN
+        )
         unless specific_rules.any?(&eligible)
           @eligibility_errors = specific_rules.map(&:eligibility_errors).detect(&:present?)
           return nil
