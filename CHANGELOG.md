@@ -1,5 +1,6 @@
 ## Solidus 3.2.0.alpha (master, unreleased)
 
+- Promotions with a `match_policy` of `any` are deprecated.
 - Monkey patch Authentication Bypass by CSRF Weakness vulnerability on solidus_auth_devise for extra security [GHSA-5629-8855-gf4g](https://github.com/solidusio/solidus/security/advisories/GHSA-5629-8855-gf4g)
 - Fix ReDos vulnerability on Spree::EmailValidator::EMAIL_REGEXP [GHSA-qxmr-qxh6-2cc9](https://github.com/solidusio/solidus/security/advisories/GHSA-qxmr-qxh6-2cc9)
 
