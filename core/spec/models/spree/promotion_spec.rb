@@ -1014,4 +1014,52 @@ RSpec.describe Spree::Promotion, type: :model do
       expect(order.adjustment_total).to eq(-10)
     end
   end
+
+  describe "#discounted_orders" do
+    around do |example|
+      with_unfrozen_spree_preference_store do
+        Spree::Config.promotion_system = :discounts
+        example.run
+        Spree::Config.promotion_system = :adjustments
+      end
+    end
+
+    let(:promotion) { create(:promotion, :with_action) }
+    let(:other_promotion) { create(:promotion, :with_action) }
+    let(:other_action) { other_promotion.actions.first }
+    let(:action) { promotion.actions.first }
+
+    let!(:order_with_line_item_discount) do
+      create(:order_with_line_items).tap do |order|
+        order.line_items.first.discounts << build(:line_item_discount, line_item: nil, promotion_action: action)
+      end
+    end
+
+    let!(:order_with_shipment_discount) do
+      create(:order_with_line_items).tap do |order|
+        order.shipments.first.discounts << build(:shipment_discount, shipment: nil, promotion_action: action)
+      end
+    end
+
+    let!(:order_with_line_item_and_shipment_discount) do
+      create(:order_with_line_items).tap do |order|
+        order.shipments.first.discounts << build(:shipment_discount, shipment: nil, promotion_action: action)
+        order.line_items.first.discounts << build(:line_item_discount, line_item: nil, promotion_action: action)
+      end
+    end
+
+    let!(:order_without_discount) { create(:order_with_line_items) }
+
+    let!(:order_with_other_discount) do
+      create(:order_with_line_items).tap do |order|
+        order.shipments.first.discounts << build(:shipment_discount, shipment: nil, promotion_action: other_action)
+      end
+    end
+
+    subject { promotion.discounted_orders }
+
+    it { is_expected.to be_a(ActiveRecord::Relation) }
+
+    it { is_expected.to match_array([order_with_line_item_and_shipment_discount, order_with_shipment_discount, order_with_line_item_discount]) }
+  end
 end

@@ -70,15 +70,23 @@ module Spree
 
     # All orders that have been discounted using this promotionp
     def discounted_orders
-      Spree::Order.
-        joins(:all_adjustments).
-        where(
-          spree_adjustments: {
-            source_type: "Spree::PromotionAction",
-            source_id: actions.map(&:id),
-            eligible: true
-          }
-        ).distinct
+      if Spree::Config.promotion_system == :adjustments
+        Spree::Order.
+          joins(:all_adjustments).
+          where(
+            spree_adjustments: {
+              source_type: "Spree::PromotionAction",
+              source_id: actions.map(&:id),
+              eligible: true
+            }
+          ).distinct
+      else
+        Spree::Order.where.not(spree_line_item_discounts: { id: nil }).
+          where(spree_line_item_discounts: { promotion_action_id: actions.map(&:id) }).or(
+            Spree::Order.where.not(spree_shipment_discounts: { id: nil }).
+              where(spree_shipment_discounts: { promotion_action_id: actions.map(&:id) })
+        ).left_outer_joins(line_items: :discounts, shipments: :discounts).distinct
+      end
     end
 
     def as_json(options = {})
