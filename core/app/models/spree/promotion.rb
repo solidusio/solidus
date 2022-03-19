@@ -68,7 +68,7 @@ module Spree
       ).first
     end
 
-    # All orders that have been discounted using this promotion
+    # All orders that have been discounted using this promotionp
     def discounted_orders
       Spree::Order.
         joins(:all_adjustments).
