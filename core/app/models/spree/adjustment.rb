@@ -62,6 +62,7 @@ module Spree
                .distinct
       exclude_canceled ? result.merge(Spree::Order.not_canceled) : result
     end
+    deprecate :in_completed_orders, "Please don't use this and rather go through Spree::Promotion#discounted_orders"
 
     def finalize!
       update!(finalized: true)
