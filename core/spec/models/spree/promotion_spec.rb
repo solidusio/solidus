@@ -357,39 +357,90 @@ RSpec.describe Spree::Promotion, type: :model do
   end
 
   describe "#usage_count" do
-    let(:promotion) do
-      FactoryBot.create(
-        :promotion,
-        :with_order_adjustment,
-        code: "discount"
-      )
-    end
-
-    subject { promotion.usage_count }
-
-    context "when the code is applied to a non-complete order" do
-      let(:order) { FactoryBot.create(:order_with_line_items) }
-      before { promotion.activate(order: order, promotion_code: promotion.codes.first) }
-      it { is_expected.to eq 0 }
-    end
-    context "when the code is applied to a complete order" do
-      let!(:order) do
+    context "with legacy promotion system" do
+      let(:promotion) do
         FactoryBot.create(
-          :completed_order_with_promotion,
-          promotion: promotion
+          :promotion,
+          :with_order_adjustment,
+          code: "discount"
         )
       end
-      context "and the promo is eligible" do
-        it { is_expected.to eq 1 }
-      end
-      context "and the promo is ineligible" do
-        before { order.adjustments.promotion.update_all(eligible: false) }
+
+      subject { promotion.usage_count }
+
+      context "when the code is applied to a non-complete order" do
+        let(:order) { FactoryBot.create(:order_with_line_items) }
+        before { promotion.activate(order: order, promotion_code: promotion.codes.first) }
         it { is_expected.to eq 0 }
       end
-      context "and the order is canceled" do
-        before { order.cancel! }
+      context "when the code is applied to a complete order" do
+        let!(:order) do
+          FactoryBot.create(
+            :completed_order_with_promotion,
+            promotion: promotion
+          )
+        end
+        context "and the promo is eligible" do
+          it { is_expected.to eq 1 }
+        end
+        context "and the promo is ineligible" do
+          before { order.adjustments.promotion.update_all(eligible: false) }
+          it { is_expected.to eq 0 }
+        end
+        context "and the order is canceled" do
+          before { order.cancel! }
+          it { is_expected.to eq 0 }
+          it { expect(order.state).to eq 'canceled' }
+        end
+      end
+    end
+
+    context "with discount system" do
+      around do |example|
+        with_unfrozen_spree_preference_store do
+          Spree::Config.promotion_system = :discounts
+          example.run
+          Spree::Config.promotion_system = :adjustments
+        end
+      end
+
+      let(:promotion) do
+        FactoryBot.create(
+          :promotion,
+          :with_line_item_adjustment,
+        )
+      end
+
+      subject { promotion.usage_count }
+
+      context "when the code is applied to a non-complete order" do
+        let(:order) { FactoryBot.create(:order_with_line_items) }
+        before do
+          order.order_promotions << Spree::OrderPromotion.new(promotion_code: promotion.codes.first, promotion: promotion)
+          order.recalculate
+        end
+
         it { is_expected.to eq 0 }
-        it { expect(order.state).to eq 'canceled' }
+      end
+
+      context "when the code is applied to a complete order" do
+        let!(:order) { FactoryBot.create(:order_ready_to_complete) }
+
+        before do
+          order.order_promotions << Spree::OrderPromotion.new(promotion_code: promotion.codes.first, promotion: promotion)
+          order.recalculate
+          order.complete!
+        end
+
+        context "and the promo is eligible" do
+          it { is_expected.to eq 1 }
+        end
+
+        context "and the order is canceled" do
+          before { order.cancel! }
+          it { is_expected.to eq 0 }
+          it { expect(order.state).to eq 'canceled' }
+        end
       end
     end
   end
