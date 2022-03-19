@@ -67,6 +67,19 @@ module Spree
       ).first
     end
 
+    # All orders that have been discounted using this promotion
+    def discounted_orders
+      Spree::Order.
+        joins(:all_adjustments).
+        where(
+          spree_adjustments: {
+            source_type: "Spree::PromotionAction",
+            source_id: actions.map(&:id),
+            eligible: true
+          }
+        ).distinct
+    end
+
     def as_json(options = {})
       options[:except] ||= :code
       super
