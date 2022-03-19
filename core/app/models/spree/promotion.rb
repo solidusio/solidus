@@ -228,21 +228,12 @@ module Spree
     end
 
     def used_by?(user, excluded_orders = [])
-      [
-        :adjustments,
-        :line_item_adjustments,
-        :shipment_adjustments
-      ].any? do |adjustment_type|
-        user.orders.complete.joins(adjustment_type).where(
-          spree_adjustments: {
-            source_type: "Spree::PromotionAction",
-            source_id: actions.map(&:id),
-            eligible: true
-          }
-        ).where.not(
-          id: excluded_orders.map(&:id)
-        ).any?
-      end
+      discounted_orders.
+        complete.
+        where.not(id: excluded_orders.map(&:id)).
+        where(user: user).
+        where.not(spree_orders: { state: :canceled }).
+        exists?
     end
 
     # Removes a promotion and any adjustments or other side effects from an
