@@ -1,8 +1,5 @@
 version: 2.1
 
-orbs:
-  stoplight: nebulab/stoplight@6.0.0
-
 executors:
   base:
     working_directory: &workdir ~/solidus
@@ -140,18 +137,3 @@ workflows:
       - mysql
       - postgres_rails60
       - postgres_rails52
-      - stoplight/push:
-          context: "Solidus Core Team"
-          project: solidus/solidus-api
-          git_token: $STOPLIGHT_GIT_TOKEN
-          source_dir: api/openapi
-          username: $STOPLIGHT_USERNAME
-          version: "`cat /tmp/workspace/solidus-version`"
-          requires:
-            - persist_version
-      - stoplight/publish:
-          context: "Solidus Core Team"
-          api_token: $STOPLIGHT_API_TOKEN
-          domain: solidus.docs.stoplight.io
-          requires:
-            - stoplight/push
