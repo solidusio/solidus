@@ -9,6 +9,10 @@ module Spree
                                          dependent: :destroy
         has_many :stores, through: :promotion_rule_stores, class_name: "Spree::Store"
 
+        def preload_relations
+          [:stores]
+        end
+
         def applicable?(promotable)
           promotable.is_a?(Spree::Order)
         end
