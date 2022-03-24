@@ -25,14 +25,9 @@ class CommonRakeTasks
         sh "bin/rails db:environment:set RAILS_ENV=test"
         sh "bin/rails db:drop db:create db:migrate VERBOSE=false RAILS_ENV=test"
 
-        begin
-          generator_namespace = "#{ENV['LIB_NAMESPACE']&.underscore || ENV['LIB_NAME']}"
-
-          require "generators/#{generator_namespace}/install/install_generator"
+        if extension_installation_generator_exists?
           puts 'Running extension installation generator...'
           sh "bin/rails generate #{generator_namespace}:install --auto-run-migrations"
-        rescue LoadError
-          # No extension generator to run
         end
       end
 
@@ -42,6 +37,20 @@ class CommonRakeTasks
         sh "bundle exec rake db:seed RAILS_ENV=test"
       end
     end
+  end
+
+  private
+
+  def extension_installation_generator_exists?
+    require "generators/#{generator_namespace}/install/install_generator"
+
+    true
+  rescue LoadError
+    false
+  end
+
+  def generator_namespace
+    "#{ENV['LIB_NAMESPACE']&.underscore || ENV['LIB_NAME']}"
   end
 end
 
