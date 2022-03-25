@@ -372,7 +372,9 @@ describe "Order Details", type: :feature, js: true do
               visit spree.cart_admin_order_path(order)
 
               expect(page.current_path).to eq(spree.edit_admin_order_path(order))
-              expect(page).not_to have_text 'Cart'
+              within '[data-hook="admin_order_tabs_order_details"]' do
+                expect(page).not_to have_text 'Cart'
+              end
               expect(page).not_to have_selector('.fa-arrows-h')
               expect(page).not_to have_selector('.fa-trash')
             end
@@ -619,9 +621,11 @@ describe "Order Details", type: :feature, js: true do
   context 'as Fakedispatch' do
     custom_authorization! do |_user|
       # allow dispatch to :admin, :index, and :edit on Spree::Order
-      can [:admin, :edit, :index, :show], Spree::Order
+      can [:admin, :edit, :index, :show, :manage], Spree::Order
       # allow dispatch to :index, :show, :create and :update shipments on the admin
       can [:admin, :manage, :show, :ship], Spree::Shipment
+      # allow dispatch to :show cartons on the admin
+      can [:show], Spree::Carton
     end
 
     before do
@@ -659,6 +663,7 @@ describe "Order Details", type: :feature, js: true do
 
       find(".ship-shipment-button").click
 
+      click_on "Cartons"
       within '.carton-state' do
         expect(page).to have_content('Shipped')
       end
