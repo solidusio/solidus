@@ -4,14 +4,16 @@ require 'mini_magick'
 
 module Spree
   module ActiveStorageAdapter
-    # Decorares AtiveStorage attachment to add methods exptected by Solidus'
+    # Decorates ActiveStorage attachment to add methods expected by Solidus'
     # Paperclip-oriented attachment support.
     class Attachment
       delegate_missing_to :@attachment
 
+      attr_reader :attachment
+
       def initialize(attachment, styles: {})
         @attachment = attachment
-        @styles = normalize_styles(styles)
+        @transformations = styles_to_transformations(styles)
       end
 
       def exists?
@@ -27,13 +29,13 @@ module Spree
       end
 
       def variant(style = nil)
-        size = style_to_size(style)
-        @attachment.variant(
-          resize_to_limit: size,
+        transformation = @transformations[style] || default_transformation(width, height)
+
+        @attachment.variant({
           saver: {
             strip: true
           }
-        ).processed
+        }.merge(transformation)).processed
       end
 
       def height
@@ -59,12 +61,23 @@ module Spree
         @attachment.metadata
       end
 
-      def normalize_styles(styles)
-        styles.transform_values { |v| v.split('x').map(&:to_i) }
+      def styles_to_transformations(styles)
+        styles.transform_values(&method(:imagemagick_to_image_processing_definition))
       end
 
-      def style_to_size(style)
-        @styles.fetch(style&.to_sym) { [width, height] }
+      def imagemagick_to_image_processing_definition(definition)
+        width_height = definition.split('x').map(&:to_i)
+
+        case definition[-1].to_sym
+        when :^
+          { resize_to_fill: width_height }
+        else
+          default_transformation(*width_height)
+        end
+      end
+
+      def default_transformation(width, height)
+        { resize_to_limit: [width, height] }
       end
     end
   end
