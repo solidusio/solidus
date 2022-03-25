@@ -696,6 +696,9 @@ en:
       spree/shipment:
         one: Shipment
         other: Shipments
+      spree/carton:
+        one: Carton
+        other: Cartons
       spree/shipping_category:
         one: Shipping Category
         other: Shipping Categories
