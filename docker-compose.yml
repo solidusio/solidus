@@ -40,6 +40,7 @@ services:
       HISTFILE: "/home/solidus_user/history/bash_history"
       MYSQL_HISTFILE: "/home/solidus_user/history/mysql_history"
       RAILS_ENV: development
+      ACTIVE_STORAGE_VARIANT_PROCESSOR: "mini_magick"
     ports:
       - "${SANDBOX_PORT:-3000}:${SANDBOX_PORT:-3000}"
     volumes:
