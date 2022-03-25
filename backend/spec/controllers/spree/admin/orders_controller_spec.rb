@@ -159,6 +159,44 @@ describe Spree::Admin::OrdersController, type: :controller do
       end
     end
 
+    context "#cartons" do
+      it "does not refresh rates if the order is completed" do
+        allow(order).to receive_messages completed?: true
+        expect(order).not_to receive :refresh_shipment_rates
+        get :cartons, params: { id: order.number }
+      end
+
+      it "does not refresh the rates if the order is incomplete" do
+        allow(order).to receive_messages completed?: false
+        expect(order).not_to receive :refresh_shipment_rates
+        get :cartons, params: { id: order.number }
+      end
+
+      context "when order does not have a ship address" do
+        before do
+          allow(order).to receive_messages ship_address: nil
+        end
+
+        context 'when order_bill_address_used is true' do
+          before { stub_spree_preferences(order_bill_address_used: true) }
+
+          it "should redirect to the customer details page" do
+            get :cartons, params: { id: order.number }
+            expect(response).to redirect_to(spree.edit_admin_order_customer_path(order))
+          end
+        end
+
+        context 'when order_bill_address_used is false' do
+          before { stub_spree_preferences(order_bill_address_used: false) }
+
+          it "should redirect to the customer details page" do
+            get :cartons, params: { id: order.number }
+            expect(response).to redirect_to(spree.edit_admin_order_customer_path(order))
+          end
+        end
+      end
+    end
+
     describe '#advance' do
       subject do
         put :advance, params: { id: order.number }

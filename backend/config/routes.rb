@@ -82,6 +82,7 @@ Spree::Core::Engine.routes.draw do
         put :approve
         put :cancel
         put :resume
+        get :cartons
       end
 
       resource :customer, controller: "orders/customer_details"
