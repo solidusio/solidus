@@ -30,7 +30,9 @@ module Spree
         size = style_to_size(style)
         @attachment.variant(
           resize_to_limit: size,
-          strip: true
+          saver: {
+            strip: true
+          }
         ).processed
       end
 
@@ -58,7 +60,7 @@ module Spree
       end
 
       def normalize_styles(styles)
-        styles.transform_values { |v| v.split('x') }
+        styles.transform_values { |v| v.split('x').map(&:to_i) }
       end
 
       def style_to_size(style)
