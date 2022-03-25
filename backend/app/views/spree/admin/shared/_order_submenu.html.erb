@@ -20,6 +20,12 @@
       <%= link_to plural_resource_name(Spree::Shipment), spree.edit_admin_order_url(@order) %>
     </li>
 
+    <% if @order.cartons.count > 0 && can?(:show, Spree::Carton) %>
+      <li class="<%= "active" if current == "Cartons" %>" data-hook='admin_order_tabs_cartons'>
+        <%= link_to plural_resource_name(Spree::Carton), spree.cartons_admin_order_url(@order) %>
+      </li>
+    <% end %>
+
     <% if can? :show, Spree::Adjustment %>
       <li class="<%= "active" if current == "Adjustments" %>" data-hook='admin_order_tabs_adjustments'>
         <%= link_to plural_resource_name(Spree::Adjustment), spree.admin_order_adjustments_url(@order) %>
