@@ -77,6 +77,7 @@ module DummyApp
           }
         }
         config.active_storage.service = :test
+        config.active_storage.variant_processor = ENV.fetch('ACTIVE_STORAGE_VARIANT_PROCESSOR', :mini_magick).to_sym
       end
     end
 
