@@ -228,6 +228,9 @@ en:
         description: Order includes specified product(s) with matching option value(s)
       spree/promotion/rules/product:
         description: Order includes specified product(s)
+      spree/promotion/rules/line_item_product:
+        description: Line item matches specified product(s)
+        preferred_match_policy: Match Policy
       spree/promotion/rules/store:
         description: Available only to the specified stores
       spree/promotion/rules/taxon:
@@ -656,6 +659,7 @@ en:
       spree/promotion/rules/one_use_per_user: One Use Per User
       spree/promotion/rules/option_value: Option Value(s)
       spree/promotion/rules/product: Product(s)
+      spree/promotion/rules/line_item_product: Line Item Product(s)
       spree/promotion/rules/taxon: Taxon(s)
       spree/promotion/rules/user: User
       spree/promotion/rules/user_logged_in: User Logged In
@@ -1867,6 +1871,11 @@ en:
         all: Match all of these rules
         any: Match any of these rules
     promotion_rule: Promotion Rule
+    promotion_rules:
+      line_item_product:
+        match_policies:
+          include: Line item's product is one of the chosen products
+          exclude: Line item's product is NOT one of the chosen products
     promotion_successfully_created: Promotion has been successfully created!
     promotion_total_changed_before_complete: One or more of the promotions on your
       order have become ineligible and were removed. Please check the new order amounts
