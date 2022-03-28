@@ -84,7 +84,7 @@ which is defined by the following rules:
 ```css
 /* solidus/frontend -> app/assets/stylesheets/spree/frontend/screen.css */
 
-div#footer {
+#footer {
  clear: both;
 }
 ```
@@ -96,7 +96,7 @@ following CSS:
 ```css
 /* your_app -> vendor/assets/stylesheets/spree/frontend/foo.css */
 
-div#footer {
+#footer {
  clear: none;
  border: 1px solid red;
 }
