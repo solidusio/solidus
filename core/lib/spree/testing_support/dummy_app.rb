@@ -48,7 +48,6 @@ module DummyApp
   class Application < ::Rails::Application
     config.load_defaults("#{Rails::VERSION::MAJOR}.#{Rails::VERSION::MINOR}")
     # Make the test environment more production-like:
-    config.cache_classes = true
     config.action_controller.allow_forgery_protection = false
     config.action_controller.default_protect_from_forgery = false
     config.action_mailer.perform_caching = false
@@ -59,6 +58,10 @@ module DummyApp
     # core/lib/spree/testing_support/caching.rb. See also
     # https://github.com/solidusio/solidus/issues/4110
     config.action_controller.perform_caching = false
+
+    # It needs to be explicitly set from Rails 7
+    # https://guides.rubyonrails.org/upgrading_ruby_on_rails.html#upgrading-from-rails-6-1-to-rails-7-0-spring
+    config.cache_classes = false
 
     # Make debugging easier:
     config.consider_all_requests_local = true
