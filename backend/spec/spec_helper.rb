@@ -67,7 +67,7 @@ end
 
 Capybara.javascript_driver = (ENV['CAPYBARA_DRIVER'] || :selenium_chrome_headless).to_sym
 
-ActionView::Base.raise_on_missing_translations = true
+Spree::RailsCompatibility.raise_on_missing_translations(true)
 
 Capybara.default_max_wait_time = ENV['DEFAULT_MAX_WAIT_TIME'].to_f if ENV['DEFAULT_MAX_WAIT_TIME'].present?
 
