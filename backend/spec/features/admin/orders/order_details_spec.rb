@@ -5,7 +5,7 @@ require 'spec_helper'
 describe "Order Details", type: :feature, js: true do
   include OrderFeatureHelper
 
-  let!(:stock_location) { create(:stock_location_with_items) }
+  let!(:stock_location) { create(:stock_location) }
   let!(:product) { create(:product, name: 'spree t-shirt', price: 20.00) }
   let(:order) { create(:order, state: 'complete', completed_at: "2011-02-01 12:36:15", number: "R100") }
   let(:state) { create(:state) }
@@ -271,12 +271,13 @@ describe "Order Details", type: :feature, js: true do
     end
 
     context 'Shipment edit page' do
-      let!(:stock_location2) { create(:stock_location_with_items, name: 'Clarksville') }
+      let!(:stock_location2) { create(:stock_location, name: 'Clarksville') }
 
       before do
-        product.master.stock_items.first.update_column(:backorderable, true)
-        product.master.stock_items.first.update_column(:count_on_hand, 100)
-        product.master.stock_items.last.update_column(:count_on_hand, 100)
+        product.master.stock_items.reload.each do |stock_item|
+          stock_item.update(backorderable: false)
+          stock_item.set_count_on_hand 100
+        end
       end
 
       context 'splitting to location' do

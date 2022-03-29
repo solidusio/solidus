@@ -319,7 +319,7 @@ RSpec.describe Spree::OrderInventory, type: :model do
       order.line_items.reload
     end
 
-    subject { described_class.new(order, new_line_item) }
+    subject { described_class.new(order, new_line_item.reload) }
 
     it 'creates a new shipment' do
       expect do
