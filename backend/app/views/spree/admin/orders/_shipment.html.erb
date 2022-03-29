@@ -66,3 +66,5 @@
     </tbody>
   </table>
 </div>
+
+<%= render partial: "spree/admin/orders/carton", collection: shipment.cartons.sort_by(&:shipped_at), locals: { order: order } %>
