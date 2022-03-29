@@ -69,6 +69,18 @@ config.allow_promotions_any_match_policy = true
 - Add configuration option for `migration_path` [#4190](https://github.com/solidusio/solidus/pull/4190) ([SuperGoodSoft](https://github.com/supergoodsoft/))
 - Deprecate Promotion `any` Match Policy [#4304](https://github.com/solidusio/solidus/pull/4304) ([mamhoff](https://www.github.com/mamhoff))
 
+### Frontend
+
+DEPRECATION WARNING: SolidusFrontend is deprecated. It will be removed from the
+solidus meta-package gem in Solidus v4. Furthermore, its code will be extracted
+from https://github.com/solidusio/solidus to a new repo. Once extracted, you'll
+need to explicitly add `solidus_frontend` to your Gemfile in order to continue
+using it.
+
+For fresh Solidus applications, we recommend you use 
+[SolidusStarterFrontend](https://github.com/solidusio/solidus_starter_frontend) 
+instead.
+
 ## Solidus 3.1.5 (v3.1, 2021-12-20)
 
 - Fix CSRF forgery protection bypass for Spree::OrdersController#populate [GHSA-h3fg-h5v3-vf8m](https://github.com/solidusio/solidus/security/advisories/GHSA-h3fg-h5v3-vf8m)

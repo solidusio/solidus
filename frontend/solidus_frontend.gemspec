@@ -23,6 +23,19 @@ Gem::Specification.new do |s|
   s.required_ruby_version = '>= 2.5.0'
   s.required_rubygems_version = '>= 1.8.23'
 
+  s.post_install_message = <<~MESSAGE
+    ----------------------------------------------------------------------------
+    DEPRECATION WARNING: SolidusFrontend is deprecated. It will be removed from
+    the solidus meta-package gem in a Solidus v4. Furthermore, its code will be
+    extracted from https://github.com/solidusio/solidus to a new repo. Once
+    extracted, you'll need to explicitly add `solidus_frontend` to your Gemfile
+    in order to continue using it.
+
+    For fresh Solidus applications, we recommend you use SolidusStarterFrontend
+    instead.
+    ----------------------------------------------------------------------------
+  MESSAGE
+
   s.add_dependency 'solidus_api', s.version
   s.add_dependency 'solidus_core', s.version
 
