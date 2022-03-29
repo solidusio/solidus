@@ -74,17 +74,6 @@
         </td>
       </tr>
 
-      <% if carton.orders.size > 1 %>
-        <tr class='order-numbers'>
-          <td colspan="5">
-            <strong><%= t('spree.carton_orders') %>:&nbsp;</strong>
-            <% (carton.orders - [order]).each do |order| %>
-              <%= link_to order.number, edit_admin_order_path(order) %>
-            <% end %>
-          </td>
-        </tr>
-      <% end %>
-
       <% if carton.external_number.present? %>
         <tr class="external-number">
           <td colspan="5">
