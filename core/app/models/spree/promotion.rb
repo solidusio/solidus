@@ -8,6 +8,8 @@ module Spree
 
     attr_reader :eligibility_errors
 
+    acts_as_list column: :priority
+
     belongs_to :promotion_category, optional: true
 
     has_many :promotion_rules, autosave: true, dependent: :destroy, inverse_of: :promotion
@@ -41,18 +43,18 @@ module Spree
     scope :advertised, -> { where(advertise: true) }
     scope :active, -> { has_actions.started_and_unexpired }
     scope :started_and_unexpired, -> do
-      table = arel_table
-      time = Time.current
+            table = arel_table
+            time = Time.current
 
-      where(table[:starts_at].eq(nil).or(table[:starts_at].lt(time))).
-        where(table[:expires_at].eq(nil).or(table[:expires_at].gt(time)))
-    end
+            where(table[:starts_at].eq(nil).or(table[:starts_at].lt(time))).
+              where(table[:expires_at].eq(nil).or(table[:expires_at].gt(time)))
+          end
     scope :has_actions, -> do
-      joins(:promotion_actions).distinct
-    end
+            joins(:promotion_actions).distinct
+          end
     scope :applied, -> { joins(:order_promotions).distinct }
 
-    self.whitelisted_ransackable_associations = ['codes']
+    self.whitelisted_ransackable_associations = ["codes"]
     self.whitelisted_ransackable_attributes = %w[name path promotion_category_id]
     def self.ransackable_scopes(*)
       %i(active)
@@ -74,17 +76,17 @@ module Spree
         Spree::Order.
           joins(:all_adjustments).
           where(
-            spree_adjustments: {
-              source_type: "Spree::PromotionAction",
-              source_id: actions.map(&:id),
-              eligible: true
-            }
-          ).distinct
+          spree_adjustments: {
+            source_type: "Spree::PromotionAction",
+            source_id: actions.map(&:id),
+            eligible: true,
+          },
+        ).distinct
       else
         Spree::Order.where.not(spree_line_item_discounts: { id: nil }).
           where(spree_line_item_discounts: { promotion_action_id: actions.map(&:id) }).or(
-            Spree::Order.where.not(spree_shipment_discounts: { id: nil }).
-              where(spree_shipment_discounts: { promotion_action_id: actions.map(&:id) })
+          Spree::Order.where.not(spree_shipment_discounts: { id: nil }).
+            where(spree_shipment_discounts: { promotion_action_id: actions.map(&:id) })
         ).left_outer_joins(line_items: :discounts, shipments: :discounts).distinct
       end
     end
@@ -127,7 +129,7 @@ module Spree
         line_item: line_item,
         user: user,
         path: path,
-        promotion_code: promotion_code
+        promotion_code: promotion_code,
       }
 
       # Track results from actions to see if any action has been taken.
@@ -186,11 +188,12 @@ module Spree
         specific_rules
       else
         Spree::Deprecation.warn(
-        <<~WARN
-          Your promotion "#{name}" with ID #{id} has a match_policy of 'any'.
+          <<~WARN
+            Your promotion "#{name}" with ID #{id} has a match_policy of 'any'.
           This is deprecated, please split the promotion into separate promotions for each rule.
-        WARN
-        )
+          WARN
+        
+)
         unless specific_rules.any?(&eligible)
           @eligibility_errors = specific_rules.map(&:eligibility_errors).detect(&:present?)
           return nil
