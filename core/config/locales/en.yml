@@ -1002,9 +1002,11 @@ en:
           edit_variant: Edit Variant
         form:
           dimensions: Dimensions
+          options: Options
           pricing: Pricing
           pricing_hint: These values are populated from the product details page and
             can be overridden below
+          properties: Properties
           use_product_tax_category: Use Product Tax Category
         new:
           new_variant: New Variant
