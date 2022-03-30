@@ -18,7 +18,7 @@ feature 'Promotion with product rule', js: true do
 
   background do
     visit spree.edit_admin_promotion_path(promotion)
-    add_promotion_rule_of_type("Product(s)")
+    add_promotion_rule_of_type("Order Product(s)")
   end
 
   it "can select by product sku" do
