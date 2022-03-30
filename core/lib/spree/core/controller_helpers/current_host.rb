@@ -7,9 +7,7 @@ module Spree
         extend ActiveSupport::Concern
 
         included do
-          before_action do
-            ActiveStorage::Current.host = request.base_url
-          end
+          Spree::RailsCompatibility.active_storage_set_current(self)
         end
       end
     end

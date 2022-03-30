@@ -33,6 +33,8 @@ RSpec.describe Spree::Image, type: :model do
     end
 
     it 'returns attachment url' do
+      Spree::RailsCompatibility.active_storage_url_options_host('https://www.example.com')
+
       expect(subject.url(:product)).to include('blank.jpg')
     end
 

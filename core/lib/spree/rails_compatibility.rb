@@ -35,7 +35,7 @@ module Spree
 
     # `raise_on_missing_translations` config option
     #
-    # Changed from ActionView to I18n in Rails 6.1
+    # Changed from ActionView to I18n on Rails 6.1
     #
     # See https://github.com/rails/rails/pull/31571
     #
@@ -45,6 +45,38 @@ module Spree
         Rails.application.config.i18n.raise_on_missing_translations = value
       else
         Rails.application.config.action_view.raise_on_missing_translations = value
+      end
+    end
+
+    # Set current host for ActiveStorage in a controller
+    #
+    # Changed from `#host` to including a module in Rails 6
+    #
+    # See https://github.com/rails/rails/commit/e33c3cd8ccbecaca6c6af0438956431b02cb3fb2
+    #
+    # TODO: Remove when deprecating Rails 5.2
+    def self.active_storage_set_current(controller)
+      if version_gte('6')
+        controller.include ActiveStorage::SetCurrent
+      else
+        controller.before_action do
+          ActiveStorage::Current.host = request.base_url
+        end
+      end
+    end
+
+    # Set current host for ActiveStorage
+    #
+    # Changed from `#host` to `#url_options` on Rails 7
+    #
+    # See https://github.com/rails/rails/issues/41388
+    #
+    # TODO: Remove when deprecating Rails 6.1
+    def self.active_storage_url_options_host(value)
+      if version_gte('7')
+        ActiveStorage::Current.url_options = { host: value }
+      else
+        ActiveStorage::Current.host = value
       end
     end
 
