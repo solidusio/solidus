@@ -1004,6 +1004,8 @@ en:
           use_product_tax_category: Use Product Tax Category
         new:
           new_variant: New Variant
+        table:
+          no_variants_found: No variants found for '%{term}'
         table_filter:
           show_deleted: Show Deleted Variants
     administration: Administration
