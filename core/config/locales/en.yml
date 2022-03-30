@@ -658,7 +658,7 @@ en:
       spree/promotion/rules/nth_order: Nth Order
       spree/promotion/rules/one_use_per_user: One Use Per User
       spree/promotion/rules/option_value: Option Value(s)
-      spree/promotion/rules/product: Product(s)
+      spree/promotion/rules/product: Order Product(s)
       spree/promotion/rules/line_item_product: Line Item Product(s)
       spree/promotion/rules/taxon: Taxon(s)
       spree/promotion/rules/user: User
