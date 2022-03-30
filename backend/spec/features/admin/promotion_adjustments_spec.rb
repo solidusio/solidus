@@ -118,7 +118,7 @@ describe "Promotion Adjustments", type: :feature, js: true do
       click_button "Create"
       expect(page).to have_title("SAVE SAVE SAVE - Promotions")
 
-      select "Product(s)", from: "Discount Rules"
+      select "Line Item Product(s)", from: "Discount Rules"
       within("#rule_fields") { click_button "Add" }
       select2_search "RoR Mug", from: "Choose products"
       within('#rule_fields') { click_button "Update" }
@@ -136,7 +136,7 @@ describe "Promotion Adjustments", type: :feature, js: true do
       expect(promotion.codes.first).to be_nil
 
       first_rule = promotion.rules.first
-      expect(first_rule.class).to eq(Spree::Promotion::Rules::Product)
+      expect(first_rule.class).to eq(Spree::Promotion::Rules::LineItemProduct)
       expect(first_rule.products.map(&:name)).to include("RoR Mug")
 
       first_action = promotion.actions.first
