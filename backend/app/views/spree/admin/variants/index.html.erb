@@ -14,7 +14,7 @@
   <% end %>
 <% end %>
 
-<% if @variants.any? || @product.variants.discarded.any? %>
+<% if @variants.any? || @product.variants.discarded.any? || params[:variant_search_term].present? %>
   <%= render "table_filter", product: @product %>
   <%= render "table", variants: @variants %>
 <% else %>

@@ -39,9 +39,11 @@
       </td>
     </tr>
     <% end %>
-    <% if variants.empty? %>
-      <tr><td colspan="4"><%= t('spree.none') %></td></tr>
-    <% end %>
   </tbody>
 </table>
+<% if variants.empty? %>
+  <div class="alert alert-warning">
+    <%= t('.no_variants_found', term: params[:variant_search_term]) %>
+  </div>
+<% end %>
 <%= paginate variants, theme: "solidus_admin" %>
