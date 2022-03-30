@@ -47,7 +47,7 @@ module Spree
         end
 
         def upload_image(filename)
-          Rack::Test::UploadedFile.new(File.open(image(filename).path), 'image/jpg')
+          Rack::Test::UploadedFile.new(File.open(image(filename).path), 'image/jpeg')
         end
       end
     end
