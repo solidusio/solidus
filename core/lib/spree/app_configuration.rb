@@ -628,6 +628,7 @@ module Spree
           Spree::Promotion::Rules::Taxon
           Spree::Promotion::Rules::NthOrder
           Spree::Promotion::Rules::OptionValue
+          Spree::Promotion::Rules::LineItemOptionValue
           Spree::Promotion::Rules::FirstRepeatPurchaseSince
           Spree::Promotion::Rules::UserRole
           Spree::Promotion::Rules::Store
