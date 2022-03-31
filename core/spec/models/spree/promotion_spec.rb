@@ -880,6 +880,14 @@ RSpec.describe Spree::Promotion, type: :model do
           let(:line_item) { build(:line_item) { |li| li.variant.product.promotionable = false } }
           it { is_expected.not_to be }
         end
+
+        context "if the promotion has ineligible line item rules" do
+          before do
+            expect(promotion).to receive(:line_item_eligible?) { false }
+          end
+
+          it { is_expected.to be false }
+        end
       end
     end
 
@@ -900,6 +908,48 @@ RSpec.describe Spree::Promotion, type: :model do
           expect(subject).to eq false
         end
       end
+    end
+  end
+
+  describe "#line_item_eligible?" do
+    let(:line_item) { build(:line_item) }
+    let(:promotion) { build(:promotion) }
+    let(:rules) { [] }
+
+    subject { promotion.line_item_eligible?(line_item) }
+
+    before do
+      promotion.promotion_rules = rules
+    end
+
+    it { is_expected.to be true }
+
+    context "if the line item's variant is not safelisted" do
+      let(:product) { build(:product, promotionable: false) }
+      let(:line_item) { build(:line_item, variant: product.master) }
+
+      it { is_expected.to be false }
+    end
+
+    context "if the promotion has inapplicable rules" do
+      let(:rule) { stub_model Spree::PromotionRule, eligible?: false, applicable?: false }
+      let(:rules) { [rule] }
+
+      it { is_expected.to be true }
+    end
+
+    context "if the promotion has applicable rules" do
+      let(:rule) { stub_model Spree::PromotionRule, eligible?: false, applicable?: true }
+      let(:rules) { [rule] }
+
+      it { is_expected.to be false }
+    end
+
+    context "if the promotion has applicable and eligible rules" do
+      let(:rule) { stub_model Spree::PromotionRule, eligible?: true, applicable?: true }
+      let(:rules) { [rule] }
+
+      it { is_expected.to be true }
     end
   end
 
