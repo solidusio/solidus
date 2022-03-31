@@ -226,6 +226,8 @@ en:
         description: Only one use per user
       spree/promotion/rules/option_value:
         description: Order includes specified product(s) with matching option value(s)
+      spree/promotion/rules/line_item_option_value:
+        description: Line Item has specified product with matching option value
       spree/promotion/rules/product:
         description: Order includes specified product(s)
       spree/promotion/rules/line_item_product:
@@ -658,6 +660,7 @@ en:
       spree/promotion/rules/nth_order: Nth Order
       spree/promotion/rules/one_use_per_user: One Use Per User
       spree/promotion/rules/option_value: Option Value(s)
+      spree/promotion/rules/line_item_option_value: Line Item Option Value(s)
       spree/promotion/rules/product: Order Product(s)
       spree/promotion/rules/line_item_product: Line Item Product(s)
       spree/promotion/rules/taxon: Taxon(s)
