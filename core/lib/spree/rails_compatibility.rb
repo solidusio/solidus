@@ -26,7 +26,7 @@ module Spree
     #
     # TODO: Remove when deprecating Rails 6.1
     def self.to_fs(value, *args, **kwargs, &block)
-      if version_gte('7.0')
+      if version_gte?('7.0')
         value.to_fs(*args, **kwargs, &block)
       else
         value.to_s(*args, **kwargs, &block)
@@ -41,7 +41,7 @@ module Spree
     #
     # TODO: Remove when deprecating Rails 6.0
     def self.raise_on_missing_translations(value)
-      if version_gte('6.1')
+      if version_gte?('6.1')
         Rails.application.config.i18n.raise_on_missing_translations = value
       else
         Rails.application.config.action_view.raise_on_missing_translations = value
@@ -56,7 +56,7 @@ module Spree
     #
     # TODO: Remove when deprecating Rails 5.2
     def self.active_storage_set_current(controller)
-      if version_gte('6')
+      if version_gte?('6')
         controller.include ActiveStorage::SetCurrent
       else
         controller.before_action do
@@ -73,7 +73,7 @@ module Spree
     #
     # TODO: Remove when deprecating Rails 6.1
     def self.active_storage_url_options_host(value)
-      if version_gte('7')
+      if version_gte?('7')
         ActiveStorage::Current.url_options = { host: value }
       else
         ActiveStorage::Current.host = value
@@ -88,12 +88,12 @@ module Spree
     #
     # TODO: Remove when deprecating Rails 6.1
     def self.variant_processor
-      version_gte('7') ? :vips : :mini_magick
+      version_gte?('7') ? :vips : :mini_magick
     end
 
-    def self.version_gte(version)
+    def self.version_gte?(version)
       ::Rails.gem_version >= Gem::Version.new(version)
     end
-    private_class_method :version_gte
+    private_class_method :version_gte?
   end
 end
