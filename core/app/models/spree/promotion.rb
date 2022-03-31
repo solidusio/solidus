@@ -211,7 +211,7 @@ module Spree
     end
 
     def line_item_actionable?(order, line_item, promotion_code: nil)
-      return false if blacklisted?(line_item)
+      return false unless line_item_eligible?(line_item)
 
       if eligible?(order, promotion_code: promotion_code)
         rules = eligible_rules(order)
@@ -225,6 +225,10 @@ module Spree
       else
         false
       end
+    end
+
+    def line_item_eligible?(line_item)
+      !blacklisted?(line_item) && !!eligible_rules(line_item)
     end
 
     def used_by?(user, excluded_orders = [])

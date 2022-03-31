@@ -74,7 +74,6 @@ RSpec.describe "Promotion System" do
           expect(order.total).to eq(35.98)
           expect(order.item_total).to eq(39.98)
           expect(order.item_total_before_tax).to eq(35.98)
-          pending "There's a bug here"
           expect(order.line_items.flat_map(&:adjustments).length).to eq(1)
         end
       end
