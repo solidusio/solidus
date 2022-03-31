@@ -13,9 +13,9 @@ module Spree
     describe "#save_in_address_book" do
       context "saving a default shipping address" do
         let(:user_address) { user.user_addresses.find_first_by_address_values(address.attributes) }
-
+        let(:force_default) { true }
         subject do
-          -> { user.save_in_address_book(address.attributes, true) }
+          -> { user.save_in_address_book(address.attributes, force_default) }
         end
 
         context "the address is a new record" do
@@ -56,6 +56,7 @@ module Spree
           let(:original_default_bill_address) { create(:bill_address) }
           let(:original_user_address) { user.user_addresses.find_first_by_address_values(original_default_address.attributes) }
           let(:original_user_bill_address) { user.user_addresses.find_first_by_address_values(original_default_bill_address.attributes) }
+          let(:force_default) { false }
 
           before do
             user.user_addresses.create(address: original_default_address, default: true)
@@ -64,7 +65,7 @@ module Spree
 
           context "saving a shipping address" do
             context "makes all the other associated shipping addresses not be the default and ignores the billing ones" do
-              it { is_expected.to change { original_user_address.reload.default }.from(true).to(false) }
+              it { is_expected.not_to change { original_user_address.reload.default }.from(true) }
               it { is_expected.not_to change { original_user_bill_address.reload.default_billing } }
             end
 

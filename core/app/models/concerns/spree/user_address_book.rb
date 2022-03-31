@@ -107,12 +107,19 @@ module Spree
       return new_address unless new_address.valid?
 
       first_one = user_addresses.empty?
+      user_address = prepare_user_address(new_address)
 
       if address_attributes[:id].present? && new_address.id != address_attributes[:id]
+        if ship_address&.id == address_attributes[:id].to_i
+          user_addresses.mark_default(user_address, address_type: :shipping)
+        end
+
+        if bill_address&.id == address_attributes[:id].to_i
+          user_addresses.mark_default(user_address, address_type: :billing)
+        end
         remove_from_address_book(address_attributes[:id])
       end
 
-      user_address = prepare_user_address(new_address)
       user_addresses.mark_default(user_address, address_type: address_type) if default || first_one
 
       if persisted?
