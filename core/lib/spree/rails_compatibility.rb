@@ -80,6 +80,17 @@ module Spree
       end
     end
 
+    # Default ActiveStorage variant processor
+    #
+    # Changed from `:mini_magick` to `vips` on Rails 7
+    #
+    # See https://github.com/rails/rails/issues/42744
+    #
+    # TODO: Remove when deprecating Rails 6.1
+    def self.variant_processor
+      version_gte('7') ? :vips : :mini_magick
+    end
+
     def self.version_gte(version)
       ::Rails.gem_version >= Gem::Version.new(version)
     end
