@@ -31,14 +31,13 @@ RSpec.describe Spree::Calculator::DistributedAmount, type: :model do
       let(:first_product) { order.line_items.first.product }
 
       before do
-        rule = Spree::Promotion::Rules::Product.create!(
-          promotion: promotion,
-          product_promotion_rules: [
-            Spree::ProductPromotionRule.new(product: first_product),
-          ],
+        order_rule = Spree::Promotion::Rules::Product.new(
+          products: [first_product],
         )
-        promotion.rules << rule
-        promotion.save!
+        line_item_rule = Spree::Promotion::Rules::LineItemProduct.new(
+          products: [first_product],
+        )
+        promotion.rules << order_rule << line_item_rule
         order.recalculate
       end
 
