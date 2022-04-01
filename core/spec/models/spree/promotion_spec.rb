@@ -919,7 +919,7 @@ RSpec.describe Spree::Promotion, type: :model do
 
   describe "#line_item_eligible?" do
     let(:line_item) { build(:line_item) }
-    let(:promotion) { build(:promotion) }
+    let(:promotion) { create(:promotion, :with_action) }
     let(:rules) { [] }
 
     subject { promotion.line_item_eligible?(line_item) }
