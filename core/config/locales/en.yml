@@ -237,6 +237,9 @@ en:
         description: Available only to the specified stores
       spree/promotion/rules/taxon:
         description: Order includes products with specified taxon(s)
+      spree/promotion/rules/line_item_taxon:
+        description: Line Item has product with specified taxon(s)
+        preferred_match_policy: Match Policy
       spree/promotion/rules/user:
         description: Available only to the specified users
       spree/promotion/rules/user_logged_in:
@@ -663,7 +666,8 @@ en:
       spree/promotion/rules/line_item_option_value: Line Item Option Value(s)
       spree/promotion/rules/product: Order Product(s)
       spree/promotion/rules/line_item_product: Line Item Product(s)
-      spree/promotion/rules/taxon: Taxon(s)
+      spree/promotion/rules/taxon: Order Taxon(s)
+      spree/promotion/rules/line_item_taxon: Line Item Taxon(s)
       spree/promotion/rules/user: User
       spree/promotion/rules/user_logged_in: User Logged In
       spree/promotion/rules/user_role: User Role(s)
@@ -1879,6 +1883,10 @@ en:
         match_policies:
           include: Line item's product is one of the chosen products
           exclude: Line item's product is NOT one of the chosen products
+      line_item_taxon:
+        match_policies:
+          include: Line item's product has one of the chosen taxons
+          exclude: Line item's product does not have one of the chosen taxons
     promotion_successfully_created: Promotion has been successfully created!
     promotion_total_changed_before_complete: One or more of the promotions on your
       order have become ineligible and were removed. Please check the new order amounts
