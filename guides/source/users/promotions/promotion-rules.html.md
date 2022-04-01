@@ -18,10 +18,17 @@ creating one.
 - **Item Total**: Eligible if the order total (before any adjustments) is less
   than or greater than a specified amount.
 - **One Use Per User**: Eligible for use one time per user.
-- **Product(s)**: Eligible for specified products only.
-- **Option Value(s)**: Eligible for specified variants (product option values)
-  only.
-- **Taxon**: Eligible for products with specified taxons.
+- **Order Product(s)**: Order is eligible if it has (or does not have)
+  the specified products.
+- **Line Item Product(s)**: Line Items are eligible if they have (or do not have)
+  the specified products.
+- **Order Option Value(s)**: Order is eligible if it has specified variants
+  (product option values) only.
+- **Line Item Option Value(s)**: Line Items are eligible if they have specified
+  variants (product option values) only.
+- **Order Taxon**: Order is eligible if products with specified taxons are in the order.
+- **Line Item Taxon**: Line Items are eligible if they have products with specified
+  taxons.
 - **User**: Eligible for specified users.
 - **User Role**: Eligible for users with the specified user role.
 - **User Logged In**: Eligible for users who are logged in.
@@ -36,6 +43,7 @@ Every time the promotion rules are re-checked, any promotional discounts are
 recalculated as well. For example, if the customer added more items to the cart,
 those new items could now be calculated against the promotion rules.
 
+Note that line-item level rules do not apply to order-level discounts.
 ## Rule matching
 
 There are two types of rule matching in Solidus' promotion system: **Match all
@@ -48,4 +56,3 @@ of these rules** or **Match any of these rules**.
 - **Match any of these rules**: This setting allows you to create more flexible
   promotions. For example, if you wanted to give a discount to customers who
   order your Tote Bag product *or* if it's their 5th order from your store.
-
