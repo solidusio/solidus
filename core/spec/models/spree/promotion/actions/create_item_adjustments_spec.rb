@@ -95,7 +95,7 @@ module Spree
     context "#compute_amount" do
       before { promotion.promotion_actions = [action] }
 
-      context "when the adjustable is actionable" do
+      context "when the adjustable is eligible" do
         it "calls compute on the calculator" do
           expect(action.calculator).to receive(:compute).with(line_item).and_call_original
           action.compute_amount(line_item)
@@ -113,8 +113,8 @@ module Spree
         end
       end
 
-      context "when the adjustable is not actionable" do
-        before { allow(promotion).to receive(:line_item_actionable?) { false } }
+      context "when the adjustable is not eligible" do
+        before { allow(promotion).to receive(:line_ite_eligible?) { false } }
 
         it 'returns 0' do
           expect(action.compute_amount(line_item)).to eql(0)

@@ -35,7 +35,7 @@ module Spree
         # item_total and ship_total
         def compute_amount(adjustable)
           order = adjustable.is_a?(Order) ? adjustable : adjustable.order
-          return 0 unless promotion.line_item_actionable?(order, adjustable)
+          return 0 unless promotion.line_item_eligible?(adjustable)
           promotion_amount = calculator.compute(adjustable)
           promotion_amount ||= BigDecimal(0)
           promotion_amount = promotion_amount.abs
@@ -89,7 +89,7 @@ module Spree
         def line_items_to_adjust(promotion, order)
           order.line_items.select do |line_item|
             line_item.adjustments.none? { |adjustment| adjustment.source == self } &&
-              promotion.line_item_actionable?(order, line_item)
+              promotion.line_item_eligible?(line_item)
           end
         end
       end

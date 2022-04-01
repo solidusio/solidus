@@ -839,6 +839,12 @@ RSpec.describe Spree::Promotion, type: :model do
       promotion.promotion_actions = [Spree::PromotionAction.new]
     end
 
+    around do |example|
+      Spree::Deprecation.silence do
+        example.run
+      end
+    end
+
     subject { promotion.line_item_actionable? order, line_item }
 
     context 'when the order is eligible for promotion' do
@@ -902,7 +908,7 @@ RSpec.describe Spree::Promotion, type: :model do
         let(:promotion) { create(:promotion, per_code_usage_limit: 0) }
         let(:promotion_code) { create(:promotion_code, promotion: promotion) }
 
-        subject { promotion.line_item_actionable? order, line_item, promotion_code: promotion_code }
+        subject { promotion.line_item_eligible? line_item, promotion_code: promotion_code }
 
         it "returns false" do
           expect(subject).to eq false
