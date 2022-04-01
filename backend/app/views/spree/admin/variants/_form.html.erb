@@ -17,7 +17,8 @@
       </div>
     </div>
   </fieldset>
-  <fieldset class="no-border-top no-border-bottom">
+  <fieldset class="no-border-bottom">
+    <legend><%= t(".options") %></legend>
     <div class="row">
       <% @product.option_types.each_with_index do |option_type, index| %>
           <div class="col-3">
@@ -41,7 +42,8 @@
 </div>
 
 <div data-hook="admin_variant_form_additional_fields">
-  <fieldset class="no-border-top no-border-bottom">
+  <fieldset class="no-border-bottom">
+    <legend><%= t(".properties") %></legend>
     <div class="row">
       <% [:weight, :height, :width, :depth].each_with_index do |field, index| %>
         <div class="col-3">
@@ -58,8 +60,9 @@
 </div>
 
 <div data-hook="admin_variant_form_fields">
-  <fieldset class="no-border-top no-border-bottom">
-    <p> <%== t('.pricing_hint') %> </p>
+  <fieldset class="no-border-bottom">
+    <legend><%= t(".pricing") %></legend>
+    <div class="alert alert-info"><%= t('.pricing_hint') %></div>
 
     <div class="row">
       <div class="col-3">
