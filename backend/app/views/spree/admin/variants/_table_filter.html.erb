@@ -4,14 +4,13 @@
 
 <% content_for :table_filter do %>
   <%= form_for :variant_search, url: spree.admin_product_variants_path(product), method: :get do |f| %>
-    <div class="col-10">
-      <div data-hook="admin_variants_index_search" class="field">
-        <%= f.label :variant_search_term, t('spree.variant_search_placeholder') %>
-        <%= text_field_tag :variant_search_term, params[:variant_search_term], class: "fullwidth", placeholder: t('spree.variant_search_placeholder') %>
+    <div class="row">
+      <div class="col-10">
+        <div data-hook="admin_variants_index_search" class="field">
+          <%= f.label :variant_search_term, t('spree.variant_search_placeholder') %>
+          <%= text_field_tag :variant_search_term, params[:variant_search_term], class: "fullwidth", placeholder: t('spree.variant_search_placeholder') %>
+        </div>
       </div>
-    </div>
-
-    <% if product.variants.with_discarded.discarded.any? %>
       <div class="col-2">
         <div class="field checkbox">
           <label>
@@ -20,10 +19,10 @@
           </label>
         </div>
       </div>
-    <% end %>
+    </div>
 
     <div class="actions filter-actions">
-      <%= f.button :search %>
+      <%= button_tag t('spree.filter_results'), class: 'btn btn-primary' %>
     </div>
   <% end %>
 <% end %>

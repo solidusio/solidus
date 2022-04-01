@@ -65,7 +65,7 @@ describe "Variants", type: :feature do
       it 'allows to display deleted variants with a filter' do
         visit spree.admin_product_variants_path(product)
         check 'Show Deleted Variants'
-        click_button 'search'
+        click_button 'Filter Results'
 
         expect(page).to have_content(discarded_variant.sku)
       end
