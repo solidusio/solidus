@@ -27,7 +27,7 @@ class CommonRakeTasks
 
         if extension_installation_generator_exists?
           puts 'Running extension installation generator...'
-          sh "bin/rails generate #{generator_namespace}:install --auto-run-migrations"
+          sh "bin/rails generate #{rake_generator_namespace}:install --auto-run-migrations"
         end
       end
 
@@ -51,6 +51,10 @@ class CommonRakeTasks
 
   def generator_namespace
     "#{ENV['LIB_NAMESPACE']&.underscore || ENV['LIB_NAME']}"
+  end
+
+  def rake_generator_namespace
+    generator_namespace.gsub("/", ":")
   end
 end
 
