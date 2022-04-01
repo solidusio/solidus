@@ -10,10 +10,11 @@ module Spree
     let(:action) { promotion.actions.first! }
     let(:line_item) { order.line_items.to_a.first }
     let(:payload) { { order: order, promotion: promotion } }
+    let(:rules) { [] }
 
     before do
-      allow(action).to receive(:promotion).and_return(promotion)
       promotion.promotion_actions = [action]
+      promotion.promotion_rules = rules
     end
 
     context "#perform" do
@@ -47,12 +48,10 @@ module Spree
         end
 
         context "with products rules" do
-          let(:rule) { double Spree::Promotion::Rules::Product }
-
-          before { allow(promotion).to receive(:eligible_rules) { [rule] } }
-
-          context "when the rule is actionable" do
-            before { allow(rule).to receive(:actionable?).and_return(true) }
+          let(:rule) { Spree::Promotion::Rules::LineItemProduct.new }
+          let(:rules) { [rule] }
+          context "when the rule is eligible" do
+            before { allow(rule).to receive(:eligible?).and_return(true) }
 
             it "creates an adjustment" do
               expect {
@@ -65,8 +64,8 @@ module Spree
             end
           end
 
-          context "when the rule is not actionable" do
-            before { allow(rule).to receive(:actionable?).and_return(false) }
+          context "when the rule is not eligible" do
+            before { allow(rule).to receive(:eligible?).and_return(false) }
 
             it "does not create an adjustment" do
               expect {
@@ -114,7 +113,7 @@ module Spree
       end
 
       context "when the adjustable is not eligible" do
-        before { allow(promotion).to receive(:line_ite_eligible?) { false } }
+        before { allow(promotion).to receive(:line_item_eligible?) { false } }
 
         it 'returns 0' do
           expect(action.compute_amount(line_item)).to eql(0)
