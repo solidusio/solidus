@@ -24,22 +24,6 @@ RSpec.describe Spree::Promotion::Rules::Taxon, type: :model do
         expect(rule).to be_eligible(order)
       end
 
-      context 'when order contains items from different taxons' do
-        before do
-          product.taxons << taxon
-          rule.taxons << taxon
-        end
-
-        it 'should act on a product within the eligible taxon' do
-          expect(rule).to be_actionable(order.line_items.last)
-        end
-
-        it 'should not act on a product in another taxon' do
-          order.line_items << create(:line_item, product: create(:product, taxons: [taxon2]))
-          expect(rule).not_to be_actionable(order.line_items.last)
-        end
-      end
-
       context "when order does not have any prefered taxon" do
         before { rule.taxons << taxon2 }
         it { expect(rule).not_to be_eligible(order) }
@@ -154,64 +138,6 @@ RSpec.describe Spree::Promotion::Rules::Taxon, type: :model do
         expect {
           rule.eligible?(order)
         }.to raise_error('unexpected match policy: "invalid"')
-      end
-    end
-  end
-
-  describe '#actionable?' do
-    let(:line_item) { order.line_items.first! }
-    let(:order) { create :order_with_line_items }
-    let(:taxon) { create :taxon, name: 'first' }
-
-    context 'with an invalid match policy' do
-      before do
-        rule.preferred_match_policy = 'invalid'
-        rule.save!(validate: false)
-        line_item.product.taxons << taxon
-        rule.taxons << taxon
-      end
-
-      it 'raises' do
-        expect {
-          rule.eligible?(order)
-        }.to raise_error('unexpected match policy: "invalid"')
-      end
-    end
-
-    context 'when a product has a taxon of a taxon rule' do
-      before do
-        product.taxons << taxon
-        rule.taxons << taxon
-        rule.save!
-      end
-
-      it 'is actionable' do
-        expect(rule).to be_actionable(line_item)
-      end
-    end
-
-    context 'when a product has a taxon child of a taxon rule' do
-      before do
-        taxon.children << taxon2
-        product.taxons << taxon2
-        rule.taxons << taxon
-        rule.save!
-      end
-
-      it 'is actionable' do
-        expect(rule).to be_actionable(line_item)
-      end
-    end
-
-    context 'when a product does not have taxon or child taxon of a taxon rule' do
-      before do
-        product.taxons << taxon2
-        rule.taxons << taxon
-        rule.save!
-      end
-
-      it 'is not actionable' do
-        expect(rule).not_to be_actionable(line_item)
       end
     end
   end

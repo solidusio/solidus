@@ -48,22 +48,6 @@ module Spree
           eligibility_errors.empty?
         end
 
-        def actionable?(line_item)
-          found = Spree::Classification.where(
-            product_id: line_item.variant.product_id,
-            taxon_id: rule_taxon_ids_with_children
-          ).exists?
-
-          case preferred_match_policy
-          when 'any', 'all'
-            found
-          when 'none'
-            !found
-          else
-            raise "unexpected match policy: #{preferred_match_policy.inspect}"
-          end
-        end
-
         def taxon_ids_string
           taxons.pluck(:id).join(',')
         end
