@@ -21,9 +21,14 @@ model][promotion-rules]:
 - `ItemTotal`: Eligible if the order total (before any adjustments) is less than
   or greater than a specified amount.
 - `OneUsePerUser`: Eligible for use one time for each user.
-- `Product`: Eligible for specified products only.
-- `OptionValue`: Eligible for specified variants (product option values) only.
-- `Taxon`: Eligible for products with specified taxons.
+- `Product`: Order is eligible if it contains specified products.
+- `LineItemProduct`: Line Item is eligible if it has one of the specified products.
+- `OptionValue`: Order is eligible if it contains specified variants
+  (product option values) only.
+- `LineItemOptionValue`: Line Item is eligible if it has one of the
+  specified variants (product option values).
+- `Taxon`: Order is eligible if any product has the specified taxons.
+- `LineItemTaxon`: Line item is eligible if item's product has the specified taxons.
 - `User`: Eligible for specified users.
 - `UserRole`: Eligible for users with the specified user role.
 - `UserLoggedIn`: Eligible for users who are logged in.
@@ -72,10 +77,6 @@ module Spree
         def eligible?(order, options = {})
           ...
         end
-
-        def actionable?(line_item)
-          ...
-        end
       ...
 ```
 
@@ -84,14 +85,16 @@ Note that the `applicable?` and `eligible?` are required:
 - `eligible?` should return `true` or `false` to indicate if the promotion is
   eligible for an order.
 - If your promotion supports discounts for some line items but not others,
-  define `actionable?` to return `true` when the specified line item meets the
-  criteria for the promotion. It should return `true` or `false` to indicate if
-  this line item can have a line item adjustment carried out on it.
+  define a separate promotion rule that is `applicable?` for line items:
 
-For example, if you are giving a promotion on specific products only,
-`eligible?` should return true if the order contains one of the products
-eligible for promotion, and `actionable?` should return true when the line item
-specified is one of the specific products for this promotion.
+  ```ruby
+  def applicable?(promotable)
+    promotable.is_a?(Spree::LineItem)
+  end
+  ```
+
+  This rule should contain the line item eligibility logic in its `eligible?` method.
+
 
 Note that you can retrieve the associated `Spree::Promotion` information by
 calling the `promotion` method.
@@ -122,7 +125,7 @@ en:
     models:
       # The presentation name of the promotion rule
       spree/promotion/rules/my_promotion_rule: My Promotion Rule
-      
+
   # If you used a custom error message
   spree:
     eligibility_errors:
@@ -131,4 +134,3 @@ en:
 ```
 
 After a server restart, the new rule will be available from the Solidus admin promotion interface.
-
