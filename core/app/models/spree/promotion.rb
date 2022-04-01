@@ -213,7 +213,7 @@ module Spree
     def line_item_actionable?(order, line_item, promotion_code: nil)
       line_item_eligible?(line_item, promotion_code: promotion_code)
     end
-    deprecate line_item_actionable?: :line_item_eligible?
+    deprecate line_item_actionable?: :line_item_eligible?, deprecator: Spree::Deprecation
 
     def line_item_eligible?(line_item, promotion_code: nil)
       !blacklisted?(line_item) &&

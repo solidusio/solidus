@@ -828,15 +828,15 @@ RSpec.describe Spree::Promotion, type: :model do
   end
 
   describe '#line_item_actionable?' do
-    let(:order) { double Spree::Order }
-    let(:line_item) { double Spree::LineItem }
-    let(:true_rule) { stub_model Spree::PromotionRule, eligible?: true, applicable?: true, actionable?: true }
-    let(:false_rule) { stub_model Spree::PromotionRule, eligible?: true, applicable?: true, actionable?: false }
+    let(:order) { line_item.order }
+    let(:line_item) { build(:line_item) }
+    let(:true_rule) { double eligible?: true, applicable?: true, actionable?: true }
+    let(:false_rule) { double eligible?: true, applicable?: true, actionable?: false }
     let(:rules) { [] }
 
     before do
-      promotion.promotion_rules = rules
-      promotion.promotion_actions = [Spree::PromotionAction.new]
+      allow(promotion).to receive(:rules) { rules }
+      allow(promotion).to receive(:actions) { [Spree::PromotionAction.new] }
     end
 
     around do |example|
