@@ -31,12 +31,6 @@ module Spree
       raise NotImplementedError, "eligible? should be implemented in a sub-class of Spree::PromotionRule"
     end
 
-    # This states if a promotion can be applied to the specified line item
-    # It is true by default, but can be overridden by promotion rules to provide conditions
-    def actionable?(_line_item)
-      true
-    end
-
     def eligibility_errors
       @eligibility_errors ||= ActiveModel::Errors.new(self)
     end

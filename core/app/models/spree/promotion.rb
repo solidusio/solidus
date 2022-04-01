@@ -211,24 +211,14 @@ module Spree
     end
 
     def line_item_actionable?(order, line_item, promotion_code: nil)
-      return false unless line_item_eligible?(line_item)
-
-      if eligible?(order, promotion_code: promotion_code)
-        rules = eligible_rules(order)
-        if rules.blank?
-          true
-        else
-          rules.send(match_all? ? :all? : :any?) do |rule|
-            rule.actionable? line_item
-          end
-        end
-      else
-        false
-      end
+      line_item_eligible?(line_item, promotion_code: promotion_code)
     end
+    deprecate line_item_actionable?: :line_item_eligible?, deprecator: Spree::Deprecation
 
-    def line_item_eligible?(line_item)
-      !blacklisted?(line_item) && !!eligible_rules(line_item)
+    def line_item_eligible?(line_item, promotion_code: nil)
+      !blacklisted?(line_item) &&
+        !!eligible_rules(line_item) &&
+        deprecated_line_item_actionable?(line_item, promotion_code: promotion_code)
     end
 
     def used_by?(user, excluded_orders = [])
@@ -255,6 +245,31 @@ module Spree
     end
 
     private
+
+    def deprecated_line_item_actionable?(line_item, promotion_code: {})
+      if eligible?(line_item.order, promotion_code: promotion_code)
+        rules = eligible_rules(line_item.order)
+        if rules.blank?
+          true
+        else
+          rules.send(match_all? ? :all? : :any?) do |rule|
+            if rule.respond_to?(:actionable?)
+              Spree::Deprecation.warn(
+                <<~WARN
+                The API of promotion rules has changed. Rather than specifying "actionable?" on your rule, create a new rule
+                that is applicable to line items and move the logic in your `actionable?` method to that rule's `eligible?` method.
+                WARN
+              )
+              rule.actionable? line_item
+            else
+              true
+            end
+          end
+        end
+      else
+        false
+      end
+    end
 
     def blacklisted?(promotable)
       case promotable

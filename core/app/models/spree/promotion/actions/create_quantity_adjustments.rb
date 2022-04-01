@@ -61,7 +61,7 @@ module Spree
           adjustment_amount = adjustment_amount.abs
 
           order = line_item.order
-          line_items = actionable_line_items(order)
+          line_items = eligible_line_items(order)
 
           actioned_line_items = order.line_item_adjustments.reload.
             select { |adjustment| adjustment.source == self && adjustment.amount < 0 }.
@@ -83,9 +83,9 @@ module Spree
 
         private
 
-        def actionable_line_items(order)
+        def eligible_line_items(order)
           order.line_items.select do |item|
-            promotion.line_item_actionable? order, item
+            promotion.line_item_eligible? item
           end
         end
 
