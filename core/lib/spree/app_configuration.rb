@@ -626,6 +626,7 @@ module Spree
           Spree::Promotion::Rules::LineItemProduct
           Spree::Promotion::Rules::OneUsePerUser
           Spree::Promotion::Rules::Taxon
+          Spree::Promotion::Rules::LineItemTaxon
           Spree::Promotion::Rules::NthOrder
           Spree::Promotion::Rules::OptionValue
           Spree::Promotion::Rules::LineItemOptionValue
