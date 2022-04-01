@@ -10,15 +10,10 @@ module Spree
           promotable.is_a?(Spree::Order)
         end
 
-        def eligible?(promotable, _options = {})
-          promotable.line_items.any? { |item| actionable?(item) }
-        end
-
-        def actionable?(line_item)
-          pid = line_item.product.id
-          ovids = line_item.variant.option_values.pluck(:id)
-
-          product_ids.include?(pid) && (value_ids(pid) & ovids).present?
+        def eligible?(order, _options = {})
+          order.line_items.any? do |item|
+            LineItemOptionValue.new(preferred_eligible_values: preferred_eligible_values).eligible?(item)
+          end
         end
 
         def preferred_eligible_values
@@ -28,16 +23,6 @@ module Spree
               (value.is_a?(Array) ? value : value.split(",")).map(&:to_i)
             end
           )]
-        end
-
-        private
-
-        def product_ids
-          preferred_eligible_values.keys
-        end
-
-        def value_ids(product_id)
-          preferred_eligible_values[product_id]
         end
       end
     end
