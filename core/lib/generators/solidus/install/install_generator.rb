@@ -52,10 +52,19 @@ module Solidus
       template 'config/initializers/spree.rb.tt', 'config/initializers/spree.rb'
     end
 
+    def is_engine
+      Dir["lib/*/engine.rb"].any?
+    end
+
     def install_file_attachment
       if options[:active_storage]
         say "Installing Active Storage", :green
-        rake 'active_storage:install'
+
+        unless is_engine
+          rake "active_storage:install"
+        else
+          rake "app:active_storage:install"
+        end
       else
         say "Installing Paperclip", :green
         gsub_file 'config/initializers/spree.rb', "ActiveStorageAttachment", "PaperclipAttachment"
@@ -148,16 +157,23 @@ module Solidus
     end
 
     def include_seed_data
-      append_file "db/seeds.rb", <<-RUBY.strip_heredoc
+      unless is_engine
+        append_file "db/seeds.rb", <<-RUBY.strip_heredoc
 
-        Spree::Core::Engine.load_seed if defined?(Spree::Core)
-        Spree::Auth::Engine.load_seed if defined?(Spree::Auth)
-      RUBY
+          Spree::Core::Engine.load_seed if defined?(Spree::Core)
+          Spree::Auth::Engine.load_seed if defined?(Spree::Auth)
+        RUBY
+      end
     end
 
     def install_migrations
       say_status :copying, "migrations"
-      `rake railties:install:migrations`
+
+      unless is_engine
+        rake "railties:install:migrations"
+      else
+        rake "app:railties:install:migrations"
+      end
     end
 
     def create_database
@@ -205,7 +221,12 @@ module Solidus
     def load_sample_data
       if @load_sample_data
         say_status :loading, "sample data"
-        rake 'spree_sample:load'
+
+        unless is_engine
+          rake "spree_sample:load"
+        else
+          rake "app:spree_sample:load"
+        end
       else
         say_status :skipping, "sample data (you can always run rake spree_sample:load)"
       end
