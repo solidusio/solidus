@@ -10,7 +10,7 @@ describe "Checkout confirm page submission", type: :feature do
 
     let(:order) { Spree::TestingSupport::OrderWalkthrough.up_to(:payment, user: user) }
     let(:order_product) { order.products.first }
-    let(:order_stock_item) { order_product.stock_items.first }
+    let(:order_stock_item) { order.line_items.first.variant.stock_items.first }
 
     before do
       order_stock_item.update! backorderable: false
@@ -25,6 +25,7 @@ describe "Checkout confirm page submission", type: :feature do
         before do
           visit spree.checkout_state_path(:confirm)
           order_stock_item.set_count_on_hand(0)
+          order.line_items.first.variant.stock_items.reload
         end
 
         it 'redirects to cart page and shows an unavailable product message' do
@@ -44,6 +45,7 @@ describe "Checkout confirm page submission", type: :feature do
         before do
           visit spree.checkout_state_path(:confirm)
           order_stock_item.set_count_on_hand(0)
+          order.line_items.first.variant.stock_items.reload
         end
 
         it "redirects to the address checkout page and shows an availability changed message" do
