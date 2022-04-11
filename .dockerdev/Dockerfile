@@ -13,6 +13,7 @@ RUN apt-get update -qq \
     curl \
     git \
     imagemagick \
+    libvips \
     libmariadb-dev \
     sqlite3 \
     libsqlite3-dev \
