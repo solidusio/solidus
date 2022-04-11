@@ -12,6 +12,10 @@ module Spree
                                            class_name: 'Spree::ProductPromotionRule'
         has_many :products, class_name: 'Spree::Product', through: :product_promotion_rules
 
+        def preload_relations
+          [:products]
+        end
+
         MATCH_POLICIES = %w(any all none)
 
         validates_inclusion_of :preferred_match_policy, in: MATCH_POLICIES

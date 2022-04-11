@@ -15,6 +15,10 @@ module Spree
         before_destroy :remove_adjustments_from_incomplete_orders
         before_discard :remove_adjustments_from_incomplete_orders
 
+        def preload_relations
+          [:calculator]
+        end
+
         def perform(payload = {})
           order = payload[:order]
           promotion = payload[:promotion]

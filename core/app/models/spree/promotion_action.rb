@@ -16,6 +16,10 @@ module Spree
     scope :of_type, ->(type) { where(type: Array.wrap(type).map(&:to_s)) }
     scope :shipping, -> { of_type(Spree::Config.environment.promotions.shipping_actions.to_a) }
 
+    def preload_relations
+      []
+    end
+
     # Updates the state of the order or performs some other action depending on
     # the subclass options will contain the payload from the event that
     # activated the promotion. This will include the key :user which allows
