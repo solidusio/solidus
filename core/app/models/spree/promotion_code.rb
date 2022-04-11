@@ -28,10 +28,14 @@ class Spree::PromotionCode < Spree::Base
   # @param excluded_orders [Array<Spree::Order>] Orders to exclude from usage count
   # @return [Integer] usage count
   def usage_count(excluded_orders: [])
-    adjustments.
-    eligible.
-    in_completed_orders(excluded_orders: excluded_orders, exclude_canceled: true).
-    count(:order_id)
+    promotion.
+      discounted_orders.
+      complete.
+      where.not(spree_orders: { state: :canceled }).
+      joins(:order_promotions).
+      where(spree_orders_promotions: { promotion_code_id: self.id }).
+      where.not(id: excluded_orders.map(&:id)).
+      count
   end
 
   def usage_limit

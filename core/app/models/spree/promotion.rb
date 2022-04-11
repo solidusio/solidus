@@ -67,6 +67,19 @@ module Spree
       ).first
     end
 
+    # All orders that have been discounted using this promotion
+    def discounted_orders
+      Spree::Order.
+        joins(:all_adjustments).
+        where(
+          spree_adjustments: {
+            source_type: "Spree::PromotionAction",
+            source_id: actions.map(&:id),
+            eligible: true
+          }
+        ).distinct
+    end
+
     def as_json(options = {})
       options[:except] ||= :code
       super
@@ -190,11 +203,11 @@ module Spree
     # @param excluded_orders [Array<Spree::Order>] Orders to exclude from usage count
     # @return [Integer] usage count
     def usage_count(excluded_orders: [])
-      Spree::Adjustment.promotion.
-        eligible.
-        in_completed_orders(excluded_orders: excluded_orders, exclude_canceled: true).
-        where(source_id: actions).
-        count(:order_id)
+      discounted_orders.
+        complete.
+        where.not(id: [excluded_orders.map(&:id)]).
+        where.not(spree_orders: { state: :canceled }).
+        count
     end
 
     def line_item_actionable?(order, line_item, promotion_code: nil)
@@ -215,21 +228,12 @@ module Spree
     end
 
     def used_by?(user, excluded_orders = [])
-      [
-        :adjustments,
-        :line_item_adjustments,
-        :shipment_adjustments
-      ].any? do |adjustment_type|
-        user.orders.complete.joins(adjustment_type).where(
-          spree_adjustments: {
-            source_type: "Spree::PromotionAction",
-            source_id: actions.map(&:id),
-            eligible: true
-          }
-        ).where.not(
-          id: excluded_orders.map(&:id)
-        ).any?
-      end
+      discounted_orders.
+        complete.
+        where.not(id: excluded_orders.map(&:id)).
+        where(user: user).
+        where.not(spree_orders: { state: :canceled }).
+        exists?
     end
 
     # Removes a promotion and any adjustments or other side effects from an
