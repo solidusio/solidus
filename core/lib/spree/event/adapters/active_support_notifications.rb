@@ -3,47 +3,28 @@
 module Spree
   module Event
     module Adapters
-      # Deprecated adapter for the event bus system.
-      #
-      # Please, upgrade to {Spree::Event::Adapters::Default}.
-      #
-      # This adapter normalizes the event name so that it includes
-      # {Spree::Event::Configuration#suffix}.
-      # When the event name is a string or a symbol, if the suffix is missing,
-      # then it is added automatically. When the event name is a regexp, due
-      # to the huge variability of regexps, adding or not the suffix is
-      # developer's responsibility (if you don't, you will subscribe to all
-      # internal rails events as well).  When the event type is not supported,
-      # an error is raised.
-      #
-      # The suffix can be changed through `config.events.suffix=` in `spree.rb`.
       module ActiveSupportNotifications
         class InvalidEventNameType < StandardError; end
 
         extend self
 
-        # @api private
         def fire(event_name, opts)
-          ActiveSupport::Notifications.instrument normalize_name(event_name), opts do
+          ActiveSupport::Notifications.instrument event_name, opts do
             yield opts if block_given?
           end
         end
 
-        # @api private
         def subscribe(event_name)
-          ActiveSupport::Notifications.subscribe normalize_name(event_name) do |*args|
+          ActiveSupport::Notifications.subscribe event_name do |*args|
             event = ActiveSupport::Notifications::Event.new(*args)
             yield event
           end
         end
 
-        # @api private
         def unsubscribe(subscriber_or_name)
-          subscriber_or_name = subscriber_or_name.is_a?(String) ? normalize_name(subscriber_or_name) : subscriber_or_name
           ActiveSupport::Notifications.unsubscribe(subscriber_or_name)
         end
 
-        # @api private
         def listeners_for(names)
           names.each_with_object({}) do |name, memo|
             listeners = ActiveSupport::Notifications.notifier.listeners_for(name)
@@ -51,6 +32,16 @@ module Spree
           end
         end
 
+        # Normalizes the event name according to this specific adapter rules.
+        #  When the event name is a string or a symbol, if the suffix is missing, then
+        #  it is added automatically.
+        #  When the event name is a regexp, due to the huge variability of regexps, adding
+        #  or not the suffix is developer's responsibility (if you don't, you will subscribe
+        #  to all internal rails events as well).
+        #  When the event type is not supported, an error is raised.
+        #
+        # @param [String, Symbol, Regexp] event_name the event name, with or without the
+        #  suffix (Spree::Config.events.suffix defaults to `.spree`).
         def normalize_name(event_name)
           case event_name
           when Regexp
@@ -63,7 +54,10 @@ module Spree
           end
         end
 
-        # @api private
+        # The suffix used for namespacing event names, defaults to
+        # `.spree`
+        #
+        # @see Spree::Event::Configuration#suffix
         def suffix
           Spree::Config.events.suffix
         end

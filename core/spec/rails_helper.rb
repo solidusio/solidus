@@ -9,10 +9,6 @@ DummyApp.setup(
   gem_root: File.expand_path('..', __dir__),
   lib_name: 'solidus_core'
 )
-unless Spree::Event::Adapters::DeprecationHandler.legacy_adapter?
-  require 'spree/event/test_interface'
-  Spree::Event.enable_test_interface
-end
 
 require 'rspec/rails'
 require 'rspec-activemodel-mocks'

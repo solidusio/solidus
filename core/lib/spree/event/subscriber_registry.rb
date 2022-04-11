@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spree/event/adapters/deprecation_handler'
-
 module Spree
   module Event
     class SubscriberRegistry
@@ -49,20 +47,6 @@ module Spree
       def deactivate_subscriber(subscriber, event_action_name = nil)
         @semaphore.synchronize do
           unsafe_deactivate_subscriber(subscriber, event_action_name)
-        end
-      end
-
-      def listeners(subscriber, event_names: [])
-        raise <<~MSG if Adapters::DeprecationHandler.legacy_adapter?
-          This method is only available with the new adapter Spree::Event::Adapters::Default
-        MSG
-
-        registry[subscriber.name].values.yield_self do |listeners|
-          if event_names.empty?
-            listeners
-          else
-            listeners.select { |listener| event_names.map(&:to_s).include?(listener.pattern) }
-          end
         end
       end
 
