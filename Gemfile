@@ -9,7 +9,7 @@ group :backend, :frontend, :core, :api do
   if ENV['RAILS_VERSION'] == 'master'
     gem 'rails', github: 'rails', require: false
   else
-    gem 'rails', ENV['RAILS_VERSION'] || '~> 6.1.0', require: false
+    gem 'rails', ENV['RAILS_VERSION'] || '~> 7.0.2', require: false
   end
   # rubocop:enable Bundler/DuplicatedGem
 

@@ -100,7 +100,7 @@ RSpec.describe Spree::Core::ControllerHelpers::Auth, type: :controller do
     end
 
     context "http_referrer is present" do
-      before { request.env['HTTP_REFERER'] = '/redirect' }
+      before { request.env['HTTP_REFERER'] = "#{request.base_url}/redirect" }
 
       it "redirects back" do
         get :index

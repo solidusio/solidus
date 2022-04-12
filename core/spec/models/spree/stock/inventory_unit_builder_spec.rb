@@ -41,7 +41,7 @@ module Spree
 
         context 'when some inventory units are already present' do
           before do
-            line_item_2.inventory_units << build(:inventory_unit)
+            line_item_2.inventory_units << build(:inventory_unit, line_item: line_item_2)
             line_item_2.save!
           end
 

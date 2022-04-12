@@ -33,14 +33,14 @@ services:
       CAPYBARA_DRIVER: selenium_chrome_headless_docker_friendly
       DB_USERNAME: root
       DB_PASSWORD: password
-      RAILS_VERSION: ${RAILS_VERSION:-~> 6.1.0}
+      RAILS_VERSION: ${RAILS_VERSION:-~> 7.0.2}
       DB_ALL: "1"
       DB_MYSQL_HOST: mysql
       DB_POSTGRES_HOST: postgres
       HISTFILE: "/home/solidus_user/history/bash_history"
       MYSQL_HISTFILE: "/home/solidus_user/history/mysql_history"
       RAILS_ENV: development
-      ACTIVE_STORAGE_VARIANT_PROCESSOR: "mini_magick"
+      ACTIVE_STORAGE_VARIANT_PROCESSOR: "vips"
     ports:
       - "${SANDBOX_PORT:-3000}:${SANDBOX_PORT:-3000}"
     volumes:

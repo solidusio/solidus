@@ -46,7 +46,6 @@ RSpec.configure do |config|
   end
 
   config.before :each do
-    ActiveStorage::Current.host = 'https://www.example.com'
     Rails.cache.clear
   end
 

@@ -7,11 +7,11 @@ module Spree
         def allocate_inventory(desired)
           # Allocate any available on hand inventory
           on_hand = allocate_on_hand(desired)
-          desired -= on_hand.values.sum if on_hand.present?
+          desired -= on_hand.values.reduce(&:+) if on_hand.present?
 
           # Allocate remaining desired inventory from backorders
           backordered = allocate_backordered(desired)
-          desired -= backordered.values.sum if backordered.present?
+          desired -= backordered.values.reduce(&:+) if backordered.present?
 
           # If all works at this point desired must be empty
           [on_hand, backordered, desired]

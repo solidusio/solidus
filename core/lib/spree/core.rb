@@ -21,6 +21,7 @@ require 'ransack'
 require 'state_machines-activerecord'
 
 require 'spree/deprecation'
+require 'spree/rails_compatibility'
 
 # This is required because ActiveModel::Validations#invalid? conflicts with the
 # invalid state of a Payment. In the future this should be removed.

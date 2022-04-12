@@ -9,7 +9,7 @@ executors:
       CIRCLE_TEST_REPORTS: /tmp/test-results
       CIRCLE_ARTIFACTS: /tmp/test-artifacts
     docker:
-      - image: &image circleci/ruby:2.5-node-browsers
+      - image: &image circleci/ruby:2.7-node-browsers
 
   postgres:
     working_directory: *workdir
@@ -76,6 +76,13 @@ commands:
       - store_test_results:
           path: /tmp/test-results
 
+# TODO: Integrate with `setup` when we deprecate support for Rails 6.1 (vips is the default from Rails 7)
+  libvips:
+    steps:
+      - run:
+          name: Install libvips
+          command: sudo apt-get install -y libvips
+
 jobs:
   persist_version:
     executor: base
@@ -98,11 +105,22 @@ jobs:
     parallelism: &parallelism 3
     steps:
       - setup
+      - libvips
       - test
 
   mysql:
     executor: mysql
     parallelism: *parallelism
+    steps:
+      - setup
+      - libvips
+      - test
+
+  postgres_rails61:
+    executor: postgres
+    parallelism: *parallelism
+    environment:
+      RAILS_VERSION: '~> 6.1.0'
     steps:
       - setup
       - test
@@ -134,6 +152,7 @@ jobs:
       CI_LEGACY_EVENT_BUS_ADAPTER: '1'
     steps:
       - setup
+      - libvips
       - test
 
 workflows:
@@ -145,6 +164,7 @@ workflows:
               only: /master|v\d\.\d+/
       - postgres
       - mysql
+      - postgres_rails61
       - postgres_rails60
       - postgres_rails52
       - event_bus_legacy_adapter
