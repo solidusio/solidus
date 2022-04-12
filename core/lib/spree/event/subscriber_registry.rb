@@ -64,13 +64,11 @@ module Spree
       # Loading the files has the side effect of adding their module to the
       # list in Spree::Event.subscribers.
       def require_subscriber_files
-        pattern = "app/subscribers/**/*_subscriber.rb"
+        require_dependency(
+          Spree::Core::Engine.root.join('app', 'subscribers', 'spree', 'mailer_subscriber.rb')
+        )
 
-        # Load Solidus subscribers
-        # rubocop:disable Rails/DynamicFindBy
-        solidus_core_dir = Gem::Specification.find_by_name('solidus_core').gem_dir
-        # rubocop:enable Rails/DynamicFindBy
-        Dir.glob(File.join(solidus_core_dir, pattern)) { |c| require_dependency(c.to_s) }
+        pattern = "app/subscribers/**/*_subscriber.rb"
 
         # Load application subscribers, only when the flag is set to true:
         if Spree::Config.events.autoload_subscribers

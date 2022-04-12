@@ -44,14 +44,29 @@ module Spree
         Migrations.new(config, engine_name).check
       end
 
-      # Setup Event Subscribers
-      initializer 'spree.core.initialize_subscribers' do |app|
-        app.reloader.to_prepare do
-          Spree::Event.activate_autoloadable_subscribers
-        end
+      # Setup pub/sub
+      initializer 'spree.core.pub_sub' do |app|
+        if Spree::Config.use_legacy_events
+          app.reloader.to_prepare do
+            Spree::Event.activate_autoloadable_subscribers
+          end
 
-        app.reloader.before_class_unload do
-          Spree::Event.deactivate_all_subscribers
+          app.reloader.before_class_unload do
+            Spree::Event.deactivate_all_subscribers
+          end
+        else
+          app.reloader.to_prepare do
+            Spree::Bus.clear
+
+            %i[
+              order_finalized
+              order_recalculated
+              reimbursement_reimbursed
+              reimbursement_errored
+            ].each { |event_name| Spree::Bus.register(event_name) }
+
+            Spree::OrderMailerSubscriber.new.subscribe_to(Spree::Bus)
+          end
         end
       end
 

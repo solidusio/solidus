@@ -3,6 +3,10 @@
 require 'spree/event/subscriber'
 
 module Spree
+  # Legacy subscriber
+  #
+  # This subscriber module is used by the legacy pub/sub system (see
+  # {Spree::Event}).
   module MailerSubscriber
     include Spree::Event::Subscriber
 

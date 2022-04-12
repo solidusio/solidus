@@ -555,14 +555,15 @@ module Spree
 
     context "with 'order_recalculated' event subscription" do
       let(:item) { spy('object') }
+      let(:bus) { Spree::Config.use_legacy_events ? Spree::Event : Spree::Bus }
 
-      let!(:event) do
-        Spree::Event.subscribe :order_recalculated do
+      let!(:subscription) do
+        bus.subscribe :order_recalculated do
           item.do_something
         end
       end
 
-      after { Spree::Event.unsubscribe event }
+      after { bus.unsubscribe subscription }
 
       it "fires the 'order_recalculated' event" do
         order.recalculate

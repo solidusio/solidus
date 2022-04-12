@@ -108,6 +108,16 @@ jobs:
       - libvips
       - test
 
+  legacy_events:
+    executor: postgres
+    parallelism: &parallelism
+    environment:
+      USE_LEGACY_EVENTS: '1'
+    steps:
+      - setup
+      - libvips
+      - test
+
   mysql:
     executor: mysql
     parallelism: *parallelism
@@ -157,3 +167,4 @@ workflows:
       - postgres_rails61
       - postgres_rails60
       - postgres_rails52
+      - legacy_events

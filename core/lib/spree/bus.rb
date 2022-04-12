@@ -13,6 +13,7 @@ module Spree
     if Spree::Config.use_legacy_events
       Spree::Event.fire(*args, **kwargs, &block)
     else
+      # Override caller_location to point to the actual event publisher
       super(*args, **kwargs, caller_location: caller_locations(1)[0], &block)
     end
   end

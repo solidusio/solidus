@@ -269,8 +269,12 @@ module Spree
     preference :track_inventory_levels, :boolean, default: true
 
     # @!attribute [rw] use_legacy_events
+    #   Before v3.2, Solidus used a custom pub/sub implementation based on
+    #   ActiveSupport::Notifications. Now, we internally use and recommend
+    #   [Omnes](https://github.com/nebulab/omnes). This preference allows falling
+    #   back to the old system.
     #   @return [Boolean]
-    preference :use_legacy_events, :boolean, default: true
+    versioned_preference :use_legacy_events, :boolean, initial_value: true, boundaries: { "3.2.0.alpha" => false }
 
     # Other configurations
 
