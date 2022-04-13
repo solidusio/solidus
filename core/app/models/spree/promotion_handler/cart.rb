@@ -34,14 +34,21 @@ module Spree
 
       def promotions
         promos = connected_order_promotions | sale_promotions
-        preloader = ActiveRecord::Associations::Preloader.new
         promos.flat_map(&:promotion_actions).group_by(&:preload_relations).each do |preload_relations, actions|
-          preloader.preload(actions, preload_relations)
+          preload(records: actions, associations: preload_relations)
         end
         promos.flat_map(&:promotion_rules).group_by(&:preload_relations).each do |preload_relations, rules|
-          preloader.preload(rules, preload_relations)
+          preload(records: rules, associations: preload_relations)
         end
         promos
+      end
+
+      def preload(records:, associations:)
+        if Rails::VERSION::MAJOR >= 7
+          ActiveRecord::Associations::Preloader.new(records: records, associations: associations).call
+        else
+          ActiveRecord::Associations::Preloader.new.preload(records, associations)
+        end
       end
 
       def connected_order_promotions
