@@ -62,18 +62,15 @@ class Spree::OrderShipping
     end
 
     inventory_units.map(&:shipment).uniq.each do |shipment|
-      # Temporarily propagate the tracking number to the shipment as well
-      # TODO: Remove tracking numbers from shipments.
-      shipment.update!(tracking: tracking_number)
-
-      next unless shipment.inventory_units.reload.all? { |iu| iu.shipped? || iu.canceled? }
-      # TODO: make OrderShipping#ship_shipment call Shipment#ship! rather than
-      # having Shipment#ship! call OrderShipping#ship_shipment. We only really
-      # need this `update_columns` for the specs, until we make that change.
-      shipment.update_columns(state: 'shipped', shipped_at: Time.current)
+      if shipment.inventory_units.reload.all? { |iu| iu.shipped? || iu.canceled? }
+        shipment.update!(state: "shipped", shipped_at: Time.current, tracking: tracking_number)
+      else
+        shipment.update!(tracking: tracking_number)
+      end
     end
 
     send_shipment_emails(carton) if stock_location.fulfillable? && !suppress_mailer # e.g. digital gift cards that aren't actually shipped
+    @order.shipments.reload
     @order.recalculate
 
     carton
