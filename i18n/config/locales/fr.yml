@@ -941,6 +941,7 @@ fr:
           pricing: Prix
           pricing_hint: Ces valeurs sont remplies grâce à la page produit et peuvent être modifiées ci-dessous
     administration: Administration
+    admin_login: Connexion administrateur
     advertise: Publiciser
     agree_to_privacy_policy: Accepter l'Engagement de Confidentialité
     agree_to_terms_of_service: Accepter les termes du contrat.
