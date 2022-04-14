@@ -1735,4 +1735,18 @@ RSpec.describe Spree::Order, type: :model do
       expect(subject).to eq 40
     end
   end
+
+  describe "#deliver_order_confirmation_email" do
+    subject { order.deliver_order_confirmation_email }
+
+    around do |example|
+      Spree::Deprecation.silence do
+        example.run
+      end
+    end
+
+    it "raises no errors" do
+      expect { subject }.not_to raise_exception
+    end
+  end
 end
