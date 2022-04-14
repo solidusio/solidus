@@ -381,7 +381,7 @@ en-NZ:
     approve:
     approved_at:
     approver:
-    are_you_sure: Are you sure
+    are_you_sure: Are you sure?
     are_you_sure_delete: Are you sure you want to delete this record?
     associated_adjustment_closed:
     at_symbol: '@'
