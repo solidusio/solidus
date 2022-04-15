@@ -90,6 +90,16 @@ module Spree
           Spree::UsersController.protect_from_forgery with: :exception
         end
       end
+
+      config.after_initialize do
+        if Spree::Config.use_legacy_events && !ENV['CI']
+          Spree::Deprecation.warn <<~MSG
+            Your Solidus store is using the legacy event system. You're
+            encouraged to switch to the new event bus. After you're done, you
+            can remove the `use_legacy_events` setting from `spree.rb`.
+          MSG
+        end
+      end
     end
   end
 end
