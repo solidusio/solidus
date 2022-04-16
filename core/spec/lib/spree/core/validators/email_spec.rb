@@ -28,7 +28,8 @@ RSpec.describe Spree::EmailValidator do
       'invalidemailemail.com',
       '@invalid.email@email.com',
       'invalid@email@email.com',
-      'invalid.email@@email.com'
+      'invalid.email@@email.com',
+      'invalid.email@gmail'
     ]
   }
 
