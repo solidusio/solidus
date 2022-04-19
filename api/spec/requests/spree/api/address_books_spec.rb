@@ -65,6 +65,25 @@ module Spree::Api
           expect(JSON.parse(response.body).first).to include(harry_address_attributes)
         end
 
+        context "when updating a default address" do
+          let(:user) { create(:user, spree_api_key: 'galleon') }
+          let(:changes) { { name: "Hermione Granger", id: user.ship_address.id} }
+          before do
+            # Create "Harry Potter" default shipping address
+            user.save_in_address_book(harry_address_attributes, true)
+          end
+
+          it "changes the address and marks the changed address as default" do
+            expect {
+              put "/api/users/#{user.id}/address_book",
+                params:  { address_book: harry_address_attributes.merge(changes) },
+                headers: { Authorization: 'Bearer galleon' }
+            }.to change { user.reload.ship_address.name }.from("Harry Potter").to("Hermione Granger")
+
+            expect(response.status).to eq(200)
+          end
+        end
+
         context 'when creating an address' do
           it 'marks the update_target' do
             user = create(:user, spree_api_key: 'galleon')
