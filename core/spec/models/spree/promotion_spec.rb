@@ -795,7 +795,7 @@ RSpec.describe Spree::Promotion, type: :model do
       end
     end
 
-    context "with 'any' match policy" do
+    context "with 'any' match policy", :silence_deprecations do
       let(:promotable) { double('Promotable') }
 
       before do
@@ -861,7 +861,7 @@ RSpec.describe Spree::Promotion, type: :model do
           end
         end
 
-        context 'when the match policy is any' do
+        context 'when the match policy is any', :silence_deprecations do
           before { promotion.match_policy = 'any' }
 
           context 'when at least one rule allows action on the line item' do
