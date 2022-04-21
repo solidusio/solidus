@@ -22,7 +22,7 @@ services:
       context: .dockerdev
       dockerfile: Dockerfile
       args:
-        RUBY_VERSION: "2.7.4"
+        RUBY_VERSION: "3.1"
         PG_VERSION: 13
         NODE_VERSION: 14
         MYSQL_VERSION: "8.0"
