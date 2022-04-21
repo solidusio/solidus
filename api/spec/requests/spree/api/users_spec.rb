@@ -175,6 +175,18 @@ module Spree::Api
         expect(response.status).to eq(204)
       end
 
+      unless Spree.user_class.instance_methods.include?(:discard)
+        it "softs-deletes when user is soft-deletable" do
+          soft_deleted = false
+          Spree.user_class.define_method(:discard) { soft_deleted = true }
+          delete spree.api_user_path(user)
+          expect(response.status).to eq(204)
+          expect(soft_deleted).to be(true)
+        ensure
+          Spree.user_class.undef_method(:discard)
+        end
+      end
+
       it "cannot destroy user with orders" do
         create(:completed_order_with_totals, user: user)
         delete spree.api_user_path(user)

@@ -61,7 +61,7 @@ module DummyApp
 
     # It needs to be explicitly set from Rails 7
     # https://guides.rubyonrails.org/upgrading_ruby_on_rails.html#upgrading-from-rails-6-1-to-rails-7-0-spring
-    config.cache_classes = false
+    config.cache_classes = true
 
     # Make debugging easier:
     config.consider_all_requests_local = true

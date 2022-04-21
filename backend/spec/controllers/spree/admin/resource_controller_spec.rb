@@ -17,19 +17,22 @@ end
 describe Spree::Admin::WidgetsController, type: :controller do
   stub_authorization!
 
-  after(:all) do
-    # Spree::Core::Engine.routes.reload_routes!
-    Rails.application.reload_routes!
-  end
-
-  with_model 'Widget', scope: :all do
-    table do |t|
-      t.string :name
-      t.integer :position
-      t.timestamps null: false
+  # RESOURCE FIXTURE
+  before(:all) do
+    # Database
+    class CreateWidgets < ActiveRecord::Migration[5.1]
+      def change
+        create_table(:widgets) do |t|
+          t.string :name
+          t.integer :position
+          t.timestamps null: false
+        end
+      end
     end
+    CreateWidgets.migrate(:up)
 
-    model do
+    # Model
+    class Widget < ActiveRecord::Base
       acts_as_list
       validates :name, presence: true
       before_destroy :check_destroy_constraints
@@ -41,9 +44,8 @@ describe Spree::Admin::WidgetsController, type: :controller do
         throw(:abort)
       end
     end
-  end
 
-  before do
+    # Routes
     Spree::Core::Engine.routes.draw do
       namespace :admin do
         resources :widgets do
@@ -51,6 +53,21 @@ describe Spree::Admin::WidgetsController, type: :controller do
         end
       end
     end
+  end
+
+  after(:all) do
+    # Database
+    CreateWidgets.migrate(:down)
+    Object.send(:remove_const, :CreateWidgets)
+
+    # Model
+    Object.send(:remove_const, :Widget)
+
+    # Controller
+    Spree::Admin.send(:remove_const, :WidgetsController)
+
+    # Routes
+    Rails.application.reload_routes!
   end
 
   describe '#new' do

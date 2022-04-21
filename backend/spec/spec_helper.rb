@@ -25,7 +25,6 @@ require 'rspec/rails'
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
 
 require 'database_cleaner'
-require 'with_model'
 
 require 'spree/testing_support/factory_bot'
 require 'spree/testing_support/partial_double_verification'
@@ -111,8 +110,6 @@ RSpec.configure do |config|
   config.include Spree::TestingSupport::Translations
   config.include Spree::TestingSupport::JobHelpers
   config.include Spree::TestingSupport::BlacklistUrls
-
-  config.extend WithModel
 
   config.example_status_persistence_file_path = "./spec/examples.txt"
 
