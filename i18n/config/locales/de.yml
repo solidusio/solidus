@@ -351,7 +351,7 @@ de:
         spree/product:
           attributes:
             base:
-              cannot_destroy_if_attached_to_line_items: Produkte können nicht gelöscht werden wenn sie in einem Einzelposten sind
+              cannot_destroy_if_attached_to_line_items: Produkte können nicht gelöscht werden wenn sie zu einem Artikel einer Bestellung gehören
         spree/refund:
           attributes:
             amount:
@@ -373,7 +373,7 @@ de:
         spree/variant:
           attributes:
             base:
-              cannot_destroy_if_attached_to_line_items: Variante kann nicht gelöscht werden wenn sie zu einem Einzelposten gehört
+              cannot_destroy_if_attached_to_line_items: Varianten können nicht gelöscht werden wenn sie zu einem Artikel einer Bestellung gehören
     models:
       spree/address:
         one: Adresse
@@ -402,8 +402,8 @@ de:
         one: Benutzer
         other: Benutzer
       spree/line_item:
-        one: Einzelposten
-        other: Einzelposten
+        one: Artikel
+        other: Artikel
       spree/log_entry:
         other: Logeinträge
       spree/option_type:
@@ -558,7 +558,7 @@ de:
     add_action_of_type: Aktion hinzufügen
     add_country: Land hinzufügen
     add_coupon_code: Gutscheincode hinzufügen
-    add_line_item: Bestellposten hinzufügen
+    add_line_item: Artikel hinzufügen
     add_new_header: Header hinzufügen
     add_new_style: Stil hinzufügen
     add_one: Hinzufügen
@@ -828,7 +828,7 @@ de:
     cannot_create_payment_without_payment_methods: Sie können keine Zahlung für eine Bestellung anlegen, ohne vorher eine Zahlungsmethode definiert
       zu haben.
     cannot_create_returns: Sie können diese Bestellung nicht zurückgeben, da sie noch nicht versendet wurde.
-    cannot_destroy_if_attached_to_line_items: Kann nicht gelöscht werden wenn es zu einem Einzelposten gehört
+    cannot_destroy_if_attached_to_line_items: Kann nicht gelöscht werden wenn es zu einem Artikel einer Bestellung gehört
     cannot_perform_operation: Kann diese Operation nicht durchführen.
     cannot_set_shipping_method_without_address: Die Versandart kann erst geändert werden, wenn die Kundendaten ausgefüllt sind.
     capture: erfassen
@@ -1165,7 +1165,7 @@ de:
     last_name_begins_with: Nachname beginnt mit
     learn_more: Mehr dazu
     lifetime_stats: 'Statistiken: Lebenszyklus'
-    line_item_adjustments: Anpassungen Bestellposten
+    line_item_adjustments: Artikelanpassungen
     list: Liste
     loading: Laden
     loading_tree: Loading tree. Please wait…
@@ -1313,7 +1313,7 @@ de:
     order_email_resent: Bestellbestätigung erneut versendet
     order_has_no_payments: Bestellung hat keine Bezahlungen
     order_information: Bestellinformationen
-    order_line_items: Bestellposten
+    order_line_items: Artikel
     order_mailer:
       cancel_email:
         dear_customer: Sehr geehrte Kundin, geehrter Kunde,
@@ -1848,8 +1848,8 @@ de:
     users: Benutzer
     validation:
       cannot_be_less_than_shipped_units: kann nicht weniger als die gelieferten Einheiten sein.
-      cannot_destroy_line_item_as_inventory_units_have_shipped: Kann Artikelposition nicht löschen, da bereits geliefert wurde.
-      exceeds_available_stock: übersteigt die verfügbaren Vorräte. Bitte sicherstellen, dass die Einzelposten eine gültige Menge haben.
+      cannot_destroy_line_item_as_inventory_units_have_shipped: Kann Artikel nicht löschen, da bereits geliefert wurde.
+      exceeds_available_stock: übersteigt die verfügbaren Vorräte. Bitte sicherstellen, dass die Artikel eine gültige Menge haben.
       is_too_large: ist zu hoch. Der Lagerbestand kann die angefragte Menge nicht abdecken.
       must_be_int: muss eine Ganzzahl sein
       must_be_non_negative: darf keinen negativen Wert haben
