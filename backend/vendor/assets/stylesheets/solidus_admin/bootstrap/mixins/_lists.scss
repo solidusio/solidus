@@ -5,3 +5,37 @@
   padding-left: 0;
   list-style: none;
 }
+
+dl {
+  width: 100%;
+  overflow: hidden;
+  margin: 5px 0;
+  color: lighten($body-color, 15);
+
+  dt,
+  dd {
+    float: left;
+    line-height: 16px;
+    padding: 5px;
+  }
+
+  dt {
+    width: 40%;
+    font-weight: $font-weight-bold;
+    padding-left: 0;
+    clear: left;
+  }
+
+  dd {
+    width: 60%;
+    padding-right: 0;
+    margin-left: 0;
+  }
+}
+
+.dl-collapse {
+  dt,
+  dd {
+    width: auto;
+  }
+}
