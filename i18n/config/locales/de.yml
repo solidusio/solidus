@@ -98,7 +98,7 @@ de:
         email: Kunden E-Mail
         included_tax_total: enthaltene Steuer
         ip_address: IP Adresse
-        item_total: Artikel gesamt
+        item_total: Zwischensumme
         number: Bestellnummer
         payment_state: Bezahlstatus
         shipment_state: Versandstatus
@@ -1142,7 +1142,7 @@ de:
     iso_name: ISO-Name
     item: Artikel
     item_description: Artikelbeschreibung
-    item_total: Artikel gesamt
+    item_total: Zwischensumme
     item_total_rule:
       operators:
         gt: größer als
