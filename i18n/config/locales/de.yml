@@ -297,7 +297,7 @@ de:
         meta_title: Meta-Titel
         name: Name
         permalink: Permalink
-        position: Posten
+        position: Position
       spree/taxonomy:
         name: Name
       spree/tracker:
