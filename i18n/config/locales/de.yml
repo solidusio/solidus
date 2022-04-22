@@ -748,7 +748,7 @@ de:
     all_adjustments_closed: Alle Anpassung wurden erfolgreich geschlossen!
     all_adjustments_opened: Alle Anpassung wurden erfolgreich geöffnet!
     all_departments: Alle Bereiche
-    all_items_have_been_returned: Alles zurückgegeben
+    all_items_have_been_returned: Alle Artikel wurden zurückgegeben
     allow_ssl_in_development_and_test: Erlaube SSL im Vorproduktions- und Testmodus
     allow_ssl_in_production: Erlaube SSL im Produktionsmodus
     allow_ssl_in_staging: Erlaube SSL im Vorproduktionsmodus
