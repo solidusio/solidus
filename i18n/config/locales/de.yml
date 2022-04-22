@@ -355,7 +355,7 @@ de:
         spree/refund:
           attributes:
             amount:
-              greater_than_allowed: Maximalwert überschritten
+              greater_than_allowed: ": Maximal erstattbarer Wert überschritten"
         spree/reimbursement:
           attributes:
             base:
