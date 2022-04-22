@@ -58,7 +58,7 @@
             <% allowed_actions = payment.actions.select { |a| can?(a.to_sym, payment) } %>
             <% allowed_actions.each do |action| %>
               <% if action == 'credit' %>
-                <%= link_to_with_icon 'reply', t('spree.refund'), new_admin_order_payment_refund_path(@order, payment), no_text: true %>
+                <%= link_to_with_icon 'mail-reply', t('spree.actions.refund'), new_admin_order_payment_refund_path(@order, payment), no_text: true %>
               <% elsif action == 'capture' && !@order.completed? %>
                 <%# no capture prior to completion. payments get captured when the order completes. %>
               <% else %>

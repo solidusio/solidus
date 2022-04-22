@@ -1,5 +1,6 @@
 .number-with-currency {
   $currency-width: 5.5rem;
+  flex-wrap: nowrap;
 
   &-symbol {
     min-width: 2.5em;

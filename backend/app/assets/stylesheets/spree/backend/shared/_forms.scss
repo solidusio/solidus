@@ -147,16 +147,17 @@ span.info {
     }
   }
 
-  &.withError {
-    .field_with_errors {
-      label {
-        color: theme-color("danger");
-      }
-
-      input {
-        border-color: theme-color("danger");
-      }
+  .field_with_errors {
+    label {
+      color: theme-color("danger");
     }
+
+    input {
+      border-color: theme-color("danger");
+    }
+  }
+
+  &.withError {
     .formError {
       color: lighten(theme-color("danger"), 15);
       font-style: italic;
