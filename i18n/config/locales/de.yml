@@ -443,8 +443,8 @@ de:
         one: Prototyp
         other: Prototypen
       spree/refund:
-        one: Rückerstattung
-        other: Rückerstattungen
+        one: Erstattung
+        other: Erstattungen
       spree/refund_reason:
         one: Begründung der Gutschrift
         other: Gutschriftsbegründungen
@@ -546,7 +546,7 @@ de:
       list: auflisten
       listing: Liste
       new: neu
-      refund: Gutschrift
+      refund: erstatten
       remove: Entfernen
       save: Speichern
       ship: verschicken
@@ -1499,11 +1499,11 @@ de:
     reception_status: Empfangsstatus
     reference: Referenz
     reference_contains: Referenz beinhaltet
-    refund: Rückerstattung
-    refund_amount_must_be_greater_than_zero: Rückerstattung muss größer 0 sein
-    refund_reasons: Rückerstattungsgründe
-    refunded_amount: Rückerstattungsbetrag
-    refunds: Rückerstattungen
+    refund: Erstattung
+    refund_amount_must_be_greater_than_zero: Erstattung muss größer 0 sein
+    refund_reasons: Erstattungsgründe
+    refunded_amount: Erstattungsbetrag
+    refunds: Erstattungen
     register: Als Neukunde registrieren
     registration: Registrierung
     reimburse: Vergüten
