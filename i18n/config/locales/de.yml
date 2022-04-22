@@ -1152,6 +1152,11 @@ de:
     items_cannot_be_shipped: Wir können die ausgewählten Artikel nicht an Ihre Lieferadresse schicken. Bitte wählen Sie eine andere Lieferadresse.
     items_in_rmas: Artikel im Umtausch
     items_reimbursed: Vergütete Artikel
+    items_selected:
+      all: alle Artikel ausgewählt
+      none: keine Artikel ausgewählt
+      one: ein Artikel ausgewählt
+      custom: einige Artikel ausgewählt
     items_to_be_reimbursed: Zu vergütende Artikel
     jirafe: Jirafe
     landing_page_rule:
@@ -1208,6 +1213,7 @@ de:
     my_account: Mein Konto
     my_orders: Meine Bestellungen
     name: Name
+    name_contains: Name enthält
     name_on_card: Name auf der Kreditkarte
     name_or_sku: Name oder Artikelnummer
     new: Neu
@@ -1383,6 +1389,7 @@ de:
       completed: Abgeschlossen
       credit_owed: Betrag schuldig
       failed: fehlgeschlagen
+      invalid: ungültig
       paid: bezahlt
       pending: noch offen
       processing: in Bearbeitung
@@ -1498,6 +1505,17 @@ de:
     receive: erhalten
     receive_stock: Empfangslager
     received: erhalten
+    reception_states:
+      awaiting: erwartend
+      cancelled: abgebrochen
+      expired: abgelaufen
+      given_to_customer: Kunden übergeben
+      in_transit: In Transfer
+      lost_in_transit: In Transfer verloren
+      received: erhalten
+      shipped_wrong_item: Falsch ausgeliefert
+      short_shipped: Minderlieferung
+      unexchanged: unausgetauscht
     reception_status: Empfangsstatus
     reference: Referenz
     reference_contains: Referenz beinhaltet
@@ -1522,6 +1540,10 @@ de:
         subject: Betreff
         total_refunded: Gesamtwert Gutschriften %{total}
     reimbursement_perform_failed: Vergütung fehlgeschlagen
+    reimbursement_states:
+      errored: fehlerhaft
+      pending: ausstehend
+      reimbursed: vergütet
     reimbursement_status: Vergütungsstatus
     reimbursement_type: Vergütungstyp
     reimbursement_type_override: Vergütungstyp überschreiben
@@ -1543,6 +1565,9 @@ de:
     return: zurückgeben
     return_authorization: Rückgabebewilligung
     return_authorization_reasons: Gründe der Rückgabebewilligung
+    return_authorization_states:
+      authorized: authorisiert
+      canceled: abgebrochen
     return_authorization_updated: Rückgabebewilligung aktualisiert
     return_authorizations: Rückgabebewilligungen
     return_item_inventory_unit_ineligible: Artikelposition des Warenkorbs von der Rückgabe ausgeschlossen
@@ -1596,8 +1621,10 @@ de:
     ship_total: Versand gesamt
     shipment: Sendung
     shipment_adjustments: Sendung anpassen
+    shipment_date: Versanddatum
     shipment_details: "%{shipping_method}"
     shipment_number: Sendungsnummer
+    shipment_numbers: Sendungsnummern
     shipment_mailer:
       shipped_email:
         dear_customer: Sehr geehrte Kundin, geehrter Kunde,
