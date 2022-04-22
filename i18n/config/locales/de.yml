@@ -479,8 +479,8 @@ de:
         one: Statusänderung
         other: Statusänderungen
       spree/stock_location:
-        one: Lagerstätte
-        other: Lagerstätten
+        one: Versandlager
+        other: Versandlager
       spree/stock_movement:
         one: Lagerbewegung
         other: Lagerbewegungen
@@ -851,7 +851,7 @@ de:
     choose_a_taxon_to_sort_products_for: Sortierungsklassifizierung wählen
     choose_currency: Währung auswählen
     choose_dashboard_locale: Dashboard-Sprache wählen
-    choose_location: Lagerstätte wählen
+    choose_location: Versandlager wählen
     city: Ort
     clear_cache: Zwischenspeicher leeren
     clear_cache_ok: Zwischenspeicher erfolgreich geleert
