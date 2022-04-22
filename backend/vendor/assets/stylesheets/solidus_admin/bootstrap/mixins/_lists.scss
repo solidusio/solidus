@@ -7,6 +7,9 @@
 }
 
 dl {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
   width: 100%;
   overflow: hidden;
   margin: 5px 0;
@@ -14,20 +17,18 @@ dl {
 
   dt,
   dd {
-    float: left;
+    min-width: 40%;
     line-height: 16px;
     padding: 5px;
   }
 
   dt {
-    width: 40%;
     font-weight: $font-weight-bold;
     padding-left: 0;
-    clear: left;
   }
 
   dd {
-    width: 60%;
+    text-align: right;
     padding-right: 0;
     margin-left: 0;
   }
