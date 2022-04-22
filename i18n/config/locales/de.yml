@@ -1200,7 +1200,7 @@ de:
     minimal_amount: Mindestanzahl
     minimize_menu: Menü minimieren
     modify_stock_count: Modifizieren (+/-)
-    missing_return_authorization: Fehlende Rückerstattungserlaubnis %{item_name}.
+    missing_return_authorization: Fehlende Rückgabebewilligung %{item_name}.
     month: Monat
     more: Mehr
     move_stock_between_locations: Lager zwischen Standorten bewegen
@@ -1581,7 +1581,7 @@ de:
     secure_connection_type: Sicherer Verbindungstyp
     security_settings: Sicherheitseinstellungen
     select: Auswählen
-    select_a_return_authorization_reason: Rückgabeberechtigungsgrund wählen
+    select_a_return_authorization_reason: Rückgabebewilligungsgrund wählen
     select_a_stock_location: Lager wählen
     select_from_prototype: Von einem Prototypen
     select_stock: Lager wählen
