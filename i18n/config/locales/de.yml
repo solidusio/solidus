@@ -390,8 +390,8 @@ de:
         one: Kreditkarte
         other: Kreditkarten
       spree/customer_return:
-        one: Kundenrücksendung
-        other: Kundenrücksendungen
+        one: Rücksendung
+        other: Rücksendungen
       spree/image:
         one: Bild
         other: Bilder
@@ -791,6 +791,8 @@ de:
     avs_response: Ergebnis der Adressprüfung
     back: Zurück
     back_end: Backend
+    back_to_customer_return: Zurück zur Rücksendung
+    back_to_customer_return_list: zurück zu den Rücksendungen
     back_to_images_list: Zurück zur Bilderliste
     back_to_payment: Zurück zur Zahlung
     back_to_resource_list: Zurück zur Bestellliste
@@ -1213,7 +1215,7 @@ de:
     new_adjustment_reason: Neuer Anpassungsgrund
     new_country: Neues Land
     new_customer: Neuer Kunde
-    new_customer_return: Neue Kundenrücksendung
+    new_customer_return: Neue Rücksendung
     new_image: Neues Bild
     new_option_type: Neue Option
     new_order: Neue Bestellung
