@@ -712,7 +712,7 @@ de:
         taxonomies: Klassifikationen
         taxons: Klassifikation
         users: Benutzer
-        RMA: RMA
+        rma: RMA
       taxons:
         display_order: Darstellungsreihenfolge
       user:
