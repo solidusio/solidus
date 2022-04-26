@@ -186,24 +186,24 @@ RSpec.describe Spree::Product, type: :model do
         end
       end
 
-      context "if discontinue_on is in the past" do
-        let(:product) { build(:product, discontinue_on: 1.day.ago) }
+      context "if available_until is in the past" do
+        let(:product) { build(:product, available_until: 1.day.ago) }
 
         it "should not be available" do
           expect(product).not_to be_available
         end
       end
 
-      context "if discontinue_on is nil" do
-        let(:product) { build(:product, discontinue_on: nil) }
+      context "if available_until is nil" do
+        let(:product) { build(:product, available_until: nil) }
 
         it "should be available" do
           expect(product).to be_available
         end
       end
 
-      context "if discontinue_on is in the future" do
-        let(:product) { build(:product, discontinue_on: 1.day.from_now) }
+      context "if available_until is in the future" do
+        let(:product) { build(:product, available_until: 1.day.from_now) }
 
         it "should be available" do
           expect(product).to be_available
@@ -219,23 +219,23 @@ RSpec.describe Spree::Product, type: :model do
       end
     end
 
-    describe "#discontinued?" do
-      subject { product.discontinued? }
+    describe "#unavailable?" do
+      subject { product.unavailable? }
 
-      context "if discontinue_on is in the past" do
-        let(:product) { build(:product, discontinue_on: 1.day.ago) }
+      context "if available_until is in the past" do
+        let(:product) { build(:product, available_until: 1.day.ago) }
 
         it { is_expected.to be(true) }
       end
 
-      context "if discontinue_on is nil" do
-        let(:product) { build(:product, discontinue_on: nil) }
+      context "if available_until is nil" do
+        let(:product) { build(:product, available_until: nil) }
 
         it { is_expected.to be(false) }
       end
 
-      context "if discontinue_on is in the future" do
-        let(:product) { build(:product, discontinue_on: 1.day.from_now) }
+      context "if available_until is in the future" do
+        let(:product) { build(:product, available_until: 1.day.from_now) }
 
         it { is_expected.to be(false) }
       end

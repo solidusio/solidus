@@ -123,14 +123,14 @@
         <% end %>
       </div>
 
-      <div data-hook="admin_product_form_discontinue_on">
-        <%= f.field_container :discontinue_on do %>
-          <%= f.label :discontinue_on %>
-          <%= f.field_hint :discontinue_on %>
+      <div data-hook="admin_product_form_available_until">
+        <%= f.field_container :available_until do %>
+          <%= f.label :available_until %>
+          <%= f.field_hint :available_until %>
 
-          <%= render "spree/admin/shared/datepicker", f: f, date_attr: :discontinue_on %>
+          <%= render "spree/admin/shared/datepicker", f: f, date_attr: :available_until %>
 
-          <%= f.error_message_on :discontinue_on %>
+          <%= f.error_message_on :available_until %>
         <% end %>
       </div>
 

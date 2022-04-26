@@ -32,9 +32,10 @@ module Spree
     belongs_to :tax_category, class_name: 'Spree::TaxCategory', optional: true
     belongs_to :shipping_category, class_name: "Spree::ShippingCategory", optional: true
 
-    delegate :name, :description, :slug, :available_on, :discontinue_on, :discontinued?,
-             :meta_description, :meta_keywords,
+    delegate :name, :description, :slug, :available_on, :discontinue_on, :available_until, :discontinued?,
+             :meta_description, :meta_keywords, :unavailable?,
              to: :product
+
     delegate :tax_category, to: :product, prefix: true
     delegate :shipping_category, :shipping_category_id,
       to: :product, prefix: true

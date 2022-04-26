@@ -314,12 +314,12 @@ describe "Products", type: :feature do
         expect(Spree::Product.last.available_on).to eq('Tue, 25 Dec 2012 00:00:00 UTC +00:00')
       end
 
-      it 'should correctly update discontinue_on', :js do
+      it 'should correctly update available_until', :js do
         visit spree.admin_product_path(product)
-        fill_in "product_discontinue_on", with: "2020/12/4"
+        fill_in "product_available_until", with: "2020/12/4"
         click_button "Update"
         expect(page).to have_content("successfully updated!")
-        expect(product.reload.discontinue_on.to_s).to eq('2020-12-04 00:00:00 UTC')
+        expect(product.reload.available_until.to_s).to eq('2020-12-04 00:00:00 UTC')
       end
 
       context "when there is a default tax category" do

@@ -1,24 +1,24 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Spree::Variant, type: :model do
   it { is_expected.to be_invalid }
 
   let!(:variant) { create(:variant) }
 
-  describe 'delegates' do
+  describe "delegates" do
     let(:product) { build(:product) }
     let(:variant) { build(:variant, product: product) }
 
-    it 'discontinue_on to product' do
-      expect(product).to receive(:discontinue_on)
-      variant.discontinue_on
+    it "available_until to product" do
+      expect(product).to receive(:available_until)
+      variant.available_until
     end
 
-    it 'discontinued? to product' do
-      expect(product).to receive(:discontinued?)
-      variant.discontinued?
+    it "unavailable? to product" do
+      expect(product).to receive(:unavailable?)
+      variant.unavailable?
     end
   end
 

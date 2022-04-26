@@ -185,8 +185,8 @@ module Spree
           def self.available(available_on = nil)
             with_master_price
               .where("#{Spree::Product.quoted_table_name}.available_on <= ?", available_on || Time.current)
-              .where("#{Spree::Product.quoted_table_name}.discontinue_on IS NULL OR" \
-                     "#{Spree::Product.quoted_table_name}.discontinue_on >= ?", Time.current)
+              .where("#{Spree::Product.quoted_table_name}.available_until IS NULL OR" \
+                     "#{Spree::Product.quoted_table_name}.available_until >= ?", Time.current)
           end
           search_scopes << :available
 

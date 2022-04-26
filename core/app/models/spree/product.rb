@@ -72,6 +72,9 @@ module Spree
         .where(master: { spree_prices: Spree::Config.default_pricing_options.desired_attributes })
     }
 
+    alias_attribute :discontinue_on, :available_until
+    deprecate discontinue_on: :available_until, deprecator: Spree::Deprecation
+
     def find_or_build_master
       master || build_master
     end
@@ -176,7 +179,7 @@ module Spree
     #
     # @return [Boolean] true if this product is available
     def available?
-      !deleted? && available_on&.past? && !discontinued?
+      !deleted? && available_on&.past? && !unavailable?
     end
 
     # Determines if product is discontinued.
@@ -185,9 +188,12 @@ module Spree
     # is not nil and in the past.
     #
     # @return [Boolean] true if this product is discontinued
-    def discontinued?
-      !!discontinue_on&.past?
+    def unavailable?
+      !!available_until&.past?
     end
+
+    alias_method :discontinued?, :unavailable?
+    deprecate discontinued?: :unavailable?, deprecator: Spree::Deprecation
 
     # Poor man's full text search.
     #
