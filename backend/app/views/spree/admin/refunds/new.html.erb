@@ -11,15 +11,13 @@
       <div class="col-3">
         <div class="field">
           <label><%= t('spree.payment_amount') %></label><br>
-          <%= number_to_currency @refund.payment.amount,
-            unit: Spree::Config.available_currencies.find { |c| c.iso_code == @refund.currency }&.symbol %>
+          <%= Spree::Money.new(@refund.payment.amount) %>
         </div>
       </div>
       <div class="col-3">
         <div class="field">
           <label><%= t('spree.credit_allowed') %></label><br/>
-          <<%= number_to_currency @refund.payment.credit_allowed,
-            unit: Spree::Config.available_currencies.find { |c| c.iso_code == @refund.currency }&.symbol %>
+          <%= Spree::Money.new(@refund.payment.credit_allowed) %>
         </div>
       </div>
       <div class="col-3">
