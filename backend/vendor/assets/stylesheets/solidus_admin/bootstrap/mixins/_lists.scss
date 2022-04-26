@@ -5,3 +5,38 @@
   padding-left: 0;
   list-style: none;
 }
+
+dl {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%;
+  overflow: hidden;
+  margin: 5px 0;
+  color: lighten($body-color, 15);
+
+  dt,
+  dd {
+    min-width: 40%;
+    line-height: 16px;
+    padding: 5px;
+  }
+
+  dt {
+    font-weight: $font-weight-bold;
+    padding-left: 0;
+  }
+
+  dd {
+    text-align: right;
+    padding-right: 0;
+    margin-left: 0;
+  }
+}
+
+.dl-collapse {
+  dt,
+  dd {
+    width: auto;
+  }
+}
