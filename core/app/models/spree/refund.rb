@@ -36,6 +36,14 @@ module Spree
       end
     end
 
+    # Sets this price's amount to a new value, parsing it if the new value is
+    # a string.
+    #
+    # @param price [String, #to_d] a new amount
+    def amount=(price)
+      self[:amount] = Spree::LocalizedNumber.parse(price)
+    end
+
     def description
       payment.payment_method.name
     end

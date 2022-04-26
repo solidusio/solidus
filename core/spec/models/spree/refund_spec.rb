@@ -69,6 +69,21 @@ RSpec.describe Spree::Refund, type: :model do
         end
       end
     end
+
+    context "with a european price format" do
+      let(:amount) { "100,00" }
+      let(:payment_amount) { 200.0 }
+
+      before do
+        expect(I18n).to receive(:t).with(:'number.currency.format.separator') do
+          ","
+        end
+      end
+
+      it "creates a refund record" do
+        expect { subject }.to change { Spree::Refund.count }.by(1)
+      end
+    end
   end
 
   describe "#perform!" do
