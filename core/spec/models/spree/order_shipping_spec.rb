@@ -214,6 +214,21 @@ RSpec.describe Spree::OrderShipping do
       end
     end
 
+    context "when a second shipment is shipped" do
+      let(:order) { create(:order_ready_to_ship) }
+
+      it "sets the order to shipped state" do
+        order.shipping.ship_shipment(order.shipments.first)
+
+        unshipped_shipment = create(:shipment, order: order, state: "ready")
+
+        order.reload
+        order.recalculate
+
+        expect { order.shipping.ship_shipment(unshipped_shipment) }.to(change { order.shipment_state }.from("partial").to("shipped"))
+      end
+    end
+
     context "when told to suppress the mailer" do
       subject do
         order.shipping.ship_shipment(
