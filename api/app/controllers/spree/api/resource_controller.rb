@@ -1,7 +1,16 @@
 # frozen_string_literal: true
 
+# @deprecated Inherit directly from Spree::Api::BaseController
 class Spree::Api::ResourceController < Spree::Api::BaseController
   before_action :load_resource, only: [:show, :update, :destroy]
+
+  def self.inherited(klass)
+    Spree::Deprecation.warn <<~MSG
+      Spree::Api::ResourceController is deprecated. Please, copy any logic you
+      need and inherit directly from Spree::Api::BaseController.
+    MSG
+    super
+  end
 
   def index
     collection_scope = model_class.accessible_by(current_ability)
