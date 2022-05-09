@@ -517,7 +517,7 @@ module Spree
         state: 'cart',
         updated_at: Time.current
       )
-      next! if !line_items.empty?
+      self.next
     end
 
     def refresh_shipment_rates
