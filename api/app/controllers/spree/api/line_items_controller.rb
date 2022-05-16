@@ -13,7 +13,7 @@ module Spree
         variant = Spree::Variant.find(params[:line_item][:variant_id])
         @line_item = @order.contents.add(
           variant,
-          params[:line_item][:quantity] || 1,
+          params[:line_item][:quantity].presence || 1,
           options: line_item_params[:options].to_h
         )
 
