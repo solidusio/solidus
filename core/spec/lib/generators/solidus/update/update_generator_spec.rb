@@ -25,7 +25,7 @@ RSpec.describe Solidus::UpdateGenerator do
   context 'core' do
     it 'adds changes when present' do
       config_class = Class.new(Spree::Preferences::Configuration) do
-        preference :foo, :boolean, default: by_version(true, '3.0' => false)
+        versioned_preference :foo, :boolean, initial_value: true, boundaries: { '3.0' => false }
       end
       stub_const('Spree::AppConfiguration', config_class)
 
@@ -62,7 +62,7 @@ RSpec.describe Solidus::UpdateGenerator do
 
     it 'adds changes when present' do
       config_class = Class.new(Spree::Preferences::Configuration) do
-        preference :foo, :boolean, default: by_version(true, '3.0' => false)
+        versioned_preference :foo, :boolean, initial_value: true, boundaries: { '3.0' => false }
       end
       stub_const('Spree::FrontendConfiguration', config_class)
 
@@ -99,7 +99,7 @@ RSpec.describe Solidus::UpdateGenerator do
 
     it 'adds changes when present' do
       config_class = Class.new(Spree::Preferences::Configuration) do
-        preference :foo, :boolean, default: by_version(true, '3.0' => false)
+        versioned_preference :foo, :boolean, initial_value: true, boundaries: { '3.0' => false }
       end
       stub_const('Spree::BackendConfiguration', config_class)
 
@@ -136,7 +136,7 @@ RSpec.describe Solidus::UpdateGenerator do
 
     it 'adds changes when present' do
       config_class = Class.new(Spree::Preferences::Configuration) do
-        preference :foo, :boolean, default: by_version(true, '3.0' => false)
+        versioned_preference :foo, :boolean, initial_value: true, boundaries: { '3.0' => false }
       end
       stub_const('Spree::ApiConfiguration', config_class)
 

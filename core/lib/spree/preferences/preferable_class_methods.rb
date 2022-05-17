@@ -49,7 +49,7 @@ module Spree::Preferences
 
                       If you want to branch on the provided Solidus version, you can do like the following:
 
-                      preference :foo, :string, default: by_version(true, "3.2.0" => false)
+                      versioned_preference :foo, :string, initial_value: true, boundaries: { "3.2.0" => false }
 
                     MSG
                     ->(_default_context) { given.call }

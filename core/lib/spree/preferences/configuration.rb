@@ -38,6 +38,7 @@ module Spree::Preferences
     #     defaults. Set via {#load_defaults}
     attr_reader :loaded_defaults
 
+    # @api private
     attr_reader :load_defaults_called
 
     def initialize
@@ -45,9 +46,9 @@ module Spree::Preferences
       @load_defaults_called = false
     end
 
-    # @param [String] Solidus version from which take defaults when not
-    # overriden.
-    # @see #load_defaults
+    # @param [String] Solidus version from which take defaults when preferences
+    # are not overriden by the user.
+    # @see #loaded_defaults
     def load_defaults(version)
       @loaded_defaults = version
       @load_defaults_called = true
@@ -118,21 +119,35 @@ module Spree::Preferences
       end
     end
 
-    # Generates a different preference default depending on {#version_defaults}
+    def self.inherited(klass)
+      klass.instance_variable_set(:@versioned_preferences, [])
+      class << klass
+        attr_reader :versioned_preferences
+      end
+    end
+
+    # Adds a preference with different default depending on {#loaded_defaults}
     #
-    # This method is meant to be used in the `default:` keyword argument for
-    # {.preference}. For instance, in the example, `foo`'s default was `true`
-    # until version 3.0.0.alpha, when it became `false`:
+    # This method is a specialized version of {.preference} that generates a
+    # different default value for different Solidus versions. For instance, in
+    # the example, `foo`'s default was `true` until version 3.0.0.alpha, when it
+    # became `false`:
     #
     # @example
-    #   preference :foo, :boolean, default: by_version(true, "3.0.0.alpha" => false)
+    #   versioned_preference :foo, :boolean, initial_value: true, boundaries: { "3.0.0.alpha" => false }
     #
+    # @see .preference
     # @see #loaded_defaults
     # @see Spree::Core::VersionedValue
-    def self.by_version(*args)
-      proc do |loaded_defaults|
-        Spree::Core::VersionedValue.new(*args).call(loaded_defaults)
-      end
+    def self.versioned_preference(name, type, initial_value:, boundaries:, **options)
+      @versioned_preferences << name
+      preference(
+        name,
+        type,
+        options.merge(
+          default: by_version(initial_value, boundaries)
+        )
+      )
     end
 
     def self.preference(name, type, options = {})
@@ -159,6 +174,13 @@ module Spree::Preferences
         class_name
       end
     end
+
+    def self.by_version(*args)
+      proc do |loaded_defaults|
+        Spree::Core::VersionedValue.new(*args).call(loaded_defaults)
+      end
+    end
+    private_class_method :by_version
 
     private
 
