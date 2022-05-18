@@ -197,6 +197,13 @@ module Spree
     #     config.log_entry_permitted_classes = ['Date']
     preference :log_entry_permitted_classes, :array, default: []
 
+    # @!attribute [rw] log_entry_allow_aliases
+    #   @return [Boolean] Whether YAML aliases are allowed when loading
+    #     serialized data in {Spree::LogEntry}. It defaults to true. Depending
+    #     on the source of your data, you may consider disabling it to prevent
+    #     entity expansion attacks.
+    preference :log_entry_allow_aliases, :boolean, default: true
+
     # @!attribute [rw] mails_from
     #   @return [String] Email address used as +From:+ field in transactional emails.
     preference :mails_from, :string, default: 'solidus@example.com'

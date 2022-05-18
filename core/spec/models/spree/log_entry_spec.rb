@@ -4,6 +4,25 @@ require 'rails_helper'
 
 RSpec.describe Spree::LogEntry, type: :model do
   describe '#parsed_details' do
+    it 'allow aliases by default' do
+      x = []
+      x << x
+
+      log_entry = described_class.new(details: x.to_yaml)
+
+      expect { log_entry.parsed_details }.not_to raise_error
+    end
+
+    it 'can disable aliases and raises a meaningful exception when used' do
+      stub_spree_preferences(log_entry_allow_aliases: false)
+      x = []
+      x << x
+
+      log_entry = described_class.new(details: x.to_yaml)
+
+      expect { log_entry.parsed_details }.to raise_error(described_class::BadAlias, /log_entry_allow_aliases/)
+    end
+
     it 'can parse ActiveMerchant::Billing::Response instances' do
       response = ActiveMerchant::Billing::Response.new('success', 'message')
 
