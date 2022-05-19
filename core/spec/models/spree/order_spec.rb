@@ -511,10 +511,24 @@ RSpec.describe Spree::Order, type: :model do
         expect { order.restart_checkout_flow }.not_to change { order.state }
       end
     end
+
     it "updates the state column to the first checkout_steps value" do
       order = create(:order_with_totals, state: "delivery")
       expect(order.checkout_steps).to eql %w(address delivery payment confirm complete)
       expect{ order.restart_checkout_flow }.to change{ order.state }.from("delivery").to("address")
+    end
+
+    context "when the order cannot advance from cart state" do
+      around do |example|
+        Spree::Order.state_machine.before_transition to: :address, do: -> { false }
+        example.run
+        Spree::Order.define_state_machine!
+      end
+
+      it "leaves the order in cart state" do
+        order = create(:order_with_totals, state: "delivery")
+        expect{ order.restart_checkout_flow }.to change { order.state }.from("delivery").to("cart")
+      end
     end
 
     context "without line items" do
