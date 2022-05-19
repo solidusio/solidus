@@ -77,8 +77,8 @@ Spree::Core::Engine.routes.draw do
         get :confirm
         put :complete
         post :resend
-        get "/adjustments/unfinalize", to: "orders#unfinalize_adjustments"
-        get "/adjustments/finalize", to: "orders#finalize_adjustments"
+        put "/adjustments/unfinalize", to: "orders#unfinalize_adjustments"
+        put "/adjustments/finalize", to: "orders#finalize_adjustments"
         put :approve
         put :cancel
         put :resume
@@ -91,7 +91,7 @@ Spree::Core::Engine.routes.draw do
         end
       end
 
-      resources :adjustments
+      resources :adjustments, except: [:show]
       resources :return_authorizations do
         member do
           put :fire
