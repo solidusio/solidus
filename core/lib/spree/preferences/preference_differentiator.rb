@@ -12,7 +12,8 @@ module Spree
       def call(from:, to:)
         preferences_from = config_class.new.load_defaults(from)
         preferences_to = config_class.new.load_defaults(to)
-        preferences_from.reduce({}) do |changes, (pref_key, value_from)|
+        config_class.versioned_preferences.reduce({}) do |changes, pref_key|
+          value_from = preferences_from[pref_key]
           value_to = preferences_to[pref_key]
           if value_from == value_to
             changes

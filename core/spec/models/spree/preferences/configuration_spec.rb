@@ -6,7 +6,7 @@ RSpec.describe Spree::Preferences::Configuration, type: :model do
   let(:config) do
     Class.new(Spree::Preferences::Configuration) do
       preference :color, :string, default: :blue
-      preference :foo, :boolean, default: by_version(true, "3.0" => false)
+      versioned_preference :foo, :boolean, initial_value: true, boundaries: { "3.0" => false }
     end.new
   end
 
