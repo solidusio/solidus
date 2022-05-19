@@ -111,6 +111,44 @@ describe "Adjustments", type: :feature do
       end
     end
 
+    context "admin bulk editing adjustments" do
+      it "allows finalizing all the adjustments" do
+        order.all_adjustments.each(&:unfinalize!)
+
+        click_button "Finalize All Adjustments"
+
+        expect(order.reload.adjustments.all?(&:finalized?)).to be(true)
+      end
+
+      it "allows unfinalizing all the adjustments" do
+        order.all_adjustments.each(&:finalize!)
+
+        click_button "Unfinalize All Adjustments"
+
+        expect(order.reload.adjustments.any?(&:finalized?)).to be(false)
+      end
+
+      it "can't finalize via a GET request" do
+        order.all_adjustments.each(&:unfinalize!)
+
+        expect {
+          visit "/admin/orders/#{order.number}/adjustments/finalize"
+        }.to raise_error(ActionController::RoutingError)
+
+        expect(order.reload.adjustments.any?(&:finalized?)).to be(false)
+      end
+
+      it "can't unfinalize via a GET request" do
+        order.all_adjustments.each(&:finalize!)
+
+        expect {
+          visit "/admin/orders/#{order.number}/adjustments/unfinalize"
+        }.to raise_error(ActionController::RoutingError)
+
+        expect(order.reload.adjustments.all?(&:finalized?)).to be(true)
+      end
+    end
+
     context "deleting an adjustment" do
       context 'when the adjustment is finalized' do
         let!(:adjustment) { super().tap(&:finalize!) }
