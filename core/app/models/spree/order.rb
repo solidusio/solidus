@@ -750,7 +750,7 @@ module Spree
 
       touch :completed_at
 
-      Spree::Event.fire 'order_finalized', order: self
+      Spree::Bus.publish :order_finalized, order: self
     end
 
     def associate_store

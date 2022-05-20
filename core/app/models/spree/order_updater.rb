@@ -26,7 +26,7 @@ module Spree
           update_shipments
           update_shipment_state
         end
-        Spree::Event.fire 'order_recalculated', order: order
+        Spree::Bus.publish :order_recalculated, order: order
         persist_totals
       end
     end

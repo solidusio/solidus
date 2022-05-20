@@ -96,6 +96,7 @@ require 'spree/core/environment'
 require 'spree/migrations'
 require 'spree/migration_helpers'
 require 'spree/event'
+require 'spree/bus'
 require 'spree/core/engine'
 
 require 'spree/i18n'
