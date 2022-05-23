@@ -43,6 +43,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'monetize', '~> 1.8'
   s.add_dependency 'kt-paperclip', ['>= 6.3', '< 8']
   s.add_dependency 'ransack', '~> 2.0'
+  s.add_dependency 'sprockets-rails'
   s.add_dependency 'state_machines-activerecord', '~> 0.6'
   s.add_dependency 'omnes', '~> 0.2.2'
 
