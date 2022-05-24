@@ -103,11 +103,12 @@ GEM
     mime-types (3.1)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2016.0521)
-    mini_portile2 (2.4.0)
+    mini_portile2 (2.8.0)
     minitest (5.11.3)
     multi_json (1.13.1)
-    nokogiri (1.10.8)
-      mini_portile2 (~> 2.4.0)
+    nokogiri (1.13.6)
+      mini_portile2 (~> 2.8.0)
+      racc (~> 1.4)
     oga (2.15)
       ast
       ruby-ll (~> 2.1)
@@ -119,6 +120,7 @@ GEM
       activesupport (>= 3.1)
     parallel (1.12.1)
     public_suffix (4.0.6)
+    racc (1.6.0)
     rack (2.0.8)
     rb-fsevent (0.10.3)
     rb-inotify (0.9.10)
@@ -148,7 +150,7 @@ PLATFORMS
 DEPENDENCIES
   middleman (~> 4.2)
   middleman-s3_sync
-  nokogiri (~> 1.10.8)
+  nokogiri (~> 1.13.6)
   oga (~> 2.14)
   rack (>= 2.0.6)
   redcarpet
