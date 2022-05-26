@@ -49,4 +49,10 @@ RSpec.describe Spree::OptionValue, type: :model do
       expect(subject).to eq "Size - S"
     end
   end
+
+  it 'deprecates creating an option_value with no associated option_type' do
+    expect(Spree::Deprecation).to receive(:warn).with(/deprecated/)
+
+    create(:option_value, option_type: nil)
+  end
 end

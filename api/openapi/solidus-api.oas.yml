@@ -2544,6 +2544,8 @@ paths:
           $ref: '#/components/responses/unprocessable-entity'
       summary: Create option value
       description: |-
+        **DEPRECATED**: Use *POST /option_types/{option_type_id}/option_values* instead
+
         Creates an option value.
 
         Only users with the `create` permission on `Spree::OptionValue` can perform this action.

@@ -54,6 +54,7 @@ Spree::Core::Engine.routes.draw do
     resources :option_types do
       resources :option_values
     end
+    # TODO: Remove :create once option_type is required on Solidus v4.0
     resources :option_values
 
     get '/orders/mine', to: 'orders#mine', as: 'my_orders'

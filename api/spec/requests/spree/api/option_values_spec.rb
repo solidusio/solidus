@@ -110,7 +110,9 @@ module Spree::Api
           expect(option_value.name).to eq("Option Value")
         end
 
-        it "can create an option value" do
+        it "can create but deprecates creating an option value without option type" do
+          expect(Spree::Deprecation).to receive(:warn).with(/deprecated/).at_least(:once)
+
           post spree.api_option_values_path, params: { option_value: {
                                 name: "Option Value",
                                 presentation: 'option value'

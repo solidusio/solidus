@@ -18,6 +18,13 @@ module Spree
       end
 
       def create
+        Spree::Deprecation.warn <<~MSG unless request.path.include?('option_types')
+          This route is deprecated, as it'll be no longer possible to create an
+          option_value without an associated option_type. Please, use instead:
+
+            POST api/option_types/{option_type_id}/option_values
+        MSG
+
         authorize! :create, Spree::OptionValue
         @option_value = scope.new(option_value_params)
         if @option_value.save
