@@ -53,6 +53,12 @@ module Spree::Api
         expect(json_response).to have_attributes(attributes)
       end
 
+      it "deprecates listing a single option value through a nested route" do
+        expect(Spree::Deprecation).to receive(:warn).with(/deprecated/)
+
+        get spree.api_option_type_option_value_path(option_type, option_value)
+      end
+
       it "cannot create a new option value" do
         post spree.api_option_type_option_values_path(option_type), params: {
                           option_value: {
@@ -110,6 +116,14 @@ module Spree::Api
           expect(option_value.name).to eq("Option Value")
         end
 
+        it "deprecates updating an option value through a nested route" do
+          expect(Spree::Deprecation).to receive(:warn).with(/deprecated/)
+
+          put spree.api_option_type_option_value_path(option_type, option_value), params: { option_value: {
+                                name: "Option Value"
+                              } }
+        end
+
         it "can create but deprecates creating an option value without option type" do
           expect(Spree::Deprecation).to receive(:warn).with(/deprecated/).at_least(:once)
 
@@ -137,6 +151,12 @@ module Spree::Api
         it "can delete an option value" do
           delete spree.api_option_value_path(option_value)
           expect(response.status).to eq(204)
+        end
+
+        it "deprecates deleting an option value through a nested route" do
+          expect(Spree::Deprecation).to receive(:warn).with(/deprecated/)
+
+          delete spree.api_option_type_option_value_path(option_type, option_value)
         end
       end
     end

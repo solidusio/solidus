@@ -13,6 +13,8 @@ module Spree
       end
 
       def show
+        warn_if_nested_member_route
+
         @option_value = scope.find(params[:id])
         respond_with(@option_value)
       end
@@ -35,6 +37,8 @@ module Spree
       end
 
       def update
+        warn_if_nested_member_route
+
         @option_value = scope.accessible_by(current_ability, :update).find(params[:id])
         if @option_value.update(option_value_params)
           render :show
@@ -44,6 +48,8 @@ module Spree
       end
 
       def destroy
+        warn_if_nested_member_route
+
         @option_value = scope.accessible_by(current_ability, :destroy).find(params[:id])
         @option_value.destroy
         render plain: nil, status: 204
@@ -61,6 +67,14 @@ module Spree
 
       def option_value_params
         params.require(:option_value).permit(permitted_option_value_attributes)
+      end
+
+      def warn_if_nested_member_route
+        Spree::Deprecation.warn <<~MSG if request.path.include?('option_types')
+          This route is deprecated. Use shallow version instead:
+
+            #{request.method.upcase} api/option_values/:id
+        MSG
       end
     end
   end

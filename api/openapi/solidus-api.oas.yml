@@ -2717,7 +2717,10 @@ paths:
         '404':
           $ref: '#/components/responses/not-found'
       summary: Get option type value
-      description: Retrieves an option type's value.
+      description: |-
+        **DEPRECATED**: Use *GET /option_values/{id}* instead
+
+        Retrieves an option type's value.
       operationId: get-option-type-value
       tags:
         - Option values
@@ -2751,7 +2754,10 @@ paths:
         '422':
           $ref: '#/components/responses/delete-restriction'
       summary: Delete option type value
-      description: Deletes an option type's value.
+      description: |-
+        **DEPRECATED**: Use *DELETE /option_values/{id}* instead
+
+        Deletes an option type's value.
       operationId: delete-option-type-value
       tags:
         - Option values
@@ -2773,6 +2779,8 @@ paths:
           $ref: '#/components/responses/unprocessable-entity'
       summary: Update option type value
       description: |-
+        **DEPRECATED**: Use *PATCH /option_values/{id}* instead
+
         Updates an option type's value.
 
         Only users with the `update` permission on the option value can perform this action.
