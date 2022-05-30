@@ -224,6 +224,17 @@ module Spree::Api
         end
       end
 
+      context 'for empty shipments' do
+        let(:order) { create :completed_order_with_totals }
+        let(:shipment) { order.shipments.create(stock_location: stock_location) }
+
+        it 'adds a variant to a shipment' do
+          put spree.add_api_shipment_path(shipment), params: { variant_id: variant.to_param, quantity: 2 }
+          expect(response.status).to eq(200)
+          expect(json_response['manifest'].detect { |h| h['variant']['id'] == variant.id }["quantity"]).to eq(2)
+        end
+      end
+
       describe '#mine' do
         subject do
           get spree.mine_api_shipments_path, params: params
