@@ -1643,11 +1643,47 @@ RSpec.describe Spree::Order, type: :model do
   describe '#create_shipments_for_line_item' do
     subject { order.create_shipments_for_line_item(line_item) }
 
-    let(:order) { create :order_with_line_items }
+    let(:order) { create :order, shipments: [] }
     let(:line_item) { build(:line_item, order: order) }
 
     it 'creates at least one new shipment for the order' do
-      expect { subject }.to change { order.shipments.count }.by 1
+      expect { subject }.to change { order.shipments.count }.from(0).to(1)
+    end
+
+    context "with a custom inventory unit builder" do
+      before do
+        # Because the defined method runs in the context of the instance of our
+        # test inventory unit builder, not the RSpec example context, we need
+        # to make this value available as a local variable. We're using
+        # Class.new and define_method to avoid creating scope gates that would
+        # take this local variable out of scope.
+        inventory_unit = arbitrary_inventory_unit
+        TestInventoryUnitBuilder = Class.new do
+          def initialize(order)
+          end
+
+          define_method(:missing_units_for_line_item) { |line_item|
+            [inventory_unit]
+          }
+        end
+
+        test_stock_config = Spree::Core::StockConfiguration.new
+        test_stock_config.inventory_unit_builder_class = TestInventoryUnitBuilder.to_s
+        stub_spree_preferences(stock: test_stock_config)
+      end
+
+      after do
+        Object.send(:remove_const, :TestInventoryUnitBuilder)
+      end
+
+      let(:arbitrary_inventory_unit) { build :inventory_unit, order: order, line_item: line_item, variant: line_item.variant }
+
+      it "relies on the custom builder" do
+        expect { subject }.to change { order.shipments.count }.from(0).to(1)
+
+        expect(order.shipments.order(:created_at).first.inventory_units)
+          .to contain_exactly arbitrary_inventory_unit
+      end
     end
   end
 
