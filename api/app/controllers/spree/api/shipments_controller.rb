@@ -61,9 +61,10 @@ module Spree
           variant = Spree::Variant.unscoped.find(params[:variant_id])
           @order.contents.add(variant, quantity, { shipment: @shipment })
           @shipment.save!
+          @shipment.reload
         end
 
-        respond_with(@shipment.reload, default_template: :show)
+        respond_with(@shipment, default_template: :show)
       end
 
       def update
