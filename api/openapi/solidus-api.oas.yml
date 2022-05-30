@@ -682,7 +682,10 @@ paths:
         '404':
           $ref: '#/components/responses/not-found'
       summary: Get product variant
-      description: Retrieves a product's variant.
+      description: |-
+        **DEPRECATED**: Use *GET /variants/{id}* instead
+
+        Retrieves a product's variant.
       operationId: get-product-variant
       tags:
         - Variants
@@ -714,7 +717,10 @@ paths:
         '422':
           $ref: '#/components/responses/delete-restriction'
       summary: Delete product variant
-      description: Deletes a product's variant.
+      description: |-
+        **DEPRECATED**: Use *DELETE /variants/{id}* instead
+
+        Deletes a product's variant.
       operationId: delete-product-variant
       tags:
         - Variants
@@ -735,7 +741,10 @@ paths:
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Update product variant
-      description: Updates a product's variant.
+      description: |-
+        **DEPRECATED**: Use *PUT /variants/{id}* instead
+
+        Updates a product's variant.
       operationId: update-product-variant
       tags:
         - Variants
@@ -857,7 +866,10 @@ paths:
         '422':
           $ref: '#/components/responses/unprocessable-entity'
       summary: Create variant
-      description: 'Creates a variant. Only users with `can :create, Variant` permissions can perform this action.'
+      description: |-
+        **DEPRECATED**: Use *POST /products/{product_id}/variants* instead
+
+        Creates a variant. Only users with `can :create, Variant` permissions can perform this action.
       operationId: create-variant
       tags:
         - Variants
