@@ -423,6 +423,13 @@ describe Spree::Admin::UsersController, type: :controller do
         put :update, params: { id: user.id, user: { stock_location_ids: [location2.id] } }
         expect(user.reload.stock_locations).to eq([location2])
       end
+
+      it "can clear stock locations" do
+        user.stock_locations << Spree::StockLocation.create(name: "my_location")
+        expect {
+          put :update, params: { id: user.id, user: { name: "Bob Bloggs", stock_location_ids: [""] } }
+        }.to change { user.reload.stock_locations.to_a }.to([])
+      end
     end
 
     context "when the user cannot manage stock locations" do
