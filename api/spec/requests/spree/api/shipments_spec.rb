@@ -49,8 +49,36 @@ module Spree::Api
 
       sign_in_as_admin!
 
-      # Start writing this spec a bit differently than before....
       describe 'POST #create' do
+        let(:params) do
+          {
+            shipment: { order_id: order.number },
+            stock_location_id: stock_location.to_param
+          }
+        end
+
+        subject do
+          post spree.api_shipments_path, params: params
+        end
+
+        it 'creates a new shipment' do
+          subject
+          expect(response).to be_ok
+          expect(json_response).to have_attributes(attributes)
+        end
+
+        context "when stock_location_id is missing" do
+          before do
+            params.delete(:stock_location_id)
+          end
+
+          it 'returns proper error' do
+            subject
+            expect(response.status).to eq(422)
+            expect(json_response['exception']).to eq("param is missing or the value is empty: stock_location_id")
+          end
+        end
+
         context 'when passing a variant along' do
           let(:params) do
             {
@@ -60,27 +88,9 @@ module Spree::Api
             }
           end
 
-          subject do
-            post spree.api_shipments_path, params: params
-          end
-
-          before do
+          it 'creates a new shipment with a deprecation message' do
             expect(Spree::Deprecation).to receive(:warn).with(/variant_id/)
-          end
 
-          context "when stock_location_id is missing" do
-            before do
-              params.delete(:stock_location_id)
-            end
-
-            it 'returns proper error' do
-              subject
-              expect(response.status).to eq(422)
-              expect(json_response['exception']).to eq("param is missing or the value is empty: stock_location_id")
-            end
-          end
-
-          it 'creates a new shipment' do
             subject
             expect(response).to be_ok
             expect(json_response).to have_attributes(attributes)
