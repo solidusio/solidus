@@ -51,34 +51,40 @@ module Spree::Api
 
       # Start writing this spec a bit differently than before....
       describe 'POST #create' do
-        let(:params) do
-          {
-            variant_id: stock_location.stock_items.first.variant.to_param,
-            shipment: { order_id: order.number },
-            stock_location_id: stock_location.to_param
-          }
-        end
+        context 'when passing a variant along' do
+          let(:params) do
+            {
+              variant_id: stock_location.stock_items.first.variant.to_param,
+              shipment: { order_id: order.number },
+              stock_location_id: stock_location.to_param
+            }
+          end
 
-        subject do
-          post spree.api_shipments_path, params: params
-        end
+          subject do
+            post spree.api_shipments_path, params: params
+          end
 
-        context "when stock_location_id is missing" do
           before do
-            params.delete(:stock_location_id)
+            expect(Spree::Deprecation).to receive(:warn).with(/variant_id/)
           end
 
-          it 'should return proper error' do
+          context "when stock_location_id is missing" do
+            before do
+              params.delete(:stock_location_id)
+            end
+
+            it 'returns proper error' do
+              subject
+              expect(response.status).to eq(422)
+              expect(json_response['exception']).to eq("param is missing or the value is empty: stock_location_id")
+            end
+          end
+
+          it 'creates a new shipment' do
             subject
-            expect(response.status).to eq(422)
-            expect(json_response['exception']).to eq("param is missing or the value is empty: stock_location_id")
+            expect(response).to be_ok
+            expect(json_response).to have_attributes(attributes)
           end
-        end
-
-        it 'should create a new shipment' do
-          subject
-          expect(response).to be_ok
-          expect(json_response).to have_attributes(attributes)
         end
       end
 
