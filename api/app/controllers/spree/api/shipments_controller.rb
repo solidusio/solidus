@@ -41,6 +41,8 @@ module Spree
       def create
         authorize! :create, Shipment
         quantity = params[:quantity].to_i
+        variant = Spree::Variant.unscoped.find(params[:variant_id])
+
         @shipment = @order.shipments.create(stock_location_id: params.fetch(:stock_location_id))
         @order.contents.add(variant, quantity, { shipment: @shipment })
 

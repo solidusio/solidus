@@ -63,17 +63,15 @@ module Spree::Api
           post spree.api_shipments_path, params: params
         end
 
-        [:variant_id, :stock_location_id].each do |field|
-          context "when #{field} is missing" do
-            before do
-              params.delete(field)
-            end
+        context "when stock_location_id is missing" do
+          before do
+            params.delete(:stock_location_id)
+          end
 
-            it 'should return proper error' do
-              subject
-              expect(response.status).to eq(422)
-              expect(json_response['exception']).to eq("param is missing or the value is empty: #{field}")
-            end
+          it 'should return proper error' do
+            subject
+            expect(response.status).to eq(422)
+            expect(json_response['exception']).to eq("param is missing or the value is empty: stock_location_id")
           end
         end
 
