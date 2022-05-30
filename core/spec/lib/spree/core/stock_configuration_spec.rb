@@ -92,4 +92,26 @@ RSpec.describe Spree::Core::StockConfiguration do
       end
     end
   end
+
+  describe '#inventory_unit_builder_class' do
+    subject { stock_configuration.inventory_unit_builder_class }
+
+    let(:stock_configuration) { described_class.new }
+
+    it "returns Spree::Stock::InventoryUnitBuilder" do
+      is_expected.to be ::Spree::Stock::InventoryUnitBuilder
+    end
+
+    context "with another constant name assigned" do
+      MyInventoryUnitBuilder = Class.new
+
+      before do
+        stock_configuration.inventory_unit_builder_class = MyInventoryUnitBuilder.to_s
+      end
+
+      it "returns the constant" do
+        expect(subject).to be MyInventoryUnitBuilder
+      end
+    end
+  end
 end

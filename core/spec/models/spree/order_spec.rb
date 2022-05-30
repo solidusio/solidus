@@ -1600,6 +1600,42 @@ RSpec.describe Spree::Order, type: :model do
     it 'creates at least one new shipment for the order' do
       expect { subject }.to change { order.shipments.count }.by 1
     end
+
+    context "with a custom inventory unit builder" do
+      before do
+        class TestInventoryUnitBuilder
+          def initialize(order)
+          end
+
+          def missing_units_for_line_item(line_item)
+            []
+          end
+        end
+
+        # This return value is stubbed this way, so that it can access the
+        # arbitrary_inventory_unit let variable.
+        allow_any_instance_of(TestInventoryUnitBuilder)
+          .to receive(:missing_units_for_line_item)
+          .and_return([arbitrary_inventory_unit])
+
+        # This is stubbed out rather than set, so that it doesn't leak out into
+        # other tests.
+        allow(Spree::Config.stock)
+          .to receive(:inventory_unit_builder_class)
+          .and_return(TestInventoryUnitBuilder)
+
+        order.shipments.first.update!(created_at: 2.years.ago)
+      end
+
+      let(:arbitrary_inventory_unit) { build :inventory_unit, order: order }
+
+      it "relies on the custom builder" do
+        expect { subject }.to change { order.shipments.count }.by 1
+
+        expect(order.shipments.order(:created_at).last.inventory_units)
+          .to contain_exactly arbitrary_inventory_unit
+      end
+    end
   end
 
   describe '#shipping_discount' do
