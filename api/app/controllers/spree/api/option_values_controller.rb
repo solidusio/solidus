@@ -20,7 +20,7 @@ module Spree
       end
 
       def create
-        Spree::Deprecation.warn <<~MSG unless request.path.include?('option_types')
+        Spree::Deprecation.warn <<~MSG unless request.path.include?('/option_types/')
           This route is deprecated, as it'll be no longer possible to create an
           option_value without an associated option_type. Please, use instead:
 
@@ -70,7 +70,7 @@ module Spree
       end
 
       def warn_if_nested_member_route
-        Spree::Deprecation.warn <<~MSG if request.path.include?('option_types')
+        Spree::Deprecation.warn <<~MSG if request.path.include?('/option_types/')
           This route is deprecated. Use shallow version instead:
 
             #{request.method.upcase} api/option_values/:id
