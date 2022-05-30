@@ -155,6 +155,38 @@ RSpec.describe Spree::StoreCredit do
     end
   end
 
+  describe "#amount=" do
+    let(:store_credit) { described_class.new(amount: amount) }
+
+    context "with an imperial price format" do
+      let(:amount) { "1,000.50" }
+
+      before do
+        expect(I18n).to receive(:t).with(:'number.currency.format.separator') do
+          "."
+        end
+      end
+
+      it "sets the correct amount" do
+        expect(store_credit.amount).to eq(1000.5)
+      end
+    end
+
+    context "with an european price format" do
+      let(:amount) { "1.000,50" }
+
+      before do
+        expect(I18n).to receive(:t).with(:'number.currency.format.separator') do
+          ","
+        end
+      end
+
+      it "sets the correct amount" do
+        expect(store_credit.amount).to eq(1000.5)
+      end
+    end
+  end
+
   describe "#amount_remaining" do
     context "invalidated" do
       before { allow(store_credit).to receive(:invalidated?) { true } }
