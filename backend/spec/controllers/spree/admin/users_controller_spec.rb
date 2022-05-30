@@ -338,7 +338,7 @@ describe Spree::Admin::UsersController, type: :controller do
       end
     end
 
-    context "when the user can manage only some stock locations" do
+    context "when the user can manage only some roles" do
       stub_authorization! do |_user|
         can :manage, Spree.user_class
         can :manage, Spree::Role
