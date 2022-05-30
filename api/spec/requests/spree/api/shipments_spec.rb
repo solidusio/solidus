@@ -96,6 +96,43 @@ module Spree::Api
             expect(json_response).to have_attributes(attributes)
           end
         end
+
+        context 'when passing a variant and a quantity along' do
+          let(:params) do
+            {
+              variant_id: stock_location.stock_items.first.variant.to_param,
+              quantity: 2,
+              shipment: { order_id: order.number },
+              stock_location_id: stock_location.to_param
+            }
+          end
+
+          it 'creates a new shipment with a deprecation message' do
+            expect(Spree::Deprecation).to receive(:warn).with(/variant_id/)
+
+            subject
+            expect(response).to be_ok
+            expect(json_response).to have_attributes(attributes)
+          end
+        end
+
+        context 'when passing a quantity along (without a variant_id)' do
+          let(:params) do
+            {
+              quantity: 1,
+              shipment: { order_id: order.number },
+              stock_location_id: stock_location.to_param
+            }
+          end
+
+          it 'returns proper error with a deprecation warning' do
+            expect(Spree::Deprecation).to receive(:warn).with(/variant_id/)
+
+            subject
+            expect(response.status).to eq(404)
+            expect(json_response['error']).to eq("The resource you were looking for could not be found.")
+          end
+        end
       end
 
       it 'can update a shipment' do
