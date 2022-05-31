@@ -49,11 +49,9 @@ module Spree::Api
 
       sign_in_as_admin!
 
-      # Start writing this spec a bit differently than before....
       describe 'POST #create' do
         let(:params) do
           {
-            variant_id: stock_location.stock_items.first.variant.to_param,
             shipment: { order_id: order.number },
             stock_location_id: stock_location.to_param
           }
@@ -63,24 +61,77 @@ module Spree::Api
           post spree.api_shipments_path, params: params
         end
 
-        [:variant_id, :stock_location_id].each do |field|
-          context "when #{field} is missing" do
-            before do
-              params.delete(field)
-            end
-
-            it 'should return proper error' do
-              subject
-              expect(response.status).to eq(422)
-              expect(json_response['exception']).to eq("param is missing or the value is empty: #{field}")
-            end
-          end
-        end
-
-        it 'should create a new shipment' do
+        it 'creates a new shipment' do
           subject
           expect(response).to be_ok
           expect(json_response).to have_attributes(attributes)
+        end
+
+        context "when stock_location_id is missing" do
+          before do
+            params.delete(:stock_location_id)
+          end
+
+          it 'returns proper error' do
+            subject
+            expect(response.status).to eq(422)
+            expect(json_response['exception']).to eq("param is missing or the value is empty: stock_location_id")
+          end
+        end
+
+        context 'when passing a variant along' do
+          let(:params) do
+            {
+              variant_id: stock_location.stock_items.first.variant.to_param,
+              shipment: { order_id: order.number },
+              stock_location_id: stock_location.to_param
+            }
+          end
+
+          it 'creates a new shipment with a deprecation message' do
+            expect(Spree::Deprecation).to receive(:warn).with(/variant_id/)
+
+            subject
+            expect(response).to be_ok
+            expect(json_response).to have_attributes(attributes)
+          end
+        end
+
+        context 'when passing a variant and a quantity along' do
+          let(:params) do
+            {
+              variant_id: stock_location.stock_items.first.variant.to_param,
+              quantity: 2,
+              shipment: { order_id: order.number },
+              stock_location_id: stock_location.to_param
+            }
+          end
+
+          it 'creates a new shipment with a deprecation message' do
+            expect(Spree::Deprecation).to receive(:warn).with(/variant_id/)
+
+            subject
+            expect(response).to be_ok
+            expect(json_response).to have_attributes(attributes)
+          end
+        end
+
+        context 'when passing a quantity along (without a variant_id)' do
+          let(:params) do
+            {
+              quantity: 1,
+              shipment: { order_id: order.number },
+              stock_location_id: stock_location.to_param
+            }
+          end
+
+          it 'returns proper error with a deprecation warning' do
+            expect(Spree::Deprecation).to receive(:warn).with(/variant_id/)
+
+            subject
+            expect(response.status).to eq(404)
+            expect(json_response['error']).to eq("The resource you were looking for could not be found.")
+          end
         end
       end
 
@@ -170,6 +221,17 @@ module Spree::Api
           put spree.remove_api_shipment_path(shipment), params: { variant_id: variant.to_param, quantity: 1 }
           expect(response.status).to eq(422)
           expect(json_response['errors']['base'].join).to match /Cannot remove items/
+        end
+      end
+
+      context 'for empty shipments' do
+        let(:order) { create :completed_order_with_totals }
+        let(:shipment) { order.shipments.create(stock_location: stock_location) }
+
+        it 'adds a variant to a shipment' do
+          put spree.add_api_shipment_path(shipment), params: { variant_id: variant.to_param, quantity: 2 }
+          expect(response.status).to eq(200)
+          expect(json_response['manifest'].detect { |h| h['variant']['id'] == variant.id }["quantity"]).to eq(2)
         end
       end
 
