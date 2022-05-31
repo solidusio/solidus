@@ -106,4 +106,23 @@ RSpec.describe Spree::Core::StockConfiguration do
       Object.send(:remove_const, :MyInventoryUnitBuilder)
     end
   end
+
+  describe '#availability_validator_class' do
+    subject { stock_configuration.availability_validator_class }
+
+    let(:stock_configuration) { described_class.new }
+
+    it "returns Spree::Stock::AvailabilityValidator" do
+      is_expected.to be ::Spree::Stock::AvailabilityValidator
+    end
+
+    it "can be reassigned" do
+      MyAvailabilityValidator = Class.new
+      stock_configuration.availability_validator_class = MyAvailabilityValidator.to_s
+
+      expect(subject).to be MyAvailabilityValidator
+
+      Object.send(:remove_const, :MyAvailabilityValidator)
+    end
+  end
 end

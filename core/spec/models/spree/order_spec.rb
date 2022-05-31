@@ -1701,4 +1701,43 @@ RSpec.describe Spree::Order, type: :model do
       expect(subject).to eq 40
     end
   end
+
+  describe "#validate_line_item_availability" do
+    subject { order.send(:validate_line_item_availability) }
+
+    before do
+      class TestValidator
+        def validate(line_item)
+          if line_item.variant.sku == "UNAVAILABLE"
+            line_item.errors.add(:quantity, ":(")
+            false
+          else
+            true
+          end
+        end
+      end
+
+      test_stock_config = Spree::Core::StockConfiguration.new
+      test_stock_config.availability_validator_class = TestValidator.to_s
+      stub_spree_preferences(stock: test_stock_config)
+    end
+
+    let(:order) { create :order_with_line_items, line_items_count: 2 }
+
+    context "when the line items are valid" do
+      it "doesn't raise an exception" do
+        expect { subject }.not_to raise_error
+      end
+    end
+
+    context "when the line items are not valid" do
+      before do
+        order.line_items.last.variant.sku = "UNAVAILABLE"
+      end
+
+      it "raises an exception" do
+        expect { subject }.to raise_error(Spree::Order::InsufficientStock)
+      end
+    end
+  end
 end

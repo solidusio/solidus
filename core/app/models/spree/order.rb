@@ -810,8 +810,15 @@ module Spree
     end
 
     def validate_line_item_availability
-      availability_validator = Spree::Stock::AvailabilityValidator.new
-      raise InsufficientStock unless line_items.all? { |line_item| availability_validator.validate(line_item) }
+      availability_validator = Spree::Config.stock.availability_validator_class.new
+
+      # NOTE: This code assumes that the availability validator will return
+      # true for success and false for failure. This is not normally the
+      # behaviour of validators, as the framework only cares about the
+      # population of the errors, not the return value of the validate method.
+      raise InsufficientStock unless line_items.all? { |line_item|
+        availability_validator.validate(line_item)
+      }
     end
 
     def ensure_line_items_present
