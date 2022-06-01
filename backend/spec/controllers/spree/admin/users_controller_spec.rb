@@ -348,7 +348,7 @@ describe Spree::Admin::UsersController, type: :controller do
       end
     end
 
-    context "when the user can manage only some stock locations" do
+    context "when the user can manage only some roles" do
       stub_authorization! do |_user|
         can :manage, Spree.user_class
         can :manage, Spree::Role
@@ -432,6 +432,13 @@ describe Spree::Admin::UsersController, type: :controller do
         user.stock_locations = [location1]
         put :update, params: { id: user.id, user: { stock_location_ids: [location2.id] } }
         expect(user.reload.stock_locations).to eq([location2])
+      end
+
+      it "can clear stock locations" do
+        user.stock_locations << Spree::StockLocation.create(name: "my_location")
+        expect {
+          put :update, params: { id: user.id, user: { name: "Bob Bloggs", stock_location_ids: [""] } }
+        }.to change { user.reload.stock_locations.to_a }.to([])
       end
     end
 
