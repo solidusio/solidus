@@ -683,7 +683,7 @@ paths:
           $ref: '#/components/responses/not-found'
       summary: Get product variant
       description: |-
-        **DEPRECATED**: Use *GET /variants/{id}* instead
+        **Deprecation Warning**: Use [shallow version](/docs/solidus/87df124706c5f-get-variant) instead
 
         Retrieves a product's variant.
       operationId: get-product-variant
@@ -718,7 +718,7 @@ paths:
           $ref: '#/components/responses/delete-restriction'
       summary: Delete product variant
       description: |-
-        **DEPRECATED**: Use *DELETE /variants/{id}* instead
+        **Deprecation Warning**: Use [shallow version](/docs/solidus/82ccaada99139-delete-variant) instead
 
         Deletes a product's variant.
       operationId: delete-product-variant
@@ -742,7 +742,7 @@ paths:
           $ref: '#/components/responses/unprocessable-entity'
       summary: Update product variant
       description: |-
-        **DEPRECATED**: Use *PUT /variants/{id}* instead
+        **Deprecation Warning**: Use [shallow version](/docs/solidus/ce338b5f3b940-update-variant) instead
 
         Updates a product's variant.
       operationId: update-product-variant
@@ -867,7 +867,7 @@ paths:
           $ref: '#/components/responses/unprocessable-entity'
       summary: Create variant
       description: |-
-        **DEPRECATED**: Use *POST /products/{product_id}/variants* instead
+        **Deprecation Warning**: Use [nested version](/docs/solidus/681aa6cb75b1e-create-product-variant) instead
 
         Creates a variant. Only users with `can :create, Variant` permissions can perform this action.
       operationId: create-variant
@@ -2556,7 +2556,7 @@ paths:
           $ref: '#/components/responses/unprocessable-entity'
       summary: Create option value
       description: |-
-        **DEPRECATED**: Use *POST /option_types/{option_type_id}/option_values* instead
+        **Deprecation Warning**: Use [nested version](/docs/solidus/810154673c613-create-option-type-value) instead
 
         Creates an option value.
 
@@ -2730,7 +2730,7 @@ paths:
           $ref: '#/components/responses/not-found'
       summary: Get option type value
       description: |-
-        **DEPRECATED**: Use *GET /option_values/{id}* instead
+        **Deprecation Warning**: Use [shallow version](/docs/solidus/cbbc403ed08a3-get-option-value) instead
 
         Retrieves an option type's value.
       operationId: get-option-type-value
@@ -2767,7 +2767,7 @@ paths:
           $ref: '#/components/responses/delete-restriction'
       summary: Delete option type value
       description: |-
-        **DEPRECATED**: Use *DELETE /option_values/{id}* instead
+        **Deprecation Warning**: Use [shallow version](/docs/solidus/0742e63219b1f-delete-option-value) instead
 
         Deletes an option type's value.
       operationId: delete-option-type-value
@@ -2791,7 +2791,7 @@ paths:
           $ref: '#/components/responses/unprocessable-entity'
       summary: Update option type value
       description: |-
-        **DEPRECATED**: Use *PATCH /option_values/{id}* instead
+        **Deprecation Warning**: Use [shallow version](/docs/solidus/b43f889175ebb-update-option-value) instead
 
         Updates an option type's value.
 
