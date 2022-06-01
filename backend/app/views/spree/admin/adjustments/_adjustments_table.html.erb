@@ -13,12 +13,12 @@
     <tr data-hook="adjustment_buttons">
       <td class="align-right" colspan="2" style="width: 50%">
         <% if can? :update, Spree::Adjustment %>
-          <%= button_to t('spree.unfinalize_all_adjustments'), adjustments_unfinalize_admin_order_path(@order), method: :get %>
+          <%= button_to t('spree.unfinalize_all_adjustments'), adjustments_unfinalize_admin_order_path(@order), method: :put %>
         <% end %>
       </td>
       <td colspan="2" style="width: 50%">
         <% if can? :update, Spree::Adjustment %>
-          <%= button_to t('spree.finalize_all_adjustments'), adjustments_finalize_admin_order_path(@order), method: :get %>
+          <%= button_to t('spree.finalize_all_adjustments'), adjustments_finalize_admin_order_path(@order), method: :put %>
         <% end %>
       </td>
       <td class='actions'>&nbsp;</td>
