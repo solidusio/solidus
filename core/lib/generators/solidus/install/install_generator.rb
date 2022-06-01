@@ -123,7 +123,10 @@ module Solidus
 
         Would you like to install it? (Y/n)"))
 
-        @plugins_to_be_installed << 'solidus_auth_devise'
+        unless gem list "^solidus_auth_devise$" -i
+          @plugins_to_be_installed << 'solidus_auth_devise'
+        end
+
         @plugin_generators_to_run << 'solidus:auth:install'
       end
     end
