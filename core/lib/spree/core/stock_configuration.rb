@@ -10,6 +10,7 @@ module Spree
       attr_writer :allocator_class
       attr_writer :inventory_unit_builder_class
       attr_writer :availability_validator_class
+      attr_writer :inventory_validator_class
 
       def coordinator_class
         @coordinator_class ||= '::Spree::Stock::SimpleCoordinator'
@@ -44,6 +45,11 @@ module Spree
       def availability_validator_class
         @availability_validator_class ||= '::Spree::Stock::AvailabilityValidator'
         @availability_validator_class.constantize
+      end
+ 
+      def inventory_validator_class
+        @inventory_validator_class ||= '::Spree::Stock::InventoryValidator'
+        @inventory_validator_class.constantize
       end
     end
   end
