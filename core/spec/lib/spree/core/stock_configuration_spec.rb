@@ -18,6 +18,7 @@ RSpec.describe Spree::Core::StockConfiguration do
 
       expect(subject).to be MyCoordinator
 
+    ensure
       Object.send(:remove_const, :MyCoordinator)
     end
   end
@@ -35,6 +36,7 @@ RSpec.describe Spree::Core::StockConfiguration do
 
       expect(subject).to be MyEstimator
 
+    ensure
       Object.send(:remove_const, :MyEstimator)
     end
   end
@@ -52,6 +54,7 @@ RSpec.describe Spree::Core::StockConfiguration do
 
       expect(subject).to be MyFilter
 
+    ensure
       Object.send(:remove_const, :MyFilter)
     end
   end
@@ -69,6 +72,7 @@ RSpec.describe Spree::Core::StockConfiguration do
 
       expect(subject).to be MySorter
 
+    ensure
       Object.send(:remove_const, :MySorter)
     end
   end
@@ -86,6 +90,7 @@ RSpec.describe Spree::Core::StockConfiguration do
 
       expect(subject).to be MyAllocator
 
+    ensure
       Object.send(:remove_const, :MyAllocator)
     end
   end
@@ -103,6 +108,7 @@ RSpec.describe Spree::Core::StockConfiguration do
 
       expect(subject).to be MyInventoryUnitBuilder
 
+    ensure
       Object.send(:remove_const, :MyInventoryUnitBuilder)
     end
   end
@@ -122,6 +128,7 @@ RSpec.describe Spree::Core::StockConfiguration do
 
       expect(subject).to be MyAvailabilityValidator
 
+    ensure
       Object.send(:remove_const, :MyAvailabilityValidator)
     end
   end
@@ -141,6 +148,7 @@ RSpec.describe Spree::Core::StockConfiguration do
 
       expect(subject).to be MyInventoryValidator
 
+    ensure
       Object.send(:remove_const, :MyInventoryValidator)
     end
   end
