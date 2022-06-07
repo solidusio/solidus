@@ -4,7 +4,6 @@ require 'spree_core'
 require 'spree_api'
 
 require 'jquery-rails'
-require 'coffee-rails'
 require 'sassc-rails'
 require 'handlebars_assets'
 require 'font-awesome-rails'

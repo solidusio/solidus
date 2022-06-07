@@ -31,7 +31,7 @@ if defined?(DummyApp)
 
     config.suite do |suite|
       suite.use_framework :mocha, "2.3.3"
-      suite.matcher = "{spec/javascripts,app/assets}/**/*_spec.{js,js.coffee,coffee}"
+      suite.matcher = "{spec/javascripts,app/assets}/**/*_spec.js"
       suite.helper = "spec_helper"
       suite.boot_partial = "/boot"
       suite.expand_assets = true
