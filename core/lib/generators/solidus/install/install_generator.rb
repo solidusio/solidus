@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'rails/generators'
+require 'rails/version'
 
 module Solidus
   # @private
@@ -15,7 +16,7 @@ module Solidus
     class_option :migrate, type: :boolean, default: true, banner: 'Run Solidus migrations'
     class_option :seed, type: :boolean, default: true, banner: 'Load seed data (migrations must be run)'
     class_option :sample, type: :boolean, default: true, banner: 'Load sample data (migrations must be run)'
-    class_option :active_storage, type: :boolean, default: true, banner: 'Install ActiveStorage as image attachments handler for products and taxons'
+    class_option :active_storage, type: :boolean, default: Rails.gem_version >= Gem::Version.new("6.1.0"), banner: 'Install ActiveStorage as image attachments handler for products and taxons'
     class_option :auto_accept, type: :boolean
     class_option :user_class, type: :string
     class_option :admin_email, type: :string
