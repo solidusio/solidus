@@ -40,6 +40,11 @@ RSpec.describe Spree::Variant, type: :model do
       variant.price = nil
       expect(variant).to be_invalid
     end
+
+    it "should have a unique sku" do
+      variant_with_same_sku = build(:variant, sku: variant.sku)
+      expect(variant_with_same_sku).to be_invalid
+    end
   end
 
   context "after create" do

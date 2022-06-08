@@ -66,7 +66,7 @@ module Spree
 
     validates :cost_price, numericality: { greater_than_or_equal_to: 0, allow_nil: true }
     validates :price,      numericality: { greater_than_or_equal_to: 0, allow_nil: true }
-    validates_uniqueness_of :sku, allow_blank: true, case_sensitive: true, if: :enforce_unique_sku?
+    validates_uniqueness_of :sku, allow_blank: true, case_sensitive: true, conditions: -> { where(deleted_at: nil) }, if: :enforce_unique_sku?
 
     after_create :create_stock_items
     after_create :set_position
