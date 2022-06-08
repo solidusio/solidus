@@ -7169,6 +7169,29 @@ components:
           type: boolean
         product_id:
           type: integer
+        tax_category_id:
+          type: integer
+        weight:
+          type: string
+        height:
+          type: string
+        width:
+          type: string
+        depth:
+          type: string
+        sku:
+          type: string
+        cost_currency:
+          type: string
+        option_value_ids:
+          type: array
+          items:
+            type: integer
+        option_values_attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/option-value-input'
+        options:
         weight:
           type: string
         height:

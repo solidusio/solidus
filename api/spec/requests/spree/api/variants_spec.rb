@@ -356,6 +356,14 @@ module Spree::Api
         end.to change { Spree::OptionValuesVariant.count }.by(1)
       end
 
+      it "creates a new variant with tax category" do
+        tax_category = create(:tax_category)
+
+        post spree.api_product_variants_path(product), params: { variant: { sku: "12345", tax_category_id: tax_category.id } }
+
+        expect(Spree::Variant.find_by_sku("12345").tax_category).to eq(tax_category)
+      end
+
       it "can update a variant" do
         put spree.api_variant_path(variant), params: { variant: { sku: "12345" } }
         expect(response.status).to eq(200)
