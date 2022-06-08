@@ -66,3 +66,16 @@ You would need to extend or rewrite this class with your preferred PSP
 integration.
 
 [credit-card-base]: https://github.com/solidusio/solidus/blob/master/core/app/models/spree/payment_method/credit_card.rb
+
+### Switching payment service provider
+
+After switching payment service provider, there may be `Spree::PaymentMethod` 
+records referencing a `type` class that does not exist anymore. Trying to 
+retrieve these records through an `ActiveRecord` query raises a 
+`Spree::PaymentMethod::UnsupportedPaymentMethod` error.
+
+If you cannot delete these records, you can deactivate them running 
+`rake payment_method:deactivate_unsupported_payment_methods`. 
+This way, their `type` will be set to `Spree::PaymentMethod`, allowing for 
+records retrieval without errors. Also, their real `type` value will be stored
+in the `type_before_removal` attribute.

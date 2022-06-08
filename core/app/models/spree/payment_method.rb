@@ -13,6 +13,7 @@ module Spree
   #
   class PaymentMethod < Spree::Base
     include Spree::Preferences::Persistable
+    class UnsupportedPaymentMethod < StandardError; end
 
     preference :server, :string, default: 'test'
     preference :test_mode, :boolean, default: true
@@ -59,6 +60,16 @@ module Spree
     class << self
       def model_name
         ModelName.new(self, Spree)
+      end
+
+      def find_sti_class(type_name)
+        super(type_name)
+      rescue ActiveRecord::SubclassNotFound
+        raise UnsupportedPaymentMethod, "Found invalid payment type '#{type_name}'.\n"\
+          "This may happen after switching payment service provider, when payment methods "\
+          "reference old types that are not supported any more.\n"\
+          "If that is the case, consider running 'rake payment_method:deprecate_unsupported_payment_methods' "\
+          "to fix the issue."
       end
     end
 
