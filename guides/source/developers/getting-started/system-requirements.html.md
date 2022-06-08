@@ -5,7 +5,8 @@ The following software is required to get Solidus running:
 - [Ruby](https://www.ruby-lang.org) 2.2.2 or newer
 - [SQLite 3](https://sqlite.org)
 - [Rails](http://guides.rubyonrails.org/getting_started.html) 5.0.0 or newer
-- [ImageMagick](http://imagemagick.org/script/download.php)
+- [libvips](https://github.com/libvips/libvips) 8.6 or newer, or
+  [ImageMagick](http://imagemagick.org/script/download.php)
 
 We recommend using [Homebrew][brew] to install these dependencies on your
 Mac. Throughout this article, we will use the `brew` command for installing
@@ -15,6 +16,7 @@ Homebrew][ruby-homebrew] if you need to upgrade from your system's Ruby.
 We also recommend configuring your development environment so that you can
 [install RubyGems without `sudo`][gem-install-without-sudo].
 
+[brew]: https://brew.sh
 [ruby-homebrew]: https://www.ruby-lang.org/en/documentation/installation/#homebrew
 [gem-install-without-sudo]: https://www.michaelehead.com/2016/02/06/installing-gems-without-sudo.html
 
@@ -83,6 +85,30 @@ gem install rails
 ```
 
 This will install Rails as well as its dependencies.
+
+## Install Libvips
+
+If you are upgrading from an older version of Solidus (where Paperclip was used
+for product images), and are continuing to use Paperclip for your product images
+(see the section on [product images][product-images] for more details), you will
+need to install ImageMagick.
+
+If you set up your store with Solidus v3 or newer, you are using ActiveStorage
+for your product images by default. As outlined in the [the ActiveStorage
+guide][active-storage-guide] you have the choice to install
+[libvips](https://github.com/libvips/libvips) (v8.6 or newer) as an alternative
+to ImageMagick. Libvips can be [both faster and less memory
+intensive](https://github.com/libvips/libvips/wiki/Speed-and-memory-use) than
+ImageMagick.
+
+To install libvips via homebrew, use the command:
+
+```bash
+brew install libvips
+```
+
+[product-images][/developers/products-and-variants/product-images.html]
+[active-storage-guide]: https://guides.rubyonrails.org/active_storage_overview.html#requirements
 
 ## Install ImageMagick
 
