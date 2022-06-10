@@ -1,0 +1,63 @@
+version: '3.7'
+
+services:
+  mysql:
+    image: mysql:8.0
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+    volumes:
+      - mysql:/var/lib/mysql:cached
+
+  postgres:
+    image: postgres:13.2
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: password
+    volumes:
+      - postgres:/var/lib/postgresql/data:cached
+
+  app:
+    build:
+      context: .dockerdev
+      dockerfile: Dockerfile
+      args:
+        RUBY_VERSION: "2.7.2"
+        PG_VERSION: 13
+        NODE_VERSION: 14
+        MYSQL_VERSION: "8.0"
+        BUNDLER_VERSION: 2
+    image: solidus-2.11
+    command: bash -c "(bundle check || bundle) && tail -f /dev/null"
+    environment:
+      CAPYBARA_DRIVER: selenium_chrome_headless_docker_friendly
+      DB_USERNAME: root
+      DB_PASSWORD: password
+      RAILS_VERSION: ${RAILS_VERSION:-~> 6.1.0}
+      DB_ALL: "1"
+      DB_MYSQL_HOST: mysql
+      DB_POSTGRES_HOST: postgres
+      HISTFILE: "/home/solidus_user/history/bash_history"
+      MYSQL_HISTFILE: "/home/solidus_user/history/mysql_history"
+      RAILS_ENV: development
+      ACTIVE_STORAGE_VARIANT_PROCESSOR: "mini_magick"
+    ports:
+      - "${SANDBOX_PORT:-3000}:${SANDBOX_PORT:-3000}"
+    volumes:
+      - .:/home/solidus_user/app:delegated
+      - bundle:/home/solidus_user/gems:cached
+      - history:/home/solidus_user/history:cached
+      - .dockerdev/.psqlrc:/home/solidus_user/.psqlrc:cached
+    tty: true
+    stdin_open: true
+    tmpfs:
+      - /tmp
+    depends_on:
+      - mysql
+      - postgres
+
+volumes:
+  bundle:
+  history:
+  postgres:
+  mysql:
