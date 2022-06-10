@@ -15,7 +15,7 @@ class CommonRakeTasks
         args.with_defaults(user_class: "Spree::LegacyUser")
         require ENV['LIB_NAME']
 
-        ENV["RAILS_ENV"] = 'test'
+        force_rails_environment_to_test
 
         Spree::DummyGenerator.start ["--lib_name=#{ENV['LIB_NAME']}", "--quiet"]
         Solidus::InstallGenerator.start ["--lib_name=#{ENV['LIB_NAME']}", "--auto-accept", "--with-authentication=false", "--payment-method=none", "--migrate=false", "--seed=false", "--sample=false", "--quiet", "--user_class=#{args[:user_class]}"]
@@ -40,6 +40,11 @@ class CommonRakeTasks
   end
 
   private
+
+  def force_rails_environment_to_test
+    ENV["RAILS_ENV"] = 'test'
+    Rails.env = 'test'
+  end
 
   def extension_installation_generator_exists?
     require "generators/#{generator_namespace}/install/install_generator"
