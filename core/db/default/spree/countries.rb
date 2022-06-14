@@ -21,12 +21,19 @@ end
 country_values = -> do
   carmen_countries = Carmen::Country.all
 
-  # find entires already in the database (so that we may ignore them)
+  available_countries = Spree::Config.available_countries
+  selected_countries = if available_countries.any?
+    carmen_countries.select { |c| available_countries.member?(c.code) }
+  else
+    carmen_countries
+  end
+
+  # find entries already in the database (so that we may ignore them)
   existing_country_isos =
-    Spree::Country.where(iso: carmen_countries.map(&:alpha_2_code)).pluck(:iso)
+    Spree::Country.where(iso: selected_countries.map(&:alpha_2_code)).pluck(:iso)
 
   # create VALUES statements for each country _not_ already in the database
-  carmen_countries
+  selected_countries
     .reject { |c| existing_country_isos.include?(c.alpha_2_code) }
     .map(&country_mapper)
     .join("), (")

@@ -24,6 +24,10 @@ Spree.config do |config|
   config.image_attachment_module = 'Spree::Image::ActiveStorageAttachment'
   config.taxon_attachment_module = 'Spree::Taxon::ActiveStorageAttachment'
 
+  # Which countries that should be imported from Carmen using 2 character code.
+  # Defaults to an empty array which inserts all countries in Carmen.
+  # config.available_countries = ['US', 'CA']
+
   # Defaults
   # Permission Sets:
 

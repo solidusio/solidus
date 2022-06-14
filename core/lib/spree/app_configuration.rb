@@ -553,6 +553,13 @@ module Spree
     # Enumerable of taxons adhering to the present_taxon_class interface
     class_name_attribute :taxon_attachment_module, default: 'Spree::Taxon::ActiveStorageAttachment'
 
+    # Which countries that should be imported from Carmen using 2 character code.
+    # Defaults to an empty array which inserts all countries in Carmen.
+    #
+    # @!attribute [rw] available_countries
+    # @return [<String>] array of country codes to whitelist
+    class_name_attribute :available_countries, default: []
+
     # Configures the absolute path that contains the Solidus engine
     # migrations. This will be checked at app boot to confirm that all Solidus
     # migrations are installed.
