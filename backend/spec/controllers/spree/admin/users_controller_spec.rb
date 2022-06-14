@@ -463,6 +463,35 @@ describe Spree::Admin::UsersController, type: :controller do
     end
   end
 
+  describe "#destroy" do
+    stub_authorization! do |_user|
+      can :manage, Spree.user_class
+    end
+
+    subject do
+      delete :destroy, params: { id: user.id }
+      response
+    end
+
+    context "with user having no orders" do
+      let(:user) { create(:user) }
+
+      it "can be destroyed" do
+        is_expected.to be_redirect
+        expect(flash[:success]).to eq("User has been successfully removed!")
+      end
+    end
+
+    context "with user having orders" do
+      let(:user) { create(:user, :with_orders) }
+
+      it "cannot be destroyed" do
+        is_expected.to be_forbidden
+        expect(subject.body).to eq I18n.t("spree.error_user_destroy_with_orders")
+      end
+    end
+  end
+
   describe "#orders" do
     stub_authorization! do |_user|
       can :manage, Spree.user_class
