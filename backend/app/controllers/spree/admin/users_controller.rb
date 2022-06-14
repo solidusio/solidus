@@ -121,7 +121,7 @@ module Spree
       # handling raise from Spree::Admin::ResourceController#destroy
       def user_destroy_with_orders_error
         invoke_callbacks(:destroy, :fails)
-        render status: :forbidden, text: t('spree.error_user_destroy_with_orders')
+        render status: :forbidden, plain: t("spree.error_user_destroy_with_orders")
       end
 
       def sign_in_if_change_own_password
