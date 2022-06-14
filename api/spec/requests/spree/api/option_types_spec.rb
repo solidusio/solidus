@@ -89,6 +89,22 @@ module Spree::Api
         expect(response.status).to eq(201)
       end
 
+      it "can create an option type with nested option values" do
+        post spree.api_option_types_path, params: {
+          option_type: {
+            name: "Option Type",
+            presentation: "Option Type",
+            option_values_attributes: [
+              name: "foo", presentation: "Foo"
+            ]
+          }
+        }
+
+        option_value = Spree::OptionType.find(json_response["id"]).option_values.first
+        expect(option_value).not_to be(nil)
+        expect(option_value.name).to eq("foo")
+      end
+
       it "cannot create an option type with invalid attributes" do
         post spree.api_option_types_path, params: { option_type: {} }
         expect(response.status).to eq(422)

@@ -7185,10 +7185,6 @@ components:
           type: array
           items:
             type: integer
-        option_values_attributes:
-          type: array
-          items:
-            $ref: '#/components/schemas/option-value-input'
         options:
           type: object
           description: '`Name` will be the name/presentation of the option type and `Value` will be the name/presentation of the option value. They will be created if not exist.'
