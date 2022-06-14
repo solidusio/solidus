@@ -1022,6 +1022,21 @@ RSpec.describe Spree::Order, type: :model do
     end
   end
 
+  describe "#shipment_total_before_tax" do
+    it "sums all of the line items totals before tax" do
+      subject.shipments = [
+        Spree::Shipment.new(cost: 20, included_tax_total: 15.0).tap do |li|
+          li.adjustments.build(eligible: true, amount: -2)
+        end,
+        Spree::Shipment.new(cost: 30, included_tax_total: 16.0).tap do |li|
+          li.adjustments.build(eligible: true, amount: -3)
+        end
+      ]
+      # 20-2 + 30-3 = 18 + 27 = 14
+      expect(subject.shipment_total_before_tax).to eq 45.0
+    end
+  end
+
   context "#refund_total" do
     let(:order) { create(:order_with_line_items) }
     let!(:payment) { create(:payment_with_refund, order: order, amount: 5, refund_amount: 3) }

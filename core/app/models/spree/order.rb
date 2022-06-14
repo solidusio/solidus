@@ -204,6 +204,10 @@ module Spree
       line_items.to_a.sum(&:total_before_tax)
     end
 
+    def shipment_total_before_tax
+      shipments.to_a.sum(&:total_before_tax)
+    end
+
     # Sum of all line item amounts pre-tax
     def item_total_excluding_vat
       line_items.to_a.sum(&:total_excluding_vat)
