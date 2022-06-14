@@ -1004,6 +1004,7 @@ RSpec.describe Spree::Order, type: :model do
       ]
       # (2*10)-15 + 30-16 = 5 + 14 = 19
       expect(subject.item_total_excluding_vat).to eq 19.0
+      expect(subject.display_item_total_excluding_vat).to eq Spree::Money.new(19)
     end
   end
 
@@ -1019,6 +1020,7 @@ RSpec.describe Spree::Order, type: :model do
       ]
       # (2*10)-2 + 30-3 = 18 + 27 = 14
       expect(subject.item_total_before_tax).to eq 45.0
+      expect(subject.display_item_total_before_tax).to eq Spree::Money.new(45)
     end
   end
 
@@ -1034,6 +1036,7 @@ RSpec.describe Spree::Order, type: :model do
       ]
       # 20-2 + 30-3 = 18 + 27 = 14
       expect(subject.shipment_total_before_tax).to eq 45.0
+      expect(subject.display_shipment_total_before_tax).to eq Spree::Money.new(45)
     end
   end
 
