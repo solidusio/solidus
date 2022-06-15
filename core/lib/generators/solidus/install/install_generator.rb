@@ -9,6 +9,7 @@ module Solidus
 
     PAYMENT_METHODS = {
       'paypal' => 'solidus_paypal_commerce_platform',
+      'bolt' => 'solidus_bolt',
       'none' => nil,
     }
 
