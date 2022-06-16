@@ -467,16 +467,32 @@ RSpec.describe Spree::Order, type: :model do
       context "when tax_using_ship_address is true" do
         let(:tax_using_ship_address) { true }
 
-        it 'returns the stores default cart tax location' do
-          expect(subject).to eq(store.default_cart_tax_location)
+        context "when the order is associated with a store" do
+          it 'returns the stores default cart tax location' do
+            expect(subject).to eq(store.default_cart_tax_location)
+          end
+        end
+
+        context "when the order is not associated with a store" do
+          let(:store) { nil }
+
+          it { is_expected.to be_nil }
         end
       end
 
       context "when tax_using_ship_address is not true" do
         let(:tax_using_ship_address) { false }
 
-        it 'returns the stores default cart tax location' do
-          expect(subject).to eq(store.default_cart_tax_location)
+        context "when the order is associated with a store" do
+          it 'returns the stores default cart tax location' do
+            expect(subject).to eq(store.default_cart_tax_location)
+          end
+        end
+
+        context "when the order is not associated with a store" do
+          let(:store) { nil }
+
+          it { is_expected.to be_nil }
         end
       end
     end
