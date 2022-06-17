@@ -1,5 +1,8 @@
 version: 2.1
 
+orbs:
+  browser-tools: circleci/browser-tools@1.3
+
 executors:
   base:
     working_directory: &workdir ~/solidus
@@ -9,7 +12,7 @@ executors:
       CIRCLE_TEST_REPORTS: /tmp/test-results
       CIRCLE_ARTIFACTS: /tmp/test-artifacts
     docker:
-      - image: &image circleci/ruby:2.7-node-browsers
+      - image: &image cimg/ruby:2.7-browsers
 
   postgres:
     working_directory: *workdir
@@ -32,13 +35,15 @@ executors:
       DB_USERNAME: root
     docker:
       - image: *image
-      - image: circleci/mysql:5.7-ram
+      - image: cimg/mysql:5.7
 
 commands:
   setup:
     steps:
       - run: .circleci/bin/halt-for-doc-only-changes.sh && circleci step halt || true # skip Circle for guides
       - checkout
+      - browser-tools/install-chrome
+      - browser-tools/install-chromedriver
       - run: |
           gem install bundler -v"~> 2.1" --conservative
           bundle lock
