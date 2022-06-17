@@ -399,7 +399,7 @@ RSpec.describe Spree::Order, type: :model do
           expect(order.shipments).to be_empty
         end
 
-        it "puts order back in address state" do
+        it "puts order back in cart state" do
           order.check_shipments_and_restart_checkout
           expect(order.state).to eql "cart"
         end
