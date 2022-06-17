@@ -5,7 +5,7 @@ namespace :payment_method do
   "which happens after switching Payment Service Provider."
   task deactivate_unsupported_payment_methods: :environment do
     Spree::PaymentMethod.pluck(:id, :type).select do |id, type|
-      ActiveSupport::Dependencies.constantize(type)
+      type.constantize
     rescue NameError
       fix_payment_method_record(id, type)
     end
