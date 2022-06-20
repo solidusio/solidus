@@ -770,6 +770,7 @@ en:
     accepted: Accepted
     account: Account
     account_updated: Account updated
+    account_not_updated: Account not updated
     action: Action
     actions:
       add: Add
