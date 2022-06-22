@@ -10,7 +10,7 @@ module Spree
     included do
       next if Rails.gem_version >= Gem::Version.new('6.1.0.alpha')
 
-      abort <<~MESSAGE
+      raise <<~MESSAGE
         Configuration Error: Solidus ActiveStorage attachment adpater requires Rails >= 6.1.0.
 
         Spree::Config.image_attachment_module preference is set to #{Spree::Config.image_attachment_module}
