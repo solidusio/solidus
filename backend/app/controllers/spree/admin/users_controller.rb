@@ -126,7 +126,7 @@ module Spree
 
         @search = super.ransack(params[:q])
         @collection = @search.result.includes(:spree_roles)
-        @collection = @collection.includes(:spree_orders)
+        @collection = @collection.includes(:orders)
         @collection = @collection.page(params[:page]).per(Spree::Config[:admin_products_per_page])
       end
 
