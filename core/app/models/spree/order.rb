@@ -38,9 +38,21 @@ module Spree
     class CannotRebuildShipments < StandardError; end
 
     extend Spree::DisplayMoney
-    money_methods :outstanding_balance, :item_total, :adjustment_total,
-      :included_tax_total, :additional_tax_total, :tax_total,
-      :shipment_total, :total, :order_total_after_store_credit, :total_available_store_credit
+    money_methods(
+      :outstanding_balance,
+      :item_total,
+      :adjustment_total,
+      :included_tax_total,
+      :additional_tax_total,
+      :tax_total,
+      :shipment_total,
+      :total,
+      :order_total_after_store_credit,
+      :total_available_store_credit,
+      :item_total_before_tax,
+      :shipment_total_before_tax,
+      :item_total_excluding_vat
+    )
     alias :display_ship_total :display_shipment_total
 
     checkout_flow do
@@ -193,6 +205,10 @@ module Spree
 
     def item_total_before_tax
       line_items.to_a.sum(&:total_before_tax)
+    end
+
+    def shipment_total_before_tax
+      shipments.to_a.sum(&:total_before_tax)
     end
 
     # Sum of all line item amounts pre-tax

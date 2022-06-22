@@ -1004,6 +1004,39 @@ RSpec.describe Spree::Order, type: :model do
       ]
       # (2*10)-15 + 30-16 = 5 + 14 = 19
       expect(subject.item_total_excluding_vat).to eq 19.0
+      expect(subject.display_item_total_excluding_vat).to eq Spree::Money.new(19)
+    end
+  end
+
+  describe "#item_total_before_tax" do
+    it "sums all of the line items totals before tax" do
+      subject.line_items = [
+        Spree::LineItem.new(price: 10, quantity: 2, included_tax_total: 15.0).tap do |li|
+          li.adjustments.build(eligible: true, amount: -2)
+        end,
+        Spree::LineItem.new(price: 30, quantity: 1, included_tax_total: 16.0).tap do |li|
+          li.adjustments.build(eligible: true, amount: -3)
+        end
+      ]
+      # (2*10)-2 + 30-3 = 18 + 27 = 14
+      expect(subject.item_total_before_tax).to eq 45.0
+      expect(subject.display_item_total_before_tax).to eq Spree::Money.new(45)
+    end
+  end
+
+  describe "#shipment_total_before_tax" do
+    it "sums all of the line items totals before tax" do
+      subject.shipments = [
+        Spree::Shipment.new(cost: 20, included_tax_total: 15.0).tap do |li|
+          li.adjustments.build(eligible: true, amount: -2)
+        end,
+        Spree::Shipment.new(cost: 30, included_tax_total: 16.0).tap do |li|
+          li.adjustments.build(eligible: true, amount: -3)
+        end
+      ]
+      # 20-2 + 30-3 = 18 + 27 = 14
+      expect(subject.shipment_total_before_tax).to eq 45.0
+      expect(subject.display_shipment_total_before_tax).to eq Spree::Money.new(45)
     end
   end
 
