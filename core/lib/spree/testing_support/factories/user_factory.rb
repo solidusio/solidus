@@ -21,6 +21,12 @@ FactoryBot.define do
       end
     end
 
+    trait :with_orders do
+      after(:create) do |user, _|
+        create(:order, user: user)
+      end
+    end
+
     factory :admin_user do
       after(:create) do |user, _|
         admin_role = Spree::Role.find_by(name: 'admin') || create(:role, name: 'admin')
