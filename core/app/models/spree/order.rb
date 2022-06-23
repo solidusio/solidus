@@ -255,7 +255,7 @@ module Spree
         ship_address
       else
         bill_address
-      end || store.default_cart_tax_location
+      end || store&.default_cart_tax_location
     end
 
     def updater
