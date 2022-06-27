@@ -30,7 +30,7 @@ module Spree
     self.refund_amount_calculator = Calculator::Returns::DefaultRefundAmount
 
     belongs_to :return_authorization, inverse_of: :return_items, optional: true
-    belongs_to :inventory_unit, inverse_of: :return_items, optional: true
+    belongs_to :inventory_unit, inverse_of: :return_items
     belongs_to :exchange_variant, class_name: 'Spree::Variant', optional: true
     belongs_to :exchange_inventory_unit, class_name: 'Spree::InventoryUnit', inverse_of: :original_return_item, optional: true
     belongs_to :customer_return, inverse_of: :return_items, optional: true
@@ -42,7 +42,6 @@ module Spree
     validate :eligible_exchange_variant
     validate :belongs_to_same_customer_order
     validate :validate_acceptance_status_for_reimbursement
-    validates :inventory_unit, presence: true
     validate :validate_no_other_completed_return_items
 
     after_create :cancel_others, unless: :cancelled?
