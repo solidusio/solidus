@@ -161,7 +161,7 @@ docker-compose logs -f app
 The image can be built with other ruby versions through the `RUBY_VERSION` build argument:
 
 ```bash
-docker-compose build --build-arg RUBY_VERSION=2.6 app
+docker-compose build --build-arg RUBY_VERSION=2.7 app
 docker-compose up -d
 ```
 
