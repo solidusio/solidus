@@ -53,18 +53,6 @@ module Spree
         end
       end
 
-      def addresses
-        if request.put?
-          if address_valid? && @user.update(user_params)
-            flash.now[:success] = t('spree.account_updated')
-          else
-            flash.now[:error] = t('spree.account_not_updated')
-          end
-
-          render :addresses
-        end
-      end
-
       def orders
         params[:q] ||= {}
         @search = Spree::Order.reverse_chronological.ransack(params[:q].merge(user_id_eq: @user.id))
@@ -154,19 +142,6 @@ module Spree
           @user.stock_locations =
             Spree::StockLocation.accessible_by(current_ability).where(id: user_params[:stock_location_ids])
         end
-      end
-
-      def address_valid?
-        bill_address_params = user_params[:bill_address_attributes]
-        ship_address_params = user_params[:ship_address_attributes]
-
-        if(Address.new(bill_address_params).valid? &&
-          Address.new(ship_address_params).valid?)
-
-          return true
-        end
-
-        return false
       end
     end
   end

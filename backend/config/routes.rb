@@ -168,9 +168,11 @@ Spree::Core::Engine.routes.draw do
       member do
         get :orders
         get :items
-        get :addresses
-        put :addresses
       end
+
+      get 'addresses', action: :addresses, controller: 'addresses', as: :addresses
+      put 'addresses', action: :addresses, controller: 'addresses'
+
       resources :store_credits, except: [:destroy] do
         member do
           get :edit_amount
