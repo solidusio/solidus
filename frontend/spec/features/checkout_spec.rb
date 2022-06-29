@@ -101,8 +101,8 @@ describe "Checkout", type: :feature, inaccessible: true do
 
       before do
         allow_any_instance_of(Spree::CheckoutController).to receive_messages(current_order: order)
-        allow_any_instance_of(Spree::CheckoutController).to receive_messages(try_spree_current_user: user)
-        allow_any_instance_of(Spree::OrdersController).to receive_messages(try_spree_current_user: user)
+        allow_any_instance_of(Spree::CheckoutController).to receive_messages(spree_current_user: user)
+        allow_any_instance_of(Spree::OrdersController).to receive_messages(spree_current_user: user)
 
         add_mug_to_cart
         click_button "Checkout"
@@ -170,8 +170,8 @@ describe "Checkout", type: :feature, inaccessible: true do
 
           # Simulate user login
           Spree::Order.last.associate_user!(user)
-          allow_any_instance_of(Spree::CheckoutController).to receive_messages(try_spree_current_user: user)
-          allow_any_instance_of(Spree::OrdersController).to receive_messages(try_spree_current_user: user)
+          allow_any_instance_of(Spree::CheckoutController).to receive_messages(spree_current_user: user)
+          allow_any_instance_of(Spree::OrdersController).to receive_messages(spree_current_user: user)
 
           # Simulate redirect back to address after login
           visit spree.checkout_state_path(:address)
@@ -220,7 +220,7 @@ describe "Checkout", type: :feature, inaccessible: true do
       order.recalculate
 
       allow_any_instance_of(Spree::CheckoutController).to receive_messages(current_order: order)
-      allow_any_instance_of(Spree::CheckoutController).to receive_messages(try_spree_current_user: user)
+      allow_any_instance_of(Spree::CheckoutController).to receive_messages(spree_current_user: user)
     end
 
     it "does not allow successful order submission" do
@@ -242,7 +242,7 @@ describe "Checkout", type: :feature, inaccessible: true do
       order.recalculate
 
       allow_any_instance_of(Spree::CheckoutController).to receive_messages(current_order: order)
-      allow_any_instance_of(Spree::CheckoutController).to receive_messages(try_spree_current_user: user)
+      allow_any_instance_of(Spree::CheckoutController).to receive_messages(spree_current_user: user)
     end
 
     it "redirects to payment page", inaccessible: true do
@@ -273,7 +273,7 @@ describe "Checkout", type: :feature, inaccessible: true do
 
     before(:each) do
       allow_any_instance_of(Spree::CheckoutController).to receive_messages(current_order: order)
-      allow_any_instance_of(Spree::CheckoutController).to receive_messages(try_spree_current_user: user)
+      allow_any_instance_of(Spree::CheckoutController).to receive_messages(spree_current_user: user)
       allow_any_instance_of(Spree::CheckoutController).to receive_messages(skip_state_validation?: true)
     end
 
@@ -317,7 +317,7 @@ describe "Checkout", type: :feature, inaccessible: true do
       order.recalculate
 
       allow_any_instance_of(Spree::CheckoutController).to receive_messages(current_order: order)
-      allow_any_instance_of(Spree::CheckoutController).to receive_messages(try_spree_current_user: order.user)
+      allow_any_instance_of(Spree::CheckoutController).to receive_messages(spree_current_user: order.user)
 
       visit spree.checkout_state_path(:payment)
     end
@@ -349,8 +349,8 @@ describe "Checkout", type: :feature, inaccessible: true do
       order = Spree::TestingSupport::OrderWalkthrough.up_to(:delivery)
 
       allow_any_instance_of(Spree::CheckoutController).to receive_messages(current_order: order)
-      allow_any_instance_of(Spree::CheckoutController).to receive_messages(try_spree_current_user: user)
-      allow_any_instance_of(Spree::OrdersController).to receive_messages(try_spree_current_user: user)
+      allow_any_instance_of(Spree::CheckoutController).to receive_messages(spree_current_user: user)
+      allow_any_instance_of(Spree::OrdersController).to receive_messages(spree_current_user: user)
 
       visit spree.checkout_state_path(:payment)
     end
@@ -571,8 +571,8 @@ describe "Checkout", type: :feature, inaccessible: true do
       before do
         user = create(:user)
         Spree::Order.last.update_column :user_id, user.id
-        allow_any_instance_of(Spree::OrdersController).to receive_messages(try_spree_current_user: user)
-        allow_any_instance_of(Spree::CheckoutController).to receive_messages(try_spree_current_user: user)
+        allow_any_instance_of(Spree::OrdersController).to receive_messages(spree_current_user: user)
+        allow_any_instance_of(Spree::CheckoutController).to receive_messages(spree_current_user: user)
         click_button "Checkout"
       end
 
@@ -588,8 +588,8 @@ describe "Checkout", type: :feature, inaccessible: true do
 
     before(:each) do
       allow_any_instance_of(Spree::CheckoutController).to receive_messages(current_order: order)
-      allow_any_instance_of(Spree::CheckoutController).to receive_messages(try_spree_current_user: user)
-      allow_any_instance_of(Spree::OrdersController).to receive_messages(try_spree_current_user: user)
+      allow_any_instance_of(Spree::CheckoutController).to receive_messages(spree_current_user: user)
+      allow_any_instance_of(Spree::OrdersController).to receive_messages(spree_current_user: user)
 
       visit spree.checkout_state_path(:delivery)
       click_button "Save and Continue"

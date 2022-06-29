@@ -24,9 +24,9 @@ module Spree
 
           if should_build && (@current_order.nil? || @current_order.completed?)
             @current_order = Spree::Order.new(new_order_params)
-            @current_order.user ||= try_spree_current_user
+            @current_order.user ||= spree_current_user
             # See issue https://github.com/spree/spree/issues/3346 for reasons why this line is here
-            @current_order.created_by ||= try_spree_current_user
+            @current_order.created_by ||= spree_current_user
             @current_order.save! if should_create
           end
 
@@ -38,15 +38,15 @@ module Spree
 
         def associate_user
           @order ||= current_order
-          if try_spree_current_user && @order
-            @order.associate_user!(try_spree_current_user) if @order.user.blank? || @order.email.blank?
+          if spree_current_user && @order
+            @order.associate_user!(spree_current_user) if @order.user.blank? || @order.email.blank?
           end
         end
 
         def set_current_order
-          if try_spree_current_user && current_order
-            try_spree_current_user.orders.by_store(current_store).incomplete.where('id != ?', current_order.id).each do |order|
-              current_order.merge!(order, try_spree_current_user)
+          if spree_current_user && current_order
+            spree_current_user.orders.by_store(current_store).incomplete.where('id != ?', current_order.id).each do |order|
+              current_order.merge!(order, spree_current_user)
             end
           end
         end
@@ -58,11 +58,11 @@ module Spree
         private
 
         def last_incomplete_order
-          @last_incomplete_order ||= try_spree_current_user.last_incomplete_spree_order(store: current_store)
+          @last_incomplete_order ||= spree_current_user.last_incomplete_spree_order(store: current_store)
         end
 
         def current_order_params
-          { currency: current_pricing_options.currency, guest_token: cookies.signed[:guest_token], store_id: current_store.id, user_id: try_spree_current_user.try(:id) }
+          { currency: current_pricing_options.currency, guest_token: cookies.signed[:guest_token], store_id: current_store.id, user_id: spree_current_user.try(:id) }
         end
 
         def new_order_params
@@ -76,7 +76,7 @@ module Spree
           order = Spree::Order.incomplete.lock(should_lock).find_by(current_order_params)
 
           # Find any incomplete orders for the current user
-          if order.nil? && try_spree_current_user
+          if order.nil? && spree_current_user
             order = last_incomplete_order
           end
 

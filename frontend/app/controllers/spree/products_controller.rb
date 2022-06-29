@@ -37,7 +37,7 @@ module Spree
     end
 
     def load_product
-      if try_spree_current_user.try(:has_spree_role?, "admin")
+      if spree_current_user.try(:has_spree_role?, "admin")
         @products = Spree::Product.with_discarded
       else
         @products = Spree::Product.available

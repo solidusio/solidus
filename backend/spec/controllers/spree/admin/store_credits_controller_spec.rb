@@ -43,7 +43,7 @@ describe Spree::Admin::StoreCreditsController do
     subject { post :create, params: parameters }
 
     before  {
-      allow(controller).to receive_messages(try_spree_current_user: admin_user)
+      allow(controller).to receive_messages(spree_current_user: admin_user)
       create(:primary_credit_type)
     }
 
@@ -124,7 +124,7 @@ describe Spree::Admin::StoreCreditsController do
 
     subject { put :update, params: parameters.merge(format: :json) }
 
-    before  { allow(controller).to receive_messages(try_spree_current_user: admin_user) }
+    before  { allow(controller).to receive_messages(spree_current_user: admin_user) }
 
     context "the passed parameters are valid" do
       let(:parameters) do
@@ -187,7 +187,7 @@ describe Spree::Admin::StoreCreditsController do
 
     subject { put :update_amount, params: parameters }
 
-    before  { allow(controller).to receive_messages(try_spree_current_user: admin_user) }
+    before  { allow(controller).to receive_messages(spree_current_user: admin_user) }
 
     context "the passed parameters are valid" do
       let(:updated_amount) { 300.0 }

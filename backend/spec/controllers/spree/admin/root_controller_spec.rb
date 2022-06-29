@@ -10,7 +10,7 @@ describe Spree::Admin::RootController do
     let(:ability) { Spree::Ability.new(user) }
 
     before do
-      allow_any_instance_of(Spree::Admin::RootController).to receive(:try_spree_current_user).and_return(user)
+      allow_any_instance_of(Spree::Admin::RootController).to receive(:spree_current_user).and_return(user)
       allow_any_instance_of(Spree::Admin::RootController).to receive(:current_ability).and_return(ability)
     end
 

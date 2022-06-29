@@ -40,7 +40,7 @@ describe "Store credits admin" do
       click_link "Users"
       click_link store_credit.user.email
       click_link "Store Credit"
-      allow_any_instance_of(Spree::Admin::StoreCreditsController).to receive_messages(try_spree_current_user: admin_user)
+      allow_any_instance_of(Spree::Admin::StoreCreditsController).to receive_messages(spree_current_user: admin_user)
     end
 
     it "should create store credit and associate it with the user" do
@@ -76,7 +76,7 @@ describe "Store credits admin" do
 
     it "lets edit store credit's memo", js: true do
       allow_any_instance_of(Spree::Admin::StoreCreditsController)
-        .to receive(:try_spree_current_user)
+        .to receive(:spree_current_user)
         .and_return(admin_user)
 
       # When there are no errors
@@ -114,7 +114,7 @@ describe "Store credits admin" do
       click_link "Users"
       click_link store_credit.user.email
       click_link "Store Credit"
-      allow_any_instance_of(Spree::Admin::StoreCreditsController).to receive_messages(try_spree_current_user: admin_user)
+      allow_any_instance_of(Spree::Admin::StoreCreditsController).to receive_messages(spree_current_user: admin_user)
     end
 
     it "updates the store credit's amount" do

@@ -75,20 +75,21 @@ RSpec.describe Spree::Core::ControllerHelpers::Auth, type: :controller do
   end
 
   describe '#try_spree_current_user' do
+    it 'is deprecated' do
+      without_partial_double_verification do
+        expect(Spree::Deprecation).to receive(:warn)
+      end
+      controller.try_spree_current_user
+    end
     it 'calls spree_current_user when define spree_current_user method' do
       without_partial_double_verification do
         expect(controller).to receive(:spree_current_user)
       end
-      controller.try_spree_current_user
-    end
-    it 'calls current_spree_user when define current_spree_user method' do
-      without_partial_double_verification do
-        expect(controller).to receive(:current_spree_user)
-      end
-      controller.try_spree_current_user
+      Spree::Deprecation.silence { controller.try_spree_current_user }
     end
     it 'returns nil' do
-      expect(controller.try_spree_current_user).to eq nil
+      controller.instance_eval { undef spree_current_user }
+      Spree::Deprecation.silence { expect(controller.try_spree_current_user).to eq nil }
     end
   end
 

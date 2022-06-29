@@ -372,7 +372,7 @@ describe "Products", type: :feature do
 
   context 'with only product permissions' do
     before do
-      allow_any_instance_of(Spree::Admin::BaseController).to receive(:try_spree_current_user).and_return(nil)
+      allow_any_instance_of(Spree::Admin::BaseController).to receive(:spree_current_user).and_return(nil)
     end
 
     custom_authorization! do |_user|
