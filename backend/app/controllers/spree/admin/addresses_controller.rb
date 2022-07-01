@@ -4,21 +4,24 @@ module Spree
       def addresses
         @user = Spree.user_class.find_by(id: params[:user_id]) if params[:user_id]
 
-        if request.put?
-          begin
-            new_shipping_address = Spree::Address.immutable_merge(@user.ship_address, user_params[:ship_address_attributes])
-            new_bill_address = Spree::Address.immutable_merge(@user.bill_address, user_params[:bill_address_attributes])
+        render :addresses
+      end
 
-            @user.bill_address = new_bill_address
-            @user.ship_address = new_shipping_address
-          rescue ActiveModel::StrictValidationFailed => e
-            flash.now[:error] = e.message
-            return render :addresses
-          end
+      def update
+        @user = Spree.user_class.find_by(id: params[:user_id]) if params[:user_id]
 
-          flash.now[:success] = t('spree.account_updated')
+        begin
+          new_shipping_address = Spree::Address.immutable_merge(@user.ship_address, user_params[:ship_address_attributes])
+          new_bill_address = Spree::Address.immutable_merge(@user.bill_address, user_params[:bill_address_attributes])
+
+          @user.bill_address = new_bill_address
+          @user.ship_address = new_shipping_address
+        rescue ActiveModel::StrictValidationFailed => e
+          flash.now[:error] = e.message
+          return render :addresses
         end
 
+        flash.now[:success] = t('spree.account_updated')
         render :addresses
       end
 

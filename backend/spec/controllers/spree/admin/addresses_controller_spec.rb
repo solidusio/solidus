@@ -40,13 +40,13 @@ describe Spree::Admin::AddressesController, type: :controller do
     end
 
     it "can update ship and bill address attributes" do
-      put :addresses, params: { user_id: user.id, user: { bill_address_attributes: valid_address_attributes, ship_address_attributes: valid_address_attributes }}
+      put :update, params: { user_id: user.id, user: { bill_address_attributes: valid_address_attributes, ship_address_attributes: valid_address_attributes }}
       expect(user.reload.ship_address.city).to eq('New York')
     end
 
     describe "can't update ship and bill addresses attributes" do
       it "name field is empty" do
-        put :addresses, params: { user_id: user.id, user: { bill_address_attributes: valid_address_attributes, ship_address_attributes: invalid_address_attributes }}
+        put :update, params: { user_id: user.id, user: { bill_address_attributes: valid_address_attributes, ship_address_attributes: invalid_address_attributes }}
         expect(user.reload.ship_address).nil?
       end
     end

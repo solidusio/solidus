@@ -171,7 +171,7 @@ Spree::Core::Engine.routes.draw do
       end
 
       get 'addresses', action: :addresses, controller: 'addresses', as: :addresses
-      put 'addresses', action: :addresses, controller: 'addresses'
+      put 'update', action: :update, controller: 'addresses', as: :addresses_update
 
       resources :store_credits, except: [:destroy] do
         member do
