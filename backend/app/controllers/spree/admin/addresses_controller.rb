@@ -38,16 +38,16 @@ module Spree
       end
 
       def message_validation_errors_for_addresses(bill_address, ship_address)
-        message = "Validation errors: "
+        message = "Validation errors: </br>"
         if(!bill_address.valid?)
-          message = message + "Billing address errors: #{map_errors(bill_address.errors.messages)}"
+          message = message + "Billing address errors: #{map_errors(bill_address.errors.messages)} <br/>"
         end
 
         if(!ship_address.valid?)
-          message = message + "Shipping address errors: #{map_errors(ship_address.errors.messages)}"
+          message = message + "Shipping address errors: #{map_errors(ship_address.errors.messages)}<br/>"
         end
 
-        message
+        message.html_safe
       end
 
       def map_errors(errors)
