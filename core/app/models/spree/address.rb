@@ -56,7 +56,6 @@ module Spree
       if existing_address == new_address
         existing_address
       else
-        raise ActiveModel::StrictValidationFailed.new(new_address.errors.messages) unless new_address.valid?
         new_address
       end
     end
