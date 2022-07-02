@@ -1,15 +1,13 @@
 module Spree
   module Admin
     class AddressesController < Spree::Admin::BaseController
-      def addresses
-        @user = Spree.user_class.find_by(id: params[:user_id]) if params[:user_id]
+      before_action :initial_user
 
+      def addresses
         render :addresses
       end
 
       def update
-        @user = Spree.user_class.find_by(id: params[:user_id]) if params[:user_id]
-
         new_shipping_address = Spree::Address.immutable_merge(@user.ship_address, user_params[:ship_address_attributes])
         new_bill_address = Spree::Address.immutable_merge(@user.bill_address, user_params[:bill_address_attributes])
 
@@ -30,6 +28,10 @@ module Spree
       end
 
       private
+
+      def initial_user
+        @user = Spree.user_class.find_by(id: params[:user_id]) if params[:user_id]
+      end
 
       def user_params
         attributes = permitted_user_attributes
