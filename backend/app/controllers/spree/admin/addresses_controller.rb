@@ -3,9 +3,7 @@ module Spree
     class AddressesController < Spree::Admin::BaseController
       before_action :initial_user
 
-      def addresses
-        render :addresses
-      end
+      def addresses; end
 
       def update
         new_shipping_address = Spree::Address.immutable_merge(@user.ship_address, user_params[:ship_address_attributes])
@@ -16,11 +14,11 @@ module Spree
           @user.ship_address = new_shipping_address
 
           flash.now[:success] = t('spree.account_updated')
+          redirect_to :admin_user_addresses
         else
           flash.now[:error] = message_validation_errors_for_addresses(new_bill_address, new_shipping_address)
+          render "addresses"
         end
-
-        render :addresses
       end
 
       def model_class
