@@ -24,21 +24,19 @@ FactoryBot.define do
     phone { '555-555-0199' }
     alternative_phone { '555-555-0199' }
 
-    state do |address|
-      Spree::State.joins(:country).where('spree_countries.iso = (?)', country_iso_code).find_by(abbr: state_code) ||
-        address.association(
-          :state,
-          strategy: :create,
-          country_iso: country_iso_code,
-          state_code: state_code
-        )
-    end
-
     country do |address|
       if address.state
         address.state.country
       else
-        address.association(:country, strategy: :create, iso: country_iso_code)
+        Spree::Country.find_by(iso: country_iso_code) ||
+          address.association(:country, strategy: :create, iso: country_iso_code)
+      end
+    end
+
+    after(:build) do |address, evaluator|
+      if address&.country&.states_required? && address.state.nil? && address.state_name.nil?
+        address.state = address.country.states.find_by(abbr: evaluator.state_code) ||
+          create(:state, country_iso: address.country.iso, state_code: evaluator.state_code)
       end
     end
   end
