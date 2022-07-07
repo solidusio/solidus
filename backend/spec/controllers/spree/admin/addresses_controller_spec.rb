@@ -54,7 +54,6 @@ describe Spree::Admin::AddressesController, type: :controller do
       put :update, params: { user_id: user.id, user: { bill_address_attributes: valid_address_attributes, ship_address_attributes: valid_address_attributes }}
 
       expect(user.reload.ship_address.city).to eq('New York')
-      expect(response.content_type).to eq "text/html"
     end
 
     context "can't update ship and bill addresses attributes" do
