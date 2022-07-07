@@ -3,7 +3,9 @@ module Spree
     class AddressesController < Spree::Admin::BaseController
       before_action :initial_user
 
-      def addresses; end
+      def show
+        render 'addresses'
+      end
 
       def update
         new_shipping_address = Spree::Address.immutable_merge(@user.ship_address, user_params[:ship_address_attributes])
