@@ -230,7 +230,7 @@ module Spree
         flash[:error] = I18n.t('spree.insufficient_stock_for_order')
         redirect_to cart_path
       else
-        availability_validator = Spree::Stock::AvailabilityValidator.new
+        availability_validator = Spree::Config.stock.availability_validator_class.new
         unavailable_items = @order.line_items.reject { |line_item| availability_validator.validate(line_item) }
         if unavailable_items.any?
           item_names = unavailable_items.map(&:name).to_sentence

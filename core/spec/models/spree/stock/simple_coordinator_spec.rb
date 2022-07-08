@@ -38,6 +38,14 @@ module Spree
           subject.shipments.count == StockLocation.count
         end
 
+        it 'uses the pluggable inventory unit builder class' do
+          expect(Spree::Config.stock)
+            .to receive(:inventory_unit_builder_class)
+            .and_call_original
+
+          subject.shipments
+        end
+
         context "missing stock items in active stock location" do
           let!(:another_location) { create(:stock_location, propagate_all_variants: false) }
 

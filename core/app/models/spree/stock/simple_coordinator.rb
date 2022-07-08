@@ -24,7 +24,8 @@ module Spree
 
       def initialize(order, inventory_units = nil)
         @order = order
-        @inventory_units = inventory_units || InventoryUnitBuilder.new(order).units
+        @inventory_units =
+          inventory_units || Spree::Config.stock.inventory_unit_builder_class.new(order).units
         @splitters = Spree::Config.environment.stock_splitters
 
         filtered_stock_locations = Spree::Config.stock.location_filter_class.new(Spree::StockLocation.all, @order).filter

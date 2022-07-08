@@ -502,7 +502,8 @@ module Spree
     end
 
     def create_shipments_for_line_item(line_item)
-      units = Spree::Stock::InventoryUnitBuilder.new(self).missing_units_for_line_item(line_item)
+      units = Spree::Config.stock.inventory_unit_builder_class.new(self).missing_units_for_line_item(line_item)
+
       Spree::Config.stock.coordinator_class.new(self, units).shipments.each do |shipment|
         shipments << shipment
       end
@@ -789,9 +790,12 @@ module Spree
 
     def ensure_inventory_units
       if has_checkout_step?("delivery")
-        inventory_validator = Spree::Stock::InventoryValidator.new
+        inventory_validator = Spree::Config.stock.inventory_validator_class.new
 
-        errors = line_items.map { |line_item| inventory_validator.validate(line_item) }.compact
+        errors = line_items.map { |line_item|
+          inventory_validator.validate(line_item)
+        }.compact
+
         raise InsufficientStock if errors.any?
       end
     end
@@ -809,8 +813,15 @@ module Spree
     end
 
     def validate_line_item_availability
-      availability_validator = Spree::Stock::AvailabilityValidator.new
-      raise InsufficientStock unless line_items.all? { |line_item| availability_validator.validate(line_item) }
+      availability_validator = Spree::Config.stock.availability_validator_class.new
+
+      # NOTE: This code assumes that the availability validator will return
+      # true for success and false for failure. This is not normally the
+      # behaviour of validators, as the framework only cares about the
+      # population of the errors, not the return value of the validate method.
+      raise InsufficientStock unless line_items.all? { |line_item|
+        availability_validator.validate(line_item)
+      }
     end
 
     def ensure_line_items_present
