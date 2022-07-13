@@ -73,6 +73,17 @@ module Spree
       end
     end
 
+    def test_dummy_inject_yaml_safe_load_classes
+      inside dummy_path do
+        inject_into_file("config/application.rb", after: /config.generators.system_tests = nil\n/, verbose: true) do
+          <<-RUBY
+            # Allow Symbol as value in serialized preferences column of Solidus models
+            config.active_record.yaml_column_permitted_classes = [Symbol]
+          RUBY
+        end
+      end
+    end
+
     def test_dummy_clean
       inside dummy_path do
         remove_file ".gitignore"
