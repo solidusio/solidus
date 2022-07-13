@@ -23,6 +23,14 @@ module Spree
       expect(definitions).to have_key('my_definition')
     end
 
+    it "can replace preferences" do
+      subject.add(preference_class, 'my_definition', { color: "red" })
+
+      subject.add(preference_class, 'my_definition', { color: "blue" })
+
+      expect(definitions['my_definition'].fetch(:color)).to eq("blue")
+    end
+
     it "errors assigning invalid preferences" do
       expect {
         subject.add(preference_class, 'my_definition', { ice_cream: 'chocolate' })

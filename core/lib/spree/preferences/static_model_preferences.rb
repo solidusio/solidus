@@ -36,8 +36,6 @@ module Spree
       end
 
       def add(klass, name, preferences)
-        # We use class name instead of class to allow reloading in dev
-        raise "Static model preference '#{name}' on #{klass} is already defined" if @store[klass.to_s][name]
         @store[klass.to_s][name] = Definition.new(klass, preferences)
       end
 
