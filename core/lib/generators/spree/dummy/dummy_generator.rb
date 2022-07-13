@@ -78,7 +78,7 @@ module Spree
         inject_into_file("config/application.rb", after: /config.generators.system_tests = nil\n/, verbose: true) do
           <<-RUBY
             # Allow Symbol as value in serialized preferences column of Solidus models
-            config.active_record.yaml_column_permitted_classes = [Symbol]
+            config.active_record.yaml_column_permitted_classes = [Symbol, BigDecimal]
           RUBY
         end
       end

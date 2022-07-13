@@ -112,7 +112,7 @@ module Solidus
       end
       application <<~RUBY
         # Allow Symbol as value in serialized preferences column of Solidus models
-        config.active_record.yaml_column_permitted_classes = [Symbol]
+        config.active_record.yaml_column_permitted_classes = [Symbol, BigDecimal]
       RUBY
     end
 
