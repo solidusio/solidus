@@ -110,6 +110,10 @@ module Solidus
     I18n.enforce_available_locales = #{options[:enforce_available_locales]}
         RUBY
       end
+      application <<~RUBY
+        # Allow Symbol as value in serialized preferences column of Solidus models
+        config.active_record.yaml_column_permitted_classes = [Symbol]
+      RUBY
     end
 
     def plugin_install_preparation
