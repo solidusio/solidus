@@ -15,6 +15,9 @@ module Spree
         generator.test_framework :rspec
       end
 
+      config.active_record.yaml_column_permitted_classes ||= []
+      config.active_record.yaml_column_permitted_classes |= [Symbol]
+
       initializer "spree.environment", before: :load_config_initializers do |app|
         app.config.spree = Spree::Config.environment
       end
