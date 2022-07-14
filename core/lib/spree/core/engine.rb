@@ -15,9 +15,11 @@ module Spree
         generator.test_framework :rspec
       end
 
-      config.active_record.yaml_column_permitted_classes ||= []
-      config.active_record.yaml_column_permitted_classes |=
-        [Symbol, BigDecimal, ActiveSupport::HashWithIndifferentAccess]
+      if ActiveRecord.respond_to?(:yaml_column_permitted_classes) || ActiveRecord::Base.respond_to?(:yaml_column_permitted_classes)
+        config.active_record.yaml_column_permitted_classes ||= []
+        config.active_record.yaml_column_permitted_classes |=
+          [Symbol, BigDecimal, ActiveSupport::HashWithIndifferentAccess]
+      end
 
       initializer "spree.environment", before: :load_config_initializers do |app|
         app.config.spree = Spree::Config.environment
