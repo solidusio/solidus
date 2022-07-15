@@ -41,6 +41,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'monetize', '~> 1.8'
   s.add_dependency 'kt-paperclip', ['>= 4.4.0', '< 7']
   s.add_dependency 'paranoia', '~> 2.4'
+  s.add_dependency 'psych', ['>= 3.1.0', '< 5.0']
   s.add_dependency 'ransack', '~> 2.0'
   s.add_dependency 'state_machines-activerecord', '~> 0.6'
 
