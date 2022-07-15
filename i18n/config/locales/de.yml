@@ -98,7 +98,7 @@ de:
         email: Kunden E-Mail
         included_tax_total: enthaltene Steuer
         ip_address: IP Adresse
-        item_total: Artikel gesamt
+        item_total: Zwischensumme
         number: Bestellnummer
         payment_state: Bezahlstatus
         shipment_state: Versandstatus
@@ -297,7 +297,7 @@ de:
         meta_title: Meta-Titel
         name: Name
         permalink: Permalink
-        position: Posten
+        position: Position
       spree/taxonomy:
         name: Name
       spree/tracker:
@@ -351,11 +351,11 @@ de:
         spree/product:
           attributes:
             base:
-              cannot_destroy_if_attached_to_line_items: Produkte können nicht gelöscht werden wenn sie in einem Einzelposten sind
+              cannot_destroy_if_attached_to_line_items: Produkte können nicht gelöscht werden wenn sie zu einem Artikel einer Bestellung gehören
         spree/refund:
           attributes:
             amount:
-              greater_than_allowed: Maximalwert überschritten
+              greater_than_allowed: ": Maximal erstattbarer Wert überschritten"
         spree/reimbursement:
           attributes:
             base:
@@ -373,7 +373,7 @@ de:
         spree/variant:
           attributes:
             base:
-              cannot_destroy_if_attached_to_line_items: Variante kann nicht gelöscht werden wenn sie zu einem Einzelposten gehört
+              cannot_destroy_if_attached_to_line_items: Varianten können nicht gelöscht werden wenn sie zu einem Artikel einer Bestellung gehören
     models:
       spree/address:
         one: Adresse
@@ -390,8 +390,8 @@ de:
         one: Kreditkarte
         other: Kreditkarten
       spree/customer_return:
-        one: Kundenrücksendung
-        other: Kundenrücksendungen
+        one: Rücksendung
+        other: Rücksendungen
       spree/image:
         one: Bild
         other: Bilder
@@ -402,8 +402,8 @@ de:
         one: Benutzer
         other: Benutzer
       spree/line_item:
-        one: Einzelposten
-        other: Einzelposten
+        one: Artikel
+        other: Artikel
       spree/log_entry:
         other: Logeinträge
       spree/option_type:
@@ -443,8 +443,8 @@ de:
         one: Prototyp
         other: Prototypen
       spree/refund:
-        one: Rückerstattung
-        other: Rückerstattungen
+        one: Erstattung
+        other: Erstattungen
       spree/refund_reason:
         one: Begründung der Gutschrift
         other: Gutschriftsbegründungen
@@ -479,8 +479,8 @@ de:
         one: Statusänderung
         other: Statusänderungen
       spree/stock_location:
-        one: Lagerstätte
-        other: Lagerstätten
+        one: Versandlager
+        other: Versandlager
       spree/stock_movement:
         one: Lagerbewegung
         other: Lagerbewegungen
@@ -546,7 +546,7 @@ de:
       list: auflisten
       listing: Liste
       new: neu
-      refund: Gutschrift
+      refund: erstatten
       remove: Entfernen
       save: Speichern
       ship: verschicken
@@ -558,7 +558,7 @@ de:
     add_action_of_type: Aktion hinzufügen
     add_country: Land hinzufügen
     add_coupon_code: Gutscheincode hinzufügen
-    add_line_item: Bestellposten hinzufügen
+    add_line_item: Artikel hinzufügen
     add_new_header: Header hinzufügen
     add_new_style: Stil hinzufügen
     add_one: Hinzufügen
@@ -712,7 +712,7 @@ de:
         taxonomies: Klassifikationen
         taxons: Klassifikation
         users: Benutzer
-        RMA: RMA
+        rma: RMA
       taxons:
         display_order: Darstellungsreihenfolge
       user:
@@ -748,7 +748,7 @@ de:
     all_adjustments_closed: Alle Anpassung wurden erfolgreich geschlossen!
     all_adjustments_opened: Alle Anpassung wurden erfolgreich geöffnet!
     all_departments: Alle Bereiche
-    all_items_have_been_returned: Alles zurückgegeben
+    all_items_have_been_returned: Alle Artikel wurden zurückgegeben
     allow_ssl_in_development_and_test: Erlaube SSL im Vorproduktions- und Testmodus
     allow_ssl_in_production: Erlaube SSL im Produktionsmodus
     allow_ssl_in_staging: Erlaube SSL im Vorproduktionsmodus
@@ -791,6 +791,8 @@ de:
     avs_response: Ergebnis der Adressprüfung
     back: Zurück
     back_end: Backend
+    back_to_customer_return: Zurück zur Rücksendung
+    back_to_customer_return_list: zurück zu den Rücksendungen
     back_to_images_list: Zurück zur Bilderliste
     back_to_payment: Zurück zur Zahlung
     back_to_resource_list: Zurück zur Bestellliste
@@ -817,7 +819,7 @@ de:
     calculator: Rechner
     calculator_settings_warning: Wenn Sie den Berechnungs-Typ ändern, müssen Sie erst speichern, bevor Sie die Berechnungs-Einstellungen bearbeiten können
     cancel: abbrechen
-    cancel_inventory: Inventar löschen
+    cancel_inventory: Artikel Stornieren
     canceled: Storniert
     canceled_at: Abgebrochen am
     canceler: Abgebrochen von
@@ -826,7 +828,7 @@ de:
     cannot_create_payment_without_payment_methods: Sie können keine Zahlung für eine Bestellung anlegen, ohne vorher eine Zahlungsmethode definiert
       zu haben.
     cannot_create_returns: Sie können diese Bestellung nicht zurückgeben, da sie noch nicht versendet wurde.
-    cannot_destroy_if_attached_to_line_items: Kann nicht gelöscht werden wenn es zu einem Einzelposten gehört
+    cannot_destroy_if_attached_to_line_items: Kann nicht gelöscht werden wenn es zu einem Artikel einer Bestellung gehört
     cannot_perform_operation: Kann diese Operation nicht durchführen.
     cannot_set_shipping_method_without_address: Die Versandart kann erst geändert werden, wenn die Kundendaten ausgefüllt sind.
     capture: erfassen
@@ -849,7 +851,7 @@ de:
     choose_a_taxon_to_sort_products_for: Sortierungsklassifizierung wählen
     choose_currency: Währung auswählen
     choose_dashboard_locale: Dashboard-Sprache wählen
-    choose_location: Lagerstätte wählen
+    choose_location: Versandlager wählen
     city: Ort
     clear_cache: Zwischenspeicher leeren
     clear_cache_ok: Zwischenspeicher erfolgreich geleert
@@ -897,7 +899,7 @@ de:
     coupon_code_unknown_error: Der Gutschein-Code verursachte ein unbekanntes Problem
     create: Erstellen
     create_a_new_account: Neues Konto erstellen
-    create_one: Eine(s) anlegen
+    create_one: Anlegen
     create_new_order: Neuer Bestellung
     create_reimbursement: Vergütung beantragen
     created_at: Erstellt am
@@ -1140,7 +1142,7 @@ de:
     iso_name: ISO-Name
     item: Artikel
     item_description: Artikelbeschreibung
-    item_total: Artikel gesamt
+    item_total: Zwischensumme
     item_total_rule:
       operators:
         gt: größer als
@@ -1150,6 +1152,11 @@ de:
     items_cannot_be_shipped: Wir können die ausgewählten Artikel nicht an Ihre Lieferadresse schicken. Bitte wählen Sie eine andere Lieferadresse.
     items_in_rmas: Artikel im Umtausch
     items_reimbursed: Vergütete Artikel
+    items_selected:
+      all: alle Artikel ausgewählt
+      none: keine Artikel ausgewählt
+      one: ein Artikel ausgewählt
+      custom: einige Artikel ausgewählt
     items_to_be_reimbursed: Zu vergütende Artikel
     jirafe: Jirafe
     landing_page_rule:
@@ -1158,7 +1165,7 @@ de:
     last_name_begins_with: Nachname beginnt mit
     learn_more: Mehr dazu
     lifetime_stats: 'Statistiken: Lebenszyklus'
-    line_item_adjustments: Anpassungen Bestellposten
+    line_item_adjustments: Artikelanpassungen
     list: Liste
     loading: Laden
     loading_tree: Loading tree. Please wait…
@@ -1198,7 +1205,7 @@ de:
     minimal_amount: Mindestanzahl
     minimize_menu: Menü minimieren
     modify_stock_count: Modifizieren (+/-)
-    missing_return_authorization: Fehlende Rückerstattungserlaubnis %{item_name}.
+    missing_return_authorization: Fehlende Rückgabebewilligung %{item_name}.
     month: Monat
     more: Mehr
     move_stock_between_locations: Lager zwischen Standorten bewegen
@@ -1206,6 +1213,7 @@ de:
     my_account: Mein Konto
     my_orders: Meine Bestellungen
     name: Name
+    name_contains: Name enthält
     name_on_card: Name auf der Kreditkarte
     name_or_sku: Name oder Artikelnummer
     new: Neu
@@ -1213,7 +1221,7 @@ de:
     new_adjustment_reason: Neuer Anpassungsgrund
     new_country: Neues Land
     new_customer: Neuer Kunde
-    new_customer_return: Neue Kundenrücksendung
+    new_customer_return: Neue Rücksendung
     new_image: Neues Bild
     new_option_type: Neue Option
     new_order: Neue Bestellung
@@ -1305,7 +1313,7 @@ de:
     order_email_resent: Bestellbestätigung erneut versendet
     order_has_no_payments: Bestellung hat keine Bezahlungen
     order_information: Bestellinformationen
-    order_line_items: Bestellposten
+    order_line_items: Artikel
     order_mailer:
       cancel_email:
         dear_customer: Sehr geehrte Kundin, geehrter Kunde,
@@ -1381,6 +1389,7 @@ de:
       completed: Abgeschlossen
       credit_owed: Betrag schuldig
       failed: fehlgeschlagen
+      invalid: ungültig
       paid: bezahlt
       pending: noch offen
       processing: in Bearbeitung
@@ -1496,14 +1505,25 @@ de:
     receive: erhalten
     receive_stock: Empfangslager
     received: erhalten
+    reception_states:
+      awaiting: erwartend
+      cancelled: abgebrochen
+      expired: abgelaufen
+      given_to_customer: Kunden übergeben
+      in_transit: In Transfer
+      lost_in_transit: In Transfer verloren
+      received: erhalten
+      shipped_wrong_item: Falsch ausgeliefert
+      short_shipped: Minderlieferung
+      unexchanged: unausgetauscht
     reception_status: Empfangsstatus
     reference: Referenz
     reference_contains: Referenz beinhaltet
-    refund: Rückerstattung
-    refund_amount_must_be_greater_than_zero: Rückerstattung muss größer 0 sein
-    refund_reasons: Rückerstattungsgründe
-    refunded_amount: Rückerstattungsbetrag
-    refunds: Rückerstattungen
+    refund: Erstattung
+    refund_amount_must_be_greater_than_zero: Erstattung muss größer 0 sein
+    refund_reasons: Erstattungsgründe
+    refunded_amount: Erstattungsbetrag
+    refunds: Erstattungen
     register: Als Neukunde registrieren
     registration: Registrierung
     reimburse: Vergüten
@@ -1520,6 +1540,10 @@ de:
         subject: Betreff
         total_refunded: Gesamtwert Gutschriften %{total}
     reimbursement_perform_failed: Vergütung fehlgeschlagen
+    reimbursement_states:
+      errored: fehlerhaft
+      pending: ausstehend
+      reimbursed: vergütet
     reimbursement_status: Vergütungsstatus
     reimbursement_type: Vergütungstyp
     reimbursement_type_override: Vergütungstyp überschreiben
@@ -1541,6 +1565,9 @@ de:
     return: zurückgeben
     return_authorization: Rückgabebewilligung
     return_authorization_reasons: Gründe der Rückgabebewilligung
+    return_authorization_states:
+      authorized: authorisiert
+      canceled: abgebrochen
     return_authorization_updated: Rückgabebewilligung aktualisiert
     return_authorizations: Rückgabebewilligungen
     return_item_inventory_unit_ineligible: Artikelposition des Warenkorbs von der Rückgabe ausgeschlossen
@@ -1579,7 +1606,7 @@ de:
     secure_connection_type: Sicherer Verbindungstyp
     security_settings: Sicherheitseinstellungen
     select: Auswählen
-    select_a_return_authorization_reason: Rückgabeberechtigungsgrund wählen
+    select_a_return_authorization_reason: Rückgabebewilligungsgrund wählen
     select_a_stock_location: Lager wählen
     select_from_prototype: Von einem Prototypen
     select_stock: Lager wählen
@@ -1594,8 +1621,10 @@ de:
     ship_total: Versand gesamt
     shipment: Sendung
     shipment_adjustments: Sendung anpassen
+    shipment_date: Versanddatum
     shipment_details: "%{shipping_method}"
     shipment_number: Sendungsnummer
+    shipment_numbers: Sendungsnummern
     shipment_mailer:
       shipped_email:
         dear_customer: Sehr geehrte Kundin, geehrter Kunde,
@@ -1819,8 +1848,8 @@ de:
     users: Benutzer
     validation:
       cannot_be_less_than_shipped_units: kann nicht weniger als die gelieferten Einheiten sein.
-      cannot_destroy_line_item_as_inventory_units_have_shipped: Kann Artikelposition nicht löschen, da bereits geliefert wurde.
-      exceeds_available_stock: übersteigt die verfügbaren Vorräte. Bitte sicherstellen, dass die Einzelposten eine gültige Menge haben.
+      cannot_destroy_line_item_as_inventory_units_have_shipped: Kann Artikel nicht löschen, da bereits geliefert wurde.
+      exceeds_available_stock: übersteigt die verfügbaren Vorräte. Bitte sicherstellen, dass die Artikel eine gültige Menge haben.
       is_too_large: ist zu hoch. Der Lagerbestand kann die angefragte Menge nicht abdecken.
       must_be_int: muss eine Ganzzahl sein
       must_be_non_negative: darf keinen negativen Wert haben
