@@ -5,7 +5,9 @@
 
 - Fix CSRF forgery protection bypass for Spree::OrdersController#populate [GHSA-h3fg-h5v3-vf8m](https://github.com/solidusio/solidus/security/advisories/GHSA-h3fg-h5v3-vf8m)
 
-**Other important changes**
+### Other important changes
+
+#### No more autoload of decorators in fresh applications
 
 New Solidus applications won't autoload files matching `app/**/*_decorator*.rb`
 pattern anymore. For previous Solidus applications, it's something that will
@@ -43,7 +45,7 @@ of Solidus recommendations (that files are monkey patches; they don't use the
 you can place those files in `app/overrides/` and remove the `decorator`
 suffix.
 
-### Changes to the promotion system
+#### Changes to the promotion system
 
 Promotions with a `match_policy` of `any` are deprecated. If you have promotions
 with such a match policy, try running the following rake task:
@@ -62,6 +64,43 @@ set a temporary flag in your `config/initializers/spree.rb` file:
 ```ruby
 # Allow creating new promotions with an `any` match policy. Unsupported in the future.
 config.allow_promotions_any_match_policy = true
+```
+
+#### Static preference sources configured within `.to_prepare` blocks
+
+[Rails 7 no longer supports referring autoloadable classes within an
+initializer](https://guides.rubyonrails.org/autoloading_and_reloading_constants.html#autoload-on-boot-and-on-each-reload).
+
+Because of that, we need to change the way we configure static preference sources.
+
+Before:
+
+```ruby
+# config/initializers/spree.rb
+Spree.config do |config|
+  config.static_model_preferences.add(
+    AmazingStore::AmazingPaymentMethod,
+    'amazing_payment_method_credentials',
+    credentials: ENV['AMAZING_PAYMENT_METHOD_CREDENTIALS'],
+    server: Rails.env.production? ? 'production' : 'test',
+    test_mode: !Rails.env.production?
+  )
+end
+```
+
+Now:
+
+```ruby
+# config/initializers/spree.rb
+Rails.application.config.to_prepare do
+  Spree::Config.static_model_preferences.add(
+    AmazingStore::AmazingPaymentMethod,
+    'amazing_payment_method_credentials',
+    credentials: ENV['AMAZING_PAYMENT_METHOD_CREDENTIALS'],
+    server: Rails.env.production? ? 'production' : 'test',
+    test_mode: !Rails.env.production?
+  )
+end
 ```
 
 ### Core
