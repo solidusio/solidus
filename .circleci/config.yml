@@ -40,7 +40,6 @@ executors:
 commands:
   setup:
     steps:
-      - run: .circleci/bin/halt-for-doc-only-changes.sh && circleci step halt || true # skip Circle for guides
       - checkout
       - browser-tools/install-chrome
       - browser-tools/install-chromedriver
