@@ -114,4 +114,27 @@ RSpec.describe Spree::Core::ControllerHelpers::Auth, type: :controller do
       expect(response).to redirect_to('/unauthorized')
     end
   end
+
+  describe "#spree_current_user" do
+    context "when an ancestor defines it" do
+      it "delegates" do
+        controller = Class.new(ApplicationController) do
+          include (Module.new do
+            def spree_current_user
+              :user
+            end
+          end)
+          include Spree::Core::ControllerHelpers::Auth
+        end.new
+
+        expect(controller.spree_current_user).to eq :user
+      end
+    end
+
+    context "when no ancestor defines it" do
+      it "returns nil" do
+        expect(controller.spree_current_user).to eq nil
+      end
+    end
+  end
 end

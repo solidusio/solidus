@@ -54,6 +54,11 @@ module Spree
           Spree::UserLastUrlStorer.new(self).store_location
         end
 
+        # Auth extensions are expected to define it, otherwise it's a no-op
+        def spree_current_user
+          defined?(super) ? super : nil
+        end
+
         # proxy method to *possible* spree_current_user method
         # Authentication extensions (such as spree_auth_devise) are meant to provide spree_current_user
         def try_spree_current_user
