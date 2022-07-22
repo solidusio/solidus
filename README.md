@@ -307,6 +307,11 @@ data already loaded.
   bin/sandbox
   ```
 
+  Depending on your local environment, it may necessary for you to set environment variables for your RDBMS, namely:
+    - `DB_HOST`
+    - `DB_USER`
+    - `DB_PASSWORD`
+
   If you need to create a Rails 5.2 application for your sandbox, for example
   if you are still using Ruby 2.4 which is not supported by Rails 6, you can
   use the `RAILS_VERSION` environment variable.
