@@ -197,7 +197,7 @@ module Spree
     end
 
     def update_promotions
-      Spree::Promotion::OrderAdjustmentsRecalculator.new(order).adjust!
+      Spree::Config.promotion_adjuster_class.new(order).adjust!
       all_items = line_items + shipments
       all_items.each do |item|
         promotion_adjustments = item.adjustments.select(&:promotion?)
