@@ -2,11 +2,22 @@
 
 require 'rails/generators'
 require 'rails/version'
+require_relative 'install_generator/bundler_context'
+require_relative 'install_generator/support_solidus_frontend_extraction'
+require_relative 'install_generator/install_frontend'
 
 module Solidus
   # @private
   class InstallGenerator < Rails::Generators::Base
     CORE_MOUNT_ROUTE = "mount Spree::Core::Engine"
+
+    LEGACY_FRONTEND = 'solidus_frontend'
+    DEFAULT_FRONTEND = 'solidus_starter_frontend'
+    FRONTENDS = [
+      DEFAULT_FRONTEND,
+      LEGACY_FRONTEND,
+      'none'
+    ].freeze
 
     class_option :migrate, type: :boolean, default: true, banner: 'Run Solidus migrations'
     class_option :seed, type: :boolean, default: true, banner: 'Load seed data (migrations must be run)'
@@ -19,6 +30,11 @@ module Solidus
     class_option :lib_name, type: :string, default: 'spree'
     class_option :with_authentication, type: :boolean, default: true
     class_option :enforce_available_locales, type: :boolean, default: nil
+    class_option :frontend,
+                 type: :string,
+                 enum: FRONTENDS,
+                 default: nil,
+                 desc: "Indicates which frontend to install."
 
     def self.source_paths
       paths = superclass.source_paths
@@ -74,13 +90,7 @@ module Solidus
       empty_directory 'app/assets/images'
 
       %w{javascripts stylesheets images}.each do |path|
-        empty_directory "vendor/assets/#{path}/spree/frontend" if defined?(Spree::Frontend) || Rails.env.test?
         empty_directory "vendor/assets/#{path}/spree/backend" if defined?(Spree::Backend) || Rails.env.test?
-      end
-
-      if defined?(Spree::Frontend) || Rails.env.test?
-        template "vendor/assets/javascripts/spree/frontend/all.js"
-        template "vendor/assets/stylesheets/spree/frontend/all.css"
       end
 
       if defined?(Spree::Backend) || Rails.env.test?
@@ -112,6 +122,9 @@ module Solidus
         Solidus has a default authentication extension that uses Devise.
         You can find more info at https://github.com/solidusio/solidus_auth_devise.
 
+        Regardless of what you answer here, it'll be installed if you choose
+        solidus_starter_frontend as your storefront in a later step.
+
         Would you like to install it? (Y/n)"))
 
         @plugins_to_be_installed << 'solidus_auth_devise'
@@ -142,12 +155,28 @@ module Solidus
         gem plugin_name
       end
 
-      bundle_cleanly{ run "bundle install" } if @plugins_to_be_installed.any?
+      BundlerContext.bundle_cleanly { run "bundle install" } if @plugins_to_be_installed.any?
       run "spring stop" if defined?(Spring)
 
       @plugin_generators_to_run.each do |plugin_generator_name|
         generate "#{plugin_generator_name} --skip_migrations=true"
       end
+    end
+
+    def install_frontend
+      return if options[:frontend] == 'none'
+
+      bundler_context = BundlerContext.new
+
+      frontend = detect_frontend_to_install(bundler_context)
+
+      support_solidus_frontend_extraction(bundler_context)
+
+      say_status :installing, frontend
+
+      InstallFrontend.
+        new(bundler_context: bundler_context, generator_context: self).
+        call(frontend, installer_adds_auth: @plugins_to_be_installed.include?('solidus_auth_devise'))
     end
 
     def run_migrations
@@ -218,8 +247,26 @@ module Solidus
 
     private
 
-    def bundle_cleanly(&block)
-      Bundler.respond_to?(:with_unbundled_env) ? Bundler.with_unbundled_env(&block) : Bundler.with_clean_env(&block)
+    def detect_frontend_to_install(bundler_context)
+      ENV['FRONTEND'] ||
+        options[:frontend] ||
+        (bundler_context.component_in_gemfile?(:frontend) && LEGACY_FRONTEND) ||
+        (options[:auto_accept] && DEFAULT_FRONTEND) ||
+        ask(<<~MSG.indent(8), limited_to: FRONTENDS, default: DEFAULT_FRONTEND)
+
+          Which frontend would you like to use? solidus_starter_frontend is
+          recommended. However, some extensions are still only compatible with
+          the now deprecated solidus_frontend.
+
+        MSG
+    end
+
+    def support_solidus_frontend_extraction(bundler_context)
+      say_status "break down", "solidus"
+
+      SupportSolidusFrontendExtraction.
+        new(bundler_context: bundler_context).
+        call
     end
   end
 end
