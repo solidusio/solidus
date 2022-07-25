@@ -21,11 +21,27 @@ RSpec.describe Spree::Promotion::OrderAdjustmentsRecalculator do
           line_item.update!(quantity: 2)
         end
 
-        it 'updates the promotion amount' do
+        it 'updates the promotion adjustments amount' do
           expect {
             subject
           }.to change {
             line_item.adjustments.first.amount
+          }.from(-1).to(-2)
+        end
+
+        it 'updates the line item promo_total' do
+          expect {
+            subject
+          }.to change {
+            line_item.promo_total
+          }.from(-1).to(-2)
+        end
+
+        it 'updates the order promo_total' do
+          expect {
+            subject
+          }.to change {
+            order.promo_total
           }.from(-1).to(-2)
         end
       end

@@ -11,11 +11,14 @@ module Spree
       end
 
       def adjust!
-        [*line_items, *shipments].each do |item|
+        all_items = line_items + shipments
+        all_items.each do |item|
           promotion_adjustments = item.adjustments.select(&:promotion?)
 
           promotion_adjustments.each { |adjustment| recalculate(adjustment) }
           Spree::Config.promotion_chooser_class.new(promotion_adjustments).update
+
+          item.promo_total = promotion_adjustments.select(&:eligible?).sum(&:amount)
         end
         # Update and select the best promotion adjustment for the order.
         # We don't update the order.promo_total yet. Order totals are updated later
@@ -24,6 +27,13 @@ module Spree
         order_promotion_adjustments = order.adjustments.select(&:promotion?)
         order_promotion_adjustments.each { |adjustment| recalculate(adjustment) }
         Spree::Config.promotion_chooser_class.new(order_promotion_adjustments).update
+
+        order.promo_total = all_items.sum(&:promo_total) +
+                            order_promotion_adjustments.
+                              select(&:eligible?).
+                              select(&:promotion?).
+                              sum(&:amount)
+        order
       end
 
       private

@@ -198,12 +198,6 @@ module Spree
 
     def update_promotions
       Spree::Config.promotion_adjuster_class.new(order).adjust!
-      all_items = line_items + shipments
-      all_items.each do |item|
-        promotion_adjustments = item.adjustments.select(&:promotion?)
-        item.promo_total = promotion_adjustments.select(&:eligible?).sum(&:amount)
-      end
-      order.promo_total = all_items.sum(&:promo_total) + adjustments.select(&:eligible?).select(&:promotion?).sum(&:amount)
     end
 
     # DEPRECATED; this functionality is handled in #update_promotions
