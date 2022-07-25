@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe "spree/admin/shared/_navigation_footer", type: :view, partial_double_verification: false do
+describe "spree/admin/shared/_navigation_footer_fallback", type: :view, partial_double_verification: false do
   let(:user) { FactoryBot.build_stubbed(:admin_user) }
   let(:ability) { Object.new.extend(CanCan::Ability) }
   before do
