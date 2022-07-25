@@ -105,6 +105,11 @@ module Spree
     # adjustment_total) on the item.
     # @return [void]
     def recalculate_adjustments
+      # Cancelations must be applied before promotions and taxes. If you get
+      # your order adjusted because of having ordered merchandise worth X, and
+      # and you then cancel have your order, the promotion should become ineligible.
+      # You should also not be taxes for short-shipped items.
+      update_cancellations
       # Promotion adjustments must be applied first, then tax adjustments.
       # This fits the criteria for VAT tax as outlined here:
       # http://www.hmrc.gov.uk/vat/managing/charging/discounts-etc.htm#1
@@ -113,7 +118,6 @@ module Spree
       update_item_promotions
       update_order_promotions
       update_taxes
-      update_cancellations
       update_item_totals
     end
 
