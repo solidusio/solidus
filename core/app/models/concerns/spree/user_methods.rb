@@ -18,7 +18,7 @@ module Spree
       has_many :stock_locations, through: :user_stock_locations
 
       has_many :spree_orders, foreign_key: "user_id", class_name: "Spree::Order"
-      has_many :orders, foreign_key: "user_id", class_name: "Spree::Order", dependent: :restrict_with_exception
+      has_many :orders, foreign_key: "user_id", class_name: "Spree::Order"
 
       has_many :store_credits, -> { includes(:credit_type) }, foreign_key: "user_id", class_name: "Spree::StoreCredit"
       has_many :store_credit_events, through: :store_credits
@@ -27,6 +27,7 @@ module Spree
       has_many :wallet_payment_sources, foreign_key: 'user_id', class_name: 'Spree::WalletPaymentSource', inverse_of: :user
 
       after_create :auto_generate_spree_api_key
+      before_destroy :check_for_deletion
 
       include Spree::RansackableAttributes unless included_modules.include?(Spree::RansackableAttributes)
 
@@ -75,6 +76,24 @@ module Spree
         available_store_credit_total(currency: currency),
         currency: currency,
       )
+    end
+
+    # Restrict to delete users with existing orders
+    #
+    # Override this in your user model class to add another logic.
+    #
+    # Ie. to allow to delete users with incomplete orders add:
+    #
+    #   orders.complete.none?
+    #
+    def can_be_deleted?
+      orders.none?
+    end
+
+    private
+
+    def check_for_deletion
+      raise ActiveRecord::DeleteRestrictionError unless can_be_deleted?
     end
   end
 end
