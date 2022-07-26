@@ -238,9 +238,7 @@ module Spree
     end
 
     def update_cancellations
-      line_items.each do |line_item|
-        line_item.adjustments.select(&:cancellation?).each(&:recalculate)
-      end
+      Spree::Config.cancelled_items_adjuster.new(order).adjust!
     end
 
     def update_item_totals
