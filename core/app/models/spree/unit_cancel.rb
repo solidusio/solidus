@@ -34,20 +34,6 @@ class Spree::UnitCancel < Spree::Base
   # This method is used by Adjustment#update to recalculate the cost.
   def compute_amount(line_item)
     raise "Adjustable does not match line item" unless line_item == inventory_unit.line_item
-
-    -weighted_line_item_amount(line_item)
-  end
-
-  private
-
-  def weighted_line_item_amount(line_item)
-    quantity_of_line_item = quantity_of_line_item(line_item)
-    raise ZeroDivisionError, "Line Item does not have any inventory units available to cancel" if quantity_of_line_item.zero?
-
-    line_item.total_before_tax / quantity_of_line_item
-  end
-
-  def quantity_of_line_item(line_item)
-    BigDecimal(line_item.inventory_units.not_canceled.reject(&:original_return_item).size)
+    -line_item.price
   end
 end

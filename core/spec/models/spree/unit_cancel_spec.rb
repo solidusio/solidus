@@ -38,20 +38,7 @@ RSpec.describe Spree::UnitCancel do
 
     context "all inventory on the line item are not canceled" do
       it "divides the line item total by the inventory units size" do
-        expect(subject).to eq(-5.0)
-      end
-    end
-
-    context "some inventory on the line item is canceled" do
-      before { inventory_unit2.cancel! }
-
-      it "divides the line item total by the uncanceled units size" do
         expect(subject).to eq(-10.0)
-      end
-
-      it "raises an error if dividing by 0" do
-        inventory_unit.cancel!
-        expect { subject }.to raise_error ZeroDivisionError, "Line Item does not have any inventory units available to cancel"
       end
     end
 
@@ -119,7 +106,9 @@ RSpec.describe Spree::UnitCancel do
 
       it 'does not include line item additional taxes' do
         expect(line_item.additional_tax_total).not_to eq 0
-        expect(subject).to eq(-5.0)
+        unit_cancel.adjust!
+        expect(subject).to eq(-10.0)
+        expect(line_item.additional_tax_total).to eq 0
       end
     end
   end
