@@ -426,6 +426,13 @@ module Spree
     #   Spree::OrderCancellations.
     class_name_attribute :order_cancellations_class, default: 'Spree::OrderCancellations'
 
+    # Allows providing your own class for adjusting items with cancellation adjustments
+    #
+    # @!attribute [rw] cancelled_items_adjuster
+    # @return [Class] a class with the same public interfaces as
+    #   Spree::OrderCancellations::CancelledItemsAdjuster.
+    class_name_attribute :cancelled_items_adjuster, default: 'Spree::OrderCancellations::CancelledItemsAdjuster'
+
     # Allows providing your own class for canceling payments.
     #
     # @!attribute [rw] payment_canceller

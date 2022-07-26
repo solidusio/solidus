@@ -36,6 +36,11 @@ RSpec.describe Spree::AppConfiguration do
     expect(prefs.pricing_options_class).to eq Spree::Variant::PriceSelector.pricing_options_class
   end
 
+  it "has a getter for the order cancellations and cancelled items adjuster" do
+    expect(prefs.order_cancellations_class).to eq(Spree::OrderCancellations)
+    expect(prefs.cancelled_items_adjuster).to eq(Spree::OrderCancellations::CancelledItemsAdjuster)
+  end
+
   describe '#stock' do
     subject { prefs.stock }
     it { is_expected.to be_a Spree::Core::StockConfiguration }
