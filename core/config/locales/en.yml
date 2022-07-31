@@ -365,7 +365,7 @@ en:
         amount_authorized: Amount Authorized
         amount_credited: Amount Credited
         amount_used: Amount Used
-        category_id: Credit Type
+        category_id: Category
         created_at: Issued On
         created_by_id: Created By
         invalidated_at: Invalidated
