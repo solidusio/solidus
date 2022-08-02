@@ -456,8 +456,8 @@ module Spree
         "Spree::MailerSubscriber#order_finalized.",
         caller(1)
 
-      Spree::Config.order_mailer_class.confirm_email(order).deliver_later
-      order.update_column(:confirmation_delivered, true)
+      Spree::Config.order_mailer_class.confirm_email(self).deliver_later
+      update_column(:confirmation_delivered, true)
     end
 
     # Helper methods for checkout steps

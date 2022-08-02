@@ -62,6 +62,19 @@ RSpec.describe Spree::Order, type: :model do
     end
   end
 
+  describe '#deliver_order_confirmation_mailer' do
+    it 'sends an email' do
+      expect(Spree::Config.order_mailer_class).to receive(:confirm_email).and_call_original
+      order.deliver_order_confirmation_email
+    end
+
+    it 'marks the order as confirmation_delivered' do
+      expect do
+        order.deliver_order_confirmation_email
+      end.to change(order, :confirmation_delivered).to true
+    end
+  end
+
   context '#store' do
     it { is_expected.to respond_to(:store) }
 
