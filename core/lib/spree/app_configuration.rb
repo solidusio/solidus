@@ -645,6 +645,7 @@ module Spree
 
         env.calculators.tax_rates = %w[
           Spree::Calculator::DefaultTax
+          Spree::Calculator::FlatFee
         ]
 
         env.payment_methods = %w[
