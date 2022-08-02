@@ -307,7 +307,7 @@ data already loaded.
   bin/sandbox
   ```
 
-  Depending on your local environment, it may necessary for you to set environment variables for your RDBMS, namely:
+  Depending on your local environment, it may be necessary for you to set environment variables for your RDBMS, namely:
     - `DB_HOST`
     - `DB_USER`
     - `DB_PASSWORD`
