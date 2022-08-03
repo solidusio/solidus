@@ -157,10 +157,11 @@ module Spree
       recalculate_adjustments
 
       all_items = line_items + shipments
+      order_tax_adjustments = adjustments.select(&:eligible?).select(&:tax?)
 
       order.adjustment_total = all_items.sum(&:adjustment_total) + adjustments.select(&:eligible?).sum(&:amount)
-      order.included_tax_total = all_items.sum(&:included_tax_total)
-      order.additional_tax_total = all_items.sum(&:additional_tax_total)
+      order.included_tax_total = all_items.sum(&:included_tax_total) + order_tax_adjustments.select(&:included?).sum(&:amount)
+      order.additional_tax_total = all_items.sum(&:additional_tax_total) + order_tax_adjustments.reject(&:included?).sum(&:amount)
 
       order.promo_total = all_items.sum(&:promo_total) + adjustments.select(&:eligible?).select(&:promotion?).sum(&:amount)
 

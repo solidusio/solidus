@@ -324,15 +324,45 @@ module Spree
           before do
             order # generate this first so we can expect it
             stub_spree_preferences(tax_calculator_class: custom_calculator_class)
+
+            allow(custom_calculator_class).to receive(:new).and_return(custom_calculator_instance)
+            allow(custom_calculator_instance).to receive(:calculate).and_return(
+              Spree::Tax::OrderTax.new(
+                order_id: order.id,
+                order_taxes: [
+                  Spree::Tax::ItemTax.new(
+                    label: "Delivery Fee",
+                    tax_rate: tax_rate,
+                    amount: 2.60,
+                    included_in_price: false
+                  )
+                ],
+                line_item_taxes: [
+                  Spree::Tax::ItemTax.new(
+                    item_id: line_item.id,
+                    label: "Item Tax",
+                    tax_rate: tax_rate,
+                    amount: 1.40,
+                    included_in_price: false
+                  )
+                ],
+                shipment_taxes: []
+              )
+            )
           end
 
           it 'uses the configured class' do
-            expect(custom_calculator_class).to receive(:new).with(order).at_least(:once).and_return(custom_calculator_instance)
-            expect(custom_calculator_instance).to receive(:calculate).at_least(:once).and_return(
-              Spree::Tax::OrderTax.new(order_id: order.id, line_item_taxes: [], shipment_taxes: [])
-            )
-
             order.recalculate
+
+            expect(custom_calculator_class).to have_received(:new).with(order).at_least(:once)
+            expect(custom_calculator_instance).to have_received(:calculate).at_least(:once)
+          end
+
+          it 'updates the aggregate columns' do
+            expect {
+              order.recalculate
+            }.to change { order.reload.additional_tax_total }.to(4.00)
+              .and change { order.reload.adjustment_total }.to(4.00)
           end
         end
       end
