@@ -89,7 +89,7 @@
           <% if can?(:edit, user) %>
             <%= link_to_edit user, no_text: true, url: spree.admin_user_path(user) %>
           <% end %>
-          <% if can?(:destroy, user) && user.orders.none? %>
+          <% if can?(:destroy, user) && user.can_be_deleted? %>
             <%= link_to_delete user, no_text: true, url: spree.admin_user_path(user) %>
           <% end %>
         </td>
