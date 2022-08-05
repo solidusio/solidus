@@ -124,5 +124,47 @@ RSpec.describe Spree::OrderTaxation do
         }.from(1).to(0)
       end
     end
+
+    context "with order-level taxes" do
+      let(:delivery_fee) do
+        FactoryBot.create(
+          :tax_rate,
+          name: "Delivery Fee",
+          tax_categories: [books_category],
+          zone: new_york_zone,
+          included_in_price: false,
+          amount: 0.05
+        )
+      end
+
+      let(:order_tax) do
+        Spree::Tax::ItemTax.new(
+          label: "Order Tax!",
+          tax_rate: delivery_fee,
+          amount: 10,
+          included_in_price: false
+        )
+      end
+
+      let(:taxes) do
+        Spree::Tax::OrderTax.new(
+          order_id: order.id,
+          order_taxes: [order_tax],
+          line_item_taxes: [],
+          shipment_taxes: []
+        )
+      end
+
+      it "creates a new tax adjustment", aggregate_failures: true do
+        expect(order.adjustments.count).to eq 1
+
+        tax_adjustment = order.adjustments.first
+        expect(tax_adjustment.label).to eq "Order Tax!"
+        expect(tax_adjustment.source).to eq delivery_fee
+        expect(tax_adjustment.order_id).to eq order.id
+        expect(tax_adjustment.amount).to eq 10
+        expect(tax_adjustment.included).to be false
+      end
+    end
   end
 end
