@@ -14,7 +14,9 @@ RSpec.describe 'solidus' do
 
     it 'removes all prices which amount column is NULL' do
       price = create(:price)
-      expect(Spree::Price).to receive(:where).with(amount: nil).and_return(Spree::Price.where(id: price))
+      with_discarded = instance_double("Spree::Price::ActiveRecord_Relation", where: Spree::Price.where(id: price))
+
+      expect(Spree::Price).to receive(:with_discarded) { with_discarded }
 
       task.invoke
 
