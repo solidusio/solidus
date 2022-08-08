@@ -3,6 +3,8 @@
 module Spree
   module Admin
     class LocaleController < Spree::Admin::BaseController
+      skip_before_action :authorize_admin, only: [:set]
+
       def set
         requested_locale = params[:switch_to_locale].to_s.presence
 
