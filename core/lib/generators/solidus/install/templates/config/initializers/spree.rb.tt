@@ -31,15 +31,6 @@ Spree.config do |config|
   # to a custom users role:
   # config.roles.assign_permissions :role_name, ['Spree::PermissionSets::CustomPermissionSet']
 
-  # Frontend:
-
-  # Custom logo for the frontend
-  # config.logo = "logo/solidus.svg"
-
-  # Template to use when rendering layout
-  # config.layout = "spree/layouts/spree_application"
-
-
   # Admin:
 
   # Custom logo for the admin
@@ -60,12 +51,6 @@ Spree.config do |config|
   #   test_mode: !Rails.env.production?
   # )
 end
-
-<% if defined?(Spree::Frontend::Engine) -%>
-Spree::Frontend::Config.configure do |config|
-  config.locale = 'en'
-end
-<% end -%>
 
 <% if defined?(Spree::Backend::Engine) -%>
 Spree::Backend::Config.configure do |config|
