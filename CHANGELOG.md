@@ -111,10 +111,11 @@ end
 ### Frontend
 
 DEPRECATION WARNING: SolidusFrontend is deprecated. It will be removed from the
-solidus meta-package gem in Solidus v4. Furthermore, its code will be extracted
-from https://github.com/solidusio/solidus to a new repo. Once extracted, you'll
-need to explicitly add `solidus_frontend` to your Gemfile in order to continue
-using it.
+solidus meta-package gem in Solidus v4. Furthermore, its code has been
+extracted from https://github.com/solidusio/solidus to
+https://github.com/solidusio/solidus_frontend. Once extracted, you'll need to
+explicitly add `solidus_frontend` to your Gemfile in order to continue using
+it.
 
 For fresh Solidus applications, we recommend you use 
 [SolidusStarterFrontend](https://github.com/solidusio/solidus_starter_frontend) 
