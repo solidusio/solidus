@@ -23,11 +23,6 @@ echo "* Testing Solidus Core *"
 echo "************************"
 bin/rspec core/spec
 
-echo "****************************"
-echo "* Testing Solidus Frontend *"
-echo "****************************"
-bin/rspec frontend/spec
-
 echo "**************************"
 echo "* Testing Solidus Sample *"
 echo "**************************"

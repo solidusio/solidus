@@ -6,7 +6,6 @@ LIBS = %w[
   api
   backend
   core
-  frontend
   sample
 ]
 

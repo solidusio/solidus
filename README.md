@@ -63,13 +63,17 @@ Guides](https://guides.solidus.io) for information about the functionality that
 Solidus provides.
 
 Solidus consists of several gems. When you require the `solidus` gem in your
-`Gemfile`, Bundler will install all of the gems maintained in this repository:
+`Gemfile`, Bundler will install all of the following gems:
 
 - [`solidus_api`](https://github.com/solidusio/solidus/tree/master/api) (RESTful API)
 - [`solidus_frontend`](https://github.com/solidusio/solidus/tree/master/frontend) (Cart and storefront)
 - [`solidus_backend`](https://github.com/solidusio/solidus/tree/master/backend) (Admin area)
 - [`solidus_core`](https://github.com/solidusio/solidus/tree/master/core) (Essential models, mailers, and classes)
 - [`solidus_sample`](https://github.com/solidusio/solidus/tree/master/sample) (Sample data)
+
+While `solidus_frontend` is still present in the meta-gem, it'll be removed in
+Solidus v4.0. For new stores, we recommend using
+[solidus_starter_frontend](https://github.com/solidusio/solidus_starter_frontend).
 
 All of the gems are designed to work together to provide a fully functional
 ecommerce platform. However, you may only want to use the
@@ -124,8 +128,9 @@ Start the Rails server with the command:
 bin/rails s
 ```
 
-The [`solidus_frontend`](https://github.com/solidusio/solidus/tree/master/frontend) storefront will be accessible at [http://localhost:3000/](http://localhost:3000/)
-and the admin can be found at [http://localhost:3000/admin/](http://localhost:3000/admin/).
+The storefront will be accessible at
+[http://localhost:3000/](http://localhost:3000/) and the admin can be found at
+[http://localhost:3000/admin/](http://localhost:3000/admin/).
 
 For information on how to customize your store, check out the [customization guides](https://guides.solidus.io/developers/customizations/overview.html).
 
@@ -343,8 +348,8 @@ You can see the build statuses at
 
 #### Run all tests
 
-[ChromeDriver](https://chromedriver.chromium.org/downloads) is
-required to run the frontend and backend test suites.
+[ChromeDriver](https://chromedriver.chromium.org/downloads) is required to run
+the backend test suites.
 
 To execute all of the test specs, run the `bin/build` script at the root of the Solidus project:
 
