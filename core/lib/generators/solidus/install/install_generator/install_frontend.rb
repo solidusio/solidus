@@ -25,7 +25,7 @@ module Solidus
       def install_solidus_frontend
         unless @bundler_context.component_in_gemfile?(:frontend)
           BundlerContext.bundle_cleanly do
-            `bundle add solidus_frontend --source=https://rubygems.org`
+            `bundle add solidus_frontend`
             `bundle install`
           end
         end
