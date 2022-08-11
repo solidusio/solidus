@@ -11,10 +11,11 @@ module Solidus
     #
     # @api private
     class BundlerContext
-      # Write and remove into a Gemfile, supporting the `path: ` option.
+      # Write and remove into and from a Gemfile
       #
-      # This custom injector adds support for path sources, which is missing in
-      # bundler's upstream injector.
+      # This custom injector fixes support for path and custom sources, which is
+      # missing in bundler's upstream injector for a dependency fetched with
+      # `Bundled.locked_gems.dependencies`.
       #
       # @api private
       class InjectorWithPathSupport < Bundler::Injector
@@ -35,7 +36,7 @@ module Solidus
               group = d.groups.size == 1 ? ", :group => #{d.groups.first.inspect}" : ", :groups => #{d.groups.inspect}"
             end
 
-            source = ", :source => \"#{d.source}\"" unless local || d.source.nil?
+            source = ", :source => \"#{d.source.remotes.join(",")}\"" unless local || d.source.nil?
             git = ", :git => \"#{d.git}\"" unless d.git.nil?
             branch = ", :branch => \"#{d.branch}\"" unless d.branch.nil?
 
