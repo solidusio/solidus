@@ -33,7 +33,7 @@ RUN apt-get update -qq && DEBIAN_FRONTEND=noninteractive apt-get -yq dist-upgrad
   DEBIAN_FRONTEND=noninteractive apt-get install -yq --no-install-recommends \
     libpq-dev \
     postgresql-client-$PG_VERSION \
-    mysql-client \
+    default-mysql-client \
     nodejs \
   &&  rm -rf /var/lib/apt/lists/*
 
