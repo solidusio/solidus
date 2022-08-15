@@ -13,19 +13,22 @@ module Solidus
     class BundlerContext
       # Write and remove into and from a Gemfile
       #
-      # This custom injector fixes support for path and custom sources, which is
-      # missing in bundler's upstream injector for a dependency fetched with
-      # `Bundled.locked_gems.dependencies`.
+      # This custom injector fixes support for path, git and custom sources,
+      # which is missing in bundler's upstream injector for a dependency fetched
+      # with `Bundled.locked_gems.dependencies`.
       #
       # @api private
       class InjectorWithPathSupport < Bundler::Injector
         private def build_gem_lines(conservative_versioning)
           @deps.map do |d|
             name = d.name.dump
-            local = d.source.is_a?(Bundler::Source::Path)
+            is_local = d.source.instance_of?(Bundler::Source::Path)
+            is_git = d.source.instance_of?(Bundler::Source::Git)
 
-            requirement = if local
+            requirement = if is_local
                             ", path: \"#{d.source.path}\""
+                          elsif is_git
+                            ", git: \"#{d.git}\"".yield_self { |g| d.ref ? g + ", ref: \"#{d.ref}\"" : g }
                           elsif conservative_versioning
                             ", \"#{conservative_version(@definition.specs[d.name][0])}\""
                           else
@@ -36,11 +39,9 @@ module Solidus
               group = d.groups.size == 1 ? ", :group => #{d.groups.first.inspect}" : ", :groups => #{d.groups.inspect}"
             end
 
-            source = ", :source => \"#{d.source.remotes.join(",")}\"" unless local || d.source.nil?
-            git = ", :git => \"#{d.git}\"" unless d.git.nil?
-            branch = ", :branch => \"#{d.branch}\"" unless d.branch.nil?
+            source = ", :source => \"#{d.source.remotes.join(",")}\"" unless is_local || is_git || d.source.nil?
 
-            %(gem #{name}#{requirement}#{group}#{source}#{git}#{branch})
+            %(gem #{name}#{requirement}#{group}#{source})
           end.join("\n")
         end
       end
@@ -87,8 +88,8 @@ module Solidus
           {
             "groups" => solidus_dependency.groups,
             "source" => solidus_dependency.source,
-            "git" => solidus_dependency.git,
-            "branch" => solidus_dependency.branch,
+            "git" => solidus_dependency.source.try(:uri),
+            "ref" => solidus_dependency.source.try(:ref),
             "autorequire" => solidus_dependency.autorequire
           }
         )
