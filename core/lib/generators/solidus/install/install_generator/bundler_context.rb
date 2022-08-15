@@ -35,13 +35,9 @@ module Solidus
                             ", #{d.requirement.as_list.map(&:dump).join(", ")}"
                           end
 
-            if d.groups != Array(:default)
-              group = d.groups.size == 1 ? ", :group => #{d.groups.first.inspect}" : ", :groups => #{d.groups.inspect}"
-            end
-
             source = ", :source => \"#{d.source.remotes.join(",")}\"" unless is_local || is_git || d.source.nil?
 
-            %(gem #{name}#{requirement}#{group}#{source})
+            %(gem #{name}#{requirement}#{source})
           end.join("\n")
         end
       end
@@ -86,11 +82,9 @@ module Solidus
           "solidus_#{component}",
           solidus_dependency.requirement,
           {
-            "groups" => solidus_dependency.groups,
             "source" => solidus_dependency.source,
             "git" => solidus_dependency.source.try(:uri),
-            "ref" => solidus_dependency.source.try(:ref),
-            "autorequire" => solidus_dependency.autorequire
+            "ref" => solidus_dependency.source.try(:ref)
           }
         )
       end
