@@ -170,7 +170,7 @@ module Solidus
 
       frontend = detect_frontend_to_install(bundler_context)
 
-      support_solidus_frontend_extraction(bundler_context)
+      support_solidus_frontend_extraction(bundler_context) unless frontend == LEGACY_FRONTEND
 
       say_status :installing, frontend
 
