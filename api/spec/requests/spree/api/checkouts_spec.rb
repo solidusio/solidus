@@ -103,7 +103,7 @@ module Spree::Api
               bill_address_attributes: address,
               ship_address_attributes: address
             } }
-          expect(json_response['error']).to eq(I18n.t(:could_not_transition, scope: "spree.api.order"))
+          expect(json_response['error']).to eq(I18n.t(:could_not_transition, scope: "spree.api", resource: "order"))
           expect(response.status).to eq(422)
         end
 
