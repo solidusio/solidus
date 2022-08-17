@@ -62,8 +62,8 @@
     <%= f.field_container :cart_tax_country_iso do %>
       <%= f.label :cart_tax_country_iso %>
       <%= f.field_hint :cart_tax_country_iso %>
-      <%= f.select :cart_tax_country_iso,
-        Spree::Country.all.map { |c| [c.name, c.iso] },
+      <%= f.collection_select :cart_tax_country_iso,
+        available_countries(restrict_to_zone: nil), :iso, :name,
         { include_blank: t(".no_cart_tax_country") },
         { class: "custom-select fullwidth" } %>
       <%= f.error_message_on :cart_tax_country_iso %>
