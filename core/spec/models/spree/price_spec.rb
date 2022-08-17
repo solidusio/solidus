@@ -122,6 +122,24 @@ RSpec.describe Spree::Price, type: :model do
     end
   end
 
+  describe "#display_country" do
+    subject { price.display_country }
+
+    context "when country_iso nil" do
+      let(:price) { build_stubbed(:price, country_iso: nil) }
+
+      it { is_expected.to eq "Any Country" }
+    end
+
+    context "when country_iso is set" do
+      let(:price) { build_stubbed(:price, country_iso: "DE") }
+
+      it "shows country iso and translated country name" do
+        is_expected.to eq "DE (Germany)"
+      end
+    end
+  end
+
   describe 'scopes' do
     describe '.for_any_country' do
       let(:country) { create(:country) }
