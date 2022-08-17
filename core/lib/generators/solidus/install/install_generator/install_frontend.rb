@@ -38,7 +38,10 @@ module Solidus
 
         # TODO: Move installation of solidus_auth_devise to the
         # solidus_starter_frontend template
-        BundlerContext.bundle_cleanly { `bundle add solidus_auth_devise` } unless auth_present?(installer_adds_auth)
+        unless auth_present?(installer_adds_auth)
+          BundlerContext.bundle_cleanly { `bundle add solidus_auth_devise` }
+          @generator_context.generate('solidus:auth:install --auto-run-migrations')
+        end
         `LOCATION="https://raw.githubusercontent.com/solidusio/solidus_starter_frontend/main/template.rb" bin/rails app:template`
       end
 
