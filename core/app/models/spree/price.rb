@@ -55,7 +55,7 @@ module Spree
 
     def display_country
       if country_iso
-        "#{country_iso} (#{country.name})"
+        "#{country_iso} (#{I18n.t(country_iso, scope: [:spree, :country_names])})"
       else
         I18n.t(:any_country, scope: [:spree, :admin, :prices])
       end
