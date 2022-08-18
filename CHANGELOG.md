@@ -1,4 +1,6 @@
-## Solidus 3.2.0.alpha (master, unreleased)
+## Solidus 3.3.0 (master, unreleased)
+
+## Solidus 3.2.0 (v3.2, 2022-08-18)
 
 Remember to run `bin/rails g solidus:update` to support you during the upgrade
 process.
