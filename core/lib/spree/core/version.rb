@@ -8,7 +8,7 @@ module Spree
   end
 
   def self.previous_solidus_minor_version
-    '3.0'
+    '3.1'
   end
 
   def self.solidus_gem_version
