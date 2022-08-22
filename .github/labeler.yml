@@ -1,0 +1,3 @@
+Solidus Core: core/**/*
+Solidus Admin: backend/**/*
+Solidus API: api/**/*
