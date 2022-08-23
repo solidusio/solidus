@@ -116,6 +116,7 @@ module DummyApp
     end
     config.paths['db/migrate'] = migration_dirs
     ActiveRecord::Migrator.migrations_paths = migration_dirs
+    ActiveRecord::Migration.verbose = false
 
     config.assets.paths << File.expand_path('dummy_app/assets/javascripts', __dir__)
     config.assets.paths << File.expand_path('dummy_app/assets/stylesheets', __dir__)
