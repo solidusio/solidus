@@ -7192,23 +7192,6 @@ components:
           items:
             $ref: '#/components/schemas/option-value-input'
         options:
-        weight:
-          type: string
-        height:
-          type: string
-        width:
-          type: string
-        depth:
-          type: string
-        sku:
-          type: string
-        cost_currency:
-          type: string
-        option_value_ids:
-          type: array
-          items:
-            type: integer
-        options:
           type: object
           description: '`Name` will be the name/presentation of the option type and `Value` will be the name/presentation of the option value. They will be created if not exist.'
           properties:
