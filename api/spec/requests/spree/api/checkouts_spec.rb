@@ -82,8 +82,6 @@ module Spree::Api
         end
 
         it "can update addresses and transition from address to delivery" do
-          pending "SQLite adapter fails to provide a unique index" if ActiveRecord::Base.connection.adapter_name == "SQLite"
-
           put spree.api_checkout_path(order),
             params: { order_token: order.guest_token, order: {
               bill_address_attributes: address,
@@ -109,8 +107,6 @@ module Spree::Api
 
         # Regression test for https://github.com/spree/spree/issues/4498
         it "does not contain duplicate variant data in delivery return" do
-          pending "SQLite adapter fails to provide a unique index" if ActiveRecord::Base.connection.adapter_name == "SQLite"
-
           put spree.api_checkout_path(order),
             params: { order_token: order.guest_token, order: {
               bill_address_attributes: address,
