@@ -20,7 +20,6 @@ FactoryBot.define do
     iso3 { carmen_country.alpha_3_code }
     numcode { carmen_country.numeric_code }
 
-    # FIXME: We should set states required, but it causes failing tests
-    # states_required { carmen_country.subregions? }
+    states_required { carmen_country.subregions? }
   end
 end

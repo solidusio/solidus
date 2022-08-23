@@ -17,9 +17,15 @@ FactoryBot.define do
       carmen_subregion do
         carmen_country = Carmen::Country.coded(country.iso)
 
-        carmen_country.subregions.coded(state_code) ||
-          carmen_country.subregions.sort_by(&:name).first ||
+        unless carmen_country.subregions?
           fail("Country #{country.iso} has no subregions")
+        end
+
+        carmen_regions = carmen_country.subregions
+        carmen_regions = carmen_regions.flat_map(&:subregions) if carmen_regions.first.subregions?
+        region_collection = Carmen::RegionCollection.new(carmen_regions)
+
+        region_collection.coded(state_code) || region_collection.sort_by(&:name).first
       end
     end
 

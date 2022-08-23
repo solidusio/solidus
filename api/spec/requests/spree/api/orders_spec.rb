@@ -523,14 +523,15 @@ module Spree::Api
       let(:billing_address) {
         { name: "Tiago Motta", address1: "Av Paulista",
                                 city: "Sao Paulo", zipcode: "01310-300", phone: "12345678",
-                                country_id: country.id }
+                                country_id: country.id, state_id: state.id }
       }
       let(:shipping_address) {
         { name: "Tiago Motta", address1: "Av Paulista",
                                  city: "Sao Paulo", zipcode: "01310-300", phone: "12345678",
-                                 country_id: country.id }
+                                 country_id: country.id, state_id: state.id }
       }
       let(:country) { create(:country, { name: "Brazil", iso_name: "BRAZIL", iso: "BR", iso3: "BRA", numcode: 76 }) }
+      let(:state) { create(:state, country_iso: 'BR')  }
 
       before { allow_any_instance_of(Spree::Order).to receive_messages user: current_api_user }
 
