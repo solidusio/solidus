@@ -48,6 +48,15 @@ group :backend, :frontend, :core, :api do
 end
 
 group :backend, :frontend do
+  # 'net/http' is required by 'capybara/server', triggering
+  # a few "already initialized constant" warnings when loaded
+  # from default gems. See:
+  # - https://github.com/ruby/net-protocol/issues/10
+  # - https://stackoverflow.com/a/72474475
+  if Gem::Version.new(RUBY_VERSION) < Gem::Version.new('3')
+    gem 'net-http', require: false
+  end
+
   gem 'capybara', '~> 3.13', require: false
   gem 'capybara-screenshot', '>= 1.0.18', require: false
   gem 'selenium-webdriver', require: false
