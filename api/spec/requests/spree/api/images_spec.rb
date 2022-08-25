@@ -74,6 +74,17 @@ module Spree::Api
           expect(response.status).to eq(204)
           expect { product_image.reload }.to raise_error(ActiveRecord::RecordNotFound)
         end
+
+        it "returns nil attribute values and noimage urls when the image cannot be found",
+          if: Spree::Config.image_attachment_module == Spree::Image::ActiveStorageAttachment do
+          product_image.attachment.blob.update(key: 11)
+          expect(Rails.logger).to receive(:error).with(/Image id: #{product_image.id} is corrupted or cannot be found/).twice
+          get spree.api_variant_images_path(product.master.id)
+          expect(response.status).to eq(200)
+          expect(json_response[:images].first[:attachment_width]).to be_nil
+          expect(json_response[:images].first[:attachment_height]).to be_nil
+          expect(json_response[:images].first[:product_url]).to include("noimage")
+        end
       end
 
       context 'when image belongs to another product' do

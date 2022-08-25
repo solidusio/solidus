@@ -59,6 +59,10 @@ module Spree
         analyze unless analyzed?
 
         @attachment.metadata
+      rescue ActiveStorage::FileNotFoundError => error
+        logger.error("#{error} - Image id: #{attachment.record.id} is corrupted or cannot be found")
+
+        { identified: nil, width: nil, height: nil, analyzed: true }
       end
 
       def styles_to_transformations(styles)
