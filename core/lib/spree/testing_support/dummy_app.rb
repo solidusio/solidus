@@ -38,7 +38,7 @@ module DummyApp
     ENV["LIB_NAME"] = lib_name
     DummyApp::Application.config.root = File.join(gem_root, 'spec', 'dummy')
 
-    DummyApp::Application.initialize!
+    DummyApp::Application.initialize! unless DummyApp::Application.initialized?
 
     if auto_migrate
       DummyApp::Migrations.auto_migrate
@@ -116,6 +116,7 @@ module DummyApp
     end
     config.paths['db/migrate'] = migration_dirs
     ActiveRecord::Migrator.migrations_paths = migration_dirs
+    ActiveRecord::Migration.verbose = false
 
     config.assets.paths << File.expand_path('dummy_app/assets/javascripts', __dir__)
     config.assets.paths << File.expand_path('dummy_app/assets/stylesheets', __dir__)
