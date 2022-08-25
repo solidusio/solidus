@@ -7,6 +7,7 @@ module Spree
         def perform(payload = {})
           order = payload[:order]
           promotion_code = payload[:promotion_code]
+          return false unless promotion.eligible? order
 
           created_adjustments = order.shipments.map do |shipment|
             next if promotion_credit_exists?(shipment)

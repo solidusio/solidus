@@ -31,6 +31,17 @@ RSpec.describe Spree::Promotion::Actions::FreeShipping, type: :model do
       end
     end
 
+    context "when given order is ineligible for promotion" do
+      it "does not create any discounts" do
+        allow(promotion).to receive(:eligible?).with(order).and_return false
+
+        expect(action.perform(payload)).to be false
+        expect(promotion.usage_count).to eq(0)
+        expect(order.shipment_adjustments.count).to eq(0)
+        expect(order.shipment_adjustments.map(&:promotion_code)).to eq []
+      end
+    end
+
     context "when a number of the orders shipments already have free shipping" do
       let(:shipments) { order.shipments }
 
