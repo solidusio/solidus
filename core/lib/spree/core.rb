@@ -131,7 +131,10 @@ require 'spree/core/controller_helpers/current_host'
 require 'spree/core/controller_helpers/order'
 require 'spree/core/controller_helpers/payment_parameters'
 require 'spree/core/controller_helpers/pricing'
+
+## Deprecate with Spree::Core::Search::Base
 require 'spree/core/controller_helpers/search'
+
 require 'spree/core/controller_helpers/store'
 require 'spree/core/controller_helpers/strong_parameters'
 require 'spree/core/role_configuration'

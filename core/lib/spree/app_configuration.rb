@@ -17,7 +17,9 @@
 # a.get :color
 # a.preferred_color
 #
+# Deprecate with Spree::Core::Search::Base
 require "spree/core/search/base"
+#
 require "spree/core/search/variant"
 require 'spree/preferences/configuration'
 require 'spree/core/environment'
@@ -272,6 +274,7 @@ module Spree
     # @!attribute [rw] show_products_without_price
     #   @return [Boolean] Whether products without a price are visible in the frontend (default: +false+)
     preference :show_products_without_price, :boolean, default: false
+    deprecate :show_products_without_price, deprecator: Spree::Deprecation
 
     # @!attribute [rw] show_raw_product_description
     #   @return [Boolean] Don't escape HTML of product descriptions. (default: +false+)
@@ -309,6 +312,7 @@ module Spree
 
     # searcher_class allows spree extension writers to provide their own Search class
     class_name_attribute :searcher_class, default: 'Spree::Core::Search::Base'
+    deprecate :searcher_class, deprecator: Spree::Deprecation
 
     # Allows implementing custom pricing for variants
     # @!attribute [rw] variant_price_selector_class

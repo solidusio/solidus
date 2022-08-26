@@ -8,7 +8,10 @@ class Spree::BaseController < ApplicationController
   include Spree::Core::ControllerHelpers::Auth
   include Spree::Core::ControllerHelpers::Common
   include Spree::Core::ControllerHelpers::PaymentParameters
+
+  # Deprecate with Spree::Core::Search::Base
   include Spree::Core::ControllerHelpers::Search
+
   include Spree::Core::ControllerHelpers::Store
   include Spree::Core::ControllerHelpers::StrongParameters
 

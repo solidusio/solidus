@@ -9,6 +9,12 @@ module Spree
         attr_accessor :pricing_options
 
         def initialize(params)
+          Spree::Deprecation.warn(
+            'This class will be moving the to solidus_frontend gem,
+            If you have not already done so, please update to the latest
+            solidus_frontend version which will remove this deprication flag'
+          )
+
           self.pricing_options = Spree::Config.default_pricing_options
           @properties = {}
           prepare(params)

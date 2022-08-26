@@ -11,6 +11,8 @@ RSpec.describe Spree::Core::ControllerHelpers::Search, type: :controller do
 
   describe '#build_searcher' do
     it 'returns Spree::Core::Search::Base instance' do
+      expect(Spree::Deprecation).to receive(:warn).exactly(3).times
+
       allow(controller).to receive_messages(
         spree_current_user: create(:user),
         current_pricing_options: Spree::Config.pricing_options_class.new(currency: 'USD')

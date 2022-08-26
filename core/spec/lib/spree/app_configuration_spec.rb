@@ -21,6 +21,7 @@ RSpec.describe Spree::AppConfiguration do
   end
 
   it "uses base searcher class by default" do
+    expect(Spree::Deprecation).to receive(:warn)
     expect(prefs.searcher_class).to eq Spree::Core::Search::Base
   end
 
