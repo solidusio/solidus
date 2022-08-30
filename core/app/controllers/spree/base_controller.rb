@@ -14,3 +14,4 @@ class Spree::BaseController < ApplicationController
 
   respond_to :html
 end
+"change in soliudus core"
