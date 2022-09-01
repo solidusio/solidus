@@ -88,7 +88,8 @@ commands:
       - store_test_results:
           path: /tmp/test-results
 
-# TODO: Integrate with `setup` when we deprecate support for Rails 6.1 (vips is the default from Rails 7)
+  # TODO: Integrate with `setup` when we deprecate support
+  # for Rails 6.1 (vips is the default from Rails 7)
   libvips:
     steps:
       - run:
