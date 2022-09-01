@@ -17,16 +17,10 @@ end
 # and https://github.com/rails/sprockets-rails/issues/369
 gem 'sprockets', '~> 3'
 
-if /mysql/.match?(ENV['DB']) || ENV['DB_ALL']
-  gem 'mysql2', '~> 0.5.0', require: false
-end
-if /postgres/.match?(ENV['DB']) || ENV['DB_ALL']
-  gem 'pg', '~> 1.0', require: false
-end
-if ENV['DB_ALL'] || !/mysql|postgres/.match?(ENV['DB'])
-  gem 'sqlite3', require: false
-  gem 'fast_sqlite', require: false
-end
+dbs = ENV['DB_ALL'] ? 'all' : ENV.fetch('DB', 'sqlite')
+gem 'mysql2', '~> 0.5.0', require: false if dbs.match?(/all|mysql/)
+gem 'pg', '~> 1.0', require: false if dbs.match?(/all|postgres/)
+gem 'fast_sqlite', require: false if dbs.match?(/all|sqlite/)
 
 gem 'database_cleaner', '~> 1.3', require: false
 gem 'rspec-activemodel-mocks', '~> 1.1', require: false
