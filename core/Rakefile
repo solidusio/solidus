@@ -14,8 +14,12 @@ DummyApp::RakeTasks.new(
   lib_name: 'solidus_core'
 )
 
-require 'yard'
-YARD::Rake::YardocTask.new
+require 'yard/rake/yardoc_task'
+YARD::Rake::YardocTask.new(:yard)
+# The following workaround can be removed
+# once https://github.com/lsegal/yard/pull/1457 is merged.
+task('yard:require') { require 'yard' }
+task yard: 'yard:require'
 
 namespace :spec do
   task :isolated do
