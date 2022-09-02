@@ -2294,7 +2294,7 @@ en:
     tax_category: Tax Category
     tax_code: Tax Code
     tax_included: Tax (incl.)
-    tax_rate_amount_explanation: Tax rates are a decimal amount to aid in calculations, (i.e. if the tax rate is 5% then enter 0.05)
+    tax_rate_amount_explanation: When using the "Default Tax" calculator, the amount is treated as a decimal amount to aid in calculations. (i.e. If the tax rate is 5% then enter 0.05) If using the "Flat Fee" calculator, the amount is used for the static fee.
     tax_rate_level: Tax Rate Level
     tax_rates: Tax Rates
     taxon: Taxon
