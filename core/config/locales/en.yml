@@ -527,6 +527,9 @@ en:
       spree/calculator/distributed_amount:
         one: Distributed Amount
         other: Distributed Amount
+      spree/calculator/flat_fee:
+        one: Flat Fee
+        other: Flat Fee
       spree/calculator/flat_percent_item_total:
         one: Flat Percent
         other: Flat Percent
@@ -1600,7 +1603,7 @@ en:
       spree/calculator:
         promotions: This is used to determine the promotional discount to be applied to an order, an item, or shipping charges.
         shipping_methods: This is used to calculate the shipping rates on a per order or per package rate.
-        tax_rates: This is used to calculate both sales tax (United States-style taxes) and value-added tax (VAT). Typically this calculator should be the only tax calculator required by your store.
+        tax_rates: The "Default Tax" calculator is used for both sales tax (United States-style taxes) and value-added tax (VAT). Typically this calculator should be the only tax calculator required by your store. "Flat Fee" can be used for any taxes that require a flat fee be charged to the customer.
       spree/price:
         country: 'This determines in what country the price is valid.<br/>Default: Any Country'
         master_variant: Changing master variant prices will not change variant prices below, but will be used to populate all new variants
