@@ -67,9 +67,9 @@ Spree.Models.ImageUpload = Backbone.Model.extend({
         }
         return xhr;
       }
-    }).done(function() {
+    }).then(function() {
       that.set({progress: 100})
-    }).error(function(jqXHR, textStatus, errorThrown) {
+    }).catch(function() {
       that.set({serverError: true});
     });
   }
