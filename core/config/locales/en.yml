@@ -1631,6 +1631,7 @@ en:
       spree/tax_category:
         is_default: When checked, this tax category will be selected by default when creating new products or variants.
       spree/tax_rate:
+        tax_rate_level: Item-level taxes will be applied as adjustments on line items and shipments. Order-level taxes will create an adjustment on the order. Care should be taken when chosing order-level adjustments as they aren't considered in refunds or in discounts. The default is item-level.
         validity_period: This determines the validity period within which the tax rate is valid and will be applied to eligible items. <br /> If no start date value is specified, the tax rate will be immediately available. <br /> If no expiration date value is specified, the tax rate will never expire
       spree/variant:
         deleted: Deleted Variant
@@ -1694,6 +1695,7 @@ en:
     iso_name: Iso Name
     item: Item
     item_description: Item Description
+    item_level: Item-level
     item_total: Item Total
     item_total_rule:
       operators:
@@ -1872,6 +1874,7 @@ en:
     order_details: Order Details
     order_email_resent: Order Email Resent
     order_information: Order Information
+    order_level: Order-level
     order_mailer:
       cancel_email:
         dear_customer: Dear Customer,
@@ -2289,6 +2292,7 @@ en:
     tax_code: Tax Code
     tax_included: Tax (incl.)
     tax_rate_amount_explanation: Tax rates are a decimal amount to aid in calculations, (i.e. if the tax rate is 5% then enter 0.05)
+    tax_rate_level: Tax Rate Level
     tax_rates: Tax Rates
     taxon: Taxon
     taxon_attachment_removal_error: There was an error removing the attachment
