@@ -26,6 +26,7 @@ module Spree
     #  or its subclasses. The controller will be passed to each rule for matching.
     def initialize(controller)
       @controller = controller
+      Spree::Deprecation.warn("This class will be removed without replacement on the release of Solidus 4.0")
     end
 
     # Stores into session[:spree_user_return_to] the request full path for

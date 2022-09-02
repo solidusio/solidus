@@ -57,6 +57,11 @@ module Spree
         end
 
         def store_location
+          Spree::Deprecation.warn <<~MSG
+            store_location is being deprecated in solidus 4.0
+            without replacement
+          MSG
+
           Spree::UserLastUrlStorer.new(self).store_location
         end
 
