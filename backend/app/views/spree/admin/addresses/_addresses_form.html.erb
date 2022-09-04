@@ -13,7 +13,7 @@
     <fieldset class="no-border-bottom">
       <legend align="center"><%= t('spree.shipping_address') %></legend>
       <%= f.fields_for :ship_address, @user.ship_address || Spree::Address.build_default do |sa_form| %>
-      <%= render partial: 'spree/admin/shared/address_form', locals: { f: sa_form, type: "shipping" } %>
+        <%= render partial: 'spree/admin/shared/address_form', locals: { f: sa_form, type: "shipping" } %>
       <% end %>
     </fieldset>
   </div>

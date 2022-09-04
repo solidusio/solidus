@@ -168,6 +168,7 @@ Spree::Core::Engine.routes.draw do
       member do
         get :orders
         get :items
+        put :addresses
       end
 
       get 'addresses', action: :show, controller: 'addresses', as: :addresses

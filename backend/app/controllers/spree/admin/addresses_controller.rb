@@ -23,10 +23,6 @@ module Spree
         end
       end
 
-      def model_class
-        Spree.user_class
-      end
-
       private
 
       def initial_user
