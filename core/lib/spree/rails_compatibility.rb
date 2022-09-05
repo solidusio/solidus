@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'rails/gem_version'
+
 module Spree
   # Supported Rails versions compatibility
   #
@@ -45,6 +47,28 @@ module Spree
         Rails.application.config.i18n.raise_on_missing_translations = value
       else
         Rails.application.config.action_view.raise_on_missing_translations = value
+      end
+    end
+
+    # Set default image attachment adapter
+    #
+    # TODO: Remove when deprecating Rails 6.0
+    def self.default_image_attachment_module
+      if version_gte?("6.1")
+        "Spree::Image::ActiveStorageAttachment"
+      else
+        "Spree::Image::PaperclipAttachment"
+      end
+    end
+
+    # Set default taxon attachment adapter
+    #
+    # TODO: Remove when deprecating Rails 6.0
+    def self.default_taxon_attachment_module
+      if version_gte?("6.1")
+        "Spree::Taxon::ActiveStorageAttachment"
+      else
+        "Spree::Taxon::PaperclipAttachment"
       end
     end
 
