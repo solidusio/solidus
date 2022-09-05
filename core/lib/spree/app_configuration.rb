@@ -21,6 +21,7 @@ require "spree/core/search/base"
 require "spree/core/search/variant"
 require 'spree/preferences/configuration'
 require 'spree/core/environment'
+require 'rails/gem_version'
 
 module Spree
   class AppConfiguration < Preferences::Configuration
@@ -481,7 +482,7 @@ module Spree
     # @!attribute [rw] image_attachment_module
     # @return [Module] a module that can be included into Spree::Image to allow attachments
     # Enumerable of images adhering to the present_image_class interface
-    class_name_attribute :image_attachment_module, default: 'Spree::Image::ActiveStorageAttachment'
+    class_name_attribute :image_attachment_module, default: Rails.gem_version >= Gem::Version.new("6.1.0") ? "Spree::Image::ActiveStorageAttachment" : "Spree::Image::PaperclipAttachment"
 
     # @!attribute [rw] allowed_image_mime_types
     #
@@ -539,7 +540,7 @@ module Spree
     # @!attribute [rw] taxon_attachment_module
     # @return [Module] a module that can be included into Spree::Taxon to allow attachments
     # Enumerable of taxons adhering to the present_taxon_class interface
-    class_name_attribute :taxon_attachment_module, default: 'Spree::Taxon::ActiveStorageAttachment'
+    class_name_attribute :taxon_attachment_module, default: Rails.gem_version >= Gem::Version.new("6.1.0") ? "Spree::Taxon::ActiveStorageAttachment" : "Spree::Taxon::PaperclipAttachment"
 
     # Allows providing your own class instance for generating order numbers.
     #
