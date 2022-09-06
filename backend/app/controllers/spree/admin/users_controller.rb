@@ -103,10 +103,6 @@ module Spree
           attributes |= [:email]
         end
 
-        if can? :manage, Spree::Role
-          attributes += [{ spree_role_ids: [] }]
-        end
-
         if can? :manage, Spree::StockLocation
           attributes += [{ stock_location_ids: [] }]
         end
@@ -142,9 +138,13 @@ module Spree
       end
 
       def set_roles
-        if user_params[:spree_role_ids]
-          @user.spree_roles = Spree::Role.accessible_by(current_ability).where(id: user_params[:spree_role_ids])
-        end
+        roles_ids = params[:user][:spree_role_ids]
+        return unless roles_ids
+
+        @user.update_spree_roles(
+          Spree::Role.where(id: roles_ids),
+          ability: current_ability
+        )
       end
 
       def set_stock_locations

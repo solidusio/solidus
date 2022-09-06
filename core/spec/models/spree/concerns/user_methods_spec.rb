@@ -21,6 +21,52 @@ RSpec.describe Spree::UserMethods do
     end
   end
 
+  describe '#update_spree_roles' do
+    let(:ability) do
+      Class.new do
+        include CanCan::Ability
+
+        def initialize(_user)
+          can :manage, ::Spree::Role, name: 'accessible_role'
+        end
+      end.new(:user)
+    end
+    let!(:accessible_role) { create(:role, name: 'accessible_role') }
+    let!(:non_accessible_role) { create(:role, name: 'non_accessible_role') }
+
+    it 'can add accessible roles' do
+      user = create(:user, spree_roles: [])
+
+      user.update_spree_roles([accessible_role], ability: ability)
+
+      expect(user.reload.spree_roles).to eq([accessible_role])
+    end
+
+    it 'can remove accessible roles' do
+      user = create(:user, spree_roles: [accessible_role])
+
+      user.update_spree_roles([], ability: ability)
+
+      expect(user.reload.spree_roles).to eq([])
+    end
+
+    it "can't add non accessible roles" do
+      user = create(:user, spree_roles: [])
+
+      user.update_spree_roles([non_accessible_role], ability: ability)
+
+      expect(user.reload.spree_roles).to eq([])
+    end
+
+    it "can't remove non accessible roles" do
+      user = create(:user, spree_roles: [non_accessible_role])
+
+      user.update_spree_roles([], ability: ability)
+
+      expect(user.reload.spree_roles).to eq([non_accessible_role])
+    end
+  end
+
   describe '#last_incomplete_spree_order' do
     subject { test_user.last_incomplete_spree_order }
 
