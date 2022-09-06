@@ -11,6 +11,7 @@ executors:
       SOLIDUS_RAISE_DEPRECATIONS: true
       CIRCLE_TEST_REPORTS: /tmp/test-results
       CIRCLE_ARTIFACTS: /tmp/test-artifacts
+      BUNDLE_WITHOUT: "utils"
     docker:
       - image: &image cimg/ruby:2.7-browsers
 
@@ -88,7 +89,8 @@ commands:
       - store_test_results:
           path: /tmp/test-results
 
-# TODO: Integrate with `setup` when we deprecate support for Rails 6.1 (vips is the default from Rails 7)
+  # TODO: Integrate with `setup` when we deprecate support
+  # for Rails 6.1 (vips is the default from Rails 7)
   libvips:
     steps:
       - run:
