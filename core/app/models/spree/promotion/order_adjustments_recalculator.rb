@@ -4,7 +4,11 @@ module Spree
   class Promotion < Spree::Base
 
     # This class encapsulates all the things the promotion system does to
-    # an order.
+    # an order. It is called from the `Spree::OrderUpdater` before taxes are
+    # calculated, such that taxes always respect promotions.
+
+    # This class iterates over all existing promotion adjustments and recalculates
+    # their amount and eligibility using their adjustment source.
     class OrderAdjustmentsRecalculator
       def initialize(order)
         @order = order
