@@ -30,7 +30,7 @@ module Solidus
           end
         end
 
-        @generator_context.generate('solidus_frontend:install')
+        @generator_context.generate("solidus_frontend:install #{@generator_context.options[:auto_accept] ? '--auto-accept' : ''}")
       end
 
       def install_solidus_starter_frontend(installer_adds_auth)
