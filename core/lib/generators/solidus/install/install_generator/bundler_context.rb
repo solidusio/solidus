@@ -62,9 +62,9 @@ module Solidus
       end
 
       def break_down_components(components)
-        raise <<~MSG  unless solidus_in_gemfile?
-          solidus meta gem needs to be present in the Gemfile to build the component dependency
-        MSG
+        unless solidus_in_gemfile?
+          raise "solidus meta gem needs to be present in the Gemfile to build the component dependency"
+        end
 
         @injector.inject(
           components.map { |component| dependency_for_component(component) }
