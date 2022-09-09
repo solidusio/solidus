@@ -361,6 +361,14 @@ describe Spree::Admin::UsersController, type: :controller do
         put :update, params: { id: user.id, user: { spree_role_ids: [role1.id, role2.id] } }
         expect(user.reload.spree_roles).to eq([role1])
       end
+
+      it "can't remove non accessible roles when assigning accessible ones" do
+        role1 = Spree::Role.create(name: "accessible_role")
+        role2 = Spree::Role.create(name: "not_accessible_role")
+        user.spree_roles << role2
+        put :update, params: { id: user.id, user: { spree_role_ids: [role1.id] } }
+        expect(user.reload.spree_roles).to match_array([role1, role2])
+      end
     end
 
     context "allowed to update email" do

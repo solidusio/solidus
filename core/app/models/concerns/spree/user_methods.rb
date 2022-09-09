@@ -90,6 +90,21 @@ module Spree
       orders.none?
     end
 
+    # Updates the roles in keeping with the given ability's permissions
+    #
+    # Roles that are not accessible to the given ability will be ignored. It
+    # also ensure not to remove non accessible roles when assigning new
+    # accessible ones.
+    #
+    # @param given_roles [Spree::Role]
+    # @param ability [Spree::Ability]
+    def update_spree_roles(given_roles, ability:)
+      accessible_roles = Spree::Role.accessible_by(ability)
+      non_accessible_roles = Spree::Role.all - accessible_roles
+      new_accessible_roles = given_roles - non_accessible_roles
+      self.spree_roles = spree_roles - accessible_roles + new_accessible_roles
+    end
+
     private
 
     def check_for_deletion
