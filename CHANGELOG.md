@@ -1,5 +1,15 @@
 ## Solidus 3.3.0 (master, unreleased)
 
+## Solidus 3.2.2 (v3.2, 2022-09-09)
+
+- Don't remove non-accessible roles when assigning new accessible roles ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Delegate `--auto-accept` installer option to solidus_frontend ([waiting-for-dev](https://github.com/waiting-for-dev))
+
+## Solidus 3.2.1 (v3.2, 2022-09-09)
+
+- [v3.2] Only default to activestorage adapter if Rails version is supported [#4564](https://github.com/solidusio/solidus/pull/4564) ([tvdeyen](https://github.com/tvdeyen))
+- Remove duplicated attributes from API docs ([kennyadsl](https://github.com/kennyadsl))
+
 ## Solidus 3.2.0 (v3.2, 2022-08-18)
 
 Remember to run `bin/rails g solidus:update` to support you during the upgrade
