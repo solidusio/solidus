@@ -3,6 +3,7 @@
 # Used in the sandbox rake task in Rakefile
 
 set -e
+test -z "${DEBUG+empty_string}" || set -x
 
 case "$DB" in
 postgres|postgresql)
