@@ -90,9 +90,9 @@ unbundled bundle install --gemfile Gemfile
 unbundled bin/rails db:drop db:create
 unbundled bin/rails generate solidus:install \
   --auto-accept \
-  --user_class=Spree::User \
-  --enforce_available_locales=true \
-  --with_authentication=false
+  --user-class=Spree::User \
+  --enforce-available-locales=true \
+  --with-authentication=false \
   $@
 
 unbundled bin/rails generate solidus:auth:install \
