@@ -100,30 +100,26 @@ var ShipmentSplitItemView = Backbone.View.extend({
       variant_id: this.variant.id,
       quantity: quantity
     };
-    var jqXHR;
+    var path;
     if (target_type == 'stock_location') {
       // transfer to a new location
       split_attr.stock_location_id = target_id;
-      jqXHR = Spree.ajax({
-        type: "POST",
-        url: Spree.pathFor('api/shipments/transfer_to_location'),
-        data: split_attr
-      });
+      path = Spree.pathFor("api/shipments/transfer_to_location");
     } else if (target_type == 'shipment') {
       // transfer to an existing shipment
       split_attr.target_shipment_number = target_id;
-      jqXHR = Spree.ajax({
-        type: "POST",
-        url: Spree.pathFor('api/shipments/transfer_to_shipment'),
-        data: split_attr
-      });
+      path = Spree.pathFor('api/shipments/transfer_to_shipment');
     } else {
       alert('Please select the split destination.');
       return false;
     }
-    jqXHR.error(function(msg) {
+    Spree.ajax({
+      type: "POST",
+      url: path,
+      data: split_attr
+    }).fail(function(msg) {
       alert(Spree.t("split_failed"));
-    }).done(function(response) {
+    }).then(function(response) {
       if (response.success) {
         window.Spree.advanceOrder();
       } else {
