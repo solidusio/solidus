@@ -343,6 +343,9 @@ module Spree
     # promotion_chooser_class allows extensions to provide their own PromotionChooser
     class_name_attribute :promotion_chooser_class, default: 'Spree::PromotionChooser'
 
+    # promotion_adjuster_class allows extensions to provide their own Promotion Adjuster
+    class_name_attribute :promotion_adjuster_class, default: 'Spree::Promotion::OrderAdjustmentsRecalculator'
+
     class_name_attribute :allocator_class, default: 'Spree::Stock::Allocator::OnHandFirst'
 
     class_name_attribute :shipping_rate_sorter_class, default: 'Spree::Stock::ShippingRateSorter'
