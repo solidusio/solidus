@@ -2,6 +2,11 @@
 
 if ENV["COVERAGE"]
   require 'simplecov'
+  if ENV["COVERAGE_DIR"]
+    SimpleCov.coverage_dir(ENV["COVERAGE_DIR"])
+  end
+  SimpleCov.command_name('solidus:api')
+  SimpleCov.merge_timeout(3600)
   SimpleCov.start('rails')
 end
 

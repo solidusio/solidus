@@ -102,3 +102,19 @@ namespace :gem do
     end
   end
 end
+
+namespace :solidus do
+  desc "Report code coverage results for all solidus gems"
+  task :coverage, [:formatter] do |task, args|
+    require "simplecov"
+    SimpleCov.merge_timeout 3600
+    if ENV["COVERAGE_DIR"]
+      SimpleCov.coverage_dir(ENV["COVERAGE_DIR"])
+    end
+    if args[:formatter] == "cobertura"
+      require "simplecov-cobertura"
+      SimpleCov.formatter = SimpleCov::Formatter::CoberturaFormatter
+    end
+    SimpleCov.result.format!
+  end
+end
