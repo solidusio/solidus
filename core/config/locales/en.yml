@@ -816,6 +816,7 @@ en:
       line_item: "%{promotion} (%{promotion_name})"
       order: "%{promotion} (%{promotion_name})"
       tax_rates:
+        flat_fee: "%{name}"
         sales_tax: "%{name}"
         sales_tax_with_rate: "%{name} %{amount}"
         vat: "%{name} (Included in Price)"
