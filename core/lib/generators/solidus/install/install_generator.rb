@@ -1,14 +1,17 @@
 # frozen_string_literal: true
 
-require 'rails/generators'
 require 'rails/version'
+require 'rails/generators'
+require 'rails/generators/app_base'
 require_relative 'install_generator/bundler_context'
 require_relative 'install_generator/support_solidus_frontend_extraction'
 require_relative 'install_generator/install_frontend'
 
 module Solidus
   # @private
-  class InstallGenerator < Rails::Generators::Base
+  class InstallGenerator < Rails::Generators::AppBase
+    argument :app_path, type: :string, default: Rails.root
+
     CORE_MOUNT_ROUTE = "mount Spree::Core::Engine"
 
     LEGACY_FRONTEND = 'solidus_frontend'
@@ -153,7 +156,7 @@ module Solidus
         gem plugin_name
       end
 
-      BundlerContext.bundle_cleanly { run "bundle install" } if @plugins_to_be_installed.any?
+      run_bundle if @plugins_to_be_installed.any?
       run "spring stop" if defined?(Spring)
 
       @plugin_generators_to_run.each do |plugin_generator_name|

@@ -42,7 +42,7 @@ module Solidus
           BundlerContext.bundle_cleanly { `bundle add solidus_auth_devise` }
           @generator_context.generate('solidus:auth:install --auto-run-migrations')
         end
-        `LOCATION="https://raw.githubusercontent.com/solidusio/solidus_starter_frontend/main/template.rb" bin/rails app:template`
+        @generator_context.apply "https://raw.githubusercontent.com/solidusio/solidus_starter_frontend/main/template.rb"
       end
 
       def auth_present?(installer_adds_auth)
