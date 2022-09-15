@@ -19,6 +19,20 @@
               <%= t('spree.included_in_price') %>
             </label>
           </div>
+          <div data-hook="level" class="field">
+            <%= f.label :level, t('spree.tax_rate_level') %>
+            <%= admin_hint t('spree.tax_rate_level'), t(:tax_rate_level, scope: [:spree, :hints, "spree/tax_rate"]) %>
+            <ul>
+              <% Spree::TaxRate.levels.keys.each do |level| %>
+                <li>
+                  <label>
+                    <%= f.radio_button :level, level %>
+                    <%= t("spree.#{level}_level") %>
+                  </label>
+                </li>
+              <% end %>
+            </ul>
+          </div>
         </div>
 
         <div class="col-5">

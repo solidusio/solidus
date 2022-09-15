@@ -52,5 +52,29 @@ RSpec.describe Spree::TaxCalculator::Default do
     it "has tax information for the shipments" do
       expect(calculated_taxes.shipment_taxes).to be_empty
     end
+
+    context "with a flat order-level fee" do
+      let!(:flat_fee_rate) do
+        FactoryBot.create(
+          :tax_rate,
+          name: "Flat Book Fee",
+          tax_categories: [books_category],
+          calculator: FactoryBot.build(:flat_fee_calculator),
+          zone: new_york_zone,
+          amount: 0.27,
+          show_rate_in_label: false,
+          level: "order"
+        )
+      end
+
+      it "has tax information for the order", aggregate_failures: true do
+        expect(calculated_taxes.order_taxes.count).to eq 1
+
+        order_tax = calculated_taxes.order_taxes.first
+        expect(order_tax.amount).to eq 0.27
+        expect(order_tax.tax_rate).to eq flat_fee_rate
+        expect(order_tax.label).to eq "Flat Book Fee"
+      end
+    end
   end
 end

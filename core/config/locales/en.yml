@@ -527,6 +527,9 @@ en:
       spree/calculator/distributed_amount:
         one: Distributed Amount
         other: Distributed Amount
+      spree/calculator/flat_fee:
+        one: Flat Fee
+        other: Flat Fee
       spree/calculator/flat_percent_item_total:
         one: Flat Percent
         other: Flat Percent
@@ -813,6 +816,7 @@ en:
       line_item: "%{promotion} (%{promotion_name})"
       order: "%{promotion} (%{promotion_name})"
       tax_rates:
+        flat_fee: "%{name}"
         sales_tax: "%{name}"
         sales_tax_with_rate: "%{name} %{amount}"
         vat: "%{name} (Included in Price)"
@@ -1600,7 +1604,7 @@ en:
       spree/calculator:
         promotions: This is used to determine the promotional discount to be applied to an order, an item, or shipping charges.
         shipping_methods: This is used to calculate the shipping rates on a per order or per package rate.
-        tax_rates: This is used to calculate both sales tax (United States-style taxes) and value-added tax (VAT). Typically this calculator should be the only tax calculator required by your store.
+        tax_rates: The "Default Tax" calculator is used for both sales tax (United States-style taxes) and value-added tax (VAT). Typically this calculator should be the only tax calculator required by your store. "Flat Fee" can be used for any taxes that require a flat fee be charged to the customer.
       spree/price:
         country: 'This determines in what country the price is valid.<br/>Default: Any Country'
         master_variant: Changing master variant prices will not change variant prices below, but will be used to populate all new variants
@@ -1631,6 +1635,7 @@ en:
       spree/tax_category:
         is_default: When checked, this tax category will be selected by default when creating new products or variants.
       spree/tax_rate:
+        tax_rate_level: Item-level taxes will be applied as adjustments on line items and shipments. Order-level taxes will create an adjustment on the order. Care should be taken when chosing order-level adjustments as they aren't considered in refunds or in discounts. The default is item-level.
         validity_period: This determines the validity period within which the tax rate is valid and will be applied to eligible items. <br /> If no start date value is specified, the tax rate will be immediately available. <br /> If no expiration date value is specified, the tax rate will never expire
       spree/variant:
         deleted: Deleted Variant
@@ -1694,6 +1699,7 @@ en:
     iso_name: Iso Name
     item: Item
     item_description: Item Description
+    item_level: Item-level
     item_total: Item Total
     item_total_rule:
       operators:
@@ -1872,6 +1878,7 @@ en:
     order_details: Order Details
     order_email_resent: Order Email Resent
     order_information: Order Information
+    order_level: Order-level
     order_mailer:
       cancel_email:
         dear_customer: Dear Customer,
@@ -2288,7 +2295,8 @@ en:
     tax_category: Tax Category
     tax_code: Tax Code
     tax_included: Tax (incl.)
-    tax_rate_amount_explanation: Tax rates are a decimal amount to aid in calculations, (i.e. if the tax rate is 5% then enter 0.05)
+    tax_rate_amount_explanation: When using the "Default Tax" calculator, the amount is treated as a decimal amount to aid in calculations. (i.e. If the tax rate is 5% then enter 0.05) If using the "Flat Fee" calculator, the amount is used for the static fee.
+    tax_rate_level: Tax Rate Level
     tax_rates: Tax Rates
     taxon: Taxon
     taxon_attachment_removal_error: There was an error removing the attachment
