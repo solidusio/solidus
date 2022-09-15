@@ -14,9 +14,9 @@ module Solidus
     LEGACY_FRONTEND = 'solidus_frontend'
     DEFAULT_FRONTEND = 'solidus_starter_frontend'
     FRONTENDS = {
-      'none' => "#{__dir__}/frontend_templates/none.rb",
-      'solidus_frontend' => "#{__dir__}/frontend_templates/solidus_frontend.rb",
-      'solidus_starter_frontend' => "#{__dir__}/frontend_templates/solidus_starter_frontend.rb",
+      'none' => "#{__dir__}/app_templates/frontend/none.rb",
+      'solidus_frontend' => "#{__dir__}/app_templates/frontend/solidus_frontend.rb",
+      'solidus_starter_frontend' => "#{__dir__}/app_templates/frontend/solidus_starter_frontend.rb",
     }
 
     class_option :migrate, type: :boolean, default: true, banner: 'Run Solidus migrations'
