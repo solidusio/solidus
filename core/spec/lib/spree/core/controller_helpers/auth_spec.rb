@@ -17,7 +17,7 @@ RSpec.describe Spree::Core::ControllerHelpers::Auth, type: :controller do
   describe '#redirect_back_or_default' do
     before do
       def controller.index
-        redirect_back_or_default('/')
+        Spree::Deprecation.silence { redirect_back_or_default('/') }
       end
     end
 
@@ -29,6 +29,11 @@ RSpec.describe Spree::Core::ControllerHelpers::Auth, type: :controller do
     it 'redirects to default page' do
       get :index
       expect(response).to redirect_to('/')
+    end
+
+    it 'is deprecated' do
+      expect(Spree::Deprecation).to receive(:warn)
+      get :index
     end
   end
 
@@ -69,7 +74,7 @@ RSpec.describe Spree::Core::ControllerHelpers::Auth, type: :controller do
   describe '#store_location' do
     it 'sets session return url' do
       allow(controller).to receive_messages(request: double(fullpath: '/redirect'))
-      controller.store_location
+      Spree::Deprecation.silence { controller.store_location }
       expect(session[:spree_user_return_to]).to eq '/redirect'
     end
   end

@@ -27,6 +27,11 @@ RSpec.describe Spree::UserLastUrlStorer do
     described_class.rules.delete('CustomRule')
   end
 
+  it 'is deprecated' do
+    expect(Spree::Deprecation).to receive(:warn)
+    described_class.new(controller)
+  end
+
   describe '::rules' do
     it 'includes default rules' do
       rule = Spree::UserLastUrlStorer::Rules::AuthenticationRule
@@ -43,7 +48,7 @@ RSpec.describe Spree::UserLastUrlStorer do
     context 'when at least one rule matches' do
       it 'does not set the path value into the session' do
         described_class.rules << CustomRule
-        subject.store_location
+        Spree::Deprecation.silence { subject.store_location }
         expect(session[:spree_user_return_to]).to be_nil
       end
     end
@@ -52,7 +57,7 @@ RSpec.describe Spree::UserLastUrlStorer do
       it 'sets the path value into the session' do
         described_class.rules << CustomRule
         described_class.rules.delete('CustomRule')
-        subject.store_location
+        Spree::Deprecation.silence { subject.store_location }
         expect(session[:spree_user_return_to]).to eql fullpath
       end
     end
