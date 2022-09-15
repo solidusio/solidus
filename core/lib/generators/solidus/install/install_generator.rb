@@ -22,7 +22,9 @@ module Solidus
     class_option :migrate, type: :boolean, default: true, banner: 'Run Solidus migrations'
     class_option :seed, type: :boolean, default: true, banner: 'Load seed data (migrations must be run)'
     class_option :sample, type: :boolean, default: true, banner: 'Load sample data (migrations must be run)'
-    class_option :active_storage, type: :boolean, default: Rails.gem_version >= Gem::Version.new("6.1.0"), banner: 'Install ActiveStorage as image attachments handler for products and taxons'
+    class_option :active_storage, type: :boolean, default: (
+      Rails.gem_version >= Gem::Version.new("6.1.0")
+    ), banner: 'Install ActiveStorage as image attachments handler for products and taxons'
     class_option :auto_accept, type: :boolean
     class_option :user_class, type: :string
     class_option :admin_email, type: :string
@@ -30,11 +32,7 @@ module Solidus
     class_option :lib_name, type: :string, default: 'spree'
     class_option :with_authentication, type: :boolean, default: true
     class_option :enforce_available_locales, type: :boolean, default: nil
-    class_option :frontend,
-                 type: :string,
-                 enum: FRONTENDS,
-                 default: nil,
-                 desc: "Indicates which frontend to install."
+    class_option :frontend, type: :string, enum: FRONTENDS, default: nil, desc: "Indicates which frontend to install."
 
     def self.source_paths
       paths = superclass.source_paths
@@ -61,10 +59,10 @@ module Solidus
 
     def install_file_attachment
       if options[:active_storage]
-        say "Installing Active Storage", :green
+        say_status :installing, "Active Storage", :green
         rake 'active_storage:install'
       else
-        say "Installing Paperclip", :green
+        say_status :installing, "Paperclip", :green
         gsub_file 'config/initializers/spree.rb', "ActiveStorageAttachment", "PaperclipAttachment"
       end
     end
@@ -105,9 +103,9 @@ module Solidus
 
     def configure_application
       if !options[:enforce_available_locales].nil?
-        application <<-RUBY
-    # Prevent this deprecation message: https://github.com/svenfuchs/i18n/commit/3b6e56e
-    I18n.enforce_available_locales = #{options[:enforce_available_locales]}
+        application <<~RUBY
+          # Prevent this deprecation message: https://github.com/svenfuchs/i18n/commit/3b6e56e
+          I18n.enforce_available_locales = #{options[:enforce_available_locales]}
         RUBY
       end
     end
@@ -133,7 +131,7 @@ module Solidus
     end
 
     def include_seed_data
-      append_file "db/seeds.rb", <<-RUBY.strip_heredoc
+      append_file "db/seeds.rb", <<~RUBY
 
         Spree::Core::Engine.load_seed if defined?(Spree::Core)
         Spree::Auth::Engine.load_seed if defined?(Spree::Auth)
@@ -142,7 +140,7 @@ module Solidus
 
     def install_migrations
       say_status :copying, "migrations"
-      `rake railties:install:migrations`
+      rake 'railties:install:migrations'
     end
 
     def create_database
@@ -191,7 +189,7 @@ module Solidus
 
     def populate_seed_data
       if @load_seed_data
-        say_status :loading,  "seed data"
+        say_status :loading, "seed data"
         rake_options = []
         rake_options << "AUTO_ACCEPT=1" if options[:auto_accept]
         rake_options << "ADMIN_EMAIL=#{options[:admin_email]}" if options[:admin_email]
@@ -237,12 +235,7 @@ module Solidus
     end
 
     def complete
-      unless options[:quiet]
-        puts "*" * 50
-        puts "Solidus has been installed successfully. You're all ready to go!"
-        puts " "
-        puts "Enjoy!"
-      end
+      say_status :complete, "Solidus has been installed successfully. Enjoy!"
     end
 
     private
