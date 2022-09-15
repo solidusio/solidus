@@ -3,9 +3,6 @@
 require 'rails/version'
 require 'rails/generators'
 require 'rails/generators/app_base'
-require_relative 'install_generator/bundler_context'
-require_relative 'install_generator/support_solidus_frontend_extraction'
-require_relative 'install_generator/install_frontend'
 
 module Solidus
   # @private
@@ -16,11 +13,11 @@ module Solidus
 
     LEGACY_FRONTEND = 'solidus_frontend'
     DEFAULT_FRONTEND = 'solidus_starter_frontend'
-    FRONTENDS = [
-      DEFAULT_FRONTEND,
-      LEGACY_FRONTEND,
-      'none'
-    ].freeze
+    FRONTENDS = {
+      'none' => "#{__dir__}/frontend_templates/none.rb",
+      'solidus_frontend' => "#{__dir__}/frontend_templates/solidus_frontend.rb",
+      'solidus_starter_frontend' => "#{__dir__}/frontend_templates/solidus_starter_frontend.rb",
+    }
 
     class_option :migrate, type: :boolean, default: true, banner: 'Run Solidus migrations'
     class_option :seed, type: :boolean, default: true, banner: 'Load seed data (migrations must be run)'
@@ -35,7 +32,7 @@ module Solidus
     class_option :lib_name, type: :string, default: 'spree'
     class_option :with_authentication, type: :boolean, default: true
     class_option :enforce_available_locales, type: :boolean, default: nil
-    class_option :frontend, type: :string, enum: FRONTENDS, default: nil, desc: "Indicates which frontend to install."
+    class_option :frontend, type: :string, enum: FRONTENDS.keys, default: nil, desc: "Indicates which frontend to install."
 
     def self.source_paths
       paths = superclass.source_paths
@@ -180,19 +177,16 @@ module Solidus
     end
 
     def install_frontend
-      return if options[:frontend] == 'none'
+      frontend_key = detect_frontend_to_install
 
-      bundler_context = BundlerContext.new
+      frontend_template = FRONTENDS.fetch(frontend_key.presence) do
+        say_status :warning, "Unknown frontend: #{frontend_key.inspect}, attempting to run it with `rails app:template`"
+        frontend_key
+      end
 
-      frontend = detect_frontend_to_install(bundler_context)
+      say_status :installing, frontend_key
 
-      support_solidus_frontend_extraction(bundler_context) unless frontend == LEGACY_FRONTEND
-
-      say_status :installing, frontend
-
-      InstallFrontend.
-        new(bundler_context: bundler_context, generator_context: self).
-        call(frontend, installer_adds_auth: @plugins_to_be_installed.include?('solidus_auth_devise'))
+      apply frontend_template
     end
 
     def run_migrations
@@ -240,26 +234,18 @@ module Solidus
       super(what, *args)
     end
 
-    def detect_frontend_to_install(bundler_context)
+    def detect_frontend_to_install
       ENV['FRONTEND'] ||
         options[:frontend] ||
-        (bundler_context.component_in_gemfile?(:frontend) && LEGACY_FRONTEND) ||
+        (Bundler.locked_gems.dependencies[LEGACY_FRONTEND] && LEGACY_FRONTEND) ||
         (options[:auto_accept] && DEFAULT_FRONTEND) ||
-        ask(<<~MSG.indent(8), limited_to: FRONTENDS, default: DEFAULT_FRONTEND)
+        ask(<<~MSG.indent(8), default: DEFAULT_FRONTEND)
 
           Which frontend would you like to use? solidus_starter_frontend is
           recommended. However, some extensions are still only compatible with
           the now deprecated solidus_frontend.
 
         MSG
-    end
-
-    def support_solidus_frontend_extraction(bundler_context)
-      say_status "break down", "solidus"
-
-      SupportSolidusFrontendExtraction.
-        new(bundler_context: bundler_context).
-        call
     end
   end
 end

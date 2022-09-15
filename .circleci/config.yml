@@ -197,6 +197,15 @@ jobs:
       - libvips
       - install_solidus:
           home_page_text: "The only eCommerce platform you’ll ever need."
+      - install_solidus:
+          flags: "--frontend=none"
+          home_page_text: "<title>Ruby on Rails"
+      - install_solidus:
+          flags: "--frontend=solidus_frontend"
+          home_page_text: "data-hook="
+      - install_solidus:
+          flags: "--frontend=solidus_starter_frontend"
+          home_page_text: "The only eCommerce platform you’ll ever need."
 
   postgres:
     executor: postgres
