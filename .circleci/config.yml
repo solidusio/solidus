@@ -123,22 +123,6 @@ commands:
           command: sudo apt-get install -y libvips
 
 jobs:
-  persist_version:
-    executor: base
-    steps:
-      - setup
-
-      - run:
-          name: Persist Solidus version
-          command: |
-            mkdir -p workspace
-            bundle exec ruby -e "puts Spree.solidus_gem_version.segments[0..1].join('.')" > workspace/solidus-version
-
-      - persist_to_workspace:
-          root: workspace
-          paths:
-            - solidus-version
-
   postgres:
     executor: postgres
     parallelism: &parallelism 3
@@ -208,10 +192,6 @@ jobs:
 workflows:
   build:
     jobs:
-      - persist_version:
-          filters:
-            branches:
-              only: /master|v\d\.\d+/
       - postgres:
           post-steps:
             - codecov/upload:
