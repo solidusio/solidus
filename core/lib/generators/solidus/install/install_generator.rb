@@ -19,6 +19,12 @@ module Solidus
       'solidus_starter_frontend' => "#{__dir__}/app_templates/frontend/solidus_starter_frontend.rb",
     }
 
+    DEFAULT_AUTHENTICATION = 'solidus_auth_devise'
+    AUTHENTICATIONS = {
+      'none' => "#{__dir__}/app_templates/authentication/none.rb",
+      'solidus_auth_devise' => "#{__dir__}/app_templates/authentication/solidus_auth_devise.rb",
+    }
+
     class_option :migrate, type: :boolean, default: true, banner: 'Run Solidus migrations'
     class_option :seed, type: :boolean, default: true, banner: 'Load seed data (migrations must be run)'
     class_option :sample, type: :boolean, default: true, banner: 'Load sample data (migrations must be run)'
@@ -33,6 +39,7 @@ module Solidus
     class_option :with_authentication, type: :boolean, default: true
     class_option :enforce_available_locales, type: :boolean, default: nil
     class_option :frontend, type: :string, enum: FRONTENDS.keys, default: nil, desc: "Indicates which frontend to install."
+    class_option :authentication, type: :string, enum: AUTHENTICATIONS.keys, default: nil, desc: "Indicates which authentication system to install."
 
     def self.source_paths
       paths = superclass.source_paths
@@ -56,6 +63,12 @@ module Solidus
 
       # No reason to check for their presence if we're about to install them
       ENV['SOLIDUS_SKIP_MIGRATIONS_CHECK'] = 'true'
+
+      if options[:authentication].blank? && !options[:with_authentication]
+        # Don't use the default authentication if the user explicitly
+        # requested no authentication system.
+        options[:authentication] = 'none'
+      end
 
       unless @run_migrations
         @load_seed_data = false
@@ -125,19 +138,17 @@ module Solidus
       @plugin_generators_to_run = []
     end
 
-    def install_auth_plugin
-      if options[:with_authentication] && (options[:auto_accept] || !no?("
-        Solidus has a default authentication extension that uses Devise.
-        You can find more info at https://github.com/solidusio/solidus_auth_devise.
+    def install_authentication
+      authentication_key = detect_authentication_to_install
 
-        Regardless of what you answer here, it'll be installed if you choose
-        solidus_starter_frontend as your storefront in a later step.
-
-        Would you like to install it? (Y/n)"))
-
-        @plugins_to_be_installed << 'solidus_auth_devise'
-        @plugin_generators_to_run << 'solidus:auth:install'
+      authentication_template = AUTHENTICATIONS.fetch(authentication_key.presence) do
+        say_status :warning, "Unknown authentication: #{authentication_key.inspect}, attempting to run it with `rails app:template`"
+        authentication_key
       end
+
+      say_status :auth, authentication_key
+
+      apply authentication_template
     end
 
     def include_seed_data
@@ -256,9 +267,22 @@ module Solidus
         (options[:auto_accept] && DEFAULT_FRONTEND) ||
         ask(<<~MSG.indent(8), default: DEFAULT_FRONTEND, limited_to: FRONTENDS.keys)
 
-          Which frontend would you like to use? solidus_starter_frontend is
-          recommended. However, some extensions are still only compatible with
-          the now deprecated solidus_frontend.
+          Which frontend would you like to use?
+          Selecting #{DEFAULT_FRONTEND} is recommended.
+          However, some extensions are still only compatible with the now deprecated #{LEGACY_FRONTEND}.
+
+        MSG
+    end
+
+    def detect_authentication_to_install
+      ENV['AUTHENTICATION'] ||
+        options[:authentication] ||
+        (Bundler.locked_gems.dependencies[DEFAULT_AUTHENTICATION] && DEFAULT_AUTHENTICATION) ||
+        (options[:auto_accept] && DEFAULT_AUTHENTICATION) ||
+        ask(<<~MSG.indent(8), default: DEFAULT_AUTHENTICATION, limited_to: AUTHENTICATIONS.keys)
+
+          Which authentication method would you like to use?
+          Selecting "#{DEFAULT_AUTHENTICATION}" is recommended.
 
         MSG
     end
