@@ -234,6 +234,12 @@ module Solidus
 
     private
 
+    def generate(what, *args)
+      args << '--auto-accept' if options[:auto_accept]
+      args << '--auto-run-migrations' if options[:migrate]
+      super(what, *args)
+    end
+
     def detect_frontend_to_install(bundler_context)
       ENV['FRONTEND'] ||
         options[:frontend] ||
