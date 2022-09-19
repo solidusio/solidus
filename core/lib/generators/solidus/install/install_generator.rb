@@ -48,8 +48,8 @@ module Solidus
       @load_sample_data = options[:sample]
 
       unless @run_migrations
-         @load_seed_data = false
-         @load_sample_data = false
+        @load_seed_data = false
+        @load_sample_data = false
       end
     end
 
