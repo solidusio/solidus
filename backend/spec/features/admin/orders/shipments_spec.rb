@@ -155,8 +155,12 @@ describe "Shipments", type: :feature do
         alert_text = page.driver.browser.switch_to.alert.text
         expect(alert_text).to include 'Please select the split destination'
         page.driver.browser.switch_to.alert.accept
+        find('#item_quantity').fill_in(with: 'text')
         find('.select2-container').click
         find(:xpath, '//body').all('.select2-drop li.select2-result', text: "#{location_name} (0 on hand)")[1].click
+        find('.save-split').click
+        accept_alert 'Quantity must be greater than 0' # Test Ajax error handling
+        find('#item_quantity').fill_in(with: '1')
         find('.save-split').click
       end
       expect(page).to have_content /Pending package from '#{location_name}'/i

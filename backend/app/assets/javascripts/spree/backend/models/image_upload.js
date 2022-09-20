@@ -56,7 +56,7 @@ Spree.Models.ImageUpload = Backbone.Model.extend({
       processData: false,  // tell jQuery not to process the data
       contentType: false,  // tell jQuery not to set contentType
       xhr: function () {
-        var xhr = $.ajaxSettings.xhr();
+        var xhr = $.ajaxSetup.xhr(); // Using default ajax builder but inputting upload settings
         if (xhr.upload) {
           xhr.upload.onprogress = function (event) {
             if (event.lengthComputable) {
@@ -67,9 +67,9 @@ Spree.Models.ImageUpload = Backbone.Model.extend({
         }
         return xhr;
       }
-    }).done(function() {
+    }).then(function() {
       that.set({progress: 100})
-    }).error(function(jqXHR, textStatus, errorThrown) {
+    }).fail(function() {
       that.set({serverError: true});
     });
   }
