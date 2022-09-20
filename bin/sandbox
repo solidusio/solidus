@@ -55,7 +55,6 @@ cd ./sandbox
 cat <<RUBY >> Gemfile
 
 gem 'solidus', path: '..'
-gem 'solidus_auth_devise', '>= 2.1.0'
 gem 'rails-i18n'
 gem 'solidus_i18n'
 
@@ -91,13 +90,8 @@ unbundled bundle install --gemfile Gemfile
 unbundled bin/rails db:drop db:create
 unbundled bin/rails generate solidus:install \
   --auto-accept \
-  --user-class=Spree::User \
   --enforce-available-locales=true \
-  --with-authentication=false \
   $@
-
-unbundled bin/rails generate solidus:auth:install \
-  --auto_run_migrations=true
 
 echo "
 🚀 This app is intended for test purposes. If you're interested in running
