@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Spree
-  VERSION = "3.1.7"
+  VERSION = "3.1.8"
 
   def self.solidus_version
     VERSION
