@@ -335,6 +335,36 @@ end
 - [Doc] Good commit message link fixed [#4186](https://github.com/solidusio/solidus/pull/4186) ([shubham9411](https://github.com/shubham9411))
 - Bump axios from 0.21.1 to 0.21.2 in /guides [#4171](https://github.com/solidusio/solidus/pull/4171) ([dependabot](https://github.com/apps/dependabot))
 
+## Solidus 3.1.8 (v3.1, 2022-09-22)
+
+- [v3.1] Only default to activestorage adapter if Rails version is supported [#4565](https://github.com/solidusio/solidus/pull/4565) ([tvdeyen](https://github.com/tvdeyen))
+- Fix key in the locale file [#4513](https://github.com/solidusio/solidus/pull/4513) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- [v3.1] Translate price country names [#4509](https://github.com/solidusio/solidus/pull/4509) ([tvdeyen](https://github.com/tvdeyen))
+- [v3.1] Fix admin variants table UX [#4506](https://github.com/solidusio/solidus/pull/4506) ([tvdeyen](https://github.com/tvdeyen))
+- [v3.1] Allow to extend user deletion logic [#4472](https://github.com/solidusio/solidus/pull/4472) ([tvdeyen](https://github.com/tvdeyen))
+
+## Solidus 3.1.7 (v3.1, 2022-07-15)
+
+- Support CVE-2022-32224 Rails security updates - backport to v3.1 [#4453](https://github.com/solidusio/solidus/pull/4453) ([gsmendoza](https://github.com/gsmendoza))
+- [v3.1] Remove N+1 from admin users [#4420](https://github.com/solidusio/solidus/pull/4420) ([tvdeyen](https://github.com/tvdeyen))
+- [v3.1] Fix delete response in admin users controller [#4416](https://github.com/solidusio/solidus/pull/4416) ([tvdeyen](https://github.com/tvdeyen))
+- [v3.1] Only install ActiveStorage adapter on supported Rails versions [#4403](https://github.com/solidusio/solidus/pull/4403) ([tvdeyen](https://github.com/tvdeyen))
+- Fix user restricted stock management v3.1 [#4400](https://github.com/solidusio/solidus/pull/4400) ([rmparr](https://github.com/rmparr))
+
+## Solidus 3.1.6 (v3.1, 2022-06-01)
+
+- [v3.1] Fix creating store credit with amount in foreign format [#4391](https://github.com/solidusio/solidus/pull/4391) ([tvdeyen](https://github.com/tvdeyen))
+- [v3.1] Replace expired GPG key for mysql install in dev Dockerfile [#4381](https://github.com/solidusio/solidus/pull/4381) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- [v3.1] Fix refund form (again) [#4360](https://github.com/solidusio/solidus/pull/4360) ([tvdeyen](https://github.com/tvdeyen))
+- [v3.1] Make more room for long values in Order Summary [#4353](https://github.com/solidusio/solidus/pull/4353) ([tvdeyen](https://github.com/tvdeyen))
+- [v3.1] Enhance refund admin UI [#4349](https://github.com/solidusio/solidus/pull/4349) ([tvdeyen](https://github.com/tvdeyen))
+- [v3.1] Fix creating refund with amount in foreign format [#4345](https://github.com/solidusio/solidus/pull/4345) ([tvdeyen](https://github.com/tvdeyen))
+- [v3.1] Update in-memory shipments of order in order_shipping [#4335](https://github.com/solidusio/solidus/pull/4335) ([tvdeyen](https://github.com/tvdeyen))
+- [3.1] Fixes using ActiveStorage adapter with libvips as variant processor [#4324](https://github.com/solidusio/solidus/pull/4324) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Authorize uuid for existing object in sortable table [#4301](https://github.com/solidusio/solidus/pull/4301) ([julienanne](https://github.com/julienanne))
+- Backport #4228 to V3.1 [#4237](https://github.com/solidusio/solidus/pull/4237) ([jcsanti](https://github.com/jcsanti))
+- [BACKPORT] Reintroduce inverse_of: :product for variants association [#4236](https://github.com/solidusio/solidus/pull/4236) ([spaghetticode](https://github.com/spaghetticode))
+
 ## Solidus 3.1.5 (v3.1, 2021-12-20)
 
 - Fix CSRF forgery protection bypass for Spree::OrdersController#populate [GHSA-h3fg-h5v3-vf8m](https://github.com/solidusio/solidus/security/advisories/GHSA-h3fg-h5v3-vf8m)
@@ -515,6 +545,38 @@ Spree::Price.where(amount: nil).delete_all
 - Use more appropriate language for woman's t-shirt in sample data [#4031](https://github.com/solidusio/solidus/pull/4031) ([Noah-Silvera](https://github.com/Noah-Silvera))
 - Improve Customizing Attributes documentation [#3979](https://github.com/solidusio/solidus/pull/3979) ([dhughesbc](https://github.com/dhughesbc))
 - Improve Solidus events documentation [#3819](https://github.com/solidusio/solidus/pull/3819) ([spaghetticode](https://github.com/spaghetticode))
+
+## Solidus 3.0.8 (v3.0, 2022-09-22)
+
+- [v3.0] Only default to activestorage adapter if Rails version is supported [#4568](https://github.com/solidusio/solidus/pull/4568) ([tvdeyen](https://github.com/tvdeyen))
+- [v3.0] Fix Ransack error when searching for orders by customer name [#4521](https://github.com/solidusio/solidus/pull/4521) ([tvdeyen](https://github.com/tvdeyen))
+- Fix key in the locale file [#4514](https://github.com/solidusio/solidus/pull/4514) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- [v3.0] Translate price country names [#4510](https://github.com/solidusio/solidus/pull/4510) ([tvdeyen](https://github.com/tvdeyen))
+- [v3.0] Fix admin variants table UX [#4507](https://github.com/solidusio/solidus/pull/4507) ([tvdeyen](https://github.com/tvdeyen))
+- [v3.0] Allow to extend user deletion logic [#4473](https://github.com/solidusio/solidus/pull/4473) ([tvdeyen](https://github.com/tvdeyen))
+
+## Solidus 3.0.7 (v3.0, 2022-07-15)
+
+- Support CVE-2022-32224 Rails security updates - backport to v3.0  [#4454](https://github.com/solidusio/solidus/pull/4454) ([gsmendoza](https://github.com/gsmendoza))
+- [v3.0] Remove N+1 from admin users [#4421](https://github.com/solidusio/solidus/pull/4421) ([tvdeyen](https://github.com/tvdeyen))
+- [v3.0] Fix delete response in admin users controller [#4417](https://github.com/solidusio/solidus/pull/4417) ([tvdeyen](https://github.com/tvdeyen))
+- [v3.0] Backport docker development environment [#4407](https://github.com/solidusio/solidus/pull/4407) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- [v3.0] Only install ActiveStorage adapter on supported Rails versions [#4404](https://github.com/solidusio/solidus/pull/4404) ([tvdeyen](https://github.com/tvdeyen))
+- Fix user restricted stock management v3.0 [#4399](https://github.com/solidusio/solidus/pull/4399) ([rmparr](https://github.com/rmparr))
+
+## Solidus 3.0.6 (v3.0, 2022-06-01)
+
+- Fix user restricted stock management v3.0 [#4399](https://github.com/solidusio/solidus/pull/4399) ([rmparr](https://github.com/rmparr))
+- [v3.0] Fix creating store credit with amount in foreign format [#4392](https://github.com/solidusio/solidus/pull/4392) ([tvdeyen](https://github.com/tvdeyen))
+- [v3.0] Fix refund form (again) [#4361](https://github.com/solidusio/solidus/pull/4361) ([tvdeyen](https://github.com/tvdeyen))
+- [v3.0] Make more room for long values in Order Summary [#4354](https://github.com/solidusio/solidus/pull/4354) ([tvdeyen](https://github.com/tvdeyen))
+- [v3.0] Enhance refund admin UI [#4350](https://github.com/solidusio/solidus/pull/4350) ([tvdeyen](https://github.com/tvdeyen))
+- [v3.0] Fix creating refund with amount in foreign format [#4346](https://github.com/solidusio/solidus/pull/4346) ([tvdeyen](https://github.com/tvdeyen))
+- [v3.0] Update in-memory shipments of order in order_shipping [#4336](https://github.com/solidusio/solidus/pull/4336) ([tvdeyen](https://github.com/tvdeyen))
+- [3.0] Fixes using ActiveStorage adapter with libvips as variant processor [#4325](https://github.com/solidusio/solidus/pull/4325) ([waiting-for-dev](https://github.com/waiting-for-dev))
+- Authorize uuid for existing object in sortable table [#4300](https://github.com/solidusio/solidus/pull/4300) ([julienanne](https://github.com/julienanne))
+- [BACKPORT] Reintroduce inverse_of: :product for variants association [#4235](https://github.com/solidusio/solidus/pull/4235) ([spaghetticode](https://github.com/spaghetticode))
+- Backport #4228 to V3.0 [#4232](https://github.com/solidusio/solidus/pull/4232) ([jcsanti](https://github.com/jcsanti))
 
 ## Solidus 3.0.5 (v3.0, 2021-12-20)
 
