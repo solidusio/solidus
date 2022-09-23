@@ -239,7 +239,7 @@ module Solidus
         options[:frontend] ||
         (Bundler.locked_gems.dependencies[LEGACY_FRONTEND] && LEGACY_FRONTEND) ||
         (options[:auto_accept] && DEFAULT_FRONTEND) ||
-        ask(<<~MSG.indent(8), default: DEFAULT_FRONTEND)
+        ask(<<~MSG.indent(8), default: DEFAULT_FRONTEND, limited_to: FRONTENDS.keys)
 
           Which frontend would you like to use? solidus_starter_frontend is
           recommended. However, some extensions are still only compatible with
