@@ -3,6 +3,7 @@
 # Used in the sandbox rake task in Rakefile
 
 set -e
+test -z "${DEBUG+empty_string}" || set -x
 
 case "$DB" in
 postgres|postgresql)
@@ -54,7 +55,6 @@ cd ./sandbox
 cat <<RUBY >> Gemfile
 
 gem 'solidus', path: '..'
-gem 'solidus_auth_devise', '>= 2.1.0'
 gem 'rails-i18n'
 gem 'solidus_i18n'
 
@@ -90,13 +90,8 @@ unbundled bundle install --gemfile Gemfile
 unbundled bin/rails db:drop db:create
 unbundled bin/rails generate solidus:install \
   --auto-accept \
-  --user_class=Spree::User \
-  --enforce_available_locales=true \
-  --with_authentication=false
+  --enforce-available-locales=true \
   $@
-
-unbundled bin/rails generate solidus:auth:install \
-  --auto_run_migrations=true
 
 echo "
 🚀 This app is intended for test purposes. If you're interested in running

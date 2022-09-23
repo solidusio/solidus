@@ -122,22 +122,90 @@ commands:
           name: Install libvips
           command: sudo apt-get install -y libvips
 
-jobs:
-  persist_version:
-    executor: base
+  install_solidus:
+    parameters:
+      flags:
+        type: string
+        default: "# no options"
+        description: "flags to be passed to `bin/rails g solidus:install"
+      home_page_text:
+        type: string
     steps:
-      - setup
-
       - run:
-          name: Persist Solidus version
+          name: "Cleanup & check rails version"
           command: |
-            mkdir -p workspace
-            bundle exec ruby -e "puts Spree.solidus_gem_version.segments[0..1].join('.')" > workspace/solidus-version
-
-      - persist_to_workspace:
-          root: workspace
+            rm -rf /tmp/my_app /tmp/pre-install-dependencies # cleanup previous runs
+            gem search -eq rails > /tmp/rails-version # get the latest rails from rubygems
+            gem search -eq solidus > /tmp/solidus-version # get the latest solidus from rubygems
+            cat /tmp/rails-version
+            cat /tmp/solidus-version
+      - restore_cache:
+          keys:
+            - solidus-installer-v4-{{ checksum "/tmp/rails-version" }}-{{ checksum "/tmp/solidus-version" }}
+            - solidus-installer-v4-{{ checksum "/tmp/rails-version" }}-
+            - solidus-installer-v4-
+            - solidus-installer-
+      - run:
+          name: "Pre-install dependencies"
+          command: |
+            export BUNDLE_PATH='/tmp/bundle'
+            mkdir -p /tmp/pre-install-dependencies
+            cd /tmp/pre-install-dependencies
+            bundle init
+            # Preinstall the latest rails and solidus
+            # in order to have most of the dependencies cached.
+            bundle add rails solidus
+      - run:
+          name: "Prepare the rails application"
+          command: |
+            export BUNDLE_PATH='/tmp/bundle'
+            cd /tmp
+            test -d my_app || rails new my_app --skip-javascript --skip-git
+      - save_cache:
+          key: solidus-installer-v4-{{ checksum "/tmp/rails-version" }}-{{ checksum "/tmp/solidus-version" }}
           paths:
-            - solidus-version
+            - /tmp/my_app
+            - /tmp/bundle
+      - run:
+          name: "Run `solidus:install` with `<<parameters.flags>>`"
+          command: |
+            export BUNDLE_PATH='/tmp/bundle'
+            cd /tmp/my_app
+            bundle add solidus --git "file://$(ruby -e"puts File.expand_path ENV['CIRCLE_WORKING_DIRECTORY']")"
+            export SKIP_SOLIDUS_BOLT='true' # workaround for solidus_frontend not being able to properly install bolt in this context
+            unset RAILS_ENV # avoid doing everything on the test environment
+            bin/rails generate solidus:install --auto-accept <<parameters.flags>>
+      - run:
+          name: "Test the home page"
+          command: |
+            export BUNDLE_PATH='/tmp/bundle'
+            cd /tmp/my_app
+            unset RAILS_ENV # avoid doing everything on the test environment
+            bin/rails server -p 3000 &
+            wget --quiet --output-document - --tries=30 --retry-connrefused "http://localhost:3000" | grep "<<parameters.home_page_text>>"
+            echo "Exited with $?"
+            kill $(cat "tmp/pids/server.pid")
+
+jobs:
+  solidus_installer:
+    executor: sqlite
+    steps:
+      - checkout
+      - run:
+          name: "apt-get update, for libvips"
+          command: "sudo apt-get update"
+      - libvips
+      - install_solidus:
+          home_page_text: "The only eCommerce platform you’ll ever need."
+      - install_solidus:
+          flags: "--frontend=none"
+          home_page_text: "<title>Ruby on Rails"
+      - install_solidus:
+          flags: "--frontend=solidus_frontend"
+          home_page_text: "data-hook="
+      - install_solidus:
+          flags: "--frontend=solidus_starter_frontend"
+          home_page_text: "The only eCommerce platform you’ll ever need."
 
   postgres:
     executor: postgres
@@ -208,10 +276,6 @@ jobs:
 workflows:
   build:
     jobs:
-      - persist_version:
-          filters:
-            branches:
-              only: /master|v\d\.\d+/
       - postgres:
           post-steps:
             - codecov/upload:
@@ -222,3 +286,4 @@ workflows:
       - postgres_rails60
       - postgres_rails52
       - legacy_events
+      - solidus_installer
