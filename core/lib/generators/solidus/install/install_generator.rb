@@ -47,6 +47,9 @@ module Solidus
       @load_seed_data = options[:seed]
       @load_sample_data = options[:sample]
 
+      # No reason to check for their presence if we're about to install them
+      ENV['SOLIDUS_SKIP_MIGRATIONS_CHECK'] = 'true'
+
       unless @run_migrations
         @load_seed_data = false
         @load_sample_data = false
