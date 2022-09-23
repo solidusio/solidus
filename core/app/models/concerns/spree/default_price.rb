@@ -16,9 +16,15 @@ module Spree
 
     # Returns `#prices` prioritized for being considered as default price
     #
-    # @return [ActiveRecord::Relation<Spree::Price>]
+    # @return [Array<Spree::Price>]
     def currently_valid_prices
-      prices.currently_valid
+      prices.sort_by do |price|
+        [
+          price.country_iso.nil? ? 0 : 1,
+          price.updated_at || Time.zone.now,
+          price.id || Float::INFINITY,
+        ]
+      end.reverse
     end
 
     # Returns {#default_price} or builds it from {Spree::Variant.default_price_attributes}
