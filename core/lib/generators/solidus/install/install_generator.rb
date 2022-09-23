@@ -234,6 +234,11 @@ module Solidus
       super(what, *args)
     end
 
+    def bundle_command(command, env = {})
+      # Make `bundle install` less verbose by skipping the "Using ..." messages
+      super(command, env.reverse_merge('BUNDLE_SUPPRESS_INSTALL_USING_MESSAGES' => 'true'))
+    end
+
     def detect_frontend_to_install
       ENV['FRONTEND'] ||
         options[:frontend] ||
