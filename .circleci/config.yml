@@ -185,15 +185,16 @@ jobs:
           command: "sudo apt-get update"
       - libvips
       - install_solidus:
+          flags: "--sample=false"
           home_page_text: "The only eCommerce platform you’ll ever need."
       - install_solidus:
-          flags: "--frontend=none"
+          flags: "--sample=false --frontend=none"
           home_page_text: "<title>Ruby on Rails"
       - install_solidus:
-          flags: "--frontend=solidus_frontend"
+          flags: "--sample=false --frontend=solidus_frontend"
           home_page_text: "data-hook="
       - install_solidus:
-          flags: "--frontend=solidus_starter_frontend"
+          flags: "--sample=false --frontend=solidus_starter_frontend"
           home_page_text: "The only eCommerce platform you’ll ever need."
 
   postgres:
