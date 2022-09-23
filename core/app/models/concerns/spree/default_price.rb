@@ -50,37 +50,15 @@ module Spree
     # @return [Spree::Price, nil]
     # @see Spree::Variant.default_price_attributes
     def default_price
-      prioritized_default(
-        prices_meeting_criteria_to_be_default(
-          prices
-        )
-      )
-    end
-
-    def has_default_price?
-      default_price.present? && !default_price.discarded?
-    end
-
-    private
-
-    def prices_meeting_criteria_to_be_default(prices)
       criteria = self.class.default_price_attributes.transform_keys(&:to_s)
-      prices.select do |price|
+      currently_valid_prices.detect do |price|
         contender = price.attributes.slice(*criteria.keys)
         criteria == contender
       end
     end
 
-    def prioritized_default(prices)
-      prices.min do |prev, succ|
-        contender_one, contender_two = [succ, prev].map do |item|
-          [
-            item.updated_at || Time.zone.now,
-            item.id || Float::INFINITY
-          ]
-        end
-        contender_one <=> contender_two
-      end
+    def has_default_price?
+      default_price.present? && !default_price.discarded?
     end
   end
 end
