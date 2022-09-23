@@ -51,8 +51,8 @@ module Spree
         let(:currency) { 'JPY' }
 
         before do
-          variant
-          product.prices.update_all(currency: currency)
+          variant.prices.each { |p| p.update(currency: currency) }
+          product.master.prices.each { |p| p.update(currency: currency) }
         end
 
         context "when variant is more than master" do
@@ -92,8 +92,8 @@ module Spree
         let(:variant_price) { 150 }
 
         before do
-          variant
-          product.prices.update_all(currency: currency)
+          variant.prices.each { |p| p.update(currency: currency) }
+          product.master.prices.each { |p| p.update(currency: currency) }
         end
 
         it "should return the variant price if the price is different than master" do
