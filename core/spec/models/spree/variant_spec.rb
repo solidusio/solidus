@@ -164,6 +164,18 @@ RSpec.describe Spree::Variant, type: :model do
         }.to change(multi_variant.option_values, :count).by(1)
       end
 
+      context "setting using #options=" do
+        it "should set option value" do
+          expect(multi_variant.option_value('media_type')).to be_nil
+
+          multi_variant.options = [{ name: "media_type", value: 'DVD' }]
+          expect(multi_variant.option_value('media_type')).to eql 'DVD'
+
+          multi_variant.options = [{ name: "media_type", value: 'CD' }]
+          expect(multi_variant.option_value('media_type')).to eql 'CD'
+        end
+      end
+
       context "and a variant is soft-deleted" do
         let!(:old_options_text) { variant.options_text }
 

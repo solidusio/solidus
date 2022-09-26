@@ -211,7 +211,7 @@ module Spree
     # Assign given options hash to option values.
     #
     # @param options [Array] array of hashes with a name and value.
-    def options=(options = {})
+    def options=(options = [])
       options.each do |option|
         set_option_value(option[:name], option[:value])
       end
