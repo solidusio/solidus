@@ -37,7 +37,10 @@ function unbundled {
         env BUNDLE_SUPPRESS_INSTALL_USING_MESSAGES=true $@
 }
 
+echo "~~~> Removing the old sandbox"
 rm -rf ./sandbox
+
+echo "~~~> Creating a pristine Rails app"
 unbundled bundle exec rails new sandbox --database="$RAILSDB" \
   --skip-bundle \
   --skip-git \
@@ -52,6 +55,7 @@ if [ ! -d "sandbox" ]; then
   exit 1
 fi
 
+echo "~~~> Adding solidus (with i18n) to the Gemfile"
 cd ./sandbox
 cat <<RUBY >> Gemfile
 
@@ -65,6 +69,7 @@ group :test, :development do
   end
 end
 RUBY
+unbundled bundle install --gemfile Gemfile
 
 replace_in_database_yml() {
   if [ $RAILSDB = "postgresql" ]; then
@@ -87,8 +92,9 @@ if [ ${PASSWORD} ]; then
   replace_in_database_yml "password" $PASSWORD
 fi
 
-unbundled bundle install --gemfile Gemfile
 unbundled bin/rails db:drop db:create
+
+echo "~~~> Running the solidus:install generator"
 unbundled bin/rails generate solidus:install \
   --auto-accept \
   --enforce-available-locales=true \
