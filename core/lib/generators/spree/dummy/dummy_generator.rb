@@ -96,13 +96,15 @@ module Spree
     protected
 
     def inject_require_for(requirement)
-      inject_into_file 'config/application.rb', %[
-begin
-  require '#{requirement}'
-rescue LoadError
-  # #{requirement} is not available.
-end
-      ], before: /require '#{@lib_name}'/, verbose: true
+      inject_into_file 'config/application.rb', (
+        <<~RUBY
+          begin
+            require '#{requirement}'
+          rescue LoadError
+            # #{requirement} is not available.
+          end
+        RUBY
+      ), before: /require '#{@lib_name}'/, verbose: true
     end
 
     def dummy_path
