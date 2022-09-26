@@ -1000,4 +1000,13 @@ RSpec.describe Spree::Variant, type: :model do
       it { is_expected.to be true }
     end
   end
+
+  describe "#name_and_sku" do
+    let(:product) { build(:product, name: "Ernie and Bert" )}
+    let(:variant) { build(:variant, product: product, sku: "EB1") }
+
+    subject { variant.name_and_sku }
+
+    it { is_expected.to eq("Ernie and Bert - EB1") }
+  end
 end
