@@ -1009,4 +1009,11 @@ RSpec.describe Spree::Variant, type: :model do
 
     it { is_expected.to eq("Ernie and Bert - EB1") }
   end
+
+  describe "#sku_and_options_text" do
+    let(:variant) { create(:variant, sku: "EB1") }
+
+    subject { variant.sku_and_options_text }
+    it { is_expected.to eq("EB1 Size: S") }
+  end
 end
