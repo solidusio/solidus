@@ -972,4 +972,20 @@ RSpec.describe Spree::Variant, type: :model do
       it { is_expected.to eq(1) }
     end
   end
+
+  describe "#deleted?" do
+    let(:variant) { create(:variant) }
+
+    subject { variant.deleted? }
+
+    it { is_expected.to be false }
+
+    context "if the variant is discarded" do
+      before do
+        variant.discard
+      end
+
+      it { is_expected.to be true }
+    end
+  end
 end
