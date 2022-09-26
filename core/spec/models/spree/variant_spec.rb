@@ -958,4 +958,18 @@ RSpec.describe Spree::Variant, type: :model do
       end
     end
   end
+
+  describe "#on_backorder" do
+    let(:variant) { create(:variant) }
+
+    subject { variant.on_backorder }
+
+    it { is_expected.to be_zero }
+
+    context "with a backordered inventory_unit" do
+      let!(:backordered_inventory_unit) { create(:inventory_unit, variant: variant, state: :backordered) }
+
+      it { is_expected.to eq(1) }
+    end
+  end
 end
