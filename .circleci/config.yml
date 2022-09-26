@@ -134,42 +134,32 @@ commands:
       - run:
           name: "Cleanup & check rails version"
           command: |
-            rm -rf /tmp/my_app /tmp/pre-install-dependencies # cleanup previous runs
-            gem search -eq rails > /tmp/rails-version # get the latest rails from rubygems
-            gem search -eq solidus > /tmp/solidus-version # get the latest solidus from rubygems
-            cat /tmp/rails-version
-            cat /tmp/solidus-version
+            gem environment path
+            rm -rf /tmp/my_app /tmp/.tool-versions # cleanup previous runs
+
+            ruby -v >> /tmp/.tool-versions
+            gem search -eq rails >> /tmp/.tool-versions # get the latest rails from rubygems
+            gem search -eq solidus >> /tmp/.tool-versions # get the latest solidus from rubygems
+
+            cat /tmp/.tool-versions
       - restore_cache:
           keys:
-            - solidus-installer-v4-{{ checksum "/tmp/rails-version" }}-{{ checksum "/tmp/solidus-version" }}
-            - solidus-installer-v4-{{ checksum "/tmp/rails-version" }}-
-            - solidus-installer-v4-
-            - solidus-installer-
-      - run:
-          name: "Pre-install dependencies"
-          command: |
-            export BUNDLE_PATH='/tmp/bundle'
-            mkdir -p /tmp/pre-install-dependencies
-            cd /tmp/pre-install-dependencies
-            bundle init
-            # Preinstall the latest rails and solidus
-            # in order to have most of the dependencies cached.
-            bundle add rails solidus
+            - solidus-installer-v5-{{ checksum "/tmp/.tool-versions" }}
+            - solidus-installer-v5-
       - run:
           name: "Prepare the rails application"
           command: |
-            export BUNDLE_PATH='/tmp/bundle'
             cd /tmp
+            test -d my_app || gem install rails solidus
             test -d my_app || rails new my_app --skip-javascript --skip-git
       - save_cache:
-          key: solidus-installer-v4-{{ checksum "/tmp/rails-version" }}-{{ checksum "/tmp/solidus-version" }}
+          key: solidus-installer-v5-{{ checksum "/tmp/.tool-versions" }}
           paths:
             - /tmp/my_app
-            - /tmp/bundle
+            - /home/circleci/.rubygems
       - run:
           name: "Run `solidus:install` with `<<parameters.flags>>`"
           command: |
-            export BUNDLE_PATH='/tmp/bundle'
             cd /tmp/my_app
             bundle add solidus --git "file://$(ruby -e"puts File.expand_path ENV['CIRCLE_WORKING_DIRECTORY']")"
             export SKIP_SOLIDUS_BOLT='true' # workaround for solidus_frontend not being able to properly install bolt in this context
@@ -178,7 +168,6 @@ commands:
       - run:
           name: "Test the home page"
           command: |
-            export BUNDLE_PATH='/tmp/bundle'
             cd /tmp/my_app
             unset RAILS_ENV # avoid doing everything on the test environment
             bin/rails server -p 3000 &
@@ -196,15 +185,16 @@ jobs:
           command: "sudo apt-get update"
       - libvips
       - install_solidus:
+          flags: "--sample=false"
           home_page_text: "The only eCommerce platform you’ll ever need."
       - install_solidus:
-          flags: "--frontend=none"
+          flags: "--sample=false --frontend=none"
           home_page_text: "<title>Ruby on Rails"
       - install_solidus:
-          flags: "--frontend=solidus_frontend"
+          flags: "--sample=false --frontend=solidus_frontend"
           home_page_text: "data-hook="
       - install_solidus:
-          flags: "--frontend=solidus_starter_frontend"
+          flags: "--sample=false --frontend=solidus_starter_frontend"
           home_page_text: "The only eCommerce platform you’ll ever need."
 
   postgres:
