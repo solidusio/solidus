@@ -45,6 +45,28 @@ RSpec.describe Spree::Variant, type: :model do
       variant_with_same_sku = build(:variant, sku: variant.sku)
       expect(variant_with_same_sku).to be_invalid
     end
+
+    context "if it is a master variant" do
+      let(:product) { create(:product) }
+      subject(:variant) { product.master }
+
+      before do
+        variant.price = nil
+      end
+
+      it "is invalid without a price" do
+        variant.valid?
+        expect(subject.errors.full_messages).to include("Price Must supply price for variant or master.price for product.")
+      end
+
+      context "if it has a price" do
+        before do
+          variant.price = 10
+        end
+
+        it { is_expected.to be_valid }
+      end
+    end
   end
 
   context "after create" do
