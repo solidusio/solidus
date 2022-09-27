@@ -45,6 +45,28 @@ RSpec.describe Spree::Variant, type: :model do
       variant_with_same_sku = build(:variant, sku: variant.sku)
       expect(variant_with_same_sku).to be_invalid
     end
+
+    context "if it is a master variant" do
+      let(:product) { create(:product) }
+      subject(:variant) { product.master }
+
+      before do
+        variant.price = nil
+      end
+
+      it "is invalid without a price" do
+        variant.valid?
+        expect(subject.errors.full_messages).to include("Price Must supply price for variant or master.price for product.")
+      end
+
+      context "if it has a price" do
+        before do
+          variant.price = 10
+        end
+
+        it { is_expected.to be_valid }
+      end
+    end
   end
 
   context "after create" do
@@ -162,6 +184,18 @@ RSpec.describe Spree::Variant, type: :model do
         expect {
           multi_variant.set_option_value('coolness_type', 'awesome')
         }.to change(multi_variant.option_values, :count).by(1)
+      end
+
+      context "setting using #options=" do
+        it "should set option value" do
+          expect(multi_variant.option_value('media_type')).to be_nil
+
+          multi_variant.options = [{ name: "media_type", value: 'DVD' }]
+          expect(multi_variant.option_value('media_type')).to eql 'DVD'
+
+          multi_variant.options = [{ name: "media_type", value: 'CD' }]
+          expect(multi_variant.option_value('media_type')).to eql 'CD'
+        end
       end
 
       context "and a variant is soft-deleted" do
@@ -957,5 +991,51 @@ RSpec.describe Spree::Variant, type: :model do
         end
       end
     end
+  end
+
+  describe "#on_backorder" do
+    let(:variant) { create(:variant) }
+
+    subject { variant.on_backorder }
+
+    it { is_expected.to be_zero }
+
+    context "with a backordered inventory_unit" do
+      let!(:backordered_inventory_unit) { create(:inventory_unit, variant: variant, state: :backordered) }
+
+      it { is_expected.to eq(1) }
+    end
+  end
+
+  describe "#deleted?" do
+    let(:variant) { create(:variant) }
+
+    subject { variant.deleted? }
+
+    it { is_expected.to be false }
+
+    context "if the variant is discarded" do
+      before do
+        variant.discard
+      end
+
+      it { is_expected.to be true }
+    end
+  end
+
+  describe "#name_and_sku" do
+    let(:product) { build(:product, name: "Ernie and Bert" )}
+    let(:variant) { build(:variant, product: product, sku: "EB1") }
+
+    subject { variant.name_and_sku }
+
+    it { is_expected.to eq("Ernie and Bert - EB1") }
+  end
+
+  describe "#sku_and_options_text" do
+    let(:variant) { create(:variant, sku: "EB1") }
+
+    subject { variant.sku_and_options_text }
+    it { is_expected.to eq("EB1 Size: S") }
   end
 end
