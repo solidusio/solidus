@@ -1,9 +1,5 @@
 # frozen_string_literal: true
 
-unless defined?(Solidus::InstallGenerator)
-  require 'generators/solidus/install/install_generator'
-end
-
 require 'generators/spree/dummy/dummy_generator'
 
 class CommonRakeTasks
@@ -17,8 +13,31 @@ class CommonRakeTasks
 
         force_rails_environment_to_test
 
-        Spree::DummyGenerator.start ["--lib_name=#{ENV['LIB_NAME']}", "--quiet"]
-        Solidus::InstallGenerator.start ["--lib_name=#{ENV['LIB_NAME']}", "--auto-accept", "--with-authentication=false", "--payment-method=none", "--migrate=false", "--seed=false", "--sample=false", "--quiet", "--user_class=#{args[:user_class]}"]
+        Spree::DummyGenerator.start [
+          "--lib-name=#{ENV['LIB_NAME']}",
+          "--quiet",
+        ]
+
+        # While the dummy app is generated the current directory
+        # within ruby is changed to that of the dummy app.
+        sh({
+          'SKIP_SOLIDUS_BOLT' => '1',
+          'FRONTEND' => 'solidus_frontend',
+        }, [
+          'bin/rails',
+          'generate',
+          'solidus:install',
+          Dir.pwd, # use the current dir as Rails.root
+          "--lib-name=#{ENV['LIB_NAME']}",
+          "--auto-accept",
+          "--with-authentication=false",
+          "--payment-method=none",
+          "--migrate=false",
+          "--seed=false",
+          "--sample=false",
+          "--user-class=#{args[:user_class]}",
+          "--quiet",
+        ].shelljoin)
 
         puts "Setting up dummy database..."
 
