@@ -42,6 +42,10 @@ module Solidus
       paths.flatten
     end
 
+    def self.exit_on_failure?
+      true
+    end
+
     def prepare_options
       @run_migrations = options[:migrate]
       @load_seed_data = options[:seed]
