@@ -9,12 +9,15 @@ class CommonRakeTasks
     namespace :common do
       task :test_app, :user_class do |_t, args|
         args.with_defaults(user_class: "Spree::LegacyUser")
-        require ENV['LIB_NAME']
+        lib_name = ENV['LIB_NAME'] or
+          raise "Please provide a library name via the LIB_NAME environment variable."
+
+        require lib_name
 
         force_rails_environment_to_test
 
         Spree::DummyGenerator.start [
-          "--lib-name=#{ENV['LIB_NAME']}",
+          "--lib-name=#{lib_name}",
           "--quiet",
         ]
 
@@ -28,7 +31,7 @@ class CommonRakeTasks
           'generate',
           'solidus:install',
           Dir.pwd, # use the current dir as Rails.root
-          "--lib-name=#{ENV['LIB_NAME']}",
+          "--lib-name=#{lib_name}",
           "--auto-accept",
           "--with-authentication=false",
           "--payment-method=none",
