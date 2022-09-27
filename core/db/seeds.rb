@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require 'thor'
+shell = Thor::Base.shell.new
+
 %w(
   stores
   store_credit
@@ -12,6 +15,6 @@
   roles
   shipping_categories
 ).each do |seed|
-  puts "Loading seed file: #{seed}"
+  shell.say_status :seed, seed
   require_relative "default/spree/#{seed}"
 end

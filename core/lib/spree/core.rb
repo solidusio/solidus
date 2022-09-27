@@ -28,7 +28,7 @@ require 'spree/rails_compatibility'
 StateMachines::Machine.ignore_method_conflicts = true
 
 module Spree
-  mattr_accessor :user_class
+  mattr_accessor :user_class, default: 'Spree::LegacyUser'
 
   def self.user_class
     if @@user_class.is_a?(Class)

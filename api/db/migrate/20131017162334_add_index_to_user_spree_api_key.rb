@@ -2,7 +2,7 @@
 
 class AddIndexToUserSpreeApiKey < ActiveRecord::Migration[4.2]
   def change
-    unless defined?(User)
+    if table_exists?(:spree_users)
       add_index :spree_users, :spree_api_key
     end
   end

@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require 'thor'
+shell = Thor::Base.shell.new
+
 Spree::Sample.load_sample("products")
 Spree::Sample.load_sample("variants")
 
@@ -116,7 +119,7 @@ products[:solidus_womens_tshirt].reload.variants.each do |variant|
 end
 
 images.each do |variant, attachments|
-  puts "Loading images for #{variant.product.name}"
+  shell.say_status :sample, "images for #{variant.product.name}"
   attachments.each do |attachment|
     File.open(attachment[:attachment]) do |f|
       variant.images.create!(attachment: f)

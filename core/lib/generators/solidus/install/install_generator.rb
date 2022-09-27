@@ -47,9 +47,15 @@ module Solidus
       @load_seed_data = options[:seed]
       @load_sample_data = options[:sample]
 
+      # Silence verbose output (e.g. Rails migrations will rely on this environment variable)
+      ENV['VERBOSE'] = 'false'
+
+      # No reason to check for their presence if we're about to install them
+      ENV['SOLIDUS_SKIP_MIGRATIONS_CHECK'] = 'true'
+
       unless @run_migrations
-         @load_seed_data = false
-         @load_sample_data = false
+        @load_seed_data = false
+        @load_sample_data = false
       end
     end
 
@@ -157,7 +163,7 @@ module Solidus
       run "spring stop" if defined?(Spring)
 
       @plugin_generators_to_run.each do |plugin_generator_name|
-        generate "#{plugin_generator_name} --skip_migrations=true"
+        generate "#{plugin_generator_name} --skip-migrations=true"
       end
     end
 
@@ -193,7 +199,7 @@ module Solidus
       if @run_migrations
         say_status :running, "migrations"
 
-        rake 'db:migrate VERBOSE=false'
+        rake 'db:migrate'
       else
         say_status :skipping, "migrations (don't forget to run rake db:migrate)"
       end
@@ -232,6 +238,11 @@ module Solidus
       args << '--auto-accept' if options[:auto_accept]
       args << '--auto-run-migrations' if options[:migrate]
       super(what, *args)
+    end
+
+    def bundle_command(command, env = {})
+      # Make `bundle install` less verbose by skipping the "Using ..." messages
+      super(command, env.reverse_merge('BUNDLE_SUPPRESS_INSTALL_USING_MESSAGES' => 'true'))
     end
 
     def detect_frontend_to_install
