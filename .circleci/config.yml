@@ -47,6 +47,22 @@ executors:
     docker:
       - image: *image
 
+  ruby30:
+    working_directory: *workdir
+    environment:
+      <<: *environment
+      DB: sqlite
+    docker:
+      - image: cimg/ruby:3.0-browsers
+
+  ruby31:
+    working_directory: *workdir
+    environment:
+      <<: *environment
+      DB: sqlite
+    docker:
+      - image: cimg/ruby:3.1-browsers
+
 commands:
   setup:
     steps:
@@ -263,6 +279,26 @@ jobs:
       - setup
       - test
 
+  ruby30:
+    executor: ruby30
+    parallelism: *parallelism
+    environment:
+      RAILS_VERSION: '>= 7.0.1'
+      DISABLE_ACTIVE_STORAGE: true
+    steps:
+      - setup
+      - test
+
+  ruby31:
+    executor: ruby31
+    parallelism: *parallelism
+    environment:
+      RAILS_VERSION: '>= 7.0.1'
+      DISABLE_ACTIVE_STORAGE: true
+    steps:
+      - setup
+      - test
+
 workflows:
   build:
     jobs:
@@ -275,5 +311,7 @@ workflows:
       - postgres_rails61
       - postgres_rails60
       - postgres_rails52
+      - ruby30
+      - ruby31
       - legacy_events
       - solidus_installer
