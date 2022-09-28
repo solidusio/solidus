@@ -34,7 +34,6 @@ class CommonRakeTasks
           "--lib-name=#{lib_name}",
           "--auto-accept",
           "--with-authentication=false",
-          "--payment-method=none",
           "--migrate=false",
           "--seed=false",
           "--sample=false",
