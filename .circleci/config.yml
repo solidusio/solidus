@@ -6,6 +6,10 @@ orbs:
 
 executors:
   base:
+    parameters: &parameters
+      ruby:
+        type: string
+        default: "2.7"
     working_directory: &workdir ~/solidus
     environment: &environment
       DEFAULT_MAX_WAIT_TIME: 10
@@ -14,9 +18,10 @@ executors:
       CIRCLE_ARTIFACTS: /tmp/test-artifacts
       BUNDLE_WITHOUT: "utils"
     docker:
-      - image: &image cimg/ruby:2.7-browsers
+      - image: &image cimg/ruby:<< parameters.ruby >>-browsers
 
   postgres:
+    parameters: *parameters
     working_directory: *workdir
     environment:
       <<: *environment
@@ -29,6 +34,7 @@ executors:
           POSTGRES_USER: root
 
   mysql:
+    parameters: *parameters
     working_directory: *workdir
     environment:
       <<: *environment
@@ -40,6 +46,7 @@ executors:
       - image: cimg/mysql:5.7
 
   sqlite:
+    parameters: *parameters
     working_directory: *workdir
     environment:
       <<: *environment
@@ -219,83 +226,71 @@ jobs:
             export LIB_NAME=set # dummy requireable file
             bundle exec rake -rrails -rspree/testing_support/extension_rake -e'Rake::Task["extension:test_app"].invoke'
 
-  postgres:
-    executor: postgres
+  test_solidus:
+    parameters:
+      database:
+        type: string
+        default: postgres
+      ruby:
+        type: string
+        default: '3.1'
+      rails:
+        type: string
+        default: "7.0"
+      paperclip:
+        type: boolean
+        default: true
+      legacy:
+        type: string
+        default: "0"
+    executor:
+      name: << parameters.database >>
+      ruby: << parameters.ruby >>
+    parallelism: &parallelism 3
+    environment:
+      DISABLE_ACTIVE_STORAGE: << parameters.paperclip >>
+      RAILS_VERSION: "~> << parameters.rails >>"
+      USE_LEGACY_EVENTS: << parameters.legacy >>
+    steps:
+      - setup
+      - libvips
+      - test
+
+  test_with_coverage:
+    parameters:
+      database:
+        type: string
+        default: postgres
+      ruby:
+        type: string
+        default: '3.1'
+    executor:
+      name: << parameters.database >>
+      ruby: << parameters.ruby >>
     parallelism: &parallelism 3
     environment:
       COVERAGE: 'true'
       COVERAGE_DIR: /tmp/coverage
+      DISABLE_ACTIVE_STORAGE: false
     steps:
       - setup
       - libvips
       - test_with_coverage
 
-  legacy_events:
-    executor: postgres
-    parallelism: &parallelism
-    environment:
-      USE_LEGACY_EVENTS: '1'
-    steps:
-      - setup
-      - libvips
-      - test
-
-  mysql:
-    executor: mysql
-    parallelism: *parallelism
-    steps:
-      - setup
-      - libvips
-      - test
-
-  postgres_rails61:
-    executor: postgres
-    parallelism: *parallelism
-    environment:
-      RAILS_VERSION: '~> 6.1.0'
-    steps:
-      - setup
-      - test
-
-  sqlite:
-    executor: sqlite
-    parallelism: *parallelism
-    steps:
-      - setup
-      - libvips
-      - test
-
-  postgres_rails60:
-    executor: postgres
-    parallelism: *parallelism
-    environment:
-      RAILS_VERSION: '~> 6.0.0'
-      DISABLE_ACTIVE_STORAGE: true
-    steps:
-      - setup
-      - test
-
-  postgres_rails52:
-    executor: postgres
-    parallelism: *parallelism
-    environment:
-      RAILS_VERSION: '~> 5.2.0'
-      DISABLE_ACTIVE_STORAGE: true
-    steps:
-      - setup
-      - test
-
 workflows:
   build:
     jobs:
-      - postgres:
+      - test_with_coverage:
           post-steps:
             - codecov/upload:
                 file: $COVERAGE_FILE
-      - mysql
-      - sqlite
-      - postgres_rails61
-      - postgres_rails60
-      - postgres_rails52
-      - legacy_events
+      - test_solidus:
+          name: &name "test-rails-<<matrix.rails>>-ruby-<<matrix.ruby>>-<<matrix.database>>-<<#matrix.paperclip>>paperclip<</matrix.paperclip>><<^matrix.paperclip>>activestorage<</matrix.paperclip>>"
+          matrix: { parameters: { rails: ['7.0'], ruby: ['3.0', '3.1'], database: ['mysql', 'sqlite', 'postgres'], paperclip: [true, false] } }
+      - test_solidus:
+          name: *name
+          matrix: { parameters: { rails: ['6.1'], ruby: ['2.7', '3.0'], database: ['sqlite'], paperclip: [false] } }
+      - test_solidus:
+          name: *name
+          matrix: { parameters: { rails: ['5.2', '6.0'], ruby: ['2.7'], database: ['sqlite'], paperclip: [true] } }
       - solidus_installer
