@@ -42,6 +42,10 @@ module Solidus
       paths.flatten
     end
 
+    def self.exit_on_failure?
+      true
+    end
+
     def prepare_options
       @run_migrations = options[:migrate]
       @load_seed_data = options[:seed]
@@ -168,7 +172,7 @@ module Solidus
     end
 
     def install_routes
-      if Rails.root.join('config', 'routes.rb').read.include? CORE_MOUNT_ROUTE
+      if Pathname(app_path).join('config', 'routes.rb').read.include? CORE_MOUNT_ROUTE
         say_status :route_exist, CORE_MOUNT_ROUTE, :blue
       else
         route <<~RUBY

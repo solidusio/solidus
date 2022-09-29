@@ -1,9 +1,5 @@
 # frozen_string_literal: true
 
-unless defined?(Solidus::InstallGenerator)
-  require 'generators/solidus/install/install_generator'
-end
-
 require 'generators/spree/dummy/dummy_generator'
 
 class CommonRakeTasks
@@ -13,12 +9,37 @@ class CommonRakeTasks
     namespace :common do
       task :test_app, :user_class do |_t, args|
         args.with_defaults(user_class: "Spree::LegacyUser")
-        require ENV['LIB_NAME']
+        lib_name = ENV['LIB_NAME'] or
+          raise "Please provide a library name via the LIB_NAME environment variable."
+
+        require lib_name
 
         force_rails_environment_to_test
 
-        Spree::DummyGenerator.start ["--lib_name=#{ENV['LIB_NAME']}", "--quiet"]
-        Solidus::InstallGenerator.start ["--lib_name=#{ENV['LIB_NAME']}", "--auto-accept", "--with-authentication=false", "--payment-method=none", "--migrate=false", "--seed=false", "--sample=false", "--quiet", "--user_class=#{args[:user_class]}"]
+        Spree::DummyGenerator.start [
+          "--lib-name=#{lib_name}",
+          "--quiet",
+        ]
+
+        # While the dummy app is generated the current directory
+        # within ruby is changed to that of the dummy app.
+        sh({
+          'SKIP_SOLIDUS_BOLT' => '1',
+          'FRONTEND' => ENV['FRONTEND'] || 'solidus_frontend',
+        }, [
+          'bin/rails',
+          'generate',
+          'solidus:install',
+          Dir.pwd, # use the current dir as Rails.root
+          "--lib-name=#{lib_name}",
+          "--auto-accept",
+          "--with-authentication=false",
+          "--migrate=false",
+          "--seed=false",
+          "--sample=false",
+          "--user-class=#{args[:user_class]}",
+          "--quiet",
+        ].shelljoin)
 
         puts "Setting up dummy database..."
 
