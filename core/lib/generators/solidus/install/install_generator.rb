@@ -22,6 +22,7 @@ module Solidus
     DEFAULT_AUTHENTICATION = 'solidus_auth_devise'
     AUTHENTICATIONS = {
       'none' => "#{__dir__}/app_templates/authentication/none.rb",
+      'existing_devise' => "#{__dir__}/app_templates/authentication/existing_devise.rb",
       'solidus_auth_devise' => "#{__dir__}/app_templates/authentication/solidus_auth_devise.rb",
     }
 
