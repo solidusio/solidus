@@ -9,7 +9,8 @@ module Spree
     end
 
     def spree_current_user
-      current_user
+      # TODO: Replace this with your implementation for retrieving the current user
+      Spree.user_class.new
     end
   end
 
