@@ -37,10 +37,12 @@ module Solidus
     class_option :admin_email, type: :string
     class_option :admin_password, type: :string
     class_option :lib_name, type: :string, default: 'spree'
-    class_option :with_authentication, type: :boolean, default: true
     class_option :enforce_available_locales, type: :boolean, default: nil
     class_option :frontend, type: :string, enum: FRONTENDS.keys, default: nil, desc: "Indicates which frontend to install."
     class_option :authentication, type: :string, enum: AUTHENTICATIONS.keys, default: nil, desc: "Indicates which authentication system to install."
+
+    # DEPRECATED
+    class_option :with_authentication, type: :boolean, hide: true, default: nil
 
     def self.source_paths
       paths = superclass.source_paths
@@ -65,10 +67,16 @@ module Solidus
       # No reason to check for their presence if we're about to install them
       ENV['SOLIDUS_SKIP_MIGRATIONS_CHECK'] = 'true'
 
-      if options[:authentication].blank? && !options[:with_authentication]
-        # Don't use the default authentication if the user explicitly
-        # requested no authentication system.
-        options[:authentication] = 'none'
+      if options[:with_authentication] != nil
+        warn \
+          "DEPRECATION WARNING: using `solidus:install --with-authentication` is now deprecated. " \
+          "Please use --authentication instead (see --help for the full list of options)."
+
+        if options[:authentication].blank? && options[:with_authentication] == 'false'
+          # Don't use the default authentication if the user explicitly
+          # requested no authentication system.
+          options[:authentication] = 'none'
+        end
       end
 
       unless @run_migrations

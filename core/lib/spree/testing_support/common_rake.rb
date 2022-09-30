@@ -33,7 +33,7 @@ class CommonRakeTasks
           Dir.pwd, # use the current dir as Rails.root
           "--lib-name=#{lib_name}",
           "--auto-accept",
-          "--with-authentication=false",
+          "--authentication=none",
           "--migrate=false",
           "--seed=false",
           "--sample=false",

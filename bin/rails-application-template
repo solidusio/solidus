@@ -122,10 +122,9 @@ after_bundle do
     "--auto-accept",
     "--user_class=Spree::User",
     "--enforce_available_locales=true",
-    "--with-authentication=false",
+    "--authentication=solidus_auth_devise",
   )
 
-  generate('solidus_auth:install')
   rails_command "db:create"
   rails_command "db:migrate"
 
