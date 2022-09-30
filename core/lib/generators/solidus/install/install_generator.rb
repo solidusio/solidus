@@ -69,10 +69,10 @@ module Solidus
 
     def install_file_attachment
       if options[:active_storage]
-        say_status :installing, "Active Storage", :green
+        say_status :assets, "Active Storage", :green
         rake 'active_storage:install'
       else
-        say_status :installing, "Paperclip", :green
+        say_status :assets, "Paperclip", :green
         gsub_file 'config/initializers/spree.rb', "ActiveStorageAttachment", "PaperclipAttachment"
       end
     end
@@ -194,7 +194,7 @@ module Solidus
         frontend_key
       end
 
-      say_status :installing, frontend_key
+      say_status :frontend, frontend_key
 
       apply frontend_template
     end
