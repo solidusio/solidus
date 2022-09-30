@@ -139,19 +139,6 @@ module Solidus
       @plugin_generators_to_run = []
     end
 
-    def install_authentication
-      authentication_key = detect_authentication_to_install
-
-      authentication_template = AUTHENTICATIONS.fetch(authentication_key.presence) do
-        say_status :warning, "Unknown authentication: #{authentication_key.inspect}, attempting to run it with `rails app:template`"
-        authentication_key
-      end
-
-      say_status :auth, authentication_key
-
-      apply authentication_template
-    end
-
     def include_seed_data
       append_file "db/seeds.rb", <<~RUBY
 
@@ -168,6 +155,19 @@ module Solidus
     def create_database
       say_status :creating, "database"
       rake 'db:create'
+    end
+
+    def install_authentication
+      authentication_key = detect_authentication_to_install
+
+      authentication_template = AUTHENTICATIONS.fetch(authentication_key.presence) do
+        say_status :warning, "Unknown authentication: #{authentication_key.inspect}, attempting to run it with `rails app:template`"
+        authentication_key
+      end
+
+      say_status :auth, authentication_key
+
+      apply authentication_template
     end
 
     def run_bundle_install_if_needed_by_plugins
