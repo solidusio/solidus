@@ -140,6 +140,18 @@ describe "Order Details", type: :feature, js: true do
       it "can remove all items with empty cart" do
         expect(page).to have_content("spree t-shirt")
 
+        within("#item_total") do
+          expect(page).to have_content("$40.00")
+        end
+
+        within("#order_total") do
+          expect(page).to have_content("$40.00")
+        end
+
+        within("#order-total", text: 'Order Total') do
+          expect(page).to have_content("$40.00")
+        end
+
         accept_confirm "Are you sure you want to delete this record?" do
           click_on 'Empty Cart'
         end
@@ -148,6 +160,16 @@ describe "Order Details", type: :feature, js: true do
 
         # Should have a new item row
         expect(page).to have_field('quantity')
+
+        within("#item_total") do
+          expect(page).to have_content("$0.00")
+        end
+
+        within("#order_total") do
+          expect(page).to have_content("$0.00")
+        end
+
+        expect(page).to have_css('#order-total', visible: false)
       end
 
       # Regression test for https://github.com/spree/spree/issues/3862

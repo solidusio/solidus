@@ -640,7 +640,8 @@ module Spree::Api
         it "can empty an order" do
           create(:adjustment, order: order, adjustable: order)
           put spree.empty_api_order_path(order)
-          expect(response.status).to eq(204)
+          expect(response.status).to eq(200)
+          expect(json_response['id']).to eq(order.id)
           order.reload
           expect(order.line_items).to be_empty
           expect(order.adjustments).to be_empty
