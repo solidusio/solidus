@@ -1,4 +1,15 @@
 ## Solidus 3.3.0 (master, unreleased)
+- Introduced level enum to `Spree::TaxRate` to allow for order-level taxes [#4491](https://github.com/solidusio/solidus/pull/4491) ([adammathys](https://github.com/adammathys))
+- Added `Spree::Calculator::FlatFee` tax calculator [#4491](https://github.com/solidusio/solidus/pull/4491) ([adammathys](https://github.com/adammathys))
+
+### Other Important Changes
+
+#### Colorado Delivery Fee
+
+With the introduction of the `Spree::Calculator::FlatFee` and `Spree::TaxRate#level`, we now have the ability to support the new Colorado Delivery Fee. There's also a new rake task provided to help setup the requisite models to support the fee: 
+```bash
+rake taxes:colorado_delivery_fee
+```
 
 ## Solidus 3.2.2 (v3.2, 2022-09-09)
 
