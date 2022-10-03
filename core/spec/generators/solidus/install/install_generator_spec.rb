@@ -15,5 +15,16 @@ RSpec.describe Solidus::InstallGenerator do
         expect(generator.instance_variable_get(:@load_sample_data)).to eq(false)
       end
     end
+
+    it 'warns when using "enforce_available_locales"' do
+      generator = described_class.new([], ['--auto-accept', '--enforce-available-locales'])
+
+      allow(generator).to receive(:warn)
+      generator.prepare_options
+
+      expect(generator).to have_received(:warn).once.with(
+        a_string_matching('using `solidus:install --enforce-available-locales` is now deprecated')
+      )
+    end
   end
 end

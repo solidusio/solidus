@@ -97,7 +97,6 @@ unbundled bin/rails db:drop db:create
 echo "~~~> Running the solidus:install generator"
 unbundled bin/rails generate solidus:install \
   --auto-accept \
-  --enforce-available-locales=true \
   $@
 
 echo "

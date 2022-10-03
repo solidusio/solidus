@@ -38,12 +38,12 @@ module Solidus
     class_option :admin_email, type: :string
     class_option :admin_password, type: :string
     class_option :lib_name, type: :string, default: 'spree'
-    class_option :enforce_available_locales, type: :boolean, default: nil
     class_option :frontend, type: :string, enum: FRONTENDS.keys, default: nil, desc: "Indicates which frontend to install."
     class_option :authentication, type: :string, enum: AUTHENTICATIONS.keys, default: nil, desc: "Indicates which authentication system to install."
 
     # DEPRECATED
     class_option :with_authentication, type: :boolean, hide: true, default: nil
+    class_option :enforce_available_locales, type: :boolean, hide: true, default: nil
 
     def self.source_paths
       paths = superclass.source_paths
@@ -78,6 +78,12 @@ module Solidus
           # requested no authentication system.
           options[:authentication] = 'none'
         end
+      end
+
+      if options[:enforce_available_locales] != nil
+        warn \
+          "DEPRECATION WARNING: using `solidus:install --enforce-available-locales` is now deprecated and has no effect. " \
+          "Since Rails 4.1 the default is `true` so we no longer need to explicitly set a value."
       end
 
       unless @run_migrations
@@ -132,15 +138,6 @@ module Solidus
 
     def create_overrides_directory
       empty_directory "app/overrides"
-    end
-
-    def configure_application
-      if !options[:enforce_available_locales].nil?
-        application <<~RUBY
-          # Prevent this deprecation message: https://github.com/svenfuchs/i18n/commit/3b6e56e
-          I18n.enforce_available_locales = #{options[:enforce_available_locales]}
-        RUBY
-      end
     end
 
     def include_seed_data
