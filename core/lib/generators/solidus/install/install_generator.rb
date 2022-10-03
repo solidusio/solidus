@@ -245,6 +245,17 @@ module Solidus
       apply template_path
     end
 
+    def with_env(vars)
+      original = ENV.to_hash
+      vars.each { |k, v| ENV[k] = v }
+
+      begin
+        yield
+      ensure
+        ENV.replace(original)
+      end
+    end
+
     def detect_frontend_to_install
       # We need to support names that were available in v3.2
       selected_frontend = 'starter' if options[:frontend] == 'solidus_starter_frontend'
