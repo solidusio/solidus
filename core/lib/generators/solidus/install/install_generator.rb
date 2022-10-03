@@ -112,21 +112,6 @@ module Solidus
       end
     end
 
-    def additional_tweaks
-      return unless File.exist? 'public/robots.txt'
-
-      append_file "public/robots.txt", <<-ROBOTS.strip_heredoc
-        User-agent: *
-        Disallow: /checkout
-        Disallow: /cart
-        Disallow: /orders
-        Disallow: /user
-        Disallow: /account
-        Disallow: /api
-        Disallow: /password
-      ROBOTS
-    end
-
     def setup_assets
       empty_directory 'app/assets/images'
 
