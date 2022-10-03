@@ -26,5 +26,16 @@ RSpec.describe Solidus::InstallGenerator do
         a_string_matching('using `solidus:install --enforce-available-locales` is now deprecated')
       )
     end
+
+    it 'warns when using "lib_name"' do
+      generator = described_class.new([], ['--auto-accept', '--lib-name'])
+
+      allow(generator).to receive(:warn)
+      generator.prepare_options
+
+      expect(generator).to have_received(:warn).once.with(
+        a_string_matching('using `solidus:install --lib-name` is now deprecated')
+      )
+    end
   end
 end

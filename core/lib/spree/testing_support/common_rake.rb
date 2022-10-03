@@ -31,7 +31,6 @@ class CommonRakeTasks
           'generate',
           'solidus:install',
           Dir.pwd, # use the current dir as Rails.root
-          "--lib-name=#{lib_name}",
           "--auto-accept",
           "--authentication=none",
           "--migrate=false",

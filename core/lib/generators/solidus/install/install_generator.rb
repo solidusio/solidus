@@ -37,13 +37,13 @@ module Solidus
     class_option :user_class, type: :string
     class_option :admin_email, type: :string
     class_option :admin_password, type: :string
-    class_option :lib_name, type: :string, default: 'spree'
     class_option :frontend, type: :string, enum: FRONTENDS.keys, default: nil, desc: "Indicates which frontend to install."
     class_option :authentication, type: :string, enum: AUTHENTICATIONS.keys, default: nil, desc: "Indicates which authentication system to install."
 
     # DEPRECATED
     class_option :with_authentication, type: :boolean, hide: true, default: nil
     class_option :enforce_available_locales, type: :boolean, hide: true, default: nil
+    class_option :lib_name, type: :string, hide: true, default: nil
 
     def self.source_paths
       paths = superclass.source_paths
@@ -86,6 +86,12 @@ module Solidus
           "Since Rails 4.1 the default is `true` so we no longer need to explicitly set a value."
       end
 
+      if options[:lib_name] != nil
+        warn \
+          "DEPRECATION WARNING: using `solidus:install --lib-name` is now deprecated and has no effect. " \
+          "The option is legacy and should be removed from scripts still using it."
+      end
+
       unless @run_migrations
         @load_seed_data = false
         @load_sample_data = false
@@ -122,8 +128,6 @@ module Solidus
     end
 
     def setup_assets
-      @lib_name = 'spree'
-
       empty_directory 'app/assets/images'
 
       %w{javascripts stylesheets images}.each do |path|
