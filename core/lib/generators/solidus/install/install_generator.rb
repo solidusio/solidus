@@ -143,11 +143,6 @@ module Solidus
       end
     end
 
-    def plugin_install_preparation
-      @plugins_to_be_installed = []
-      @plugin_generators_to_run = []
-    end
-
     def include_seed_data
       append_file "db/seeds.rb", <<~RUBY
 
@@ -177,19 +172,6 @@ module Solidus
       say_status :auth, authentication_key
 
       apply authentication_template
-    end
-
-    def run_bundle_install_if_needed_by_plugins
-      @plugins_to_be_installed.each do |plugin_name|
-        gem plugin_name
-      end
-
-      run_bundle if @plugins_to_be_installed.any?
-      run "spring stop" if defined?(Spring)
-
-      @plugin_generators_to_run.each do |plugin_generator_name|
-        generate "#{plugin_generator_name} --skip-migrations=true"
-      end
     end
 
     def install_routes
