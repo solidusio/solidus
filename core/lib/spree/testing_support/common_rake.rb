@@ -25,7 +25,7 @@ class CommonRakeTasks
         # within ruby is changed to that of the dummy app.
         sh({
           'SKIP_SOLIDUS_BOLT' => '1',
-          'FRONTEND' => ENV['FRONTEND'] || 'solidus_frontend',
+          'FRONTEND' => ENV['FRONTEND'] || 'classic',
         }, [
           'bin/rails',
           'generate',

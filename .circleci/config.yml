@@ -206,7 +206,7 @@ jobs:
           command: "sudo apt-get update"
       - libvips
 
-      - install_solidus: { flags: "--sample=false" }
+      - install_solidus: { flags: "--sample=false --frontend=starter --authentication=devise" }
       - test_page: { expected_text: "The only eCommerce platform you’ll ever need." }
 
       - install_solidus: { flags: "--sample=false --frontend=none --authentication=none" }

@@ -37,5 +37,21 @@ RSpec.describe Solidus::InstallGenerator do
         a_string_matching('using `solidus:install --lib-name` is now deprecated')
       )
     end
+
+    context 'supports legacy frontend option names' do
+      it 'transform "solidus_frontend" into "classic"' do
+        generator = described_class.new([], ['--auto-accept', '--frontend=solidus_frontend'])
+        generator.prepare_options
+
+        expect(generator.instance_variable_get(:@selected_frontend)).to eq('classic')
+      end
+
+      it 'transform "solidus_starter_frontend" into "starter"' do
+        generator = described_class.new([], ['--auto-accept', '--frontend=solidus_starter_frontend'])
+        generator.prepare_options
+
+        expect(generator.instance_variable_get(:@selected_frontend)).to eq('starter')
+      end
+    end
   end
 end

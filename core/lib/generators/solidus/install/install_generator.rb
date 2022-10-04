@@ -13,8 +13,12 @@ module Solidus
 
     FRONTENDS = %w[
       none
-      legacy_frontend
-      starter_frontend
+      classic
+      starter
+    ]
+    LEGACY_FRONTENDS = %w[
+      solidus_starter_frontend
+      solidus_frontend
     ]
 
     AUTHENTICATIONS = %w[
@@ -35,7 +39,7 @@ module Solidus
     class_option :admin_email, type: :string
     class_option :admin_password, type: :string
 
-    class_option :frontend, type: :string, enum: FRONTENDS, default: nil, desc: "Indicates which frontend to install."
+    class_option :frontend, type: :string, enum: FRONTENDS + LEGACY_FRONTENDS, default: nil, desc: "Indicates which frontend to install."
     class_option :authentication, type: :string, enum: AUTHENTICATIONS, default: nil, desc: "Indicates which authentication system to install."
 
     # DEPRECATED
@@ -197,10 +201,10 @@ module Solidus
 
     private
 
-    def generate(what, *args)
+    def generate(what, *args, abort_on_failure: true)
       args << '--auto-accept' if options[:auto_accept]
       args << '--auto-run-migrations' if options[:migrate]
-      super(what, *args)
+      super(what, *args, abort_on_failure: abort_on_failure)
     end
 
     def bundle_command(command, env = {})
@@ -242,26 +246,33 @@ module Solidus
     end
 
     def detect_frontend_to_install
+      # We need to support names that were available in v3.2
+      selected_frontend = 'starter' if options[:frontend] == 'solidus_starter_frontend'
+      selected_frontend = 'classic' if options[:frontend] == 'solidus_frontend'
+      selected_frontend ||= options[:frontend]
+
       ENV['FRONTEND'] ||
-        options[:frontend] ||
-        (Bundler.locked_gems.dependencies['solidus_frontend'] && 'solidus_frontend') ||
-        (options[:auto_accept] && 'solidus_starter_frontend') ||
+        selected_frontend ||
+        (Bundler.locked_gems.dependencies['solidus_frontend'] && 'classic') ||
+        (options[:auto_accept] && 'starter') ||
         ask_with_description(
-          default: 'solidus_starter_frontend',
+          default: 'starter',
           limited_to: FRONTENDS,
           desc: <<~TEXT
             Which frontend would you like to use?
 
-            - [#{set_color 'solidus_starter_frontend', :bold}] Generate all necessary controllers and views directly in your Rails app (#{set_color :default, :bold}).
-            - [#{set_color 'solidus_frontend', :bold}] Install `solidus_frontend`, was the default in previous solidus versions (#{set_color :deprecated, :bold}).
+            - [#{set_color 'starter', :bold}] Generate all necessary controllers and views directly in your Rails app (#{set_color :default, :bold}).
+            - [#{set_color 'classic', :bold}] Install `solidus_frontend`, was the default in previous solidus versions (#{set_color :deprecated, :bold}).
             - [#{set_color 'none', :bold}] Skip installing a frontend
 
-            Selecting `solidus_starter_frontend` is recommended, however, some extensions are still only compatible with `solidus_frontend`.
+            Selecting `starter` is recommended, however, some extensions are still only compatible with `classic`.
           TEXT
         )
     end
 
     def detect_authentication_to_install
+      return 'devise' if @selected_frontend == 'starter'
+
       if options[:with_authentication] != nil
         say_status :warning, \
           "Using `solidus:install --with-authentication` is now deprecated. " \
