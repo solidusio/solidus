@@ -206,6 +206,8 @@ module Solidus
     def bundle_command(command, env = {})
       # Make `bundle install` less verbose by skipping the "Using ..." messages
       super(command, env.reverse_merge('BUNDLE_SUPPRESS_INSTALL_USING_MESSAGES' => 'true'))
+    ensure
+      Bundler.reset_paths!
     end
 
     def ask_with_description(desc:, limited_to:, default:)
