@@ -11,15 +11,12 @@ module Solidus
 
     CORE_MOUNT_ROUTE = "mount Spree::Core::Engine"
 
-    LEGACY_FRONTEND = 'solidus_frontend'
-    DEFAULT_FRONTEND = 'solidus_starter_frontend'
     FRONTENDS = {
       'none' => "#{__dir__}/app_templates/frontend/none.rb",
       'solidus_frontend' => "#{__dir__}/app_templates/frontend/solidus_frontend.rb",
       'solidus_starter_frontend' => "#{__dir__}/app_templates/frontend/solidus_starter_frontend.rb",
     }
 
-    DEFAULT_AUTHENTICATION = 'devise'
     AUTHENTICATIONS = {
       'devise' => "#{__dir__}/app_templates/authentication/devise.rb",
       'existing' => "#{__dir__}/app_templates/authentication/existing.rb",
@@ -61,24 +58,14 @@ module Solidus
       @run_migrations = options[:migrate]
       @load_seed_data = options[:seed]
       @load_sample_data = options[:sample]
+      @selected_frontend = detect_frontend_to_install
+      @selected_authentication = detect_authentication_to_install
 
       # Silence verbose output (e.g. Rails migrations will rely on this environment variable)
       ENV['VERBOSE'] = 'false'
 
       # No reason to check for their presence if we're about to install them
       ENV['SOLIDUS_SKIP_MIGRATIONS_CHECK'] = 'true'
-
-      if options[:with_authentication] != nil
-        warn \
-          "DEPRECATION WARNING: using `solidus:install --with-authentication` is now deprecated. " \
-          "Please use --authentication instead (see --help for the full list of options)."
-
-        if options[:authentication].blank? && options[:with_authentication] == 'false'
-          # Don't use the default authentication if the user explicitly
-          # requested no authentication system.
-          options[:authentication] = 'none'
-        end
-      end
 
       if options[:enforce_available_locales] != nil
         warn \
@@ -148,14 +135,12 @@ module Solidus
     end
 
     def install_authentication
-      authentication_key = detect_authentication_to_install
-
-      authentication_template = AUTHENTICATIONS.fetch(authentication_key.presence) do
-        say_status :warning, "Unknown authentication: #{authentication_key.inspect}, attempting to run it with `rails app:template`"
-        authentication_key
+      authentication_template = AUTHENTICATIONS.fetch(@selected_authentication.presence) do
+        say_status :warning, "Unknown authentication: #{@selected_authentication.inspect}, attempting to run it with `rails app:template`"
+        @selected_authentication
       end
 
-      say_status :auth, authentication_key
+      say_status :auth, @selected_authentication
 
       apply authentication_template
     end
@@ -176,14 +161,12 @@ module Solidus
     end
 
     def install_frontend
-      frontend_key = detect_frontend_to_install
-
-      frontend_template = FRONTENDS.fetch(frontend_key.presence) do
-        say_status :warning, "Unknown frontend: #{frontend_key.inspect}, attempting to run it with `rails app:template`"
-        frontend_key
+      frontend_template = FRONTENDS.fetch(@selected_frontend.presence) do
+        say_status :warning, "Unknown frontend: #{@selected_frontend.inspect}, attempting to run it with `rails app:template`"
+        @selected_frontend
       end
 
-      say_status :frontend, frontend_key
+      say_status :frontend, @selected_frontend
 
       apply frontend_template
     end
@@ -238,31 +221,77 @@ module Solidus
       super(command, env.reverse_merge('BUNDLE_SUPPRESS_INSTALL_USING_MESSAGES' => 'true'))
     end
 
+    def ask_with_description(desc:, limited_to:, default:)
+      loop do
+        say_status :question, desc, :yellow
+        answer = ask(set_color("answer:".rjust(13), :blue, :bold)).to_s.downcase.presence
+
+        case answer
+        when nil
+          say_status :using, "#{default} (default)"
+          break default
+        when *limited_to.map(&:to_s)
+          say_status :using, answer
+          break answer
+        else say_status :error, "Please select a valid answer:", :red
+        end
+      end
+    end
+
     def detect_frontend_to_install
       ENV['FRONTEND'] ||
         options[:frontend] ||
-        (Bundler.locked_gems.dependencies[LEGACY_FRONTEND] && LEGACY_FRONTEND) ||
-        (options[:auto_accept] && DEFAULT_FRONTEND) ||
-        ask(<<~MSG.indent(8), default: DEFAULT_FRONTEND, limited_to: FRONTENDS.keys)
+        (Bundler.locked_gems.dependencies['solidus_frontend'] && 'solidus_frontend') ||
+        (options[:auto_accept] && 'solidus_starter_frontend') ||
+        ask_with_description(
+          default: 'solidus_starter_frontend',
+          limited_to: FRONTENDS.keys,
+          desc: <<~TEXT
+            Which frontend would you like to use?
 
-          Which frontend would you like to use?
-          Selecting #{DEFAULT_FRONTEND} is recommended.
-          However, some extensions are still only compatible with the now deprecated #{LEGACY_FRONTEND}.
+            - [#{set_color 'solidus_starter_frontend', :bold}] Generate all necessary controllers and views directly in your Rails app (#{set_color :default, :bold}).
+            - [#{set_color 'solidus_frontend', :bold}] Install `solidus_frontend`, was the default in previous solidus versions (#{set_color :deprecated, :bold}).
+            - [#{set_color 'none', :bold}] Skip installing a frontend
 
-        MSG
+            Selecting `solidus_starter_frontend` is recommended, however, some extensions are still only compatible with `solidus_frontend`.
+          TEXT
+        )
     end
 
     def detect_authentication_to_install
+      if options[:with_authentication] != nil
+        say_status :warning, \
+          "Using `solidus:install --with-authentication` is now deprecated. " \
+          "Please use `--authentication` instead (see --help for the full list of options).",
+          :red
+
+        if options[:with_authentication] == 'false'
+          # Don't use the default authentication if the user explicitly
+          # requested no authentication system.
+          return 'none'
+        else
+          return 'devise'
+        end
+      end
+
       ENV['AUTHENTICATION'] ||
         options[:authentication] ||
         (Bundler.locked_gems.dependencies['solidus_auth_devise'] && 'devise') ||
-        (options[:auto_accept] && DEFAULT_AUTHENTICATION) ||
-        ask(<<~MSG.indent(8), default: DEFAULT_AUTHENTICATION, limited_to: AUTHENTICATIONS.keys)
+        (options[:auto_accept] && 'devise') ||
+        ask_with_description(
+          default: 'devise',
+          limited_to: AUTHENTICATIONS.keys,
+          desc: <<~TEXT
+            Which authentication would you like to use?
 
-          Which authentication method would you like to use?
-          Selecting "#{DEFAULT_AUTHENTICATION}" is recommended.
+            - [#{set_color 'devise', :bold}] Install and configure the standard `devise` integration. (#{set_color :default, :bold}).
+            - [#{set_color 'existing', :bold}] Integrate and configure an existing `devise` setup.
+            - [#{set_color 'custom', :bold}] A starter configuration for rolling your own authentication system.
+            - [#{set_color 'none', :bold}] Don't add any configuration for authentication.
 
-        MSG
+            Selecting `devise` is recommended.
+          TEXT
+        )
     end
   end
 end
