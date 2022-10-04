@@ -28,6 +28,10 @@ module Solidus
       none
     ]
 
+    PAYMENT_METHODS = %w[
+      none
+    ]
+
     class_option :migrate, type: :boolean, default: true, banner: 'Run Solidus migrations'
     class_option :seed, type: :boolean, default: true, banner: 'Load seed data (migrations must be run)'
     class_option :sample, type: :boolean, default: true, banner: 'Load sample data (migrations and seeds must be run)'
@@ -41,6 +45,7 @@ module Solidus
 
     class_option :frontend, type: :string, enum: FRONTENDS + LEGACY_FRONTENDS, default: nil, desc: "Indicates which frontend to install."
     class_option :authentication, type: :string, enum: AUTHENTICATIONS, default: nil, desc: "Indicates which authentication system to install."
+    class_option :payment_method, type: :string, enum: PAYMENT_METHODS, default: nil, desc: "Indicates which payment method to install."
 
     # DEPRECATED
     class_option :with_authentication, type: :boolean, hide: true, default: nil
@@ -59,6 +64,7 @@ module Solidus
       @load_sample_data = options[:sample] && @run_migrations && @load_seed_data
       @selected_frontend = detect_frontend_to_install
       @selected_authentication = detect_authentication_to_install
+      @selected_payment_method = detect_payment_method_to_install
 
       # Silence verbose output (e.g. Rails migrations will rely on this environment variable)
       ENV['VERBOSE'] = 'false'
@@ -157,6 +163,10 @@ module Solidus
 
     def install_frontend
       apply_template_for :frontend, @selected_frontend
+    end
+
+    def install_payment_method
+      apply_template_for :payment_method, @selected_payment_method
     end
 
     def populate_seed_data
@@ -302,6 +312,19 @@ module Solidus
             - [#{set_color 'none', :bold}] Don't add any configuration for authentication.
 
             Selecting `devise` is recommended.
+          TEXT
+        )
+    end
+
+    def detect_payment_method_to_install
+      options[:payment_method] ||
+        ask_with_description(
+          default: 'none',
+          limited_to: PAYMENT_METHODS,
+          desc: <<~TEXT
+            Which payment method would you like to use?
+
+            - [#{set_color 'none', :bold}] Skip installing a payment method.
           TEXT
         )
     end

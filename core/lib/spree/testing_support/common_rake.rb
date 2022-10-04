@@ -32,6 +32,7 @@ class CommonRakeTasks
           Dir.pwd, # use the current dir as Rails.root
           "--auto-accept",
           "--authentication=none",
+          "--payment-method=none",
           "--migrate=false",
           "--seed=false",
           "--sample=false",
