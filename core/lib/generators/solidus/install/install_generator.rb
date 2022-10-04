@@ -11,18 +11,18 @@ module Solidus
 
     CORE_MOUNT_ROUTE = "mount Spree::Core::Engine"
 
-    FRONTENDS = {
-      'none' => "#{__dir__}/app_templates/frontend/none.rb",
-      'solidus_frontend' => "#{__dir__}/app_templates/frontend/solidus_frontend.rb",
-      'solidus_starter_frontend' => "#{__dir__}/app_templates/frontend/solidus_starter_frontend.rb",
-    }
+    FRONTENDS = %w[
+      none
+      legacy_frontend
+      starter_frontend
+    ]
 
-    AUTHENTICATIONS = {
-      'devise' => "#{__dir__}/app_templates/authentication/devise.rb",
-      'existing' => "#{__dir__}/app_templates/authentication/existing.rb",
-      'custom' => "#{__dir__}/app_templates/authentication/custom.rb",
-      'none' => "#{__dir__}/app_templates/authentication/none.rb",
-    }
+    AUTHENTICATIONS = %w[
+      devise
+      existing
+      custom
+      none
+    ]
 
     class_option :migrate, type: :boolean, default: true, banner: 'Run Solidus migrations'
     class_option :seed, type: :boolean, default: true, banner: 'Load seed data (migrations must be run)'
@@ -34,8 +34,9 @@ module Solidus
     class_option :user_class, type: :string
     class_option :admin_email, type: :string
     class_option :admin_password, type: :string
-    class_option :frontend, type: :string, enum: FRONTENDS.keys, default: nil, desc: "Indicates which frontend to install."
-    class_option :authentication, type: :string, enum: AUTHENTICATIONS.keys, default: nil, desc: "Indicates which authentication system to install."
+
+    class_option :frontend, type: :string, enum: FRONTENDS, default: nil, desc: "Indicates which frontend to install."
+    class_option :authentication, type: :string, enum: AUTHENTICATIONS, default: nil, desc: "Indicates which authentication system to install."
 
     # DEPRECATED
     class_option :with_authentication, type: :boolean, hide: true, default: nil
@@ -135,14 +136,7 @@ module Solidus
     end
 
     def install_authentication
-      authentication_template = AUTHENTICATIONS.fetch(@selected_authentication.presence) do
-        say_status :warning, "Unknown authentication: #{@selected_authentication.inspect}, attempting to run it with `rails app:template`"
-        @selected_authentication
-      end
-
-      say_status :auth, @selected_authentication
-
-      apply authentication_template
+      apply_template_for :authentication, @selected_authentication
     end
 
     def install_routes
@@ -161,14 +155,7 @@ module Solidus
     end
 
     def install_frontend
-      frontend_template = FRONTENDS.fetch(@selected_frontend.presence) do
-        say_status :warning, "Unknown frontend: #{@selected_frontend.inspect}, attempting to run it with `rails app:template`"
-        @selected_frontend
-      end
-
-      say_status :frontend, @selected_frontend
-
-      apply frontend_template
+      apply_template_for :frontend, @selected_frontend
     end
 
     def run_migrations
@@ -238,6 +225,20 @@ module Solidus
       end
     end
 
+    def apply_template_for(topic, selected)
+      template_path = Dir["#{__dir__}/app_templates/#{topic}/*.rb"].find do |path|
+        File.basename(path, '.rb') == selected
+      end
+
+      unless template_path
+        say_status :warning, "Unknown #{topic}: #{selected.inspect}, attempting to run it with `rails app:template`"
+        template_path = selected
+      end
+
+      say_status :installing, "[#{topic}] #{selected}", :blue
+      apply template_path
+    end
+
     def detect_frontend_to_install
       ENV['FRONTEND'] ||
         options[:frontend] ||
@@ -245,7 +246,7 @@ module Solidus
         (options[:auto_accept] && 'solidus_starter_frontend') ||
         ask_with_description(
           default: 'solidus_starter_frontend',
-          limited_to: FRONTENDS.keys,
+          limited_to: FRONTENDS,
           desc: <<~TEXT
             Which frontend would you like to use?
 
@@ -280,7 +281,7 @@ module Solidus
         (options[:auto_accept] && 'devise') ||
         ask_with_description(
           default: 'devise',
-          limited_to: AUTHENTICATIONS.keys,
+          limited_to: AUTHENTICATIONS,
           desc: <<~TEXT
             Which authentication would you like to use?
 
