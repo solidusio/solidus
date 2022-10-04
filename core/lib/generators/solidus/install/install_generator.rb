@@ -135,10 +135,6 @@ module Solidus
       rake 'db:create'
     end
 
-    def install_authentication
-      apply_template_for :authentication, @selected_authentication
-    end
-
     def install_routes
       if Pathname(app_path).join('config', 'routes.rb').read.include? CORE_MOUNT_ROUTE
         say_status :route_exist, CORE_MOUNT_ROUTE, :blue
@@ -154,10 +150,6 @@ module Solidus
       end
     end
 
-    def install_frontend
-      apply_template_for :frontend, @selected_frontend
-    end
-
     def run_migrations
       if @run_migrations
         say_status :running, "migrations"
@@ -166,6 +158,14 @@ module Solidus
       else
         say_status :skipping, "migrations (don't forget to run rake db:migrate)"
       end
+    end
+
+    def install_authentication
+      apply_template_for :authentication, @selected_authentication
+    end
+
+    def install_frontend
+      apply_template_for :frontend, @selected_frontend
     end
 
     def populate_seed_data
