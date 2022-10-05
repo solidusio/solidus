@@ -46,11 +46,7 @@ module Spree
     # @return [Spree::Price, nil]
     # @see Spree::Variant.default_price_attributes
     def default_price
-      criteria = self.class.default_price_attributes.transform_keys(&:to_s)
-      currently_valid_prices.detect do |price|
-        contender = price.attributes.slice(*criteria.keys)
-        criteria == contender
-      end
+      price_selector.price_for_options(Spree::Config.default_pricing_options)
     end
 
     def has_default_price?
