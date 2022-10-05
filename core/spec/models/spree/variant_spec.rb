@@ -339,6 +339,12 @@ RSpec.describe Spree::Variant, type: :model do
   end
 
   describe '#currently_valid_prices' do
+    around do |example|
+      Spree::Deprecation.silence do
+        example.run
+      end
+    end
+
     it 'returns prioritized prices' do
       price_1 = create(:price, country: create(:country))
       price_2 = create(:price, country: nil)
