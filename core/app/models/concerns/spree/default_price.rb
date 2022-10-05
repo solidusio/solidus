@@ -16,16 +16,12 @@ module Spree
 
     # Returns `#prices` prioritized for being considered as default price
     #
-    # @return [Array<Spree::Price>]
+    # @deprecated
+    # @return [ActiveRecord::Relation<Spree::Price>]
     def currently_valid_prices
-      prices.sort_by do |price|
-        [
-          price.country_iso.nil? ? 0 : 1,
-          price.updated_at || Time.zone.now,
-          price.id || Float::INFINITY,
-        ]
-      end.reverse
+      prices.currently_valid
     end
+    deprecate :currently_valid_prices, deprecator: Spree::Deprecation
 
     # Returns {#default_price} or builds it from {Spree::Variant.default_price_attributes}
     #
