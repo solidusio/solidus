@@ -52,7 +52,9 @@ module Spree
       #
       # @return [Array<Spree::Price>]
       def sorted_prices_for(variant)
-        variant.prices.sort_by do |price|
+        variant.prices.select do |price|
+          variant.discarded? || price.kept?
+        end.sort_by do |price|
           [
             price.country_iso.nil? ? 0 : 1,
             price.updated_at || Time.zone.now,
