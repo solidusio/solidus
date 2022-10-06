@@ -261,6 +261,22 @@ RSpec.describe Spree::Variant, type: :model do
 
       expect(variant.default_price.attributes).to eq(price.attributes)
     end
+
+    context "when the variant and the price are both soft-deleted" do
+      it "will use a deleted price as the default price" do
+        variant = create(:variant, deleted_at: 1.day.ago)
+        variant.prices.each { |price| price.discard }
+        expect(variant.reload.price).to be_present
+      end
+    end
+
+    context "when the variant is not soft-deleted, but its price is" do
+      it "will not use a deleted price as the default price" do
+        variant = create(:variant)
+        variant.prices.each { |price| price.discard }
+        expect(variant.reload.price).not_to be_present
+      end
+    end
   end
 
   describe '#default_price_or_build' do
