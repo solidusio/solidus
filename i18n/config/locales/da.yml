@@ -532,11 +532,6 @@ da:
     country: Land
     country_based: Landbaseret
     country_name: Navn
-    country_names:
-      CA:
-      FRA:
-      ITA:
-      US:
     coupon: Rabat
     coupon_code: Rabatkode
     coupon_code_already_applied: Rabatkoden er allerede anvendt på denne ordre

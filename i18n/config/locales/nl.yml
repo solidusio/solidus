@@ -468,11 +468,6 @@ nl:
     country: Land
     country_based: Gebaseerd op land
     country_name: Naam
-    country_names:
-      CA:
-      FRA:
-      ITA:
-      US:
     coupon: Kortingscode
     coupon_code: Kortingscode
     coupon_code_already_applied: Deze kortingscode is al toegepast op deze bestelling

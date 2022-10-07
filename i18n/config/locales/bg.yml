@@ -460,11 +460,6 @@ bg:
     country: "Страна"
     country_based:
     country_name: "Име"
-    country_names:
-      CA:
-      FRA:
-      ITA:
-      US:
     coupon: "Ваучер"
     coupon_code: "Код на ваучер"
     coupon_code_already_applied: "Този код вече е използван за тази доставка."

@@ -466,11 +466,6 @@ ro:
     country: "Țara"
     country_based: Bazat pe țară
     country_name: Nume
-    country_names:
-      CA:
-      FRA:
-      ITA:
-      US:
     coupon: Cupon
     coupon_code: Cod cupon
     coupon_code_already_applied: Codul voucher a fost deja aplicat acestei comenzi
