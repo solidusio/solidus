@@ -422,11 +422,6 @@ tr:
     country: "Ülke"
     country_based: "Ülke Tabanlı"
     country_name: Ad
-    country_names:
-      CA:
-      FRA:
-      ITA:
-      US:
     coupon: Kupon
     coupon_code: Kupon kodu
     coupon_code_already_applied: Girdiğiniz kupon kodu bu siparişe önceden uygulandı
