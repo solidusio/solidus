@@ -34,7 +34,8 @@
             q: {
               product_name_or_sku_cont: term
             },
-            token: Spree.api_key
+            token: Spree.api_key,
+            page: page
           };
           return _.extend(searchData, searchOptions);
         },
@@ -42,7 +43,8 @@
         results: function(data, page) {
           window.variants = data["variants"];
           return {
-            results: data["variants"]
+            results: data["variants"],
+            more: data.current_page * data.per_page < data.total_count
           };
         }
       },
