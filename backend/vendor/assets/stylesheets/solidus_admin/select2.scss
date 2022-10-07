@@ -439,7 +439,7 @@ disabled look for disabled choices in the results dropdown
 }
 
 .select2-more-results.select2-active {
-    background: #f4f4f4 image-url('solidus_admin/select2-spinner.gif') no-repeat 100%;
+    background: #f4f4f4 image-url('solidus_admin/select2-spinner.gif') no-repeat 95% center;
 }
 
 .select2-results .select2-ajax-error {
@@ -449,6 +449,7 @@ disabled look for disabled choices in the results dropdown
 .select2-more-results {
     background: #f4f4f4;
     display: list-item;
+    padding: 0.5em 1em
 }
 
 /* disabled styles */
