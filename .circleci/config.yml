@@ -128,8 +128,6 @@ commands:
         type: string
         default: "# no options"
         description: "flags to be passed to `bin/rails g solidus:install"
-      home_page_text:
-        type: string
     steps:
       - run:
           name: "Cleanup & check rails version"
@@ -165,13 +163,25 @@ commands:
             export SKIP_SOLIDUS_BOLT='true' # workaround for solidus_frontend not being able to properly install bolt in this context
             unset RAILS_ENV # avoid doing everything on the test environment
             bin/rails generate solidus:install --auto-accept <<parameters.flags>>
+  test_page:
+    parameters:
+      app_root:
+        type: string
+        default: '/tmp/my_app'
+      path:
+        type: string
+        default: '/'
+      expected_text:
+        type: string
+
+    steps:
       - run:
-          name: "Test the home page"
+          name: "Check the contents of the <<parameters.path>> page"
           command: |
-            cd /tmp/my_app
+            cd <<parameters.app_root>>
             unset RAILS_ENV # avoid doing everything on the test environment
             bin/rails server -p 3000 &
-            wget --quiet --output-document - --tries=30 --retry-connrefused "http://localhost:3000" | grep "<<parameters.home_page_text>>"
+            wget --quiet --output-document - --tries=30 --retry-connrefused "http://localhost:3000<<parameters.path>>" | grep "<<parameters.expected_text>>"
             echo "Exited with $?"
             kill $(cat "tmp/pids/server.pid")
 
@@ -184,20 +194,22 @@ jobs:
           name: "apt-get update, for libvips"
           command: "sudo apt-get update"
       - libvips
-      - install_solidus:
-          flags: "--sample=false"
-          home_page_text: "The only eCommerce platform you’ll ever need."
-      - install_solidus:
-          flags: "--sample=false --frontend=none"
-          home_page_text: "<title>Ruby on Rails"
-      - install_solidus:
-          flags: "--sample=false --frontend=solidus_frontend"
-          home_page_text: "data-hook="
-      - install_solidus:
-          flags: "--sample=false --frontend=solidus_starter_frontend"
-          home_page_text: "The only eCommerce platform you’ll ever need."
+
+      - install_solidus: { flags: "--sample=false" }
+      - test_page: { expected_text: "The only eCommerce platform you’ll ever need." }
+
+      - install_solidus: { flags: "--sample=false --frontend=none --authentication=none" }
+      - test_page: { expected_text: "<title>Ruby on Rails" }
+      - test_page: { path: '/admin/orders', expected_text: "No Orders found." }
+
+      - install_solidus: { flags: "--sample=false --frontend=solidus_frontend --authentication=none" }
+      - test_page: { expected_text: "data-hook=" }
+
+      - install_solidus: { flags: "--sample=false --frontend=solidus_starter_frontend --authentication=solidus_auth_devise" }
+      - test_page: { expected_text: "The only eCommerce platform you’ll ever need." }
+
       - run:
-          name: "rake task: extensions:test_app"
+          name: "Test `rake task: extensions:test_app`"
           command: |
             mkdir -p /tmp/dummy_extension
             cd /tmp/dummy_extension

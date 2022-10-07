@@ -9,7 +9,8 @@ module Spree
     end
 
     def spree_current_user
-      current_user
+      # TODO: Replace this with your implementation for retrieving the current user
+      Spree.user_class.new
     end
   end
 
@@ -33,8 +34,3 @@ module Spree
     end
   end
 end
-
-ApplicationController.send :include, Spree::AuthenticationHelpers
-ApplicationController.send :include, Spree::CurrentUserHelpers
-
-Spree::Api::BaseController.send :include, Spree::CurrentUserHelpers
