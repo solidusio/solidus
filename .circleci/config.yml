@@ -61,7 +61,7 @@ commands:
       - browser-tools/install-chrome
       - browser-tools/install-chromedriver
       - run: |
-          gem install bundler -v"~> 2.1" --conservative
+          gem install bundler -v"~> 2.3" --conservative
           bundle lock
       - restore_cache:
           keys:
