@@ -60,15 +60,19 @@ commands:
       - checkout
       - browser-tools/install-chrome
       - browser-tools/install-chromedriver
-      - run: |
-          gem install bundler -v"~> 2.1" --conservative
-          bundle lock
+      - run:
+          name: "Lock dependencies"
+          command: |
+            sudo gem update --system
+            gem install bundler -v"~> 2.3" --conservative
+            bundle lock
+            ruby -v > .ruby-version
       - restore_cache:
           keys:
-            - solidus-gems-v3-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
-            - solidus-gems-v3-{{ .Branch }}
-            - solidus-gems-v3-master
-            - solidus-gems-v3
+            - solidus-gems-v3-{{checksum ".ruby-version"}}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+            - solidus-gems-v3-{{checksum ".ruby-version"}}-{{ .Branch }}
+            - solidus-gems-v3-{{checksum ".ruby-version"}}-master
+            - solidus-gems-v3-{{checksum ".ruby-version"}}
 
       - run: |
           bundle config set path 'vendor/bundle'
@@ -76,7 +80,7 @@ commands:
           bundle clean
 
       - save_cache:
-          key: solidus-gems-v3-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+          key: solidus-gems-v3-{{checksum ".ruby-version"}}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
           paths:
             - vendor/bundle
 
