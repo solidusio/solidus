@@ -21,9 +21,10 @@ module Solidus
 
     DEFAULT_AUTHENTICATION = 'devise'
     AUTHENTICATIONS = {
-      'none' => "#{__dir__}/app_templates/authentication/none.rb",
-      'existing' => "#{__dir__}/app_templates/authentication/existing.rb",
       'devise' => "#{__dir__}/app_templates/authentication/devise.rb",
+      'existing' => "#{__dir__}/app_templates/authentication/existing.rb",
+      'custom' => "#{__dir__}/app_templates/authentication/custom.rb",
+      'none' => "#{__dir__}/app_templates/authentication/none.rb",
     }
 
     class_option :migrate, type: :boolean, default: true, banner: 'Run Solidus migrations'
