@@ -191,5 +191,18 @@ RSpec.describe Spree::Core::ControllerHelpers::PaymentParameters, type: :control
         other_param: 2
       )
     end
+
+    context 'with store credit' do
+      let!(:credit) { create(:store_credit, user: order.user, amount: 10) }
+      it 'produces the expected hash' do
+        expect(params_hash).to eq(
+          order: {
+            payments_attributes: [{ amount: 91 }],
+            other_order_param: 1
+          },
+          other_param: 2
+        )
+      end
+    end
   end
 end
