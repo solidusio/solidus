@@ -5143,13 +5143,12 @@ paths:
   '/orders/{order_number}/empty':
     put:
       responses:
-        '204':
+        '200':
           description: ''
           content:
             application/json:
               schema:
-                type: object
-                properties: {}
+                $ref: '#/components/schemas/order-big'
         '401':
           $ref: '#/components/responses/invalid-api-key'
         '404':
