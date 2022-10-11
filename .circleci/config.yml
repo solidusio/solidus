@@ -216,7 +216,7 @@ jobs:
       - install_solidus: { flags: "--sample=false --frontend=solidus_frontend --authentication=none" }
       - test_page: { expected_text: "data-hook=" }
 
-      - install_solidus: { flags: "--sample=false --frontend=solidus_starter_frontend --authentication=solidus_auth_devise" }
+      - install_solidus: { flags: "--sample=false --frontend=solidus_starter_frontend --authentication=devise" }
       - test_page: { expected_text: "The only eCommerce platform you’ll ever need." }
 
       - run:
