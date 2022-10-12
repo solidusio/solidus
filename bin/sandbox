@@ -52,17 +52,8 @@ fi
 
 cd ./sandbox
 cat <<RUBY >> Gemfile
-
 gem 'solidus', path: '..'
-gem 'solidus_auth_devise', '>= 2.1.0'
-gem 'rails-i18n'
-gem 'solidus_i18n'
-
-group :test, :development do
-  platforms :mri do
-    gem 'pry-byebug'
-  end
-end
+gem 'pry-byebug', group: [:test, :development], platforms: :mri
 RUBY
 
 replace_in_database_yml() {
@@ -88,13 +79,7 @@ fi
 
 unbundled bundle install --gemfile Gemfile
 unbundled bin/rails db:drop db:create
-unbundled bin/rails generate solidus:install \
-  --auto-accept \
-  --user_class=Spree::User \
-  --enforce_available_locales=true \
-  --with_authentication=false \
-  --payment-method=none
-  $@
+unbundled bin/rails generate solidus:install --auto-accept $@
 
 unbundled bin/rails generate solidus:auth:install \
   --auto_run_migrations=true
