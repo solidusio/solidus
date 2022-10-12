@@ -13,7 +13,7 @@
 [![Silver Partners on Open Collective](https://opencollective.com/solidus/tiers/silver/badge.svg?label=Silver&nbsp;Partners&color=brightgree)](https://opencollective.com/solidus)
 [![Gold Partners on Open Collective](https://opencollective.com/solidus/tiers/gold/badge.svg?label=Gold&nbsp;Partners&color=brightgree)](https://opencollective.com/solidus)
 [![Open Source Helpers](https://www.codetriage.com/solidusio/solidus/badges/users.svg)](https://www.codetriage.com/solidusio/solidus)
-[![Slack](http://slack.solidus.io/badge.svg)](http://slack.solidus.io)
+[![Slack](https://shields.io/badge/slack-start_chatting-blue?logo=slack)](http://slack.solidus.io)
 
 **A free, open-source ecommerce platform that gives you complete control over your store.**
 
