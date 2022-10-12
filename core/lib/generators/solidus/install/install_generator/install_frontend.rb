@@ -30,7 +30,14 @@ module Solidus
           end
         end
 
-        @generator_context.generate("solidus_frontend:install #{@generator_context.options[:auto_accept] ? '--auto-accept' : ''}")
+        # Solidus bolt will be handled in the installer as a payment method.
+        begin
+          skip_solidus_bolt = ENV['SKIP_SOLIDUS_BOLT']
+          ENV['SKIP_SOLIDUS_BOLT'] = 'true'
+          @generator_context.generate("solidus_frontend:install #{@generator_context.options[:auto_accept] ? '--auto-accept' : ''}")
+        ensure
+          ENV['SKIP_SOLIDUS_BOLT'] = skip_solidus_bolt
+        end
       end
 
       def install_solidus_starter_frontend(installer_adds_auth)
