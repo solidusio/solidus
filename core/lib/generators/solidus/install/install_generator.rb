@@ -183,19 +183,6 @@ module Solidus
       rake 'db:create'
     end
 
-    def run_bundle_install_if_needed_by_plugins
-      @plugins_to_be_installed.each do |plugin_name|
-        gem plugin_name
-      end
-
-      BundlerContext.bundle_cleanly { run "bundle install" } if @plugins_to_be_installed.any?
-      run "spring stop" if defined?(Spring)
-
-      @plugin_generators_to_run.each do |plugin_generator_name|
-        generate "#{plugin_generator_name} --skip_migrations=true"
-      end
-    end
-
     def install_frontend
       return if options[:frontend] == 'none'
 
@@ -210,6 +197,19 @@ module Solidus
       InstallFrontend.
         new(bundler_context: bundler_context, generator_context: self).
         call(frontend, installer_adds_auth: @plugins_to_be_installed.include?('solidus_auth_devise'))
+    end
+
+    def run_bundle_install_if_needed_by_plugins
+      @plugins_to_be_installed.each do |plugin_name|
+        gem plugin_name
+      end
+
+      BundlerContext.bundle_cleanly { run "bundle install" } if @plugins_to_be_installed.any?
+      run "spring stop" if defined?(Spring)
+
+      @plugin_generators_to_run.each do |plugin_generator_name|
+        generate "#{plugin_generator_name} --skip_migrations=true"
+      end
     end
 
     def run_migrations
