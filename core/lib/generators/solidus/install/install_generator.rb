@@ -33,7 +33,7 @@ module Solidus
     class_option :admin_email, type: :string
     class_option :admin_password, type: :string
     class_option :lib_name, type: :string, default: 'spree'
-    class_option :with_authentication, type: :boolean, default: true
+    class_option :with_authentication, type: :boolean, default: nil
     class_option :enforce_available_locales, type: :boolean, default: nil
     class_option :frontend,
                  type: :string,
@@ -43,7 +43,7 @@ module Solidus
     class_option :payment_method,
                  type: :string,
                  enum: PAYMENT_METHODS.keys,
-                 default: PAYMENT_METHODS.keys.first,
+                 default: nil,
                  desc: "Indicates which payment method to install."
 
     def self.source_paths
@@ -128,7 +128,8 @@ module Solidus
     end
 
     def install_auth_plugin
-      if options[:with_authentication] && (options[:auto_accept] || !no?("
+      with_authentication = options[:with_authentication]
+      with_authentication.nil? and with_authentication = (options[:auto_accept] || !no?("
         Solidus has a default authentication extension that uses Devise.
         You can find more info at https://github.com/solidusio/solidus_auth_devise.
 
@@ -137,6 +138,7 @@ module Solidus
 
         Would you like to install it? (Y/n)"))
 
+      if with_authentication
         @plugins_to_be_installed << 'solidus_auth_devise'
         @plugin_generators_to_run << 'solidus:auth:install'
       end
@@ -149,14 +151,10 @@ module Solidus
       ), :yellow
 
       name = options[:payment_method]
-
-      unless options[:auto_accept]
-        available_names = PAYMENT_METHODS.keys
-
-        name = ask("
+      name ||= PAYMENT_METHODS.keys.first if options[:auto_accept]
+      name ||= ask("
   You can select a payment method to be included in the installation process.
-  Please select a payment method name:", limited_to: available_names, default: available_names.first)
-      end
+  Please select a payment method name:", limited_to: PAYMENT_METHODS.keys, default: PAYMENT_METHODS.keys.first)
 
       gem_name = PAYMENT_METHODS.fetch(name)
 
