@@ -19,6 +19,11 @@ module Solidus
       'none'
     ].freeze
 
+    PAYMENT_METHODS = {
+      'paypal' => 'solidus_paypal_commerce_platform',
+      'none' => nil,
+    }
+
     class_option :migrate, type: :boolean, default: true, banner: 'Run Solidus migrations'
     class_option :seed, type: :boolean, default: true, banner: 'Load seed data (migrations must be run)'
     class_option :sample, type: :boolean, default: true, banner: 'Load sample data (migrations must be run)'
@@ -35,6 +40,11 @@ module Solidus
                  enum: FRONTENDS,
                  default: nil,
                  desc: "Indicates which frontend to install."
+    class_option :payment_method,
+                 type: :string,
+                 enum: PAYMENT_METHODS.keys,
+                 default: PAYMENT_METHODS.keys.first,
+                 desc: "Indicates which payment method to install."
 
     def self.source_paths
       paths = superclass.source_paths
@@ -129,6 +139,25 @@ module Solidus
 
         @plugins_to_be_installed << 'solidus_auth_devise'
         @plugin_generators_to_run << 'solidus:auth:install'
+      end
+    end
+
+    def install_payment_method
+      name = options[:payment_method]
+
+      unless options[:auto_accept]
+        available_names = PAYMENT_METHODS.keys
+
+        name = ask("
+  You can select a payment method to be included in the installation process.
+  Please select a payment method name:", limited_to: available_names, default: available_names.first)
+      end
+
+      gem_name = PAYMENT_METHODS.fetch(name)
+
+      if gem_name
+        @plugins_to_be_installed << gem_name
+        @plugin_generators_to_run << "#{gem_name}:install"
       end
     end
 
