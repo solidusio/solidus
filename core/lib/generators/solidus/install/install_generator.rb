@@ -143,6 +143,11 @@ module Solidus
     end
 
     def install_payment_method
+      say_status :warning, set_color(
+        "Selecting a payment along with `solidus_starter_frontend` that might require manual integration.",
+        :yellow
+      ), :yellow
+
       name = options[:payment_method]
 
       unless options[:auto_accept]
