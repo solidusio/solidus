@@ -19,11 +19,12 @@ module Solidus
       'solidus_starter_frontend' => "#{__dir__}/app_templates/frontend/solidus_starter_frontend.rb",
     }
 
-    DEFAULT_AUTHENTICATION = 'solidus_auth_devise'
+    DEFAULT_AUTHENTICATION = 'devise'
     AUTHENTICATIONS = {
+      'devise' => "#{__dir__}/app_templates/authentication/devise.rb",
+      'existing' => "#{__dir__}/app_templates/authentication/existing.rb",
+      'custom' => "#{__dir__}/app_templates/authentication/custom.rb",
       'none' => "#{__dir__}/app_templates/authentication/none.rb",
-      'existing_devise' => "#{__dir__}/app_templates/authentication/existing_devise.rb",
-      'solidus_auth_devise' => "#{__dir__}/app_templates/authentication/solidus_auth_devise.rb",
     }
 
     class_option :migrate, type: :boolean, default: true, banner: 'Run Solidus migrations'
@@ -286,7 +287,7 @@ module Solidus
     def detect_authentication_to_install
       ENV['AUTHENTICATION'] ||
         options[:authentication] ||
-        (Bundler.locked_gems.dependencies[DEFAULT_AUTHENTICATION] && DEFAULT_AUTHENTICATION) ||
+        (Bundler.locked_gems.dependencies['solidus_auth_devise'] && 'devise') ||
         (options[:auto_accept] && DEFAULT_AUTHENTICATION) ||
         ask(<<~MSG.indent(8), default: DEFAULT_AUTHENTICATION, limited_to: AUTHENTICATIONS.keys)
 

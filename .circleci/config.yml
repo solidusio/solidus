@@ -211,12 +211,11 @@ jobs:
 
       - install_solidus: { flags: "--sample=false --frontend=none --authentication=none" }
       - test_page: { expected_text: "<title>Ruby on Rails" }
-      - test_page: { path: '/admin/orders', expected_text: "No Orders found." }
 
-      - install_solidus: { flags: "--sample=false --frontend=solidus_frontend --authentication=none" }
+      - install_solidus: { flags: "--sample=false --frontend=solidus_frontend --authentication=custom" }
       - test_page: { expected_text: "data-hook=" }
 
-      - install_solidus: { flags: "--sample=false --frontend=solidus_starter_frontend --authentication=solidus_auth_devise" }
+      - install_solidus: { flags: "--sample=false --frontend=solidus_starter_frontend --authentication=devise" }
       - test_page: { expected_text: "The only eCommerce platform you’ll ever need." }
 
       - run:
