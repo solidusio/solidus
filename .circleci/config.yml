@@ -133,6 +133,12 @@ commands:
           name: Install libvips
           command: sudo apt-get install -y libvips
 
+  imagemagick:
+    steps:
+      - run:
+          name: Install imagemagick
+          command: sudo apt-get install -y imagemagick
+
   install_solidus:
     parameters:
       flags:
@@ -256,7 +262,17 @@ jobs:
       USE_LEGACY_EVENTS: << parameters.legacy >>
     steps:
       - setup
-      - libvips
+      - when:
+          condition:
+            not:
+              equal: [<<parameters.ruby>>, '2.5']
+          steps:
+            - libvips
+      - when:
+          condition:
+            equal: [<<parameters.ruby>>, '2.5']
+          steps:
+            - imagemagick
       - test
 
   test_with_coverage:
