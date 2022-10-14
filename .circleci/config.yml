@@ -133,6 +133,12 @@ commands:
           name: Install libvips
           command: sudo apt-get install -y libvips
 
+  imagemagick:
+    steps:
+      - run:
+          name: Install imagemagick
+          command: sudo apt-get install -y imagemagick
+
   install_solidus:
     parameters:
       flags:
@@ -256,7 +262,17 @@ jobs:
       USE_LEGACY_EVENTS: << parameters.legacy >>
     steps:
       - setup
-      - libvips
+      - when:
+          condition:
+            not:
+              equal: [<<parameters.ruby>>, '2.5']
+          steps:
+            - libvips
+      - when:
+          condition:
+            equal: [<<parameters.ruby>>, '2.5']
+          steps:
+            - imagemagick
       - test
 
   test_with_coverage:
@@ -283,10 +299,16 @@ jobs:
 workflows:
   build:
     jobs:
+      - solidus_installer
+
+      # Only test with coverage support with the default versions
       - test_with_coverage:
           post-steps:
             - codecov/upload:
                 file: $COVERAGE_FILE
+
+      # Based on supported versions for the current Solidus release and recommended versions from
+      # https://www.fastruby.io/blog/ruby/rails/versions/compatibility-table.html.
       - test_solidus:
           name: &name "test-rails-<<matrix.rails>>-ruby-<<matrix.ruby>>-<<matrix.database>>-<<#matrix.paperclip>>paperclip<</matrix.paperclip>><<^matrix.paperclip>>activestorage<</matrix.paperclip>>"
           matrix: { parameters: { rails: ['7.0'], ruby: ['3.0', '3.1'], database: ['mysql', 'sqlite', 'postgres'], paperclip: [true, false] } }
@@ -295,5 +317,7 @@ workflows:
           matrix: { parameters: { rails: ['6.1'], ruby: ['2.7', '3.0'], database: ['sqlite'], paperclip: [false] } }
       - test_solidus:
           name: *name
-          matrix: { parameters: { rails: ['5.2', '6.0'], ruby: ['2.7'], database: ['sqlite'], paperclip: [true] } }
-      - solidus_installer
+          matrix: { parameters: { rails: ['6.0'], ruby: ['2.6'], database: ['sqlite'], paperclip: [true] } }
+      - test_solidus:
+          name: *name
+          matrix: { parameters: { rails: ['5.2'], ruby: ['2.5'], database: ['sqlite'], paperclip: [true] } }

@@ -40,7 +40,8 @@ group :backend do
   # from default gems. See:
   # - https://github.com/ruby/net-protocol/issues/10
   # - https://stackoverflow.com/a/72474475
-  if Gem::Version.new(RUBY_VERSION) < Gem::Version.new('3')
+  v = ->(string) { Gem::Version.new(string) }
+  if Gem::Requirement.new(['>= 2.6', '< 3']) === Gem::Version.new(RUBY_VERSION)
     gem 'net-http', require: false
   end
 
