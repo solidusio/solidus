@@ -19,6 +19,12 @@ module Solidus
       'none'
     ].freeze
 
+    PAYMENT_METHODS = {
+      'paypal' => 'solidus_paypal_commerce_platform',
+      'bolt' => 'solidus_bolt',
+      'none' => nil,
+    }
+
     class_option :migrate, type: :boolean, default: true, banner: 'Run Solidus migrations'
     class_option :seed, type: :boolean, default: true, banner: 'Load seed data (migrations must be run)'
     class_option :sample, type: :boolean, default: true, banner: 'Load sample data (migrations must be run)'
@@ -28,13 +34,18 @@ module Solidus
     class_option :admin_email, type: :string
     class_option :admin_password, type: :string
     class_option :lib_name, type: :string, default: 'spree'
-    class_option :with_authentication, type: :boolean, default: true
+    class_option :with_authentication, type: :boolean, default: nil
     class_option :enforce_available_locales, type: :boolean, default: nil
     class_option :frontend,
                  type: :string,
                  enum: FRONTENDS,
                  default: nil,
                  desc: "Indicates which frontend to install."
+    class_option :payment_method,
+                 type: :string,
+                 enum: PAYMENT_METHODS.keys,
+                 default: nil,
+                 desc: "Indicates which payment method to install."
 
     def self.source_paths
       paths = superclass.source_paths
@@ -118,7 +129,8 @@ module Solidus
     end
 
     def install_auth_plugin
-      if options[:with_authentication] && (options[:auto_accept] || !no?("
+      with_authentication = options[:with_authentication]
+      with_authentication.nil? and with_authentication = (options[:auto_accept] || !no?("
         Solidus has a default authentication extension that uses Devise.
         You can find more info at https://github.com/solidusio/solidus_auth_devise.
 
@@ -127,8 +139,29 @@ module Solidus
 
         Would you like to install it? (Y/n)"))
 
+      if with_authentication
         @plugins_to_be_installed << 'solidus_auth_devise'
         @plugin_generators_to_run << 'solidus:auth:install'
+      end
+    end
+
+    def install_payment_method
+      say_status :warning, set_color(
+        "Selecting a payment along with `solidus_starter_frontend` that might require manual integration.",
+        :yellow
+      ), :yellow
+
+      name = options[:payment_method]
+      name ||= PAYMENT_METHODS.keys.first if options[:auto_accept]
+      name ||= ask("
+  You can select a payment method to be included in the installation process.
+  Please select a payment method name:", limited_to: PAYMENT_METHODS.keys, default: PAYMENT_METHODS.keys.first)
+
+      gem_name = PAYMENT_METHODS.fetch(name)
+
+      if gem_name
+        @plugins_to_be_installed << gem_name
+        @plugin_generators_to_run << "#{gem_name}:install"
       end
     end
 
@@ -150,19 +183,6 @@ module Solidus
       rake 'db:create'
     end
 
-    def run_bundle_install_if_needed_by_plugins
-      @plugins_to_be_installed.each do |plugin_name|
-        gem plugin_name
-      end
-
-      BundlerContext.bundle_cleanly { run "bundle install" } if @plugins_to_be_installed.any?
-      run "spring stop" if defined?(Spring)
-
-      @plugin_generators_to_run.each do |plugin_generator_name|
-        generate "#{plugin_generator_name} --skip_migrations=true"
-      end
-    end
-
     def install_frontend
       return if options[:frontend] == 'none'
 
@@ -177,6 +197,19 @@ module Solidus
       InstallFrontend.
         new(bundler_context: bundler_context, generator_context: self).
         call(frontend, installer_adds_auth: @plugins_to_be_installed.include?('solidus_auth_devise'))
+    end
+
+    def run_bundle_install_if_needed_by_plugins
+      @plugins_to_be_installed.each do |plugin_name|
+        gem plugin_name
+      end
+
+      BundlerContext.bundle_cleanly { run "bundle install" } if @plugins_to_be_installed.any?
+      run "spring stop" if defined?(Spring)
+
+      @plugin_generators_to_run.each do |plugin_generator_name|
+        generate "#{plugin_generator_name} --skip_migrations=true"
+      end
     end
 
     def run_migrations
