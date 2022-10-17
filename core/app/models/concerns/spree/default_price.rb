@@ -16,10 +16,12 @@ module Spree
 
     # Returns `#prices` prioritized for being considered as default price
     #
+    # @deprecated
     # @return [ActiveRecord::Relation<Spree::Price>]
     def currently_valid_prices
       prices.currently_valid
     end
+    deprecate :currently_valid_prices, deprecator: Spree::Deprecation
 
     # Returns {#default_price} or builds it from {Spree::Variant.default_price_attributes}
     #
@@ -33,7 +35,7 @@ module Spree
     # Select from {#prices} the one to be considered as the default
     #
     # This method works with the in-memory association, so non-persisted prices
-    # are taken into account. Discarded prices are also considered.
+    # are taken into account.
     #
     # A price is a candidate to be considered as the default when it meets
     # {Spree::Variant.default_price_attributes} criteria. When more than one candidate is
@@ -44,37 +46,11 @@ module Spree
     # @return [Spree::Price, nil]
     # @see Spree::Variant.default_price_attributes
     def default_price
-      prioritized_default(
-        prices_meeting_criteria_to_be_default(
-          (prices + prices.with_discarded).uniq
-        )
-      )
+      price_selector.price_for_options(Spree::Config.default_pricing_options)
     end
 
     def has_default_price?
       default_price.present? && !default_price.discarded?
-    end
-
-    private
-
-    def prices_meeting_criteria_to_be_default(prices)
-      criteria = self.class.default_price_attributes.transform_keys(&:to_s)
-      prices.select do |price|
-        contender = price.attributes.slice(*criteria.keys)
-        criteria == contender
-      end
-    end
-
-    def prioritized_default(prices)
-      prices.min do |prev, succ|
-        contender_one, contender_two = [succ, prev].map do |item|
-          [
-            item.updated_at || Time.zone.now,
-            item.id || Float::INFINITY
-          ]
-        end
-        contender_one <=> contender_two
-      end
     end
   end
 end

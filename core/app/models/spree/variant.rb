@@ -23,7 +23,6 @@ module Spree
     after_discard do
       stock_items.discard_all
       images.destroy_all
-      prices.discard_all
     end
 
     attr_writer :rebuild_vat_prices
@@ -52,6 +51,7 @@ module Spree
     has_many :images, -> { order(:position) }, as: :viewable, dependent: :destroy, class_name: "Spree::Image"
 
     has_many :prices,
+      -> { with_discarded },
       class_name: 'Spree::Price',
       dependent: :destroy,
       inverse_of: :variant,
