@@ -532,6 +532,15 @@ module Spree
                                                           small: '400x400>',
                                                           product: '680x680>',
                                                           large: '1200x1200>' }
+
+    # Allows providing your own class for prioritizing store credit application
+    # to an order.
+    #
+    # @!attribute [rw] store_credit_prioritizer_class
+    # @return [Class] a class with the same public interfaces as
+    #   Spree::StoreCreditPrioritizer.
+    class_name_attribute :store_credit_prioritizer_class, default: 'Spree::StoreCreditPrioritizer'
+
     # @!attribute [rw] taxon_image_style_default
     #
     # Defines which style to default to when style is not provided
