@@ -20,7 +20,7 @@ products[:ruby_mug] = Spree::Product.find_by!(name: "Ruby Mug")
 products[:solidus_tote] = Spree::Product.find_by!(name: "Solidus Tote")
 products[:ruby_tote] = Spree::Product.find_by!(name: "Ruby Tote")
 
-def image(name, type = "jpg")
+image = ->(name, type = "jpg") do
   images_path = Pathname.new(File.dirname(__FILE__)) + "images"
   path = images_path + "#{name}.#{type}"
 
@@ -32,61 +32,61 @@ end
 images = {
   products[:solidus_snapback_cap].master => [
     {
-      attachment: image("solidus_snapback_cap")
+      attachment: image["solidus_snapback_cap"]
     }
   ],
   products[:solidus_hoodie].master => [
     {
-      attachment: image("solidus_hoodie")
+      attachment: image["solidus_hoodie"]
     }
   ],
   products[:ruby_hoodie].master => [
     {
-      attachment: image("ruby_hoodie")
+      attachment: image["ruby_hoodie"]
     }
   ],
   products[:ruby_hoodie_zip].master => [
     {
-      attachment: image("ruby_hoodie_zip")
+      attachment: image["ruby_hoodie_zip"]
     }
   ],
   products[:ruby_polo].master => [
     {
-      attachment: image("ruby_polo")
+      attachment: image["ruby_polo"]
     },
     {
-      attachment: image("ruby_polo_back")
+      attachment: image["ruby_polo_back"]
     }
   ],
   products[:solidus_mug].master => [
     {
-      attachment: image("solidus_mug")
+      attachment: image["solidus_mug"]
     }
   ],
   products[:ruby_mug].master => [
     {
-      attachment: image("ruby_mug")
+      attachment: image["ruby_mug"]
     }
   ],
   products[:solidus_tote].master => [
     {
-      attachment: image("tote_bag_solidus")
+      attachment: image["tote_bag_solidus"]
     }
   ],
   products[:ruby_tote].master => [
     {
-      attachment: image("tote_bag_ruby")
+      attachment: image["tote_bag_ruby"]
     }
   ]
 }
 
 products[:solidus_tshirt].variants.each do |variant|
   color = variant.option_value("tshirt-color").downcase
-  main_image = image("solidus_tshirt_#{color}", "png")
+  main_image = image["solidus_tshirt_#{color}", "png"]
   File.open(main_image) do |f|
     variant.images.create!(attachment: f)
   end
-  back_image = image("solidus_tshirt_back_#{color}", "png")
+  back_image = image["solidus_tshirt_back_#{color}", "png"]
 
   next unless back_image
 
@@ -97,11 +97,11 @@ end
 
 products[:solidus_long].variants.each do |variant|
   color = variant.option_value("tshirt-color").downcase
-  main_image = image("solidus_long_#{color}", "png")
+  main_image = image["solidus_long_#{color}", "png"]
   File.open(main_image) do |f|
     variant.images.create!(attachment: f)
   end
-  back_image = image("solidus_long_back_#{color}", "png")
+  back_image = image["solidus_long_back_#{color}", "png"]
 
   next unless back_image
 
@@ -112,7 +112,7 @@ end
 
 products[:solidus_womens_tshirt].reload.variants.each do |variant|
   color = variant.option_value("tshirt-color").downcase
-  main_image = image("solidus_womens_tshirt_#{color}", "png")
+  main_image = image["solidus_womens_tshirt_#{color}", "png"]
   File.open(main_image) do |f|
     variant.images.create!(attachment: f)
   end

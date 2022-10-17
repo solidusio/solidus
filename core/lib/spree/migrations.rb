@@ -33,8 +33,7 @@ module Spree
         #{missing_migrations.map {|m| "#{prefix} - #{m}"}.join("\n")}
         #{prefix}
         #{prefix} Run `bin/rails railties:install:migrations` to get them.
-        #{prefix} You can silence thi warning by setting the environment
-        #{prefix} variable SOLIDUS_SKIP_MIGRATIONS_CHECK.'
+        #{prefix} You can silence thi warning by setting the `SOLIDUS_SKIP_MIGRATIONS_CHECK` environment variable.
       WARN
     end
 

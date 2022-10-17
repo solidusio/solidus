@@ -11,21 +11,22 @@ module Solidus
 
     CORE_MOUNT_ROUTE = "mount Spree::Core::Engine"
 
-    LEGACY_FRONTEND = 'solidus_frontend'
-    DEFAULT_FRONTEND = 'solidus_starter_frontend'
-    FRONTENDS = {
-      'none' => "#{__dir__}/app_templates/frontend/none.rb",
-      'solidus_frontend' => "#{__dir__}/app_templates/frontend/solidus_frontend.rb",
-      'solidus_starter_frontend' => "#{__dir__}/app_templates/frontend/solidus_starter_frontend.rb",
-    }
+    FRONTENDS = %w[
+      none
+      classic
+      starter
+    ]
+    LEGACY_FRONTENDS = %w[
+      solidus_starter_frontend
+      solidus_frontend
+    ]
 
-    DEFAULT_AUTHENTICATION = 'devise'
-    AUTHENTICATIONS = {
-      'devise' => "#{__dir__}/app_templates/authentication/devise.rb",
-      'existing' => "#{__dir__}/app_templates/authentication/existing.rb",
-      'custom' => "#{__dir__}/app_templates/authentication/custom.rb",
-      'none' => "#{__dir__}/app_templates/authentication/none.rb",
-    }
+    AUTHENTICATIONS = %w[
+      devise
+      existing
+      custom
+      none
+    ]
 
     class_option :migrate, type: :boolean, default: true, banner: 'Run Solidus migrations'
     class_option :seed, type: :boolean, default: true, banner: 'Load seed data (migrations must be run)'
@@ -37,13 +38,14 @@ module Solidus
     class_option :user_class, type: :string
     class_option :admin_email, type: :string
     class_option :admin_password, type: :string
-    class_option :lib_name, type: :string, default: 'spree'
-    class_option :enforce_available_locales, type: :boolean, default: nil
-    class_option :frontend, type: :string, enum: FRONTENDS.keys, default: nil, desc: "Indicates which frontend to install."
-    class_option :authentication, type: :string, enum: AUTHENTICATIONS.keys, default: nil, desc: "Indicates which authentication system to install."
+
+    class_option :frontend, type: :string, enum: FRONTENDS + LEGACY_FRONTENDS, default: nil, desc: "Indicates which frontend to install."
+    class_option :authentication, type: :string, enum: AUTHENTICATIONS, default: nil, desc: "Indicates which authentication system to install."
 
     # DEPRECATED
     class_option :with_authentication, type: :boolean, hide: true, default: nil
+    class_option :enforce_available_locales, type: :boolean, hide: true, default: nil
+    class_option :lib_name, type: :string, hide: true, default: nil
 
     def self.source_paths
       paths = superclass.source_paths
@@ -61,6 +63,8 @@ module Solidus
       @run_migrations = options[:migrate]
       @load_seed_data = options[:seed]
       @load_sample_data = options[:sample]
+      @selected_frontend = detect_frontend_to_install
+      @selected_authentication = detect_authentication_to_install
 
       # Silence verbose output (e.g. Rails migrations will rely on this environment variable)
       ENV['VERBOSE'] = 'false'
@@ -68,16 +72,16 @@ module Solidus
       # No reason to check for their presence if we're about to install them
       ENV['SOLIDUS_SKIP_MIGRATIONS_CHECK'] = 'true'
 
-      if options[:with_authentication] != nil
+      if options[:enforce_available_locales] != nil
         warn \
-          "DEPRECATION WARNING: using `solidus:install --with-authentication` is now deprecated. " \
-          "Please use --authentication instead (see --help for the full list of options)."
+          "DEPRECATION WARNING: using `solidus:install --enforce-available-locales` is now deprecated and has no effect. " \
+          "Since Rails 4.1 the default is `true` so we no longer need to explicitly set a value."
+      end
 
-        if options[:authentication].blank? && options[:with_authentication] == 'false'
-          # Don't use the default authentication if the user explicitly
-          # requested no authentication system.
-          options[:authentication] = 'none'
-        end
+      if options[:lib_name] != nil
+        warn \
+          "DEPRECATION WARNING: using `solidus:install --lib-name` is now deprecated and has no effect. " \
+          "The option is legacy and should be removed from scripts still using it."
       end
 
       unless @run_migrations
@@ -100,24 +104,7 @@ module Solidus
       end
     end
 
-    def additional_tweaks
-      return unless File.exist? 'public/robots.txt'
-
-      append_file "public/robots.txt", <<-ROBOTS.strip_heredoc
-        User-agent: *
-        Disallow: /checkout
-        Disallow: /cart
-        Disallow: /orders
-        Disallow: /user
-        Disallow: /account
-        Disallow: /api
-        Disallow: /password
-      ROBOTS
-    end
-
     def setup_assets
-      @lib_name = 'spree'
-
       empty_directory 'app/assets/images'
 
       %w{javascripts stylesheets images}.each do |path|
@@ -132,20 +119,6 @@ module Solidus
 
     def create_overrides_directory
       empty_directory "app/overrides"
-    end
-
-    def configure_application
-      if !options[:enforce_available_locales].nil?
-        application <<~RUBY
-          # Prevent this deprecation message: https://github.com/svenfuchs/i18n/commit/3b6e56e
-          I18n.enforce_available_locales = #{options[:enforce_available_locales]}
-        RUBY
-      end
-    end
-
-    def plugin_install_preparation
-      @plugins_to_be_installed = []
-      @plugin_generators_to_run = []
     end
 
     def include_seed_data
@@ -166,32 +139,6 @@ module Solidus
       rake 'db:create'
     end
 
-    def install_authentication
-      authentication_key = detect_authentication_to_install
-
-      authentication_template = AUTHENTICATIONS.fetch(authentication_key.presence) do
-        say_status :warning, "Unknown authentication: #{authentication_key.inspect}, attempting to run it with `rails app:template`"
-        authentication_key
-      end
-
-      say_status :auth, authentication_key
-
-      apply authentication_template
-    end
-
-    def run_bundle_install_if_needed_by_plugins
-      @plugins_to_be_installed.each do |plugin_name|
-        gem plugin_name
-      end
-
-      run_bundle if @plugins_to_be_installed.any?
-      run "spring stop" if defined?(Spring)
-
-      @plugin_generators_to_run.each do |plugin_generator_name|
-        generate "#{plugin_generator_name} --skip-migrations=true"
-      end
-    end
-
     def install_routes
       if Pathname(app_path).join('config', 'routes.rb').read.include? CORE_MOUNT_ROUTE
         say_status :route_exist, CORE_MOUNT_ROUTE, :blue
@@ -207,19 +154,6 @@ module Solidus
       end
     end
 
-    def install_frontend
-      frontend_key = detect_frontend_to_install
-
-      frontend_template = FRONTENDS.fetch(frontend_key.presence) do
-        say_status :warning, "Unknown frontend: #{frontend_key.inspect}, attempting to run it with `rails app:template`"
-        frontend_key
-      end
-
-      say_status :frontend, frontend_key
-
-      apply frontend_template
-    end
-
     def run_migrations
       if @run_migrations
         say_status :running, "migrations"
@@ -228,6 +162,14 @@ module Solidus
       else
         say_status :skipping, "migrations (don't forget to run rake db:migrate)"
       end
+    end
+
+    def install_authentication
+      apply_template_for :authentication, @selected_authentication
+    end
+
+    def install_frontend
+      apply_template_for :frontend, @selected_frontend
     end
 
     def populate_seed_data
@@ -259,42 +201,111 @@ module Solidus
 
     private
 
-    def generate(what, *args)
+    def generate(what, *args, abort_on_failure: true)
       args << '--auto-accept' if options[:auto_accept]
       args << '--auto-run-migrations' if options[:migrate]
-      super(what, *args)
+      super(what, *args, abort_on_failure: abort_on_failure)
     end
 
     def bundle_command(command, env = {})
       # Make `bundle install` less verbose by skipping the "Using ..." messages
       super(command, env.reverse_merge('BUNDLE_SUPPRESS_INSTALL_USING_MESSAGES' => 'true'))
+    ensure
+      Bundler.reset_paths!
+    end
+
+    def ask_with_description(desc:, limited_to:, default:)
+      loop do
+        say_status :question, desc, :yellow
+        answer = ask(set_color("answer:".rjust(13), :blue, :bold)).to_s.downcase.presence
+
+        case answer
+        when nil
+          say_status :using, "#{default} (default)"
+          break default
+        when *limited_to.map(&:to_s)
+          say_status :using, answer
+          break answer
+        else say_status :error, "Please select a valid answer:", :red
+        end
+      end
+    end
+
+    def apply_template_for(topic, selected)
+      template_path = Dir["#{__dir__}/app_templates/#{topic}/*.rb"].find do |path|
+        File.basename(path, '.rb') == selected
+      end
+
+      unless template_path
+        say_status :warning, "Unknown #{topic}: #{selected.inspect}, attempting to run it with `rails app:template`"
+        template_path = selected
+      end
+
+      say_status :installing, "[#{topic}] #{selected}", :blue
+      apply template_path
     end
 
     def detect_frontend_to_install
+      # We need to support names that were available in v3.2
+      selected_frontend = 'starter' if options[:frontend] == 'solidus_starter_frontend'
+      selected_frontend = 'classic' if options[:frontend] == 'solidus_frontend'
+      selected_frontend ||= options[:frontend]
+
       ENV['FRONTEND'] ||
-        options[:frontend] ||
-        (Bundler.locked_gems.dependencies[LEGACY_FRONTEND] && LEGACY_FRONTEND) ||
-        (options[:auto_accept] && DEFAULT_FRONTEND) ||
-        ask(<<~MSG.indent(8), default: DEFAULT_FRONTEND, limited_to: FRONTENDS.keys)
+        selected_frontend ||
+        (Bundler.locked_gems.dependencies['solidus_frontend'] && 'classic') ||
+        (options[:auto_accept] && 'starter') ||
+        ask_with_description(
+          default: 'starter',
+          limited_to: FRONTENDS,
+          desc: <<~TEXT
+            Which frontend would you like to use?
 
-          Which frontend would you like to use?
-          Selecting #{DEFAULT_FRONTEND} is recommended.
-          However, some extensions are still only compatible with the now deprecated #{LEGACY_FRONTEND}.
+            - [#{set_color 'starter', :bold}] Generate all necessary controllers and views directly in your Rails app (#{set_color :default, :bold}).
+            - [#{set_color 'classic', :bold}] Install `solidus_frontend`, was the default in previous solidus versions (#{set_color :deprecated, :bold}).
+            - [#{set_color 'none', :bold}] Skip installing a frontend
 
-        MSG
+            Selecting `starter` is recommended, however, some extensions are still only compatible with `classic`.
+          TEXT
+        )
     end
 
     def detect_authentication_to_install
+      return 'devise' if @selected_frontend == 'starter'
+
+      if options[:with_authentication] != nil
+        say_status :warning, \
+          "Using `solidus:install --with-authentication` is now deprecated. " \
+          "Please use `--authentication` instead (see --help for the full list of options).",
+          :red
+
+        if options[:with_authentication] == 'false'
+          # Don't use the default authentication if the user explicitly
+          # requested no authentication system.
+          return 'none'
+        else
+          return 'devise'
+        end
+      end
+
       ENV['AUTHENTICATION'] ||
         options[:authentication] ||
         (Bundler.locked_gems.dependencies['solidus_auth_devise'] && 'devise') ||
-        (options[:auto_accept] && DEFAULT_AUTHENTICATION) ||
-        ask(<<~MSG.indent(8), default: DEFAULT_AUTHENTICATION, limited_to: AUTHENTICATIONS.keys)
+        (options[:auto_accept] && 'devise') ||
+        ask_with_description(
+          default: 'devise',
+          limited_to: AUTHENTICATIONS,
+          desc: <<~TEXT
+            Which authentication would you like to use?
 
-          Which authentication method would you like to use?
-          Selecting "#{DEFAULT_AUTHENTICATION}" is recommended.
+            - [#{set_color 'devise', :bold}] Install and configure the standard `devise` integration. (#{set_color :default, :bold}).
+            - [#{set_color 'existing', :bold}] Integrate and configure an existing `devise` setup.
+            - [#{set_color 'custom', :bold}] A starter configuration for rolling your own authentication system.
+            - [#{set_color 'none', :bold}] Don't add any configuration for authentication.
 
-        MSG
+            Selecting `devise` is recommended.
+          TEXT
+        )
     end
   end
 end
