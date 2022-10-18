@@ -30,6 +30,7 @@ module Solidus
 
     PAYMENT_METHODS = %w[
       paypal
+      bolt
       none
     ]
 
@@ -319,6 +320,8 @@ module Solidus
 
     def detect_payment_method_to_install
       return 'paypal' if Bundler.locked_gems.dependencies['solidus_paypal_commerce_platform']
+      return 'bolt' if Bundler.locked_gems.dependencies['solidus_bolt']
+
       options[:payment_method] ||
         (options[:auto_accept] && @selected_frontend == 'classic' ? 'paypal' : 'none') ||
         (@selected_frontend != 'classic' && 'none') || # bail out if it's not classic
@@ -329,6 +332,7 @@ module Solidus
             Which payment method would you like to use?
 
             - [#{set_color 'paypal', :bold}] Install `solidus_paypal_commerce_platform` (#{set_color :default, :bold}).
+            - [#{set_color 'bolt', :bold}] Install `solidus_bolt`.
             - [#{set_color 'none', :bold}] Skip installing a payment method.
           TEXT
         )
