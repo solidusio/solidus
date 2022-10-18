@@ -30,7 +30,7 @@ module Solidus
 
     class_option :migrate, type: :boolean, default: true, banner: 'Run Solidus migrations'
     class_option :seed, type: :boolean, default: true, banner: 'Load seed data (migrations must be run)'
-    class_option :sample, type: :boolean, default: true, banner: 'Load sample data (migrations must be run)'
+    class_option :sample, type: :boolean, default: true, banner: 'Load sample data (migrations and seeds must be run)'
     class_option :active_storage, type: :boolean, default: (
       Rails.gem_version >= Gem::Version.new("6.1.0")
     ), banner: 'Install ActiveStorage as image attachments handler for products and taxons'
@@ -56,7 +56,7 @@ module Solidus
     def prepare_options
       @run_migrations = options[:migrate]
       @load_seed_data = options[:seed] && @run_migrations
-      @load_sample_data = options[:sample] && @run_migrations
+      @load_sample_data = options[:sample] && @run_migrations && @load_seed_data
       @selected_frontend = detect_frontend_to_install
       @selected_authentication = detect_authentication_to_install
 

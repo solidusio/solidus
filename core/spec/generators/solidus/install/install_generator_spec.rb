@@ -60,6 +60,15 @@ RSpec.describe Solidus::InstallGenerator do
       expect(generator.instance_variable_get(:@load_sample_data)).to eq(false)
     end
 
+    it 'skips sample data if seeds are disabled' do
+      generator = described_class.new([], ['--auto-accept', '--seed=false'])
+      generator.prepare_options
+
+      expect(generator.instance_variable_get(:@run_migrations)).to eq(true)
+      expect(generator.instance_variable_get(:@load_seed_data)).to eq(false)
+      expect(generator.instance_variable_get(:@load_sample_data)).to eq(false)
+    end
+
     context 'supports legacy frontend option names' do
       it 'transform "solidus_frontend" into "classic"' do
         generator = described_class.new([], ['--auto-accept', '--frontend=solidus_frontend'])
