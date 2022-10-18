@@ -19,6 +19,17 @@ RSpec.describe Solidus::InstallGenerator do
       end
     end
 
+    it 'defaults to "paypal" for payments when frontend is "classic"' do
+      generator = described_class.new([], ['--auto-accept', '--frontend=classic'])
+      generator.prepare_options
+
+      aggregate_failures do
+        expect(generator.instance_variable_get(:@selected_frontend)).to eq("classic")
+        expect(generator.instance_variable_get(:@selected_authentication)).to eq("devise")
+        expect(generator.instance_variable_get(:@selected_payment_method)).to eq("paypal")
+      end
+    end
+
     it 'disables "seeds" and "sample" if "migrate" are disabled' do
       generator = described_class.new([], ['--auto-accept', '--migrate=false'])
       generator.prepare_options
