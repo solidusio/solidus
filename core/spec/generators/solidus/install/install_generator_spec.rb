@@ -12,6 +12,9 @@ RSpec.describe Solidus::InstallGenerator do
       aggregate_failures do
         expect(generator.instance_variable_get(:@selected_frontend)).to eq("starter")
         expect(generator.instance_variable_get(:@selected_authentication)).to eq("devise")
+        expect(generator.instance_variable_get(:@run_migrations)).to eq(true)
+        expect(generator.instance_variable_get(:@load_seed_data)).to eq(true)
+        expect(generator.instance_variable_get(:@load_sample_data)).to eq(true)
       end
     end
 
@@ -46,6 +49,15 @@ RSpec.describe Solidus::InstallGenerator do
       expect(generator).to have_received(:warn).once.with(
         a_string_matching('using `solidus:install --lib-name` is now deprecated')
       )
+    end
+
+    it 'skips seed and sample data if migrations are disabled' do
+      generator = described_class.new([], ['--auto-accept', '--migrate=false'])
+      generator.prepare_options
+
+      expect(generator.instance_variable_get(:@run_migrations)).to eq(false)
+      expect(generator.instance_variable_get(:@load_seed_data)).to eq(false)
+      expect(generator.instance_variable_get(:@load_sample_data)).to eq(false)
     end
 
     context 'supports legacy frontend option names' do

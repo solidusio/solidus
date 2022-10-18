@@ -55,8 +55,8 @@ module Solidus
 
     def prepare_options
       @run_migrations = options[:migrate]
-      @load_seed_data = options[:seed]
-      @load_sample_data = options[:sample]
+      @load_seed_data = options[:seed] && @run_migrations
+      @load_sample_data = options[:sample] && @run_migrations
       @selected_frontend = detect_frontend_to_install
       @selected_authentication = detect_authentication_to_install
 
@@ -76,11 +76,6 @@ module Solidus
         warn \
           "DEPRECATION WARNING: using `solidus:install --lib-name` is now deprecated and has no effect. " \
           "The option is legacy and should be removed from scripts still using it."
-      end
-
-      unless @run_migrations
-        @load_seed_data = false
-        @load_sample_data = false
       end
     end
 
