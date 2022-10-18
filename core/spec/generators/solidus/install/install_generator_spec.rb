@@ -5,6 +5,16 @@ require 'generators/solidus/install/install_generator'
 
 RSpec.describe Solidus::InstallGenerator do
   describe '#prepare_options' do
+    it 'has a default setup' do
+      generator = described_class.new([], ['--auto-accept'])
+      generator.prepare_options
+
+      aggregate_failures do
+        expect(generator.instance_variable_get(:@selected_frontend)).to eq("starter")
+        expect(generator.instance_variable_get(:@selected_authentication)).to eq("devise")
+      end
+    end
+
     it 'disables "seeds" and "sample" if "migrate" are disabled' do
       generator = described_class.new([], ['--auto-accept', '--migrate=false'])
       generator.prepare_options
