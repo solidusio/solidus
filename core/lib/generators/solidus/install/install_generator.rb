@@ -112,9 +112,7 @@ module Solidus
 
     def include_seed_data
       append_file "db/seeds.rb", <<~RUBY
-
         Spree::Core::Engine.load_seed if defined?(Spree::Core)
-        Spree::Auth::Engine.load_seed if defined?(Spree::Auth)
       RUBY
     end
 
