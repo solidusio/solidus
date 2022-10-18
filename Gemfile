@@ -74,6 +74,8 @@ group :utils do
   gem 'gem-release', require: false
 end
 
+gem 'buildkite-test_collector', require: false, group: :test
+
 gem 'rspec_junit_formatter', require: false, group: :ci
 
 # Documentation
