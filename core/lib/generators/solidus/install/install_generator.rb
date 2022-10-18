@@ -47,13 +47,7 @@ module Solidus
     class_option :enforce_available_locales, type: :boolean, hide: true, default: nil
     class_option :lib_name, type: :string, hide: true, default: nil
 
-    def self.source_paths
-      paths = superclass.source_paths
-      paths << File.expand_path('../templates', "../../#{__FILE__}")
-      paths << File.expand_path('../templates', "../#{__FILE__}")
-      paths << File.expand_path('templates', __dir__)
-      paths.flatten
-    end
+    source_root "#{__dir__}/templates"
 
     def self.exit_on_failure?
       true
