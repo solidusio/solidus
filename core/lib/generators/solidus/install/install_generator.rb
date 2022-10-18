@@ -263,7 +263,7 @@ module Solidus
 
             - [#{set_color 'starter', :bold}] Generate all necessary controllers and views directly in your Rails app (#{set_color :default, :bold}).
             - [#{set_color 'classic', :bold}] Install `solidus_frontend`, was the default in previous solidus versions (#{set_color :deprecated, :bold}).
-            - [#{set_color 'none', :bold}] Skip installing a frontend
+            - [#{set_color 'none', :bold}] Skip installing a frontend.
 
             Selecting `starter` is recommended, however, some extensions are still only compatible with `classic`.
           TEXT
