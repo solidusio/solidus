@@ -1,6 +1,3 @@
-<% if agent_number = ENV['TC_AGENT_NUMBER']
-database_prefix = agent_number + '_'
-end %>
 <% db = case ENV['DB']
         when 'mysql'
           'mysql'
@@ -22,14 +19,11 @@ end %>
 <% db_username = ENV['DB_USERNAME'] %>
 <% db_password = ENV['DB_PASSWORD'] %>
 
-
-
-
 <% case ENV['DB']
   when 'mysql' %>
 development:
   adapter: mysql2
-  database: <%= database_prefix %><%= options[:lib_name] %>_solidus_development
+  database: <%= options[:lib_name] %>_solidus_development
   <% unless db_username.blank? %>
   username: <%= db_username %>
   <% end %>
@@ -42,7 +36,7 @@ development:
   encoding: utf8
 test:
   adapter: mysql2
-  database: <%= database_prefix %><%= options[:lib_name] %>_solidus_test
+  database: <%= options[:lib_name] %>_solidus_test
   <% unless db_username.blank? %>
   username: <%= db_username %>
   <% end %>
@@ -55,7 +49,7 @@ test:
   encoding: utf8
 production:
   adapter: mysql2
-  database: <%= database_prefix %><%= options[:lib_name] %>_solidus_production
+  database: <%= options[:lib_name] %>_solidus_production
   <% unless db_username.blank? %>
   username: <%= db_username %>
   <% end %>
@@ -69,7 +63,7 @@ production:
 <% when 'postgres', 'postgresql' %>
 development:
   adapter: postgresql
-  database: <%= database_prefix %><%= options[:lib_name] %>_solidus_development
+  database: <%= options[:lib_name] %>_solidus_development
   <% unless db_username.blank? %>
   username: <%= db_username %>
   <% end %>
@@ -82,7 +76,7 @@ development:
   min_messages: warning
 test:
   adapter: postgresql
-  database: <%= database_prefix %><%= options[:lib_name] %>_solidus_test
+  database: <%= options[:lib_name] %>_solidus_test
   <% unless db_username.blank? %>
   username: <%= db_username %>
   <% end %>
@@ -95,7 +89,7 @@ test:
   min_messages: warning
 production:
   adapter: postgresql
-  database: <%= database_prefix %><%= options[:lib_name] %>_solidus_production
+  database: <%= options[:lib_name] %>_solidus_production
   <% unless db_username.blank? %>
   username: <%= db_username %>
   <% end %>
