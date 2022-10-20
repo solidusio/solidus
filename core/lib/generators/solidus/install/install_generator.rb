@@ -28,9 +28,15 @@ module Solidus
       none
     ]
 
+    PAYMENT_METHODS = %w[
+      paypal
+      bolt
+      none
+    ]
+
     class_option :migrate, type: :boolean, default: true, banner: 'Run Solidus migrations'
     class_option :seed, type: :boolean, default: true, banner: 'Load seed data (migrations must be run)'
-    class_option :sample, type: :boolean, default: true, banner: 'Load sample data (migrations must be run)'
+    class_option :sample, type: :boolean, default: true, banner: 'Load sample data (migrations and seeds must be run)'
     class_option :active_storage, type: :boolean, default: (
       Rails.gem_version >= Gem::Version.new("6.1.0")
     ), banner: 'Install ActiveStorage as image attachments handler for products and taxons'
@@ -41,19 +47,14 @@ module Solidus
 
     class_option :frontend, type: :string, enum: FRONTENDS + LEGACY_FRONTENDS, default: nil, desc: "Indicates which frontend to install."
     class_option :authentication, type: :string, enum: AUTHENTICATIONS, default: nil, desc: "Indicates which authentication system to install."
+    class_option :payment_method, type: :string, enum: PAYMENT_METHODS, default: nil, desc: "Indicates which payment method to install."
 
     # DEPRECATED
     class_option :with_authentication, type: :boolean, hide: true, default: nil
     class_option :enforce_available_locales, type: :boolean, hide: true, default: nil
     class_option :lib_name, type: :string, hide: true, default: nil
 
-    def self.source_paths
-      paths = superclass.source_paths
-      paths << File.expand_path('../templates', "../../#{__FILE__}")
-      paths << File.expand_path('../templates', "../#{__FILE__}")
-      paths << File.expand_path('templates', __dir__)
-      paths.flatten
-    end
+    source_root "#{__dir__}/templates"
 
     def self.exit_on_failure?
       true
@@ -61,10 +62,11 @@ module Solidus
 
     def prepare_options
       @run_migrations = options[:migrate]
-      @load_seed_data = options[:seed]
-      @load_sample_data = options[:sample]
+      @load_seed_data = options[:seed] && @run_migrations
+      @load_sample_data = options[:sample] && @run_migrations && @load_seed_data
       @selected_frontend = detect_frontend_to_install
       @selected_authentication = detect_authentication_to_install
+      @selected_payment_method = detect_payment_method_to_install
 
       # Silence verbose output (e.g. Rails migrations will rely on this environment variable)
       ENV['VERBOSE'] = 'false'
@@ -82,11 +84,6 @@ module Solidus
         warn \
           "DEPRECATION WARNING: using `solidus:install --lib-name` is now deprecated and has no effect. " \
           "The option is legacy and should be removed from scripts still using it."
-      end
-
-      unless @run_migrations
-        @load_seed_data = false
-        @load_sample_data = false
       end
     end
 
@@ -123,9 +120,7 @@ module Solidus
 
     def include_seed_data
       append_file "db/seeds.rb", <<~RUBY
-
-        Spree::Core::Engine.load_seed if defined?(Spree::Core)
-        Spree::Auth::Engine.load_seed if defined?(Spree::Auth)
+        Spree::Core::Engine.load_seed
       RUBY
     end
 
@@ -170,6 +165,10 @@ module Solidus
 
     def install_frontend
       apply_template_for :frontend, @selected_frontend
+    end
+
+    def install_payment_method
+      apply_template_for :payment_method, @selected_payment_method
     end
 
     def populate_seed_data
@@ -245,6 +244,17 @@ module Solidus
       apply template_path
     end
 
+    def with_env(vars)
+      original = ENV.to_hash
+      vars.each { |k, v| ENV[k] = v }
+
+      begin
+        yield
+      ensure
+        ENV.replace(original)
+      end
+    end
+
     def detect_frontend_to_install
       # We need to support names that were available in v3.2
       selected_frontend = 'starter' if options[:frontend] == 'solidus_starter_frontend'
@@ -263,7 +273,7 @@ module Solidus
 
             - [#{set_color 'starter', :bold}] Generate all necessary controllers and views directly in your Rails app (#{set_color :default, :bold}).
             - [#{set_color 'classic', :bold}] Install `solidus_frontend`, was the default in previous solidus versions (#{set_color :deprecated, :bold}).
-            - [#{set_color 'none', :bold}] Skip installing a frontend
+            - [#{set_color 'none', :bold}] Skip installing a frontend.
 
             Selecting `starter` is recommended, however, some extensions are still only compatible with `classic`.
           TEXT
@@ -304,6 +314,26 @@ module Solidus
             - [#{set_color 'none', :bold}] Don't add any configuration for authentication.
 
             Selecting `devise` is recommended.
+          TEXT
+        )
+    end
+
+    def detect_payment_method_to_install
+      return 'paypal' if Bundler.locked_gems.dependencies['solidus_paypal_commerce_platform']
+      return 'bolt' if Bundler.locked_gems.dependencies['solidus_bolt']
+
+      options[:payment_method] ||
+        (options[:auto_accept] && @selected_frontend == 'classic' ? 'paypal' : 'none') ||
+        (@selected_frontend != 'classic' && 'none') || # bail out if it's not classic
+        ask_with_description(
+          default: 'paypal',
+          limited_to: PAYMENT_METHODS,
+          desc: <<~TEXT
+            Which payment method would you like to use?
+
+            - [#{set_color 'paypal', :bold}] Install `solidus_paypal_commerce_platform` (#{set_color :default, :bold}).
+            - [#{set_color 'bolt', :bold}] Install `solidus_bolt`.
+            - [#{set_color 'none', :bold}] Skip installing a payment method.
           TEXT
         )
     end

@@ -24,7 +24,6 @@ class CommonRakeTasks
         # While the dummy app is generated the current directory
         # within ruby is changed to that of the dummy app.
         sh({
-          'SKIP_SOLIDUS_BOLT' => '1',
           'FRONTEND' => ENV['FRONTEND'] || 'classic',
         }, [
           'bin/rails',
@@ -33,6 +32,7 @@ class CommonRakeTasks
           Dir.pwd, # use the current dir as Rails.root
           "--auto-accept",
           "--authentication=none",
+          "--payment-method=none",
           "--migrate=false",
           "--seed=false",
           "--sample=false",

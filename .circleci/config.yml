@@ -177,7 +177,6 @@ commands:
           command: |
             cd /tmp/my_app
             bundle add solidus --git "file://$(ruby -e"puts File.expand_path ENV['CIRCLE_WORKING_DIRECTORY']")"
-            export SKIP_SOLIDUS_BOLT='true' # workaround for solidus_frontend not being able to properly install bolt in this context
             unset RAILS_ENV # avoid doing everything on the test environment
             bin/rails generate solidus:install --auto-accept <<parameters.flags>>
   test_page:

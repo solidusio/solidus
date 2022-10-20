@@ -9,4 +9,8 @@ else
   bundle_command("add solidus_frontend #{github_solidus_frontend}")
 end
 
-generate 'solidus_frontend:install'
+# Disable solidus_bolt installation from solidus_frontend as it can be
+# explicitly selected directly from the solidus installer.
+with_env('SKIP_SOLIDUS_BOLT' => 'true') do
+  generate 'solidus_frontend:install'
+end
