@@ -27,6 +27,22 @@ FactoryBot.define do
       end
     end
 
+    trait :with_adjustable_action do
+      transient do
+        preferred_amount { 10 }
+        calculator_class { Spree::Calculator::FlatRate }
+        promotion_action_class { Spree::Promotion::Actions::CreateItemAdjustments }
+      end
+
+      after(:create) do |promotion, evaluator|
+        calculator = evaluator.calculator_class.new
+        calculator.preferred_amount = evaluator.preferred_amount
+        evaluator.promotion_action_class.create!(calculator: calculator, promotion: promotion)
+      end
+    end
+
+    factory :promotion_with_action_adjustment, traits: [:with_adjustable_action]
+
     trait :with_line_item_adjustment do
       transient do
         adjustment_rate { 10 }

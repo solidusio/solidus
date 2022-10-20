@@ -11,6 +11,12 @@ RSpec.describe 'promotion code factory' do
     it_behaves_like 'a working factory'
   end
 
+  describe 'promotion with action adjustment' do
+    let(:factory) { :promotion_with_action_adjustment }
+
+    it_behaves_like 'a working factory'
+  end
+
   describe 'promotion with item adjustment' do
     let(:factory) { :promotion_with_item_adjustment }
 
