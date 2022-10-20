@@ -329,7 +329,7 @@ end
 
 ### Docs & Guides
 
-- Add explicit information about DB_* env variables to the README [#4461](https://github.com/solidusio/solidus/pull/4461) ([chrean](https://github.com/chrean))
+- Add explicit information about DB_\* env variables to the README [#4461](https://github.com/solidusio/solidus/pull/4461) ([chrean](https://github.com/chrean))
 - Move legacy guides to a separate repository [#4459](https://github.com/solidusio/solidus/pull/4459) ([aldesantis](https://github.com/aldesantis))
 - Bump minimist from 1.2.0 to 1.2.6 in /guides [#4314](https://github.com/solidusio/solidus/pull/4314) ([dependabot](https://github.com/apps/dependabot))
 - Update customizing-assets.html.md [#4312](https://github.com/solidusio/solidus/pull/4312) ([mapreal19](https://github.com/mapreal19))
