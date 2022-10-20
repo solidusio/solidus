@@ -2,12 +2,12 @@
 
 Spree::OptionType.create!([
   {
-    name: "tshirt-size",
+    name: "clothing-size",
     presentation: "Size",
     position: 1
   },
   {
-    name: "tshirt-color",
+    name: "clothing-color",
     presentation: "Color",
     position: 2
   }

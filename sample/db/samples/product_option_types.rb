@@ -5,6 +5,12 @@ Spree::Sample.load_sample("products")
 size = Spree::OptionType.find_by!(presentation: "Size")
 color = Spree::OptionType.find_by!(presentation: "Color")
 
-solidus_tshirt = Spree::Product.find_by!(name: "Solidus T-Shirt")
-solidus_tshirt.option_types = [size, color]
-solidus_tshirt.save!
+colored_clothes = [
+  "Solidus T-Shirt", "Solidus Long Sleeve", "Solidus Women's T-Shirt"
+]
+
+Spree::Product.all.each do |product|
+  product.option_types = [size]
+  product.option_types << color if colored_clothes.include?(product.name)
+  product.save!
+end
