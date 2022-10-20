@@ -85,10 +85,6 @@ combine it with your own custom frontend, admin interface, and API.
 
 You can try the live Solidus demo [here.](http://demo.solidus.io/) The admin section can be accessed [here.](http://demo.solidus.io/admin)
 
-You can also try out Solidus with one-click on Heroku:
-
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/solidusio/solidus-example-app)
-
 ## Getting started
 
 Begin by making sure you have
