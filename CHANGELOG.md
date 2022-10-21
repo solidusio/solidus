@@ -329,7 +329,7 @@ end
 
 ### Docs & Guides
 
-- Add explicit information about DB_* env variables to the README [#4461](https://github.com/solidusio/solidus/pull/4461) ([chrean](https://github.com/chrean))
+- Add explicit information about DB_\* env variables to the README [#4461](https://github.com/solidusio/solidus/pull/4461) ([chrean](https://github.com/chrean))
 - Move legacy guides to a separate repository [#4459](https://github.com/solidusio/solidus/pull/4459) ([aldesantis](https://github.com/aldesantis))
 - Bump minimist from 1.2.0 to 1.2.6 in /guides [#4314](https://github.com/solidusio/solidus/pull/4314) ([dependabot](https://github.com/apps/dependabot))
 - Update customizing-assets.html.md [#4312](https://github.com/solidusio/solidus/pull/4312) ([mapreal19](https://github.com/mapreal19))
@@ -733,6 +733,28 @@ the maintained fork.
 - Update readme with Solidus demo URL [#3822](https://github.com/solidusio/solidus/pull/3822) ([seand7565](https://github.com/seand7565))
 - Fix headers in changelog [#3812](https://github.com/solidusio/solidus/pull/3812) ([jarednorman](https://github.com/jarednorman))
 - Fixed typo with misspell [#3811](https://github.com/solidusio/solidus/pull/3811) ([hsbt](https://github.com/hsbt))
+
+## Solidus 2.11.17 (v2.11, 2022-07-11)
+
+- Fixed user restricted stock management in [#4398](https://github.com/solidusio/solidus/pull/4398) by [@rmparr](https://github.com/rmparr)
+- Backported docker development environment in [#4408](https://github.com/solidusio/solidus/pull/4408) by [@waiting-for-dev](https://github.com/waiting-for-dev)
+- Removed N+1 from admin users in [#4422](https://github.com/solidusio/solidus/pull/4422) by [@tvdeyen](https://github.com/tvdeyen)
+- Fixed delete response in admin users controller in [#4418](https://github.com/solidusio/solidus/pull/4418) by [@tvdeyen](https://github.com/tvdeyen)
+- Support CVE-2022-32224 Rails security updates in [#4455](https://github.com/solidusio/solidus/pull/4455) backport by [@gsmendoza](https://github.com/gsmendoza)
+
+### Breaking changes
+
+**NOTE:** This release contains a breaking change due to the backport of the
+fixes for CVE-2022-32224 in
+[#4455](https://github.com/solidusio/solidus/pull/4455), specifically due to the
+switch to `YAML.safe_load` in `Spree::LogEntry`
+[here](https://github.com/solidusio/solidus/pull/4455/commits/d2b05aa1a9ec6903027a880f5d466c5abd5b8f05).
+To ensure compatibility with this change, you may need to update your app
+configuration for `Spree::AppConfiguration#log_entry_permitted_classes` and
+ensure it includes any constants that may be serialized in YAML in addition to
+the already allowed ones by
+[core](https://github.com/solidusio/solidus/pull/4455/files#diff-96cc27eba934e1e96a1ffc0e5574406061f5b4f48770faeba62a062544b8633bR11)
+or any extensions you may use.
 
 ## Solidus 2.11.15 (v2.11, 2022-03-10)
 
