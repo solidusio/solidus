@@ -22,12 +22,20 @@ module Solidus
 
       private
 
+      def bundle_command(command, env = {})
+        @generator_context.say_status :run, "bundle #{command}"
+        BundlerContext.bundle_cleanly do
+          system(
+            Gem.ruby,
+            Gem.bin_path("bundler", "bundle"),
+            *command.shellsplit,
+          )
+        end
+      end
+
       def install_solidus_frontend
         unless @bundler_context.component_in_gemfile?(:frontend)
-          BundlerContext.bundle_cleanly do
-            `bundle add solidus_frontend`
-            `bundle install`
-          end
+          bundle_command 'add solidus_frontend'
         end
 
         # Solidus bolt will be handled in the installer as a payment method.
