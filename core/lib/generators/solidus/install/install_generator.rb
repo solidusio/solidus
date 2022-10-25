@@ -147,7 +147,7 @@ module Solidus
 
     def install_payment_method
       say_status :warning, set_color(
-        "Selecting a payment along with `solidus_starter_frontend` that might require manual integration.",
+        "Selecting a payment along with `solidus_starter_frontend` might require manual integration.",
         :yellow
       ), :yellow
 
