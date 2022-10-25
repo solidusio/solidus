@@ -194,9 +194,9 @@ module Solidus
 
       say_status :installing, frontend
 
-      InstallFrontend.
-        new(bundler_context: bundler_context, generator_context: self).
-        call(frontend, installer_adds_auth: @plugins_to_be_installed.include?('solidus_auth_devise'))
+      InstallFrontend
+        .new(bundler_context: bundler_context, generator_context: self)
+        .call(frontend)
     end
 
     def run_bundle_install_if_needed_by_plugins

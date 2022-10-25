@@ -11,12 +11,12 @@ module Solidus
         @generator_context = generator_context
       end
 
-      def call(frontend, installer_adds_auth:)
+      def call(frontend)
         case frontend
         when 'solidus_frontend'
           install_solidus_frontend
         when 'solidus_starter_frontend'
-          install_solidus_starter_frontend(installer_adds_auth)
+          install_solidus_starter_frontend
         end
       end
 
@@ -40,20 +40,9 @@ module Solidus
         end
       end
 
-      def install_solidus_starter_frontend(installer_adds_auth)
+      def install_solidus_starter_frontend
         @bundler_context.remove(['solidus_frontend']) if @bundler_context.component_in_gemfile?(:frontend)
-
-        # TODO: Move installation of solidus_auth_devise to the
-        # solidus_starter_frontend template
-        unless auth_present?(installer_adds_auth)
-          BundlerContext.bundle_cleanly { `bundle add solidus_auth_devise` }
-          @generator_context.generate('solidus:auth:install --auto-run-migrations')
-        end
         @generator_context.apply "https://raw.githubusercontent.com/solidusio/solidus_starter_frontend/v3.2/template.rb"
-      end
-
-      def auth_present?(installer_adds_auth)
-        installer_adds_auth || @bundler_context.component_in_gemfile?(:auth_devise)
       end
     end
   end
