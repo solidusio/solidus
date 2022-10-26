@@ -15,7 +15,7 @@
   </div>
 
   <div data-hook="admin_user_address_edit_form">
-    <%= form_for [:admin, @user], as: :user, url: admin_user_addresses_update_url(@user), method: :put do |f| %>
+    <%= form_for [:admin, @user], as: :user, url: admin_user_addresses_url(@user), method: :put do |f| %>
       <%= render partial: 'addresses_form', locals: { f: f } %>
 
       <% if can?(:update, @user) %>
