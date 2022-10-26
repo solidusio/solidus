@@ -10,6 +10,9 @@ if ENV["COVERAGE"]
   SimpleCov.start('rails')
 end
 
+require 'spree/testing_support/buildkite_test_collector'
+Spree::TestingSupport::BuildkiteTestCollector.enable
+
 require 'rspec/core'
 
 require 'spree/testing_support/partial_double_verification'

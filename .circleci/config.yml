@@ -259,6 +259,7 @@ jobs:
       DISABLE_ACTIVE_STORAGE: << parameters.paperclip >>
       RAILS_VERSION: "~> << parameters.rails >>"
       USE_LEGACY_EVENTS: << parameters.legacy >>
+      BUILDKITE_ANALYTICS_EXECUTION_NAME_PREFIX: "(<< parameters.ruby >>:<< parameters.rails >>:<< parameters.database >>:<< parameters.paperclip >>)"
     steps:
       - setup
       - when:
