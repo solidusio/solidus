@@ -11,23 +11,31 @@ module Solidus
         @generator_context = generator_context
       end
 
-      def call(frontend, installer_adds_auth:)
+      def call(frontend)
         case frontend
         when 'solidus_frontend'
           install_solidus_frontend
         when 'solidus_starter_frontend'
-          install_solidus_starter_frontend(installer_adds_auth)
+          install_solidus_starter_frontend
         end
       end
 
       private
 
+      def bundle_command(command, env = {})
+        @generator_context.say_status :run, "bundle #{command}"
+        BundlerContext.bundle_cleanly do
+          system(
+            Gem.ruby,
+            Gem.bin_path("bundler", "bundle"),
+            *command.shellsplit,
+          )
+        end
+      end
+
       def install_solidus_frontend
         unless @bundler_context.component_in_gemfile?(:frontend)
-          BundlerContext.bundle_cleanly do
-            `bundle add solidus_frontend`
-            `bundle install`
-          end
+          bundle_command 'add solidus_frontend'
         end
 
         # Solidus bolt will be handled in the installer as a payment method.
@@ -40,20 +48,9 @@ module Solidus
         end
       end
 
-      def install_solidus_starter_frontend(installer_adds_auth)
+      def install_solidus_starter_frontend
         @bundler_context.remove(['solidus_frontend']) if @bundler_context.component_in_gemfile?(:frontend)
-
-        # TODO: Move installation of solidus_auth_devise to the
-        # solidus_starter_frontend template
-        unless auth_present?(installer_adds_auth)
-          BundlerContext.bundle_cleanly { `bundle add solidus_auth_devise` }
-          @generator_context.generate('solidus:auth:install --auto-run-migrations')
-        end
-        `LOCATION="https://raw.githubusercontent.com/solidusio/solidus_starter_frontend/main/template.rb" bin/rails app:template`
-      end
-
-      def auth_present?(installer_adds_auth)
-        installer_adds_auth || @bundler_context.component_in_gemfile?(:auth_devise)
+        @generator_context.apply "https://raw.githubusercontent.com/solidusio/solidus_starter_frontend/v3.2/template.rb"
       end
     end
   end
