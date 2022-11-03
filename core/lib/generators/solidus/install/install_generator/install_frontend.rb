@@ -22,12 +22,14 @@ module Solidus
 
       private
 
-      def bundle_command(command, env = {})
+      def bundle_command(command)
         @generator_context.say_status :run, "bundle #{command}"
+        bundle_path = Gem.bin_path("bundler", "bundle")
+
         BundlerContext.bundle_cleanly do
           system(
             Gem.ruby,
-            Gem.bin_path("bundler", "bundle"),
+            bundle_path,
             *command.shellsplit,
           )
         end
