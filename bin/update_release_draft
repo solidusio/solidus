@@ -1,0 +1,87 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require "octokit"
+
+class UpdateReleaseDraft
+  REPOSITORY = 'waiting-for-dev/solidus'
+
+  CATEGORIES = Set[
+    'Solidus Core',
+    'Solidus Admin',
+    'Solidus API'
+  ].freeze
+
+  TITLE_PREFIX = "### "
+
+  TITLE_TEMPLATE = lambda do |category|
+    TITLE_PREFIX + category
+  end.freeze
+
+  TITLE_SEPARATOR = "\n"
+
+  PR_TEMPLATE = lambda do |pr|
+    "- #{pr.title} ##{pr.number} (@#{pr.user.login})"
+  end.freeze
+
+  PR_SEPARATOR = "\n"
+
+  SECTION_SEPARATOR = "\n\n"
+
+  def initialize(github_token)
+    @client = Octokit::Client.new(access_token: github_token)
+  end
+
+  def call(pr_number)
+    pr = fetch_pr(pr_number)
+    labels = pr.labels.map(&:name)
+    entry = PR_TEMPLATE.(pr)
+    draft = load_draft
+    (CATEGORIES & labels).each do |category|
+      draft[category] << entry
+    end
+    puts dump_draft(draft)
+  end
+
+  private
+
+  def fetch_pr(pr_number)
+    @client.pull(REPOSITORY, pr_number)
+  end
+
+  def load_draft
+    groups = fetch_draft.split(/(^#{TITLE_PREFIX}.*$)/)
+    groups.each_with_object({}) do |substr, parsed|
+      category = CATEGORIES.find do |category|
+        TITLE_TEMPLATE.(category) == substr
+      end
+      next unless category
+
+      parsed[category] = ((groups[groups.index(substr) + 1]) || "").split(PR_SEPARATOR)
+    end
+  end
+
+  def fetch_draft
+    @draft ||= @client.release(REPOSITORY, tag: get_tag)
+  rescue Octokit::NotFound
+    initial_draft
+  end
+
+  def dump_draft(parsed)
+    parsed.map do |(category, prs)|
+      "#{TITLE_TEMPLATE.(category)}#{TITLE_SEPARATOR}#{prs.join(PR_SEPARATOR)}"
+    end.join(SECTION_SEPARATOR)
+  end
+
+  def initial_draft
+    CATEGORIES.map do |category|
+      TITLE_TEMPLATE.(category)
+    end.join(SECTION_SEPARATOR)
+  end
+
+  def get_tag
+    "v4"
+  end
+end
+
+UpdateReleaseDraft.new(ARGV[0]).call(ARGV[1])

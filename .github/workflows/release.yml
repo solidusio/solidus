@@ -1,0 +1,15 @@
+name: "Draft a release"
+on:
+  - pull_request_target
+
+jobs:
+  draft_release:
+    permissions:
+      contents: write
+      pull-requests: read
+    runs-on: ubuntu-latest
+    steps:
+    - name: Get labels
+      run:
+        | gh pr view 3486 --json labels --jq ".labels[].name"
+        gh pr view 3486 --json labels --jq '.labels[].name | select(. == "Solidus Core")'
