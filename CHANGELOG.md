@@ -11,6 +11,15 @@ With the introduction of the `Spree::Calculator::FlatFee` and `Spree::TaxRate#le
 rake taxes:colorado_delivery_fee
 ```
 
+## Solidus 3.2.3 (v3.2, 2022-11-03)
+
+- Paginate variant autocomplete [#4662](https://github.com/solidusio/solidus/pull/4662) ([@tvdeyen](https://github.com/tvdeyen))
+- Update deprecated jQuery methods [#4674](https://github.com/solidusio/solidus/pull/4674) ([@elia](https://github.com/elia))
+- Restore `--payment-method=` for `solidus:install` on v3.2 [#4673](https://github.com/solidusio/solidus/pull/4673) ([@elia](https://github.com/elia))
+- Ensure puma 6 is not used in development [#4692](https://github.com/solidusio/solidus/pull/4692) ([@elia](https://github.com/elia))
+- make frontend installer shell-out commands more compatible [#4694](https://github.com/solidusio/solidus/pull/4694) ([@elia](https://github.com/elia))
+- Fix `nil` bundle_path while installing solidus_frontend [#4697](https://github.com/solidusio/solidus/pull/4697) ([@elia](https://github.com/elia))
+
 ## Solidus 3.2.2 (v3.2, 2022-09-09)
 
 - Don't remove non-accessible roles when assigning new accessible roles ([waiting-for-dev](https://github.com/waiting-for-dev))
