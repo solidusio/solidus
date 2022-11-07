@@ -1,0 +1,28 @@
+name: "Extract pipeline context"
+
+on:
+  workflow_call:
+    outputs:
+      current_tag:
+        description: "Current tag"
+        value: ${{ jobs.extract.outputs.current_tag }}
+      candidate_tag:
+        description: "Candidate tag"
+        value: ${{ jobs.extract.outputs.candidate_tag }}
+
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: git fetch --tags origin
+      - id: extraction
+        name: "Extract context for the current pipeline"
+        run: |
+          cd dev_tools/ && bin/extract-pipeline-context \
+            $GITHUB_OUTPUT \
+            ${{ github.ref_name }} \
+            `git tag --list`
+    outputs:
+      current_tag: ${{ steps.extraction.outputs.current_tag }}
+      candidate_tag: ${{ steps.extraction.outputs.candidate_tag }}
