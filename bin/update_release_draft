@@ -2,86 +2,99 @@
 # frozen_string_literal: true
 
 require "octokit"
+require "faraday"
 
-class UpdateReleaseDraft
-  REPOSITORY = 'waiting-for-dev/solidus'
+module Spree
+  module Release
+    Draft = Struct.new(:new?, :content)
 
-  CATEGORIES = Set[
-    'Solidus Core',
-    'Solidus Admin',
-    'Solidus API'
-  ].freeze
+    class Client
+      REPOSITORY = 'waiting-for-dev/solidus'
 
-  TITLE_PREFIX = "### "
-
-  TITLE_TEMPLATE = lambda do |category|
-    TITLE_PREFIX + category
-  end.freeze
-
-  TITLE_SEPARATOR = "\n"
-
-  PR_TEMPLATE = lambda do |pr|
-    "- #{pr.title} ##{pr.number} (@#{pr.user.login})"
-  end.freeze
-
-  PR_SEPARATOR = "\n"
-
-  SECTION_SEPARATOR = "\n\n"
-
-  def initialize(github_token)
-    @client = Octokit::Client.new(access_token: github_token)
-  end
-
-  def call(pr_number)
-    pr = fetch_pr(pr_number)
-    labels = pr.labels.map(&:name)
-    entry = PR_TEMPLATE.(pr)
-    draft = load_draft
-    (CATEGORIES & labels).each do |category|
-      draft[category] << entry
-    end
-    puts dump_draft(draft)
-  end
-
-  private
-
-  def fetch_pr(pr_number)
-    @client.pull(REPOSITORY, pr_number)
-  end
-
-  def load_draft
-    groups = fetch_draft.split(/(^#{TITLE_PREFIX}.*$)/)
-    groups.each_with_object({}) do |substr, parsed|
-      category = CATEGORIES.find do |category|
-        TITLE_TEMPLATE.(category) == substr
+      def initialize(github_token:)
+        @client = Octokit::Client.new(access_token: github_token)
       end
-      next unless category
 
-      parsed[category] = ((groups[groups.index(substr) + 1]) || "").split(PR_SEPARATOR)
+      def fetch_draft(initial_draft:, tag:)
+        Draft.new(false, @client.release(REPOSITORY, tag: tag))
+      rescue Octokit::NotFound
+        Draft.new(true, initial_draft)
+      end
+
+      def fetch_pr(pr_number:)
+        @client.pull(REPOSITORY, pr_number)
+      end
+
+      def update_draft(draft)
+      end
     end
-  end
 
-  def fetch_draft
-    @draft ||= @client.release(REPOSITORY, tag: get_tag)
-  rescue Octokit::NotFound
-    initial_draft
-  end
+    class Template
+      CATEGORIES = Set[
+        'Solidus Core',
+        'Solidus Admin',
+        'Solidus API'
+      ].freeze
 
-  def dump_draft(parsed)
-    parsed.map do |(category, prs)|
-      "#{TITLE_TEMPLATE.(category)}#{TITLE_SEPARATOR}#{prs.join(PR_SEPARATOR)}"
-    end.join(SECTION_SEPARATOR)
-  end
+      TITLE_PREFIX = "### "
 
-  def initial_draft
-    CATEGORIES.map do |category|
-      TITLE_TEMPLATE.(category)
-    end.join(SECTION_SEPARATOR)
-  end
+      TITLE_TEMPLATE = lambda do |category|
+        TITLE_PREFIX + category
+      end.freeze
 
-  def get_tag
-    "v4"
+      TITLE_SEPARATOR = "\n"
+
+      PR_TEMPLATE = lambda do |pr|
+        "- #{pr.title} ##{pr.number} (@#{pr.user.login})"
+      end.freeze
+
+      PR_SEPARATOR = "\n"
+
+      SECTION_SEPARATOR = "\n\n"
+
+      def initialize(github_token:, tag:)
+        @client = Client.new(github_token: github_token)
+        @draft = @client.fetch_draft(initial_draft: initial_draft, tag: tag)
+      end
+
+      def call(pr_number:)
+        pr = @client.fetch_pr(pr_number: pr_number)
+        labels = pr.labels.map(&:name)
+        entry = PR_TEMPLATE.(pr)
+        draft = load_draft
+        (CATEGORIES & labels).each do |category|
+          draft[category] << entry
+        end
+        puts dump_draft(draft)
+      end
+
+      private
+
+      def load_draft
+        groups = @draft.content.split(/(^#{TITLE_PREFIX}.*$)/)
+        groups.each_with_object({}) do |substr, parsed|
+          category = CATEGORIES.find do |category|
+            TITLE_TEMPLATE.(category) == substr
+          end
+          next unless category
+
+          parsed[category] = ((groups[groups.index(substr) + 1]) || "").split(PR_SEPARATOR)
+        end
+      end
+
+      def dump_draft(parsed)
+        parsed.map do |(category, prs)|
+          "#{TITLE_TEMPLATE.(category)}#{TITLE_SEPARATOR}#{prs.join(PR_SEPARATOR)}"
+        end.join(SECTION_SEPARATOR)
+      end
+
+      def initial_draft
+        CATEGORIES.map do |category|
+          TITLE_TEMPLATE.(category)
+        end.join(SECTION_SEPARATOR)
+      end
+    end
   end
 end
 
-UpdateReleaseDraft.new(ARGV[0]).call(ARGV[1])
+Spree::Release::Template.new(github_token: ARGV[0], tag: ARGV[1]).call(pr_number: ARGV[2])

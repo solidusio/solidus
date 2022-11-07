@@ -72,6 +72,8 @@ group :utils do
   gem 'rubocop-performance', '~> 1.4', require: false
   gem 'rubocop-rails', '~> 2.3', require: false
   gem 'gem-release', require: false
+  gem 'octokit', '~> 6.0'
+  gem 'faraday-retry', '~> 2.0'
 end
 
 gem 'buildkite-test_collector', require: false, group: :test
