@@ -17,4 +17,8 @@ jobs:
       uses: "WyriHaximus/github-action-get-previous-tag@v1"
     - name: "Generate draft"
       run:
-        | ./bin/update_release_draft {{ github.token }} {{ steps.previous_tag.outputs.tag }} {{ github.ref_name }} {{ github.event.number }}
+        > ./bin/update_release_draft
+            {{ github.token }}
+            {{ steps.previous_tag.outputs.tag }}
+            {{ github.ref_name }}
+            {{ github.event.number }}

@@ -28,7 +28,7 @@ module Spree
 
       def initialize(github_token:, tag:, branch:)
         @client = Octokit::Client.new(access_token: github_token).tap { |c| c.auto_paginate }
-        @tag = tag
+        @tag = Gem::Version.new(tag.delete_prefix('v')).bump
         @branch = branch
       end
 
