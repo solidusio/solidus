@@ -6,26 +6,63 @@ require "faraday"
 
 module Spree
   module Release
-    Draft = Struct.new(:new?, :content)
+    class Draft
+      attr_reader :url, :content
+
+      def initialize(url:, content:)
+        @url = url
+        @content = content
+      end
+
+      def new?
+        @url.nil?
+      end
+
+      def with(content:)
+        self.class.new(content: content, url: @url)
+      end
+    end
 
     class Client
       REPOSITORY = 'waiting-for-dev/solidus'
 
-      def initialize(github_token:)
-        @client = Octokit::Client.new(access_token: github_token)
+      def initialize(github_token:, tag:, branch:)
+        @client = Octokit::Client.new(access_token: github_token).tap { |c| c.auto_paginate }
+        @tag = tag
+        @branch = branch
       end
 
-      def fetch_draft(initial_draft:, tag:)
-        Draft.new(false, @client.release(REPOSITORY, tag: tag))
-      rescue Octokit::NotFound
-        Draft.new(true, initial_draft)
+      def fetch_draft(initial_draft:)
+        release = @client.releases(REPOSITORY).find do |release|
+          release.name == @tag
+        end
+        release ? Draft.new(url: release.url, content: release.body) : Draft.new(url: nil, content: initial_draft)
       end
 
       def fetch_pr(pr_number:)
         @client.pull(REPOSITORY, pr_number)
       end
 
-      def update_draft(draft)
+      def create_draft(draft:)
+        @client.create_release(
+          REPOSITORY,
+          @tag,
+          name: @tag,
+          target_commitish: @branch,
+          body: draft.content,
+          draft: true
+        )
+      end
+
+      def update_draft(draft:)
+        @client.update_release(
+          draft.url,
+          name: @tag,
+          body: draft.content,
+          draft: true,
+          tag_name: @tag,
+          target_commitish: @branch
+        )
       end
     end
 
@@ -52,9 +89,9 @@ module Spree
 
       SECTION_SEPARATOR = "\n\n"
 
-      def initialize(github_token:, tag:)
-        @client = Client.new(github_token: github_token)
-        @draft = @client.fetch_draft(initial_draft: initial_draft, tag: tag)
+      def initialize(github_token:, tag:, branch:)
+        @client = Client.new(github_token: github_token, tag: tag, branch: branch)
+        @draft = @client.fetch_draft(initial_draft: initial_draft)
       end
 
       def call(pr_number:)
@@ -65,7 +102,13 @@ module Spree
         (CATEGORIES & labels).each do |category|
           draft[category] << entry
         end
-        puts dump_draft(draft)
+        new_content = dump_draft(draft)
+        if @draft.new?
+          @client.create_draft(draft: @draft.with(content: new_content))
+        else
+          @client.update_draft(draft: @draft.with(content: new_content))
+        end
+        puts new_content
       end
 
       private
@@ -97,4 +140,4 @@ module Spree
   end
 end
 
-Spree::Release::Template.new(github_token: ARGV[0], tag: ARGV[1]).call(pr_number: ARGV[2])
+Spree::Release::Template.new(github_token: ARGV[0], tag: ARGV[1], branch: ARGV[2]).call(pr_number: ARGV[3])
