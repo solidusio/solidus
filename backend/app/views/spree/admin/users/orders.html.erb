@@ -38,7 +38,7 @@
         <tr data-hook="admin_orders_index_rows">
           <td class="order-completed-at"><%= l(order.completed_at.to_date) if order.completed_at %></td>
           <td class="order-number">
-            <% if can?([:admin, :edit], order) %>
+            <% if can?(:admin, order) && can?(:edit, order) %>
               <%= link_to order.number, edit_admin_order_path(order) %>
             <% else %>
               <%= order.number %>
