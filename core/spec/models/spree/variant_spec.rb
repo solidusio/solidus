@@ -257,12 +257,20 @@ RSpec.describe Spree::Variant, type: :model do
       expect(variant.default_price.attributes).to eq(price.attributes)
     end
 
-    it 'includes discarded prices' do
-      variant = create(:variant)
-      price = create(:price, variant: variant, currency: 'USD')
-      price.discard
+    context "when the variant and the price are both soft-deleted" do
+      it "will use a deleted price as the default price" do
+        variant = create(:variant, deleted_at: 1.day.ago)
+        variant.prices.each { |price| price.discard }
+        expect(variant.reload.price).to be_present
+      end
+    end
 
-      expect(variant.default_price).to eq(price)
+    context "when the variant is not soft-deleted, but its price is" do
+      it "will not use a deleted price as the default price" do
+        variant = create(:variant)
+        variant.prices.each { |price| price.discard }
+        expect(variant.reload.price).not_to be_present
+      end
     end
   end
 
@@ -308,6 +316,12 @@ RSpec.describe Spree::Variant, type: :model do
   end
 
   describe '#currently_valid_prices' do
+    around do |example|
+      Spree::Deprecation.silence do
+        example.run
+      end
+    end
+
     it 'returns prioritized prices' do
       price_1 = create(:price, country: create(:country))
       price_2 = create(:price, country: nil)
@@ -754,7 +768,7 @@ RSpec.describe Spree::Variant, type: :model do
   end
 
   describe "#discard" do
-    it "discards related associations" do
+    it "discards related stock items and images, but not prices" do
       variant.images = [create(:image)]
 
       expect(variant.stock_items).not_to be_empty
@@ -765,16 +779,16 @@ RSpec.describe Spree::Variant, type: :model do
 
       expect(variant.images).to be_empty
       expect(variant.stock_items.reload).to be_empty
-      expect(variant.prices).to be_empty
+      expect(variant.prices).not_to be_empty
     end
 
     describe 'default_price' do
       let!(:previous_variant_price) { variant.default_price }
 
-      it "should discard default_price" do
+      it "should not discard default_price" do
         variant.discard
         variant.reload
-        expect(previous_variant_price.reload).to be_discarded
+        expect(previous_variant_price.reload).not_to be_discarded
       end
 
       it "should keep its price if deleted" do

@@ -33,7 +33,7 @@
         <%= f.field_container :price do %>
           <%= f.label :price, class: Spree::Config.require_master_price ? 'required' : '' %>
 
-          <% if f.object.new_record? || f.object.has_default_price? %>
+          <% if (f.object.new_record? || f.object.has_default_price?) && !f.object.discarded? %>
             <%= render "spree/admin/shared/number_with_currency",
                        f: f,
                        amount_attr: :price,
