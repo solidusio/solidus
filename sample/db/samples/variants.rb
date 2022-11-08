@@ -157,6 +157,96 @@ variants = [
     option_values: [medium, black],
     sku: "SOL-WM006",
     cost_price: 17
+  },
+  {
+    product: solidus_snapback_cap,
+    option_values: [small],
+    sku: "SOL-SNC02",
+    cost_price: 17
+  },
+  {
+    product: solidus_snapback_cap,
+    option_values: [medium],
+    sku: "SOL-SNC03",
+    cost_price: 17
+  },
+  {
+    product: solidus_snapback_cap,
+    option_values: [large],
+    sku: "SOL-SNC04",
+    cost_price: 17
+  },
+  {
+    product: solidus_hoodie,
+    option_values: [small],
+    sku: "SOL-HD02",
+    cost_price: 27
+  },
+  {
+    product: solidus_hoodie,
+    option_values: [medium],
+    sku: "SOL-HD03",
+    cost_price: 27
+  },
+  {
+    product: solidus_hoodie,
+    option_values: [large],
+    sku: "SOL-HD04",
+    cost_price: 27
+  },
+  {
+    product: ruby_hoodie,
+    option_values: [small],
+    sku: "RUB-HD02",
+    cost_price: 27
+  },
+  {
+    product: ruby_hoodie,
+    option_values: [medium],
+    sku: "RUB-HD03",
+    cost_price: 27
+  },
+  {
+    product: ruby_hoodie,
+    option_values: [large],
+    sku: "RUB-HD04",
+    cost_price: 27
+  },
+  {
+    product: ruby_hoodie_zip,
+    option_values: [small],
+    sku: "RUB-HD05",
+    cost_price: 27
+  },
+  {
+    product: ruby_hoodie_zip,
+    option_values: [medium],
+    sku: "RUB-HD06",
+    cost_price: 27
+  },
+  {
+    product: ruby_hoodie_zip,
+    option_values: [large],
+    sku: "RUB-HD07",
+    cost_price: 27
+  },
+  {
+    product: ruby_polo,
+    option_values: [small],
+    sku: "RUB-PL02",
+    cost_price: 23
+  },
+  {
+    product: ruby_polo,
+    option_values: [medium],
+    sku: "RUB-PL03",
+    cost_price: 23
+  },
+  {
+    product: ruby_polo,
+    option_values: [large],
+    sku: "RUB-PL04",
+    cost_price: 23
   }
 ]
 
