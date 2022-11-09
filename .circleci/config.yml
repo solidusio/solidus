@@ -87,68 +87,8 @@ commands:
           name: Install libvips
           command: sudo apt-get install -y libvips
 
-jobs:
-  postgres:
-    executor: postgres
-    parallelism: &parallelism 3
-    steps:
-      - setup
-      - libvips
-      - test
-
-  legacy_events:
-    executor: postgres
-    parallelism: &parallelism
-    environment:
-      USE_LEGACY_EVENTS: '1'
-    steps:
-      - setup
-      - libvips
-      - test
-
-  mysql:
-    executor: mysql
-    parallelism: *parallelism
-    steps:
-      - setup
-      - libvips
-      - test
-
-  postgres_rails61:
-    executor: postgres
-    parallelism: *parallelism
-    environment:
-      RAILS_VERSION: '~> 6.1.0'
-    steps:
-      - setup
-      - test
-
-  postgres_rails60:
-    executor: postgres
-    parallelism: *parallelism
-    environment:
-      RAILS_VERSION: '~> 6.0.0'
-      DISABLE_ACTIVE_STORAGE: true
-    steps:
-      - setup
-      - test
-
-  postgres_rails52:
-    executor: postgres
-    parallelism: *parallelism
-    environment:
-      RAILS_VERSION: '~> 5.2.0'
-      DISABLE_ACTIVE_STORAGE: true
-    steps:
-      - setup
-      - test
+jobs: {}
 
 workflows:
   build:
-    jobs:
-      - postgres
-      - mysql
-      - postgres_rails61
-      - postgres_rails60
-      - postgres_rails52
-      - legacy_events
+    jobs: []
