@@ -11,6 +11,11 @@ With the introduction of the `Spree::Calculator::FlatFee` and `Spree::TaxRate#le
 rake taxes:colorado_delivery_fee
 ```
 
+## Solidus 3.2.4 (v3.2, 2022-11-09)
+
+- Revert jQuery changes to xhr var in image upload [#4708](https://github.com/solidusio/solidus/pull/4708) ([@cpfergus1](https://github.com/cpfergus1))
+- Fix variant price performance regressions [#4690](https://github.com/solidusio/solidus/pull/4690) ([@mamhoff](https://github.com/mamhoff))
+
 ## Solidus 3.2.3 (v3.2, 2022-11-03)
 
 - Paginate variant autocomplete [#4662](https://github.com/solidusio/solidus/pull/4662) ([@tvdeyen](https://github.com/tvdeyen))
