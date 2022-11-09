@@ -596,8 +596,9 @@ module Spree
 
       if matching_store_credits.any?
         payment_method = Spree::PaymentMethod::StoreCredit.first
+        sorter = Spree::Config.store_credit_prioritizer_class.new(matching_store_credits, self)
 
-        matching_store_credits.order_by_priority.each do |credit|
+        sorter.call.each do |credit|
           break if remaining_total.zero?
           next if credit.amount_remaining.zero?
 
