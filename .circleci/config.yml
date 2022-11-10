@@ -103,8 +103,103 @@ commands:
           name: Install libvips
           command: sudo apt-get install -y libvips
 
-jobs: {}
+  install_solidus:
+    parameters:
+      flags:
+        type: string
+        default: "# no options"
+        description: "flags to be passed to `bin/rails g solidus:install"
+    steps:
+      - run:
+          name: "Cleanup & check rails version"
+          command: |
+            gem environment path
+            rm -rf /tmp/my_app /tmp/.tool-versions # cleanup previous runs
+
+            ruby -v >> /tmp/.tool-versions
+            gem search -eq rails >> /tmp/.tool-versions # get the latest rails from rubygems
+            gem search -eq solidus >> /tmp/.tool-versions # get the latest solidus from rubygems
+
+            cat /tmp/.tool-versions
+      - restore_cache:
+          keys:
+            - solidus-installer-v5-{{ checksum "/tmp/.tool-versions" }}
+            - solidus-installer-v5-
+      - run:
+          name: "Prepare the rails application"
+          command: |
+            cd /tmp
+            test -d my_app || gem install rails solidus
+            test -d my_app || rails new my_app --skip-javascript --skip-git
+      - save_cache:
+          key: solidus-installer-v5-{{ checksum "/tmp/.tool-versions" }}
+          paths:
+            - /tmp/my_app
+            - /home/circleci/.rubygems
+      - run:
+          name: "Run `solidus:install` with `<<parameters.flags>>`"
+          command: |
+            cd /tmp/my_app
+            bundle add solidus --git "file://$(ruby -e"puts File.expand_path ENV['CIRCLE_WORKING_DIRECTORY']")"
+            unset RAILS_ENV # avoid doing everything on the test environment
+            bin/rails generate solidus:install --auto-accept <<parameters.flags>>
+
+  test_page:
+    parameters:
+      app_root:
+        type: string
+        default: '/tmp/my_app'
+      path:
+        type: string
+        default: '/'
+      expected_text:
+        type: string
+
+    steps:
+      - run:
+          name: "Check the contents of the <<parameters.path>> page"
+          command: |
+            cd <<parameters.app_root>>
+            unset RAILS_ENV # avoid doing everything on the test environment
+            bin/rails server -p 3000 &
+            wget --quiet --output-document - --tries=30 --retry-connrefused "http://localhost:3000<<parameters.path>>" | grep "<<parameters.expected_text>>"
+            echo "Exited with $?"
+            kill $(cat "tmp/pids/server.pid")
+
+jobs:
+  solidus_installer:
+    executor: sqlite
+    steps:
+      - checkout
+      - run:
+          name: "apt-get update, for libvips"
+          command: "sudo apt-get update"
+      - libvips
+
+      - install_solidus: { flags: "--sample=false --frontend=starter --authentication=devise" }
+      - test_page: { expected_text: "The only eCommerce platform you’ll ever need." }
+
+      - install_solidus: { flags: "--sample=false --frontend=none --authentication=none" }
+      - test_page: { expected_text: "<title>Ruby on Rails" }
+
+      - install_solidus: { flags: "--sample=false --frontend=solidus_frontend --authentication=custom" }
+      - test_page: { expected_text: "data-hook=" }
+
+      - install_solidus: { flags: "--sample=false --frontend=solidus_starter_frontend --authentication=devise" }
+      - test_page: { expected_text: "The only eCommerce platform you’ll ever need." }
+
+      - run:
+          name: "Test `rake task: extensions:test_app`"
+          command: |
+            mkdir -p /tmp/dummy_extension
+            cd /tmp/dummy_extension
+            bundle init
+            bundle add rails sqlite3 --skip-install
+            bundle add solidus --git "file://$(ruby -e"puts File.expand_path ENV['CIRCLE_WORKING_DIRECTORY']")"
+            export LIB_NAME=set # dummy requireable file
+            bundle exec rake -rrails -rspree/testing_support/extension_rake -e'Rake::Task["extension:test_app"].invoke'
 
 workflows:
   build:
-    jobs: []
+    jobs:
+      - solidus_installer
