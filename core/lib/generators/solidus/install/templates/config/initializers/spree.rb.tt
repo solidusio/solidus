@@ -9,9 +9,6 @@ Spree.config do |config|
   # Default currency for new sites
   config.currency = "USD"
 
-  # from address for transactional emails
-  config.mails_from = "store@example.com"
-
   # Uncomment to stop tracking inventory levels in the application
   # config.track_inventory_levels = false
 

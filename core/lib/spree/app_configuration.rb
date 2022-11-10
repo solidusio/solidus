@@ -193,7 +193,17 @@ module Spree
 
     # @!attribute [rw] mails_from
     #   @return [String] Email address used as +From:+ field in transactional emails.
+    #   @deprecated Spree::Store#mail_from_address is used instead
     preference :mails_from, :string, default: 'solidus@example.com'
+    def mails_from=(value)
+      Spree::Deprecation.warn(<<~MSG) && preferences[:mail_from] = value
+        Solidus doesn't use `Spree::Config.mails_from` preference and it'll
+        removed on the next major release. Please, remove its definition in
+        `config/initializers/spree.rb`. Use the `Spree::Store#mail_from_address`
+        attribute for the default email address used as the 'From:' field in
+        transactional emails.
+      MSG
+    end
 
     # @!attribute [rw] max_level_in_taxons_menu
     #   @return [Integer] maximum nesting level in taxons menu (default: +1+)

@@ -138,7 +138,6 @@ end
 Spree.user_class = 'Spree::LegacyUser'
 Spree.load_defaults(Spree.solidus_version)
 Spree.config do |config|
-  config.mails_from = "store@example.com"
   config.use_legacy_events = ENV['USE_LEGACY_EVENTS'].present?
 
   if ENV['DISABLE_ACTIVE_STORAGE']
