@@ -5,16 +5,22 @@ orbs:
 
 executors:
   base:
+    parameters: &parameters
+      ruby:
+        type: string
+        default: "2.7"
     working_directory: &workdir ~/solidus
     environment: &environment
       DEFAULT_MAX_WAIT_TIME: 10
       SOLIDUS_RAISE_DEPRECATIONS: true
       CIRCLE_TEST_REPORTS: /tmp/test-results
       CIRCLE_ARTIFACTS: /tmp/test-artifacts
+      BUNDLE_WITHOUT: "utils"
     docker:
-      - image: &image cimg/ruby:2.7-browsers
+      - image: &image cimg/ruby:<< parameters.ruby >>-browsers
 
   postgres:
+    parameters: *parameters
     working_directory: *workdir
     environment:
       <<: *environment
@@ -27,6 +33,7 @@ executors:
           POSTGRES_USER: root
 
   mysql:
+    parameters: *parameters
     working_directory: *workdir
     environment:
       <<: *environment
