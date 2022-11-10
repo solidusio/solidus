@@ -185,17 +185,6 @@ jobs:
       - install_solidus: { flags: "--sample=false --frontend=solidus_starter_frontend --with-authentication" }
       - test_page: { expected_text: "The only eCommerce platform you’ll ever need." }
 
-      - run:
-          name: "Test `rake task: extensions:test_app`"
-          command: |
-            mkdir -p /tmp/dummy_extension
-            cd /tmp/dummy_extension
-            bundle init
-            bundle add rails sqlite3 --skip-install
-            bundle add solidus --git "file://$(ruby -e"puts File.expand_path ENV['CIRCLE_WORKING_DIRECTORY']")"
-            export LIB_NAME=set # dummy requireable file
-            bundle exec rake -rrails -rspree/testing_support/extension_rake -e'Rake::Task["extension:test_app"].invoke'
-
 workflows:
   build:
     jobs:
