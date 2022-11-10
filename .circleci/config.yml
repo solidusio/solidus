@@ -44,6 +44,15 @@ executors:
       - image: *image
       - image: cimg/mysql:5.7
 
+  sqlite:
+    parameters: *parameters
+    working_directory: *workdir
+    environment:
+      <<: *environment
+      DB: sqlite
+    docker:
+      - image: *image
+
 commands:
   setup:
     steps:
