@@ -184,19 +184,21 @@ module Solidus
     end
 
     def install_frontend
-      return if options[:frontend] == 'none'
-
       bundler_context = BundlerContext.new
 
-      frontend = detect_frontend_to_install(bundler_context)
+      if options[:frontend] == 'none'
+        support_solidus_frontend_extraction(bundler_context)
+      else
+        frontend = detect_frontend_to_install(bundler_context)
 
-      support_solidus_frontend_extraction(bundler_context) unless frontend == LEGACY_FRONTEND
+        support_solidus_frontend_extraction(bundler_context) unless frontend == LEGACY_FRONTEND
 
-      say_status :installing, frontend
+        say_status :installing, frontend
 
-      InstallFrontend
-        .new(bundler_context: bundler_context, generator_context: self)
-        .call(frontend)
+        InstallFrontend
+          .new(bundler_context: bundler_context, generator_context: self)
+          .call(frontend)
+      end
     end
 
     def run_bundle_install_if_needed_by_plugins
