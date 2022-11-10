@@ -176,13 +176,13 @@ jobs:
           command: "sudo apt-get update"
       - libvips
 
-      - install_solidus: { flags: "--sample=false --frontend=none --authentication=none" }
+      - install_solidus: { flags: "--sample=false --frontend=none --with-authentication=false" }
       - test_page: { expected_text: "<title>Ruby on Rails" }
 
-      - install_solidus: { flags: "--sample=false --frontend=solidus_frontend --authentication=custom" }
+      - install_solidus: { flags: "--sample=false --frontend=solidus_frontend --with-authentication" }
       - test_page: { expected_text: "data-hook=" }
 
-      - install_solidus: { flags: "--sample=false --frontend=solidus_starter_frontend --authentication=devise" }
+      - install_solidus: { flags: "--sample=false --frontend=solidus_starter_frontend --with-authentication" }
       - test_page: { expected_text: "The only eCommerce platform you’ll ever need." }
 
       - run:
