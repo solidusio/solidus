@@ -1,5 +1,5 @@
 <% content_for :page_actions do %>
-  <% if can?([:admin, :create], Spree::Order) %>
+  <% if can?(:admin, Spree::Order) && can?(:create, Spree::Order) %>
     <li>
       <%= link_to t(".create_order"), spree.new_admin_order_path(user_id: @user.id), class: 'btn btn-primary' %>
     </li>
