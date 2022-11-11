@@ -60,7 +60,7 @@
                 </span>
               </td>
               <td class="order-number">
-                <% if can?([:admin, :edit], order) %>
+                <% if can?(:admin, order) && can?(:edit, order) %>
                   <%= link_to order.number, edit_admin_order_url(order) %>
                 <% else %>
                   <%= order.number %>
