@@ -919,8 +919,6 @@ module Spree::Api
 
       context "can cancel an order" do
         before do
-          stub_spree_preferences(mails_from: "solidus@example.com")
-
           order.completed_at = Time.current
           order.state = 'complete'
           order.shipment_state = 'ready'
