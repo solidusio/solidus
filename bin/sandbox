@@ -18,7 +18,7 @@ mysql)
   USERNAME=$DB_USERNAME
   PASSWORD=$DB_PASSWORD
   ;;
-sqlite|'')
+sqlite3|sqlite|'')
   RAILSDB="sqlite3"
   ;;
 *)

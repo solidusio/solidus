@@ -341,7 +341,7 @@ createuser --superuser --echo postgres # only the first time
 bin/build
 ```
 
-The `bin/build` script runs using PostgreSQL by default, but it can be overridden by setting the DB environment variable to `DB=sqlite` or `DB=mysql`. For example:
+The `bin/build` script runs using PostgreSQL by default, but it can be overridden by setting the DB environment variable to `DB=sqlite3` or `DB=mysql`. For example:
 
 ```bash
 env DB=mysql bin/build

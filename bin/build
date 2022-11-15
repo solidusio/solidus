@@ -2,7 +2,7 @@
 
 set -e
 
-# Target postgresql. Override with: `env DB=sqlite bin/build`
+# Target postgresql. Override with: `env DB=sqlite3 bin/build`
 export DB=${DB:-postgresql}
 
 if [ -n "$COVERAGE" ]; then

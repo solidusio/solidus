@@ -17,7 +17,7 @@ end
 # and https://github.com/rails/sprockets-rails/issues/369
 gem 'sprockets', '~> 3'
 
-dbs = ENV['DB_ALL'] ? 'all' : ENV.fetch('DB', 'sqlite')
+dbs = ENV['DB_ALL'] ? 'all' : ENV.fetch('DB', 'sqlite3')
 gem 'mysql2', '~> 0.5.0', require: false if dbs.match?(/all|mysql/)
 gem 'pg', '~> 1.0', require: false if dbs.match?(/all|postgres/)
 gem 'fast_sqlite', require: false if dbs.match?(/all|sqlite/)

@@ -50,7 +50,7 @@ executors:
     working_directory: *workdir
     environment:
       <<: *environment
-      DB: sqlite
+      DB: sqlite3
     docker:
       - image: *image
 
