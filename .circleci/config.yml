@@ -5,16 +5,22 @@ orbs:
 
 executors:
   base:
+    parameters: &parameters
+      ruby:
+        type: string
+        default: "2.7"
     working_directory: &workdir ~/solidus
     environment: &environment
       DEFAULT_MAX_WAIT_TIME: 10
       SOLIDUS_RAISE_DEPRECATIONS: true
       CIRCLE_TEST_REPORTS: /tmp/test-results
       CIRCLE_ARTIFACTS: /tmp/test-artifacts
+      BUNDLE_WITHOUT: "utils"
     docker:
-      - image: &image cimg/ruby:2.7-browsers
+      - image: &image cimg/ruby:<< parameters.ruby >>-browsers
 
   postgres:
+    parameters: *parameters
     working_directory: *workdir
     environment:
       <<: *environment
@@ -27,6 +33,7 @@ executors:
           POSTGRES_USER: root
 
   mysql:
+    parameters: *parameters
     working_directory: *workdir
     environment:
       <<: *environment
@@ -36,6 +43,15 @@ executors:
     docker:
       - image: *image
       - image: cimg/mysql:5.7
+
+  sqlite:
+    parameters: *parameters
+    working_directory: *workdir
+    environment:
+      <<: *environment
+      DB: sqlite
+    docker:
+      - image: *image
 
 commands:
   setup:
@@ -87,88 +103,151 @@ commands:
           name: Install libvips
           command: sudo apt-get install -y libvips
 
-jobs:
-  persist_version:
-    executor: base
+  imagemagick:
     steps:
-      - setup
-
       - run:
-          name: Persist Solidus version
+          name: Install imagemagick
+          command: sudo apt-get install -y imagemagick
+
+  install_solidus:
+    parameters:
+      flags:
+        type: string
+        default: "# no options"
+        description: "flags to be passed to `bin/rails g solidus:install"
+    steps:
+      - run:
+          name: "Cleanup & check rails version"
           command: |
-            mkdir -p workspace
-            bundle exec ruby -e "puts Spree.solidus_gem_version.segments[0..1].join('.')" > workspace/solidus-version
+            gem environment path
+            rm -rf /tmp/my_app /tmp/.tool-versions # cleanup previous runs
 
-      - persist_to_workspace:
-          root: workspace
+            ruby -v >> /tmp/.tool-versions
+            gem search -eq rails >> /tmp/.tool-versions # get the latest rails from rubygems
+            gem search -eq solidus >> /tmp/.tool-versions # get the latest solidus from rubygems
+
+            cat /tmp/.tool-versions
+      - restore_cache:
+          keys:
+            - solidus-installer-v5-{{ checksum "/tmp/.tool-versions" }}
+            - solidus-installer-v5-
+      - run:
+          name: "Prepare the rails application"
+          command: |
+            cd /tmp
+            test -d my_app || gem install rails solidus
+            test -d my_app || rails new my_app --skip-javascript --skip-git
+      - save_cache:
+          key: solidus-installer-v5-{{ checksum "/tmp/.tool-versions" }}
           paths:
-            - solidus-version
+            - /tmp/my_app
+            - /home/circleci/.rubygems
+      - run:
+          name: "Run `solidus:install` with `<<parameters.flags>>`"
+          command: |
+            cd /tmp/my_app
+            bundle add solidus --git "file://$(ruby -e"puts File.expand_path ENV['CIRCLE_WORKING_DIRECTORY']")"
+            unset RAILS_ENV # avoid doing everything on the test environment
+            bin/rails generate solidus:install --auto-accept <<parameters.flags>>
 
-  postgres:
-    executor: postgres
+  test_page:
+    parameters:
+      app_root:
+        type: string
+        default: '/tmp/my_app'
+      path:
+        type: string
+        default: '/'
+      expected_text:
+        type: string
+
+    steps:
+      - run:
+          name: "Check the contents of the <<parameters.path>> page"
+          command: |
+            cd <<parameters.app_root>>
+            unset RAILS_ENV # avoid doing everything on the test environment
+            bin/rails server -p 3000 &
+            wget --quiet --output-document - --tries=30 --retry-connrefused "http://localhost:3000<<parameters.path>>" | grep "<<parameters.expected_text>>"
+            echo "Exited with $?"
+            kill $(cat "tmp/pids/server.pid")
+
+jobs:
+  solidus_installer:
+    executor: sqlite
+    steps:
+      - checkout
+      - run:
+          name: "apt-get update, for libvips"
+          command: "sudo apt-get update"
+      - libvips
+
+      - install_solidus: { flags: "--sample=false --frontend=none --with-authentication=false" }
+      - test_page: { expected_text: "<title>Ruby on Rails" }
+
+      - install_solidus: { flags: "--sample=false --frontend=solidus_frontend --with-authentication" }
+      - test_page: { expected_text: "data-hook=" }
+
+      - install_solidus: { flags: "--sample=false --frontend=solidus_starter_frontend --with-authentication" }
+      - test_page: { expected_text: "The only eCommerce platform you’ll ever need." }
+
+  test_solidus:
+    parameters:
+      database:
+        type: string
+        default: postgres
+      ruby:
+        type: string
+        default: '3.1'
+      rails:
+        type: string
+        default: "7.0"
+      paperclip:
+        type: boolean
+        default: true
+      legacy:
+        type: string
+        default: "0"
+    executor:
+      name: << parameters.database >>
+      ruby: << parameters.ruby >>
     parallelism: &parallelism 3
-    steps:
-      - setup
-      - libvips
-      - test
-
-  legacy_events:
-    executor: postgres
-    parallelism: &parallelism
     environment:
-      USE_LEGACY_EVENTS: '1'
+      DISABLE_ACTIVE_STORAGE: << parameters.paperclip >>
+      RAILS_VERSION: "~> << parameters.rails >>"
+      USE_LEGACY_EVENTS: << parameters.legacy >>
+      BUILDKITE_ANALYTICS_EXECUTION_NAME_PREFIX: "(<< parameters.ruby >>:<< parameters.rails >>:<< parameters.database >>:<< parameters.paperclip >>)"
     steps:
       - setup
-      - libvips
-      - test
-
-  mysql:
-    executor: mysql
-    parallelism: *parallelism
-    steps:
-      - setup
-      - libvips
-      - test
-
-  postgres_rails61:
-    executor: postgres
-    parallelism: *parallelism
-    environment:
-      RAILS_VERSION: '~> 6.1.0'
-    steps:
-      - setup
-      - test
-
-  postgres_rails60:
-    executor: postgres
-    parallelism: *parallelism
-    environment:
-      RAILS_VERSION: '~> 6.0.0'
-      DISABLE_ACTIVE_STORAGE: true
-    steps:
-      - setup
-      - test
-
-  postgres_rails52:
-    executor: postgres
-    parallelism: *parallelism
-    environment:
-      RAILS_VERSION: '~> 5.2.0'
-      DISABLE_ACTIVE_STORAGE: true
-    steps:
-      - setup
+      - when:
+          condition:
+            not:
+              equal: [<<parameters.ruby>>, '2.5']
+          steps:
+            - libvips
+      - when:
+          condition:
+            equal: [<<parameters.ruby>>, '2.5']
+          steps:
+            - imagemagick
       - test
 
 workflows:
   build:
     jobs:
-      - persist_version:
-          filters:
-            branches:
-              only: /master|v\d\.\d+/
-      - postgres
-      - mysql
-      - postgres_rails61
-      - postgres_rails60
-      - postgres_rails52
-      - legacy_events
+      - solidus_installer
+
+      # Based on supported versions for the current Solidus release and recommended versions from
+      # https://www.fastruby.io/blog/ruby/rails/versions/compatibility-table.html.
+      - test_solidus:
+          name: &name "test-rails-<<matrix.rails>>-ruby-<<matrix.ruby>>-<<matrix.database>>-<<#matrix.paperclip>>paperclip<</matrix.paperclip>><<^matrix.paperclip>>activestorage<</matrix.paperclip>>"
+          matrix: { parameters: { rails: ['7.0'], ruby: ['3.0', '3.1'], database: ['mysql', 'sqlite', 'postgres'], paperclip: [true, false] } }
+      - test_solidus:
+          name: *name
+          matrix: { parameters: { rails: ['6.1'], ruby: ['2.7', '3.0'], database: ['sqlite'], paperclip: [false] } }
+      - test_solidus:
+          name: *name
+          matrix: { parameters: { rails: ['6.0'], ruby: ['2.6'], database: ['sqlite'], paperclip: [true] } }
+      - test_solidus:
+          name: *name
+          matrix: { parameters: { rails: ['5.2'], ruby: ['2.5'], database: ['sqlite'], paperclip: [true] } }
