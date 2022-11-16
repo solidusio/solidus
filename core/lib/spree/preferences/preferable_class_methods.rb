@@ -75,7 +75,7 @@ module Spree::Preferences
       # is a pending preference before going to default
       define_method preference_getter_method(name) do
         value = preferences.fetch(name) do
-          default.call(*context_for_default)
+          instance_exec(*context_for_default, &default)
         end
         value = preference_encryptor.decrypt(value) if preference_encryptor.present?
         value
@@ -92,7 +92,7 @@ module Spree::Preferences
       end
 
       define_method preference_default_getter_method(name) do
-        default.call(*context_for_default)
+        instance_exec(*context_for_default, &default)
       end
 
       define_method preference_type_getter_method(name) do
