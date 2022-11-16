@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Solidus
-  class InstallGenerator < Rails::Generators::Base
+  class InstallGenerator < Rails::Generators::AppBase
     # Bundler context during the install process.
     #
     # This class gives access to information about the bundler context in which
