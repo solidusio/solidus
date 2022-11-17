@@ -17,9 +17,12 @@ module Solidus
           install_solidus_frontend
         when 'solidus_starter_frontend'
           install_solidus_starter_frontend
+        else
+          # Adapted from #install_solidus_starter_frontend
+          @bundler_context.remove(['solidus_frontend']) if @bundler_context.component_in_gemfile?(:frontend)
+          @generator_context.apply ENV['FRONTEND'] or abort("Frontend installation failed.")
         end
       end
-
       private
 
       def bundle_command(command)
