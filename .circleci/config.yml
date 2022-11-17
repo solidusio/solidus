@@ -2,6 +2,7 @@ version: 2.1
 
 orbs:
   browser-tools: circleci/browser-tools@1.3
+  slack: circleci/slack@4.9.3
 
 executors:
   base:
@@ -78,6 +79,13 @@ commands:
           key: solidus-gems-v3-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
           paths:
             - vendor/bundle
+
+  notify:
+    steps:
+      - slack/notify:
+          event: fail
+          template: basic_fail_1
+          branch_pattern: master, v[0-9]+\.[0-9]+
 
   test:
     steps:
@@ -201,6 +209,7 @@ jobs:
             bundle add solidus --git "file://$(ruby -e"puts File.expand_path ENV['CIRCLE_WORKING_DIRECTORY']")"
             export LIB_NAME=set # dummy requireable file
             bundle exec rake -rrails -rspree/testing_support/extension_rake -e'Rake::Task["extension:test_app"].invoke'
+      - notify
 
   test_solidus:
     parameters:
@@ -242,23 +251,29 @@ jobs:
           steps:
             - imagemagick
       - test
+      - notify
 
 workflows:
   build:
     jobs:
-      - solidus_installer
+      - solidus_installer:
+          context: slack-secrets
 
       # Based on supported versions for the current Solidus release and recommended versions from
       # https://www.fastruby.io/blog/ruby/rails/versions/compatibility-table.html.
       - test_solidus:
+          context: slack-secrets
           name: &name "test-rails-<<matrix.rails>>-ruby-<<matrix.ruby>>-<<matrix.database>>-<<#matrix.paperclip>>paperclip<</matrix.paperclip>><<^matrix.paperclip>>activestorage<</matrix.paperclip>>"
           matrix: { parameters: { rails: ['7.0'], ruby: ['3.0', '3.1'], database: ['mysql', 'sqlite', 'postgres'], paperclip: [true, false] } }
       - test_solidus:
+          context: slack-secrets
           name: *name
           matrix: { parameters: { rails: ['6.1'], ruby: ['2.7', '3.0'], database: ['sqlite'], paperclip: [false] } }
       - test_solidus:
+          context: slack-secrets
           name: *name
           matrix: { parameters: { rails: ['6.0'], ruby: ['2.6'], database: ['sqlite'], paperclip: [true] } }
       - test_solidus:
+          context: slack-secrets
           name: *name
           matrix: { parameters: { rails: ['5.2'], ruby: ['2.5'], database: ['sqlite'], paperclip: [true] } }
