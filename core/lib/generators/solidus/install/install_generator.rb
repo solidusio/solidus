@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'rails/generators'
+require 'rails/generators/app_base'
 require 'rails/version'
 require_relative 'install_generator/bundler_context'
 require_relative 'install_generator/support_solidus_frontend_extraction'
@@ -8,7 +9,9 @@ require_relative 'install_generator/install_frontend'
 
 module Solidus
   # @private
-  class InstallGenerator < Rails::Generators::Base
+  class InstallGenerator < Rails::Generators::AppBase
+    argument :app_path, type: :string, default: Rails.root
+
     CORE_MOUNT_ROUTE = "mount Spree::Core::Engine"
 
     LEGACY_FRONTEND = 'solidus_frontend'

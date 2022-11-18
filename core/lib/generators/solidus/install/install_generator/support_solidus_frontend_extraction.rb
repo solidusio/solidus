@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Solidus
-  class InstallGenerator < Rails::Generators::Base
+  class InstallGenerator < Rails::Generators::AppBase
     # Helper for extracting solidus_frontend from solidus meta-gem
     #
     # We're recommending users use newer solidus_starter_frontend. However,

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Solidus
-  class InstallGenerator < Rails::Generators::Base
+  class InstallGenerator < Rails::Generators::AppBase
     class InstallFrontend
       attr_reader :bundler_context,
                   :generator_context
