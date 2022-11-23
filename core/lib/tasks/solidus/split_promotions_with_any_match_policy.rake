@@ -3,7 +3,8 @@
 namespace :solidus do
   desc "Split Promotions with 'any' match policy"
   task split_promotions_with_any_match_policy: :environment do
-    Spree::Promotion.where(match_policy: :any).includes(:promotion_rules).all.each do |promotion|
+    promotions = Spree::Promotion.where(match_policy: :any)
+    promotions.includes(:promotion_rules, :promotion_actions).find_each do |promotion|
       if promotion.promotion_rules.length <= 1
         promotion.update!(match_policy: :all)
       elsif promotion.active?
@@ -28,6 +29,8 @@ namespace :solidus do
       end
     end
 
-    Spree::Order.where(completed_at: nil).each { |order| Spree::PromotionHandler::Cart.new(order).activate }
+    if promotions.any?
+      Spree::Order.where(completed_at: nil).each { |order| Spree::PromotionHandler::Cart.new(order).activate }
+    end
   end
 end
