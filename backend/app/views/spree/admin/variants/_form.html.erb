@@ -70,13 +70,10 @@
           <%= f.label :price %>
           <%= render "spree/admin/shared/number_with_currency", f: f, amount_attr: :price, currency: @variant.default_price_or_build.currency %>
         </div>
+        <% if show_rebuild_vat_checkbox? %>
+          <%= render "spree/admin/shared/rebuild_vat_prices_checkbox", form: f, model_name: "variant" %>
+        <% end %>
       </div>
-
-      <% if show_rebuild_vat_checkbox? %>
-        <div class="col-3">
-          <%= render "spree/admin/shared/rebuild_vat_prices_checkbox", form: f, model_name: "variant", wrapper_class: "field" %>
-        </div>
-      <% end %>
 
       <div class="col-3">
         <div class="field" data-hook="cost_price">
