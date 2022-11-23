@@ -94,6 +94,19 @@
                                   { class: 'custom-select fullwidth' } %>
         </div>
       </div>
+
+      <div class="col-3">
+        <div class="field" data-hook="shipping_category">
+          <%= f.label :shipping_category %>
+          <%= f.field_hint :shipping_category %>
+          <%= f.collection_select :shipping_category_id,
+                                  @shipping_categories,
+                                  :id,
+                                  :name,
+                                  { include_blank: t('.use_product_shipping_category') },
+                                  { class: 'custom-select fullwidth' } %>
+        </div>
+      </div>
     </div>
   </fieldset>
 </div>

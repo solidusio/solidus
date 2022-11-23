@@ -30,11 +30,14 @@ module Spree
 
     belongs_to :product, -> { with_discarded }, touch: true, class_name: 'Spree::Product', inverse_of: :variants_including_master, optional: false
     belongs_to :tax_category, class_name: 'Spree::TaxCategory', optional: true
+    belongs_to :shipping_category, class_name: "Spree::ShippingCategory", optional: true
 
     delegate :name, :description, :slug, :available_on, :discontinue_on, :discontinued?,
-             :shipping_category_id, :meta_description, :meta_keywords, :shipping_category,
+             :meta_description, :meta_keywords,
              to: :product
     delegate :tax_category, to: :product, prefix: true
+    delegate :shipping_category, :shipping_category_id,
+      to: :product, prefix: true
     delegate :tax_rates, to: :tax_category
 
     has_many :inventory_units, inverse_of: :variant
@@ -140,6 +143,23 @@ module Spree
     #
     def tax_category
       super || product_tax_category
+    end
+
+    # @return [Spree::ShippingCategory] the variant's shipping category
+    #
+    # This returns the product's shipping category if the shipping category ID on the variant is nil. It looks
+    # like an association, but really is an override.
+    #
+    def shipping_category
+      super || product_shipping_category
+    end
+
+    # @return [Integer] the variant's shipping category id
+    #
+    # This returns the product's shipping category if if the shipping category ID on the variant is nil.
+    #
+    def shipping_category_id
+      super || product_shipping_category_id
     end
 
     # Sets the cost_price for the variant.

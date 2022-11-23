@@ -25,6 +25,7 @@ describe "Variants", type: :feature do
       expect(page).to have_field('variant_width', with: "1.00")
       expect(page).to have_field('variant_depth', with: "1.50")
       expect(page).to have_select('variant[tax_category_id]')
+      expect(page).to have_select('variant[shipping_category_id]')
     end
   end
 
