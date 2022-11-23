@@ -1,3 +1,5 @@
+I'll be testing stale bot with this PR. I'll mark this PR as stale and check if the stale bot will close it in 7 days.
+
 <img width="250" src="./logo.svg" alt="Solidus logo">
 
 # Solidus
