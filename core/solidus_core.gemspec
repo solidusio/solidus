@@ -40,6 +40,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'image_processing', '~> 1.10'
   s.add_dependency 'kaminari-activerecord', '~> 1.1'
   s.add_dependency 'mini_magick', '~> 4.10'
+  s.add_dependency 'mail', ['>= 2.8.0.rc1', '< 3.0']
   s.add_dependency 'monetize', '~> 1.8'
   s.add_dependency 'kt-paperclip', ['>= 6.3', '< 8']
   s.add_dependency 'psych', ['>= 3.1.0', '< 5.0']
