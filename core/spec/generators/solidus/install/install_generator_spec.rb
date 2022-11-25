@@ -12,7 +12,7 @@ RSpec.describe Solidus::InstallGenerator do
       aggregate_failures do
         expect(generator.instance_variable_get(:@selected_frontend)).to eq("starter")
         expect(generator.instance_variable_get(:@selected_authentication)).to eq("devise")
-        expect(generator.instance_variable_get(:@selected_payment_method)).to eq("none")
+        expect(generator.instance_variable_get(:@selected_payment_method)).to eq("paypal")
         expect(generator.instance_variable_get(:@run_migrations)).to eq(true)
         expect(generator.instance_variable_get(:@load_seed_data)).to eq(true)
         expect(generator.instance_variable_get(:@load_sample_data)).to eq(true)
@@ -96,5 +96,43 @@ RSpec.describe Solidus::InstallGenerator do
         expect(generator.instance_variable_get(:@selected_frontend)).to eq('starter')
       end
     end
+
+    context 'when asked interactively' do
+      it 'presents different options for the "classic"' do
+        questions = []
+        generator = described_class.new([], ['--frontend=classic', '--authentication=devise'])
+        allow(generator).to receive(:ask_with_description) { |**args| questions << args }
+
+        generator.prepare_options
+
+        expect(questions.size).to eq(1)
+        expect(questions.first[:limited_to]).to eq(['paypal', 'bolt', 'none'])
+        expect(questions.first[:default]).to eq('paypal')
+        expect(strip_ansi questions.first[:desc]).to include('[paypal]')
+        expect(strip_ansi questions.first[:desc]).to include('[bolt]')
+        expect(strip_ansi questions.first[:desc]).to include('[none]')
+      end
+
+      it 'presents different options for the "classic"' do
+        questions = []
+        generator = described_class.new([], ['--frontend=starter', '--authentication=devise'])
+        allow(generator).to receive(:ask_with_description) { |**args| questions << args }
+
+        generator.prepare_options
+
+        expect(questions.size).to eq(1)
+        expect(questions.first[:limited_to]).to eq(['paypal', 'none'])
+        expect(questions.first[:default]).to eq('paypal')
+        expect(strip_ansi questions.first[:desc]).to include('[paypal]')
+        expect(strip_ansi questions.first[:desc]).not_to include('[bolt]')
+        expect(strip_ansi questions.first[:desc]).to include('[none]')
+      end
+    end
+  end
+
+  private
+
+  def strip_ansi(string)
+    string.gsub(/\u001b\[.*?m/, '')
   end
 end
