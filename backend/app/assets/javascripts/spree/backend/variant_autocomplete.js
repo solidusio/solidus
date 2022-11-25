@@ -7,10 +7,24 @@
     });
   };
 
-  $.fn.variantAutocomplete = function(searchOptions) {
-    if (searchOptions == null) {
-      searchOptions = {};
+  /**
+    * Make the element a select2 dropdown used for finding Variants. By default, the search term will be
+    * passed to the defined Spree::Config.variant_search_class by the controller with its defined scope.
+    * @param  {Object} options Options
+    * @param  {Function|undefined} options.searchCallback Returns a hash object for params to merge on the select2 ajax request
+    *                                                     Accepts an argument of the select2 search term. To use Ransack, define
+    *                                                     variant_search_term as a falsy value, and q as the Ransack query. Note,
+    *                                                     you need to ensure that the attributes are allowed to be Ransacked.
+    */
+  $.fn.variantAutocomplete = function(options = {}) {
+    function extraParameters(term) {
+      if (typeof(options['searchCallback']) === 'function') {
+        return options['searchCallback'](term)
+      }
+
+      return {}
     }
+
     this.select2({
       placeholder: Spree.translations.variant_placeholder,
       minimumInputLength: 3,
@@ -35,7 +49,7 @@
             token: Spree.api_key,
             page: page
           };
-          return _.extend(searchData, searchOptions);
+          return _.extend(searchData, extraParameters(term));
         },
 
         results: function(data, page) {
