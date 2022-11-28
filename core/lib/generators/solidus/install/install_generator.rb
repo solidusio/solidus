@@ -187,14 +187,12 @@ module Solidus
     end
 
     def install_frontend
-      bundler_context = BundlerContext.new
-
       if options[:frontend] == 'none'
-        support_solidus_frontend_extraction(bundler_context)
+        support_solidus_frontend_extraction
       else
-        frontend = detect_frontend_to_install(bundler_context)
+        frontend = detect_frontend_to_install
 
-        support_solidus_frontend_extraction(bundler_context) unless frontend == LEGACY_FRONTEND
+        support_solidus_frontend_extraction unless frontend == LEGACY_FRONTEND
 
         say_status :installing, frontend
 
@@ -285,7 +283,7 @@ module Solidus
 
     private
 
-    def detect_frontend_to_install(bundler_context)
+    def detect_frontend_to_install
       ENV['FRONTEND'] ||
         options[:frontend] ||
         (bundler_context.component_in_gemfile?(:frontend) && LEGACY_FRONTEND) ||
@@ -299,12 +297,16 @@ module Solidus
         MSG
     end
 
-    def support_solidus_frontend_extraction(bundler_context)
+    def support_solidus_frontend_extraction
       say_status "break down", "solidus"
 
       SupportSolidusFrontendExtraction.
         new(bundler_context: bundler_context).
         call
+    end
+
+    def bundler_context
+      @bundler_context ||= BundlerContext.new
     end
   end
 end
