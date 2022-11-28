@@ -126,14 +126,9 @@ module Solidus
       end
     end
 
-    def plugin_install_preparation
-      @plugins_to_be_installed = []
-      @plugin_generators_to_run = []
-    end
-
-    def install_auth_plugin
-      with_authentication = options[:with_authentication]
-      with_authentication.nil? and with_authentication = (options[:auto_accept] || !no?("
+    def select_auth_plugin
+      @with_authentication = options[:with_authentication]
+      @with_authentication.nil? and @with_authentication = (options[:auto_accept] || !no?("
         Solidus has a default authentication extension that uses Devise.
         You can find more info at https://github.com/solidusio/solidus_auth_devise.
 
@@ -141,14 +136,9 @@ module Solidus
         solidus_starter_frontend as your storefront in a later step.
 
         Would you like to install it? (Y/n)"))
-
-      if with_authentication
-        @plugins_to_be_installed << 'solidus_auth_devise'
-        @plugin_generators_to_run << 'solidus:auth:install'
-      end
     end
 
-    def install_payment_method
+    def select_payment_method
       say_status :warning, set_color(
         "Selecting a payment along with `solidus_starter_frontend` might require manual integration.",
         :yellow
@@ -160,12 +150,7 @@ module Solidus
   You can select a payment method to be included in the installation process.
   Please select a payment method name:", limited_to: PAYMENT_METHODS.keys, default: PAYMENT_METHODS.keys.first)
 
-      gem_name = PAYMENT_METHODS.fetch(name)
-
-      if gem_name
-        @plugins_to_be_installed << gem_name
-        @plugin_generators_to_run << "#{gem_name}:install"
-      end
+      @payment_method_gem_name = PAYMENT_METHODS.fetch(name)
     end
 
     def include_seed_data
@@ -202,17 +187,16 @@ module Solidus
       end
     end
 
-    def run_bundle_install_if_needed_by_plugins
-      @plugins_to_be_installed.each do |plugin_name|
-        gem plugin_name
-      end
+    def install_authentication_plugin
+      return unless @with_authentication
 
-      BundlerContext.bundle_cleanly { run "bundle install" } if @plugins_to_be_installed.any?
-      run "spring stop" if defined?(Spring)
+      install_plugin(plugin_name: 'solidus_auth_devise', plugin_generator_name: 'solidus:auth:install')
+    end
 
-      @plugin_generators_to_run.each do |plugin_generator_name|
-        generate "#{plugin_generator_name} --skip_migrations=true"
-      end
+    def install_payment_method_plugin
+      return unless @payment_method_gem_name
+
+      install_plugin(plugin_name: @payment_method_gem_name, plugin_generator_name: "#{@payment_method_gem_name}:install")
     end
 
     def run_migrations
@@ -303,6 +287,13 @@ module Solidus
       SupportSolidusFrontendExtraction.
         new(bundler_context: bundler_context).
         call
+    end
+
+    def install_plugin(plugin_name:, plugin_generator_name:)
+      gem plugin_name
+      BundlerContext.bundle_cleanly { run "bundle install" }
+      run "spring stop" if defined?(Spring)
+      generate "#{plugin_generator_name} --skip_migrations=true"
     end
 
     def bundler_context
