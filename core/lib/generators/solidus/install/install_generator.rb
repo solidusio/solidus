@@ -184,6 +184,12 @@ module Solidus
         InstallFrontend
           .new(bundler_context: bundler_context, generator_context: self)
           .call(frontend)
+
+        # The DEFAULT_FRONTEND installation makes changes to the
+        # bundle without updating the bundler context. As such, we need to
+        # reset the bundler context to get the latest dependencies from the
+        # context.
+        reset_bundler_context if frontend == DEFAULT_FRONTEND
       end
     end
 
@@ -290,6 +296,11 @@ module Solidus
     end
 
     def install_plugin(plugin_name:, plugin_generator_name:)
+      if bundler_context.dependencies[plugin_name]
+        say_status :skipping, "#{plugin_name} is already in the gemfile"
+        return
+      end
+
       gem plugin_name
       BundlerContext.bundle_cleanly { run "bundle install" }
       run "spring stop" if defined?(Spring)
@@ -298,6 +309,10 @@ module Solidus
 
     def bundler_context
       @bundler_context ||= BundlerContext.new
+    end
+
+    def reset_bundler_context
+      @bundler_context = nil
     end
   end
 end
