@@ -302,7 +302,7 @@ module Solidus
       end
 
       gem plugin_name
-      BundlerContext.bundle_cleanly { run "bundle install" }
+      run_bundle
       run "spring stop" if defined?(Spring)
       generate "#{plugin_generator_name} --skip_migrations=true"
     end

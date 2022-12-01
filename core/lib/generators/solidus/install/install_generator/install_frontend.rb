@@ -24,22 +24,11 @@ module Solidus
 
       private
 
-      def bundle_command(command)
-        @generator_context.say_status :run, "bundle #{command}"
-        bundle_path = Gem.bin_path("bundler", "bundle")
-
-        BundlerContext.bundle_cleanly do
-          system(
-            Gem.ruby,
-            bundle_path,
-            *command.shellsplit,
-          )
-        end
-      end
-
       def install_solidus_frontend
         unless @bundler_context.component_in_gemfile?(:frontend)
-          bundle_command 'add solidus_frontend'
+          # `Rails::Generator::AppBase#bundle_command` is protected so have to `send` it.
+          # See https://api.rubyonrails.org/v3.2.16/classes/Rails/Generators/AppBase.html#method-i-run_bundle
+          @generator_context.send :bundle_command, 'add solidus_frontend'
         end
 
         # Solidus bolt will be handled in the installer as a payment method.
