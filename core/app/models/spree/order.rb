@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module Spree
+  # Test
   # The customers cart until completed, then acts as permanent record of the transaction.
   #
   # `Spree::Order` is the heart of the Solidus system, as it acts as the customer's
