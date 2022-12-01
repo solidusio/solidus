@@ -1,19 +1,19 @@
+name: "Automatic backporting"
 on:
   pull_request_target:
     types: ["labeled", "closed"]
 
 jobs:
   backport:
-    name: Backport PR
     runs-on: ubuntu-latest
     if: |
       github.event.pull_request.merged == true
       && contains(
            join(github.event.pull_request.labels.*.name, '---'),
-           '---Needs Backport'
+           '---backport'
          )
       && (
-        (github.event.action == 'labeled' && startsWith(github.event.label.name, 'Needs Backport')) ||
+        (github.event.action == 'labeled' && startsWith(github.event.label.name, 'backport')) ||
           (github.event.action == 'closed')
       )
     steps:
@@ -21,7 +21,7 @@ jobs:
         uses: sqren/backport-github-action@v8.9.3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          auto_backport_label_prefix: Needs Backport-
+          auto_backport_label_prefix: backport-
           add_original_reviewers: true
 
       - name: Info log
