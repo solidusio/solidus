@@ -139,7 +139,9 @@ commands:
     steps:
       - run:
           name: Install libvips
-          command: sudo apt-get install -y libvips
+          command: |
+            sudo apt-get update
+            sudo apt-get install -yq libvips-dev
 
   imagemagick:
     steps:
@@ -214,9 +216,6 @@ jobs:
     executor: sqlite
     steps:
       - checkout
-      - run:
-          name: "apt-get update, for libvips"
-          command: "sudo apt-get update"
       - libvips
 
       - install_solidus: { flags: "--sample=false --frontend=starter --authentication=devise" }
