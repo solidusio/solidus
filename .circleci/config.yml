@@ -139,8 +139,8 @@ commands:
             cat /tmp/.tool-versions
       - restore_cache:
           keys:
-            - solidus-installer-v5-{{ checksum "/tmp/.tool-versions" }}
-            - solidus-installer-v5-
+            - solidus-installer-v6-{{ checksum "/tmp/.tool-versions" }}
+            - solidus-installer-v6-
       - run:
           name: "Prepare the rails application"
           command: |
