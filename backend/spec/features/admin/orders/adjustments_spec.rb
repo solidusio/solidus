@@ -36,7 +36,7 @@ describe "Adjustments", type: :feature do
   context "admin managing adjustments" do
     it "should display the correct values for existing order adjustments" do
       within first('table tr', text: 'Tax') do
-        expect(column_text(2)).to match(/TaxCategory - \d+ 20\.000%/)
+        expect(column_text(2)).to match(/TaxCategory - \d+ 20\.0%/)
         expect(column_text(3)).to eq("$2.00")
       end
     end
