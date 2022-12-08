@@ -773,6 +773,44 @@ RSpec.describe Spree::Variant, type: :model do
     end
   end
 
+  describe '#shipping_category' do
+    context 'when shipping_category is nil' do
+      let(:shipping_category) { build(:shipping_category) }
+      let(:product) { build(:product, shipping_category: shipping_category) }
+      let(:variant) { build(:variant, product: product, shipping_category_id: nil) }
+      it 'returns the parent products shipping_category' do
+        expect(variant.shipping_category).to eq(shipping_category)
+      end
+    end
+
+    context 'when shipping_category is set' do
+      let(:shipping_category) { create(:shipping_category) }
+      let(:variant) { build(:variant, shipping_category: shipping_category) }
+      it 'returns the shipping_category set on itself' do
+        expect(variant.shipping_category).to eq(shipping_category)
+      end
+    end
+  end
+
+  describe '#shipping_category_id' do
+    context 'when shipping_category_id is nil' do
+      let(:shipping_category) { build(:shipping_category) }
+      let(:product) { build(:product, shipping_category: shipping_category) }
+      let(:variant) { build(:variant, product: product, shipping_category_id: nil) }
+      it 'returns the parent products shipping_category_id' do
+        expect(variant.shipping_category_id).to eq(shipping_category.id)
+      end
+    end
+
+    context 'when shipping_category_id is set' do
+      let(:shipping_category) { create(:shipping_category) }
+      let(:variant) { build(:variant, shipping_category_id: shipping_category.id) }
+      it 'returns the shipping_category_id set on itself' do
+        expect(variant.shipping_category_id).to eq(shipping_category.id)
+      end
+    end
+  end
+
   describe "touching" do
     it "updates a product" do
       variant.product.update_column(:updated_at, 1.day.ago)

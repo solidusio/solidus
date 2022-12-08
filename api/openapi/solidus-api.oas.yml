@@ -7168,6 +7168,8 @@ components:
           type: boolean
         product_id:
           type: integer
+        shipping_category_id:
+          type: integer
         tax_category_id:
           type: integer
         weight:

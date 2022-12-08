@@ -70,13 +70,10 @@
           <%= f.label :price %>
           <%= render "spree/admin/shared/number_with_currency", f: f, amount_attr: :price, currency: @variant.default_price_or_build.currency %>
         </div>
+        <% if show_rebuild_vat_checkbox? %>
+          <%= render "spree/admin/shared/rebuild_vat_prices_checkbox", form: f, model_name: "variant" %>
+        <% end %>
       </div>
-
-      <% if show_rebuild_vat_checkbox? %>
-        <div class="col-3">
-          <%= render "spree/admin/shared/rebuild_vat_prices_checkbox", form: f, model_name: "variant", wrapper_class: "field" %>
-        </div>
-      <% end %>
 
       <div class="col-3">
         <div class="field" data-hook="cost_price">
@@ -94,6 +91,19 @@
                                   :id,
                                   :name,
                                   { include_blank: t('.use_product_tax_category') },
+                                  { class: 'custom-select fullwidth' } %>
+        </div>
+      </div>
+
+      <div class="col-3">
+        <div class="field" data-hook="shipping_category">
+          <%= f.label :shipping_category %>
+          <%= f.field_hint :shipping_category %>
+          <%= f.collection_select :shipping_category_id,
+                                  @shipping_categories,
+                                  :id,
+                                  :name,
+                                  { include_blank: t('.use_product_shipping_category') },
                                   { class: 'custom-select fullwidth' } %>
         </div>
       </div>

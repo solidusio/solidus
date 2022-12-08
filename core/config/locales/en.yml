@@ -415,6 +415,7 @@ en:
         depth: Depth
         height: Height
         price: Price
+        shipping_category: Variant Shipping Category
         sku: SKU
         tax_category: Variant Tax Category
         weight: Weight
@@ -993,6 +994,7 @@ en:
           pricing: Pricing
           pricing_hint: These values are populated from the product details page and can be overridden below
           properties: Properties
+          use_product_shipping_category: Use Product Shipping Category
           use_product_tax_category: Use Product Tax Category
         new:
           new_variant: New Variant
@@ -1641,6 +1643,7 @@ en:
         deleted: Deleted Variant
         deleted_explanation: This variant was deleted on %{date}.
         deleted_explanation_with_replacement: This variant was deleted on %{date}. It has since been replaced by another with the same SKU.
+        shipping_category: 'This determines what kind of shipping this variant requires.<br/> Default: Use shipping category of the product associated with this variant'
         tax_category: 'This determines what kind of taxation is applied to this variant.<br/> Default: Use tax category of the product associated with this variant'
     home: Home
     i18n:
