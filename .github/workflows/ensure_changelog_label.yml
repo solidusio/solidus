@@ -1,0 +1,21 @@
+name: "Ensure Changelog label"
+
+on:
+  pull_request_target:
+    types: ["labeled", "unlabeled"]
+  workflow_call:
+
+jobs:
+  ensure:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: "Check for the presence of a changelog label"
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh pr view \
+            ${{ github.event.pull_request.number }} \
+            --json labels \
+            --jq 'any(.labels[].name; startswith("changelog:"))' \
+            | jq -e

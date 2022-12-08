@@ -1,8 +1,9 @@
-name: "Pull Request Labeler"
+name: "Triage for Changelog"
+
 on: pull_request_target
 
 jobs:
-  triage_changelog_label:
+  triage:
     permissions:
       contents: read
       pull-requests: write
@@ -12,3 +13,6 @@ jobs:
         with:
           repo-token: "${{ secrets.GITHUB_TOKEN }}"
           sync-labels: true
+  ensure:
+    uses: "./.github/workflows/ensure_changelog_label.yml"
+    needs: "triage"
